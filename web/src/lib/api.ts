@@ -55,6 +55,7 @@ export interface Prediction {
   settled_at: string | null
   pred_score: string | null; pred_corners_home: number | null; pred_corners_away: number | null
   home_corners: number | null; away_corners: number | null
+  grid_json: string | null
 }
 export interface SlateGame {
   id: number; date: string; sport: string; tournament: string | null

@@ -4,7 +4,7 @@ Prediction Tracker — local app (stdlib only).
 Backend: http.server + sqlite3 + urllib. Auto-settle via API-Football / API-NBA / ESPN; keyless weather (Open-Meteo).
 Run:  python3 app.py   ->  http://127.0.0.1:8787
 """
-import json, os, sqlite3, urllib.request, urllib.error, datetime, csv, io, time, unicodedata
+import json, os, sqlite3, urllib.request, urllib.error, datetime, csv, io, time, unicodedata, subprocess, zipfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 
@@ -320,16 +320,23 @@ def _espn_cached(tag, match, kickoff, fn):
     return res
 def espn_soccer_final(match, kickoff):
     return _espn_cached("final", match, kickoff, _espn_final_compute)
+
+# Post-WC: settle searches these ESPN league feeds in order for the matchup (WC first for history,
+# then the active club competitions). Add slugs here when a new tournament enters the rotation.
+ESPN_SOCCER_LEAGUES = ["fifa.world","usa.1","bra.1","uefa.champions","uefa.europa",
+                       "eng.1","esp.1","ger.1","ita.1","fra.1","eng.2","mex.1","concacaf.leagues.cup"]
+
 def _espn_final_compute(match, kickoff):
-    """Grade a WC soccer pick from its 'A v B' matchup + kickoff date via ESPN fifa.world (FINAL only).
-    Returns (home_score, away_score, desc) aligned to the pick's team order, else None."""
+    """Grade a soccer pick from its 'A v B' matchup + kickoff date via ESPN (FINAL only).
+    Searches every league in ESPN_SOCCER_LEAGUES. Returns (home_score, away_score, desc) or None."""
     m=(match or "").replace(" vs "," v ")
     if " v " not in m: return None
     teamA,teamB=[p.strip() for p in m.split(" v ",1)]
     try: base=datetime.date.fromisoformat((kickoff or "")[:10])
     except ValueError: return None
     for d in (base, base-datetime.timedelta(days=1)):   # late-UTC games can sit on the prior ESPN date
-        try: data=_get_json("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates="+d.strftime("%Y%m%d"))
+      for lg in ESPN_SOCCER_LEAGUES:
+        try: data=_get_json(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
         except Exception: continue
         for e in data.get("events",[]):
             comp=(e.get("competitions") or [{}])[0]
@@ -358,7 +365,7 @@ def _first_scorer(summ, teamA, teamB, total_goals):
 def espn_soccer_box(match, kickoff):
     return _espn_cached("box", match, kickoff, _espn_box_compute)
 def _espn_box_compute(match, kickoff):
-    """ACTUAL corners + first-scorer for a finished WC soccer pick via ESPN fifa.world boxscore.
+    """ACTUAL corners + first-scorer for a finished soccer pick via ESPN boxscore (multi-league).
     Returns {"corners":(hc,ac)|None, "first":'home'/'away'/'none'|None} aligned to 'A v B' (A=home), else None."""
     m=(match or "").replace(" vs "," v ")
     if " v " not in m: return None
@@ -366,7 +373,8 @@ def _espn_box_compute(match, kickoff):
     try: base=datetime.date.fromisoformat((kickoff or "")[:10])
     except ValueError: return None
     for d in (base, base-datetime.timedelta(days=1)):   # late-UTC games can sit on the prior ESPN date
-        try: data=_get_json("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates="+d.strftime("%Y%m%d"))
+      for lg in ESPN_SOCCER_LEAGUES:
+        try: data=_get_json(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
         except Exception: continue
         for e in data.get("events",[]):
             comp=(e.get("competitions") or [{}])[0]
@@ -379,7 +387,7 @@ def _espn_box_compute(match, kickoff):
                 except (TypeError,ValueError): pass
             eid=e.get("id")
             if not eid: continue
-            try: summ=_get_json("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event="+str(eid))
+            try: summ=_get_json(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/summary?event="+str(eid))
             except Exception: return None
             cor={}; allstats={}    # allstats[team] = {statName: float} — the FULL boxscore line, not just corners
             for t in ((summ.get("boxscore") or {}).get("teams") or []):
@@ -1044,6 +1052,29 @@ class H(BaseHTTPRequestHandler):
                 done.append({"id":r["id"],"pick":r["pick"],"status":st,"score":f"{hs}-{as_}"})
             c.commit(); c.close()
             return self._send({"settled":done})
+        if p=="/api/publish-site":   # re-export public_site + deploy to Netlify (finished games drop off, next pick slides in)
+            site_id="999d079e-2f4f-4a3a-85b4-0b1bca946c7a"   # edge-machine-picks.netlify.app
+            ex=subprocess.run(["python3", os.path.join(ROOT,"export_public.py")],
+                              capture_output=True, text=True, timeout=120)
+            if ex.returncode!=0:
+                return self._send({"error":f"export failed: {(ex.stderr or ex.stdout)[-300:]}"},500)
+            tok_path=os.path.join(ROOT,".netlify_token")
+            if not os.path.exists(tok_path):
+                return self._send({"exported":True,"deployed":False,
+                    "note":"Exported, but no .netlify_token — save a Netlify personal access token to ~/Predictions/.netlify_token (chmod 600) to deploy from this button, or ask Claude to deploy."})
+            buf=io.BytesIO(); pub=os.path.join(ROOT,"public_site")
+            with zipfile.ZipFile(buf,"w",zipfile.ZIP_DEFLATED) as z:
+                for fn in os.listdir(pub): z.write(os.path.join(pub,fn),fn)
+            req=urllib.request.Request(f"https://api.netlify.com/api/v1/sites/{site_id}/deploys",
+                data=buf.getvalue(), method="POST",
+                headers={"Content-Type":"application/zip",
+                         "Authorization":f"Bearer {open(tok_path).read().strip()}"})
+            try:
+                with urllib.request.urlopen(req,timeout=90) as f: d=json.load(f)
+            except urllib.error.HTTPError as e:
+                return self._send({"exported":True,"deployed":False,"error":f"netlify deploy failed: HTTP {e.code}"},502)
+            return self._send({"exported":True,"deployed":True,"state":d.get("state"),
+                               "url":"https://edge-machine-picks.netlify.app"})
         return self._send({"error":"not found"},404)
 
     def do_PATCH(self):

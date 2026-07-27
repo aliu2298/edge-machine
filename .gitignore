@@ -10,6 +10,11 @@
 
 # --- personal data / runtime state ---
 predictions.db
+staged_orders.json
+
+# --- Kalshi trading infra (not part of the public-facing repo) ---
+kalshi_client.py
+web/src/components/StagedOrders.tsx
 *.db
 *.log
 inbox.jsonl

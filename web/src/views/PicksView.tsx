@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CheckCircle2, Sparkles, Brain, Download, RotateCw, Flag, Target } from 'lucide-react'
+import { CheckCircle2, Sparkles, Brain, Download, RotateCw, Target, Globe } from 'lucide-react'
 import { useApi, postJSON } from '@/lib/api'
 import type { Stats, Prediction } from '@/lib/api'
 import { usd } from '@/lib/utils'
@@ -8,90 +8,6 @@ import { Badge } from '@/components/ui/badge'
 import type { BadgeProps } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { StatTile, SectionTitle, Empty } from '@/components/bits'
-import { matchupRoles, ARCHE_TONE } from '@/lib/archetypes'
-import type { Arche } from '@/lib/archetypes'
-
-function ArchChip({ a }: { a: Arche }) {
-  return (
-    <span
-      title={a.expect}
-      className={`inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[9px] font-semibold ${ARCHE_TONE[a.tone]}`}
-    >
-      {a.emoji} {a.label}
-    </span>
-  )
-}
-
-function ChemistBench({ home, away, gap, contested, ach, aca, hg, ag }: {
-  home: string; away: string; gap: number; contested: boolean
-  ach: number | null; aca: number | null; hg: number | null; ag: number | null
-}) {
-  const clamp = (v: number) => Math.max(-1, Math.min(1, v))
-  const settled = ach != null && aca != null
-  let pos: number, face: string, msg: string
-  let lesson: string | null = null
-  let lessonTone = 'text-muted-foreground'
-  let stumped = false
-
-  if (!settled) {
-    stumped = contested
-    pos = contested ? 50 : 50 - clamp(gap / 4) * 38
-    face = contested ? '🧑‍🔬❓' : '🧑‍🔬'
-    msg = contested
-      ? 'Chemist’s stumped — valences too close, can’t tell which way the yield goes.'
-      : `Chemist sits by ${gap > 0 ? short(home) : short(away)} — the high-yield side.`
-  } else {
-    const am = (ach as number) - (aca as number)
-    pos = Math.abs(am) < 1 ? 50 : 50 - clamp(am / 8) * 38
-    const predDir = contested ? 0 : Math.sign(gap)
-    const actDir = Math.sign(am)
-    const right = predDir !== 0 ? predDir === actDir : Math.abs(am) <= 2
-    const actW = am > 0 ? short(home) : am < 0 ? short(away) : 'neither'
-    const predW = predDir > 0 ? short(home) : predDir < 0 ? short(away) : 'no side'
-    if (right) {
-      face = '🧑‍🔬😄'
-      msg = contested ? 'Called it a coin-flip — and it stayed close. ✓' : `Nailed it — ${actW} sieged, just as predicted. ✓`
-      lesson = '✓ called it'
-      lessonTone = 'text-yes'
-    } else {
-      face = '🧑‍🔬😟'
-      lessonTone = 'text-no'
-      if (predDir === 0) {
-        msg = `Should’ve called it — ${actW} clearly took the corners; it wasn’t a coin-flip.`
-        lesson = '😟 not a coin-flip'
-      } else {
-        const predMargin = predDir > 0 ? (hg ?? 0) - (ag ?? 0) : (ag ?? 0) - (hg ?? 0)
-        const clinical = predMargin >= 1
-        msg = clinical
-          ? `Missed: ${predW} won clinically — no siege needed, ${actW} took the corners.`
-          : `Missed: ${predW}’s siege broke — ${actW} took the corners (chased / countered).`
-        lesson = clinical ? '😟 clinical, no siege' : '😟 siege broke'
-      }
-    }
-  }
-
-  pos = Math.max(15, Math.min(85, pos))
-
-  return (
-    <div className="select-none">
-      <div className="relative h-9">
-        <div className="absolute inset-x-1 top-[31px] h-px bg-border" />
-        <span className="absolute top-[24px] left-1 text-[8px] font-semibold uppercase tracking-wide text-muted-foreground">{short(home)}</span>
-        <span className="absolute top-[24px] right-1 text-[8px] font-semibold uppercase tracking-wide text-muted-foreground">{short(away)}</span>
-        <span
-          style={{ left: `${pos}%` }}
-          title={msg}
-          className={`absolute top-0 -translate-x-1/2 whitespace-nowrap text-2xl leading-none ${stumped ? 'animate-bounce' : ''}`}
-        >
-          {face}
-        </span>
-      </div>
-      {lesson && (
-        <div className={`truncate text-center text-[10px] font-semibold ${lessonTone}`} title={msg}>{lesson}</div>
-      )}
-    </div>
-  )
-}
 
 function statusBadge(s: string) {
   const map: Record<string, { v: BadgeProps['variant']; t: string }> = {
@@ -140,6 +56,41 @@ function teams(match: string): [string, string] {
 }
 const short = (name: string) => name.replace(/\b(FC|CF|United|City)\b/gi, '').trim().slice(0, 12)
 
+type ScoreGrid = { home: string; away: string; picked: string; pred: string; buckets: Record<string, number | null> }
+
+// Correct Score Group grid — 6 buckets (fav/dog win low, win by 3, draw, any other) with derived odds.
+function ScoreGroupGrid({ raw }: { raw: string | null }) {
+  let g: ScoreGrid | null = null
+  try { g = raw ? (JSON.parse(raw) as ScoreGrid) : null } catch { g = null }
+  if (!g) return <div className="py-3 text-center text-[11px] text-muted-foreground">No score-group market yet</div>
+  const b = g.buckets || {}
+  const cells = [
+    { k: 'home_low', label: `${short(g.home)} 1-0·2-0·2-1` },
+    { k: 'away_low', label: `${short(g.away)} 1-0·2-0·2-1` },
+    { k: 'home_big', label: `${short(g.home)} 3-0·3-1·3-2` },
+    { k: 'away_big', label: `${short(g.away)} 3-0·3-1·3-2` },
+    { k: 'draw', label: 'Draw 1-1·2-2·3-3' },
+    { k: 'other', label: 'Any other' },
+  ]
+  return (
+    <div className="grid grid-cols-2 gap-1.5">
+      {cells.map((c) => {
+        const picked = c.k === g!.picked
+        const odd = b[c.k]
+        return (
+          <div
+            key={c.k}
+            className={`flex items-center justify-between gap-1 rounded-md border px-2 py-1.5 ${picked ? 'border-yes bg-yes-soft' : 'border-border bg-card/40'}`}
+          >
+            <span className={`text-[9px] leading-tight ${picked ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}>{c.label}</span>
+            <span className={`tnum text-[12px] font-bold ${picked ? 'text-yes' : ''}`}>{odd != null ? odd.toFixed(2) : '—'}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 // A card now represents a GAME and shows every leg (the pre-game pair) on one face.
 function GameCard({
   legs,
@@ -155,22 +106,12 @@ function GameCard({
   const g = legs[0] // game-level fields (match, archetypes, predictions) are shared across legs
   const settledLeg = legs.find((l) => l.home_score != null) ?? g
   const [home, away] = teams(g.match)
-  const { home: archHome, away: archAway, gap, contested } = matchupRoles(home, away)
-
-  const ch = g.pred_corners_home
-  const ca = g.pred_corners_away
-  const hasCorners = ch != null || ca != null
-  const cornerTotal = (ch ?? 0) + (ca ?? 0)
-  const ach = settledLeg.home_corners
-  const aca = settledLeg.away_corners
-  const hasActualCorners = ach != null || aca != null
-  const actualCornerTotal = (ach ?? 0) + (aca ?? 0)
   const settled = settledLeg.home_score != null && settledLeg.away_score != null
   const exact = settled && g.pred_score === `${settledLeg.home_score}-${settledLeg.away_score}`
   const anyPending = legs.some((l) => l.status === 'pending')
 
   return (
-    <div className="aspect-[3/4] [perspective:1200px]">
+    <div className="h-[244px] [perspective:1200px]">
       <div
         role="button"
         tabIndex={0}
@@ -188,12 +129,6 @@ function GameCard({
           </div>
 
           <div className="mt-1 truncate text-sm font-semibold leading-tight">{g.match}</div>
-          {(archHome || archAway) && (
-            <div className="mt-1.5 flex flex-wrap gap-1">
-              {archHome && <ArchChip a={archHome} />}
-              {archAway && <ArchChip a={archAway} />}
-            </div>
-          )}
 
           <div className="mt-2 flex min-h-0 flex-1 flex-col justify-start gap-2 overflow-hidden">
             {legs.map((leg) => {
@@ -243,70 +178,16 @@ function GameCard({
             <span className="truncate text-[10px] text-muted-foreground">{short(home)} v {short(away)}</span>
           </div>
 
-          <div className="mt-3 flex flex-col items-center">
-            <div className="flex items-center gap-1 text-[10px] uppercase tracking-wide text-muted-foreground">
-              <Target className="h-3 w-3" /> Correct score {exact && <span className="text-yes">✓ exact</span>}
-            </div>
-            <div className="mt-1 flex items-start justify-center gap-4">
-              <div className="flex flex-col items-center">
-                <div className="tnum text-2xl font-extrabold tracking-tight">{g.pred_score || '— : —'}</div>
-                <div className="text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">Predicted</div>
-              </div>
-              {settled && (
-                <div className="flex flex-col items-center">
-                  <div className="tnum text-2xl font-extrabold tracking-tight text-amber-400">
-                    {settledLeg.home_score}-{settledLeg.away_score}
-                  </div>
-                  <div className="text-[9px] font-semibold uppercase tracking-wide text-amber-500/90">Actual</div>
-                </div>
-              )}
-            </div>
+          <div className="mt-2 flex items-center justify-between text-[10px] uppercase tracking-wide text-muted-foreground">
+            <span className="flex items-center gap-1"><Target className="h-3 w-3" /> Score group</span>
+            <span className="tnum normal-case">
+              pred <span className="font-bold text-foreground">{g.pred_score || '—'}</span>
+              {settled && <span className="text-amber-400"> · act {settledLeg.home_score}-{settledLeg.away_score}</span>}
+              {exact && <span className="text-yes"> ✓</span>}
+            </span>
           </div>
-
-          <div className="mt-auto space-y-2">
-            {gap != null && (
-              <ChemistBench
-                home={home}
-                away={away}
-                gap={gap}
-                contested={contested}
-                ach={ach}
-                aca={aca}
-                hg={settledLeg.home_score}
-                ag={settledLeg.away_score}
-              />
-            )}
-            <div className="rounded-lg border bg-card p-2.5">
-              <div className="mb-1.5 flex items-center gap-1 text-[10px] uppercase tracking-wide text-muted-foreground">
-                <Flag className="h-3 w-3" /> Corners
-                {hasCorners && (
-                  <span className="ml-auto tnum normal-case">
-                    pred {cornerTotal}
-                    {hasActualCorners && <span className="text-amber-400"> · act {actualCornerTotal}</span>}
-                  </span>
-                )}
-              </div>
-              {hasCorners ? (
-                <div className="grid grid-cols-2 gap-2 text-center">
-                  <div>
-                    <div className="flex items-baseline justify-center gap-1.5">
-                      <span className="tnum text-xl font-bold">{ch ?? '—'}</span>
-                      {hasActualCorners && <span className="tnum text-base font-bold text-amber-400">{ach ?? '—'}</span>}
-                    </div>
-                    <div className="truncate text-[10px] text-muted-foreground">{short(home)}</div>
-                  </div>
-                  <div>
-                    <div className="flex items-baseline justify-center gap-1.5">
-                      <span className="tnum text-xl font-bold">{ca ?? '—'}</span>
-                      {hasActualCorners && <span className="tnum text-base font-bold text-amber-400">{aca ?? '—'}</span>}
-                    </div>
-                    <div className="truncate text-[10px] text-muted-foreground">{short(away)}</div>
-                  </div>
-                </div>
-              ) : (
-                <div className="py-1 text-center text-[11px] text-muted-foreground">Not predicted yet</div>
-              )}
-            </div>
+          <div className="mt-2 flex-1">
+            <ScoreGroupGrid raw={g.grid_json} />
           </div>
 
           <RotateCw className="pointer-events-none absolute bottom-2 right-2 h-3.5 w-3.5 text-muted-foreground/50" />
@@ -362,6 +243,20 @@ export function PicksView() {
   const queue = (action: string, note: string, msg: string) =>
     postJSON('/api/request', { action, note }).then(() => alert(msg + '\n\n📥 Queued for Claude.'))
 
+  // Re-export the public picks board and push it to Netlify — settled games drop
+  // off and the next pending pick takes the open slot.
+  const publish = async () => {
+    setBusy(true)
+    try {
+      const r = await postJSON<{ deployed?: boolean; url?: string; note?: string; error?: string }>('/api/publish-site')
+      if (r.deployed) alert(`🌐 Published → ${r.url}`)
+      else alert(r.note || r.error || 'Exported; deploy skipped.')
+    } catch {
+      alert('Publish failed.')
+    }
+    setBusy(false)
+  }
+
   // Settle every pending leg of the game with the entered score.
   const settleScore = async (legs: Prediction[]) => {
     if (hs === '' || as_ === '') return alert('Enter both scores.')
@@ -392,6 +287,9 @@ export function PicksView() {
       <div className="flex flex-wrap gap-2">
         <Button onClick={settle} disabled={busy}>
           <CheckCircle2 /> {busy ? 'Settling…' : 'Settle results'}
+        </Button>
+        <Button onClick={publish} disabled={busy}>
+          <Globe /> Publish site
         </Button>
         <Button variant="outline" onClick={() => queue('predict', "Generate the next day's picks", '🔮 Predict')}>
           <Sparkles /> Predict
