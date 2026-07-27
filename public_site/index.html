@@ -1,0 +1,276 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine · Picks</title>
+<meta name="description" content="Public read-only picks board — control-not-margin soccer betting tracker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
+--pos:#3fb970;--neg:#e06c75;--warn:#f0b429}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
+letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:34px 0 12px}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}.warn{color:var(--warn)}
+.tnum{font-variant-numeric:tabular-nums}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:12px}
+.row1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match{font-weight:700;font-size:16px}
+.ko{font-size:12px;color:var(--mut);margin-top:2px}
+.pick{margin-top:8px;font-weight:600;color:var(--warn)}
+.nums{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mut);margin-top:4px;font-variant-numeric:tabular-nums}
+.why{font-size:12.5px;color:var(--mut);margin-top:10px;border-left:2px solid var(--bd);padding-left:10px}
+.nextbtn{margin-top:12px;font:inherit;font-size:12px;font-weight:700;color:var(--mut);
+background:none;border:1px dashed var(--bd);border-radius:8px;padding:7px 13px;cursor:pointer;width:100%}
+.nextbtn:hover{color:var(--fg);border-color:var(--mut)}
+.chip{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+border:1px solid;border-radius:999px;padding:2px 8px}
+.st{font-size:10.5px;font-weight:800;letter-spacing:.05em}
+.sg{margin-top:12px}.sg-t{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-bottom:6px}
+.sg-c{display:inline-flex;align-items:center;gap:10px;font-size:12px;
+background:#0c1017;border:1px solid var(--bd);border-radius:8px;padding:6px 11px}
+.sg-c b{font-variant-numeric:tabular-nums;color:var(--fg)}
+.sg-c.pk{border-color:var(--pos);color:var(--fg);background:#12211a}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);
+padding:6px 8px;border-bottom:1px solid var(--bd)}
+td{padding:8px;border-bottom:1px solid #1a1f2b;vertical-align:top}
+.tmatch{font-weight:600}.tres{font-size:11.5px}
+.tbl{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:6px 10px;overflow-x:auto}
+.btns{margin-left:auto;display:flex;gap:6px}
+.kbtn{font-size:11.5px;font-weight:700;color:#7aa2f7;text-decoration:none;
+border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;padding:4px 11px;white-space:nowrap}
+.kbtn:hover{background:#7aa2f72a}
+.kbtn.bov{color:#e8564f;border-color:#e8564f55;background:#e8564f14}
+.kbtn.bov:hover{background:#e8564f2a}
+details.res summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;user-select:none}
+details.res summary::-webkit-details-marker{display:none}
+details.res summary h2{margin:34px 0 12px}
+details.res .caret{color:var(--mut);margin-top:22px;transition:transform .15s}
+details.res[open] .caret{transform:rotate(90deg)}
+footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
+@media (max-width:540px){
+  body{padding:18px 10px 44px;font-size:14px}
+  h1{font-size:19px}
+  .card{padding:13px}
+  .match{font-size:15px}
+  .btns{margin-left:0;width:100%;justify-content:flex-start;margin-top:2px}
+  .kbtn{padding:5px 12px}
+  th,td{padding:6px 5px;font-size:12px}
+  .why{font-size:12px}
+}
+</style></head><body><div class="wrap">
+<h1>Edge Machine</h1>
+<div class="sub">The next 3 picks + results as they conclude · updated Jul 27 2026 · 21:12 UTC</div>
+<h2>Current picks <span id="qleft"></span></h2>
+<div class="card" data-pick="110">
+  <div class="row1"><span class="match">Los Angeles FC v Sporting Kansas City</span><span class="chip" style="color:#56b6c2;border-color:#56b6c255;background:#56b6c218">tt-test</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXMLSGAME-26JUL25LAFCSKC" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-26T02:30Z">2026-07-26T02:30Z</time></div>
+  <div class="pick">Sporting KC to NOT score (under 0.5)</div>
+  <div class="nums"><span>@2.1429</span><span>$25.00 stake</span><span>to win $28.57</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 2-0</div><div class="sg-c pk"><span>Los Angeles FC 1-0·2-0·2-1</span></div></div>
+  <div class="why">tt-test #3 (fade-bad-attack template, same as Atlanta): SKC ~1.07 gf/g visiting the league&#x27;s best defense (LAFC ~1.06 ga, at home). Est blank 50-55% vs 46.7% implied @2.14 → +7-15% EV. [Vancouver o1.5 checked @1.67 = fair, skipped.]</div>
+  <button class="nextbtn" data-next="110">✓ Game finished — show next pick</button>
+</div><div class="card" data-pick="114">
+  <div class="row1"><span class="match">RB Bragantino v Coritiba</span><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXBRASILEIROGAME-26JUL26RBBCFC" target="_blank" rel="noopener">Kalshi ↗</a><a class="kbtn bov" href="https://www.bovada.lv/sports/soccer/south-america/brazil/brasileirao-serie-a/rb-bragantino-sp-coritiba-pr-202607261730" target="_blank" rel="noopener">Bovada ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-26T21:30Z">2026-07-26T21:30Z</time></div>
+  <div class="pick">RB Bragantino -0.5</div>
+  <div class="nums"><span>@1.64</span><span>$30.00 stake</span><span>to win $19.20</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 2-1</div><div class="sg-c pk"><span>RB Bragantino 1-0·2-0·2-1</span><b>@2.21</b></div></div>
+  <div class="why">Home fav 1.64 in band. Bragantino home 5-1-3 (16-9, 1.8 gf/g); Coritiba travels okay (4-2-4) but ships 1.6/g away. Home form carries it.</div>
+  <button class="nextbtn" data-next="114">✓ Game finished — show next pick</button>
+</div><div class="card" data-pick="116">
+  <div class="row1"><span class="match">Mirassol v Remo</span><span class="chip" style="color:#7aa2f7;border-color:#7aa2f755;background:#7aa2f718">lean</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXBRASILEIROGAME-26JUL29MIRCR" target="_blank" rel="noopener">Kalshi ↗</a><a class="kbtn bov" href="https://www.bovada.lv/sports/soccer/south-america/brazil/brasileirao-serie-a/mirassol-sp-remo-pa-202607291830" target="_blank" rel="noopener">Bovada ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-29T22:30Z">2026-07-29T22:30Z</time></div>
+  <div class="pick">Mirassol -0.5</div>
+  <div class="nums"><span>@1.74</span><span>$20.00 stake</span><span>to win $14.80</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 2-1</div><div class="sg-c pk"><span>Mirassol 1-0·2-0·2-1</span><b>@2.14</b></div></div>
+  <div class="why">Weak-vs-weak, but venue edge + Remo is the league&#x27;s worst traveler (2-2-6, 21 conceded away). Mirassol home form mediocre (4-3-3) - smallest sizing.</div>
+  <button class="nextbtn" data-next="116">✓ Game finished — show next pick</button>
+</div><div class="card" data-pick="117">
+  <div class="row1"><span class="match">Fluminense v Bahia</span><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXBRASILEIROGAME-26JUL29FLUBAH" target="_blank" rel="noopener">Kalshi ↗</a><a class="kbtn bov" href="https://www.bovada.lv/sports/soccer/south-america/brazil/brasileirao-serie-a/fluminense-rj-bahia-ba-202607292030" target="_blank" rel="noopener">Bovada ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-30T00:30Z">2026-07-30T00:30Z</time></div>
+  <div class="pick">Fluminense -0.5</div>
+  <div class="nums"><span>@1.82</span><span>$30.00 stake</span><span>to win $24.60</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 2-1</div><div class="sg-c pk"><span>Fluminense 1-0·2-0·2-1</span><b>@2.38</b></div></div>
+  <div class="why">Flu home 7-2-1 (18-11, 2.30 home PPG, 70% home wins); Bahia travels okay (4-2-3) but concedes 1.56/g away. Form agrees.</div>
+  <button class="nextbtn" data-next="117">✓ Game finished — show next pick</button>
+</div><div class="card" data-pick="119">
+  <div class="row1"><span class="match">Atlético-MG v RB Bragantino</span><span class="chip" style="color:#7aa2f7;border-color:#7aa2f755;background:#7aa2f718">lean</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXBRASILEIROGAME-26JUL30ATLRBB" target="_blank" rel="noopener">Kalshi ↗</a><a class="kbtn bov" href="https://www.bovada.lv/sports/soccer/south-america/brazil/brasileirao-serie-a/atletico-mineiro-mg-rb-bragantino-sp-202607301400" target="_blank" rel="noopener">Bovada ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-30T18:00Z">2026-07-30T18:00Z</time></div>
+  <div class="pick">Atlético-MG -0.5</div>
+  <div class="nums"><span>@2.1</span><span>$20.00 stake</span><span>to win $22.00</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 1-0</div><div class="sg-c pk"><span>Atlético-MG 1-0·2-0·2-1</span></div></div>
+  <div class="why">In band @2.10. Atl-MG has one home loss (4-4-1) but is draw-heavy; Bragantino is a solid traveler (4-2-4). Draw risk high - lean sizing.</div>
+  <button class="nextbtn" data-next="119">✓ Game finished — show next pick</button>
+</div><div class="card" data-pick="118">
+  <div class="row1"><span class="match">Botafogo v Grêmio</span><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXBRASILEIROGAME-26JUL30BOTGPA" target="_blank" rel="noopener">Kalshi ↗</a><a class="kbtn bov" href="https://www.bovada.lv/sports/soccer/south-america/brazil/brasileirao-serie-a/botafogo-rj-gremio-rs-202607301400" target="_blank" rel="noopener">Bovada ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-30T18:00Z">2026-07-30T18:00Z</time></div>
+  <div class="pick">Botafogo -0.5</div>
+  <div class="nums"><span>@1.76</span><span>$30.00 stake</span><span>to win $22.80</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 2-1</div><div class="sg-c pk"><span>Botafogo 1-0·2-0·2-1</span></div></div>
+  <div class="why">Home fav 1.76 in band. Grêmio is WINLESS away (0-4-6, 0.6 gf/g); Botafogo home 4-3-2 with 1.9 gf/g. Chaos team, but the matchup is one-way.</div>
+  <button class="nextbtn" data-next="118">✓ Game finished — show next pick</button>
+</div><div class="card" data-pick="120">
+  <div class="row1"><span class="match">Corinthians v Athletico-PR</span><span class="chip" style="color:#7aa2f7;border-color:#7aa2f755;background:#7aa2f718">lean</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXBRASILEIROGAME-26JUL30CORCAP" target="_blank" rel="noopener">Kalshi ↗</a><a class="kbtn bov" href="https://www.bovada.lv/sports/soccer/south-america/brazil/brasileirao-serie-a/corinthians-sp-athletico-paranaense-pr-202607301830" target="_blank" rel="noopener">Bovada ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-07-30T22:30Z">2026-07-30T22:30Z</time></div>
+  <div class="pick">Corinthians -0.5</div>
+  <div class="nums"><span>@1.95</span><span>$25.00 stake</span><span>to win $23.75</span></div>
+  <div class="sg"><div class="sg-t">Score group · pred 1-0</div><div class="sg-c pk"><span>Corinthians 1-0·2-0·2-1</span><b>@2.28</b></div></div>
+  <div class="why">Home fav 1.95, league-best home defense (12-8, 8 clean sheets); Athletico away just 3-1-5 despite the win streak. Their form is the risk - lean. Corinthians games run under (2.11 avg).</div>
+  <button class="nextbtn" data-next="120">✓ Game finished — show next pick</button>
+</div>
+<div class="mut" id="qempty" style="display:none">Queue finished — check back after the next slate.</div>
+<details class="res">
+<summary><h2>Recent results (12)</h2><span class="caret">▸</span></summary>
+<div class="tbl"><table>
+<tr><th>Date</th><th>Match</th><th>Pick</th><th>Odds</th><th>Stake</th><th>Lane</th><th>Result</th><th>P&amp;L</th></tr>
+<tr>
+  <td class="mut">2026-07-26</td>
+  <td><div class="tmatch">Palmeiras v Atlético-MG</div><div class="tres mut">Palmeiras 1-2 Atlético-MG (FT)</div></td>
+  <td>Palmeiras -0.5</td>
+  <td class="tnum">1.66</td>
+  <td class="tnum">$35.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$35.00</td>
+</tr><tr>
+  <td class="mut">2026-07-26</td>
+  <td><div class="tmatch">Flamengo v São Paulo</div><div class="tres mut">Flamengo 1-1 São Paulo (FT)</div></td>
+  <td>Flamengo -1.5</td>
+  <td class="tnum">2.4</td>
+  <td class="tnum">$25.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$25.00</td>
+</tr><tr>
+  <td class="mut">2026-07-26</td>
+  <td><div class="tmatch">Bahia v Corinthians</div><div class="tres mut">Bahia 1-1 Corinthians (FT)</div></td>
+  <td>Bahia -0.5</td>
+  <td class="tnum">2.4</td>
+  <td class="tnum">$20.00</td>
+  <td><span class="chip" style="color:#7aa2f7;border-color:#7aa2f755;background:#7aa2f718">lean</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$20.00</td>
+</tr><tr>
+  <td class="mut">2026-07-26</td>
+  <td><div class="tmatch">Cruzeiro v Botafogo</div><div class="tres mut">Cruzeiro 0-1 Botafogo (FT)</div></td>
+  <td>Cruzeiro -0.5</td>
+  <td class="tnum">1.8</td>
+  <td class="tnum">$30.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$30.00</td>
+</tr><tr>
+  <td class="mut">2026-07-25</td>
+  <td><div class="tmatch">Houston Dynamo v Austin FC</div><div class="tres mut">Houston Dynamo 3-0 Austin FC (FT)</div></td>
+  <td>Houston Dynamo -0.5</td>
+  <td class="tnum">1.6667</td>
+  <td class="tnum">$25.00</td>
+  <td><span class="chip" style="color:#7aa2f7;border-color:#7aa2f755;background:#7aa2f718">lean</span></td>
+  <td><span class="st pos">WIN</span></td>
+  <td class="tnum pos">+$16.67</td>
+</tr><tr>
+  <td class="mut">2026-07-25</td>
+  <td><div class="tmatch">Columbus Crew v FC Cincinnati</div><div class="tres mut">Columbus Crew 2-1 FC Cincinnati (FT)</div></td>
+  <td>Columbus Crew -0.5</td>
+  <td class="tnum">1.7273</td>
+  <td class="tnum">$30.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st pos">WIN</span></td>
+  <td class="tnum pos">+$21.82</td>
+</tr><tr>
+  <td class="mut">2026-07-25</td>
+  <td><div class="tmatch">Athletico-PR v Internacional-RS</div><div class="tres mut">Athletico-PR 2-0 Internacional-RS (FT)</div></td>
+  <td>Athletico-PR -0.5</td>
+  <td class="tnum">1.8889</td>
+  <td class="tnum">$35.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st pos">WIN</span></td>
+  <td class="tnum pos">+$31.11</td>
+</tr><tr>
+  <td class="mut">2026-07-22</td>
+  <td><div class="tmatch">São Paulo v Athletico-PR</div><div class="tres mut">São Paulo 1-2 Athletico-PR (FT)</div></td>
+  <td>São Paulo -0.5</td>
+  <td class="tnum">1.9231</td>
+  <td class="tnum">$35.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$35.00</td>
+</tr><tr>
+  <td class="mut">2026-07-21</td>
+  <td><div class="tmatch">Atlético Mineiro v Bahia</div><div class="tres mut">Atlético Mineiro v Bahia 1-1</div></td>
+  <td>Atlético Mineiro -0.5</td>
+  <td class="tnum">2.05</td>
+  <td class="tnum">$40.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$40.00</td>
+</tr><tr>
+  <td class="mut">2026-07-22</td>
+  <td><div class="tmatch">Inter Miami v Chicago Fire</div><div class="tres mut">Inter Miami 3-2 Chicago Fire (FT)</div></td>
+  <td>Chicago Fire over 1.5 team goals</td>
+  <td class="tnum">1.82</td>
+  <td class="tnum">$25.00</td>
+  <td><span class="chip" style="color:#56b6c2;border-color:#56b6c255;background:#56b6c218">tt-test</span></td>
+  <td><span class="st pos">WIN</span></td>
+  <td class="tnum pos">+$20.50</td>
+</tr><tr>
+  <td class="mut">2026-07-22</td>
+  <td><div class="tmatch">Charlotte v Atlanta United</div><div class="tres mut">Charlotte 2-2 Atlanta United (FT)</div></td>
+  <td>Atlanta to NOT score (under 0.5 team goals)</td>
+  <td class="tnum">2.6</td>
+  <td class="tnum">$25.00</td>
+  <td><span class="chip" style="color:#56b6c2;border-color:#56b6c255;background:#56b6c218">tt-test</span></td>
+  <td><span class="st neg">LOSS</span></td>
+  <td class="tnum neg">−$25.00</td>
+</tr><tr>
+  <td class="mut">2026-07-19</td>
+  <td><div class="tmatch">Spain v Argentina</div><div class="tres mut">Spain 0-0 Argentina (90 mins) — Spain won 1-0 AET; +0.5 settles on regulation</div></td>
+  <td>Spain +0.5</td>
+  <td class="tnum">1.3226</td>
+  <td class="tnum">$45.00</td>
+  <td><span class="chip" style="color:#3fb970;border-color:#3fb97055;background:#3fb97018">value</span></td>
+  <td><span class="st pos">WIN</span></td>
+  <td class="tnum pos">+$14.52</td>
+</tr>
+</table></div>
+</details>
+<footer>Read-only static export · picks are paper-tracked research, not betting advice.</footer>
+</div>
+<script>
+for (const t of document.querySelectorAll("time[data-utc]")) {
+  const d = new Date(t.dataset.utc);
+  if (!isNaN(d)) t.textContent = d.toLocaleString([], {weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+}
+// Pick queue: 12 picks are baked in; show 3 at a time.
+// "Game finished — show next pick" hides the card (remembered per device via
+// localStorage) and the next queued pick takes the slot. No redeploy needed.
+(function () {
+  const KEY = "em-done-picks", SHOW = 3;
+  let done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
+  const cards = [...document.querySelectorAll(".card[data-pick]")];
+  function refresh() {
+    let shown = 0;
+    for (const c of cards) {
+      const vis = !done.has(c.dataset.pick) && shown < SHOW;
+      c.style.display = vis ? "" : "none";
+      if (vis) shown++;
+    }
+    const left = cards.filter(c => !done.has(c.dataset.pick)).length;
+    document.getElementById("qleft").textContent = `(${shown} of ${left} queued)`;
+    document.getElementById("qempty").style.display = left ? "none" : "";
+  }
+  for (const b of document.querySelectorAll(".nextbtn")) {
+    b.addEventListener("click", () => {
+      done.add(b.dataset.next);
+      localStorage.setItem(KEY, JSON.stringify([...done]));
+      refresh();
+    });
+  }
+  refresh();
+})();
+</script></body></html>

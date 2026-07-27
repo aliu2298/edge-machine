@@ -2,8 +2,11 @@
 .apifootball_key
 .kalshi_removed_backup/
 *.pem
+*_pem
 *_key
 .kalshi_key*
+.kalshi_pem
+.netlify_token
 
 # --- personal data / runtime state ---
 predictions.db
@@ -26,3 +29,4 @@ __pycache__/
 web/node_modules/
 web/dist/
 node_modules/
+public_site/.netlify/
