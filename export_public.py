@@ -16,6 +16,8 @@ import sqlite3, json, html, datetime, os, re, unicodedata, urllib.request
 
 DB = os.path.join(os.path.dirname(__file__), "predictions.db")
 OUT_DIR = os.path.join(os.path.dirname(__file__), "public_site")
+# repo-tracked mirror of the predictions table ONLY (see load_rows)
+MIRROR = os.path.join(os.path.dirname(__file__), "data", "predictions.json")
 
 SETTLED = ("win", "loss", "half_win", "half_loss", "void")
 
@@ -35,7 +37,10 @@ EARNINGS_SPORT = "kalshi"
 # ---------------------------------------------------------------- venue links
 # Public, unauthenticated feeds only. Extend the lists as leagues open.
 KALSHI_API = "https://api.elections.kalshi.com/trade-api/v2/events"
-KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME", "KXUEFAGAME"]
+KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME", "KXUEFAGAME",
+                 # per-match GAME series for the rest of the 10 tracked leagues
+                 "KXEPLGAME", "KXLALIGAGAME", "KXBUNDESLIGAGAME", "KXSERIEAGAME",
+                 "KXLIGUE1GAME", "KXEREDIVISIEGAME", "KXLIGAPORTUGALGAME", "KXUCLGAME"]
 BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/description/soccer"
 BOVADA_LEAGUES = ["north-america/united-states/mls",
                   "south-america/brazil/brasileirao-serie-a",
@@ -340,12 +345,35 @@ NAV_EARN = ('<div class="nav"><a href="./">Sports</a>'
             '<a class="on" href="./earnings.html">Earnings</a><a href="./tips.html">Tips</a></div>')
 
 
+def load_rows():
+    """Picks come from predictions.db on the Mac, or data/predictions.json in CI.
+
+    ONLY the `predictions` table is ever mirrored into the repo. predictions.db also
+    holds kalshi_orders / kalshi_bets / kalshi_config — private trading data that must
+    never reach the public repo — so the raw .db stays gitignored and we export just
+    this one table. Every field below is already shown on the public board.
+    """
+    if os.path.exists(DB):
+        c = sqlite3.connect(DB); c.row_factory = sqlite3.Row
+        # NOTE: archived=1 only hides picks from the tracker's daily board — the
+        # ledger/stats keep them (matches /api/stats), so no archived filter here.
+        rows = [dict(r) for r in c.execute("SELECT * FROM predictions ORDER BY id DESC")]
+        c.close()
+        os.makedirs(os.path.dirname(MIRROR), exist_ok=True)
+        with open(MIRROR, "w") as f:                    # keep the repo copy in step
+            json.dump({"exported_at": datetime.datetime.now(datetime.timezone.utc)
+                       .isoformat(timespec="seconds"), "count": len(rows), "picks": rows},
+                      f, indent=1, default=str)
+        print(f"  mirrored {len(rows)} picks -> {MIRROR}")
+        return rows
+    if os.path.exists(MIRROR):
+        print(f"  no predictions.db — reading {MIRROR}")
+        return json.load(open(MIRROR)).get("picks", [])
+    raise SystemExit("no predictions.db and no data/predictions.json — nothing to build")
+
+
 def build():
-    c = sqlite3.connect(DB); c.row_factory = sqlite3.Row
-    # NOTE: archived=1 only hides picks from the tracker's daily board — the
-    # ledger/stats keep them (matches /api/stats), so no archived filter here.
-    rows = [dict(r) for r in c.execute("SELECT * FROM predictions ORDER BY id DESC")]
-    c.close()
+    rows = load_rows()
 
     today = datetime.date.today()
     back = (today - datetime.timedelta(days=RESULTS_BACK_DAYS)).isoformat()

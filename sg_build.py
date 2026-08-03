@@ -9,6 +9,14 @@ Usage:  python3 sg_build.py
 """
 import json, os, html, datetime
 
+# Reuse export_public.py's Kalshi lookup so the link logic lives in exactly one
+# place (same series list, same team-token matcher, same fail-soft behaviour).
+try:
+    from export_public import fetch_kalshi_events, venue_link
+except Exception:            # keep the board buildable if that import ever breaks
+    fetch_kalshi_events = lambda: []
+    venue_link = lambda *a, **k: None
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data", "sg_picks.json")
 OUT = os.path.join(ROOT, "public_site", "tips.html")
@@ -56,17 +64,19 @@ def facts(p):
     return "".join(out)
 
 
-def card(p):
+def card(p, kalshi_url=None):
     dec = p.get("tip_odds_decimal")
     decs = f' <span class="mut">({dec:g} dec)</span>' if dec else ""
     pl = p.get("tip_pl")
     plh = (f'<span class="{"pos" if pl > 0 else "neg" if pl < 0 else "mut"}">{money(pl, True)}</span>'
            if pl is not None else '<span class="mut">—</span>')
     fin = (f'<span class="fin">FT {esc(p["final_score"])}</span>' if p.get("final_score") else "")
+    kal = (f'<a class="kbtn kal" href="{esc(kalshi_url)}" target="_blank" rel="noopener">Kalshi ↗</a>'
+           if kalshi_url else "")
     return f"""<div class="card">
   <div class="row1"><span class="match">{esc(p.get("match"))}</span>
     <span class="lg">{esc(p.get("league"))}</span>{fin}
-    <a class="kbtn" href="{esc(p.get("url"))}" target="_blank" rel="noopener">Source ↗</a></div>
+    <span class="btns">{kal}<a class="kbtn" href="{esc(p.get("url"))}" target="_blank" rel="noopener">Source ↗</a></span></div>
   <div class="ko">{esc(p.get("kickoff_text") or p.get("date") or "")}</div>
   <div class="tip">{esc(p.get("tip_text") or "no tip published")}{decs}
     {chip(p.get("tip_result"))} {plh}</div>
@@ -82,6 +92,11 @@ def build():
     picks = blob.get("picks", [])
     today = datetime.date.today()
     back = (today - datetime.timedelta(days=RESULTS_BACK_DAYS)).isoformat()
+
+    kal_events = fetch_kalshi_events()
+    def klink(p):
+        return venue_link(p.get("match", "").replace(" v ", " vs "),
+                          p.get("date"), kal_events)
 
     pend = sorted([p for p in picks if p.get("status") == "pending"],
                   key=lambda p: (p.get("date") or "", p.get("match") or ""))
@@ -137,12 +152,15 @@ border-radius:6px;padding:2px 8px;font-variant-numeric:tabular-nums}}
 .f{{display:flex;gap:10px;font-size:12.5px;margin-top:7px;flex-wrap:wrap}}
 .fl{{color:var(--mut);min-width:150px}}
 .fv{{color:var(--fg);font-variant-numeric:tabular-nums}}
-.kbtn{{margin-left:auto;font-size:11.5px;font-weight:700;color:#7aa2f7;text-decoration:none;
+.btns{{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}}
+.kbtn.kal{{color:#3fb970;border-color:#3fb97055;background:#3fb97014}}
+.kbtn.kal:hover{{background:#3fb9702a}}
+.kbtn{{font-size:11.5px;font-weight:700;color:#7aa2f7;text-decoration:none;
 border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;padding:4px 11px}}
 .kbtn:hover{{background:#7aa2f72a}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:540px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}
-.card{{padding:13px}}.match{{font-size:15px}}.kbtn{{margin-left:0}}.fl{{min-width:0}}}}
+.card{{padding:13px}}.match{{font-size:15px}}.btns{{margin-left:0;width:100%}}.fl{{min-width:0}}}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Tips</h1>
 <div class="sub">Published predictions from sportsgambler.com — scraped and settled automatically ·
@@ -159,10 +177,10 @@ data updated {esc(upd)} UTC</div>
 </div>
 
 <h2>Upcoming ({len(pend)})</h2>
-{"".join(card(p) for p in pend) or '<div class="mut">No upcoming fixtures in the tracked leagues.</div>'}
+{"".join(card(p, klink(p)) for p in pend) or '<div class="mut">No upcoming fixtures in the tracked leagues.</div>'}
 
 <h2>Settled ({len(done)})</h2>
-{"".join(card(p) for p in done) or '<div class="mut">Nothing settled yet.</div>'}
+{"".join(card(p, klink(p)) for p in done) or '<div class="mut">Nothing settled yet.</div>'}
 
 <footer>Predictions are sportsgambler.com's, not ours · settled from ESPN final scores ·
 paper-tracked research, not betting advice.</footer>
