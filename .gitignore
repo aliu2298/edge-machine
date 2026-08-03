@@ -15,6 +15,7 @@ staged_orders.json
 # --- Kalshi trading infra (not part of the public-facing repo) ---
 kalshi_client.py
 web/src/components/StagedOrders.tsx
+lovable_earnings_spec.md
 *.db
 *.log
 inbox.jsonl
@@ -35,3 +36,6 @@ web/node_modules/
 web/dist/
 node_modules/
 public_site/.netlify/
+
+# transient Kalshi event cache (shared between board builders)
+data/.kalshi_events.json

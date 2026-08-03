@@ -12,7 +12,7 @@ positions, balances) or any keys — safe to publish the output directory as-is.
 Usage:  python3 export_public.py   →  public_site/index.html
 Deploy: Netlify site 'edge-machine-picks' (re-run + redeploy after each slate/settle).
 """
-import sqlite3, json, html, datetime, os, re, unicodedata, urllib.request
+import sqlite3, json, html, datetime, os, re, time, unicodedata, urllib.request, urllib.error
 
 DB = os.path.join(os.path.dirname(__file__), "predictions.db")
 OUT_DIR = os.path.join(os.path.dirname(__file__), "public_site")
@@ -61,18 +61,53 @@ def _get_json(url):
     with urllib.request.urlopen(req, timeout=10) as f:
         return json.load(f)
 
-def fetch_kalshi_events():
-    """[(url, title, date)] for open Kalshi game events. Empty on failure."""
-    out = []
-    for series in KALSHI_SERIES:
+KALSHI_CACHE = os.path.join(os.path.dirname(__file__), "data", ".kalshi_events.json")
+KALSHI_CACHE_TTL = 3600          # seconds
+_KALSHI_MEM = None
+
+
+def _kalshi_series_events(series, tries=4):
+    """One series, with backoff on 429. Kalshi rate-limits hard once you query
+    ~10 series back-to-back, and a silent failure just makes links disappear."""
+    for i in range(tries):
         try:
             # no status filter: events leave "open" at kickoff, but their pages
             # keep working (and show the result) — the date check scopes matches
-            events = _get_json(f"{KALSHI_API}?series_ticker={series}&limit=200"
-                               ).get("events") or []
+            return _get_json(f"{KALSHI_API}?series_ticker={series}&limit=200").get("events") or []
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and i < tries - 1:
+                time.sleep(1.5 * (i + 1))
+                continue
+            print(f"  (kalshi lookup skipped for {series}: {e})")
+            return []
         except Exception as e:
             print(f"  (kalshi lookup skipped for {series}: {e})")
-            continue
+            return []
+    return []
+
+
+def fetch_kalshi_events():
+    """[(url, title, date)] for Kalshi game events. Cached on disk so the two board
+    builders in one CI run share a single fetch instead of doubling the request count."""
+    global _KALSHI_MEM
+    if _KALSHI_MEM is not None:
+        return _KALSHI_MEM
+    try:
+        st = os.path.getmtime(KALSHI_CACHE)
+        if time.time() - st < KALSHI_CACHE_TTL:
+            raw = json.load(open(KALSHI_CACHE))
+            _KALSHI_MEM = [(u, t, datetime.date.fromisoformat(d) if d else None)
+                           for u, t, d in raw]
+            print(f"  (kalshi events from cache: {len(_KALSHI_MEM)})")
+            return _KALSHI_MEM
+    except Exception:
+        pass
+
+    out = []
+    for n, series in enumerate(KALSHI_SERIES):
+        if n:
+            time.sleep(0.4)                      # pace: stay under the rate limit
+        events = _kalshi_series_events(series)
         for ev in events:
             t = ev.get("event_ticker") or ""
             m = re.search(r"-(\d{2})([A-Z]{3})(\d{2})", t)  # -26JUL25...
@@ -82,6 +117,13 @@ def fetch_kalshi_events():
                 try: d = datetime.date(2000+int(yy), MONTHS[mon], int(dd))
                 except (KeyError, ValueError): pass
             out.append((f"https://kalshi.com/events/{t}", ev.get("title") or "", d))
+    try:
+        os.makedirs(os.path.dirname(KALSHI_CACHE), exist_ok=True)
+        with open(KALSHI_CACHE, "w") as f:
+            json.dump([(u, t, d.isoformat() if d else None) for u, t, d in out], f)
+    except Exception:
+        pass
+    _KALSHI_MEM = out
     return out
 
 def fetch_bovada_events():
