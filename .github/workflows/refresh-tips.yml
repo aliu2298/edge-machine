@@ -1,0 +1,55 @@
+name: Refresh tips
+
+# Replaces the Lovable app's scheduled edge function. Runs on GitHub's servers, so
+# there is no CORS restriction and no dependency on the local Mac being awake.
+# Pushing to main triggers Netlify's git-linked auto-deploy.
+
+on:
+  schedule:
+    - cron: "17 11 * * *"      # daily ~11:17 UTC (off the hour — see note below)
+  workflow_dispatch:            # manual "Refresh now" from the Actions tab
+
+# Least privilege: the job only needs to push the regenerated board back to main.
+permissions:
+  contents: write
+
+concurrency:                    # never let two refreshes race on the same branch
+  group: refresh-tips
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # stdlib only — no pip install step needed
+
+      - name: Scrape published predictions
+        run: python3 sg_scrape.py
+
+      - name: Settle finished matches
+        run: python3 sg_settle.py
+
+      - name: Rebuild tips board
+        run: python3 sg_build.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/sg_picks.json public_site/tips.html
+          if git diff --cached --quiet; then
+            echo "no changes — nothing to deploy"
+            exit 0
+          fi
+          git commit -m "Refresh tips board ($(date -u +%Y-%m-%d))"
+          # rebase in case the board was pushed from the Mac meanwhile
+          git pull --rebase --autostash origin main
+          git push origin main

@@ -335,9 +335,9 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
 
 
 NAV_SPORTS = ('<div class="nav"><a class="on" href="./">Sports</a>'
-              '<a href="./earnings.html">Earnings</a></div>')
+              '<a href="./earnings.html">Earnings</a><a href="./tips.html">Tips</a></div>')
 NAV_EARN = ('<div class="nav"><a href="./">Sports</a>'
-            '<a class="on" href="./earnings.html">Earnings</a></div>')
+            '<a class="on" href="./earnings.html">Earnings</a><a href="./tips.html">Tips</a></div>')
 
 
 def build():
