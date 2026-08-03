@@ -31,6 +31,11 @@ LEAGUES = {
 MATCH_RE = re.compile(
     r"/betting-tips/football/([a-z0-9-]+-vs-[a-z0-9-]+-prediction-lineups-odds-\d{4}-\d{2}-\d{2})/")
 RATE_LIMIT_S = 1.0
+STALE_AFTER_DAYS = 5      # ignore fixtures older than this (index links months-old pages)
+HORIZON_DAYS = 21         # and anything further out than this (tips not published yet)
+# fields written by sg_settle.py — never overwritten by a --reparse
+KEEP_ON_REPARSE = ("status", "final_home", "final_away", "final_score", "proj_result",
+                   "btts_actual", "btts_result", "tip_result", "tip_pl", "settled_at")
 
 
 def get(url, tries=3):
@@ -85,7 +90,9 @@ def parse_match(url, raw):
     lg = re.search(r"\n([A-Z][A-Za-z .]+ - [A-Z][A-Za-z0-9 .]+)\n", t)
     if lg:
         d["league_raw"] = lg.group(1).strip()
-    ko = re.search(r"\n((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) \d{1,2} [A-Z][a-z]{2})\n(\d{1,2}:\d{2})\n", t)
+    # header renders as "\n Thu 9 Apr\n 14:00\n" — note the space after each newline
+    ko = re.search(r"\n\s*((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+\d{1,2}\s+[A-Z][a-z]{2})"
+                   r"\s*\n\s*(\d{1,2}:\d{2})\s*\n", t)
     if ko:
         d["kickoff_text"] = f"{ko.group(1)} {ko.group(2)}"
 
@@ -135,20 +142,42 @@ def parse_match(url, raw):
 
 
 def league_matches(slug):
+    """Match links for a league, date-filtered BEFORE fetching.
+
+    The index also links long-archived fixtures (April pages were still listed in
+    August). Those pages no longer carry a Main Match Prediction block, so scraping
+    them just burns requests and stores tip-less rows. The date is in the URL, so
+    filter there rather than after the fetch.
+    """
     raw = get(f"{BASE}/betting-tips/football/{slug}-predictions/")
     if not raw:
         return []
-    seen, out = set(), []
+    today = datetime.date.today()
+    seen, out, skipped = set(), [], 0
     for m in MATCH_RE.finditer(raw):
-        if m.group(1) not in seen:
-            seen.add(m.group(1))
-            out.append(f"{BASE}/betting-tips/football/{m.group(1)}/")
+        slugpart = m.group(1)
+        if slugpart in seen:
+            continue
+        seen.add(slugpart)
+        dm = re.search(r"(\d{4}-\d{2}-\d{2})$", slugpart)
+        if dm:
+            try:
+                age = (today - datetime.date.fromisoformat(dm.group(1))).days
+                if age > STALE_AFTER_DAYS or age < -HORIZON_DAYS:
+                    skipped += 1
+                    continue
+            except ValueError:
+                pass
+        out.append(f"{BASE}/betting-tips/football/{slugpart}/")
+    if skipped:
+        print(f"   ({skipped} out-of-window fixtures skipped)")
     return out
 
 
 def main():
     limit = None
     only = None
+    reparse = "--reparse" in sys.argv
     if "--limit" in sys.argv:
         limit = int(sys.argv[sys.argv.index("--limit") + 1])
     if "--league" in sys.argv:
@@ -169,7 +198,7 @@ def main():
         print(f"{name:<18} {len(urls)} match pages")
         time.sleep(RATE_LIMIT_S)
         for u in urls:
-            if u in existing:                  # never re-scrape (protects settled rows)
+            if u in existing and not reparse:   # don't re-scrape (protects settled rows)
                 skipped += 1
                 continue
             raw = get(u)
@@ -178,7 +207,16 @@ def main():
                 continue
             row = parse_match(u, raw)
             row["league"] = name
-            row["status"] = "pending"
+            if u in existing:
+                # --reparse: refresh parsed FIELDS but keep everything settlement wrote,
+                # so a parser fix can be backfilled without losing graded results.
+                old = existing[u]
+                row = {**old, **{k: v for k, v in row.items() if v not in (None, "", [])}}
+                for k in KEEP_ON_REPARSE:
+                    if k in old:
+                        row[k] = old[k]
+            else:
+                row["status"] = "pending"
             existing[u] = row
             added += 1
             print(f"   + {row['match']:<42} {row.get('tip_text','(no tip)')[:38]}")
@@ -193,7 +231,8 @@ def main():
         json.dump({"updated_at": datetime.datetime.now(datetime.timezone.utc)
                    .isoformat(timespec="seconds"),
                    "count": len(picks), "picks": picks}, f, indent=1)
-    print(f"\nwrote {OUT} — {len(picks)} total ({added} new, {skipped} already stored)")
+    verb = "reparsed" if reparse else "new"
+    print(f"\nwrote {OUT} — {len(picks)} total ({added} {verb}, {skipped} already stored)")
 
 
 if __name__ == "__main__":
