@@ -9,9 +9,12 @@ on:
     - cron: "17 11 * * *"      # daily ~11:17 UTC (off the hour — see note below)
   workflow_dispatch:            # manual "Refresh now" from the Actions tab
 
-# Least privilege: the job only needs to push the regenerated board back to main.
+# contents: push the regenerated boards back to main.
+# pages/id-token: publish those boards to GitHub Pages.
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:                    # never let two refreshes race on the same branch
   group: refresh-tips
@@ -78,3 +81,14 @@ jobs:
             exit 0
           fi
           curl -fsS -X POST -d '{}' "$HOOK" && echo "Netlify build triggered"
+
+      # GitHub Pages: free and unmetered for public repos, with no build credits to
+      # exhaust. Added Aug 3 2026 after Netlify began skipping every deploy with
+      # "account credit usage exceeded", freezing the live site. Runs unconditionally
+      # so the boards publish even when nothing changed and even if Netlify is down.
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public_site
+      - id: deployment
+        uses: actions/deploy-pages@v4
