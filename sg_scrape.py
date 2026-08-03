@@ -33,6 +33,7 @@ MATCH_RE = re.compile(
 RATE_LIMIT_S = 1.0
 STALE_AFTER_DAYS = 5      # ignore fixtures older than this (index links months-old pages)
 HORIZON_DAYS = 21         # and anything further out than this (tips not published yet)
+KEEP_DAYS = 60            # history retained in sg_picks.json; older rows are pruned on write
 # fields written by sg_settle.py — never overwritten by a --reparse
 KEEP_ON_REPARSE = ("status", "final_home", "final_away", "final_score", "proj_result",
                    "btts_actual", "btts_result", "tip_result", "tip_pl", "settled_at")
@@ -141,6 +142,38 @@ def parse_match(url, raw):
     return d
 
 
+def prune(picks):
+    """Drop rows whose match is older than KEEP_DAYS.
+
+    Nothing else removes rows: STALE_AFTER_DAYS only filters what gets FETCHED, and the
+    board merely hides anything past RESULTS_BACK_DAYS. Without this the file grows without
+    bound and every run rewrites the whole thing.
+
+    A dropped row that never reached "settled" is reported separately — that means
+    sg_settle.py could not grade it before it aged out (usually an ESPN team-name mismatch),
+    which is a settlement bug worth seeing rather than quietly discarding.
+    """
+    today = datetime.date.today()
+    keep, dropped, unsettled = [], 0, []
+    for p in picks:
+        try:
+            age = (today - datetime.date.fromisoformat(p.get("date", ""))).days
+        except ValueError:
+            keep.append(p)          # unparseable date: keep rather than silently lose data
+            continue
+        if age <= KEEP_DAYS:
+            keep.append(p)
+            continue
+        dropped += 1
+        if p.get("status") != "settled":
+            unsettled.append(f"{p.get('date')} {p.get('match')}")
+    if dropped:
+        print(f"  pruned {dropped} row(s) older than {KEEP_DAYS}d")
+    for u in unsettled:
+        print(f"  ! pruned WITHOUT settling (check team matching): {u}")
+    return keep
+
+
 def league_matches(slug):
     """Match links for a league, date-filtered BEFORE fetching.
 
@@ -225,7 +258,8 @@ def main():
         if limit and added >= limit:
             break
 
-    picks = sorted(existing.values(), key=lambda r: (r.get("date") or "", r.get("match") or ""))
+    picks = prune(sorted(existing.values(),
+                         key=lambda r: (r.get("date") or "", r.get("match") or "")))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         json.dump({"updated_at": datetime.datetime.now(datetime.timezone.utc)
