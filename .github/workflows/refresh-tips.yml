@@ -60,3 +60,21 @@ jobs:
           # rebase in case the board was pushed from the Mac meanwhile
           git pull --rebase --autostash origin main
           git push origin main
+          echo "pushed=yes" >> "$GITHUB_ENV"
+
+      # A push made with the default GITHUB_TOKEN does NOT emit a webhook — GitHub
+      # suppresses it to avoid CI loops — so Netlify's git integration never hears
+      # about these commits and the site silently goes stale. Poke it directly.
+      # Create the hook at: Netlify -> Site configuration -> Build & deploy ->
+      # Build hooks, then save the URL as repo secret NETLIFY_BUILD_HOOK.
+      - name: Trigger Netlify deploy
+        if: env.pushed == 'yes'
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::NETLIFY_BUILD_HOOK not set — the site will NOT update."
+            echo "::warning::Add it under Settings > Secrets and variables > Actions."
+            exit 0
+          fi
+          curl -fsS -X POST -d '{}' "$HOOK" && echo "Netlify build triggered"
