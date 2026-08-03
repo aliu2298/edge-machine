@@ -34,10 +34,23 @@ ESPN_LEAGUE = {
 _cache = {}
 
 
+# sportsgambler token -> equivalent ESPN token(s). Some clubs share NO token between the
+# two sources: ESPN returns literally "LAFC" in displayName/location/abbreviation, while
+# sportsgambler says "Los Angeles FC", so nothing overlaps and the fixture never settles.
+# Add an entry whenever sg_health.py reports an unmatched fixture.
+ALIASES = {
+    "angeles": {"lafc"},
+    "athletico": {"paranaense"},
+}
+
+
 def _norm(s):
     s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode().lower()
     drop = {"fc", "cf", "sc", "afc", "club", "the", "united", "city"}
-    return {w for w in re.split(r"[^a-z0-9]+", s) if len(w) > 2 and w not in drop}
+    toks = {w for w in re.split(r"[^a-z0-9]+", s) if len(w) > 2 and w not in drop}
+    for t in list(toks):
+        toks |= ALIASES.get(t, set())
+    return toks
 
 
 def espn_scores(league, date):

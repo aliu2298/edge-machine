@@ -98,8 +98,15 @@ def build():
         return venue_link(p.get("match", "").replace(" v ", " vs "),
                           p.get("date"), kal_events)
 
-    pend = sorted([p for p in picks if p.get("status") == "pending"],
+    # A pending row whose match date has passed is NOT upcoming — it failed to settle.
+    # Rendering it under "Upcoming" is how a two-day-old Vancouver v LAFC kept showing as
+    # a future fixture. Split it out and label it honestly instead.
+    _pending = [p for p in picks if p.get("status") == "pending"]
+    _today = today.isoformat()
+    pend = sorted([p for p in _pending if (p.get("date") or "") >= _today],
                   key=lambda p: (p.get("date") or "", p.get("match") or ""))
+    awaiting = sorted([p for p in _pending if (p.get("date") or "") < _today],
+                      key=lambda p: (p.get("date") or ""), reverse=True)
     done = sorted([p for p in picks if p.get("status") == "settled"
                    and (p.get("date") or "") >= back],
                   key=lambda p: (p.get("date") or ""), reverse=True)
@@ -178,6 +185,10 @@ data updated {esc(upd)} UTC</div>
 
 <h2>Upcoming ({len(pend)})</h2>
 {"".join(card(p, klink(p)) for p in pend) or '<div class="mut">No upcoming fixtures in the tracked leagues.</div>'}
+
+{f'''<h2>Awaiting result ({len(awaiting)})</h2>
+<div class="mut" style="margin:-6px 0 12px;font-size:12.5px">Kicked off but not yet graded — if one lingers here, settlement could not match the fixture.</div>
+{"".join(card(p, klink(p)) for p in awaiting)}''' if awaiting else ""}
 
 <h2>Settled ({len(done)})</h2>
 {"".join(card(p, klink(p)) for p in done) or '<div class="mut">Nothing settled yet.</div>'}

@@ -40,6 +40,13 @@ jobs:
       - name: Settle finished matches
         run: python3 sg_settle.py
 
+      # Guardrails. The failure mode here is SILENT — a fixture whose teams don't match
+      # ESPN never settles and just keeps rendering as "upcoming" (Vancouver v LAFC sat
+      # like that for two days). Warn-only on purpose: a stale board is worse than a
+      # flagged one, so this annotates the run summary without blocking the deploy.
+      - name: Health check
+        run: python3 sg_health.py
+
       - name: Rebuild tips board
         run: python3 sg_build.py
 
