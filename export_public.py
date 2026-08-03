@@ -25,16 +25,22 @@ def profit(status, odds, stake):
             "half_win": s/2*(o-1), "half_loss": -s/2}.get(status, 0.0)
 
 PICKS_SHOWN = 3         # visible slots on the board
-QUEUE_SIZE = 12         # picks baked into the page; "next" reveals them client-side
+QUEUE_SIZE = 20         # picks baked into the page; "next" reveals them client-side
 RESULTS_BACK_DAYS = 7   # keep concluded picks' results on the board for N days
+
+# Boards are kept SEPARATE (user directive Aug 2 2026): index.html is sports only,
+# earnings.html is the Kalshi company-quarterlies lane. Picks split on this sport value.
+EARNINGS_SPORT = "kalshi"
 
 # ---------------------------------------------------------------- venue links
 # Public, unauthenticated feeds only. Extend the lists as leagues open.
 KALSHI_API = "https://api.elections.kalshi.com/trade-api/v2/events"
-KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME"]
+KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME", "KXUEFAGAME"]
 BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/description/soccer"
 BOVADA_LEAGUES = ["north-america/united-states/mls",
-                  "south-america/brazil/brasileirao-serie-a"]
+                  "south-america/brazil/brasileirao-serie-a",
+                  "international-club/uefa-champions-league",
+                  "international-club/uefa-europa-league"]
 # our team-name token → alternate token some venues use (tried alongside the raw token)
 ALIASES = {"athletico": "paranaense", "angeles": "lafc"}
 MONTHS = {m: i+1 for i, m in enumerate(
@@ -162,7 +168,7 @@ def grid_html(grid_json):
     return (f'<div class="sg"><div class="sg-t">Score group · pred {esc(g.get("pred", ""))}</div>'
             f'<div class="sg-c pk"><span>{esc(labels[picked])}</span>{odds}</div></div>')
 
-def pending_card(r, link_pair):
+def pending_card(r, link_pair, *, show_grid=True, done_label="✓ Game finished — show next pick"):
     ko = esc(r["kickoff"] or "")
     btns = "".join(
         f'<a class="kbtn {cls}" href="{esc(url)}" target="_blank" rel="noopener">{label} ↗</a>'
@@ -174,9 +180,9 @@ def pending_card(r, link_pair):
   <div class="ko"><time data-utc="{ko}">{ko}</time></div>
   <div class="pick">{esc(r["pick"])}</div>
   <div class="nums"><span>@{r["odds"]:g}</span><span>{usd(r["stake"])} stake</span><span>to win {usd((r["stake"] or 0)*((r["odds"] or 1)-1))}</span></div>
-  {grid_html(r["grid_json"])}
+  {grid_html(r["grid_json"]) if show_grid else ""}
   {f'<div class="why">{esc(r["rationale"])}</div>' if r["rationale"] else ""}
-  <button class="nextbtn" data-next="{r["id"]}">✓ Game finished — show next pick</button>
+  <button class="nextbtn" data-next="{r["id"]}">{done_label}</button>
 </div>"""
 
 def settled_row(r):
@@ -192,44 +198,25 @@ def settled_row(r):
   <td class="tnum {tone(p)}">{usd(p, True)}</td>
 </tr>"""
 
-def build():
-    c = sqlite3.connect(DB); c.row_factory = sqlite3.Row
-    # NOTE: archived=1 only hides picks from the tracker's daily board — the
-    # ledger/stats keep them (matches /api/stats), so no archived filter here.
-    rows = [dict(r) for r in c.execute("SELECT * FROM predictions ORDER BY id DESC")]
-    c.close()
+def picks_feed(rows):
+    """ALL pending picks (not just the QUEUE_SIZE slice shown on the board) with the
+    structured fields a downstream settler needs. `id` is the stable dedup key.
+    SPORTS ONLY — earnings live on their own page/feed (see EARNINGS_SPORT)."""
+    return [{"id": r["id"], "event_date": r["event_date"], "sport": r["sport"], "match": r["match"],
+             "pick": r["pick"], "market": r["market"], "selection": r["selection"], "line": r["line"],
+             "odds": r["odds"], "stake": r["stake"], "tag": r["tag"], "rationale": r["rationale"],
+             "af_fixture_id": r["af_fixture_id"], "kickoff": r["kickoff"]}
+            for r in rows if r["status"] == "pending" and r["sport"] != EARNINGS_SPORT]
 
-    today = datetime.date.today()
-    back = (today - datetime.timedelta(days=RESULTS_BACK_DAYS)).isoformat()
-
-    def day_of(r, field):  # "2026-07-25T21:30Z" / "2026-07-25" → "2026-07-25"
-        return (r[field] or r["event_date"] or "")[:10]
-
-    # Board = a queue of up to QUEUE_SIZE open picks baked into the page; the
-    # viewer sees PICKS_SHOWN at a time and taps "next" on a finished game to
-    # reveal the next queued pick (client-side, no redeploy needed) — plus
-    # picks concluded within the last N days.
-    pend = sorted([r for r in rows if r["status"] == "pending"],
-                  key=lambda r: r["kickoff"] or "")[:QUEUE_SIZE]
-    settled = [r for r in rows if r["status"] in SETTLED
-               and day_of(r, "settled_at") >= back]
-    now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
-
-    kalshi_events = fetch_kalshi_events()
-    bovada_events = fetch_bovada_events()
-    links = {}
-    for r in pend:
-        ko = r["kickoff"] or r["event_date"]
-        links[r["id"]] = {"kalshi": venue_link(r["match"], ko, kalshi_events),
-                          "bovada": venue_link(r["match"], ko, bovada_events)}
-        for venue, url in links[r["id"]].items():
-            if not url:
-                print(f"  (no {venue} match found for: {r['match']})")
-
+def page_html(*, title, heading, subtitle, pend, settled, links, nav, now,
+              show_grid=True, done_label="✓ Game finished — show next pick",
+              empty_msg="No open picks right now — check back after the next slate."):
+    """Render one board. Called once per lane (sports / earnings) — the boards are
+    deliberately separate, so each gets its own page, queue and results table."""
     page = f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine · Picks</title>
-<meta name="description" content="Public read-only picks board — control-not-margin soccer betting tracker.">
+<title>{title}</title>
+<meta name="description" content="Public read-only board — paper-tracked research, not betting advice.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -280,6 +267,11 @@ details.res summary h2{{margin:34px 0 12px}}
 details.res .caret{{color:var(--mut);margin-top:22px;transition:transform .15s}}
 details.res[open] .caret{{transform:rotate(90deg)}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
+.nav{{display:flex;gap:8px;margin-top:14px}}
+.nav a{{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
+.nav a:hover{{color:var(--fg);border-color:var(--mut)}}
+.nav a.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
 @media (max-width:540px){{
   body{{padding:18px 10px 44px;font-size:14px}}
   h1{{font-size:19px}}
@@ -291,10 +283,11 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
   .why{{font-size:12px}}
 }}
 </style></head><body><div class="wrap">
-<h1>Edge Machine</h1>
-<div class="sub">The next {PICKS_SHOWN} picks + results as they conclude · updated {now}</div>
+<h1>{heading}</h1>
+<div class="sub">{subtitle} · updated {now}</div>
+{nav}
 <h2>Current picks <span id="qleft"></span></h2>
-{"".join(pending_card(r, links[r["id"]]) for r in pend) or '<div class="mut">No open picks right now — check back after the next slate.</div>'}
+{"".join(pending_card(r, links[r["id"]], show_grid=show_grid, done_label=done_label) for r in pend) or f'<div class="mut">{empty_msg}</div>'}
 <div class="mut" id="qempty" style="display:none">Queue finished — check back after the next slate.</div>
 <details class="res">
 <summary><h2>Recent results ({len(settled)})</h2><span class="caret">▸</span></summary>
@@ -338,15 +331,85 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
   refresh();
 }})();
 </script></body></html>"""
+    return page
+
+
+NAV_SPORTS = ('<div class="nav"><a class="on" href="./">Sports</a>'
+              '<a href="./earnings.html">Earnings</a></div>')
+NAV_EARN = ('<div class="nav"><a href="./">Sports</a>'
+            '<a class="on" href="./earnings.html">Earnings</a></div>')
+
+
+def build():
+    c = sqlite3.connect(DB); c.row_factory = sqlite3.Row
+    # NOTE: archived=1 only hides picks from the tracker's daily board — the
+    # ledger/stats keep them (matches /api/stats), so no archived filter here.
+    rows = [dict(r) for r in c.execute("SELECT * FROM predictions ORDER BY id DESC")]
+    c.close()
+
+    today = datetime.date.today()
+    back = (today - datetime.timedelta(days=RESULTS_BACK_DAYS)).isoformat()
+    now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
+
+    def day_of(r, field):  # "2026-07-25T21:30Z" / "2026-07-25" → "2026-07-25"
+        return (r[field] or r["event_date"] or "")[:10]
+
+    kalshi_events = fetch_kalshi_events()
+    bovada_events = fetch_bovada_events()
+
+    def links_for(pend):
+        links = {}
+        for r in pend:
+            if r.get("ext_link"):   # direct market link stored on the pick (Kalshi quarterlies)
+                links[r["id"]] = {"kalshi": r["ext_link"], "bovada": None}
+                continue
+            ko = r["kickoff"] or r["event_date"]
+            links[r["id"]] = {"kalshi": venue_link(r["match"], ko, kalshi_events),
+                              "bovada": venue_link(r["match"], ko, bovada_events)}
+            for venue, url in links[r["id"]].items():
+                if not url:
+                    print(f"  (no {venue} match found for: {r['match']})")
+        return links
+
+    def lane(is_earnings):
+        sel = [r for r in rows if (r["sport"] == EARNINGS_SPORT) == is_earnings]
+        pend = sorted([r for r in sel if r["status"] == "pending"],
+                      key=lambda r: r["kickoff"] or "")[:QUEUE_SIZE]
+        settled = [r for r in sel if r["status"] in SETTLED and day_of(r, "settled_at") >= back]
+        return pend, settled
 
     os.makedirs(OUT_DIR, exist_ok=True)
+
+    # ---- sports board (index.html) ----
+    pend, settled = lane(False)
+    links = links_for(pend)
     out = os.path.join(OUT_DIR, "index.html")
-    with open(out, "w") as f: f.write(page)
-    print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
-          f"{len(pend)} current picks "
-          f"({sum(1 for v in links.values() if v['kalshi'])} kalshi / "
-          f"{sum(1 for v in links.values() if v['bovada'])} bovada links), "
+    with open(out, "w") as f:
+        f.write(page_html(title="Edge Machine · Picks", heading="Edge Machine",
+                          subtitle=f"The next {PICKS_SHOWN} picks + results as they conclude",
+                          pend=pend, settled=settled, links=links, nav=NAV_SPORTS, now=now))
+    print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — {len(pend)} sports picks, "
           f"{len(settled)} results (≥{back})")
+
+    # ---- earnings board (earnings.html) ----
+    epend, esettled = lane(True)
+    elinks = links_for(epend)
+    eout = os.path.join(OUT_DIR, "earnings.html")
+    with open(eout, "w") as f:
+        f.write(page_html(title="Edge Machine · Earnings", heading="Edge Machine · Earnings",
+                          subtitle="Company quarterlies — entry timed to the report date",
+                          pend=epend, settled=esettled, links=elinks, nav=NAV_EARN, now=now,
+                          show_grid=False,
+                          done_label="✓ Reported — show next",
+                          empty_msg="No open earnings positions — check back next reporting week."))
+    print(f"wrote {eout}  ({os.path.getsize(eout)/1024:.0f} KB) — {len(epend)} earnings picks, "
+          f"{len(esettled)} results (≥{back})")
+
+    # ---- sports-only machine feed ----
+    feed = picks_feed(rows)
+    feed_out = os.path.join(OUT_DIR, "picks.json")
+    with open(feed_out, "w") as f: json.dump(feed, f, indent=1)
+    print(f"wrote {feed_out}  ({len(feed)} pending sports picks — earnings excluded)")
 
 if __name__ == "__main__":
     build()

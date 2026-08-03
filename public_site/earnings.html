@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine · Earnings</title>
+<meta name="description" content="Public read-only board — paper-tracked research, not betting advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
+--pos:#3fb970;--neg:#e06c75;--warn:#f0b429}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
+letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:34px 0 12px}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}.warn{color:var(--warn)}
+.tnum{font-variant-numeric:tabular-nums}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:12px}
+.row1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match{font-weight:700;font-size:16px}
+.ko{font-size:12px;color:var(--mut);margin-top:2px}
+.pick{margin-top:8px;font-weight:600;color:var(--warn)}
+.nums{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mut);margin-top:4px;font-variant-numeric:tabular-nums}
+.why{font-size:12.5px;color:var(--mut);margin-top:10px;border-left:2px solid var(--bd);padding-left:10px}
+.nextbtn{margin-top:12px;font:inherit;font-size:12px;font-weight:700;color:var(--mut);
+background:none;border:1px dashed var(--bd);border-radius:8px;padding:7px 13px;cursor:pointer;width:100%}
+.nextbtn:hover{color:var(--fg);border-color:var(--mut)}
+.chip{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+border:1px solid;border-radius:999px;padding:2px 8px}
+.st{font-size:10.5px;font-weight:800;letter-spacing:.05em}
+.sg{margin-top:12px}.sg-t{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-bottom:6px}
+.sg-c{display:inline-flex;align-items:center;gap:10px;font-size:12px;
+background:#0c1017;border:1px solid var(--bd);border-radius:8px;padding:6px 11px}
+.sg-c b{font-variant-numeric:tabular-nums;color:var(--fg)}
+.sg-c.pk{border-color:var(--pos);color:var(--fg);background:#12211a}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);
+padding:6px 8px;border-bottom:1px solid var(--bd)}
+td{padding:8px;border-bottom:1px solid #1a1f2b;vertical-align:top}
+.tmatch{font-weight:600}.tres{font-size:11.5px}
+.tbl{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:6px 10px;overflow-x:auto}
+.btns{margin-left:auto;display:flex;gap:6px}
+.kbtn{font-size:11.5px;font-weight:700;color:#7aa2f7;text-decoration:none;
+border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;padding:4px 11px;white-space:nowrap}
+.kbtn:hover{background:#7aa2f72a}
+.kbtn.bov{color:#e8564f;border-color:#e8564f55;background:#e8564f14}
+.kbtn.bov:hover{background:#e8564f2a}
+details.res summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;user-select:none}
+details.res summary::-webkit-details-marker{display:none}
+details.res summary h2{margin:34px 0 12px}
+details.res .caret{color:var(--mut);margin-top:22px;transition:transform .15s}
+details.res[open] .caret{transform:rotate(90deg)}
+footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
+.nav{display:flex;gap:8px;margin-top:14px}
+.nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
+.nav a:hover{color:var(--fg);border-color:var(--mut)}
+.nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+@media (max-width:540px){
+  body{padding:18px 10px 44px;font-size:14px}
+  h1{font-size:19px}
+  .card{padding:13px}
+  .match{font-size:15px}
+  .btns{margin-left:0;width:100%;justify-content:flex-start;margin-top:2px}
+  .kbtn{padding:5px 12px}
+  th,td{padding:6px 5px;font-size:12px}
+  .why{font-size:12px}
+}
+</style></head><body><div class="wrap">
+<h1>Edge Machine · Earnings</h1>
+<div class="sub">Company quarterlies — entry timed to the report date · updated Aug 03 2026 · 14:41 UTC</div>
+<div class="nav"><a href="./">Sports</a><a class="on" href="./earnings.html">Earnings</a></div>
+<h2>Current picks <span id="qleft"></span></h2>
+<div class="card" data-pick="131">
+  <div class="row1"><span class="match">Palantir Q2: total customers</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXPLTR-26AUGCUST" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-03T21:00Z">2026-08-03T21:00Z</time></div>
+  <div class="pick">YES — above 1,050 customers @ 85c</div>
+  <div class="nums"><span>@1.1765</span><span>$17.00 stake</span><span>to win $3.00</span></div>
+  
+  <div class="why">Reports Mon after close — fastest settle of the week. Customer count is cumulative; consensus clears 1,050 comfortably. OI 680, 1c spread. Maker-join at 85; skip if the bid moves above 88.</div>
+  <button class="nextbtn" data-next="131">✓ Reported — show next</button>
+</div><div class="card" data-pick="132">
+  <div class="row1"><span class="match">McDonald&#x27;s Q2: systemwide restaurants</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXMCD-26AUGREST" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-04T12:00Z">2026-08-04T12:00Z</time></div>
+  <div class="pick">YES — above 46,000 restaurants @ 88c</div>
+  <div class="nums"><span>@1.1364</span><span>$17.60 stake</span><span>to win $2.40</span></div>
+  
+  <div class="why">Reports Tue pre-market. Unit count is the steadiest ladder there is — MCD adds stores every quarter. Top of the 75-88c band. OI 1,983, 1c spread.</div>
+  <button class="nextbtn" data-next="132">✓ Reported — show next</button>
+</div><div class="card" data-pick="133">
+  <div class="row1"><span class="match">Toast Q2: total locations</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXTOST-26AUGLOC" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-04T21:00Z">2026-08-04T21:00Z</time></div>
+  <div class="pick">YES — above 178k locations @ 77c</div>
+  <div class="nums"><span>@1.2987</span><span>$16.94 stake</span><span>to win $5.06</span></div>
+  
+  <div class="why">Reports Tue after close. Location count trends one way. 3c spread — place at 77, don&#x27;t chase the ask. OI 1,116.</div>
+  <button class="nextbtn" data-next="133">✓ Reported — show next</button>
+</div><div class="card" data-pick="135">
+  <div class="row1"><span class="match">Shopify Q2: gross merchandise volume</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXSHOP-26AUGGMV" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-05T12:00Z">2026-08-05T12:00Z</time></div>
+  <div class="pick">YES — above $112B GMV @ 84c (optional)</div>
+  <div class="nums"><span>@1.1905</span><span>$16.80 stake</span><span>to win $3.20</span></div>
+  
+  <div class="why">Reports Wed pre-market. OPTIONAL leg: thinnest book on the slate (OI 204) — only take a passive fill at 84.</div>
+  <button class="nextbtn" data-next="135">✓ Reported — show next</button>
+</div><div class="card" data-pick="134">
+  <div class="row1"><span class="match">DoorDash Q2: total orders</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXDASH-26AUGORDERS" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-05T21:00Z">2026-08-05T21:00Z</time></div>
+  <div class="pick">YES — above 960M orders @ 85c</div>
+  <div class="nums"><span>@1.1765</span><span>$17.00 stake</span><span>to win $3.00</span></div>
+  
+  <div class="why">Reports Wed after close. Order volume has beaten this pace all year. OI 1,271, 1c spread.</div>
+  <button class="nextbtn" data-next="134">✓ Reported — show next</button>
+</div><div class="card" data-pick="137">
+  <div class="row1"><span class="match">Lyft Q2: total rides</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXLYFT-26AUGRIDES" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-06T21:00Z">2026-08-06T21:00Z</time></div>
+  <div class="pick">YES — above 251M rides @ 85c</div>
+  <div class="nums"><span>@1.1765</span><span>$17.00 stake</span><span>to win $3.00</span></div>
+  
+  <div class="why">Reports Thu after close — place no earlier than Tue (3d rule). OI 1,185, 1c spread.</div>
+  <button class="nextbtn" data-next="137">✓ Reported — show next</button>
+</div><div class="card" data-pick="136">
+  <div class="row1"><span class="match">Airbnb Q2: nights &amp; seats booked</span><span class="chip" style="color:#888;border-color:#88855;background:#88818">quarterly</span><span class="btns"><a class="kbtn " href="https://kalshi.com/events/KXABNB-26AUGNEB" target="_blank" rel="noopener">Kalshi ↗</a></span></div>
+  <div class="ko"><time data-utc="2026-08-06T21:00Z">2026-08-06T21:00Z</time></div>
+  <div class="pick">YES — above 145M nights @ 85c</div>
+  <div class="nums"><span>@1.1765</span><span>$17.00 stake</span><span>to win $3.00</span></div>
+  
+  <div class="why">Reports Thu after close — place no earlier than Tue to keep the hold under 3 days. OI 275, 1c spread.</div>
+  <button class="nextbtn" data-next="136">✓ Reported — show next</button>
+</div>
+<div class="mut" id="qempty" style="display:none">Queue finished — check back after the next slate.</div>
+<details class="res">
+<summary><h2>Recent results (0)</h2><span class="caret">▸</span></summary>
+<div class="mut">Nothing settled in the last week.</div>
+</details>
+<footer>Read-only static export · picks are paper-tracked research, not betting advice.</footer>
+</div>
+<script>
+for (const t of document.querySelectorAll("time[data-utc]")) {
+  const d = new Date(t.dataset.utc);
+  if (!isNaN(d)) t.textContent = d.toLocaleString([], {weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+}
+// Pick queue: 20 picks are baked in; show 3 at a time.
+// "Game finished — show next pick" hides the card (remembered per device via
+// localStorage) and the next queued pick takes the slot. No redeploy needed.
+(function () {
+  const KEY = "em-done-picks", SHOW = 3;
+  let done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
+  const cards = [...document.querySelectorAll(".card[data-pick]")];
+  function refresh() {
+    let shown = 0;
+    for (const c of cards) {
+      const vis = !done.has(c.dataset.pick) && shown < SHOW;
+      c.style.display = vis ? "" : "none";
+      if (vis) shown++;
+    }
+    const left = cards.filter(c => !done.has(c.dataset.pick)).length;
+    document.getElementById("qleft").textContent = `(${shown} of ${left} queued)`;
+    document.getElementById("qempty").style.display = left ? "none" : "";
+  }
+  for (const b of document.querySelectorAll(".nextbtn")) {
+    b.addEventListener("click", () => {
+      done.add(b.dataset.next);
+      localStorage.setItem(KEY, JSON.stringify([...done]));
+      refresh();
+    });
+  }
+  refresh();
+})();
+</script></body></html>
