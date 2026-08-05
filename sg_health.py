@@ -24,6 +24,7 @@ import json, os, sys, datetime
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data", "sg_picks.json")
+MIRROR = os.path.join(ROOT, "data", "predictions.json")   # sports board source
 
 SETTLE_GRACE_DAYS = 2      # a match may legitimately be ungraded the morning after
 STALE_AFTER_HOURS = 36     # data file should be refreshed daily
@@ -132,8 +133,52 @@ def main():
                                     f"link — check that league's series ticker in KALSHI_SERIES")
                     problems += 1
             tot_linked, tot = sum(linked.values()), len(upcoming)
-            print(f"  kalshi links: {tot_linked}/{tot} upcoming "
+            print(f"  kalshi links (tips): {tot_linked}/{tot} upcoming "
                   f"({', '.join(f'{l} {linked.get(l,0)}/{n}' for l, n in sorted(by_league.items()))})")
+
+        # Same check for the SPORTS board, which is a different data source
+        # (data/predictions.json, the user's own picks). Here a missing link is usually
+        # a wrong kickoff DATE rather than a bad series ticker: venue_link only accepts a
+        # ±1 day gap, so a pick filed on the wrong day silently loses its button. That is
+        # exactly how pick #122 was caught — a Europa tie dated Tuesday when the
+        # competition plays Thursday.
+        if os.path.exists(MIRROR):
+            rows = json.load(open(MIRROR)).get("picks", [])
+            _own_pending = [p for p in rows if p.get("status") == "pending"
+                            and p.get("sport") not in (None, "kalshi")]
+
+            # Own picks whose kickoff has passed but are still pending. Without this a
+            # pick filed on the WRONG DAY simply drops out of the coverage window and
+            # stops being checked at all — reverting #122 to its bad Tuesday date made it
+            # vanish from the count rather than raise anything.
+            for p in _own_pending:
+                ko = (p.get("kickoff") or p.get("event_date") or "")[:10]
+                try:
+                    age = (today - datetime.date.fromisoformat(ko)).days
+                except ValueError:
+                    continue
+                if age > SETTLE_GRACE_DAYS:
+                    note("warning", f"STUCK own pick #{p.get('id')} {p.get('match')} "
+                                    f"({ko}, {age}d) still pending — settle it, or the "
+                                    f"kickoff date is wrong")
+                    problems += 1
+
+            # Coverage window includes the grace period, so a just-passed pick is still
+            # examined rather than silently falling out of scope.
+            cutoff = (today - datetime.timedelta(days=SETTLE_GRACE_DAYS)).isoformat()
+            own = [p for p in _own_pending
+                   if (p.get("kickoff") or p.get("event_date") or "")[:10] >= cutoff]
+            if own:
+                miss = [p for p in own
+                        if not venue_link(p.get("match", ""),
+                                          p.get("kickoff") or p.get("event_date"), events)]
+                print(f"  kalshi links (sports): {len(own)-len(miss)}/{len(own)} upcoming")
+                for p in miss:
+                    note("warning", f"LINKS no Kalshi match for own pick #{p.get('id')} "
+                                    f"{p.get('match')} ({(p.get('kickoff') or '')[:10]}) — "
+                                    f"check the kickoff date is right; venue_link allows only "
+                                    f"±1 day")
+                problems += len(miss)
     except Exception as e:
         note("warning", f"LINKS check skipped: {e}")
 
