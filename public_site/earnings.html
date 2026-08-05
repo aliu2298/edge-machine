@@ -64,7 +64,29 @@ border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
 .mlink{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
 border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 9px;white-space:nowrap}
 .mlink:hover{background:#3fb9702a}
-.note{font-size:12px;color:var(--mut);margin:-4px 0 10px}
+.note{font-size:12px;color:var(--mut);margin:-4px 0 14px;line-height:1.5}
+.mday{margin-bottom:16px}
+.mdate{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+color:var(--fg);border-bottom:1px solid var(--bd);padding-bottom:5px;margin-bottom:8px}
+.mrow{background:var(--card);border:1px solid var(--bd);border-radius:10px;
+padding:10px 12px;margin-bottom:7px}
+.mhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mco{font-weight:800;font-size:13px}
+.mph{color:var(--warn);font-weight:700;font-size:14px}
+.msp{font-size:11px;color:var(--mut)}
+.mlean{font-size:11px;color:var(--mut);border:1px solid var(--bd);border-radius:999px;padding:2px 8px}
+.vtake{font-size:10.5px;font-weight:800;color:var(--pos);border:1px solid #3fb97055;
+background:#3fb97014;border-radius:999px;padding:2px 8px}
+.vthin{font-size:10.5px;font-weight:800;color:var(--warn);border:1px solid #f0b42955;
+background:#f0b42914;border-radius:999px;padding:2px 8px}
+.vpass{font-size:10.5px;font-weight:800;color:var(--mut);border:1px solid var(--bd);
+border-radius:999px;padding:2px 8px}
+.mwhy{font-size:12.5px;color:var(--mut);margin-top:7px;border-left:2px solid var(--bd);
+padding-left:10px;line-height:1.5}
+.mlink{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
+border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 9px;
+white-space:nowrap;margin-left:auto}
+.mlink:hover{background:#3fb9702a}
 @media (max-width:540px){
   body{padding:18px 10px 44px;font-size:14px}
   h1{font-size:19px}
@@ -77,7 +99,7 @@ border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 
 }
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Earnings</h1>
-<div class="sub">Company quarterlies — entry timed to the report date · updated Aug 05 2026 · 23:39 UTC</div>
+<div class="sub">Company quarterlies — entry timed to the report date · updated Aug 05 2026 · 23:40 UTC</div>
 <div class="nav"><a href="./">Sports</a><a class="on" href="./earnings.html">Earnings</a><a href="./tips.html">Tips</a></div>
 <h2>Current picks <span id="qleft"></span></h2>
 <div class="card" data-pick="131">
@@ -138,185 +160,183 @@ border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 
   <button class="nextbtn" data-next="136">✓ Reported — show next</button>
 </div>
 <div class="mut" id="qempty" style="display:none">Queue finished — check back after the next slate.</div>
-<h2>Earnings-call mentions (33)</h2>
-<div class="note">Live Kalshi markets on what a company will <em>say</em> on its next call.
-Banded on the <b>bid</b> (75-88c) because entry is maker-only —
-you join the bid, and last-traded goes stale. Spread ≤3c.
-<b>Available markets, not picks.</b> Base rate is high by construction (AMD's Aug 4 call had
-16 of 17 phrases said), so the edge is in judging a specific phrase — that judgement is not
-made here. Scanned 2026-08-05 23:39 UTC</div>
-<div class="mtbl"><table>
-<tr><th>Company</th><th>Phrase</th><th>Last</th><th>Bid / Ask (entry)</th><th>OI</th><th></th></tr>
-<tr>
-  <td class="mco">DKNG</td>
-  <td class="mph">Alberta</td>
-  <td class="tnum">0.87</td>
-  <td class="tnum msp">0.8600 / 0.8700</td>
-  <td class="tnum msp">5,114</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDKNG-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">ABNB</td>
-  <td class="mph">World Cup</td>
-  <td class="tnum">0.85</td>
-  <td class="tnum msp">0.8400 / 0.8500</td>
-  <td class="tnum msp">3,807</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONABNB-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">CELH</td>
-  <td class="mph">Vibe</td>
-  <td class="tnum">0.83</td>
-  <td class="tnum msp">0.8200 / 0.8300</td>
-  <td class="tnum msp">3,281</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONCELH-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">WEN</td>
-  <td class="mph">Project Fresh</td>
-  <td class="tnum">0.81</td>
-  <td class="tnum msp">0.8000 / 0.8100</td>
-  <td class="tnum msp">2,179</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWEN-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">DPZ</td>
-  <td class="mph">Same Store</td>
-  <td class="tnum">0.89</td>
-  <td class="tnum msp">0.8200 / 0.8500</td>
-  <td class="tnum msp">2,165</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDPZ-26OCT15" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">WMT</td>
-  <td class="mph">Marketplace / Market Place</td>
-  <td class="tnum">0.87</td>
-  <td class="tnum msp">0.8600 / 0.8700</td>
-  <td class="tnum msp">2,115</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWMT-26AUG20" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">WMT</td>
-  <td class="mph">Rollback / Roll Back</td>
-  <td class="tnum">0.77</td>
-  <td class="tnum msp">0.7700 / 0.7800</td>
-  <td class="tnum msp">2,030</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWMT-26AUG20" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">CAVA</td>
-  <td class="mph">Salmon</td>
-  <td class="tnum">0.81</td>
-  <td class="tnum msp">0.7900 / 0.8100</td>
-  <td class="tnum msp">1,651</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONCAVA-26AUG11" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">NBIS</td>
-  <td class="mph">Nvidia</td>
-  <td class="tnum">0.80</td>
-  <td class="tnum msp">0.7900 / 0.8100</td>
-  <td class="tnum msp">1,553</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONNBIS-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">WEN</td>
-  <td class="mph">App</td>
-  <td class="tnum">0.85</td>
-  <td class="tnum msp">0.8400 / 0.8500</td>
-  <td class="tnum msp">1,410</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWEN-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">CELH</td>
-  <td class="mph">PepsiCo</td>
-  <td class="tnum">0.88</td>
-  <td class="tnum msp">0.8700 / 0.8800</td>
-  <td class="tnum msp">1,278</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONCELH-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">WEN</td>
-  <td class="mph">Inflation</td>
-  <td class="tnum">0.86</td>
-  <td class="tnum msp">0.8500 / 0.8600</td>
-  <td class="tnum msp">942</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWEN-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">LYFT</td>
-  <td class="mph">Waymo</td>
-  <td class="tnum">0.76</td>
-  <td class="tnum msp">0.7500 / 0.7600</td>
-  <td class="tnum msp">870</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONLYFT-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">LYFT</td>
-  <td class="mph">Revenue</td>
-  <td class="tnum">0.80</td>
-  <td class="tnum msp">0.7900 / 0.8000</td>
-  <td class="tnum msp">645</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONLYFT-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">DKNG</td>
-  <td class="mph">Expansion</td>
-  <td class="tnum">0.79</td>
-  <td class="tnum msp">0.7800 / 0.7900</td>
-  <td class="tnum msp">585</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDKNG-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">HIMS</td>
-  <td class="mph">Peptide</td>
-  <td class="tnum">0.81</td>
-  <td class="tnum msp">0.8100 / 0.8400</td>
-  <td class="tnum msp">561</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">HIMS</td>
-  <td class="mph">Lab Testing</td>
-  <td class="tnum">0.75</td>
-  <td class="tnum msp">0.7500 / 0.7600</td>
-  <td class="tnum msp">495</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">HD</td>
-  <td class="mph">Mexico</td>
-  <td class="tnum">0.77</td>
-  <td class="tnum msp">0.7700 / 0.8000</td>
-  <td class="tnum msp">345</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHD-26AUG18" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">ARITZIA</td>
-  <td class="mph">AI</td>
-  <td class="tnum">0.76</td>
-  <td class="tnum msp">0.7500 / 0.7600</td>
-  <td class="tnum msp">334</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONARITZIA-26OCT14" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">WMT</td>
-  <td class="mph">Tariff</td>
-  <td class="tnum">0.84</td>
-  <td class="tnum msp">0.8100 / 0.8400</td>
-  <td class="tnum msp">252</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWMT-26AUG20" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">STZ</td>
-  <td class="mph">Wine</td>
-  <td class="tnum">0.80</td>
-  <td class="tnum msp">0.7900 / 0.8000</td>
-  <td class="tnum msp">249</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONSTZ-26OCT05" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">DELL</td>
-  <td class="mph">Confidence</td>
-  <td class="tnum">0.77</td>
-  <td class="tnum msp">0.7500 / 0.7600</td>
-  <td class="tnum msp">234</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDELL-26SEP03" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">VST</td>
-  <td class="mph">Production Tax Credit / PTC</td>
-  <td class="tnum">0.71</td>
-  <td class="tnum msp">0.7500 / 0.7600</td>
-  <td class="tnum msp">227</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONVST-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr><tr>
-  <td class="mco">HIMS</td>
-  <td class="mph">Longevity</td>
-  <td class="tnum">0.78</td>
-  <td class="tnum msp">0.7700 / 0.7800</td>
-  <td class="tnum msp">217</td>
-  <td><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></td>
-</tr>
-</table></div>
+<h2>Earnings-call mentions (28)</h2>
+<div class="note">Kalshi markets on what a company will <em>say</em> on its next call, by call date.
+Banded on the <b>bid</b> (75-88c) because entry is maker-only — you join the bid, and
+last-traded goes stale. Spread ≤3c.
+<b>Our lean is stated before the call</b> so accuracy can be scored, not just P&amp;L —
+the base rate is high by construction (AMD's Aug 4 call: 16 of 17 phrases said), so a good
+win rate alone would prove nothing. <b>PASS</b> = our lean is at or under the market bid.
+Scanned 2026-08-05 23:33 UTC</div>
+<div class="mday"><div class="mdate">Thu 06 Aug <span class="mut">· tomorrow</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">AAOI</span>
+    <span class="mph">Tariff</span>
+    <span class="msp tnum">bid 0.7600 / ask 0.7900</span>
+    <span class="mlean">our lean 0.72</span><span class="vpass">PASS</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONAAOI-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Applied Optoelectronics has China manufacturing exposure, so tariffs are plausible — but with only 36 open interest this is an illiquid market and the phrase may not surface if the quarter is quiet on trade policy. Below the 0.76 bid — PASS.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">ABNB</span>
+    <span class="mph">World Cup</span>
+    <span class="msp tnum">bid 0.8700 / ask 0.8800</span>
+    <span class="mlean">our lean 0.95</span><span class="vthin">thin +8c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONABNB-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">The 2026 World Cup is co-hosted across North America and lands squarely in Airbnb&#x27;s booking window. Management has already been framing it as a demand catalyst; a Q2 call weeks out from the tournament almost certainly references it in guidance or the host-city narrative.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">CELH</span>
+    <span class="mph">Vibe</span>
+    <span class="msp tnum">bid 0.8200 / ask 0.8300</span>
+    <span class="mlean">our lean 0.70</span><span class="vpass">PASS</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONCELH-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Brand-language phrase rather than an operational one. Celsius does talk about brand energy, but &#x27;Vibe&#x27; is a specific word that may not surface unless a product line or campaign carries the name. Below the 0.82 bid — PASS.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">CELH</span>
+    <span class="mph">PepsiCo</span>
+    <span class="msp tnum">bid 0.8700 / ask 0.8800</span>
+    <span class="mlean">our lean 0.93</span><span class="vthin">thin +6c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONCELH-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">PepsiCo is Celsius&#x27;s distribution partner and a major shareholder. Distribution economics come up on essentially every Celsius call — it is hard to discuss shelf velocity or margin without naming the partner.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">LYFT</span>
+    <span class="mph">Waymo</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <span class="mlean">our lean 0.88</span><span class="vtake">TAKE +13c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONLYFT-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Autonomy is the dominant analyst question for rideshare, and Lyft has an active Waymo partnership narrative. Even if management avoids it in prepared remarks, the Q+A almost always forces the competitive-autonomy question, and the rules include Q+A.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">LYFT</span>
+    <span class="mph">Revenue</span>
+    <span class="msp tnum">bid 0.7900 / ask 0.8000</span>
+    <span class="mlean">our lean 0.99</span><span class="vtake">TAKE +20c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONLYFT-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Near-certain filler word on any earnings call. The market bid of 0.79 looks like it is underpricing an almost-automatic mention — this is the cleanest of the near-term set.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">NBIS</span>
+    <span class="mph">Nvidia</span>
+    <span class="msp tnum">bid 0.7900 / ask 0.8100</span>
+    <span class="mlean">our lean 0.94</span><span class="vtake">TAKE +15c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONNBIS-26AUG06" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Nebius is a GPU-cloud operator; its capacity, backlog and capex are denominated in Nvidia hardware. Discussing fleet buildout without naming the supplier would be unusual.</div>
+</div></div><div class="mday"><div class="mdate">Fri 07 Aug <span class="mut">· in 2d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">DKNG</span>
+    <span class="mph">Retention / Retain</span>
+    <span class="msp tnum">bid 0.7600 / ask 0.7700</span>
+    <span class="mlean">our lean 0.85</span><span class="vtake">TAKE +9c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDKNG-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Customer retention and hold rate are core DraftKings metrics; the word appears in most of their operational discussion. Modest edge over the 0.76 bid.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">DKNG</span>
+    <span class="mph">Expansion</span>
+    <span class="msp tnum">bid 0.7800 / ask 0.7900</span>
+    <span class="mlean">our lean 0.95</span><span class="vtake">TAKE +17c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDKNG-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Generic operational word that DraftKings uses constantly for new-state rollout. Far more likely than the specific jurisdiction names priced near it.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">DKNG</span>
+    <span class="mph">Alberta</span>
+    <span class="msp tnum">bid 0.8600 / ask 0.8700</span>
+    <span class="mlean">our lean 0.80</span><span class="vpass">PASS</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDKNG-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Alberta&#x27;s regulated market opening is DraftKings&#x27; live expansion story in Canada. Likely named in the state/province rollout list, but it is one specific jurisdiction among several — management could speak generically about &#x27;new markets&#x27; instead. Roughly fair at the 0.86 bid, so no edge — PASS.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">VST</span>
+    <span class="mph">Production Tax Credit / PTC</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <span class="mlean">our lean 0.82</span><span class="vthin">thin +7c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONVST-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Vistra&#x27;s nuclear economics run through the PTC floor price, and it is a recurring topic in their guidance discussion. Slight edge over the 0.75 bid, though it depends on whether policy comes up this quarter.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">WEN</span>
+    <span class="mph">Project Fresh</span>
+    <span class="msp tnum">bid 0.8000 / ask 0.8100</span>
+    <span class="mlean">our lean 0.88</span><span class="vthin">thin +8c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWEN-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Named internal initiative. Companies reliably repeat their own branded program names on calls — that is what the naming is for.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">WEN</span>
+    <span class="mph">Inflation</span>
+    <span class="msp tnum">bid 0.8500 / ask 0.8600</span>
+    <span class="mlean">our lean 0.90</span><span class="vthin">thin +5c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWEN-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Commodity and labour inflation is standard QSR margin commentary, and Wendy&#x27;s has been discussing beef costs. Small edge over the 0.85 bid.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">WEN</span>
+    <span class="mph">App</span>
+    <span class="msp tnum">bid 0.8400 / ask 0.8500</span>
+    <span class="mlean">our lean 0.92</span><span class="vtake">TAKE +8c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWEN-26AUG07" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Digital ordering is Wendy&#x27;s growth narrative; app/loyalty metrics appear in nearly every quarter&#x27;s remarks.</div>
+</div></div><div class="mday"><div class="mdate">Mon 10 Aug <span class="mut">· in 5d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">HIMS</span>
+    <span class="mph">Peptide</span>
+    <span class="msp tnum">bid 0.8100 / ask 0.8400</span>
+    <span class="mlean">our lean 0.86</span><span class="vthin">thin +5c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Peptides are central to Hims&#x27;s compounded-product and longevity roadmap, and management has leaned into the category. Roughly fair at the 0.81 bid — thin edge.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">HIMS</span>
+    <span class="mph">Longevity</span>
+    <span class="msp tnum">bid 0.7700 / ask 0.7800</span>
+    <span class="mlean">our lean 0.85</span><span class="vthin">thin +8c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Longevity is an explicitly announced Hims vertical. Named strategic verticals get repeated on calls; the 0.77 bid gives a modest edge.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">HIMS</span>
+    <span class="mph">Lab Testing</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <span class="mlean">our lean 0.80</span><span class="vthin">thin +5c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Lab testing underpins the personalisation and diagnostics push. Likely but not certain to be phrased exactly this way — management may say &#x27;diagnostics&#x27; or &#x27;biomarkers&#x27; instead, and the rule needs this phrase.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">HIMS</span>
+    <span class="mph">FDA</span>
+    <span class="msp tnum">bid 0.8500 / ask 0.8600</span>
+    <span class="mlean">our lean 0.94</span><span class="vtake">TAKE +9c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Hims operates in compounded GLP-1s under active FDA scrutiny; regulatory status is the single most-asked analyst question. Q+A alone makes this near-certain. The 0.85 bid is the biggest gap to our lean in the near-term set.</div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">HIMS</span>
+    <span class="mph">Canada</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <span class="mlean">our lean 0.70</span><span class="vpass">PASS</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHIMS-26AUG10" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">International expansion is real, but Canada specifically is one geography among several and may lose out to &#x27;international&#x27; or the UK/Europe assets. Below the 0.75 bid — PASS.</div>
+</div></div><div class="mday"><div class="mdate">Tue 11 Aug <span class="mut">· in 6d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">CAVA</span>
+    <span class="mph">Salmon</span>
+    <span class="msp tnum">bid 0.7900 / ask 0.8100</span>
+    <span class="mlean">our lean 0.88</span><span class="vtake">TAKE +9c</span><a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONCAVA-26AUG11" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy">Cava&#x27;s grilled-salmon launch has been their headline menu-innovation item, and new LTO/menu items are standard call material. Edge over the 0.79 bid.</div>
+</div></div><div class="mday"><div class="mdate">Tue 18 Aug <span class="mut">· in 13d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">HD</span>
+    <span class="mph">Weather</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHD-26AUG18" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">HD</span>
+    <span class="mph">Mexico</span>
+    <span class="msp tnum">bid 0.7700 / ask 0.8000</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONHD-26AUG18" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div></div><div class="mday"><div class="mdate">Thu 20 Aug <span class="mut">· in 15d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">WMT</span>
+    <span class="mph">Tariff</span>
+    <span class="msp tnum">bid 0.8100 / ask 0.8400</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWMT-26AUG20" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">WMT</span>
+    <span class="mph">Rollback / Roll Back</span>
+    <span class="msp tnum">bid 0.7700 / ask 0.7800</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWMT-26AUG20" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">WMT</span>
+    <span class="mph">Marketplace / Market Place</span>
+    <span class="msp tnum">bid 0.8600 / ask 0.8700</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONWMT-26AUG20" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div></div><div class="mday"><div class="mdate">Thu 27 Aug <span class="mut">· in 22d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">ULTA</span>
+    <span class="mph">Luxury</span>
+    <span class="msp tnum">bid 0.7700 / ask 0.7800</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONULTA-26AUG27" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div><div class="mrow">
+  <div class="mhead"><span class="mco">ULTA</span>
+    <span class="mph">Iran / Middle East</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONULTA-26AUG27" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div></div><div class="mday"><div class="mdate">Thu 03 Sep <span class="mut">· in 29d</span></div><div class="mrow">
+  <div class="mhead"><span class="mco">DELL</span>
+    <span class="mph">Confidence</span>
+    <span class="msp tnum">bid 0.7500 / ask 0.7600</span>
+    <a class="mlink" href="https://kalshi.com/events/KXEARNINGSMENTIONDELL-26SEP03" target="_blank" rel="noopener">Kalshi ↗</a></div>
+  <div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>
+</div></div>
 <details class="res">
 <summary><h2>Recent results (0)</h2><span class="caret">▸</span></summary>
 <div class="mut">Nothing settled in the last week.</div>
