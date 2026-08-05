@@ -97,7 +97,47 @@ def main():
               f"(need {MIN_PARSE_SAMPLE})")
     print(f"  upcoming rows: {len(upcoming)}")
 
-    # 4. UNGRADED — settled but the grader couldn't score the tip.
+    # 4. LINKS — Kalshi buttons actually resolving for upcoming fixtures.
+    #
+    # This is the check that was missing when KXUEFAGAME (an EMPTY series) meant every
+    # Europa League card rendered with no Kalshi button. The lookup fails soft by design,
+    # so a wrong series ticker is indistinguishable from "no market exists" unless
+    # something explicitly looks. Two signals:
+    #   a) a configured series returning zero events  -> almost certainly a bad ticker
+    #   b) a league with several fixtures but zero links -> that league's series is wrong
+    # Overall coverage is deliberately NOT alerted on: plenty of fixtures genuinely have
+    # no Kalshi market, so a global rate would cry wolf.
+    try:
+        from export_public import fetch_kalshi_events, venue_link, kalshi_series_counts
+
+        for series, n in sorted(kalshi_series_counts().items()):
+            if n == 0:
+                note("warning", f"LINKS series {series} returned 0 events — wrong ticker? "
+                                f"(KXUEFAGAME was empty while Europa lived under KXUELGAME)")
+                problems += 1
+
+        if upcoming:
+            events = fetch_kalshi_events()
+            by_league, linked = {}, {}
+            for p in upcoming:
+                lg = p.get("league") or "?"
+                by_league[lg] = by_league.get(lg, 0) + 1
+                if venue_link((p.get("match") or "").replace(" v ", " vs "),
+                              p.get("date"), events):
+                    linked[lg] = linked.get(lg, 0) + 1
+            for lg, total in sorted(by_league.items()):
+                got = linked.get(lg, 0)
+                if total >= 2 and got == 0:
+                    note("warning", f"LINKS {lg}: 0 of {total} upcoming fixtures got a Kalshi "
+                                    f"link — check that league's series ticker in KALSHI_SERIES")
+                    problems += 1
+            tot_linked, tot = sum(linked.values()), len(upcoming)
+            print(f"  kalshi links: {tot_linked}/{tot} upcoming "
+                  f"({', '.join(f'{l} {linked.get(l,0)}/{n}' for l, n in sorted(by_league.items()))})")
+    except Exception as e:
+        note("warning", f"LINKS check skipped: {e}")
+
+    # 5. UNGRADED — settled but the grader couldn't score the tip.
     ungraded = [p for p in picks if p.get("status") == "settled"
                 and p.get("tip_result") == "ungraded"]
     for p in ungraded:

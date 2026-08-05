@@ -70,6 +70,7 @@ def _get_json(url):
 KALSHI_CACHE = os.path.join(os.path.dirname(__file__), "data", ".kalshi_events.json")
 KALSHI_CACHE_TTL = 3600          # seconds
 _KALSHI_MEM = None
+_KALSHI_COUNTS = {}               # series -> event count, for sg_health's series check
 
 
 def _kalshi_page(url, tries=4):
@@ -121,22 +122,28 @@ def fetch_kalshi_events():
     global _KALSHI_MEM
     if _KALSHI_MEM is not None:
         return _KALSHI_MEM
+    global _KALSHI_COUNTS
     try:
         st = os.path.getmtime(KALSHI_CACHE)
         if time.time() - st < KALSHI_CACHE_TTL:
             raw = json.load(open(KALSHI_CACHE))
+            # cache was a bare list before per-series counts were added; accept both
+            rows = raw.get("events", []) if isinstance(raw, dict) else raw
+            _KALSHI_COUNTS = raw.get("counts", {}) if isinstance(raw, dict) else {}
             _KALSHI_MEM = [(u, t, datetime.date.fromisoformat(d) if d else None)
-                           for u, t, d in raw]
+                           for u, t, d in rows]
             print(f"  (kalshi events from cache: {len(_KALSHI_MEM)})")
             return _KALSHI_MEM
     except Exception:
         pass
 
     out = []
+    _KALSHI_COUNTS = {}
     for n, series in enumerate(KALSHI_SERIES):
         if n:
             time.sleep(0.4)                      # pace: stay under the rate limit
         events = _kalshi_series_events(series)
+        _KALSHI_COUNTS[series] = len(events)
         for ev in events:
             t = ev.get("event_ticker") or ""
             m = re.search(r"-(\d{2})([A-Z]{3})(\d{2})", t)  # -26JUL25...
@@ -149,11 +156,20 @@ def fetch_kalshi_events():
     try:
         os.makedirs(os.path.dirname(KALSHI_CACHE), exist_ok=True)
         with open(KALSHI_CACHE, "w") as f:
-            json.dump([(u, t, d.isoformat() if d else None) for u, t, d in out], f)
+            json.dump({"events": [(u, t, d.isoformat() if d else None) for u, t, d in out],
+                       "counts": _KALSHI_COUNTS}, f)
     except Exception:
         pass
     _KALSHI_MEM = out
     return out
+
+def kalshi_series_counts():
+    """series -> number of events fetched. Populated by fetch_kalshi_events (or restored
+    from its cache); sg_health uses it to catch a series ticker that returns nothing."""
+    if _KALSHI_MEM is None:
+        fetch_kalshi_events()
+    return dict(_KALSHI_COUNTS)
+
 
 def fetch_bovada_events():
     """[(url, title, date)] for upcoming Bovada soccer events. Empty on failure."""
