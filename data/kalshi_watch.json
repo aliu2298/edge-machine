@@ -1,5 +1,5 @@
 {
- "checked_at": "2026-08-05T23:14:24Z",
+ "checked_at": "2026-08-05T23:24:08Z",
  "categories": [
   "Climate and Weather",
   "Commodities",
@@ -225,17 +225,25 @@
    "last": 0.79,
    "bid": "0.7600",
    "ask": "0.7900",
+   "spread": 0.03,
    "oi": "36.24",
-   "ticker": "KXEARNINGSMENTIONAAOI-26AUG06-TARI"
+   "volume": "37.29",
+   "event_ticker": "KXEARNINGSMENTIONAAOI-26AUG06",
+   "ticker": "KXEARNINGSMENTIONAAOI-26AUG06-TARI",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "AAOI",
    "phrase": "Qualification",
-   "last": 0.86,
+   "last": 0.9,
    "bid": "0.8500",
    "ask": "0.9000",
-   "oi": "587.00",
-   "ticker": "KXEARNINGSMENTIONAAOI-26AUG06-QUAL"
+   "spread": 0.05,
+   "oi": "588.10",
+   "volume": "588.15",
+   "event_ticker": "KXEARNINGSMENTIONAAOI-26AUG06",
+   "ticker": "KXEARNINGSMENTIONAAOI-26AUG06-QUAL",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "AAOI",
@@ -243,26 +251,25 @@
    "last": 0.81,
    "bid": "0.7600",
    "ask": "0.8000",
+   "spread": 0.04,
    "oi": "36.21",
-   "ticker": "KXEARNINGSMENTIONAAOI-26AUG06-CHIN"
+   "volume": "36.21",
+   "event_ticker": "KXEARNINGSMENTIONAAOI-26AUG06",
+   "ticker": "KXEARNINGSMENTIONAAOI-26AUG06-CHIN",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ABNB",
    "phrase": "World Cup",
-   "last": 0.86,
+   "last": 0.85,
    "bid": "0.8600",
-   "ask": "0.9000",
-   "oi": "3894.20",
-   "ticker": "KXEARNINGSMENTIONABNB-26AUG06-WORL"
-  },
-  {
-   "company": "AC",
-   "phrase": "Iran / Middle East",
-   "last": 0.79,
-   "bid": "0.7200",
-   "ask": "0.7900",
-   "oi": "117.29",
-   "ticker": "KXEARNINGSMENTIONAC-26AUG12-IRAN"
+   "ask": "0.8900",
+   "spread": 0.03,
+   "oi": "3966.69",
+   "volume": "6997.17",
+   "event_ticker": "KXEARNINGSMENTIONABNB-26AUG06",
+   "ticker": "KXEARNINGSMENTIONABNB-26AUG06-WORL",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "AMAT",
@@ -270,8 +277,12 @@
    "last": 0.76,
    "bid": "0.7600",
    "ask": "0.8100",
+   "spread": 0.05,
    "oi": "33.00",
-   "ticker": "KXEARNINGSMENTIONAMAT-26AUG13-SUPP"
+   "volume": "33.00",
+   "event_ticker": "KXEARNINGSMENTIONAMAT-26AUG13",
+   "ticker": "KXEARNINGSMENTIONAMAT-26AUG13-SUPP",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "AMAT",
@@ -279,8 +290,12 @@
    "last": 0.76,
    "bid": "0.7600",
    "ask": "0.8000",
+   "spread": 0.04,
    "oi": "33.00",
-   "ticker": "KXEARNINGSMENTIONAMAT-26AUG13-HYBR"
+   "volume": "33.00",
+   "event_ticker": "KXEARNINGSMENTIONAMAT-26AUG13",
+   "ticker": "KXEARNINGSMENTIONAMAT-26AUG13-HYBR",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ARITZIA",
@@ -288,8 +303,12 @@
    "last": 0.83,
    "bid": "0.8300",
    "ask": "0.8400",
+   "spread": 0.01,
    "oi": "43.11",
-   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-TARI"
+   "volume": "460.11",
+   "event_ticker": "KXEARNINGSMENTIONARITZIA-26OCT14",
+   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-TARI",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ARITZIA",
@@ -297,8 +316,12 @@
    "last": 0.81,
    "bid": "0.8100",
    "ask": "0.8500",
+   "spread": 0.04,
    "oi": "143.00",
-   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-RUNW"
+   "volume": "622.00",
+   "event_ticker": "KXEARNINGSMENTIONARITZIA-26OCT14",
+   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-RUNW",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ARITZIA",
@@ -306,17 +329,12 @@
    "last": 0.79,
    "bid": "0.8100",
    "ask": "0.8300",
+   "spread": 0.02,
    "oi": "192.00",
-   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-FRAN"
-  },
-  {
-   "company": "ARITZIA",
-   "phrase": "Flagship",
-   "last": 0.76,
-   "bid": "0.5300",
-   "ask": "0.6300",
-   "oi": "42.00",
-   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-FLAG"
+   "volume": "744.00",
+   "event_ticker": "KXEARNINGSMENTIONARITZIA-26OCT14",
+   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-FRAN",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ARITZIA",
@@ -324,35 +342,12 @@
    "last": 0.76,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "334.00",
-   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-AI"
-  },
-  {
-   "company": "BULL",
-   "phrase": "Korea / Korean",
-   "last": 0.83,
-   "bid": "0.5800",
-   "ask": "0.6300",
-   "oi": "505.05",
-   "ticker": "KXEARNINGSMENTIONBULL-26JUL24-KORE"
-  },
-  {
-   "company": "BULL",
-   "phrase": "Canada",
-   "last": 0.83,
-   "bid": "0.6300",
-   "ask": "0.6700",
-   "oi": "5.00",
-   "ticker": "KXEARNINGSMENTIONBULL-26JUL24-CANA"
-  },
-  {
-   "company": "BULL",
-   "phrase": "Buyback / Repurchase",
-   "last": 0.85,
-   "bid": "0.6100",
-   "ask": "0.6500",
-   "oi": "65.08",
-   "ticker": "KXEARNINGSMENTIONBULL-26JUL24-BUYB"
+   "volume": "640.00",
+   "event_ticker": "KXEARNINGSMENTIONARITZIA-26OCT14",
+   "ticker": "KXEARNINGSMENTIONARITZIA-26OCT14-AI",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "CAVA",
@@ -360,17 +355,12 @@
    "last": 0.81,
    "bid": "0.7800",
    "ask": "0.8100",
+   "spread": 0.03,
    "oi": "1651.00",
-   "ticker": "KXEARNINGSMENTIONCAVA-26AUG11-SALM"
-  },
-  {
-   "company": "CAVA",
-   "phrase": "AUV",
-   "last": 0.87,
-   "bid": "0.7100",
-   "ask": "0.7300",
-   "oi": "229.00",
-   "ticker": "KXEARNINGSMENTIONCAVA-26AUG11-AUV"
+   "volume": "1673.00",
+   "event_ticker": "KXEARNINGSMENTIONCAVA-26AUG11",
+   "ticker": "KXEARNINGSMENTIONCAVA-26AUG11-SALM",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "CBRS",
@@ -378,8 +368,12 @@
    "last": 0.86,
    "bid": "0.8100",
    "ask": "0.8900",
+   "spread": 0.08,
    "oi": "622.00",
-   "ticker": "KXEARNINGSMENTIONCBRS-26AUG12-OPEN"
+   "volume": "1030.00",
+   "event_ticker": "KXEARNINGSMENTIONCBRS-26AUG12",
+   "ticker": "KXEARNINGSMENTIONCBRS-26AUG12-OPEN",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "CBRS",
@@ -387,8 +381,12 @@
    "last": 0.82,
    "bid": "0.7800",
    "ask": "0.8200",
+   "spread": 0.04,
    "oi": "423.55",
-   "ticker": "KXEARNINGSMENTIONCBRS-26AUG12-AWS"
+   "volume": "1636.55",
+   "event_ticker": "KXEARNINGSMENTIONCBRS-26AUG12",
+   "ticker": "KXEARNINGSMENTIONCBRS-26AUG12-AWS",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "CELH",
@@ -396,8 +394,12 @@
    "last": 0.83,
    "bid": "0.8200",
    "ask": "0.8300",
+   "spread": 0.01,
    "oi": "3280.98",
-   "ticker": "KXEARNINGSMENTIONCELH-26AUG06-VIBE"
+   "volume": "3491.55",
+   "event_ticker": "KXEARNINGSMENTIONCELH-26AUG06",
+   "ticker": "KXEARNINGSMENTIONCELH-26AUG06-VIBE",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "CELH",
@@ -405,8 +407,25 @@
    "last": 0.88,
    "bid": "0.8700",
    "ask": "0.8800",
-   "oi": "1198.83",
-   "ticker": "KXEARNINGSMENTIONCELH-26AUG06-PEPS"
+   "spread": 0.01,
+   "oi": "1277.70",
+   "volume": "1920.02",
+   "event_ticker": "KXEARNINGSMENTIONCELH-26AUG06",
+   "ticker": "KXEARNINGSMENTIONCELH-26AUG06-PEPS",
+   "close_time": "2026-12-31T15:00:00Z"
+  },
+  {
+   "company": "CRWD",
+   "phrase": "Falcon Flex",
+   "last": 0.92,
+   "bid": "0.8800",
+   "ask": "0.9300",
+   "spread": 0.05,
+   "oi": "178.07",
+   "volume": "178.07",
+   "event_ticker": "KXEARNINGSMENTIONCRWD-26AUG26",
+   "ticker": "KXEARNINGSMENTIONCRWD-26AUG26-FALC",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "CRWD",
@@ -414,8 +433,12 @@
    "last": 0.84,
    "bid": "0.8400",
    "ask": "0.9000",
+   "spread": 0.06,
    "oi": "102.00",
-   "ticker": "KXEARNINGSMENTIONCRWD-26AUG26-CONS"
+   "volume": "102.00",
+   "event_ticker": "KXEARNINGSMENTIONCRWD-26AUG26",
+   "ticker": "KXEARNINGSMENTIONCRWD-26AUG26-CONS",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "CRWD",
@@ -423,8 +446,25 @@
    "last": 0.8,
    "bid": "0.8000",
    "ask": "0.8500",
+   "spread": 0.05,
    "oi": "39.00",
-   "ticker": "KXEARNINGSMENTIONCRWD-26AUG26-AWS"
+   "volume": "39.00",
+   "event_ticker": "KXEARNINGSMENTIONCRWD-26AUG26",
+   "ticker": "KXEARNINGSMENTIONCRWD-26AUG26-AWS",
+   "close_time": "2027-01-31T15:00:00Z"
+  },
+  {
+   "company": "CRWD",
+   "phrase": "Acquisition",
+   "last": 0.0,
+   "bid": "0.7600",
+   "ask": "0.8000",
+   "spread": 0.04,
+   "oi": "0.00",
+   "volume": "0.00",
+   "event_ticker": "KXEARNINGSMENTIONCRWD-26AUG26",
+   "ticker": "KXEARNINGSMENTIONCRWD-26AUG26-ACQU",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "DELL",
@@ -432,8 +472,12 @@
    "last": 0.8,
    "bid": "0.7600",
    "ask": "0.8000",
+   "spread": 0.04,
    "oi": "159.00",
-   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-POWES"
+   "volume": "159.00",
+   "event_ticker": "KXEARNINGSMENTIONDELL-26SEP03",
+   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-POWES",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "DELL",
@@ -441,17 +485,12 @@
    "last": 0.83,
    "bid": "0.7600",
    "ask": "0.8400",
+   "spread": 0.08,
    "oi": "217.00",
-   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-NVID"
-  },
-  {
-   "company": "DELL",
-   "phrase": "Data Center",
-   "last": 0.8,
-   "bid": "0.7300",
-   "ask": "0.8000",
-   "oi": "409.15",
-   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-DATA"
+   "volume": "226.00",
+   "event_ticker": "KXEARNINGSMENTIONDELL-26SEP03",
+   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-NVID",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "DELL",
@@ -459,8 +498,12 @@
    "last": 0.77,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "234.00",
-   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-CONF"
+   "volume": "236.00",
+   "event_ticker": "KXEARNINGSMENTIONDELL-26SEP03",
+   "ticker": "KXEARNINGSMENTIONDELL-26SEP03-CONF",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "DKNG",
@@ -468,8 +511,12 @@
    "last": 0.77,
    "bid": "0.7600",
    "ask": "0.7700",
+   "spread": 0.01,
    "oi": "43.93",
-   "ticker": "KXEARNINGSMENTIONDKNG-26AUG07-RETE"
+   "volume": "668.12",
+   "event_ticker": "KXEARNINGSMENTIONDKNG-26AUG07",
+   "ticker": "KXEARNINGSMENTIONDKNG-26AUG07-RETE",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "DKNG",
@@ -477,8 +524,12 @@
    "last": 0.79,
    "bid": "0.7800",
    "ask": "0.7900",
+   "spread": 0.01,
    "oi": "585.34",
-   "ticker": "KXEARNINGSMENTIONDKNG-26AUG07-EXPA"
+   "volume": "1315.34",
+   "event_ticker": "KXEARNINGSMENTIONDKNG-26AUG07",
+   "ticker": "KXEARNINGSMENTIONDKNG-26AUG07-EXPA",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "DKNG",
@@ -486,17 +537,25 @@
    "last": 0.87,
    "bid": "0.8600",
    "ask": "0.8700",
-   "oi": "5034.05",
-   "ticker": "KXEARNINGSMENTIONDKNG-26AUG07-ALB"
+   "spread": 0.01,
+   "oi": "5113.77",
+   "volume": "6016.27",
+   "event_ticker": "KXEARNINGSMENTIONDKNG-26AUG07",
+   "ticker": "KXEARNINGSMENTIONDKNG-26AUG07-ALB",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
-   "company": "FUTU",
-   "phrase": "Staking",
-   "last": 0.76,
-   "bid": "0.5200",
-   "ask": "0.5800",
-   "oi": "551.00",
-   "ticker": "KXEARNINGSMENTIONFUTU-26AUG20-STAK"
+   "company": "DPZ",
+   "phrase": "Same Store",
+   "last": 0.89,
+   "bid": "0.8200",
+   "ask": "0.8500",
+   "spread": 0.03,
+   "oi": "2164.52",
+   "volume": "3408.60",
+   "event_ticker": "KXEARNINGSMENTIONDPZ-26OCT15",
+   "ticker": "KXEARNINGSMENTIONDPZ-26OCT15-SAME",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HD",
@@ -504,8 +563,12 @@
    "last": 0.75,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "83.20",
-   "ticker": "KXEARNINGSMENTIONHD-26AUG18-WEAT"
+   "volume": "490.20",
+   "event_ticker": "KXEARNINGSMENTIONHD-26AUG18",
+   "ticker": "KXEARNINGSMENTIONHD-26AUG18-WEAT",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HD",
@@ -513,26 +576,12 @@
    "last": 0.77,
    "bid": "0.7700",
    "ask": "0.8000",
+   "spread": 0.03,
    "oi": "344.60",
-   "ticker": "KXEARNINGSMENTIONHD-26AUG18-MEXI"
-  },
-  {
-   "company": "HIMS",
-   "phrase": "Zava",
-   "last": 0.75,
-   "bid": "0.6800",
-   "ask": "0.6900",
-   "oi": "309.00",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-ZAVA"
-  },
-  {
-   "company": "HIMS",
-   "phrase": "Wegovy",
-   "last": 0.76,
-   "bid": "0.7100",
-   "ask": "0.7500",
-   "oi": "527.12",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-WEGO"
+   "volume": "766.36",
+   "event_ticker": "KXEARNINGSMENTIONHD-26AUG18",
+   "ticker": "KXEARNINGSMENTIONHD-26AUG18-MEXI",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HIMS",
@@ -540,8 +589,12 @@
    "last": 0.81,
    "bid": "0.8100",
    "ask": "0.8400",
+   "spread": 0.03,
    "oi": "560.52",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-PEPT"
+   "volume": "1402.52",
+   "event_ticker": "KXEARNINGSMENTIONHIMS-26AUG10",
+   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-PEPT",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HIMS",
@@ -549,8 +602,12 @@
    "last": 0.78,
    "bid": "0.7700",
    "ask": "0.7800",
+   "spread": 0.01,
    "oi": "217.14",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-LONG"
+   "volume": "1082.14",
+   "event_ticker": "KXEARNINGSMENTIONHIMS-26AUG10",
+   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-LONG",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HIMS",
@@ -558,8 +615,12 @@
    "last": 0.75,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "495.17",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-LABT"
+   "volume": "1668.17",
+   "event_ticker": "KXEARNINGSMENTIONHIMS-26AUG10",
+   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-LABT",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HIMS",
@@ -567,8 +628,12 @@
    "last": 0.86,
    "bid": "0.8500",
    "ask": "0.8600",
+   "spread": 0.01,
    "oi": "109.95",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-FDA"
+   "volume": "573.89",
+   "event_ticker": "KXEARNINGSMENTIONHIMS-26AUG10",
+   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-FDA",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "HIMS",
@@ -576,17 +641,12 @@
    "last": 0.77,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "52.55",
-   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-CANA"
-  },
-  {
-   "company": "KLAR",
-   "phrase": "Credit Quality",
-   "last": 0.75,
-   "bid": "0.6400",
-   "ask": "0.7500",
-   "oi": "659.05",
-   "ticker": "KXEARNINGSMENTIONKLAR-26AUG18-CRED"
+   "volume": "434.55",
+   "event_ticker": "KXEARNINGSMENTIONHIMS-26AUG10",
+   "ticker": "KXEARNINGSMENTIONHIMS-26AUG10-CANA",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "LYFT",
@@ -594,8 +654,12 @@
    "last": 0.76,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "870.20",
-   "ticker": "KXEARNINGSMENTIONLYFT-26AUG06-WAYM"
+   "volume": "2129.20",
+   "event_ticker": "KXEARNINGSMENTIONLYFT-26AUG06",
+   "ticker": "KXEARNINGSMENTIONLYFT-26AUG06-WAYM",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "LYFT",
@@ -603,17 +667,12 @@
    "last": 0.8,
    "bid": "0.7900",
    "ask": "0.8000",
-   "oi": "520.40",
-   "ticker": "KXEARNINGSMENTIONLYFT-26AUG06-REVE"
-  },
-  {
-   "company": "NBIS",
-   "phrase": "Token",
-   "last": 0.77,
-   "bid": "0.7400",
-   "ask": "0.7800",
-   "oi": "3210.53",
-   "ticker": "KXEARNINGSMENTIONNBIS-26AUG06-TOKE"
+   "spread": 0.01,
+   "oi": "521.63",
+   "volume": "1208.63",
+   "event_ticker": "KXEARNINGSMENTIONLYFT-26AUG06",
+   "ticker": "KXEARNINGSMENTIONLYFT-26AUG06-REVE",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "NBIS",
@@ -621,8 +680,12 @@
    "last": 0.8,
    "bid": "0.7900",
    "ask": "0.8100",
+   "spread": 0.02,
    "oi": "1553.01",
-   "ticker": "KXEARNINGSMENTIONNBIS-26AUG06-NVID"
+   "volume": "2101.10",
+   "event_ticker": "KXEARNINGSMENTIONNBIS-26AUG06",
+   "ticker": "KXEARNINGSMENTIONNBIS-26AUG06-NVID",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "NBIS",
@@ -630,17 +693,25 @@
    "last": 0.85,
    "bid": "0.8100",
    "ask": "0.8500",
+   "spread": 0.04,
    "oi": "1575.48",
-   "ticker": "KXEARNINGSMENTIONNBIS-26AUG06-META"
+   "volume": "1920.48",
+   "event_ticker": "KXEARNINGSMENTIONNBIS-26AUG06",
+   "ticker": "KXEARNINGSMENTIONNBIS-26AUG06-META",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "NVDA",
-   "phrase": "Gaming",
-   "last": 0.85,
-   "bid": "0.7200",
-   "ask": "0.7900",
-   "oi": "1397.28",
-   "ticker": "KXEARNINGSMENTIONNVDA-26AUG26-GAMI"
+   "phrase": "Hyperscaler",
+   "last": 0.89,
+   "bid": "0.8500",
+   "ask": "0.8900",
+   "spread": 0.04,
+   "oi": "665.37",
+   "volume": "1343.53",
+   "event_ticker": "KXEARNINGSMENTIONNVDA-26AUG26",
+   "ticker": "KXEARNINGSMENTIONNVDA-26AUG26-HYPE",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "STZ",
@@ -648,8 +719,12 @@
    "last": 0.8,
    "bid": "0.7900",
    "ask": "0.8000",
+   "spread": 0.01,
    "oi": "248.58",
-   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-WINE"
+   "volume": "1203.58",
+   "event_ticker": "KXEARNINGSMENTIONSTZ-26OCT05",
+   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-WINE",
+   "close_time": "2027-03-31T14:00:00Z"
   },
   {
    "company": "STZ",
@@ -657,8 +732,12 @@
    "last": 0.76,
    "bid": "0.7600",
    "ask": "0.8200",
+   "spread": 0.06,
    "oi": "257.00",
-   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-INVE"
+   "volume": "258.00",
+   "event_ticker": "KXEARNINGSMENTIONSTZ-26OCT05",
+   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-INVE",
+   "close_time": "2027-03-31T14:00:00Z"
   },
   {
    "company": "STZ",
@@ -666,17 +745,12 @@
    "last": 0.76,
    "bid": "0.7600",
    "ask": "0.8200",
+   "spread": 0.06,
    "oi": "2.00",
-   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-ESPE"
-  },
-  {
-   "company": "STZ",
-   "phrase": "Depletion / Depletions",
-   "last": 0.77,
-   "bid": "0.7000",
-   "ask": "0.7800",
-   "oi": "211.00",
-   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-DEPL"
+   "volume": "2.00",
+   "event_ticker": "KXEARNINGSMENTIONSTZ-26OCT05",
+   "ticker": "KXEARNINGSMENTIONSTZ-26OCT05-ESPE",
+   "close_time": "2027-03-31T14:00:00Z"
   },
   {
    "company": "TGT",
@@ -684,53 +758,38 @@
    "last": 0.81,
    "bid": "0.8100",
    "ask": "0.8600",
+   "spread": 0.05,
    "oi": "273.69",
-   "ticker": "KXEARNINGSMENTIONTGT-26AUG19-REMO"
+   "volume": "781.91",
+   "event_ticker": "KXEARNINGSMENTIONTGT-26AUG19",
+   "ticker": "KXEARNINGSMENTIONTGT-26AUG19-REMO",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "TGT",
-   "phrase": "Back to School",
-   "last": 0.75,
-   "bid": "0.7400",
-   "ask": "0.7500",
-   "oi": "1064.04",
-   "ticker": "KXEARNINGSMENTIONTGT-26AUG19-BACK"
-  },
-  {
-   "company": "TOL",
-   "phrase": "Land Bank / Land Banking",
-   "last": 0.78,
-   "bid": "0.7400",
-   "ask": "0.7800",
-   "oi": "144.00",
-   "ticker": "KXEARNINGSMENTIONTOL-26AUG18-LAND"
-  },
-  {
-   "company": "TOL",
-   "phrase": "Incentive",
-   "last": 0.78,
-   "bid": "0.7400",
-   "ask": "0.8000",
-   "oi": "678.00",
-   "ticker": "KXEARNINGSMENTIONTOL-26AUG18-INCE"
+   "phrase": "Beauty",
+   "last": 0.89,
+   "bid": "0.8700",
+   "ask": "0.9100",
+   "spread": 0.04,
+   "oi": "1144.00",
+   "volume": "2361.00",
+   "event_ticker": "KXEARNINGSMENTIONTGT-26AUG19",
+   "ticker": "KXEARNINGSMENTIONTGT-26AUG19-BEAU",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "TOL",
    "phrase": "Cash Buyer / All Cash",
-   "last": 0.84,
+   "last": 0.9,
    "bid": "0.8200",
-   "ask": "0.8300",
-   "oi": "140.00",
-   "ticker": "KXEARNINGSMENTIONTOL-26AUG18-CASH"
-  },
-  {
-   "company": "TOL",
-   "phrase": "Apartment",
-   "last": 0.79,
-   "bid": "0.7200",
-   "ask": "0.7500",
-   "oi": "220.00",
-   "ticker": "KXEARNINGSMENTIONTOL-26AUG18-APAR"
+   "ask": "0.9000",
+   "spread": 0.08,
+   "oi": "175.10",
+   "volume": "607.10",
+   "event_ticker": "KXEARNINGSMENTIONTOL-26AUG18",
+   "ticker": "KXEARNINGSMENTIONTOL-26AUG18-CASH",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "TTWO",
@@ -738,26 +797,12 @@
    "last": 0.75,
    "bid": "0.7700",
    "ask": "0.8300",
+   "spread": 0.06,
    "oi": "1832.11",
-   "ticker": "KXEARNINGSMENTIONTTWO-26AUG07-RED"
-  },
-  {
-   "company": "TTWO",
-   "phrase": "Pre Order",
-   "last": 0.79,
-   "bid": "0.7000",
-   "ask": "0.7400",
-   "oi": "3680.28",
-   "ticker": "KXEARNINGSMENTIONTTWO-26AUG07-PRE"
-  },
-  {
-   "company": "TTWO",
-   "phrase": "GTA+ / GTA plus",
-   "last": 0.81,
-   "bid": "0.7100",
-   "ask": "0.7800",
-   "oi": "790.82",
-   "ticker": "KXEARNINGSMENTIONTTWO-26AUG07-GTA"
+   "volume": "3394.13",
+   "event_ticker": "KXEARNINGSMENTIONTTWO-26AUG07",
+   "ticker": "KXEARNINGSMENTIONTTWO-26AUG07-RED",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "UAL",
@@ -765,8 +810,12 @@
    "last": 0.88,
    "bid": "0.8200",
    "ask": "0.8800",
+   "spread": 0.06,
    "oi": "712.00",
-   "ticker": "KXEARNINGSMENTIONUAL-26OCT14-STAR"
+   "volume": "765.45",
+   "event_ticker": "KXEARNINGSMENTIONUAL-26OCT14",
+   "ticker": "KXEARNINGSMENTIONUAL-26OCT14-STAR",
+   "close_time": "2027-03-31T14:00:00Z"
   },
   {
    "company": "UAL",
@@ -774,17 +823,25 @@
    "last": 0.76,
    "bid": "0.7600",
    "ask": "0.8300",
+   "spread": 0.07,
    "oi": "24.19",
-   "ticker": "KXEARNINGSMENTIONUAL-26OCT14-OIL"
+   "volume": "29.19",
+   "event_ticker": "KXEARNINGSMENTIONUAL-26OCT14",
+   "ticker": "KXEARNINGSMENTIONUAL-26OCT14-OIL",
+   "close_time": "2027-03-31T14:00:00Z"
   },
   {
    "company": "ULTA",
-   "phrase": "Rare Beauty",
-   "last": 0.76,
-   "bid": "0.7300",
-   "ask": "0.7400",
-   "oi": "19.78",
-   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-RARE"
+   "phrase": "Uncertainty",
+   "last": 0.9,
+   "bid": "0.8200",
+   "ask": "0.9000",
+   "spread": 0.08,
+   "oi": "102.05",
+   "volume": "941.05",
+   "event_ticker": "KXEARNINGSMENTIONULTA-26AUG27",
+   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-UNCE",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ULTA",
@@ -792,8 +849,12 @@
    "last": 0.78,
    "bid": "0.7700",
    "ask": "0.7800",
+   "spread": 0.01,
    "oi": "31.00",
-   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-LUXU"
+   "volume": "435.00",
+   "event_ticker": "KXEARNINGSMENTIONULTA-26AUG27",
+   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-LUXU",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ULTA",
@@ -801,8 +862,12 @@
    "last": 0.76,
    "bid": "0.7500",
    "ask": "0.7600",
+   "spread": 0.01,
    "oi": "41.82",
-   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-IRAN"
+   "volume": "41.82",
+   "event_ticker": "KXEARNINGSMENTIONULTA-26AUG27",
+   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-IRAN",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "ULTA",
@@ -810,44 +875,25 @@
    "last": 0.86,
    "bid": "0.7800",
    "ask": "0.8200",
+   "spread": 0.04,
    "oi": "105.33",
-   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-AI"
-  },
-  {
-   "company": "URBN",
-   "phrase": "Tariff",
-   "last": 0.8,
-   "bid": "0.5800",
-   "ask": "0.7900",
-   "oi": "74.11",
-   "ticker": "KXEARNINGSMENTIONURBN-26AUG26-TARI"
-  },
-  {
-   "company": "URBN",
-   "phrase": "Headwind",
-   "last": 0.75,
-   "bid": "0.5300",
-   "ask": "0.7900",
-   "oi": "206.50",
-   "ticker": "KXEARNINGSMENTIONURBN-26AUG26-HEAD"
+   "volume": "498.48",
+   "event_ticker": "KXEARNINGSMENTIONULTA-26AUG27",
+   "ticker": "KXEARNINGSMENTIONULTA-26AUG27-AI",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "VST",
-   "phrase": "Meta",
-   "last": 0.81,
-   "bid": "0.7100",
-   "ask": "0.7200",
-   "oi": "1635.00",
-   "ticker": "KXEARNINGSMENTIONVST-26AUG07-META"
-  },
-  {
-   "company": "VST",
-   "phrase": "Cogentrix",
-   "last": 0.83,
-   "bid": "0.7300",
-   "ask": "0.7400",
-   "oi": "1413.86",
-   "ticker": "KXEARNINGSMENTIONVST-26AUG07-COGE"
+   "phrase": "Production Tax Credit / PTC",
+   "last": 0.71,
+   "bid": "0.7500",
+   "ask": "0.7600",
+   "spread": 0.01,
+   "oi": "227.00",
+   "volume": "645.00",
+   "event_ticker": "KXEARNINGSMENTIONVST-26AUG07",
+   "ticker": "KXEARNINGSMENTIONVST-26AUG07-PROD",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "WEN",
@@ -855,8 +901,12 @@
    "last": 0.81,
    "bid": "0.8000",
    "ask": "0.8100",
+   "spread": 0.01,
    "oi": "2178.86",
-   "ticker": "KXEARNINGSMENTIONWEN-26AUG07-PROJ"
+   "volume": "3282.68",
+   "event_ticker": "KXEARNINGSMENTIONWEN-26AUG07",
+   "ticker": "KXEARNINGSMENTIONWEN-26AUG07-PROJ",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "WEN",
@@ -864,8 +914,12 @@
    "last": 0.86,
    "bid": "0.8500",
    "ask": "0.8600",
+   "spread": 0.01,
    "oi": "942.04",
-   "ticker": "KXEARNINGSMENTIONWEN-26AUG07-INFL"
+   "volume": "1777.28",
+   "event_ticker": "KXEARNINGSMENTIONWEN-26AUG07",
+   "ticker": "KXEARNINGSMENTIONWEN-26AUG07-INFL",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "WEN",
@@ -873,8 +927,12 @@
    "last": 0.85,
    "bid": "0.8400",
    "ask": "0.8500",
+   "spread": 0.01,
    "oi": "1409.79",
-   "ticker": "KXEARNINGSMENTIONWEN-26AUG07-APP"
+   "volume": "2232.73",
+   "event_ticker": "KXEARNINGSMENTIONWEN-26AUG07",
+   "ticker": "KXEARNINGSMENTIONWEN-26AUG07-APP",
+   "close_time": "2026-12-31T15:00:00Z"
   },
   {
    "company": "WMT",
@@ -882,8 +940,12 @@
    "last": 0.84,
    "bid": "0.8100",
    "ask": "0.8400",
+   "spread": 0.03,
    "oi": "252.46",
-   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-TARI"
+   "volume": "741.42",
+   "event_ticker": "KXEARNINGSMENTIONWMT-26AUG20",
+   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-TARI",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "WMT",
@@ -891,8 +953,12 @@
    "last": 0.77,
    "bid": "0.7700",
    "ask": "0.7800",
+   "spread": 0.01,
    "oi": "2029.79",
-   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-ROLL"
+   "volume": "3339.64",
+   "event_ticker": "KXEARNINGSMENTIONWMT-26AUG20",
+   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-ROLL",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "WMT",
@@ -900,8 +966,12 @@
    "last": 0.87,
    "bid": "0.8600",
    "ask": "0.8700",
+   "spread": 0.01,
    "oi": "2115.35",
-   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-MARK"
+   "volume": "3330.36",
+   "event_ticker": "KXEARNINGSMENTIONWMT-26AUG20",
+   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-MARK",
+   "close_time": "2027-01-31T15:00:00Z"
   },
   {
    "company": "WMT",
@@ -909,8 +979,12 @@
    "last": 0.85,
    "bid": "0.7900",
    "ask": "0.8500",
+   "spread": 0.06,
    "oi": "552.64",
-   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-AUTOM"
+   "volume": "1035.25",
+   "event_ticker": "KXEARNINGSMENTIONWMT-26AUG20",
+   "ticker": "KXEARNINGSMENTIONWMT-26AUG20-AUTOM",
+   "close_time": "2027-01-31T15:00:00Z"
   }
  ]
 }

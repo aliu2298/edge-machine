@@ -91,30 +91,50 @@ def main():
             continue
         live.append(t)
         for m in ms:
+            # Band on the BID, not last-traded. The strategy is maker-only — you join
+            # the bid, so that is your actual entry. `last` goes stale: VST "Meta" showed
+            # last 0.81 against a 0.71/0.72 book, which would have listed a market as
+            # in-band when the real entry was 10c below it.
             try:
                 lp = float(m.get("last_price_dollars"))
+                bid = float(m.get("yes_bid_dollars"))
             except (TypeError, ValueError):
                 continue
-            if BAND[0] <= lp <= BAND[1]:
-                in_band.append((t.replace(PREFIX, ""), m.get("yes_sub_title"), lp,
-                                m.get("yes_bid_dollars"), m.get("yes_ask_dollars"),
-                                m.get("open_interest_fp"), m.get("ticker")))
+            if BAND[0] <= bid <= BAND[1]:
+                try:
+                    spread = round(float(m.get("yes_ask_dollars")) -
+                                   float(m.get("yes_bid_dollars")), 4)
+                except (TypeError, ValueError):
+                    spread = None
+                in_band.append({
+                    "company": t.replace(PREFIX, ""),
+                    "phrase": m.get("yes_sub_title"),
+                    "last": lp,
+                    "bid": m.get("yes_bid_dollars"),
+                    "ask": m.get("yes_ask_dollars"),
+                    "spread": spread,
+                    "oi": m.get("open_interest_fp"),
+                    "volume": m.get("volume_fp"),
+                    "event_ticker": m.get("event_ticker"),
+                    "ticker": m.get("ticker"),
+                    # listed close is a long-stop; the real resolution is the call itself
+                    "close_time": m.get("close_time"),
+                })
         time.sleep(0.25)
 
     if not quiet:
         print(f"  {len(live)} companies with open markets; "
               f"{len(in_band)} strikes in the {int(BAND[0]*100)}-{int(BAND[1]*100)}c band")
-        for c, sub, lp, bid, ask, oi, _ in sorted(in_band, key=lambda x: -float(x[5] or 0))[:12]:
-            print(f"    {c:<7} {str(sub)[:26]:<26} {lp:.2f} (bid {bid} / ask {ask}) oi={oi}")
+        for r in sorted(in_band, key=lambda x: -float(x["oi"] or 0))[:12]:
+            print(f"    {r['company']:<7} {str(r['phrase'])[:26]:<26} {r['last']:.2f} "
+                  f"(bid {r['bid']} / ask {r['ask']}, sp {r['spread']}) oi={r['oi']}")
 
     os.makedirs(os.path.dirname(STATE), exist_ok=True)
     json.dump({"checked_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                "categories": cats,
                "mention_series": mention,
                "live_series": live,
-               "in_band": [{"company": c, "phrase": s, "last": lp, "bid": b, "ask": a,
-                            "oi": oi, "ticker": tk}
-                           for c, s, lp, b, a, oi, tk in in_band]},
+               "in_band": in_band},
               open(STATE, "w"), indent=1)
     return 0
 

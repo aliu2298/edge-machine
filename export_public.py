@@ -302,7 +302,8 @@ def picks_feed(rows):
 
 def page_html(*, title, heading, subtitle, pend, settled, links, nav, now,
               show_grid=True, done_label="✓ Game finished — show next pick",
-              empty_msg="No open picks right now — check back after the next slate."):
+              empty_msg="No open picks right now — check back after the next slate.",
+              extra_section=""):
     """Render one board. Called once per lane (sports / earnings) — the boards are
     deliberately separate, so each gets its own page, queue and results table."""
     page = f"""<!doctype html><html lang="en"><head>
@@ -364,6 +365,14 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
 .nav a:hover{{color:var(--fg);border-color:var(--mut)}}
 .nav a.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
+.mtbl{{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:6px 10px;overflow-x:auto}}
+.mco{{font-weight:700}}
+.mph{{color:var(--warn);font-weight:600}}
+.msp{{font-size:11px;color:var(--mut)}}
+.mlink{{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
+border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 9px;white-space:nowrap}}
+.mlink:hover{{background:#3fb9702a}}
+.note{{font-size:12px;color:var(--mut);margin:-4px 0 10px}}
 @media (max-width:540px){{
   body{{padding:18px 10px 44px;font-size:14px}}
   h1{{font-size:19px}}
@@ -381,6 +390,7 @@ border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
 <h2>Current picks <span id="qleft"></span></h2>
 {"".join(pending_card(r, links[r["id"]], show_grid=show_grid, done_label=done_label) for r in pend) or f'<div class="mut">{empty_msg}</div>'}
 <div class="mut" id="qempty" style="display:none">Queue finished — check back after the next slate.</div>
+{extra_section}
 <details class="res">
 <summary><h2>Recent results ({len(settled)})</h2><span class="caret">▸</span></summary>
 {f'''<div class="tbl"><table>
@@ -424,6 +434,62 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
 }})();
 </script></body></html>"""
     return page
+
+
+
+WATCH = os.path.join(os.path.dirname(__file__), "data", "kalshi_watch.json")
+MENTION_MAX_SPREAD = 0.03     # wider than this is not workable maker-only
+MENTION_SHOWN = 24
+
+
+def mentions_section():
+    """Second section of the earnings board: live earnings-call MENTION markets.
+
+    These are Kalshi's `KXEARNINGSMENTION<TICKER>` series — "what will <company> say on
+    their next earnings call", one strike per word/phrase. Filtered to the 75-88c entry
+    band with a workable spread; data comes from kalshi_watch.py so this costs no extra
+    API calls at build time.
+
+    Presented as AVAILABLE MARKETS, not as picks. The metric ladders above are chosen;
+    these are supply. Their base rate is high by construction (AMD's settled Aug 4 call
+    had 16 of 17 phrases resolve Yes), so the deep end is priced, not free — the edge is
+    in judging a specific phrase, and that judgement has not been made here.
+    """
+    try:
+        blob = json.load(open(WATCH))
+    except Exception:
+        return ""
+    rows = [r for r in blob.get("in_band", [])
+            if r.get("spread") is not None and r["spread"] <= MENTION_MAX_SPREAD]
+    if not rows:
+        return ""
+    rows.sort(key=lambda r: -(float(r.get("oi") or 0)))
+    checked = (blob.get("checked_at") or "")[:16].replace("T", " ")
+
+    def row_html(r):
+        ev = r.get("event_ticker") or ""
+        link = (f'<a class="mlink" href="https://kalshi.com/events/{esc(ev)}" '
+                f'target="_blank" rel="noopener">Kalshi ↗</a>' if ev else "")
+        return f"""<tr>
+  <td class="mco">{esc(r.get("company"))}</td>
+  <td class="mph">{esc(r.get("phrase"))}</td>
+  <td class="tnum">{float(r["last"]):.2f}</td>
+  <td class="tnum msp">{esc(r.get("bid"))} / {esc(r.get("ask"))}</td>
+  <td class="tnum msp">{float(r["oi"] or 0):,.0f}</td>
+  <td>{link}</td>
+</tr>"""
+
+    return f"""<h2>Earnings-call mentions ({len(rows)})</h2>
+<div class="note">Live Kalshi markets on what a company will <em>say</em> on its next call.
+Banded on the <b>bid</b> ({int(0.75*100)}-{int(0.88*100)}c) because entry is maker-only —
+you join the bid, and last-traded goes stale. Spread ≤{int(MENTION_MAX_SPREAD*100)}c.
+<b>Available markets, not picks.</b> Base rate is high by construction (AMD's Aug 4 call had
+16 of 17 phrases said), so the edge is in judging a specific phrase — that judgement is not
+made here. Scanned {esc(checked)} UTC</div>
+<div class="mtbl"><table>
+<tr><th>Company</th><th>Phrase</th><th>Last</th><th>Bid / Ask (entry)</th><th>OI</th><th></th></tr>
+{"".join(row_html(r) for r in rows[:MENTION_SHOWN])}
+</table></div>"""
 
 
 NAV_SPORTS = ('<div class="nav"><a class="on" href="./">Sports</a>'
@@ -516,7 +582,8 @@ def build():
                           pend=epend, settled=esettled, links=elinks, nav=NAV_EARN, now=now,
                           show_grid=False,
                           done_label="✓ Reported — show next",
-                          empty_msg="No open earnings positions — check back next reporting week."))
+                          empty_msg="No open earnings positions — check back next reporting week.",
+                          extra_section=mentions_section()))
     print(f"wrote {eout}  ({os.path.getsize(eout)/1024:.0f} KB) — {len(epend)} earnings picks, "
           f"{len(esettled)} results (≥{back})")
 
