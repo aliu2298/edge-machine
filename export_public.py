@@ -37,17 +37,23 @@ EARNINGS_SPORT = "kalshi"
 # ---------------------------------------------------------------- venue links
 # Public, unauthenticated feeds only. Extend the lists as leagues open.
 KALSHI_API = "https://api.elections.kalshi.com/trade-api/v2/events"
-KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME", "KXUEFAGAME",
-                 # per-match GAME series for the rest of the 10 tracked leagues
+# Per-match GAME series for the 10 tracked leagues.
+# NB: "KXUEFAGAME" looks right but is an EMPTY series (0 events) — Europa League fixtures
+# live under KXUELGAME. Using the wrong one silently produced tips cards with no Kalshi
+# button for every Europa tie. Verify a series actually returns events before adding it.
+KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME",
                  "KXEPLGAME", "KXLALIGAGAME", "KXBUNDESLIGAGAME", "KXSERIEAGAME",
-                 "KXLIGUE1GAME", "KXEREDIVISIEGAME", "KXLIGAPORTUGALGAME", "KXUCLGAME"]
+                 "KXLIGUE1GAME", "KXEREDIVISIEGAME", "KXLIGAPORTUGALGAME",
+                 "KXUCLGAME", "KXUELGAME", "KXUECLGAME"]
+KALSHI_MAX_PAGES = 3      # events endpoint caps at 200/page and returns a cursor
 BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/description/soccer"
 BOVADA_LEAGUES = ["north-america/united-states/mls",
                   "south-america/brazil/brasileirao-serie-a",
                   "international-club/uefa-champions-league",
                   "international-club/uefa-europa-league"]
 # our team-name token → alternate token some venues use (tried alongside the raw token)
-ALIASES = {"athletico": "paranaense", "angeles": "lafc"}
+ALIASES = {"athletico": "paranaense", "angeles": "lafc",
+           "hearts": "midlothian"}   # Kalshi spells it "Heart of Midlothian"
 MONTHS = {m: i+1 for i, m in enumerate(
     ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"])}
 
@@ -66,24 +72,47 @@ KALSHI_CACHE_TTL = 3600          # seconds
 _KALSHI_MEM = None
 
 
-def _kalshi_series_events(series, tries=4):
-    """One series, with backoff on 429. Kalshi rate-limits hard once you query
-    ~10 series back-to-back, and a silent failure just makes links disappear."""
+def _kalshi_page(url, tries=4):
+    """One request, with backoff on 429. Kalshi rate-limits hard once you query ~10
+    series back-to-back, and a silent failure just makes links disappear."""
     for i in range(tries):
         try:
-            # no status filter: events leave "open" at kickoff, but their pages
-            # keep working (and show the result) — the date check scopes matches
-            return _get_json(f"{KALSHI_API}?series_ticker={series}&limit=200").get("events") or []
+            return _get_json(url)
         except urllib.error.HTTPError as e:
             if e.code == 429 and i < tries - 1:
                 time.sleep(1.5 * (i + 1))
                 continue
-            print(f"  (kalshi lookup skipped for {series}: {e})")
-            return []
+            raise
+    return {}
+
+
+def _kalshi_series_events(series):
+    """All events for a series, following the cursor.
+
+    The endpoint caps at 200 per page. Taking only the first page silently truncated
+    KXUCLGAME (exactly 200 back, cursor non-null), so fixtures past the cut had no link.
+    """
+    out, cursor = [], None
+    for page in range(KALSHI_MAX_PAGES):
+        # no status filter: events leave "open" at kickoff, but their pages keep
+        # working (and show the result) — the date check scopes matches
+        url = f"{KALSHI_API}?series_ticker={series}&limit=200"
+        if cursor:
+            url += f"&cursor={cursor}"
+        try:
+            data = _kalshi_page(url)
         except Exception as e:
             print(f"  (kalshi lookup skipped for {series}: {e})")
-            return []
-    return []
+            break
+        evs = data.get("events") or []
+        out += evs
+        cursor = data.get("cursor")
+        if not cursor or not evs:
+            break
+        time.sleep(0.3)
+    if not out:
+        print(f"  (kalshi: {series} returned NO events — wrong series ticker?)")
+    return out
 
 
 def fetch_kalshi_events():
