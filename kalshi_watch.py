@@ -27,12 +27,27 @@ Close   listed close_time is a LONG-STOP (Dec 31 / Jan 31); the real resolution 
 
 Usage:  python3 kalshi_watch.py [--quiet]
 """
-import json, os, sys, time, urllib.request
+import json, os, re, sys, time, datetime, urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 STATE = os.path.join(ROOT, "data", "kalshi_watch.json")
 B = "https://api.elections.kalshi.com/trade-api/v2"
 PREFIX = "KXEARNINGSMENTION"
+MON = {m: i + 1 for i, m in enumerate(
+    ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"])}
+
+
+def call_date(event_ticker):
+    """Call date from the event ticker (…-26AUG10). The listed close_time is a
+    long-stop (Dec 31), so the ticker is the only reliable date source."""
+    m = re.search(r"-(\d{2})([A-Z]{3})(\d{2})$", event_ticker or "")
+    if not m:
+        return None
+    try:
+        return datetime.date(2000 + int(m.group(1)), MON[m.group(2)],
+                             int(m.group(3))).isoformat()
+    except (KeyError, ValueError):
+        return None
 BAND = (0.75, 0.88)          # the clock-out entry band
 
 
@@ -116,6 +131,7 @@ def main():
                     "oi": m.get("open_interest_fp"),
                     "volume": m.get("volume_fp"),
                     "event_ticker": m.get("event_ticker"),
+                    "call_date": call_date(m.get("event_ticker")),
                     "ticker": m.get("ticker"),
                     # listed close is a long-stop; the real resolution is the call itself
                     "close_time": m.get("close_time"),

@@ -53,6 +53,13 @@ jobs:
       - name: Watch for new Kalshi market types
         run: python3 kalshi_watch.py
 
+      # Grade earnings-call mention picks off Kalshi's own resolution and report
+      # calibration. Base rate on these is high by construction, so win rate proves
+      # little — the Brier-vs-base-rate line is the number that says whether the
+      # phrase judgement is real. Never fails the run.
+      - name: Score mention picks
+        run: python3 mention_settle.py
+
       - name: Rebuild tips board
         run: python3 sg_build.py
 

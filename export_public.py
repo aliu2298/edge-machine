@@ -372,7 +372,29 @@ border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
 .mlink{{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
 border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 9px;white-space:nowrap}}
 .mlink:hover{{background:#3fb9702a}}
-.note{{font-size:12px;color:var(--mut);margin:-4px 0 10px}}
+.note{{font-size:12px;color:var(--mut);margin:-4px 0 14px;line-height:1.5}}
+.mday{{margin-bottom:16px}}
+.mdate{{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+color:var(--fg);border-bottom:1px solid var(--bd);padding-bottom:5px;margin-bottom:8px}}
+.mrow{{background:var(--card);border:1px solid var(--bd);border-radius:10px;
+padding:10px 12px;margin-bottom:7px}}
+.mhead{{display:flex;align-items:center;gap:8px;flex-wrap:wrap}}
+.mco{{font-weight:800;font-size:13px}}
+.mph{{color:var(--warn);font-weight:700;font-size:14px}}
+.msp{{font-size:11px;color:var(--mut)}}
+.mlean{{font-size:11px;color:var(--mut);border:1px solid var(--bd);border-radius:999px;padding:2px 8px}}
+.vtake{{font-size:10.5px;font-weight:800;color:var(--pos);border:1px solid #3fb97055;
+background:#3fb97014;border-radius:999px;padding:2px 8px}}
+.vthin{{font-size:10.5px;font-weight:800;color:var(--warn);border:1px solid #f0b42955;
+background:#f0b42914;border-radius:999px;padding:2px 8px}}
+.vpass{{font-size:10.5px;font-weight:800;color:var(--mut);border:1px solid var(--bd);
+border-radius:999px;padding:2px 8px}}
+.mwhy{{font-size:12.5px;color:var(--mut);margin-top:7px;border-left:2px solid var(--bd);
+padding-left:10px;line-height:1.5}}
+.mlink{{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
+border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:3px 9px;
+white-space:nowrap;margin-left:auto}}
+.mlink:hover{{background:#3fb9702a}}
 @media (max-width:540px){{
   body{{padding:18px 10px 44px;font-size:14px}}
   h1{{font-size:19px}}
@@ -438,58 +460,104 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
 
 
 WATCH = os.path.join(os.path.dirname(__file__), "data", "kalshi_watch.json")
+RATIONALE = os.path.join(os.path.dirname(__file__), "data", "mention_rationale.json")
 MENTION_MAX_SPREAD = 0.03     # wider than this is not workable maker-only
-MENTION_SHOWN = 24
+MENTION_WEEKS = 45            # only show calls within this many days
 
 
 def mentions_section():
-    """Second section of the earnings board: live earnings-call MENTION markets.
+    """Second section of the earnings board: live earnings-call MENTION markets,
+    arranged BY CALL DATE.
 
-    These are Kalshi's `KXEARNINGSMENTION<TICKER>` series — "what will <company> say on
-    their next earnings call", one strike per word/phrase. Filtered to the 75-88c entry
-    band with a workable spread; data comes from kalshi_watch.py so this costs no extra
-    API calls at build time.
+    Kalshi's `KXEARNINGSMENTION<TICKER>` series — "what will <company> say on their next
+    earnings call", one strike per word/phrase, resolving if the phrase is said by any
+    company representative (Q+A included).
 
-    Presented as AVAILABLE MARKETS, not as picks. The metric ladders above are chosen;
-    these are supply. Their base rate is high by construction (AMD's settled Aug 4 call
-    had 16 of 17 phrases resolve Yes), so the deep end is priced, not free — the edge is
-    in judging a specific phrase, and that judgement has not been made here.
+    Each row carries our own reasoning and a stated `lean` (our probability), written
+    BEFORE the call so mention_settle.py can score calibration rather than just P&L.
+    That matters because the base rate here is high by construction — AMD's Aug 4 call had
+    16 of 17 phrases said — so win rate alone proves nothing.
+
+    Where our lean sits at or below the market's bid we mark it PASS: the market is asking
+    at least what we think it is worth, so there is no edge to take.
     """
     try:
         blob = json.load(open(WATCH))
     except Exception:
         return ""
+    try:
+        rat = json.load(open(RATIONALE)).get("rationale", {})
+    except Exception:
+        rat = {}
+    today = datetime.date.today()
+    horizon = (today + datetime.timedelta(days=MENTION_WEEKS)).isoformat()
+
     rows = [r for r in blob.get("in_band", [])
-            if r.get("spread") is not None and r["spread"] <= MENTION_MAX_SPREAD]
+            if r.get("spread") is not None and r["spread"] <= MENTION_MAX_SPREAD
+            and r.get("call_date") and today.isoformat() <= r["call_date"] <= horizon]
     if not rows:
         return ""
-    rows.sort(key=lambda r: -(float(r.get("oi") or 0)))
-    checked = (blob.get("checked_at") or "")[:16].replace("T", " ")
 
-    def row_html(r):
-        ev = r.get("event_ticker") or ""
-        link = (f'<a class="mlink" href="https://kalshi.com/events/{esc(ev)}" '
-                f'target="_blank" rel="noopener">Kalshi ↗</a>' if ev else "")
-        return f"""<tr>
-  <td class="mco">{esc(r.get("company"))}</td>
-  <td class="mph">{esc(r.get("phrase"))}</td>
-  <td class="tnum">{float(r["last"]):.2f}</td>
-  <td class="tnum msp">{esc(r.get("bid"))} / {esc(r.get("ask"))}</td>
-  <td class="tnum msp">{float(r["oi"] or 0):,.0f}</td>
-  <td>{link}</td>
-</tr>"""
+    by_date = {}
+    for r in rows:
+        by_date.setdefault(r["call_date"], []).append(r)
 
+    def verdict(r):
+        info = rat.get(f"{r.get('company')}|{r.get('phrase')}")
+        if not info:
+            return "", "", None
+        lean = info.get("lean")
+        try:
+            bid = float(r.get("bid"))
+        except (TypeError, ValueError):
+            bid = None
+        if lean is None or bid is None:
+            return info.get("why", ""), "", lean
+        edge = lean - bid
+        if edge <= 0.01:
+            tag = '<span class="vpass">PASS</span>'
+        elif edge >= 0.08:
+            tag = f'<span class="vtake">TAKE +{edge*100:.0f}c</span>'
+        else:
+            tag = f'<span class="vthin">thin +{edge*100:.0f}c</span>'
+        return info.get("why", ""), tag, lean
+
+    out = []
+    for d in sorted(by_date):
+        try:
+            nice = datetime.date.fromisoformat(d).strftime("%a %d %b")
+        except ValueError:
+            nice = d
+        days = (datetime.date.fromisoformat(d) - today).days
+        when = "today" if days == 0 else ("tomorrow" if days == 1 else f"in {days}d")
+        cards = []
+        for r in sorted(by_date[d], key=lambda x: (x.get("company") or "")):
+            why, tag, lean = verdict(r)
+            leanh = f'<span class="mlean">our lean {lean:.2f}</span>' if lean is not None else ""
+            ev = r.get("event_ticker") or ""
+            link = (f'<a class="mlink" href="https://kalshi.com/events/{esc(ev)}" '
+                    f'target="_blank" rel="noopener">Kalshi ↗</a>' if ev else "")
+            cards.append(f"""<div class="mrow">
+  <div class="mhead"><span class="mco">{esc(r.get("company"))}</span>
+    <span class="mph">{esc(r.get("phrase"))}</span>
+    <span class="msp tnum">bid {esc(r.get("bid"))} / ask {esc(r.get("ask"))}</span>
+    {leanh}{tag}{link}</div>
+  {f'<div class="mwhy">{esc(why)}</div>' if why else
+   '<div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>'}
+</div>""")
+        out.append(f'<div class="mday"><div class="mdate">{esc(nice)} '
+                   f'<span class="mut">· {when}</span></div>{"".join(cards)}</div>')
+
+    scanned = (blob.get("checked_at") or "")[:16].replace("T", " ")
     return f"""<h2>Earnings-call mentions ({len(rows)})</h2>
-<div class="note">Live Kalshi markets on what a company will <em>say</em> on its next call.
-Banded on the <b>bid</b> ({int(0.75*100)}-{int(0.88*100)}c) because entry is maker-only —
-you join the bid, and last-traded goes stale. Spread ≤{int(MENTION_MAX_SPREAD*100)}c.
-<b>Available markets, not picks.</b> Base rate is high by construction (AMD's Aug 4 call had
-16 of 17 phrases said), so the edge is in judging a specific phrase — that judgement is not
-made here. Scanned {esc(checked)} UTC</div>
-<div class="mtbl"><table>
-<tr><th>Company</th><th>Phrase</th><th>Last</th><th>Bid / Ask (entry)</th><th>OI</th><th></th></tr>
-{"".join(row_html(r) for r in rows[:MENTION_SHOWN])}
-</table></div>"""
+<div class="note">Kalshi markets on what a company will <em>say</em> on its next call, by call date.
+Banded on the <b>bid</b> (75-88c) because entry is maker-only — you join the bid, and
+last-traded goes stale. Spread ≤{int(MENTION_MAX_SPREAD*100)}c.
+<b>Our lean is stated before the call</b> so accuracy can be scored, not just P&amp;L —
+the base rate is high by construction (AMD's Aug 4 call: 16 of 17 phrases said), so a good
+win rate alone would prove nothing. <b>PASS</b> = our lean is at or under the market bid.
+Scanned {esc(scanned)} UTC</div>
+{"".join(out)}"""
 
 
 NAV_SPORTS = ('<div class="nav"><a class="on" href="./">Sports</a>'
