@@ -47,9 +47,10 @@ jobs:
       - name: Health check
         run: python3 sg_health.py
 
-      # Company earnings-call MENTION markets don't exist on Kalshi yet (verified across
-      # all 8,055 series, Aug 5 2026). This watches for the day they appear instead of
-      # re-running that scan by hand. Never fails the run.
+      # Tracks Kalshi's KXEARNINGSMENTION series (159 companies, category "Mentions").
+      # An earlier note here claimed these did not exist — that was wrong: the scan had
+      # hardcoded 10 of Kalshi's 18 categories and never looked at "Mentions".
+      # Refreshes live in-band strikes for the earnings board. Never fails the run.
       - name: Watch for new Kalshi market types
         run: python3 kalshi_watch.py
 
