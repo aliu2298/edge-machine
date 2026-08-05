@@ -389,6 +389,8 @@ background:#3fb97014;border-radius:999px;padding:2px 8px}}
 background:#f0b42914;border-radius:999px;padding:2px 8px}}
 .vpass{{font-size:10.5px;font-weight:800;color:var(--mut);border:1px solid var(--bd);
 border-radius:999px;padding:2px 8px}}
+.vheld{{font-size:10.5px;font-weight:800;color:#0a0d14;background:var(--pos);
+border-radius:999px;padding:2px 8px}}
 .mwhy{{font-size:12.5px;color:var(--mut);margin-top:7px;border-left:2px solid var(--bd);
 padding-left:10px;line-height:1.5}}
 .mlink{{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
@@ -461,6 +463,7 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
 
 WATCH = os.path.join(os.path.dirname(__file__), "data", "kalshi_watch.json")
 RATIONALE = os.path.join(os.path.dirname(__file__), "data", "mention_rationale.json")
+MPICKS = os.path.join(os.path.dirname(__file__), "data", "mention_picks.json")
 MENTION_MAX_SPREAD = 0.03     # wider than this is not workable maker-only
 MENTION_WEEKS = 45            # only show calls within this many days
 
@@ -489,6 +492,12 @@ def mentions_section():
         rat = json.load(open(RATIONALE)).get("rationale", {})
     except Exception:
         rat = {}
+    try:
+        mp = json.load(open(MPICKS)).get("picks", [])
+    except Exception:
+        mp = []
+    # rows we actually hold, so the board distinguishes a position from mere supply
+    taken = {(p.get("company"), p.get("phrase")): p for p in mp}
     today = datetime.date.today()
     horizon = (today + datetime.timedelta(days=MENTION_WEEKS)).isoformat()
 
@@ -534,6 +543,10 @@ def mentions_section():
         for r in sorted(by_date[d], key=lambda x: (x.get("company") or "")):
             why, tag, lean = verdict(r)
             leanh = f'<span class="mlean">our lean {lean:.2f}</span>' if lean is not None else ""
+            held = taken.get((r.get("company"), r.get("phrase")))
+            if held:
+                tag = (f'<span class="vheld">HELD @{float(held.get("entry_price") or 0):.2f}</span>'
+                       + tag)
             ev = r.get("event_ticker") or ""
             link = (f'<a class="mlink" href="https://kalshi.com/events/{esc(ev)}" '
                     f'target="_blank" rel="noopener">Kalshi ↗</a>' if ev else "")
