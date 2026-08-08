@@ -63,7 +63,10 @@ def main():
             continue
         if age > SETTLE_GRACE_DAYS:
             stuck.append((age, p))
-    for age, p in sorted(stuck, reverse=True):
+    # Sort on age ONLY. `sorted(stuck, reverse=True)` compared the tuples, so two picks
+    # with the SAME age fell through to comparing the dicts and raised TypeError — which
+    # crashed the whole run for three days. Never sort tuples whose tail isn't orderable.
+    for age, p in sorted(stuck, key=lambda x: -x[0]):
         note("warning", f"STUCK {age}d unsettled: {p.get('match')} ({p.get('league')}) "
                         f"{p.get('date')} — likely an ESPN team-name mismatch; "
                         f"add an entry to ALIASES in sg_settle.py")
@@ -198,4 +201,15 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # A guardrail must never be able to break the thing it guards. main() is warn-only by
+    # exit code, but an unhandled exception bypassed that and failed the pipeline for three
+    # days (a TypeError sorting stuck picks). Any unexpected error is now reported and
+    # swallowed, unless --strict is explicitly requested.
+    try:
+        sys.exit(main())
+    except Exception as e:
+        import traceback
+        note("warning", f"sg_health crashed ({type(e).__name__}: {e}) — "
+                        f"checks skipped, pipeline continues")
+        traceback.print_exc()
+        sys.exit(1 if "--strict" in sys.argv else 0)
