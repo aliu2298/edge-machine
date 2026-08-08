@@ -24,12 +24,24 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data", "sg_picks.json")
 STAKE = 1.0                       # flat 1 unit, paper-tracked
 
-ESPN = "https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/scoreboard?dates={d}"
+# ESPN hosts, tried in order. site.api began returning 403 for EVERY league on 2026-08-08
+# — from this machine AND from the GitHub runner, with any user-agent — so it is a
+# server-side block, not a rate limit we caused. site.web.api serves the identical payload
+# on the identical path. Keeping a list means one host going dark degrades instead of
+# killing settlement outright.
+ESPN_HOSTS = ["https://site.web.api.espn.com", "https://site.api.espn.com"]
+ESPN_PATH = "/apis/site/v2/sports/soccer/{lg}/scoreboard?dates={d}"
+# Each competition maps to a LIST of ESPN slugs, all of which are searched.
+# QUALIFYING rounds live under a separate "_qual" slug: on 2026-08-04 `uefa.champions`
+# returned 0 events while `uefa.champions_qual` returned 8 (Red Star at Hapoel Be'er
+# Sheva etc.). Querying only the main slug left every August qualifier permanently
+# unsettleable — the same failure shape as pointing at the wrong Kalshi series ticker.
 ESPN_LEAGUE = {
-    "Premier League": "eng.1", "La Liga": "esp.1", "Bundesliga": "ger.1",
-    "Serie A": "ita.1", "Ligue 1": "fra.1", "MLS": "usa.1",
-    "Eredivisie": "ned.1", "Primeira Liga": "por.1",
-    "Champions League": "uefa.champions", "Europa League": "uefa.europa",
+    "Premier League": ["eng.1"], "La Liga": ["esp.1"], "Bundesliga": ["ger.1"],
+    "Serie A": ["ita.1"], "Ligue 1": ["fra.1"], "MLS": ["usa.1"],
+    "Eredivisie": ["ned.1"], "Primeira Liga": ["por.1"],
+    "Champions League": ["uefa.champions", "uefa.champions_qual"],
+    "Europa League": ["uefa.europa", "uefa.europa_qual", "uefa.europa.conf"],
 }
 _cache = {}
 
@@ -41,6 +53,11 @@ _cache = {}
 ALIASES = {
     "angeles": {"lafc"},
     "athletico": {"paranaense"},
+    # ESPN renders these clubs with a completely different name from sportsgambler,
+    # so no token overlaps and the fixture never settles. Each was surfaced by a
+    # sg_health STUCK warning — that is the loop working as intended.
+    "zvezda": {"belgrade", "star"},        # Crvena Zvezda -> "Red Star Belgrade"
+    "hearts": {"midlothian"},              # Hearts        -> "Heart of Midlothian"
 }
 
 
@@ -54,21 +71,36 @@ def _norm(s):
 
 
 def espn_scores(league, date):
-    """[(home, away, hs, as_)] of FINISHED matches for a league/date."""
-    lg = ESPN_LEAGUE.get(league)
-    if not lg or not date:
+    """[(home, away, hs, as_)] of FINISHED matches for a league/date, across every
+    slug that competition uses (main + qualifying)."""
+    slugs = ESPN_LEAGUE.get(league)
+    if not slugs or not date:
         return []
-    key = (lg, date)
+    key = (league, date)
     if key in _cache:
         return _cache[key]
-    url = ESPN.format(lg=lg, d=date.replace("-", ""))
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "edge-machine/1.0"})
-        with urllib.request.urlopen(req, timeout=25) as r:
-            data = json.load(r)
-    except Exception as e:
-        print(f"  ! espn fetch failed {lg} {date}: {e}", file=sys.stderr)
-        _cache[key] = []
+    out = []
+    for lg in slugs:
+        out += _espn_one(lg, date)
+    _cache[key] = out
+    return out
+
+
+def _espn_one(lg, date):
+    """One league slug, trying each host."""
+    path = ESPN_PATH.format(lg=lg, d=date.replace("-", ""))
+    data, last_err = None, None
+    for host in ESPN_HOSTS:
+        try:
+            req = urllib.request.Request(host + path,
+                                         headers={"User-Agent": "edge-machine/1.0"})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                data = json.load(r)
+            break
+        except Exception as e:
+            last_err = e
+    if data is None:
+        print(f"  ! espn fetch failed {lg} {date} on all hosts: {last_err}", file=sys.stderr)
         return []
     out = []
     for e in data.get("events", []):
@@ -85,7 +117,6 @@ def espn_scores(league, date):
                         int(h.get("score")), int(a.get("score"))))
         except (TypeError, ValueError, KeyError):
             continue
-    _cache[key] = out
     return out
 
 

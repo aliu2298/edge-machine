@@ -37,6 +37,11 @@ def apifootball(path, params=None): return _apisports(APIFOOTBALL_BASE, path, pa
 def apinba(path, params=None):      return _apisports(APINBA_BASE, path, params)        # NBA
 
 # ---- Open-Meteo (keyless, free) — kickoff weather for totals (rain/wind dampen scoring)
+# site.api.espn.com began 403-ing every request on 2026-08-08 (this machine AND the
+# GitHub runner, any user-agent) — a server-side block, not our rate limit. site.web.api
+# serves the identical payload on the identical path.
+ESPN_HOST = "https://site.web.api.espn.com"
+
 def _get_json(url, retries=3):
     req = urllib.request.Request(url, headers={"User-Agent": "pred-tracker/1.0"})
     for attempt in range(retries):
@@ -112,7 +117,7 @@ def nba_fetch_score(gid):
 ESPN_PATH = {"nba": "basketball/nba", "wnba": "basketball/wnba", "mlb": "baseball/mlb", "nhl": "hockey/nhl"}  # keyless ESPN, no free-plan paywall
 def espn_fetch_score(sport, event_id):
     """ESPN summary (keyless) → (home, away, desc) ONLY if STATUS_FINAL, else None. sport ∈ ESPN_PATH."""
-    j = _get_json(f"https://site.api.espn.com/apis/site/v2/sports/{ESPN_PATH[sport]}/summary?event={event_id}")
+    j = _get_json(f"{ESPN_HOST}/apis/site/v2/sports/{ESPN_PATH[sport]}/summary?event={event_id}")
     comp = ((j.get("header") or {}).get("competitions") or [{}])[0]
     if (((comp.get("status") or {}).get("type") or {}).get("name")) != "STATUS_FINAL": return None
     home=away=None; hn=an="?"
@@ -127,7 +132,7 @@ def espn_fetch_score(sport, event_id):
 def espn_games(sport, date=""):
     """ESPN scoreboard (keyless) → list of {event_id, teams, status, spread/total, scores}."""
     d=(date or "").replace("-","")
-    url=f"https://site.api.espn.com/apis/site/v2/sports/{ESPN_PATH[sport]}/scoreboard"+("?dates="+d if d else "")
+    url=f"{ESPN_HOST}/apis/site/v2/sports/{ESPN_PATH[sport]}/scoreboard"+("?dates="+d if d else "")
     out=[]
     for e in _get_json(url).get("events",[]):
         c=(e.get("competitions") or [{}])[0]; comps=c.get("competitors") or []
@@ -323,8 +328,14 @@ def espn_soccer_final(match, kickoff):
 
 # Post-WC: settle searches these ESPN league feeds in order for the matchup (WC first for history,
 # then the active club competitions). Add slugs here when a new tournament enters the rotation.
-ESPN_SOCCER_LEAGUES = ["fifa.world","usa.1","bra.1","uefa.champions","uefa.europa",
-                       "eng.1","esp.1","ger.1","ita.1","fra.1","eng.2","mex.1","concacaf.leagues.cup"]
+ESPN_SOCCER_LEAGUES = ["fifa.world","usa.1","bra.1",
+                       # QUALIFYING rounds sit under separate slugs — uefa.champions
+                       # returned 0 events for the Aug 4 ties while _qual returned 8.
+                       "uefa.champions","uefa.champions_qual",
+                       "uefa.europa","uefa.europa_qual","uefa.europa.conf",
+                       "eng.1","esp.1","ger.1","ita.1","fra.1","eng.2","mex.1",
+                       "ned.1","por.1","den.1","aut.1","sui.1","swe.1","nor.1",
+                       "concacaf.leagues.cup"]
 
 def _espn_final_compute(match, kickoff):
     """Grade a soccer pick from its 'A v B' matchup + kickoff date via ESPN (FINAL only).
@@ -336,7 +347,7 @@ def _espn_final_compute(match, kickoff):
     except ValueError: return None
     for d in (base, base-datetime.timedelta(days=1)):   # late-UTC games can sit on the prior ESPN date
       for lg in ESPN_SOCCER_LEAGUES:
-        try: data=_get_json(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
+        try: data=_get_json(f"{ESPN_HOST}/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
         except Exception: continue
         for e in data.get("events",[]):
             comp=(e.get("competitions") or [{}])[0]
@@ -374,7 +385,7 @@ def _espn_box_compute(match, kickoff):
     except ValueError: return None
     for d in (base, base-datetime.timedelta(days=1)):   # late-UTC games can sit on the prior ESPN date
       for lg in ESPN_SOCCER_LEAGUES:
-        try: data=_get_json(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
+        try: data=_get_json(f"{ESPN_HOST}/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
         except Exception: continue
         for e in data.get("events",[]):
             comp=(e.get("competitions") or [{}])[0]
@@ -387,7 +398,7 @@ def _espn_box_compute(match, kickoff):
                 except (TypeError,ValueError): pass
             eid=e.get("id")
             if not eid: continue
-            try: summ=_get_json(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lg}/summary?event="+str(eid))
+            try: summ=_get_json(f"{ESPN_HOST}/apis/site/v2/sports/soccer/{lg}/summary?event="+str(eid))
             except Exception: return None
             cor={}; allstats={}    # allstats[team] = {statName: float} — the FULL boxscore line, not just corners
             for t in ((summ.get("boxscore") or {}).get("teams") or []):
@@ -852,6 +863,11 @@ class H(BaseHTTPRequestHandler):
         if p=="/api/insights":
             c=db(); rows=[dict(r) for r in c.execute("SELECT * FROM insights ORDER BY id DESC LIMIT 10").fetchall()]; c.close()
             return self._send(rows)
+        if p=="/api/staged":                                                # Kalshi staged-order slate (approve in UI)
+            try:
+                with open(os.path.join(ROOT,"staged_orders.json")) as fh: data=json.load(fh)
+            except Exception: data={"orders":[]}
+            return self._send(data)
         if p=="/api/export.csv":
             c=db(); rows=c.execute("SELECT * FROM predictions ORDER BY id").fetchall(); c.close()
             buf=io.StringIO(); w=csv.writer(buf)
@@ -966,6 +982,49 @@ class H(BaseHTTPRequestHandler):
             except Exception: pass
             row["dispatched"] = False   # request queued in DB + inbox; Claude fulfills on manual activation
             return self._send(row,201)
+        if p in ("/api/staged/execute","/api/staged/dismiss"):
+            # Kalshi staged slate. EXECUTE is only ever triggered by the USER's Approve click in the UI —
+            # the server relays their decision to kalshi_client.py. Claude never calls this endpoint.
+            b=self._body(); i=int(b.get("index",-1))
+            spath=os.path.join(ROOT,"staged_orders.json")
+            try:
+                with open(spath) as fh: data=json.load(fh)
+            except Exception: return self._send({"error":"no staged file"},404)
+            orders=data.get("orders",[])
+            if not (0<=i<len(orders)): return self._send({"error":"bad index"},400)
+            o=orders[i]
+            if p.endswith("dismiss"):
+                o["status"]="dismissed"
+            else:
+                if o.get("status")=="live": return self._send({"error":"already live"},409)
+                prm=o.get("params") or {}
+                if not prm: return self._send({"error":"order missing params"},400)
+                venvpy=os.path.join(ROOT,".venv","bin","python")
+                if prm.get("cancel_order_id"):        # re-price: cancel the stale resting order first
+                    rc=subprocess.run([venvpy,os.path.join(ROOT,"kalshi_client.py"),"cancel",prm["cancel_order_id"]],
+                                      cwd=ROOT,capture_output=True,text=True,timeout=30)
+                    if rc.returncode!=0:
+                        o["status"]="error"; o["exchange_response"]={"cancel_failed":(rc.stderr or rc.stdout)[:300]}
+                        with open(spath,"w") as fh: json.dump(data,fh,indent=1)
+                        return self._send({"index":i,"status":"error","response":o["exchange_response"]})
+                payload=json.dumps({"ticker":prm["ticker"],"action":prm["action"],
+                                    "side":prm["side"],"count":prm["count"],
+                                    "price_cents":prm["price_cents"],
+                                    "post_only":prm.get("post_only",True),"live":True})
+                venvpy=os.path.join(ROOT,".venv","bin","python")
+                try:
+                    r=subprocess.run([venvpy,os.path.join(ROOT,"kalshi_client.py"),"place",payload],
+                                     cwd=ROOT,capture_output=True,text=True,timeout=30)
+                    out=(r.stdout or "").strip()
+                    try: resp=json.loads(out)
+                    except Exception: resp={"raw":out[:300],"stderr":(r.stderr or "")[:300],"rc":r.returncode}
+                    o["status"]="live" if r.returncode==0 else "error"
+                    o["exchange_response"]=resp
+                    o["executed_at"]=datetime.datetime.now().isoformat(timespec="seconds")
+                except Exception as e:
+                    o["status"]="error"; o["exchange_response"]={"error":str(e)[:300]}
+            with open(spath,"w") as fh: json.dump(data,fh,indent=1)
+            return self._send({"index":i,"status":o["status"],"response":o.get("exchange_response")})
         if p=="/api/insights":
             b=self._body(); c=db()
             cur=c.execute("INSERT INTO insights(created_at,summary,metrics) VALUES(?,?,?)",
