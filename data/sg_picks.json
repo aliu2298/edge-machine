@@ -1,6 +1,6 @@
 {
- "updated_at": "2026-08-08T19:18:03+00:00",
- "count": 32,
+ "updated_at": "2026-08-09T11:47:35+00:00",
+ "count": 33,
  "picks": [
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/chicago-fire-vs-charlotte-fc-prediction-lineups-odds-2026-08-01/",
@@ -824,7 +824,16 @@
     "8/10 away"
    ],
    "league": "Primeira Liga",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 2,
+   "final_away": 2,
+   "final_score": "2-2",
+   "proj_result": "miss",
+   "btts_actual": "Yes",
+   "btts_result": "miss",
+   "tip_result": "win",
+   "tip_pl": 0.7874,
+   "settled_at": "2026-08-09T11:47:35+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/nec-nijmegen-vs-sc-telstar-prediction-lineups-odds-2026-08-08/",
@@ -855,7 +864,16 @@
     "8/10 away"
    ],
    "league": "Eredivisie",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 1,
+   "final_away": 2,
+   "final_score": "1-2",
+   "proj_result": "miss",
+   "btts_actual": "Yes",
+   "btts_result": "hit",
+   "tip_result": "win",
+   "tip_pl": 0.8475,
+   "settled_at": "2026-08-09T11:47:35+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/new-england-revolution-vs-houston-dynamo-prediction-lineups-odds-2026-08-08/",
@@ -886,7 +904,16 @@
     "5/10 away"
    ],
    "league": "MLS",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 0,
+   "final_away": 2,
+   "final_score": "0-2",
+   "proj_result": "miss",
+   "btts_actual": "No",
+   "btts_result": "miss",
+   "tip_result": "loss",
+   "tip_pl": -1.0,
+   "settled_at": "2026-08-09T11:47:35+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/psv-vs-fortuna-sittard-prediction-lineups-odds-2026-08-08/",
@@ -917,7 +944,16 @@
     "7/10 away"
    ],
    "league": "Eredivisie",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 2,
+   "final_away": 2,
+   "final_score": "2-2",
+   "proj_result": "miss",
+   "btts_actual": "Yes",
+   "btts_result": "hit",
+   "tip_result": "loss",
+   "tip_pl": -1.0,
+   "settled_at": "2026-08-09T11:47:35+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/vitoria-de-guimaraes-vs-arouca-prediction-lineups-odds-2026-08-08/",
@@ -948,7 +984,16 @@
     "5/10 away"
    ],
    "league": "Primeira Liga",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 0,
+   "final_away": 1,
+   "final_score": "0-1",
+   "proj_result": "miss",
+   "btts_actual": "No",
+   "btts_result": "miss",
+   "tip_result": "win",
+   "tip_pl": 0.8772,
+   "settled_at": "2026-08-09T11:47:35+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/gil-vicente-vs-rio-ave-prediction-lineups-odds-2026-08-09/",
@@ -1165,6 +1210,37 @@
     "4/10 away"
    ],
    "league": "Eredivisie",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/santa-clara-vs-nacional-prediction-lineups-odds-2026-08-10/",
+   "scraped_at": "2026-08-09T11:47:31+00:00",
+   "home": "Santa Clara",
+   "away": "Nacional",
+   "date": "2026-08-10",
+   "match": "Santa Clara v Nacional",
+   "kickoff_text": "Mon 10 Aug 12:15",
+   "tip_text": "Under 2.5 Goals @ -154",
+   "tip_odds_american": "-154",
+   "tip_odds_decimal": 1.6494,
+   "proj_home_team": "Santa Clara",
+   "proj_away_team": "Nacional",
+   "proj_home": 1,
+   "proj_away": 0,
+   "proj_score": "1-0",
+   "proj_score_odds": "+440",
+   "btts_yes_odds": "-111",
+   "btts_no_odds": "-130",
+   "btts_yes_decimal": 1.9009,
+   "btts_no_decimal": 1.7692,
+   "btts_implied": "No",
+   "btts_form": [
+    "3/10 overall",
+    "3/10 home",
+    "2/10 overall",
+    "5/10 away"
+   ],
+   "league": "Primeira Liga",
    "status": "pending"
   }
  ]
