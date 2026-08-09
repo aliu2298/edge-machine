@@ -391,6 +391,10 @@ background:#f0b42914;border-radius:999px;padding:2px 8px}}
 border-radius:999px;padding:2px 8px}}
 .vheld{{font-size:10.5px;font-weight:800;color:#0a0d14;background:var(--pos);
 border-radius:999px;padding:2px 8px}}
+.fmt{{font-size:10px;border-radius:999px;padding:2px 8px;border:1px solid}}
+.fmt.fgood{{color:var(--pos);border-color:#3fb97044;background:#3fb9700f}}
+.fmt.fbad{{color:var(--neg);border-color:#e06c7544;background:#e06c750f}}
+.fmt.funk{{color:var(--mut);border-color:var(--bd)}}
 .mwhy{{font-size:12.5px;color:var(--mut);margin-top:7px;border-left:2px solid var(--bd);
 padding-left:10px;line-height:1.5}}
 .mlink{{font-size:11px;font-weight:700;color:#3fb970;text-decoration:none;
@@ -489,9 +493,11 @@ def mentions_section():
     except Exception:
         return ""
     try:
-        rat = json.load(open(RATIONALE)).get("rationale", {})
+        _rblob = json.load(open(RATIONALE))
+        rat = _rblob.get("rationale", {})
+        fmt = _rblob.get("call_format", {})
     except Exception:
-        rat = {}
+        rat, fmt = {}, {}
     try:
         mp = json.load(open(MPICKS)).get("picks", [])
     except Exception:
@@ -512,24 +518,48 @@ def mentions_section():
         by_date.setdefault(r["call_date"], []).append(r)
 
     def verdict(r):
-        info = rat.get(f"{r.get('company')}|{r.get('phrase')}")
+        """(why, tag, lean, format_note).
+
+        THE FORMAT GATE runs before the price comparison. A financial-vocabulary phrase
+        only pays if the company actually delivers prepared remarks on the call; on a
+        Q&A-only company nobody walks the P&L and the word may never be said. LYFT
+        "Revenue" was leaned .99 against a .79 bid on exactly that mistake and resolved NO.
+        So: financial phrase + qa_only  -> forced PASS, whatever the lean says.
+                 financial phrase + unverified format -> capped at "thin", never TAKE.
+        """
+        co = r.get("company")
+        info = rat.get(f"{co}|{r.get('phrase')}")
+        finfo = fmt.get(co) or {}
+        cf = finfo.get("format", "unverified")
+        fmt_note = {"qa_only": "Q&A only — no live prepared remarks",
+                    "remarks_live": "delivers prepared remarks live",
+                    "unverified": "call format not yet verified"}[cf if cf in
+                    ("qa_only", "remarks_live") else "unverified"]
         if not info:
-            return "", "", None
-        lean = info.get("lean")
+            return "", "", None, (cf, fmt_note)
+        lean, kind = info.get("lean"), info.get("kind", "topic")
         try:
             bid = float(r.get("bid"))
         except (TypeError, ValueError):
             bid = None
         if lean is None or bid is None:
-            return info.get("why", ""), "", lean
+            return info.get("why", ""), "", lean, (cf, fmt_note)
+
+        if kind == "financial" and cf == "qa_only":
+            return (info.get("why", ""),
+                    '<span class="vpass">PASS · financial phrase, Q&amp;A-only call</span>',
+                    lean, (cf, fmt_note))
+
         edge = lean - bid
         if edge <= 0.01:
             tag = '<span class="vpass">PASS</span>'
-        elif edge >= 0.08:
+        elif edge >= 0.08 and not (kind == "financial" and cf == "unverified"):
             tag = f'<span class="vtake">TAKE +{edge*100:.0f}c</span>'
+        elif edge >= 0.08:
+            tag = f'<span class="vthin">thin +{edge*100:.0f}c · format unverified</span>'
         else:
             tag = f'<span class="vthin">thin +{edge*100:.0f}c</span>'
-        return info.get("why", ""), tag, lean
+        return info.get("why", ""), tag, lean, (cf, fmt_note)
 
     out = []
     for d in sorted(by_date):
@@ -541,8 +571,10 @@ def mentions_section():
         when = "today" if days == 0 else ("tomorrow" if days == 1 else f"in {days}d")
         cards = []
         for r in sorted(by_date[d], key=lambda x: (x.get("company") or "")):
-            why, tag, lean = verdict(r)
+            why, tag, lean, (cf, fmt_note) = verdict(r)
             leanh = f'<span class="mlean">our lean {lean:.2f}</span>' if lean is not None else ""
+            fcls = {"qa_only": "fbad", "remarks_live": "fgood"}.get(cf, "funk")
+            fmth = f'<span class="fmt {fcls}">{esc(fmt_note)}</span>' 
             held = taken.get((r.get("company"), r.get("phrase")))
             if held:
                 tag = (f'<span class="vheld">HELD @{float(held.get("entry_price") or 0):.2f}</span>'
@@ -554,7 +586,7 @@ def mentions_section():
   <div class="mhead"><span class="mco">{esc(r.get("company"))}</span>
     <span class="mph">{esc(r.get("phrase"))}</span>
     <span class="msp tnum">bid {esc(r.get("bid"))} / ask {esc(r.get("ask"))}</span>
-    {leanh}{tag}{link}</div>
+    {leanh}{tag}{fmth}{link}</div>
   {f'<div class="mwhy">{esc(why)}</div>' if why else
    '<div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>'}
 </div>""")

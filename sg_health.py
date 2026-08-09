@@ -185,7 +185,36 @@ def main():
     except Exception as e:
         note("warning", f"LINKS check skipped: {e}")
 
-    # 5. UNGRADED — settled but the grader couldn't score the tip.
+    # 5. FORMAT — earnings-call mention rationales must record the company's call format.
+    #
+    # A financial-vocabulary phrase ("Revenue", "Inflation", "Margin") only pays if the
+    # company actually delivers prepared remarks on the call. LYFT publishes theirs to the
+    # IR site and runs Q&A only, so "Revenue" was never said and a .99 lean lost. Any
+    # company with a rationale but no verified format is a latent repeat of that mistake.
+    try:
+        rb = json.load(open(os.path.join(ROOT, "data", "mention_rationale.json")))
+        rat, cf = rb.get("rationale", {}), rb.get("call_format", {})
+        need = {}
+        for key, info in rat.items():
+            co = key.split("|", 1)[0]
+            if co in cf:
+                continue
+            need.setdefault(co, []).append((key.split("|", 1)[-1], info.get("kind", "topic")))
+        for co, phrases in sorted(need.items()):
+            fin = [p for p, k in phrases if k == "financial"]
+            if fin:
+                note("warning", f"FORMAT {co} has no verified call format but carries "
+                                f"FINANCIAL phrases ({', '.join(fin)}) — check whether they "
+                                f"deliver prepared remarks live before treating these as TAKE")
+                problems += 1
+            else:
+                print(f"  format unverified for {co} ({len(phrases)} non-financial phrases)")
+        verified = ", ".join(f"{c}={v.get('format')}" for c, v in sorted(cf.items()))
+        print(f"  call formats verified: {verified or 'none'}")
+    except Exception as e:
+        note("warning", f"FORMAT check skipped: {e}")
+
+    # 6. UNGRADED — settled but the grader couldn't score the tip.
     ungraded = [p for p in picks if p.get("status") == "settled"
                 and p.get("tip_result") == "ungraded"]
     for p in ungraded:
