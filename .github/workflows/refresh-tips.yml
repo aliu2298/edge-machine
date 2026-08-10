@@ -61,6 +61,12 @@ jobs:
       - name: Score mention picks
         run: python3 mention_settle.py
 
+      # Metric quarterlies live in predictions.db, which is gitignored and local-only, so
+      # this no-ops in CI with a clear message. Kept in the workflow so the step is visible
+      # rather than forgotten — see the note in kalshi_settle.py about the local-only gap.
+      - name: Score quarterly picks
+        run: python3 kalshi_settle.py
+
       - name: Rebuild tips board
         run: python3 sg_build.py
 
