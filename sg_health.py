@@ -214,7 +214,26 @@ def main():
     except Exception as e:
         note("warning", f"FORMAT check skipped: {e}")
 
-    # 6. UNGRADED — settled but the grader couldn't score the tip.
+    # 6. BTTS CROSS-CHECK — the tip grader and the market-implied BTTS tracker are two
+    # independent paths to the same fact. When the tip IS a BTTS bet they must agree; a
+    # disagreement means one of them is wrong, which is far more useful than either being
+    # quietly wrong on its own.
+    for p in picks:
+        tip = (p.get("tip_text") or "").lower()
+        if "both teams to score" not in tip or p.get("status") != "settled":
+            continue
+        res, actual = p.get("tip_result"), p.get("btts_actual")
+        if res in (None, "ungraded") or actual is None:
+            continue
+        backed_yes = "- yes" in tip or "yes @" in tip
+        should_win = (actual == "Yes") == backed_yes
+        if (res == "win") != should_win:
+            note("warning", f"BTTS MISMATCH {p.get('match')}: tip '{p.get('tip_text')}' "
+                            f"graded {res} but btts_actual={actual} — grader disagrees with "
+                            f"the market tracker, one of them is wrong")
+            problems += 1
+
+    # 7. UNGRADED — settled but the grader couldn't score the tip.
     ungraded = [p for p in picks if p.get("status") == "settled"
                 and p.get("tip_result") == "ungraded"]
     for p in ungraded:

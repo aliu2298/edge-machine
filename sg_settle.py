@@ -181,6 +181,18 @@ def grade_tip(tip, home, away, hs, as_):
         return (("win", 1.0) if ((total > line) == (m.group(1) == "over"))
                 else ("loss", -1.0))
 
+    # --- both teams to score ("Both Teams To Score - Yes @ -154") ---
+    # sportsgambler publishes these often and they were the ONLY unhandled shape, so
+    # every BTTS tip settled as "ungraded" with a null P/L — invisible in the record
+    # rather than wrong, but still a hole in a lane that is explicitly BTTS-focused.
+    if "both teams to score" in t:
+        m = re.search(r"both teams to score\s*[-–:]?\s*(yes|no)\b", t)
+        if not m:
+            return "ungraded", None
+        both = hs > 0 and as_ > 0
+        backed_yes = m.group(1) == "yes"
+        return ("win", 1.0) if (both == backed_yes) else ("loss", -1.0)
+
     # --- moneyline "<Team> To Win" ---
     if "to win" in t:
         side = side_of(tip[:t.index("to win")], home, away)
@@ -205,6 +217,24 @@ def main():
     graded = 0
 
     for p in picks:
+        # Re-grade rows that settled as "ungraded": the score is already stored, only the
+        # grader was missing. Without this a parser improvement never reaches past rows and
+        # the gap stays in the record forever.
+        if p.get("status") == "settled" and p.get("tip_result") == "ungraded":
+            hs, as_ = p.get("final_home"), p.get("final_away")
+            if hs is not None and as_ is not None:
+                res, mult = grade_tip(p.get("tip_text", ""), p.get("home", ""),
+                                      p.get("away", ""), hs, as_)
+                if res != "ungraded":
+                    dec = p.get("tip_odds_decimal")
+                    p["tip_result"] = res
+                    p["tip_pl"] = (None if (mult is None or dec is None) else
+                                   round(STAKE * (dec - 1) * mult, 4) if mult > 0 else
+                                   round(STAKE * mult, 4))
+                    graded += 1
+                    print(f"  REGRADED {p['match'][:30]:<30} {p['final_score']}  "
+                          f"tip={res}  pl={p['tip_pl']}")
+            continue
         if p.get("status") != "pending":
             continue
         if not force:
