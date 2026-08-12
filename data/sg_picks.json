@@ -1,6 +1,6 @@
 {
- "updated_at": "2026-08-11T11:59:57+00:00",
- "count": 38,
+ "updated_at": "2026-08-12T12:01:43+00:00",
+ "count": 41,
  "picks": [
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/chicago-fire-vs-charlotte-fc-prediction-lineups-odds-2026-08-01/",
@@ -1369,7 +1369,16 @@
     "6/10 away"
    ],
    "league": "Champions League",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 0,
+   "final_away": 2,
+   "final_score": "0-2",
+   "proj_result": "miss",
+   "btts_actual": "No",
+   "btts_result": "hit",
+   "tip_result": "loss",
+   "tip_pl": -1.0,
+   "settled_at": "2026-08-12T12:01:43+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/lyon-vs-sparta-prague-prediction-lineups-odds-2026-08-11/",
@@ -1400,7 +1409,16 @@
     "2/10 away"
    ],
    "league": "Champions League",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 3,
+   "final_away": 0,
+   "final_score": "3-0",
+   "proj_result": "hit",
+   "btts_actual": "No",
+   "btts_result": "miss",
+   "tip_result": "win",
+   "tip_pl": 0.5988,
+   "settled_at": "2026-08-12T12:01:43+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/nec-nijmegen-vs-olympiacos-prediction-lineups-odds-2026-08-11/",
@@ -1462,6 +1480,108 @@
     "4/10 away"
    ],
    "league": "Champions League",
+   "status": "settled",
+   "final_home": 0,
+   "final_away": 1,
+   "final_score": "0-1",
+   "proj_result": "miss",
+   "btts_actual": "No",
+   "btts_result": "miss",
+   "tip_result": "win",
+   "tip_pl": 0.8696,
+   "settled_at": "2026-08-12T12:01:43+00:00"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/anderlecht-vs-paok-prediction-lineups-odds-2026-08-13/",
+   "scraped_at": "2026-08-12T12:01:41+00:00",
+   "home": "Anderlecht",
+   "away": "Paok",
+   "date": "2026-08-13",
+   "match": "Anderlecht v Paok",
+   "kickoff_text": "Thu 13 Aug 11:30",
+   "tip_text": "Over 2.5 Goals @ -122",
+   "tip_odds_american": "-122",
+   "tip_odds_decimal": 1.8197,
+   "proj_home_team": "Anderlecht",
+   "proj_away_team": "PAOK",
+   "proj_home": 2,
+   "proj_away": 1,
+   "proj_score": "2-1",
+   "proj_score_odds": "+650",
+   "btts_yes_odds": "-152",
+   "btts_no_odds": "+105",
+   "btts_yes_decimal": 1.6579,
+   "btts_no_decimal": 2.05,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "9/10 overall",
+    "9/10 home",
+    "6/10 overall",
+    "6/10 away"
+   ],
+   "league": "Europa League",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/hearts-vs-benfica-prediction-lineups-odds-2026-08-13/",
+   "scraped_at": "2026-08-12T12:01:43+00:00",
+   "home": "Hearts",
+   "away": "Benfica",
+   "date": "2026-08-13",
+   "match": "Hearts v Benfica",
+   "kickoff_text": "Thu 13 Aug 11:45",
+   "tip_text": "Hearts Asian Hcp +1.25 @ -120",
+   "tip_odds_american": "-120",
+   "tip_odds_decimal": 1.8333,
+   "proj_home_team": "Hearts",
+   "proj_away_team": "Benfica",
+   "proj_home": 1,
+   "proj_away": 1,
+   "proj_score": "1-1",
+   "proj_score_odds": "+600",
+   "btts_yes_odds": "-159",
+   "btts_no_odds": "+108",
+   "btts_yes_decimal": 1.6289,
+   "btts_no_decimal": 2.08,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "8/10 overall",
+    "3/10 home",
+    "8/10 overall",
+    "8/10 away"
+   ],
+   "league": "Europa League",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/rangers-vs-jagiellonia-bialystok-prediction-lineups-odds-2026-08-13/",
+   "scraped_at": "2026-08-12T12:01:39+00:00",
+   "home": "Rangers",
+   "away": "Jagiellonia Bialystok",
+   "date": "2026-08-13",
+   "match": "Rangers v Jagiellonia Bialystok",
+   "kickoff_text": "Thu 13 Aug 11:30",
+   "tip_text": "Both Teams To Score - Yes @ -130",
+   "tip_odds_american": "-130",
+   "tip_odds_decimal": 1.7692,
+   "proj_home_team": "Rangers",
+   "proj_away_team": "Jagiellonia",
+   "proj_home": 2,
+   "proj_away": 1,
+   "proj_score": "2-1",
+   "proj_score_odds": "+525",
+   "btts_yes_odds": "-128",
+   "btts_no_odds": "-112",
+   "btts_yes_decimal": 1.7812,
+   "btts_no_decimal": 1.8929,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "10/10 overall",
+    "8/10 home",
+    "5/10 overall",
+    "6/10 away"
+   ],
+   "league": "Europa League",
    "status": "pending"
   }
  ]
