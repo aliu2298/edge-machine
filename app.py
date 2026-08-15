@@ -184,7 +184,14 @@ def corner_bet_dict(r):
 # Settle soccer by MATCHUP+DATE via ESPN's keyless World Cup feed — no fixture id needed
 # (API-Football's free tier paywalls WC 2026 fixtures, so this is the reliable auto-settle path).
 TEAM_ALIASES = {"ivory coast":"cote d ivoire","turkiye":"turkey","usa":"united states",
-                "south korea":"korea republic","republic of korea":"korea republic","czechia":"czech republic"}
+                "south korea":"korea republic","republic of korea":"korea republic","czechia":"czech republic",
+                # CLUB aliases — ESPN names these completely differently from our pick text,
+                # and _team_match is a substring test, so nothing overlaps and the fixture
+                # never settles. Each was surfaced by an sg_health STUCK warning.
+                # NB: sg_settle.py keeps its own ALIASES (set-intersection matcher) — a name
+                # fixed there is NOT fixed here. Two matchers, two maps.
+                "crvena zvezda":"red star belgrade", "hearts":"heart of midlothian",
+                "red star":"red star belgrade"}
 def _norm_team(s):
     s=unicodedata.normalize("NFKD", s or "").encode("ascii","ignore").decode().lower()
     s=" ".join("".join(ch if ch.isalnum() or ch==" " else " " for ch in s).split())
@@ -345,7 +352,10 @@ def _espn_final_compute(match, kickoff):
     teamA,teamB=[p.strip() for p in m.split(" v ",1)]
     try: base=datetime.date.fromisoformat((kickoff or "")[:10])
     except ValueError: return None
-    for d in (base, base-datetime.timedelta(days=1)):   # late-UTC games can sit on the prior ESPN date
+    for d in (base, base-datetime.timedelta(days=1), base+datetime.timedelta(days=1),
+              base-datetime.timedelta(days=2)):   # late-UTC games sit on the prior ESPN date;
+                                                   # the wider window also tolerates a fixture
+                                                   # filed a day or two off (see pick #122)
       for lg in ESPN_SOCCER_LEAGUES:
         try: data=_get_json(f"{ESPN_HOST}/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
         except Exception: continue
@@ -383,7 +393,10 @@ def _espn_box_compute(match, kickoff):
     teamA,teamB=[p.strip() for p in m.split(" v ",1)]
     try: base=datetime.date.fromisoformat((kickoff or "")[:10])
     except ValueError: return None
-    for d in (base, base-datetime.timedelta(days=1)):   # late-UTC games can sit on the prior ESPN date
+    for d in (base, base-datetime.timedelta(days=1), base+datetime.timedelta(days=1),
+              base-datetime.timedelta(days=2)):   # late-UTC games sit on the prior ESPN date;
+                                                   # the wider window also tolerates a fixture
+                                                   # filed a day or two off (see pick #122)
       for lg in ESPN_SOCCER_LEAGUES:
         try: data=_get_json(f"{ESPN_HOST}/apis/site/v2/sports/soccer/{lg}/scoreboard?dates="+d.strftime("%Y%m%d"))
         except Exception: continue

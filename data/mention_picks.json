@@ -1,6 +1,6 @@
 {
  "_note": "Mention picks with our stated probability, recorded BEFORE the call so mention_settle.py can score calibration rather than just P&L. entry_price = the bid we joined (maker-only). Paper-tracked.",
- "updated_at": "2026-08-08T19:06:57+00:00",
+ "updated_at": "2026-08-13T05:11:37+00:00",
  "picks": [
   {
    "id": "LYFT-Revenue-26AUG06",
@@ -55,8 +55,12 @@
    "stake": 1.0,
    "edge_at_entry": 0.09,
    "rationale": "Hims operates compounded GLP-1s under active FDA scrutiny; regulatory status is the single most-asked analyst question. Q+A alone makes this near-certain.",
-   "status": "pending",
-   "recorded_at": "2026-08-05T23:51:53+00:00"
+   "status": "settled",
+   "recorded_at": "2026-08-05T23:51:53+00:00",
+   "result": "yes",
+   "won": true,
+   "pl": 0.15,
+   "settled_at": "2026-08-13T05:11:37+00:00"
   }
  ]
 }
