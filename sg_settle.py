@@ -31,6 +31,18 @@ STAKE = 1.0                       # flat 1 unit, paper-tracked
 # killing settlement outright.
 ESPN_HOSTS = ["https://site.web.api.espn.com", "https://site.api.espn.com"]
 ESPN_PATH = "/apis/site/v2/sports/soccer/{lg}/scoreboard?dates={d}"
+ESPN_SUMMARY = "/apis/site/v2/sports/soccer/{lg}/summary?event={eid}"
+
+# Statuses that mean "played to a result". Accepting only STATUS_FULL_TIME left every
+# extra-time tie permanently unsettleable (two Aug 11 UCL qualifiers sat stuck).
+DONE_STATUSES = {"STATUS_FULL_TIME", "STATUS_FINAL", "STATUS_FINAL_AET",
+                 "STATUS_FINAL_PEN", "STATUS_FINAL_AWD"}
+# ...but the scoreboard score for those INCLUDES extra time and shootouts, while BTTS /
+# totals / handicap bets settle on 90 MINUTES. Grading NEC Nijmegen v Olympiacos on the
+# scoreboard's 2-1 instead of the true 1-1 flips an Over 2.5 from loss to win. So for any
+# non-90-minute finish we rebuild the regulation score from timed goal events, and if that
+# cannot be done we return nothing rather than grade on the wrong basis.
+REG_ONLY = {"STATUS_FINAL_AET", "STATUS_FINAL_PEN"}
 # Each competition maps to a LIST of ESPN slugs, all of which are searched.
 # QUALIFYING rounds live under a separate "_qual" slug: on 2026-08-04 `uefa.champions`
 # returned 0 events while `uefa.champions_qual` returned 8 (Red Star at Hapoel Be'er
@@ -105,7 +117,8 @@ def _espn_one(lg, date):
     out = []
     for e in data.get("events", []):
         c = (e.get("competitions") or [{}])[0]
-        if (c.get("status") or {}).get("type", {}).get("name") != "STATUS_FULL_TIME":
+        st = (c.get("status") or {}).get("type", {}).get("name")
+        if st not in DONE_STATUSES:
             continue
         cs = c.get("competitors", [])
         if len(cs) < 2:
@@ -113,11 +126,65 @@ def _espn_one(lg, date):
         h = next((x for x in cs if x.get("homeAway") == "home"), cs[0])
         a = next((x for x in cs if x.get("homeAway") == "away"), cs[1])
         try:
-            out.append((h["team"]["displayName"], a["team"]["displayName"],
-                        int(h.get("score")), int(a.get("score"))))
+            hn, an = h["team"]["displayName"], a["team"]["displayName"]
+            hs, as_ = int(h.get("score")), int(a.get("score"))
         except (TypeError, ValueError, KeyError):
             continue
+        if st in REG_ONLY:
+            reg = _regulation_score(lg, e.get("id"), hn, an)
+            if reg is None:
+                print(f"  ! {hn} v {an}: {st}, could not rebuild the 90-minute score "
+                      f"— left unsettled rather than graded on the extra-time result",
+                      file=sys.stderr)
+                continue
+            hs, as_ = reg
+        out.append((hn, an, hs, as_))
     return out
+
+
+def _regulation_score(lg, eid, home_name, away_name):
+    """90-minute score rebuilt from timed goal events, or None if not reconstructable."""
+    if not eid:
+        return None
+    try:
+        data = None
+        for host in ESPN_HOSTS:
+            try:
+                req = urllib.request.Request(host + ESPN_SUMMARY.format(lg=lg, eid=eid),
+                                             headers={"User-Agent": "edge-machine/1.0"})
+                with urllib.request.urlopen(req, timeout=25) as r:
+                    data = json.load(r)
+                break
+            except Exception:
+                continue
+        if not data:
+            return None
+        events = data.get("keyEvents") or []
+        if not events:
+            return None
+        hs = as_ = 0
+        saw_goal = False
+        for p in events:
+            ty = ((p.get("type") or {}).get("text") or "").lower()
+            if "goal" not in ty:                       # includes "own goal", "penalty - scored"
+                continue
+            clock = ((p.get("clock") or {}).get("displayValue") or "")
+            m = re.match(r"(\d+)", clock)
+            if not m:
+                return None                            # untimed goal -> cannot trust the split
+            saw_goal = True
+            if int(m.group(1)) > 90:                   # extra time; excluded from a 90' market
+                continue
+            team = ((p.get("team") or {}).get("displayName") or "")
+            if team == home_name:
+                hs += 1
+            elif team == away_name:
+                as_ += 1
+            else:
+                return None                            # unattributable goal
+        return (hs, as_) if saw_goal else None
+    except Exception:
+        return None
 
 
 def find_score(pick):
