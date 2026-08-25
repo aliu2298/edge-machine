@@ -1,6 +1,6 @@
 {
- "updated_at": "2026-08-24T11:45:56+00:00",
- "count": 162,
+ "updated_at": "2026-08-25T11:46:40+00:00",
+ "count": 167,
  "picks": [
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/chicago-fire-vs-charlotte-fc-prediction-lineups-odds-2026-08-01/",
@@ -6156,7 +6156,16 @@
     "2/10 away"
    ],
    "league": "Serie A",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 0,
+   "final_away": 1,
+   "final_score": "0-1",
+   "proj_result": "hit",
+   "btts_actual": "No",
+   "btts_result": "hit",
+   "tip_result": "win",
+   "tip_pl": 0.9434,
+   "settled_at": "2026-08-25T11:46:40+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/fulham-vs-chelsea-prediction-lineups-odds-2026-08-24/",
@@ -6187,7 +6196,16 @@
     "8/10 away"
    ],
    "league": "Premier League",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 2,
+   "final_away": 3,
+   "final_score": "2-3",
+   "proj_result": "miss",
+   "btts_actual": "Yes",
+   "btts_result": "hit",
+   "tip_result": "loss",
+   "tip_pl": -1.0,
+   "settled_at": "2026-08-25T11:46:40+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/gil-vicente-vs-casa-pia-prediction-lineups-odds-2026-08-24/",
@@ -6218,7 +6236,16 @@
     "3/10 away"
    ],
    "league": "Primeira Liga",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 2,
+   "final_away": 0,
+   "final_score": "2-0",
+   "proj_result": "hit",
+   "btts_actual": "No",
+   "btts_result": "hit",
+   "tip_result": "win",
+   "tip_pl": 0.6098,
+   "settled_at": "2026-08-25T11:46:40+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/malaga-vs-deportivo-la-coruna-prediction-lineups-odds-2026-08-24/",
@@ -6249,7 +6276,16 @@
     "6/10 away"
    ],
    "league": "La Liga",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 1,
+   "final_away": 1,
+   "final_score": "1-1",
+   "proj_result": "miss",
+   "btts_actual": "Yes",
+   "btts_result": "miss",
+   "tip_result": "half_win",
+   "tip_pl": 0.3597,
+   "settled_at": "2026-08-25T11:46:40+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/osasuna-vs-levante-prediction-lineups-odds-2026-08-24/",
@@ -6280,7 +6316,16 @@
     "5/10 away"
    ],
    "league": "La Liga",
-   "status": "pending"
+   "status": "settled",
+   "final_home": 0,
+   "final_away": 0,
+   "final_score": "0-0",
+   "proj_result": "miss",
+   "btts_actual": "No",
+   "btts_result": "miss",
+   "tip_result": "loss",
+   "tip_pl": -1.0,
+   "settled_at": "2026-08-25T11:46:40+00:00"
   },
   {
    "url": "https://www.sportsgambler.com/betting-tips/football/roma-vs-fiorentina-prediction-lineups-odds-2026-08-24/",
@@ -6311,6 +6356,71 @@
     "6/10 away"
    ],
    "league": "Serie A",
+   "status": "settled",
+   "final_home": 4,
+   "final_away": 0,
+   "final_score": "4-0",
+   "proj_result": "miss",
+   "btts_actual": "No",
+   "btts_result": "hit",
+   "tip_result": "win",
+   "tip_pl": 0.9709,
+   "settled_at": "2026-08-25T11:46:40+00:00"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/bodo-glimt-vs-nec-nijmegen-prediction-lineups-odds-2026-08-25/",
+   "scraped_at": "2026-08-25T11:46:34+00:00",
+   "home": "Bodo Glimt",
+   "away": "Nec Nijmegen",
+   "date": "2026-08-25",
+   "match": "Bodo Glimt v Nec Nijmegen",
+   "kickoff_text": "Tue 25 Aug 15:00",
+   "tip_text": "Bodo/Glimt Asian Hcp -1.25 @ -104",
+   "tip_odds_american": "-104",
+   "tip_odds_decimal": 1.9615,
+   "btts_yes_odds": "-233",
+   "btts_no_odds": "+155",
+   "btts_yes_decimal": 1.4292,
+   "btts_no_decimal": 2.55,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "5/10 overall",
+    "2/10 home",
+    "9/10 overall",
+    "8/10 away"
+   ],
+   "league": "Champions League",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/lask-vs-celtic-prediction-lineups-odds-2026-08-25/",
+   "scraped_at": "2026-08-25T11:46:32+00:00",
+   "home": "Lask",
+   "away": "Celtic",
+   "date": "2026-08-25",
+   "match": "Lask v Celtic",
+   "kickoff_text": "Tue 25 Aug 15:00",
+   "tip_text": "Celtic Asian Hcp +0.25 @ -105",
+   "tip_odds_american": "-105",
+   "tip_odds_decimal": 1.9524,
+   "proj_home_team": "LASK",
+   "proj_away_team": "Celtic",
+   "proj_home": 0,
+   "proj_away": 1,
+   "proj_score": "0-1",
+   "proj_score_odds": "+900",
+   "btts_yes_odds": "-204",
+   "btts_no_odds": "+140",
+   "btts_yes_decimal": 1.4902,
+   "btts_no_decimal": 2.4,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "6/10 overall",
+    "7/10 home",
+    "7/10 overall",
+    "8/10 away"
+   ],
+   "league": "Champions League",
    "status": "pending"
   },
   {
@@ -6340,6 +6450,99 @@
     "6/10 home",
     "7/10 overall",
     "8/10 away"
+   ],
+   "league": "La Liga",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/aek-vs-levski-sofia-prediction-lineups-odds-2026-08-26/",
+   "scraped_at": "2026-08-25T11:46:36+00:00",
+   "home": "Aek",
+   "away": "Levski Sofia",
+   "date": "2026-08-26",
+   "match": "Aek v Levski Sofia",
+   "kickoff_text": "Wed 26 Aug 15:00",
+   "tip_text": "Levski Asian Hcp +1.25 @ -139",
+   "tip_odds_american": "-139",
+   "tip_odds_decimal": 1.7194,
+   "proj_home_team": "AEK",
+   "proj_away_team": "Levski",
+   "proj_home": 1,
+   "proj_away": 1,
+   "proj_score": "1-1",
+   "proj_score_odds": "+540",
+   "btts_yes_odds": "+116",
+   "btts_no_odds": "-172",
+   "btts_yes_decimal": 2.16,
+   "btts_no_decimal": 1.5814,
+   "btts_implied": "No",
+   "btts_form": [
+    "4/10 overall",
+    "4/10 home",
+    "3/10 overall",
+    "7/10 away"
+   ],
+   "league": "Champions League",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/lyon-vs-fenerbahce-prediction-lineups-odds-2026-08-26/",
+   "scraped_at": "2026-08-25T11:46:38+00:00",
+   "home": "Lyon",
+   "away": "Fenerbahce",
+   "date": "2026-08-26",
+   "match": "Lyon v Fenerbahce",
+   "kickoff_text": "Wed 26 Aug 15:00",
+   "tip_text": "Both Teams To Score - Yes @ -159",
+   "tip_odds_american": "-159",
+   "tip_odds_decimal": 1.6289,
+   "proj_home_team": "Lyon",
+   "proj_away_team": "Fenerbahce",
+   "proj_home": 1,
+   "proj_away": 1,
+   "proj_score": "1-1",
+   "proj_score_odds": "+500",
+   "btts_yes_odds": "-159",
+   "btts_no_odds": "+112",
+   "btts_yes_decimal": 1.6289,
+   "btts_no_decimal": 2.12,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "6/10 overall",
+    "5/10 home",
+    "6/10 overall",
+    "4/10 away"
+   ],
+   "league": "Champions League",
+   "status": "pending"
+  },
+  {
+   "url": "https://www.sportsgambler.com/betting-tips/football/real-madrid-vs-real-sociedad-prediction-lineups-odds-2026-08-26/",
+   "scraped_at": "2026-08-25T11:46:19+00:00",
+   "home": "Real Madrid",
+   "away": "Real Sociedad",
+   "date": "2026-08-26",
+   "match": "Real Madrid v Real Sociedad",
+   "kickoff_text": "Wed 26 Aug 15:00",
+   "tip_text": "Sociedad Asian Hcp +1.5 @ -110",
+   "tip_odds_american": "-110",
+   "tip_odds_decimal": 1.9091,
+   "proj_home_team": "Madrid",
+   "proj_away_team": "Sociedad",
+   "proj_home": 2,
+   "proj_away": 1,
+   "proj_score": "2-1",
+   "proj_score_odds": "+700",
+   "btts_yes_odds": "-137",
+   "btts_no_odds": "-100",
+   "btts_yes_decimal": 1.7299,
+   "btts_no_decimal": 2.0,
+   "btts_implied": "Yes",
+   "btts_form": [
+    "6/10 overall",
+    "7/10 home",
+    "6/10 overall",
+    "7/10 away"
    ],
    "league": "La Liga",
    "status": "pending"
