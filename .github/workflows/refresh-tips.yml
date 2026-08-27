@@ -2,7 +2,7 @@ name: Refresh tips
 
 # Replaces the Lovable app's scheduled edge function. Runs on GitHub's servers, so
 # there is no CORS restriction and no dependency on the local Mac being awake.
-# Scrapes -> settles -> rebuilds all three boards -> publishes to GitHub Pages.
+# Scrapes -> settles -> rebuilds both boards -> publishes to GitHub Pages.
 
 on:
   schedule:
@@ -47,33 +47,13 @@ jobs:
       - name: Health check
         run: python3 sg_health.py
 
-      # Tracks Kalshi's KXEARNINGSMENTION series (159 companies, category "Mentions").
-      # An earlier note here claimed these did not exist — that was wrong: the scan had
-      # hardcoded 10 of Kalshi's 18 categories and never looked at "Mentions".
-      # Refreshes live in-band strikes for the earnings board. Never fails the run.
-      - name: Watch for new Kalshi market types
-        run: python3 kalshi_watch.py
-
-      # Grade earnings-call mention picks off Kalshi's own resolution and report
-      # calibration. Base rate on these is high by construction, so win rate proves
-      # little — the Brier-vs-base-rate line is the number that says whether the
-      # phrase judgement is real. Never fails the run.
-      - name: Score mention picks
-        run: python3 mention_settle.py
-
-      # Metric quarterlies live in predictions.db, which is gitignored and local-only, so
-      # this no-ops in CI with a clear message. Kept in the workflow so the step is visible
-      # rather than forgotten — see the note in kalshi_settle.py about the local-only gap.
-      - name: Score quarterly picks
-        run: python3 kalshi_settle.py
-
       - name: Rebuild tips board
         run: python3 sg_build.py
 
       # predictions.db stays local+gitignored (it also holds private kalshi_* tables);
       # data/predictions.json is the repo-tracked mirror of the predictions table only,
-      # so the sports + earnings boards can be rebuilt here without the Mac.
-      - name: Rebuild sports + earnings boards
+      # so the sports board can be rebuilt here without the Mac.
+      - name: Rebuild sports board
         run: python3 export_public.py
 
       - name: Commit and push if changed
@@ -81,7 +61,7 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           git add data/sg_picks.json public_site/tips.html \
-                  public_site/index.html public_site/earnings.html public_site/picks.json
+                  public_site/index.html public_site/picks.json
           if git diff --cached --quiet; then
             echo "no changes — nothing to deploy"
             exit 0

@@ -172,7 +172,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>Edge Machine · Tips</h1>
 <div class="sub">Published predictions from sportsgambler.com — scraped and settled automatically ·
 data updated {esc(upd)} UTC</div>
-<div class="nav"><a href="./">Sports</a><a href="./earnings.html">Earnings</a>
+<div class="nav"><a href="./">Sports</a>
 <a class="on" href="./tips.html">Tips</a></div>
 
 <div class="tiles">

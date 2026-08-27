@@ -30,8 +30,8 @@ PICKS_SHOWN = 3         # visible slots on the board
 QUEUE_SIZE = 20         # picks baked into the page; "next" reveals them client-side
 RESULTS_BACK_DAYS = 7   # keep concluded picks' results on the board for N days
 
-# Boards are kept SEPARATE (user directive Aug 2 2026): index.html is sports only,
-# earnings.html is the Kalshi company-quarterlies lane. Picks split on this sport value.
+# Kalshi company-quarterly picks (sport value below) are excluded from the public
+# board and feed entirely — that lane has no page of its own.
 EARNINGS_SPORT = "kalshi"
 
 # ---------------------------------------------------------------- venue links
@@ -260,7 +260,7 @@ def grid_html(grid_json):
     return (f'<div class="sg"><div class="sg-t">Score group · pred {esc(g.get("pred", ""))}</div>'
             f'<div class="sg-c pk"><span>{esc(labels[picked])}</span>{odds}</div></div>')
 
-def pending_card(r, link_pair, *, show_grid=True, done_label="✓ Game finished — show next pick"):
+def pending_card(r, link_pair):
     ko = esc(r["kickoff"] or "")
     btns = "".join(
         f'<a class="kbtn {cls}" href="{esc(url)}" target="_blank" rel="noopener">{label} ↗</a>'
@@ -272,9 +272,9 @@ def pending_card(r, link_pair, *, show_grid=True, done_label="✓ Game finished 
   <div class="ko"><time data-utc="{ko}">{ko}</time></div>
   <div class="pick">{esc(r["pick"])}</div>
   <div class="nums"><span>@{r["odds"]:g}</span><span>{usd(r["stake"])} stake</span><span>to win {usd((r["stake"] or 0)*((r["odds"] or 1)-1))}</span></div>
-  {grid_html(r["grid_json"]) if show_grid else ""}
+  {grid_html(r["grid_json"])}
   {f'<div class="why">{esc(r["rationale"])}</div>' if r["rationale"] else ""}
-  <button class="nextbtn" data-next="{r["id"]}">{done_label}</button>
+  <button class="nextbtn" data-next="{r["id"]}">✓ Game finished — show next pick</button>
 </div>"""
 
 def settled_row(r):
@@ -293,19 +293,15 @@ def settled_row(r):
 def picks_feed(rows):
     """ALL pending picks (not just the QUEUE_SIZE slice shown on the board) with the
     structured fields a downstream settler needs. `id` is the stable dedup key.
-    SPORTS ONLY — earnings live on their own page/feed (see EARNINGS_SPORT)."""
+    Excludes Kalshi company-quarterly picks (see EARNINGS_SPORT)."""
     return [{"id": r["id"], "event_date": r["event_date"], "sport": r["sport"], "match": r["match"],
              "pick": r["pick"], "market": r["market"], "selection": r["selection"], "line": r["line"],
              "odds": r["odds"], "stake": r["stake"], "tag": r["tag"], "rationale": r["rationale"],
              "af_fixture_id": r["af_fixture_id"], "kickoff": r["kickoff"]}
             for r in rows if r["status"] == "pending" and r["sport"] != EARNINGS_SPORT]
 
-def page_html(*, title, heading, subtitle, pend, settled, links, nav, now,
-              show_grid=True, done_label="✓ Game finished — show next pick",
-              empty_msg="No open picks right now — check back after the next slate.",
-              extra_section=""):
-    """Render one board. Called once per lane (sports / earnings) — the boards are
-    deliberately separate, so each gets its own page, queue and results table."""
+def page_html(*, title, heading, subtitle, pend, settled, links, nav, now):
+    """Render the public sports board — queue and results table."""
     page = f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
@@ -416,9 +412,8 @@ white-space:nowrap;margin-left:auto}}
 <div class="sub">{subtitle} · updated {now}</div>
 {nav}
 <h2>Current picks <span id="qleft"></span></h2>
-{"".join(pending_card(r, links[r["id"]], show_grid=show_grid, done_label=done_label) for r in pend) or f'<div class="mut">{empty_msg}</div>'}
+{"".join(pending_card(r, links[r["id"]]) for r in pend) or '<div class="mut">No open picks right now — check back after the next slate.</div>'}
 <div class="mut" id="qempty" style="display:none">Queue finished — check back after the next slate.</div>
-{extra_section}
 <details class="res">
 <summary><h2>Recent results ({len(settled)})</h2><span class="caret">▸</span></summary>
 {f'''<div class="tbl"><table>
@@ -465,150 +460,8 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
 
 
 
-WATCH = os.path.join(os.path.dirname(__file__), "data", "kalshi_watch.json")
-RATIONALE = os.path.join(os.path.dirname(__file__), "data", "mention_rationale.json")
-MPICKS = os.path.join(os.path.dirname(__file__), "data", "mention_picks.json")
-MENTION_MAX_SPREAD = 0.03     # wider than this is not workable maker-only
-MENTION_WEEKS = 45            # only show calls within this many days
-
-
-def mentions_section():
-    """Second section of the earnings board: live earnings-call MENTION markets,
-    arranged BY CALL DATE.
-
-    Kalshi's `KXEARNINGSMENTION<TICKER>` series — "what will <company> say on their next
-    earnings call", one strike per word/phrase, resolving if the phrase is said by any
-    company representative (Q+A included).
-
-    Each row carries our own reasoning and a stated `lean` (our probability), written
-    BEFORE the call so mention_settle.py can score calibration rather than just P&L.
-    That matters because the base rate here is high by construction — AMD's Aug 4 call had
-    16 of 17 phrases said — so win rate alone proves nothing.
-
-    Where our lean sits at or below the market's bid we mark it PASS: the market is asking
-    at least what we think it is worth, so there is no edge to take.
-    """
-    try:
-        blob = json.load(open(WATCH))
-    except Exception:
-        return ""
-    try:
-        _rblob = json.load(open(RATIONALE))
-        rat = _rblob.get("rationale", {})
-        fmt = _rblob.get("call_format", {})
-    except Exception:
-        rat, fmt = {}, {}
-    try:
-        mp = json.load(open(MPICKS)).get("picks", [])
-    except Exception:
-        mp = []
-    # rows we actually hold, so the board distinguishes a position from mere supply
-    taken = {(p.get("company"), p.get("phrase")): p for p in mp}
-    today = datetime.date.today()
-    horizon = (today + datetime.timedelta(days=MENTION_WEEKS)).isoformat()
-
-    rows = [r for r in blob.get("in_band", [])
-            if r.get("spread") is not None and r["spread"] <= MENTION_MAX_SPREAD
-            and r.get("call_date") and today.isoformat() <= r["call_date"] <= horizon]
-    if not rows:
-        return ""
-
-    by_date = {}
-    for r in rows:
-        by_date.setdefault(r["call_date"], []).append(r)
-
-    def verdict(r):
-        """(why, tag, lean, format_note).
-
-        THE FORMAT GATE runs before the price comparison. A financial-vocabulary phrase
-        only pays if the company actually delivers prepared remarks on the call; on a
-        Q&A-only company nobody walks the P&L and the word may never be said. LYFT
-        "Revenue" was leaned .99 against a .79 bid on exactly that mistake and resolved NO.
-        So: financial phrase + qa_only  -> forced PASS, whatever the lean says.
-                 financial phrase + unverified format -> capped at "thin", never TAKE.
-        """
-        co = r.get("company")
-        info = rat.get(f"{co}|{r.get('phrase')}")
-        finfo = fmt.get(co) or {}
-        cf = finfo.get("format", "unverified")
-        fmt_note = {"qa_only": "Q&A only — no live prepared remarks",
-                    "remarks_live": "delivers prepared remarks live",
-                    "unverified": "call format not yet verified"}[cf if cf in
-                    ("qa_only", "remarks_live") else "unverified"]
-        if not info:
-            return "", "", None, (cf, fmt_note)
-        lean, kind = info.get("lean"), info.get("kind", "topic")
-        try:
-            bid = float(r.get("bid"))
-        except (TypeError, ValueError):
-            bid = None
-        if lean is None or bid is None:
-            return info.get("why", ""), "", lean, (cf, fmt_note)
-
-        if kind == "financial" and cf == "qa_only":
-            return (info.get("why", ""),
-                    '<span class="vpass">PASS · financial phrase, Q&amp;A-only call</span>',
-                    lean, (cf, fmt_note))
-
-        edge = lean - bid
-        if edge <= 0.01:
-            tag = '<span class="vpass">PASS</span>'
-        elif edge >= 0.08 and not (kind == "financial" and cf == "unverified"):
-            tag = f'<span class="vtake">TAKE +{edge*100:.0f}c</span>'
-        elif edge >= 0.08:
-            tag = f'<span class="vthin">thin +{edge*100:.0f}c · format unverified</span>'
-        else:
-            tag = f'<span class="vthin">thin +{edge*100:.0f}c</span>'
-        return info.get("why", ""), tag, lean, (cf, fmt_note)
-
-    out = []
-    for d in sorted(by_date):
-        try:
-            nice = datetime.date.fromisoformat(d).strftime("%a %d %b")
-        except ValueError:
-            nice = d
-        days = (datetime.date.fromisoformat(d) - today).days
-        when = "today" if days == 0 else ("tomorrow" if days == 1 else f"in {days}d")
-        cards = []
-        for r in sorted(by_date[d], key=lambda x: (x.get("company") or "")):
-            why, tag, lean, (cf, fmt_note) = verdict(r)
-            leanh = f'<span class="mlean">our lean {lean:.2f}</span>' if lean is not None else ""
-            fcls = {"qa_only": "fbad", "remarks_live": "fgood"}.get(cf, "funk")
-            fmth = f'<span class="fmt {fcls}">{esc(fmt_note)}</span>' 
-            held = taken.get((r.get("company"), r.get("phrase")))
-            if held:
-                tag = (f'<span class="vheld">HELD @{float(held.get("entry_price") or 0):.2f}</span>'
-                       + tag)
-            ev = r.get("event_ticker") or ""
-            link = (f'<a class="mlink" href="https://kalshi.com/events/{esc(ev)}" '
-                    f'target="_blank" rel="noopener">Kalshi ↗</a>' if ev else "")
-            cards.append(f"""<div class="mrow">
-  <div class="mhead"><span class="mco">{esc(r.get("company"))}</span>
-    <span class="mph">{esc(r.get("phrase"))}</span>
-    <span class="msp tnum">bid {esc(r.get("bid"))} / ask {esc(r.get("ask"))}</span>
-    {leanh}{tag}{fmth}{link}</div>
-  {f'<div class="mwhy">{esc(why)}</div>' if why else
-   '<div class="mwhy mut"><em>No reasoning written yet — not a pick.</em></div>'}
-</div>""")
-        out.append(f'<div class="mday"><div class="mdate">{esc(nice)} '
-                   f'<span class="mut">· {when}</span></div>{"".join(cards)}</div>')
-
-    scanned = (blob.get("checked_at") or "")[:16].replace("T", " ")
-    return f"""<h2>Earnings-call mentions ({len(rows)})</h2>
-<div class="note">Kalshi markets on what a company will <em>say</em> on its next call, by call date.
-Banded on the <b>bid</b> (75-88c) because entry is maker-only — you join the bid, and
-last-traded goes stale. Spread ≤{int(MENTION_MAX_SPREAD*100)}c.
-<b>Our lean is stated before the call</b> so accuracy can be scored, not just P&amp;L —
-the base rate is high by construction (AMD's Aug 4 call: 16 of 17 phrases said), so a good
-win rate alone would prove nothing. <b>PASS</b> = our lean is at or under the market bid.
-Scanned {esc(scanned)} UTC</div>
-{"".join(out)}"""
-
-
 NAV_SPORTS = ('<div class="nav"><a class="on" href="./">Sports</a>'
-              '<a href="./earnings.html">Earnings</a><a href="./tips.html">Tips</a></div>')
-NAV_EARN = ('<div class="nav"><a href="./">Sports</a>'
-            '<a class="on" href="./earnings.html">Earnings</a><a href="./tips.html">Tips</a></div>')
+              '<a href="./tips.html">Tips</a></div>')
 
 
 def load_rows():
@@ -665,8 +518,8 @@ def build():
                     print(f"  (no {venue} match found for: {r['match']})")
         return links
 
-    def lane(is_earnings):
-        sel = [r for r in rows if (r["sport"] == EARNINGS_SPORT) == is_earnings]
+    def lane():
+        sel = [r for r in rows if r["sport"] != EARNINGS_SPORT]
         pend = sorted([r for r in sel if r["status"] == "pending"],
                       key=lambda r: r["kickoff"] or "")[:QUEUE_SIZE]
         settled = [r for r in sel if r["status"] in SETTLED and day_of(r, "settled_at") >= back]
@@ -675,7 +528,7 @@ def build():
     os.makedirs(OUT_DIR, exist_ok=True)
 
     # ---- sports board (index.html) ----
-    pend, settled = lane(False)
+    pend, settled = lane()
     links = links_for(pend)
     out = os.path.join(OUT_DIR, "index.html")
     with open(out, "w") as f:
@@ -684,21 +537,6 @@ def build():
                           pend=pend, settled=settled, links=links, nav=NAV_SPORTS, now=now))
     print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — {len(pend)} sports picks, "
           f"{len(settled)} results (≥{back})")
-
-    # ---- earnings board (earnings.html) ----
-    epend, esettled = lane(True)
-    elinks = links_for(epend)
-    eout = os.path.join(OUT_DIR, "earnings.html")
-    with open(eout, "w") as f:
-        f.write(page_html(title="Edge Machine · Earnings", heading="Edge Machine · Earnings",
-                          subtitle="Company quarterlies — entry timed to the report date",
-                          pend=epend, settled=esettled, links=elinks, nav=NAV_EARN, now=now,
-                          show_grid=False,
-                          done_label="✓ Reported — show next",
-                          empty_msg="No open earnings positions — check back next reporting week.",
-                          extra_section=mentions_section()))
-    print(f"wrote {eout}  ({os.path.getsize(eout)/1024:.0f} KB) — {len(epend)} earnings picks, "
-          f"{len(esettled)} results (≥{back})")
 
     # ---- sports-only machine feed ----
     feed = picks_feed(rows)

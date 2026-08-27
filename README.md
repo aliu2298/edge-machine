@@ -9,10 +9,9 @@ whether an idea actually holds up.
 | Board | What it is |
 |---|---|
 | [Sports](https://aliu2298.github.io/edge-machine/) | Picks made in the local tracker |
-| [Earnings](https://aliu2298.github.io/edge-machine/earnings.html) | Kalshi company-quarterly (KPI) positions |
 | [Tips](https://aliu2298.github.io/edge-machine/tips.html) | sportsgambler.com's published predictions, scraped and graded |
 
-The three boards are deliberately **separate** — different sources, different edges, no merging.
+The two boards are deliberately **separate** — different sources, different edges, no merging.
 
 ## Architecture
 
@@ -23,7 +22,7 @@ flowchart TB
         SC["sg_scrape.py<br/>10 league index pages → match pages"]
         SE["sg_settle.py<br/>grade vs final scores"]
         SB["sg_build.py<br/>render tips board"]
-        EX["export_public.py<br/>render sports + earnings boards"]
+        EX["export_public.py<br/>render sports board"]
         SC --> SE --> SB --> EX
     end
 
@@ -36,7 +35,7 @@ flowchart TB
     subgraph REPO["Repo (committed)"]
         SGJ["data/sg_picks.json"]
         PJ["data/predictions.json<br/>mirror of predictions table only"]
-        OUT["public_site/<br/>index · earnings · tips"]
+        OUT["public_site/<br/>index · tips"]
     end
 
     subgraph LOCAL["Local Mac (optional)"]
@@ -75,7 +74,7 @@ the Mac is on. The local tracker is where picks get made; the mirror is how they
 | `sg_scrape.py` | Scrapes sportsgambler for 10 leagues — projected score, BTTS odds, published tip. |
 | `sg_settle.py` | Grades scraped tips against ESPN final scores. |
 | `sg_build.py` | Renders `public_site/tips.html`. |
-| `export_public.py` | Renders the sports + earnings boards; mirrors the predictions table to JSON. |
+| `export_public.py` | Renders the sports board; mirrors the predictions table to JSON. |
 | `.github/workflows/refresh-tips.yml` | Daily cron: scrape → settle → build → publish to Pages. |
 
 ## Run locally
