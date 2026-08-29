@@ -237,11 +237,17 @@ def kickoff_dt(f):
         return None
 
 
-def find_leads(fixtures, streaks, rates):
-    """Upcoming fixtures where both sides' runs point the same way."""
+def find_leads(fixtures, streaks, rates, now=None, links=True):
+    """Upcoming fixtures where both sides' runs point the same way.
+
+    `now` is a parameter so a backtest can ask what the board WOULD have shown at a past
+    moment; it defaults to the real clock. `links=False` skips the venue lookup, which is
+    a linear scan over thousands of Kalshi events per fixture and pure waste when
+    replaying hundreds of simulated days.
+    """
     leads = []
-    now = datetime.datetime.now(datetime.timezone.utc)
-    today = utc_today().isoformat()
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    today = now.date().isoformat()
     for f in fixtures:
         if f["played"]:
             continue
@@ -297,7 +303,7 @@ def find_leads(fixtures, streaks, rates):
                             if bet.get("subject") else dict(bet),
                     "a_recent": form_seq(sa_["recent"], ra),
                     "b_recent": form_seq(sb_["recent"], rb),
-                    "kalshi": kalshi_link(f),
+                    "kalshi": kalshi_link(f) if links else None,
                 })
     # SOONEST first: the board is read to see what is coming up, so kickoff order is the
     # useful order. Sorted on the kickoff INSTANT, not the date string — a fixture at
