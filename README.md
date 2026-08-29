@@ -8,7 +8,7 @@ whether an idea actually holds up.
 
 | Board | What it is |
 |---|---|
-| [Sports](https://aliu2298.github.io/edge-machine/) | Picks made in the local tracker |
+| [Picks](https://aliu2298.github.io/edge-machine/) | Three auto-drawn picks from streak confluences, graded on the final score |
 | [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Teams on an unusual run, matched against a next opponent who is soft in the same place |
 
 ## Architecture
@@ -18,10 +18,10 @@ flowchart TB
     subgraph CI["GitHub Actions — daily cron"]
         direction TB
         HC["health.py<br/>guardrails (warn-only)"]
-        EX["export_public.py<br/>render sports board"]
         SF["streaks_fetch.py<br/>11 leagues → fixtures"]
         SB["streaks_build.py<br/>runs → confluences"]
-        HC --> EX --> SF --> SB
+        SL["slate_build.py<br/>draw 3 · grade · refill"]
+        HC --> SF --> SB --> SL
     end
 
     subgraph EXT["External sources (public, no auth)"]
@@ -30,8 +30,8 @@ flowchart TB
     end
 
     subgraph REPO["Repo (committed)"]
-        PJ["data/predictions.json<br/>mirror of predictions table only"]
         SJ["data/streaks.json<br/>computed leads"]
+        SLJ["data/slate.json<br/>pick ledger"]
         OUT["public_site/<br/>index · streaks"]
     end
 
@@ -41,13 +41,13 @@ flowchart TB
         APP <--> DB
     end
 
-    KAL -.link lookup.-> EX
+    KAL -.link lookup.-> SB
     ESPN --> SF
+    ESPN -.final scores.-> SL
 
-    PJ --> EX --> OUT
-    SF --> SB --> SJ
+    SF --> SB --> SJ --> SL --> SLJ
     SB --> OUT
-    DB -.mirrors predictions table.-> PJ
+    SL --> OUT
 
     OUT --> PAGES["GitHub Pages<br/>aliu2298.github.io/edge-machine"]
 
@@ -57,7 +57,8 @@ flowchart TB
 ```
 
 The pipeline runs entirely on GitHub's servers, so the board stays current whether or not
-the Mac is on. The local tracker is where picks get made; the mirror is how they reach CI.
+the Mac is on. Nothing is entered by hand: the slate draws from the streak leads, grades
+itself against ESPN final scores, and refills each slot as its pick settles.
 
 ## Components
 
@@ -65,13 +66,16 @@ the Mac is on. The local tracker is where picks get made; the mirror is how they
 |---|---|
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, slate, base rates, auto-settlement. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
-| `export_public.py` | Renders the sports board; mirrors the predictions table to JSON. |
+| `venues.py` | Shared fixture→market matcher (Kalshi, Bovada). |
+| `slate.py` | Draws three picks, grades them, keeps `data/slate.json`. |
+| `slate_build.py` | Renders the card board to `public_site/index.html`. |
+| `slate_backtest.py` | Replays the board day by day over past fixtures. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 11 leagues from ESPN. |
 | `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
-| `health.py` | Warn-only guardrails: stuck picks, missing venue links. |
+| `health.py` | Warn-only guardrails: lead freshness, stuck picks, bad series tickers. |
 | `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
 
 ## Run locally
@@ -84,8 +88,32 @@ npm --prefix web run dev  # frontend dev server on :5173
 Rebuild the public boards by hand:
 
 ```bash
-python3 export_public.py && python3 streaks_build.py
+python3 streaks_build.py && python3 slate_build.py
 ```
+
+## The Picks board
+
+Three cards, drawn automatically from the Streaks leads — nothing is entered by hand.
+Rarest confluence first, with **one pick per fixture and one per team**, so the three are
+independent bets rather than three angles on the same match. Each is **locked when drawn**:
+the runs behind a lead keep moving, so the card shows what was claimed at the time.
+
+A slot refills as soon as its pick settles, rather than waiting for all three — batch
+replacement stalls for days whenever one pick is on a Saturday fixture and another on a
+Wednesday one. The window starts at 24h and widens only when it must.
+
+`slate_backtest.py` replays the board day by day over past fixtures with no lookahead. Two
+things it established that are worth knowing:
+
+* **In season the slate is full every day** (91 of 91). It goes dark for about six weeks
+  each summer — in 2026 that is the World Cup plus the European off-season, when there are
+  genuinely no fixtures anywhere.
+* **Picks span more than 24h** — median 2.3 days from draw to kickoff, because three held
+  slots turning over every ~2 days structurally reach further than one night. Re-ranking
+  does not change it; the binding constraint is slot turnover, not ranking order.
+
+**Current state: no bet type clears its league-adjusted baseline.** No edge is claimed —
+what the fixed cadence buys is a clean, uncorrelated, continuously accumulating sample.
 
 ## The Streaks board
 
@@ -98,7 +126,7 @@ not been played yet ("A have scored 2+ in six straight; B have conceded 2+ in fi
 legs must run at least 3 games.
 
 Each lead links to its **Kalshi market** where one exists (~80% of them), reusing
-`export_public`'s matcher rather than a second copy of it.
+the shared matcher in `venues.py` rather than a second copy of it.
 
 Two design choices worth knowing:
 
@@ -150,9 +178,9 @@ Leads are research to look at. Nothing here places or stages a bet.
 ## Data handling
 
 `predictions.db` is **git-ignored** and stays local. It holds `kalshi_orders`, `kalshi_bets`
-and `kalshi_config` alongside the picks, so the raw database is never committed. Only the
-`predictions` table is mirrored to `data/predictions.json` — the same pick, odds, stake and
-result fields already shown on the board, with no keys, tokens or balances.
+and `kalshi_config`, so the raw database is never committed. `data/predictions.json` is a
+frozen archive of the 125 manually-entered picks that predate the auto-drawn slate; nothing
+writes to it any more, and stake was stripped from it because the repo is public.
 
 Secrets (`.apifootball_key`, `.kalshi_key`, `.kalshi_pem`, `*.pem`) are git-ignored. A fresh
 checkout creates empty tables on first run.

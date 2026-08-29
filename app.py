@@ -1124,7 +1124,10 @@ class H(BaseHTTPRequestHandler):
             return self._send({"settled":done})
         if p=="/api/publish-site":   # re-export public_site + deploy to Netlify (finished games drop off, next pick slides in)
             site_id="999d079e-2f4f-4a3a-85b4-0b1bca946c7a"   # edge-machine-picks.netlify.app
-            ex=subprocess.run(["python3", os.path.join(ROOT,"export_public.py")],
+            # slate_build.py replaced export_public.py — the board is now the auto-drawn
+            # slate, not the manual picks table. (The Netlify branch below is vestigial:
+            # that host was retired Aug 2026 and GitHub Pages publishes from CI.)
+            ex=subprocess.run(["python3", os.path.join(ROOT,"slate_build.py")],
                               capture_output=True, text=True, timeout=120)
             if ex.returncode!=0:
                 return self._send({"error":f"export failed: {(ex.stderr or ex.stdout)[-300:]}"},500)

@@ -33,24 +33,19 @@ jobs:
 
       # stdlib only — no pip install step needed
 
-      # Guardrails. The failure mode here is SILENT — a pick with a wrong kickoff date
-      # keeps rendering as "upcoming" with nothing reporting a problem. Warn-only on
-      # purpose: a stale board is worse than a flagged one, so this annotates the run
-      # summary without blocking the deploy.
-      # Logic tests for the streaks pipeline. Runs BEFORE the build so a regression in
-      # run detection or grading fails loudly here rather than silently shipping a wrong
-      # board. Strict on purpose — unlike health.py, these assert correctness, not freshness.
-      - name: Streaks logic tests
-        run: python3 test_streaks.py
+      # Correctness gate. Runs BEFORE any build so a regression in run detection,
+      # selection or grading fails loudly here rather than silently shipping a wrong
+      # board. Strict on purpose — unlike health.py these assert behaviour, not freshness.
+      - name: Logic tests
+        run: |
+          python3 test_streaks.py
+          python3 test_slate.py
 
+      # Guardrails. The failure mode here is SILENT — a live pick that never matches a
+      # final score just sits on the board looking normal. Warn-only: a stale board beats
+      # a blocked deploy, so this annotates the run summary instead of failing it.
       - name: Health check
         run: python3 health.py
-
-      # predictions.db stays local+gitignored (it also holds private kalshi_* tables);
-      # data/predictions.json is the repo-tracked mirror of the predictions table only,
-      # so the board can be rebuilt here without the Mac.
-      - name: Rebuild sports board
-        run: python3 export_public.py
 
       # Streak leads off ESPN's keyless scoreboard. API-Football is NOT usable here —
       # its free plan blocks the current season outright ("try from 2022 to 2024"), and a
@@ -62,12 +57,17 @@ jobs:
       - name: Rebuild streaks board and grade leads
         run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
 
+      # MUST run after streaks_build: the slate draws from the leads it just published.
+      # Also grades any live pick whose fixture has finished, then refills the slot.
+      - name: Draw and grade the slate
+        run: python3 slate_build.py || echo "slate build failed — keeping previous board"
+
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add public_site/index.html public_site/picks.json data/predictions.json \
-                  public_site/streaks.html data/streaks.json data/streak_leads.json
+          git add public_site/index.html public_site/streaks.html \
+                  data/streaks.json data/streak_leads.json data/slate.json
           if git diff --cached --quiet; then
             echo "no changes — nothing to deploy"
             exit 0
