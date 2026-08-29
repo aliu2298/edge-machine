@@ -39,3 +39,7 @@ public_site/.netlify/
 
 # transient Kalshi event cache (shared between board builders)
 data/.kalshi_events.json
+
+# raw ESPN fixture pull backing the streaks board — a ~400KB cache that changes every
+# run. data/streaks.json (the computed leads) is committed; this input is not.
+data/streaks_raw.json

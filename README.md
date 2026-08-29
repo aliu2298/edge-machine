@@ -9,6 +9,7 @@ whether an idea actually holds up.
 | Board | What it is |
 |---|---|
 | [Sports](https://aliu2298.github.io/edge-machine/) | Picks made in the local tracker |
+| [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Teams on an unusual run, matched against a next opponent who is soft in the same place |
 
 ## Architecture
 
@@ -18,16 +19,20 @@ flowchart TB
         direction TB
         HC["health.py<br/>guardrails (warn-only)"]
         EX["export_public.py<br/>render sports board"]
-        HC --> EX
+        SF["streaks_fetch.py<br/>11 leagues → fixtures"]
+        SB["streaks_build.py<br/>runs → confluences"]
+        HC --> EX --> SF --> SB
     end
 
     subgraph EXT["External sources (public, no auth)"]
         KAL["Kalshi public API<br/>market links"]
+        ESPN["ESPN scoreboard<br/>results + fixtures"]
     end
 
     subgraph REPO["Repo (committed)"]
         PJ["data/predictions.json<br/>mirror of predictions table only"]
-        OUT["public_site/<br/>index"]
+        SJ["data/streaks.json<br/>computed leads"]
+        OUT["public_site/<br/>index · streaks"]
     end
 
     subgraph LOCAL["Local Mac (optional)"]
@@ -37,8 +42,11 @@ flowchart TB
     end
 
     KAL -.link lookup.-> EX
+    ESPN --> SF
 
     PJ --> EX --> OUT
+    SF --> SB --> SJ
+    SB --> OUT
     DB -.mirrors predictions table.-> PJ
 
     OUT --> PAGES["GitHub Pages<br/>aliu2298.github.io/edge-machine"]
@@ -58,8 +66,10 @@ the Mac is on. The local tracker is where picks get made; the mirror is how they
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, slate, base rates, auto-settlement. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
 | `export_public.py` | Renders the sports board; mirrors the predictions table to JSON. |
+| `streaks_fetch.py` | Pulls recent + upcoming fixtures for 11 leagues from ESPN. |
+| `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |
 | `health.py` | Warn-only guardrails: stuck picks, missing venue links. |
-| `.github/workflows/refresh-tips.yml` | Daily cron: check → build → publish to Pages. |
+| `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
 
 ## Run locally
 
@@ -68,11 +78,39 @@ python3 app.py            # tracker UI + API on :8787
 npm --prefix web run dev  # frontend dev server on :5173
 ```
 
-Rebuild the public board by hand:
+Rebuild the public boards by hand:
 
 ```bash
-python3 export_public.py
+python3 export_public.py && python3 streaks_build.py
 ```
+
+## The Streaks board
+
+Tracks 11 leagues: the big five (Premier League, La Liga, Bundesliga, Serie A, Ligue 1),
+Eredivisie, Primeira Liga, MLS, Saudi Pro League, and the Champions/Europa Leagues.
+
+A **lead** is not a streak on its own — plenty of good sides score freely. It is a
+*confluence*: one team's run meeting the opponent's matching weakness in a fixture that has
+not been played yet ("A have scored 2+ in six straight; B have conceded 2+ in five"). Both
+legs must run at least 3 games.
+
+Two design choices worth knowing:
+
+* **Form is cross-competition.** A team's last 6 games span every tracked competition, not
+  just the one their next fixture belongs to. Form does not reset when a side walks into a
+  European tie — and early season it is the only thing that works at all, since UCL/UEL
+  sides have played ~2 European games.
+* **Every run is shown with its base rate.** This repo has already falsified three signals
+  that looked good until measured. The trap each time was reading a pattern without asking
+  how often it shows up by chance, so each run is rendered next to the share of tracked
+  teams currently on a run that long. A 5-game scoring streak that a fifth of the league is
+  also on is not a lead, and the board says so.
+
+Confluences are genuinely rare — whole leagues can have none on a given day. The **All teams
+on a run** tab exists for that: it browses every tracked team's current runs directly,
+rather than showing an empty league.
+
+Leads are research to look at. Nothing here places or stages a bet.
 
 ## Data handling
 
