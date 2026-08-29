@@ -201,7 +201,7 @@ _KALSHI_EVENTS = None
 def kalshi_link(f):
     """Kalshi market URL for a fixture, or None.
 
-    Reuses export_public's matcher rather than writing a second one — that module already
+    Reuses the shared matcher in venues.py rather than writing a second one — that module
     carries the hard-won parts (the KXUEFAGAME empty-series trap, cursor pagination, 429
     backoff, the name aliases) and a duplicate would drift from them. Fail-soft: a missing
     link is normal, since plenty of fixtures have no Kalshi market.
@@ -211,7 +211,7 @@ def kalshi_link(f):
     global _KALSHI_EVENTS
     if _KALSHI_EVENTS is None:
         try:
-            from export_public import fetch_kalshi_events
+            from venues import fetch_kalshi_events
             _KALSHI_EVENTS = fetch_kalshi_events()
         except Exception as e:
             print(f"  (kalshi links unavailable: {e})")
@@ -219,7 +219,7 @@ def kalshi_link(f):
     if not _KALSHI_EVENTS:
         return None
     try:
-        from export_public import venue_link
+        from venues import venue_link
         return venue_link(f"{f['home']} vs {f['away']}",
                           f.get("kickoff") or f.get("date"), _KALSHI_EVENTS)
     except Exception:

@@ -51,7 +51,7 @@ def main():
     #      accepts a ±1 day gap. That is exactly how pick #122 was caught — a Europa tie
     #      dated Tuesday when the competition plays Thursday.
     try:
-        from export_public import fetch_kalshi_events, venue_link, kalshi_series_counts
+        from venues import fetch_kalshi_events, venue_link, kalshi_series_counts
 
         for series, n in sorted(kalshi_series_counts().items()):
             if n == 0:
