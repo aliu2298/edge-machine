@@ -83,6 +83,19 @@ def esc(x):
     return html.escape(str(x if x is not None else ""))
 
 
+def form_seq(games, run_len=0):
+    """Recent games (newest first) as compact structured entries for the page's score pills.
+
+    `hit` lights exactly the games IN the run — that is, the first `run_len`. It is
+    deliberately NOT "does this game satisfy the predicate": a run is a prefix from the most
+    recent game, so a qualifying game sitting the far side of a break is not part of it.
+    Lighting those too made a 4-game run render as 6-with-a-gap.
+    """
+    return [{"s": f"{g['gf']}-{g['ga']}", "opp": g["opp"], "h": g["home"],
+             "hit": i < run_len}
+            for i, g in enumerate(games[:FORM_GAMES])]
+
+
 def team_games(fixtures):
     """team -> [game dicts], most recent first. One played fixture yields two rows, one
     from each side's perspective, so `gf`/`ga` are always that team's own goals."""
@@ -178,12 +191,11 @@ def find_leads(fixtures, streaks, rates):
                     "why": why.format(a=a, b=b, ra=ra, rb=rb),
                     "a": a, "b": b, "a_run": ra, "b_run": rb,
                     "a_key": a_key, "b_key": b_key,
+                    "a_label": STREAK_BY_KEY[a_key][1], "b_label": STREAK_BY_KEY[b_key][1],
                     "strength": ra + rb,
                     "base_rate": rate,
-                    "a_recent": [f"{g['gf']}-{g['ga']} {'H' if g['home'] else 'A'} v {g['opp']}"
-                                 for g in sa_["recent"][:FORM_GAMES]],
-                    "b_recent": [f"{g['gf']}-{g['ga']} {'H' if g['home'] else 'A'} v {g['opp']}"
-                                 for g in sb_["recent"][:FORM_GAMES]],
+                    "a_recent": form_seq(sa_["recent"], ra),
+                    "b_recent": form_seq(sb_["recent"], rb),
                 })
     # RAREST first, not longest. The question is "who is on an unusual run", and a
     # 6-game run that a quarter of the league is also on answers it worse than a shorter
@@ -237,9 +249,13 @@ def team_rows(streaks, by_team, fixtures, rates):
 
     rows = []
     for team, info in streaks.items():
-        runs = [{"key": k, "label": STREAK_BY_KEY[k][1], "n": n,
-                 "rate": rates[k][min(n, FORM_GAMES)]}
-                for k, n in sorted(info["runs"].items(), key=lambda kv: -kv[1])]
+        # rarest run first, so the chip the row leads with is the notable one and
+        # `runs[0]` is what the form sequence highlights
+        runs = sorted(
+            ({"key": k, "label": STREAK_BY_KEY[k][1], "n": n,
+              "rate": rates[k][min(n, FORM_GAMES)]}
+             for k, n in info["runs"].items()),
+            key=lambda r: (r["rate"], -r["n"]))
         if not runs:
             continue
         rows.append({
@@ -250,8 +266,8 @@ def team_rows(streaks, by_team, fixtures, rates):
             "best_rate": min(r["rate"] for r in runs),
             "longest": max(r["n"] for r in runs),
             "next": nxt.get(team),
-            "recent": [f"{g['gf']}-{g['ga']} {'H' if g['home'] else 'A'} v {g['opp']}"
-                       for g in info["recent"][:FORM_GAMES]],
+            # highlight the rarest run, which is the one the row leads with
+            "recent": form_seq(info["recent"], runs[0]["n"] if runs else 0),
         })
     rows.sort(key=lambda r: (r["best_rate"], -r["longest"], r["team"]))
     return rows
@@ -285,8 +301,19 @@ h2{{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em
 border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
 .nav a:hover{{color:var(--fg);border-color:var(--mut)}}
 .nav a.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
-.note{{font-size:12.5px;color:var(--mut);margin:14px 0 0;line-height:1.55;
-border-left:2px solid var(--bd);padding-left:11px}}
+details.how{{margin-top:15px;border:1px solid var(--bd);border-radius:10px;
+background:var(--card)}}
+details.how summary{{cursor:pointer;list-style:none;user-select:none;
+font-size:12.5px;font-weight:600;color:var(--mut);padding:10px 14px}}
+details.how summary::-webkit-details-marker{{display:none}}
+details.how summary::before{{content:"▸";display:inline-block;margin-right:8px;
+transition:transform .15s;color:var(--mut)}}
+details.how[open] summary::before{{transform:rotate(90deg)}}
+details.how summary:hover{{color:var(--fg)}}
+.howbody{{padding:0 14px 13px 32px;font-size:12.5px;color:var(--mut);line-height:1.6}}
+.howbody p{{margin:0 0 8px}}
+.howbody p:last-child{{margin-bottom:0}}
+.howbody b{{color:var(--fg);font-weight:600}}
 .controls{{position:sticky;top:0;z-index:20;background:var(--bg);
 padding:14px 0 10px;margin-top:18px;border-bottom:1px solid var(--bd)}}
 .tabs{{display:flex;gap:6px;margin-bottom:10px}}
@@ -295,12 +322,16 @@ background:none;border:1px solid var(--bd);border-radius:9px;padding:7px 15px;tr
 .tb:hover{{color:var(--fg);border-color:var(--mut)}}
 .tb.on{{color:var(--fg);background:#161b26;border-color:var(--mut)}}
 .trow{{background:var(--card);border:1px solid var(--bd);border-radius:11px;
-padding:13px 15px;margin-bottom:9px}}
-.th{{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}}
-.tn{{font-weight:800;font-size:15px}}
-.tl{{font-size:11.5px;color:var(--mut)}}
-.tnx{{font-size:12px;color:var(--mut);margin-top:4px}}
+margin-bottom:9px;overflow:hidden}}
+.th{{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+padding:12px 15px 10px;border-bottom:1px solid var(--bd)}}
+.tn{{font-weight:700;font-size:15px;letter-spacing:-.012em}}
+.tl{{font-size:11.5px;color:var(--mut);margin-left:auto;white-space:nowrap}}
+.tbody{{padding:11px 15px 12px}}
+.tnx{{font-size:12px;color:var(--mut);margin-top:10px;
+padding-top:9px;border-top:1px solid var(--bd)}}
 .tnx b{{color:var(--fg);font-weight:600}}
+.truns{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}}
 .lgs{{display:flex;gap:6px;flex-wrap:wrap}}
 .lg{{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);cursor:pointer;
 background:none;border:1px solid var(--bd);border-radius:999px;padding:5px 12px;
@@ -313,33 +344,43 @@ border:1px solid var(--bd);border-radius:9px;padding:8px 12px;outline:none}}
 .srch input:focus{{border-color:var(--acc)}}
 .srch input::placeholder{{color:var(--mut)}}
 .cnt{{font-size:11.5px;color:var(--mut);white-space:nowrap;font-variant-numeric:tabular-nums}}
+/* --- card: fixture header → evidence → the lead, in that order --- */
 .card{{background:var(--card);border:1px solid var(--bd);border-radius:12px;
-padding:15px;margin-bottom:11px}}
-.r1{{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}}
-.hl{{font-weight:800;font-size:16px;color:var(--warn)}}
-.mt{{font-size:13px;font-weight:600}}
-.meta{{font-size:11.5px;color:var(--mut);margin-top:3px}}
-.why{{font-size:13px;margin-top:9px;line-height:1.5}}
-.runs{{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}}
-.rn{{font-size:10.5px;font-weight:800;letter-spacing:.03em;border-radius:999px;
-padding:3px 9px;border:1px solid}}
-.rn.a{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
-.rn.b{{color:var(--acc);border-color:#7aa2f755;background:#7aa2f714}}
-.rare{{font-size:10.5px;font-weight:800;border-radius:999px;padding:3px 9px;border:1px solid}}
+margin-bottom:11px;overflow:hidden}}
+.chd{{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+padding:13px 15px 11px;border-bottom:1px solid var(--bd)}}
+.fx{{font-weight:700;font-size:15px;letter-spacing:-.012em}}
+.fxm{{font-size:11.5px;color:var(--mut);margin-left:auto;white-space:nowrap}}
+.ev{{padding:11px 15px 3px}}
+.leg{{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:7px}}
+.lgn{{font-size:13px;font-weight:700;min-width:0}}
+.lgr{{font-size:11px;font-weight:700;letter-spacing:.02em;border-radius:999px;
+padding:2px 8px;border:1px solid;white-space:nowrap}}
+.lgr.a{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
+.lgr.b{{color:var(--acc);border-color:#7aa2f755;background:#7aa2f714}}
+.seq{{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 11px}}
+.sc{{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;
+border-radius:5px;padding:2px 6px;background:#0c1017;border:1px solid var(--bd);
+color:var(--mut);cursor:default}}
+.sc.hit{{color:var(--fg);border-color:#3fb97044;background:#3fb9700f}}
+/* the lead — its own section, after the evidence that supports it */
+.lead{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+padding:11px 15px;background:#0c1017;border-top:1px solid var(--bd)}}
+.lbl{{font-size:9.5px;font-weight:800;letter-spacing:.09em;color:var(--mut);
+text-transform:uppercase;white-space:nowrap}}
+.hl{{font-weight:800;font-size:14.5px;color:var(--warn);letter-spacing:-.01em}}
+.rare{{font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;
+border:1px solid;margin-left:auto;white-space:nowrap}}
 .rare.hot{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
 .rare.mid{{color:var(--mut);border-color:var(--bd)}}
 .rare.common{{color:var(--neg);border-color:#e06c7544;background:#e06c750f}}
-.forms{{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:11px}}
-.fm{{background:#0c1017;border:1px solid var(--bd);border-radius:9px;padding:9px 11px}}
-.fmt{{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
-color:var(--mut);margin-bottom:5px}}
-.fmr{{font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--mut);line-height:1.7}}
-.empty{{color:var(--mut);padding:26px 0;text-align:center}}
+.empty{{color:var(--mut);padding:26px 0;text-align:center;line-height:1.6}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:560px){{
   body{{padding:18px 10px 44px;font-size:14px}}
-  h1{{font-size:19px}} .card{{padding:13px}} .hl{{font-size:15px}}
-  .forms{{grid-template-columns:1fr}}
+  h1{{font-size:19px}} .hl{{font-size:14px}}
+  .fxm{{margin-left:0;width:100%}}
+  .rare{{margin-left:0}}
 }}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Streaks</h1>
@@ -347,13 +388,22 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 place · updated {esc(now)}</div>
 <div class="nav"><a href="./">Sports</a><a class="on" href="./streaks.html">Streaks</a></div>
 
-<div class="note">A streak on its own is not an edge — plenty of good sides score freely.
-What is shown here is the <b>confluence</b>: one team's run meeting the other's matching
-weakness in a fixture not yet played. Every card carries a <b>rarity</b> chip — the share of
-tracked teams currently on a run that long. When that share is high the pattern is ordinary,
-and the chip says so. Form is measured across <b>all</b> tracked competitions
-(last {FORM_GAMES} games, minimum {MIN_PLAYED} played), because form does not reset when a
-side walks into a European tie. Leads to look at — not picks, and not betting advice.</div>
+<details class="how">
+<summary>A run only counts when the opponent is soft in the same place — how this works</summary>
+<div class="howbody">
+<p>A streak on its own is not an edge; plenty of good sides score freely. What is shown here
+is the <b>confluence</b>: one team's run meeting the other's matching weakness in a fixture
+not yet played.</p>
+<p>Every lead carries a <b>rarity</b> chip — the share of tracked teams currently on a run
+that long. When that share is high the pattern is ordinary, and the chip says so. Leads are
+sorted rarest first, not longest.</p>
+<p>Form is measured across <b>all</b> tracked competitions (last {FORM_GAMES} games, minimum
+{MIN_PLAYED} played), because form does not reset when a side walks into a European tie.</p>
+<p>Confluences are genuinely rare — a whole league can have none on a given day. <b>All teams
+on a run</b> browses the raw runs instead. Leads to look at: not picks, and not betting
+advice.</p>
+</div>
+</details>
 
 <div class="controls">
   <div class="tabs">
@@ -399,45 +449,55 @@ function when(iso) {{
   return d.toLocaleString([], {{weekday:'short', month:'short', day:'numeric',
                                hour:'numeric', minute:'2-digit'}});
 }}
+// Recent results as compact pills, newest LEFT. Games inside the run are lit; the rest
+// are dimmed, so the streak is visible at a glance instead of spelled out in prose.
+function seq(games) {{
+  return `<div class="seq">` + games.map(g =>
+    `<span class="sc${{g.hit ? ' hit' : ''}}" title="${{esc(g.s)}} ${{g.h ? 'home' : 'away'}}`
+    + ` v ${{esc(g.opp)}}">${{esc(g.s)}}</span>`).join('') + `</div>`;
+}}
+function leg(name, label, n, side, games) {{
+  return `<div class="leg"><span class="lgn">${{esc(name)}}</span>`
+       + `<span class="lgr ${{side}}">${{esc(label)}} · ${{n}} straight</span></div>`
+       + seq(games);
+}}
 function card(l) {{
   const [cls, txt] = rarity(l.base_rate);
   return `<div class="card">
-    <div class="r1"><span class="hl">${{esc(l.headline)}}</span></div>
-    <div class="mt">${{esc(l.match)}}</div>
-    <div class="meta">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</div>
-    <div class="why">${{esc(l.why)}}</div>
-    <div class="runs">
-      <span class="rn a">${{esc(l.a)}} · ${{l.a_run}} straight</span>
-      <span class="rn b">${{esc(l.b)}} · ${{l.b_run}} straight</span>
-      <span class="rare ${{cls}}">${{esc(txt)}}</span>
+    <div class="chd">
+      <span class="fx">${{esc(l.match)}}</span>
+      <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
     </div>
-    <div class="forms">
-      <div class="fm"><div class="fmt">${{esc(l.a)}} — last ${{l.a_recent.length}}</div>
-        <div class="fmr">${{l.a_recent.map(esc).join('<br>')}}</div></div>
-      <div class="fm"><div class="fmt">${{esc(l.b)}} — last ${{l.b_recent.length}}</div>
-        <div class="fmr">${{l.b_recent.map(esc).join('<br>')}}</div></div>
+    <div class="ev">
+      ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}
+      ${{leg(l.b, l.b_label, l.b_run, 'b', l.b_recent)}}
+    </div>
+    <div class="lead">
+      <span class="lbl">Lead</span>
+      <span class="hl">${{esc(l.headline)}}</span>
+      <span class="rare ${{cls}}">${{esc(txt)}}</span>
     </div>
   </div>`;
 }}
 function teamRow(t) {{
   const chips = t.runs.map(r => {{
     const [cls] = rarity(r.rate);
-    return `<span class="rare ${{cls}}">${{esc(r.label)}} · ${{r.n}} straight`
-         + ` <span class="mut">(${{Math.round(r.rate*100)}}%)</span></span>`;
+    return `<span class="rare ${{cls}}" style="margin-left:0">${{esc(r.label)}} · ${{r.n}}`
+         + ` straight · ${{Math.round(r.rate*100)}}%</span>`;
   }}).join('');
   const n = t.next
     ? `<div class="tnx">Next: <b>${{esc(t.next.home ? 'vs ' + t.next.opp
                                                    : 'away to ' + t.next.opp)}}</b>`
       + ` · ${{esc(when(t.next.kickoff) || t.next.date)}} · ${{esc(t.next.league)}}</div>`
-    : `<div class="tnx mut">No fixture scheduled in the next 14 days</div>`;
+    : `<div class="tnx">No fixture scheduled in the next 14 days</div>`;
   return `<div class="trow">
     <div class="th"><span class="tn">${{esc(t.team)}}</span>
       <span class="tl">${{esc(t.league)}} · ${{t.played}} games</span></div>
-    ${{n}}
-    <div class="runs">${{chips}}</div>
-    <div class="fm" style="margin-top:10px">
-      <div class="fmt">Last ${{t.recent.length}}</div>
-      <div class="fmr">${{t.recent.map(esc).join(' &nbsp;·&nbsp; ')}}</div></div>
+    <div class="tbody">
+      <div class="truns">${{chips}}</div>
+      ${{seq(t.recent)}}
+      ${{n}}
+    </div>
   </div>`;
 }}
 function render() {{
