@@ -139,14 +139,16 @@
     "n": 3
    },
    "date": "2026-08-29",
+   "final": "3-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-08-29T15:39:11+00:00",
    "headline": "Over 2.5 goals",
    "home": "FC Cologne",
    "id": "2026-08-29|FC Cologne|TSG Hoffenheim|Over 2.5 goals",
    "kickoff": "2026-08-29T13:30Z",
    "league": "Bundesliga",
    "match": "FC Cologne v TSG Hoffenheim",
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score": {
@@ -598,6 +600,53 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Both teams to score": {
+   "a": "Bayer Leverkusen",
+   "a_key": "btts",
+   "a_run": 6,
+   "away": "1. FC Union Berlin",
+   "b": "1. FC Union Berlin",
+   "b_key": "btts",
+   "b_run": 3,
+   "base_rate": 0.21390374331550802,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-09-05",
+   "first_seen": "2026-08-29",
+   "headline": "Both teams to score",
+   "home": "Bayer Leverkusen",
+   "id": "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Both teams to score",
+   "kickoff": "2026-09-05T13:30Z",
+   "league": "Bundesliga",
+   "match": "Bayer Leverkusen v 1. FC Union Berlin",
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Over 2.5 goals": {
+   "a": "Bayer Leverkusen",
+   "a_key": "over25",
+   "a_run": 4,
+   "away": "1. FC Union Berlin",
+   "b": "1. FC Union Berlin",
+   "b_key": "over25",
+   "b_run": 6,
+   "base_rate": 0.1657754010695187,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-05",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "Bayer Leverkusen",
+   "id": "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Over 2.5 goals",
+   "kickoff": "2026-09-05T13:30Z",
+   "league": "Bundesliga",
+   "match": "Bayer Leverkusen v 1. FC Union Berlin",
+   "status": "pending",
+   "strength": 10
+  },
   "2026-09-05|Estrela|FC Famalicao|Estrela to score": {
    "a": "Estrela",
    "a_key": "scoring",
@@ -886,6 +935,30 @@
    "kickoff": "2026-09-06T15:30Z",
    "league": "Premier League",
    "match": "Arsenal v Chelsea",
+   "status": "pending",
+   "strength": 8
+  },
+  "2026-09-06|Eintracht Frankfurt|FC Augsburg|Over 2.5 goals": {
+   "a": "Eintracht Frankfurt",
+   "a_key": "over25",
+   "a_run": 3,
+   "away": "FC Augsburg",
+   "b": "FC Augsburg",
+   "b_key": "over25",
+   "b_run": 5,
+   "base_rate": 0.24598930481283424,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-06",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "Eintracht Frankfurt",
+   "id": "2026-09-06|Eintracht Frankfurt|FC Augsburg|Over 2.5 goals",
+   "kickoff": "2026-09-06T15:30Z",
+   "league": "Bundesliga",
+   "match": "Eintracht Frankfurt v FC Augsburg",
    "status": "pending",
    "strength": 8
   },
@@ -1404,6 +1477,30 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-12|FC Augsburg|Bayer Leverkusen|Over 2.5 goals": {
+   "a": "FC Augsburg",
+   "a_key": "over25",
+   "a_run": 5,
+   "away": "Bayer Leverkusen",
+   "b": "Bayer Leverkusen",
+   "b_key": "over25",
+   "b_run": 4,
+   "base_rate": 0.1657754010695187,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "FC Augsburg",
+   "id": "2026-09-12|FC Augsburg|Bayer Leverkusen|Over 2.5 goals",
+   "kickoff": "2026-09-12T13:30Z",
+   "league": "Bundesliga",
+   "match": "FC Augsburg v Bayer Leverkusen",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-12|FC Cincinnati|Charlotte FC|Both teams to score": {
    "a": "FC Cincinnati",
    "a_key": "btts",
@@ -1651,5 +1748,5 @@
  "methodology": "form=last6 across tracked competitions + preseason friendlies; leads require >=3-run both legs and >=1 competitive game per run",
  "reset_at": "2026-08-29T02:40:03+00:00",
  "reset_note": "Reset from 74 pending leads on 2026-08-29. Preseason friendlies were added to the form basis, which changes every team's run lengths, so leads published before that change were computed under a different methodology. None had been graded yet. Grading both together would mix two methodologies in one measurement, so the ledger starts fresh from the friendlies-inclusive version.",
- "updated_at": "2026-08-29T12:53:04+00:00"
+ "updated_at": "2026-08-29T15:39:11+00:00"
 }
