@@ -1,0 +1,163 @@
+name: Backup refresh (watchdog)
+
+# Failover for "Refresh boards". Deliberately NOT a duplicate of it.
+#
+# A second copy of the pipeline on another schedule would double the work every day and,
+# worse, race the primary on push. This instead runs 12 hours out of phase, asks whether
+# the primary actually did its job, and only takes over when it did not.
+#
+# Two independent things are checked, because they fail in different ways:
+#   1. Did the primary workflow SUCCEED recently?   (it never ran, or it ran red)
+#   2. Is the LIVE BOARD actually fresh?            (it ran green but the deploy is stale —
+#      the Pages deploy has flaked before on an OIDC token timeout)
+# Either being wrong is enough to take over.
+#
+# It shares the primary's concurrency group, so if the primary is mid-run this queues
+# behind it rather than pushing at the same time.
+
+on:
+  schedule:
+    - cron: "17 23 * * *"      # 12h out of phase with the primary's 11:17
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Run the pipeline even if the primary looks healthy"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: read                # to read the primary workflow's run history
+
+concurrency:
+  group: refresh-boards        # MUST match the primary, or the two can push together
+  cancel-in-progress: false
+
+env:
+  # The primary runs daily. Allow a full cycle plus slack before calling it stale.
+  STALE_AFTER_HOURS: 26
+  BOARD_URL: https://aliu2298.github.io/edge-machine/
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decide whether to take over
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          REASONS=""
+
+          # --- 1. when did the primary last SUCCEED? ---
+          LAST=$(gh api \
+            "/repos/${{ github.repository }}/actions/workflows/refresh-boards.yml/runs?status=success&per_page=1" \
+            --jq '.workflow_runs[0].created_at // empty' || true)
+          if [ -z "$LAST" ]; then
+            REASONS="primary has no successful run on record"
+          else
+            AGE=$(( ( $(date -u +%s) - $(date -u -d "$LAST" +%s) ) / 3600 ))
+            echo "primary last succeeded ${AGE}h ago ($LAST)"
+            if [ "$AGE" -gt "${STALE_AFTER_HOURS}" ]; then
+              REASONS="primary last succeeded ${AGE}h ago"
+            fi
+          fi
+
+          # --- 2. is the live board actually fresh? ---
+          # Catches the case the run history cannot see: workflow green, deploy stale.
+          BODY=$(curl -fsSL "${BOARD_URL}" || true)
+          if [ -z "$BODY" ]; then
+            REASONS="${REASONS:+$REASONS; }live board did not respond"
+          else
+            # subtitle carries: "updated Aug 29 2026 · 19:34 UTC"
+            STAMP=$(printf '%s' "$BODY" | grep -o 'updated [A-Z][a-z]* [0-9]\{1,2\} [0-9]\{4\} · [0-9]\{2\}:[0-9]\{2\} UTC' | head -1 | sed 's/^updated //; s/ · / /; s/ UTC$//')
+            if [ -z "$STAMP" ]; then
+              REASONS="${REASONS:+$REASONS; }could not read the board's timestamp"
+            else
+              BAGE=$(( ( $(date -u +%s) - $(date -u -d "$STAMP" +%s) ) / 3600 ))
+              echo "live board is ${BAGE}h old ($STAMP)"
+              if [ "$BAGE" -gt "${STALE_AFTER_HOURS}" ]; then
+                REASONS="${REASONS:+$REASONS; }live board is ${BAGE}h old"
+              fi
+            fi
+          fi
+
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            REASONS="${REASONS:-forced by manual dispatch}"
+          fi
+
+          if [ -n "$REASONS" ]; then
+            echo "::warning::Backup taking over — $REASONS"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Primary is healthy; nothing to do."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.check.outputs.run == 'true'
+        with:
+          python-version: "3.12"
+
+      # From here the steps mirror the primary. Kept warn-only in the same places: the
+      # backup exists to get a board out, so a failing guardrail must not stop the deploy.
+      - name: Logic tests
+        if: steps.check.outputs.run == 'true'
+        run: |
+          python3 test_streaks.py
+          python3 test_slate.py
+
+      - name: Health check
+        if: steps.check.outputs.run == 'true'
+        run: python3 health.py
+
+      - name: Verify league coverage
+        if: steps.check.outputs.run == 'true'
+        run: python3 verify_coverage.py
+
+      - name: Rebuild streaks board and grade leads
+        if: steps.check.outputs.run == 'true'
+        run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
+
+      - name: Draw and grade the slate
+        if: steps.check.outputs.run == 'true'
+        run: python3 slate_build.py || echo "slate build failed — keeping previous board"
+
+      - name: Track on-fire runs
+        if: steps.check.outputs.run == 'true'
+        run: python3 fire_track.py || echo "fire tracking failed — continuing"
+
+      - name: Commit and push if changed
+        if: steps.check.outputs.run == 'true'
+        run: |
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add public_site/index.html public_site/streaks.html \
+                  data/streaks.json data/streak_leads.json data/slate.json \
+                  data/fire_runs.json
+          if git diff --cached --quiet; then
+            echo "no changes — nothing to commit"
+            exit 0
+          fi
+          git commit -m "Refresh board via backup ($(date -u +%Y-%m-%d))"
+          git pull --rebase --autostash origin main
+          git push origin main
+
+      # Deploy runs whenever the backup took over, even if nothing changed — a stale LIVE
+      # board with an unchanged repo is exactly the failure this workflow exists to fix.
+      - uses: actions/configure-pages@v5
+        if: steps.check.outputs.run == 'true'
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.check.outputs.run == 'true'
+        with:
+          path: public_site
+      - id: deployment
+        if: steps.check.outputs.run == 'true'
+        uses: actions/deploy-pages@v4
