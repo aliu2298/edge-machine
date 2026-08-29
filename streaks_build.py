@@ -207,15 +207,20 @@ def fire_rows(by_team, fixtures, league_of, nxt):
                              "rate": rates[key].get(min(n, FIRE_WINDOW), 0.0)})
         if not runs:
             continue
-        runs.sort(key=lambda r: (r["rate"], -r["n"]))
+        # longest run leads the row; rarity breaks ties so the more unusual of two
+        # equal-length runs is the one the row is titled by
+        runs.sort(key=lambda r: (-r["n"], r["rate"]))
         rows.append({
             "team": team, "league": league_of.get(team, "—"), "played": len(games),
-            "runs": runs, "best_rate": runs[0]["rate"], "longest": max(r["n"] for r in runs),
+            "runs": runs, "best_rate": min(r["rate"] for r in runs),
+            "longest": max(r["n"] for r in runs),
             "next": nxt.get(team),
             # show the whole run, plus a couple of games past where it started
             "recent": form_seq(games, runs[0]["n"], limit=min(runs[0]["n"] + 2, FIRE_WINDOW)),
+            "next_ko": (nxt.get(team) or {}).get("kickoff") or "",
         })
-    rows.sort(key=lambda r: (r["best_rate"], -r["longest"], r["team"]))
+    # hottest first — longest run, then rarest at equal length
+    rows.sort(key=lambda r: (-r["longest"], r["best_rate"], r["team"]))
     return rows
 
 
@@ -570,6 +575,17 @@ transition:all .12s}}
 border:1px solid var(--bd);border-radius:9px;padding:8px 12px;outline:none}}
 .srch input:focus{{border-color:var(--acc)}}
 .srch input::placeholder{{color:var(--mut)}}
+.sorts{{display:flex;align-items:center;gap:6px;margin-top:9px}}
+.slbl{{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+color:var(--mut);margin-right:2px}}
+.sb{{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);cursor:pointer;
+background:none;border:1px solid var(--bd);border-radius:999px;padding:4px 11px}}
+.sb:hover{{color:var(--fg);border-color:var(--mut)}}
+.sb.on{{color:#0a0d14;background:var(--warn);border-color:var(--warn)}}
+.more{{width:100%;font:inherit;font-size:12px;font-weight:700;color:var(--mut);
+background:none;border:1px dashed var(--bd);border-radius:9px;padding:9px 13px;
+cursor:pointer;margin-top:4px}}
+.more:hover{{color:var(--fg);border-color:var(--mut)}}
 .cnt{{font-size:11.5px;color:var(--mut);white-space:nowrap;font-variant-numeric:tabular-nums}}
 /* --- card: fixture header → evidence → the lead, in that order --- */
 .card{{background:var(--card);border:1px solid var(--bd);border-radius:12px;
@@ -689,6 +705,11 @@ advice.</p>
     <input id="q" type="search" placeholder="Filter by team… (e.g. Barcelona)" autocomplete="off">
     <span class="cnt" id="cnt"></span>
   </div>
+  <div class="sorts" id="sorts" style="display:none">
+    <span class="slbl">Sort</span>
+    <button class="sb on" data-sort="hot">Hottest</button>
+    <button class="sb" data-sort="soon">Playing soonest</button>
+  </div>
 </div>
 
 <div class="legend"><span class="sc hit">2-1</span> in the run
@@ -711,6 +732,9 @@ const empty= document.getElementById('empty');
 const q    = document.getElementById('q');
 let league = '';
 let tab    = 'leads';
+let sort   = 'hot';          // On Fire ordering: 'hot' (longest run) | 'soon' (next kickoff)
+let expand = false;          // show the full list past TOP_SHOWN
+const TOP_SHOWN = 10;        // keep the tab exclusive; the rest sit behind one click
 
 function rarity(r) {{
   if (r <= 0.10) return ['hot',    'rare · ' + Math.round(r*100) + '% of teams'];
@@ -962,8 +986,18 @@ function render() {{
     total = FIRE.length;
     rows = FIRE.filter(t => (!league || t.league === league) &&
                             (!term || t.team.toLowerCase().includes(term)));
+    // FIRE arrives hottest-first; re-sort only when the other order is asked for.
+    // Teams with no scheduled fixture sink to the bottom of "playing soonest" rather
+    // than sorting as if they kicked off at the epoch.
+    if (sort === 'soon') {{
+      rows = rows.slice().sort((a, b) =>
+        (a.next_ko || '9999').localeCompare(b.next_ko || '9999') ||
+        b.longest - a.longest);
+    }}
     // The warning goes ABOVE the list, not in a footnote: this tab shows the most
     // seductive patterns on the board and they are the ones that measured worst.
+    const shownRows = expand ? rows : rows.slice(0, TOP_SHOWN);
+    const hidden = rows.length - shownRows.length;
     html_ = `<div class="tr-note warn"><b>These runs do not predict their own
       continuation.</b> Measured over the season so far: teams on an 8+ "scored in" run
       extended 88.8% of the time — but those same teams score in 91.9% of all their games
@@ -972,17 +1006,39 @@ function render() {{
       that number is the hot-hand fallacy, not an edge. A long streak here is a striking
       fact about the past and survivorship in the present: the side still on a 12-game run
       is simply the one whose run has not broken yet.</div>`
-      + rows.map(fireRow).join('');
+      + shownRows.map(fireRow).join('')
+      + (hidden > 0
+          ? `<button class="more" id="more">Show ${{hidden}} more team${{
+              hidden === 1 ? '' : 's'}} on a run</button>`
+          : (expand && rows.length > TOP_SHOWN
+              ? `<button class="more" id="more">Show only the top ${{TOP_SHOWN}}</button>`
+              : ''));
     empty.textContent = 'No team is on a run of ' + FIRE_MIN + '+ right now.';
   }} else {{
     total = TEAMS.length;
     rows = TEAMS.filter(t => (!league || t.league === league) &&
                              (!term || t.team.toLowerCase().includes(term)));
-    html_ = rows.map(teamRow).join('');
+    // Same collapse as On Fire: the tab is COMPLETE by design (every squad is listed),
+    // but 200 rows unfiltered is a wall. Filter or expand to reach the rest.
+    const shownT = expand ? rows : rows.slice(0, TOP_SHOWN);
+    const hiddenT = rows.length - shownT.length;
+    html_ = shownT.map(teamRow).join('')
+      + (hiddenT > 0
+          ? `<button class="more" id="more">Show ${{hiddenT}} more team${{
+              hiddenT === 1 ? '' : 's'}}</button>`
+          : (expand && rows.length > TOP_SHOWN
+              ? `<button class="more" id="more">Show only the top ${{TOP_SHOWN}}</button>`
+              : ''));
     empty.textContent = 'No teams match that filter.';
   }}
   list.innerHTML = html_;
-  cnt.textContent = rows.length + ' of ' + total;
+  const onScreen = ((tab === 'fire' || tab === 'teams') && !expand)
+    ? Math.min(rows.length, TOP_SHOWN) : rows.length;
+  cnt.textContent = (onScreen < rows.length ? onScreen + ' of ' + rows.length
+                                            : rows.length + ' of ' + total);
+  const mb = document.getElementById('more');
+  if (mb) mb.addEventListener('click', () => {{ expand = !expand; render(); }});
+  document.getElementById('sorts').style.display = tab === 'fire' ? 'flex' : 'none';
   empty.style.display = rows.length ? 'none' : '';
 }}
 for (const b of document.querySelectorAll('.lg')) {{
@@ -998,10 +1054,19 @@ for (const b of document.querySelectorAll('.tb')) {{
     document.querySelectorAll('.tb').forEach(x => x.classList.remove('on'));
     b.classList.add('on');
     tab = b.dataset.tab;
+    expand = false;
     // the league/team filters describe fixtures, which the track view does not list
     const hide = tab === 'track' ? 'none' : '';
     document.querySelector('.lgs').style.display = hide;
     document.querySelector('.srch').style.display = hide ? 'none' : 'flex';
+    render();
+  }});
+}}
+for (const b of document.querySelectorAll('.sb')) {{
+  b.addEventListener('click', () => {{
+    document.querySelectorAll('.sb').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    sort = b.dataset.sort;
     render();
   }});
 }}

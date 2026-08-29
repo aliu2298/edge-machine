@@ -75,21 +75,6 @@
    "team": "Ajax Amsterdam",
    "test_date": "2026-08-30"
   },
-  "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal": {
-   "home": false,
-   "id": "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal",
-   "key": "scoring1",
-   "kickoff": "2026-09-01T18:00Z",
-   "label": "scored in",
-   "league": "Saudi Pro League",
-   "length": 8,
-   "logged_at": "2026-08-29T19:16:46+00:00",
-   "opp": "Al Hilal",
-   "rate": 0.20555555555555555,
-   "status": "pending",
-   "team": "Al Ahli",
-   "test_date": "2026-09-01"
-  },
   "Al Hilal|scoring1|2026-09-01|Al Hilal|Al Ahli": {
    "home": true,
    "id": "Al Hilal|scoring1|2026-09-01|Al Hilal|Al Ahli",
@@ -209,6 +194,21 @@
    "status": "pending",
    "team": "Atl\u00e9tico Madrid",
    "test_date": "2026-08-29"
+  },
+  "Atl\u00e9tico Madrid|scoring1|2026-09-05|Atl\u00e9tico Madrid|Athletic Club": {
+   "home": false,
+   "id": "Atl\u00e9tico Madrid|scoring1|2026-09-05|Atl\u00e9tico Madrid|Athletic Club",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T14:15Z",
+   "label": "scored in",
+   "league": "La Liga",
+   "length": 9,
+   "logged_at": "2026-08-29T19:33:25+00:00",
+   "opp": "Athletic Club",
+   "rate": 0.16111111111111112,
+   "status": "pending",
+   "team": "Atl\u00e9tico Madrid",
+   "test_date": "2026-09-05"
   },
   "Austin FC|porous|2026-08-30|Austin FC|Portland Timbers": {
    "home": false,
@@ -465,21 +465,6 @@
    "team": "D.C. United",
    "test_date": "2026-08-29"
   },
-  "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla": {
-   "home": true,
-   "id": "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla",
-   "key": "scoring1",
-   "kickoff": "2026-09-06T19:00Z",
-   "label": "scored in",
-   "league": "La Liga",
-   "length": 8,
-   "logged_at": "2026-08-29T19:16:46+00:00",
-   "opp": "Sevilla",
-   "rate": 0.20555555555555555,
-   "status": "pending",
-   "team": "Espanyol",
-   "test_date": "2026-09-06"
-  },
   "Estoril|porous|2026-08-31|Estoril|Benfica": {
    "home": false,
    "id": "Estoril|porous|2026-08-31|Estoril|Benfica",
@@ -494,21 +479,6 @@
    "status": "pending",
    "team": "Estoril",
    "test_date": "2026-08-31"
-  },
-  "Excelsior|scoring1|2026-09-05|Excelsior|Willem II": {
-   "home": false,
-   "id": "Excelsior|scoring1|2026-09-05|Excelsior|Willem II",
-   "key": "scoring1",
-   "kickoff": "2026-09-05T19:00Z",
-   "label": "scored in",
-   "league": "Eredivisie",
-   "length": 8,
-   "logged_at": "2026-08-29T19:16:46+00:00",
-   "opp": "Willem II",
-   "rate": 0.20555555555555555,
-   "status": "pending",
-   "team": "Excelsior",
-   "test_date": "2026-09-05"
   },
   "FC Augsburg|porous|2026-08-30|FC Augsburg|Schalke 04": {
    "home": true,
@@ -1276,5 +1246,5 @@
    "test_date": "2026-08-30"
   }
  },
- "updated_at": "2026-08-29T19:16:46+00:00"
+ "updated_at": "2026-08-29T19:33:25+00:00"
 }
