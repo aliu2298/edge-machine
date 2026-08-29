@@ -62,6 +62,14 @@ def settle_bet(bet, home, away, hg, ag):
     return None
 
 
+def utc_today():
+    """UTC date. ESPN stamps fixtures in UTC, so comparing them against a LOCAL date makes
+    the board non-deterministic: on a US-timezone Mac `date.today()` was 2026-08-28 while
+    CI (UTC) saw 2026-08-29, and the two produced different lead sets from identical data.
+    """
+    return datetime.datetime.now(datetime.timezone.utc).date()
+
+
 def lead_id(l):
     """Stable across rebuilds: a lead is the same lead if it is the same claim about the
     same fixture. Deliberately excludes run lengths, which grow as games are played."""
@@ -98,7 +106,7 @@ def record(leads, blob=None):
             continue
         blob["leads"][lid] = {
             "id": lid,
-            "first_seen": datetime.date.today().isoformat(),
+            "first_seen": utc_today().isoformat(),
             "date": l["date"], "kickoff": l.get("kickoff"), "league": l["league"],
             "match": l["match"], "home": l["home"], "away": l["away"],
             "headline": l["headline"], "bet": l["bet"],
@@ -119,7 +127,7 @@ def grade(fixtures, blob=None):
         if f["played"] and f["home_goals"] is not None:
             results[(f["date"], f["home"], f["away"])] = (f["home_goals"], f["away_goals"])
 
-    today = datetime.date.today()
+    today = utc_today()
     graded = 0
     for lid, e in blob["leads"].items():
         if e["status"] != "pending":
@@ -157,7 +165,11 @@ def population_rates(fixtures):
     This is the yardstick. Without it a hit rate is unreadable — the whole question is
     whether flagging a fixture beats not flagging it.
     """
-    played = [f for f in fixtures if f["played"] and f["home_goals"] is not None]
+    # COMPETITIVE only. Friendlies are in the pull to give barely-started teams a form
+    # line, but they are higher-scoring and less serious — letting them into the baseline
+    # would shift the very yardstick the leads are measured against.
+    played = [f for f in fixtures if f["played"] and f["home_goals"] is not None
+              and f.get("competitive", True)]
     n = len(played)
     if not n:
         return {}
@@ -196,9 +208,10 @@ def league_baselines(fixtures):
     significant edge that was really 'MLS and the Eredivisie score a lot'.
     """
     out = {}
-    for lg in {f["league"] for f in fixtures if f["played"]}:
+    for lg in {f["league"] for f in fixtures
+               if f["played"] and f.get("competitive", True)}:
         sub = [f for f in fixtures if f["played"] and f["league"] == lg
-               and f["home_goals"] is not None]
+               and f["home_goals"] is not None and f.get("competitive", True)]
         if sub:
             out[lg] = population_rates(sub)
     return out

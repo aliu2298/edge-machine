@@ -40,7 +40,12 @@ DATA_OUT = os.path.join(ROOT, "data", "streaks.json")
 
 FORM_GAMES = 6        # window a streak is measured over
 MIN_RUN = 3           # shorter than this is noise, not a run
-MIN_PLAYED = 5        # a team needs this many games before we say anything about them
+MIN_PLAYED = 5        # games needed before a team may form one half of a LEAD
+# Browsing threshold. A promoted side or a second-tier club in a cup tie can be 3 games
+# into its season; showing nothing for them is worse than showing a thin sample clearly
+# labelled as thin. Kept BELOW the lead threshold on purpose — a confluence still requires
+# real form on both sides, so a 3-game team is visible but never generates a lead.
+MIN_PLAYED_SHOWN = 3
 TOP_LEADS = 120       # cards baked into the page; the league filter narrows from here
 
 # ---------------------------------------------------------------- streak definitions
@@ -97,6 +102,14 @@ def esc(x):
     return html.escape(str(x if x is not None else ""))
 
 
+def utc_today():
+    """UTC date. ESPN stamps fixtures in UTC, so comparing them against a LOCAL date makes
+    the board non-deterministic: on a US-timezone Mac `date.today()` was 2026-08-28 while
+    CI (UTC) saw 2026-08-29, and the two produced different lead sets from identical data.
+    """
+    return datetime.datetime.now(datetime.timezone.utc).date()
+
+
 def form_seq(games, run_len=0):
     """Recent games (newest first) as compact structured entries for the page's score pills.
 
@@ -106,7 +119,7 @@ def form_seq(games, run_len=0):
     Lighting those too made a 4-game run render as 6-with-a-gap.
     """
     return [{"s": f"{g['gf']}-{g['ga']}", "opp": g["opp"], "h": g["home"],
-             "hit": i < run_len}
+             "hit": i < run_len, "comp": g.get("comp", True), "lg": g.get("league", "")}
             for i, g in enumerate(games[:FORM_GAMES])]
 
 
@@ -120,10 +133,13 @@ def team_games(fixtures):
         hg, ag = f["home_goals"], f["away_goals"]
         if hg is None or ag is None:
             continue
+        comp = f.get("competitive", True)
         by_team[f["home"]].append({"date": f["date"], "opp": f["away"], "home": True,
-                                   "gf": hg, "ga": ag, "league": f["league"]})
+                                   "gf": hg, "ga": ag, "league": f["league"],
+                                   "comp": comp})
         by_team[f["away"]].append({"date": f["date"], "opp": f["home"], "home": False,
-                                   "gf": ag, "ga": hg, "league": f["league"]})
+                                   "gf": ag, "ga": hg, "league": f["league"],
+                                   "comp": comp})
     for t in by_team:
         by_team[t].sort(key=lambda g: g["date"], reverse=True)
     return by_team
@@ -142,11 +158,15 @@ def run_length(games, pred):
     return n
 
 
-def team_streaks(by_team):
-    """team -> {streak_key: run_length} for teams with enough games played."""
+def team_streaks(by_team, min_played=MIN_PLAYED):
+    """team -> {streak_key: run_length} for teams with enough games played.
+
+    `min_played` is a parameter because the board applies two thresholds: MIN_PLAYED for
+    leads, and the lower MIN_PLAYED_SHOWN for the browse view.
+    """
     out = {}
     for team, games in by_team.items():
-        if len(games) < MIN_PLAYED:
+        if len(games) < min_played:
             continue
         runs = {}
         for key, _label, _side, pred in STREAKS:
@@ -175,12 +195,47 @@ def base_rates(streaks):
     return rates
 
 
+_KALSHI_EVENTS = None
+
+
+def kalshi_link(f):
+    """Kalshi market URL for a fixture, or None.
+
+    Reuses export_public's matcher rather than writing a second one — that module already
+    carries the hard-won parts (the KXUEFAGAME empty-series trap, cursor pagination, 429
+    backoff, the name aliases) and a duplicate would drift from them. Fail-soft: a missing
+    link is normal, since plenty of fixtures have no Kalshi market.
+
+    NB `venue_link` expects "A vs B" and allows only a ±1 day gap on the date.
+    """
+    global _KALSHI_EVENTS
+    if _KALSHI_EVENTS is None:
+        try:
+            from export_public import fetch_kalshi_events
+            _KALSHI_EVENTS = fetch_kalshi_events()
+        except Exception as e:
+            print(f"  (kalshi links unavailable: {e})")
+            _KALSHI_EVENTS = []
+    if not _KALSHI_EVENTS:
+        return None
+    try:
+        from export_public import venue_link
+        return venue_link(f"{f['home']} vs {f['away']}",
+                          f.get("kickoff") or f.get("date"), _KALSHI_EVENTS)
+    except Exception:
+        return None
+
+
 def find_leads(fixtures, streaks, rates):
     """Upcoming fixtures where both sides' runs point the same way."""
     leads = []
-    today = datetime.date.today().isoformat()
+    today = utc_today().isoformat()
     for f in fixtures:
         if f["played"] or (f["date"] or "") < today:
+            continue
+        # Friendlies feed FORM but are never themselves a lead — a preseason kickabout is
+        # not a fixture to have a read on.
+        if not f.get("competitive", True):
             continue
         home, away = f["home"], f["away"]
         sh, sa = streaks.get(home), streaks.get(away)
@@ -192,6 +247,12 @@ def find_leads(fixtures, streaks, rates):
                 ra = sa_["runs"].get(a_key, 0)
                 rb = sb_["runs"].get(b_key, 0)
                 if ra < MIN_RUN or rb < MIN_RUN:
+                    continue
+                # A run made up ENTIRELY of preseason friendlies is not evidence — teams
+                # rest players and experiment, and the scorelines reflect that. Mixed runs
+                # are fine (and flagged on the card); pure-preseason ones are dropped.
+                if (not any(g.get("comp", True) for g in sa_["recent"][:ra]) or
+                        not any(g.get("comp", True) for g in sb_["recent"][:rb])):
                     continue
                 # Rarity of the WEAKER leg is what makes the pair notable — a pairing is
                 # only as unusual as its most ordinary half.
@@ -214,6 +275,7 @@ def find_leads(fixtures, streaks, rates):
                             if bet.get("subject") else dict(bet),
                     "a_recent": form_seq(sa_["recent"], ra),
                     "b_recent": form_seq(sb_["recent"], rb),
+                    "kalshi": kalshi_link(f),
                 })
     # RAREST first, not longest. The question is "who is on an unusual run", and a
     # 6-game run that a quarter of the league is also on answers it worse than a shorter
@@ -248,16 +310,29 @@ def team_rows(streaks, by_team, fixtures, rates):
     Suppressing a whole league rather than showing its actual form would be the wrong
     answer, so the runs are browsable on their own terms.
     """
-    # A team's league is where they play most — so Barcelona reads "La Liga", not
-    # "Champions League", regardless of which competition their next fixture is in.
+    # A team's league is where they play most COMPETITIVELY — so a side whose only recent
+    # games are friendlies still reads as its real league rather than "Club Friendly".
+    # Falls back to the competition of their next fixture (a promoted side may have no
+    # competitive history in the window at all), and only then to whatever is left.
+    next_comp_league = {}
+    for f in fixtures:
+        if f["played"] or not f.get("competitive", True):
+            continue
+        for t in (f["home"], f["away"]):
+            next_comp_league.setdefault(t, f["league"])
     league_of = {}
     for team, games in by_team.items():
-        c = collections.Counter(g["league"] for g in games)
+        c = collections.Counter(g["league"] for g in games if g.get("comp", True))
         if c:
             league_of[team] = c.most_common(1)[0][0]
+        elif team in next_comp_league:
+            league_of[team] = next_comp_league[team]
+        elif games:
+            league_of[team] = collections.Counter(
+                g["league"] for g in games).most_common(1)[0][0]
 
     # next scheduled fixture per team, so a run has somewhere to point
-    today = datetime.date.today().isoformat()
+    today = utc_today().isoformat()
     nxt = {}
     for f in sorted((x for x in fixtures if not x["played"] and (x["date"] or "") >= today),
                     key=lambda x: x["date"]):
@@ -265,8 +340,18 @@ def team_rows(streaks, by_team, fixtures, rates):
             nxt.setdefault(t, {"opp": opp, "date": f["date"], "kickoff": f["kickoff"],
                                "league": f["league"], "home": t == f["home"]})
 
+    # Only teams that belong to the tracked competitions. The friendlies feed drags in
+    # reserve and lower-division sides (Espanyol B, Pozuelo Alarcón) that played one
+    # preseason game against a tracked club — they are noise in a browse list, so a team
+    # must have either a competitive game or an upcoming competitive fixture to appear.
+    relevant = {t for t, gs in by_team.items() if any(g.get("comp", True) for g in gs)}
+    relevant |= {t for f in fixtures if not f["played"] and f.get("competitive", True)
+                 for t in (f["home"], f["away"])}
+
     rows = []
     for team, info in streaks.items():
+        if team not in relevant:
+            continue
         # rarest run first, so the chip the row leads with is the notable one and
         # `runs[0]` is what the form sequence highlights
         runs = sorted(
@@ -286,8 +371,12 @@ def team_rows(streaks, by_team, fixtures, rates):
             "next": nxt.get(team),
             # highlight the rarest run, which is the one the row leads with
             "recent": form_seq(info["recent"], runs[0]["n"] if runs else 0),
+            # below the lead threshold: visible, but never half of a confluence
+            "thin": info["played"] < MIN_PLAYED,
+            "friendlies": sum(1 for g in info["recent"] if not g.get("comp", True)),
         })
-    rows.sort(key=lambda r: (r["best_rate"], -r["longest"], r["team"]))
+    # thin-sample rows sink below properly-evidenced ones regardless of how rare they look
+    rows.sort(key=lambda r: (r["thin"], r["best_rate"], -r["longest"], r["team"]))
     return rows
 
 
@@ -382,6 +471,13 @@ padding:2px 8px;border:1px solid;white-space:nowrap}}
 border-radius:5px;padding:2px 6px;background:#0c1017;border:1px solid var(--bd);
 color:var(--mut);cursor:default}}
 .sc.hit{{color:var(--fg);border-color:#3fb97044;background:#3fb9700f}}
+/* preseason/friendly result — same data, visibly weaker evidence */
+.sc.fr{{border-style:dashed;opacity:.75}}
+.kbtn{{font-size:11px;font-weight:700;color:var(--acc);text-decoration:none;
+border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;
+padding:3px 10px;white-space:nowrap}}
+.kbtn:hover{{background:#7aa2f72a}}
+.frn{{font-size:11px;color:var(--warn);margin:-4px 0 9px}}
 /* the lead — its own section, after the evidence that supports it */
 .lead{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
 padding:11px 15px;background:#0c1017;border-top:1px solid var(--bd)}}
@@ -494,9 +590,16 @@ function when(iso) {{
 // Recent results as compact pills, newest LEFT. Games inside the run are lit; the rest
 // are dimmed, so the streak is visible at a glance instead of spelled out in prose.
 function seq(games) {{
-  return `<div class="seq">` + games.map(g =>
-    `<span class="sc${{g.hit ? ' hit' : ''}}" title="${{esc(g.s)}} ${{g.h ? 'home' : 'away'}}`
-    + ` v ${{esc(g.opp)}}">${{esc(g.s)}}</span>`).join('') + `</div>`;
+  const pills = games.map(g =>
+    `<span class="sc${{g.hit ? ' hit' : ''}}${{g.comp === false ? ' fr' : ''}}"`
+    + ` title="${{esc(g.s)}} ${{g.h ? 'home' : 'away'}} v ${{esc(g.opp)}}`
+    + `${{g.lg ? ' · ' + esc(g.lg) : ''}}">${{esc(g.s)}}</span>`).join('');
+  // Say it out loud when a run leans on preseason — a dashed pill alone is too quiet.
+  const fr = games.filter(g => g.comp === false && g.hit).length;
+  const note = fr
+    ? `<div class="frn">${{fr}} of these are preseason friendlies — weaker evidence</div>`
+    : '';
+  return `<div class="seq">${{pills}}</div>` + note;
 }}
 function leg(name, label, n, side, games) {{
   return `<div class="leg"><span class="lgn">${{esc(name)}}</span>`
@@ -509,6 +612,8 @@ function card(l) {{
     <div class="chd">
       <span class="fx">${{esc(l.match)}}</span>
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
+      ${{l.kalshi ? `<a class="kbtn" href="${{esc(l.kalshi)}}" target="_blank"
+         rel="noopener">Kalshi ↗</a>` : ''}}
     </div>
     <div class="ev">
       ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}
@@ -534,6 +639,8 @@ function teamRow(t) {{
     : `<div class="tnx">No fixture scheduled in the next 14 days</div>`;
   return `<div class="trow">
     <div class="th"><span class="tn">${{esc(t.team)}}</span>
+      ${{t.thin ? `<span class="rare common" style="margin-left:0">thin · ${{
+        t.played}} games</span>` : ''}}
       <span class="tl">${{esc(t.league)}} · ${{t.played}} games</span></div>
     <div class="tbody">
       <div class="truns">${{chips}}</div>
@@ -677,10 +784,14 @@ def build(force=False):
     fixtures = blob["fixtures"]
 
     by_team = team_games(fixtures)
-    streaks = team_streaks(by_team)
+    streaks = team_streaks(by_team)                          # lead-grade form
     rates = base_rates(streaks)
+    # Browse-grade form: same computation, lower games threshold, so thin-sample sides are
+    # visible rather than absent. Rarity is still quoted against `rates` (the lead-grade
+    # population) so a chip means the same thing in both views.
+    shown = team_streaks(by_team, MIN_PLAYED_SHOWN)
     leads = find_leads(fixtures, streaks, rates)[:TOP_LEADS]
-    teams = team_rows(streaks, by_team, fixtures, rates)
+    teams = team_rows(shown, by_team, fixtures, rates)
 
     # Log what is being published and settle anything now finished. Recording happens at
     # publish time so the ledger holds the claim as it was actually made, not a later
@@ -694,11 +805,17 @@ def build(force=False):
 
     # League buttons must cover BOTH views, so draw them from the teams index too —
     # scoping them to fixtures alone hid every league that had runs but no confluence.
-    leagues = sorted({f["league"] for f in fixtures if not f["played"]} |
-                     {t["league"] for t in teams})
+    # Friendlies are excluded: they are a form source, never something to filter leads by.
+    friendly_names = set(streaks_fetch.FORM_ONLY_LEAGUES.values())
+    leagues = sorted(({f["league"] for f in fixtures
+                       if not f["played"] and f.get("competitive", True)} |
+                      {t["league"] for t in teams}) - friendly_names)
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
-    meta = (f"{len(streaks)} teams with {MIN_PLAYED}+ games · "
-            f"{sum(1 for f in fixtures if not f['played'])} upcoming fixtures scanned")
+    # Describe what is actually on the page, not the raw index behind it.
+    n_up = sum(1 for f in fixtures if not f["played"] and f.get("competitive", True))
+    n_thin = sum(1 for t in teams if t["thin"])
+    meta = (f"{len(teams)} teams on a run ({n_thin} on a thin sample) · "
+            f"{n_up} upcoming fixtures scanned · form includes preseason friendlies")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "streaks.html")

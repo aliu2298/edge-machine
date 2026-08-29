@@ -70,6 +70,7 @@ the Mac is on. The local tracker is where picks get made; the mirror is how they
 | `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
+| `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
 | `health.py` | Warn-only guardrails: stuck picks, missing venue links. |
 | `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
 
@@ -96,12 +97,20 @@ A **lead** is not a streak on its own — plenty of good sides score freely. It 
 not been played yet ("A have scored 2+ in six straight; B have conceded 2+ in five"). Both
 legs must run at least 3 games.
 
+Each lead links to its **Kalshi market** where one exists (~80% of them), reusing
+`export_public`'s matcher rather than a second copy of it.
+
 Two design choices worth knowing:
 
-* **Form is cross-competition.** A team's last 6 games span every tracked competition, not
-  just the one their next fixture belongs to. Form does not reset when a side walks into a
-  European tie — and early season it is the only thing that works at all, since UCL/UEL
-  sides have played ~2 European games.
+* **Form is cross-competition, and includes preseason.** A team's last 6 games span every
+  tracked competition, not just the one their next fixture belongs to — form does not reset
+  when a side walks into a European tie, and early season it is the only thing that works
+  at all (UCL/UEL sides have played ~2 European games). Preseason **friendlies** are pulled
+  too, so a promoted club or a second-tier side in a cup tie has a form line instead of a
+  blank. Friendlies are marked with dashed pills and a note, are **excluded from the
+  baselines** (they are higher-scoring and less serious, and would shift the yardstick),
+  never generate a lead of their own, and a run made up *entirely* of friendlies is
+  discarded rather than shown as evidence.
 * **Every run is shown with its base rate.** This repo has already falsified three signals
   that looked good until measured. The trap each time was reading a pattern without asking
   how often it shows up by chance, so each run is rendered next to the share of tracked

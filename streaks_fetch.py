@@ -34,6 +34,21 @@ LEAGUES = {
     "uefa.champions": "Champions League", "uefa.europa": "Europa League",
 }
 
+# FORM-ONLY feeds. These fill the gap for sides that have barely started their league
+# season — a promoted team or a second-tier club drawn into a cup tie could show up with
+# one game played, or none, and render blank. Preseason friendlies give them a form line.
+#
+# They are FORM ONLY, never a source of leads, and they are excluded from the population
+# baselines: friendlies are higher-scoring and less serious than competitive fixtures, so
+# letting them into the baseline would quietly shift the very yardstick the leads are
+# judged against. Games from these feeds are flagged `competitive: False` and rendered
+# differently, because a run resting on preseason is weaker evidence than a league run.
+FORM_ONLY_LEAGUES = {
+    "club.friendly": "Club Friendly",
+    "uefa.super_cup": "UEFA Super Cup",
+    "ger.super_cup": "German Supercup",
+}
+
 # Form history. 180 days comfortably covers a mid-season domestic run AND bridges the
 # European summer gap, so early-season sides still have a usable sample.
 HISTORY_DAYS = 180
@@ -55,7 +70,7 @@ def get(url, tries=3):
     return {}
 
 
-def parse_event(ev, league_slug, league_name):
+def parse_event(ev, league_slug, league_name, competitive=True):
     """One ESPN event -> a flat row, or None if it isn't usable.
 
     Only FULL_TIME games carry scores worth trusting; scheduled ones are kept without
@@ -95,16 +110,20 @@ def parse_event(ev, league_slug, league_name):
         "home_goals": hs,
         "away_goals": as_,
         "played": played,
+        "competitive": competitive,
     }
 
 
 def fetch():
-    today = datetime.date.today()
+    # UTC: ESPN stamps fixtures in UTC, and CI runs there too
+    today = datetime.datetime.now(datetime.timezone.utc).date()
     start = (today - datetime.timedelta(days=HISTORY_DAYS)).strftime("%Y%m%d")
     end = (today + datetime.timedelta(days=HORIZON_DAYS)).strftime("%Y%m%d")
 
     rows, per_league = [], {}
-    for n, (slug, name) in enumerate(LEAGUES.items()):
+    feeds = ([(s, n_, True) for s, n_ in LEAGUES.items()] +
+             [(s, n_, False) for s, n_ in FORM_ONLY_LEAGUES.items()])
+    for n, (slug, name, competitive) in enumerate(feeds):
         if n:
             time.sleep(0.4)            # be polite; ESPN has no documented limit
         url = (f"{HOST}/apis/site/v2/sports/soccer/{slug}/scoreboard"
@@ -115,11 +134,26 @@ def fetch():
             print(f"  {name}: FETCH FAILED ({e}) — skipped")
             per_league[name] = 0
             continue
-        got = [r for r in (parse_event(e, slug, name) for e in data.get("events", [])) if r]
+        got = [r for r in (parse_event(e, slug, name, competitive)
+                           for e in data.get("events", [])) if r]
         rows += got
         played = sum(1 for r in got if r["played"])
         per_league[name] = len(got)
-        print(f"  {name:18s} {len(got):4d} fixtures ({played} played, {len(got)-played} upcoming)")
+        tag = "" if competitive else "  [form only]"
+        print(f"  {name:18s} {len(got):4d} fixtures "
+              f"({played} played, {len(got)-played} upcoming){tag}")
+
+    # A club can appear in two feeds for the same match (a friendly relisted, a super cup
+    # also carried elsewhere). Duplicates would double-count games and inflate every run,
+    # so collapse on the fixture identity, preferring the COMPETITIVE copy.
+    seen = {}
+    for r in rows:
+        k = (r["date"], r["home"], r["away"])
+        if k not in seen or (r["competitive"] and not seen[k]["competitive"]):
+            seen[k] = r
+    if len(seen) != len(rows):
+        print(f"  (collapsed {len(rows) - len(seen)} duplicate fixtures across feeds)")
+    rows = list(seen.values())
 
     blob = {
         "fetched_at": datetime.datetime.now(datetime.timezone.utc)

@@ -1,81 +1,5 @@
 {
  "leads": {
-  "2026-08-29|1. FC Union Berlin|Eintracht Frankfurt|1. FC Union Berlin to score 2+": {
-   "a": "1. FC Union Berlin",
-   "a_key": "scoring",
-   "a_run": 3,
-   "away": "Eintracht Frankfurt",
-   "b": "Eintracht Frankfurt",
-   "b_key": "leaky",
-   "b_run": 3,
-   "base_rate": 0.1,
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "subject": "a",
-    "team": "1. FC Union Berlin"
-   },
-   "date": "2026-08-29",
-   "first_seen": "2026-08-28",
-   "headline": "1. FC Union Berlin to score 2+",
-   "home": "1. FC Union Berlin",
-   "id": "2026-08-29|1. FC Union Berlin|Eintracht Frankfurt|1. FC Union Berlin to score 2+",
-   "kickoff": "2026-08-29T13:30Z",
-   "league": "Bundesliga",
-   "match": "1. FC Union Berlin v Eintracht Frankfurt",
-   "status": "pending",
-   "strength": 6
-  },
-  "2026-08-29|1. FC Union Berlin|Eintracht Frankfurt|Over 2.5 goals": {
-   "a": "1. FC Union Berlin",
-   "a_key": "over25",
-   "a_run": 6,
-   "away": "Eintracht Frankfurt",
-   "b": "Eintracht Frankfurt",
-   "b_key": "over25",
-   "b_run": 3,
-   "base_rate": 0.2111111111111111,
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-08-29",
-   "first_seen": "2026-08-28",
-   "headline": "Over 2.5 goals",
-   "home": "1. FC Union Berlin",
-   "id": "2026-08-29|1. FC Union Berlin|Eintracht Frankfurt|Over 2.5 goals",
-   "kickoff": "2026-08-29T13:30Z",
-   "league": "Bundesliga",
-   "match": "1. FC Union Berlin v Eintracht Frankfurt",
-   "status": "pending",
-   "strength": 9
-  },
-  "2026-08-29|AJ Auxerre|Angers|AJ Auxerre to score": {
-   "a": "AJ Auxerre",
-   "a_key": "scoring",
-   "a_run": 6,
-   "away": "Angers",
-   "b": "Angers",
-   "b_key": "porous",
-   "b_run": 6,
-   "base_rate": 0.2777777777777778,
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "subject": "a",
-    "team": "AJ Auxerre"
-   },
-   "date": "2026-08-29",
-   "first_seen": "2026-08-28",
-   "headline": "AJ Auxerre to score",
-   "home": "AJ Auxerre",
-   "id": "2026-08-29|AJ Auxerre|Angers|AJ Auxerre to score",
-   "kickoff": "2026-08-29T18:45Z",
-   "league": "Ligue 1",
-   "match": "AJ Auxerre v Angers",
-   "status": "pending",
-   "strength": 12
-  },
   "2026-08-29|AZ Alkmaar|Go Ahead Eagles|AZ Alkmaar to score": {
    "a": "AZ Alkmaar",
    "a_key": "scoring",
@@ -84,7 +8,7 @@
    "b": "Go Ahead Eagles",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -92,7 +16,7 @@
     "team": "AZ Alkmaar"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "AZ Alkmaar to score",
    "home": "AZ Alkmaar",
    "id": "2026-08-29|AZ Alkmaar|Go Ahead Eagles|AZ Alkmaar to score",
@@ -110,7 +34,7 @@
    "b": "Charlotte FC",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.37777777777777777,
+   "base_rate": 0.40860215053763443,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -118,7 +42,7 @@
     "team": "Atlanta United FC"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Atlanta United FC to score",
    "home": "Atlanta United FC",
    "id": "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score",
@@ -136,12 +60,12 @@
    "b": "Charlotte FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Atlanta United FC",
    "id": "2026-08-29|Atlanta United FC|Charlotte FC|Both teams to score",
@@ -159,7 +83,7 @@
    "b": "Atlanta United FC",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -167,7 +91,7 @@
     "team": "Charlotte FC"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Charlotte FC to score",
    "home": "Atlanta United FC",
    "id": "2026-08-29|Atlanta United FC|Charlotte FC|Charlotte FC to score",
@@ -185,13 +109,13 @@
    "b": "Charlotte FC",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.12777777777777777,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
    "home": "Atlanta United FC",
    "id": "2026-08-29|Atlanta United FC|Charlotte FC|Over 2.5 goals",
@@ -201,6 +125,30 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-08-29|FC Cologne|TSG Hoffenheim|Over 2.5 goals": {
+   "a": "FC Cologne",
+   "a_key": "over25",
+   "a_run": 5,
+   "away": "TSG Hoffenheim",
+   "b": "TSG Hoffenheim",
+   "b_key": "over25",
+   "b_run": 3,
+   "base_rate": 0.24193548387096775,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-08-29",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "FC Cologne",
+   "id": "2026-08-29|FC Cologne|TSG Hoffenheim|Over 2.5 goals",
+   "kickoff": "2026-08-29T13:30Z",
+   "league": "Bundesliga",
+   "match": "FC Cologne v TSG Hoffenheim",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score": {
    "a": "Inter Miami CF",
    "a_key": "btts",
@@ -209,12 +157,12 @@
    "b": "CF Montr\u00e9al",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Inter Miami CF",
    "id": "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score",
@@ -224,6 +172,32 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-08-29|Sevilla|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score": {
+   "a": "Atl\u00e9tico Madrid",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Atl\u00e9tico Madrid",
+   "b": "Sevilla",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.26344086021505375,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Atl\u00e9tico Madrid"
+   },
+   "date": "2026-08-29",
+   "first_seen": "2026-08-29",
+   "headline": "Atl\u00e9tico Madrid to score",
+   "home": "Sevilla",
+   "id": "2026-08-29|Sevilla|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score",
+   "kickoff": "2026-08-29T19:30Z",
+   "league": "La Liga",
+   "match": "Sevilla v Atl\u00e9tico Madrid",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-08-29|Toronto FC|New York City FC|Both teams to score": {
    "a": "Toronto FC",
    "a_key": "btts",
@@ -232,12 +206,12 @@
    "b": "New York City FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.11666666666666667,
+   "base_rate": 0.0967741935483871,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Toronto FC",
    "id": "2026-08-29|Toronto FC|New York City FC|Both teams to score",
@@ -255,7 +229,7 @@
    "b": "New York City FC",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -263,7 +237,7 @@
     "team": "Toronto FC"
    },
    "date": "2026-08-29",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Toronto FC to score",
    "home": "Toronto FC",
    "id": "2026-08-29|Toronto FC|New York City FC|Toronto FC to score",
@@ -280,13 +254,13 @@
    "away": "PSV Eindhoven",
    "b": "PSV Eindhoven",
    "b_key": "btts",
-   "b_run": 6,
-   "base_rate": 0.17777777777777778,
+   "b_run": 3,
+   "base_rate": 0.20967741935483872,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-30",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "FC Utrecht",
    "id": "2026-08-30|FC Utrecht|PSV Eindhoven|Both teams to score",
@@ -294,7 +268,7 @@
    "league": "Eredivisie",
    "match": "FC Utrecht v PSV Eindhoven",
    "status": "pending",
-   "strength": 10
+   "strength": 7
   },
   "2026-08-30|FC Utrecht|PSV Eindhoven|Over 2.5 goals": {
    "a": "FC Utrecht",
@@ -304,13 +278,13 @@
    "b": "PSV Eindhoven",
    "b_key": "over25",
    "b_run": 6,
-   "base_rate": 0.12777777777777777,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-08-30",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
    "home": "FC Utrecht",
    "id": "2026-08-30|FC Utrecht|PSV Eindhoven|Over 2.5 goals",
@@ -323,12 +297,12 @@
   "2026-08-30|FC Utrecht|PSV Eindhoven|PSV Eindhoven to score 2+": {
    "a": "PSV Eindhoven",
    "a_key": "scoring",
-   "a_run": 6,
+   "a_run": 4,
    "away": "PSV Eindhoven",
    "b": "FC Utrecht",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.044444444444444446,
+   "base_rate": 0.06451612903225806,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -336,7 +310,7 @@
     "team": "PSV Eindhoven"
    },
    "date": "2026-08-30",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "PSV Eindhoven to score 2+",
    "home": "FC Utrecht",
    "id": "2026-08-30|FC Utrecht|PSV Eindhoven|PSV Eindhoven to score 2+",
@@ -344,7 +318,7 @@
    "league": "Eredivisie",
    "match": "FC Utrecht v PSV Eindhoven",
    "status": "pending",
-   "strength": 10
+   "strength": 8
   },
   "2026-08-30|Minnesota United FC|Orlando City SC|Both teams to score": {
    "a": "Minnesota United FC",
@@ -354,12 +328,12 @@
    "b": "Orlando City SC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-30",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Minnesota United FC",
    "id": "2026-08-30|Minnesota United FC|Orlando City SC|Both teams to score",
@@ -377,12 +351,12 @@
    "b": "Austin FC",
    "b_key": "btts",
    "b_run": 3,
-   "base_rate": 0.24444444444444444,
+   "base_rate": 0.20967741935483872,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-30",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Portland Timbers",
    "id": "2026-08-30|Portland Timbers|Austin FC|Both teams to score",
@@ -392,15 +366,41 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-08-30|Real Madrid|M\u00e1laga|Real Madrid to score": {
+   "a": "Real Madrid",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "M\u00e1laga",
+   "b": "M\u00e1laga",
+   "b_key": "porous",
+   "b_run": 5,
+   "base_rate": 0.3010752688172043,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Real Madrid"
+   },
+   "date": "2026-08-30",
+   "first_seen": "2026-08-29",
+   "headline": "Real Madrid to score",
+   "home": "Real Madrid",
+   "id": "2026-08-30|Real Madrid|M\u00e1laga|Real Madrid to score",
+   "kickoff": "2026-08-30T15:00Z",
+   "league": "La Liga",
+   "match": "Real Madrid v M\u00e1laga",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-08-30|Telstar|Ajax Amsterdam|Ajax Amsterdam to score": {
    "a": "Ajax Amsterdam",
    "a_key": "scoring",
-   "a_run": 3,
+   "a_run": 4,
    "away": "Ajax Amsterdam",
    "b": "Telstar",
    "b_key": "porous",
    "b_run": 3,
-   "base_rate": 0.4888888888888889,
+   "base_rate": 0.478494623655914,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -408,7 +408,7 @@
     "team": "Ajax Amsterdam"
    },
    "date": "2026-08-30",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Ajax Amsterdam to score",
    "home": "Telstar",
    "id": "2026-08-30|Telstar|Ajax Amsterdam|Ajax Amsterdam to score",
@@ -416,7 +416,57 @@
    "league": "Eredivisie",
    "match": "Telstar v Ajax Amsterdam",
    "status": "pending",
-   "strength": 6
+   "strength": 7
+  },
+  "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals": {
+   "a": "Aston Villa",
+   "a_key": "over25",
+   "a_run": 6,
+   "away": "Arsenal",
+   "b": "Arsenal",
+   "b_key": "over25",
+   "b_run": 4,
+   "base_rate": 0.15053763440860216,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-08-31",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "Aston Villa",
+   "id": "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals",
+   "kickoff": "2026-08-31T19:00Z",
+   "league": "Premier League",
+   "match": "Aston Villa v Arsenal",
+   "status": "pending",
+   "strength": 10
+  },
+  "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score": {
+   "a": "Barcelona",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Rayo Vallecano",
+   "b": "Rayo Vallecano",
+   "b_key": "porous",
+   "b_run": 4,
+   "base_rate": 0.40860215053763443,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Barcelona"
+   },
+   "date": "2026-08-31",
+   "first_seen": "2026-08-29",
+   "headline": "Barcelona to score",
+   "home": "Barcelona",
+   "id": "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score",
+   "kickoff": "2026-08-31T19:30Z",
+   "league": "La Liga",
+   "match": "Barcelona v Rayo Vallecano",
+   "status": "pending",
+   "strength": 7
   },
   "2026-08-31|Benfica|Estoril|Benfica to score": {
    "a": "Benfica",
@@ -426,7 +476,7 @@
    "b": "Estoril",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -434,7 +484,7 @@
     "team": "Benfica"
    },
    "date": "2026-08-31",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Benfica to score",
    "home": "Benfica",
    "id": "2026-08-31|Benfica|Estoril|Benfica to score",
@@ -444,88 +494,15 @@
    "status": "pending",
    "strength": 12
   },
-  "2026-09-04|VfB Stuttgart|FC Cologne|Both teams to score": {
-   "a": "VfB Stuttgart",
-   "a_key": "btts",
-   "a_run": 6,
-   "away": "FC Cologne",
-   "b": "FC Cologne",
-   "b_key": "btts",
-   "b_run": 6,
-   "base_rate": 0.08333333333333333,
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-09-04",
-   "first_seen": "2026-08-28",
-   "headline": "Both teams to score",
-   "home": "VfB Stuttgart",
-   "id": "2026-09-04|VfB Stuttgart|FC Cologne|Both teams to score",
-   "kickoff": "2026-09-04T18:30Z",
-   "league": "Bundesliga",
-   "match": "VfB Stuttgart v FC Cologne",
-   "status": "pending",
-   "strength": 12
-  },
-  "2026-09-04|VfB Stuttgart|FC Cologne|Over 2.5 goals": {
-   "a": "VfB Stuttgart",
-   "a_key": "over25",
-   "a_run": 4,
-   "away": "FC Cologne",
-   "b": "FC Cologne",
-   "b_key": "over25",
-   "b_run": 4,
-   "base_rate": 0.12777777777777777,
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-09-04",
-   "first_seen": "2026-08-28",
-   "headline": "Over 2.5 goals",
-   "home": "VfB Stuttgart",
-   "id": "2026-09-04|VfB Stuttgart|FC Cologne|Over 2.5 goals",
-   "kickoff": "2026-09-04T18:30Z",
-   "league": "Bundesliga",
-   "match": "VfB Stuttgart v FC Cologne",
-   "status": "pending",
-   "strength": 8
-  },
-  "2026-09-05|AS Roma|Atalanta|AS Roma to score": {
-   "a": "AS Roma",
-   "a_key": "scoring",
-   "a_run": 6,
-   "away": "Atalanta",
-   "b": "Atalanta",
-   "b_key": "porous",
-   "b_run": 4,
-   "base_rate": 0.37777777777777777,
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "subject": "a",
-    "team": "AS Roma"
-   },
-   "date": "2026-09-05",
-   "first_seen": "2026-08-28",
-   "headline": "AS Roma to score",
-   "home": "AS Roma",
-   "id": "2026-09-05|AS Roma|Atalanta|AS Roma to score",
-   "kickoff": "2026-09-05T18:45Z",
-   "league": "Serie A",
-   "match": "AS Roma v Atalanta",
-   "status": "pending",
-   "strength": 10
-  },
   "2026-09-05|Ajax Amsterdam|PSV Eindhoven|Ajax Amsterdam to score": {
    "a": "Ajax Amsterdam",
    "a_key": "scoring",
-   "a_run": 3,
+   "a_run": 4,
    "away": "PSV Eindhoven",
    "b": "PSV Eindhoven",
    "b_key": "porous",
-   "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "b_run": 3,
+   "base_rate": 0.478494623655914,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -533,7 +510,7 @@
     "team": "Ajax Amsterdam"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Ajax Amsterdam to score",
    "home": "Ajax Amsterdam",
    "id": "2026-09-05|Ajax Amsterdam|PSV Eindhoven|Ajax Amsterdam to score",
@@ -541,7 +518,7 @@
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v PSV Eindhoven",
    "status": "pending",
-   "strength": 9
+   "strength": 7
   },
   "2026-09-05|Alverca|Braga|Braga to score 2+": {
    "a": "Braga",
@@ -551,7 +528,7 @@
    "b": "Alverca",
    "b_key": "leaky",
    "b_run": 3,
-   "base_rate": 0.1,
+   "base_rate": 0.13978494623655913,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -559,7 +536,7 @@
     "team": "Braga"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Braga to score 2+",
    "home": "Alverca",
    "id": "2026-09-05|Alverca|Braga|Braga to score 2+",
@@ -569,15 +546,41 @@
    "status": "pending",
    "strength": 6
   },
+  "2026-09-05|Athletic Club|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score": {
+   "a": "Atl\u00e9tico Madrid",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Atl\u00e9tico Madrid",
+   "b": "Athletic Club",
+   "b_key": "porous",
+   "b_run": 4,
+   "base_rate": 0.40860215053763443,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Atl\u00e9tico Madrid"
+   },
+   "date": "2026-09-05",
+   "first_seen": "2026-08-29",
+   "headline": "Atl\u00e9tico Madrid to score",
+   "home": "Athletic Club",
+   "id": "2026-09-05|Athletic Club|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score",
+   "kickoff": "2026-09-05T14:15Z",
+   "league": "La Liga",
+   "match": "Athletic Club v Atl\u00e9tico Madrid",
+   "status": "pending",
+   "strength": 7
+  },
   "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|1. FC Union Berlin to score": {
    "a": "1. FC Union Berlin",
    "a_key": "scoring",
-   "a_run": 3,
+   "a_run": 5,
    "away": "1. FC Union Berlin",
    "b": "Bayer Leverkusen",
    "b_key": "porous",
-   "b_run": 5,
-   "base_rate": 0.3,
+   "b_run": 6,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -585,7 +588,7 @@
     "team": "1. FC Union Berlin"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "1. FC Union Berlin to score",
    "home": "Bayer Leverkusen",
    "id": "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|1. FC Union Berlin to score",
@@ -593,17 +596,17 @@
    "league": "Bundesliga",
    "match": "Bayer Leverkusen v 1. FC Union Berlin",
    "status": "pending",
-   "strength": 8
+   "strength": 11
   },
   "2026-09-05|Estrela|FC Famalicao|Estrela to score": {
    "a": "Estrela",
    "a_key": "scoring",
-   "a_run": 3,
+   "a_run": 4,
    "away": "FC Famalicao",
    "b": "FC Famalicao",
    "b_key": "porous",
    "b_run": 3,
-   "base_rate": 0.4888888888888889,
+   "base_rate": 0.478494623655914,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -611,7 +614,7 @@
     "team": "Estrela"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Estrela to score",
    "home": "Estrela",
    "id": "2026-09-05|Estrela|FC Famalicao|Estrela to score",
@@ -619,7 +622,7 @@
    "league": "Primeira Liga",
    "match": "Estrela v FC Famalicao",
    "status": "pending",
-   "strength": 6
+   "strength": 7
   },
   "2026-09-05|FC Utrecht|Go Ahead Eagles|Both teams to score": {
    "a": "FC Utrecht",
@@ -629,12 +632,12 @@
    "b": "Go Ahead Eagles",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "FC Utrecht",
    "id": "2026-09-05|FC Utrecht|Go Ahead Eagles|Both teams to score",
@@ -652,7 +655,7 @@
    "b": "FC Utrecht",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.1,
+   "base_rate": 0.13978494623655913,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -660,7 +663,7 @@
     "team": "Go Ahead Eagles"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Go Ahead Eagles to score 2+",
    "home": "FC Utrecht",
    "id": "2026-09-05|FC Utrecht|Go Ahead Eagles|Go Ahead Eagles to score 2+",
@@ -678,13 +681,13 @@
    "b": "Go Ahead Eagles",
    "b_key": "over25",
    "b_run": 6,
-   "base_rate": 0.12777777777777777,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
    "home": "FC Utrecht",
    "id": "2026-09-05|FC Utrecht|Go Ahead Eagles|Over 2.5 goals",
@@ -702,7 +705,7 @@
    "b": "Inter Miami CF",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.044444444444444446,
+   "base_rate": 0.06451612903225806,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -710,7 +713,7 @@
     "team": "Atlanta United FC"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Atlanta United FC to score 2+",
    "home": "Inter Miami CF",
    "id": "2026-09-05|Inter Miami CF|Atlanta United FC|Atlanta United FC to score 2+",
@@ -728,12 +731,12 @@
    "b": "Atlanta United FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Inter Miami CF",
    "id": "2026-09-05|Inter Miami CF|Atlanta United FC|Both teams to score",
@@ -751,13 +754,13 @@
    "b": "Atlanta United FC",
    "b_key": "over25",
    "b_run": 6,
-   "base_rate": 0.12777777777777777,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
    "home": "Inter Miami CF",
    "id": "2026-09-05|Inter Miami CF|Atlanta United FC|Over 2.5 goals",
@@ -767,6 +770,29 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-05|Newcastle United|AFC Bournemouth|Both teams to score": {
+   "a": "Newcastle United",
+   "a_key": "btts",
+   "a_run": 6,
+   "away": "AFC Bournemouth",
+   "b": "AFC Bournemouth",
+   "b_key": "btts",
+   "b_run": 5,
+   "base_rate": 0.0967741935483871,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-09-05",
+   "first_seen": "2026-08-29",
+   "headline": "Both teams to score",
+   "home": "Newcastle United",
+   "id": "2026-09-05|Newcastle United|AFC Bournemouth|Both teams to score",
+   "kickoff": "2026-09-05T11:30Z",
+   "league": "Premier League",
+   "match": "Newcastle United v AFC Bournemouth",
+   "status": "pending",
+   "strength": 11
+  },
   "2026-09-05|Philadelphia Union|CF Montr\u00e9al|Both teams to score": {
    "a": "Philadelphia Union",
    "a_key": "btts",
@@ -775,12 +801,12 @@
    "b": "CF Montr\u00e9al",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Philadelphia Union",
    "id": "2026-09-05|Philadelphia Union|CF Montr\u00e9al|Both teams to score",
@@ -798,12 +824,12 @@
    "b": "Chicago Fire FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.11666666666666667,
+   "base_rate": 0.0967741935483871,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Toronto FC",
    "id": "2026-09-05|Toronto FC|Chicago Fire FC|Both teams to score",
@@ -821,7 +847,7 @@
    "b": "Chicago Fire FC",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -829,7 +855,7 @@
     "team": "Toronto FC"
    },
    "date": "2026-09-05",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Toronto FC to score",
    "home": "Toronto FC",
    "id": "2026-09-05|Toronto FC|Chicago Fire FC|Toronto FC to score",
@@ -839,29 +865,79 @@
    "status": "pending",
    "strength": 9
   },
-  "2026-09-06|Eintracht Frankfurt|FC Augsburg|Over 2.5 goals": {
-   "a": "Eintracht Frankfurt",
+  "2026-09-06|Arsenal|Chelsea|Over 2.5 goals": {
+   "a": "Arsenal",
    "a_key": "over25",
-   "a_run": 3,
-   "away": "FC Augsburg",
-   "b": "FC Augsburg",
+   "a_run": 4,
+   "away": "Chelsea",
+   "b": "Chelsea",
    "b_key": "over25",
-   "b_run": 3,
-   "base_rate": 0.2111111111111111,
+   "b_run": 4,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-09-06",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
-   "home": "Eintracht Frankfurt",
-   "id": "2026-09-06|Eintracht Frankfurt|FC Augsburg|Over 2.5 goals",
+   "home": "Arsenal",
+   "id": "2026-09-06|Arsenal|Chelsea|Over 2.5 goals",
    "kickoff": "2026-09-06T15:30Z",
-   "league": "Bundesliga",
-   "match": "Eintracht Frankfurt v FC Augsburg",
+   "league": "Premier League",
+   "match": "Arsenal v Chelsea",
+   "status": "pending",
+   "strength": 8
+  },
+  "2026-09-06|Espanyol|Sevilla|Over 2.5 goals": {
+   "a": "Espanyol",
+   "a_key": "over25",
+   "a_run": 3,
+   "away": "Sevilla",
+   "b": "Sevilla",
+   "b_key": "over25",
+   "b_run": 3,
+   "base_rate": 0.24193548387096775,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-06",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "Espanyol",
+   "id": "2026-09-06|Espanyol|Sevilla|Over 2.5 goals",
+   "kickoff": "2026-09-06T19:00Z",
+   "league": "La Liga",
+   "match": "Espanyol v Sevilla",
    "status": "pending",
    "strength": 6
+  },
+  "2026-09-06|Hamburg SV|Mainz|Mainz to score": {
+   "a": "Mainz",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Mainz",
+   "b": "Hamburg SV",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.26344086021505375,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Mainz"
+   },
+   "date": "2026-09-06",
+   "first_seen": "2026-08-29",
+   "headline": "Mainz to score",
+   "home": "Hamburg SV",
+   "id": "2026-09-06|Hamburg SV|Mainz|Mainz to score",
+   "kickoff": "2026-09-06T13:30Z",
+   "league": "Bundesliga",
+   "match": "Hamburg SV v Mainz",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-06|Portland Timbers|Minnesota United FC|Both teams to score": {
    "a": "Portland Timbers",
@@ -871,12 +947,12 @@
    "b": "Minnesota United FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-06",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Portland Timbers",
    "id": "2026-09-06|Portland Timbers|Minnesota United FC|Both teams to score",
@@ -894,13 +970,13 @@
    "b": "Excelsior",
    "b_key": "over25",
    "b_run": 3,
-   "base_rate": 0.2111111111111111,
+   "base_rate": 0.24193548387096775,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-09-08",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
    "home": "NEC Nijmegen",
    "id": "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals",
@@ -918,7 +994,7 @@
    "b": "Orlando City SC",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.37777777777777777,
+   "base_rate": 0.40860215053763443,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -926,7 +1002,7 @@
     "team": "Atlanta United FC"
    },
    "date": "2026-09-09",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Atlanta United FC to score",
    "home": "Atlanta United FC",
    "id": "2026-09-09|Atlanta United FC|Orlando City SC|Atlanta United FC to score",
@@ -944,12 +1020,12 @@
    "b": "Orlando City SC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-09",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Atlanta United FC",
    "id": "2026-09-09|Atlanta United FC|Orlando City SC|Both teams to score",
@@ -967,12 +1043,12 @@
    "b": "Charlotte FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-09",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "CF Montr\u00e9al",
    "id": "2026-09-09|CF Montr\u00e9al|Charlotte FC|Both teams to score",
@@ -990,7 +1066,7 @@
    "b": "CF Montr\u00e9al",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -998,7 +1074,7 @@
     "team": "Charlotte FC"
    },
    "date": "2026-09-09",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Charlotte FC to score",
    "home": "CF Montr\u00e9al",
    "id": "2026-09-09|CF Montr\u00e9al|Charlotte FC|Charlotte FC to score",
@@ -1016,12 +1092,12 @@
    "b": "FC Cincinnati",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-09",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Philadelphia Union",
    "id": "2026-09-09|Philadelphia Union|FC Cincinnati|Both teams to score",
@@ -1039,12 +1115,12 @@
    "b": "Inter Miami CF",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-10",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Chicago Fire FC",
    "id": "2026-09-10|Chicago Fire FC|Inter Miami CF|Both teams to score",
@@ -1057,17 +1133,17 @@
   "2026-09-10|Estrela|Braga|Both teams to score": {
    "a": "Estrela",
    "a_key": "btts",
-   "a_run": 3,
+   "a_run": 4,
    "away": "Braga",
    "b": "Braga",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.24444444444444444,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-10",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Estrela",
    "id": "2026-09-10|Estrela|Braga|Both teams to score",
@@ -1075,7 +1151,7 @@
    "league": "Primeira Liga",
    "match": "Estrela v Braga",
    "status": "pending",
-   "strength": 9
+   "strength": 10
   },
   "2026-09-10|Estrela|Braga|Braga to score 2+": {
    "a": "Braga",
@@ -1084,8 +1160,8 @@
    "away": "Braga",
    "b": "Estrela",
    "b_key": "leaky",
-   "b_run": 3,
-   "base_rate": 0.1,
+   "b_run": 4,
+   "base_rate": 0.13978494623655913,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -1093,7 +1169,7 @@
     "team": "Braga"
    },
    "date": "2026-09-10",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Braga to score 2+",
    "home": "Estrela",
    "id": "2026-09-10|Estrela|Braga|Braga to score 2+",
@@ -1101,17 +1177,17 @@
    "league": "Primeira Liga",
    "match": "Estrela v Braga",
    "status": "pending",
-   "strength": 6
+   "strength": 7
   },
   "2026-09-10|Estrela|Braga|Estrela to score 2+": {
    "a": "Estrela",
    "a_key": "scoring",
-   "a_run": 3,
+   "a_run": 4,
    "away": "Braga",
    "b": "Braga",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.1,
+   "base_rate": 0.06451612903225806,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -1119,7 +1195,7 @@
     "team": "Estrela"
    },
    "date": "2026-09-10",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Estrela to score 2+",
    "home": "Estrela",
    "id": "2026-09-10|Estrela|Braga|Estrela to score 2+",
@@ -1127,23 +1203,23 @@
    "league": "Primeira Liga",
    "match": "Estrela v Braga",
    "status": "pending",
-   "strength": 7
+   "strength": 8
   },
   "2026-09-10|Estrela|Braga|Over 2.5 goals": {
    "a": "Estrela",
    "a_key": "over25",
-   "a_run": 3,
+   "a_run": 4,
    "away": "Braga",
    "b": "Braga",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.2111111111111111,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
    },
    "date": "2026-09-10",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Over 2.5 goals",
    "home": "Estrela",
    "id": "2026-09-10|Estrela|Braga|Over 2.5 goals",
@@ -1151,7 +1227,7 @@
    "league": "Primeira Liga",
    "match": "Estrela v Braga",
    "status": "pending",
-   "strength": 7
+   "strength": 8
   },
   "2026-09-10|Portland Timbers|St. Louis CITY SC|Both teams to score": {
    "a": "Portland Timbers",
@@ -1161,12 +1237,12 @@
    "b": "St. Louis CITY SC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-09-10",
-   "first_seen": "2026-08-28",
+   "first_seen": "2026-08-29",
    "headline": "Both teams to score",
    "home": "Portland Timbers",
    "id": "2026-09-10|Portland Timbers|St. Louis CITY SC|Both teams to score",
@@ -1176,6 +1252,80 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-11|Stade Rennais|Marseille|Over 2.5 goals": {
+   "a": "Stade Rennais",
+   "a_key": "over25",
+   "a_run": 6,
+   "away": "Marseille",
+   "b": "Marseille",
+   "b_key": "over25",
+   "b_run": 4,
+   "base_rate": 0.15053763440860216,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-11",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "Stade Rennais",
+   "id": "2026-09-11|Stade Rennais|Marseille|Over 2.5 goals",
+   "kickoff": "2026-09-11T18:45Z",
+   "league": "Ligue 1",
+   "match": "Stade Rennais v Marseille",
+   "status": "pending",
+   "strength": 10
+  },
+  "2026-09-12|AFC Bournemouth|Brentford|Brentford to score 2+": {
+   "a": "Brentford",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Brentford",
+   "b": "AFC Bournemouth",
+   "b_key": "leaky",
+   "b_run": 3,
+   "base_rate": 0.13978494623655913,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "Brentford"
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-08-29",
+   "headline": "Brentford to score 2+",
+   "home": "AFC Bournemouth",
+   "id": "2026-09-12|AFC Bournemouth|Brentford|Brentford to score 2+",
+   "kickoff": "2026-09-12T14:00Z",
+   "league": "Premier League",
+   "match": "AFC Bournemouth v Brentford",
+   "status": "pending",
+   "strength": 6
+  },
+  "2026-09-12|AFC Bournemouth|Brentford|Over 2.5 goals": {
+   "a": "AFC Bournemouth",
+   "a_key": "over25",
+   "a_run": 3,
+   "away": "Brentford",
+   "b": "Brentford",
+   "b_key": "over25",
+   "b_run": 3,
+   "base_rate": 0.24193548387096775,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-08-29",
+   "headline": "Over 2.5 goals",
+   "home": "AFC Bournemouth",
+   "id": "2026-09-12|AFC Bournemouth|Brentford|Over 2.5 goals",
+   "kickoff": "2026-09-12T14:00Z",
+   "league": "Premier League",
+   "match": "AFC Bournemouth v Brentford",
+   "status": "pending",
+   "strength": 6
+  },
   "2026-09-12|D.C. United|Atlanta United FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
    "a_key": "scoring",
@@ -1184,7 +1334,7 @@
    "b": "D.C. United",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1210,7 +1360,7 @@
    "b": "Charlotte FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
@@ -1233,7 +1383,7 @@
    "b": "FC Cincinnati",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1254,12 +1404,12 @@
   "2026-09-12|Fortuna Sittard|Ajax Amsterdam|Ajax Amsterdam to score": {
    "a": "Ajax Amsterdam",
    "a_key": "scoring",
-   "a_run": 3,
+   "a_run": 4,
    "away": "Ajax Amsterdam",
    "b": "Fortuna Sittard",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1275,7 +1425,7 @@
    "league": "Eredivisie",
    "match": "Fortuna Sittard v Ajax Amsterdam",
    "status": "pending",
-   "strength": 9
+   "strength": 10
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen|Both teams to score": {
    "a": "Go Ahead Eagles",
@@ -1285,7 +1435,7 @@
    "b": "FC Groningen",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
@@ -1308,7 +1458,7 @@
    "b": "FC Groningen",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2777777777777778,
+   "base_rate": 0.26344086021505375,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1334,7 +1484,7 @@
    "b": "FC Groningen",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.12777777777777777,
+   "base_rate": 0.15053763440860216,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1350,30 +1500,6 @@
    "status": "pending",
    "strength": 10
   },
-  "2026-09-12|Le Havre AC|Angers|Under 2.5 goals": {
-   "a": "Le Havre AC",
-   "a_key": "under25",
-   "a_run": 4,
-   "away": "Angers",
-   "b": "Angers",
-   "b_key": "under25",
-   "b_run": 3,
-   "base_rate": 0.05555555555555555,
-   "bet": {
-    "kind": "total_lte",
-    "n": 2
-   },
-   "date": "2026-09-12",
-   "first_seen": "2026-08-29",
-   "headline": "Under 2.5 goals",
-   "home": "Le Havre AC",
-   "id": "2026-09-12|Le Havre AC|Angers|Under 2.5 goals",
-   "kickoff": "2026-09-12T18:45Z",
-   "league": "Ligue 1",
-   "match": "Le Havre AC v Angers",
-   "status": "pending",
-   "strength": 7
-  },
   "2026-09-12|Orlando City SC|Toronto FC|Both teams to score": {
    "a": "Orlando City SC",
    "a_key": "btts",
@@ -1382,7 +1508,7 @@
    "b": "Toronto FC",
    "b_key": "btts",
    "b_run": 5,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
@@ -1405,7 +1531,7 @@
    "b": "Orlando City SC",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.37777777777777777,
+   "base_rate": 0.40860215053763443,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1431,7 +1557,7 @@
    "b": "New York City FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.08333333333333333,
+   "base_rate": 0.08064516129032258,
    "bet": {
     "kind": "btts"
    },
@@ -1454,7 +1580,7 @@
    "b": "Minnesota United FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.17777777777777778,
+   "base_rate": 0.16666666666666666,
    "bet": {
     "kind": "btts"
    },
@@ -1470,5 +1596,8 @@
    "strength": 8
   }
  },
- "updated_at": "2026-08-29T02:17:43+00:00"
+ "methodology": "form=last6 across tracked competitions + preseason friendlies; leads require >=3-run both legs and >=1 competitive game per run",
+ "reset_at": "2026-08-29T02:40:03+00:00",
+ "reset_note": "Reset from 74 pending leads on 2026-08-29. Preseason friendlies were added to the form basis, which changes every team's run lengths, so leads published before that change were computed under a different methodology. None had been graded yet. Grading both together would mix two methodologies in one measurement, so the ledger starts fresh from the friendlies-inclusive version.",
+ "updated_at": "2026-08-29T02:41:20+00:00"
 }

@@ -29,7 +29,8 @@ import sys, math, collections, datetime
 import streaks_fetch
 from streaks_build import (STREAKS, STREAK_BY_KEY, PAIRINGS, FORM_GAMES,
                            MIN_PLAYED, run_length)
-from streaks_track import settle_bet, bet_key, population_rates, _wilson
+from streaks_track import (settle_bet, bet_key, population_rates,
+                           league_baselines, mixed_baseline, _wilson)
 
 
 def build_history(fixtures):
@@ -63,7 +64,10 @@ def runs_before(games, date, min_run):
 
 def backtest(fixtures, min_run):
     hist = build_history(fixtures)
-    played = sorted([f for f in fixtures if f["played"] and f["home_goals"] is not None],
+    # Friendlies inform form (build_history keeps them) but are never graded as leads —
+    # matching the live board, which does not raise a lead on a friendly.
+    played = sorted([f for f in fixtures if f["played"] and f["home_goals"] is not None
+                     and f.get("competitive", True)],
                     key=lambda f: f["date"])
 
     graded, seen = [], set()
@@ -95,34 +99,6 @@ def backtest(fixtures, min_run):
     return graded
 
 
-def league_adjusted_baseline(fixtures, rows):
-    """Baseline matched to the LEAGUE MIX of the flagged leads.
-
-    A global baseline is confounded: BTTS leads cluster in high-scoring leagues, so a
-    naive comparison credits the streak for what is really MLS being MLS. This reweights
-    each league's own rate by how often that league appears among the flagged leads, which
-    is the comparison that isolates the signal from the schedule.
-    """
-    per_league = {}
-    for lg in {f["league"] for f in fixtures if f["played"]}:
-        sub = [f for f in fixtures if f["played"] and f["league"] == lg
-               and f["home_goals"] is not None]
-        if sub:
-            per_league[lg] = population_rates(sub)
-    mix = collections.Counter(r["league"] for r in rows)
-    total = sum(mix.values())
-    if not total:
-        return None
-    acc, weight = 0.0, 0.0
-    for lg, cnt in mix.items():
-        rate = (per_league.get(lg) or {}).get(rows[0]["kind"])
-        if rate is None:
-            continue
-        acc += rate * cnt
-        weight += cnt
-    return (acc / weight) if weight else None
-
-
 def main():
     min_run = 3
     if "--min-run" in sys.argv:
@@ -130,6 +106,7 @@ def main():
 
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
     pop = population_rates(fixtures)
+    per_league = league_baselines(fixtures)     # shared with the live tracker
     graded = backtest(fixtures, min_run)
 
     print(f"\nWALK-FORWARD BACKTEST (min_run={min_run}, form window={FORM_GAMES})")
@@ -155,7 +132,7 @@ def main():
         if gbase is None:
             continue
         # league-adjusted is the baseline that counts; global is shown for contrast
-        base = league_adjusted_baseline(fixtures, rows)
+        base = mixed_baseline(per_league, kind, [r["league"] for r in rows])
         base = gbase if base is None else base
         lift = (p - base) * 100
         sig = lo > base or hi < base

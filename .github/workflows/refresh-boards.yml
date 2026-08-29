@@ -37,6 +37,12 @@ jobs:
       # keeps rendering as "upcoming" with nothing reporting a problem. Warn-only on
       # purpose: a stale board is worse than a flagged one, so this annotates the run
       # summary without blocking the deploy.
+      # Logic tests for the streaks pipeline. Runs BEFORE the build so a regression in
+      # run detection or grading fails loudly here rather than silently shipping a wrong
+      # board. Strict on purpose — unlike health.py, these assert correctness, not freshness.
+      - name: Streaks logic tests
+        run: python3 test_streaks.py
+
       - name: Health check
         run: python3 health.py
 
