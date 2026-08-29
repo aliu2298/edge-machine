@@ -70,7 +70,7 @@ def _get_json(url):
 KALSHI_CACHE = os.path.join(os.path.dirname(__file__), "data", ".kalshi_events.json")
 KALSHI_CACHE_TTL = 3600          # seconds
 _KALSHI_MEM = None
-_KALSHI_COUNTS = {}               # series -> event count, for sg_health's series check
+_KALSHI_COUNTS = {}               # series -> event count, for health.py's series check
 
 
 def _kalshi_page(url, tries=4):
@@ -165,7 +165,7 @@ def fetch_kalshi_events():
 
 def kalshi_series_counts():
     """series -> number of events fetched. Populated by fetch_kalshi_events (or restored
-    from its cache); sg_health uses it to catch a series ticker that returns nothing."""
+    from its cache); health.py uses it to catch a series ticker that returns nothing."""
     if _KALSHI_MEM is None:
         fetch_kalshi_events()
     return dict(_KALSHI_COUNTS)
@@ -461,7 +461,7 @@ for (const t of document.querySelectorAll("time[data-utc]")) {{
 
 
 NAV_SPORTS = ('<div class="nav"><a class="on" href="./">Sports</a>'
-              '<a href="./tips.html">Tips</a></div>')
+              '<a href="./streaks.html">Streaks</a></div>')
 
 
 def load_rows():

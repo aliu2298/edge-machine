@@ -1,23 +1,22 @@
-name: Refresh tips
+name: Refresh boards
 
-# Replaces the Lovable app's scheduled edge function. Runs on GitHub's servers, so
-# there is no CORS restriction and no dependency on the local Mac being awake.
-# Scrapes -> settles -> rebuilds both boards -> publishes to GitHub Pages.
+# Runs on GitHub's servers, so there is no dependency on the local Mac being awake.
+# Checks -> rebuilds the board -> publishes to GitHub Pages.
 
 on:
   schedule:
-    - cron: "17 11 * * *"      # daily ~11:17 UTC (off the hour — see note below)
+    - cron: "17 11 * * *"      # daily ~11:17 UTC (off the hour)
   workflow_dispatch:            # manual "Refresh now" from the Actions tab
 
-# contents: push the regenerated boards back to main.
-# pages/id-token: publish those boards to GitHub Pages.
+# contents: push the regenerated board back to main.
+# pages/id-token: publish to GitHub Pages.
 permissions:
   contents: write
   pages: write
   id-token: write
 
 concurrency:                    # never let two refreshes race on the same branch
-  group: refresh-tips
+  group: refresh-boards
   cancel-in-progress: false
 
 jobs:
@@ -34,25 +33,16 @@ jobs:
 
       # stdlib only — no pip install step needed
 
-      - name: Scrape published predictions
-        run: python3 sg_scrape.py
-
-      - name: Settle finished matches
-        run: python3 sg_settle.py
-
-      # Guardrails. The failure mode here is SILENT — a fixture whose teams don't match
-      # ESPN never settles and just keeps rendering as "upcoming" (Vancouver v LAFC sat
-      # like that for two days). Warn-only on purpose: a stale board is worse than a
-      # flagged one, so this annotates the run summary without blocking the deploy.
+      # Guardrails. The failure mode here is SILENT — a pick with a wrong kickoff date
+      # keeps rendering as "upcoming" with nothing reporting a problem. Warn-only on
+      # purpose: a stale board is worse than a flagged one, so this annotates the run
+      # summary without blocking the deploy.
       - name: Health check
-        run: python3 sg_health.py
-
-      - name: Rebuild tips board
-        run: python3 sg_build.py
+        run: python3 health.py
 
       # predictions.db stays local+gitignored (it also holds private kalshi_* tables);
       # data/predictions.json is the repo-tracked mirror of the predictions table only,
-      # so the sports board can be rebuilt here without the Mac.
+      # so the board can be rebuilt here without the Mac.
       - name: Rebuild sports board
         run: python3 export_public.py
 
@@ -60,21 +50,19 @@ jobs:
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/sg_picks.json public_site/tips.html \
-                  public_site/index.html public_site/picks.json
+          git add public_site/index.html public_site/picks.json data/predictions.json
           if git diff --cached --quiet; then
             echo "no changes — nothing to deploy"
             exit 0
           fi
-          git commit -m "Refresh tips board ($(date -u +%Y-%m-%d))"
+          git commit -m "Refresh board ($(date -u +%Y-%m-%d))"
           # rebase in case the board was pushed from the Mac meanwhile
           git pull --rebase --autostash origin main
           git push origin main
 
       # GitHub Pages is the ONLY host (Netlify dropped Aug 3 2026 — it was skipping
       # every deploy for exceeded credit usage, and nothing here needed a feature
-      # Pages lacks). Free and unmetered for public repos, no build credits.
-      # Runs unconditionally so the boards publish even when nothing changed.
+      # Pages lacks). Runs unconditionally so the board publishes even when nothing changed.
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

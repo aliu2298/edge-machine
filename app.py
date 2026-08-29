@@ -187,9 +187,7 @@ TEAM_ALIASES = {"ivory coast":"cote d ivoire","turkiye":"turkey","usa":"united s
                 "south korea":"korea republic","republic of korea":"korea republic","czechia":"czech republic",
                 # CLUB aliases — ESPN names these completely differently from our pick text,
                 # and _team_match is a substring test, so nothing overlaps and the fixture
-                # never settles. Each was surfaced by an sg_health STUCK warning.
-                # NB: sg_settle.py keeps its own ALIASES (set-intersection matcher) — a name
-                # fixed there is NOT fixed here. Two matchers, two maps.
+                # never settles. Each was surfaced by a health.py STUCK warning.
                 "crvena zvezda":"red star belgrade", "hearts":"heart of midlothian",
                 "red star":"red star belgrade"}
 def _norm_team(s):
