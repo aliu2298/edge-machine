@@ -435,6 +435,21 @@
    "team": "Chicago Fire FC",
    "test_date": "2026-08-29"
   },
+  "Chicago Fire FC|scoring1|2026-09-05|Chicago Fire FC|Toronto FC": {
+   "home": false,
+   "id": "Chicago Fire FC|scoring1|2026-09-05|Chicago Fire FC|Toronto FC",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 17,
+   "logged_at": "2026-08-29T20:48:15+00:00",
+   "opp": "Toronto FC",
+   "rate": 0.022222222222222223,
+   "status": "pending",
+   "team": "Chicago Fire FC",
+   "test_date": "2026-09-05"
+  },
   "Columbus Crew|scoring1|2026-08-30|Columbus Crew|New England Revolution": {
    "home": true,
    "id": "Columbus Crew|scoring1|2026-08-30|Columbus Crew|New England Revolution",
@@ -1065,6 +1080,21 @@
    "team": "Seattle Sounders FC",
    "test_date": "2026-08-29"
   },
+  "Seattle Sounders FC|porous|2026-09-06|Seattle Sounders FC|Red Bull New York": {
+   "home": true,
+   "id": "Seattle Sounders FC|porous|2026-09-06|Seattle Sounders FC|Red Bull New York",
+   "key": "porous",
+   "kickoff": "2026-09-06T00:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 14,
+   "logged_at": "2026-08-29T20:48:15+00:00",
+   "opp": "Red Bull New York",
+   "rate": 0.03888888888888889,
+   "status": "pending",
+   "team": "Seattle Sounders FC",
+   "test_date": "2026-09-06"
+  },
   "Sparta Rotterdam|porous|2026-09-04|Sparta Rotterdam|PEC Zwolle": {
    "home": true,
    "id": "Sparta Rotterdam|porous|2026-09-04|Sparta Rotterdam|PEC Zwolle",
@@ -1291,5 +1321,5 @@
    "test_date": "2026-08-30"
   }
  },
- "updated_at": "2026-08-29T19:59:22+00:00"
+ "updated_at": "2026-08-29T20:48:15+00:00"
 }
