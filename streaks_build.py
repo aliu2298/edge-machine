@@ -367,7 +367,7 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
                             if bet.get("subject") else dict(bet),
                     "a_recent": form_seq(sa_["recent"], ra),
                     "b_recent": form_seq(sb_["recent"], rb),
-                    "kalshi": venue_market_link(f) if links else None,
+                    "market": venue_market_link(f) if links else None,
                 })
     # SOONEST first: the board is read to see what is coming up, so kickoff order is the
     # useful order. Sorted on the kickoff INSTANT, not the date string — a fixture at
@@ -822,7 +822,7 @@ function card(l) {{
       <span class="fx">${{esc(l.match)}}</span>
       <span class="cd ${{cdCls}}" data-ko="${{esc(l.kickoff || '')}}">${{esc(cdTxt)}}</span>
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
-      ${{l.kalshi ? `<a class="kbtn" href="${{esc(l.kalshi)}}" target="_blank"
+      ${{l.market ? `<a class="kbtn" href="${{esc(l.market)}}" target="_blank"
          rel="noopener">Bovada ↗</a>` : ''}}
     </div>
     <div class="ev">

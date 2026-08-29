@@ -66,6 +66,23 @@ def seq_html(games, limit=6):
     return f'<div class="seq">{"".join(out)}</div>'
 
 
+def market_link(p):
+    """Resolve the pick's market URL AT RENDER TIME, not from the ledger.
+
+    A pick is locked at draw — runs, rarity, the bet spec — because those are the claim
+    being judged. The venue link is not part of that claim, it is a convenience, and
+    freezing it broke on the Kalshi->Bovada switch: three live picks kept their stored
+    Kalshi URLs under a "Bovada" label, which is worse than having no link at all.
+    Resolving live means a venue change takes effect immediately for picks already drawn.
+    """
+    try:
+        from venues import fetch_bovada_events, venue_link
+        return venue_link(p["match"].replace(" v ", " vs "),
+                          p.get("kickoff") or p.get("date"), fetch_bovada_events())
+    except Exception:
+        return None
+
+
 def card_html(p):
     abbr, pip = market_index(p["bet"])
     rcls, rtxt = rarity_class(p["base_rate"])
@@ -75,8 +92,9 @@ def card_html(p):
         st = p["status"]
         final = f'<span>{esc(p["final"])}</span>' if p.get("final") else ""
         stamp = f'<div class="stamp {st}">{esc(st.upper())}{final}</div>'
-    kalshi = (f'<a class="kbtn" href="{esc(p["kalshi"])}" target="_blank" '
-              f'rel="noopener">Bovada ↗</a>' if p.get("kalshi") else "")
+    mkt = market_link(p)
+    kalshi = (f'<a class="kbtn" href="{esc(mkt)}" target="_blank" '
+              f'rel="noopener">Bovada ↗</a>' if mkt else "")
     ko = esc(p.get("kickoff") or "")
     return f"""<div class="pcard {'live' if live else 'done'}">
   <div class="idx tl"><b>{esc(abbr)}</b><i>{pip}</i></div>

@@ -179,7 +179,7 @@ def draw(leads, blob=None, now=None, slate_size=SLATE_SIZE):
             "a_label": l.get("a_label"), "b_label": l.get("b_label"),
             "a_recent": l.get("a_recent", []), "b_recent": l.get("b_recent", []),
             "base_rate": l["base_rate"], "strength": l["strength"],
-            "kalshi": l.get("kalshi"),
+            "market": l.get("market"),
             "status": "live",
         }
         blob["picks"][pid] = rec
