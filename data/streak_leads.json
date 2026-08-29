@@ -962,6 +962,32 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-08|FC Porto|Manchester City|FC Porto to score": {
+   "a": "FC Porto",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Manchester City",
+   "b": "Manchester City",
+   "b_key": "porous",
+   "b_run": 5,
+   "base_rate": 0.2994652406417112,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "FC Porto"
+   },
+   "date": "2026-09-08",
+   "first_seen": "2026-08-29",
+   "headline": "FC Porto to score",
+   "home": "FC Porto",
+   "id": "2026-09-08|FC Porto|Manchester City|FC Porto to score",
+   "kickoff": "2026-09-08T19:00Z",
+   "league": "Champions League",
+   "match": "FC Porto v Manchester City",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals": {
    "a": "NEC Nijmegen",
    "a_key": "over25",
@@ -1106,6 +1132,32 @@
    "match": "Philadelphia Union v FC Cincinnati",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-09|Sporting CP|Galatasaray|Sporting CP to score": {
+   "a": "Sporting CP",
+   "a_key": "scoring",
+   "a_run": 6,
+   "away": "Galatasaray",
+   "b": "Galatasaray",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.2620320855614973,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Sporting CP"
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-08-29",
+   "headline": "Sporting CP to score",
+   "home": "Sporting CP",
+   "id": "2026-09-09|Sporting CP|Galatasaray|Sporting CP to score",
+   "kickoff": "2026-09-09T19:00Z",
+   "league": "Champions League",
+   "match": "Sporting CP v Galatasaray",
+   "status": "pending",
+   "strength": 12
   },
   "2026-09-10|Chicago Fire FC|Inter Miami CF|Both teams to score": {
    "a": "Chicago Fire FC",
@@ -1599,5 +1651,5 @@
  "methodology": "form=last6 across tracked competitions + preseason friendlies; leads require >=3-run both legs and >=1 competitive game per run",
  "reset_at": "2026-08-29T02:40:03+00:00",
  "reset_note": "Reset from 74 pending leads on 2026-08-29. Preseason friendlies were added to the form basis, which changes every team's run lengths, so leads published before that change were computed under a different methodology. None had been graded yet. Grading both together would mix two methodologies in one measurement, so the ledger starts fresh from the friendlies-inclusive version.",
- "updated_at": "2026-08-29T12:51:08+00:00"
+ "updated_at": "2026-08-29T12:53:04+00:00"
 }

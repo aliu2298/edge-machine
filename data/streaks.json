@@ -1,5 +1,5 @@
 {
- "built_at": "2026-08-29T12:51:09+00:00",
+ "built_at": "2026-08-29T12:53:04+00:00",
  "teams_tracked": 187,
  "leads": [
   {
@@ -5021,6 +5021,260 @@
    "kalshi": null
   },
   {
+   "date": "2026-09-08",
+   "kickoff": "2026-09-08T19:00Z",
+   "league": "Champions League",
+   "match": "FC Porto v Manchester City",
+   "home": "FC Porto",
+   "away": "Manchester City",
+   "headline": "FC Porto to score",
+   "why": "FC Porto have scored 2+ in 3 straight; Manchester City have conceded in 5 straight.",
+   "a": "FC Porto",
+   "b": "Manchester City",
+   "a_run": 3,
+   "b_run": 5,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 8,
+   "base_rate": 0.2994652406417112,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "FC Porto"
+   },
+   "a_recent": [
+    {
+     "s": "2-0",
+     "opp": "Arouca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Rio Ave",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Alverca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Santa Clara",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-3",
+     "opp": "AVS",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Alverca",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "4-1",
+     "opp": "Crystal Palace",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-1",
+     "opp": "AFC Bournemouth",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "3-1",
+     "opp": "Atl\u00e9tico Madrid",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-2",
+     "opp": "Aston Villa",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "AFC Bournemouth",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "3-0",
+     "opp": "Crystal Palace",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    }
+   ],
+   "kalshi": null
+  },
+  {
+   "date": "2026-09-09",
+   "kickoff": "2026-09-09T19:00Z",
+   "league": "Champions League",
+   "match": "Sporting CP v Galatasaray",
+   "home": "Sporting CP",
+   "away": "Galatasaray",
+   "headline": "Sporting CP to score",
+   "why": "Sporting CP have scored 2+ in 6 straight; Galatasaray have conceded in 6 straight.",
+   "a": "Sporting CP",
+   "b": "Galatasaray",
+   "a_run": 6,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 12,
+   "base_rate": 0.2620320855614973,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Sporting CP"
+   },
+   "a_recent": [
+    {
+     "s": "4-0",
+     "opp": "Rio Ave",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Alverca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "3-2",
+     "opp": "Vit\u00f3ria de Guimaraes",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Estrela",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Gil Vicente",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Rio Ave",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-2",
+     "opp": "Villarreal",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-3",
+     "opp": "Stade Rennais",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-3",
+     "opp": "Venezia",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-2",
+     "opp": "Monza",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "5-1",
+     "opp": "Umraniyespor",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-4",
+     "opp": "Liverpool",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Champions League"
+    }
+   ],
+   "kalshi": null
+  },
+  {
    "date": "2026-09-09",
    "kickoff": "2026-09-09T23:30Z",
    "league": "MLS",
@@ -9986,7 +10240,13 @@
    ],
    "best_rate": 0.0481283422459893,
    "longest": 6,
-   "next": null,
+   "next": {
+    "opp": "Sporting CP",
+    "date": "2026-09-09",
+    "kickoff": "2026-09-09T19:00Z",
+    "league": "Champions League",
+    "home": false
+   },
    "recent": [
     {
      "s": "1-2",
@@ -20025,6 +20285,68 @@
    ],
    "thin": true,
    "friendlies": 2
+  },
+  {
+   "team": "Fenerbahce",
+   "league": "Champions League",
+   "played": 3,
+   "runs": [
+    {
+     "key": "scoring",
+     "label": "scored 2+",
+     "n": 3,
+     "rate": 0.13903743315508021
+    },
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 3,
+     "rate": 0.24064171122994651
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 3,
+     "rate": 0.47593582887700536
+    }
+   ],
+   "best_rate": 0.13903743315508021,
+   "longest": 3,
+   "next": {
+    "opp": "AS Roma",
+    "date": "2026-09-10",
+    "kickoff": "2026-09-10T16:45Z",
+    "league": "Champions League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "2-1",
+     "opp": "LASK Linz",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "4-0",
+     "opp": "Pogon Szczecin",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "5-0",
+     "opp": "FC Admira Wacker Modling",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": true,
+   "friendlies": 3
   },
   {
    "team": "Ipswich Town",
