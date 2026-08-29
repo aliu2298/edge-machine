@@ -46,7 +46,14 @@ MIN_PLAYED = 5        # games needed before a team may form one half of a LEAD
 # labelled as thin. Kept BELOW the lead threshold on purpose — a confluence still requires
 # real form on both sides, so a 3-game team is visible but never generates a lead.
 MIN_PLAYED_SHOWN = 3
-TOP_LEADS = 120       # cards baked into the page; the league filter narrows from here
+TOP_LEADS = 120     # cards baked into the page; the league filter narrows from here
+
+# ---- "On fire": genuinely long runs, measured OUTSIDE the 6-game form window.
+# FORM_GAMES caps every run at 6, which is right for a confluence (old form is not current
+# form) but makes a 10-game streak undetectable. These look back further and are used ONLY
+# for the On Fire tab — the lead logic is untouched, so the ledger stays comparable.
+FIRE_WINDOW = 24      # how far back a long run may reach
+FIRE_MIN = 8          # shorter than this is not "on fire"
 
 # ---------------------------------------------------------------- streak definitions
 # Each: (key, label, side, predicate over one game from THAT team's perspective).
@@ -110,7 +117,7 @@ def utc_today():
     return datetime.datetime.now(datetime.timezone.utc).date()
 
 
-def form_seq(games, run_len=0):
+def form_seq(games, run_len=0, limit=None):
     """Recent games (newest first) as compact structured entries for the page's score pills.
 
     `hit` lights exactly the games IN the run — that is, the first `run_len`. It is
@@ -120,7 +127,7 @@ def form_seq(games, run_len=0):
     """
     return [{"s": f"{g['gf']}-{g['ga']}", "opp": g["opp"], "h": g["home"],
              "hit": i < run_len, "comp": g.get("comp", True), "lg": g.get("league", "")}
-            for i, g in enumerate(games[:FORM_GAMES])]
+            for i, g in enumerate(games[:(limit or FORM_GAMES)])]
 
 
 def team_games(fixtures):
@@ -156,6 +163,60 @@ def run_length(games, pred):
         else:
             break
     return n
+
+
+def long_run(games, pred, window=FIRE_WINDOW):
+    """Run length without the FORM_GAMES cap, for the On Fire tab.
+
+    Deliberately separate from run_length(): the confluence logic must keep its 6-game
+    horizon so leads stay comparable with everything already in the ledger.
+    """
+    n = 0
+    for g in games[:window]:
+        if pred(g["gf"], g["ga"]):
+            n += 1
+        else:
+            break
+    return n
+
+
+def fire_rows(by_team, fixtures, league_of, nxt):
+    """Teams on a genuinely long run, rarest-first.
+
+    Ranked by RARITY, not raw length. The longest runs in the data are the least demanding
+    predicates — Bayern had scored in 23 straight, which is barely news because most good
+    sides score most weeks — while "scored 2+" topped out at 8. Ranking on length alone
+    would fill the tab with the most ordinary metric available.
+    """
+    # base rate for a long run of length n: share of teams with >= n, measured over the
+    # same population, so the chip means the same thing it does elsewhere on the board.
+    pool = {t: g for t, g in by_team.items() if len(g) >= FIRE_MIN}
+    rates = {}
+    for key, _l, _s, pred in STREAKS:
+        lens = [long_run(g, pred) for g in pool.values()]
+        rates[key] = {n: (sum(1 for x in lens if x >= n) / len(lens)) if lens else 0.0
+                      for n in range(FIRE_MIN, FIRE_WINDOW + 1)}
+
+    rows = []
+    for team, games in pool.items():
+        runs = []
+        for key, label, _side, pred in STREAKS:
+            n = long_run(games, pred)
+            if n >= FIRE_MIN:
+                runs.append({"key": key, "label": label, "n": n,
+                             "rate": rates[key].get(min(n, FIRE_WINDOW), 0.0)})
+        if not runs:
+            continue
+        runs.sort(key=lambda r: (r["rate"], -r["n"]))
+        rows.append({
+            "team": team, "league": league_of.get(team, "—"), "played": len(games),
+            "runs": runs, "best_rate": runs[0]["rate"], "longest": max(r["n"] for r in runs),
+            "next": nxt.get(team),
+            # show the whole run, plus a couple of games past where it started
+            "recent": form_seq(games, runs[0]["n"], limit=min(runs[0]["n"] + 2, FIRE_WINDOW)),
+        })
+    rows.sort(key=lambda r: (r["best_rate"], -r["longest"], r["team"]))
+    return rows
 
 
 def team_streaks(by_team, min_played=MIN_PLAYED):
@@ -332,18 +393,14 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
     return uniq
 
 
-def team_rows(streaks, by_team, fixtures, rates):
-    """Every tracked team with its current runs — the browse view.
+def team_lookups(by_team, fixtures):
+    """(league_of, next_fixture) — shared by the browse and On Fire views.
 
-    This exists because a confluence is genuinely rare: the Premier League currently has
-    exactly one side on a conceded-2+ run, so the leads list is legitimately empty there.
-    Suppressing a whole league rather than showing its actual form would be the wrong
-    answer, so the runs are browsable on their own terms.
+    A team's league is where they play most COMPETITIVELY, so a side whose only recent
+    games are friendlies still reads as its real league rather than "Club Friendly".
+    Falls back to the competition of their next fixture (a promoted side may have no
+    competitive history in the window), and only then to whatever is left.
     """
-    # A team's league is where they play most COMPETITIVELY — so a side whose only recent
-    # games are friendlies still reads as its real league rather than "Club Friendly".
-    # Falls back to the competition of their next fixture (a promoted side may have no
-    # competitive history in the window at all), and only then to whatever is left.
     next_comp_league = {}
     for f in fixtures:
         if f["played"] or not f.get("competitive", True):
@@ -361,10 +418,9 @@ def team_rows(streaks, by_team, fixtures, rates):
             league_of[team] = collections.Counter(
                 g["league"] for g in games).most_common(1)[0][0]
 
-    # Next fixture per team, so a run has somewhere to point. Filtered and ordered on the
-    # kickoff INSTANT: a date-only comparison kept matches already in progress, and a
-    # date-only sort left same-day fixtures in arbitrary order, so "next" could name the
-    # later of two games on the same day.
+    # Ordered on the kickoff INSTANT: a date-only comparison kept matches already in
+    # progress, and a date-only sort left same-day fixtures in arbitrary order, so "next"
+    # could name the later of two games on the same day.
     now = datetime.datetime.now(datetime.timezone.utc)
     today = utc_today().isoformat()
 
@@ -380,6 +436,18 @@ def team_rows(streaks, by_team, fixtures, rates):
         for t, opp in ((f["home"], f["away"]), (f["away"], f["home"])):
             nxt.setdefault(t, {"opp": opp, "date": f["date"], "kickoff": f["kickoff"],
                                "league": f["league"], "home": t == f["home"]})
+    return league_of, nxt
+
+
+def team_rows(streaks, by_team, fixtures, rates):
+    """Every tracked team with its current runs — the browse view.
+
+    This exists because a confluence is genuinely rare: the Premier League currently has
+    exactly one side on a conceded-2+ run, so the leads list is legitimately empty there.
+    Suppressing a whole league rather than showing its actual form would be the wrong
+    answer, so the runs are browsable on their own terms.
+    """
+    league_of, nxt = team_lookups(by_team, fixtures)
 
     # Only teams that belong to the tracked competitions. The friendlies feed drags in
     # reserve and lower-division sides (Espanyol B, Pozuelo Alarcón) that played one
@@ -400,15 +468,14 @@ def team_rows(streaks, by_team, fixtures, rates):
               "rate": rates[k][min(n, FORM_GAMES)]}
              for k, n in info["runs"].items()),
             key=lambda r: (r["rate"], -r["n"]))
-        if not runs:
-            continue
         rows.append({
             "team": team,
+            "no_run": not runs,
             "league": league_of.get(team, "—"),
             "played": info["played"],
             "runs": runs,
-            "best_rate": min(r["rate"] for r in runs),
-            "longest": max(r["n"] for r in runs),
+            "best_rate": min((r["rate"] for r in runs), default=1.0),
+            "longest": max((r["n"] for r in runs), default=0),
             "next": nxt.get(team),
             # highlight the rarest run, which is the one the row leads with
             "recent": form_seq(info["recent"], runs[0]["n"] if runs else 0),
@@ -417,14 +484,18 @@ def team_rows(streaks, by_team, fixtures, rates):
             "friendlies": sum(1 for g in info["recent"] if not g.get("comp", True)),
         })
     # thin-sample rows sink below properly-evidenced ones regardless of how rare they look
-    rows.sort(key=lambda r: (r["thin"], r["best_rate"], -r["longest"], r["team"]))
+    # teams on a run lead; then thin samples; then rarity. Teams with no current run
+    # still appear — the tab is a complete league browser, not just a highlight reel.
+    rows.sort(key=lambda r: (r["no_run"], r["thin"], r["best_rate"],
+                             -r["longest"], r["team"]))
     return rows
 
 
 # ---------------------------------------------------------------- rendering
-def page_html(leads, teams, track, meta, leagues, now):
+def page_html(leads, teams, fire, track, meta, leagues, now):
     payload = json.dumps(leads).replace("</", "<\\/")
     teams_payload = json.dumps(teams).replace("</", "<\\/")
+    fire_payload = json.dumps(fire).replace("</", "<\\/")
     track_payload = json.dumps(track).replace("</", "<\\/")
     league_btns = "".join(
         f'<button class="lg" data-lg="{esc(l)}">{esc(l)}</button>' for l in leagues)
@@ -481,6 +552,13 @@ padding:12px 15px 10px;border-bottom:1px solid var(--bd)}}
 padding-top:9px;border-top:1px solid var(--bd)}}
 .tnx b{{color:var(--fg);font-weight:600}}
 .truns{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}}
+.flame{{font-size:11px;font-weight:800;color:#0a0d14;background:var(--warn);
+border-radius:999px;padding:2px 9px;font-variant-numeric:tabular-nums}}
+.trow.fire{{border-color:#f0b42944}}
+.norun{{font-size:11px;color:var(--mut);font-style:italic}}
+.legend{{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--mut);
+margin:10px 0 2px}}
+.legend .sc{{margin:0}}
 .lgs{{display:flex;gap:6px;flex-wrap:wrap}}
 .lg{{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);cursor:pointer;
 background:none;border:1px solid var(--bd);border-radius:999px;padding:5px 12px;
@@ -515,7 +593,7 @@ color:var(--mut);cursor:default}}
 /* Preseason/friendly result. Marked by a DASHED border only — an opacity knock-back on
    top of `.hit` made a friendly that is part of the run read as though it were outside
    it, which contradicted both the run length and the note underneath. */
-.sc.fr{{border-style:dashed}}
+.sc.fr{{border-style:dashed;border-color:#f0b42966;color:var(--warn)}}
 .kbtn{{font-size:11px;font-weight:700;color:var(--acc);text-decoration:none;
 border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;
 padding:3px 10px;white-space:nowrap}}
@@ -548,6 +626,7 @@ border:1px solid;margin-left:auto;white-space:nowrap}}
 .tr-note{{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
 border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}}
 .tr-note b{{color:var(--fg);font-weight:600}}
+.tr-note.warn{{border-color:#f0b42944;background:#f0b4290a}}
 .tiles{{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}}
 .tile{{flex:1;min-width:104px;background:var(--card);border:1px solid var(--bd);
 border-radius:10px;padding:11px 13px}}
@@ -599,7 +678,8 @@ advice.</p>
 <div class="controls">
   <div class="tabs">
     <button class="tb on" data-tab="leads">Leads</button>
-    <button class="tb" data-tab="teams">All teams on a run</button>
+    <button class="tb" data-tab="fire">🔥 On fire</button>
+    <button class="tb" data-tab="teams">All teams</button>
     <button class="tb" data-tab="track">Track record</button>
   </div>
   <div class="lgs">
@@ -611,6 +691,9 @@ advice.</p>
   </div>
 </div>
 
+<div class="legend"><span class="sc hit">2-1</span> in the run
+  <span class="sc">1-1</span> outside it
+  <span class="sc hit fr">3-0</span> preseason friendly</div>
 <div id="list"></div>
 <div class="empty" id="empty" style="display:none"></div>
 
@@ -619,6 +702,8 @@ advice.</p>
 <script>
 const LEADS = {payload};
 const TEAMS = {teams_payload};
+const FIRE = {fire_payload};
+const FIRE_MIN = {FIRE_MIN};
 const TRACK = {track_payload};
 const list = document.getElementById('list');
 const cnt  = document.getElementById('cnt');
@@ -698,12 +783,9 @@ function seq(games) {{
     `<span class="sc${{g.hit ? ' hit' : ''}}${{g.comp === false ? ' fr' : ''}}"`
     + ` title="${{esc(g.s)}} ${{g.h ? 'home' : 'away'}} v ${{esc(g.opp)}}`
     + `${{g.lg ? ' · ' + esc(g.lg) : ''}}">${{esc(g.s)}}</span>`).join('');
-  // Say it out loud when a run leans on preseason — a dashed pill alone is too quiet.
-  const fr = games.filter(g => g.comp === false && g.hit).length;
-  const note = fr
-    ? `<div class="frn">${{fr}} of these are preseason friendlies — weaker evidence</div>`
-    : '';
-  return `<div class="seq">${{pills}}</div>` + note;
+  // Preseason is carried by colour alone (dashed amber pill) — the legend explains it
+  // once, so every card does not repeat the same sentence.
+  return `<div class="seq">${{pills}}</div>`;
 }}
 function leg(name, label, n, side, games) {{
   return `<div class="leg"><span class="lgn">${{esc(name)}}</span>`
@@ -748,6 +830,7 @@ function teamRow(t) {{
     : `<div class="tnx">No fixture scheduled in the next 14 days</div>`;
   return `<div class="trow">
     <div class="th"><span class="tn">${{esc(t.team)}}</span>
+      ${{t.no_run ? '<span class="norun">no current run</span>' : ''}}
       ${{t.thin ? `<span class="rare common" style="margin-left:0">thin · ${{
         t.played}} games</span>` : ''}}
       <span class="tl">${{esc(t.league)}} · ${{t.played}} games</span></div>
@@ -793,23 +876,7 @@ function trackView() {{
 
   let out = note;
 
-  // Backtest first: it is the only section with a real sample early on.
-  if (t.backtest_n) {{
-    out += `<h2>Backtest · same rules replayed over past fixtures</h2>`
-        + `<div class="tr-note">Walk-forward over ${{t.population_fixtures}} played
-           fixtures: for each one, form is computed <b>only from games before it</b>, then
-           graded on the actual result. No lookahead. ${{
-             t.backtest_any_sig
-               ? 'At least one bet type clears its baseline — but several are tested at once, so some separation is expected by chance.'
-               : '<b>No bet type clears its baseline.</b> On this sample the confluence is not distinguishable from the population — no measurable edge yet.'}}</div>`
-        + `<div class="tiles">
-             <div class="tile"><b>${{t.backtest_n}}</b><span>Leads replayed</span></div>
-             <div class="tile"><b>${{Math.round(t.backtest_rate*100)}}%</b><span>Hit rate</span></div>
-           </div>`
-        + resultTable(t.backtest_rows);
-  }}
-
-  out += `<h2>Live ledger · leads logged when published</h2>`;
+  out += `<h2>Leads logged when published</h2>`;
   if (!t.graded) {{
     out += `<div class="empty">Nothing graded yet — ${{t.pending}} lead${{
       t.pending === 1 ? '' : 's'}} pending.<br>They settle automatically as their fixtures
@@ -833,6 +900,30 @@ function trackView() {{
       </table></div>`;
   }}
   return out;
+}}
+function fireRow(t) {{
+  const chips = t.runs.map(r => {{
+    const [cls] = rarity(r.rate);
+    return `<span class="rare ${{cls}}" style="margin-left:0">${{esc(r.label)}}`
+         + ` · <b>${{r.n}} straight</b> · ${{Math.round(r.rate*100)}}%</span>`;
+  }}).join('');
+  const n = t.next
+    ? `<div class="tnx">Next: <b>${{esc(t.next.home ? 'vs ' + t.next.opp
+                                                   : 'away to ' + t.next.opp)}}</b>`
+      + ` · ${{esc(when(t.next.kickoff) || t.next.date)}}`
+      + ` · <span class="nx" data-ko="${{esc(t.next.kickoff || '')}}">${{
+          esc(countdown(t.next.kickoff)[1])}}</span></div>`
+    : `<div class="tnx">No fixture scheduled</div>`;
+  return `<div class="trow fire">
+    <div class="th"><span class="tn">${{esc(t.team)}}</span>
+      <span class="flame">${{t.longest}}</span>
+      <span class="tl">${{esc(t.league)}} · ${{t.played}} games</span></div>
+    <div class="tbody">
+      <div class="truns">${{chips}}</div>
+      ${{seq(t.recent)}}
+      ${{n}}
+    </div>
+  </div>`;
 }}
 function render() {{
   const term = q.value.trim().toLowerCase();
@@ -867,6 +958,22 @@ function render() {{
       ? 'No confluences in ' + league + ' right now — both sides of a fixture have to be '
         + 'on matching runs, which is genuinely rare. Try "All teams on a run".'
       : 'No leads match that filter.';
+  }} else if (tab === 'fire') {{
+    total = FIRE.length;
+    rows = FIRE.filter(t => (!league || t.league === league) &&
+                            (!term || t.team.toLowerCase().includes(term)));
+    // The warning goes ABOVE the list, not in a footnote: this tab shows the most
+    // seductive patterns on the board and they are the ones that measured worst.
+    html_ = `<div class="tr-note warn"><b>These runs do not predict their own
+      continuation.</b> Measured over the season so far: teams on an 8+ "scored in" run
+      extended 88.8% of the time — but those same teams score in 91.9% of all their games
+      anyway, so the run ran <b>3.1pp below</b> their normal rate. Compared against the
+      population instead of the team, the same data reads +12.8pp and "significant" —
+      that number is the hot-hand fallacy, not an edge. A long streak here is a striking
+      fact about the past and survivorship in the present: the side still on a 12-game run
+      is simply the one whose run has not broken yet.</div>`
+      + rows.map(fireRow).join('');
+    empty.textContent = 'No team is on a run of ' + FIRE_MIN + '+ right now.';
   }} else {{
     total = TEAMS.length;
     rows = TEAMS.filter(t => (!league || t.league === league) &&
@@ -930,6 +1037,8 @@ def build(force=False):
     # visible rather than absent. Rarity is still quoted against `rates` (the lead-grade
     # population) so a chip means the same thing in both views.
     shown = team_streaks(by_team, MIN_PLAYED_SHOWN)
+    _league_of, _nxt = team_lookups(by_team, fixtures)
+    fire = fire_rows(by_team, fixtures, _league_of, _nxt)
     leads = find_leads(fixtures, streaks, rates)[:TOP_LEADS]
     teams = team_rows(shown, by_team, fixtures, rates)
 
@@ -949,7 +1058,8 @@ def build(force=False):
     friendly_names = set(streaks_fetch.FORM_ONLY_LEAGUES.values())
     leagues = sorted(({f["league"] for f in fixtures
                        if not f["played"] and f.get("competitive", True)} |
-                      {t["league"] for t in teams}) - friendly_names)
+                      {t["league"] for t in teams} |
+                      {t["league"] for t in fire}) - friendly_names)
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
     # Describe what is actually on the page, not the raw index behind it.
     n_up = sum(1 for f in fixtures if not f["played"] and f.get("competitive", True))
@@ -960,13 +1070,14 @@ def build(force=False):
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "streaks.html")
     with open(out, "w") as f:
-        f.write(page_html(leads, teams, track, meta, leagues, now))
+        f.write(page_html(leads, teams, fire, track, meta, leagues, now))
 
     # machine-readable companion, same shape the page consumes
     with open(DATA_OUT, "w") as f:
         json.dump({"built_at": datetime.datetime.now(datetime.timezone.utc)
                    .isoformat(timespec="seconds"),
                    "teams_tracked": len(streaks), "leads": leads, "teams": teams,
+                   "fire": fire,
                    "base_rates": {k: {str(n): round(v, 4) for n, v in d.items()}
                                   for k, d in rates.items()}}, f, indent=1)
 

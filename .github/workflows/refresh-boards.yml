@@ -47,6 +47,12 @@ jobs:
       - name: Health check
         run: python3 health.py
 
+      # Proves every league's squad is actually on the board. Teams went missing silently
+      # once — Liverpool, Lyon, Valencia and LA Galaxy were all dropped because they had
+      # no 3+ run — and nothing anywhere said so. Warn-only.
+      - name: Verify league coverage
+        run: python3 verify_coverage.py
+
       # Streak leads off ESPN's keyless scoreboard. API-Football is NOT usable here —
       # its free plan blocks the current season outright ("try from 2022 to 2024"), and a
       # streak is a claim about current form. --force skips the 6h local cache so CI
@@ -62,12 +68,17 @@ jobs:
       - name: Draw and grade the slate
         run: python3 slate_build.py || echo "slate build failed — keeping previous board"
 
+      # Logs teams on a long run and grades whether the run actually continued.
+      - name: Track on-fire runs
+        run: python3 fire_track.py || echo "fire tracking failed — continuing"
+
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           git add public_site/index.html public_site/streaks.html \
-                  data/streaks.json data/streak_leads.json data/slate.json
+                  data/streaks.json data/streak_leads.json data/slate.json \
+                  data/fire_runs.json
           if git diff --cached --quiet; then
             echo "no changes — nothing to deploy"
             exit 0
