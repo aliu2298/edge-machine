@@ -1325,6 +1325,30 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-10|Neom SC|Al Fateh|Under 2.5 goals": {
+   "a": "Neom SC",
+   "a_key": "under25",
+   "a_run": 3,
+   "away": "Al Fateh",
+   "b": "Al Fateh",
+   "b_key": "under25",
+   "b_run": 3,
+   "base_rate": 0.0748663101604278,
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "first_seen": "2026-08-29",
+   "headline": "Under 2.5 goals",
+   "home": "Neom SC",
+   "id": "2026-09-10|Neom SC|Al Fateh|Under 2.5 goals",
+   "kickoff": "2026-09-10T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Neom SC v Al Fateh",
+   "status": "pending",
+   "strength": 6
+  },
   "2026-09-10|Portland Timbers|St. Louis CITY SC|Both teams to score": {
    "a": "Portland Timbers",
    "a_key": "btts",
@@ -1742,5 +1766,5 @@
    "strength": 8
   }
  },
- "updated_at": "2026-08-29T19:34:27+00:00"
+ "updated_at": "2026-08-29T19:59:21+00:00"
 }

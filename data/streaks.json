@@ -1,5 +1,5 @@
 {
- "built_at": "2026-08-29T19:34:27+00:00",
+ "built_at": "2026-08-29T19:59:21+00:00",
  "teams_tracked": 187,
  "leads": [
   {
@@ -1522,7 +1522,7 @@
    "a_label": "scored 2+",
    "b_label": "conceded in",
    "strength": 7,
-   "base_rate": 0.48663101604278075,
+   "base_rate": 0.48128342245989303,
    "bet": {
     "kind": "team_gte",
     "subject": "a",
@@ -2650,7 +2650,7 @@
    "a_label": "scored 2+",
    "b_label": "conceded in",
    "strength": 7,
-   "base_rate": 0.48663101604278075,
+   "base_rate": 0.48128342245989303,
    "bet": {
     "kind": "team_gte",
     "subject": "a",
@@ -3404,7 +3404,7 @@
    "a_label": "scored 2+",
    "b_label": "conceded in",
    "strength": 7,
-   "base_rate": 0.48663101604278075,
+   "base_rate": 0.48128342245989303,
    "bet": {
     "kind": "team_gte",
     "subject": "a",
@@ -6146,6 +6146,131 @@
   {
    "date": "2026-09-10",
    "kickoff": "2026-09-10T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Neom SC v Al Fateh",
+   "home": "Neom SC",
+   "away": "Al Fateh",
+   "headline": "Under 2.5 goals",
+   "why": "Neom SC have gone under 2.5 in 3 straight; Al Fateh in 3 straight.",
+   "a": "Neom SC",
+   "b": "Al Fateh",
+   "a_run": 3,
+   "b_run": 3,
+   "a_key": "under25",
+   "b_key": "under25",
+   "a_label": "under 2.5 goals",
+   "b_label": "under 2.5 goals",
+   "strength": 6,
+   "base_rate": 0.0748663101604278,
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "0-1",
+     "opp": "Al Riyadh",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Al Qadsiah",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Al-Faisaly",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Al Fayha",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al Ettifaq",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Al Hilal",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-0",
+     "opp": "Al Ittihad",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al-Faisaly",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-1",
+     "opp": "Al Ettifaq",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-3",
+     "opp": "Al Nassr",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-0",
+     "opp": "Al Kholood",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Al Najma",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "kalshi": null
+  },
+  {
+   "date": "2026-09-10",
+   "kickoff": "2026-09-10T18:00Z",
    "league": "Primeira Liga",
    "match": "Estrela v Braga",
    "home": "Estrela",
@@ -8300,7 +8425,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.0053475935828877,
@@ -8468,7 +8593,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -8636,7 +8761,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.0106951871657754,
@@ -8790,7 +8915,7 @@
      "key": "under25",
      "label": "under 2.5 goals",
      "n": 3,
-     "rate": 0.06951871657754011
+     "rate": 0.0748663101604278
     },
     {
      "key": "porous",
@@ -8895,13 +9020,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.0213903743315508,
@@ -8994,7 +9119,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -9087,7 +9212,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.0213903743315508,
@@ -9168,7 +9293,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.0213903743315508,
@@ -9255,7 +9380,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.0213903743315508,
@@ -9336,7 +9461,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.0213903743315508,
@@ -9417,13 +9542,13 @@
      "key": "under25",
      "label": "under 2.5 goals",
      "n": 3,
-     "rate": 0.06951871657754011
+     "rate": 0.0748663101604278
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.0213903743315508,
@@ -9504,7 +9629,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.026737967914438502,
@@ -9846,7 +9971,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -9945,7 +10070,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -10044,7 +10169,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -10230,7 +10355,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -10335,7 +10460,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.058823529411764705,
@@ -10428,7 +10553,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
    "best_rate": 0.058823529411764705,
@@ -10524,16 +10649,16 @@
      "rate": 0.17647058823529413
     },
     {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    },
+    {
      "key": "porous",
      "label": "conceded in",
      "n": 4,
      "rate": 0.40641711229946526
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
     }
    ],
    "best_rate": 0.058823529411764705,
@@ -10788,7 +10913,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -10881,7 +11006,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -10980,7 +11105,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -11079,13 +11204,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.06417112299465241,
@@ -11151,405 +11276,6 @@
    "friendlies": 3
   },
   {
-   "team": "Estoril",
-   "no_run": false,
-   "league": "Primeira Liga",
-   "played": 13,
-   "runs": [
-    {
-     "key": "under25",
-     "label": "under 2.5 goals",
-     "n": 3,
-     "rate": 0.06951871657754011
-    },
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.06951871657754011,
-   "longest": 6,
-   "next": {
-    "opp": "Benfica",
-    "date": "2026-08-31",
-    "kickoff": "2026-08-31T19:15Z",
-    "league": "Primeira Liga",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "0-2",
-     "opp": "Rio Ave",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "C.D. Nacional",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "FC Famalicao",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-3",
-     "opp": "Benfica",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Alverca",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Braga",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Everton",
-   "no_run": false,
-   "league": "Premier League",
-   "played": 15,
-   "runs": [
-    {
-     "key": "under25",
-     "label": "under 2.5 goals",
-     "n": 3,
-     "rate": 0.06951871657754011
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 5,
-     "rate": 0.32085561497326204
-    }
-   ],
-   "best_rate": 0.06951871657754011,
-   "longest": 5,
-   "next": {
-    "opp": "Manchester United",
-    "date": "2026-09-06",
-    "kickoff": "2026-09-06T13:00Z",
-    "league": "Premier League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-1",
-     "opp": "AFC Bournemouth",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Crystal Palace",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Lille",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-1",
-     "opp": "Newcastle United",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-3",
-     "opp": "VfB Stuttgart",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-1",
-     "opp": "Tottenham Hotspur",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Premier League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 3
-  },
-  {
-   "team": "Bologna",
-   "no_run": false,
-   "league": "Serie A",
-   "played": 18,
-   "runs": [
-    {
-     "key": "under25",
-     "label": "under 2.5 goals",
-     "n": 3,
-     "rate": 0.06951871657754011
-    },
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 4,
-     "rate": 0.40641711229946526
-    }
-   ],
-   "best_rate": 0.06951871657754011,
-   "longest": 4,
-   "next": {
-    "opp": "Atalanta",
-    "date": "2026-08-31",
-    "kickoff": "2026-08-31T18:45Z",
-    "league": "Serie A",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "0-1",
-     "opp": "Lazio",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "0-1",
-     "opp": "Brighton & Hove Albion",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Pisa",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-3",
-     "opp": "Internazionale",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "1-0",
-     "opp": "Atalanta",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "3-2",
-     "opp": "Napoli",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Serie A"
-    }
-   ],
-   "thin": false,
-   "friendlies": 2
-  },
-  {
-   "team": "Santa Clara",
-   "no_run": false,
-   "league": "Primeira Liga",
-   "played": 14,
-   "runs": [
-    {
-     "key": "under25",
-     "label": "under 2.5 goals",
-     "n": 3,
-     "rate": 0.06951871657754011
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
-    }
-   ],
-   "best_rate": 0.06951871657754011,
-   "longest": 4,
-   "next": {
-    "opp": "Rio Ave",
-    "date": "2026-09-06",
-    "kickoff": "2026-09-06T14:30Z",
-    "league": "Primeira Liga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-1",
-     "opp": "Alverca",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "FC Famalicao",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Acad\u00e9mico de Viseu",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "C.D. Nacional",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-1",
-     "opp": "FC Porto",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "C.D. Nacional",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Neom SC",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 14,
-   "runs": [
-    {
-     "key": "under25",
-     "label": "under 2.5 goals",
-     "n": 3,
-     "rate": 0.06951871657754011
-    }
-   ],
-   "best_rate": 0.06951871657754011,
-   "longest": 3,
-   "next": {
-    "opp": "Al Khaleej",
-    "date": "2026-09-03",
-    "kickoff": "2026-09-03T16:30Z",
-    "league": "Saudi Pro League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "0-1",
-     "opp": "Al Riyadh",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-2",
-     "opp": "Al Qadsiah",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Al-Faisaly",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-1",
-     "opp": "Al Fayha",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Ettifaq",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-2",
-     "opp": "Al Hilal",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "Ajax Amsterdam",
    "no_run": false,
    "league": "Eredivisie",
@@ -11565,7 +11291,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.0748663101604278,
@@ -11629,6 +11355,87 @@
    ],
    "thin": false,
    "friendlies": 4
+  },
+  {
+   "team": "Estoril",
+   "no_run": false,
+   "league": "Primeira Liga",
+   "played": 13,
+   "runs": [
+    {
+     "key": "under25",
+     "label": "under 2.5 goals",
+     "n": 3,
+     "rate": 0.0748663101604278
+    },
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 6,
+     "rate": 0.2620320855614973
+    }
+   ],
+   "best_rate": 0.0748663101604278,
+   "longest": 6,
+   "next": {
+    "opp": "Benfica",
+    "date": "2026-08-31",
+    "kickoff": "2026-08-31T19:15Z",
+    "league": "Primeira Liga",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "0-2",
+     "opp": "Rio Ave",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "C.D. Nacional",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Famalicao",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-3",
+     "opp": "Benfica",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Alverca",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Braga",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
   },
   {
    "team": "FC Augsburg",
@@ -11718,6 +11525,87 @@
    "friendlies": 2
   },
   {
+   "team": "Everton",
+   "no_run": false,
+   "league": "Premier League",
+   "played": 15,
+   "runs": [
+    {
+     "key": "under25",
+     "label": "under 2.5 goals",
+     "n": 3,
+     "rate": 0.0748663101604278
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 5,
+     "rate": 0.31016042780748665
+    }
+   ],
+   "best_rate": 0.0748663101604278,
+   "longest": 5,
+   "next": {
+    "opp": "Manchester United",
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T13:00Z",
+    "league": "Premier League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-1",
+     "opp": "AFC Bournemouth",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Crystal Palace",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Lille",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-1",
+     "opp": "Newcastle United",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-3",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Tottenham Hotspur",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 3
+  },
+  {
    "team": "Al Nassr",
    "no_run": false,
    "league": "Saudi Pro League",
@@ -11739,7 +11627,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.0748663101604278,
@@ -11805,6 +11693,87 @@
    "friendlies": 2
   },
   {
+   "team": "Bologna",
+   "no_run": false,
+   "league": "Serie A",
+   "played": 18,
+   "runs": [
+    {
+     "key": "under25",
+     "label": "under 2.5 goals",
+     "n": 3,
+     "rate": 0.0748663101604278
+    },
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 4,
+     "rate": 0.40641711229946526
+    }
+   ],
+   "best_rate": 0.0748663101604278,
+   "longest": 4,
+   "next": {
+    "opp": "Atalanta",
+    "date": "2026-08-31",
+    "kickoff": "2026-08-31T18:45Z",
+    "league": "Serie A",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "0-1",
+     "opp": "Lazio",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "0-1",
+     "opp": "Brighton & Hove Albion",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Pisa",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-3",
+     "opp": "Internazionale",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "1-0",
+     "opp": "Atalanta",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "3-2",
+     "opp": "Napoli",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Serie A"
+    }
+   ],
+   "thin": false,
+   "friendlies": 2
+  },
+  {
    "team": "Chelsea",
    "no_run": false,
    "league": "Premier League",
@@ -11832,13 +11801,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.0748663101604278,
@@ -11904,6 +11873,237 @@
    "friendlies": 4
   },
   {
+   "team": "Santa Clara",
+   "no_run": false,
+   "league": "Primeira Liga",
+   "played": 14,
+   "runs": [
+    {
+     "key": "under25",
+     "label": "under 2.5 goals",
+     "n": 3,
+     "rate": 0.0748663101604278
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    }
+   ],
+   "best_rate": 0.0748663101604278,
+   "longest": 4,
+   "next": {
+    "opp": "Rio Ave",
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T14:30Z",
+    "league": "Primeira Liga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-1",
+     "opp": "Alverca",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "FC Famalicao",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Acad\u00e9mico de Viseu",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "C.D. Nacional",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "FC Porto",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "C.D. Nacional",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Al Fateh",
+   "no_run": false,
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [
+    {
+     "key": "under25",
+     "label": "under 2.5 goals",
+     "n": 3,
+     "rate": 0.0748663101604278
+    }
+   ],
+   "best_rate": 0.0748663101604278,
+   "longest": 3,
+   "next": {
+    "opp": "Al Taawoun",
+    "date": "2026-09-05",
+    "kickoff": "2026-09-05T15:55Z",
+    "league": "Saudi Pro League",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "0-0",
+     "opp": "Al Ittihad",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al-Faisaly",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-1",
+     "opp": "Al Ettifaq",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-3",
+     "opp": "Al Nassr",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-0",
+     "opp": "Al Kholood",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Al Najma",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Neom SC",
+   "no_run": false,
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [
+    {
+     "key": "under25",
+     "label": "under 2.5 goals",
+     "n": 3,
+     "rate": 0.0748663101604278
+    }
+   ],
+   "best_rate": 0.0748663101604278,
+   "longest": 3,
+   "next": {
+    "opp": "Al Khaleej",
+    "date": "2026-09-03",
+    "kickoff": "2026-09-03T16:30Z",
+    "league": "Saudi Pro League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "0-1",
+     "opp": "Al Riyadh",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Al Qadsiah",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Al-Faisaly",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Al Fayha",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al Ettifaq",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Al Hilal",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
    "team": "AFC Bournemouth",
    "no_run": false,
    "league": "Premier League",
@@ -11919,7 +12119,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12012,7 +12212,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12099,7 +12299,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12186,7 +12386,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12279,7 +12479,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12366,7 +12566,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12453,7 +12653,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12540,7 +12740,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -12789,7 +12989,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.09090909090909091,
@@ -12870,7 +13070,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.09090909090909091,
@@ -12963,7 +13163,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -13068,7 +13268,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
    "best_rate": 0.0962566844919786,
@@ -13155,7 +13355,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13236,7 +13436,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13329,7 +13529,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -13434,7 +13634,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13521,7 +13721,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13602,7 +13802,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13689,7 +13889,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13770,7 +13970,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -13857,7 +14057,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.1657754010695187,
@@ -13950,7 +14150,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.1657754010695187,
@@ -14037,7 +14237,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     }
    ],
    "best_rate": 0.1657754010695187,
@@ -14112,7 +14312,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -14199,7 +14399,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -14286,7 +14486,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
@@ -14370,16 +14570,16 @@
      "rate": 0.1657754010695187
     },
     {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    },
+    {
      "key": "porous",
      "label": "conceded in",
      "n": 4,
      "rate": 0.40641711229946526
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
     }
    ],
    "best_rate": 0.1657754010695187,
@@ -14457,16 +14657,16 @@
      "rate": 0.1657754010695187
     },
     {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    },
+    {
      "key": "porous",
      "label": "conceded in",
      "n": 4,
      "rate": 0.40641711229946526
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
     }
    ],
    "best_rate": 0.1657754010695187,
@@ -14547,7 +14747,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.17647058823529413,
@@ -14628,7 +14828,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.17647058823529413,
@@ -14709,7 +14909,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
    "best_rate": 0.17647058823529413,
@@ -14796,13 +14996,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.17647058823529413,
@@ -14883,7 +15083,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
    "best_rate": 0.17647058823529413,
@@ -15045,7 +15245,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -15132,7 +15332,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -15225,7 +15425,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -15318,7 +15518,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -15411,7 +15611,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -15498,7 +15698,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -15573,7 +15773,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.24598930481283424,
@@ -15648,7 +15848,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.24598930481283424,
@@ -15729,7 +15929,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.24598930481283424,
@@ -15804,10 +16004,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
-   "best_rate": 0.2620320855614973,
+   "best_rate": 0.25133689839572193,
    "longest": 6,
    "next": {
     "opp": "Lyon",
@@ -15879,10 +16079,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
-   "best_rate": 0.2620320855614973,
+   "best_rate": 0.25133689839572193,
    "longest": 6,
    "next": {
     "opp": "Al Hilal",
@@ -15945,156 +16145,6 @@
    "friendlies": 0
   },
   {
-   "team": "Al Ettifaq",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "Abha",
-    "date": "2026-09-04",
-    "kickoff": "2026-09-04T16:00Z",
-    "league": "Saudi Pro League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-3",
-     "opp": "Al Nassr",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Fateh",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-2",
-     "opp": "Al Riyadh",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Neom SC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-3",
-     "opp": "Al Ittihad",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "5-0",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Al Ittihad",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "Al Nassr",
-    "date": "2026-09-05",
-    "kickoff": "2026-09-05T18:00Z",
-    "league": "Saudi Pro League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "3-2",
-     "opp": "Al Hazem",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Qadsiah",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Kholood",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-5",
-     "opp": "Al Qadsiah",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-3",
-     "opp": "Al Shabab",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-1",
-     "opp": "Al Ettifaq",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "Alav\u00e9s",
    "no_run": false,
    "league": "La Liga",
@@ -16104,10 +16154,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.2620320855614973
+     "rate": 0.25133689839572193
     }
    ],
-   "best_rate": 0.2620320855614973,
+   "best_rate": 0.25133689839572193,
    "longest": 6,
    "next": {
     "opp": "Osasuna",
@@ -16168,6 +16218,531 @@
    ],
    "thin": false,
    "friendlies": 0
+  },
+  {
+   "team": "Feyenoord Rotterdam",
+   "no_run": false,
+   "league": "Eredivisie",
+   "played": 15,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "ADO Den Haag",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T12:30Z",
+    "league": "Eredivisie",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "5-2",
+     "opp": "SC Cambuur",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Go Ahead Eagles",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-0",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Atalanta",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-1",
+     "opp": "Royal Charleroi SC",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-1",
+     "opp": "Club Brugge",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": false,
+   "friendlies": 3
+  },
+  {
+   "team": "Fulham",
+   "no_run": false,
+   "league": "Premier League",
+   "played": 14,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "Sunderland",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T13:00Z",
+    "league": "Premier League",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "2-3",
+     "opp": "Chelsea",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-0",
+     "opp": "VfB Stuttgart",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-2",
+     "opp": "M\u00e1laga",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-2",
+     "opp": "Crystal Palace",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-0",
+     "opp": "Newcastle United",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Wolverhampton Wanderers",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 3
+  },
+  {
+   "team": "Houston Dynamo FC",
+   "no_run": false,
+   "league": "MLS",
+   "played": 19,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "San Jose Earthquakes",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T00:30Z",
+    "league": "MLS",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "St. Louis CITY SC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Vancouver Whitecaps",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "LA Galaxy",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-0",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-0",
+     "opp": "Sporting Kansas City",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-0",
+     "opp": "Austin FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Internazionale",
+   "no_run": false,
+   "league": "Serie A",
+   "played": 16,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "Cagliari",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T18:45Z",
+    "league": "Serie A",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "4-1",
+     "opp": "Monza",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "1-0",
+     "opp": "Real Betis",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-1",
+     "opp": "Juventus",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "AC Milan",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-1",
+     "opp": "Karlsruher SC",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-3",
+     "opp": "Bologna",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    }
+   ],
+   "thin": false,
+   "friendlies": 4
+  },
+  {
+   "team": "Juventus",
+   "no_run": false,
+   "league": "Serie A",
+   "played": 18,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "AC Milan",
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T18:45Z",
+    "league": "Serie A",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-0",
+     "opp": "Frosinone",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "2-0",
+     "opp": "Palermo",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-2",
+     "opp": "Internazionale",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Chelsea",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-0",
+     "opp": "Nice",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Standard Liege",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": false,
+   "friendlies": 5
+  },
+  {
+   "team": "Napoli",
+   "no_run": false,
+   "league": "Serie A",
+   "played": 14,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "Como",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T16:30Z",
+    "league": "Serie A",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "2-0",
+     "opp": "Genoa",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "6-2",
+     "opp": "Aris",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Celta Vigo",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Udinese",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "3-0",
+     "opp": "Pisa",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "2-3",
+     "opp": "Bologna",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    }
+   ],
+   "thin": false,
+   "friendlies": 2
+  },
+  {
+   "team": "Newcastle United",
+   "no_run": false,
+   "league": "Premier League",
+   "played": 19,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.25133689839572193
+    }
+   ],
+   "best_rate": 0.25133689839572193,
+   "longest": 6,
+   "next": {
+    "opp": "AFC Bournemouth",
+    "date": "2026-09-05",
+    "kickoff": "2026-09-05T11:30Z",
+    "league": "Premier League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "2-0",
+     "opp": "Tottenham Hotspur",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Liverpool",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Strasbourg",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-2",
+     "opp": "Bayer Leverkusen",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-3",
+     "opp": "Everton",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-1",
+     "opp": "Valencia",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": false,
+   "friendlies": 4
   },
   {
    "team": "Angers",
@@ -16464,81 +17039,6 @@
    "friendlies": 0
   },
   {
-   "team": "Feyenoord Rotterdam",
-   "no_run": false,
-   "league": "Eredivisie",
-   "played": 15,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "ADO Den Haag",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T12:30Z",
-    "league": "Eredivisie",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "5-2",
-     "opp": "SC Cambuur",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "Go Ahead Eagles",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-0",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Atalanta",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-1",
-     "opp": "Royal Charleroi SC",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-1",
-     "opp": "Club Brugge",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "thin": false,
-   "friendlies": 3
-  },
-  {
    "team": "Fortuna Sittard",
    "no_run": false,
    "league": "Eredivisie",
@@ -16612,81 +17112,6 @@
    ],
    "thin": false,
    "friendlies": 0
-  },
-  {
-   "team": "Fulham",
-   "no_run": false,
-   "league": "Premier League",
-   "played": 14,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "Sunderland",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T13:00Z",
-    "league": "Premier League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-3",
-     "opp": "Chelsea",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-0",
-     "opp": "VfB Stuttgart",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-2",
-     "opp": "M\u00e1laga",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-2",
-     "opp": "Crystal Palace",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-0",
-     "opp": "Newcastle United",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Wolverhampton Wanderers",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 3
   },
   {
    "team": "Hamburg SV",
@@ -16831,381 +17256,6 @@
    ],
    "thin": false,
    "friendlies": 0
-  },
-  {
-   "team": "Houston Dynamo FC",
-   "no_run": false,
-   "league": "MLS",
-   "played": 19,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "San Jose Earthquakes",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T00:30Z",
-    "league": "MLS",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "St. Louis CITY SC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "Vancouver Whitecaps",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "LA Galaxy",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-0",
-     "opp": "New England Revolution",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-0",
-     "opp": "Sporting Kansas City",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-0",
-     "opp": "Austin FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Internazionale",
-   "no_run": false,
-   "league": "Serie A",
-   "played": 16,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "Cagliari",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T18:45Z",
-    "league": "Serie A",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "4-1",
-     "opp": "Monza",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "1-0",
-     "opp": "Real Betis",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-1",
-     "opp": "Juventus",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "AC Milan",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-1",
-     "opp": "Karlsruher SC",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-3",
-     "opp": "Bologna",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    }
-   ],
-   "thin": false,
-   "friendlies": 4
-  },
-  {
-   "team": "Juventus",
-   "no_run": false,
-   "league": "Serie A",
-   "played": 18,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "AC Milan",
-    "date": "2026-09-06",
-    "kickoff": "2026-09-06T18:45Z",
-    "league": "Serie A",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-0",
-     "opp": "Frosinone",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "2-0",
-     "opp": "Palermo",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-2",
-     "opp": "Internazionale",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Chelsea",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-0",
-     "opp": "Nice",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Standard Liege",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "thin": false,
-   "friendlies": 5
-  },
-  {
-   "team": "Napoli",
-   "no_run": false,
-   "league": "Serie A",
-   "played": 14,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "Como",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T16:30Z",
-    "league": "Serie A",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "2-0",
-     "opp": "Genoa",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "6-2",
-     "opp": "Aris",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Celta Vigo",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Udinese",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "3-0",
-     "opp": "Pisa",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "2-3",
-     "opp": "Bologna",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    }
-   ],
-   "thin": false,
-   "friendlies": 2
-  },
-  {
-   "team": "Newcastle United",
-   "no_run": false,
-   "league": "Premier League",
-   "played": 19,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.2620320855614973
-    }
-   ],
-   "best_rate": 0.2620320855614973,
-   "longest": 6,
-   "next": {
-    "opp": "AFC Bournemouth",
-    "date": "2026-09-05",
-    "kickoff": "2026-09-05T11:30Z",
-    "league": "Premier League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "2-0",
-     "opp": "Tottenham Hotspur",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "2-2",
-     "opp": "Liverpool",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Strasbourg",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-2",
-     "opp": "Bayer Leverkusen",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-3",
-     "opp": "Everton",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-1",
-     "opp": "Valencia",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "thin": false,
-   "friendlies": 4
   },
   {
    "team": "Pisa",
@@ -18247,10 +18297,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
-   "best_rate": 0.32085561497326204,
+   "best_rate": 0.31016042780748665,
    "longest": 5,
    "next": {
     "opp": "Bologna",
@@ -18322,10 +18372,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
-   "best_rate": 0.32085561497326204,
+   "best_rate": 0.31016042780748665,
    "longest": 5,
    "next": null,
    "recent": [
@@ -18391,10 +18441,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.32085561497326204
+     "rate": 0.31016042780748665
     }
    ],
-   "best_rate": 0.32085561497326204,
+   "best_rate": 0.31016042780748665,
    "longest": 5,
    "next": {
     "opp": "LA Galaxy",
@@ -18451,6 +18501,375 @@
      "hit": false,
      "comp": true,
      "lg": "MLS"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Borussia Dortmund",
+   "no_run": false,
+   "league": "Bundesliga",
+   "played": 17,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    }
+   ],
+   "best_rate": 0.40106951871657753,
+   "longest": 4,
+   "next": {
+    "opp": "TSG Hoffenheim",
+    "date": "2026-09-05",
+    "kickoff": "2026-09-05T13:30Z",
+    "league": "Bundesliga",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "2-0",
+     "opp": "Hamburg SV",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Bayern Munich",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "German Supercup"
+    },
+    {
+     "s": "2-2",
+     "opp": "AS Roma",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "FC Tokyo",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Cerezo Osaka",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-2",
+     "opp": "Fortuna D\u00fcsseldorf",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": false,
+   "friendlies": 5
+  },
+  {
+   "team": "Lille",
+   "no_run": false,
+   "league": "Ligue 1",
+   "played": 16,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    }
+   ],
+   "best_rate": 0.40106951871657753,
+   "longest": 4,
+   "next": {
+    "opp": "Toulouse",
+    "date": "2026-09-03",
+    "kickoff": "2026-09-03T18:45Z",
+    "league": "Ligue 1",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "2-2",
+     "opp": "Paris Saint-Germain",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "2-0",
+     "opp": "Angers",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "1-1",
+     "opp": "Everton",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Hamburg SV",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-2",
+     "opp": "AJ Auxerre",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "1-0",
+     "opp": "AS Monaco",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Ligue 1"
+    }
+   ],
+   "thin": false,
+   "friendlies": 2
+  },
+  {
+   "team": "Nashville SC",
+   "no_run": false,
+   "league": "MLS",
+   "played": 19,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    }
+   ],
+   "best_rate": 0.40106951871657753,
+   "longest": 4,
+   "next": {
+    "opp": "FC Cincinnati",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T00:30Z",
+    "league": "MLS",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "3-2",
+     "opp": "Columbus Crew",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "4-1",
+     "opp": "Inter Miami CF",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-1",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "CF Montr\u00e9al",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Sunderland",
+   "no_run": false,
+   "league": "Premier League",
+   "played": 16,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    }
+   ],
+   "best_rate": 0.40106951871657753,
+   "longest": 4,
+   "next": {
+    "opp": "Fulham",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T13:00Z",
+    "league": "Premier League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "Ipswich Town",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Stade Rennais",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-0",
+     "opp": "Lens",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Wrexham",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Leeds United",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-4",
+     "opp": "Liverpool",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": false,
+   "friendlies": 5
+  },
+  {
+   "team": "Tondela",
+   "no_run": false,
+   "league": "Primeira Liga",
+   "played": 10,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 4,
+     "rate": 0.40106951871657753
+    }
+   ],
+   "best_rate": 0.40106951871657753,
+   "longest": 4,
+   "next": null,
+   "recent": [
+    {
+     "s": "1-3",
+     "opp": "Arouca",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Moreirense",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Casa Pia",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Sporting CP",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "C.D. Nacional",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "FC Porto",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
     }
    ],
    "thin": false,
@@ -18820,525 +19239,6 @@
    "friendlies": 1
   },
   {
-   "team": "Borussia Dortmund",
-   "no_run": false,
-   "league": "Bundesliga",
-   "played": 17,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
-    }
-   ],
-   "best_rate": 0.4117647058823529,
-   "longest": 4,
-   "next": {
-    "opp": "TSG Hoffenheim",
-    "date": "2026-09-05",
-    "kickoff": "2026-09-05T13:30Z",
-    "league": "Bundesliga",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-0",
-     "opp": "Hamburg SV",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Bayern Munich",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "German Supercup"
-    },
-    {
-     "s": "2-2",
-     "opp": "AS Roma",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "FC Tokyo",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-1",
-     "opp": "Cerezo Osaka",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-2",
-     "opp": "Fortuna D\u00fcsseldorf",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "thin": false,
-   "friendlies": 5
-  },
-  {
-   "team": "Lille",
-   "no_run": false,
-   "league": "Ligue 1",
-   "played": 16,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
-    }
-   ],
-   "best_rate": 0.4117647058823529,
-   "longest": 4,
-   "next": {
-    "opp": "Toulouse",
-    "date": "2026-09-03",
-    "kickoff": "2026-09-03T18:45Z",
-    "league": "Ligue 1",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-2",
-     "opp": "Paris Saint-Germain",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "2-0",
-     "opp": "Angers",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "1-1",
-     "opp": "Everton",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Hamburg SV",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-2",
-     "opp": "AJ Auxerre",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "1-0",
-     "opp": "AS Monaco",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Ligue 1"
-    }
-   ],
-   "thin": false,
-   "friendlies": 2
-  },
-  {
-   "team": "Nashville SC",
-   "no_run": false,
-   "league": "MLS",
-   "played": 19,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
-    }
-   ],
-   "best_rate": 0.4117647058823529,
-   "longest": 4,
-   "next": {
-    "opp": "FC Cincinnati",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T00:30Z",
-    "league": "MLS",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "3-2",
-     "opp": "Columbus Crew",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "Red Bull New York",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "4-1",
-     "opp": "Inter Miami CF",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-2",
-     "opp": "D.C. United",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "0-1",
-     "opp": "Orlando City SC",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "CF Montr\u00e9al",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "MLS"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Sunderland",
-   "no_run": false,
-   "league": "Premier League",
-   "played": 16,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
-    }
-   ],
-   "best_rate": 0.4117647058823529,
-   "longest": 4,
-   "next": {
-    "opp": "Fulham",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T13:00Z",
-    "league": "Premier League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "Ipswich Town",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "2-1",
-     "opp": "Stade Rennais",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-0",
-     "opp": "Lens",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Wrexham",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-1",
-     "opp": "Leeds United",
-     "h": true,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-4",
-     "opp": "Liverpool",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "thin": false,
-   "friendlies": 5
-  },
-  {
-   "team": "Tondela",
-   "no_run": false,
-   "league": "Primeira Liga",
-   "played": 10,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 4,
-     "rate": 0.4117647058823529
-    }
-   ],
-   "best_rate": 0.4117647058823529,
-   "longest": 4,
-   "next": null,
-   "recent": [
-    {
-     "s": "1-3",
-     "opp": "Arouca",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Moreirense",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Casa Pia",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Sporting CP",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "C.D. Nacional",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "FC Porto",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Al Fateh",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 3,
-     "rate": 0.48663101604278075
-    }
-   ],
-   "best_rate": 0.48663101604278075,
-   "longest": 3,
-   "next": {
-    "opp": "Al Taawoun",
-    "date": "2026-09-05",
-    "kickoff": "2026-09-05T15:55Z",
-    "league": "Saudi Pro League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-1",
-     "opp": "Al-Faisaly",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Al Ettifaq",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-3",
-     "opp": "Al Nassr",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-0",
-     "opp": "Al Kholood",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Al Najma",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Al Riyadh",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "Al Hazem",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 3,
-     "rate": 0.48663101604278075
-    }
-   ],
-   "best_rate": 0.48663101604278075,
-   "longest": 3,
-   "next": {
-    "opp": "Al Shabab",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T16:05Z",
-    "league": "Saudi Pro League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "2-3",
-     "opp": "Al Ittihad",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Al Diriyah",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-1",
-     "opp": "Abha",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Al Taawoun",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-2",
-     "opp": "Al Qadsiah",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-2",
-     "opp": "Al Najma",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "Cagliari",
    "no_run": false,
    "league": "Serie A",
@@ -19348,10 +19248,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.47593582887700536,
    "longest": 3,
    "next": {
     "opp": "Internazionale",
@@ -19414,231 +19314,6 @@
    "friendlies": 0
   },
   {
-   "team": "Elche",
-   "no_run": false,
-   "league": "La Liga",
-   "played": 16,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 3,
-     "rate": 0.48663101604278075
-    }
-   ],
-   "best_rate": 0.48663101604278075,
-   "longest": 3,
-   "next": {
-    "opp": "Real Sociedad",
-    "date": "2026-09-07",
-    "kickoff": "2026-09-07T19:30Z",
-    "league": "La Liga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "2-3",
-     "opp": "Racing Santander",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "0-5",
-     "opp": "Barcelona",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Deportivo",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Toulouse",
-     "h": true,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Girona",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Getafe",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
-    }
-   ],
-   "thin": false,
-   "friendlies": 1
-  },
-  {
-   "team": "FC Famalicao",
-   "no_run": false,
-   "league": "Primeira Liga",
-   "played": 13,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 3,
-     "rate": 0.48663101604278075
-    }
-   ],
-   "best_rate": 0.48663101604278075,
-   "longest": 3,
-   "next": {
-    "opp": "Gil Vicente",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T19:30Z",
-    "league": "Primeira Liga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "0-1",
-     "opp": "Santa Clara",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Maritimo",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Estoril",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Alverca",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-0",
-     "opp": "Estrela",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Benfica",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
-   "team": "FC Twente",
-   "no_run": false,
-   "league": "Eredivisie",
-   "played": 11,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 3,
-     "rate": 0.48663101604278075
-    }
-   ],
-   "best_rate": 0.48663101604278075,
-   "longest": 3,
-   "next": {
-    "opp": "SC Cambuur",
-    "date": "2026-08-30",
-    "kickoff": "2026-08-30T18:00Z",
-    "league": "Eredivisie",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "3-1",
-     "opp": "PEC Zwolle",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-1",
-     "opp": "Heerenveen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-5",
-     "opp": "PSV Eindhoven",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "4-0",
-     "opp": "Sparta Rotterdam",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "AZ Alkmaar",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-1",
-     "opp": "NEC Nijmegen",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "Lazio",
    "no_run": false,
    "league": "Serie A",
@@ -19648,10 +19323,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.47593582887700536,
    "longest": 3,
    "next": {
     "opp": "Genoa",
@@ -19723,10 +19398,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.47593582887700536,
    "longest": 3,
    "next": null,
    "recent": [
@@ -19792,10 +19467,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.47593582887700536,
    "longest": 3,
    "next": {
     "opp": "Columbus Crew",
@@ -19867,10 +19542,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.47593582887700536,
    "longest": 3,
    "next": {
     "opp": "Real Madrid",
@@ -19933,6 +19608,306 @@
    "friendlies": 3
   },
   {
+   "team": "Al Hazem",
+   "no_run": false,
+   "league": "Saudi Pro League",
+   "played": 13,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 3,
+     "rate": 0.48128342245989303
+    }
+   ],
+   "best_rate": 0.48128342245989303,
+   "longest": 3,
+   "next": {
+    "opp": "Al Shabab",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T16:05Z",
+    "league": "Saudi Pro League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "2-3",
+     "opp": "Al Ittihad",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-1",
+     "opp": "Al Diriyah",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Abha",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Al Taawoun",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Al Qadsiah",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Al Najma",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Elche",
+   "no_run": false,
+   "league": "La Liga",
+   "played": 16,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 3,
+     "rate": 0.48128342245989303
+    }
+   ],
+   "best_rate": 0.48128342245989303,
+   "longest": 3,
+   "next": {
+    "opp": "Real Sociedad",
+    "date": "2026-09-07",
+    "kickoff": "2026-09-07T19:30Z",
+    "league": "La Liga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "2-3",
+     "opp": "Racing Santander",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-5",
+     "opp": "Barcelona",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Deportivo",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Toulouse",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Girona",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Getafe",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    }
+   ],
+   "thin": false,
+   "friendlies": 1
+  },
+  {
+   "team": "FC Famalicao",
+   "no_run": false,
+   "league": "Primeira Liga",
+   "played": 13,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 3,
+     "rate": 0.48128342245989303
+    }
+   ],
+   "best_rate": 0.48128342245989303,
+   "longest": 3,
+   "next": {
+    "opp": "Gil Vicente",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T19:30Z",
+    "league": "Primeira Liga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "0-1",
+     "opp": "Santa Clara",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Maritimo",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Estoril",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Alverca",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-0",
+     "opp": "Estrela",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Benfica",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "FC Twente",
+   "no_run": false,
+   "league": "Eredivisie",
+   "played": 11,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 3,
+     "rate": 0.48128342245989303
+    }
+   ],
+   "best_rate": 0.48128342245989303,
+   "longest": 3,
+   "next": {
+    "opp": "SC Cambuur",
+    "date": "2026-08-30",
+    "kickoff": "2026-08-30T18:00Z",
+    "league": "Eredivisie",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "3-1",
+     "opp": "PEC Zwolle",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-1",
+     "opp": "Heerenveen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-5",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "4-0",
+     "opp": "Sparta Rotterdam",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "AZ Alkmaar",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-1",
+     "opp": "NEC Nijmegen",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
    "team": "VfL Wolfsburg",
    "no_run": false,
    "league": "Bundesliga",
@@ -19942,10 +19917,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.48128342245989303,
    "longest": 3,
    "next": null,
    "recent": [
@@ -20067,57 +20042,6 @@
    "friendlies": 2
   },
   {
-   "team": "Al Diriyah",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 3,
-   "runs": [
-    {
-     "key": "under25",
-     "label": "under 2.5 goals",
-     "n": 3,
-     "rate": 0.06951871657754011
-    }
-   ],
-   "best_rate": 0.06951871657754011,
-   "longest": 3,
-   "next": {
-    "opp": "Al Qadsiah",
-    "date": "2026-09-03",
-    "kickoff": "2026-09-03T18:00Z",
-    "league": "Saudi Pro League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-1",
-     "opp": "Al Kholood",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Hazem",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Al Ahli",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": true,
-   "friendlies": 0
-  },
-  {
    "team": "Troyes",
    "no_run": false,
    "league": "Ligue 1",
@@ -20127,10 +20051,10 @@
      "key": "under25",
      "label": "under 2.5 goals",
      "n": 3,
-     "rate": 0.06951871657754011
+     "rate": 0.0748663101604278
     }
    ],
-   "best_rate": 0.06951871657754011,
+   "best_rate": 0.0748663101604278,
    "longest": 3,
    "next": {
     "opp": "Strasbourg",
@@ -20196,13 +20120,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.09090909090909091,
@@ -20267,7 +20191,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.09090909090909091,
@@ -20330,7 +20254,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.09090909090909091,
@@ -20387,7 +20311,7 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.09090909090909091,
@@ -20458,7 +20382,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -20521,7 +20445,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     }
    ],
    "best_rate": 0.13368983957219252,
@@ -20584,13 +20508,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.4117647058823529
+     "rate": 0.40106951871657753
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -20655,13 +20579,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.47593582887700536
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
    "best_rate": 0.22459893048128343,
@@ -20880,6 +20804,65 @@
    "friendlies": 1
   },
   {
+   "team": "Al Diriyah",
+   "no_run": false,
+   "league": "Saudi Pro League",
+   "played": 4,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 3,
+     "rate": 0.47593582887700536
+    }
+   ],
+   "best_rate": 0.47593582887700536,
+   "longest": 3,
+   "next": {
+    "opp": "Al Qadsiah",
+    "date": "2026-09-03",
+    "kickoff": "2026-09-03T18:00Z",
+    "league": "Saudi Pro League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "3-0",
+     "opp": "Al Ettifaq",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al Kholood",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Hazem",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "0-1",
+     "opp": "Al Ahli",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": true,
+   "friendlies": 0
+  },
+  {
    "team": "Al-Faisaly",
    "no_run": false,
    "league": "Saudi Pro League",
@@ -20889,10 +20872,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 3,
-     "rate": 0.48663101604278075
+     "rate": 0.48128342245989303
     }
    ],
-   "best_rate": 0.48663101604278075,
+   "best_rate": 0.48128342245989303,
    "longest": 3,
    "next": {
     "opp": "Al Qadsiah",
@@ -21061,6 +21044,74 @@
    "friendlies": 0
   },
   {
+   "team": "Al Ettifaq",
+   "no_run": true,
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [],
+   "best_rate": 1.0,
+   "longest": 0,
+   "next": {
+    "opp": "Abha",
+    "date": "2026-09-04",
+    "kickoff": "2026-09-04T16:00Z",
+    "league": "Saudi Pro League",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "0-3",
+     "opp": "Al Diriyah",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-3",
+     "opp": "Al Nassr",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Fateh",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "4-2",
+     "opp": "Al Riyadh",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Neom SC",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-3",
+     "opp": "Al Ittihad",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
    "team": "Al Fayha",
    "no_run": true,
    "league": "Saudi Pro League",
@@ -21119,6 +21170,74 @@
     {
      "s": "0-3",
      "opp": "Damac",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
+   "team": "Al Ittihad",
+   "no_run": true,
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [],
+   "best_rate": 1.0,
+   "longest": 0,
+   "next": {
+    "opp": "Al Nassr",
+    "date": "2026-09-05",
+    "kickoff": "2026-09-05T18:00Z",
+    "league": "Saudi Pro League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "0-0",
+     "opp": "Al Fateh",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "3-2",
+     "opp": "Al Hazem",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Qadsiah",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al Kholood",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-5",
+     "opp": "Al Qadsiah",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-3",
+     "opp": "Al Shabab",
      "h": false,
      "hit": false,
      "comp": true,
@@ -32638,10 +32757,10 @@
    "6": 0.0214
   },
   "scoring1": {
-   "3": 0.4866,
-   "4": 0.4118,
-   "5": 0.3209,
-   "6": 0.262
+   "3": 0.4759,
+   "4": 0.4011,
+   "5": 0.3102,
+   "6": 0.2513
   },
   "blanked": {
    "3": 0.016,
@@ -32656,7 +32775,7 @@
    "6": 0.0
   },
   "porous": {
-   "3": 0.4866,
+   "3": 0.4813,
    "4": 0.4064,
    "5": 0.2995,
    "6": 0.262
@@ -32680,7 +32799,7 @@
    "6": 0.0642
   },
   "under25": {
-   "3": 0.0695,
+   "3": 0.0749,
    "4": 0.0321,
    "5": 0.0107,
    "6": 0.0053
