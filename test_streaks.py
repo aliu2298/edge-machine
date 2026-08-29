@@ -187,6 +187,46 @@ check("id ignores run lengths", a, b)
 c = T.lead_id(dict(lead, headline="Over 2.5 goals"))
 check("id distinguishes different claims", a != c, True)
 
+print("\n== find_leads: a match already under way is not a lead ==")
+now = datetime.datetime.now(datetime.timezone.utc)
+rows = []
+for i in range(6):
+    d = f"2026-06-{i+1:02d}"
+    rows.append(fx(d, "Aces", f"opp{i}", 3, 0))
+    rows.append(fx(d, f"foe{i}", "Bees", 2, 0))
+# same UTC DAY as now, but kicked off two hours ago — the date-only filter kept these
+started = fx(now.date().isoformat(), "Aces", "Bees", None, None, played=False)
+started["kickoff"] = (now - datetime.timedelta(hours=2)).strftime("%Y-%m-%dT%H:%MZ")
+st = B.team_streaks(B.team_games(rows + [started]))
+check("no lead on an in-progress match",
+      len(B.find_leads(rows + [started], st, B.base_rates(st))), 0)
+# the same fixture two hours from now IS a lead
+soon = dict(started, kickoff=(now + datetime.timedelta(hours=2)).strftime("%Y-%m-%dT%H:%MZ"))
+check("a match two hours out is a lead",
+      len(B.find_leads(rows + [soon], st, B.base_rates(st))) > 0, True)
+
+print("\n== leads are ordered by kickoff ==")
+rows2 = list(rows)
+for h, off in (("Zulu", 50), ("Alpha", 10), ("Mike", 30)):
+    for i in range(6):
+        rows2.append(fx(f"2026-06-{i+1:02d}", h, f"q{h}{i}", 2, 2))
+mk = []
+for h, off in (("Zulu", 50), ("Alpha", 10), ("Mike", 30)):
+    g = fx((now + datetime.timedelta(hours=off)).date().isoformat(), h, "Bees",
+           None, None, played=False)
+    g["kickoff"] = (now + datetime.timedelta(hours=off)).strftime("%Y-%m-%dT%H:%MZ")
+    mk.append(g)
+st2 = B.team_streaks(B.team_games(rows2))
+got = B.find_leads(rows2 + mk, st2, B.base_rates(st2))
+kos = [l["kickoff"] for l in got]
+check("kickoffs ascending", kos, sorted(kos))
+
+print("\n== kickoff_dt ==")
+check("parses ESPN Z form",
+      B.kickoff_dt({"kickoff": "2026-08-30T10:15Z"}).hour, 10)
+check("None when absent", B.kickoff_dt({}), None)
+check("None when unparseable", B.kickoff_dt({"kickoff": "not-a-date"}), None)
+
 print("\n== live-data consistency ==")
 try:
     import streaks_fetch

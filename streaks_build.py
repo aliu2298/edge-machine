@@ -226,12 +226,34 @@ def kalshi_link(f):
         return None
 
 
+def kickoff_dt(f):
+    """Fixture kickoff as an aware datetime, or None. ESPN sends '2026-08-30T10:15Z'."""
+    ko = f.get("kickoff")
+    if not ko:
+        return None
+    try:
+        return datetime.datetime.fromisoformat(ko.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
 def find_leads(fixtures, streaks, rates):
     """Upcoming fixtures where both sides' runs point the same way."""
     leads = []
+    now = datetime.datetime.now(datetime.timezone.utc)
     today = utc_today().isoformat()
     for f in fixtures:
-        if f["played"] or (f["date"] or "") < today:
+        if f["played"]:
+            continue
+        # Drop anything already under way. Comparing DATES was not enough: a match that
+        # kicked off at 18:00Z is still "today" until midnight, so an evening build would
+        # keep listing games in progress as upcoming leads. Compare the instant, and fall
+        # back to the date only when a fixture carries no kickoff time.
+        ko = kickoff_dt(f)
+        if ko is not None:
+            if ko <= now:
+                continue
+        elif (f["date"] or "") < today:
             continue
         # Friendlies feed FORM but are never themselves a lead — a preseason kickabout is
         # not a fixture to have a read on.
@@ -277,10 +299,12 @@ def find_leads(fixtures, streaks, rates):
                     "b_recent": form_seq(sb_["recent"], rb),
                     "kalshi": kalshi_link(f),
                 })
-    # RAREST first, not longest. The question is "who is on an unusual run", and a
-    # 6-game run that a quarter of the league is also on answers it worse than a shorter
-    # one almost nobody has. Length breaks ties.
-    leads.sort(key=lambda x: (x["base_rate"], -x["strength"], x["date"]))
+    # SOONEST first: the board is read to see what is coming up, so kickoff order is the
+    # useful order. Sorted on the kickoff INSTANT, not the date string — a fixture at
+    # 01:30Z belongs to the previous evening in the Americas, and ordering by the UTC date
+    # would file it a day late relative to how the card renders it.
+    # Rarity still decides ties, so the more unusual read leads a shared kickoff.
+    leads.sort(key=lambda x: (x["kickoff"] or x["date"], x["base_rate"], -x["strength"]))
     # One card per team-per-direction-per-fixture. Without this, `scoring+leaky` and
     # `scoring+porous` both fire on the same fixture — conceding 2+ implies conceding 1+,
     # so the porous version is strictly the weaker restatement of the same lead. Sorting
@@ -331,11 +355,22 @@ def team_rows(streaks, by_team, fixtures, rates):
             league_of[team] = collections.Counter(
                 g["league"] for g in games).most_common(1)[0][0]
 
-    # next scheduled fixture per team, so a run has somewhere to point
+    # Next fixture per team, so a run has somewhere to point. Filtered and ordered on the
+    # kickoff INSTANT: a date-only comparison kept matches already in progress, and a
+    # date-only sort left same-day fixtures in arbitrary order, so "next" could name the
+    # later of two games on the same day.
+    now = datetime.datetime.now(datetime.timezone.utc)
     today = utc_today().isoformat()
+
+    def upcoming(x):
+        if x["played"]:
+            return False
+        ko = kickoff_dt(x)
+        return ko > now if ko is not None else (x["date"] or "") >= today
+
     nxt = {}
-    for f in sorted((x for x in fixtures if not x["played"] and (x["date"] or "") >= today),
-                    key=lambda x: x["date"]):
+    for f in sorted((x for x in fixtures if upcoming(x)),
+                    key=lambda x: (x.get("kickoff") or x["date"])):
         for t, opp in ((f["home"], f["away"]), (f["away"], f["home"])):
             nxt.setdefault(t, {"opp": opp, "date": f["date"], "kickoff": f["kickoff"],
                                "league": f["league"], "home": t == f["home"]})
@@ -471,13 +506,27 @@ padding:2px 8px;border:1px solid;white-space:nowrap}}
 border-radius:5px;padding:2px 6px;background:#0c1017;border:1px solid var(--bd);
 color:var(--mut);cursor:default}}
 .sc.hit{{color:var(--fg);border-color:#3fb97044;background:#3fb9700f}}
-/* preseason/friendly result — same data, visibly weaker evidence */
-.sc.fr{{border-style:dashed;opacity:.75}}
+/* Preseason/friendly result. Marked by a DASHED border only — an opacity knock-back on
+   top of `.hit` made a friendly that is part of the run read as though it were outside
+   it, which contradicted both the run length and the note underneath. */
+.sc.fr{{border-style:dashed}}
 .kbtn{{font-size:11px;font-weight:700;color:var(--acc);text-decoration:none;
 border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;
 padding:3px 10px;white-space:nowrap}}
 .kbtn:hover{{background:#7aa2f72a}}
 .frn{{font-size:11px;color:var(--warn);margin:-4px 0 9px}}
+/* date grouping + countdown */
+.dhd{{display:flex;align-items:baseline;gap:9px;margin:22px 0 9px;
+padding-bottom:6px;border-bottom:1px solid var(--bd)}}
+.dhd:first-child{{margin-top:4px}}
+.dday{{font-size:12.5px;font-weight:800;letter-spacing:.03em;color:var(--fg)}}
+.drel{{font-size:11px;color:var(--mut)}}
+.dcnt{{font-size:11px;color:var(--mut);margin-left:auto;font-variant-numeric:tabular-nums}}
+.cd{{font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;
+border-radius:999px;padding:3px 9px;border:1px solid;white-space:nowrap}}
+.cd.soon{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
+.cd.later{{color:var(--mut);border-color:var(--bd)}}
+.cd.live{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
 /* the lead — its own section, after the evidence that supports it */
 .lead{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
 padding:11px 15px;background:#0c1017;border-top:1px solid var(--bd)}}
@@ -587,6 +636,46 @@ function when(iso) {{
   return d.toLocaleString([], {{weekday:'short', month:'short', day:'numeric',
                                hour:'numeric', minute:'2-digit'}});
 }}
+// Everything below works off the kickoff INSTANT and renders in the viewer's timezone.
+// The stored `date` field is the UTC date, which is a different day from local for any
+// late-UTC kickoff (a 01:30Z match is the previous evening in the Americas) — grouping on
+// it would print a header that disagreed with the card underneath it.
+function localDayKey(iso) {{
+  const d = new Date(iso);
+  if (isNaN(d)) return 'unknown';
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0')
+       + '-' + String(d.getDate()).padStart(2,'0');
+}}
+function dayLabel(iso) {{
+  const d = new Date(iso);
+  if (isNaN(d)) return 'Date unknown';
+  const now = new Date();
+  const midnight = x => new Date(x.getFullYear(), x.getMonth(), x.getDate());
+  const days = Math.round((midnight(d) - midnight(now)) / 86400000);
+  const nice = d.toLocaleDateString([], {{weekday:'long', month:'short', day:'numeric'}});
+  if (days === 0) return ['Today', nice];
+  if (days === 1) return ['Tomorrow', nice];
+  return [nice, days > 0 ? `in ${{days}} days` : `${{-days}} days ago`];
+}}
+/** Countdown to kickoff, or the state once it has started. */
+function countdown(iso) {{
+  const d = new Date(iso);
+  if (isNaN(d)) return ['later', ''];
+  let ms = d - new Date();
+  if (ms <= 0) {{
+    // Roughly two hours covers a match plus stoppages; after that it is simply done.
+    return ms > -2.5*3600*1000 ? ['live', 'kicked off'] : ['live', 'played'];
+  }}
+  const mins = Math.floor(ms / 60000);
+  const days = Math.floor(mins / 1440);
+  const hrs  = Math.floor((mins % 1440) / 60);
+  const m    = mins % 60;
+  let txt;
+  if (days > 0)      txt = `in ${{days}}d ${{hrs}}h`;
+  else if (hrs > 0)  txt = `in ${{hrs}}h ${{String(m).padStart(2,'0')}}m`;
+  else               txt = `in ${{m}}m`;
+  return [mins <= 720 ? 'soon' : 'later', txt];   // highlight inside 12 hours
+}}
 // Recent results as compact pills, newest LEFT. Games inside the run are lit; the rest
 // are dimmed, so the streak is visible at a glance instead of spelled out in prose.
 function seq(games) {{
@@ -608,9 +697,11 @@ function leg(name, label, n, side, games) {{
 }}
 function card(l) {{
   const [cls, txt] = rarity(l.base_rate);
+  const [cdCls, cdTxt] = countdown(l.kickoff);
   return `<div class="card">
     <div class="chd">
       <span class="fx">${{esc(l.match)}}</span>
+      <span class="cd ${{cdCls}}" data-ko="${{esc(l.kickoff || '')}}">${{esc(cdTxt)}}</span>
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
       ${{l.kalshi ? `<a class="kbtn" href="${{esc(l.kalshi)}}" target="_blank"
          rel="noopener">Kalshi ↗</a>` : ''}}
@@ -635,7 +726,10 @@ function teamRow(t) {{
   const n = t.next
     ? `<div class="tnx">Next: <b>${{esc(t.next.home ? 'vs ' + t.next.opp
                                                    : 'away to ' + t.next.opp)}}</b>`
-      + ` · ${{esc(when(t.next.kickoff) || t.next.date)}} · ${{esc(t.next.league)}}</div>`
+      + ` · ${{esc(when(t.next.kickoff) || t.next.date)}}`
+      + ` · <span class="nx" data-ko="${{esc(t.next.kickoff || '')}}">${{
+          esc(countdown(t.next.kickoff)[1])}}</span>`
+      + ` · ${{esc(t.next.league)}}</div>`
     : `<div class="tnx">No fixture scheduled in the next 14 days</div>`;
   return `<div class="trow">
     <div class="th"><span class="tn">${{esc(t.team)}}</span>
@@ -738,7 +832,22 @@ function render() {{
     total = LEADS.length;
     rows = LEADS.filter(l => (!league || l.league === league) &&
                              (!term || l.match.toLowerCase().includes(term)));
-    html_ = rows.map(card).join('');
+    // Group under local-day headers. LEADS already arrives in kickoff order, so walking
+    // it and emitting a header whenever the local day changes preserves that order.
+    let out = '', lastDay = null;
+    for (const l of rows) {{
+      const k = localDayKey(l.kickoff);
+      if (k !== lastDay) {{
+        lastDay = k;
+        const [main, sub] = dayLabel(l.kickoff);
+        const sameDay = rows.filter(x => localDayKey(x.kickoff) === k).length;
+        out += `<div class="dhd"><span class="dday">${{esc(main)}}</span>`
+             + `<span class="drel">${{esc(sub)}}</span>`
+             + `<span class="dcnt">${{sameDay}} lead${{sameDay === 1 ? '' : 's'}}</span></div>`;
+      }}
+      out += card(l);
+    }}
+    html_ = out;
     empty.textContent = league
       ? 'No confluences in ' + league + ' right now — both sides of a fixture have to be '
         + 'on matching runs, which is genuinely rare. Try "All teams on a run".'
@@ -776,6 +885,22 @@ for (const b of document.querySelectorAll('.tb')) {{
 }}
 q.addEventListener('input', render);
 render();
+
+// Keep countdowns honest without re-rendering the whole list: retarget the chips in place
+// every 30s. A page left open overnight would otherwise still claim a match is hours away.
+setInterval(() => {{
+  for (const el of document.querySelectorAll('.cd[data-ko]')) {{
+    const [cls, txt] = countdown(el.dataset.ko);
+    if (el.textContent !== txt) {{
+      el.textContent = txt;
+      el.className = 'cd ' + cls;
+    }}
+  }}
+  for (const el of document.querySelectorAll('.nx[data-ko]')) {{
+    const [, txt] = countdown(el.dataset.ko);
+    el.textContent = txt;
+  }}
+}}, 30000);
 </script></body></html>"""
 
 
