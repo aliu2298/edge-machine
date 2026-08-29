@@ -32,6 +32,7 @@ Usage:  python3 streaks_build.py [--force]   →  public_site/streaks.html
 import json, os, sys, html, datetime, collections
 
 import streaks_fetch
+import streaks_track
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(ROOT, "public_site")
@@ -60,22 +61,35 @@ STREAKS = [
 STREAK_BY_KEY = {s[0]: s for s in STREAKS}
 
 # A lead = team-A run + team-B run that point the same way.
-# (a_key, b_key, headline, why) — `why` is rendered as the reasoning line on the card.
+# (a_key, b_key, headline, why, bet) — `why` is the reasoning line; `bet` is the
+# machine-checkable claim, so streaks_track.py can grade the lead against the final score
+# without a human deciding what the card "meant".
+#   team_gte  — the subject team scores >= n         (subject: "a" or "b")
+#   team_eq   — the subject team scores exactly n
+#   btts      — both teams score
+#   total_gte / total_lte — combined goals
 PAIRINGS = [
     ("scoring", "leaky",    "{a} to score 2+",
-     "{a} have scored 2+ in {ra} straight; {b} have conceded 2+ in {rb} straight."),
+     "{a} have scored 2+ in {ra} straight; {b} have conceded 2+ in {rb} straight.",
+     {"kind": "team_gte", "subject": "a", "n": 2}),
     ("scoring", "porous",   "{a} to score",
-     "{a} have scored 2+ in {ra} straight; {b} have conceded in {rb} straight."),
+     "{a} have scored 2+ in {ra} straight; {b} have conceded in {rb} straight.",
+     {"kind": "team_gte", "subject": "a", "n": 1}),
     ("btts",    "btts",     "Both teams to score",
-     "Both sides are on a BTTS run — {a} {ra} straight, {b} {rb} straight."),
+     "Both sides are on a BTTS run — {a} {ra} straight, {b} {rb} straight.",
+     {"kind": "btts"}),
     ("over25",  "over25",   "Over 2.5 goals",
-     "{a} have gone over 2.5 in {ra} straight; {b} in {rb} straight."),
+     "{a} have gone over 2.5 in {ra} straight; {b} in {rb} straight.",
+     {"kind": "total_gte", "n": 3}),
     ("under25", "under25",  "Under 2.5 goals",
-     "{a} have gone under 2.5 in {ra} straight; {b} in {rb} straight."),
+     "{a} have gone under 2.5 in {ra} straight; {b} in {rb} straight.",
+     {"kind": "total_lte", "n": 2}),
     ("solid",   "blanked",  "{b} to fail to score",
-     "{a} have kept {ra} straight clean sheets; {b} have failed to score in {rb} straight."),
+     "{a} have kept {ra} straight clean sheets; {b} have failed to score in {rb} straight.",
+     {"kind": "team_eq", "subject": "b", "n": 0}),
     ("blanked", "solid",    "{a} to fail to score",
-     "{a} have failed to score in {ra} straight; {b} have kept {rb} straight clean sheets."),
+     "{a} have failed to score in {ra} straight; {b} have kept {rb} straight clean sheets.",
+     {"kind": "team_eq", "subject": "a", "n": 0}),
 ]
 
 
@@ -172,7 +186,7 @@ def find_leads(fixtures, streaks, rates):
         sh, sa = streaks.get(home), streaks.get(away)
         if not sh or not sa:
             continue
-        for a_key, b_key, headline, why in PAIRINGS:
+        for a_key, b_key, headline, why, bet in PAIRINGS:
             # try both orientations: home as "A", then away as "A"
             for (a, b, sa_, sb_) in ((home, away, sh, sa), (away, home, sa, sh)):
                 ra = sa_["runs"].get(a_key, 0)
@@ -194,6 +208,10 @@ def find_leads(fixtures, streaks, rates):
                     "a_label": STREAK_BY_KEY[a_key][1], "b_label": STREAK_BY_KEY[b_key][1],
                     "strength": ra + rb,
                     "base_rate": rate,
+                    # resolve the bet's subject to a concrete team now, so grading never
+                    # has to re-derive which side "a" referred to
+                    "bet": dict(bet, team=(a if bet.get("subject") == "a" else b))
+                            if bet.get("subject") else dict(bet),
                     "a_recent": form_seq(sa_["recent"], ra),
                     "b_recent": form_seq(sb_["recent"], rb),
                 })
@@ -274,9 +292,10 @@ def team_rows(streaks, by_team, fixtures, rates):
 
 
 # ---------------------------------------------------------------- rendering
-def page_html(leads, teams, meta, leagues, now):
+def page_html(leads, teams, track, meta, leagues, now):
     payload = json.dumps(leads).replace("</", "<\\/")
     teams_payload = json.dumps(teams).replace("</", "<\\/")
+    track_payload = json.dumps(track).replace("</", "<\\/")
     league_btns = "".join(
         f'<button class="lg" data-lg="{esc(l)}">{esc(l)}</button>' for l in leagues)
     return f"""<!doctype html><html lang="en"><head>
@@ -374,6 +393,27 @@ border:1px solid;margin-left:auto;white-space:nowrap}}
 .rare.hot{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
 .rare.mid{{color:var(--mut);border-color:var(--bd)}}
 .rare.common{{color:var(--neg);border-color:#e06c7544;background:#e06c750f}}
+/* --- track record --- */
+.tr-note{{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
+border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}}
+.tr-note b{{color:var(--fg);font-weight:600}}
+.tiles{{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}}
+.tile{{flex:1;min-width:104px;background:var(--card);border:1px solid var(--bd);
+border-radius:10px;padding:11px 13px}}
+.tile b{{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}}
+.tile span{{font-size:11px;color:var(--mut)}}
+.tbl{{background:var(--card);border:1px solid var(--bd);border-radius:11px;
+overflow-x:auto;margin-bottom:13px}}
+table{{width:100%;border-collapse:collapse;font-size:12.5px}}
+th{{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:nowrap}}
+td{{padding:9px 11px;border-bottom:1px solid #1a1f2b;white-space:nowrap}}
+tr:last-child td{{border-bottom:none}}
+.num{{font-variant-numeric:tabular-nums;text-align:right}}
+.sig{{font-size:9.5px;font-weight:800;letter-spacing:.05em;border-radius:999px;
+padding:2px 7px;border:1px solid}}
+.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
+.sig.n{{color:var(--mut);border-color:var(--bd)}}
 .empty{{color:var(--mut);padding:26px 0;text-align:center;line-height:1.6}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:560px){{
@@ -409,6 +449,7 @@ advice.</p>
   <div class="tabs">
     <button class="tb on" data-tab="leads">Leads</button>
     <button class="tb" data-tab="teams">All teams on a run</button>
+    <button class="tb" data-tab="track">Track record</button>
   </div>
   <div class="lgs">
     <button class="lg on" data-lg="">All leagues</button>{league_btns}
@@ -427,6 +468,7 @@ advice.</p>
 <script>
 const LEADS = {payload};
 const TEAMS = {teams_payload};
+const TRACK = {track_payload};
 const list = document.getElementById('list');
 const cnt  = document.getElementById('cnt');
 const empty= document.getElementById('empty');
@@ -500,9 +542,91 @@ function teamRow(t) {{
     </div>
   </div>`;
 }}
+const BETNAME = {{
+  'btts': 'Both teams to score', 'total_gte:3': 'Over 2.5 goals',
+  'total_lte:2': 'Under 2.5 goals', 'team_gte:2': 'Team to score 2+',
+  'team_gte:1': 'Team to score', 'team_eq:0': 'Team to fail to score'
+}};
+function resultTable(rows) {{
+  return `<div class="tbl"><table>
+    <tr><th>Bet</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+        <th class="num">baseline</th><th class="num">lift</th><th></th></tr>
+    ${{rows.map(r => `<tr>
+      <td>${{esc(BETNAME[r.kind] || r.kind)}}</td>
+      <td class="num">${{r.n}}</td>
+      <td class="num">${{r.hits}}</td>
+      <td class="num">${{Math.round(r.rate*100)}}%</td>
+      <td class="num mut" title="league-adjusted${{r.global_base != null
+        ? '; global ' + Math.round(r.global_base*100) + '%' : ''}}">${{
+        r.base == null ? '—' : Math.round(r.base*100) + '%'}}</td>
+      <td class="num ${{r.lift == null ? '' : (r.lift >= 0 ? 'pos' : 'neg')}}">${{
+        r.lift == null ? '—' : (r.lift >= 0 ? '+' : '') + (r.lift*100).toFixed(1) + 'pp'}}</td>
+      <td><span class="sig ${{r.significant ? 'y' : 'n'}}">${{
+        r.significant ? 'SIGNIFICANT' : 'not sig'}}</span></td>
+    </tr>`).join('')}}</table></div>`;
+}}
+function trackView() {{
+  const t = TRACK;
+  const note = `<div class="tr-note">This board carries no odds, so this is <b>not</b>
+    profit and cannot be. What it measures is whether flagging a fixture beats not flagging
+    it: each lead's hit rate against the same outcome's <b>league-adjusted baseline</b>.
+    The adjustment matters — BTTS leads cluster in high-scoring leagues, and comparing them
+    to a global rate would credit the streak for what is really the schedule.
+    <b>Lift is the number that counts</b>; a hit rate alone is not evidence, and a lift is
+    only called significant when its 95% interval clears the baseline.</div>`;
+
+  let out = note;
+
+  // Backtest first: it is the only section with a real sample early on.
+  if (t.backtest_n) {{
+    out += `<h2>Backtest · same rules replayed over past fixtures</h2>`
+        + `<div class="tr-note">Walk-forward over ${{t.population_fixtures}} played
+           fixtures: for each one, form is computed <b>only from games before it</b>, then
+           graded on the actual result. No lookahead. ${{
+             t.backtest_any_sig
+               ? 'At least one bet type clears its baseline — but several are tested at once, so some separation is expected by chance.'
+               : '<b>No bet type clears its baseline.</b> On this sample the confluence is not distinguishable from the population — no measurable edge yet.'}}</div>`
+        + `<div class="tiles">
+             <div class="tile"><b>${{t.backtest_n}}</b><span>Leads replayed</span></div>
+             <div class="tile"><b>${{Math.round(t.backtest_rate*100)}}%</b><span>Hit rate</span></div>
+           </div>`
+        + resultTable(t.backtest_rows);
+  }}
+
+  out += `<h2>Live ledger · leads logged when published</h2>`;
+  if (!t.graded) {{
+    out += `<div class="empty">Nothing graded yet — ${{t.pending}} lead${{
+      t.pending === 1 ? '' : 's'}} pending.<br>They settle automatically as their fixtures
+      are played.</div>`;
+    return out;
+  }}
+  out += `<div class="tiles">
+    <div class="tile"><b>${{t.graded}}</b><span>Graded</span></div>
+    <div class="tile"><b>${{Math.round(t.overall_rate*100)}}%</b><span>Hit rate</span></div>
+    <div class="tile"><b>${{t.pending}}</b><span>Pending</span></div>
+    <div class="tile"><b>${{t.void}}</b><span>Void</span></div>
+  </div>` + resultTable(t.rows);
+  if (t.recent.length) {{
+    out += `<h2>Recently graded</h2><div class="tbl"><table>
+      <tr><th>Date</th><th>Match</th><th>Lead</th><th class="num">Final</th><th></th></tr>
+      ${{t.recent.map(e => `<tr>
+        <td class="mut">${{esc(e.date)}}</td><td>${{esc(e.match)}}</td>
+        <td>${{esc(e.headline)}}</td><td class="num">${{esc(e.final || '—')}}</td>
+        <td><span class="sig ${{e.status === 'hit' ? 'y' : 'n'}}">${{
+          esc(e.status.toUpperCase())}}</span></td></tr>`).join('')}}
+      </table></div>`;
+  }}
+  return out;
+}}
 function render() {{
   const term = q.value.trim().toLowerCase();
   let rows, total, html_;
+  if (tab === 'track') {{
+    list.innerHTML = trackView();
+    cnt.textContent = TRACK.graded + ' graded';
+    empty.style.display = 'none';
+    return;
+  }}
   if (tab === 'leads') {{
     total = LEADS.length;
     rows = LEADS.filter(l => (!league || l.league === league) &&
@@ -536,6 +660,10 @@ for (const b of document.querySelectorAll('.tb')) {{
     document.querySelectorAll('.tb').forEach(x => x.classList.remove('on'));
     b.classList.add('on');
     tab = b.dataset.tab;
+    // the league/team filters describe fixtures, which the track view does not list
+    const hide = tab === 'track' ? 'none' : '';
+    document.querySelector('.lgs').style.display = hide;
+    document.querySelector('.srch').style.display = hide ? 'none' : 'flex';
     render();
   }});
 }}
@@ -554,6 +682,16 @@ def build(force=False):
     leads = find_leads(fixtures, streaks, rates)[:TOP_LEADS]
     teams = team_rows(streaks, by_team, fixtures, rates)
 
+    # Log what is being published and settle anything now finished. Recording happens at
+    # publish time so the ledger holds the claim as it was actually made, not a later
+    # rationalisation of it.
+    ledger, added = streaks_track.record(leads)
+    ledger, newly_graded = streaks_track.grade(fixtures, ledger)
+    streaks_track.save(ledger)
+    track = streaks_track.report(fixtures, ledger)
+    print(f"  ledger: +{added} new, {newly_graded} graded now, "
+          f"{track['graded']} settled / {track['pending']} pending")
+
     # League buttons must cover BOTH views, so draw them from the teams index too —
     # scoping them to fixtures alone hid every league that had runs but no confluence.
     leagues = sorted({f["league"] for f in fixtures if not f["played"]} |
@@ -565,7 +703,7 @@ def build(force=False):
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "streaks.html")
     with open(out, "w") as f:
-        f.write(page_html(leads, teams, meta, leagues, now))
+        f.write(page_html(leads, teams, track, meta, leagues, now))
 
     # machine-readable companion, same shape the page consumes
     with open(DATA_OUT, "w") as f:

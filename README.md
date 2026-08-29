@@ -68,6 +68,8 @@ the Mac is on. The local tracker is where picks get made; the mirror is how they
 | `export_public.py` | Renders the sports board; mirrors the predictions table to JSON. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 11 leagues from ESPN. |
 | `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |
+| `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
+| `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
 | `health.py` | Warn-only guardrails: stuck picks, missing venue links. |
 | `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
 
@@ -109,6 +111,30 @@ Two design choices worth knowing:
 Confluences are genuinely rare — whole leagues can have none on a given day. The **All teams
 on a run** tab exists for that: it browses every tracked team's current runs directly,
 rather than showing an empty league.
+
+### Tracking and grading
+
+Every lead is logged to `data/streak_leads.json` when it is published and graded once its
+fixture is played — automatically, in the same daily job. Each pairing carries a
+machine-checkable claim (`{"kind": "team_gte", "n": 2, ...}`) so grading never depends on
+someone deciding after the fact what a card "meant". A lead that cannot be judged is voided,
+never scored as a miss.
+
+**What this measures is information, not profit.** The board carries no odds, so ROI is
+unmeasurable — and a hit rate alone says nothing ("over 2.5 landed 60%" is meaningless
+without a reference). Each lead is therefore compared against the **league-adjusted base
+rate** for that same outcome. The adjustment is not cosmetic: BTTS leads cluster in
+high-scoring leagues, and on the backtest a global baseline showed a +17.1pp BTTS lift that
+fell to +10.7pp — and lost significance — once each lead was compared against its own
+league. **Lift is the number that counts.**
+
+`streaks_backtest.py` replays the same rules over already-played fixtures, computing each
+side's form only from games *before* the fixture in question (no lookahead). It exists so
+the idea is falsifiable today rather than in a month, and so the grader itself is verified.
+
+**Current state (Aug 2026, n=135 backtested): no bet type's confidence interval clears its
+league-adjusted baseline.** Lifts are mostly positive but none are distinguishable from
+chance at this sample. No edge is claimed.
 
 Leads are research to look at. Nothing here places or stages a bet.
 
