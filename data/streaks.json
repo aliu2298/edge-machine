@@ -1,5 +1,5 @@
 {
- "built_at": "2026-08-29T02:17:06+00:00",
+ "built_at": "2026-08-29T02:17:43+00:00",
  "teams_tracked": 180,
  "leads": [
   {
@@ -207,6 +207,106 @@
    ]
   },
   {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T18:45Z",
+   "league": "Ligue 1",
+   "match": "Le Havre AC v Angers",
+   "home": "Le Havre AC",
+   "away": "Angers",
+   "headline": "Under 2.5 goals",
+   "why": "Le Havre AC have gone under 2.5 in 4 straight; Angers in 3 straight.",
+   "a": "Le Havre AC",
+   "b": "Angers",
+   "a_run": 4,
+   "b_run": 3,
+   "a_key": "under25",
+   "b_key": "under25",
+   "a_label": "under 2.5 goals",
+   "b_label": "under 2.5 goals",
+   "strength": 7,
+   "base_rate": 0.05555555555555555,
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "0-1",
+     "opp": "AS Monaco",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-0",
+     "opp": "Lorient",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "0-1",
+     "opp": "Marseille",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Lille",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-4",
+     "opp": "Metz",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "1-1",
+     "opp": "Angers",
+     "h": false,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-2",
+     "opp": "Lille",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Brest",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Strasbourg",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-3",
+     "opp": "AJ Auxerre",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "0-3",
+     "opp": "Paris Saint-Germain",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "1-1",
+     "opp": "Le Havre AC",
+     "h": true,
+     "hit": false
+    }
+   ]
+  },
+  {
    "date": "2026-09-04",
    "kickoff": "2026-09-04T18:30Z",
    "league": "Bundesliga",
@@ -301,6 +401,105 @@
      "s": "3-1",
      "opp": "Werder Bremen",
      "h": true,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "date": "2026-09-13",
+   "kickoff": "2026-09-13T01:30Z",
+   "league": "MLS",
+   "match": "Real Salt Lake v New York City FC",
+   "home": "Real Salt Lake",
+   "away": "New York City FC",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 Real Salt Lake 6 straight, New York City FC 6 straight.",
+   "a": "Real Salt Lake",
+   "b": "New York City FC",
+   "a_run": 6,
+   "b_run": 6,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 12,
+   "base_rate": 0.08333333333333333,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "1-2",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-4",
+     "opp": "FC Dallas",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Minnesota United FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "St. Louis CITY SC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Portland Timbers",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-3",
+     "opp": "LAFC",
+     "h": false,
+     "hit": true
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-1",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "FC Cincinnati",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-3",
+     "opp": "Philadelphia Union",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Toronto FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "3-1",
+     "opp": "Chicago Fire FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "Columbus Crew",
+     "h": false,
      "hit": true
     }
    ]
@@ -1414,6 +1613,106 @@
    ]
   },
   {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T16:45Z",
+   "league": "Eredivisie",
+   "match": "Go Ahead Eagles v FC Groningen",
+   "home": "Go Ahead Eagles",
+   "away": "FC Groningen",
+   "headline": "Over 2.5 goals",
+   "why": "Go Ahead Eagles have gone over 2.5 in 6 straight; FC Groningen in 4 straight.",
+   "a": "Go Ahead Eagles",
+   "b": "FC Groningen",
+   "a_run": 6,
+   "b_run": 4,
+   "a_key": "over25",
+   "b_key": "over25",
+   "a_label": "over 2.5 goals",
+   "b_label": "over 2.5 goals",
+   "strength": 10,
+   "base_rate": 0.12777777777777777,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "ADO Den Haag",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "Feyenoord Rotterdam",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-1",
+     "opp": "Willem II",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "NEC Nijmegen",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-4",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-3",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-5",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-1",
+     "opp": "ADO Den Haag",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "0-2",
+     "opp": "Ajax Amsterdam",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "2-1",
+     "opp": "Heracles Almelo",
+     "h": false,
+     "hit": false
+    }
+   ]
+  },
+  {
    "date": "2026-09-04",
    "kickoff": "2026-09-04T18:30Z",
    "league": "Bundesliga",
@@ -2405,6 +2704,303 @@
    ]
   },
   {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T16:45Z",
+   "league": "Eredivisie",
+   "match": "Go Ahead Eagles v FC Groningen",
+   "home": "Go Ahead Eagles",
+   "away": "FC Groningen",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 Go Ahead Eagles 6 straight, FC Groningen 4 straight.",
+   "a": "Go Ahead Eagles",
+   "b": "FC Groningen",
+   "a_run": 6,
+   "b_run": 4,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 10,
+   "base_rate": 0.17777777777777778,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "ADO Den Haag",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "Feyenoord Rotterdam",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-1",
+     "opp": "Willem II",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "NEC Nijmegen",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-4",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-3",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-5",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-1",
+     "opp": "ADO Den Haag",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "0-2",
+     "opp": "Ajax Amsterdam",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "2-1",
+     "opp": "Heracles Almelo",
+     "h": false,
+     "hit": false
+    }
+   ]
+  },
+  {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T23:30Z",
+   "league": "MLS",
+   "match": "FC Cincinnati v Charlotte FC",
+   "home": "FC Cincinnati",
+   "away": "Charlotte FC",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 FC Cincinnati 6 straight, Charlotte FC 4 straight.",
+   "a": "FC Cincinnati",
+   "b": "Charlotte FC",
+   "a_run": 6,
+   "b_run": 4,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 10,
+   "base_rate": 0.17777777777777778,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "1-1",
+     "opp": "Seattle Sounders FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "New York City FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-2",
+     "opp": "San Jose Earthquakes",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Columbus Crew",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-3",
+     "opp": "Vancouver Whitecaps",
+     "h": true,
+     "hit": true
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "3-1",
+     "opp": "D.C. United",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "3-3",
+     "opp": "Toronto FC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-1",
+     "opp": "Columbus Crew",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Chicago Fire FC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-0",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "2-2",
+     "opp": "Atlanta United FC",
+     "h": true,
+     "hit": false
+    }
+   ]
+  },
+  {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T23:30Z",
+   "league": "MLS",
+   "match": "Orlando City SC v Toronto FC",
+   "home": "Orlando City SC",
+   "away": "Toronto FC",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 Orlando City SC 4 straight, Toronto FC 5 straight.",
+   "a": "Orlando City SC",
+   "b": "Toronto FC",
+   "a_run": 4,
+   "b_run": 5,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 9,
+   "base_rate": 0.17777777777777778,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "2-1",
+     "opp": "Real Salt Lake",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Chicago Fire FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Cincinnati",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-3",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-0",
+     "opp": "Nashville SC",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "4-0",
+     "opp": "San Jose Earthquakes",
+     "h": false,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-1",
+     "opp": "Inter Miami CF",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-3",
+     "opp": "Charlotte FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "New England Revolution",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "New York City FC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "0-0",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": false
+    }
+   ]
+  },
+  {
    "date": "2026-08-29",
    "kickoff": "2026-08-29T23:30Z",
    "league": "MLS",
@@ -2796,6 +3392,105 @@
      "s": "2-2",
      "opp": "Atlanta United FC",
      "h": true,
+     "hit": false
+    }
+   ]
+  },
+  {
+   "date": "2026-09-13",
+   "kickoff": "2026-09-13T00:30Z",
+   "league": "MLS",
+   "match": "St. Louis CITY SC v Minnesota United FC",
+   "home": "St. Louis CITY SC",
+   "away": "Minnesota United FC",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 St. Louis CITY SC 4 straight, Minnesota United FC 4 straight.",
+   "a": "St. Louis CITY SC",
+   "b": "Minnesota United FC",
+   "a_run": 4,
+   "b_run": 4,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 8,
+   "base_rate": 0.17777777777777778,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "2-1",
+     "opp": "Houston Dynamo FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Sporting Kansas City",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-1",
+     "opp": "San Jose Earthquakes",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Real Salt Lake",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-0",
+     "opp": "Colorado Rapids",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "3-1",
+     "opp": "LA Galaxy",
+     "h": false,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "5-1",
+     "opp": "San Jose Earthquakes",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Atlanta United FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Real Salt Lake",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "San Diego FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "0-0",
+     "opp": "Vancouver Whitecaps",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "1-2",
+     "opp": "Sporting Kansas City",
+     "h": false,
      "hit": false
     }
    ]
@@ -3705,6 +4400,108 @@
    ]
   },
   {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T23:30Z",
+   "league": "MLS",
+   "match": "D.C. United v Atlanta United FC",
+   "home": "D.C. United",
+   "away": "Atlanta United FC",
+   "headline": "Atlanta United FC to score",
+   "why": "Atlanta United FC have scored 2+ in 4 straight; D.C. United have conceded in 6 straight.",
+   "a": "Atlanta United FC",
+   "b": "D.C. United",
+   "a_run": 4,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 10,
+   "base_rate": 0.2777777777777778,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Atlanta United FC"
+   },
+   "a_recent": [
+    {
+     "s": "2-1",
+     "opp": "Sporting Kansas City",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "Minnesota United FC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "Red Bull New York",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-3",
+     "opp": "Philadelphia Union",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-4",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "2-2",
+     "opp": "Charlotte FC",
+     "h": false,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-3",
+     "opp": "Charlotte FC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "0-3",
+     "opp": "New England Revolution",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "CF Montr\u00e9al",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "Nashville SC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "Toronto FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Houston Dynamo FC",
+     "h": false,
+     "hit": true
+    }
+   ]
+  },
+  {
    "date": "2026-08-29",
    "kickoff": "2026-08-29T23:30Z",
    "league": "MLS",
@@ -4215,6 +5012,312 @@
    ]
   },
   {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T16:45Z",
+   "league": "Eredivisie",
+   "match": "Go Ahead Eagles v FC Groningen",
+   "home": "Go Ahead Eagles",
+   "away": "FC Groningen",
+   "headline": "Go Ahead Eagles to score",
+   "why": "Go Ahead Eagles have scored 2+ in 3 straight; FC Groningen have conceded in 6 straight.",
+   "a": "Go Ahead Eagles",
+   "b": "FC Groningen",
+   "a_run": 3,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 9,
+   "base_rate": 0.2777777777777778,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Go Ahead Eagles"
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "ADO Den Haag",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "Feyenoord Rotterdam",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-1",
+     "opp": "Willem II",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "NEC Nijmegen",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "1-4",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "2-2",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-3",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-5",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-1",
+     "opp": "ADO Den Haag",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "0-2",
+     "opp": "Ajax Amsterdam",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "Heracles Almelo",
+     "h": false,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T18:00Z",
+   "league": "Eredivisie",
+   "match": "Fortuna Sittard v Ajax Amsterdam",
+   "home": "Fortuna Sittard",
+   "away": "Ajax Amsterdam",
+   "headline": "Ajax Amsterdam to score",
+   "why": "Ajax Amsterdam have scored 2+ in 3 straight; Fortuna Sittard have conceded in 6 straight.",
+   "a": "Ajax Amsterdam",
+   "b": "Fortuna Sittard",
+   "a_run": 3,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 9,
+   "base_rate": 0.2777777777777778,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Ajax Amsterdam"
+   },
+   "a_recent": [
+    {
+     "s": "2-2",
+     "opp": "Heerenveen",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-0",
+     "opp": "PEC Zwolle",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "2-0",
+     "opp": "FC Groningen",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "0-0",
+     "opp": "Heerenveen",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "1-2",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "2-2",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "3-2",
+     "opp": "FC Groningen",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "0-2",
+     "opp": "AZ Alkmaar",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "3-1",
+     "opp": "SC Cambuur",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-2",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "0-2",
+     "opp": "FC Utrecht",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-2",
+     "opp": "PEC Zwolle",
+     "h": true,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T23:30Z",
+   "league": "MLS",
+   "match": "FC Cincinnati v Charlotte FC",
+   "home": "FC Cincinnati",
+   "away": "Charlotte FC",
+   "headline": "Charlotte FC to score",
+   "why": "Charlotte FC have scored 2+ in 3 straight; FC Cincinnati have conceded in 6 straight.",
+   "a": "Charlotte FC",
+   "b": "FC Cincinnati",
+   "a_run": 3,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 9,
+   "base_rate": 0.2777777777777778,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Charlotte FC"
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "D.C. United",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "3-3",
+     "opp": "Toronto FC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-1",
+     "opp": "Columbus Crew",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Chicago Fire FC",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "2-0",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "2-2",
+     "opp": "Atlanta United FC",
+     "h": true,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-1",
+     "opp": "Seattle Sounders FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "New York City FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-2",
+     "opp": "San Jose Earthquakes",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Columbus Crew",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "4-3",
+     "opp": "Vancouver Whitecaps",
+     "h": true,
+     "hit": true
+    }
+   ]
+  },
+  {
    "date": "2026-09-05",
    "kickoff": "2026-09-05T13:30Z",
    "league": "Bundesliga",
@@ -4623,6 +5726,108 @@
    ]
   },
   {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T23:30Z",
+   "league": "MLS",
+   "match": "Orlando City SC v Toronto FC",
+   "home": "Orlando City SC",
+   "away": "Toronto FC",
+   "headline": "Toronto FC to score",
+   "why": "Toronto FC have scored 2+ in 3 straight; Orlando City SC have conceded in 4 straight.",
+   "a": "Toronto FC",
+   "b": "Orlando City SC",
+   "a_run": 3,
+   "b_run": 4,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 7,
+   "base_rate": 0.37777777777777777,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Toronto FC"
+   },
+   "a_recent": [
+    {
+     "s": "2-1",
+     "opp": "Inter Miami CF",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "3-3",
+     "opp": "Charlotte FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-1",
+     "opp": "New England Revolution",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "New York City FC",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "1-2",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": false
+    },
+    {
+     "s": "0-0",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": false
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-1",
+     "opp": "Real Salt Lake",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-2",
+     "opp": "Chicago Fire FC",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Cincinnati",
+     "h": true,
+     "hit": true
+    },
+    {
+     "s": "2-3",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": true
+    },
+    {
+     "s": "1-0",
+     "opp": "Nashville SC",
+     "h": true,
+     "hit": false
+    },
+    {
+     "s": "4-0",
+     "opp": "San Jose Earthquakes",
+     "h": false,
+     "hit": false
+    }
+   ]
+  },
+  {
    "date": "2026-08-30",
    "kickoff": "2026-08-30T14:45Z",
    "league": "Eredivisie",
@@ -4831,7 +6036,7 @@
   {
    "team": "Crystal Palace",
    "league": "Premier League",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "leaky",
@@ -5095,7 +6300,7 @@
   {
    "team": "Casa Pia",
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "blanked",
@@ -5161,7 +6366,7 @@
   {
    "team": "AS Roma",
    "league": "Serie A",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "solid",
@@ -5233,7 +6438,7 @@
   {
    "team": "Girona",
    "league": "La Liga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "under25",
@@ -5425,7 +6630,7 @@
   {
    "team": "AJ Auxerre",
    "league": "Ligue 1",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "scoring",
@@ -5917,7 +7122,7 @@
   {
    "team": "AZ Alkmaar",
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "scoring",
@@ -6325,7 +7530,7 @@
   {
    "team": "FC Utrecht",
    "league": "Eredivisie",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "leaky",
@@ -6409,7 +7614,7 @@
   {
    "team": "Inter Miami CF",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "leaky",
@@ -6769,7 +7974,7 @@
   {
    "team": "Go Ahead Eagles",
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "over25",
@@ -7183,7 +8388,7 @@
   {
    "team": "RB Leipzig",
    "league": "Bundesliga",
-   "played": 11,
+   "played": 10,
    "runs": [
     {
      "key": "over25",
@@ -7393,7 +8598,7 @@
   {
    "team": "Eintracht Frankfurt",
    "league": "Bundesliga",
-   "played": 11,
+   "played": 10,
    "runs": [
     {
      "key": "leaky",
@@ -7561,7 +8766,7 @@
   {
    "team": "Torino",
    "league": "Serie A",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "leaky",
@@ -8029,7 +9234,7 @@
   {
    "team": "New York City FC",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -8245,7 +9450,7 @@
   {
    "team": "VfB Stuttgart",
    "league": "Bundesliga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "btts",
@@ -8647,7 +9852,7 @@
   {
    "team": "Ajax Amsterdam",
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "scoring",
@@ -8785,7 +9990,7 @@
   {
    "team": "Chelsea",
    "league": "Premier League",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "btts",
@@ -8863,7 +10068,7 @@
   {
    "team": "Hamburg SV",
    "league": "Bundesliga",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "btts",
@@ -8935,7 +10140,7 @@
   {
    "team": "FC Groningen",
    "league": "Eredivisie",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "over25",
@@ -9013,7 +10218,7 @@
   {
    "team": "SC Freiburg",
    "league": "Bundesliga",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "over25",
@@ -9307,7 +10512,7 @@
   {
    "team": "Orlando City SC",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -9379,7 +10584,7 @@
   {
    "team": "Philadelphia Union",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -9451,7 +10656,7 @@
   {
    "team": "St. Louis CITY SC",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -9595,7 +10800,7 @@
   {
    "team": "Excelsior",
    "league": "Eredivisie",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "over25",
@@ -10069,7 +11274,7 @@
   {
    "team": "Austin FC",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -10141,7 +11346,7 @@
   {
    "team": "Brest",
    "league": "Ligue 1",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "btts",
@@ -10669,7 +11874,7 @@
   {
    "team": "Arsenal",
    "league": "Premier League",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "scoring1",
@@ -10843,7 +12048,7 @@
   {
    "team": "D.C. United",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "porous",
@@ -10903,7 +12108,7 @@
   {
    "team": "Espanyol",
    "league": "La Liga",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring1",
@@ -10963,7 +12168,7 @@
   {
    "team": "Feyenoord Rotterdam",
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "scoring1",
@@ -11257,7 +12462,7 @@
   {
    "team": "Nottingham Forest",
    "league": "Premier League",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "porous",
@@ -11317,7 +12522,7 @@
   {
    "team": "Real Betis",
    "league": "La Liga",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "scoring1",
@@ -11617,7 +12822,7 @@
   {
    "team": "Sevilla",
    "league": "La Liga",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "porous",
@@ -12031,7 +13236,7 @@
   {
    "team": "AC Milan",
    "league": "Serie A",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
@@ -12211,7 +13416,7 @@
   {
    "team": "San Diego FC",
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "scoring1",
@@ -12271,7 +13476,7 @@
   {
    "team": "Atalanta",
    "league": "Serie A",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "porous",
@@ -12451,7 +13656,7 @@
   {
    "team": "Cremonese",
    "league": "Serie A",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "scoring1",
@@ -12505,7 +13710,7 @@
   {
    "team": "Elche",
    "league": "La Liga",
-   "played": 16,
+   "played": 15,
    "runs": [
     {
      "key": "porous",
@@ -12625,7 +13830,7 @@
   {
    "team": "Sassuolo",
    "league": "Serie A",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
@@ -12685,7 +13890,7 @@
   {
    "team": "Tondela",
    "league": "Primeira Liga",
-   "played": 11,
+   "played": 10,
    "runs": [
     {
      "key": "scoring1",
@@ -12919,7 +14124,7 @@
   {
    "team": "Fulham",
    "league": "Premier League",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "scoring1",
@@ -13039,7 +14244,7 @@
   {
    "team": "Marseille",
    "league": "Ligue 1",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "scoring1",
@@ -13159,7 +14364,7 @@
   {
    "team": "Santa Clara",
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
@@ -13393,7 +14598,7 @@
   {
    "team": "FC Famalicao",
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -13453,7 +14658,7 @@
   {
    "team": "FC Twente",
    "league": "Eredivisie",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "porous",
@@ -13513,7 +14718,7 @@
   {
    "team": "FC Volendam",
    "league": "Eredivisie",
-   "played": 10,
+   "played": 9,
    "runs": [
     {
      "key": "porous",
@@ -13627,7 +14832,7 @@
   {
    "team": "VfL Wolfsburg",
    "league": "Bundesliga",
-   "played": 11,
+   "played": 10,
    "runs": [
     {
      "key": "porous",
