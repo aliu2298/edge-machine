@@ -1,33 +1,5 @@
 {
  "leads": {
-  "2026-08-29|AZ Alkmaar|Go Ahead Eagles|AZ Alkmaar to score": {
-   "a": "AZ Alkmaar",
-   "a_key": "scoring",
-   "a_run": 4,
-   "away": "Go Ahead Eagles",
-   "b": "Go Ahead Eagles",
-   "b_key": "porous",
-   "b_run": 6,
-   "base_rate": 0.26344086021505375,
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "subject": "a",
-    "team": "AZ Alkmaar"
-   },
-   "date": "2026-08-29",
-   "final": "5-2",
-   "first_seen": "2026-08-29",
-   "graded_at": "2026-08-29T19:12:37+00:00",
-   "headline": "AZ Alkmaar to score",
-   "home": "AZ Alkmaar",
-   "id": "2026-08-29|AZ Alkmaar|Go Ahead Eagles|AZ Alkmaar to score",
-   "kickoff": "2026-08-29T16:45Z",
-   "league": "Eredivisie",
-   "match": "AZ Alkmaar v Go Ahead Eagles",
-   "status": "hit",
-   "strength": 10
-  },
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
    "a_key": "scoring",
@@ -36,7 +8,7 @@
    "b": "Charlotte FC",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.40860215053763443,
+   "base_rate": 0.40641711229946526,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -62,7 +34,7 @@
    "b": "Charlotte FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -85,7 +57,7 @@
    "b": "Atlanta United FC",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -111,7 +83,7 @@
    "b": "Charlotte FC",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -127,32 +99,6 @@
    "status": "pending",
    "strength": 10
   },
-  "2026-08-29|FC Cologne|TSG Hoffenheim|Over 2.5 goals": {
-   "a": "FC Cologne",
-   "a_key": "over25",
-   "a_run": 5,
-   "away": "TSG Hoffenheim",
-   "b": "TSG Hoffenheim",
-   "b_key": "over25",
-   "b_run": 3,
-   "base_rate": 0.24193548387096775,
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-08-29",
-   "final": "3-2",
-   "first_seen": "2026-08-29",
-   "graded_at": "2026-08-29T15:39:11+00:00",
-   "headline": "Over 2.5 goals",
-   "home": "FC Cologne",
-   "id": "2026-08-29|FC Cologne|TSG Hoffenheim|Over 2.5 goals",
-   "kickoff": "2026-08-29T13:30Z",
-   "league": "Bundesliga",
-   "match": "FC Cologne v TSG Hoffenheim",
-   "status": "hit",
-   "strength": 8
-  },
   "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score": {
    "a": "Inter Miami CF",
    "a_key": "btts",
@@ -161,7 +107,7 @@
    "b": "CF Montr\u00e9al",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -184,7 +130,7 @@
    "b": "Sevilla",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -210,7 +156,7 @@
    "b": "New York City FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.0967741935483871,
+   "base_rate": 0.0962566844919786,
    "bet": {
     "kind": "btts"
    },
@@ -233,7 +179,7 @@
    "b": "New York City FC",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -259,7 +205,7 @@
    "b": "PSV Eindhoven",
    "b_key": "btts",
    "b_run": 3,
-   "base_rate": 0.20967741935483872,
+   "base_rate": 0.21390374331550802,
    "bet": {
     "kind": "btts"
    },
@@ -282,7 +228,7 @@
    "b": "PSV Eindhoven",
    "b_key": "over25",
    "b_run": 6,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -306,7 +252,7 @@
    "b": "FC Utrecht",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.06451612903225806,
+   "base_rate": 0.06417112299465241,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -332,7 +278,7 @@
    "b": "Orlando City SC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -355,7 +301,7 @@
    "b": "Austin FC",
    "b_key": "btts",
    "b_run": 3,
-   "base_rate": 0.20967741935483872,
+   "base_rate": 0.21390374331550802,
    "bet": {
     "kind": "btts"
    },
@@ -378,7 +324,7 @@
    "b": "M\u00e1laga",
    "b_key": "porous",
    "b_run": 5,
-   "base_rate": 0.3010752688172043,
+   "base_rate": 0.29411764705882354,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -404,7 +350,7 @@
    "b": "Telstar",
    "b_key": "porous",
    "b_run": 3,
-   "base_rate": 0.478494623655914,
+   "base_rate": 0.48128342245989303,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -430,7 +376,7 @@
    "b": "Arsenal",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -454,7 +400,7 @@
    "b": "Rayo Vallecano",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.40860215053763443,
+   "base_rate": 0.40641711229946526,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -480,7 +426,7 @@
    "b": "Estoril",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -506,7 +452,7 @@
    "b": "PSV Eindhoven",
    "b_key": "porous",
    "b_run": 3,
-   "base_rate": 0.478494623655914,
+   "base_rate": 0.48128342245989303,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -524,55 +470,6 @@
    "status": "pending",
    "strength": 7
   },
-  "2026-09-05|Alverca|Braga|Both teams to score": {
-   "a": "Alverca",
-   "a_key": "btts",
-   "a_run": 3,
-   "away": "Braga",
-   "b": "Braga",
-   "b_key": "btts",
-   "b_run": 6,
-   "base_rate": 0.22459893048128343,
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-09-05",
-   "first_seen": "2026-08-29",
-   "headline": "Both teams to score",
-   "home": "Alverca",
-   "id": "2026-09-05|Alverca|Braga|Both teams to score",
-   "kickoff": "2026-09-05T17:00Z",
-   "league": "Primeira Liga",
-   "match": "Alverca v Braga",
-   "status": "pending",
-   "strength": 9
-  },
-  "2026-09-05|Alverca|Braga|Braga to score": {
-   "a": "Braga",
-   "a_key": "scoring",
-   "a_run": 3,
-   "away": "Braga",
-   "b": "Alverca",
-   "b_key": "porous",
-   "b_run": 6,
-   "base_rate": 0.2620320855614973,
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "subject": "a",
-    "team": "Braga"
-   },
-   "date": "2026-09-05",
-   "first_seen": "2026-08-29",
-   "headline": "Braga to score",
-   "home": "Alverca",
-   "id": "2026-09-05|Alverca|Braga|Braga to score",
-   "kickoff": "2026-09-05T17:00Z",
-   "league": "Primeira Liga",
-   "match": "Alverca v Braga",
-   "status": "pending",
-   "strength": 9
-  },
   "2026-09-05|Alverca|Braga|Braga to score 2+": {
    "a": "Braga",
    "a_key": "scoring",
@@ -581,7 +478,7 @@
    "b": "Alverca",
    "b_key": "leaky",
    "b_run": 3,
-   "base_rate": 0.13978494623655913,
+   "base_rate": 0.13368983957219252,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -607,7 +504,7 @@
    "b": "Athletic Club",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.40860215053763443,
+   "base_rate": 0.40641711229946526,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -628,12 +525,12 @@
   "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|1. FC Union Berlin to score": {
    "a": "1. FC Union Berlin",
    "a_key": "scoring",
-   "a_run": 5,
+   "a_run": 6,
    "away": "1. FC Union Berlin",
    "b": "Bayer Leverkusen",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -649,7 +546,7 @@
    "league": "Bundesliga",
    "match": "Bayer Leverkusen v 1. FC Union Berlin",
    "status": "pending",
-   "strength": 11
+   "strength": 12
   },
   "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Both teams to score": {
    "a": "Bayer Leverkusen",
@@ -706,7 +603,7 @@
    "b": "FC Famalicao",
    "b_key": "porous",
    "b_run": 3,
-   "base_rate": 0.478494623655914,
+   "base_rate": 0.48128342245989303,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -732,7 +629,7 @@
    "b": "Go Ahead Eagles",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -755,7 +652,7 @@
    "b": "FC Utrecht",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.13978494623655913,
+   "base_rate": 0.13368983957219252,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -781,7 +678,7 @@
    "b": "Go Ahead Eagles",
    "b_key": "over25",
    "b_run": 6,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -805,7 +702,7 @@
    "b": "Inter Miami CF",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.06451612903225806,
+   "base_rate": 0.06417112299465241,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -831,7 +728,7 @@
    "b": "Atlanta United FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -854,7 +751,7 @@
    "b": "Atlanta United FC",
    "b_key": "over25",
    "b_run": 6,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -878,7 +775,7 @@
    "b": "AFC Bournemouth",
    "b_key": "btts",
    "b_run": 5,
-   "base_rate": 0.0967741935483871,
+   "base_rate": 0.0962566844919786,
    "bet": {
     "kind": "btts"
    },
@@ -901,7 +798,7 @@
    "b": "CF Montr\u00e9al",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -924,7 +821,7 @@
    "b": "Chicago Fire FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.0967741935483871,
+   "base_rate": 0.0962566844919786,
    "bet": {
     "kind": "btts"
    },
@@ -947,7 +844,7 @@
    "b": "Chicago Fire FC",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -973,7 +870,7 @@
    "b": "Chelsea",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1021,7 +918,7 @@
    "b": "Sevilla",
    "b_key": "over25",
    "b_run": 3,
-   "base_rate": 0.24193548387096775,
+   "base_rate": 0.24598930481283424,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1037,32 +934,6 @@
    "status": "pending",
    "strength": 6
   },
-  "2026-09-06|Hamburg SV|Mainz|Mainz to score": {
-   "a": "Mainz",
-   "a_key": "scoring",
-   "a_run": 3,
-   "away": "Mainz",
-   "b": "Hamburg SV",
-   "b_key": "porous",
-   "b_run": 6,
-   "base_rate": 0.26344086021505375,
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "subject": "a",
-    "team": "Mainz"
-   },
-   "date": "2026-09-06",
-   "first_seen": "2026-08-29",
-   "headline": "Mainz to score",
-   "home": "Hamburg SV",
-   "id": "2026-09-06|Hamburg SV|Mainz|Mainz to score",
-   "kickoff": "2026-09-06T13:30Z",
-   "league": "Bundesliga",
-   "match": "Hamburg SV v Mainz",
-   "status": "pending",
-   "strength": 9
-  },
   "2026-09-06|Portland Timbers|Minnesota United FC|Both teams to score": {
    "a": "Portland Timbers",
    "a_key": "btts",
@@ -1071,7 +942,7 @@
    "b": "Minnesota United FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1094,7 +965,7 @@
    "b": "Manchester City",
    "b_key": "porous",
    "b_run": 5,
-   "base_rate": 0.2994652406417112,
+   "base_rate": 0.29411764705882354,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1120,7 +991,7 @@
    "b": "Excelsior",
    "b_key": "over25",
    "b_run": 3,
-   "base_rate": 0.24193548387096775,
+   "base_rate": 0.24598930481283424,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1144,7 +1015,7 @@
    "b": "Orlando City SC",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.40860215053763443,
+   "base_rate": 0.40641711229946526,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1170,7 +1041,7 @@
    "b": "Orlando City SC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1193,7 +1064,7 @@
    "b": "Charlotte FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1216,7 +1087,7 @@
    "b": "CF Montr\u00e9al",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1242,7 +1113,7 @@
    "b": "FC Cincinnati",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1265,7 +1136,7 @@
    "b": "Galatasaray",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.2620320855614973,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1291,7 +1162,7 @@
    "b": "Inter Miami CF",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1314,7 +1185,7 @@
    "b": "Braga",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1337,7 +1208,7 @@
    "b": "Estrela",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.13978494623655913,
+   "base_rate": 0.13368983957219252,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -1363,7 +1234,7 @@
    "b": "Braga",
    "b_key": "leaky",
    "b_run": 4,
-   "base_rate": 0.06451612903225806,
+   "base_rate": 0.06417112299465241,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -1389,7 +1260,7 @@
    "b": "Braga",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1413,7 +1284,7 @@
    "b": "St. Louis CITY SC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1436,7 +1307,7 @@
    "b": "Marseille",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1452,32 +1323,6 @@
    "status": "pending",
    "strength": 10
   },
-  "2026-09-12|AFC Bournemouth|Brentford|Brentford to score": {
-   "a": "Brentford",
-   "a_key": "scoring",
-   "a_run": 3,
-   "away": "Brentford",
-   "b": "AFC Bournemouth",
-   "b_key": "porous",
-   "b_run": 6,
-   "base_rate": 0.2620320855614973,
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "subject": "a",
-    "team": "Brentford"
-   },
-   "date": "2026-09-12",
-   "first_seen": "2026-08-29",
-   "headline": "Brentford to score",
-   "home": "AFC Bournemouth",
-   "id": "2026-09-12|AFC Bournemouth|Brentford|Brentford to score",
-   "kickoff": "2026-09-12T14:00Z",
-   "league": "Premier League",
-   "match": "AFC Bournemouth v Brentford",
-   "status": "pending",
-   "strength": 9
-  },
   "2026-09-12|AFC Bournemouth|Brentford|Brentford to score 2+": {
    "a": "Brentford",
    "a_key": "scoring",
@@ -1486,7 +1331,7 @@
    "b": "AFC Bournemouth",
    "b_key": "leaky",
    "b_run": 3,
-   "base_rate": 0.13978494623655913,
+   "base_rate": 0.13368983957219252,
    "bet": {
     "kind": "team_gte",
     "n": 2,
@@ -1512,7 +1357,7 @@
    "b": "Brentford",
    "b_key": "over25",
    "b_run": 3,
-   "base_rate": 0.24193548387096775,
+   "base_rate": 0.24598930481283424,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1536,7 +1381,7 @@
    "b": "D.C. United",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1586,7 +1431,7 @@
    "b": "Charlotte FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1609,7 +1454,7 @@
    "b": "FC Cincinnati",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1635,7 +1480,7 @@
    "b": "Fortuna Sittard",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1661,7 +1506,7 @@
    "b": "FC Groningen",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1684,7 +1529,7 @@
    "b": "FC Groningen",
    "b_key": "porous",
    "b_run": 6,
-   "base_rate": 0.26344086021505375,
+   "base_rate": 0.25668449197860965,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1710,7 +1555,7 @@
    "b": "FC Groningen",
    "b_key": "over25",
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1734,7 +1579,7 @@
    "b": "Toronto FC",
    "b_key": "btts",
    "b_run": 5,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1757,7 +1602,7 @@
    "b": "Orlando City SC",
    "b_key": "porous",
    "b_run": 4,
-   "base_rate": 0.40860215053763443,
+   "base_rate": 0.40641711229946526,
    "bet": {
     "kind": "team_gte",
     "n": 1,
@@ -1783,7 +1628,7 @@
    "b": "New York City FC",
    "b_key": "btts",
    "b_run": 6,
-   "base_rate": 0.08064516129032258,
+   "base_rate": 0.08021390374331551,
    "bet": {
     "kind": "btts"
    },
@@ -1806,7 +1651,7 @@
    "b": "Minnesota United FC",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.16666666666666666,
+   "base_rate": 0.1657754010695187,
    "bet": {
     "kind": "btts"
    },
@@ -1822,8 +1667,5 @@
    "strength": 8
   }
  },
- "methodology": "form=last6 across tracked competitions + preseason friendlies; leads require >=3-run both legs and >=1 competitive game per run",
- "reset_at": "2026-08-29T02:40:03+00:00",
- "reset_note": "Reset from 74 pending leads on 2026-08-29. Preseason friendlies were added to the form basis, which changes every team's run lengths, so leads published before that change were computed under a different methodology. None had been graded yet. Grading both together would mix two methodologies in one measurement, so the ledger starts fresh from the friendlies-inclusive version.",
- "updated_at": "2026-08-29T19:14:24+00:00"
+ "updated_at": "2026-08-29T19:15:24+00:00"
 }

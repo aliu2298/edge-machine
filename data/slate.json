@@ -1,9 +1,9 @@
 {
  "picks": {
-  "2026-08-29|Atlanta United FC|Charlotte FC|Over 2.5 goals": {
+  "2026-08-29|Atlanta United FC|Charlotte FC|Both teams to score": {
    "a": "Atlanta United FC",
-   "a_key": "over25",
-   "a_label": "over 2.5 goals",
+   "a_key": "btts",
+   "a_label": "both teams scored",
    "a_recent": [
     {
      "comp": true,
@@ -57,8 +57,8 @@
    "a_run": 6,
    "away": "Charlotte FC",
    "b": "Charlotte FC",
-   "b_key": "over25",
-   "b_label": "over 2.5 goals",
+   "b_key": "btts",
+   "b_label": "both teams scored",
    "b_recent": [
     {
      "comp": true,
@@ -110,150 +110,22 @@
     }
    ],
    "b_run": 4,
-   "base_rate": 0.15053763440860216,
+   "base_rate": 0.1657754010695187,
    "bet": {
-    "kind": "total_gte",
-    "n": 3
+    "kind": "btts"
    },
    "date": "2026-08-29",
-   "drawn_at": "2026-08-29T04:54:19+00:00",
-   "headline": "Over 2.5 goals",
+   "drawn_at": "2026-08-29T19:15:25+00:00",
+   "headline": "Both teams to score",
    "home": "Atlanta United FC",
-   "id": "2026-08-29|Atlanta United FC|Charlotte FC|Over 2.5 goals",
+   "id": "2026-08-29|Atlanta United FC|Charlotte FC|Both teams to score",
    "kalshi": "https://kalshi.com/events/KXMLSGAME-26AUG29ATLCLT",
    "kickoff": "2026-08-29T23:30Z",
    "league": "MLS",
    "match": "Atlanta United FC v Charlotte FC",
    "status": "live",
    "strength": 10,
-   "why": "Atlanta United FC have gone over 2.5 in 6 straight; Charlotte FC in 4 straight."
-  },
-  "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score": {
-   "a": "Inter Miami CF",
-   "a_key": "btts",
-   "a_label": "both teams scored",
-   "a_recent": [
-    {
-     "comp": true,
-     "h": true,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "Toronto FC",
-     "s": "1-2"
-    },
-    {
-     "comp": true,
-     "h": false,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "Philadelphia Union",
-     "s": "2-2"
-    },
-    {
-     "comp": true,
-     "h": false,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "Nashville SC",
-     "s": "1-4"
-    },
-    {
-     "comp": true,
-     "h": true,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "Columbus Crew",
-     "s": "2-2"
-    },
-    {
-     "comp": true,
-     "h": false,
-     "hit": false,
-     "lg": "MLS",
-     "opp": "CF Montr\u00e9al",
-     "s": "1-0"
-    },
-    {
-     "comp": true,
-     "h": true,
-     "hit": false,
-     "lg": "MLS",
-     "opp": "Chicago Fire FC",
-     "s": "3-2"
-    }
-   ],
-   "a_run": 4,
-   "away": "CF Montr\u00e9al",
-   "b": "CF Montr\u00e9al",
-   "b_key": "btts",
-   "b_label": "both teams scored",
-   "b_recent": [
-    {
-     "comp": true,
-     "h": true,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "LA Galaxy",
-     "s": "2-2"
-    },
-    {
-     "comp": true,
-     "h": false,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "Columbus Crew",
-     "s": "2-1"
-    },
-    {
-     "comp": true,
-     "h": true,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "D.C. United",
-     "s": "1-1"
-    },
-    {
-     "comp": true,
-     "h": true,
-     "hit": true,
-     "lg": "MLS",
-     "opp": "New England Revolution",
-     "s": "2-2"
-    },
-    {
-     "comp": true,
-     "h": true,
-     "hit": false,
-     "lg": "MLS",
-     "opp": "Inter Miami CF",
-     "s": "0-1"
-    },
-    {
-     "comp": true,
-     "h": false,
-     "hit": false,
-     "lg": "MLS",
-     "opp": "Nashville SC",
-     "s": "0-1"
-    }
-   ],
-   "b_run": 4,
-   "base_rate": 0.16666666666666666,
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-08-29",
-   "drawn_at": "2026-08-29T04:54:19+00:00",
-   "headline": "Both teams to score",
-   "home": "Inter Miami CF",
-   "id": "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score",
-   "kalshi": "https://kalshi.com/events/KXMLSGAME-26AUG29MIAMTL",
-   "kickoff": "2026-08-29T23:30Z",
-   "league": "MLS",
-   "match": "Inter Miami CF v CF Montr\u00e9al",
-   "status": "live",
-   "strength": 8,
-   "why": "Both sides are on a BTTS run \u2014 Inter Miami CF 4 straight, CF Montr\u00e9al 4 straight."
+   "why": "Both sides are on a BTTS run \u2014 Atlanta United FC 6 straight, Charlotte FC 4 straight."
   },
   "2026-08-29|Toronto FC|New York City FC|Both teams to score": {
    "a": "Toronto FC",
@@ -365,12 +237,12 @@
     }
    ],
    "b_run": 6,
-   "base_rate": 0.0967741935483871,
+   "base_rate": 0.0962566844919786,
    "bet": {
     "kind": "btts"
    },
    "date": "2026-08-29",
-   "drawn_at": "2026-08-29T04:54:19+00:00",
+   "drawn_at": "2026-08-29T19:15:25+00:00",
    "headline": "Both teams to score",
    "home": "Toronto FC",
    "id": "2026-08-29|Toronto FC|New York City FC|Both teams to score",
@@ -381,7 +253,137 @@
    "status": "live",
    "strength": 11,
    "why": "Both sides are on a BTTS run \u2014 Toronto FC 5 straight, New York City FC 6 straight."
+  },
+  "2026-08-30|FC Utrecht|PSV Eindhoven|PSV Eindhoven to score 2+": {
+   "a": "PSV Eindhoven",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "FC Groningen",
+     "s": "5-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Excelsior",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Fortuna Sittard",
+     "s": "2-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "FC Eindhoven",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Villarreal",
+     "s": "1-3"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Union St.-Gilloise",
+     "s": "7-3"
+    }
+   ],
+   "a_run": 4,
+   "away": "PSV Eindhoven",
+   "b": "FC Utrecht",
+   "b_key": "leaky",
+   "b_label": "conceded 2+",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Sparta Rotterdam",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "AZ Alkmaar",
+     "s": "1-4"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "FC Groningen",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Heerenveen",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "Fortuna Sittard",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "Ajax Amsterdam",
+     "s": "2-1"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.06417112299465241,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "PSV Eindhoven"
+   },
+   "date": "2026-08-30",
+   "drawn_at": "2026-08-29T19:15:25+00:00",
+   "headline": "PSV Eindhoven to score 2+",
+   "home": "FC Utrecht",
+   "id": "2026-08-30|FC Utrecht|PSV Eindhoven|PSV Eindhoven to score 2+",
+   "kalshi": "https://kalshi.com/events/KXEREDIVISIEGAME-26AUG30FCUPSV",
+   "kickoff": "2026-08-30T10:15Z",
+   "league": "Eredivisie",
+   "match": "FC Utrecht v PSV Eindhoven",
+   "status": "live",
+   "strength": 8,
+   "why": "PSV Eindhoven have scored 2+ in 4 straight; FC Utrecht have conceded 2+ in 4 straight."
   }
  },
- "updated_at": "2026-08-29T19:14:24+00:00"
+ "updated_at": "2026-08-29T19:15:25+00:00"
 }
