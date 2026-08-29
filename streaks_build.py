@@ -261,33 +261,31 @@ def base_rates(streaks):
     return rates
 
 
-_KALSHI_EVENTS = None
+_VENUE_EVENTS = None
 
 
-def kalshi_link(f):
-    """Kalshi market URL for a fixture, or None.
+def venue_market_link(f):
+    """Bovada market URL for a fixture, or None.
 
-    Reuses the shared matcher in venues.py rather than writing a second one — that module
-    carries the hard-won parts (the KXUEFAGAME empty-series trap, cursor pagination, 429
-    backoff, the name aliases) and a duplicate would drift from them. Fail-soft: a missing
-    link is normal, since plenty of fixtures have no Kalshi market.
+    Reuses the shared matcher in venues.py rather than writing a second one. Fail-soft: a
+    missing link is normal, since not every fixture is priced.
 
     NB `venue_link` expects "A vs B" and allows only a ±1 day gap on the date.
     """
-    global _KALSHI_EVENTS
-    if _KALSHI_EVENTS is None:
+    global _VENUE_EVENTS
+    if _VENUE_EVENTS is None:
         try:
-            from venues import fetch_kalshi_events
-            _KALSHI_EVENTS = fetch_kalshi_events()
+            from venues import fetch_bovada_events
+            _VENUE_EVENTS = fetch_bovada_events()
         except Exception as e:
-            print(f"  (kalshi links unavailable: {e})")
-            _KALSHI_EVENTS = []
-    if not _KALSHI_EVENTS:
+            print(f"  (bovada links unavailable: {e})")
+            _VENUE_EVENTS = []
+    if not _VENUE_EVENTS:
         return None
     try:
         from venues import venue_link
         return venue_link(f"{f['home']} vs {f['away']}",
-                          f.get("kickoff") or f.get("date"), _KALSHI_EVENTS)
+                          f.get("kickoff") or f.get("date"), _VENUE_EVENTS)
     except Exception:
         return None
 
@@ -369,7 +367,7 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
                             if bet.get("subject") else dict(bet),
                     "a_recent": form_seq(sa_["recent"], ra),
                     "b_recent": form_seq(sb_["recent"], rb),
-                    "kalshi": kalshi_link(f) if links else None,
+                    "kalshi": venue_market_link(f) if links else None,
                 })
     # SOONEST first: the board is read to see what is coming up, so kickoff order is the
     # useful order. Sorted on the kickoff INSTANT, not the date string — a fixture at
@@ -825,7 +823,7 @@ function card(l) {{
       <span class="cd ${{cdCls}}" data-ko="${{esc(l.kickoff || '')}}">${{esc(cdTxt)}}</span>
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
       ${{l.kalshi ? `<a class="kbtn" href="${{esc(l.kalshi)}}" target="_blank"
-         rel="noopener">Kalshi ↗</a>` : ''}}
+         rel="noopener">Bovada ↗</a>` : ''}}
     </div>
     <div class="ev">
       ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}

@@ -76,7 +76,7 @@ def card_html(p):
         final = f'<span>{esc(p["final"])}</span>' if p.get("final") else ""
         stamp = f'<div class="stamp {st}">{esc(st.upper())}{final}</div>'
     kalshi = (f'<a class="kbtn" href="{esc(p["kalshi"])}" target="_blank" '
-              f'rel="noopener">Kalshi ↗</a>' if p.get("kalshi") else "")
+              f'rel="noopener">Bovada ↗</a>' if p.get("kalshi") else "")
     ko = esc(p.get("kickoff") or "")
     return f"""<div class="pcard {'live' if live else 'done'}">
   <div class="idx tl"><b>{esc(abbr)}</b><i>{pip}</i></div>

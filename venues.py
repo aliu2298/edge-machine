@@ -24,10 +24,16 @@ KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME",
                  "KXUCLGAME", "KXUELGAME", "KXUECLGAME"]
 KALSHI_MAX_PAGES = 3      # events endpoint caps at 200/page and returns a cursor
 BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/description/soccer"
-BOVADA_LEAGUES = ["north-america/united-states/mls",
-                  "south-america/brazil/brasileirao-serie-a",
-                  "international-club/uefa-champions-league",
-                  "international-club/uefa-europa-league"]
+# Bovada is queried at the TOP LEVEL, not per league. Two reasons, both learned by
+# probing rather than guessing:
+#   * the per-league coupon 404s unpredictably — Bundesliga is "1-bundesliga", not
+#     "bundesliga", and several paths that appear in the top-level listing return 404
+#     when requested directly
+#   * one call returns ~1500 events across every competition Bovada lists, which covers
+#     all nine tracked domestic leagues in a single request instead of eleven
+# Same lesson as the Kalshi series tickers: enumerate what the API actually has, never
+# hand-write the key space.
+BOVADA_ALL = (BOVADA_API + "?marketFilterId=def&preMatchOnly=true&lang=en")
 # our team-name token → alternate token some venues use (tried alongside the raw token)
 ALIASES = {"athletico": "paranaense", "angeles": "lafc",
            "hearts": "midlothian"}   # Kalshi spells it "Heart of Midlothian"
@@ -148,25 +154,39 @@ def kalshi_series_counts():
     return dict(_KALSHI_COUNTS)
 
 
+_BOVADA_MEM = None
+
+
 def fetch_bovada_events():
-    """[(url, title, date)] for upcoming Bovada soccer events. Empty on failure."""
+    """[(url, title, date)] for upcoming Bovada soccer events. Empty on failure.
+
+    One request for every competition (see BOVADA_ALL). Memoised for the process so the
+    board builders share a single fetch rather than repeating a 1500-event download.
+    """
+    global _BOVADA_MEM
+    if _BOVADA_MEM is not None:
+        return _BOVADA_MEM
+    try:
+        groups = _get_json(BOVADA_ALL)
+    except Exception as e:
+        print(f"  (bovada lookup failed: {e})")
+        _BOVADA_MEM = []
+        return _BOVADA_MEM
     out = []
-    for league in BOVADA_LEAGUES:
-        try:
-            groups = _get_json(f"{BOVADA_API}/{league}?marketFilterId=def&preMatchOnly=true&lang=en")
-        except Exception as e:
-            print(f"  (bovada lookup skipped for {league}: {e})")
-            continue
-        for grp in groups or []:
-            for ev in grp.get("events") or []:
-                d = None
-                if ev.get("startTime"):
-                    d = datetime.datetime.fromtimestamp(
-                        ev["startTime"]/1000, datetime.timezone.utc).date()
-                # The API's `link` is relative to the /sports app root — without
-                # the prefix Bovada renders "page not found".
-                out.append((f"https://www.bovada.lv/sports{ev.get('link','')}",
-                            ev.get("description") or "", d))
+    for grp in groups or []:
+        for ev in grp.get("events") or []:
+            d = None
+            if ev.get("startTime"):
+                d = datetime.datetime.fromtimestamp(
+                    ev["startTime"]/1000, datetime.timezone.utc).date()
+            # The API's `link` is relative to the /sports app root — without the prefix
+            # Bovada renders "page not found".
+            out.append((f"https://www.bovada.lv/sports{ev.get('link','')}",
+                        ev.get("description") or "", d))
+    if not out:
+        print("  (bovada: returned NO events — endpoint or filter changed?)")
+    print(f"  (bovada events: {len(out)})")
+    _BOVADA_MEM = out
     return out
 
 def venue_link(match, kickoff, events):

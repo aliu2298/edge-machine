@@ -2,7 +2,7 @@
 """health.py — guardrails for the boards.
 
 The real risk here is SILENT failure, not loud failure. A pick whose fixture never matches
-a final score just sits "live" forever; a Kalshi series ticker that quietly returns nothing
+a final score just sits "live" forever; a venue feed that quietly returns nothing
 makes every market button vanish with no error anywhere. Both look fine on the page.
 
 Writes GitHub Actions annotations so problems land on the run summary rather than being
@@ -81,25 +81,26 @@ def main():
     except Exception as e:
         note("warning", f"SLATE check skipped: {e}")
 
-    # 3. VENUE LINKS — a series ticker returning zero events is indistinguishable from
-    # "no market exists" unless something explicitly looks. KXUEFAGAME looked right,
-    # returned HTTP 200, and was empty; every Europa card lost its button silently.
+    # 3. VENUE LINKS — the board links Bovada. A feed returning nothing is
+    # indistinguishable from "no market exists" unless something explicitly looks, which
+    # is how an empty Kalshi series once removed every Europa button in silence.
+    #
+    # Coverage is only meaningful NEAR TERM: a sportsbook prices the next few days and
+    # posts distant fixtures closer to kickoff, so a lead two weeks out legitimately has
+    # no line yet. Only the live slate — which is always near-term — is checked.
     try:
-        from venues import fetch_kalshi_events, venue_link, kalshi_series_counts
-        for series, n in sorted(kalshi_series_counts().items()):
-            if n == 0:
-                note("warning", f"LINKS series {series} returned 0 events — wrong ticker? "
-                                f"(KXUEFAGAME was empty while Europa lived under KXUELGAME)")
-                problems += 1
-        if live:
-            events = fetch_kalshi_events()
+        from venues import fetch_bovada_events, venue_link
+        events = fetch_bovada_events()
+        if not events:
+            note("warning", "LINKS bovada returned 0 events — endpoint or filter changed?")
+            problems += 1
+        elif live:
             miss = [p for p in live
                     if not venue_link(p["match"].replace(" v ", " vs "),
                                       p.get("kickoff") or p["date"], events)]
-            print(f"  kalshi links: {len(live)-len(miss)}/{len(live)} live picks")
-            # Not every fixture has a market, so a miss is informational, not a problem.
+            print(f"  bovada links: {len(live)-len(miss)}/{len(live)} live picks")
             for p in miss:
-                print(f"    (no market for {p['match']})")
+                print(f"    (no line for {p['match']})")
     except Exception as e:
         note("warning", f"LINKS check skipped: {e}")
 

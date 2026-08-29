@@ -25,7 +25,7 @@ flowchart TB
     end
 
     subgraph EXT["External sources (public, no auth)"]
-        KAL["Kalshi public API<br/>market links"]
+        BOV["Bovada public API<br/>market links"]
         ESPN["ESPN scoreboard<br/>results + fixtures"]
     end
 
@@ -41,7 +41,7 @@ flowchart TB
         APP <--> DB
     end
 
-    KAL -.link lookup.-> SB
+    BOV -.link lookup.-> SB
     ESPN --> SF
     ESPN -.final scores.-> SL
 
@@ -66,7 +66,7 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 |---|---|
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, slate, base rates, auto-settlement. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
-| `venues.py` | Shared fixture→market matcher (Kalshi, Bovada). |
+| `venues.py` | Shared fixture→market matcher (Bovada; Kalshi retained, unused). |
 | `slate.py` | Draws three picks, grades them, keeps `data/slate.json`. |
 | `slate_build.py` | Renders the card board to `public_site/index.html`. |
 | `slate_backtest.py` | Replays the board day by day over past fixtures. |
@@ -75,8 +75,12 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
-| `health.py` | Warn-only guardrails: lead freshness, stuck picks, bad series tickers. |
+| `health.py` | Warn-only guardrails: lead freshness, stuck picks, dead venue feed. |
+| `verify_coverage.py` | Proves every league's squad reaches the board. |
+| `fire_track.py` | Logs long runs and grades whether they continued. |
+| `test_slate.py` | Logic tests for slate selection and lifecycle. |
 | `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
+| `.github/workflows/backup-refresh.yml` | Watchdog 12h out of phase; takes over only if the primary failed or the live board is stale. |
 
 ## Run locally
 
@@ -125,8 +129,10 @@ A **lead** is not a streak on its own — plenty of good sides score freely. It 
 not been played yet ("A have scored 2+ in six straight; B have conceded 2+ in five"). Both
 legs must run at least 3 games.
 
-Each lead links to its **Kalshi market** where one exists (~80% of them), reusing
-the shared matcher in `venues.py` rather than a second copy of it.
+Each lead links to its **Bovada market** where a line exists, via the shared matcher in
+`venues.py`. Coverage is near-total inside three days (17/17 at last check) and thin beyond
+that — a sportsbook prices the next few days and posts distant fixtures closer to kickoff,
+so a lead two weeks out has no line yet and gains one as it approaches.
 
 Two design choices worth knowing:
 
