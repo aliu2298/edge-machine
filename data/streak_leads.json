@@ -470,6 +470,55 @@
    "status": "pending",
    "strength": 7
   },
+  "2026-09-05|Alverca|Braga|Both teams to score": {
+   "a": "Alverca",
+   "a_key": "btts",
+   "a_run": 3,
+   "away": "Braga",
+   "b": "Braga",
+   "b_key": "btts",
+   "b_run": 6,
+   "base_rate": 0.22459893048128343,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-09-05",
+   "first_seen": "2026-08-29",
+   "headline": "Both teams to score",
+   "home": "Alverca",
+   "id": "2026-09-05|Alverca|Braga|Both teams to score",
+   "kickoff": "2026-09-05T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Alverca v Braga",
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-05|Alverca|Braga|Braga to score": {
+   "a": "Braga",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Braga",
+   "b": "Alverca",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.2620320855614973,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Braga"
+   },
+   "date": "2026-09-05",
+   "first_seen": "2026-08-29",
+   "headline": "Braga to score",
+   "home": "Alverca",
+   "id": "2026-09-05|Alverca|Braga|Braga to score",
+   "kickoff": "2026-09-05T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Alverca v Braga",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-05|Alverca|Braga|Braga to score 2+": {
    "a": "Braga",
    "a_key": "scoring",
@@ -1323,6 +1372,32 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-12|AFC Bournemouth|Brentford|Brentford to score": {
+   "a": "Brentford",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Brentford",
+   "b": "AFC Bournemouth",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.2620320855614973,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Brentford"
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-08-29",
+   "headline": "Brentford to score",
+   "home": "AFC Bournemouth",
+   "id": "2026-09-12|AFC Bournemouth|Brentford|Brentford to score",
+   "kickoff": "2026-09-12T14:00Z",
+   "league": "Premier League",
+   "match": "AFC Bournemouth v Brentford",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-12|AFC Bournemouth|Brentford|Brentford to score 2+": {
    "a": "Brentford",
    "a_key": "scoring",
@@ -1667,5 +1742,5 @@
    "strength": 8
   }
  },
- "updated_at": "2026-08-29T19:33:45+00:00"
+ "updated_at": "2026-08-29T19:34:27+00:00"
 }
