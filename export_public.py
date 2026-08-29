@@ -21,6 +21,10 @@ MIRROR = os.path.join(os.path.dirname(__file__), "data", "predictions.json")
 
 SETTLED = ("win", "loss", "half_win", "half_loss", "void")
 
+# Never written to the public repo. The board is world-readable, and these disclose real
+# money rather than anything a reader needs — performance is published to a 1-unit stake.
+PRIVATE_FIELDS = {"stake"}
+
 def profit(status, odds, stake):
     o, s = (odds or 0), (stake or 0)
     return {"win": s*(o-1), "loss": -s, "void": 0.0,
@@ -219,11 +223,29 @@ TAG_COLORS = {"best": "#f0b429", "value": "#3fb970", "lean": "#7aa2f7",
 
 def esc(x): return html.escape(str(x if x is not None else ""))
 
-def usd(x, sign=False):
+def units(x, sign=False):
+    """Render a result in UNITS, never currency.
+
+    PRIVACY: this repo is public, so the board must not disclose real money. Stake sizes
+    and dollar P&L are personal financial information — they reveal bankroll and betting
+    volume — while conveying nothing a reader needs. Everything is normalised to one unit
+    per pick (a win at 1.82 is +0.82u), which preserves the entire analytical picture —
+    win rate, ROI, cumulative performance — with no absolute figure attached.
+
+    `stake` is also stripped from data/predictions.json and public_site/picks.json for the
+    same reason; see load_rows() and picks_feed().
+    """
     if x is None: return "—"
-    s = f"${abs(x):,.2f}"
+    s = f"{abs(x):.2f}u"
     if x < 0: return f"−{s}"
     return f"+{s}" if sign else s
+
+
+def profit_units(status, odds):
+    """P&L to a ONE-UNIT stake, so absolute money never enters the export."""
+    o = odds or 0
+    return {"win": o - 1, "loss": -1.0, "void": 0.0,
+            "half_win": (o - 1) / 2, "half_loss": -0.5}.get(status, 0.0)
 
 def tone(x): return "pos" if (x or 0) >= 0 else "neg"
 
@@ -271,32 +293,33 @@ def pending_card(r, link_pair):
   <div class="row1"><span class="match">{esc(r["match"])}</span>{tag_chip(r["tag"])}{btns}</div>
   <div class="ko"><time data-utc="{ko}">{ko}</time></div>
   <div class="pick">{esc(r["pick"])}</div>
-  <div class="nums"><span>@{r["odds"]:g}</span><span>{usd(r["stake"])} stake</span><span>to win {usd((r["stake"] or 0)*((r["odds"] or 1)-1))}</span></div>
+  <div class="nums"><span>@{r["odds"]:g}</span><span>1u stake</span><span>to win {units((r["odds"] or 1)-1)}</span></div>
   {grid_html(r["grid_json"])}
   {f'<div class="why">{esc(r["rationale"])}</div>' if r["rationale"] else ""}
   <button class="nextbtn" data-next="{r["id"]}">✓ Game finished — show next pick</button>
 </div>"""
 
 def settled_row(r):
-    p = profit(r["status"], r["odds"], r["stake"])
+    p = profit_units(r["status"], r["odds"])
     return f"""<tr>
   <td class="mut">{esc(r["event_date"])}</td>
   <td><div class="tmatch">{esc(r["match"])}</div><div class="tres mut">{esc(r["result_note"] or "")}</div></td>
   <td>{esc(r["pick"])}</td>
   <td class="tnum">{r["odds"]:g}</td>
-  <td class="tnum">{usd(r["stake"])}</td>
   <td>{tag_chip(r["tag"])}</td>
   <td>{status_chip(r["status"])}</td>
-  <td class="tnum {tone(p)}">{usd(p, True)}</td>
+  <td class="tnum {tone(p)}">{units(p, True)}</td>
 </tr>"""
 
 def picks_feed(rows):
     """ALL pending picks (not just the QUEUE_SIZE slice shown on the board) with the
     structured fields a downstream settler needs. `id` is the stable dedup key.
     Excludes Kalshi company-quarterly picks (see EARNINGS_SPORT)."""
+    # NOTE: `stake` is deliberately absent — see units(). A downstream settler needs the
+    # market and price, never how much money was on it.
     return [{"id": r["id"], "event_date": r["event_date"], "sport": r["sport"], "match": r["match"],
              "pick": r["pick"], "market": r["market"], "selection": r["selection"], "line": r["line"],
-             "odds": r["odds"], "stake": r["stake"], "tag": r["tag"], "rationale": r["rationale"],
+             "odds": r["odds"], "tag": r["tag"], "rationale": r["rationale"],
              "af_fixture_id": r["af_fixture_id"], "kickoff": r["kickoff"]}
             for r in rows if r["status"] == "pending" and r["sport"] != EARNINGS_SPORT]
 
@@ -417,7 +440,7 @@ white-space:nowrap;margin-left:auto}}
 <details class="res">
 <summary><h2>Recent results ({len(settled)})</h2><span class="caret">▸</span></summary>
 {f'''<div class="tbl"><table>
-<tr><th>Date</th><th>Match</th><th>Pick</th><th>Odds</th><th>Stake</th><th>Lane</th><th>Result</th><th>P&amp;L</th></tr>
+<tr><th>Date</th><th>Match</th><th>Pick</th><th>Odds</th><th>Lane</th><th>Result</th><th>P&amp;L to 1u</th></tr>
 {"".join(settled_row(r) for r in settled)}
 </table></div>''' if settled else '<div class="mut">Nothing settled in the last week.</div>'}
 </details>
@@ -470,7 +493,13 @@ def load_rows():
     ONLY the `predictions` table is ever mirrored into the repo. predictions.db also
     holds kalshi_orders / kalshi_bets / kalshi_config — private trading data that must
     never reach the public repo — so the raw .db stays gitignored and we export just
-    this one table. Every field below is already shown on the public board.
+    this one table.
+
+    STAKE IS STRIPPED FROM THE MIRROR. The repo is public, and stake sizes are personal
+    financial information: 125 picks at $10-$75 disclose bankroll and betting volume to
+    anyone who reads the file. Nothing on the board needs them — results render to one
+    unit (see units()) — so the money never leaves this machine. `stake` stays available
+    in memory for the local tracker; only the published copy drops it.
     """
     if os.path.exists(DB):
         c = sqlite3.connect(DB); c.row_factory = sqlite3.Row
@@ -478,12 +507,15 @@ def load_rows():
         # ledger/stats keep them (matches /api/stats), so no archived filter here.
         rows = [dict(r) for r in c.execute("SELECT * FROM predictions ORDER BY id DESC")]
         c.close()
+        public = [{k: v for k, v in r.items() if k not in PRIVATE_FIELDS} for r in rows]
         os.makedirs(os.path.dirname(MIRROR), exist_ok=True)
         with open(MIRROR, "w") as f:                    # keep the repo copy in step
             json.dump({"exported_at": datetime.datetime.now(datetime.timezone.utc)
-                       .isoformat(timespec="seconds"), "count": len(rows), "picks": rows},
+                       .isoformat(timespec="seconds"), "count": len(public),
+                       "note": "stake omitted: results are published to a 1-unit stake",
+                       "picks": public},
                       f, indent=1, default=str)
-        print(f"  mirrored {len(rows)} picks -> {MIRROR}")
+        print(f"  mirrored {len(public)} picks -> {MIRROR} (stake withheld)")
         return rows
     if os.path.exists(MIRROR):
         print(f"  no predictions.db — reading {MIRROR}")

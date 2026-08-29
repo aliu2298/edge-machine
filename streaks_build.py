@@ -570,7 +570,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Streaks</h1>
 <div class="sub">Teams on a run, matched against a next opponent who is soft in the same
-place · updated {esc(now)}</div>
+place · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Sports</a><a class="on" href="./streaks.html">Streaks</a></div>
 
 <details class="how">
@@ -630,29 +630,38 @@ function esc(s) {{
   return String(s).replace(/[&<>"']/g, c => (
     {{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]));
 }}
+// All wall-clock times render in CENTRAL, pinned explicitly rather than taken from the
+// viewer's device. Relying on the browser's zone meant the same page showed different
+// kickoff times depending on what machine it was opened from; naming the zone makes the
+// board say one thing. "America/Chicago" (not a fixed -5/-6 offset) so CDT/CST switches
+// are handled for us.
+const TZ = 'America/Chicago';
 function when(iso) {{
   const d = new Date(iso);
   if (isNaN(d)) return '';
-  return d.toLocaleString([], {{weekday:'short', month:'short', day:'numeric',
-                               hour:'numeric', minute:'2-digit'}});
+  return d.toLocaleString('en-US', {{timeZone: TZ, weekday:'short', month:'short',
+                                    day:'numeric', hour:'numeric', minute:'2-digit'}});
 }}
 // Everything below works off the kickoff INSTANT and renders in the viewer's timezone.
 // The stored `date` field is the UTC date, which is a different day from local for any
 // late-UTC kickoff (a 01:30Z match is the previous evening in the Americas) — grouping on
 // it would print a header that disagreed with the card underneath it.
+/** YYYY-MM-DD for an instant, as it falls in Central. 'en-CA' yields exactly that shape. */
 function localDayKey(iso) {{
   const d = new Date(iso);
   if (isNaN(d)) return 'unknown';
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0')
-       + '-' + String(d.getDate()).padStart(2,'0');
+  return d.toLocaleDateString('en-CA', {{timeZone: TZ}});
 }}
 function dayLabel(iso) {{
   const d = new Date(iso);
-  if (isNaN(d)) return 'Date unknown';
-  const now = new Date();
-  const midnight = x => new Date(x.getFullYear(), x.getMonth(), x.getDate());
-  const days = Math.round((midnight(d) - midnight(now)) / 86400000);
-  const nice = d.toLocaleDateString([], {{weekday:'long', month:'short', day:'numeric'}});
+  if (isNaN(d)) return ['Date unknown', ''];
+  // "Today"/"Tomorrow" are relative to the CENTRAL calendar day, so they agree with the
+  // date printed on the cards under the header.
+  const key = localDayKey(iso), todayKey = localDayKey(new Date().toISOString());
+  const days = Math.round((Date.parse(key + 'T00:00:00Z')
+                         - Date.parse(todayKey + 'T00:00:00Z')) / 86400000);
+  const nice = d.toLocaleDateString('en-US', {{timeZone: TZ, weekday:'long',
+                                              month:'short', day:'numeric'}});
   if (days === 0) return ['Today', nice];
   if (days === 1) return ['Tomorrow', nice];
   return [nice, days > 0 ? `in ${{days}} days` : `${{-days}} days ago`];
