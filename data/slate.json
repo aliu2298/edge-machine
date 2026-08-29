@@ -1,0 +1,387 @@
+{
+ "picks": {
+  "2026-08-29|Atlanta United FC|Charlotte FC|Over 2.5 goals": {
+   "a": "Atlanta United FC",
+   "a_key": "over25",
+   "a_label": "over 2.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Sporting Kansas City",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Minnesota United FC",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Red Bull New York",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Philadelphia Union",
+     "s": "2-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New England Revolution",
+     "s": "1-4"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Charlotte FC",
+     "s": "2-2"
+    }
+   ],
+   "a_run": 6,
+   "away": "Charlotte FC",
+   "b": "Charlotte FC",
+   "b_key": "over25",
+   "b_label": "over 2.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "D.C. United",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Toronto FC",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Columbus Crew",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Chicago Fire FC",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "Red Bull New York",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "Atlanta United FC",
+     "s": "2-2"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.15053763440860216,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-08-29",
+   "drawn_at": "2026-08-29T04:54:19+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "Atlanta United FC",
+   "id": "2026-08-29|Atlanta United FC|Charlotte FC|Over 2.5 goals",
+   "kalshi": "https://kalshi.com/events/KXMLSGAME-26AUG29ATLCLT",
+   "kickoff": "2026-08-29T23:30Z",
+   "league": "MLS",
+   "match": "Atlanta United FC v Charlotte FC",
+   "status": "live",
+   "strength": 10,
+   "why": "Atlanta United FC have gone over 2.5 in 6 straight; Charlotte FC in 4 straight."
+  },
+  "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score": {
+   "a": "Inter Miami CF",
+   "a_key": "btts",
+   "a_label": "both teams scored",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Toronto FC",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Philadelphia Union",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Nashville SC",
+     "s": "1-4"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Columbus Crew",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "CF Montr\u00e9al",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "Chicago Fire FC",
+     "s": "3-2"
+    }
+   ],
+   "a_run": 4,
+   "away": "CF Montr\u00e9al",
+   "b": "CF Montr\u00e9al",
+   "b_key": "btts",
+   "b_label": "both teams scored",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "LA Galaxy",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Columbus Crew",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "D.C. United",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New England Revolution",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "Inter Miami CF",
+     "s": "0-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "Nashville SC",
+     "s": "0-1"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.16666666666666666,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-08-29",
+   "drawn_at": "2026-08-29T04:54:19+00:00",
+   "headline": "Both teams to score",
+   "home": "Inter Miami CF",
+   "id": "2026-08-29|Inter Miami CF|CF Montr\u00e9al|Both teams to score",
+   "kalshi": "https://kalshi.com/events/KXMLSGAME-26AUG29MIAMTL",
+   "kickoff": "2026-08-29T23:30Z",
+   "league": "MLS",
+   "match": "Inter Miami CF v CF Montr\u00e9al",
+   "status": "live",
+   "strength": 8,
+   "why": "Both sides are on a BTTS run \u2014 Inter Miami CF 4 straight, CF Montr\u00e9al 4 straight."
+  },
+  "2026-08-29|Toronto FC|New York City FC|Both teams to score": {
+   "a": "Toronto FC",
+   "a_key": "btts",
+   "a_label": "both teams scored",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Inter Miami CF",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Charlotte FC",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New England Revolution",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New York City FC",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "D.C. United",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "MLS",
+     "opp": "New England Revolution",
+     "s": "0-0"
+    }
+   ],
+   "a_run": 5,
+   "away": "New York City FC",
+   "b": "New York City FC",
+   "b_key": "btts",
+   "b_label": "both teams scored",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New England Revolution",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "FC Cincinnati",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Philadelphia Union",
+     "s": "2-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Toronto FC",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Chicago Fire FC",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Columbus Crew",
+     "s": "2-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.0967741935483871,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-08-29",
+   "drawn_at": "2026-08-29T04:54:19+00:00",
+   "headline": "Both teams to score",
+   "home": "Toronto FC",
+   "id": "2026-08-29|Toronto FC|New York City FC|Both teams to score",
+   "kalshi": "https://kalshi.com/events/KXMLSGAME-26AUG29TORNYC",
+   "kickoff": "2026-08-29T23:30Z",
+   "league": "MLS",
+   "match": "Toronto FC v New York City FC",
+   "status": "live",
+   "strength": 11,
+   "why": "Both sides are on a BTTS run \u2014 Toronto FC 5 straight, New York City FC 6 straight."
+  }
+ },
+ "updated_at": "2026-08-29T04:54:19+00:00"
+}
