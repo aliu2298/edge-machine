@@ -944,6 +944,7 @@
    "test_date": "2026-09-05"
   },
   "Internazionale|scoring1|2026-08-30|Internazionale|Cagliari": {
+   "graded_at": "2026-08-30T21:12:17+00:00",
    "home": false,
    "id": "Internazionale|scoring1|2026-08-30|Internazionale|Cagliari",
    "key": "scoring1",
@@ -954,7 +955,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Cagliari",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "1-0",
+   "status": "extended",
    "team": "Internazionale",
    "test_date": "2026-08-30"
   },
@@ -1905,5 +1907,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-08-30T20:31:13+00:00"
+ "updated_at": "2026-08-30T21:12:17+00:00"
 }
