@@ -501,6 +501,8 @@
    },
    "date": "2026-08-30",
    "drawn_at": "2026-08-30T14:51:27+00:00",
+   "final": "4-0",
+   "graded_at": "2026-08-30T20:31:12+00:00",
    "headline": "Real Madrid to score",
    "home": "Real Madrid",
    "id": "2026-08-30|Real Madrid|M\u00e1laga|Real Madrid to score",
@@ -508,7 +510,7 @@
    "league": "La Liga",
    "market": "https://www.bovada.lv/sports/soccer/europe/spain/la-liga/real-madrid-malaga-202608301100",
    "match": "Real Madrid v M\u00e1laga",
-   "status": "live",
+   "status": "hit",
    "strength": 8,
    "why": "Real Madrid have scored 2+ in 3 straight; M\u00e1laga have conceded in 5 straight."
   },
@@ -639,6 +641,136 @@
    "status": "live",
    "strength": 10,
    "why": "Aston Villa have gone over 2.5 in 6 straight; Arsenal in 4 straight."
+  },
+  "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score": {
+   "a": "Barcelona",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Athletic Club",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Elche",
+     "s": "5-0"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "FC Basel",
+     "s": "5-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Valencia",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Real Betis",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Alav\u00e9s",
+     "s": "0-1"
+    }
+   ],
+   "a_run": 3,
+   "away": "Rayo Vallecano",
+   "b": "Rayo Vallecano",
+   "b_key": "porous",
+   "b_label": "conceded in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Alav\u00e9s",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Sevilla",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Ipswich Town",
+     "s": "0-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Alav\u00e9s",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Villarreal",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Valencia",
+     "s": "1-1"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.4095744680851064,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Barcelona"
+   },
+   "date": "2026-08-31",
+   "drawn_at": "2026-08-30T20:31:12+00:00",
+   "headline": "Barcelona to score",
+   "home": "Barcelona",
+   "id": "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score",
+   "kickoff": "2026-08-31T19:30Z",
+   "league": "La Liga",
+   "market": "https://www.bovada.lv/sports/soccer/europe/spain/la-liga/fc-barcelona-rayo-vallecano-202608311530",
+   "match": "Barcelona v Rayo Vallecano",
+   "status": "live",
+   "strength": 7,
+   "why": "Barcelona have scored 2+ in 3 straight; Rayo Vallecano have conceded in 4 straight."
   },
   "2026-08-31|Benfica|Estoril|Benfica to score": {
    "a": "Benfica",
@@ -771,5 +903,5 @@
    "why": "Benfica have scored 2+ in 6 straight; Estoril have conceded in 6 straight."
   }
  },
- "updated_at": "2026-08-30T14:51:27+00:00"
+ "updated_at": "2026-08-30T20:31:12+00:00"
 }

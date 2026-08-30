@@ -358,14 +358,16 @@
     "team": "Real Madrid"
    },
    "date": "2026-08-30",
+   "final": "4-0",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-08-30T20:31:12+00:00",
    "headline": "Real Madrid to score",
    "home": "Real Madrid",
    "id": "2026-08-30|Real Madrid|M\u00e1laga|Real Madrid to score",
    "kickoff": "2026-08-30T15:00Z",
    "league": "La Liga",
    "match": "Real Madrid v M\u00e1laga",
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-08-30|Telstar|Ajax Amsterdam|Ajax Amsterdam to score": {
@@ -384,14 +386,16 @@
     "team": "Ajax Amsterdam"
    },
    "date": "2026-08-30",
+   "final": "0-4",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-08-30T20:31:12+00:00",
    "headline": "Ajax Amsterdam to score",
    "home": "Telstar",
    "id": "2026-08-30|Telstar|Ajax Amsterdam|Ajax Amsterdam to score",
    "kickoff": "2026-08-30T14:45Z",
    "league": "Eredivisie",
    "match": "Telstar v Ajax Amsterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals": {
@@ -1918,6 +1922,32 @@
    "status": "pending",
    "strength": 7
   },
+  "2026-09-12|Real Madrid|Rayo Vallecano|Real Madrid to score": {
+   "a": "Real Madrid",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Rayo Vallecano",
+   "b": "Rayo Vallecano",
+   "b_key": "porous",
+   "b_run": 4,
+   "base_rate": 0.4095744680851064,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Real Madrid"
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-08-30",
+   "headline": "Real Madrid to score",
+   "home": "Real Madrid",
+   "id": "2026-09-12|Real Madrid|Rayo Vallecano|Real Madrid to score",
+   "kickoff": "2026-09-12T19:00Z",
+   "league": "La Liga",
+   "match": "Real Madrid v Rayo Vallecano",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-13|Braga|Estoril|Braga to score": {
    "a": "Braga",
    "a_key": "scoring",
@@ -2097,6 +2127,32 @@
    "match": "Manchester United v Manchester City",
    "status": "pending",
    "strength": 7
+  },
+  "2026-09-13|Manchester United|Manchester City|Manchester City to score 2+": {
+   "a": "Manchester City",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Manchester City",
+   "b": "Manchester United",
+   "b_key": "leaky",
+   "b_run": 3,
+   "base_rate": 0.12234042553191489,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "Manchester City"
+   },
+   "date": "2026-09-13",
+   "first_seen": "2026-08-30",
+   "headline": "Manchester City to score 2+",
+   "home": "Manchester United",
+   "id": "2026-09-13|Manchester United|Manchester City|Manchester City to score 2+",
+   "kickoff": "2026-09-13T15:30Z",
+   "league": "Premier League",
+   "match": "Manchester United v Manchester City",
+   "status": "pending",
+   "strength": 6
   },
   "2026-09-13|Neom SC|Al Fateh|Under 2.5 goals": {
    "a": "Neom SC",
@@ -2318,5 +2374,5 @@
    "strength": 11
   }
  },
- "updated_at": "2026-08-30T14:51:27+00:00"
+ "updated_at": "2026-08-30T20:31:12+00:00"
 }

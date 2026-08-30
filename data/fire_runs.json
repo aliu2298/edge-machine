@@ -61,6 +61,7 @@
    "test_date": "2026-09-04"
   },
   "Ajax Amsterdam|scoring1|2026-08-30|Ajax Amsterdam|Telstar": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": false,
    "id": "Ajax Amsterdam|scoring1|2026-08-30|Ajax Amsterdam|Telstar",
    "key": "scoring1",
@@ -71,7 +72,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Telstar",
    "rate": 0.18888888888888888,
-   "status": "pending",
+   "result": "4-0",
+   "status": "extended",
    "team": "Ajax Amsterdam",
    "test_date": "2026-08-30"
   },
@@ -565,6 +567,21 @@
    "team": "Columbus Crew",
    "test_date": "2026-08-30"
   },
+  "Columbus Crew|scoring1|2026-09-05|Columbus Crew|Colorado Rapids": {
+   "home": true,
+   "id": "Columbus Crew|scoring1|2026-09-05|Columbus Crew|Colorado Rapids",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Colorado Rapids",
+   "rate": 0.17222222222222222,
+   "status": "pending",
+   "team": "Columbus Crew",
+   "test_date": "2026-09-05"
+  },
   "Crystal Palace|porous|2026-09-05|Crystal Palace|Fulham": {
    "home": false,
    "id": "Crystal Palace|porous|2026-09-05|Crystal Palace|Fulham",
@@ -643,6 +660,7 @@
    "test_date": "2026-09-05"
   },
   "FC Augsburg|porous|2026-08-30|FC Augsburg|Schalke 04": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
    "id": "FC Augsburg|porous|2026-08-30|FC Augsburg|Schalke 04",
    "key": "porous",
@@ -653,7 +671,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Schalke 04",
    "rate": 0.09444444444444444,
-   "status": "pending",
+   "result": "3-0",
+   "status": "broke",
    "team": "FC Augsburg",
    "test_date": "2026-08-30"
   },
@@ -938,6 +957,21 @@
    "status": "pending",
    "team": "Internazionale",
    "test_date": "2026-08-30"
+  },
+  "Internazionale|scoring1|2026-09-05|Internazionale|Napoli": {
+   "home": true,
+   "id": "Internazionale|scoring1|2026-09-05|Internazionale|Napoli",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T16:00Z",
+   "label": "scored in",
+   "league": "Serie A",
+   "length": 15,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Napoli",
+   "rate": 0.03888888888888889,
+   "status": "pending",
+   "team": "Internazionale",
+   "test_date": "2026-09-05"
   },
   "Manchester City|scoring1|2026-09-05|Manchester City|Coventry City": {
    "home": true,
@@ -1335,6 +1369,7 @@
    "test_date": "2026-09-06"
   },
   "Real Madrid|scoring1|2026-08-30|Real Madrid|M\u00e1laga": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
    "id": "Real Madrid|scoring1|2026-08-30|Real Madrid|M\u00e1laga",
    "key": "scoring1",
@@ -1345,9 +1380,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "M\u00e1laga",
    "rate": 0.1388888888888889,
-   "status": "pending",
+   "result": "4-0",
+   "status": "extended",
    "team": "Real Madrid",
    "test_date": "2026-08-30"
+  },
+  "Real Madrid|scoring1|2026-09-04|Real Madrid|Real Betis": {
+   "home": false,
+   "id": "Real Madrid|scoring1|2026-09-04|Real Madrid|Real Betis",
+   "key": "scoring1",
+   "kickoff": "2026-09-04T19:00Z",
+   "label": "scored in",
+   "league": "La Liga",
+   "length": 11,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Real Betis",
+   "rate": 0.11666666666666667,
+   "status": "pending",
+   "team": "Real Madrid",
+   "test_date": "2026-09-04"
   },
   "Real Salt Lake|btts|2026-08-30|Real Salt Lake|Colorado Rapids": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -1634,6 +1685,7 @@
    "test_date": "2026-08-30"
   },
   "Stade Rennais|btts|2026-08-30|Stade Rennais|Le Mans": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
    "id": "Stade Rennais|btts|2026-08-30|Stade Rennais|Le Mans",
    "key": "btts",
@@ -1644,11 +1696,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Le Mans",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "3-2",
+   "status": "extended",
    "team": "Stade Rennais",
    "test_date": "2026-08-30"
   },
+  "Stade Rennais|btts|2026-09-06|Stade Rennais|Angers": {
+   "home": false,
+   "id": "Stade Rennais|btts|2026-09-06|Stade Rennais|Angers",
+   "key": "btts",
+   "kickoff": "2026-09-06T15:15Z",
+   "label": "both teams scored",
+   "league": "Ligue 1",
+   "length": 9,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Angers",
+   "rate": 0.027777777777777776,
+   "status": "pending",
+   "team": "Stade Rennais",
+   "test_date": "2026-09-06"
+  },
   "Stade Rennais|over25|2026-08-30|Stade Rennais|Le Mans": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
    "id": "Stade Rennais|over25|2026-08-30|Stade Rennais|Le Mans",
    "key": "over25",
@@ -1659,11 +1728,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Le Mans",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "3-2",
+   "status": "extended",
    "team": "Stade Rennais",
    "test_date": "2026-08-30"
   },
+  "Stade Rennais|over25|2026-09-06|Stade Rennais|Angers": {
+   "home": false,
+   "id": "Stade Rennais|over25|2026-09-06|Stade Rennais|Angers",
+   "key": "over25",
+   "kickoff": "2026-09-06T15:15Z",
+   "label": "over 2.5 goals",
+   "league": "Ligue 1",
+   "length": 12,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Angers",
+   "rate": 0.011111111111111112,
+   "status": "pending",
+   "team": "Stade Rennais",
+   "test_date": "2026-09-06"
+  },
   "Stade Rennais|porous|2026-08-30|Stade Rennais|Le Mans": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
    "id": "Stade Rennais|porous|2026-08-30|Stade Rennais|Le Mans",
    "key": "porous",
@@ -1674,11 +1760,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Le Mans",
    "rate": 0.2111111111111111,
-   "status": "pending",
+   "result": "3-2",
+   "status": "extended",
    "team": "Stade Rennais",
    "test_date": "2026-08-30"
   },
+  "Stade Rennais|porous|2026-09-06|Stade Rennais|Angers": {
+   "home": false,
+   "id": "Stade Rennais|porous|2026-09-06|Stade Rennais|Angers",
+   "key": "porous",
+   "kickoff": "2026-09-06T15:15Z",
+   "label": "conceded in",
+   "league": "Ligue 1",
+   "length": 9,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Angers",
+   "rate": 0.17222222222222222,
+   "status": "pending",
+   "team": "Stade Rennais",
+   "test_date": "2026-09-06"
+  },
   "Stade Rennais|scoring1|2026-08-30|Stade Rennais|Le Mans": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
    "id": "Stade Rennais|scoring1|2026-08-30|Stade Rennais|Le Mans",
    "key": "scoring1",
@@ -1689,9 +1792,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Le Mans",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "3-2",
+   "status": "extended",
    "team": "Stade Rennais",
    "test_date": "2026-08-30"
+  },
+  "Stade Rennais|scoring1|2026-09-06|Stade Rennais|Angers": {
+   "home": false,
+   "id": "Stade Rennais|scoring1|2026-09-06|Stade Rennais|Angers",
+   "key": "scoring1",
+   "kickoff": "2026-09-06T15:15Z",
+   "label": "scored in",
+   "league": "Ligue 1",
+   "length": 12,
+   "logged_at": "2026-08-30T20:31:13+00:00",
+   "opp": "Angers",
+   "rate": 0.08888888888888889,
+   "status": "pending",
+   "team": "Stade Rennais",
+   "test_date": "2026-09-06"
   },
   "Strasbourg|porous|2026-09-06|Strasbourg|Troyes": {
    "home": false,
@@ -1754,6 +1873,7 @@
    "test_date": "2026-09-05"
   },
   "Werder Bremen|porous|2026-08-30|Werder Bremen|SC Freiburg": {
+   "graded_at": "2026-08-30T20:31:13+00:00",
    "home": false,
    "id": "Werder Bremen|porous|2026-08-30|Werder Bremen|SC Freiburg",
    "key": "porous",
@@ -1764,7 +1884,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "SC Freiburg",
    "rate": 0.17222222222222222,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "Werder Bremen",
    "test_date": "2026-08-30"
   },
@@ -1784,5 +1905,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-08-30T14:51:28+00:00"
+ "updated_at": "2026-08-30T20:31:13+00:00"
 }
