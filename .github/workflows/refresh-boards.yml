@@ -5,7 +5,14 @@ name: Refresh boards
 
 on:
   schedule:
-    - cron: "17 11 * * *"      # daily ~11:17 UTC (off the hour)
+    # Every 6h, not daily. A daily refresh made staleness UNDETECTABLE: normal
+    # operation left the board up to 24h old, so a skipped cron looked identical to a
+    # healthy one and no threshold could tell them apart. GitHub skipped the 2026-08-30
+    # 11:17 slot and the board sat 18h stale with every check reporting green.
+    # Six-hourly bounds staleness, makes one skipped run nearly invisible, and lets the
+    # watchdog use a threshold tight enough to actually fire. Runs are ~45s and Actions
+    # minutes are free on public repos, so the extra cost is nil.
+    - cron: "17 */6 * * *"     # 00:17, 06:17, 12:17, 18:17 UTC
   workflow_dispatch:            # manual "Refresh now" from the Actions tab
 
 # contents: push the regenerated board back to main.
@@ -83,7 +90,7 @@ jobs:
             echo "no changes — nothing to deploy"
             exit 0
           fi
-          git commit -m "Refresh board ($(date -u +%Y-%m-%d))"
+          git commit -m "Refresh board ($(date -u +%Y-%m-%d\ %H:%MZ))"
           # rebase in case the board was pushed from the Mac meanwhile
           git pull --rebase --autostash origin main
           git push origin main

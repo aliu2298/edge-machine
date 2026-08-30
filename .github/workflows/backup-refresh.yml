@@ -2,9 +2,9 @@ name: Backup refresh (watchdog)
 
 # Failover for "Refresh boards". Deliberately NOT a duplicate of it.
 #
-# A second copy of the pipeline on another schedule would double the work every day and,
-# worse, race the primary on push. This instead runs 12 hours out of phase, asks whether
-# the primary actually did its job, and only takes over when it did not.
+# A second copy of the pipeline on its own schedule would double the work and, worse, race
+# the primary on push. This instead runs 3h after each primary slot, asks whether the
+# primary actually did its job, and only takes over when it did not.
 #
 # Two independent things are checked, because they fail in different ways:
 #   1. Did the primary workflow SUCCEED recently?   (it never ran, or it ran red)
@@ -17,7 +17,9 @@ name: Backup refresh (watchdog)
 
 on:
   schedule:
-    - cron: "17 23 * * *"      # 12h out of phase with the primary's 11:17
+    # Offset 3h from each primary slot, so a skipped primary is caught within 3 hours
+    # instead of waiting for the next daily cycle.
+    - cron: "17 3,9,15,21 * * *"
   workflow_dispatch:
     inputs:
       force:
@@ -36,8 +38,11 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # The primary runs daily. Allow a full cycle plus slack before calling it stale.
-  STALE_AFTER_HOURS: 26
+  # The primary runs every 6h and this checks 3h after each slot, so a healthy last
+  # success is ~3h old and a single missed slot shows as ~9h. 8h therefore fires on one
+  # miss without false-positiving on a normal cycle — the tight threshold is only possible
+  # BECAUSE the primary is frequent; at daily cadence no value worked.
+  STALE_AFTER_HOURS: 8
   BOARD_URL: https://aliu2298.github.io/edge-machine/
 
 jobs:
@@ -146,7 +151,7 @@ jobs:
             echo "no changes — nothing to commit"
             exit 0
           fi
-          git commit -m "Refresh board via backup ($(date -u +%Y-%m-%d))"
+          git commit -m "Refresh board via backup ($(date -u +%Y-%m-%d\ %H:%MZ))"
           git pull --rebase --autostash origin main
           git push origin main
 
