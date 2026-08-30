@@ -692,9 +692,9 @@ advice.</p>
 <div class="controls">
   <div class="tabs">
     <button class="tb on" data-tab="leads">Leads</button>
+    <button class="tb" data-tab="track">Track record</button>
     <button class="tb" data-tab="fire">🔥 On fire</button>
     <button class="tb" data-tab="teams">All teams</button>
-    <button class="tb" data-tab="track">Track record</button>
   </div>
   <div class="lgs">
     <button class="lg on" data-lg="">All leagues</button>{league_btns}
