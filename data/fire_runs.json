@@ -75,6 +75,21 @@
    "team": "Ajax Amsterdam",
    "test_date": "2026-08-30"
   },
+  "Ajax Amsterdam|scoring1|2026-09-05|Ajax Amsterdam|PSV Eindhoven": {
+   "home": true,
+   "id": "Ajax Amsterdam|scoring1|2026-09-05|Ajax Amsterdam|PSV Eindhoven",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T18:00Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "PSV Eindhoven",
+   "rate": 0.19444444444444445,
+   "status": "pending",
+   "team": "Ajax Amsterdam",
+   "test_date": "2026-09-05"
+  },
   "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal": {
    "home": false,
    "id": "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal",
@@ -181,6 +196,7 @@
    "test_date": "2026-08-31"
   },
   "Atlanta United FC|porous|2026-08-29|Atlanta United FC|Charlotte FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Atlanta United FC|porous|2026-08-29|Atlanta United FC|Charlotte FC",
    "key": "porous",
@@ -191,11 +207,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Charlotte FC",
    "rate": 0.022222222222222223,
-   "status": "pending",
+   "result": "0-2",
+   "status": "extended",
    "team": "Atlanta United FC",
    "test_date": "2026-08-29"
   },
+  "Atlanta United FC|porous|2026-09-05|Atlanta United FC|Inter Miami CF": {
+   "home": false,
+   "id": "Atlanta United FC|porous|2026-09-05|Atlanta United FC|Inter Miami CF",
+   "key": "porous",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 17,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Inter Miami CF",
+   "rate": 0.022222222222222223,
+   "status": "pending",
+   "team": "Atlanta United FC",
+   "test_date": "2026-09-05"
+  },
   "Atl\u00e9tico Madrid|scoring1|2026-08-29|Atl\u00e9tico Madrid|Sevilla": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Atl\u00e9tico Madrid|scoring1|2026-08-29|Atl\u00e9tico Madrid|Sevilla",
    "key": "scoring1",
@@ -206,7 +239,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Sevilla",
    "rate": 0.16111111111111112,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Atl\u00e9tico Madrid",
    "test_date": "2026-08-29"
   },
@@ -226,6 +260,7 @@
    "test_date": "2026-09-05"
   },
   "Austin FC|porous|2026-08-30|Austin FC|Portland Timbers": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Austin FC|porous|2026-08-30|Austin FC|Portland Timbers",
    "key": "porous",
@@ -236,9 +271,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Portland Timbers",
    "rate": 0.12777777777777777,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Austin FC",
    "test_date": "2026-08-30"
+  },
+  "Austin FC|porous|2026-09-06|Austin FC|San Jose Earthquakes": {
+   "home": true,
+   "id": "Austin FC|porous|2026-09-06|Austin FC|San Jose Earthquakes",
+   "key": "porous",
+   "kickoff": "2026-09-06T00:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 11,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "San Jose Earthquakes",
+   "rate": 0.1111111111111111,
+   "status": "pending",
+   "team": "Austin FC",
+   "test_date": "2026-09-06"
   },
   "Bayer Leverkusen|btts|2026-09-05|Bayer Leverkusen|1. FC Union Berlin": {
    "home": true,
@@ -406,6 +457,7 @@
    "test_date": "2026-09-05"
   },
   "Charlotte FC|scoring1|2026-08-29|Charlotte FC|Atlanta United FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Charlotte FC|scoring1|2026-08-29|Charlotte FC|Atlanta United FC",
    "key": "scoring1",
@@ -416,11 +468,58 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Atlanta United FC",
    "rate": 0.18888888888888888,
-   "status": "pending",
+   "result": "2-0",
+   "status": "extended",
    "team": "Charlotte FC",
    "test_date": "2026-08-29"
   },
+  "Charlotte FC|scoring1|2026-09-05|Charlotte FC|Houston Dynamo FC": {
+   "home": true,
+   "id": "Charlotte FC|scoring1|2026-09-05|Charlotte FC|Houston Dynamo FC",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Houston Dynamo FC",
+   "rate": 0.16666666666666666,
+   "status": "pending",
+   "team": "Charlotte FC",
+   "test_date": "2026-09-05"
+  },
+  "Chicago Fire FC|btts|2026-09-05|Chicago Fire FC|Toronto FC": {
+   "home": false,
+   "id": "Chicago Fire FC|btts|2026-09-05|Chicago Fire FC|Toronto FC",
+   "key": "btts",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "both teams scored",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Toronto FC",
+   "rate": 0.044444444444444446,
+   "status": "pending",
+   "team": "Chicago Fire FC",
+   "test_date": "2026-09-05"
+  },
+  "Chicago Fire FC|porous|2026-09-05|Chicago Fire FC|Toronto FC": {
+   "home": false,
+   "id": "Chicago Fire FC|porous|2026-09-05|Chicago Fire FC|Toronto FC",
+   "key": "porous",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Toronto FC",
+   "rate": 0.2111111111111111,
+   "status": "pending",
+   "team": "Chicago Fire FC",
+   "test_date": "2026-09-05"
+  },
   "Chicago Fire FC|scoring1|2026-08-29|Chicago Fire FC|Seattle Sounders FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Chicago Fire FC|scoring1|2026-08-29|Chicago Fire FC|Seattle Sounders FC",
    "key": "scoring1",
@@ -431,7 +530,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Seattle Sounders FC",
    "rate": 0.022222222222222223,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Chicago Fire FC",
    "test_date": "2026-08-29"
   },
@@ -481,6 +581,7 @@
    "test_date": "2026-09-05"
   },
   "D.C. United|porous|2026-08-29|D.C. United|LAFC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "D.C. United|porous|2026-08-29|D.C. United|LAFC",
    "key": "porous",
@@ -491,7 +592,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "LAFC",
    "rate": 0.12777777777777777,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "D.C. United",
    "test_date": "2026-08-29"
   },
@@ -556,6 +658,7 @@
    "test_date": "2026-08-30"
   },
   "FC Cincinnati|btts|2026-08-30|FC Cincinnati|Nashville SC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "FC Cincinnati|btts|2026-08-30|FC Cincinnati|Nashville SC",
    "key": "btts",
@@ -566,11 +669,13 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Nashville SC",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "0-4",
+   "status": "broke",
    "team": "FC Cincinnati",
    "test_date": "2026-08-30"
   },
   "FC Cincinnati|porous|2026-08-30|FC Cincinnati|Nashville SC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "FC Cincinnati|porous|2026-08-30|FC Cincinnati|Nashville SC",
    "key": "porous",
@@ -581,11 +686,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Nashville SC",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "0-4",
+   "status": "extended",
    "team": "FC Cincinnati",
    "test_date": "2026-08-30"
   },
+  "FC Cincinnati|porous|2026-09-05|FC Cincinnati|D.C. United": {
+   "home": true,
+   "id": "FC Cincinnati|porous|2026-09-05|FC Cincinnati|D.C. United",
+   "key": "porous",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 12,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "D.C. United",
+   "rate": 0.08888888888888889,
+   "status": "pending",
+   "team": "FC Cincinnati",
+   "test_date": "2026-09-05"
+  },
   "FC Cincinnati|scoring1|2026-08-30|FC Cincinnati|Nashville SC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "FC Cincinnati|scoring1|2026-08-30|FC Cincinnati|Nashville SC",
    "key": "scoring1",
@@ -596,7 +718,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Nashville SC",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "0-4",
+   "status": "broke",
    "team": "FC Cincinnati",
    "test_date": "2026-08-30"
   },
@@ -675,7 +798,23 @@
    "team": "FC Porto",
    "test_date": "2026-09-04"
   },
+  "FC Utrecht|scoring1|2026-09-05|FC Utrecht|Go Ahead Eagles": {
+   "home": true,
+   "id": "FC Utrecht|scoring1|2026-09-05|FC Utrecht|Go Ahead Eagles",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T16:45Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Go Ahead Eagles",
+   "rate": 0.19444444444444445,
+   "status": "pending",
+   "team": "FC Utrecht",
+   "test_date": "2026-09-05"
+  },
   "Feyenoord Rotterdam|scoring1|2026-08-30|Feyenoord Rotterdam|ADO Den Haag": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Feyenoord Rotterdam|scoring1|2026-08-30|Feyenoord Rotterdam|ADO Den Haag",
    "key": "scoring1",
@@ -686,9 +825,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "ADO Den Haag",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Feyenoord Rotterdam",
    "test_date": "2026-08-30"
+  },
+  "Feyenoord Rotterdam|scoring1|2026-09-05|Feyenoord Rotterdam|NEC Nijmegen": {
+   "home": false,
+   "id": "Feyenoord Rotterdam|scoring1|2026-09-05|Feyenoord Rotterdam|NEC Nijmegen",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T14:30Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 12,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "NEC Nijmegen",
+   "rate": 0.08333333333333333,
+   "status": "pending",
+   "team": "Feyenoord Rotterdam",
+   "test_date": "2026-09-05"
   },
   "Fortuna Sittard|porous|2026-09-06|Fortuna Sittard|ADO Den Haag": {
    "home": false,
@@ -721,6 +876,7 @@
    "test_date": "2026-09-06"
   },
   "Houston Dynamo FC|scoring1|2026-08-30|Houston Dynamo FC|San Jose Earthquakes": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Houston Dynamo FC|scoring1|2026-08-30|Houston Dynamo FC|San Jose Earthquakes",
    "key": "scoring1",
@@ -731,11 +887,13 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "San Jose Earthquakes",
    "rate": 0.16111111111111112,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "Houston Dynamo FC",
    "test_date": "2026-08-30"
   },
   "Inter Miami CF|scoring1|2026-08-29|Inter Miami CF|CF Montr\u00e9al": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Inter Miami CF|scoring1|2026-08-29|Inter Miami CF|CF Montr\u00e9al",
    "key": "scoring1",
@@ -746,9 +904,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "CF Montr\u00e9al",
    "rate": 0.022222222222222223,
-   "status": "pending",
+   "result": "7-1",
+   "status": "extended",
    "team": "Inter Miami CF",
    "test_date": "2026-08-29"
+  },
+  "Inter Miami CF|scoring1|2026-09-05|Inter Miami CF|Atlanta United FC": {
+   "home": true,
+   "id": "Inter Miami CF|scoring1|2026-09-05|Inter Miami CF|Atlanta United FC",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 18,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Atlanta United FC",
+   "rate": 0.016666666666666666,
+   "status": "pending",
+   "team": "Inter Miami CF",
+   "test_date": "2026-09-05"
   },
   "Internazionale|scoring1|2026-08-30|Internazionale|Cagliari": {
    "home": false,
@@ -780,6 +954,36 @@
    "team": "Manchester City",
    "test_date": "2026-09-05"
   },
+  "NEC Nijmegen|btts|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
+   "home": true,
+   "id": "NEC Nijmegen|btts|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam",
+   "key": "btts",
+   "kickoff": "2026-09-05T14:30Z",
+   "label": "both teams scored",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Feyenoord Rotterdam",
+   "rate": 0.044444444444444446,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-05"
+  },
+  "NEC Nijmegen|porous|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
+   "home": true,
+   "id": "NEC Nijmegen|porous|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam",
+   "key": "porous",
+   "kickoff": "2026-09-05T14:30Z",
+   "label": "conceded in",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Feyenoord Rotterdam",
+   "rate": 0.2111111111111111,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-05"
+  },
   "NEC Nijmegen|scoring1|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "home": true,
    "id": "NEC Nijmegen|scoring1|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam",
@@ -796,6 +1000,7 @@
    "test_date": "2026-09-05"
   },
   "New York City FC|btts|2026-08-29|New York City FC|Toronto FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "New York City FC|btts|2026-08-29|New York City FC|Toronto FC",
    "key": "btts",
@@ -806,11 +1011,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Toronto FC",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "New York City FC",
    "test_date": "2026-08-29"
   },
+  "New York City FC|btts|2026-09-04|New York City FC|Nashville SC": {
+   "home": true,
+   "id": "New York City FC|btts|2026-09-04|New York City FC|Nashville SC",
+   "key": "btts",
+   "kickoff": "2026-09-04T23:30Z",
+   "label": "both teams scored",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Nashville SC",
+   "rate": 0.022222222222222223,
+   "status": "pending",
+   "team": "New York City FC",
+   "test_date": "2026-09-04"
+  },
   "New York City FC|porous|2026-08-29|New York City FC|Toronto FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "New York City FC|porous|2026-08-29|New York City FC|Toronto FC",
    "key": "porous",
@@ -821,11 +1043,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Toronto FC",
    "rate": 0.2111111111111111,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "New York City FC",
    "test_date": "2026-08-29"
   },
+  "New York City FC|porous|2026-09-04|New York City FC|Nashville SC": {
+   "home": true,
+   "id": "New York City FC|porous|2026-09-04|New York City FC|Nashville SC",
+   "key": "porous",
+   "kickoff": "2026-09-04T23:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Nashville SC",
+   "rate": 0.17222222222222222,
+   "status": "pending",
+   "team": "New York City FC",
+   "test_date": "2026-09-04"
+  },
   "New York City FC|scoring1|2026-08-29|New York City FC|Toronto FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "New York City FC|scoring1|2026-08-29|New York City FC|Toronto FC",
    "key": "scoring1",
@@ -836,9 +1075,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Toronto FC",
    "rate": 0.1388888888888889,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "New York City FC",
    "test_date": "2026-08-29"
+  },
+  "New York City FC|scoring1|2026-09-04|New York City FC|Nashville SC": {
+   "home": true,
+   "id": "New York City FC|scoring1|2026-09-04|New York City FC|Nashville SC",
+   "key": "scoring1",
+   "kickoff": "2026-09-04T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 11,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Nashville SC",
+   "rate": 0.1111111111111111,
+   "status": "pending",
+   "team": "New York City FC",
+   "test_date": "2026-09-04"
   },
   "Newcastle United|porous|2026-09-05|Newcastle United|AFC Bournemouth": {
    "home": true,
@@ -856,6 +1111,7 @@
    "test_date": "2026-09-05"
   },
   "Orlando City SC|scoring1|2026-08-30|Orlando City SC|Minnesota United FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Orlando City SC|scoring1|2026-08-30|Orlando City SC|Minnesota United FC",
    "key": "scoring1",
@@ -866,11 +1122,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Minnesota United FC",
    "rate": 0.16111111111111112,
-   "status": "pending",
+   "result": "3-3",
+   "status": "extended",
    "team": "Orlando City SC",
    "test_date": "2026-08-30"
   },
+  "Orlando City SC|scoring1|2026-09-05|Orlando City SC|San Diego FC": {
+   "home": true,
+   "id": "Orlando City SC|scoring1|2026-09-05|Orlando City SC|San Diego FC",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 10,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "San Diego FC",
+   "rate": 0.1388888888888889,
+   "status": "pending",
+   "team": "Orlando City SC",
+   "test_date": "2026-09-05"
+  },
   "PSV Eindhoven|over25|2026-08-30|PSV Eindhoven|FC Utrecht": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "PSV Eindhoven|over25|2026-08-30|PSV Eindhoven|FC Utrecht",
    "key": "over25",
@@ -881,11 +1154,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "FC Utrecht",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "6-1",
+   "status": "extended",
    "team": "PSV Eindhoven",
    "test_date": "2026-08-30"
   },
+  "PSV Eindhoven|over25|2026-09-05|PSV Eindhoven|Ajax Amsterdam": {
+   "home": false,
+   "id": "PSV Eindhoven|over25|2026-09-05|PSV Eindhoven|Ajax Amsterdam",
+   "key": "over25",
+   "kickoff": "2026-09-05T18:00Z",
+   "label": "over 2.5 goals",
+   "league": "Eredivisie",
+   "length": 12,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Ajax Amsterdam",
+   "rate": 0.005555555555555556,
+   "status": "pending",
+   "team": "PSV Eindhoven",
+   "test_date": "2026-09-05"
+  },
   "PSV Eindhoven|scoring1|2026-08-30|PSV Eindhoven|FC Utrecht": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "PSV Eindhoven|scoring1|2026-08-30|PSV Eindhoven|FC Utrecht",
    "key": "scoring1",
@@ -896,11 +1186,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "FC Utrecht",
    "rate": 0.027777777777777776,
-   "status": "pending",
+   "result": "6-1",
+   "status": "extended",
    "team": "PSV Eindhoven",
    "test_date": "2026-08-30"
   },
+  "PSV Eindhoven|scoring1|2026-09-05|PSV Eindhoven|Ajax Amsterdam": {
+   "home": false,
+   "id": "PSV Eindhoven|scoring1|2026-09-05|PSV Eindhoven|Ajax Amsterdam",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T18:00Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 17,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Ajax Amsterdam",
+   "rate": 0.022222222222222223,
+   "status": "pending",
+   "team": "PSV Eindhoven",
+   "test_date": "2026-09-05"
+  },
   "Philadelphia Union|scoring1|2026-08-29|Philadelphia Union|Red Bull New York": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Philadelphia Union|scoring1|2026-08-29|Philadelphia Union|Red Bull New York",
    "key": "scoring1",
@@ -911,11 +1218,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Red Bull New York",
    "rate": 0.1388888888888889,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Philadelphia Union",
    "test_date": "2026-08-29"
   },
+  "Philadelphia Union|scoring1|2026-09-05|Philadelphia Union|CF Montr\u00e9al": {
+   "home": true,
+   "id": "Philadelphia Union|scoring1|2026-09-05|Philadelphia Union|CF Montr\u00e9al",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T23:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 11,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "CF Montr\u00e9al",
+   "rate": 0.1111111111111111,
+   "status": "pending",
+   "team": "Philadelphia Union",
+   "test_date": "2026-09-05"
+  },
   "Portland Timbers|btts|2026-08-30|Portland Timbers|Austin FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Portland Timbers|btts|2026-08-30|Portland Timbers|Austin FC",
    "key": "btts",
@@ -926,11 +1250,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Austin FC",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-08-30"
   },
+  "Portland Timbers|btts|2026-09-06|Portland Timbers|Minnesota United FC": {
+   "home": true,
+   "id": "Portland Timbers|btts|2026-09-06|Portland Timbers|Minnesota United FC",
+   "key": "btts",
+   "kickoff": "2026-09-06T02:30Z",
+   "label": "both teams scored",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Minnesota United FC",
+   "rate": 0.022222222222222223,
+   "status": "pending",
+   "team": "Portland Timbers",
+   "test_date": "2026-09-06"
+  },
   "Portland Timbers|porous|2026-08-30|Portland Timbers|Austin FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Portland Timbers|porous|2026-08-30|Portland Timbers|Austin FC",
    "key": "porous",
@@ -941,11 +1282,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Austin FC",
    "rate": 0.12777777777777777,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-08-30"
   },
+  "Portland Timbers|porous|2026-09-06|Portland Timbers|Minnesota United FC": {
+   "home": true,
+   "id": "Portland Timbers|porous|2026-09-06|Portland Timbers|Minnesota United FC",
+   "key": "porous",
+   "kickoff": "2026-09-06T02:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 11,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Minnesota United FC",
+   "rate": 0.1111111111111111,
+   "status": "pending",
+   "team": "Portland Timbers",
+   "test_date": "2026-09-06"
+  },
   "Portland Timbers|scoring1|2026-08-30|Portland Timbers|Austin FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Portland Timbers|scoring1|2026-08-30|Portland Timbers|Austin FC",
    "key": "scoring1",
@@ -956,9 +1314,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Austin FC",
    "rate": 0.18888888888888888,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-08-30"
+  },
+  "Portland Timbers|scoring1|2026-09-06|Portland Timbers|Minnesota United FC": {
+   "home": true,
+   "id": "Portland Timbers|scoring1|2026-09-06|Portland Timbers|Minnesota United FC",
+   "key": "scoring1",
+   "kickoff": "2026-09-06T02:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Minnesota United FC",
+   "rate": 0.16666666666666666,
+   "status": "pending",
+   "team": "Portland Timbers",
+   "test_date": "2026-09-06"
   },
   "Real Madrid|scoring1|2026-08-30|Real Madrid|M\u00e1laga": {
    "home": true,
@@ -976,6 +1350,7 @@
    "test_date": "2026-08-30"
   },
   "Real Salt Lake|btts|2026-08-30|Real Salt Lake|Colorado Rapids": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Real Salt Lake|btts|2026-08-30|Real Salt Lake|Colorado Rapids",
    "key": "btts",
@@ -986,11 +1361,13 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Colorado Rapids",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "Real Salt Lake",
    "test_date": "2026-08-30"
   },
   "Real Salt Lake|porous|2026-08-30|Real Salt Lake|Colorado Rapids": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Real Salt Lake|porous|2026-08-30|Real Salt Lake|Colorado Rapids",
    "key": "porous",
@@ -1001,11 +1378,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Colorado Rapids",
    "rate": 0.2111111111111111,
-   "status": "pending",
+   "result": "0-1",
+   "status": "extended",
    "team": "Real Salt Lake",
    "test_date": "2026-08-30"
   },
+  "Real Salt Lake|porous|2026-09-06|Real Salt Lake|LAFC": {
+   "home": true,
+   "id": "Real Salt Lake|porous|2026-09-06|Real Salt Lake|LAFC",
+   "key": "porous",
+   "kickoff": "2026-09-06T01:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "LAFC",
+   "rate": 0.17222222222222222,
+   "status": "pending",
+   "team": "Real Salt Lake",
+   "test_date": "2026-09-06"
+  },
   "Real Salt Lake|scoring1|2026-08-30|Real Salt Lake|Colorado Rapids": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "Real Salt Lake|scoring1|2026-08-30|Real Salt Lake|Colorado Rapids",
    "key": "scoring1",
@@ -1016,7 +1410,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Colorado Rapids",
    "rate": 0.07777777777777778,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "Real Salt Lake",
    "test_date": "2026-08-30"
   },
@@ -1036,6 +1431,7 @@
    "test_date": "2026-09-03"
   },
   "Red Bull New York|porous|2026-08-29|Red Bull New York|Philadelphia Union": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Red Bull New York|porous|2026-08-29|Red Bull New York|Philadelphia Union",
    "key": "porous",
@@ -1046,11 +1442,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Philadelphia Union",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "Red Bull New York",
    "test_date": "2026-08-29"
   },
+  "Red Bull New York|porous|2026-09-06|Red Bull New York|Seattle Sounders FC": {
+   "home": false,
+   "id": "Red Bull New York|porous|2026-09-06|Red Bull New York|Seattle Sounders FC",
+   "key": "porous",
+   "kickoff": "2026-09-06T00:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 20,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Seattle Sounders FC",
+   "rate": 0.011111111111111112,
+   "status": "pending",
+   "team": "Red Bull New York",
+   "test_date": "2026-09-06"
+  },
   "San Jose Earthquakes|porous|2026-08-30|San Jose Earthquakes|Houston Dynamo FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
    "id": "San Jose Earthquakes|porous|2026-08-30|San Jose Earthquakes|Houston Dynamo FC",
    "key": "porous",
@@ -1061,11 +1474,13 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Houston Dynamo FC",
    "rate": 0.03333333333333333,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "San Jose Earthquakes",
    "test_date": "2026-08-30"
   },
   "Seattle Sounders FC|porous|2026-08-29|Seattle Sounders FC|Chicago Fire FC": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Seattle Sounders FC|porous|2026-08-29|Seattle Sounders FC|Chicago Fire FC",
    "key": "porous",
@@ -1076,7 +1491,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Chicago Fire FC",
    "rate": 0.03888888888888889,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Seattle Sounders FC",
    "test_date": "2026-08-29"
   },
@@ -1093,6 +1509,21 @@
    "rate": 0.03888888888888889,
    "status": "pending",
    "team": "Seattle Sounders FC",
+   "test_date": "2026-09-06"
+  },
+  "Sevilla|porous|2026-09-06|Sevilla|Espanyol": {
+   "home": false,
+   "id": "Sevilla|porous|2026-09-06|Sevilla|Espanyol",
+   "key": "porous",
+   "kickoff": "2026-09-06T19:00Z",
+   "label": "conceded in",
+   "league": "La Liga",
+   "length": 8,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "Espanyol",
+   "rate": 0.2111111111111111,
+   "status": "pending",
+   "team": "Sevilla",
    "test_date": "2026-09-06"
   },
   "Sparta Rotterdam|porous|2026-09-04|Sparta Rotterdam|PEC Zwolle": {
@@ -1156,6 +1587,7 @@
    "test_date": "2026-09-05"
   },
   "Sporting Kansas City|porous|2026-08-30|Sporting Kansas City|Vancouver Whitecaps": {
+   "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
    "id": "Sporting Kansas City|porous|2026-08-30|Sporting Kansas City|Vancouver Whitecaps",
    "key": "porous",
@@ -1166,9 +1598,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Vancouver Whitecaps",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "0-3",
+   "status": "extended",
    "team": "Sporting Kansas City",
    "test_date": "2026-08-30"
+  },
+  "Sporting Kansas City|porous|2026-09-06|Sporting Kansas City|FC Dallas": {
+   "home": false,
+   "id": "Sporting Kansas City|porous|2026-09-06|Sporting Kansas City|FC Dallas",
+   "key": "porous",
+   "kickoff": "2026-09-06T00:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 20,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "FC Dallas",
+   "rate": 0.011111111111111112,
+   "status": "pending",
+   "team": "Sporting Kansas City",
+   "test_date": "2026-09-06"
   },
   "St. Louis CITY SC|scoring1|2026-08-30|St. Louis CITY SC|FC Dallas": {
    "home": true,
@@ -1319,7 +1767,22 @@
    "status": "pending",
    "team": "Werder Bremen",
    "test_date": "2026-08-30"
+  },
+  "Werder Bremen|porous|2026-09-05|Werder Bremen|RB Leipzig": {
+   "home": true,
+   "id": "Werder Bremen|porous|2026-09-05|Werder Bremen|RB Leipzig",
+   "key": "porous",
+   "kickoff": "2026-09-05T13:30Z",
+   "label": "conceded in",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-08-30T14:51:28+00:00",
+   "opp": "RB Leipzig",
+   "rate": 0.17222222222222222,
+   "status": "pending",
+   "team": "Werder Bremen",
+   "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-08-29T20:51:49+00:00"
+ "updated_at": "2026-08-30T14:51:28+00:00"
 }

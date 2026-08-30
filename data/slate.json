@@ -116,6 +116,8 @@
    },
    "date": "2026-08-29",
    "drawn_at": "2026-08-29T19:15:25+00:00",
+   "final": "0-2",
+   "graded_at": "2026-08-30T14:51:27+00:00",
    "headline": "Both teams to score",
    "home": "Atlanta United FC",
    "id": "2026-08-29|Atlanta United FC|Charlotte FC|Both teams to score",
@@ -123,7 +125,7 @@
    "kickoff": "2026-08-29T23:30Z",
    "league": "MLS",
    "match": "Atlanta United FC v Charlotte FC",
-   "status": "live",
+   "status": "miss",
    "strength": 10,
    "why": "Both sides are on a BTTS run \u2014 Atlanta United FC 6 straight, Charlotte FC 4 straight."
   },
@@ -243,6 +245,8 @@
    },
    "date": "2026-08-29",
    "drawn_at": "2026-08-29T19:15:25+00:00",
+   "final": "1-1",
+   "graded_at": "2026-08-30T14:51:27+00:00",
    "headline": "Both teams to score",
    "home": "Toronto FC",
    "id": "2026-08-29|Toronto FC|New York City FC|Both teams to score",
@@ -250,7 +254,7 @@
    "kickoff": "2026-08-29T23:30Z",
    "league": "MLS",
    "match": "Toronto FC v New York City FC",
-   "status": "live",
+   "status": "hit",
    "strength": 11,
    "why": "Both sides are on a BTTS run \u2014 Toronto FC 5 straight, New York City FC 6 straight."
   },
@@ -373,6 +377,8 @@
    },
    "date": "2026-08-30",
    "drawn_at": "2026-08-29T19:15:25+00:00",
+   "final": "1-6",
+   "graded_at": "2026-08-30T14:51:27+00:00",
    "headline": "PSV Eindhoven to score 2+",
    "home": "FC Utrecht",
    "id": "2026-08-30|FC Utrecht|PSV Eindhoven|PSV Eindhoven to score 2+",
@@ -380,10 +386,390 @@
    "kickoff": "2026-08-30T10:15Z",
    "league": "Eredivisie",
    "match": "FC Utrecht v PSV Eindhoven",
-   "status": "live",
+   "status": "hit",
    "strength": 8,
    "why": "PSV Eindhoven have scored 2+ in 4 straight; FC Utrecht have conceded 2+ in 4 straight."
+  },
+  "2026-08-30|Real Madrid|M\u00e1laga|Real Madrid to score": {
+   "a": "Real Madrid",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Real Sociedad",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Espanyol",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Schalke 04",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Deportivo",
+     "s": "1-0"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Ferencvaros",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Fiorentina",
+     "s": "2-2"
+    }
+   ],
+   "a_run": 3,
+   "away": "M\u00e1laga",
+   "b": "M\u00e1laga",
+   "b_key": "porous",
+   "b_label": "conceded in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Deportivo",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Atl\u00e9tico Madrid",
+     "s": "0-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Fulham",
+     "s": "2-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Ceuta",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Al Arabi",
+     "s": "4-2"
+    }
+   ],
+   "b_run": 5,
+   "base_rate": 0.31382978723404253,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Real Madrid"
+   },
+   "date": "2026-08-30",
+   "drawn_at": "2026-08-30T14:51:27+00:00",
+   "headline": "Real Madrid to score",
+   "home": "Real Madrid",
+   "id": "2026-08-30|Real Madrid|M\u00e1laga|Real Madrid to score",
+   "kickoff": "2026-08-30T15:00Z",
+   "league": "La Liga",
+   "market": "https://www.bovada.lv/sports/soccer/europe/spain/la-liga/real-madrid-malaga-202608301100",
+   "match": "Real Madrid v M\u00e1laga",
+   "status": "live",
+   "strength": 8,
+   "why": "Real Madrid have scored 2+ in 3 straight; M\u00e1laga have conceded in 5 straight."
+  },
+  "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals": {
+   "a": "Aston Villa",
+   "a_key": "over25",
+   "a_label": "over 2.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Brighton & Hove Albion",
+     "s": "0-4"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "UEFA Super Cup",
+     "opp": "Paris Saint-Germain",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Bayern Munich",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Manchester City",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Europa League",
+     "opp": "SC Freiburg",
+     "s": "3-0"
+    }
+   ],
+   "a_run": 6,
+   "away": "Arsenal",
+   "b": "Arsenal",
+   "b_key": "over25",
+   "b_label": "over 2.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Coventry City",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Real Betis",
+     "s": "1-3"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Girona",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Crystal Palace",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Premier League",
+     "opp": "Burnley",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Premier League",
+     "opp": "West Ham United",
+     "s": "1-0"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.1702127659574468,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-08-31",
+   "drawn_at": "2026-08-30T14:51:27+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "Aston Villa",
+   "id": "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals",
+   "kickoff": "2026-08-31T19:00Z",
+   "league": "Premier League",
+   "market": "https://www.bovada.lv/sports/soccer/europe/england/premier-league/aston-villa-arsenal-202608311500",
+   "match": "Aston Villa v Arsenal",
+   "status": "live",
+   "strength": 10,
+   "why": "Aston Villa have gone over 2.5 in 6 straight; Arsenal in 4 straight."
+  },
+  "2026-08-31|Benfica|Estoril|Benfica to score": {
+   "a": "Benfica",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Casa Pia",
+     "s": "7-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Acad\u00e9mico de Viseu",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Estoril",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Braga",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "FC Famalicao",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Moreirense",
+     "s": "4-1"
+    }
+   ],
+   "a_run": 6,
+   "away": "Estoril",
+   "b": "Estoril",
+   "b_key": "porous",
+   "b_label": "conceded in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Rio Ave",
+     "s": "0-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "C.D. Nacional",
+     "s": "0-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "FC Famalicao",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Benfica",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Alverca",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Braga",
+     "s": "1-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2553191489361702,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Benfica"
+   },
+   "date": "2026-08-31",
+   "drawn_at": "2026-08-30T14:51:27+00:00",
+   "headline": "Benfica to score",
+   "home": "Benfica",
+   "id": "2026-08-31|Benfica|Estoril|Benfica to score",
+   "kickoff": "2026-08-31T19:15Z",
+   "league": "Primeira Liga",
+   "market": "https://www.bovada.lv/sports/soccer/europe/portugal/primeira-liga/benfica-estoril-202608311515",
+   "match": "Benfica v Estoril",
+   "status": "live",
+   "strength": 12,
+   "why": "Benfica have scored 2+ in 6 straight; Estoril have conceded in 6 straight."
   }
  },
- "updated_at": "2026-08-29T20:51:48+00:00"
+ "updated_at": "2026-08-30T14:51:27+00:00"
 }
