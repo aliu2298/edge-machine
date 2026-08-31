@@ -412,14 +412,16 @@
     "n": 3
    },
    "date": "2026-08-31",
+   "final": "0-1",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-08-31T22:54:34+00:00",
    "headline": "Over 2.5 goals",
    "home": "Aston Villa",
    "id": "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals",
    "kickoff": "2026-08-31T19:00Z",
    "league": "Premier League",
    "match": "Aston Villa v Arsenal",
-   "status": "pending",
+   "status": "miss",
    "strength": 10
   },
   "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score": {
@@ -438,14 +440,16 @@
     "team": "Barcelona"
    },
    "date": "2026-08-31",
+   "final": "5-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-08-31T22:54:34+00:00",
    "headline": "Barcelona to score",
    "home": "Barcelona",
    "id": "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score",
    "kickoff": "2026-08-31T19:30Z",
    "league": "La Liga",
    "match": "Barcelona v Rayo Vallecano",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-08-31|Benfica|Estoril|Benfica to score": {
@@ -464,14 +468,16 @@
     "team": "Benfica"
    },
    "date": "2026-08-31",
+   "final": "2-1",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-08-31T22:54:34+00:00",
    "headline": "Benfica to score",
    "home": "Benfica",
    "id": "2026-08-31|Benfica|Estoril|Benfica to score",
    "kickoff": "2026-08-31T19:15Z",
    "league": "Primeira Liga",
    "match": "Benfica v Estoril",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-05|Ajax Amsterdam|PSV Eindhoven|Ajax Amsterdam to score": {
@@ -2373,6 +2379,32 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-14|Torino|AS Roma|AS Roma to score 2+": {
+   "a": "AS Roma",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "AS Roma",
+   "b": "Torino",
+   "b_key": "leaky",
+   "b_run": 4,
+   "base_rate": 0.12234042553191489,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "AS Roma"
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-08-31",
+   "headline": "AS Roma to score 2+",
+   "home": "Torino",
+   "id": "2026-09-14|Torino|AS Roma|AS Roma to score 2+",
+   "kickoff": "2026-09-14T16:30Z",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
+   "status": "pending",
+   "strength": 7
+  },
   "2026-09-14|Torino|AS Roma|Over 2.5 goals": {
    "a": "Torino",
    "a_key": "over25",
@@ -2398,5 +2430,5 @@
    "strength": 11
   }
  },
- "updated_at": "2026-08-31T14:00:41+00:00"
+ "updated_at": "2026-08-31T22:54:34+00:00"
 }

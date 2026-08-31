@@ -631,6 +631,8 @@
    },
    "date": "2026-08-31",
    "drawn_at": "2026-08-30T14:51:27+00:00",
+   "final": "0-1",
+   "graded_at": "2026-08-31T22:54:34+00:00",
    "headline": "Over 2.5 goals",
    "home": "Aston Villa",
    "id": "2026-08-31|Aston Villa|Arsenal|Over 2.5 goals",
@@ -638,7 +640,7 @@
    "league": "Premier League",
    "market": "https://www.bovada.lv/sports/soccer/europe/england/premier-league/aston-villa-arsenal-202608311500",
    "match": "Aston Villa v Arsenal",
-   "status": "live",
+   "status": "miss",
    "strength": 10,
    "why": "Aston Villa have gone over 2.5 in 6 straight; Arsenal in 4 straight."
   },
@@ -761,6 +763,8 @@
    },
    "date": "2026-08-31",
    "drawn_at": "2026-08-30T20:31:12+00:00",
+   "final": "5-2",
+   "graded_at": "2026-08-31T22:54:34+00:00",
    "headline": "Barcelona to score",
    "home": "Barcelona",
    "id": "2026-08-31|Barcelona|Rayo Vallecano|Barcelona to score",
@@ -768,7 +772,7 @@
    "league": "La Liga",
    "market": "https://www.bovada.lv/sports/soccer/europe/spain/la-liga/fc-barcelona-rayo-vallecano-202608311530",
    "match": "Barcelona v Rayo Vallecano",
-   "status": "live",
+   "status": "hit",
    "strength": 7,
    "why": "Barcelona have scored 2+ in 3 straight; Rayo Vallecano have conceded in 4 straight."
   },
@@ -891,6 +895,8 @@
    },
    "date": "2026-08-31",
    "drawn_at": "2026-08-30T14:51:27+00:00",
+   "final": "2-1",
+   "graded_at": "2026-08-31T22:54:34+00:00",
    "headline": "Benfica to score",
    "home": "Benfica",
    "id": "2026-08-31|Benfica|Estoril|Benfica to score",
@@ -898,10 +904,395 @@
    "league": "Primeira Liga",
    "market": "https://www.bovada.lv/sports/soccer/europe/portugal/primeira-liga/benfica-estoril-202608311515",
    "match": "Benfica v Estoril",
-   "status": "live",
+   "status": "hit",
    "strength": 12,
    "why": "Benfica have scored 2+ in 6 straight; Estoril have conceded in 6 straight."
+  },
+  "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Over 2.5 goals": {
+   "a": "Bayer Leverkusen",
+   "a_key": "over25",
+   "a_label": "over 2.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "SV Elversberg",
+     "s": "2-3"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Newcastle United",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Nottingham Forest",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Sevilla",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Bundesliga",
+     "opp": "Hamburg SV",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Bundesliga",
+     "opp": "VfB Stuttgart",
+     "s": "1-3"
+    }
+   ],
+   "a_run": 4,
+   "away": "1. FC Union Berlin",
+   "b": "1. FC Union Berlin",
+   "b_key": "over25",
+   "b_label": "over 2.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "Eintracht Frankfurt",
+     "s": "3-3"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Ipswich Town",
+     "s": "2-4"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Aris Limassol",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "FC Augsburg",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "Mainz",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "FC Cologne",
+     "s": "2-2"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.1595744680851064,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-05",
+   "drawn_at": "2026-08-31T22:54:34+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "Bayer Leverkusen",
+   "id": "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Over 2.5 goals",
+   "kickoff": "2026-09-05T13:30Z",
+   "league": "Bundesliga",
+   "market": "https://www.bovada.lv/sports/soccer/europe/germany/1-bundesliga/bayer-leverkusen-union-berlin-202609050930",
+   "match": "Bayer Leverkusen v 1. FC Union Berlin",
+   "status": "live",
+   "strength": 10,
+   "why": "Bayer Leverkusen have gone over 2.5 in 4 straight; 1. FC Union Berlin in 6 straight."
+  },
+  "2026-09-05|FC Utrecht|Go Ahead Eagles|Go Ahead Eagles to score 2+": {
+   "a": "Go Ahead Eagles",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "AZ Alkmaar",
+     "s": "2-5"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "ADO Den Haag",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Feyenoord Rotterdam",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Willem II",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "NEC Nijmegen",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "PSV Eindhoven",
+     "s": "1-4"
+    }
+   ],
+   "a_run": 4,
+   "away": "Go Ahead Eagles",
+   "b": "FC Utrecht",
+   "b_key": "leaky",
+   "b_label": "conceded 2+",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "PSV Eindhoven",
+     "s": "1-6"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Sparta Rotterdam",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "AZ Alkmaar",
+     "s": "1-4"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "FC Groningen",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Heerenveen",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "Fortuna Sittard",
+     "s": "2-0"
+    }
+   ],
+   "b_run": 5,
+   "base_rate": 0.09042553191489362,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "Go Ahead Eagles"
+   },
+   "date": "2026-09-05",
+   "drawn_at": "2026-08-31T22:54:34+00:00",
+   "headline": "Go Ahead Eagles to score 2+",
+   "home": "FC Utrecht",
+   "id": "2026-09-05|FC Utrecht|Go Ahead Eagles|Go Ahead Eagles to score 2+",
+   "kickoff": "2026-09-05T16:45Z",
+   "league": "Eredivisie",
+   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/fc-utrecht-go-ahead-eagles-202609051245",
+   "match": "FC Utrecht v Go Ahead Eagles",
+   "status": "live",
+   "strength": 9,
+   "why": "Go Ahead Eagles have scored 2+ in 4 straight; FC Utrecht have conceded 2+ in 5 straight."
+  },
+  "2026-09-05|NEC Nijmegen|Feyenoord Rotterdam|Both teams to score": {
+   "a": "NEC Nijmegen",
+   "a_key": "btts",
+   "a_label": "both teams scored",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "PEC Zwolle",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Willem II",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Telstar",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Go Ahead Eagles",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "FC Groningen",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Telstar",
+     "s": "1-1"
+    }
+   ],
+   "a_run": 6,
+   "away": "Feyenoord Rotterdam",
+   "b": "Feyenoord Rotterdam",
+   "b_key": "btts",
+   "b_label": "both teams scored",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "ADO Den Haag",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "SC Cambuur",
+     "s": "5-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Go Ahead Eagles",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "Sparta Rotterdam",
+     "s": "1-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Atalanta",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Royal Charleroi SC",
+     "s": "3-1"
+    }
+   ],
+   "b_run": 3,
+   "base_rate": 0.2127659574468085,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-09-05",
+   "drawn_at": "2026-08-31T22:54:34+00:00",
+   "headline": "Both teams to score",
+   "home": "NEC Nijmegen",
+   "id": "2026-09-05|NEC Nijmegen|Feyenoord Rotterdam|Both teams to score",
+   "kickoff": "2026-09-05T14:30Z",
+   "league": "Eredivisie",
+   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/nec-nijmegen-feyenoord-202609051030",
+   "match": "NEC Nijmegen v Feyenoord Rotterdam",
+   "status": "live",
+   "strength": 9,
+   "why": "Both sides are on a BTTS run \u2014 NEC Nijmegen 6 straight, Feyenoord Rotterdam 3 straight."
   }
  },
- "updated_at": "2026-08-31T14:00:41+00:00"
+ "updated_at": "2026-08-31T22:54:34+00:00"
 }

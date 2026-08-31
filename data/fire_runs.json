@@ -168,6 +168,7 @@
    "test_date": "2026-09-06"
   },
   "Arsenal|scoring1|2026-08-31|Arsenal|Aston Villa": {
+   "graded_at": "2026-08-31T22:54:37+00:00",
    "home": false,
    "id": "Arsenal|scoring1|2026-08-31|Arsenal|Aston Villa",
    "key": "scoring1",
@@ -178,11 +179,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Aston Villa",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "1-0",
+   "status": "extended",
    "team": "Arsenal",
    "test_date": "2026-08-31"
   },
+  "Arsenal|scoring1|2026-09-06|Arsenal|Chelsea": {
+   "home": true,
+   "id": "Arsenal|scoring1|2026-09-06|Arsenal|Chelsea",
+   "key": "scoring1",
+   "kickoff": "2026-09-06T15:30Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 12,
+   "logged_at": "2026-08-31T22:54:37+00:00",
+   "opp": "Chelsea",
+   "rate": 0.1,
+   "status": "pending",
+   "team": "Arsenal",
+   "test_date": "2026-09-06"
+  },
   "Aston Villa|over25|2026-08-31|Aston Villa|Arsenal": {
+   "graded_at": "2026-08-31T22:54:37+00:00",
    "home": true,
    "id": "Aston Villa|over25|2026-08-31|Aston Villa|Arsenal",
    "key": "over25",
@@ -193,7 +211,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Arsenal",
    "rate": 0.016666666666666666,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "Aston Villa",
    "test_date": "2026-08-31"
   },
@@ -398,7 +417,23 @@
    "team": "Bayern Munich",
    "test_date": "2026-09-05"
   },
+  "Benfica|over25|2026-09-05|Benfica|Maritimo": {
+   "home": false,
+   "id": "Benfica|over25|2026-09-05|Benfica|Maritimo",
+   "key": "over25",
+   "kickoff": "2026-09-05T17:00Z",
+   "label": "over 2.5 goals",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-08-31T22:54:37+00:00",
+   "opp": "Maritimo",
+   "rate": 0.03333333333333333,
+   "status": "pending",
+   "team": "Benfica",
+   "test_date": "2026-09-05"
+  },
   "Benfica|scoring1|2026-08-31|Benfica|Estoril": {
+   "graded_at": "2026-08-31T22:54:37+00:00",
    "home": true,
    "id": "Benfica|scoring1|2026-08-31|Benfica|Estoril",
    "key": "scoring1",
@@ -409,11 +444,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Estoril",
    "rate": 0.06111111111111111,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Benfica",
    "test_date": "2026-08-31"
   },
+  "Benfica|scoring1|2026-09-05|Benfica|Maritimo": {
+   "home": false,
+   "id": "Benfica|scoring1|2026-09-05|Benfica|Maritimo",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T17:00Z",
+   "label": "scored in",
+   "league": "Primeira Liga",
+   "length": 13,
+   "logged_at": "2026-08-31T22:54:37+00:00",
+   "opp": "Maritimo",
+   "rate": 0.05555555555555555,
+   "status": "pending",
+   "team": "Benfica",
+   "test_date": "2026-09-05"
+  },
   "Benfica|scoring|2026-08-31|Benfica|Estoril": {
+   "graded_at": "2026-08-31T22:54:37+00:00",
    "home": true,
    "id": "Benfica|scoring|2026-08-31|Benfica|Estoril",
    "key": "scoring",
@@ -424,11 +476,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Estoril",
    "rate": 0.011111111111111112,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Benfica",
    "test_date": "2026-08-31"
   },
+  "Benfica|scoring|2026-09-05|Benfica|Maritimo": {
+   "home": false,
+   "id": "Benfica|scoring|2026-09-05|Benfica|Maritimo",
+   "key": "scoring",
+   "kickoff": "2026-09-05T17:00Z",
+   "label": "scored 2+",
+   "league": "Primeira Liga",
+   "length": 9,
+   "logged_at": "2026-08-31T22:54:37+00:00",
+   "opp": "Maritimo",
+   "rate": 0.005555555555555556,
+   "status": "pending",
+   "team": "Benfica",
+   "test_date": "2026-09-05"
+  },
   "Braga|scoring1|2026-08-31|Braga|Vit\u00f3ria de Guimaraes": {
+   "graded_at": "2026-08-31T22:54:37+00:00",
    "home": true,
    "id": "Braga|scoring1|2026-08-31|Braga|Vit\u00f3ria de Guimaraes",
    "key": "scoring1",
@@ -439,9 +508,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Vit\u00f3ria de Guimaraes",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "1-0",
+   "status": "extended",
    "team": "Braga",
    "test_date": "2026-08-31"
+  },
+  "Braga|scoring1|2026-09-05|Braga|Alverca": {
+   "home": false,
+   "id": "Braga|scoring1|2026-09-05|Braga|Alverca",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T17:00Z",
+   "label": "scored in",
+   "league": "Primeira Liga",
+   "length": 16,
+   "logged_at": "2026-08-31T22:54:37+00:00",
+   "opp": "Alverca",
+   "rate": 0.03333333333333333,
+   "status": "pending",
+   "team": "Braga",
+   "test_date": "2026-09-05"
   },
   "Brest|porous|2026-09-05|Brest|Le Havre AC": {
    "home": false,
@@ -632,6 +717,7 @@
    "test_date": "2026-09-06"
   },
   "Estoril|porous|2026-08-31|Estoril|Benfica": {
+   "graded_at": "2026-08-31T22:54:37+00:00",
    "home": false,
    "id": "Estoril|porous|2026-08-31|Estoril|Benfica",
    "key": "porous",
@@ -642,9 +728,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Benfica",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Estoril",
    "test_date": "2026-08-31"
+  },
+  "Estoril|porous|2026-09-07|Estoril|Arouca": {
+   "home": true,
+   "id": "Estoril|porous|2026-09-07|Estoril|Arouca",
+   "key": "porous",
+   "kickoff": "2026-09-07T19:15Z",
+   "label": "conceded in",
+   "league": "Primeira Liga",
+   "length": 12,
+   "logged_at": "2026-08-31T22:54:37+00:00",
+   "opp": "Arouca",
+   "rate": 0.08888888888888889,
+   "status": "pending",
+   "team": "Estoril",
+   "test_date": "2026-09-07"
   },
   "Excelsior|scoring1|2026-09-05|Excelsior|Willem II": {
    "home": false,
@@ -1926,5 +2028,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-08-31T14:00:43+00:00"
+ "updated_at": "2026-08-31T22:54:37+00:00"
 }
