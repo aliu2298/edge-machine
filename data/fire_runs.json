@@ -553,6 +553,7 @@
    "test_date": "2026-09-05"
   },
   "Columbus Crew|scoring1|2026-08-30|Columbus Crew|New England Revolution": {
+   "graded_at": "2026-08-31T05:44:01+00:00",
    "home": true,
    "id": "Columbus Crew|scoring1|2026-08-30|Columbus Crew|New England Revolution",
    "key": "scoring1",
@@ -563,7 +564,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "New England Revolution",
    "rate": 0.16111111111111112,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "Columbus Crew",
    "test_date": "2026-08-30"
   },
@@ -1672,6 +1674,7 @@
    "test_date": "2026-09-06"
   },
   "St. Louis CITY SC|scoring1|2026-08-30|St. Louis CITY SC|FC Dallas": {
+   "graded_at": "2026-08-31T05:44:01+00:00",
    "home": true,
    "id": "St. Louis CITY SC|scoring1|2026-08-30|St. Louis CITY SC|FC Dallas",
    "key": "scoring1",
@@ -1682,9 +1685,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "FC Dallas",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "3-3",
+   "status": "extended",
    "team": "St. Louis CITY SC",
    "test_date": "2026-08-30"
+  },
+  "St. Louis CITY SC|scoring1|2026-09-06|St. Louis CITY SC|Vancouver Whitecaps": {
+   "home": false,
+   "id": "St. Louis CITY SC|scoring1|2026-09-06|St. Louis CITY SC|Vancouver Whitecaps",
+   "key": "scoring1",
+   "kickoff": "2026-09-06T02:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 12,
+   "logged_at": "2026-08-31T05:44:01+00:00",
+   "opp": "Vancouver Whitecaps",
+   "rate": 0.09444444444444444,
+   "status": "pending",
+   "team": "St. Louis CITY SC",
+   "test_date": "2026-09-06"
   },
   "Stade Rennais|btts|2026-08-30|Stade Rennais|Le Mans": {
    "graded_at": "2026-08-30T20:31:13+00:00",
@@ -1907,5 +1926,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-08-30T21:12:17+00:00"
+ "updated_at": "2026-08-31T05:44:01+00:00"
 }
