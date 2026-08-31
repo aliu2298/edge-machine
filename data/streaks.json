@@ -1,5 +1,5 @@
 {
- "built_at": "2026-08-31T05:44:00+00:00",
+ "built_at": "2026-08-31T14:00:41+00:00",
  "teams_tracked": 188,
  "leads": [
   {
@@ -1885,7 +1885,7 @@
      "lg": "Club Friendly"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/ajax-psv-eindhoven-202609051400"
   },
   {
    "date": "2026-09-05",
@@ -4518,7 +4518,7 @@
      "lg": "Bundesliga"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/europe/germany/1-bundesliga/augsburg-bayer-leverkusen-202609120930"
   },
   {
    "date": "2026-09-12",
@@ -5148,7 +5148,7 @@
      "lg": "La Liga"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/europe/spain/la-liga/real-madrid-rayo-vallecano-202609121500"
   },
   {
    "date": "2026-09-12",
@@ -6535,131 +6535,6 @@
   {
    "date": "2026-09-13",
    "kickoff": "2026-09-13T18:00Z",
-   "league": "Serie A",
-   "match": "Torino v AS Roma",
-   "home": "Torino",
-   "away": "AS Roma",
-   "headline": "Over 2.5 goals",
-   "why": "Torino have gone over 2.5 in 5 straight; AS Roma in 6 straight.",
-   "a": "Torino",
-   "b": "AS Roma",
-   "a_run": 5,
-   "b_run": 6,
-   "a_key": "over25",
-   "b_key": "over25",
-   "a_label": "over 2.5 goals",
-   "b_label": "over 2.5 goals",
-   "strength": 11,
-   "base_rate": 0.10106382978723404,
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "a_recent": [
-    {
-     "s": "1-2",
-     "opp": "Sassuolo",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "1-2",
-     "opp": "AC Milan",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "2-2",
-     "opp": "Juventus",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "1-2",
-     "opp": "Cagliari",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "2-1",
-     "opp": "Sassuolo",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "0-2",
-     "opp": "Udinese",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Serie A"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "4-0",
-     "opp": "Fiorentina",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Serie A"
-    },
-    {
-     "s": "2-2",
-     "opp": "Borussia Dortmund",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-3",
-     "opp": "Brighton & Hove Albion",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "4-1",
-     "opp": "Newport County",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-4",
-     "opp": "Cardiff City",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-3",
-     "opp": "AS Cannes",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T18:00Z",
    "league": "Primeira Liga",
    "match": "Braga v Estoril",
    "home": "Braga",
@@ -7036,7 +6911,7 @@
      "lg": "Ligue 1"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/europe/france/ligue-1/brest-paris-saint-germain-202609131445"
   },
   {
    "date": "2026-09-13",
@@ -7163,7 +7038,132 @@
      "lg": "La Liga"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/europe/spain/la-liga/real-madrid-rayo-vallecano-202609121500"
+  },
+  {
+   "date": "2026-09-14",
+   "kickoff": "2026-09-14T16:30Z",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
+   "home": "Torino",
+   "away": "AS Roma",
+   "headline": "Over 2.5 goals",
+   "why": "Torino have gone over 2.5 in 5 straight; AS Roma in 6 straight.",
+   "a": "Torino",
+   "b": "AS Roma",
+   "a_run": 5,
+   "b_run": 6,
+   "a_key": "over25",
+   "b_key": "over25",
+   "a_label": "over 2.5 goals",
+   "b_label": "over 2.5 goals",
+   "strength": 11,
+   "base_rate": 0.10106382978723404,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "a_recent": [
+    {
+     "s": "1-2",
+     "opp": "Sassuolo",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "1-2",
+     "opp": "AC Milan",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "2-2",
+     "opp": "Juventus",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "1-2",
+     "opp": "Cagliari",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "2-1",
+     "opp": "Sassuolo",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "0-2",
+     "opp": "Udinese",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Serie A"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "4-0",
+     "opp": "Fiorentina",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "2-2",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-3",
+     "opp": "Brighton & Hove Albion",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "4-1",
+     "opp": "Newport County",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-4",
+     "opp": "Cardiff City",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-3",
+     "opp": "AS Cannes",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "market": "https://www.bovada.lv/sports/soccer/europe/italy/serie-a/torino-as-roma-202609130630"
   }
  ],
  "teams": [

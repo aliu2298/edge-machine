@@ -2372,7 +2372,31 @@
    "match": "Torino v AS Roma",
    "status": "pending",
    "strength": 11
+  },
+  "2026-09-14|Torino|AS Roma|Over 2.5 goals": {
+   "a": "Torino",
+   "a_key": "over25",
+   "a_run": 5,
+   "away": "AS Roma",
+   "b": "AS Roma",
+   "b_key": "over25",
+   "b_run": 6,
+   "base_rate": 0.10106382978723404,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-08-31",
+   "headline": "Over 2.5 goals",
+   "home": "Torino",
+   "id": "2026-09-14|Torino|AS Roma|Over 2.5 goals",
+   "kickoff": "2026-09-14T16:30Z",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
+   "status": "pending",
+   "strength": 11
   }
  },
- "updated_at": "2026-08-31T05:44:00+00:00"
+ "updated_at": "2026-08-31T14:00:41+00:00"
 }
