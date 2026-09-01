@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-01T16:43:59+00:00",
+ "built_at": "2026-09-01T21:06:42+00:00",
  "teams_tracked": 188,
  "leads": [
   {
@@ -20,7 +20,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -145,7 +145,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -520,7 +520,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 10,
-   "base_rate": 0.1595744680851064,
+   "base_rate": 0.16489361702127658,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -896,7 +896,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 7,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -1021,7 +1021,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -1270,7 +1270,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 8,
-   "base_rate": 0.22872340425531915,
+   "base_rate": 0.23404255319148937,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -1511,133 +1511,6 @@
    "match": "FC Utrecht v Go Ahead Eagles",
    "home": "FC Utrecht",
    "away": "Go Ahead Eagles",
-   "headline": "Go Ahead Eagles to score 2+",
-   "why": "Go Ahead Eagles have scored 2+ in 4 straight; FC Utrecht have conceded 2+ in 5 straight.",
-   "a": "Go Ahead Eagles",
-   "b": "FC Utrecht",
-   "a_run": 4,
-   "b_run": 5,
-   "a_key": "scoring",
-   "b_key": "leaky",
-   "a_label": "scored 2+",
-   "b_label": "conceded 2+",
-   "strength": 9,
-   "base_rate": 0.09042553191489362,
-   "bet": {
-    "kind": "team_gte",
-    "subject": "a",
-    "n": 2,
-    "team": "Go Ahead Eagles"
-   },
-   "a_recent": [
-    {
-     "s": "2-5",
-     "opp": "AZ Alkmaar",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-1",
-     "opp": "ADO Den Haag",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "Feyenoord Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "4-1",
-     "opp": "Willem II",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "NEC Nijmegen",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-4",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "1-6",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-4",
-     "opp": "AZ Alkmaar",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "FC Groningen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Heerenveen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-0",
-     "opp": "Fortuna Sittard",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/fc-utrecht-go-ahead-eagles-202609051245"
-  },
-  {
-   "date": "2026-09-05",
-   "kickoff": "2026-09-05T16:45Z",
-   "league": "Eredivisie",
-   "match": "FC Utrecht v Go Ahead Eagles",
-   "home": "FC Utrecht",
-   "away": "Go Ahead Eagles",
    "headline": "Over 2.5 goals",
    "why": "FC Utrecht have gone over 2.5 in 5 straight; Go Ahead Eagles in 6 straight.",
    "a": "FC Utrecht",
@@ -1750,6 +1623,133 @@
      "opp": "PSV Eindhoven",
      "h": true,
      "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/fc-utrecht-go-ahead-eagles-202609051245"
+  },
+  {
+   "date": "2026-09-05",
+   "kickoff": "2026-09-05T16:45Z",
+   "league": "Eredivisie",
+   "match": "FC Utrecht v Go Ahead Eagles",
+   "home": "FC Utrecht",
+   "away": "Go Ahead Eagles",
+   "headline": "Go Ahead Eagles to score 2+",
+   "why": "Go Ahead Eagles have scored 2+ in 4 straight; FC Utrecht have conceded 2+ in 5 straight.",
+   "a": "Go Ahead Eagles",
+   "b": "FC Utrecht",
+   "a_run": 4,
+   "b_run": 5,
+   "a_key": "scoring",
+   "b_key": "leaky",
+   "a_label": "scored 2+",
+   "b_label": "conceded 2+",
+   "strength": 9,
+   "base_rate": 0.09574468085106383,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 2,
+    "team": "Go Ahead Eagles"
+   },
+   "a_recent": [
+    {
+     "s": "2-5",
+     "opp": "AZ Alkmaar",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "ADO Den Haag",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Feyenoord Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "4-1",
+     "opp": "Willem II",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "NEC Nijmegen",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-4",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-6",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-4",
+     "opp": "AZ Alkmaar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "FC Groningen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "Heerenveen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-0",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": false,
      "comp": true,
      "lg": "Eredivisie"
     }
@@ -2398,7 +2398,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 6,
-   "base_rate": 0.22872340425531915,
+   "base_rate": 0.23404255319148937,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -2898,7 +2898,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 10,
-   "base_rate": 0.48404255319148937,
+   "base_rate": 0.48936170212765956,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -3399,7 +3399,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -3774,7 +3774,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 9,
-   "base_rate": 0.22872340425531915,
+   "base_rate": 0.23404255319148937,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -3899,7 +3899,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 8,
-   "base_rate": 0.1595744680851064,
+   "base_rate": 0.16489361702127658,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -4024,7 +4024,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -4149,7 +4149,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 9,
-   "base_rate": 0.1595744680851064,
+   "base_rate": 0.16489361702127658,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -4401,7 +4401,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 10,
-   "base_rate": 0.48404255319148937,
+   "base_rate": 0.48936170212765956,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -4653,7 +4653,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -5781,7 +5781,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 7,
-   "base_rate": 0.22872340425531915,
+   "base_rate": 0.23404255319148937,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -6405,7 +6405,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 10,
-   "base_rate": 0.1595744680851064,
+   "base_rate": 0.16489361702127658,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -6530,7 +6530,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 10,
-   "base_rate": 0.48404255319148937,
+   "base_rate": 0.48936170212765956,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -6905,7 +6905,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 8,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -7154,7 +7154,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 10,
-   "base_rate": 0.1595744680851064,
+   "base_rate": 0.16489361702127658,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -7785,7 +7785,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 10,
-   "base_rate": 0.48404255319148937,
+   "base_rate": 0.48936170212765956,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -8660,7 +8660,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 10,
-   "base_rate": 0.48404255319148937,
+   "base_rate": 0.48936170212765956,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -8785,7 +8785,7 @@
    "a_label": "over 2.5 goals",
    "b_label": "over 2.5 goals",
    "strength": 9,
-   "base_rate": 0.1595744680851064,
+   "base_rate": 0.16489361702127658,
    "bet": {
     "kind": "total_gte",
     "n": 3
@@ -8896,382 +8896,6 @@
    "date": "2026-09-13",
    "kickoff": "2026-09-13T12:30Z",
    "league": "Eredivisie",
-   "match": "PSV Eindhoven v Sparta Rotterdam",
-   "home": "PSV Eindhoven",
-   "away": "Sparta Rotterdam",
-   "headline": "Both teams to score",
-   "why": "Both sides are on a BTTS run \u2014 PSV Eindhoven 4 straight, Sparta Rotterdam 3 straight.",
-   "a": "PSV Eindhoven",
-   "b": "Sparta Rotterdam",
-   "a_run": 4,
-   "b_run": 3,
-   "a_key": "btts",
-   "b_key": "btts",
-   "a_label": "both teams scored",
-   "b_label": "both teams scored",
-   "strength": 7,
-   "base_rate": 0.2127659574468085,
-   "bet": {
-    "kind": "btts"
-   },
-   "a_recent": [
-    {
-     "s": "6-1",
-     "opp": "FC Utrecht",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "5-1",
-     "opp": "FC Groningen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "Fortuna Sittard",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-0",
-     "opp": "FC Eindhoven",
-     "h": true,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-3",
-     "opp": "Villarreal",
-     "h": true,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "1-2",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "FC Utrecht",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-1",
-     "opp": "Telstar",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-1",
-     "opp": "Feyenoord Rotterdam",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-3",
-     "opp": "Excelsior",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-4",
-     "opp": "FC Twente",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T12:30Z",
-   "league": "Eredivisie",
-   "match": "PSV Eindhoven v Sparta Rotterdam",
-   "home": "PSV Eindhoven",
-   "away": "Sparta Rotterdam",
-   "headline": "Over 2.5 goals",
-   "why": "PSV Eindhoven have gone over 2.5 in 6 straight; Sparta Rotterdam in 3 straight.",
-   "a": "PSV Eindhoven",
-   "b": "Sparta Rotterdam",
-   "a_run": 6,
-   "b_run": 3,
-   "a_key": "over25",
-   "b_key": "over25",
-   "a_label": "over 2.5 goals",
-   "b_label": "over 2.5 goals",
-   "strength": 9,
-   "base_rate": 0.22872340425531915,
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "a_recent": [
-    {
-     "s": "6-1",
-     "opp": "FC Utrecht",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "5-1",
-     "opp": "FC Groningen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "Fortuna Sittard",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-0",
-     "opp": "FC Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-3",
-     "opp": "Villarreal",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "1-2",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "FC Utrecht",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-1",
-     "opp": "Telstar",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-1",
-     "opp": "Feyenoord Rotterdam",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-3",
-     "opp": "Excelsior",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-4",
-     "opp": "FC Twente",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T12:30Z",
-   "league": "Eredivisie",
-   "match": "PSV Eindhoven v Sparta Rotterdam",
-   "home": "PSV Eindhoven",
-   "away": "Sparta Rotterdam",
-   "headline": "PSV Eindhoven to score",
-   "why": "PSV Eindhoven have scored 2+ in 5 straight; Sparta Rotterdam have conceded in 6 straight.",
-   "a": "PSV Eindhoven",
-   "b": "Sparta Rotterdam",
-   "a_run": 5,
-   "b_run": 6,
-   "a_key": "scoring",
-   "b_key": "porous",
-   "a_label": "scored 2+",
-   "b_label": "conceded in",
-   "strength": 11,
-   "base_rate": 0.2553191489361702,
-   "bet": {
-    "kind": "team_gte",
-    "subject": "a",
-    "n": 1,
-    "team": "PSV Eindhoven"
-   },
-   "a_recent": [
-    {
-     "s": "6-1",
-     "opp": "FC Utrecht",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "5-1",
-     "opp": "FC Groningen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "Fortuna Sittard",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-0",
-     "opp": "FC Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-3",
-     "opp": "Villarreal",
-     "h": true,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "1-2",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "FC Utrecht",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-1",
-     "opp": "Telstar",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-1",
-     "opp": "Feyenoord Rotterdam",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-3",
-     "opp": "Excelsior",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-4",
-     "opp": "FC Twente",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T12:30Z",
-   "league": "Eredivisie",
    "match": "Heerenveen v Telstar",
    "home": "Heerenveen",
    "away": "Telstar",
@@ -9286,7 +8910,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -9411,7 +9035,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -10025,6 +9649,382 @@
   {
    "date": "2026-09-13",
    "kickoff": "2026-09-13T18:00Z",
+   "league": "Eredivisie",
+   "match": "PSV Eindhoven v Sparta Rotterdam",
+   "home": "PSV Eindhoven",
+   "away": "Sparta Rotterdam",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 PSV Eindhoven 4 straight, Sparta Rotterdam 3 straight.",
+   "a": "PSV Eindhoven",
+   "b": "Sparta Rotterdam",
+   "a_run": 4,
+   "b_run": 3,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 7,
+   "base_rate": 0.2127659574468085,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "6-1",
+     "opp": "FC Utrecht",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "5-1",
+     "opp": "FC Groningen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-0",
+     "opp": "FC Eindhoven",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-3",
+     "opp": "Villarreal",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-2",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "Telstar",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-1",
+     "opp": "Feyenoord Rotterdam",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-3",
+     "opp": "Excelsior",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-4",
+     "opp": "FC Twente",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-13",
+   "kickoff": "2026-09-13T18:00Z",
+   "league": "Eredivisie",
+   "match": "PSV Eindhoven v Sparta Rotterdam",
+   "home": "PSV Eindhoven",
+   "away": "Sparta Rotterdam",
+   "headline": "Over 2.5 goals",
+   "why": "PSV Eindhoven have gone over 2.5 in 6 straight; Sparta Rotterdam in 3 straight.",
+   "a": "PSV Eindhoven",
+   "b": "Sparta Rotterdam",
+   "a_run": 6,
+   "b_run": 3,
+   "a_key": "over25",
+   "b_key": "over25",
+   "a_label": "over 2.5 goals",
+   "b_label": "over 2.5 goals",
+   "strength": 9,
+   "base_rate": 0.23404255319148937,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "a_recent": [
+    {
+     "s": "6-1",
+     "opp": "FC Utrecht",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "5-1",
+     "opp": "FC Groningen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-0",
+     "opp": "FC Eindhoven",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-3",
+     "opp": "Villarreal",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-2",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "Telstar",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-1",
+     "opp": "Feyenoord Rotterdam",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-3",
+     "opp": "Excelsior",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-4",
+     "opp": "FC Twente",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-13",
+   "kickoff": "2026-09-13T18:00Z",
+   "league": "Eredivisie",
+   "match": "PSV Eindhoven v Sparta Rotterdam",
+   "home": "PSV Eindhoven",
+   "away": "Sparta Rotterdam",
+   "headline": "PSV Eindhoven to score",
+   "why": "PSV Eindhoven have scored 2+ in 5 straight; Sparta Rotterdam have conceded in 6 straight.",
+   "a": "PSV Eindhoven",
+   "b": "Sparta Rotterdam",
+   "a_run": 5,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 11,
+   "base_rate": 0.2553191489361702,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "PSV Eindhoven"
+   },
+   "a_recent": [
+    {
+     "s": "6-1",
+     "opp": "FC Utrecht",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "5-1",
+     "opp": "FC Groningen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-0",
+     "opp": "FC Eindhoven",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-3",
+     "opp": "Villarreal",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-2",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Utrecht",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "Telstar",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-1",
+     "opp": "Feyenoord Rotterdam",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-3",
+     "opp": "Excelsior",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-4",
+     "opp": "FC Twente",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-13",
+   "kickoff": "2026-09-13T18:00Z",
    "league": "Primeira Liga",
    "match": "Casa Pia v FC Porto",
    "home": "Casa Pia",
@@ -10167,7 +10167,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 8,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -10796,7 +10796,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 8,
-   "base_rate": 0.5531914893617021,
+   "base_rate": 0.5585106382978723,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -11425,7 +11425,7 @@
    "a_label": "over 1.5 goals",
    "b_label": "over 1.5 goals",
    "strength": 9,
-   "base_rate": 0.48404255319148937,
+   "base_rate": 0.48936170212765956,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -11550,19 +11550,19 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.005319148936170213,
@@ -11730,7 +11730,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -11904,7 +11904,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
    "best_rate": 0.015957446808510637,
@@ -12414,7 +12414,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -12519,7 +12519,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -12618,7 +12618,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -12717,7 +12717,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -12822,7 +12822,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -12921,7 +12921,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -13026,7 +13026,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     },
     {
      "key": "porous",
@@ -13206,7 +13206,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -13293,7 +13293,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -13392,7 +13392,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -13497,7 +13497,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     },
     {
      "key": "porous",
@@ -13677,7 +13677,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -13776,7 +13776,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -13794,7 +13794,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.05319148936170213,
@@ -13887,7 +13887,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     },
     {
      "key": "over15",
@@ -14061,7 +14061,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "porous",
@@ -14073,7 +14073,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.05319148936170213,
@@ -14166,7 +14166,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.05851063829787234,
@@ -14334,7 +14334,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -14433,13 +14433,13 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -14532,7 +14532,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -14625,13 +14625,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -14724,7 +14724,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -14823,7 +14823,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -14916,7 +14916,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -15009,7 +15009,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -15102,7 +15102,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -15195,7 +15195,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     },
     {
      "key": "over15",
@@ -15282,7 +15282,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
    "best_rate": 0.07446808510638298,
@@ -15648,6 +15648,99 @@
    "friendlies": 0
   },
   {
+   "team": "Al Hilal",
+   "no_run": false,
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [
+    {
+     "key": "scoring",
+     "label": "scored 2+",
+     "n": 4,
+     "rate": 0.09574468085106383
+    },
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 4,
+     "rate": 0.16489361702127658
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.2393617021276596
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 4,
+     "rate": 0.48936170212765956
+    }
+   ],
+   "best_rate": 0.09574468085106383,
+   "longest": 6,
+   "next": {
+    "opp": "Al Shabab",
+    "date": "2026-09-04",
+    "kickoff": "2026-09-04T18:00Z",
+    "league": "Saudi Pro League",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "3-0",
+     "opp": "Al Ahli",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "5-1",
+     "opp": "Al Khaleej",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "3-0",
+     "opp": "Al Fayha",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "4-2",
+     "opp": "Al-Faisaly",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Fayha",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Neom SC",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
    "team": "Al Nassr",
    "no_run": false,
    "league": "Saudi Pro League",
@@ -15657,13 +15750,13 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "over15",
@@ -15675,10 +15768,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
-   "best_rate": 0.09042553191489362,
+   "best_rate": 0.09574468085106383,
    "longest": 6,
    "next": {
     "opp": "Al Ittihad",
@@ -15750,13 +15843,13 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -15765,7 +15858,7 @@
      "rate": 0.3191489361702128
     }
    ],
-   "best_rate": 0.09042553191489362,
+   "best_rate": 0.09574468085106383,
    "longest": 6,
    "next": {
     "opp": "Athletic Club",
@@ -15837,13 +15930,13 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -15852,7 +15945,7 @@
      "rate": 0.3191489361702128
     }
    ],
-   "best_rate": 0.09042553191489362,
+   "best_rate": 0.09574468085106383,
    "longest": 6,
    "next": {
     "opp": "Valencia",
@@ -15924,13 +16017,13 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -15939,7 +16032,7 @@
      "rate": 0.3191489361702128
     }
    ],
-   "best_rate": 0.09042553191489362,
+   "best_rate": 0.09574468085106383,
    "longest": 6,
    "next": {
     "opp": "Houston Dynamo FC",
@@ -16000,99 +16093,6 @@
    ],
    "thin": false,
    "friendlies": 0
-  },
-  {
-   "team": "Real Madrid",
-   "no_run": false,
-   "league": "La Liga",
-   "played": 24,
-   "runs": [
-    {
-     "key": "scoring",
-     "label": "scored 2+",
-     "n": 4,
-     "rate": 0.09042553191489362
-    },
-    {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 4,
-     "rate": 0.1595744680851064
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.24468085106382978
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 4,
-     "rate": 0.48404255319148937
-    }
-   ],
-   "best_rate": 0.09042553191489362,
-   "longest": 6,
-   "next": {
-    "opp": "Real Betis",
-    "date": "2026-09-04",
-    "kickoff": "2026-09-04T19:00Z",
-    "league": "La Liga",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "4-0",
-     "opp": "M\u00e1laga",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "4-1",
-     "opp": "Real Sociedad",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Espanyol",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Schalke 04",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Deportivo",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-1",
-     "opp": "Ferencvaros",
-     "h": false,
-     "hit": false,
-     "comp": false,
-     "lg": "Club Friendly"
-    }
-   ],
-   "thin": false,
-   "friendlies": 3
   },
   {
    "team": "Estoril",
@@ -16209,13 +16209,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -16227,7 +16227,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.09574468085106383,
@@ -16314,7 +16314,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -16477,6 +16477,99 @@
    ],
    "thin": false,
    "friendlies": 4
+  },
+  {
+   "team": "Real Madrid",
+   "no_run": false,
+   "league": "La Liga",
+   "played": 24,
+   "runs": [
+    {
+     "key": "scoring",
+     "label": "scored 2+",
+     "n": 4,
+     "rate": 0.09574468085106383
+    },
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 4,
+     "rate": 0.16489361702127658
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.2393617021276596
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 4,
+     "rate": 0.48936170212765956
+    }
+   ],
+   "best_rate": 0.09574468085106383,
+   "longest": 6,
+   "next": {
+    "opp": "Real Betis",
+    "date": "2026-09-04",
+    "kickoff": "2026-09-04T19:00Z",
+    "league": "La Liga",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "4-0",
+     "opp": "M\u00e1laga",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Real Sociedad",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Espanyol",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Schalke 04",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Deportivo",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-1",
+     "opp": "Ferencvaros",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "thin": false,
+   "friendlies": 3
   },
   {
    "team": "Telstar",
@@ -16755,7 +16848,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "porous",
@@ -16767,7 +16860,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.09574468085106383,
@@ -16854,7 +16947,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.09574468085106383,
@@ -16935,7 +17028,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -16947,7 +17040,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     },
     {
      "key": "over15",
@@ -17040,13 +17133,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -17139,13 +17232,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -17238,7 +17331,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -17331,7 +17424,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "porous",
@@ -17424,13 +17517,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     },
     {
      "key": "porous",
@@ -17529,7 +17622,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.12234042553191489,
@@ -17595,99 +17688,6 @@
    "friendlies": 4
   },
   {
-   "team": "Al Hilal",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "scoring",
-     "label": "scored 2+",
-     "n": 3,
-     "rate": 0.12234042553191489
-    },
-    {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 3,
-     "rate": 0.22872340425531915
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.24468085106382978
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 3,
-     "rate": 0.5531914893617021
-    }
-   ],
-   "best_rate": 0.12234042553191489,
-   "longest": 6,
-   "next": {
-    "opp": "Al Ahli",
-    "date": "2026-09-01",
-    "kickoff": "2026-09-01T18:00Z",
-    "league": "Saudi Pro League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "5-1",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-0",
-     "opp": "Al Fayha",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-2",
-     "opp": "Al-Faisaly",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Fayha",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Neom SC",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Nassr",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "Paris Saint-Germain",
    "no_run": false,
    "league": "Ligue 1",
@@ -17709,7 +17709,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -17727,7 +17727,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
    "best_rate": 0.12234042553191489,
@@ -17814,13 +17814,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.1595744680851064,
@@ -17886,180 +17886,6 @@
    "friendlies": 0
   },
   {
-   "team": "Espanyol",
-   "no_run": false,
-   "league": "La Liga",
-   "played": 16,
-   "runs": [
-    {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 4,
-     "rate": 0.1595744680851064
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.24468085106382978
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 6,
-     "rate": 0.3191489361702128
-    }
-   ],
-   "best_rate": 0.1595744680851064,
-   "longest": 6,
-   "next": {
-    "opp": "Sevilla",
-    "date": "2026-09-06",
-    "kickoff": "2026-09-06T19:00Z",
-    "league": "La Liga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "Real Sociedad",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Real Madrid",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Levante",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-3",
-     "opp": "Coventry City",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Real Sociedad",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Osasuna",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
-    }
-   ],
-   "thin": false,
-   "friendlies": 1
-  },
-  {
-   "team": "Excelsior",
-   "no_run": false,
-   "league": "Eredivisie",
-   "played": 12,
-   "runs": [
-    {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 4,
-     "rate": 0.1595744680851064
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.24468085106382978
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 6,
-     "rate": 0.3191489361702128
-    }
-   ],
-   "best_rate": 0.1595744680851064,
-   "longest": 6,
-   "next": {
-    "opp": "Willem II",
-    "date": "2026-09-05",
-    "kickoff": "2026-09-05T19:00Z",
-    "league": "Eredivisie",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-1",
-     "opp": "Sparta Rotterdam",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "4-0",
-     "opp": "SC Cambuur",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-1",
-     "opp": "FC Volendam",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "FC Groningen",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "FC Groningen",
    "no_run": false,
    "league": "Eredivisie",
@@ -18075,7 +17901,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "porous",
@@ -18093,7 +17919,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
    "best_rate": 0.1595744680851064,
@@ -18180,13 +18006,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.1595744680851064,
@@ -18261,7 +18087,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "porous",
@@ -18273,13 +18099,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.1595744680851064,
@@ -18360,7 +18186,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "porous",
@@ -18372,7 +18198,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.1595744680851064,
@@ -18438,6 +18264,180 @@
    "friendlies": 0
   },
   {
+   "team": "Espanyol",
+   "no_run": false,
+   "league": "La Liga",
+   "played": 16,
+   "runs": [
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 4,
+     "rate": 0.16489361702127658
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.2393617021276596
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 6,
+     "rate": 0.3191489361702128
+    }
+   ],
+   "best_rate": 0.16489361702127658,
+   "longest": 6,
+   "next": {
+    "opp": "Sevilla",
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T19:00Z",
+    "league": "La Liga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "Real Sociedad",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Levante",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-3",
+     "opp": "Coventry City",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Real Sociedad",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Osasuna",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    }
+   ],
+   "thin": false,
+   "friendlies": 1
+  },
+  {
+   "team": "Excelsior",
+   "no_run": false,
+   "league": "Eredivisie",
+   "played": 12,
+   "runs": [
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 4,
+     "rate": 0.16489361702127658
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 6,
+     "rate": 0.2393617021276596
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 6,
+     "rate": 0.3191489361702128
+    }
+   ],
+   "best_rate": 0.16489361702127658,
+   "longest": 6,
+   "next": {
+    "opp": "Willem II",
+    "date": "2026-09-05",
+    "kickoff": "2026-09-05T19:00Z",
+    "league": "Eredivisie",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "2-1",
+     "opp": "Sparta Rotterdam",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "4-0",
+     "opp": "SC Cambuur",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Volendam",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "FC Groningen",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
    "team": "Borussia M\u00f6nchengladbach",
    "no_run": false,
    "league": "Bundesliga",
@@ -18447,16 +18447,16 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
-   "best_rate": 0.1595744680851064,
+   "best_rate": 0.16489361702127658,
    "longest": 4,
    "next": {
     "opp": "SV Elversberg",
@@ -18540,13 +18540,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -18639,7 +18639,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -18726,7 +18726,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -18807,7 +18807,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -18819,13 +18819,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -18918,7 +18918,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -18999,7 +18999,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -19011,13 +19011,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -19104,13 +19104,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -19185,7 +19185,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "over15",
@@ -19200,7 +19200,7 @@
      "rate": 0.4574468085106383
     }
    ],
-   "best_rate": 0.22872340425531915,
+   "best_rate": 0.23404255319148937,
    "longest": 6,
    "next": {
     "opp": "FC Augsburg",
@@ -19272,22 +19272,22 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.22872340425531915,
+   "best_rate": 0.23404255319148937,
    "longest": 6,
    "next": {
     "opp": "Orlando City SC",
@@ -19359,22 +19359,22 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
-   "best_rate": 0.22872340425531915,
+   "best_rate": 0.23404255319148937,
    "longest": 4,
    "next": null,
    "recent": [
@@ -19431,6 +19431,87 @@
    "friendlies": 0
   },
   {
+   "team": "Al Ahli",
+   "no_run": false,
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 3,
+     "rate": 0.23404255319148937
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 3,
+     "rate": 0.5585106382978723
+    }
+   ],
+   "best_rate": 0.23404255319148937,
+   "longest": 3,
+   "next": {
+    "opp": "Al Riyadh",
+    "date": "2026-09-04",
+    "kickoff": "2026-09-04T18:00Z",
+    "league": "Saudi Pro League",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "0-3",
+     "opp": "Al Hilal",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-3",
+     "opp": "Al Kholood",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "4-0",
+     "opp": "Abha",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Diriyah",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "4-1",
+     "opp": "Al Khaleej",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "3-0",
+     "opp": "Al Kholood",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "thin": false,
+   "friendlies": 0
+  },
+  {
    "team": "AJ Auxerre",
    "no_run": false,
    "league": "Ligue 1",
@@ -19440,10 +19521,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Lyon",
@@ -19506,81 +19587,6 @@
    "friendlies": 2
   },
   {
-   "team": "Al Ahli",
-   "no_run": false,
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 6,
-     "rate": 0.24468085106382978
-    }
-   ],
-   "best_rate": 0.24468085106382978,
-   "longest": 6,
-   "next": {
-    "opp": "Al Hilal",
-    "date": "2026-09-01",
-    "kickoff": "2026-09-01T18:00Z",
-    "league": "Saudi Pro League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-3",
-     "opp": "Al Kholood",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-0",
-     "opp": "Abha",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Diriyah",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-1",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-0",
-     "opp": "Al Kholood",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-1",
-     "opp": "Al Taawoun",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0
-  },
-  {
    "team": "Alav\u00e9s",
    "no_run": false,
    "league": "La Liga",
@@ -19590,10 +19596,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Osasuna",
@@ -19665,10 +19671,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Chelsea",
@@ -19740,10 +19746,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "AS Roma",
@@ -19815,10 +19821,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Alverca",
@@ -19890,7 +19896,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -19899,7 +19905,7 @@
      "rate": 0.3191489361702128
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Sunderland",
@@ -19971,10 +19977,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Napoli",
@@ -20046,10 +20052,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Brighton & Hove Albion",
@@ -20121,16 +20127,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "Internazionale",
@@ -20202,7 +20208,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 6,
-     "rate": 0.24468085106382978
+     "rate": 0.2393617021276596
     },
     {
      "key": "over15",
@@ -20211,7 +20217,7 @@
      "rate": 0.3191489361702128
     }
    ],
-   "best_rate": 0.24468085106382978,
+   "best_rate": 0.2393617021276596,
    "longest": 6,
    "next": {
     "opp": "AFC Bournemouth",
@@ -21750,7 +21756,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.2553191489361702,
@@ -21819,10 +21825,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     }
    ],
-   "best_rate": 0.30851063829787234,
+   "best_rate": 0.30319148936170215,
    "longest": 5,
    "next": {
     "opp": "Leeds United",
@@ -21894,10 +21900,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     }
    ],
-   "best_rate": 0.30851063829787234,
+   "best_rate": 0.30319148936170215,
    "longest": 5,
    "next": null,
    "recent": [
@@ -21963,10 +21969,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     }
    ],
-   "best_rate": 0.30851063829787234,
+   "best_rate": 0.30319148936170215,
    "longest": 5,
    "next": {
     "opp": "New York City FC",
@@ -22038,10 +22044,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 5,
-     "rate": 0.30851063829787234
+     "rate": 0.30319148936170215
     }
    ],
-   "best_rate": 0.30851063829787234,
+   "best_rate": 0.30319148936170215,
    "longest": 5,
    "next": {
     "opp": "Brentford",
@@ -22350,7 +22356,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.3191489361702128,
@@ -22425,7 +22431,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
    "best_rate": 0.3191489361702128,
@@ -22506,7 +22512,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
    "best_rate": 0.3191489361702128,
@@ -22806,16 +22812,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.3776595744680851,
+   "best_rate": 0.3723404255319149,
    "longest": 4,
    "next": {
     "opp": "TSG Hoffenheim",
@@ -22887,10 +22893,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
-   "best_rate": 0.3776595744680851,
+   "best_rate": 0.3723404255319149,
    "longest": 4,
    "next": {
     "opp": "Udinese",
@@ -22962,16 +22968,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.3776595744680851,
+   "best_rate": 0.3723404255319149,
    "longest": 4,
    "next": {
     "opp": "Toulouse",
@@ -23043,10 +23049,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     }
    ],
-   "best_rate": 0.3776595744680851,
+   "best_rate": 0.3723404255319149,
    "longest": 4,
    "next": null,
    "recent": [
@@ -23556,10 +23562,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
-   "best_rate": 0.4574468085106383,
+   "best_rate": 0.4521276595744681,
    "longest": 3,
    "next": {
     "opp": "New England Revolution",
@@ -23631,10 +23637,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
-   "best_rate": 0.4574468085106383,
+   "best_rate": 0.4521276595744681,
    "longest": 3,
    "next": {
     "opp": "Real Madrid",
@@ -23775,10 +23781,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.5531914893617021,
+   "best_rate": 0.5585106382978723,
    "longest": 3,
    "next": {
     "opp": "Estoril",
@@ -23850,10 +23856,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.5531914893617021,
+   "best_rate": 0.5585106382978723,
    "longest": 3,
    "next": {
     "opp": "Atl\u00e9tico Madrid",
@@ -23925,10 +23931,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.5531914893617021,
+   "best_rate": 0.5585106382978723,
    "longest": 3,
    "next": {
     "opp": "Santa Clara",
@@ -24077,7 +24083,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -24089,7 +24095,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.026595744680851064,
@@ -24152,7 +24158,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "porous",
@@ -24164,13 +24170,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.05319148936170213,
@@ -24235,7 +24241,7 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "btts",
@@ -24253,13 +24259,13 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.05319148936170213,
@@ -24318,13 +24324,13 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 4,
-     "rate": 0.09042553191489362
+     "rate": 0.09574468085106383
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 4,
-     "rate": 0.1595744680851064
+     "rate": 0.16489361702127658
     },
     {
      "key": "btts",
@@ -24336,7 +24342,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "porous",
@@ -24348,10 +24354,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
-   "best_rate": 0.09042553191489362,
+   "best_rate": 0.09574468085106383,
    "longest": 4,
    "next": {
     "opp": "Liverpool",
@@ -24419,13 +24425,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "porous",
@@ -24437,7 +24443,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.09574468085106383,
@@ -24508,7 +24514,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.09574468085106383,
@@ -24579,13 +24585,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "porous",
@@ -24597,7 +24603,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.09574468085106383,
@@ -24654,19 +24660,19 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.12234042553191489,
@@ -24723,13 +24729,13 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 3,
-     "rate": 0.22872340425531915
+     "rate": 0.23404255319148937
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 4,
-     "rate": 0.3776595744680851
+     "rate": 0.3723404255319149
     },
     {
      "key": "porous",
@@ -24741,7 +24747,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -24806,7 +24812,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     },
     {
      "key": "porous",
@@ -24818,7 +24824,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
    "best_rate": 0.2127659574468085,
@@ -24875,7 +24881,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.40425531914893614,
@@ -24999,7 +25005,7 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 4,
-     "rate": 0.48404255319148937
+     "rate": 0.48936170212765956
     }
    ],
    "best_rate": 0.40425531914893614,
@@ -25117,10 +25123,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 3,
-     "rate": 0.4574468085106383
+     "rate": 0.4521276595744681
     }
    ],
-   "best_rate": 0.4574468085106383,
+   "best_rate": 0.4521276595744681,
    "longest": 3,
    "next": {
     "opp": "Al Qadsiah",
@@ -25235,10 +25241,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 3,
-     "rate": 0.5531914893617021
+     "rate": 0.5585106382978723
     }
    ],
-   "best_rate": 0.5531914893617021,
+   "best_rate": 0.5585106382978723,
    "longest": 3,
    "next": null,
    "recent": [
@@ -30783,6 +30789,143 @@
    "next_ko": "2026-09-06T16:30Z"
   },
   {
+   "team": "Al Hilal",
+   "league": "Saudi Pro League",
+   "played": 14,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 14,
+     "rate": 0.044444444444444446
+    }
+   ],
+   "best_rate": 0.044444444444444446,
+   "longest": 14,
+   "next": {
+    "opp": "Al Shabab",
+    "date": "2026-09-04",
+    "kickoff": "2026-09-04T18:00Z",
+    "league": "Saudi Pro League",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "3-0",
+     "opp": "Al Ahli",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "5-1",
+     "opp": "Al Khaleej",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "3-0",
+     "opp": "Al Fayha",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "4-2",
+     "opp": "Al-Faisaly",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Fayha",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Neom SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Al Nassr",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Al Khaleej",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "3-0",
+     "opp": "Al Hazem",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Damac",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "6-0",
+     "opp": "Al Kholood",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Al Taawoun",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Al Fateh",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    },
+    {
+     "s": "4-0",
+     "opp": "Al Najma",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Saudi Pro League"
+    }
+   ],
+   "next_ko": "2026-09-04T18:00Z"
+  },
+  {
    "team": "Benfica",
    "league": "Primeira Liga",
    "played": 13,
@@ -30928,135 +31071,6 @@
     }
    ],
    "next_ko": "2026-09-05T17:00Z"
-  },
-  {
-   "team": "Al Hilal",
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 13,
-     "rate": 0.05555555555555555
-    }
-   ],
-   "best_rate": 0.05555555555555555,
-   "longest": 13,
-   "next": {
-    "opp": "Al Ahli",
-    "date": "2026-09-01",
-    "kickoff": "2026-09-01T18:00Z",
-    "league": "Saudi Pro League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "5-1",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-0",
-     "opp": "Al Fayha",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-2",
-     "opp": "Al-Faisaly",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Fayha",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Neom SC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Nassr",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-1",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-0",
-     "opp": "Al Hazem",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Damac",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "6-0",
-     "opp": "Al Kholood",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-2",
-     "opp": "Al Taawoun",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Fateh",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-0",
-     "opp": "Al Najma",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "next_ko": "2026-09-01T18:00Z"
   },
   {
    "team": "Manchester City",
@@ -32469,7 +32483,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.19444444444444445
+     "rate": 0.18888888888888888
     }
    ],
    "best_rate": 0.07777777777777778,
@@ -34141,7 +34155,7 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.19444444444444445
+     "rate": 0.18888888888888888
     }
    ],
    "best_rate": 0.1111111111111111,
@@ -37436,6 +37450,125 @@
    "next_ko": "2026-09-04T19:15Z"
   },
   {
+   "team": "Espanyol",
+   "league": "La Liga",
+   "played": 16,
+   "runs": [
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 9,
+     "rate": 0.19444444444444445
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 8,
+     "rate": 0.18888888888888888
+    }
+   ],
+   "best_rate": 0.18888888888888888,
+   "longest": 9,
+   "next": {
+    "opp": "Sevilla",
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T19:00Z",
+    "league": "La Liga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "Real Sociedad",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Levante",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-3",
+     "opp": "Coventry City",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Real Sociedad",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Osasuna",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Athletic Club",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Sevilla",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-0",
+     "opp": "Levante",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Rayo Vallecano",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    }
+   ],
+   "next_ko": "2026-09-06T19:00Z"
+  },
+  {
    "team": "1. FC Heidenheim 1846",
    "league": "Bundesliga",
    "played": 11,
@@ -37654,230 +37787,6 @@
     }
    ],
    "next_ko": "2026-09-05T14:00Z"
-  },
-  {
-   "team": "Espanyol",
-   "league": "La Liga",
-   "played": 16,
-   "runs": [
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 9,
-     "rate": 0.19444444444444445
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 8,
-     "rate": 0.19444444444444445
-    }
-   ],
-   "best_rate": 0.19444444444444445,
-   "longest": 9,
-   "next": {
-    "opp": "Sevilla",
-    "date": "2026-09-06",
-    "kickoff": "2026-09-06T19:00Z",
-    "league": "La Liga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "Real Sociedad",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Real Madrid",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Levante",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-3",
-     "opp": "Coventry City",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Real Sociedad",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Osasuna",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Athletic Club",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Sevilla",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "Real Madrid",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "0-0",
-     "opp": "Levante",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "0-1",
-     "opp": "Rayo Vallecano",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
-    }
-   ],
-   "next_ko": "2026-09-06T19:00Z"
-  },
-  {
-   "team": "Al Ahli",
-   "league": "Saudi Pro League",
-   "played": 13,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 8,
-     "rate": 0.19444444444444445
-    }
-   ],
-   "best_rate": 0.19444444444444445,
-   "longest": 8,
-   "next": {
-    "opp": "Al Hilal",
-    "date": "2026-09-01",
-    "kickoff": "2026-09-01T18:00Z",
-    "league": "Saudi Pro League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-3",
-     "opp": "Al Kholood",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-0",
-     "opp": "Abha",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Al Diriyah",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-1",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-0",
-     "opp": "Al Kholood",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "2-1",
-     "opp": "Al Taawoun",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-1",
-     "opp": "Al Fateh",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "4-0",
-     "opp": "Al Okhdood",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-2",
-     "opp": "Al Nassr",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Fayha",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "next_ko": "2026-09-01T18:00Z"
   },
   {
    "team": "Heracles Almelo",
@@ -38477,15 +38386,15 @@
  "base_rates": {
   "scoring": {
    "3": 0.1223,
-   "4": 0.0904,
+   "4": 0.0957,
    "5": 0.0479,
    "6": 0.0213
   },
   "scoring1": {
-   "3": 0.4574,
-   "4": 0.3777,
-   "5": 0.3085,
-   "6": 0.2447
+   "3": 0.4521,
+   "4": 0.3723,
+   "5": 0.3032,
+   "6": 0.2394
   },
   "blanked": {
    "3": 0.0266,
@@ -38518,14 +38427,14 @@
    "6": 0.0638
   },
   "over25": {
-   "3": 0.2287,
-   "4": 0.1596,
+   "3": 0.234,
+   "4": 0.1649,
    "5": 0.0957,
    "6": 0.0585
   },
   "over15": {
-   "3": 0.5532,
-   "4": 0.484,
+   "3": 0.5585,
+   "4": 0.4894,
    "5": 0.4149,
    "6": 0.3191
   },

@@ -138,6 +138,7 @@
    "test_date": "2026-09-05"
   },
   "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal": {
+   "graded_at": "2026-09-01T21:06:44+00:00",
    "home": false,
    "id": "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal",
    "key": "scoring1",
@@ -148,11 +149,13 @@
    "logged_at": "2026-08-29T19:34:27+00:00",
    "opp": "Al Hilal",
    "rate": 0.20555555555555555,
-   "status": "pending",
+   "result": "0-3",
+   "status": "broke",
    "team": "Al Ahli",
    "test_date": "2026-09-01"
   },
   "Al Hilal|scoring1|2026-09-01|Al Hilal|Al Ahli": {
+   "graded_at": "2026-09-01T21:06:44+00:00",
    "home": true,
    "id": "Al Hilal|scoring1|2026-09-01|Al Hilal|Al Ahli",
    "key": "scoring1",
@@ -163,9 +166,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Al Ahli",
    "rate": 0.06111111111111111,
-   "status": "pending",
+   "result": "3-0",
+   "status": "extended",
    "team": "Al Hilal",
    "test_date": "2026-09-01"
+  },
+  "Al Hilal|scoring1|2026-09-04|Al Hilal|Al Shabab": {
+   "home": false,
+   "id": "Al Hilal|scoring1|2026-09-04|Al Hilal|Al Shabab",
+   "key": "scoring1",
+   "kickoff": "2026-09-04T18:00Z",
+   "label": "scored in",
+   "league": "Saudi Pro League",
+   "length": 14,
+   "logged_at": "2026-09-01T21:06:44+00:00",
+   "opp": "Al Shabab",
+   "rate": 0.044444444444444446,
+   "status": "pending",
+   "team": "Al Hilal",
+   "test_date": "2026-09-04"
   },
   "Al Nassr|over15|2026-09-05|Al Nassr|Al Ittihad": {
    "home": false,
@@ -2598,5 +2617,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-09-01T16:44:03+00:00"
+ "updated_at": "2026-09-01T21:06:44+00:00"
 }
