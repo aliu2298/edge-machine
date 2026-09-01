@@ -179,6 +179,8 @@ def population_rates(fixtures):
                     if f["home_goals"] >= 1 and f["away_goals"] >= 1) / n,
         "total_gte:3": sum(1 for f in played
                            if f["home_goals"] + f["away_goals"] >= 3) / n,
+        "total_gte:2": sum(1 for f in played
+                           if f["home_goals"] + f["away_goals"] >= 2) / n,
         "total_lte:2": sum(1 for f in played
                            if f["home_goals"] + f["away_goals"] <= 2) / n,
     }
@@ -228,6 +230,7 @@ def team_kind_rates(fixtures):
             d = tot[team]
             d["btts"].append(1 if (gf >= 1 and ga >= 1) else 0)
             d["total_gte:3"].append(1 if gf + ga >= 3 else 0)
+            d["total_gte:2"].append(1 if gf + ga >= 2 else 0)
             d["total_lte:2"].append(1 if gf + ga <= 2 else 0)
             d["team_gte:1"].append(1 if gf >= 1 else 0)
             d["team_gte:2"].append(1 if gf >= 2 else 0)

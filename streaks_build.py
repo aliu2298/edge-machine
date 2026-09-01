@@ -68,6 +68,10 @@ STREAKS = [
     ("solid",    "clean sheet",         "defence", lambda gf, ga: ga == 0),
     ("btts",     "both teams scored",   "game",    lambda gf, ga: gf >= 1 and ga >= 1),
     ("over25",   "over 2.5 goals",      "game",    lambda gf, ga: gf + ga >= 3),
+    # Over 1.5 lands in ~80% of matches, so its runs go long (max 20 here, vs 12 for
+    # over 2.5) largely BECAUSE it is common. The rarity chip prices that in — a long
+    # over-1.5 run is a weaker claim than a short over-2.5 one, and the board says so.
+    ("over15",   "over 1.5 goals",      "game",    lambda gf, ga: gf + ga >= 2),
     ("under25",  "under 2.5 goals",     "game",    lambda gf, ga: gf + ga <= 2),
 ]
 STREAK_BY_KEY = {s[0]: s for s in STREAKS}
@@ -93,6 +97,9 @@ PAIRINGS = [
     ("over25",  "over25",   "Over 2.5 goals",
      "{a} have gone over 2.5 in {ra} straight; {b} in {rb} straight.",
      {"kind": "total_gte", "n": 3}),
+    ("over15",  "over15",   "Over 1.5 goals",
+     "{a} have gone over 1.5 in {ra} straight; {b} in {rb} straight.",
+     {"kind": "total_gte", "n": 2}),
     ("under25", "under25",  "Under 2.5 goals",
      "{a} have gone under 2.5 in {ra} straight; {b} in {rb} straight.",
      {"kind": "total_lte", "n": 2}),
@@ -393,6 +400,12 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
             continue
         seen.add(k)
         uniq.append(l)
+
+    # A stronger claim implies the weaker one: over 2.5 means over 1.5 was also met, so a
+    # fixture hitting both would show two cards for one idea. Keep the sharper.
+    strong = {(l["match"], l["a"]) for l in uniq if l["a_key"] == "over25"}
+    uniq = [l for l in uniq
+            if not (l["a_key"] == "over15" and (l["match"], l["a"]) in strong)]
     return uniq
 
 

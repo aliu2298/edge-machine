@@ -28,6 +28,7 @@ OUT_DIR = os.path.join(ROOT, "public_site")
 MARKETS = {
     "btts":         ("BTTS", "♥"),
     "total_gte:3":  ("O2.5", "♠"),
+    "total_gte:2":  ("O1.5", "♠"),
     "total_lte:2":  ("U2.5", "♣"),
     "team_gte:2":   ("2+",   "♦"),
     "team_gte:1":   ("1+",   "♦"),
