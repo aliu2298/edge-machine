@@ -2428,7 +2428,33 @@
    "match": "Torino v AS Roma",
    "status": "pending",
    "strength": 11
+  },
+  "2026-09-15|Elche|Real Madrid|Real Madrid to score": {
+   "a": "Real Madrid",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Real Madrid",
+   "b": "Elche",
+   "b_key": "porous",
+   "b_run": 3,
+   "base_rate": 0.4574468085106383,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Real Madrid"
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-01",
+   "headline": "Real Madrid to score",
+   "home": "Elche",
+   "id": "2026-09-15|Elche|Real Madrid|Real Madrid to score",
+   "kickoff": "2026-09-15T19:30Z",
+   "league": "La Liga",
+   "match": "Elche v Real Madrid",
+   "status": "pending",
+   "strength": 7
   }
  },
- "updated_at": "2026-08-31T22:54:34+00:00"
+ "updated_at": "2026-09-01T05:17:23+00:00"
 }

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-08-31T22:54:34+00:00",
+ "built_at": "2026-09-01T05:17:23+00:00",
  "teams_tracked": 188,
  "leads": [
   {
@@ -5906,6 +5906,133 @@
     }
    ],
    "market": "https://www.bovada.lv/sports/soccer/europe/italy/serie-a/torino-as-roma-202609141230"
+  },
+  {
+   "date": "2026-09-15",
+   "kickoff": "2026-09-15T19:30Z",
+   "league": "La Liga",
+   "match": "Elche v Real Madrid",
+   "home": "Elche",
+   "away": "Real Madrid",
+   "headline": "Real Madrid to score",
+   "why": "Real Madrid have scored 2+ in 4 straight; Elche have conceded in 3 straight.",
+   "a": "Real Madrid",
+   "b": "Elche",
+   "a_run": 4,
+   "b_run": 3,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 7,
+   "base_rate": 0.4574468085106383,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "Real Madrid"
+   },
+   "a_recent": [
+    {
+     "s": "4-0",
+     "opp": "M\u00e1laga",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Real Sociedad",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Espanyol",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Schalke 04",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Deportivo",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-1",
+     "opp": "Ferencvaros",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-3",
+     "opp": "Racing Santander",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-5",
+     "opp": "Barcelona",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Deportivo",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Toulouse",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Girona",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Getafe",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    }
+   ],
+   "market": null
   }
  ],
  "teams": [
@@ -7776,7 +7903,7 @@
    "team": "Chelsea",
    "no_run": false,
    "league": "Premier League",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "scoring",
@@ -8844,7 +8971,7 @@
    "team": "Bayer Leverkusen",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "btts",
@@ -10536,7 +10663,7 @@
    "team": "Manchester United",
    "no_run": false,
    "league": "Premier League",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "leaky",
@@ -11121,7 +11248,7 @@
    "team": "Manchester City",
    "no_run": false,
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "btts",
@@ -12885,7 +13012,7 @@
    "team": "Rayo Vallecano",
    "no_run": false,
    "league": "La Liga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "btts",
@@ -13602,7 +13729,7 @@
    "team": "Arsenal",
    "no_run": false,
    "league": "Premier League",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "scoring1",
@@ -14127,7 +14254,7 @@
    "team": "Newcastle United",
    "no_run": false,
    "league": "Premier League",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "scoring1",
@@ -14277,7 +14404,7 @@
    "team": "Aston Villa",
    "no_run": false,
    "league": "Premier League",
-   "played": 22,
+   "played": 21,
    "runs": [
     {
      "key": "porous",
@@ -14721,7 +14848,7 @@
    "team": "Hamburg SV",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -15678,7 +15805,7 @@
    "team": "Brighton & Hove Albion",
    "no_run": false,
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring1",
@@ -16710,7 +16837,7 @@
    "team": "Real Oviedo",
    "no_run": false,
    "league": "La Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -19722,7 +19849,7 @@
    "team": "Fulham",
    "no_run": true,
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -20656,7 +20783,7 @@
    "team": "Nottingham Forest",
    "no_run": true,
    "league": "Premier League",
-   "played": 19,
+   "played": 18,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -21336,7 +21463,7 @@
    "team": "West Ham United",
    "no_run": true,
    "league": "Premier League",
-   "played": 10,
+   "played": 9,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -23695,143 +23822,6 @@
    "next_ko": "2026-09-06T16:30Z"
   },
   {
-   "team": "Hamburg SV",
-   "league": "Bundesliga",
-   "played": 14,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 14,
-     "rate": 0.03333333333333333
-    }
-   ],
-   "best_rate": 0.03333333333333333,
-   "longest": 14,
-   "next": {
-    "opp": "Mainz",
-    "date": "2026-09-06",
-    "kickoff": "2026-09-06T13:30Z",
-    "league": "Bundesliga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "0-2",
-     "opp": "Borussia Dortmund",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Toulouse",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-1",
-     "opp": "Lille",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Bayer Leverkusen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-2",
-     "opp": "SC Freiburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Eintracht Frankfurt",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-2",
-     "opp": "TSG Hoffenheim",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-3",
-     "opp": "Werder Bremen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "0-4",
-     "opp": "VfB Stuttgart",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-1",
-     "opp": "FC Augsburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-3",
-     "opp": "Borussia Dortmund",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-1",
-     "opp": "FC Cologne",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "VfL Wolfsburg",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "0-1",
-     "opp": "Bayer Leverkusen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    }
-   ],
-   "next_ko": "2026-09-06T13:30Z"
-  },
-  {
    "team": "Benfica",
    "league": "Primeira Liga",
    "played": 13,
@@ -24104,7 +24094,7 @@
   {
    "team": "Manchester City",
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring1",
@@ -24234,14 +24224,6 @@
      "hit": false,
      "comp": true,
      "lg": "Champions League"
-    },
-    {
-     "s": "2-2",
-     "opp": "Nottingham Forest",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Premier League"
     }
    ],
    "next_ko": "2026-09-05T14:00Z"
@@ -24648,6 +24630,135 @@
     }
    ],
    "next_ko": "2026-09-06T14:45Z"
+  },
+  {
+   "team": "Hamburg SV",
+   "league": "Bundesliga",
+   "played": 13,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 13,
+     "rate": 0.06111111111111111
+    }
+   ],
+   "best_rate": 0.06111111111111111,
+   "longest": 13,
+   "next": {
+    "opp": "Mainz",
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T13:30Z",
+    "league": "Bundesliga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "0-2",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Toulouse",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Lille",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-2",
+     "opp": "SC Freiburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "TSG Hoffenheim",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "Werder Bremen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-4",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Cologne",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "VfL Wolfsburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "next_ko": "2026-09-06T13:30Z"
   },
   {
    "team": "Real Sociedad",
@@ -25230,7 +25341,7 @@
   {
    "team": "Bayer Leverkusen",
    "league": "Bundesliga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "scoring1",
@@ -26167,7 +26278,7 @@
   {
    "team": "Arsenal",
    "league": "Premier League",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "scoring1",
