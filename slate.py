@@ -123,8 +123,32 @@ def eligible(leads, blob, now):
         if fixture_key(l) in seen_fixtures:
             continue
         out.append(l)
-    # rarest first; longer run breaks a tie; then soonest
-    out.sort(key=lambda l: (l["base_rate"], -l["strength"], l.get("kickoff") or ""))
+
+    # Rank on rarity WITHIN each market, not across them.
+    #
+    # Absolute rarity cannot compare markets whose base rates differ. Over 1.5 lands in
+    # ~80% of matches, so even its most unusual confluence scores 32% while BTTS reaches
+    # 6% — under a raw-rarity sort the entire over-1.5 family sat behind every other type
+    # and could never be drawn at all. That is not a judgement that over-1.5 is worse
+    # evidence; it is an artefact of comparing across distributions.
+    #
+    # So each lead is ranked against OTHERS OF ITS OWN KIND: position 0 is the most
+    # unusual over-1.5 confluence available, and it competes on equal footing with the
+    # most unusual BTTS one. The card still shows the ABSOLUTE rarity, so a drawn
+    # over-1.5 pick is still visibly labelled "common · 32%".
+    by_kind = {}
+    for l in out:
+        by_kind.setdefault(l["a_key"], []).append(l)
+    rank = {}
+    for kind, group in by_kind.items():
+        group.sort(key=lambda l: (l["base_rate"], -l["strength"]))
+        n = len(group)
+        for i, l in enumerate(group):
+            # percentile within the kind; single-member kinds rank as best-in-class
+            rank[id(l)] = (i / (n - 1)) if n > 1 else 0.0
+
+    out.sort(key=lambda l: (rank[id(l)], l["base_rate"], -l["strength"],
+                            l.get("kickoff") or ""))
     return out
 
 

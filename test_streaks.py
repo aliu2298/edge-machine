@@ -227,6 +227,24 @@ check("parses ESPN Z form",
 check("None when absent", B.kickoff_dt({}), None)
 check("None when unparseable", B.kickoff_dt({"kickoff": "not-a-date"}), None)
 
+print("\n== over 2.5 implies over 1.5: only the sharper card survives ==")
+rows = []
+for i in range(6):
+    d = f"2026-06-{i+1:02d}"
+    rows.append(fx(d, "Goals", f"o{i}", 3, 1))     # total 4 -> over 2.5 AND over 1.5
+    rows.append(fx(d, "Nets", f"p{i}", 2, 2))      # total 4 -> both
+rows.append(fx(future, "Goals", "Nets", None, None, played=False))
+st = B.team_streaks(B.team_games(rows))
+got = B.find_leads(rows, st, B.base_rates(st))
+heads = [l["headline"] for l in got]
+check("Over 2.5 card present", "Over 2.5 goals" in heads, True)
+check("Over 1.5 card suppressed", "Over 1.5 goals" in heads, False)
+
+print("\n== one claim, one card: identical headline never duplicates ==")
+import collections as _c
+dupes = [k for k, v in _c.Counter((l["match"], l["headline"]) for l in got).items() if v > 1]
+check("no duplicated headline on a fixture", dupes, [])
+
 print("\n== live-data consistency ==")
 try:
     import streaks_fetch

@@ -406,7 +406,20 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
     strong = {(l["match"], l["a"]) for l in uniq if l["a_key"] == "over25"}
     uniq = [l for l in uniq
             if not (l["a_key"] == "over15" and (l["match"], l["a"]) in strong)]
-    return uniq
+
+    # Final guard: identical HEADLINE on the same fixture is the same claim however it was
+    # reached. `solid` (A keeps clean sheets, B fails to score) and `blanked` (B fails to
+    # score, A keeps clean sheets) are the same statement read from either end and both
+    # rendered "Casa Pia to fail to score" on one match. Keying on (match, a, a_key) let
+    # both through because the roles are swapped.
+    seen_head, final = set(), []
+    for l in uniq:
+        hk = (l["match"], l["headline"])
+        if hk in seen_head:
+            continue
+        seen_head.add(hk)
+        final.append(l)
+    return final
 
 
 def team_lookups(by_team, fixtures):
