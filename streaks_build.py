@@ -871,14 +871,15 @@ const BETNAME = {{
 function resultTable(rows) {{
   return `<div class="tbl"><table>
     <tr><th>Bet</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
-        <th class="num">baseline</th><th class="num">lift</th><th></th></tr>
+        <th class="num">team base</th><th class="num">lift</th><th></th></tr>
     ${{rows.map(r => `<tr>
       <td>${{esc(BETNAME[r.kind] || r.kind)}}</td>
       <td class="num">${{r.n}}</td>
       <td class="num">${{r.hits}}</td>
       <td class="num">${{Math.round(r.rate*100)}}%</td>
-      <td class="num mut" title="league-adjusted${{r.global_base != null
-        ? '; global ' + Math.round(r.global_base*100) + '%' : ''}}">${{
+      <td class="num mut" title="the teams' own rate${{r.league_base != null
+        ? '; league avg ' + Math.round(r.league_base*100) + '%' : ''}}${{
+        r.global_base != null ? '; global ' + Math.round(r.global_base*100) + '%' : ''}}">${{
         r.base == null ? '—' : Math.round(r.base*100) + '%'}}</td>
       <td class="num ${{r.lift == null ? '' : (r.lift >= 0 ? 'pos' : 'neg')}}">${{
         r.lift == null ? '—' : (r.lift >= 0 ? '+' : '') + (r.lift*100).toFixed(1) + 'pp'}}</td>
@@ -890,9 +891,11 @@ function trackView() {{
   const t = TRACK;
   const note = `<div class="tr-note">This board carries no odds, so this is <b>not</b>
     profit and cannot be. What it measures is whether flagging a fixture beats not flagging
-    it: each lead's hit rate against the same outcome's <b>league-adjusted baseline</b>.
-    The adjustment matters — BTTS leads cluster in high-scoring leagues, and comparing them
-    to a global rate would credit the streak for what is really the schedule.
+    it: each lead's hit rate against <b>the rate those same teams manage anyway</b>. A claim
+    like "X to score 2+" has to be judged against how often X scores 2+, not against a
+    league average — the confluence selects free-scoring sides, so a league baseline
+    manufactures lift out of team quality. On the first graded leads that difference took
+    "team to score" from +9.3pp to <b>-1.5pp</b>.
     <b>Lift is the number that counts</b>; a hit rate alone is not evidence, and a lift is
     only called significant when its 95% interval clears the baseline.</div>`;
 

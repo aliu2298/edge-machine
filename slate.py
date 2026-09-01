@@ -232,6 +232,7 @@ def report(fixtures, blob=None):
     blob = load() if blob is None else blob
     pop = T.population_rates(fixtures)
     per_league = T.league_baselines(fixtures)
+    tr = T.team_kind_rates(fixtures)
 
     decided = [p for p in settled_picks(blob) if p["status"] in ("hit", "miss")]
     by_kind = {}
@@ -243,10 +244,14 @@ def report(fixtures, blob=None):
         n = len(ps)
         hits = sum(1 for p in ps if p["status"] == "hit")
         rate, lo, hi = T._wilson(hits, n)
-        base = T.mixed_baseline(per_league, k, [p["league"] for p in ps]) or pop.get(k)
+        # judged against the TEAMS involved, not the league — see team_kind_rates()
+        lbase = T.mixed_baseline(per_league, k, [p["league"] for p in ps]) or pop.get(k)
+        tvals = [T.team_baseline(p, k, tr) for p in ps]
+        tvals = [v for v in tvals if v is not None]
+        base = (sum(tvals) / len(tvals)) if tvals else lbase
         rows.append({
             "kind": k, "n": n, "hits": hits, "rate": rate,
-            "base": base, "global_base": pop.get(k),
+            "base": base, "league_base": lbase, "global_base": pop.get(k),
             "lift": (rate - base) if base is not None else None,
             "significant": bool(base is not None and (lo > base or hi < base)),
         })

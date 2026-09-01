@@ -284,7 +284,8 @@ team</b>, so the three are independent rather than three angles on the same matc
 refills as soon as its pick settles{f' · currently reaching {hz}' if hz else ''}.
 Every pick is <b>locked when drawn</b> — the runs behind it keep moving, so the card shows
 what was claimed at the time, not a tidier version found later.
-<b>No edge is claimed</b>: the backtest cannot distinguish these from the base rate.
+<b>No edge is claimed.</b> Results are judged against the rate the teams involved manage
+anyway — not a league average, which would credit the pick for team quality.
 Research, not betting advice.</div>
 
 {f'''<h2>Record</h2>
@@ -296,7 +297,7 @@ Research, not betting advice.</div>
 </div>
 <div class="tbl"><table>
 <tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
-    <th class="num">baseline</th><th class="num">lift</th><th></th></tr>
+    <th class="num">team base</th><th class="num">lift</th><th></th></tr>
 {perf}</table></div>''' if report["graded"] else
 '''<h2>Record</h2><div class="note">Nothing graded yet — the first picks settle as their
 fixtures are played.</div>'''}

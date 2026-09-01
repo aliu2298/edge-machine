@@ -25,7 +25,7 @@ never re-scored or re-priced after the fact.
 Usage:  python3 streaks_track.py [--report]
         (streaks_build.py calls record() and grade() automatically each build)
 """
-import json, os, math, datetime
+import json, os, math, datetime, collections
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 LEDGER = os.path.join(ROOT, "data", "streak_leads.json")
@@ -198,6 +198,56 @@ def bet_key(bet):
     return k if k == "btts" else f"{k}:{bet.get('n')}"
 
 
+def team_kind_rates(fixtures):
+    """team -> {bet_kind: that team's own rate for the outcome}.
+
+    ⚠️ THE LEAGUE BASELINE IS NOT ENOUGH, and for team-specific bets it is close to
+    meaningless. "Go Ahead Eagles to score 2+" should be judged against how often GAE
+    score 2+, not against how often anyone in the Eredivisie does — and the confluence
+    SELECTS free-scoring teams, so a league average systematically understates what these
+    sides do anyway and manufactures lift out of team quality.
+
+    Measured on the first 18 graded leads:
+
+        team to score    +9.3pp vs league  ->  -1.5pp vs the team    (sign flips)
+        team to score 2+ +48.7pp           ->  +7.7pp
+        BTTS             +18.0pp           -> +11.7pp
+
+    Same confound already found in fire_track: teams on long scoring runs are good teams.
+    Fixture-level outcomes (BTTS, totals) use the mean of the two sides' own rates, which
+    is an approximation but far closer than a league average.
+    """
+    tot = collections.defaultdict(lambda: collections.defaultdict(list))
+    for f in fixtures:
+        if not f.get("played") or f.get("home_goals") is None:
+            continue
+        if not f.get("competitive", True):
+            continue                      # friendlies would shift the yardstick
+        hg, ag = f["home_goals"], f["away_goals"]
+        for team, gf, ga in ((f["home"], hg, ag), (f["away"], ag, hg)):
+            d = tot[team]
+            d["btts"].append(1 if (gf >= 1 and ga >= 1) else 0)
+            d["total_gte:3"].append(1 if gf + ga >= 3 else 0)
+            d["total_lte:2"].append(1 if gf + ga <= 2 else 0)
+            d["team_gte:1"].append(1 if gf >= 1 else 0)
+            d["team_gte:2"].append(1 if gf >= 2 else 0)
+            d["team_eq:0"].append(1 if gf == 0 else 0)
+    return {t: {k: (sum(v) / len(v) if v else None) for k, v in d.items()}
+            for t, d in tot.items()}
+
+
+def team_baseline(entry, kind, team_rates):
+    """Baseline for ONE graded entry, from the teams involved rather than the league."""
+    bet = entry.get("bet") or {}
+    if bet.get("team"):                                  # the claim names a side
+        return team_rates.get(bet["team"], {}).get(kind)
+    a = team_rates.get(entry.get("home"), {}).get(kind)  # fixture-level outcome
+    b = team_rates.get(entry.get("away"), {}).get(kind)
+    if a is None or b is None:
+        return a if b is None else b
+    return (a + b) / 2
+
+
 def league_baselines(fixtures):
     """league -> its own population rates. Needed because a GLOBAL baseline is confounded
     by league mix.
@@ -244,6 +294,7 @@ def report(fixtures, blob=None):
     blob = blob if blob is not None else load()
     pop = population_rates(fixtures)
     per_league = league_baselines(fixtures)
+    tr = team_kind_rates(fixtures)
     settled = [e for e in blob["leads"].values() if e["status"] in ("hit", "miss")]
 
     by_kind = {}
@@ -255,13 +306,16 @@ def report(fixtures, blob=None):
         n = len(entries)
         hits = sum(1 for e in entries if e["status"] == "hit")
         p, lo, hi = _wilson(hits, n)
-        # league-adjusted baseline is the one judged against; global kept for contrast
-        base = mixed_baseline(per_league, k, [e["league"] for e in entries])
-        if base is None:
-            base = pop.get(k)
+        # TEAM baseline is the one judged against — a claim about a named side must be
+        # measured against that side, and the confluence selects free-scoring teams so a
+        # league average manufactures lift out of team quality. League kept for contrast.
+        lbase = mixed_baseline(per_league, k, [e["league"] for e in entries]) or pop.get(k)
+        tvals = [team_baseline(e, k, tr) for e in entries]
+        tvals = [v for v in tvals if v is not None]
+        base = (sum(tvals) / len(tvals)) if tvals else lbase
         rows.append({
             "kind": k, "n": n, "hits": hits, "rate": p, "lo": lo, "hi": hi,
-            "base": base, "global_base": pop.get(k),
+            "base": base, "league_base": lbase, "global_base": pop.get(k),
             "lift": (p - base) if base is not None else None,
             # A lift is only meaningful if the interval clears the baseline.
             "significant": bool(base is not None and n and (lo > base or hi < base)),
