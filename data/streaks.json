@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-01T21:06:42+00:00",
+ "built_at": "2026-09-02T04:42:35+00:00",
  "teams_tracked": 188,
  "leads": [
   {
@@ -11531,6 +11531,380 @@
     }
    ],
    "market": null
+  },
+  {
+   "date": "2026-09-16",
+   "kickoff": "2026-09-16T17:00Z",
+   "league": "La Liga",
+   "match": "Deportivo v Sevilla",
+   "home": "Deportivo",
+   "away": "Sevilla",
+   "headline": "Both teams to score",
+   "why": "Both sides are on a BTTS run \u2014 Deportivo 3 straight, Sevilla 4 straight.",
+   "a": "Deportivo",
+   "b": "Sevilla",
+   "a_run": 3,
+   "b_run": 4,
+   "a_key": "btts",
+   "b_key": "btts",
+   "a_label": "both teams scored",
+   "b_label": "both teams scored",
+   "strength": 7,
+   "base_rate": 0.2127659574468085,
+   "bet": {
+    "kind": "btts"
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "Valencia",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "M\u00e1laga",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Elche",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Genoa",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Fiorentina",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-3",
+     "opp": "Atl\u00e9tico Madrid",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Athletic Club",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Rayo Vallecano",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Celta Vigo",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-16",
+   "kickoff": "2026-09-16T17:00Z",
+   "league": "La Liga",
+   "match": "Deportivo v Sevilla",
+   "home": "Deportivo",
+   "away": "Sevilla",
+   "headline": "Over 1.5 goals",
+   "why": "Deportivo have gone over 1.5 in 3 straight; Sevilla in 4 straight.",
+   "a": "Deportivo",
+   "b": "Sevilla",
+   "a_run": 3,
+   "b_run": 4,
+   "a_key": "over15",
+   "b_key": "over15",
+   "a_label": "over 1.5 goals",
+   "b_label": "over 1.5 goals",
+   "strength": 7,
+   "base_rate": 0.5585106382978723,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "Valencia",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "M\u00e1laga",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Elche",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-0",
+     "opp": "Genoa",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Fiorentina",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-3",
+     "opp": "Atl\u00e9tico Madrid",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Athletic Club",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Rayo Vallecano",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Celta Vigo",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Real Madrid",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "La Liga"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-16",
+   "kickoff": "2026-09-16T19:00Z",
+   "league": "Europa League",
+   "match": "AC Milan v Benfica",
+   "home": "AC Milan",
+   "away": "Benfica",
+   "headline": "Over 1.5 goals",
+   "why": "AC Milan have gone over 1.5 in 6 straight; Benfica in 6 straight.",
+   "a": "AC Milan",
+   "b": "Benfica",
+   "a_run": 6,
+   "b_run": 6,
+   "a_key": "over15",
+   "b_key": "over15",
+   "a_label": "over 1.5 goals",
+   "b_label": "over 1.5 goals",
+   "strength": 12,
+   "base_rate": 0.3191489361702128,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "2-0",
+     "opp": "Venezia",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "2-1",
+     "opp": "Torino",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Serie A"
+    },
+    {
+     "s": "4-2",
+     "opp": "Manchester United",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-3",
+     "opp": "Chelsea",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Internazionale",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-2",
+     "opp": "Celtic",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-1",
+     "opp": "Estoril",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "7-0",
+     "opp": "Casa Pia",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Acad\u00e9mico de Viseu",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Estoril",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Braga",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Famalicao",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "market": "https://www.bovada.lv/sports/soccer/international-club/uefa-europa-league/ac-milan-benfica-202609161500"
   }
  ],
  "teams": [
@@ -16662,7 +17036,7 @@
    "team": "Tottenham Hotspur",
    "no_run": false,
    "league": "Premier League",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "leaky",
@@ -19353,7 +19727,7 @@
    "team": "Damac",
    "no_run": false,
    "league": "Saudi Pro League",
-   "played": 10,
+   "played": 9,
    "runs": [
     {
      "key": "over25",
@@ -20589,7 +20963,7 @@
    "team": "Crystal Palace",
    "no_run": false,
    "league": "Premier League",
-   "played": 16,
+   "played": 15,
    "runs": [
     {
      "key": "porous",
@@ -25806,7 +26180,7 @@
    "team": "Al Riyadh",
    "no_run": true,
    "league": "Saudi Pro League",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -33208,7 +33582,7 @@
   {
    "team": "Crystal Palace",
    "league": "Premier League",
-   "played": 16,
+   "played": 15,
    "runs": [
     {
      "key": "porous",

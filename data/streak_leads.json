@@ -3534,7 +3534,78 @@
    "match": "Rayo Vallecano v Espanyol",
    "status": "pending",
    "strength": 12
+  },
+  "2026-09-16|AC Milan|Benfica|Over 1.5 goals": {
+   "a": "AC Milan",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Benfica",
+   "b": "Benfica",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.3191489361702128,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-02",
+   "headline": "Over 1.5 goals",
+   "home": "AC Milan",
+   "id": "2026-09-16|AC Milan|Benfica|Over 1.5 goals",
+   "kickoff": "2026-09-16T19:00Z",
+   "league": "Europa League",
+   "match": "AC Milan v Benfica",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-16|Deportivo|Sevilla|Both teams to score": {
+   "a": "Deportivo",
+   "a_key": "btts",
+   "a_run": 3,
+   "away": "Sevilla",
+   "b": "Sevilla",
+   "b_key": "btts",
+   "b_run": 4,
+   "base_rate": 0.2127659574468085,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-02",
+   "headline": "Both teams to score",
+   "home": "Deportivo",
+   "id": "2026-09-16|Deportivo|Sevilla|Both teams to score",
+   "kickoff": "2026-09-16T17:00Z",
+   "league": "La Liga",
+   "match": "Deportivo v Sevilla",
+   "status": "pending",
+   "strength": 7
+  },
+  "2026-09-16|Deportivo|Sevilla|Over 1.5 goals": {
+   "a": "Deportivo",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "Sevilla",
+   "b": "Sevilla",
+   "b_key": "over15",
+   "b_run": 4,
+   "base_rate": 0.5585106382978723,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-02",
+   "headline": "Over 1.5 goals",
+   "home": "Deportivo",
+   "id": "2026-09-16|Deportivo|Sevilla|Over 1.5 goals",
+   "kickoff": "2026-09-16T17:00Z",
+   "league": "La Liga",
+   "match": "Deportivo v Sevilla",
+   "status": "pending",
+   "strength": 7
   }
  },
- "updated_at": "2026-09-01T21:06:42+00:00"
+ "updated_at": "2026-09-02T04:42:35+00:00"
 }
