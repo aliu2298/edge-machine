@@ -713,6 +713,7 @@
    "test_date": "2026-09-05"
   },
   "Celtic|scoring1|2026-09-02|Celtic|Aberdeen": {
+   "graded_at": "2026-09-02T21:07:36+00:00",
    "home": true,
    "id": "Celtic|scoring1|2026-09-02|Celtic|Aberdeen",
    "key": "scoring1",
@@ -723,9 +724,25 @@
    "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Aberdeen",
    "rate": 0.125,
-   "status": "pending",
+   "result": "3-0",
+   "status": "extended",
    "team": "Celtic",
    "test_date": "2026-09-02"
+  },
+  "Celtic|scoring1|2026-09-05|Celtic|St Mirren": {
+   "home": false,
+   "id": "Celtic|scoring1|2026-09-05|Celtic|St Mirren",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T19:00Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 12,
+   "logged_at": "2026-09-02T21:07:36+00:00",
+   "opp": "St Mirren",
+   "rate": 0.10416666666666667,
+   "status": "pending",
+   "team": "Celtic",
+   "test_date": "2026-09-05"
   },
   "Charlotte FC|scoring1|2026-08-29|Charlotte FC|Atlanta United FC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -2004,6 +2021,7 @@
    "test_date": "2026-09-05"
   },
   "Rangers|scoring1|2026-09-02|Rangers|Falkirk": {
+   "graded_at": "2026-09-02T21:07:36+00:00",
    "home": false,
    "id": "Rangers|scoring1|2026-09-02|Rangers|Falkirk",
    "key": "scoring1",
@@ -2014,9 +2032,25 @@
    "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Falkirk",
    "rate": 0.09895833333333333,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Rangers",
    "test_date": "2026-09-02"
+  },
+  "Rangers|scoring1|2026-09-05|Rangers|Motherwell": {
+   "home": true,
+   "id": "Rangers|scoring1|2026-09-05|Rangers|Motherwell",
+   "key": "scoring1",
+   "kickoff": "2026-09-05T14:00Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 13,
+   "logged_at": "2026-09-02T21:07:36+00:00",
+   "opp": "Motherwell",
+   "rate": 0.057291666666666664,
+   "status": "pending",
+   "team": "Rangers",
+   "test_date": "2026-09-05"
   },
   "Rayo Vallecano|over15|2026-09-05|Rayo Vallecano|Racing Santander": {
    "home": true,
@@ -2692,5 +2726,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-09-02T16:39:34+00:00"
+ "updated_at": "2026-09-02T21:07:36+00:00"
 }
