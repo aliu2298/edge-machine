@@ -468,71 +468,6 @@ def team_lookups(by_team, fixtures):
     return league_of, nxt
 
 
-def today_rows(fixtures, shown, league_of, rates):
-    """Every fixture kicking off in the CURRENT day, with both sides' runs attached.
-
-    The day is the CENTRAL calendar day, matching what the cards print — a fixture at
-    01:30Z belongs to the previous evening in the Americas, so a UTC day would list it a
-    day late relative to its own timestamp.
-
-    Refreshes on its own: the pipeline runs every 6h, so the list empties as the day
-    passes and repopulates overnight.
-    """
-    tz = datetime.timezone(datetime.timedelta(hours=-5))     # Central; DST handled below
-    now = datetime.datetime.now(datetime.timezone.utc)
-    today_ct = now.astimezone(tz).date()
-
-    out = []
-    for f in fixtures:
-        if not f.get("competitive", True):
-            continue
-        ko = kickoff_dt(f)
-        if ko is None or ko.astimezone(tz).date() != today_ct:
-            continue
-
-        def side(team):
-            info = shown.get(team)
-            runs = []
-            if info:
-                runs = sorted(
-                    ({"key": k, "label": STREAK_BY_KEY[k][1], "n": n,
-                      "rate": rates[k][min(n, FORM_GAMES)]}
-                     for k, n in info["runs"].items()),
-                    key=lambda r: (r["rate"], -r["n"]))
-            return {"team": team, "runs": runs,
-                    "recent": form_seq(info["recent"], runs[0]["n"] if runs else 0)
-                              if info else []}
-
-        out.append({
-            "match": f"{f['home']} v {f['away']}",
-            "home": side(f["home"]), "away": side(f["away"]),
-            "league": f["league"], "kickoff": f.get("kickoff"), "date": f["date"],
-            "played": bool(f.get("played")),
-            "final": (f"{f['home_goals']}-{f['away_goals']}"
-                      if f.get("played") and f.get("home_goals") is not None else None),
-            # a fixture is more interesting when either side carries a run
-            "best_rate": min([r["rate"] for sd in ("home", "away") for r in []] or [1.0]),
-        })
-    for r in out:
-        rates_here = [x["rate"] for sd in (r["home"], r["away"]) for x in sd["runs"]]
-        r["best_rate"] = min(rates_here) if rates_here else 1.0
-        r["has_run"] = bool(rates_here)
-    # fixtures with a notable run first, then by kickoff
-    out.sort(key=lambda r: (not r["has_run"], r["best_rate"], r.get("kickoff") or ""))
-
-    # How many land tomorrow. Opened late in the evening the list is nearly empty, which
-    # reads as a fault rather than as the day being over — so the page says what is next.
-    tomorrow = today_ct + datetime.timedelta(days=1)
-    n_tom = sum(1 for f in fixtures
-                if f.get("competitive", True)
-                and (kickoff_dt(f) or now).astimezone(tz).date() == tomorrow)
-    for r in out:
-        r["_tomorrow"] = n_tom
-    if not out:
-        out = [{"_empty": True, "_tomorrow": n_tom}]
-    return out
-
-
 def team_rows(streaks, by_team, fixtures, rates):
     """Every tracked team with its current runs — the browse view.
 
@@ -586,11 +521,10 @@ def team_rows(streaks, by_team, fixtures, rates):
 
 
 # ---------------------------------------------------------------- rendering
-def page_html(leads, teams, fire, today, track, meta, leagues, now):
+def page_html(leads, teams, fire, track, meta, leagues, now):
     payload = json.dumps(leads).replace("</", "<\\/")
     teams_payload = json.dumps(teams).replace("</", "<\\/")
     fire_payload = json.dumps(fire).replace("</", "<\\/")
-    today_payload = json.dumps(today).replace("</", "<\\/")
     league_btns = "".join(
         f'<button class="lg" data-lg="{esc(l)}">{esc(l)}</button>' for l in leagues)
     return f"""<!doctype html><html lang="en"><head>
@@ -766,7 +700,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="sub">Teams on a run, matched against a next opponent who is soft in the same
 place · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Picks</a><a class="on" href="./streaks.html">Streaks</a>
-<a href="./record.html">Record</a></div>
+<a href="./record.html">Record</a><a href="./today.html">Today</a></div>
 
 <details class="how">
 <summary>A run only counts when the opponent is soft in the same place — how this works</summary>
@@ -788,7 +722,6 @@ advice.</p>
 <div class="controls">
   <div class="tabs">
     <button class="tb on" data-tab="leads">Leads</button>
-    <button class="tb" data-tab="today">Today</button>
     <button class="tb" data-tab="fire">🔥 On fire</button>
     <button class="tb" data-tab="teams">All teams</button>
   </div>
@@ -818,7 +751,6 @@ advice.</p>
 const LEADS = {payload};
 const TEAMS = {teams_payload};
 const FIRE = {fire_payload};
-const TODAY = {today_payload};
 const FIRE_MIN = {FIRE_MIN};
 const list = document.getElementById('list');
 const cnt  = document.getElementById('cnt');
@@ -964,28 +896,6 @@ const BETNAME = {{
   'total_lte:2': 'Under 2.5 goals', 'team_gte:2': 'Team to score 2+',
   'team_gte:1': 'Team to score', 'team_eq:0': 'Team to fail to score'
 }};
-function sideBlock(sd) {{
-  const chips = sd.runs.slice(0, 2).map(r => {{
-    const [cls] = rarity(r.rate);
-    return `<span class="rare ${{cls}}" style="margin-left:0">${{esc(r.label)}} · ${{r.n}}`
-         + ` · ${{Math.round(r.rate*100)}}%</span>`;
-  }}).join('');
-  return `<div class="tdside">
-    <div class="tdname">${{esc(sd.team)}}</div>
-    <div class="truns">${{chips || '<span class="norun">no current run</span>'}}</div>
-    ${{sd.recent.length ? seq(sd.recent) : ''}}
-  </div>`;
-}}
-function todayRow(m) {{
-  const when_ = m.played
-    ? `<span class="st hit" style="border:none;background:none;padding:0">FT ${{esc(m.final||'')}}</span>`
-    : `<span class="nx" data-ko="${{esc(m.kickoff||'')}}">${{esc(countdown(m.kickoff)[1])}}</span>`;
-  return `<div class="trow">
-    <div class="th"><span class="tn">${{esc(m.match)}}</span>
-      <span class="tl">${{esc(m.league)}} · ${{esc(when(m.kickoff) || m.date)}} · ${{when_}}</span></div>
-    <div class="tbody tdgrid">${{sideBlock(m.home)}}${{sideBlock(m.away)}}</div>
-  </div>`;
-}}
 function fireRow(t) {{
   const chips = t.runs.map(r => {{
     const [cls] = rarity(r.rate);
@@ -1038,23 +948,6 @@ function render() {{
       ? 'No confluences in ' + league + ' right now — both sides of a fixture have to be '
         + 'on matching runs, which is genuinely rare. Try "All teams on a run".'
       : 'No leads match that filter.';
-  }} else if (tab === 'today') {{
-    total = TODAY.length;
-    rows = TODAY.filter(m => (!league || m.league === league) &&
-                             (!term || m.match.toLowerCase().includes(term)));
-    const real = rows.filter(m => !m._empty);
-    const tom = (TODAY[0] && TODAY[0]._tomorrow) || 0;
-    total = TODAY.filter(m => !m._empty).length;
-    html_ = `<div class="tr-note">Every tracked fixture kicking off <b>today</b>
-      (Central), with each side's current runs — those with a run come first. The list
-      empties as the day passes and fills again overnight; the pipeline refreshes every
-      6 hours.${{tom ? ` <b>${{tom}} fixture${{tom===1?'':'s'}} tomorrow.</b>` : ''}}</div>`
-      + real.map(todayRow).join('')
-      + (real.length ? '' : `<div class="empty">Nothing left today.${{
-          tom ? ` ${{tom}} fixture${{tom===1?'':'s'}} tomorrow.` : ''}}</div>`);
-    rows = real;
-    empty.style.display = 'none';
-    empty.textContent = '';
   }} else if (tab === 'fire') {{
     total = FIRE.length;
     rows = FIRE.filter(t => (!league || t.league === league) &&
@@ -1177,7 +1070,6 @@ def build(force=False):
     shown = team_streaks(by_team, MIN_PLAYED_SHOWN)
     _league_of, _nxt = team_lookups(by_team, fixtures)
     fire = fire_rows(by_team, fixtures, _league_of, _nxt)
-    today = today_rows(fixtures, shown, _league_of, rates)
     leads = find_leads(fixtures, streaks, rates)[:TOP_LEADS]
     teams = team_rows(shown, by_team, fixtures, rates)
 
@@ -1209,14 +1101,14 @@ def build(force=False):
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "streaks.html")
     with open(out, "w") as f:
-        f.write(page_html(leads, teams, fire, today, track, meta, leagues, now))
+        f.write(page_html(leads, teams, fire, track, meta, leagues, now))
 
     # machine-readable companion, same shape the page consumes
     with open(DATA_OUT, "w") as f:
         json.dump({"built_at": datetime.datetime.now(datetime.timezone.utc)
                    .isoformat(timespec="seconds"),
                    "teams_tracked": len(streaks), "leads": leads, "teams": teams,
-                   "fire": fire, "today": today,
+                   "fire": fire,
                    "base_rates": {k: {str(n): round(v, 4) for n, v in d.items()}
                                   for k, d in rates.items()}}, f, indent=1)
 

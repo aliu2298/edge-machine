@@ -157,7 +157,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>Edge Machine · Record</h1>
 <div class="sub">Everything that has been graded · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Picks</a><a href="./streaks.html">Streaks</a>
-<a class="on" href="./record.html">Record</a></div>
+<a class="on" href="./record.html">Record</a><a href="./today.html">Today</a></div>
 
 <div class="note warn">There are no odds anywhere on this site, so <b>none of this is
 profit</b> and none of it should be read as ROI. Each rate is compared against

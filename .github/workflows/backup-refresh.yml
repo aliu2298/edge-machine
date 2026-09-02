@@ -144,12 +144,16 @@ jobs:
         if: steps.check.outputs.run == 'true'
         run: python3 record_build.py || echo "record build failed — keeping previous page"
 
+      - name: Build today's fixtures page
+        if: steps.check.outputs.run == 'true'
+        run: python3 today_build.py || echo "today build failed — keeping previous page"
+
       - name: Commit and push if changed
         if: steps.check.outputs.run == 'true'
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add public_site/index.html public_site/streaks.html public_site/record.html \
+          git add public_site/index.html public_site/streaks.html public_site/record.html public_site/today.html \
                   data/streaks.json data/streak_leads.json data/slate.json \
                   data/fire_runs.json
           if git diff --cached --quiet; then

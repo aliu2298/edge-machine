@@ -276,7 +276,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="sub">Three picks drawn automatically from streak confluences · graded on the
 final score · all times CT · updated {esc(now)}</div>
 <div class="nav"><a class="on" href="./">Picks</a><a href="./streaks.html">Streaks</a>
-<a href="./record.html">Record</a></div>
+<a href="./record.html">Record</a><a href="./today.html">Today</a></div>
 
 <div class="hand">{cards}</div>
 
