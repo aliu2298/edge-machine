@@ -138,7 +138,7 @@
    "test_date": "2026-09-05"
   },
   "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal": {
-   "graded_at": "2026-09-01T21:06:44+00:00",
+   "graded_at": "2026-09-02T04:46:11+00:00",
    "home": false,
    "id": "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal",
    "key": "scoring1",
@@ -155,7 +155,7 @@
    "test_date": "2026-09-01"
   },
   "Al Hilal|scoring1|2026-09-01|Al Hilal|Al Ahli": {
-   "graded_at": "2026-09-01T21:06:44+00:00",
+   "graded_at": "2026-09-02T04:46:11+00:00",
    "home": true,
    "id": "Al Hilal|scoring1|2026-09-01|Al Hilal|Al Ahli",
    "key": "scoring1",
@@ -179,9 +179,9 @@
    "label": "scored in",
    "league": "Saudi Pro League",
    "length": 14,
-   "logged_at": "2026-09-01T21:06:44+00:00",
+   "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Al Shabab",
-   "rate": 0.044444444444444446,
+   "rate": 0.041666666666666664,
    "status": "pending",
    "team": "Al Hilal",
    "test_date": "2026-09-04"
@@ -711,6 +711,21 @@
    "status": "pending",
    "team": "Brest",
    "test_date": "2026-09-05"
+  },
+  "Celtic|scoring1|2026-09-02|Celtic|Aberdeen": {
+   "home": true,
+   "id": "Celtic|scoring1|2026-09-02|Celtic|Aberdeen",
+   "key": "scoring1",
+   "kickoff": "2026-09-02T18:45Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 11,
+   "logged_at": "2026-09-02T04:46:11+00:00",
+   "opp": "Aberdeen",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "Celtic",
+   "test_date": "2026-09-02"
   },
   "Charlotte FC|scoring1|2026-08-29|Charlotte FC|Atlanta United FC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -1347,6 +1362,51 @@
    "team": "Hamburg SV",
    "test_date": "2026-09-06"
   },
+  "Heart of Midlothian|over15|2026-09-03|Heart of Midlothian|Hibernian": {
+   "home": false,
+   "id": "Heart of Midlothian|over15|2026-09-03|Heart of Midlothian|Hibernian",
+   "key": "over15",
+   "kickoff": "2026-09-03T18:45Z",
+   "label": "over 1.5 goals",
+   "league": "Scottish Premiership",
+   "length": 10,
+   "logged_at": "2026-09-02T04:46:11+00:00",
+   "opp": "Hibernian",
+   "rate": 0.15104166666666666,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-03"
+  },
+  "Heart of Midlothian|scoring1|2026-09-03|Heart of Midlothian|Hibernian": {
+   "home": false,
+   "id": "Heart of Midlothian|scoring1|2026-09-03|Heart of Midlothian|Hibernian",
+   "key": "scoring1",
+   "kickoff": "2026-09-03T18:45Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 11,
+   "logged_at": "2026-09-02T04:46:11+00:00",
+   "opp": "Hibernian",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-03"
+  },
+  "Hibernian|porous|2026-09-03|Hibernian|Heart of Midlothian": {
+   "home": true,
+   "id": "Hibernian|porous|2026-09-03|Hibernian|Heart of Midlothian",
+   "key": "porous",
+   "kickoff": "2026-09-03T18:45Z",
+   "label": "conceded in",
+   "league": "Scottish Premiership",
+   "length": 9,
+   "logged_at": "2026-09-02T04:46:11+00:00",
+   "opp": "Heart of Midlothian",
+   "rate": 0.16145833333333334,
+   "status": "pending",
+   "team": "Hibernian",
+   "test_date": "2026-09-03"
+  },
   "Houston Dynamo FC|scoring1|2026-08-30|Houston Dynamo FC|San Jose Earthquakes": {
    "graded_at": "2026-08-30T14:51:28+00:00",
    "home": true,
@@ -1942,6 +2002,21 @@
    "status": "pending",
    "team": "RB Leipzig",
    "test_date": "2026-09-05"
+  },
+  "Rangers|scoring1|2026-09-02|Rangers|Falkirk": {
+   "home": false,
+   "id": "Rangers|scoring1|2026-09-02|Rangers|Falkirk",
+   "key": "scoring1",
+   "kickoff": "2026-09-02T19:00Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 12,
+   "logged_at": "2026-09-02T04:46:11+00:00",
+   "opp": "Falkirk",
+   "rate": 0.09895833333333333,
+   "status": "pending",
+   "team": "Rangers",
+   "test_date": "2026-09-02"
   },
   "Rayo Vallecano|over15|2026-09-05|Rayo Vallecano|Racing Santander": {
    "home": true,
@@ -2617,5 +2692,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-09-02T04:42:39+00:00"
+ "updated_at": "2026-09-02T04:46:11+00:00"
 }

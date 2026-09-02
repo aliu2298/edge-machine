@@ -18,7 +18,7 @@ flowchart TB
     subgraph CI["GitHub Actions — daily cron"]
         direction TB
         HC["health.py<br/>guardrails (warn-only)"]
-        SF["streaks_fetch.py<br/>11 leagues → fixtures"]
+        SF["streaks_fetch.py<br/>12 leagues → fixtures"]
         SB["streaks_build.py<br/>runs → confluences"]
         SL["slate_build.py<br/>draw 3 · grade · refill"]
         HC --> SF --> SB --> SL
@@ -70,7 +70,7 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 | `slate.py` | Draws three picks, grades them, keeps `data/slate.json`. |
 | `slate_build.py` | Renders the card board to `public_site/index.html`. |
 | `slate_backtest.py` | Replays the board day by day over past fixtures. |
-| `streaks_fetch.py` | Pulls recent + upcoming fixtures for 11 leagues from ESPN. |
+| `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
 | `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
@@ -121,8 +121,9 @@ what the fixed cadence buys is a clean, uncorrelated, continuously accumulating 
 
 ## The Streaks board
 
-Tracks 11 leagues: the big five (Premier League, La Liga, Bundesliga, Serie A, Ligue 1),
-Eredivisie, Primeira Liga, MLS, Saudi Pro League, and the Champions/Europa Leagues.
+Tracks 12 leagues: the big five (Premier League, La Liga, Bundesliga, Serie A, Ligue 1),
+Eredivisie, Primeira Liga, Scottish Premiership, MLS, Saudi Pro League, and the
+Champions/Europa Leagues.
 
 A **lead** is not a streak on its own — plenty of good sides score freely. It is a
 *confluence*: one team's run meeting the opponent's matching weakness in a fixture that has

@@ -33,7 +33,7 @@ BOARD = os.path.join(ROOT, "data", "streaks.json")
 SQUADS = {
     "Premier League": 20, "La Liga": 20, "Bundesliga": 18, "Serie A": 20,
     "Ligue 1": 18, "Eredivisie": 18, "Primeira Liga": 18, "MLS": 30,
-    "Saudi Pro League": 18,
+    "Saudi Pro League": 18, "Scottish Premiership": 12,
 }
 # Cup competitions have no fixed membership, so a size check is meaningless for them.
 NO_SQUAD_CHECK = {"Champions League", "Europa League"}

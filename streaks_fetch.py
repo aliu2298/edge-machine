@@ -30,7 +30,8 @@ UA = {"User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
 LEAGUES = {
     "eng.1": "Premier League", "esp.1": "La Liga", "ger.1": "Bundesliga",
     "ita.1": "Serie A", "fra.1": "Ligue 1", "ned.1": "Eredivisie",
-    "por.1": "Primeira Liga", "usa.1": "MLS", "ksa.1": "Saudi Pro League",
+    "por.1": "Primeira Liga", "sco.1": "Scottish Premiership",
+    "usa.1": "MLS", "ksa.1": "Saudi Pro League",
     "uefa.champions": "Champions League", "uefa.europa": "Europa League",
 }
 

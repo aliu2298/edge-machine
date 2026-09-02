@@ -480,6 +480,30 @@
    "status": "hit",
    "strength": 12
   },
+  "2026-09-03|Hibernian|Heart of Midlothian|Over 2.5 goals": {
+   "a": "Hibernian",
+   "a_key": "over25",
+   "a_run": 3,
+   "away": "Heart of Midlothian",
+   "b": "Heart of Midlothian",
+   "b_key": "over25",
+   "b_run": 5,
+   "base_rate": 0.235,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-03",
+   "first_seen": "2026-09-02",
+   "headline": "Over 2.5 goals",
+   "home": "Hibernian",
+   "id": "2026-09-03|Hibernian|Heart of Midlothian|Over 2.5 goals",
+   "kickoff": "2026-09-03T18:45Z",
+   "league": "Scottish Premiership",
+   "match": "Hibernian v Heart of Midlothian",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-03|Toulouse|Lille|Over 1.5 goals": {
    "a": "Toulouse",
    "a_key": "over15",
@@ -1427,6 +1451,30 @@
    "match": "FC Dallas v Sporting Kansas City",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-06|Heart of Midlothian|Dundee|Over 1.5 goals": {
+   "a": "Heart of Midlothian",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Dundee",
+   "b": "Dundee",
+   "b_key": "over15",
+   "b_run": 3,
+   "base_rate": 0.55,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-06",
+   "first_seen": "2026-09-02",
+   "headline": "Over 1.5 goals",
+   "home": "Heart of Midlothian",
+   "id": "2026-09-06|Heart of Midlothian|Dundee|Over 1.5 goals",
+   "kickoff": "2026-09-06T14:00Z",
+   "league": "Scottish Premiership",
+   "match": "Heart of Midlothian v Dundee",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-06|Heerenveen|AZ Alkmaar|AZ Alkmaar to score 2+": {
    "a": "AZ Alkmaar",
@@ -3511,6 +3559,30 @@
    "status": "pending",
    "strength": 7
   },
+  "2026-09-15|Hibernian|Kilmarnock|Over 2.5 goals": {
+   "a": "Hibernian",
+   "a_key": "over25",
+   "a_run": 3,
+   "away": "Kilmarnock",
+   "b": "Kilmarnock",
+   "b_key": "over25",
+   "b_run": 6,
+   "base_rate": 0.235,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-02",
+   "headline": "Over 2.5 goals",
+   "home": "Hibernian",
+   "id": "2026-09-15|Hibernian|Kilmarnock|Over 2.5 goals",
+   "kickoff": "2026-09-15T18:45Z",
+   "league": "Scottish Premiership",
+   "match": "Hibernian v Kilmarnock",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals": {
    "a": "Rayo Vallecano",
    "a_key": "over15",
@@ -3543,7 +3615,7 @@
    "b": "Benfica",
    "b_key": "over15",
    "b_run": 6,
-   "base_rate": 0.3191489361702128,
+   "base_rate": 0.31,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -3567,7 +3639,7 @@
    "b": "Sevilla",
    "b_key": "btts",
    "b_run": 4,
-   "base_rate": 0.2127659574468085,
+   "base_rate": 0.205,
    "bet": {
     "kind": "btts"
    },
@@ -3590,7 +3662,7 @@
    "b": "Sevilla",
    "b_key": "over15",
    "b_run": 4,
-   "base_rate": 0.5585106382978723,
+   "base_rate": 0.55,
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -3607,5 +3679,5 @@
    "strength": 7
   }
  },
- "updated_at": "2026-09-02T04:42:35+00:00"
+ "updated_at": "2026-09-02T04:45:54+00:00"
 }
