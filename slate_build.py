@@ -275,7 +275,8 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>Edge Machine</h1>
 <div class="sub">Three picks drawn automatically from streak confluences · graded on the
 final score · all times CT · updated {esc(now)}</div>
-<div class="nav"><a class="on" href="./">Picks</a><a href="./streaks.html">Streaks</a></div>
+<div class="nav"><a class="on" href="./">Picks</a><a href="./streaks.html">Streaks</a>
+<a href="./record.html">Record</a></div>
 
 <div class="hand">{cards}</div>
 
@@ -289,24 +290,8 @@ what was claimed at the time, not a tidier version found later.
 anyway — not a league average, which would credit the pick for team quality.
 Research, not betting advice.</div>
 
-{f'''<h2>Record</h2>
-<div class="tiles">
-  <div class="tile"><b>{report["graded"]}</b><span>Graded</span></div>
-  <div class="tile"><b>{round(report["rate"]*100)}%</b><span>Hit rate</span></div>
-  <div class="tile"><b>{report["live"]}</b><span>Live</span></div>
-  <div class="tile"><b>{report["void"]}</b><span>Void</span></div>
-</div>
-<div class="tbl"><table>
-<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
-    <th class="num">team base</th><th class="num">lift</th><th></th></tr>
-{perf}</table></div>''' if report["graded"] else
-'''<h2>Record</h2><div class="note">Nothing graded yet — the first picks settle as their
-fixtures are played.</div>'''}
-
-{f'''<h2>Settled picks ({len(report["history"])})</h2>
-<div class="tbl"><table>
-<tr><th>Date</th><th>Match</th><th>Pick</th><th class="num">Final</th><th></th></tr>
-{rows}</table></div>''' if report["history"] else ''}
+<div class="note">Results live on the <a href="./record.html">Record</a>
+page — graded picks, leads and on-fire runs, each against what those teams do anyway.</div>
 
 <footer>Read-only static export · picks are auto-drawn research, not betting advice.</footer>
 </div>

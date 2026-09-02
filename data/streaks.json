@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-02T04:47:37+00:00",
+ "built_at": "2026-09-02T04:58:55+00:00",
  "teams_tracked": 200,
  "leads": [
   {
@@ -40604,6 +40604,165 @@
     }
    ],
    "next_ko": "2026-09-05T13:30Z"
+  }
+ ],
+ "today": [
+  {
+   "match": "Al Hilal v Al Ahli",
+   "home": {
+    "team": "Al Hilal",
+    "runs": [
+     {
+      "key": "scoring",
+      "label": "scored 2+",
+      "n": 4,
+      "rate": 0.09
+     },
+     {
+      "key": "over25",
+      "label": "over 2.5 goals",
+      "n": 4,
+      "rate": 0.165
+     },
+     {
+      "key": "scoring1",
+      "label": "scored in",
+      "n": 6,
+      "rate": 0.24
+     },
+     {
+      "key": "over15",
+      "label": "over 1.5 goals",
+      "n": 4,
+      "rate": 0.475
+     }
+    ],
+    "recent": [
+     {
+      "s": "3-0",
+      "opp": "Al Ahli",
+      "h": true,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "5-1",
+      "opp": "Al Khaleej",
+      "h": false,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "3-0",
+      "opp": "Al Fayha",
+      "h": false,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "4-2",
+      "opp": "Al-Faisaly",
+      "h": true,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "1-0",
+      "opp": "Al Fayha",
+      "h": false,
+      "hit": false,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "2-0",
+      "opp": "Neom SC",
+      "h": true,
+      "hit": false,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     }
+    ]
+   },
+   "away": {
+    "team": "Al Ahli",
+    "runs": [
+     {
+      "key": "over25",
+      "label": "over 2.5 goals",
+      "n": 3,
+      "rate": 0.235
+     },
+     {
+      "key": "over15",
+      "label": "over 1.5 goals",
+      "n": 3,
+      "rate": 0.55
+     }
+    ],
+    "recent": [
+     {
+      "s": "0-3",
+      "opp": "Al Hilal",
+      "h": false,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "1-3",
+      "opp": "Al Kholood",
+      "h": false,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "4-0",
+      "opp": "Abha",
+      "h": true,
+      "hit": true,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "1-0",
+      "opp": "Al Diriyah",
+      "h": false,
+      "hit": false,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "4-1",
+      "opp": "Al Khaleej",
+      "h": false,
+      "hit": false,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     },
+     {
+      "s": "3-0",
+      "opp": "Al Kholood",
+      "h": true,
+      "hit": false,
+      "comp": true,
+      "lg": "Saudi Pro League"
+     }
+    ]
+   },
+   "league": "Saudi Pro League",
+   "kickoff": "2026-09-01T18:00Z",
+   "date": "2026-09-01",
+   "played": true,
+   "final": "3-0",
+   "best_rate": 0.09,
+   "has_run": true,
+   "_tomorrow": 5
   }
  ],
  "base_rates": {

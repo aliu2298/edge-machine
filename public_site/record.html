@@ -1,0 +1,196 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine · Record</title>
+<meta name="description" content="Every measured result, judged against what the teams involved do anyway.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
+--pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
+letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
+.wrap{max-width:920px;margin:0 auto}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+color:var(--mut);margin:34px 0 12px}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}
+.nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
+.nav a:hover{color:var(--fg);border-color:var(--mut)}
+.nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+.note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
+border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.note b{color:var(--fg);font-weight:600}
+.note.warn{border-color:#f0b42944;background:#f0b4290a}
+.tiles{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}
+.tile{flex:1;min-width:100px;background:var(--card);border:1px solid var(--bd);
+border-radius:10px;padding:11px 13px}
+.tile b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+.tile span{font-size:11px;color:var(--mut)}
+.tbl{background:var(--card);border:1px solid var(--bd);border-radius:11px;
+overflow-x:auto;margin-bottom:13px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid #1a1f2b;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.num{font-variant-numeric:tabular-nums;text-align:right}
+.st,.sig{font-size:9.5px;font-weight:800;letter-spacing:.05em;border-radius:999px;
+padding:2px 7px;border:1px solid}
+.st.hit,.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
+.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
+.st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
+footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
+@media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
+</style></head><body><div class="wrap">
+<h1>Edge Machine · Record</h1>
+<div class="sub">Everything that has been graded · all times CT · updated Sep 02 2026 · 04:59 UTC</div>
+<div class="nav"><a href="./">Picks</a><a href="./streaks.html">Streaks</a>
+<a class="on" href="./record.html">Record</a></div>
+
+<div class="note warn">There are no odds anywhere on this site, so <b>none of this is
+profit</b> and none of it should be read as ROI. Each rate is compared against
+<b>what the teams involved manage anyway</b> — the named side's own rate for a claim about
+one team, the two sides' mean for a fixture-level outcome. A league average would credit a
+pick for team quality: measured here, that difference moved "team to score" from
+<b>-1.5pp to +9.3pp</b>, and moved on-fire runs from <b>-3.1pp to +12.8pp and
+"significant"</b>. <b>Lift is the number</b>; a hit rate alone is unreadable, and three
+lanes in this repo have already died from being read without a reference.</div>
+
+<h2>Picks — the 3-card slate</h2><div class="note">Three picks drawn automatically, graded on the final score.</div><div class="tiles"><div class="tile"><b>7</b><span>Graded</span></div><div class="tile"><b>71%</b><span>Hit rate</span></div><div class="tile"><b>3</b><span>Live</span></div><div class="tile"><b>0</b><span>Void</span></div></div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+    <th class="num">team base</th><th class="num">lift</th><th></th></tr>
+<tr><td>Team to score</td>
+        <td class="num">3</td>
+        <td class="num">3</td>
+        <td class="num">100%</td>
+        <td class="num mut" title="league avg 76%">95%</td>
+        <td class="num pos">+5.3pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Both teams to score</td>
+        <td class="num">2</td>
+        <td class="num">1</td>
+        <td class="num">50%</td>
+        <td class="num mut" title="league avg 66%">74%</td>
+        <td class="num neg">-23.7pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Team to score 2+</td>
+        <td class="num">1</td>
+        <td class="num">1</td>
+        <td class="num">100%</td>
+        <td class="num mut" title="league avg 51%">92%</td>
+        <td class="num pos">+7.7pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Over 2.5 goals</td>
+        <td class="num">1</td>
+        <td class="num">0</td>
+        <td class="num">0%</td>
+        <td class="num mut" title="league avg 58%">46%</td>
+        <td class="num neg">-46.2pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr></table></div>
+
+<h2>Leads — every confluence published</h2><div class="note">Every lead the Streaks board has shown, graded whether or not it was picked. A wider sample than the slate, since the slate only ever holds three.</div><div class="tiles"><div class="tile"><b>18</b><span>Graded</span></div><div class="tile"><b>78%</b><span>Hit rate</span></div><div class="tile"><b>131</b><span>Pending</span></div><div class="tile"><b>0</b><span>Void</span></div></div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+    <th class="num">team base</th><th class="num">lift</th><th></th></tr>
+<tr><td>Team to score</td>
+        <td class="num">8</td>
+        <td class="num">7</td>
+        <td class="num">88%</td>
+        <td class="num mut" title="league avg 78%">89%</td>
+        <td class="num neg">-1.5pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Both teams to score</td>
+        <td class="num">6</td>
+        <td class="num">5</td>
+        <td class="num">83%</td>
+        <td class="num mut" title="league avg 65%">72%</td>
+        <td class="num pos">+11.7pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Over 2.5 goals</td>
+        <td class="num">3</td>
+        <td class="num">1</td>
+        <td class="num">33%</td>
+        <td class="num mut" title="league avg 63%">64%</td>
+        <td class="num neg">-30.7pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Team to score 2+</td>
+        <td class="num">1</td>
+        <td class="num">1</td>
+        <td class="num">100%</td>
+        <td class="num mut" title="league avg 51%">92%</td>
+        <td class="num pos">+7.7pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr></table></div>
+
+<h2>On fire — do long runs continue?</h2><div class="note">Each long run logged against the fixture that tests it. Judged against the team's OWN rate: the question is not whether a side on a hot run keeps scoring, it is whether they do it MORE than they usually would.</div><div class="tiles"><div class="tile"><b>48</b><span>Graded</span></div><div class="tile"><b>79%</b><span>Extended</span></div><div class="tile"><b>125</b><span>Pending</span></div></div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+    <th class="num">own rate</th><th class="num">lift</th><th></th></tr>
+<tr><td>scored in</td>
+        <td class="num">24</td>
+        <td class="num">20</td>
+        <td class="num">83%</td>
+        <td class="num mut" title="">90%</td>
+        <td class="num neg">-6.5pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>conceded in</td>
+        <td class="num">15</td>
+        <td class="num">12</td>
+        <td class="num">80%</td>
+        <td class="num mut" title="">88%</td>
+        <td class="num neg">-8.4pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>both teams scored</td>
+        <td class="num">5</td>
+        <td class="num">3</td>
+        <td class="num">60%</td>
+        <td class="num mut" title="">78%</td>
+        <td class="num neg">-17.8pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>over 2.5 goals</td>
+        <td class="num">3</td>
+        <td class="num">2</td>
+        <td class="num">67%</td>
+        <td class="num mut" title="">82%</td>
+        <td class="num neg">-15.0pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>scored 2+</td>
+        <td class="num">1</td>
+        <td class="num">1</td>
+        <td class="num">100%</td>
+        <td class="num mut" title="">92%</td>
+        <td class="num pos">+7.7pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr></table></div>
+
+<h2>Settled picks (7)</h2>
+<div class="tbl"><table>
+<tr><th>Date</th><th>Match</th><th>Pick</th><th class="num">Final</th><th></th></tr>
+<tr><td class="mut">2026-08-31</td>
+        <td>Barcelona v Rayo Vallecano</td><td>Barcelona to score</td>
+        <td class="num">5-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-08-31</td>
+        <td>Benfica v Estoril</td><td>Benfica to score</td>
+        <td class="num">2-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-08-31</td>
+        <td>Aston Villa v Arsenal</td><td>Over 2.5 goals</td>
+        <td class="num">0-1</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-08-30</td>
+        <td>Real Madrid v Málaga</td><td>Real Madrid to score</td>
+        <td class="num">4-0</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-08-30</td>
+        <td>FC Utrecht v PSV Eindhoven</td><td>PSV Eindhoven to score 2+</td>
+        <td class="num">1-6</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-08-29</td>
+        <td>Atlanta United FC v Charlotte FC</td><td>Both teams to score</td>
+        <td class="num">0-2</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-08-29</td>
+        <td>Toronto FC v New York City FC</td><td>Both teams to score</td>
+        <td class="num">1-1</td>
+        <td><span class="st hit">HIT</span></td></tr></table></div>
+
+<footer>Read-only static export · auto-drawn research, not betting advice.</footer>
+</div></body></html>

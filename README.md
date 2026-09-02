@@ -10,6 +10,7 @@ whether an idea actually holds up.
 |---|---|
 | [Picks](https://aliu2298.github.io/edge-machine/) | Three auto-drawn picks from streak confluences, graded on the final score |
 | [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Teams on an unusual run, matched against a next opponent who is soft in the same place |
+| [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — picks, leads and on-fire runs — against what those teams do anyway |
 
 ## Architecture
 
@@ -32,7 +33,7 @@ flowchart TB
     subgraph REPO["Repo (committed)"]
         SJ["data/streaks.json<br/>computed leads"]
         SLJ["data/slate.json<br/>pick ledger"]
-        OUT["public_site/<br/>index · streaks"]
+        OUT["public_site/<br/>index · streaks · record"]
     end
 
     subgraph LOCAL["Local Mac (optional)"]
@@ -69,6 +70,7 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 | `venues.py` | Shared fixture→market matcher (Bovada; Kalshi retained, unused). |
 | `slate.py` | Draws three picks, grades them, keeps `data/slate.json`. |
 | `slate_build.py` | Renders the card board to `public_site/index.html`. |
+| `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
 | `slate_backtest.py` | Replays the board day by day over past fixtures. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
 | `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |

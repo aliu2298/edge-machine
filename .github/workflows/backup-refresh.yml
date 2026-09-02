@@ -139,12 +139,17 @@ jobs:
         if: steps.check.outputs.run == 'true'
         run: python3 fire_track.py || echo "fire tracking failed — continuing"
 
+      # Record page LAST: it reads all three ledgers.
+      - name: Build the record page
+        if: steps.check.outputs.run == 'true'
+        run: python3 record_build.py || echo "record build failed — keeping previous page"
+
       - name: Commit and push if changed
         if: steps.check.outputs.run == 'true'
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add public_site/index.html public_site/streaks.html \
+          git add public_site/index.html public_site/streaks.html public_site/record.html \
                   data/streaks.json data/streak_leads.json data/slate.json \
                   data/fire_runs.json
           if git diff --cached --quiet; then
