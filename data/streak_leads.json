@@ -494,14 +494,16 @@
     "n": 3
    },
    "date": "2026-09-03",
+   "final": "1-3",
    "first_seen": "2026-09-02",
+   "graded_at": "2026-09-03T21:07:03+00:00",
    "headline": "Over 2.5 goals",
    "home": "Hibernian",
    "id": "2026-09-03|Hibernian|Heart of Midlothian|Over 2.5 goals",
    "kickoff": "2026-09-03T18:45Z",
    "league": "Scottish Premiership",
    "match": "Hibernian v Heart of Midlothian",
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-09-03|Toulouse|Lille|Over 1.5 goals": {
@@ -518,14 +520,16 @@
     "n": 2
    },
    "date": "2026-09-03",
+   "final": "0-1",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-03T21:07:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Toulouse",
    "id": "2026-09-03|Toulouse|Lille|Over 1.5 goals",
    "kickoff": "2026-09-03T18:45Z",
    "league": "Ligue 1",
    "match": "Toulouse v Lille",
-   "status": "pending",
+   "status": "miss",
    "strength": 9
   },
   "2026-09-04|Sparta Rotterdam|PEC Zwolle|Over 1.5 goals": {
@@ -1597,6 +1601,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-08|Al Qadsiah|Al Ahli|Over 1.5 goals": {
+   "a": "Al Qadsiah",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "Al Ahli",
+   "b": "Al Ahli",
+   "b_key": "over15",
+   "b_run": 3,
+   "base_rate": 0.5522388059701493,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-08",
+   "first_seen": "2026-09-03",
+   "headline": "Over 1.5 goals",
+   "home": "Al Qadsiah",
+   "id": "2026-09-08|Al Qadsiah|Al Ahli|Over 1.5 goals",
+   "kickoff": "2026-09-08T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Al Qadsiah v Al Ahli",
+   "status": "pending",
+   "strength": 6
+  },
   "2026-09-08|FC Porto|Manchester City|FC Porto to score": {
    "a": "FC Porto",
    "a_key": "scoring",
@@ -2376,6 +2404,56 @@
    "match": "AFC Bournemouth v Brentford",
    "status": "pending",
    "strength": 6
+  },
+  "2026-09-12|Al Khaleej|Al Nassr|Al Nassr to score": {
+   "a": "Al Nassr",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Al Nassr",
+   "b": "Al Khaleej",
+   "b_key": "porous",
+   "b_run": 3,
+   "base_rate": 0.4427860696517413,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Al Nassr"
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-03",
+   "headline": "Al Nassr to score",
+   "home": "Al Khaleej",
+   "id": "2026-09-12|Al Khaleej|Al Nassr|Al Nassr to score",
+   "kickoff": "2026-09-12T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Al Khaleej v Al Nassr",
+   "status": "pending",
+   "strength": 7
+  },
+  "2026-09-12|Al Khaleej|Al Nassr|Over 1.5 goals": {
+   "a": "Al Khaleej",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "Al Nassr",
+   "b": "Al Nassr",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.5522388059701493,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-03",
+   "headline": "Over 1.5 goals",
+   "home": "Al Khaleej",
+   "id": "2026-09-12|Al Khaleej|Al Nassr|Over 1.5 goals",
+   "kickoff": "2026-09-12T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Al Khaleej v Al Nassr",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-12|Athletic Club|Elche|Over 1.5 goals": {
    "a": "Athletic Club",
@@ -3679,5 +3757,5 @@
    "strength": 7
   }
  },
- "updated_at": "2026-09-03T16:30:38+00:00"
+ "updated_at": "2026-09-03T21:07:03+00:00"
 }

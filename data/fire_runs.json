@@ -1380,6 +1380,7 @@
    "test_date": "2026-09-06"
   },
   "Heart of Midlothian|over15|2026-09-03|Heart of Midlothian|Hibernian": {
+   "graded_at": "2026-09-03T21:07:04+00:00",
    "home": false,
    "id": "Heart of Midlothian|over15|2026-09-03|Heart of Midlothian|Hibernian",
    "key": "over15",
@@ -1390,11 +1391,28 @@
    "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Hibernian",
    "rate": 0.15104166666666666,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Heart of Midlothian",
    "test_date": "2026-09-03"
   },
+  "Heart of Midlothian|over15|2026-09-06|Heart of Midlothian|Dundee": {
+   "home": true,
+   "id": "Heart of Midlothian|over15|2026-09-06|Heart of Midlothian|Dundee",
+   "key": "over15",
+   "kickoff": "2026-09-06T14:00Z",
+   "label": "over 1.5 goals",
+   "league": "Scottish Premiership",
+   "length": 11,
+   "logged_at": "2026-09-03T21:07:04+00:00",
+   "opp": "Dundee",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-06"
+  },
   "Heart of Midlothian|scoring1|2026-09-03|Heart of Midlothian|Hibernian": {
+   "graded_at": "2026-09-03T21:07:04+00:00",
    "home": false,
    "id": "Heart of Midlothian|scoring1|2026-09-03|Heart of Midlothian|Hibernian",
    "key": "scoring1",
@@ -1405,11 +1423,28 @@
    "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Hibernian",
    "rate": 0.125,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Heart of Midlothian",
    "test_date": "2026-09-03"
   },
+  "Heart of Midlothian|scoring1|2026-09-06|Heart of Midlothian|Dundee": {
+   "home": true,
+   "id": "Heart of Midlothian|scoring1|2026-09-06|Heart of Midlothian|Dundee",
+   "key": "scoring1",
+   "kickoff": "2026-09-06T14:00Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 12,
+   "logged_at": "2026-09-03T21:07:04+00:00",
+   "opp": "Dundee",
+   "rate": 0.109375,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-06"
+  },
   "Hibernian|porous|2026-09-03|Hibernian|Heart of Midlothian": {
+   "graded_at": "2026-09-03T21:07:04+00:00",
    "home": true,
    "id": "Hibernian|porous|2026-09-03|Hibernian|Heart of Midlothian",
    "key": "porous",
@@ -1420,9 +1455,25 @@
    "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Heart of Midlothian",
    "rate": 0.16145833333333334,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "Hibernian",
    "test_date": "2026-09-03"
+  },
+  "Hibernian|porous|2026-09-06|Hibernian|St Johnstone": {
+   "home": false,
+   "id": "Hibernian|porous|2026-09-06|Hibernian|St Johnstone",
+   "key": "porous",
+   "kickoff": "2026-09-06T14:00Z",
+   "label": "conceded in",
+   "league": "Scottish Premiership",
+   "length": 10,
+   "logged_at": "2026-09-03T21:07:04+00:00",
+   "opp": "St Johnstone",
+   "rate": 0.11458333333333333,
+   "status": "pending",
+   "team": "Hibernian",
+   "test_date": "2026-09-06"
   },
   "Houston Dynamo FC|scoring1|2026-08-30|Houston Dynamo FC|San Jose Earthquakes": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -2166,6 +2217,7 @@
    "test_date": "2026-08-30"
   },
   "Real Sociedad|porous|2026-09-03|Real Sociedad|Celta Vigo": {
+   "graded_at": "2026-09-03T21:07:04+00:00",
    "home": true,
    "id": "Real Sociedad|porous|2026-09-03|Real Sociedad|Celta Vigo",
    "key": "porous",
@@ -2176,7 +2228,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Celta Vigo",
    "rate": 0.09444444444444444,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "Real Sociedad",
    "test_date": "2026-09-03"
   },
@@ -2634,6 +2687,7 @@
    "test_date": "2026-09-06"
   },
   "Toulouse|over15|2026-09-03|Toulouse|Lille": {
+   "graded_at": "2026-09-03T21:07:04+00:00",
    "home": true,
    "id": "Toulouse|over15|2026-09-03|Toulouse|Lille",
    "key": "over15",
@@ -2644,11 +2698,13 @@
    "logged_at": "2026-09-01T13:34:34+00:00",
    "opp": "Lille",
    "rate": 0.15555555555555556,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "Toulouse",
    "test_date": "2026-09-03"
   },
   "Toulouse|porous|2026-09-03|Toulouse|Lille": {
+   "graded_at": "2026-09-03T21:07:04+00:00",
    "home": true,
    "id": "Toulouse|porous|2026-09-03|Toulouse|Lille",
    "key": "porous",
@@ -2659,9 +2715,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Lille",
    "rate": 0.17222222222222222,
-   "status": "pending",
+   "result": "0-1",
+   "status": "extended",
    "team": "Toulouse",
    "test_date": "2026-09-03"
+  },
+  "Toulouse|porous|2026-09-12|Toulouse|Lorient": {
+   "home": false,
+   "id": "Toulouse|porous|2026-09-12|Toulouse|Lorient",
+   "key": "porous",
+   "kickoff": "2026-09-12T18:45Z",
+   "label": "conceded in",
+   "league": "Ligue 1",
+   "length": 11,
+   "logged_at": "2026-09-03T21:07:04+00:00",
+   "opp": "Lorient",
+   "rate": 0.09895833333333333,
+   "status": "pending",
+   "team": "Toulouse",
+   "test_date": "2026-09-12"
   },
   "VfB Stuttgart|porous|2026-09-04|VfB Stuttgart|FC Cologne": {
    "home": true,
@@ -2726,5 +2798,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-09-03T16:30:39+00:00"
+ "updated_at": "2026-09-03T21:07:04+00:00"
 }
