@@ -546,14 +546,16 @@
     "n": 2
    },
    "date": "2026-09-04",
+   "final": "2-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-04T20:49:45+00:00",
    "headline": "Over 1.5 goals",
    "home": "Sparta Rotterdam",
    "id": "2026-09-04|Sparta Rotterdam|PEC Zwolle|Over 1.5 goals",
    "kickoff": "2026-09-04T18:00Z",
    "league": "Eredivisie",
    "match": "Sparta Rotterdam v PEC Zwolle",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-05|Ajax Amsterdam|PSV Eindhoven|Ajax Amsterdam to score": {
@@ -1699,6 +1701,56 @@
    "status": "pending",
    "strength": 7
   },
+  "2026-09-09|Al Kholood|Al Shabab|Over 1.5 goals": {
+   "a": "Al Kholood",
+   "a_key": "over15",
+   "a_run": 5,
+   "away": "Al Shabab",
+   "b": "Al Shabab",
+   "b_key": "over15",
+   "b_run": 3,
+   "base_rate": 0.5643564356435643,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-04",
+   "headline": "Over 1.5 goals",
+   "home": "Al Kholood",
+   "id": "2026-09-09|Al Kholood|Al Shabab|Over 1.5 goals",
+   "kickoff": "2026-09-09T15:55Z",
+   "league": "Saudi Pro League",
+   "match": "Al Kholood v Al Shabab",
+   "status": "pending",
+   "strength": 8
+  },
+  "2026-09-09|Al Nassr|Abha|Al Nassr to score": {
+   "a": "Al Nassr",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Abha",
+   "b": "Abha",
+   "b_key": "porous",
+   "b_run": 5,
+   "base_rate": 0.33663366336633666,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "Al Nassr"
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-04",
+   "headline": "Al Nassr to score",
+   "home": "Al Nassr",
+   "id": "2026-09-09|Al Nassr|Abha|Al Nassr to score",
+   "kickoff": "2026-09-09T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Al Nassr v Abha",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-09|Atlanta United FC|Orlando City SC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
    "a_key": "scoring",
@@ -2038,6 +2090,30 @@
    "match": "Chicago Fire FC v Inter Miami CF",
    "status": "pending",
    "strength": 11
+  },
+  "2026-09-10|Como|RB Leipzig|Over 1.5 goals": {
+   "a": "Como",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "RB Leipzig",
+   "b": "RB Leipzig",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.5643564356435643,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "first_seen": "2026-09-04",
+   "headline": "Over 1.5 goals",
+   "home": "Como",
+   "id": "2026-09-10|Como|RB Leipzig|Over 1.5 goals",
+   "kickoff": "2026-09-10T19:00Z",
+   "league": "Champions League",
+   "match": "Como v RB Leipzig",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-10|Estrela|Braga|Both teams to score": {
    "a": "Estrela",
@@ -3395,6 +3471,32 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-13|PSV Eindhoven|Sparta Rotterdam|PSV Eindhoven to score 2+": {
+   "a": "PSV Eindhoven",
+   "a_key": "scoring",
+   "a_run": 5,
+   "away": "Sparta Rotterdam",
+   "b": "Sparta Rotterdam",
+   "b_key": "leaky",
+   "b_run": 3,
+   "base_rate": 0.09405940594059406,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "PSV Eindhoven"
+   },
+   "date": "2026-09-13",
+   "first_seen": "2026-09-04",
+   "headline": "PSV Eindhoven to score 2+",
+   "home": "PSV Eindhoven",
+   "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|PSV Eindhoven to score 2+",
+   "kickoff": "2026-09-13T18:00Z",
+   "league": "Eredivisie",
+   "match": "PSV Eindhoven v Sparta Rotterdam",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-13|Real Madrid|Rayo Vallecano|Real Madrid to score": {
    "a": "Real Madrid",
    "a_key": "scoring",
@@ -4004,5 +4106,5 @@
    "strength": 12
   }
  },
- "updated_at": "2026-09-04T16:26:53+00:00"
+ "updated_at": "2026-09-04T20:49:45+00:00"
 }

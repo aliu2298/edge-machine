@@ -76,6 +76,7 @@
    "test_date": "2026-09-05"
   },
   "AJ Auxerre|scoring1|2026-09-04|AJ Auxerre|Lyon": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": false,
    "id": "AJ Auxerre|scoring1|2026-09-04|AJ Auxerre|Lyon",
    "key": "scoring1",
@@ -86,9 +87,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Lyon",
    "rate": 0.18888888888888888,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "AJ Auxerre",
    "test_date": "2026-09-04"
+  },
+  "AJ Auxerre|scoring1|2026-09-12|AJ Auxerre|Nice": {
+   "home": true,
+   "id": "AJ Auxerre|scoring1|2026-09-12|AJ Auxerre|Nice",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T18:45Z",
+   "label": "scored in",
+   "league": "Ligue 1",
+   "length": 10,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Nice",
+   "rate": 0.15625,
+   "status": "pending",
+   "team": "AJ Auxerre",
+   "test_date": "2026-09-12"
   },
   "AS Roma|over15|2026-09-05|AS Roma|Atalanta": {
    "home": true,
@@ -172,6 +189,7 @@
    "test_date": "2026-09-01"
   },
   "Al Hilal|scoring1|2026-09-04|Al Hilal|Al Shabab": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": false,
    "id": "Al Hilal|scoring1|2026-09-04|Al Hilal|Al Shabab",
    "key": "scoring1",
@@ -182,9 +200,25 @@
    "logged_at": "2026-09-02T04:46:11+00:00",
    "opp": "Al Shabab",
    "rate": 0.041666666666666664,
-   "status": "pending",
+   "result": "2-0",
+   "status": "extended",
    "team": "Al Hilal",
    "test_date": "2026-09-04"
+  },
+  "Al Hilal|scoring1|2026-09-07|Al Hilal|Neom SC": {
+   "home": true,
+   "id": "Al Hilal|scoring1|2026-09-07|Al Hilal|Neom SC",
+   "key": "scoring1",
+   "kickoff": "2026-09-07T18:00Z",
+   "label": "scored in",
+   "league": "Saudi Pro League",
+   "length": 14,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Neom SC",
+   "rate": 0.041666666666666664,
+   "status": "pending",
+   "team": "Al Hilal",
+   "test_date": "2026-09-07"
   },
   "Al Nassr|over15|2026-09-05|Al Nassr|Al Ittihad": {
    "home": false,
@@ -1168,6 +1202,7 @@
    "test_date": "2026-08-30"
   },
   "FC Cologne|btts|2026-09-04|FC Cologne|VfB Stuttgart": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": false,
    "id": "FC Cologne|btts|2026-09-04|FC Cologne|VfB Stuttgart",
    "key": "btts",
@@ -1178,11 +1213,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "VfB Stuttgart",
    "rate": 0.005555555555555556,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "FC Cologne",
    "test_date": "2026-09-04"
   },
+  "FC Cologne|btts|2026-09-12|FC Cologne|Werder Bremen": {
+   "home": true,
+   "id": "FC Cologne|btts|2026-09-12|FC Cologne|Werder Bremen",
+   "key": "btts",
+   "kickoff": "2026-09-12T16:30Z",
+   "label": "both teams scored",
+   "league": "Bundesliga",
+   "length": 12,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Werder Bremen",
+   "rate": 0.005208333333333333,
+   "status": "pending",
+   "team": "FC Cologne",
+   "test_date": "2026-09-12"
+  },
   "FC Cologne|over15|2026-09-04|FC Cologne|VfB Stuttgart": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": false,
    "id": "FC Cologne|over15|2026-09-04|FC Cologne|VfB Stuttgart",
    "key": "over15",
@@ -1193,11 +1245,28 @@
    "logged_at": "2026-09-01T13:34:34+00:00",
    "opp": "VfB Stuttgart",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "FC Cologne",
    "test_date": "2026-09-04"
   },
+  "FC Cologne|over15|2026-09-12|FC Cologne|Werder Bremen": {
+   "home": true,
+   "id": "FC Cologne|over15|2026-09-12|FC Cologne|Werder Bremen",
+   "key": "over15",
+   "kickoff": "2026-09-12T16:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 12,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Werder Bremen",
+   "rate": 0.09895833333333333,
+   "status": "pending",
+   "team": "FC Cologne",
+   "test_date": "2026-09-12"
+  },
   "FC Cologne|porous|2026-09-04|FC Cologne|VfB Stuttgart": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": false,
    "id": "FC Cologne|porous|2026-09-04|FC Cologne|VfB Stuttgart",
    "key": "porous",
@@ -1208,11 +1277,28 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "VfB Stuttgart",
    "rate": 0.09444444444444444,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "FC Cologne",
    "test_date": "2026-09-04"
   },
+  "FC Cologne|porous|2026-09-12|FC Cologne|Werder Bremen": {
+   "home": true,
+   "id": "FC Cologne|porous|2026-09-12|FC Cologne|Werder Bremen",
+   "key": "porous",
+   "kickoff": "2026-09-12T16:30Z",
+   "label": "conceded in",
+   "league": "Bundesliga",
+   "length": 12,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Werder Bremen",
+   "rate": 0.07291666666666667,
+   "status": "pending",
+   "team": "FC Cologne",
+   "test_date": "2026-09-12"
+  },
   "FC Cologne|scoring1|2026-09-04|FC Cologne|VfB Stuttgart": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": false,
    "id": "FC Cologne|scoring1|2026-09-04|FC Cologne|VfB Stuttgart",
    "key": "scoring1",
@@ -1223,9 +1309,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "VfB Stuttgart",
    "rate": 0.07777777777777778,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "FC Cologne",
    "test_date": "2026-09-04"
+  },
+  "FC Cologne|scoring1|2026-09-12|FC Cologne|Werder Bremen": {
+   "home": true,
+   "id": "FC Cologne|scoring1|2026-09-12|FC Cologne|Werder Bremen",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T16:30Z",
+   "label": "scored in",
+   "league": "Bundesliga",
+   "length": 12,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Werder Bremen",
+   "rate": 0.109375,
+   "status": "pending",
+   "team": "FC Cologne",
+   "test_date": "2026-09-12"
   },
   "FC Groningen|over15|2026-09-06|FC Groningen|FC Twente": {
    "home": true,
@@ -1271,6 +1373,21 @@
    "status": "pending",
    "team": "FC Porto",
    "test_date": "2026-09-04"
+  },
+  "FC Porto|scoring1|2026-09-08|FC Porto|Manchester City": {
+   "home": true,
+   "id": "FC Porto|scoring1|2026-09-08|FC Porto|Manchester City",
+   "key": "scoring1",
+   "kickoff": "2026-09-08T19:00Z",
+   "label": "scored in",
+   "league": "Primeira Liga",
+   "length": 9,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Manchester City",
+   "rate": 0.17708333333333334,
+   "status": "pending",
+   "team": "FC Porto",
+   "test_date": "2026-09-08"
   },
   "FC Utrecht|over15|2026-09-05|FC Utrecht|Go Ahead Eagles": {
    "home": true,
@@ -1557,6 +1674,7 @@
    "test_date": "2026-09-05"
   },
   "Lyon|over15|2026-09-04|Lyon|AJ Auxerre": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": true,
    "id": "Lyon|over15|2026-09-04|Lyon|AJ Auxerre",
    "key": "over15",
@@ -1567,9 +1685,25 @@
    "logged_at": "2026-09-01T13:34:34+00:00",
    "opp": "AJ Auxerre",
    "rate": 0.2222222222222222,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Lyon",
    "test_date": "2026-09-04"
+  },
+  "Lyon|over15|2026-09-12|Lyon|Paris FC": {
+   "home": false,
+   "id": "Lyon|over15|2026-09-12|Lyon|Paris FC",
+   "key": "over15",
+   "kickoff": "2026-09-12T18:45Z",
+   "label": "over 1.5 goals",
+   "league": "Ligue 1",
+   "length": 9,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Paris FC",
+   "rate": 0.1875,
+   "status": "pending",
+   "team": "Lyon",
+   "test_date": "2026-09-12"
   },
   "Manchester City|over15|2026-09-05|Manchester City|Coventry City": {
    "home": true,
@@ -2150,6 +2284,21 @@
    "team": "Real Madrid",
    "test_date": "2026-09-04"
   },
+  "Real Madrid|scoring1|2026-09-08|Real Madrid|Internazionale": {
+   "home": true,
+   "id": "Real Madrid|scoring1|2026-09-08|Real Madrid|Internazionale",
+   "key": "scoring1",
+   "kickoff": "2026-09-08T19:00Z",
+   "label": "scored in",
+   "league": "La Liga",
+   "length": 11,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Internazionale",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "Real Madrid",
+   "test_date": "2026-09-08"
+  },
   "Real Salt Lake|btts|2026-08-30|Real Salt Lake|Colorado Rapids": {
    "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
@@ -2345,6 +2494,7 @@
    "test_date": "2026-09-06"
   },
   "Sparta Rotterdam|porous|2026-09-04|Sparta Rotterdam|PEC Zwolle": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": true,
    "id": "Sparta Rotterdam|porous|2026-09-04|Sparta Rotterdam|PEC Zwolle",
    "key": "porous",
@@ -2355,9 +2505,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "PEC Zwolle",
    "rate": 0.2111111111111111,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Sparta Rotterdam",
    "test_date": "2026-09-04"
+  },
+  "Sparta Rotterdam|porous|2026-09-13|Sparta Rotterdam|PSV Eindhoven": {
+   "home": false,
+   "id": "Sparta Rotterdam|porous|2026-09-13|Sparta Rotterdam|PSV Eindhoven",
+   "key": "porous",
+   "kickoff": "2026-09-13T18:00Z",
+   "label": "conceded in",
+   "league": "Eredivisie",
+   "length": 10,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "PSV Eindhoven",
+   "rate": 0.11979166666666667,
+   "status": "pending",
+   "team": "Sparta Rotterdam",
+   "test_date": "2026-09-13"
   },
   "Sporting CP|over15|2026-09-05|Sporting CP|C.D. Nacional": {
    "home": true,
@@ -2736,6 +2902,7 @@
    "test_date": "2026-09-12"
   },
   "VfB Stuttgart|porous|2026-09-04|VfB Stuttgart|FC Cologne": {
+   "graded_at": "2026-09-04T20:49:52+00:00",
    "home": true,
    "id": "VfB Stuttgart|porous|2026-09-04|VfB Stuttgart|FC Cologne",
    "key": "porous",
@@ -2746,9 +2913,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "FC Cologne",
    "rate": 0.2111111111111111,
-   "status": "pending",
+   "result": "4-1",
+   "status": "extended",
    "team": "VfB Stuttgart",
    "test_date": "2026-09-04"
+  },
+  "VfB Stuttgart|porous|2026-09-09|VfB Stuttgart|Viking FK": {
+   "home": true,
+   "id": "VfB Stuttgart|porous|2026-09-09|VfB Stuttgart|Viking FK",
+   "key": "porous",
+   "kickoff": "2026-09-09T16:45Z",
+   "label": "conceded in",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-09-04T20:49:52+00:00",
+   "opp": "Viking FK",
+   "rate": 0.16145833333333334,
+   "status": "pending",
+   "team": "VfB Stuttgart",
+   "test_date": "2026-09-09"
   },
   "Villarreal|porous|2026-09-05|Villarreal|Deportivo": {
    "home": true,
@@ -2798,5 +2981,5 @@
    "test_date": "2026-09-05"
   }
  },
- "updated_at": "2026-09-04T16:26:56+00:00"
+ "updated_at": "2026-09-04T20:49:52+00:00"
 }
