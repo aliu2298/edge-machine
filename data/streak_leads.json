@@ -2479,6 +2479,58 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-12|Casa Pia|FC Porto|Casa Pia to fail to score": {
+   "a": "FC Porto",
+   "a_key": "solid",
+   "a_run": 5,
+   "away": "FC Porto",
+   "b": "Casa Pia",
+   "b_key": "blanked",
+   "b_run": 4,
+   "base_rate": 0.014925373134328358,
+   "bet": {
+    "kind": "team_eq",
+    "n": 0,
+    "subject": "b",
+    "team": "Casa Pia"
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-04",
+   "headline": "Casa Pia to fail to score",
+   "home": "Casa Pia",
+   "id": "2026-09-12|Casa Pia|FC Porto|Casa Pia to fail to score",
+   "kickoff": "2026-09-12T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Casa Pia v FC Porto",
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-12|Casa Pia|FC Porto|FC Porto to score": {
+   "a": "FC Porto",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "FC Porto",
+   "b": "Casa Pia",
+   "b_key": "porous",
+   "b_run": 5,
+   "base_rate": 0.3333333333333333,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "FC Porto"
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-04",
+   "headline": "FC Porto to score",
+   "home": "Casa Pia",
+   "id": "2026-09-12|Casa Pia|FC Porto|FC Porto to score",
+   "kickoff": "2026-09-12T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Casa Pia v FC Porto",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-12|D.C. United|Atlanta United FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
    "a_key": "scoring",
@@ -3513,6 +3565,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-14|Rio Ave|Estrela|Over 1.5 goals": {
+   "a": "Rio Ave",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "Estrela",
+   "b": "Estrela",
+   "b_key": "over15",
+   "b_run": 5,
+   "base_rate": 0.5522388059701493,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-04",
+   "headline": "Over 1.5 goals",
+   "home": "Rio Ave",
+   "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
+   "kickoff": "2026-09-14T17:45Z",
+   "league": "Primeira Liga",
+   "match": "Rio Ave v Estrela",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-14|San Diego FC|Philadelphia Union|Over 1.5 goals": {
    "a": "San Diego FC",
    "a_key": "over15",
@@ -3928,5 +4004,5 @@
    "strength": 12
   }
  },
- "updated_at": "2026-09-04T04:41:08+00:00"
+ "updated_at": "2026-09-04T11:25:55+00:00"
 }

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-04T04:41:08+00:00",
+ "built_at": "2026-09-04T11:25:55+00:00",
  "teams_tracked": 201,
  "leads": [
   {
@@ -7515,6 +7515,260 @@
   },
   {
    "date": "2026-09-12",
+   "kickoff": "2026-09-12T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Casa Pia v FC Porto",
+   "home": "Casa Pia",
+   "away": "FC Porto",
+   "headline": "Casa Pia to fail to score",
+   "why": "FC Porto have kept 5 straight clean sheets; Casa Pia have failed to score in 4 straight.",
+   "a": "FC Porto",
+   "b": "Casa Pia",
+   "a_run": 5,
+   "b_run": 4,
+   "a_key": "solid",
+   "b_key": "blanked",
+   "a_label": "clean sheet",
+   "b_label": "failed to score",
+   "strength": 9,
+   "base_rate": 0.014925373134328358,
+   "bet": {
+    "kind": "team_eq",
+    "subject": "b",
+    "n": 0,
+    "team": "Casa Pia"
+   },
+   "a_recent": [
+    {
+     "s": "3-0",
+     "opp": "Acad\u00e9mico de Viseu",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Arouca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Rio Ave",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Alverca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Santa Clara",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-3",
+     "opp": "AVS",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-1",
+     "opp": "Moreirense",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "Gil Vicente",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-7",
+     "opp": "Benfica",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Maritimo",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Rio Ave",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Vit\u00f3ria de Guimaraes",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-12",
+   "kickoff": "2026-09-12T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Casa Pia v FC Porto",
+   "home": "Casa Pia",
+   "away": "FC Porto",
+   "headline": "FC Porto to score",
+   "why": "FC Porto have scored 2+ in 4 straight; Casa Pia have conceded in 5 straight.",
+   "a": "FC Porto",
+   "b": "Casa Pia",
+   "a_run": 4,
+   "b_run": 5,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 9,
+   "base_rate": 0.3333333333333333,
+   "bet": {
+    "kind": "team_gte",
+    "subject": "a",
+    "n": 1,
+    "team": "FC Porto"
+   },
+   "a_recent": [
+    {
+     "s": "3-0",
+     "opp": "Acad\u00e9mico de Viseu",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Arouca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Rio Ave",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Alverca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Santa Clara",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-3",
+     "opp": "AVS",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-1",
+     "opp": "Moreirense",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "Gil Vicente",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-7",
+     "opp": "Benfica",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Maritimo",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Rio Ave",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Vit\u00f3ria de Guimaraes",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "market": null
+  },
+  {
+   "date": "2026-09-12",
    "kickoff": "2026-09-12T18:00Z",
    "league": "Eredivisie",
    "match": "Fortuna Sittard v Ajax Amsterdam",
@@ -9774,133 +10028,6 @@
   {
    "date": "2026-09-13",
    "kickoff": "2026-09-13T18:00Z",
-   "league": "Primeira Liga",
-   "match": "Casa Pia v FC Porto",
-   "home": "Casa Pia",
-   "away": "FC Porto",
-   "headline": "Casa Pia to fail to score",
-   "why": "FC Porto have kept 5 straight clean sheets; Casa Pia have failed to score in 4 straight.",
-   "a": "FC Porto",
-   "b": "Casa Pia",
-   "a_run": 5,
-   "b_run": 4,
-   "a_key": "solid",
-   "b_key": "blanked",
-   "a_label": "clean sheet",
-   "b_label": "failed to score",
-   "strength": 9,
-   "base_rate": 0.014925373134328358,
-   "bet": {
-    "kind": "team_eq",
-    "subject": "b",
-    "n": 0,
-    "team": "Casa Pia"
-   },
-   "a_recent": [
-    {
-     "s": "3-0",
-     "opp": "Acad\u00e9mico de Viseu",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Arouca",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Rio Ave",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Alverca",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Santa Clara",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-3",
-     "opp": "AVS",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "0-1",
-     "opp": "Moreirense",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "Gil Vicente",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-7",
-     "opp": "Benfica",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-1",
-     "opp": "Maritimo",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Rio Ave",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Vit\u00f3ria de Guimaraes",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T18:00Z",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
    "home": "PSV Eindhoven",
@@ -10270,258 +10397,6 @@
      "hit": true,
      "comp": true,
      "lg": "Eredivisie"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T18:00Z",
-   "league": "Primeira Liga",
-   "match": "Casa Pia v FC Porto",
-   "home": "Casa Pia",
-   "away": "FC Porto",
-   "headline": "FC Porto to score",
-   "why": "FC Porto have scored 2+ in 4 straight; Casa Pia have conceded in 5 straight.",
-   "a": "FC Porto",
-   "b": "Casa Pia",
-   "a_run": 4,
-   "b_run": 5,
-   "a_key": "scoring",
-   "b_key": "porous",
-   "a_label": "scored 2+",
-   "b_label": "conceded in",
-   "strength": 9,
-   "base_rate": 0.3333333333333333,
-   "bet": {
-    "kind": "team_gte",
-    "subject": "a",
-    "n": 1,
-    "team": "FC Porto"
-   },
-   "a_recent": [
-    {
-     "s": "3-0",
-     "opp": "Acad\u00e9mico de Viseu",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Arouca",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Rio Ave",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Alverca",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Santa Clara",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-3",
-     "opp": "AVS",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "0-1",
-     "opp": "Moreirense",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "Gil Vicente",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-7",
-     "opp": "Benfica",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-1",
-     "opp": "Maritimo",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Rio Ave",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Vit\u00f3ria de Guimaraes",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "market": null
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T18:00Z",
-   "league": "Primeira Liga",
-   "match": "Rio Ave v Estrela",
-   "home": "Rio Ave",
-   "away": "Estrela",
-   "headline": "Over 1.5 goals",
-   "why": "Rio Ave have gone over 1.5 in 3 straight; Estrela in 5 straight.",
-   "a": "Rio Ave",
-   "b": "Estrela",
-   "a_run": 3,
-   "b_run": 5,
-   "a_key": "over15",
-   "b_key": "over15",
-   "a_label": "over 1.5 goals",
-   "b_label": "over 1.5 goals",
-   "strength": 8,
-   "base_rate": 0.5522388059701493,
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "a_recent": [
-    {
-     "s": "0-4",
-     "opp": "Sporting CP",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Estoril",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "FC Porto",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-1",
-     "opp": "Gil Vicente",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Casa Pia",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-4",
-     "opp": "Sporting CP",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "3-2",
-     "opp": "C.D. Nacional",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Alverca",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Sporting CP",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "4-2",
-     "opp": "Al Nassr",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-2",
-     "opp": "Braga",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "0-0",
-     "opp": "FC Famalicao",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Primeira Liga"
     }
    ],
    "market": null
@@ -11279,6 +11154,131 @@
     }
    ],
    "market": "https://www.bovada.lv/sports/soccer/europe/italy/serie-a/torino-as-roma-202609141230"
+  },
+  {
+   "date": "2026-09-14",
+   "kickoff": "2026-09-14T17:45Z",
+   "league": "Primeira Liga",
+   "match": "Rio Ave v Estrela",
+   "home": "Rio Ave",
+   "away": "Estrela",
+   "headline": "Over 1.5 goals",
+   "why": "Rio Ave have gone over 1.5 in 3 straight; Estrela in 5 straight.",
+   "a": "Rio Ave",
+   "b": "Estrela",
+   "a_run": 3,
+   "b_run": 5,
+   "a_key": "over15",
+   "b_key": "over15",
+   "a_label": "over 1.5 goals",
+   "b_label": "over 1.5 goals",
+   "strength": 8,
+   "base_rate": 0.5522388059701493,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "0-4",
+     "opp": "Sporting CP",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "Estoril",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-2",
+     "opp": "FC Porto",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-1",
+     "opp": "Gil Vicente",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Casa Pia",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-4",
+     "opp": "Sporting CP",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "3-2",
+     "opp": "C.D. Nacional",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Alverca",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Sporting CP",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "4-2",
+     "opp": "Al Nassr",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-2",
+     "opp": "Braga",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "0-0",
+     "opp": "FC Famalicao",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "market": null
   },
   {
    "date": "2026-09-15",
