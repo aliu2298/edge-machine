@@ -1025,6 +1025,8 @@
    },
    "date": "2026-09-05",
    "drawn_at": "2026-08-31T22:54:34+00:00",
+   "final": "4-0",
+   "graded_at": "2026-09-05T20:27:57+00:00",
    "headline": "Over 2.5 goals",
    "home": "Bayer Leverkusen",
    "id": "2026-09-05|Bayer Leverkusen|1. FC Union Berlin|Over 2.5 goals",
@@ -1032,7 +1034,7 @@
    "league": "Bundesliga",
    "market": "https://www.bovada.lv/sports/soccer/europe/germany/1-bundesliga/bayer-leverkusen-union-berlin-202609050930",
    "match": "Bayer Leverkusen v 1. FC Union Berlin",
-   "status": "live",
+   "status": "hit",
    "strength": 10,
    "why": "Bayer Leverkusen have gone over 2.5 in 4 straight; 1. FC Union Berlin in 6 straight."
   },
@@ -1282,6 +1284,8 @@
    },
    "date": "2026-09-05",
    "drawn_at": "2026-08-31T22:54:34+00:00",
+   "final": "1-3",
+   "graded_at": "2026-09-05T20:27:57+00:00",
    "headline": "Both teams to score",
    "home": "NEC Nijmegen",
    "id": "2026-09-05|NEC Nijmegen|Feyenoord Rotterdam|Both teams to score",
@@ -1289,10 +1293,265 @@
    "league": "Eredivisie",
    "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/nec-nijmegen-feyenoord-202609051030",
    "match": "NEC Nijmegen v Feyenoord Rotterdam",
-   "status": "live",
+   "status": "hit",
    "strength": 9,
    "why": "Both sides are on a BTTS run \u2014 NEC Nijmegen 6 straight, Feyenoord Rotterdam 3 straight."
+  },
+  "2026-09-05|Toronto FC|Chicago Fire FC|Both teams to score": {
+   "a": "Toronto FC",
+   "a_key": "btts",
+   "a_label": "both teams scored",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New York City FC",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Inter Miami CF",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Charlotte FC",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New England Revolution",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New York City FC",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "D.C. United",
+     "s": "1-2"
+    }
+   ],
+   "a_run": 6,
+   "away": "Chicago Fire FC",
+   "b": "Chicago Fire FC",
+   "b_key": "btts",
+   "b_label": "both teams scored",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Seattle Sounders FC",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Red Bull New York",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Orlando City SC",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Portland Timbers",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Charlotte FC",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "New York City FC",
+     "s": "1-3"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.052884615384615384,
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-09-05",
+   "drawn_at": "2026-09-05T20:27:57+00:00",
+   "headline": "Both teams to score",
+   "home": "Toronto FC",
+   "id": "2026-09-05|Toronto FC|Chicago Fire FC|Both teams to score",
+   "kickoff": "2026-09-05T23:30Z",
+   "league": "MLS",
+   "market": "https://www.bovada.lv/sports/soccer/north-america/united-states/mls/toronto-fc-chicago-fire-202609051930",
+   "match": "Toronto FC v Chicago Fire FC",
+   "status": "live",
+   "strength": 12,
+   "why": "Both sides are on a BTTS run \u2014 Toronto FC 6 straight, Chicago Fire FC 6 straight."
+  },
+  "2026-09-06|Angers|Stade Rennais|Over 1.5 goals": {
+   "a": "Angers",
+   "a_key": "over15",
+   "a_label": "over 1.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "AJ Auxerre",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "Lille",
+     "s": "0-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Paris FC",
+     "s": "3-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Lorient",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "Brest",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "Strasbourg",
+     "s": "1-1"
+    }
+   ],
+   "a_run": 6,
+   "away": "Stade Rennais",
+   "b": "Stade Rennais",
+   "b_key": "over15",
+   "b_label": "over 1.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "Le Mans",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "Paris Saint-Germain",
+     "s": "2-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Sunderland",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Brentford",
+     "s": "2-4"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Galatasaray",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Ligue 1",
+     "opp": "Marseille",
+     "s": "1-3"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.27884615384615385,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-06",
+   "drawn_at": "2026-09-05T20:27:57+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Angers",
+   "id": "2026-09-06|Angers|Stade Rennais|Over 1.5 goals",
+   "kickoff": "2026-09-06T15:15Z",
+   "league": "Ligue 1",
+   "market": null,
+   "match": "Angers v Stade Rennais",
+   "status": "live",
+   "strength": 12,
+   "why": "Angers have gone over 1.5 in 6 straight; Stade Rennais in 6 straight."
   }
  },
- "updated_at": "2026-09-05T15:19:04+00:00"
+ "updated_at": "2026-09-05T20:27:57+00:00"
 }
