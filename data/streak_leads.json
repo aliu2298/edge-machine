@@ -919,14 +919,16 @@
     "n": 2
    },
    "date": "2026-09-05",
+   "final": "1-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-05T15:19:04+00:00",
    "headline": "Over 1.5 goals",
    "home": "Fiorentina",
    "id": "2026-09-05|Fiorentina|Torino|Over 1.5 goals",
    "kickoff": "2026-09-05T13:00Z",
    "league": "Serie A",
    "match": "Fiorentina v Torino",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-05|Inter Miami CF|Atlanta United FC|Atlanta United FC to score 2+": {
@@ -1112,14 +1114,16 @@
     "kind": "btts"
    },
    "date": "2026-09-05",
+   "final": "2-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-05T15:19:04+00:00",
    "headline": "Both teams to score",
    "home": "Newcastle United",
    "id": "2026-09-05|Newcastle United|AFC Bournemouth|Both teams to score",
    "kickoff": "2026-09-05T11:30Z",
    "league": "Premier League",
    "match": "Newcastle United v AFC Bournemouth",
-   "status": "pending",
+   "status": "hit",
    "strength": 11
   },
   "2026-09-05|Newcastle United|AFC Bournemouth|Over 1.5 goals": {
@@ -1136,14 +1140,16 @@
     "n": 2
    },
    "date": "2026-09-05",
+   "final": "2-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-05T15:19:04+00:00",
    "headline": "Over 1.5 goals",
    "home": "Newcastle United",
    "id": "2026-09-05|Newcastle United|AFC Bournemouth|Over 1.5 goals",
    "kickoff": "2026-09-05T11:30Z",
    "league": "Premier League",
    "match": "Newcastle United v AFC Bournemouth",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-05|Orlando City SC|San Diego FC|Over 2.5 goals": {
@@ -3763,6 +3769,32 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-14|Torino|AS Roma|AS Roma to score": {
+   "a": "AS Roma",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "AS Roma",
+   "b": "Torino",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.2512315270935961,
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "subject": "a",
+    "team": "AS Roma"
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-05",
+   "headline": "AS Roma to score",
+   "home": "Torino",
+   "id": "2026-09-14|Torino|AS Roma|AS Roma to score",
+   "kickoff": "2026-09-14T16:30Z",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-14|Torino|AS Roma|AS Roma to score 2+": {
    "a": "AS Roma",
    "a_key": "scoring",
@@ -4588,5 +4620,5 @@
    "strength": 11
   }
  },
- "updated_at": "2026-09-05T10:42:46+00:00"
+ "updated_at": "2026-09-05T15:19:04+00:00"
 }

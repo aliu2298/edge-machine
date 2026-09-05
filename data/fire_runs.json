@@ -15,6 +15,21 @@
    "team": "1. FC Union Berlin",
    "test_date": "2026-09-05"
   },
+  "1. FC Union Berlin|over15|2026-09-11|1. FC Union Berlin|Schalke 04": {
+   "home": true,
+   "id": "1. FC Union Berlin|over15|2026-09-11|1. FC Union Berlin|Schalke 04",
+   "key": "over15",
+   "kickoff": "2026-09-11T18:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 11,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Schalke 04",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "1. FC Union Berlin",
+   "test_date": "2026-09-11"
+  },
   "1. FC Union Berlin|over25|2026-09-05|1. FC Union Berlin|Bayer Leverkusen": {
    "home": false,
    "id": "1. FC Union Berlin|over25|2026-09-05|1. FC Union Berlin|Bayer Leverkusen",
@@ -30,6 +45,21 @@
    "team": "1. FC Union Berlin",
    "test_date": "2026-09-05"
   },
+  "1. FC Union Berlin|over25|2026-09-11|1. FC Union Berlin|Schalke 04": {
+   "home": true,
+   "id": "1. FC Union Berlin|over25|2026-09-11|1. FC Union Berlin|Schalke 04",
+   "key": "over25",
+   "kickoff": "2026-09-11T18:30Z",
+   "label": "over 2.5 goals",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Schalke 04",
+   "rate": 0.015625,
+   "status": "pending",
+   "team": "1. FC Union Berlin",
+   "test_date": "2026-09-11"
+  },
   "1. FC Union Berlin|scoring1|2026-09-05|1. FC Union Berlin|Bayer Leverkusen": {
    "home": false,
    "id": "1. FC Union Berlin|scoring1|2026-09-05|1. FC Union Berlin|Bayer Leverkusen",
@@ -44,6 +74,21 @@
    "status": "pending",
    "team": "1. FC Union Berlin",
    "test_date": "2026-09-05"
+  },
+  "1. FC Union Berlin|scoring1|2026-09-11|1. FC Union Berlin|Schalke 04": {
+   "home": true,
+   "id": "1. FC Union Berlin|scoring1|2026-09-11|1. FC Union Berlin|Schalke 04",
+   "key": "scoring1",
+   "kickoff": "2026-09-11T18:30Z",
+   "label": "scored in",
+   "league": "Bundesliga",
+   "length": 10,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Schalke 04",
+   "rate": 0.15104166666666666,
+   "status": "pending",
+   "team": "1. FC Union Berlin",
+   "test_date": "2026-09-11"
   },
   "AC Milan|over15|2026-09-06|AC Milan|Juventus": {
    "home": false,
@@ -61,6 +106,7 @@
    "test_date": "2026-09-06"
   },
   "AFC Bournemouth|scoring1|2026-09-05|AFC Bournemouth|Newcastle United": {
+   "graded_at": "2026-09-05T15:19:06+00:00",
    "home": false,
    "id": "AFC Bournemouth|scoring1|2026-09-05|AFC Bournemouth|Newcastle United",
    "key": "scoring1",
@@ -71,9 +117,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Newcastle United",
    "rate": 0.1111111111111111,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-05"
+  },
+  "AFC Bournemouth|scoring1|2026-09-12|AFC Bournemouth|Brentford": {
+   "home": true,
+   "id": "AFC Bournemouth|scoring1|2026-09-12|AFC Bournemouth|Brentford",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T14:00Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 13,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Brentford",
+   "rate": 0.057291666666666664,
+   "status": "pending",
+   "team": "AFC Bournemouth",
+   "test_date": "2026-09-12"
   },
   "AJ Auxerre|scoring1|2026-09-04|AJ Auxerre|Lyon": {
    "graded_at": "2026-09-04T20:49:52+00:00",
@@ -391,6 +453,21 @@
    "team": "Atl\u00e9tico Madrid",
    "test_date": "2026-09-05"
   },
+  "Atl\u00e9tico Madrid|over15|2026-09-09|Atl\u00e9tico Madrid|Liverpool": {
+   "home": false,
+   "id": "Atl\u00e9tico Madrid|over15|2026-09-09|Atl\u00e9tico Madrid|Liverpool",
+   "key": "over15",
+   "kickoff": "2026-09-09T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "La Liga",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Liverpool",
+   "rate": 0.21354166666666666,
+   "status": "pending",
+   "team": "Atl\u00e9tico Madrid",
+   "test_date": "2026-09-09"
+  },
   "Atl\u00e9tico Madrid|scoring1|2026-08-29|Atl\u00e9tico Madrid|Sevilla": {
    "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
@@ -422,6 +499,21 @@
    "status": "pending",
    "team": "Atl\u00e9tico Madrid",
    "test_date": "2026-09-05"
+  },
+  "Atl\u00e9tico Madrid|scoring1|2026-09-09|Atl\u00e9tico Madrid|Liverpool": {
+   "home": false,
+   "id": "Atl\u00e9tico Madrid|scoring1|2026-09-09|Atl\u00e9tico Madrid|Liverpool",
+   "key": "scoring1",
+   "kickoff": "2026-09-09T19:00Z",
+   "label": "scored in",
+   "league": "La Liga",
+   "length": 10,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Liverpool",
+   "rate": 0.15104166666666666,
+   "status": "pending",
+   "team": "Atl\u00e9tico Madrid",
+   "test_date": "2026-09-09"
   },
   "Austin FC|porous|2026-08-30|Austin FC|Portland Timbers": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -470,6 +562,21 @@
    "team": "Bayer Leverkusen",
    "test_date": "2026-09-05"
   },
+  "Bayer Leverkusen|btts|2026-09-12|Bayer Leverkusen|FC Augsburg": {
+   "home": false,
+   "id": "Bayer Leverkusen|btts|2026-09-12|Bayer Leverkusen|FC Augsburg",
+   "key": "btts",
+   "kickoff": "2026-09-12T13:30Z",
+   "label": "both teams scored",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Augsburg",
+   "rate": 0.020833333333333332,
+   "status": "pending",
+   "team": "Bayer Leverkusen",
+   "test_date": "2026-09-12"
+  },
   "Bayer Leverkusen|over15|2026-09-05|Bayer Leverkusen|1. FC Union Berlin": {
    "home": true,
    "id": "Bayer Leverkusen|over15|2026-09-05|Bayer Leverkusen|1. FC Union Berlin",
@@ -484,6 +591,21 @@
    "status": "pending",
    "team": "Bayer Leverkusen",
    "test_date": "2026-09-05"
+  },
+  "Bayer Leverkusen|over15|2026-09-12|Bayer Leverkusen|FC Augsburg": {
+   "home": false,
+   "id": "Bayer Leverkusen|over15|2026-09-12|Bayer Leverkusen|FC Augsburg",
+   "key": "over15",
+   "kickoff": "2026-09-12T13:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Augsburg",
+   "rate": 0.18229166666666666,
+   "status": "pending",
+   "team": "Bayer Leverkusen",
+   "test_date": "2026-09-12"
   },
   "Bayer Leverkusen|porous|2026-09-05|Bayer Leverkusen|1. FC Union Berlin": {
    "home": true,
@@ -500,6 +622,21 @@
    "team": "Bayer Leverkusen",
    "test_date": "2026-09-05"
   },
+  "Bayer Leverkusen|porous|2026-09-12|Bayer Leverkusen|FC Augsburg": {
+   "home": false,
+   "id": "Bayer Leverkusen|porous|2026-09-12|Bayer Leverkusen|FC Augsburg",
+   "key": "porous",
+   "kickoff": "2026-09-12T13:30Z",
+   "label": "conceded in",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Augsburg",
+   "rate": 0.15625,
+   "status": "pending",
+   "team": "Bayer Leverkusen",
+   "test_date": "2026-09-12"
+  },
   "Bayer Leverkusen|scoring1|2026-09-05|Bayer Leverkusen|1. FC Union Berlin": {
    "home": true,
    "id": "Bayer Leverkusen|scoring1|2026-09-05|Bayer Leverkusen|1. FC Union Berlin",
@@ -514,6 +651,21 @@
    "status": "pending",
    "team": "Bayer Leverkusen",
    "test_date": "2026-09-05"
+  },
+  "Bayer Leverkusen|scoring1|2026-09-12|Bayer Leverkusen|FC Augsburg": {
+   "home": false,
+   "id": "Bayer Leverkusen|scoring1|2026-09-12|Bayer Leverkusen|FC Augsburg",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T13:30Z",
+   "label": "scored in",
+   "league": "Bundesliga",
+   "length": 12,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Augsburg",
+   "rate": 0.10416666666666667,
+   "status": "pending",
+   "team": "Bayer Leverkusen",
+   "test_date": "2026-09-12"
   },
   "Bayern Munich|btts|2026-09-05|Bayern Munich|Schalke 04": {
    "home": false,
@@ -730,6 +882,21 @@
    "status": "pending",
    "team": "Brentford",
    "test_date": "2026-09-05"
+  },
+  "Brentford|over15|2026-09-12|Brentford|AFC Bournemouth": {
+   "home": false,
+   "id": "Brentford|over15|2026-09-12|Brentford|AFC Bournemouth",
+   "key": "over15",
+   "kickoff": "2026-09-12T14:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 9,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "AFC Bournemouth",
+   "rate": 0.18229166666666666,
+   "status": "pending",
+   "team": "Brentford",
+   "test_date": "2026-09-12"
   },
   "Brest|porous|2026-09-05|Brest|Le Havre AC": {
    "home": false,
@@ -949,6 +1116,21 @@
    "team": "Crystal Palace",
    "test_date": "2026-09-05"
   },
+  "Crystal Palace|over15|2026-09-12|Crystal Palace|Ipswich Town": {
+   "home": true,
+   "id": "Crystal Palace|over15|2026-09-12|Crystal Palace|Ipswich Town",
+   "key": "over15",
+   "kickoff": "2026-09-12T14:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 12,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Ipswich Town",
+   "rate": 0.09375,
+   "status": "pending",
+   "team": "Crystal Palace",
+   "test_date": "2026-09-12"
+  },
   "Crystal Palace|porous|2026-09-05|Crystal Palace|Fulham": {
    "home": false,
    "id": "Crystal Palace|porous|2026-09-05|Crystal Palace|Fulham",
@@ -963,6 +1145,21 @@
    "status": "pending",
    "team": "Crystal Palace",
    "test_date": "2026-09-05"
+  },
+  "Crystal Palace|porous|2026-09-12|Crystal Palace|Ipswich Town": {
+   "home": true,
+   "id": "Crystal Palace|porous|2026-09-12|Crystal Palace|Ipswich Town",
+   "key": "porous",
+   "kickoff": "2026-09-12T14:00Z",
+   "label": "conceded in",
+   "league": "Premier League",
+   "length": 12,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Ipswich Town",
+   "rate": 0.07291666666666667,
+   "status": "pending",
+   "team": "Crystal Palace",
+   "test_date": "2026-09-12"
   },
   "D.C. United|porous|2026-08-29|D.C. United|LAFC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -1453,6 +1650,21 @@
    "team": "Feyenoord Rotterdam",
    "test_date": "2026-09-05"
   },
+  "Feyenoord Rotterdam|scoring1|2026-09-09|Feyenoord Rotterdam|Barcelona": {
+   "home": false,
+   "id": "Feyenoord Rotterdam|scoring1|2026-09-09|Feyenoord Rotterdam|Barcelona",
+   "key": "scoring1",
+   "kickoff": "2026-09-09T16:45Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 12,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Barcelona",
+   "rate": 0.10416666666666667,
+   "status": "pending",
+   "team": "Feyenoord Rotterdam",
+   "test_date": "2026-09-09"
+  },
   "Fortuna Sittard|over15|2026-09-06|Fortuna Sittard|ADO Den Haag": {
    "home": false,
    "id": "Fortuna Sittard|over15|2026-09-06|Fortuna Sittard|ADO Den Haag",
@@ -1722,6 +1934,21 @@
    "team": "Manchester City",
    "test_date": "2026-09-05"
   },
+  "Manchester City|over15|2026-09-08|Manchester City|FC Porto": {
+   "home": false,
+   "id": "Manchester City|over15|2026-09-08|Manchester City|FC Porto",
+   "key": "over15",
+   "kickoff": "2026-09-08T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Porto",
+   "rate": 0.21354166666666666,
+   "status": "pending",
+   "team": "Manchester City",
+   "test_date": "2026-09-08"
+  },
   "Manchester City|scoring1|2026-09-05|Manchester City|Coventry City": {
    "home": true,
    "id": "Manchester City|scoring1|2026-09-05|Manchester City|Coventry City",
@@ -1736,6 +1963,21 @@
    "status": "pending",
    "team": "Manchester City",
    "test_date": "2026-09-05"
+  },
+  "Manchester City|scoring1|2026-09-08|Manchester City|FC Porto": {
+   "home": false,
+   "id": "Manchester City|scoring1|2026-09-08|Manchester City|FC Porto",
+   "key": "scoring1",
+   "kickoff": "2026-09-08T19:00Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 13,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Porto",
+   "rate": 0.057291666666666664,
+   "status": "pending",
+   "team": "Manchester City",
+   "test_date": "2026-09-08"
   },
   "NEC Nijmegen|btts|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "home": true,
@@ -1752,6 +1994,21 @@
    "team": "NEC Nijmegen",
    "test_date": "2026-09-05"
   },
+  "NEC Nijmegen|btts|2026-09-08|NEC Nijmegen|Excelsior": {
+   "home": true,
+   "id": "NEC Nijmegen|btts|2026-09-08|NEC Nijmegen|Excelsior",
+   "key": "btts",
+   "kickoff": "2026-09-08T16:45Z",
+   "label": "both teams scored",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Excelsior",
+   "rate": 0.036458333333333336,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-08"
+  },
   "NEC Nijmegen|over15|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "home": true,
    "id": "NEC Nijmegen|over15|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam",
@@ -1766,6 +2023,21 @@
    "status": "pending",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-05"
+  },
+  "NEC Nijmegen|over15|2026-09-08|NEC Nijmegen|Excelsior": {
+   "home": true,
+   "id": "NEC Nijmegen|over15|2026-09-08|NEC Nijmegen|Excelsior",
+   "key": "over15",
+   "kickoff": "2026-09-08T16:45Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 11,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Excelsior",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-08"
   },
   "NEC Nijmegen|porous|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "home": true,
@@ -1782,6 +2054,21 @@
    "team": "NEC Nijmegen",
    "test_date": "2026-09-05"
   },
+  "NEC Nijmegen|porous|2026-09-08|NEC Nijmegen|Excelsior": {
+   "home": true,
+   "id": "NEC Nijmegen|porous|2026-09-08|NEC Nijmegen|Excelsior",
+   "key": "porous",
+   "kickoff": "2026-09-08T16:45Z",
+   "label": "conceded in",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Excelsior",
+   "rate": 0.19270833333333334,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-08"
+  },
   "NEC Nijmegen|scoring1|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "home": true,
    "id": "NEC Nijmegen|scoring1|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam",
@@ -1796,6 +2083,21 @@
    "status": "pending",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-05"
+  },
+  "NEC Nijmegen|scoring1|2026-09-08|NEC Nijmegen|Excelsior": {
+   "home": true,
+   "id": "NEC Nijmegen|scoring1|2026-09-08|NEC Nijmegen|Excelsior",
+   "key": "scoring1",
+   "kickoff": "2026-09-08T16:45Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 11,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Excelsior",
+   "rate": 0.11458333333333333,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-08"
   },
   "New York City FC|btts|2026-08-29|New York City FC|Toronto FC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -1917,6 +2219,7 @@
    "test_date": "2026-09-04"
   },
   "Newcastle United|over15|2026-09-05|Newcastle United|AFC Bournemouth": {
+   "graded_at": "2026-09-05T15:19:06+00:00",
    "home": true,
    "id": "Newcastle United|over15|2026-09-05|Newcastle United|AFC Bournemouth",
    "key": "over15",
@@ -1927,11 +2230,28 @@
    "logged_at": "2026-09-01T13:34:34+00:00",
    "opp": "AFC Bournemouth",
    "rate": 0.12777777777777777,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Newcastle United",
    "test_date": "2026-09-05"
   },
+  "Newcastle United|over15|2026-09-14|Newcastle United|Leeds United": {
+   "home": false,
+   "id": "Newcastle United|over15|2026-09-14|Newcastle United|Leeds United",
+   "key": "over15",
+   "kickoff": "2026-09-14T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 12,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Leeds United",
+   "rate": 0.09375,
+   "status": "pending",
+   "team": "Newcastle United",
+   "test_date": "2026-09-14"
+  },
   "Newcastle United|porous|2026-09-05|Newcastle United|AFC Bournemouth": {
+   "graded_at": "2026-09-05T15:19:06+00:00",
    "home": true,
    "id": "Newcastle United|porous|2026-09-05|Newcastle United|AFC Bournemouth",
    "key": "porous",
@@ -1942,9 +2262,25 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "AFC Bournemouth",
    "rate": 0.03333333333333333,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Newcastle United",
    "test_date": "2026-09-05"
+  },
+  "Newcastle United|scoring1|2026-09-14|Newcastle United|Leeds United": {
+   "home": false,
+   "id": "Newcastle United|scoring1|2026-09-14|Newcastle United|Leeds United",
+   "key": "scoring1",
+   "kickoff": "2026-09-14T19:00Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Leeds United",
+   "rate": 0.1875,
+   "status": "pending",
+   "team": "Newcastle United",
+   "test_date": "2026-09-14"
   },
   "Orlando City SC|scoring1|2026-08-30|Orlando City SC|Minnesota United FC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -2230,6 +2566,21 @@
    "team": "RB Leipzig",
    "test_date": "2026-09-05"
   },
+  "RB Leipzig|over15|2026-09-10|RB Leipzig|Como": {
+   "home": false,
+   "id": "RB Leipzig|over15|2026-09-10|RB Leipzig|Como",
+   "key": "over15",
+   "kickoff": "2026-09-10T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Como",
+   "rate": 0.21354166666666666,
+   "status": "pending",
+   "team": "RB Leipzig",
+   "test_date": "2026-09-10"
+  },
   "Rangers|scoring1|2026-09-02|Rangers|Falkirk": {
    "graded_at": "2026-09-02T21:07:36+00:00",
    "home": false,
@@ -2261,6 +2612,21 @@
    "status": "pending",
    "team": "Rangers",
    "test_date": "2026-09-05"
+  },
+  "Rangers|scoring1|2026-09-09|Rangers|St Mirren": {
+   "home": true,
+   "id": "Rangers|scoring1|2026-09-09|Rangers|St Mirren",
+   "key": "scoring1",
+   "kickoff": "2026-09-09T18:45Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 13,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "St Mirren",
+   "rate": 0.057291666666666664,
+   "status": "pending",
+   "team": "Rangers",
+   "test_date": "2026-09-09"
   },
   "Rayo Vallecano|over15|2026-09-05|Rayo Vallecano|Racing Santander": {
    "home": true,
@@ -2455,6 +2821,21 @@
    "status": "pending",
    "team": "SC Freiburg",
    "test_date": "2026-09-05"
+  },
+  "SC Freiburg|over15|2026-09-12|SC Freiburg|Borussia M\u00f6nchengladbach": {
+   "home": true,
+   "id": "SC Freiburg|over15|2026-09-12|SC Freiburg|Borussia M\u00f6nchengladbach",
+   "key": "over15",
+   "kickoff": "2026-09-12T13:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 11,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "Borussia M\u00f6nchengladbach",
+   "rate": 0.125,
+   "status": "pending",
+   "team": "SC Freiburg",
+   "test_date": "2026-09-12"
   },
   "San Jose Earthquakes|porous|2026-08-30|San Jose Earthquakes|Houston Dynamo FC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -2879,6 +3260,36 @@
    "team": "Telstar",
    "test_date": "2026-09-06"
   },
+  "Torino|over15|2026-09-14|Torino|AS Roma": {
+   "home": true,
+   "id": "Torino|over15|2026-09-14|Torino|AS Roma",
+   "key": "over15",
+   "kickoff": "2026-09-14T16:30Z",
+   "label": "over 1.5 goals",
+   "league": "Serie A",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "AS Roma",
+   "rate": 0.21354166666666666,
+   "status": "pending",
+   "team": "Torino",
+   "test_date": "2026-09-14"
+  },
+  "Torino|porous|2026-09-14|Torino|AS Roma": {
+   "home": true,
+   "id": "Torino|porous|2026-09-14|Torino|AS Roma",
+   "key": "porous",
+   "kickoff": "2026-09-14T16:30Z",
+   "label": "conceded in",
+   "league": "Serie A",
+   "length": 8,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "AS Roma",
+   "rate": 0.19270833333333334,
+   "status": "pending",
+   "team": "Torino",
+   "test_date": "2026-09-14"
+  },
   "Toulouse|over15|2026-09-03|Toulouse|Lille": {
    "graded_at": "2026-09-03T21:07:04+00:00",
    "home": true,
@@ -3006,7 +3417,22 @@
    "status": "pending",
    "team": "Werder Bremen",
    "test_date": "2026-09-05"
+  },
+  "Werder Bremen|porous|2026-09-12|Werder Bremen|FC Cologne": {
+   "home": false,
+   "id": "Werder Bremen|porous|2026-09-12|Werder Bremen|FC Cologne",
+   "key": "porous",
+   "kickoff": "2026-09-12T16:30Z",
+   "label": "conceded in",
+   "league": "Bundesliga",
+   "length": 10,
+   "logged_at": "2026-09-05T15:19:06+00:00",
+   "opp": "FC Cologne",
+   "rate": 0.11979166666666667,
+   "status": "pending",
+   "team": "Werder Bremen",
+   "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-05T10:42:49+00:00"
+ "updated_at": "2026-09-05T15:19:06+00:00"
 }
