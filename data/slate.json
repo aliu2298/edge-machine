@@ -1413,6 +1413,8 @@
    },
    "date": "2026-09-05",
    "drawn_at": "2026-09-05T20:27:57+00:00",
+   "final": "4-4",
+   "graded_at": "2026-09-06T04:46:55+00:00",
    "headline": "Both teams to score",
    "home": "Toronto FC",
    "id": "2026-09-05|Toronto FC|Chicago Fire FC|Both teams to score",
@@ -1420,7 +1422,7 @@
    "league": "MLS",
    "market": "https://www.bovada.lv/sports/soccer/north-america/united-states/mls/toronto-fc-chicago-fire-202609051930",
    "match": "Toronto FC v Chicago Fire FC",
-   "status": "live",
+   "status": "hit",
    "strength": 12,
    "why": "Both sides are on a BTTS run \u2014 Toronto FC 6 straight, Chicago Fire FC 6 straight."
   },
@@ -1551,7 +1553,137 @@
    "status": "live",
    "strength": 12,
    "why": "Angers have gone over 1.5 in 6 straight; Stade Rennais in 6 straight."
+  },
+  "2026-09-06|Heerenveen|AZ Alkmaar|AZ Alkmaar to score 2+": {
+   "a": "AZ Alkmaar",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Go Ahead Eagles",
+     "s": "5-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Fortuna Sittard",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "FC Utrecht",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "ADO Den Haag",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "NAC Breda",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "Feyenoord Rotterdam",
+     "s": "1-1"
+    }
+   ],
+   "a_run": 5,
+   "away": "AZ Alkmaar",
+   "b": "Heerenveen",
+   "b_key": "leaky",
+   "b_label": "conceded 2+",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Willem II",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "PEC Zwolle",
+     "s": "0-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Ajax Amsterdam",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "FC Twente",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "FC Utrecht",
+     "s": "2-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "Ajax Amsterdam",
+     "s": "0-0"
+    }
+   ],
+   "b_run": 3,
+   "base_rate": 0.09090909090909091,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "AZ Alkmaar"
+   },
+   "date": "2026-09-06",
+   "drawn_at": "2026-09-06T04:46:55+00:00",
+   "headline": "AZ Alkmaar to score 2+",
+   "home": "Heerenveen",
+   "id": "2026-09-06|Heerenveen|AZ Alkmaar|AZ Alkmaar to score 2+",
+   "kickoff": "2026-09-06T12:30Z",
+   "league": "Eredivisie",
+   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/heerenveen-az-alkmaar-202609060830",
+   "match": "Heerenveen v AZ Alkmaar",
+   "status": "live",
+   "strength": 8,
+   "why": "AZ Alkmaar have scored 2+ in 5 straight; Heerenveen have conceded 2+ in 3 straight."
   }
  },
- "updated_at": "2026-09-05T20:27:57+00:00"
+ "updated_at": "2026-09-06T04:46:55+00:00"
 }
