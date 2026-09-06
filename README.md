@@ -211,9 +211,10 @@ Two implementation choices turned out to matter more than the data:
   often none in a shuffle — culling ~25% of teams from the null and none from the
   observation. That mismatch alone produced p = 0.005–0.015.
 
-**Current state (Sep 2026, n=145): every streak type sits inside its own null band**, and
-nothing survives Bonferroni across the six types tested together. Long runs are not
-distinguishable from a shuffled fixture list.
+**Current state (Sep 2026, n=145): nothing survives correction** — the best type ("scored
+in") sits +0.7pp outside a 10.6pp band, p adj 0.21. And it will not resolve with patience:
+the band narrows as 1/sqrt(teams), so separating a margin that thin needs roughly **400x
+the data**. The tab is a browse surface for what is happening, not a signal.
 
 Leads are research to look at. Nothing here places or stages a bet.
 

@@ -34,7 +34,7 @@ follow one are pre-selected against.
 
 So the reference point is not a base rate at all — it is that shuffled distribution. A
 result only means something if it lands OUTSIDE the band a random schedule produces.
-permutation_test() below computes it the same way on the real order and on 400 shuffles.
+permutation_test() below computes it the same way on the real order and on 2000 shuffles.
 
 Measured at n=145 (Sep 2026), every streak type sits INSIDE its own null band, p 0.72-0.98:
 long runs are indistinguishable from a shuffled fixture list. That is the finding.
@@ -57,7 +57,9 @@ VOID_AFTER_DAYS = 7
 
 # Shuffles used to build the streak-selection floor. Seeded, so CI and the Mac agree —
 # an unseeded null would make "significant" flicker between runs of the same data.
-PERMUTATIONS = 400
+# 400 shuffles left p visibly seed-dependent (0.015 vs 0.040 on the same data), which is
+# enough wobble to flip a verdict on its own. 2000 costs ~10s and settles it.
+PERMUTATIONS = 2000
 SEED = 20260906
 
 
