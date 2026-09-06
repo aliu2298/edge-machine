@@ -1548,14 +1548,16 @@
     "team": "AZ Alkmaar"
    },
    "date": "2026-09-06",
+   "final": "2-3",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-06T14:51:36+00:00",
    "headline": "AZ Alkmaar to score 2+",
    "home": "Heerenveen",
    "id": "2026-09-06|Heerenveen|AZ Alkmaar|AZ Alkmaar to score 2+",
    "kickoff": "2026-09-06T12:30Z",
    "league": "Eredivisie",
    "match": "Heerenveen v AZ Alkmaar",
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-09-06|Heerenveen|AZ Alkmaar|Over 1.5 goals": {
@@ -1572,14 +1574,16 @@
     "n": 2
    },
    "date": "2026-09-06",
+   "final": "2-3",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-06T14:51:36+00:00",
    "headline": "Over 1.5 goals",
    "home": "Heerenveen",
    "id": "2026-09-06|Heerenveen|AZ Alkmaar|Over 1.5 goals",
    "kickoff": "2026-09-06T12:30Z",
    "league": "Eredivisie",
    "match": "Heerenveen v AZ Alkmaar",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-06|Juventus|AC Milan|Over 2.5 goals": {
@@ -3519,6 +3523,30 @@
    "match": "Real Madrid v Rayo Vallecano",
    "status": "pending",
    "strength": 8
+  },
+  "2026-09-12|SC Cambuur|NEC Nijmegen|Over 2.5 goals": {
+   "a": "SC Cambuur",
+   "a_key": "over25",
+   "a_run": 5,
+   "away": "NEC Nijmegen",
+   "b": "NEC Nijmegen",
+   "b_key": "over25",
+   "b_run": 6,
+   "base_rate": 0.0981012658227848,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "SC Cambuur",
+   "id": "2026-09-12|SC Cambuur|NEC Nijmegen|Over 2.5 goals",
+   "kickoff": "2026-09-12T19:00Z",
+   "league": "Eredivisie",
+   "match": "SC Cambuur v NEC Nijmegen",
+   "status": "pending",
+   "strength": 11
   },
   "2026-09-12|SC Freiburg|Borussia M\u00f6nchengladbach|Over 1.5 goals": {
    "a": "SC Freiburg",
@@ -6548,5 +6576,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-06T14:47:24+00:00"
+ "updated_at": "2026-09-06T14:51:36+00:00"
 }
