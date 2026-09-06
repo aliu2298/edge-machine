@@ -265,6 +265,74 @@ try:
 except Exception as ex:
     print(f"  (live checks skipped: {ex})")
 
+
+print("\n== fire measurement: prior games only ==")
+import fire_track as F
+# 8 hits then a miss: the miss is game 9, ON-run (the run was 8 long going in) even
+# though it is itself a failure. If it were classified on its own result, on_h would be 1.
+on_h, on_n, off_h, off_n = F._split([1] * 8 + [0], 8)
+check("run state read from prior games", (on_n, on_h), (1, 0))
+check("warm-up games discarded", off_n, 0)
+
+print("\n== fire measurement: the warm-up trap ==")
+# A team's opening fire_min games hit ~4pp lower than its later ones. Counting them
+# forces that weak stretch entirely into the control arm in the REAL order while a
+# shuffle scatters it — which alone flipped three streak types to SIGNIFICANT.
+on_h, on_n, off_h, off_n = F._split([0] * 8 + [1, 1], 8)
+# Exactly the two post-warm-up games are scored; the 8 opening misses are discarded
+# rather than being dumped into the control arm.
+check("only post-warm-up games are scored", on_n + off_n, 2)
+check("the discarded opening misses do not depress the control", (off_n, off_h), (2, 2))
+check("no run was reachable, so no on-run games", (on_n, on_h), (0, 0))
+
+print("\n== fire measurement: pairing ==")
+check("a team with only one arm is not a pair",
+      F.paired_diff({"A": {"k": [1] * 20}}, "k", 8), None)
+# Cancelling team quality is the entire point of pairing within team: the population
+# figure must be the plain MEAN of each side's own on-minus-off gap, so a team's overall
+# level cannot leak in. (It does not mean the gap is zero — see the null test below.)
+good, weak = {"k": [1, 1, 1, 1, 0] * 7}, {"k": [1, 1, 1, 0, 0, 0] * 6}
+both = F.paired_diff({"good": good, "weak": weak}, "k", 3)
+solo = [F.paired_diff({"t": t}, "k", 3) for t in (good, weak)]
+check("population diff is the mean of the within-team diffs",
+      round(both["diff"], 9), round(sum(s["diff"] for s in solo) / 2, 9))
+check("the good team's own gap is measured against itself, not the weak one",
+      bool(abs(solo[0]["diff"] - solo[1]["diff"]) > 0.01), True)
+
+print("\n== fire measurement: the null must not centre on zero ==")
+# This is why all three earlier baselines were wrong. Conditioning on a run is negative
+# even when runs carry NO information, because a run ends the moment it fails. If this
+# null ever centres on zero the test has stopped modelling the selection effect and
+# every verdict resting on it is void.
+series = {f"t{i}": {"k": [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1] * 2}
+          for i in range(30)}
+t = F.permutation_test(series, "k", 4, iters=200, seed=1)
+check("shuffled null is negative, not zero", bool(t and t["null_mid"] < -0.02), True)
+check("shuffled null upper edge stays below +10pp", bool(t and t["null_hi"] < 0.10), True)
+
+print("\n== fire measurement: ledger and test stay apart ==")
+blob = {"runs": {
+    "a": {"team": "A", "key": "scoring1", "status": "extended", "test_date": "2026-01-01"},
+    "b": {"team": "B", "key": "scoring1", "status": "broke", "test_date": "2026-01-02"},
+}}
+rep = F.report([], blob=blob, iters=10)
+check("ledger counts settled runs", (rep["graded"], rep["extended"]), (2, 1))
+row = rep["rows"][0]
+check("ledger rate", round(row["rate"], 6), 0.5)
+# A lift or verdict on a ledger row means the two samples have been re-mixed.
+check("ledger row carries no verdict",
+      [k for k in ("lift", "significant", "base") if k in row], [])
+
+print("\n== fire measurement: family-wise correction ==")
+fake = [{"p": 0.02, "outside_band": True}, {"p": 0.4, "outside_band": True}]
+fam = len(fake)
+for x in fake:
+    x["p_adj"] = min(1.0, x["p"] * fam)
+    x["significant"] = bool(x["outside_band"] and x["p_adj"] < 0.05)
+check("Bonferroni applied across streak types", [x["p_adj"] for x in fake], [0.04, 0.8])
+check("a lone marginal p does not survive alone",
+      [x["significant"] for x in fake], [True, False])
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

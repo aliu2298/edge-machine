@@ -81,7 +81,7 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
 | `health.py` | Warn-only guardrails: lead freshness, stuck picks, dead venue feed. |
 | `verify_coverage.py` | Proves every league's squad reaches the board. |
-| `fire_track.py` | Logs long runs and grades whether they continued. |
+| `fire_track.py` | Logs long runs; tests them against a shuffled-schedule null. |
 | `test_slate.py` | Logic tests for slate selection and lifecycle. |
 | `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
 | `.github/workflows/backup-refresh.yml` | Watchdog 12h out of phase; takes over only if the primary failed or the live board is stale. |
@@ -183,6 +183,37 @@ the idea is falsifiable today rather than in a month, and so the grader itself i
 **Current state (Aug 2026, n=135 backtested): no bet type's confidence interval clears its
 league-adjusted baseline.** Lifts are mostly positive but none are distinguishable from
 chance at this sample. No edge is claimed.
+
+### On-fire runs: measured against a shuffled schedule, not a base rate
+
+Long runs get no baseline column, because three were tried and all three were wrong — the
+population rate (+12.8pp, "significant": teams on scoring runs are simply good teams), the
+team's own rate (−8.7pp, "significant": circular, since the run's own games are inside the
+team's average), and the team's rate with the run removed (+10.3pp: over-corrects, since
+deleting a run deletes only successes). Same games, three answers, two of them significant
+in opposite directions.
+
+The reference is not an average at all. **Shuffle a team's own games into a random order**
+and runs carry zero information by construction — yet being "on a run" still predicts a
+next-game rate 17–39pp *lower*, because a run ends the moment it fails and the games after
+one are pre-selected against. That shuffled band is what "no signal" looks like, and a
+result only counts if it lands outside it.
+
+Two implementation choices turned out to matter more than the data:
+
+* **The first `FIRE_MIN` games of every team are discarded.** No run is reachable there, so
+  counting them forces that stretch entirely into the control arm — and a team's opening 8
+  games hit **4.3pp lower** than its later ones. In the real order that depresses the
+  control; a shuffle scatters it. Including them alone flagged three streak types
+  SIGNIFICANT.
+* **The test is never restricted to the teams in the ledger.** A team reaches the ledger
+  only by going on a real run, so it always supplies an on-run arm in the real order and
+  often none in a shuffle — culling ~25% of teams from the null and none from the
+  observation. That mismatch alone produced p = 0.005–0.015.
+
+**Current state (Sep 2026, n=145): every streak type sits inside its own null band**, and
+nothing survives Bonferroni across the six types tested together. Long runs are not
+distinguishable from a shuffled fixture list.
 
 Leads are research to look at. Nothing here places or stages a bet.
 

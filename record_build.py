@@ -17,11 +17,12 @@ section compares a hit rate against **what the teams involved manage anyway**:
   * picks and leads -> the named side's own rate (or the two sides' mean for a
     fixture-level outcome). A league average would credit the pick for team quality —
     measured, that inflated "team to score" from -1.5pp to +9.3pp.
-  * fire runs -> the team's own rate for that streak. Against the population it read
-    +12.8pp and "significant"; against the team, -3.1pp and nothing.
+  * fire runs -> NOTHING. There is no honest baseline for a streak, so the fire section
+    shows the ledger descriptively and puts significance in a separate permutation test.
+    Three baselines were tried and all three were wrong; see fire_track's docstring.
 
-LIFT IS THE NUMBER. A hit rate on its own is unreadable, and three lanes in this repo have
-already died from being read without a reference.
+LIFT IS THE NUMBER where a reference exists. A hit rate on its own is unreadable, and
+three lanes in this repo have already died from being read without a reference.
 
 Usage:  python3 record_build.py   →  public_site/record.html
 """
@@ -77,6 +78,37 @@ def perf_table(rows, label_of, base_head="team base"):
 {body}</table></div>"""
 
 
+def fire_tables(fr):
+    """Ledger and test, rendered apart on purpose.
+
+    They are different samples answering different questions, and the reason the fire
+    numbers were wrong twice is that a settled-run count was read as if it were evidence.
+    The ledger gets no lift column and no verdict; only the test carries a verdict.
+    """
+    led = "".join(
+        f"""<tr><td>{esc(r['label'])}</td><td class="num">{r['n']}</td>
+        <td class="num">{r['extended']}</td><td class="num">{pct(r['rate'])}</td></tr>"""
+        for r in fr["rows"])
+    ledger = f"""<div class="tbl"><table>
+<tr><th>Streak</th><th class="num">n</th><th class="num">extended</th>
+    <th class="num">rate</th></tr>{led}</table></div>""" if led else ""
+
+    tst = "".join(
+        f"""<tr><td>{esc(t['label'])}</td><td class="num">{t['teams']}</td>
+        <td class="num">{t['on_n']}/{t['off_n']}</td>
+        {lift_cell(t['diff'])}
+        <td class="num mut">{t['null_lo']*100:+.0f} to {t['null_hi']*100:+.0f}pp</td>
+        <td class="num mut">{t['p_adj']:.2f}</td>
+        <td><span class="sig {'y' if t['significant'] else 'n'}">
+          {'SIGNIFICANT' if t['significant'] else 'no result'}</span></td></tr>"""
+        for t in fr.get("test", []))
+    test = f"""<div class="tbl"><table>
+<tr><th>Streak</th><th class="num">teams</th><th class="num">on/off</th>
+    <th class="num">diff</th><th class="num">shuffled 95%</th>
+    <th class="num">p adj</th><th></th></tr>{tst}</table></div>""" if tst else ""
+    return ledger, test
+
+
 def tiles(pairs):
     return ('<div class="tiles">' + "".join(
         f'<div class="tile"><b>{esc(v)}</b><span>{esc(k)}</span></div>'
@@ -95,9 +127,18 @@ def page_html(sl, ld, fr, hist, now):
     leads_body = tiles([("Graded", ld["graded"]), ("Hit rate", pct(ld["overall_rate"])),
                         ("Pending", ld["pending"]), ("Void", ld["void"])]) + \
         perf_table(ld["rows"], lambda r: BET_NAME.get(r["kind"], r["kind"]))
-    fire_body = tiles([("Graded", fr["graded"]), ("Extended", pct(fr["rate"])),
-                       ("Pending", fr["pending"]), ("", "")][:3]) + \
-        perf_table(fr["rows"], lambda r: r["label"], base_head="own rate")
+    fire_led, fire_test = fire_tables(fr)
+    fire_body = (tiles([("Graded", fr["graded"]), ("Extended", pct(fr["rate"])),
+                        ("Pending", fr["pending"])]) + fire_led +
+                 '<div class="note">Above is only a tally — it carries no verdict, because '
+                 'a ledger of streaks contains no clean control. Below is the actual test: '
+                 'for each team, its hit rate <b>while on a run</b> against its own rate '
+                 '<b>while not</b>, compared to the same statistic computed on <b>400 '
+                 'shuffles of that team\'s own games</b>. Shuffling destroys the runs and '
+                 'nothing else, so the shuffled band is what "no signal" looks like — and '
+                 'it sits far below zero, because a run ends the moment it fails and the '
+                 'games after one are pre-selected against. <b>Only a diff outside that '
+                 'band means anything.</b></div>' + fire_test)
 
     hist_rows = "".join(
         f"""<tr><td class="mut">{esc((p.get('kickoff') or p['date'])[:10])}</td>
@@ -164,9 +205,10 @@ profit</b> and none of it should be read as ROI. Each rate is compared against
 <b>what the teams involved manage anyway</b> — the named side's own rate for a claim about
 one team, the two sides' mean for a fixture-level outcome. A league average would credit a
 pick for team quality: measured here, that difference moved "team to score" from
-<b>-1.5pp to +9.3pp</b>, and moved on-fire runs from <b>-3.1pp to +12.8pp and
-"significant"</b>. <b>Lift is the number</b>; a hit rate alone is unreadable, and three
-lanes in this repo have already died from being read without a reference.</div>
+<b>-1.5pp to +9.3pp</b>. On-fire runs get no baseline at all — three were tried and all
+three were wrong, so that section is measured against a shuffled schedule instead.
+<b>The reference is the number</b>; a rate alone is unreadable, and three lanes in this
+repo have already died from being read without one.</div>
 
 {section("Picks — the 3-card slate",
          "Three picks drawn automatically, graded on the final score.", sl, slate_body,
@@ -179,9 +221,9 @@ lanes in this repo have already died from being read without a reference.</div>
          "Nothing graded yet.")}
 
 {section("On fire — do long runs continue?",
-         "Each long run logged against the fixture that tests it. Judged against the "
-         "team's OWN rate: the question is not whether a side on a hot run keeps scoring, "
-         "it is whether they do it MORE than they usually would.",
+         "Each long run logged against the fixture that tests it. The question is not "
+         "whether a side on a hot run keeps scoring — it is whether they do it more than "
+         "the same side does anyway, and more than a shuffled schedule would fake.",
          fr, fire_body,
          "Nothing graded yet.")}
 
