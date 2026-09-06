@@ -1,28 +1,18 @@
 #!/usr/bin/env python3
-"""venues.py — match a fixture to its betting-venue page (Kalshi, Bovada).
+"""venues.py — match a fixture to its Bovada market page.
 
 Extracted from export_public.py so the boards, the health check and the slate can all
-share ONE matcher. A second copy would drift from the hard-won parts below — the empty
-KXUEFAGAME series, cursor pagination, 429 backoff, and the name aliases — each of which
-was a silent bug that made links quietly disappear rather than fail loudly.
+share ONE matcher. A second copy would drift from the hard-won parts below — the name
+aliases and the side-matching rules — each of which was a silent bug that made links
+quietly disappear rather than fail loudly.
 
 Public, unauthenticated feeds only. No keys, no auth, fail-soft: a missing link is normal,
 since plenty of fixtures simply have no market.
 """
-import json, os, re, time, difflib, datetime, unicodedata, urllib.request, urllib.error
+import json, re, difflib, datetime, unicodedata, urllib.request, urllib.error
 
 # ---------------------------------------------------------------- venue links
 # Public, unauthenticated feeds only. Extend the lists as leagues open.
-KALSHI_API = "https://api.elections.kalshi.com/trade-api/v2/events"
-# Per-match GAME series for the 10 tracked leagues.
-# NB: "KXUEFAGAME" looks right but is an EMPTY series (0 events) — Europa League fixtures
-# live under KXUELGAME. Using the wrong one silently produced tips cards with no Kalshi
-# button for every Europa tie. Verify a series actually returns events before adding it.
-KALSHI_SERIES = ["KXBRASILEIROGAME", "KXMLSGAME",
-                 "KXEPLGAME", "KXLALIGAGAME", "KXBUNDESLIGAGAME", "KXSERIEAGAME",
-                 "KXLIGUE1GAME", "KXEREDIVISIEGAME", "KXLIGAPORTUGALGAME",
-                 "KXUCLGAME", "KXUELGAME", "KXUECLGAME"]
-KALSHI_MAX_PAGES = 3      # events endpoint caps at 200/page and returns a cursor
 BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/description/soccer"
 # Bovada is queried at the TOP LEVEL, not per league. Two reasons, both learned by
 # probing rather than guessing:
@@ -31,12 +21,12 @@ BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/descri
 #     when requested directly
 #   * one call returns ~1500 events across every competition Bovada lists, which covers
 #     all nine tracked domestic leagues in a single request instead of eleven
-# Same lesson as the Kalshi series tickers: enumerate what the API actually has, never
-# hand-write the key space.
+# Lesson worth keeping: enumerate what the API actually has, never hand-write the
+# key space from guesses.
 BOVADA_ALL = (BOVADA_API + "?marketFilterId=def&preMatchOnly=true&lang=en")
 # our team-name token → alternate token some venues use (tried alongside the raw token)
 ALIASES = {"athletico": "paranaense", "angeles": "lafc",
-           "hearts": "midlothian"}   # Kalshi spells it "Heart of Midlothian"
+           "hearts": "midlothian"}   # some feeds spell it "Heart of Midlothian"
 
 # Corporate/legal noise that carries no identity. "Real" and "Atletico" are deliberately
 # NOT here: they are the only thing separating Real Madrid from Real Sociedad.
@@ -57,110 +47,6 @@ def _get_json(url):
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"})
     with urllib.request.urlopen(req, timeout=10) as f:
         return json.load(f)
-
-KALSHI_CACHE = os.path.join(os.path.dirname(__file__), "data", ".kalshi_events.json")
-KALSHI_CACHE_TTL = 3600          # seconds
-_KALSHI_MEM = None
-_KALSHI_COUNTS = {}               # series -> event count, for health.py's series check
-
-
-def _kalshi_page(url, tries=4):
-    """One request, with backoff on 429. Kalshi rate-limits hard once you query ~10
-    series back-to-back, and a silent failure just makes links disappear."""
-    for i in range(tries):
-        try:
-            return _get_json(url)
-        except urllib.error.HTTPError as e:
-            if e.code == 429 and i < tries - 1:
-                time.sleep(1.5 * (i + 1))
-                continue
-            raise
-    return {}
-
-
-def _kalshi_series_events(series):
-    """All events for a series, following the cursor.
-
-    The endpoint caps at 200 per page. Taking only the first page silently truncated
-    KXUCLGAME (exactly 200 back, cursor non-null), so fixtures past the cut had no link.
-    """
-    out, cursor = [], None
-    for page in range(KALSHI_MAX_PAGES):
-        # no status filter: events leave "open" at kickoff, but their pages keep
-        # working (and show the result) — the date check scopes matches
-        url = f"{KALSHI_API}?series_ticker={series}&limit=200"
-        if cursor:
-            url += f"&cursor={cursor}"
-        try:
-            data = _kalshi_page(url)
-        except Exception as e:
-            print(f"  (kalshi lookup skipped for {series}: {e})")
-            break
-        evs = data.get("events") or []
-        out += evs
-        cursor = data.get("cursor")
-        if not cursor or not evs:
-            break
-        time.sleep(0.3)
-    if not out:
-        print(f"  (kalshi: {series} returned NO events — wrong series ticker?)")
-    return out
-
-
-def fetch_kalshi_events():
-    """[(url, title, date)] for Kalshi game events. Cached on disk so the two board
-    builders in one CI run share a single fetch instead of doubling the request count."""
-    global _KALSHI_MEM
-    if _KALSHI_MEM is not None:
-        return _KALSHI_MEM
-    global _KALSHI_COUNTS
-    try:
-        st = os.path.getmtime(KALSHI_CACHE)
-        if time.time() - st < KALSHI_CACHE_TTL:
-            raw = json.load(open(KALSHI_CACHE))
-            # cache was a bare list before per-series counts were added; accept both
-            rows = raw.get("events", []) if isinstance(raw, dict) else raw
-            _KALSHI_COUNTS = raw.get("counts", {}) if isinstance(raw, dict) else {}
-            _KALSHI_MEM = [(u, t, datetime.date.fromisoformat(d) if d else None)
-                           for u, t, d in rows]
-            print(f"  (kalshi events from cache: {len(_KALSHI_MEM)})")
-            return _KALSHI_MEM
-    except Exception:
-        pass
-
-    out = []
-    _KALSHI_COUNTS = {}
-    for n, series in enumerate(KALSHI_SERIES):
-        if n:
-            time.sleep(0.4)                      # pace: stay under the rate limit
-        events = _kalshi_series_events(series)
-        _KALSHI_COUNTS[series] = len(events)
-        for ev in events:
-            t = ev.get("event_ticker") or ""
-            m = re.search(r"-(\d{2})([A-Z]{3})(\d{2})", t)  # -26JUL25...
-            d = None
-            if m:
-                yy, mon, dd = m.groups()
-                try: d = datetime.date(2000+int(yy), MONTHS[mon], int(dd))
-                except (KeyError, ValueError): pass
-            out.append((f"https://kalshi.com/events/{t}", ev.get("title") or "", d))
-    try:
-        os.makedirs(os.path.dirname(KALSHI_CACHE), exist_ok=True)
-        with open(KALSHI_CACHE, "w") as f:
-            json.dump({"events": [(u, t, d.isoformat() if d else None) for u, t, d in out],
-                       "counts": _KALSHI_COUNTS}, f)
-    except Exception:
-        pass
-    _KALSHI_MEM = out
-    return out
-
-def kalshi_series_counts():
-    """series -> number of events fetched. Populated by fetch_kalshi_events (or restored
-    from its cache); health.py uses it to catch a series ticker that returns nothing."""
-    if _KALSHI_MEM is None:
-        fetch_kalshi_events()
-    return dict(_KALSHI_COUNTS)
-
 
 _BOVADA_MEM = None
 

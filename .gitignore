@@ -1,19 +1,22 @@
-# --- secrets & credentials (NEVER commit) ---
-.apifootball_key
+# Credential material — NEVER commit. The event-contract lane and all its code were
+# removed in Sep 2026, but the key files it used still exist locally and must stay out
+# of this public repo. Dropping these lines once made `git add -A` stage a file straight
+# out of the credentials directory.
 .kalshi_removed_backup/
-*.pem
-*_pem
-*_key
 .kalshi_key*
 .kalshi_pem
+*.pem
+*_pem
+# --- secrets & credentials (NEVER commit) ---
+.apifootball_key
+*_pem
+*_key
 .netlify_token
 
 # --- personal data / runtime state ---
 predictions.db
 staged_orders.json
 
-# --- Kalshi trading infra (not part of the public-facing repo) ---
-kalshi_client.py
 web/src/components/StagedOrders.tsx
 lovable_earnings_spec.md
 *.db
@@ -29,7 +32,6 @@ __pycache__/
 
 # --- backups / scratch ---
 *.bak
-*.prekalshi-strip
 
 # --- node / build output ---
 web/node_modules/
@@ -37,8 +39,6 @@ web/dist/
 node_modules/
 public_site/.netlify/
 
-# transient Kalshi event cache (shared between board builders)
-data/.kalshi_events.json
 
 # raw ESPN fixture pull backing the streaks board — a ~400KB cache that changes every
 # run. data/streaks.json (the computed leads) is committed; this input is not.

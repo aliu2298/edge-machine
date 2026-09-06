@@ -325,7 +325,7 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
 
     `now` is a parameter so a backtest can ask what the board WOULD have shown at a past
     moment; it defaults to the real clock. `links=False` skips the venue lookup, which is
-    a linear scan over thousands of Kalshi events per fixture and pure waste when
+    a linear scan over thousands of venue events per fixture and pure waste when
     replaying hundreds of simulated days.
     """
     leads = []

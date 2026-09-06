@@ -33,7 +33,6 @@ def lead(home, away, headline="Both teams to score", hours=6, rate=0.10, strengt
         "a": home, "b": away, "a_run": 4, "b_run": 4, "a_key": "btts", "b_key": "btts",
         "a_label": "both teams scored", "b_label": "both teams scored",
         "a_recent": [], "b_recent": [], "base_rate": rate, "strength": strength,
-        "kalshi": None,
     }
 
 
@@ -171,12 +170,12 @@ check("history populated", len(rep["history"]), 3)
 
 print("\n== ledger never freezes a venue URL ==")
 # A pick is locked at draw because the CLAIM is judged; the venue link is not part of the
-# claim. Freezing it is how three live cards kept Kalshi URLs under a "Bovada" label
-# after the venue switch, and how a settled pick can outlive the venue it names.
-_lead = dict(lead("Ledger A", "Ledger B"), market="https://kalshi.com/events/DEAD")
+# claim. Freezing it is how three live cards kept the PREVIOUS venue's URLs under a
+# "Bovada" label after the switch, and how a settled pick can outlive the venue it names.
+_lead = dict(lead("Ledger A", "Ledger B"), market="https://old-venue.example/e/DEAD")
 _b, _drawn = S.draw([_lead], {"picks": {}}, NOW)
 check("draw does not copy the lead's market URL",
-      [k for k in _drawn[0] if "market" in k or "kalshi" in k], [])
+      [k for k in _drawn[0] if "market" in k], [])
 check("no pick field holds a URL",
       [k for k, v in _drawn[0].items() if isinstance(v, str) and "://" in v], [])
 

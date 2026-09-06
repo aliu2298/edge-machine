@@ -120,8 +120,8 @@ def market_link(p):
 
     A pick is locked at draw — runs, rarity, the bet spec — because those are the claim
     being judged. The venue link is not part of that claim, it is a convenience, and
-    freezing it broke on the Kalshi->Bovada switch: three live picks kept their stored
-    Kalshi URLs under a "Bovada" label, which is worse than having no link at all.
+    freezing it broke when the venue changed: three live picks kept URLs for the previous
+    venue under a "Bovada" label, which is worse than having no link at all.
     Resolving live means a venue change takes effect immediately for picks already drawn.
     """
     try:
@@ -154,14 +154,14 @@ def card_html(p):
         stamp = f'<div class="stamp {st}">{esc(st.upper())}{final}</div>'
     mkt = market_link(p)
     if mkt:
-        kalshi = (f'<a class="kbtn" href="{esc(mkt)}" target="_blank" '
-                  f'rel="noopener">Bovada ↗</a>')
+        mkt_btn = (f'<a class="kbtn" href="{esc(mkt)}" target="_blank" '
+                   f'rel="noopener">Bovada ↗</a>')
     else:
         # An empty corner reads as a broken card, so say WHICH kind of no-link this is.
         # A sportsbook pulls its pre-match market at kickoff, so a live pick losing its
         # button is the normal case, not a failure — and a fixture Bovada has not posted
         # yet is a different thing again.
-        kalshi = (f'<span class="kbtn off">{esc(no_link_reason(p))}</span>' if live else "")
+        mkt_btn = (f'<span class="kbtn off">{esc(no_link_reason(p))}</span>' if live else "")
     ko = esc(p.get("kickoff") or "")
     # Legs in FIXTURE order, home first. They were rendered in pairing order (a then b),
     # and a pairing may take the away side as "a" — so a card headed "Arsenal v Chelsea"
@@ -188,7 +188,7 @@ def card_html(p):
     <div class="pev">{legs_html}</div>
   </div>
   <div class="pfoot">
-    <span class="rare {rcls}">{esc(rtxt)}</span>{kalshi}
+    <span class="rare {rcls}">{esc(rtxt)}</span>{mkt_btn}
   </div>
 </div>"""
 

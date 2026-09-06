@@ -97,7 +97,7 @@ def main():
 
         # The ledger must never carry a venue URL. Links resolve at RENDER time so a
         # venue switch takes effect on picks already drawn; a stored URL silently
-        # outlives the switch, which is exactly how three live cards kept Kalshi links
+        # outlives the switch, which is exactly how three live cards kept stale links
         # under a "Bovada" label. A dead field named for the old venue is one careless
         # read away from being rendered again.
         stored = sorted({k for p in sb["picks"].values() if isinstance(p, dict)
@@ -116,7 +116,7 @@ def main():
 
     # 3. VENUE LINKS — the board links Bovada. A feed returning nothing is
     # indistinguishable from "no market exists" unless something explicitly looks, which
-    # is how an empty Kalshi series once removed every Europa button in silence.
+    # is how a silently-empty upstream feed once removed every Europa button.
     #
     # Coverage is only meaningful NEAR TERM: a sportsbook prices the next few days and
     # posts distant fixtures closer to kickoff, so a lead two weeks out legitimately has

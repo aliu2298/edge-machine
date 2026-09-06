@@ -874,11 +874,6 @@ class H(BaseHTTPRequestHandler):
         if p=="/api/insights":
             c=db(); rows=[dict(r) for r in c.execute("SELECT * FROM insights ORDER BY id DESC LIMIT 10").fetchall()]; c.close()
             return self._send(rows)
-        if p=="/api/staged":                                                # Kalshi staged-order slate (approve in UI)
-            try:
-                with open(os.path.join(ROOT,"staged_orders.json")) as fh: data=json.load(fh)
-            except Exception: data={"orders":[]}
-            return self._send(data)
         if p=="/api/export.csv":
             c=db(); rows=c.execute("SELECT * FROM predictions ORDER BY id").fetchall(); c.close()
             buf=io.StringIO(); w=csv.writer(buf)
@@ -993,49 +988,6 @@ class H(BaseHTTPRequestHandler):
             except Exception: pass
             row["dispatched"] = False   # request queued in DB + inbox; Claude fulfills on manual activation
             return self._send(row,201)
-        if p in ("/api/staged/execute","/api/staged/dismiss"):
-            # Kalshi staged slate. EXECUTE is only ever triggered by the USER's Approve click in the UI —
-            # the server relays their decision to kalshi_client.py. Claude never calls this endpoint.
-            b=self._body(); i=int(b.get("index",-1))
-            spath=os.path.join(ROOT,"staged_orders.json")
-            try:
-                with open(spath) as fh: data=json.load(fh)
-            except Exception: return self._send({"error":"no staged file"},404)
-            orders=data.get("orders",[])
-            if not (0<=i<len(orders)): return self._send({"error":"bad index"},400)
-            o=orders[i]
-            if p.endswith("dismiss"):
-                o["status"]="dismissed"
-            else:
-                if o.get("status")=="live": return self._send({"error":"already live"},409)
-                prm=o.get("params") or {}
-                if not prm: return self._send({"error":"order missing params"},400)
-                venvpy=os.path.join(ROOT,".venv","bin","python")
-                if prm.get("cancel_order_id"):        # re-price: cancel the stale resting order first
-                    rc=subprocess.run([venvpy,os.path.join(ROOT,"kalshi_client.py"),"cancel",prm["cancel_order_id"]],
-                                      cwd=ROOT,capture_output=True,text=True,timeout=30)
-                    if rc.returncode!=0:
-                        o["status"]="error"; o["exchange_response"]={"cancel_failed":(rc.stderr or rc.stdout)[:300]}
-                        with open(spath,"w") as fh: json.dump(data,fh,indent=1)
-                        return self._send({"index":i,"status":"error","response":o["exchange_response"]})
-                payload=json.dumps({"ticker":prm["ticker"],"action":prm["action"],
-                                    "side":prm["side"],"count":prm["count"],
-                                    "price_cents":prm["price_cents"],
-                                    "post_only":prm.get("post_only",True),"live":True})
-                venvpy=os.path.join(ROOT,".venv","bin","python")
-                try:
-                    r=subprocess.run([venvpy,os.path.join(ROOT,"kalshi_client.py"),"place",payload],
-                                     cwd=ROOT,capture_output=True,text=True,timeout=30)
-                    out=(r.stdout or "").strip()
-                    try: resp=json.loads(out)
-                    except Exception: resp={"raw":out[:300],"stderr":(r.stderr or "")[:300],"rc":r.returncode}
-                    o["status"]="live" if r.returncode==0 else "error"
-                    o["exchange_response"]=resp
-                    o["executed_at"]=datetime.datetime.now().isoformat(timespec="seconds")
-                except Exception as e:
-                    o["status"]="error"; o["exchange_response"]={"error":str(e)[:300]}
-            with open(spath,"w") as fh: json.dump(data,fh,indent=1)
-            return self._send({"index":i,"status":o["status"],"response":o.get("exchange_response")})
         if p=="/api/insights":
             b=self._body(); c=db()
             cur=c.execute("INSERT INTO insights(created_at,summary,metrics) VALUES(?,?,?)",

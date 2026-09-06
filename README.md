@@ -68,7 +68,7 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 |---|---|
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, slate, base rates, auto-settlement. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
-| `venues.py` | Shared fixture→market matcher (Bovada; Kalshi retained, unused). |
+| `venues.py` | Shared fixture→market matcher (Bovada). |
 | `slate.py` | Draws three picks, grades them, keeps `data/slate.json`. |
 | `slate_build.py` | Renders the card board to `public_site/index.html`. |
 | `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
@@ -279,13 +279,18 @@ Leads are research to look at. Nothing here places or stages a bet.
 
 ## Data handling
 
-`predictions.db` is **git-ignored** and stays local. It holds `kalshi_orders`, `kalshi_bets`
-and `kalshi_config`, so the raw database is never committed. `data/predictions.json` is a
-frozen archive of the 125 manually-entered picks that predate the auto-drawn slate; nothing
-writes to it any more, and stake was stripped from it because the repo is public.
+`predictions.db` is **git-ignored** and stays local, so the raw database is never
+committed. `data/predictions.json` is a frozen archive of the 118 manually-entered sports picks
+that predate the auto-drawn slate; nothing writes to it any more, and stake was stripped
+from it because the repo is public.
 
-Secrets (`.apifootball_key`, `.kalshi_key`, `.kalshi_pem`, `*.pem`) are git-ignored. A fresh
-checkout creates empty tables on first run.
+Secrets (`.apifootball_key`, `*.pem`) are git-ignored. A fresh checkout creates empty
+tables on first run.
+
+**This repo places no bets and holds no exchange credentials.** An earlier lane traded
+event contracts through an authenticated, request-signing client; that client, its staged
+-order endpoints, its React approval panel and the unused venue matcher were all removed
+in Sep 2026. There is no order-placing code path left — every surface is read-only.
 
 ## Notes
 
@@ -303,6 +308,7 @@ falsified:
   flat. BTTS implied side: 62.1% hit vs 63.2% market-implied — well-calibrated, the loss is
   just the vig. Projected exact score: −37.2% ROI, CI [−0.676, −0.017], a *significant*
   loser. No edge to keep.
-* **Earnings** (Kalshi company quarterlies + earnings-call mention markets, removed Aug 2026).
+* **Earnings** (company quarterlies + earnings-call mention markets on an event-contract
+  exchange, removed Aug 2026; the exchange integration itself was removed Sep 2026).
 
 Picks are research, not betting advice.
