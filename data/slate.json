@@ -1542,6 +1542,260 @@
    "strength": 12,
    "why": "Angers have gone over 1.5 in 6 straight; Stade Rennais in 6 straight."
   },
+  "2026-09-06|Espanyol|Sevilla|Over 2.5 goals": {
+   "a": "Espanyol",
+   "a_key": "over25",
+   "a_label": "over 2.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Real Sociedad",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Real Madrid",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Levante",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Coventry City",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Real Sociedad",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Osasuna",
+     "s": "2-1"
+    }
+   ],
+   "a_run": 4,
+   "away": "Sevilla",
+   "b": "Sevilla",
+   "b_key": "over25",
+   "b_label": "over 2.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Atl\u00e9tico Madrid",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Athletic Club",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "La Liga",
+     "opp": "Rayo Vallecano",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Bayer Leverkusen",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Celta Vigo",
+     "s": "0-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "La Liga",
+     "opp": "Real Madrid",
+     "s": "0-1"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.1674641148325359,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-06",
+   "drawn_at": "2026-09-06T13:26:06+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "Espanyol",
+   "id": "2026-09-06|Espanyol|Sevilla|Over 2.5 goals",
+   "kickoff": "2026-09-06T19:00Z",
+   "league": "La Liga",
+   "match": "Espanyol v Sevilla",
+   "status": "live",
+   "strength": 8,
+   "why": "Espanyol have gone over 2.5 in 4 straight; Sevilla in 4 straight."
+  },
+  "2026-09-06|Heart of Midlothian|Dundee|Over 1.5 goals": {
+   "a": "Heart of Midlothian",
+   "a_key": "over15",
+   "a_label": "over 1.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Hibernian",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "St Johnstone",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Dundee United",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Aberdeen",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Celtic",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Falkirk",
+     "s": "3-0"
+    }
+   ],
+   "a_run": 6,
+   "away": "Dundee",
+   "b": "Dundee",
+   "b_key": "over15",
+   "b_label": "over 1.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "St Johnstone",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Hibernian",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Dundee United",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Aberdeen",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Scottish Premiership",
+     "opp": "Celtic",
+     "s": "0-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Scottish Premiership",
+     "opp": "Aberdeen",
+     "s": "3-2"
+    }
+   ],
+   "b_run": 4,
+   "base_rate": 0.44976076555023925,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-06",
+   "drawn_at": "2026-09-06T13:26:06+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Heart of Midlothian",
+   "id": "2026-09-06|Heart of Midlothian|Dundee|Over 1.5 goals",
+   "kickoff": "2026-09-06T14:00Z",
+   "league": "Scottish Premiership",
+   "match": "Heart of Midlothian v Dundee",
+   "status": "live",
+   "strength": 10,
+   "why": "Heart of Midlothian have gone over 1.5 in 6 straight; Dundee in 4 straight."
+  },
   "2026-09-06|Heerenveen|AZ Alkmaar|AZ Alkmaar to score 2+": {
    "a": "AZ Alkmaar",
    "a_key": "scoring",
@@ -1672,5 +1926,5 @@
    "why": "AZ Alkmaar have scored 2+ in 5 straight; Heerenveen have conceded 2+ in 3 straight."
   }
  },
- "updated_at": "2026-09-06T13:22:03+00:00"
+ "updated_at": "2026-09-06T13:26:59+00:00"
 }

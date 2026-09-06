@@ -102,6 +102,43 @@ def live_picks(blob):
                   key=lambda p: p.get("kickoff") or p["date"])
 
 
+def board_picks(blob, now=None):
+    """The picks that can still be ACTED ON: live, and not yet kicked off.
+
+    This is deliberately not the same set as live_picks(). A pick stays "live" until a
+    final score settles it, which is right for the ledger — but a fixture that has
+    already kicked off cannot be bet, and a sportsbook has pulled its pre-match market,
+    so leaving it in a board slot fills the board with cards that have no link and no
+    use. Worse, a POSTPONED fixture that vanishes from the feed holds its slot for the
+    full VOID_AFTER_DAYS: FC Utrecht v Go Ahead Eagles (2026-09-05) disappeared from
+    ESPN and blocked a third of the board for a week.
+
+    So slots are freed at KICKOFF and the pick keeps settling in the background.
+    """
+    now = now or utc_now()
+    out = []
+    for p in blob["picks"].values():
+        if p["status"] != "live":
+            continue
+        ko = _dt(p.get("kickoff"))
+        if ko is None or ko > now:
+            out.append(p)
+    return sorted(out, key=lambda p: p.get("kickoff") or p["date"])
+
+
+def awaiting_result(blob, now=None):
+    """Live picks whose fixture has started — off the board, still to be graded."""
+    now = now or utc_now()
+    started = []
+    for p in blob["picks"].values():
+        if p["status"] != "live":
+            continue
+        ko = _dt(p.get("kickoff"))
+        if ko is not None and ko <= now:
+            started.append(p)
+    return sorted(started, key=lambda p: p.get("kickoff") or p["date"])
+
+
 def settled_picks(blob):
     return [p for p in blob["picks"].values() if p["status"] in ("hit", "miss", "void")]
 
@@ -157,12 +194,14 @@ def draw(leads, blob=None, now=None, slate_size=SLATE_SIZE):
     blob = load() if blob is None else blob
     now = now or utc_now()
 
-    active = live_picks(blob)
+    active = board_picks(blob, now)
     need = slate_size - len(active)
     if need <= 0:
         return blob, []
 
-    # A team already carrying a live pick is off the table for this slate.
+    # A team already on the BOARD is off the table, so the three standing picks stay
+    # independent bets. A team whose pick has already kicked off is free again: that
+    # fixture is done, and a later one is a separate event.
     busy_teams = {t for p in active for t in (p["home"], p["away"])}
     pool = eligible(leads, blob, now)
 

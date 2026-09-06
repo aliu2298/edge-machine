@@ -106,9 +106,18 @@ Rarest confluence first, with **one pick per fixture and one per team**, so the 
 independent bets rather than three angles on the same match. Each is **locked when drawn**:
 the runs behind a lead keep moving, so the card shows what was claimed at the time.
 
-A slot refills as soon as its pick settles, rather than waiting for all three — batch
-replacement stalls for days whenever one pick is on a Saturday fixture and another on a
-Wednesday one. The window starts at 24h and widens only when it must.
+**A slot refills at kickoff, not at settlement.** A started fixture cannot be backed and
+the sportsbook has already pulled its pre-match market, so holding the slot until a final
+score arrives fills the board with cards that have no link and no use. Worse, a postponed
+fixture *vanishes from the ESPN feed* and can never grade at all: FC Utrecht v Go Ahead
+Eagles (2026-09-05) was dropped from the feed and would have blocked a third of the board
+for the full 7-day void. The pick keeps settling in the background and is listed under
+"in play · awaiting result" until it does. `health.py` flags a fixture that is a day
+overdue *and* absent from the feed, rather than waiting out the void.
+
+Slots also refill one at a time rather than waiting for all three — batch replacement
+stalls for days whenever one pick is on a Saturday fixture and another on a Wednesday one.
+The window starts at 24h and widens only when it must.
 
 `slate_backtest.py` replays the board day by day over past fixtures with no lookahead. Two
 things it established that are worth knowing:

@@ -140,13 +140,25 @@ def card_html(p):
 </div>"""
 
 
-def page_html(live, report, horizon, now):
+def page_html(live, report, horizon, now, settling=()):
     cards = "".join(card_html(p) for p in live)
     for _ in range(S.SLATE_SIZE - len(live)):
         cards += ('<div class="pcard empty"><div class="pbody">'
                   '<div class="eslot">No qualifying pick</div>'
                   '<div class="emsg">A slot opens as soon as a confluence appears on an '
                   'unplayed fixture.</div></div></div>')
+
+    # Picks whose fixture has kicked off. They no longer hold a board slot — the board is
+    # for what can still be backed — but dropping them from the page entirely would look
+    # like a pick had quietly disappeared between refreshes.
+    settling_html = ""
+    if settling:
+        items = "".join(
+            f'<li><b>{esc(p["headline"])}</b> · {esc(p["match"])}'
+            f'<span class="mut"> · {esc((p.get("kickoff") or "")[5:16].replace("T", " "))}'
+            f'</span></li>' for p in settling)
+        settling_html = (f'<div class="settling"><h3>In play · awaiting result '
+                         f'({len(settling)})</h3><ul>{items}</ul></div>')
 
     rows = "".join(
         f"""<tr><td class="mut">{esc((p.get("kickoff") or p["date"])[:10])}</td>
@@ -247,6 +259,12 @@ border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;padding:2px 
 margin-left:auto}}
 .kbtn:hover{{background:#7aa2f72a}}
 .kbtn.off{{color:var(--mut);border-color:var(--bd);background:none;cursor:default}}
+.settling{{background:var(--card);border:1px solid var(--bd);border-radius:11px;
+padding:12px 14px;margin-bottom:13px}}
+.settling h3{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;
+color:var(--mut);margin:0 0 7px}}
+.settling ul{{margin:0;padding:0;list-style:none;font-size:12.5px;line-height:1.7}}
+.settling b{{font-weight:600}}
 .eslot{{font-size:13px;font-weight:700;color:var(--mut)}}
 .emsg{{font-size:11.5px;color:var(--mut);margin-top:7px;line-height:1.5;padding:0 6px}}
 /* result stamp */
@@ -299,10 +317,15 @@ final score · all times CT · updated {esc(now)}</div>
 
 <div class="hand">{cards}</div>
 
+{settling_html}
+
 <div class="note">Picks are drawn from the <b>Streaks</b> board: one team's run meeting the
 next opponent's matching weakness. Rarest first, <b>one pick per fixture and one per
-team</b>, so the three are independent rather than three angles on the same match. A slot
-refills as soon as its pick settles{f' · currently reaching {hz}' if hz else ''}.
+team</b>, so the three are independent rather than three angles on the same match.
+A slot refills <b>at kickoff</b>, not when the pick finally settles — a fixture that has
+started cannot be backed and its market is gone, so holding the slot until a final score
+arrives just fills the board with cards you cannot use. The pick keeps settling in the
+background and appears below until it does{f' · currently reaching {hz}' if hz else ''}.
 Every pick is <b>locked when drawn</b> — the runs behind it keep moving, so the card shows
 what was claimed at the time, not a tidier version found later.
 <b>No edge is claimed.</b> Results are judged against the rate the teams involved manage
@@ -347,15 +370,17 @@ def build():
     blob, graded, drawn = S.run(fixtures)
     S.save(blob)
     rep = S.report(fixtures, blob)
-    live = S.live_picks(blob)
+    live = S.board_picks(blob)            # bettable: live AND not yet kicked off
+    settling = S.awaiting_result(blob)    # kicked off, still to be graded
     hz = S.horizon_days(blob)
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "index.html")
     with open(out, "w") as f:
-        f.write(page_html(live, rep, hz, now))
-    print(f"  slate: graded {graded}, drew {len(drawn)}, {len(live)} live")
+        f.write(page_html(live, rep, hz, now, settling))
+    print(f"  slate: graded {graded}, drew {len(drawn)}, {len(live)} on board, "
+          f"{len(settling)} awaiting result")
     print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
           f"{rep['graded']} graded, {len(rep['history'])} settled")
 

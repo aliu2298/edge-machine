@@ -180,6 +180,34 @@ check("draw does not copy the lead's market URL",
 check("no pick field holds a URL",
       [k for k, v in _drawn[0].items() if isinstance(v, str) and "://" in v], [])
 
+
+print("\n== a slot frees at KICKOFF, not at settlement ==")
+# A started fixture cannot be backed and its pre-match market is gone, so holding the
+# slot until a final score arrives fills the board with cards that have no use. Worse,
+# a POSTPONED fixture vanishes from the feed and would hold its slot for VOID_AFTER_DAYS
+# (7 days) — FC Utrecht v Go Ahead Eagles did exactly that on 2026-09-05.
+# Drawn while the fixture is still ahead (eligible() rightly refuses a past one), then
+# time moves past its kickoff — which is the situation on the real board.
+_b, _d = S.draw([lead("Gone A", "Gone B", hours=6)], {"picks": {}}, NOW)
+check("a pick is drawn while the fixture is ahead", len(_d), 1)
+_b["picks"][_d[0]["id"]]["kickoff"] = (NOW - datetime.timedelta(hours=4)).isoformat()
+_soon = lead("Next A", "Next B", hours=30)
+check("ledger still holds it live for grading", len(S.live_picks(_b)), 1)
+check("but it no longer occupies a board slot", len(S.board_picks(_b, NOW)), 0)
+check("and it is listed as awaiting a result", len(S.awaiting_result(_b, NOW)), 1)
+_b, _d2 = S.draw([_soon], _b, NOW)
+check("the freed slot refills", [p["match"] for p in _d2], ["Next A v Next B"])
+check("board now holds the replacement", len(S.board_picks(_b, NOW)), 1)
+
+print("\n== a started pick does not block its teams forever ==")
+# One team per BOARD keeps the standing picks independent. Once a pick has kicked off
+# that fixture is done, so the team is free for a later, separate fixture.
+_b2, _ = S.draw([lead("Reuse A", "Reuse B", hours=6)], {"picks": {}}, NOW)
+_pid = list(_b2["picks"])[0]
+_b2["picks"][_pid]["kickoff"] = (NOW - datetime.timedelta(hours=3)).isoformat()
+_b2, _d3 = S.draw([lead("Reuse A", "Other", hours=40)], _b2, NOW)
+check("same team may be picked again in a later fixture", len(_d3), 1)
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

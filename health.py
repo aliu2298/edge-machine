@@ -60,12 +60,33 @@ def main():
     try:
         import slate as S
         sb = S.load(SLATE)
-        live = S.live_picks(sb)
+        live = S.live_picks(sb)               # everything still to be graded
+        board = S.board_picks(sb)             # the subset that can still be backed
         settled = [p for p in sb["picks"].values() if p["status"] != "live"]
-        print(f"  slate: {len(live)} live, {len(settled)} settled")
+        print(f"  slate: {len(board)} on board, "
+              f"{len(live) - len(board)} awaiting result, {len(settled)} settled")
 
         # A live pick whose match finished days ago never matched a final score. That is
         # the silent failure this file exists for — it renders as a normal pending card.
+        # A fixture that vanishes from the feed can NEVER grade, so waiting the full
+        # grace period tells us nothing new. FC Utrecht v Go Ahead Eagles (2026-09-05)
+        # was postponed, dropped out of ESPN entirely, and would have sat live for the
+        # 7-day void. Flag it as soon as it is a day overdue AND absent from the feed.
+        try:
+            import streaks_fetch
+            known = {S.fixture_key(f)
+                     for f in streaks_fetch.load_or_fetch()["fixtures"]}
+        except Exception:
+            known = set()             # no feed, no claim: stay silent rather than guess
+        for p in S.awaiting_result(sb):
+            ko = S._dt(p.get("kickoff"))
+            overdue = ko and (now - ko).total_seconds() > 24 * 3600
+            if overdue and known and S.fixture_key(p) not in known:
+                note("warning", f"GONE {p['match']} ({p['date']}) kicked off "
+                                f"{(now-ko).days}d ago and is no longer in the fixture "
+                                f"feed — postponed or moved; it can never grade")
+                problems += 1
+
         for p in live:
             ko = S._dt(p.get("kickoff"))
             if ko and (now - ko).days > SETTLE_GRACE_DAYS:
@@ -86,8 +107,8 @@ def main():
                             f"resolve at render time, not be frozen at draw")
             problems += 1
 
-        if len(live) < S.SLATE_SIZE and n_leads:
-            note("warning", f"SLATE only {len(live)}/{S.SLATE_SIZE} filled while "
+        if len(board) < S.SLATE_SIZE and n_leads:
+            note("warning", f"SLATE only {len(board)}/{S.SLATE_SIZE} filled while "
                             f"{n_leads} leads exist — selection may be over-constrained")
             problems += 1
     except Exception as e:
@@ -99,18 +120,20 @@ def main():
     #
     # Coverage is only meaningful NEAR TERM: a sportsbook prices the next few days and
     # posts distant fixtures closer to kickoff, so a lead two weeks out legitimately has
-    # no line yet. Only the live slate — which is always near-term — is checked.
+    # no line yet. Only the BOARD is checked — a pick whose fixture has kicked off has no
+    # pre-match market by definition, and counting those as misses made the check read
+    # "3/5" while the board was in fact fully linked.
     try:
         from venues import fetch_bovada_events, venue_link
         events = fetch_bovada_events()
         if not events:
             note("warning", "LINKS bovada returned 0 events — endpoint or filter changed?")
             problems += 1
-        elif live:
-            miss = [p for p in live
+        elif board:
+            miss = [p for p in board
                     if not venue_link(p["match"].replace(" v ", " vs "),
                                       p.get("kickoff") or p["date"], events)]
-            print(f"  bovada links: {len(live)-len(miss)}/{len(live)} live picks")
+            print(f"  bovada links: {len(board)-len(miss)}/{len(board)} board picks")
             for p in miss:
                 print(f"    (no line for {p['match']})")
     except Exception as e:
