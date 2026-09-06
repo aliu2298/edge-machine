@@ -111,6 +111,21 @@
    "team": "AC Milan",
    "test_date": "2026-09-06"
   },
+  "AC Milan|over15|2026-09-12|AC Milan|Lazio": {
+   "home": false,
+   "id": "AC Milan|over15|2026-09-12|AC Milan|Lazio",
+   "key": "over15",
+   "kickoff": "2026-09-12T16:00Z",
+   "label": "over 1.5 goals",
+   "league": "Serie A",
+   "length": 10,
+   "logged_at": "2026-09-06T20:29:25+00:00",
+   "opp": "Lazio",
+   "rate": 0.15306122448979592,
+   "status": "pending",
+   "team": "AC Milan",
+   "test_date": "2026-09-12"
+  },
   "AFC Bournemouth|scoring1|2026-09-05|AFC Bournemouth|Newcastle United": {
    "graded_at": "2026-09-05T15:19:06+00:00",
    "home": false,
@@ -460,6 +475,7 @@
    "test_date": "2026-09-09"
   },
   "Alav\u00e9s|scoring1|2026-09-06|Alav\u00e9s|Osasuna": {
+   "graded_at": "2026-09-06T20:29:25+00:00",
    "home": true,
    "id": "Alav\u00e9s|scoring1|2026-09-06|Alav\u00e9s|Osasuna",
    "key": "scoring1",
@@ -470,7 +486,8 @@
    "logged_at": "2026-08-29T19:09:29+00:00",
    "opp": "Osasuna",
    "rate": 0.044444444444444446,
-   "status": "pending",
+   "result": "5-2",
+   "status": "extended",
    "team": "Alav\u00e9s",
    "test_date": "2026-09-06"
   },
@@ -1843,6 +1860,21 @@
    "team": "Espanyol",
    "test_date": "2026-09-06"
   },
+  "Espanyol|over15|2026-09-12|Espanyol|Osasuna": {
+   "home": false,
+   "id": "Espanyol|over15|2026-09-12|Espanyol|Osasuna",
+   "key": "over15",
+   "kickoff": "2026-09-12T14:15Z",
+   "label": "over 1.5 goals",
+   "league": "La Liga",
+   "length": 9,
+   "logged_at": "2026-09-06T20:29:25+00:00",
+   "opp": "Osasuna",
+   "rate": 0.18027210884353742,
+   "status": "pending",
+   "team": "Espanyol",
+   "test_date": "2026-09-12"
+  },
   "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla": {
    "home": true,
    "id": "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla",
@@ -1857,6 +1889,21 @@
    "status": "pending",
    "team": "Espanyol",
    "test_date": "2026-09-06"
+  },
+  "Espanyol|scoring1|2026-09-12|Espanyol|Osasuna": {
+   "home": false,
+   "id": "Espanyol|scoring1|2026-09-12|Espanyol|Osasuna",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T14:15Z",
+   "label": "scored in",
+   "league": "La Liga",
+   "length": 8,
+   "logged_at": "2026-09-06T20:29:25+00:00",
+   "opp": "Osasuna",
+   "rate": 0.16326530612244897,
+   "status": "pending",
+   "team": "Espanyol",
+   "test_date": "2026-09-12"
   },
   "Estoril|porous|2026-08-31|Estoril|Benfica": {
    "graded_at": "2026-08-31T22:54:37+00:00",
@@ -3641,6 +3688,7 @@
    "test_date": "2026-09-14"
   },
   "OFI Crete|over15|2026-09-06|OFI Crete|Kifisia": {
+   "graded_at": "2026-09-06T20:29:25+00:00",
    "home": true,
    "id": "OFI Crete|over15|2026-09-06|OFI Crete|Kifisia",
    "key": "over15",
@@ -3651,7 +3699,8 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "Kifisia",
    "rate": 0.15306122448979592,
-   "status": "pending",
+   "result": "2-0",
+   "status": "extended",
    "team": "OFI Crete",
    "test_date": "2026-09-06"
   },
@@ -3878,6 +3927,36 @@
    "status": "pending",
    "team": "PSV Eindhoven",
    "test_date": "2026-09-10"
+  },
+  "Panetolikos|over15|2026-09-13|Panetolikos|Panathinaikos": {
+   "home": false,
+   "id": "Panetolikos|over15|2026-09-13|Panetolikos|Panathinaikos",
+   "key": "over15",
+   "kickoff": "2026-09-13T18:30Z",
+   "label": "over 1.5 goals",
+   "league": "Greek Super League",
+   "length": 8,
+   "logged_at": "2026-09-06T20:29:25+00:00",
+   "opp": "Panathinaikos",
+   "rate": 0.2108843537414966,
+   "status": "pending",
+   "team": "Panetolikos",
+   "test_date": "2026-09-13"
+  },
+  "Panetolikos|scoring1|2026-09-13|Panetolikos|Panathinaikos": {
+   "home": false,
+   "id": "Panetolikos|scoring1|2026-09-13|Panetolikos|Panathinaikos",
+   "key": "scoring1",
+   "kickoff": "2026-09-13T18:30Z",
+   "label": "scored in",
+   "league": "Greek Super League",
+   "length": 8,
+   "logged_at": "2026-09-06T20:29:25+00:00",
+   "opp": "Panathinaikos",
+   "rate": 0.16326530612244897,
+   "status": "pending",
+   "team": "Panetolikos",
+   "test_date": "2026-09-13"
   },
   "Paris Saint-Germain|over15|2026-09-09|Paris Saint-Germain|Slovan Bratislava": {
    "home": true,
@@ -4541,6 +4620,7 @@
    "test_date": "2026-09-13"
   },
   "Samsunspor|over15|2026-09-06|Samsunspor|Kocaelispor": {
+   "graded_at": "2026-09-06T20:29:25+00:00",
    "home": false,
    "id": "Samsunspor|over15|2026-09-06|Samsunspor|Kocaelispor",
    "key": "over15",
@@ -4551,7 +4631,8 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "Kocaelispor",
    "rate": 0.06802721088435375,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "Samsunspor",
    "test_date": "2026-09-06"
   },
@@ -4635,6 +4716,21 @@
    "status": "pending",
    "team": "Sevilla",
    "test_date": "2026-09-06"
+  },
+  "Sevilla|porous|2026-09-11|Sevilla|Valencia": {
+   "home": true,
+   "id": "Sevilla|porous|2026-09-11|Sevilla|Valencia",
+   "key": "porous",
+   "kickoff": "2026-09-11T19:00Z",
+   "label": "conceded in",
+   "league": "La Liga",
+   "length": 8,
+   "logged_at": "2026-09-06T20:29:25+00:00",
+   "opp": "Valencia",
+   "rate": 0.15306122448979592,
+   "status": "pending",
+   "team": "Sevilla",
+   "test_date": "2026-09-11"
   },
   "Sint-Truidense|over15|2026-09-12|Sint-Truidense|Waasland-Beveren": {
    "home": false,
@@ -5578,5 +5674,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-06T18:23:27+00:00"
+ "updated_at": "2026-09-06T20:29:25+00:00"
 }

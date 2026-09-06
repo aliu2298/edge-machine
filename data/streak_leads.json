@@ -3556,6 +3556,30 @@
    "status": "pending",
    "strength": 7
   },
+  "2026-09-12|Osasuna|Espanyol|Over 1.5 goals": {
+   "a": "Osasuna",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Espanyol",
+   "b": "Espanyol",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.45962732919254656,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Osasuna",
+   "id": "2026-09-12|Osasuna|Espanyol|Over 1.5 goals",
+   "kickoff": "2026-09-12T14:15Z",
+   "league": "La Liga",
+   "match": "Osasuna v Espanyol",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-12|Real Madrid|Rayo Vallecano|Over 1.5 goals": {
    "a": "Real Madrid",
    "a_key": "over15",
@@ -5804,6 +5828,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-19|Osasuna|Rayo Vallecano|Over 1.5 goals": {
+   "a": "Osasuna",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Rayo Vallecano",
+   "b": "Rayo Vallecano",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.45962732919254656,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Osasuna",
+   "id": "2026-09-19|Osasuna|Rayo Vallecano|Over 1.5 goals",
+   "kickoff": "2026-09-19T12:00Z",
+   "league": "La Liga",
+   "match": "Osasuna v Rayo Vallecano",
+   "status": "pending",
+   "strength": 7
+  },
   "2026-09-19|Sevilla|Barcelona|Barcelona to score": {
    "a": "Barcelona",
    "a_key": "scoring",
@@ -6826,5 +6874,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-06T18:23:26+00:00"
+ "updated_at": "2026-09-06T20:29:24+00:00"
 }

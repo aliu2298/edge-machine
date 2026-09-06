@@ -2315,7 +2315,263 @@
    "status": "live",
    "strength": 9,
    "why": "Estoril have gone over 1.5 in 6 straight; Arouca in 3 straight."
+  },
+  "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals": {
+   "a": "LASK Linz",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Austrian Bundesliga",
+     "opp": "Wolfsberger",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Austrian Bundesliga",
+     "opp": "SC Rheindorf Altach",
+     "s": "3-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Austrian Bundesliga",
+     "opp": "SV Josko Ried",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Austrian Bundesliga",
+     "opp": "Austria Vienna",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Austrian Bundesliga",
+     "opp": "Grazer AK",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Fenerbahce",
+     "s": "1-2"
+    }
+   ],
+   "a_run": 5,
+   "away": "LASK Linz",
+   "b": "AEK Athens",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Greek Super League",
+     "opp": "Aris",
+     "s": "5-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Greek Super League",
+     "opp": "Kifisia",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Greek Super League",
+     "opp": "Iraklis",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Greek Super League",
+     "opp": "Olympiacos",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Greek Super League",
+     "opp": "PAOK",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Greek Super League",
+     "opp": "Panathinaikos",
+     "s": "2-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2236024844720497,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-08",
+   "drawn_at": "2026-09-06T20:29:24+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "AEK Athens",
+   "id": "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals",
+   "kickoff": "2026-09-08T16:45Z",
+   "league": "Champions League",
+   "match": "AEK Athens v LASK Linz",
+   "rank_pct": 0.3488372093023256,
+   "status": "live",
+   "strength": 11,
+   "why": "LASK Linz have scored 2+ in 5 straight and AEK Athens have scored in 6 \u2014 two plus one clears 2.5."
+  },
+  "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals": {
+   "a": "NEC Nijmegen",
+   "a_key": "over25",
+   "a_label": "over 2.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Feyenoord Rotterdam",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "PEC Zwolle",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Willem II",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Telstar",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Go Ahead Eagles",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "FC Groningen",
+     "s": "1-2"
+    }
+   ],
+   "a_run": 6,
+   "away": "Excelsior",
+   "b": "Excelsior",
+   "b_key": "over25",
+   "b_label": "over 2.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Willem II",
+     "s": "3-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Sparta Rotterdam",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "PSV Eindhoven",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "SC Cambuur",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Eredivisie",
+     "opp": "Sparta Rotterdam",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Eredivisie",
+     "opp": "FC Volendam",
+     "s": "1-1"
+    }
+   ],
+   "b_run": 5,
+   "base_rate": 0.09627329192546584,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-08",
+   "drawn_at": "2026-09-06T20:29:24+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "NEC Nijmegen",
+   "id": "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals",
+   "kickoff": "2026-09-08T16:45Z",
+   "league": "Eredivisie",
+   "match": "NEC Nijmegen v Excelsior",
+   "rank_pct": 0.046511627906976744,
+   "status": "live",
+   "strength": 11,
+   "why": "NEC Nijmegen have gone over 2.5 in 6 straight; Excelsior in 5 straight."
   }
  },
- "updated_at": "2026-09-06T18:23:26+00:00"
+ "updated_at": "2026-09-06T20:29:24+00:00"
 }
