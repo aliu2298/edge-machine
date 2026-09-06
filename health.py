@@ -74,6 +74,18 @@ def main():
                                 f"have moved, or team names drifted from ESPN's")
                 problems += 1
 
+        # The ledger must never carry a venue URL. Links resolve at RENDER time so a
+        # venue switch takes effect on picks already drawn; a stored URL silently
+        # outlives the switch, which is exactly how three live cards kept Kalshi links
+        # under a "Bovada" label. A dead field named for the old venue is one careless
+        # read away from being rendered again.
+        stored = sorted({k for p in sb["picks"].values() if isinstance(p, dict)
+                         for k, v in p.items() if isinstance(v, str) and "://" in v})
+        if stored:
+            note("warning", f"SLATE ledger stores venue URLs in {stored} — links must "
+                            f"resolve at render time, not be frozen at draw")
+            problems += 1
+
         if len(live) < S.SLATE_SIZE and n_leads:
             note("warning", f"SLATE only {len(live)}/{S.SLATE_SIZE} filled while "
                             f"{n_leads} leads exist — selection may be over-constrained")

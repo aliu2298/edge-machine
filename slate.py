@@ -203,7 +203,10 @@ def draw(leads, blob=None, now=None, slate_size=SLATE_SIZE):
             "a_label": l.get("a_label"), "b_label": l.get("b_label"),
             "a_recent": l.get("a_recent", []), "b_recent": l.get("b_recent", []),
             "base_rate": l["base_rate"], "strength": l["strength"],
-            "market": l.get("market"),
+            # NO "market" URL. A pick is locked at draw because the CLAIM is what gets
+            # judged; the venue link is not part of the claim and is resolved at render
+            # time instead. Freezing it here is how three live cards kept Kalshi URLs
+            # under a "Bovada" label after the switch. health.py fails on a stored URL.
             "status": "live",
         }
         blob["picks"][pid] = rec

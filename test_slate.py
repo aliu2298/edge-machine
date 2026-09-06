@@ -168,6 +168,18 @@ check("2 hits", rep["hits"], 2)
 check("rate", round(rep["rate"], 3), round(2/3, 3))
 check("history populated", len(rep["history"]), 3)
 
+
+print("\n== ledger never freezes a venue URL ==")
+# A pick is locked at draw because the CLAIM is judged; the venue link is not part of the
+# claim. Freezing it is how three live cards kept Kalshi URLs under a "Bovada" label
+# after the venue switch, and how a settled pick can outlive the venue it names.
+_lead = dict(lead("Ledger A", "Ledger B"), market="https://kalshi.com/events/DEAD")
+_b, _drawn = S.draw([_lead], {"picks": {}}, NOW)
+check("draw does not copy the lead's market URL",
+      [k for k in _drawn[0] if "market" in k or "kalshi" in k], [])
+check("no pick field holds a URL",
+      [k for k, v in _drawn[0].items() if isinstance(v, str) and "://" in v], [])
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")
