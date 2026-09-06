@@ -135,9 +135,28 @@ not been played yet ("A have scored 2+ in six straight; B have conceded 2+ in fi
 legs must run at least 3 games.
 
 Each lead links to its **Bovada market** where a line exists, via the shared matcher in
-`venues.py`. Coverage is near-total inside three days (17/17 at last check) and thin beyond
-that — a sportsbook prices the next few days and posts distant fixtures closer to kickoff,
-so a lead two weeks out has no line yet and gains one as it approaches.
+`venues.py`. Coverage inside three days is **51/53** of fixtures Bovada has posted; the
+remainder are simply not listed yet. Beyond that it thins out — a sportsbook prices the
+next few days and posts distant fixtures closer to kickoff, so a lead two weeks out has no
+line yet and gains one as it approaches. A live card whose market has been pulled at
+kickoff says **in play** rather than showing an empty corner.
+
+The matcher compares the two sides **in order** and scores each on its most distinctive
+token, because venues disagree about descriptors and not identity — ESPN's "Stade Rennais"
+is Bovada's "Rennes", "Internazionale" is "Inter Milan", "Al Taawoun" is "Al Taawon". Three
+things it has to get right, each of which was a real bug:
+
+* **The side with fewer distinctive tokens must have all of them matched.** Scoring on the
+  single best token alone rated "Real Madrid" vs "Real Sociedad" a perfect 1.0.
+* **Names built entirely of short words must still match.** The old matcher required a
+  token of 4+ characters, so "Rio Ave" could never link even though Bovada listed the
+  fixture under exactly that name.
+* **A duplicate listing is not an ambiguity.** Bovada publishes the same fixture more than
+  once; counting a duplicate as a rival candidate made the ambiguity guard veto every
+  ordinary match and dropped coverage from 46 to 36.
+
+When two genuinely different fixtures both fit, it returns no link rather than guessing —
+a wrong link is worse than none, since the card still reads as though it were checked.
 
 Two design choices worth knowing:
 

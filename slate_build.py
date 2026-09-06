@@ -84,6 +84,17 @@ def market_link(p):
         return None
 
 
+def no_link_reason(p):
+    """Why a live pick has no market button."""
+    ko = p.get("kickoff") or ""
+    try:
+        started = datetime.datetime.fromisoformat(
+            ko.replace("Z", "+00:00")) <= datetime.datetime.now(datetime.timezone.utc)
+    except ValueError:
+        started = False
+    return "in play" if started else "no line yet"
+
+
 def card_html(p):
     abbr, pip = market_index(p["bet"])
     rcls, rtxt = rarity_class(p["base_rate"])
@@ -94,8 +105,15 @@ def card_html(p):
         final = f'<span>{esc(p["final"])}</span>' if p.get("final") else ""
         stamp = f'<div class="stamp {st}">{esc(st.upper())}{final}</div>'
     mkt = market_link(p)
-    kalshi = (f'<a class="kbtn" href="{esc(mkt)}" target="_blank" '
-              f'rel="noopener">Bovada ↗</a>' if mkt else "")
+    if mkt:
+        kalshi = (f'<a class="kbtn" href="{esc(mkt)}" target="_blank" '
+                  f'rel="noopener">Bovada ↗</a>')
+    else:
+        # An empty corner reads as a broken card, so say WHICH kind of no-link this is.
+        # A sportsbook pulls its pre-match market at kickoff, so a live pick losing its
+        # button is the normal case, not a failure — and a fixture Bovada has not posted
+        # yet is a different thing again.
+        kalshi = (f'<span class="kbtn off">{esc(no_link_reason(p))}</span>' if live else "")
     ko = esc(p.get("kickoff") or "")
     return f"""<div class="pcard {'live' if live else 'done'}">
   <div class="idx tl"><b>{esc(abbr)}</b><i>{pip}</i></div>
@@ -228,6 +246,7 @@ padding-right:34px}}   /* 34px keeps clear of the mirrored corner index */
 border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;padding:2px 9px;
 margin-left:auto}}
 .kbtn:hover{{background:#7aa2f72a}}
+.kbtn.off{{color:var(--mut);border-color:var(--bd);background:none;cursor:default}}
 .eslot{{font-size:13px;font-weight:700;color:var(--mut)}}
 .emsg{{font-size:11.5px;color:var(--mut);margin-top:7px;line-height:1.5;padding:0 6px}}
 /* result stamp */

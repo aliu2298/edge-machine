@@ -333,6 +333,48 @@ check("Bonferroni applied across streak types", [x["p_adj"] for x in fake], [0.0
 check("a lone marginal p does not survive alone",
       [x["significant"] for x in fake], [True, False])
 
+
+print("\n== venue matcher: identity vs descriptors ==")
+import venues as V
+# Venues disagree about DESCRIPTORS, never identity. The short side is the abbreviation.
+for a, b in [("stade rennais", "rennes"), ("inter milan", "internazionale"),
+             ("heart midlothian", "hearts"), ("lafc", "los angeles"),
+             ("taawoun", "taawon"), ("red bull new york", "new york red bulls")]:
+    check(f"same club: {a} / {b}", V.side_score(a, b) >= V.SIDE_MATCH, True)
+# The shared word must NOT carry the match — scoring on the single best token alone
+# rated "Real Madrid" vs "Real Sociedad" a perfect 1.0.
+for a, b in [("real madrid", "real sociedad"), ("atletico madrid", "atletico bilbao"),
+             ("manchester united", "manchester city"), ("bayern munich", "bayer leverkusen")]:
+    check(f"different clubs: {a} / {b}", V.side_score(a, b) >= V.SIDE_MATCH, False)
+
+print("\n== venue matcher: names made only of short words ==")
+# "Rio Ave" has no token of 4+ chars. The old matcher required one and so could never
+# link it, even though Bovada listed the fixture under exactly that name.
+check("rio ave matches itself", V.side_score("rio ave", "rio ave") >= V.SIDE_MATCH, True)
+check("rio ave is not santa clara", V.side_score("rio ave", "santa clara") >= V.SIDE_MATCH, False)
+
+print("\n== venue matcher: link selection ==")
+_d = datetime.date(2026, 9, 6)
+evs = [("u/angers-rennes", "Angers vs Rennes", _d)]
+check("descriptor difference still links",
+      V.venue_link("Angers vs Stade Rennais", "2026-09-06", evs), "u/angers-rennes")
+# Bovada publishes the same fixture more than once. A duplicate is not a rival candidate;
+# treating it as one made the ambiguity guard veto every ordinary match (46 -> 36).
+dup = evs + [("u/angers-rennes-2", "Angers vs Rennes", _d)]
+check("duplicate listing is not ambiguity",
+      bool(V.venue_link("Angers vs Stade Rennais", "2026-09-06", dup)), True)
+# Two DIFFERENT fixtures that both fit: refuse rather than guess. A wrong link is worse
+# than no link, because the card still reads as though it were checked.
+amb = [("u/a", "Rennes vs Lyon", _d), ("u/b", "Rennes vs Lille", _d)]
+check("ambiguous pair returns no link",
+      V.venue_link("Stade Rennais vs L", "2026-09-06", amb), None)
+# Sides are matched in order, so the reverse fixture is never returned as a match.
+rev = [("u/rev", "Chelsea vs Arsenal", _d)]
+check("reverse fixture is not a match",
+      V.venue_link("Arsenal vs Chelsea", "2026-09-06", rev), None)
+check("date outside the window is not a match",
+      V.venue_link("Angers vs Stade Rennais", "2026-09-20", evs), None)
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")
