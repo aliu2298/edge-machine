@@ -145,29 +145,6 @@ def espn_games(sport, date=""):
             "line":od.get("details"),"spread":od.get("spread"),"total":od.get("overUnder"),
             "home_score":h.get("score"),"away_score":a.get("score")})
     return out
-def _pm_prob(field):
-    """Polymarket outcomePrices come as a JSON string like '["0.66","0.34"]' → first prob as float."""
-    if not field: return None
-    if isinstance(field, str):
-        try: field=json.loads(field)
-        except Exception: return None
-    try: return round(float(field[0]), 4)
-    except Exception: return None
-def polymarket_search(query, limit=8):
-    """Polymarket Gamma public-search (read-only, keyless) → events + implied probabilities. NO account, NO trading."""
-    url="https://gamma-api.polymarket.com/public-search?limit_per_type="+str(limit)+"&q="+urllib.parse.quote(query)
-    d=_get_json(url); out=[]
-    for e in (d.get("events") or [])[:limit]:
-        mks=[]
-        for m in (e.get("markets") or []):
-            if m.get("closed"): continue
-            mks.append({"name": m.get("groupItemTitle") or m.get("question"),
-                        "prob": _pm_prob(m.get("outcomePrices"))})
-        mks=[m for m in mks if m["prob"] is not None]
-        mks.sort(key=lambda x: x["prob"], reverse=True)
-        out.append({"event":e.get("title"),"slug":e.get("slug"),
-                    "volume":round(float(e.get("volume") or 0)),"end":e.get("endDate"),"markets":mks})
-    return out
 # ================= Sportzino corner-bet helpers (American odds) =================
 def _ts(): return datetime.datetime.now().isoformat(timespec="seconds")
 def amer_implied(price):  # American odds → implied probability
@@ -898,11 +875,6 @@ class H(BaseHTTPRequestHandler):
         if p in ("/api/wnba/games","/api/mlb/games","/api/nhl/games"):   # ESPN scoreboard (keyless). ?date=YYYY-MM-DD
             sport=p.split("/")[2]
             try: return self._send(espn_games(sport, q.get("date",[""])[0]))
-            except Exception as e: return self._send({"error":str(e)},502)
-        if p=="/api/polymarket":   # read-only Polymarket implied probabilities (no account/trading). ?q=world cup group a
-            qq=q.get("q",[""])[0]
-            if not qq: return self._send({"error":"q (search query) required"},400)
-            try: return self._send(polymarket_search(qq))
             except Exception as e: return self._send({"error":str(e)},502)
         return self._send({"error":"not found"},404)
 
