@@ -153,16 +153,42 @@ jobs:
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add public_site/index.html public_site/streaks.html public_site/record.html public_site/today.html \
-                  data/streaks.json data/streak_leads.json data/slate.json \
-                  data/fire_runs.json
-          if git diff --cached --quiet; then
-            echo "no changes — nothing to commit"
-            exit 0
-          fi
-          git commit -m "Refresh board via backup ($(date -u +%Y-%m-%d\ %H:%MZ))"
-          git pull --rebase --autostash origin main
-          git push origin main
+
+          PUBLISHED="public_site/index.html public_site/streaks.html public_site/record.html public_site/today.html \
+                     data/streaks.json data/streak_leads.json data/slate.json data/fire_runs.json"
+
+          for attempt in 1 2 3; do
+            git add $PUBLISHED
+            if git diff --cached --quiet; then
+              echo "no changes — nothing to deploy"
+              exit 0
+            fi
+            git commit -m "Refresh board via backup ($(date -u +%Y-%m-%d\ %H:%MZ))"
+            if git push origin main; then
+              echo "published on attempt $attempt"
+              exit 0
+            fi
+
+            # Another run published while this one was building. The old handling was
+            # `git pull --rebase`, which tries to MERGE generated files line by line and
+            # conflicts on all eight every time — that is how the 2026-09-06 14:50 pair
+            # of dispatches failed: the second run checked out 20s before the first
+            # pushed, so it was stale from birth and could never rebase cleanly.
+            #
+            # Every file here is DERIVED. The four pages are a pure function of the
+            # ledgers, and the ledgers are accumulative and idempotent — record() adds
+            # only leads it has not seen, grade() settles by fixture, draw() fills empty
+            # slots. So the correct resolution is never a line-by-line merge: take what
+            # was published and RE-DERIVE on top of it.
+            echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
+            git fetch origin main
+            git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
+            python3 streaks_build.py && python3 slate_build.py && python3 fire_track.py \
+              && python3 record_build.py && python3 today_build.py
+          done
+
+          echo "::error::could not publish after 3 attempts — another run keeps winning the race"
+          exit 1
 
       # Deploy runs whenever the backup took over, even if nothing changed — a stale LIVE
       # board with an unchanged repo is exactly the failure this workflow exists to fix.
