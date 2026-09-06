@@ -1,7 +1,8 @@
-# Credential material — NEVER commit. The event-contract lane and all its code were
-# removed in Sep 2026, but the key files it used still exist locally and must stay out
-# of this public repo. Dropping these lines once made `git add -A` stage a file straight
-# out of the credentials directory.
+# Credential material — NEVER commit. The event-contract lane, its code and its keys
+# were all removed in Sep 2026 (the API key was a PRODUCTION credential and should be
+# revoked exchange-side). These patterns are kept as a standing guard: dropping them
+# once made `git add -A` stage a file straight out of the credentials directory, and
+# they cost nothing while that repo stays public.
 .kalshi_removed_backup/
 .kalshi_key*
 .kalshi_pem
