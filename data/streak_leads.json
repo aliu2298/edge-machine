@@ -1472,14 +1472,16 @@
     "n": 2
    },
    "date": "2026-09-06",
+   "final": "2-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-06T15:32:06+00:00",
    "headline": "Over 1.5 goals",
    "home": "Everton",
    "id": "2026-09-06|Everton|Manchester United|Over 1.5 goals",
    "kickoff": "2026-09-06T13:00Z",
    "league": "Premier League",
    "match": "Everton v Manchester United",
-   "status": "pending",
+   "status": "hit",
    "strength": 11
   },
   "2026-09-06|FC Dallas|Sporting Kansas City|Over 1.5 goals": {
@@ -2854,6 +2856,30 @@
    "match": "Stade Rennais v Marseille",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-11|Venezia|Fiorentina|Over 1.5 goals": {
+   "a": "Venezia",
+   "a_key": "over15",
+   "a_run": 5,
+   "away": "Fiorentina",
+   "b": "Fiorentina",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.3793103448275862,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-11",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Venezia",
+   "id": "2026-09-11|Venezia|Fiorentina|Over 1.5 goals",
+   "kickoff": "2026-09-11T18:45Z",
+   "league": "Serie A",
+   "match": "Venezia v Fiorentina",
+   "status": "pending",
+   "strength": 11
   },
   "2026-09-12|AFC Bournemouth|Brentford|Brentford to score": {
    "a": "Brentford",
@@ -4239,6 +4265,30 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-13|RB Leipzig|Hamburg SV|Over 1.5 goals": {
+   "a": "RB Leipzig",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Hamburg SV",
+   "b": "Hamburg SV",
+   "b_key": "over15",
+   "b_run": 3,
+   "base_rate": 0.5329153605015674,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-13",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "RB Leipzig",
+   "id": "2026-09-13|RB Leipzig|Hamburg SV|Over 1.5 goals",
+   "kickoff": "2026-09-13T13:30Z",
+   "league": "Bundesliga",
+   "match": "RB Leipzig v Hamburg SV",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-13|Real Madrid|Rayo Vallecano|Real Madrid to score": {
    "a": "Real Madrid",
    "a_key": "scoring",
@@ -5265,6 +5315,30 @@
    "status": "pending",
    "strength": 12
   },
+  "2026-09-18|Monza|Sassuolo|Over 1.5 goals": {
+   "a": "Monza",
+   "a_key": "scoring1",
+   "a_run": 5,
+   "away": "Sassuolo",
+   "b": "Sassuolo",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.46394984326018807,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-18",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Monza",
+   "id": "2026-09-18|Monza|Sassuolo|Over 1.5 goals",
+   "kickoff": "2026-09-18T18:45Z",
+   "league": "Serie A",
+   "match": "Monza v Sassuolo",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-19|AS Roma|Internazionale|Over 2.5 goals": {
    "a": "AS Roma",
    "a_key": "scoring",
@@ -5503,6 +5577,30 @@
    "match": "Everton v Ipswich Town",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals": {
+   "a": "Hamburg SV",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "FC Cologne",
+   "b": "FC Cologne",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.5329153605015674,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Hamburg SV",
+   "id": "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals",
+   "kickoff": "2026-09-19T13:30Z",
+   "league": "Bundesliga",
+   "match": "Hamburg SV v FC Cologne",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-19|Kilmarnock|Heart of Midlothian|Heart of Midlothian to score": {
    "a": "Heart of Midlothian",
@@ -6576,5 +6674,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-06T15:10:44+00:00"
+ "updated_at": "2026-09-06T15:32:06+00:00"
 }
