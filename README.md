@@ -138,10 +138,41 @@ Tracks 12 leagues: the big five (Premier League, La Liga, Bundesliga, Serie A, L
 Eredivisie, Primeira Liga, Scottish Premiership, MLS, Saudi Pro League, and the
 Champions/Europa Leagues.
 
+Seven more — Belgian, Norwegian, Greek, Austrian, Danish, Cypriot and Turkish top flights —
+are pulled as **competitive form feeds**. The European competitions drag in opponents from
+leagues the board does not track, and those sides arrived with *no form at all*: 21 teams
+in upcoming fixtures had zero games. Since `find_leads` skips a fixture when either side
+lacks form, 48 of 273 upcoming fixtures could never produce a lead — silently, because a
+skipped fixture looks exactly like "no confluence today". These feeds close 10 of those.
+They are real football, so they count as form and enter the baselines, but they carry
+`lead_source: False`: the tracked league list is deliberate, and quietly turning seven more
+leagues into lead sources would change the product rather than fix the gap.
+
+Fourteen sides still have no form, from leagues ESPN does not serve (Czech, Polish,
+Croatian, Ukrainian, Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani, Armenian). That is
+a data limit, and `verify_coverage.py` now names them rather than letting the gap pass as
+silence.
+
+**Leads and picks are total-goals only: over 1.5 and over 2.5.** Eight bet types meant
+every market carried a thin, separately underpowered sample, and the slate had to compare
+rarity across markets whose base rates differ by 40 points. Two markets on one axis pool
+the evidence instead of splitting it.
+
 A **lead** is not a streak on its own — plenty of good sides score freely. It is a
-*confluence*: one team's run meeting the opponent's matching weakness in a fixture that has
-not been played yet ("A have scored 2+ in six straight; B have conceded 2+ in five"). Both
-legs must run at least 3 games.
+*confluence*: two runs meeting in a fixture that has not been played yet. Both legs must
+run at least 3 games, and **the pair must imply the bet arithmetically**:
+
+| line | evidence |
+|---|---|
+| Over 1.5 | both sides' matches go over 1.5 |
+| Over 1.5 | both sides score — 1 + 1 ≥ 2 |
+| Over 2.5 | both sides' matches go over 2.5 |
+| Over 2.5 | A scores 2+ and B scores — 2 + 1 ≥ 3 |
+
+That rules out the pairing that looks most natural. "A have scored in N straight" plus "B
+have conceded in M straight" reads like two pieces of evidence, but in a match between them
+**A scoring and B conceding are the same event**, counted twice — and it only implies one
+goal, so it says nothing about a 1.5 line.
 
 Each lead links to its **Bovada market** where a line exists, via the shared matcher in
 `venues.py`. Coverage inside three days is **51/53** of fixtures Bovada has posted; the

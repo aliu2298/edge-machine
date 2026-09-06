@@ -171,11 +171,17 @@ def eligible(leads, blob, now):
     #
     # So each lead is ranked against OTHERS OF ITS OWN KIND: position 0 is the most
     # unusual over-1.5 confluence available, and it competes on equal footing with the
-    # most unusual BTTS one. The card still shows the ABSOLUTE rarity, so a drawn
+    # most unusual over-2.5 one. The card still shows the ABSOLUTE rarity, so a drawn
     # over-1.5 pick is still visibly labelled "common · 32%".
+    #
+    # Grouped by the BET, not by the streak that produced it. Two different streaks now
+    # imply over 2.5 ("both sides go over 2.5", and "A scores 2+ AND B scores"), and
+    # grouping on the streak key split one market into two smaller pools — each then
+    # got its own best-in-class slot, so over 2.5 drew twice as often as its share of
+    # the evidence justified. The market is what the pick competes in.
     by_kind = {}
     for l in out:
-        by_kind.setdefault(l["a_key"], []).append(l)
+        by_kind.setdefault(T.bet_key(l["bet"]), []).append(l)
     rank = {}
     for kind, group in by_kind.items():
         group.sort(key=lambda l: (l["base_rate"], -l["strength"]))

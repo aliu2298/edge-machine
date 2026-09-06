@@ -1542,6 +1542,133 @@
    "strength": 12,
    "why": "Angers have gone over 1.5 in 6 straight; Stade Rennais in 6 straight."
   },
+  "2026-09-06|Arsenal|Chelsea|Over 2.5 goals": {
+   "a": "Chelsea",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Brighton & Hove Albion",
+     "s": "4-3"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Fulham",
+     "s": "3-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Real Sociedad",
+     "s": "3-1"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Johor Darul Ta'zim",
+     "s": "3-3"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "AC Milan",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Juventus",
+     "s": "0-1"
+    }
+   ],
+   "a_run": 5,
+   "away": "Chelsea",
+   "b": "Arsenal",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Aston Villa",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Coventry City",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Real Betis",
+     "s": "1-3"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Girona",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Crystal Palace",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Burnley",
+     "s": "1-0"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-06",
+   "drawn_at": "2026-09-06T14:25:52+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "Arsenal",
+   "id": "2026-09-06|Arsenal|Chelsea|Over 2.5 goals",
+   "kickoff": "2026-09-06T15:30Z",
+   "league": "Premier League",
+   "match": "Arsenal v Chelsea",
+   "status": "live",
+   "strength": 11,
+   "why": "Chelsea have scored 2+ in 5 straight and Arsenal have scored in 6 \u2014 two plus one clears 2.5."
+  },
   "2026-09-06|Espanyol|Sevilla|Over 2.5 goals": {
    "a": "Espanyol",
    "a_key": "over25",
@@ -1926,5 +2053,5 @@
    "why": "AZ Alkmaar have scored 2+ in 5 straight; Heerenveen have conceded 2+ in 3 straight."
   }
  },
- "updated_at": "2026-09-06T13:26:59+00:00"
+ "updated_at": "2026-09-06T14:26:57+00:00"
 }

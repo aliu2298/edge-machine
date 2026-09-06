@@ -60,6 +60,12 @@ def gather():
     for f in fixtures:
         if not f.get("competitive", True):
             continue
+        # Competitive FORM feeds (Belgian, Norwegian, Greek, Turkish...) are pulled so a
+        # European tie has form on both sides. They are not part of this board, and
+        # letting them through put 13 extra fixtures on Today from leagues the site does
+        # not otherwise mention.
+        if not f.get("lead_source", True):
+            continue
         ko = B.kickoff_dt(f)
         if ko is None:
             continue

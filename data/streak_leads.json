@@ -1582,6 +1582,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-06|Juventus|AC Milan|Over 2.5 goals": {
+   "a": "AC Milan",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "AC Milan",
+   "b": "Juventus",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-06",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Juventus",
+   "id": "2026-09-06|Juventus|AC Milan|Over 2.5 goals",
+   "kickoff": "2026-09-06T18:45Z",
+   "league": "Serie A",
+   "match": "Juventus v AC Milan",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-06|Portland Timbers|Minnesota United FC|Both teams to score": {
    "a": "Portland Timbers",
    "a_key": "btts",
@@ -1657,6 +1681,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals": {
+   "a": "LASK Linz",
+   "a_key": "scoring",
+   "a_run": 5,
+   "away": "LASK Linz",
+   "b": "AEK Athens",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-08",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "AEK Athens",
+   "id": "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals",
+   "kickoff": "2026-09-08T16:45Z",
+   "league": "Champions League",
+   "match": "AEK Athens v LASK Linz",
+   "status": "pending",
+   "strength": 11
+  },
   "2026-09-08|Al Qadsiah|Al Ahli|Over 1.5 goals": {
    "a": "Al Qadsiah",
    "a_key": "over15",
@@ -1730,6 +1778,54 @@
    "match": "FC Porto v Manchester City",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-08|FC Porto|Manchester City|Over 2.5 goals": {
+   "a": "FC Porto",
+   "a_key": "scoring",
+   "a_run": 5,
+   "away": "Manchester City",
+   "b": "Manchester City",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-08",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "FC Porto",
+   "id": "2026-09-08|FC Porto|Manchester City|Over 2.5 goals",
+   "kickoff": "2026-09-08T19:00Z",
+   "league": "Champions League",
+   "match": "FC Porto v Manchester City",
+   "status": "pending",
+   "strength": 11
+  },
+  "2026-09-08|Lille|Real Betis|Over 1.5 goals": {
+   "a": "Lille",
+   "a_key": "scoring1",
+   "a_run": 5,
+   "away": "Real Betis",
+   "b": "Real Betis",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3682539682539683,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-08",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Lille",
+   "id": "2026-09-08|Lille|Real Betis|Over 1.5 goals",
+   "kickoff": "2026-09-08T19:00Z",
+   "league": "Champions League",
+   "match": "Lille v Real Betis",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals": {
    "a": "NEC Nijmegen",
@@ -1954,6 +2050,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-09|Barcelona|Feyenoord Rotterdam|Over 2.5 goals": {
+   "a": "Barcelona",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Feyenoord Rotterdam",
+   "b": "Feyenoord Rotterdam",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Barcelona",
+   "id": "2026-09-09|Barcelona|Feyenoord Rotterdam|Over 2.5 goals",
+   "kickoff": "2026-09-09T16:45Z",
+   "league": "Champions League",
+   "match": "Barcelona v Feyenoord Rotterdam",
+   "status": "pending",
+   "strength": 10
+  },
   "2026-09-09|CF Montr\u00e9al|Charlotte FC|Both teams to score": {
    "a": "CF Montr\u00e9al",
    "a_key": "btts",
@@ -2027,6 +2147,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-09|FC Twente|Telstar|Over 2.5 goals": {
+   "a": "FC Twente",
+   "a_key": "over25",
+   "a_run": 3,
+   "away": "Telstar",
+   "b": "Telstar",
+   "b_key": "over25",
+   "b_run": 5,
+   "base_rate": 0.2253968253968254,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "FC Twente",
+   "id": "2026-09-09|FC Twente|Telstar|Over 2.5 goals",
+   "kickoff": "2026-09-09T16:45Z",
+   "league": "Eredivisie",
+   "match": "FC Twente v Telstar",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-09|Liverpool|Atl\u00e9tico Madrid|Liverpool to score": {
    "a": "Liverpool",
    "a_key": "scoring",
@@ -2077,6 +2221,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-09|Napoli|Arsenal|Over 1.5 goals": {
+   "a": "Napoli",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Arsenal",
+   "b": "Arsenal",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Napoli",
+   "id": "2026-09-09|Napoli|Arsenal|Over 1.5 goals",
+   "kickoff": "2026-09-09T19:00Z",
+   "league": "Champions League",
+   "match": "Napoli v Arsenal",
+   "status": "pending",
+   "strength": 12
+  },
   "2026-09-09|Philadelphia Union|FC Cincinnati|Both teams to score": {
    "a": "Philadelphia Union",
    "a_key": "btts",
@@ -2124,6 +2292,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-09|Rangers|St Mirren|Over 1.5 goals": {
+   "a": "Rangers",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "St Mirren",
+   "b": "St Mirren",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Rangers",
+   "id": "2026-09-09|Rangers|St Mirren|Over 1.5 goals",
+   "kickoff": "2026-09-09T18:45Z",
+   "league": "Scottish Premiership",
+   "match": "Rangers v St Mirren",
+   "status": "pending",
+   "strength": 12
+  },
   "2026-09-09|Sporting CP|Galatasaray|Over 1.5 goals": {
    "a": "Sporting CP",
    "a_key": "over15",
@@ -2142,6 +2334,30 @@
    "headline": "Over 1.5 goals",
    "home": "Sporting CP",
    "id": "2026-09-09|Sporting CP|Galatasaray|Over 1.5 goals",
+   "kickoff": "2026-09-09T19:00Z",
+   "league": "Champions League",
+   "match": "Sporting CP v Galatasaray",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-09|Sporting CP|Galatasaray|Over 2.5 goals": {
+   "a": "Sporting CP",
+   "a_key": "scoring",
+   "a_run": 6,
+   "away": "Galatasaray",
+   "b": "Galatasaray",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-09",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Sporting CP",
+   "id": "2026-09-09|Sporting CP|Galatasaray|Over 2.5 goals",
    "kickoff": "2026-09-09T19:00Z",
    "league": "Champions League",
    "match": "Sporting CP v Galatasaray",
@@ -2344,6 +2560,30 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-10|Fenerbahce|AS Roma|Over 2.5 goals": {
+   "a": "AS Roma",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "AS Roma",
+   "b": "Fenerbahce",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-10",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Fenerbahce",
+   "id": "2026-09-10|Fenerbahce|AS Roma|Over 2.5 goals",
+   "kickoff": "2026-09-10T16:45Z",
+   "league": "Champions League",
+   "match": "Fenerbahce v AS Roma",
+   "status": "pending",
+   "strength": 10
+  },
   "2026-09-10|Minnesota United FC|FC Dallas|Minnesota United FC to score 2+": {
    "a": "Minnesota United FC",
    "a_key": "scoring",
@@ -2488,6 +2728,30 @@
    "match": "Portland Timbers v St. Louis CITY SC",
    "status": "pending",
    "strength": 11
+  },
+  "2026-09-10|Portland Timbers|St. Louis CITY SC|Over 2.5 goals": {
+   "a": "St. Louis CITY SC",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "St. Louis CITY SC",
+   "b": "Portland Timbers",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-10",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Portland Timbers",
+   "id": "2026-09-10|Portland Timbers|St. Louis CITY SC|Over 2.5 goals",
+   "kickoff": "2026-09-10T02:30Z",
+   "league": "MLS",
+   "match": "Portland Timbers v St. Louis CITY SC",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-10|Portland Timbers|St. Louis CITY SC|St. Louis CITY SC to score": {
    "a": "St. Louis CITY SC",
@@ -3083,6 +3347,30 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-12|Lazio|AC Milan|Over 2.5 goals": {
+   "a": "AC Milan",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "AC Milan",
+   "b": "Lazio",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3682539682539683,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Lazio",
+   "id": "2026-09-12|Lazio|AC Milan|Over 2.5 goals",
+   "kickoff": "2026-09-12T16:00Z",
+   "league": "Serie A",
+   "match": "Lazio v AC Milan",
+   "status": "pending",
+   "strength": 7
+  },
   "2026-09-12|Liverpool|Fulham|Liverpool to score": {
    "a": "Liverpool",
    "a_key": "scoring",
@@ -3255,6 +3543,30 @@
    "match": "SC Freiburg v Borussia M\u00f6nchengladbach",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-12|Sunderland|Arsenal|Over 1.5 goals": {
+   "a": "Sunderland",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Arsenal",
+   "b": "Arsenal",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Sunderland",
+   "id": "2026-09-12|Sunderland|Arsenal|Over 1.5 goals",
+   "kickoff": "2026-09-12T19:00Z",
+   "league": "Premier League",
+   "match": "Sunderland v Arsenal",
+   "status": "pending",
+   "strength": 12
   },
   "2026-09-12|TSG Hoffenheim|VfB Stuttgart|TSG Hoffenheim to score": {
    "a": "TSG Hoffenheim",
@@ -3776,6 +4088,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-13|PEC Zwolle|Feyenoord Rotterdam|Over 2.5 goals": {
+   "a": "Feyenoord Rotterdam",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Feyenoord Rotterdam",
+   "b": "PEC Zwolle",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3682539682539683,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-13",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "PEC Zwolle",
+   "id": "2026-09-13|PEC Zwolle|Feyenoord Rotterdam|Over 2.5 goals",
+   "kickoff": "2026-09-13T14:45Z",
+   "league": "Eredivisie",
+   "match": "PEC Zwolle v Feyenoord Rotterdam",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-13|PSV Eindhoven|Sparta Rotterdam|Both teams to score": {
    "a": "PSV Eindhoven",
    "a_key": "btts",
@@ -3974,6 +4310,30 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-13|Sassuolo|Juventus|Over 1.5 goals": {
+   "a": "Sassuolo",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Juventus",
+   "b": "Juventus",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.4634920634920635,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-13",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Sassuolo",
+   "id": "2026-09-13|Sassuolo|Juventus|Over 1.5 goals",
+   "kickoff": "2026-09-13T18:45Z",
+   "league": "Serie A",
+   "match": "Sassuolo v Juventus",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|Both teams to score": {
    "a": "St. Louis CITY SC",
    "a_key": "btts",
@@ -4144,6 +4504,30 @@
    "match": "Vancouver Whitecaps v Austin FC",
    "status": "pending",
    "strength": 8
+  },
+  "2026-09-14|Leeds United|Newcastle United|Over 2.5 goals": {
+   "a": "Newcastle United",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Newcastle United",
+   "b": "Leeds United",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Leeds United",
+   "id": "2026-09-14|Leeds United|Newcastle United|Over 2.5 goals",
+   "kickoff": "2026-09-14T19:00Z",
+   "league": "Premier League",
+   "match": "Leeds United v Newcastle United",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-14|Rio Ave|Estrela|Over 1.5 goals": {
    "a": "Rio Ave",
@@ -4369,6 +4753,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-15|Falkirk|Heart of Midlothian|Over 2.5 goals": {
+   "a": "Heart of Midlothian",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Heart of Midlothian",
+   "b": "Falkirk",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4634920634920635,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Falkirk",
+   "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 2.5 goals",
+   "kickoff": "2026-09-15T18:45Z",
+   "league": "Scottish Premiership",
+   "match": "Falkirk v Heart of Midlothian",
+   "status": "pending",
+   "strength": 6
+  },
   "2026-09-15|Hibernian|Kilmarnock|Over 2.5 goals": {
    "a": "Hibernian",
    "a_key": "over25",
@@ -4440,6 +4848,30 @@
    "match": "AC Milan v Benfica",
    "status": "pending",
    "strength": 12
+  },
+  "2026-09-16|AC Milan|Benfica|Over 2.5 goals": {
+   "a": "AC Milan",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Benfica",
+   "b": "Benfica",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "AC Milan",
+   "id": "2026-09-16|AC Milan|Benfica|Over 2.5 goals",
+   "kickoff": "2026-09-16T19:00Z",
+   "league": "Europa League",
+   "match": "AC Milan v Benfica",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-16|Barcelona|Racing Santander|Barcelona to score": {
    "a": "Barcelona",
@@ -4513,6 +4945,102 @@
    "match": "Deportivo v Sevilla",
    "status": "pending",
    "strength": 7
+  },
+  "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals": {
+   "a": "SK Sturm Graz",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Stade Rennais",
+   "b": "Stade Rennais",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "SK Sturm Graz",
+   "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
+   "kickoff": "2026-09-16T19:00Z",
+   "league": "Europa League",
+   "match": "SK Sturm Graz v Stade Rennais",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-16|Sunderland|AZ Alkmaar|Over 2.5 goals": {
+   "a": "AZ Alkmaar",
+   "a_key": "scoring",
+   "a_run": 5,
+   "away": "AZ Alkmaar",
+   "b": "Sunderland",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Sunderland",
+   "id": "2026-09-16|Sunderland|AZ Alkmaar|Over 2.5 goals",
+   "kickoff": "2026-09-16T19:00Z",
+   "league": "Europa League",
+   "match": "Sunderland v AZ Alkmaar",
+   "status": "pending",
+   "strength": 11
+  },
+  "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals": {
+   "a": "Juventus",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "NEC Nijmegen",
+   "b": "NEC Nijmegen",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-17",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Juventus",
+   "id": "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals",
+   "kickoff": "2026-09-17T19:00Z",
+   "league": "Europa League",
+   "match": "Juventus v NEC Nijmegen",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-17|OFI Crete|TSG Hoffenheim|Over 2.5 goals": {
+   "a": "TSG Hoffenheim",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "TSG Hoffenheim",
+   "b": "OFI Crete",
+   "b_key": "scoring1",
+   "b_run": 5,
+   "base_rate": 0.3047619047619048,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-17",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "OFI Crete",
+   "id": "2026-09-17|OFI Crete|TSG Hoffenheim|Over 2.5 goals",
+   "kickoff": "2026-09-17T16:45Z",
+   "league": "Europa League",
+   "match": "OFI Crete v TSG Hoffenheim",
+   "status": "pending",
+   "strength": 8
   },
   "2026-09-18|Bayern Munich|1. FC Union Berlin|1. FC Union Berlin to score": {
    "a": "1. FC Union Berlin",
@@ -4637,6 +5165,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-18|Brentford|Chelsea|Over 2.5 goals": {
+   "a": "Chelsea",
+   "a_key": "scoring",
+   "a_run": 5,
+   "away": "Chelsea",
+   "b": "Brentford",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-18",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Brentford",
+   "id": "2026-09-18|Brentford|Chelsea|Over 2.5 goals",
+   "kickoff": "2026-09-18T19:00Z",
+   "league": "Premier League",
+   "match": "Brentford v Chelsea",
+   "status": "pending",
+   "strength": 11
+  },
   "2026-09-18|Espanyol|Elche|Over 1.5 goals": {
    "a": "Espanyol",
    "a_key": "over15",
@@ -4684,6 +5236,30 @@
    "match": "FC Groningen v PEC Zwolle",
    "status": "pending",
    "strength": 12
+  },
+  "2026-09-19|AS Roma|Internazionale|Over 2.5 goals": {
+   "a": "AS Roma",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Internazionale",
+   "b": "Internazionale",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "AS Roma",
+   "id": "2026-09-19|AS Roma|Internazionale|Over 2.5 goals",
+   "kickoff": "2026-09-19T16:00Z",
+   "league": "Serie A",
+   "match": "AS Roma v Internazionale",
+   "status": "pending",
+   "strength": 10
   },
   "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals": {
    "a": "Ajax Amsterdam",
@@ -4756,6 +5332,30 @@
    "match": "Alverca v Rio Ave",
    "status": "pending",
    "strength": 7
+  },
+  "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals": {
+   "a": "Brighton & Hove Albion",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Arsenal",
+   "b": "Arsenal",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Brighton & Hove Albion",
+   "id": "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals",
+   "kickoff": "2026-09-19T14:00Z",
+   "league": "Premier League",
+   "match": "Brighton & Hove Albion v Arsenal",
+   "status": "pending",
+   "strength": 12
   },
   "2026-09-19|CF Montr\u00e9al|Columbus Crew|Both teams to score": {
    "a": "CF Montr\u00e9al",
@@ -5000,6 +5600,30 @@
    "status": "pending",
    "strength": 10
   },
+  "2026-09-19|Sevilla|Barcelona|Over 2.5 goals": {
+   "a": "Barcelona",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Barcelona",
+   "b": "Sevilla",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3682539682539683,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Sevilla",
+   "id": "2026-09-19|Sevilla|Barcelona|Over 2.5 goals",
+   "kickoff": "2026-09-19T19:00Z",
+   "league": "La Liga",
+   "match": "Sevilla v Barcelona",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-19|Sparta Rotterdam|Heerenveen|Over 1.5 goals": {
    "a": "Sparta Rotterdam",
    "a_key": "over15",
@@ -5092,6 +5716,30 @@
    "headline": "Over 1.5 goals",
    "home": "AFC Bournemouth",
    "id": "2026-09-20|AFC Bournemouth|Liverpool|Over 1.5 goals",
+   "kickoff": "2026-09-20T13:00Z",
+   "league": "Premier League",
+   "match": "AFC Bournemouth v Liverpool",
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-20|AFC Bournemouth|Liverpool|Over 2.5 goals": {
+   "a": "Liverpool",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Liverpool",
+   "b": "AFC Bournemouth",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "AFC Bournemouth",
+   "id": "2026-09-20|AFC Bournemouth|Liverpool|Over 2.5 goals",
    "kickoff": "2026-09-20T13:00Z",
    "league": "Premier League",
    "match": "AFC Bournemouth v Liverpool",
@@ -5245,6 +5893,54 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-20|Celtic|Rangers|Over 2.5 goals": {
+   "a": "Celtic",
+   "a_key": "scoring",
+   "a_run": 4,
+   "away": "Rangers",
+   "b": "Rangers",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "Celtic",
+   "id": "2026-09-20|Celtic|Rangers|Over 2.5 goals",
+   "kickoff": "2026-09-20T11:00Z",
+   "league": "Scottish Premiership",
+   "match": "Celtic v Rangers",
+   "status": "pending",
+   "strength": 10
+  },
+  "2026-09-20|Deportivo|Real Betis|Over 1.5 goals": {
+   "a": "Deportivo",
+   "a_key": "scoring1",
+   "a_run": 4,
+   "away": "Real Betis",
+   "b": "Real Betis",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3682539682539683,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Deportivo",
+   "id": "2026-09-20|Deportivo|Real Betis|Over 1.5 goals",
+   "kickoff": "2026-09-20T16:30Z",
+   "league": "La Liga",
+   "match": "Deportivo v Real Betis",
+   "status": "pending",
+   "strength": 8
+  },
   "2026-09-20|FC Dallas|Austin FC|Over 1.5 goals": {
    "a": "FC Dallas",
    "a_key": "over15",
@@ -5292,6 +5988,54 @@
    "match": "FC Porto v Benfica",
    "status": "pending",
    "strength": 11
+  },
+  "2026-09-20|FC Porto|Benfica|Over 2.5 goals": {
+   "a": "Benfica",
+   "a_key": "scoring",
+   "a_run": 6,
+   "away": "Benfica",
+   "b": "FC Porto",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "FC Porto",
+   "id": "2026-09-20|FC Porto|Benfica|Over 2.5 goals",
+   "kickoff": "2026-09-20T19:30Z",
+   "league": "Primeira Liga",
+   "match": "FC Porto v Benfica",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-20|FC Twente|PSV Eindhoven|Over 2.5 goals": {
+   "a": "FC Twente",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "PSV Eindhoven",
+   "b": "PSV Eindhoven",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "FC Twente",
+   "id": "2026-09-20|FC Twente|PSV Eindhoven|Over 2.5 goals",
+   "kickoff": "2026-09-20T12:30Z",
+   "league": "Eredivisie",
+   "match": "FC Twente v PSV Eindhoven",
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-20|FC Twente|PSV Eindhoven|PSV Eindhoven to score": {
    "a": "PSV Eindhoven",
@@ -5415,6 +6159,54 @@
    "match": "Fiorentina v Napoli",
    "status": "pending",
    "strength": 11
+  },
+  "2026-09-20|Juventus|Atalanta|Over 1.5 goals": {
+   "a": "Juventus",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Atalanta",
+   "b": "Atalanta",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Juventus",
+   "id": "2026-09-20|Juventus|Atalanta|Over 1.5 goals",
+   "kickoff": "2026-09-20T16:00Z",
+   "league": "Serie A",
+   "match": "Juventus v Atalanta",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-20|Manchester City|Sunderland|Over 1.5 goals": {
+   "a": "Manchester City",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Sunderland",
+   "b": "Sunderland",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Manchester City",
+   "id": "2026-09-20|Manchester City|Sunderland|Over 1.5 goals",
+   "kickoff": "2026-09-20T13:00Z",
+   "league": "Premier League",
+   "match": "Manchester City v Sunderland",
+   "status": "pending",
+   "strength": 12
   },
   "2026-09-20|Marseille|Paris Saint-Germain|Over 1.5 goals": {
    "a": "Marseille",
@@ -5610,6 +6402,30 @@
    "status": "pending",
    "strength": 12
   },
+  "2026-09-20|Santa Clara|Braga|Over 1.5 goals": {
+   "a": "Santa Clara",
+   "a_key": "scoring1",
+   "a_run": 4,
+   "away": "Braga",
+   "b": "Braga",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.3682539682539683,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 1.5 goals",
+   "home": "Santa Clara",
+   "id": "2026-09-20|Santa Clara|Braga|Over 1.5 goals",
+   "kickoff": "2026-09-20T17:00Z",
+   "league": "Primeira Liga",
+   "match": "Santa Clara v Braga",
+   "status": "pending",
+   "strength": 10
+  },
   "2026-09-20|Sporting Kansas City|Philadelphia Union|Over 1.5 goals": {
    "a": "Sporting Kansas City",
    "a_key": "over15",
@@ -5681,6 +6497,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-20|St. Louis CITY SC|Toronto FC|Over 2.5 goals": {
+   "a": "St. Louis CITY SC",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "Toronto FC",
+   "b": "Toronto FC",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2222222222222222,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-06",
+   "headline": "Over 2.5 goals",
+   "home": "St. Louis CITY SC",
+   "id": "2026-09-20|St. Louis CITY SC|Toronto FC|Over 2.5 goals",
+   "kickoff": "2026-09-20T00:30Z",
+   "league": "MLS",
+   "match": "St. Louis CITY SC v Toronto FC",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-20|St. Louis CITY SC|Toronto FC|St. Louis CITY SC to score": {
    "a": "St. Louis CITY SC",
    "a_key": "scoring",
@@ -5708,5 +6548,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-06T13:26:59+00:00"
+ "updated_at": "2026-09-06T14:26:57+00:00"
 }

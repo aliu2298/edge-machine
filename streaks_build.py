@@ -84,32 +84,44 @@ STREAK_BY_KEY = {s[0]: s for s in STREAKS}
 #   team_eq   — the subject team scores exactly n
 #   btts      — both teams score
 #   total_gte / total_lte — combined goals
+# Leads and picks are TOTAL-GOALS only: over 1.5 and over 2.5. Nothing else.
+#
+# WHY THE MARKET LIST IS THIS SHORT
+# ---------------------------------
+# Eight bet types across two boards meant every market carried a thin, separately
+# underpowered sample, and the slate had to compare rarity ACROSS markets whose base
+# rates differ by 40 points. Two markets on one axis pool the evidence instead of
+# splitting it, and the picks board can rank on a single scale.
+#
+# WHY THESE FOUR PAIRINGS AND NOT MORE
+# ------------------------------------
+# Each pairing must IMPLY its bet arithmetically. That rules out the pairing that looks
+# most natural: "{a} have scored in N straight" + "{b} have conceded in M straight" is
+# not two pieces of evidence at all — in a match between them, A scoring and B conceding
+# are THE SAME EVENT, counted twice. It also only implies one goal, so it says nothing
+# about a 1.5 line. The four below each survive the arithmetic:
+#
+#   over 1.5  <-  both sides' matches go over 1.5           (direct)
+#   over 1.5  <-  both sides score           => 1 + 1 >= 2  (implies the line)
+#   over 2.5  <-  both sides' matches go over 2.5           (direct)
+#   over 2.5  <-  A scores 2+ and B scores   => 2 + 1 >= 3  (implies the line)
 PAIRINGS = [
-    ("scoring", "leaky",    "{a} to score 2+",
-     "{a} have scored 2+ in {ra} straight; {b} have conceded 2+ in {rb} straight.",
-     {"kind": "team_gte", "subject": "a", "n": 2}),
-    ("scoring", "porous",   "{a} to score",
-     "{a} have scored 2+ in {ra} straight; {b} have conceded in {rb} straight.",
-     {"kind": "team_gte", "subject": "a", "n": 1}),
-    ("btts",    "btts",     "Both teams to score",
-     "Both sides are on a BTTS run — {a} {ra} straight, {b} {rb} straight.",
-     {"kind": "btts"}),
-    ("over25",  "over25",   "Over 2.5 goals",
+    ("over25",   "over25",   "Over 2.5 goals",
      "{a} have gone over 2.5 in {ra} straight; {b} in {rb} straight.",
      {"kind": "total_gte", "n": 3}),
-    ("over15",  "over15",   "Over 1.5 goals",
+    ("scoring",  "scoring1", "Over 2.5 goals",
+     "{a} have scored 2+ in {ra} straight and {b} have scored in {rb} — two plus one "
+     "clears 2.5.",
+     {"kind": "total_gte", "n": 3}),
+    ("over15",   "over15",   "Over 1.5 goals",
      "{a} have gone over 1.5 in {ra} straight; {b} in {rb} straight.",
      {"kind": "total_gte", "n": 2}),
-    ("under25", "under25",  "Under 2.5 goals",
-     "{a} have gone under 2.5 in {ra} straight; {b} in {rb} straight.",
-     {"kind": "total_lte", "n": 2}),
-    ("solid",   "blanked",  "{b} to fail to score",
-     "{a} have kept {ra} straight clean sheets; {b} have failed to score in {rb} straight.",
-     {"kind": "team_eq", "subject": "b", "n": 0}),
-    ("blanked", "solid",    "{a} to fail to score",
-     "{a} have failed to score in {ra} straight; {b} have kept {rb} straight clean sheets.",
-     {"kind": "team_eq", "subject": "a", "n": 0}),
+    ("scoring1", "scoring1", "Over 1.5 goals",
+     "Both sides have scored in every recent game — {a} {ra} straight, {b} {rb} "
+     "straight — and one apiece clears 1.5.",
+     {"kind": "total_gte", "n": 2}),
 ]
+
 
 
 def esc(x):
@@ -336,6 +348,11 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
         # not a fixture to have a read on.
         if not f.get("competitive", True):
             continue
+        # Same for the competitive form feeds (Belgian, Norwegian, Greek...). Those are
+        # real football and count as form, but they exist so a Champions League tie has
+        # form on BOTH sides — not to quietly add seven leagues to the board.
+        if not f.get("lead_source", True):
+            continue
         home, away = f["home"], f["away"]
         sh, sa = streaks.get(home), streaks.get(away)
         if not sh or not sa:
@@ -403,9 +420,20 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
 
     # A stronger claim implies the weaker one: over 2.5 means over 1.5 was also met, so a
     # fixture hitting both would show two cards for one idea. Keep the sharper.
-    strong = {(l["match"], l["a"]) for l in uniq if l["a_key"] == "over25"}
-    uniq = [l for l in uniq
-            if not (l["a_key"] == "over15" and (l["match"], l["a"]) in strong)]
+    #
+    # Keyed on the BET, not on the streak that produced it. The earlier version tested
+    # a_key == "over25", which only caught the direct over25+over25 pairing; once
+    # "scored 2+ AND scored" also began implying over 2.5, 34 fixtures started showing
+    # both cards again. What makes one card redundant is the CLAIM it settles, so that is
+    # what the key must be — the same lesson as the headline guard below.
+    #
+    # A totals bet has no subject team, so the fixture alone is the key.
+    def _total(l, n):
+        b = l.get("bet") or {}
+        return b.get("kind") == "total_gte" and b.get("n") == n
+
+    strong = {l["match"] for l in uniq if _total(l, 3)}
+    uniq = [l for l in uniq if not (_total(l, 2) and l["match"] in strong)]
 
     # Final guard: identical HEADLINE on the same fixture is the same claim however it was
     # reached. `solid` (A keeps clean sheets, B fails to score) and `blanked` (B fails to
@@ -429,7 +457,14 @@ def team_lookups(by_team, fixtures):
     games are friendlies still reads as its real league rather than "Club Friendly".
     Falls back to the competition of their next fixture (a promoted side may have no
     competitive history in the window), and only then to whatever is left.
+
+    Among competitive leagues a TRACKED one wins, even if the side plays there less
+    often. Anderlecht play most of their football in Belgium, but Belgium is only a form
+    feed here — labelling them by it put six form leagues into the browse tab's league
+    buttons. They are on this board because of the Europa League, so that is what they
+    are filed under.
     """
+    tracked_leagues = {f["league"] for f in fixtures if f.get("lead_source", True)}
     next_comp_league = {}
     for f in fixtures:
         if f["played"] or not f.get("competitive", True):
@@ -438,7 +473,14 @@ def team_lookups(by_team, fixtures):
             next_comp_league.setdefault(t, f["league"])
     league_of = {}
     for team, games in by_team.items():
-        c = collections.Counter(g["league"] for g in games if g.get("comp", True))
+        comp = [g["league"] for g in games if g.get("comp", True)]
+        tracked_first = [L for L in comp if L in tracked_leagues]
+        # by_team holds PLAYED games only, so a side whose first tracked fixture is still
+        # ahead has no tracked history to be filed under — the European tie that puts
+        # them on this board has not happened yet. Look at what they play next.
+        if not tracked_first and next_comp_league.get(team) in tracked_leagues:
+            tracked_first = [next_comp_league[team]]
+        c = collections.Counter(tracked_first or comp)
         if c:
             league_of[team] = c.most_common(1)[0][0]
         elif team in next_comp_league:
@@ -1069,9 +1111,19 @@ def build(force=False):
     # population) so a chip means the same thing in both views.
     shown = team_streaks(by_team, MIN_PLAYED_SHOWN)
     _league_of, _nxt = team_lookups(by_team, fixtures)
-    fire = fire_rows(by_team, fixtures, _league_of, _nxt)
+    # The competitive FORM feeds (Belgian, Norwegian, Greek, Turkish...) exist so a
+    # European tie has form on both sides. They must not become part of the board: left
+    # unfiltered they added six leagues to the browse tab and On Fire, and tripled the
+    # page to 696 KB. A side earns a place by playing in a TRACKED competition — which
+    # keeps Anderlecht (they are in the Europa League) and drops a Belgian club that
+    # never leaves Belgium.
+    tracked = {t for f in fixtures if f.get("lead_source", True)
+               for t in (f["home"], f["away"])}
+    fire = [r for r in fire_rows(by_team, fixtures, _league_of, _nxt)
+            if r["team"] in tracked]
     leads = find_leads(fixtures, streaks, rates)[:TOP_LEADS]
-    teams = team_rows(shown, by_team, fixtures, rates)
+    teams = [r for r in team_rows(shown, by_team, fixtures, rates)
+             if r["team"] in tracked]
 
     # Log what is being published and settle anything now finished. Recording happens at
     # publish time so the ledger holds the claim as it was actually made, not a later

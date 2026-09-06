@@ -25,10 +25,14 @@ OUT_DIR = os.path.join(ROOT, "public_site")
 
 # bet kind -> (corner abbreviation, suit pip). Suits distinguish market families at a
 # glance; they carry no ranking, they are just the card's index.
+# The board runs on TWO markets now, so they must be told apart at a glance — both were
+# spades before, which was fine when the suit only separated totals from team bets.
+# The rest are retained so picks drawn before the change still render their own market
+# rather than falling through to a generic star.
 MARKETS = {
-    "btts":         ("BTTS", "♥"),
     "total_gte:3":  ("O2.5", "♠"),
-    "total_gte:2":  ("O1.5", "♠"),
+    "total_gte:2":  ("O1.5", "♦"),
+    "btts":         ("BTTS", "♥"),
     "total_lte:2":  ("U2.5", "♣"),
     "team_gte:2":   ("2+",   "♦"),
     "team_gte:1":   ("1+",   "♦"),

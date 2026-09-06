@@ -92,13 +92,14 @@ check("unknown team voids",
       T.settle_bet({"kind": "team_gte", "n": 1, "team": "Z"}, "A", "B", 1, 1), None)
 check("unknown kind voids", T.settle_bet({"kind": "nope"}, "A", "B", 1, 1), None)
 
-print("\n== find_leads: end-to-end on a built scenario ==")
-# A scores 2+ in 6 straight; B concedes 2+ in 6 straight; they meet in the future.
+print("\n== find_leads: end-to-end, totals only ==")
+# Leads and picks are TOTAL-GOALS only now: over 1.5 and over 2.5, nothing else.
+# Aces score 2+ every game; Bees score every game. 2 + 1 clears 2.5.
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
-    rows.append(fx(d, "Aces", f"opp{i}", 3, 0))       # Aces score 3, concede 0
-    rows.append(fx(d, f"foe{i}", "Bees", 2, 0))        # Bees concede 2, score 0
+    rows.append(fx(d, "Aces", f"opp{i}", 3, 0))       # Aces score 3
+    rows.append(fx(d, "Bees", f"foe{i}", 1, 0))        # Bees score 1
 future = (datetime.date.today() + datetime.timedelta(days=3)).isoformat()
 rows.append(fx(future, "Aces", "Bees", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
@@ -106,11 +107,14 @@ rt = B.base_rates(st)
 leads = B.find_leads(rows, st, rt)
 heads = {l["headline"] for l in leads}
 check("Aces scoring run detected", st["Aces"]["runs"].get("scoring"), 6)
-check("Bees leaky run detected", st["Bees"]["runs"].get("leaky"), 6)
-check("'to score 2+' lead present", "Aces to score 2+" in heads, True)
-sc = [l for l in leads if l["headline"] == "Aces to score 2+"][0]
-check("bet subject resolved to the right team", sc["bet"]["team"], "Aces")
-check("bet is team_gte 2", (sc["bet"]["kind"], sc["bet"]["n"]), ("team_gte", 2))
+check("Bees scored-in run detected", st["Bees"]["runs"].get("scoring1"), 6)
+check("every lead is a totals bet",
+      sorted({l["bet"]["kind"] for l in leads}), ["total_gte"])
+check("no team-subject bet survives",
+      [l["headline"] for l in leads if l["bet"].get("team")], [])
+check("'Over 2.5 goals' lead present", "Over 2.5 goals" in heads, True)
+o25 = [l for l in leads if l["headline"] == "Over 2.5 goals"][0]
+check("bet is total_gte 3", (o25["bet"]["kind"], o25["bet"]["n"]), ("total_gte", 3))
 check("no lead points at a played fixture",
       all(l["date"] >= datetime.date.today().isoformat() for l in leads), True)
 
@@ -118,27 +122,45 @@ print("\n== find_leads: symmetric pairings are not double-listed ==")
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
-    rows.append(fx(d, "Cats", f"o{i}", 1, 1))          # BTTS every game
-    rows.append(fx(d, "Dogs", f"p{i}", 2, 1))          # BTTS every game
+    rows.append(fx(d, "Cats", f"o{i}", 1, 1))          # both sides score every game
+    rows.append(fx(d, "Dogs", f"p{i}", 1, 1))
 rows.append(fx(future, "Cats", "Dogs", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
 leads = B.find_leads(rows, st, B.base_rates(st))
-btts = [l for l in leads if l["headline"] == "Both teams to score"]
-check("one BTTS card, not two orientations", len(btts), 1)
+check("one card per fixture, not one per orientation", len(leads), 1)
 
-print("\n== find_leads: weaker restatement is dropped ==")
-# Aces/Bees again: scoring+leaky and scoring+porous both qualify; keep the sharper one.
+print("\n== find_leads: over 2.5 suppresses over 1.5 on the same fixture ==")
+# Keyed on the BET, not the streak that produced it. Keying on a_key == "over25" only
+# caught the direct pairing; once "scored 2+ AND scored" also implied over 2.5, 34
+# fixtures started rendering both cards for one idea.
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
-    rows.append(fx(d, "Aces", f"opp{i}", 3, 0))
-    rows.append(fx(d, f"foe{i}", "Bees", 2, 0))
+    rows.append(fx(d, "Aces", f"opp{i}", 3, 1))        # over 2.5 and over 1.5 every game
+    rows.append(fx(d, "Bees", f"foe{i}", 2, 1))
 rows.append(fx(future, "Aces", "Bees", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
 leads = B.find_leads(rows, st, B.base_rates(st))
-aces = [l for l in leads if l["a"] == "Aces" and l["a_key"] == "scoring"]
-check("only one scoring-side card for Aces", len(aces), 1)
-check("kept the sharper (leaky) leg", aces[0]["b_key"], "leaky")
+check("exactly one card for the fixture", len(leads), 1)
+check("and it is the sharper line", leads[0]["bet"]["n"], 3)
+
+print("\n== a form-only league never produces a lead ==")
+# Belgian/Norwegian/Greek feeds exist so a European tie has form on BOTH sides. They are
+# not fixtures this board has an opinion about.
+rows = []
+for i in range(6):
+    d = f"2026-06-{i+1:02d}"
+    rows.append(fx(d, "Ghent", f"o{i}", 2, 1))
+    rows.append(fx(d, "Genk", f"p{i}", 2, 1))
+_ff = fx(future, "Ghent", "Genk", None, None, played=False)
+_ff["lead_source"] = False
+rows.append(_ff)
+st = B.team_streaks(B.team_games(rows))
+check("form-league fixture yields no lead",
+      B.find_leads(rows, st, B.base_rates(st)), [])
+_ff["lead_source"] = True
+check("the same fixture in a tracked league does",
+      len(B.find_leads(rows, st, B.base_rates(st))), 1)
 
 print("\n== population_rates ==")
 pool = [fx("2026-01-01", "A", "B", 1, 1),    # btts, total 2

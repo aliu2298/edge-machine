@@ -50,6 +50,31 @@ FORM_ONLY_LEAGUES = {
     "ger.super_cup": "German Supercup",
 }
 
+# COMPETITIVE form feeds — real league football, but not a source of leads.
+#
+# The Champions and Europa Leagues drag in opponents from leagues we do not track, and
+# those sides arrived with NO form at all: 21 teams in upcoming fixtures had zero games
+# (Anderlecht, Dinamo Zagreb, AEK Athens, Sturm Graz, Bodo/Glimt...). find_leads skips a
+# fixture when either side lacks form, so 48 of 273 upcoming fixtures could never produce
+# a lead — silently, since a missing lead looks exactly like "no confluence today".
+#
+# These differ from FORM_ONLY_LEAGUES above in the way that matters: a Belgian league
+# match is COMPETITIVE, so it counts as real form and belongs in the baselines. What it
+# is not is a fixture this board has an opinion about — the tracked league list is
+# deliberate, and quietly turning seven more leagues into lead sources would change the
+# product rather than fix the gap. Hence `lead_source: False`.
+#
+# Only slugs ESPN actually serves are listed. Czech, Polish, Croatian, Ukrainian,
+# Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani and Armenian top flights were all
+# probed and either 400 or return zero events, so a handful of European ties still have
+# a one-sided form line. That is a data limit, not an oversight — see verify_coverage.py,
+# which reports it rather than letting it pass as silence.
+FORM_LEAGUES = {
+    "bel.1": "Belgian Pro League", "nor.1": "Eliteserien", "gre.1": "Greek Super League",
+    "aut.1": "Austrian Bundesliga", "den.1": "Danish Superliga",
+    "cyp.1": "Cypriot First Division", "tur.1": "Turkish Super Lig",
+}
+
 # Form history. 180 days comfortably covers a mid-season domestic run AND bridges the
 # European summer gap, so early-season sides still have a usable sample.
 HISTORY_DAYS = 180
@@ -71,7 +96,7 @@ def get(url, tries=3):
     return {}
 
 
-def parse_event(ev, league_slug, league_name, competitive=True):
+def parse_event(ev, league_slug, league_name, competitive=True, lead_source=True):
     """One ESPN event -> a flat row, or None if it isn't usable.
 
     Only FULL_TIME games carry scores worth trusting; scheduled ones are kept without
@@ -112,6 +137,9 @@ def parse_event(ev, league_slug, league_name, competitive=True):
         "away_goals": as_,
         "played": played,
         "competitive": competitive,
+        # Whether this board may form an opinion ABOUT this fixture. Form feeds are real
+        # football (competitive=True) but carry no leads of their own.
+        "lead_source": lead_source,
     }
 
 
@@ -122,9 +150,10 @@ def fetch():
     end = (today + datetime.timedelta(days=HORIZON_DAYS)).strftime("%Y%m%d")
 
     rows, per_league = [], {}
-    feeds = ([(s, n_, True) for s, n_ in LEAGUES.items()] +
-             [(s, n_, False) for s, n_ in FORM_ONLY_LEAGUES.items()])
-    for n, (slug, name, competitive) in enumerate(feeds):
+    feeds = ([(s, n_, True, True) for s, n_ in LEAGUES.items()] +
+             [(s, n_, True, False) for s, n_ in FORM_LEAGUES.items()] +
+             [(s, n_, False, False) for s, n_ in FORM_ONLY_LEAGUES.items()])
+    for n, (slug, name, competitive, lead_source) in enumerate(feeds):
         if n:
             time.sleep(0.4)            # be polite; ESPN has no documented limit
         url = (f"{HOST}/apis/site/v2/sports/soccer/{slug}/scoreboard"
@@ -135,12 +164,13 @@ def fetch():
             print(f"  {name}: FETCH FAILED ({e}) — skipped")
             per_league[name] = 0
             continue
-        got = [r for r in (parse_event(e, slug, name, competitive)
+        got = [r for r in (parse_event(e, slug, name, competitive, lead_source)
                            for e in data.get("events", [])) if r]
         rows += got
         played = sum(1 for r in got if r["played"])
         per_league[name] = len(got)
-        tag = "" if competitive else "  [form only]"
+        tag = ("" if lead_source else
+               ("  [form only]" if competitive else "  [form only, non-competitive]"))
         print(f"  {name:18s} {len(got):4d} fixtures "
               f"({played} played, {len(got)-played} upcoming){tag}")
 
@@ -150,7 +180,8 @@ def fetch():
     seen = {}
     for r in rows:
         k = (r["date"], r["home"], r["away"])
-        if k not in seen or (r["competitive"] and not seen[k]["competitive"]):
+        if k not in seen or (r["lead_source"] and not seen[k].get("lead_source", True)) \
+                or (r["competitive"] and not seen[k]["competitive"]):
             seen[k] = r
     if len(seen) != len(rows):
         print(f"  (collapsed {len(rows) - len(seen)} duplicate fixtures across feeds)")

@@ -208,6 +208,29 @@ _b2["picks"][_pid]["kickoff"] = (NOW - datetime.timedelta(hours=3)).isoformat()
 _b2, _d3 = S.draw([lead("Reuse A", "Other", hours=40)], _b2, NOW)
 check("same team may be picked again in a later fixture", len(_d3), 1)
 
+
+print("\n== rarity is ranked within the MARKET, not the streak ==")
+# Two different streaks now imply over 2.5 ("both go over 2.5", and "A scores 2+ AND B
+# scores"). Grouping on the streak key split one market into two pools, each of which
+# then got its own best-in-class slot — so over 2.5 drew twice its fair share.
+_pool = []
+for i in range(4):                       # over-2.5 leads reached two different ways
+    l = lead(f"P{i}", f"Q{i}", headline="Over 2.5 goals", rate=0.20 + i / 100, hours=6 + i)
+    l["bet"] = {"kind": "total_gte", "n": 3}
+    l["a_key"] = "over25" if i % 2 else "scoring"
+    _pool.append(l)
+for i in range(4):
+    l = lead(f"R{i}", f"S{i}", headline="Over 1.5 goals", rate=0.30 + i / 100, hours=6 + i)
+    l["bet"] = {"kind": "total_gte", "n": 2}
+    l["a_key"] = "over15" if i % 2 else "scoring1"
+    _pool.append(l)
+_ranked = S.eligible(_pool, {"picks": {}}, NOW)
+_keys = [S.T.bet_key(l["bet"]) for l in _ranked]
+check("two markets are pooled, not four streak groups",
+      len(set(_keys)), 2)
+# best-in-class from each market should lead, one apiece, not two from the same market
+check("the two markets alternate at the top", _keys[:2].count("total_gte:3"), 1)
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

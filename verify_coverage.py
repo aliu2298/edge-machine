@@ -63,10 +63,15 @@ def main():
         note("error", f"cannot read {BOARD}: {e}")
         return 1
 
-    # teams seen in each league's COMPETITIVE fixtures
+    # Teams seen in each TRACKED league's competitive fixtures. The competitive form
+    # feeds (Belgian, Norwegian, Greek, Turkish...) are pulled only so a European tie has
+    # form on both sides; their squads are not meant to reach the board, and counting
+    # them made this file report 93 phantom "dropped" teams.
+    tracked = {t for f in fixtures if f.get("lead_source", True)
+               for t in (f["home"], f["away"])}
     seen = collections.defaultdict(set)
     for f in fixtures:
-        if f.get("competitive", True):
+        if f.get("competitive", True) and f.get("lead_source", True):
             seen[f["league"]].add(f["home"])
             seen[f["league"]].add(f["away"])
 
@@ -99,13 +104,27 @@ def main():
     # A team with games but no board row means the render dropped it — the exact bug
     # this file was written for.
     ghosts = [t for t, g in by_team.items()
-              if len(g) >= B.MIN_PLAYED_SHOWN and t in shown and t not in on_board]
+              if len(g) >= B.MIN_PLAYED_SHOWN and t in shown and t not in on_board
+              and t in tracked]
     # friendly-only sides are filtered on purpose and are not ghosts
     ghosts = [t for t in ghosts
               if any(g.get("comp", True) for g in by_team[t])]
     if ghosts:
         note("warning", f"DROPPED {len(ghosts)} teams have form but no board row: "
                         f"{', '.join(sorted(ghosts)[:8])}")
+        problems += 1
+
+    # The gap that actually costs leads: a side in a tracked fixture with NO form at all.
+    # find_leads skips a fixture when either team is missing form, and a skipped fixture
+    # is indistinguishable from "no confluence today" unless something says so out loud.
+    blind = sorted({t for f in fixtures
+                    if not f["played"] and f.get("lead_source", True)
+                    and f.get("competitive", True)
+                    for t in (f["home"], f["away"]) if not by_team.get(t)})
+    if blind:
+        note("warning", f"NO FORM {len(blind)} sides in upcoming tracked fixtures have "
+                        f"no games at all, so those fixtures can never produce a lead: "
+                        f"{', '.join(blind[:6])}{'…' if len(blind) > 6 else ''}")
         problems += 1
 
     print(f"\n  teams with form: {len(shown)} | on board: {len(on_board)} | "
