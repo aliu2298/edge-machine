@@ -231,6 +231,46 @@ check("two markets are pooled, not four streak groups",
 # best-in-class from each market should lead, one apiece, not two from the same market
 check("the two markets alternate at the top", _keys[:2].count("total_gte:3"), 1)
 
+
+print("\n== rarity chip is graded against its own line ==")
+import slate_build as SB
+# An absolute cut measures the MARKET, not the pick: the rarest over-1.5 confluence that
+# exists is a 22% base rate, so under a 10%/25% threshold every over-1.5 card was badged
+# "common" (38 of 49) in the loudest style on the card, while over 2.5 took every "rare".
+check("rarest over-1.5 can reach the top band",
+      SB.rarity_class({"base_rate": 0.22, "rank_pct": 0.0})[0], "hot")
+check("rarest over-2.5 can too",
+      SB.rarity_class({"base_rate": 0.06, "rank_pct": 0.0})[0], "hot")
+check("a mid-pack pick is mid",
+      SB.rarity_class({"base_rate": 0.37, "rank_pct": 0.45})[0], "mid")
+check("the worst of a line is ordinary",
+      SB.rarity_class({"base_rate": 0.53, "rank_pct": 0.95})[0], "common")
+# The number shown stays the ABSOLUTE base rate. Printing the percentile implied
+# precision the data lacks — the pool holds nothing between 15% and 22%, so two visibly
+# different picks both rendered "top 23%".
+check("the label still quotes the real base rate",
+      "22%" in SB.rarity_class({"base_rate": 0.22, "rank_pct": 0.0})[1], True)
+# Locked at draw, so a card cannot change its label as the pool moves around it.
+_b, _d = S.draw([lead("Rk A", "Rk B", hours=6)], {"picks": {}}, NOW)
+check("rank_pct is stored on the pick", isinstance(_d[0].get("rank_pct"), float), True)
+
+print("\n== card evidence reads in fixture order ==")
+# A pairing may take the AWAY side as "a", which listed Chelsea's form above Arsenal's on
+# a card headed "Arsenal v Chelsea", with nothing saying which was which.
+_p = {"home": "Arsenal", "away": "Chelsea", "a": "Chelsea", "b": "Arsenal",
+      "a_label": "scored 2+", "b_label": "scored in", "a_run": 5, "b_run": 6,
+      "a_recent": [], "b_recent": [], "match": "Arsenal v Chelsea",
+      "headline": "Over 2.5 goals", "bet": {"kind": "total_gte", "n": 3},
+      "base_rate": 0.22, "rank_pct": 0.3, "status": "live", "league": "PL",
+      "kickoff": "2026-09-06T14:30Z", "date": "2026-09-06"}
+_html = SB.card_html(_p)
+# Scope to the evidence block: the fixture line above it also names both teams.
+_ev = _html.split('class="pev"')[1]
+check("home side is rendered first",
+      _ev.index("Arsenal<") < _ev.index("Chelsea<"), True)
+check("each leg keeps its own run",
+      _ev.index("scored in") < _ev.index("scored 2+"), True)
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

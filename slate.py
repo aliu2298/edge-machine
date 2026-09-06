@@ -189,6 +189,7 @@ def eligible(leads, blob, now):
         for i, l in enumerate(group):
             # percentile within the kind; single-member kinds rank as best-in-class
             rank[id(l)] = (i / (n - 1)) if n > 1 else 0.0
+            l["rank_pct"] = rank[id(l)]
 
     out.sort(key=lambda l: (rank[id(l)], l["base_rate"], -l["strength"],
                             l.get("kickoff") or ""))
@@ -248,6 +249,14 @@ def draw(leads, blob=None, now=None, slate_size=SLATE_SIZE):
             "a_label": l.get("a_label"), "b_label": l.get("b_label"),
             "a_recent": l.get("a_recent", []), "b_recent": l.get("b_recent", []),
             "base_rate": l["base_rate"], "strength": l["strength"],
+            # Percentile of this lead's rarity WITHIN ITS MARKET, fixed at draw. The
+            # card's rarity chip is read off this rather than off the absolute rate,
+            # because an absolute threshold measures the market and not the pick: the
+            # rarest over-1.5 confluence available is 22%, so under a 10%/25% cut every
+            # over-1.5 card was permanently badged "common" (38 of 49) while over 2.5
+            # collected every "rare". Stored, not recomputed, so a locked card cannot
+            # change its label as the pool moves around it.
+            "rank_pct": l.get("rank_pct"),
             # NO "market" URL. A pick is locked at draw because the CLAIM is what gets
             # judged; the venue link is not part of the claim and is resolved at render
             # time instead. Freezing it here is how three live cards kept Kalshi URLs

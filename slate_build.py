@@ -48,12 +48,56 @@ def market_index(bet):
     return MARKETS.get(S.T.bet_key(bet), ("PICK", "★"))
 
 
-def rarity_class(r):
-    if r <= 0.10:
-        return "hot", f"rare · {round(r*100)}%"
-    if r <= 0.25:
+_MARKET_RATES = None
+
+
+def market_rates():
+    """bet key -> sorted base rates of every lead currently published in that market.
+
+    Used only to place a pick that was drawn before rank_pct was stored. Read from the
+    published board rather than recomputed, so it reflects what the site actually shows.
+    """
+    global _MARKET_RATES
+    if _MARKET_RATES is None:
+        _MARKET_RATES = {}
+        try:
+            for l in json.load(open(S.LEADS_IN)).get("leads", []):
+                _MARKET_RATES.setdefault(S.T.bet_key(l["bet"]), []).append(l["base_rate"])
+        except Exception:
+            pass
+    return _MARKET_RATES
+
+
+def rarity_class(p):
+    """Chip class and label, from the pick's rank WITHIN ITS OWN MARKET.
+
+    Absolute thresholds measured the market rather than the pick. The rarest over-1.5
+    confluence that exists is 22%, so a 10%/25% cut left every over-1.5 card permanently
+    badged "common" — 38 of 49 — in the loudest style on the card, while over 2.5
+    collected every "rare". The two lines are simply not on the same scale.
+
+    `rank_pct` is fixed when the pick is drawn (0 = rarest available in that market), so
+    a locked card keeps its label as the pool moves. Picks drawn before it existed have
+    their percentile derived from today's pool instead — an approximation, but one that
+    at least measures the right thing.
+    """
+    pct = p.get("rank_pct")
+    r = p.get("base_rate")
+    if pct is None and r is not None:
+        peers = market_rates().get(S.T.bet_key(p["bet"]))
+        if peers:
+            pct = sum(1 for x in peers if x < r) / len(peers)
+    if pct is None:
+        return "mid", (f"{round(r*100)}% base" if r is not None else "—")
+    # The WORD comes from the market-relative rank; the NUMBER stays the absolute base
+    # rate. Printing the percentile itself implied precision the data does not have —
+    # base rates come from a coarse run-length lookup, so the pool holds nothing between
+    # 15% and 22% and two visibly different picks both rendered "top 23%".
+    if pct <= 0.20:
+        return "hot", f"rare for this line · {round(r*100)}%"
+    if pct <= 0.60:
         return "mid", f"uncommon · {round(r*100)}%"
-    return "common", f"common · {round(r*100)}%"
+    return "common", f"ordinary · {round(r*100)}%"
 
 
 def seq_html(games, limit=6):
@@ -101,7 +145,7 @@ def no_link_reason(p):
 
 def card_html(p):
     abbr, pip = market_index(p["bet"])
-    rcls, rtxt = rarity_class(p["base_rate"])
+    rcls, rtxt = rarity_class(p)
     live = p["status"] == "live"
     stamp = ""
     if not live:
@@ -119,6 +163,18 @@ def card_html(p):
         # yet is a different thing again.
         kalshi = (f'<span class="kbtn off">{esc(no_link_reason(p))}</span>' if live else "")
     ko = esc(p.get("kickoff") or "")
+    # Legs in FIXTURE order, home first. They were rendered in pairing order (a then b),
+    # and a pairing may take the away side as "a" — so a card headed "Arsenal v Chelsea"
+    # listed Chelsea's form above Arsenal's, with nothing on the card saying which was
+    # which. The evidence should read in the same order as the fixture line above it.
+    legs = [(p["a"], p.get("a_label"), p["a_run"], p.get("a_recent", [])),
+            (p["b"], p.get("b_label"), p["b_run"], p.get("b_recent", []))]
+    if legs[0][0] != p.get("home") and legs[1][0] == p.get("home"):
+        legs.reverse()
+    legs_html = "".join(
+        f'<div class="leg"><span>{esc(t)}</span><em>{esc(lab or "")} · {run}</em></div>'
+        + seq_html(rec)
+        for t, lab, run, rec in legs)
     return f"""<div class="pcard {'live' if live else 'done'}">
   <div class="idx tl"><b>{esc(abbr)}</b><i>{pip}</i></div>
   <div class="idx br"><b>{esc(abbr)}</b><i>{pip}</i></div>
@@ -129,14 +185,7 @@ def card_html(p):
     <div class="pfx">{esc(p["match"])}</div>
     <div class="pmeta">{esc(p["league"])} · <time data-ko="{ko}">{ko[5:16].replace("T"," ")}</time></div>
     {f'<div class="pcd" data-cd="{ko}"></div>' if live else ''}
-    <div class="pev">
-      <div class="leg"><span>{esc(p["a"])}</span>
-        <em>{esc(p.get("a_label") or "")} · {p["a_run"]}</em></div>
-      {seq_html(p.get("a_recent", []))}
-      <div class="leg"><span>{esc(p["b"])}</span>
-        <em>{esc(p.get("b_label") or "")} · {p["b_run"]}</em></div>
-      {seq_html(p.get("b_recent", []))}
-    </div>
+    <div class="pev">{legs_html}</div>
   </div>
   <div class="pfoot">
     <span class="rare {rcls}">{esc(rtxt)}</span>{kalshi}
@@ -323,9 +372,14 @@ final score · all times CT · updated {esc(now)}</div>
 
 {settling_html}
 
-<div class="note">Picks are drawn from the <b>Streaks</b> board: one team's run meeting the
-next opponent's matching weakness. Rarest first, <b>one pick per fixture and one per
-team</b>, so the three are independent rather than three angles on the same match.
+<div class="note">Picks are drawn from the <b>Streaks</b> board and are
+<b>total goals only — over 1.5 or over 2.5</b>. A lead is two runs meeting in one
+fixture, and the pair has to <b>imply the line arithmetically</b>: both sides scoring
+means 1 + 1 clears 1.5; one side scoring twice while the other scores at all clears 2.5.
+Rarest first <b>within its own line</b> — the two are not on the same scale, since the
+most unusual over-1.5 confluence that exists is still a 22% base rate — and
+<b>one pick per fixture and one per team</b>, so the three are independent rather than
+three angles on the same match.
 A slot refills <b>at kickoff</b>, not when the pick finally settles — a fixture that has
 started cannot be backed and its market is gone, so holding the slot until a final score
 arrives just fills the board with cards you cannot use. The pick keeps settling in the
