@@ -37,9 +37,9 @@ jobs:
     timeout-minutes: 25
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -136,9 +136,9 @@ jobs:
       # GitHub Pages is the ONLY host (Netlify dropped Aug 3 2026 — it was skipping
       # every deploy for exceeded credit usage, and nothing here needed a feature
       # Pages lacks). Runs unconditionally so the board publishes even when nothing changed.
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: public_site
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
