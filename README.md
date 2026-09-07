@@ -9,7 +9,8 @@ whether an idea actually holds up.
 | Board | What it is |
 |---|---|
 | [Picks](https://aliu2298.github.io/edge-machine/) | Three auto-drawn picks from streak confluences, graded on the final score |
-| [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Teams on an unusual run, matched against a next opponent who is soft in the same place |
+| [Leads](https://aliu2298.github.io/edge-machine/leads.html) | Upcoming fixtures where both sides' runs point at the same total |
+| [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Every tracked team's current runs, and the sides on the longest ones |
 | [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — picks, leads and on-fire runs — against what those teams do anyway |
 | [Today](https://aliu2298.github.io/edge-machine/today.html) | Every tracked fixture kicking off today, with both sides' current runs |
 
@@ -75,7 +76,7 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 | `today_build.py` | Renders today's fixtures to `public_site/today.html`. |
 | `slate_backtest.py` | Replays the board day by day over past fixtures. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
-| `streaks_build.py` | Finds streak confluences and renders `public_site/streaks.html`. |
+| `streaks_build.py` | Finds streak confluences; renders `leads.html` and `streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |

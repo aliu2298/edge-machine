@@ -563,16 +563,98 @@ def team_rows(streaks, by_team, fixtures, rates):
 
 
 # ---------------------------------------------------------------- rendering
-def page_html(leads, teams, fire, track, meta, leagues, now):
-    payload = json.dumps(leads).replace("</", "<\\/")
-    teams_payload = json.dumps(teams).replace("</", "<\\/")
-    fire_payload = json.dumps(fire).replace("</", "<\\/")
+PAGES = {
+    # id -> (file, nav label, h1, <title>, meta description, sub-heading)
+    "leads": ("leads.html", "Leads", "Edge Machine · Leads",
+              "Edge Machine · Leads",
+              "Upcoming fixtures where both sides' runs point at the same total. "
+              "Research, not betting advice.",
+              "Both sides' runs pointing at the same total"),
+    "streaks": ("streaks.html", "Streaks", "Edge Machine · Streaks",
+                "Edge Machine · Streaks",
+                "Every tracked team's current runs, and the sides on the longest ones. "
+                "Research, not betting advice.",
+                "Every tracked team's current runs"),
+}
+TAB_LABEL = {"leads": "Leads", "fire": "🔥 On fire", "teams": "All teams"}
+
+
+def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
+              tabs=("leads", "fire", "teams")):
+    """Render one board. `tabs` selects which panels this page carries.
+
+    Leads used to be the first of three tabs on Streaks, which meant the page shipped
+    ALL THREE payloads — 598 KB — just to show the one list most people open first.
+    Splitting them lets each page carry only what it renders, and puts Leads one click
+    from the picks rather than two.
+    """
+    _f, _lbl, h1, title, desc, sub = PAGES[page]
+    # Only embed the payloads this page actually renders.
+    payload = json.dumps(leads if "leads" in tabs else []).replace("</", "<\\/")
+    teams_payload = json.dumps(teams if "teams" in tabs else []).replace("</", "<\\/")
+    fire_payload = json.dumps(fire if "fire" in tabs else []).replace("</", "<\\/")
+    initial_tab = tabs[0]
+    # One tab is not a choice — render the bar only when there is something to switch to.
+    tab_btns = ("" if len(tabs) < 2 else "".join(
+        f'<button class="tb{" on" if t == initial_tab else ""}" data-tab="{t}">'
+        f'{TAB_LABEL[t]}</button>' for t in tabs))
+    nav = "".join(
+        f'<a{" class=\"on\"" if p == page else ""} href="./{PAGES[p][0]}">'
+        f'{PAGES[p][1]}</a>' for p in ("leads", "streaks"))
+    # Buttons must reflect what THIS page can actually filter. The Leads page listing
+    # the Belgian, Danish and Turkish leagues was a dead end — those are form feeds and
+    # never produce a lead, so every one of those buttons returned nothing.
+    shown_leagues = set()
+    if "leads" in tabs:
+        shown_leagues |= {l["league"] for l in leads}
+    if "teams" in tabs:
+        shown_leagues |= {t["league"] for t in teams}
+    if "fire" in tabs:
+        shown_leagues |= {t["league"] for t in fire}
     league_btns = "".join(
-        f'<button class="lg" data-lg="{esc(l)}">{esc(l)}</button>' for l in leagues)
+        f'<button class="lg" data-lg="{esc(l)}">{esc(l)}</button>'
+        for l in leagues if l in shown_leagues)
+
+    if "leads" in tabs:
+        explain_summary = ("How a lead is chosen — and why only two lines")
+        explain_body = f"""
+<p>A streak on its own is not an edge; plenty of good sides score freely. A <b>lead</b> is
+two runs meeting in a fixture not yet played, where the pair <b>implies the line
+arithmetically</b>:</p>
+<p>&nbsp;&nbsp;• <b>Over 1.5</b> — both sides' matches go over 1.5, or both sides score
+(1&nbsp;+&nbsp;1&nbsp;≥&nbsp;2).<br>
+&nbsp;&nbsp;• <b>Over 2.5</b> — both sides' matches go over 2.5, or one scores 2+ while the
+other scores (2&nbsp;+&nbsp;1&nbsp;≥&nbsp;3).</p>
+<p>That rules out the pairing that looks most natural. "A have scored in 6 straight" plus
+"B have conceded in 6 straight" reads like two pieces of evidence, but in a match between
+them <b>A scoring and B conceding are the same event</b>, counted twice — and it only
+implies one goal, so it says nothing about a 1.5 line.</p>
+<p>Both legs must run at least <b>{MIN_RUN} games</b>, on a side with at least
+<b>{MIN_PLAYED}</b> played. Form spans <b>all</b> tracked competitions (last
+{FORM_GAMES} games), because form does not reset when a side walks into a European tie.
+A run made up entirely of preseason friendlies is discarded.</p>
+<p>Every lead carries a <b>rarity</b> chip — the share of tracked teams currently on a run
+that long, taken from the <b>weaker</b> leg, since a pair is only as unusual as its most
+ordinary half. When that share is high the pattern is ordinary and the chip says so.
+Over 2.5 suppresses over 1.5 on the same fixture: the sharper claim implies the weaker one.</p>
+<p>Leads to look at — not picks, and not betting advice.</p>"""
+    else:
+        explain_summary = "What these runs are, and what the rarity chip means"
+        explain_body = f"""
+<p><b>All teams</b> browses every tracked side's current runs — a complete league browser,
+not a highlight reel, so a team with nothing going still appears.</p>
+<p><b>On fire</b> looks back further than the {FORM_GAMES}-game form window to catch genuinely
+long runs. Measured, long runs do <b>not</b> extend more often than a shuffled fixture list
+would produce — see the <a href="./record.html">Record</a> page.</p>
+<p>Every run carries a <b>rarity</b> chip: the share of tracked teams currently on a run that
+long. When that share is high the pattern is ordinary, and the chip says so.</p>
+<p>Form is measured across <b>all</b> tracked competitions (last {FORM_GAMES} games, minimum
+{MIN_PLAYED_SHOWN} played here). Looking for a fixture to act on? The
+<a href="./leads.html">Leads</a> page pairs these runs into upcoming matches.</p>"""
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine · Streaks</title>
-<meta name="description" content="Teams on an unusual run whose next opponent is a matching soft touch. Research, not betting advice.">
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(desc)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -738,35 +820,18 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
   .rare{{margin-left:0}}
 }}
 </style></head><body><div class="wrap">
-<h1>Edge Machine · Streaks</h1>
-<div class="sub">Teams on a run, matched against a next opponent who is soft in the same
-place · all times CT · updated {esc(now)}</div>
-<div class="nav"><a href="./">Picks</a><a class="on" href="./streaks.html">Streaks</a>
+<h1>{esc(h1)}</h1>
+<div class="sub">{esc(sub)} · all times CT · updated {esc(now)}</div>
+<div class="nav"><a href="./">Picks</a>{nav}
 <a href="./record.html">Record</a><a href="./today.html">Today</a></div>
 
 <details class="how">
-<summary>A run only counts when the opponent is soft in the same place — how this works</summary>
-<div class="howbody">
-<p>A streak on its own is not an edge; plenty of good sides score freely. What is shown here
-is the <b>confluence</b>: one team's run meeting the other's matching weakness in a fixture
-not yet played.</p>
-<p>Every lead carries a <b>rarity</b> chip — the share of tracked teams currently on a run
-that long. When that share is high the pattern is ordinary, and the chip says so. Leads are
-sorted rarest first, not longest.</p>
-<p>Form is measured across <b>all</b> tracked competitions (last {FORM_GAMES} games, minimum
-{MIN_PLAYED} played), because form does not reset when a side walks into a European tie.</p>
-<p>Confluences are genuinely rare — a whole league can have none on a given day. <b>All teams
-on a run</b> browses the raw runs instead. Leads to look at: not picks, and not betting
-advice.</p>
-</div>
+<summary>{explain_summary}</summary>
+<div class="howbody">{explain_body}</div>
 </details>
 
 <div class="controls">
-  <div class="tabs">
-    <button class="tb on" data-tab="leads">Leads</button>
-    <button class="tb" data-tab="fire">🔥 On fire</button>
-    <button class="tb" data-tab="teams">All teams</button>
-  </div>
+  <div class="tabs">{tab_btns}</div>
   <div class="lgs">
     <button class="lg on" data-lg="">All leagues</button>{league_btns}
   </div>
@@ -799,7 +864,7 @@ const cnt  = document.getElementById('cnt');
 const empty= document.getElementById('empty');
 const q    = document.getElementById('q');
 let league = '';
-let tab    = 'leads';
+let tab    = '{initial_tab}';
 let sort   = 'hot';          // On Fire ordering: 'hot' (longest run) | 'soon' (next kickoff)
 let expand = false;          // show the full list past TOP_SHOWN
 const TOP_SHOWN = 10;        // keep the tab exclusive; the rest sit behind one click
@@ -1007,13 +1072,19 @@ function render() {{
     const shownRows = expand ? rows : rows.slice(0, TOP_SHOWN);
     const hidden = rows.length - shownRows.length;
     html_ = `<div class="tr-note warn"><b>These runs do not predict their own
-      continuation.</b> Measured over the season so far: teams on an 8+ "scored in" run
-      extended 88.8% of the time — but those same teams score in 91.9% of all their games
-      anyway, so the run ran <b>3.1pp below</b> their normal rate. Compared against the
-      population instead of the team, the same data reads +12.8pp and "significant" —
-      that number is the hot-hand fallacy, not an edge. A long streak here is a striking
+      continuation.</b> Three different baselines were tried here and all three were
+      wrong — the population rate said +12.8pp and "significant" (the hot-hand fallacy:
+      streaky teams are good teams), the team's own rate said −8.7pp and "significant"
+      (circular, since the run's own games sit inside that average), and removing the run
+      said +10.3pp (it deletes only successes). No average can settle it.
+      <b>Shuffle a team's own games into a random order</b> and runs carry zero
+      information by construction — yet being "on a run" still predicts a next-game rate
+      17–39pp <i>lower</i>, because a run ends the moment it fails. Against that shuffled
+      yardstick, every streak type measured here lands <b>inside</b> the band, and nothing
+      survives correcting for testing six of them at once. A long streak is a striking
       fact about the past and survivorship in the present: the side still on a 12-game run
-      is simply the one whose run has not broken yet.</div>`
+      is simply the one whose run has not broken yet.
+      <a href="./record.html">See the Record page.</a></div>`
       + shownRows.map(fireRow).join('')
       + (hidden > 0
           ? `<button class="more" id="more">Show ${{hidden}} more team${{
@@ -1151,9 +1222,16 @@ def build(force=False):
             f"{n_up} upcoming fixtures scanned · form includes preseason friendlies")
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    out = os.path.join(OUT_DIR, "streaks.html")
-    with open(out, "w") as f:
-        f.write(page_html(leads, teams, fire, track, meta, leagues, now))
+    # Two pages from ONE computation. Leads are the list most people open first, so they
+    # get their own page next to the picks instead of being the first tab behind Streaks
+    # — and each page now ships only the payload it renders.
+    written = []
+    for page, tabs in (("leads", ("leads",)), ("streaks", ("fire", "teams"))):
+        out = os.path.join(OUT_DIR, PAGES[page][0])
+        with open(out, "w") as f:
+            f.write(page_html(leads, teams, fire, track, meta, leagues, now,
+                              page=page, tabs=tabs))
+        written.append((out, os.path.getsize(out) / 1024))
 
     # machine-readable companion, same shape the page consumes
     with open(DATA_OUT, "w") as f:
@@ -1164,8 +1242,9 @@ def build(force=False):
                    "base_rates": {k: {str(n): round(v, 4) for n, v in d.items()}
                                   for k, d in rates.items()}}, f, indent=1)
 
-    print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — {len(leads)} leads, "
-          f"{len(teams)} teams on a run, across {len(leagues)} leagues")
+    for out, kb in written:
+        print(f"wrote {out}  ({kb:.0f} KB)")
+    print(f"  {len(leads)} leads · {len(teams)} teams on a run · {len(leagues)} leagues")
     print(f"wrote {DATA_OUT}")
     return leads
 

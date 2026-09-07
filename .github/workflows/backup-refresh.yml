@@ -154,7 +154,8 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html public_site/streaks.html public_site/record.html public_site/today.html \
+          PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
+                     public_site/record.html public_site/today.html \
                      data/streaks.json data/streak_leads.json data/slate.json data/fire_runs.json"
 
           for attempt in 1 2 3; do
