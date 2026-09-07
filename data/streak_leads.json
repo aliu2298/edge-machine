@@ -1689,14 +1689,16 @@
     "n": 2
    },
    "date": "2026-09-07",
+   "final": "0-0",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-07T21:35:32+00:00",
    "headline": "Over 1.5 goals",
    "home": "Estoril",
    "id": "2026-09-07|Estoril|Arouca|Over 1.5 goals",
    "kickoff": "2026-09-07T19:15Z",
    "league": "Primeira Liga",
    "match": "Estoril v Arouca",
-   "status": "pending",
+   "status": "miss",
    "strength": 9
   },
   "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals": {
@@ -4691,6 +4693,30 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
+   "a": "Internazionale",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Udinese",
+   "b": "Udinese",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4613003095975232,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-07",
+   "headline": "Over 1.5 goals",
+   "home": "Internazionale",
+   "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
+   "kickoff": "2026-09-14T18:45Z",
+   "league": "Serie A",
+   "match": "Internazionale v Udinese",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-14|Leeds United|Newcastle United|Over 2.5 goals": {
    "a": "Newcastle United",
    "a_key": "scoring",
@@ -6902,5 +6928,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-07T12:43:15+00:00"
+ "updated_at": "2026-09-07T21:35:32+00:00"
 }

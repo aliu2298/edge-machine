@@ -430,6 +430,7 @@
    "test_date": "2026-09-04"
   },
   "Al Hilal|scoring1|2026-09-07|Al Hilal|Neom SC": {
+   "graded_at": "2026-09-07T21:35:37+00:00",
    "home": true,
    "id": "Al Hilal|scoring1|2026-09-07|Al Hilal|Neom SC",
    "key": "scoring1",
@@ -440,7 +441,8 @@
    "logged_at": "2026-09-04T20:49:52+00:00",
    "opp": "Neom SC",
    "rate": 0.041666666666666664,
-   "status": "pending",
+   "result": "0-2",
+   "status": "broke",
    "team": "Al Hilal",
    "test_date": "2026-09-07"
   },
@@ -1929,6 +1931,7 @@
    "test_date": "2026-08-31"
   },
   "Estoril|porous|2026-09-07|Estoril|Arouca": {
+   "graded_at": "2026-09-07T21:35:37+00:00",
    "home": true,
    "id": "Estoril|porous|2026-09-07|Estoril|Arouca",
    "key": "porous",
@@ -1939,7 +1942,8 @@
    "logged_at": "2026-08-31T22:54:37+00:00",
    "opp": "Arouca",
    "rate": 0.08888888888888889,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "Estoril",
    "test_date": "2026-09-07"
   },
@@ -2374,6 +2378,21 @@
    "team": "FC Groningen",
    "test_date": "2026-09-12"
   },
+  "FC Midtjylland|scoring1|2026-09-14|FC Midtjylland|Br\u00f8ndby IF": {
+   "home": true,
+   "id": "FC Midtjylland|scoring1|2026-09-14|FC Midtjylland|Br\u00f8ndby IF",
+   "key": "scoring1",
+   "kickoff": "2026-09-14T17:00Z",
+   "label": "scored in",
+   "league": "Europa League",
+   "length": 8,
+   "logged_at": "2026-09-07T21:35:37+00:00",
+   "opp": "Br\u00f8ndby IF",
+   "rate": 0.16666666666666666,
+   "status": "pending",
+   "team": "FC Midtjylland",
+   "test_date": "2026-09-14"
+  },
   "FC Porto|scoring1|2026-09-04|FC Porto|Moreirense": {
    "graded_at": "2026-09-05T04:36:43+00:00",
    "home": true,
@@ -2623,6 +2642,21 @@
    "status": "pending",
    "team": "Galatasaray",
    "test_date": "2026-09-09"
+  },
+  "Goztepe|porous|2026-09-12|Goztepe|Alanyaspor": {
+   "home": false,
+   "id": "Goztepe|porous|2026-09-12|Goztepe|Alanyaspor",
+   "key": "porous",
+   "kickoff": "2026-09-12T17:00Z",
+   "label": "conceded in",
+   "league": "Turkish Super Lig",
+   "length": 8,
+   "logged_at": "2026-09-07T21:35:37+00:00",
+   "opp": "Alanyaspor",
+   "rate": 0.15306122448979592,
+   "status": "pending",
+   "team": "Goztepe",
+   "test_date": "2026-09-12"
   },
   "Hamburg SV|porous|2026-09-06|Hamburg SV|Mainz": {
    "graded_at": "2026-09-06T15:32:07+00:00",
@@ -5712,5 +5746,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-07T12:43:17+00:00"
+ "updated_at": "2026-09-07T21:35:37+00:00"
 }

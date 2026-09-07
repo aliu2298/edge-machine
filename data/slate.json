@@ -2309,6 +2309,8 @@
    },
    "date": "2026-09-07",
    "drawn_at": "2026-09-06T15:32:06+00:00",
+   "final": "0-0",
+   "graded_at": "2026-09-07T21:35:32+00:00",
    "headline": "Over 1.5 goals",
    "home": "Estoril",
    "id": "2026-09-07|Estoril|Arouca|Over 1.5 goals",
@@ -2316,7 +2318,7 @@
    "league": "Primeira Liga",
    "match": "Estoril v Arouca",
    "rank_pct": 0.8235294117647058,
-   "status": "live",
+   "status": "miss",
    "strength": 9,
    "why": "Estoril have gone over 1.5 in 6 straight; Arouca in 3 straight."
   },
@@ -2448,6 +2450,134 @@
    "strength": 11,
    "why": "LASK Linz have scored 2+ in 5 straight and AEK Athens have scored in 6 \u2014 two plus one clears 2.5."
   },
+  "2026-09-08|FC Porto|Manchester City|Over 2.5 goals": {
+   "a": "FC Porto",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Moreirense",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Acad\u00e9mico de Viseu",
+     "s": "3-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Arouca",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Rio Ave",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Alverca",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Primeira Liga",
+     "opp": "Santa Clara",
+     "s": "1-0"
+    }
+   ],
+   "a_run": 5,
+   "away": "Manchester City",
+   "b": "Manchester City",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Coventry City",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Crystal Palace",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "AFC Bournemouth",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Atl\u00e9tico Madrid",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Aston Villa",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "AFC Bournemouth",
+     "s": "1-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2260061919504644,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-08",
+   "drawn_at": "2026-09-07T21:35:32+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "FC Porto",
+   "id": "2026-09-08|FC Porto|Manchester City|Over 2.5 goals",
+   "kickoff": "2026-09-08T19:00Z",
+   "league": "Champions League",
+   "match": "FC Porto v Manchester City",
+   "rank_pct": 0.35,
+   "status": "live",
+   "strength": 11,
+   "why": "FC Porto have scored 2+ in 5 straight and Manchester City have scored in 6 \u2014 two plus one clears 2.5."
+  },
   "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals": {
    "a": "NEC Nijmegen",
    "a_key": "over25",
@@ -2577,5 +2707,5 @@
    "why": "NEC Nijmegen have gone over 2.5 in 6 straight; Excelsior in 5 straight."
   }
  },
- "updated_at": "2026-09-07T12:43:16+00:00"
+ "updated_at": "2026-09-07T21:35:32+00:00"
 }
