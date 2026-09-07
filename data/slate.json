@@ -1790,13 +1790,15 @@
    },
    "date": "2026-09-06",
    "drawn_at": "2026-09-06T13:26:06+00:00",
+   "final": "1-1",
+   "graded_at": "2026-09-07T02:56:02+00:00",
    "headline": "Over 2.5 goals",
    "home": "Espanyol",
    "id": "2026-09-06|Espanyol|Sevilla|Over 2.5 goals",
    "kickoff": "2026-09-06T19:00Z",
    "league": "La Liga",
    "match": "Espanyol v Sevilla",
-   "status": "live",
+   "status": "miss",
    "strength": 8,
    "why": "Espanyol have gone over 2.5 in 4 straight; Sevilla in 4 straight."
   },
@@ -2177,6 +2179,8 @@
    },
    "date": "2026-09-06",
    "drawn_at": "2026-09-06T15:32:06+00:00",
+   "final": "1-1",
+   "graded_at": "2026-09-07T02:56:02+00:00",
    "headline": "Over 2.5 goals",
    "home": "Juventus",
    "id": "2026-09-06|Juventus|AC Milan|Over 2.5 goals",
@@ -2184,7 +2188,7 @@
    "league": "Serie A",
    "match": "Juventus v AC Milan",
    "rank_pct": 0.525,
-   "status": "live",
+   "status": "miss",
    "strength": 9,
    "why": "AC Milan have scored 2+ in 3 straight and Juventus have scored in 6 \u2014 two plus one clears 2.5."
   },
@@ -2573,5 +2577,5 @@
    "why": "NEC Nijmegen have gone over 2.5 in 6 straight; Excelsior in 5 straight."
   }
  },
- "updated_at": "2026-09-06T20:29:24+00:00"
+ "updated_at": "2026-09-07T02:56:02+00:00"
 }

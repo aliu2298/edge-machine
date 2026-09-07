@@ -97,6 +97,7 @@
    "test_date": "2026-09-11"
   },
   "AC Milan|over15|2026-09-06|AC Milan|Juventus": {
+   "graded_at": "2026-09-07T02:56:04+00:00",
    "home": false,
    "id": "AC Milan|over15|2026-09-06|AC Milan|Juventus",
    "key": "over15",
@@ -107,7 +108,8 @@
    "logged_at": "2026-09-01T13:34:34+00:00",
    "opp": "Juventus",
    "rate": 0.15555555555555556,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "AC Milan",
    "test_date": "2026-09-06"
   },
@@ -1846,6 +1848,7 @@
    "test_date": "2026-09-12"
   },
   "Espanyol|over15|2026-09-06|Espanyol|Sevilla": {
+   "graded_at": "2026-09-07T02:56:04+00:00",
    "home": true,
    "id": "Espanyol|over15|2026-09-06|Espanyol|Sevilla",
    "key": "over15",
@@ -1856,7 +1859,8 @@
    "logged_at": "2026-09-01T13:34:34+00:00",
    "opp": "Sevilla",
    "rate": 0.19444444444444445,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "Espanyol",
    "test_date": "2026-09-06"
   },
@@ -1876,6 +1880,7 @@
    "test_date": "2026-09-12"
   },
   "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla": {
+   "graded_at": "2026-09-07T02:56:04+00:00",
    "home": true,
    "id": "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla",
    "key": "scoring1",
@@ -1886,7 +1891,8 @@
    "logged_at": "2026-08-29T19:34:27+00:00",
    "opp": "Sevilla",
    "rate": 0.20555555555555555,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "Espanyol",
    "test_date": "2026-09-06"
   },
@@ -2955,6 +2961,21 @@
    "team": "Istanbul Basaksehir",
    "test_date": "2026-09-13"
   },
+  "Juventus|scoring1|2026-09-13|Juventus|Sassuolo": {
+   "home": false,
+   "id": "Juventus|scoring1|2026-09-13|Juventus|Sassuolo",
+   "key": "scoring1",
+   "kickoff": "2026-09-13T18:45Z",
+   "label": "scored in",
+   "league": "Serie A",
+   "length": 8,
+   "logged_at": "2026-09-07T02:56:04+00:00",
+   "opp": "Sassuolo",
+   "rate": 0.16666666666666666,
+   "status": "pending",
+   "team": "Juventus",
+   "test_date": "2026-09-13"
+  },
   "KV Mechelen|leaky|2026-09-11|KV Mechelen|Anderlecht": {
    "home": true,
    "id": "KV Mechelen|leaky|2026-09-11|KV Mechelen|Anderlecht",
@@ -3797,6 +3818,21 @@
    "status": "pending",
    "team": "Orlando City SC",
    "test_date": "2026-09-09"
+  },
+  "PAOK|over15|2026-09-13|PAOK|Aris": {
+   "home": true,
+   "id": "PAOK|over15|2026-09-13|PAOK|Aris",
+   "key": "over15",
+   "kickoff": "2026-09-13T18:00Z",
+   "label": "over 1.5 goals",
+   "league": "Greek Super League",
+   "length": 8,
+   "logged_at": "2026-09-07T02:56:04+00:00",
+   "opp": "Aris",
+   "rate": 0.21428571428571427,
+   "status": "pending",
+   "team": "PAOK",
+   "test_date": "2026-09-13"
   },
   "PSV Eindhoven|over15|2026-09-05|PSV Eindhoven|Ajax Amsterdam": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -4703,6 +4739,7 @@
    "test_date": "2026-09-06"
   },
   "Sevilla|porous|2026-09-06|Sevilla|Espanyol": {
+   "graded_at": "2026-09-07T02:56:04+00:00",
    "home": false,
    "id": "Sevilla|porous|2026-09-06|Sevilla|Espanyol",
    "key": "porous",
@@ -4713,7 +4750,8 @@
    "logged_at": "2026-08-30T14:51:28+00:00",
    "opp": "Espanyol",
    "rate": 0.2111111111111111,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "Sevilla",
    "test_date": "2026-09-06"
   },
@@ -5674,5 +5712,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-06T20:29:25+00:00"
+ "updated_at": "2026-09-07T02:56:04+00:00"
 }

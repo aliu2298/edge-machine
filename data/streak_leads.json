@@ -1454,14 +1454,16 @@
     "n": 3
    },
    "date": "2026-09-06",
+   "final": "1-1",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-07T02:56:02+00:00",
    "headline": "Over 2.5 goals",
    "home": "Espanyol",
    "id": "2026-09-06|Espanyol|Sevilla|Over 2.5 goals",
    "kickoff": "2026-09-06T19:00Z",
    "league": "La Liga",
    "match": "Espanyol v Sevilla",
-   "status": "pending",
+   "status": "miss",
    "strength": 6
   },
   "2026-09-06|Everton|Manchester United|Over 1.5 goals": {
@@ -1610,14 +1612,16 @@
     "n": 3
    },
    "date": "2026-09-06",
+   "final": "1-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-07T02:56:02+00:00",
    "headline": "Over 2.5 goals",
    "home": "Juventus",
    "id": "2026-09-06|Juventus|AC Milan|Over 2.5 goals",
    "kickoff": "2026-09-06T18:45Z",
    "league": "Serie A",
    "match": "Juventus v AC Milan",
-   "status": "pending",
+   "status": "miss",
    "strength": 9
   },
   "2026-09-06|Portland Timbers|Minnesota United FC|Both teams to score": {
@@ -3432,6 +3436,30 @@
    "match": "Go Ahead Eagles v FC Groningen",
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-12|Lazio|AC Milan|Over 1.5 goals": {
+   "a": "Lazio",
+   "a_key": "scoring1",
+   "a_run": 4,
+   "away": "AC Milan",
+   "b": "AC Milan",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3653250773993808,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-07",
+   "headline": "Over 1.5 goals",
+   "home": "Lazio",
+   "id": "2026-09-12|Lazio|AC Milan|Over 1.5 goals",
+   "kickoff": "2026-09-12T16:00Z",
+   "league": "Serie A",
+   "match": "Lazio v AC Milan",
+   "status": "pending",
+   "strength": 8
   },
   "2026-09-12|Lazio|AC Milan|Over 2.5 goals": {
    "a": "AC Milan",
@@ -6874,5 +6902,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-06T20:29:24+00:00"
+ "updated_at": "2026-09-07T02:56:02+00:00"
 }
