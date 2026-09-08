@@ -2643,6 +2643,81 @@
    "team": "Galatasaray",
    "test_date": "2026-09-09"
   },
+  "Go Ahead Eagles|btts|2026-09-12|Go Ahead Eagles|FC Groningen": {
+   "home": true,
+   "id": "Go Ahead Eagles|btts|2026-09-12|Go Ahead Eagles|FC Groningen",
+   "key": "btts",
+   "kickoff": "2026-09-12T16:45Z",
+   "label": "both teams scored",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-08T13:39:10+00:00",
+   "opp": "FC Groningen",
+   "rate": 0.02040816326530612,
+   "status": "pending",
+   "team": "Go Ahead Eagles",
+   "test_date": "2026-09-12"
+  },
+  "Go Ahead Eagles|over15|2026-09-12|Go Ahead Eagles|FC Groningen": {
+   "home": true,
+   "id": "Go Ahead Eagles|over15|2026-09-12|Go Ahead Eagles|FC Groningen",
+   "key": "over15",
+   "kickoff": "2026-09-12T16:45Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-08T13:39:10+00:00",
+   "opp": "FC Groningen",
+   "rate": 0.21768707482993196,
+   "status": "pending",
+   "team": "Go Ahead Eagles",
+   "test_date": "2026-09-12"
+  },
+  "Go Ahead Eagles|over25|2026-09-12|Go Ahead Eagles|FC Groningen": {
+   "home": true,
+   "id": "Go Ahead Eagles|over25|2026-09-12|Go Ahead Eagles|FC Groningen",
+   "key": "over25",
+   "kickoff": "2026-09-12T16:45Z",
+   "label": "over 2.5 goals",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-08T13:39:10+00:00",
+   "opp": "FC Groningen",
+   "rate": 0.027210884353741496,
+   "status": "pending",
+   "team": "Go Ahead Eagles",
+   "test_date": "2026-09-12"
+  },
+  "Go Ahead Eagles|porous|2026-09-12|Go Ahead Eagles|FC Groningen": {
+   "home": true,
+   "id": "Go Ahead Eagles|porous|2026-09-12|Go Ahead Eagles|FC Groningen",
+   "key": "porous",
+   "kickoff": "2026-09-12T16:45Z",
+   "label": "conceded in",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-08T13:39:10+00:00",
+   "opp": "FC Groningen",
+   "rate": 0.1564625850340136,
+   "status": "pending",
+   "team": "Go Ahead Eagles",
+   "test_date": "2026-09-12"
+  },
+  "Go Ahead Eagles|scoring1|2026-09-12|Go Ahead Eagles|FC Groningen": {
+   "home": true,
+   "id": "Go Ahead Eagles|scoring1|2026-09-12|Go Ahead Eagles|FC Groningen",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T16:45Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-08T13:39:10+00:00",
+   "opp": "FC Groningen",
+   "rate": 0.17006802721088435,
+   "status": "pending",
+   "team": "Go Ahead Eagles",
+   "test_date": "2026-09-12"
+  },
   "Goztepe|porous|2026-09-12|Goztepe|Alanyaspor": {
    "home": false,
    "id": "Goztepe|porous|2026-09-12|Goztepe|Alanyaspor",
@@ -5746,5 +5821,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-08T11:27:03+00:00"
+ "updated_at": "2026-09-08T13:39:10+00:00"
 }
