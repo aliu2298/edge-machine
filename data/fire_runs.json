@@ -1965,6 +1965,7 @@
    "test_date": "2026-09-05"
   },
   "Excelsior|over15|2026-09-08|Excelsior|NEC Nijmegen": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "Excelsior|over15|2026-09-08|Excelsior|NEC Nijmegen",
    "key": "over15",
@@ -1975,9 +1976,25 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "NEC Nijmegen",
    "rate": 0.125,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Excelsior",
    "test_date": "2026-09-08"
+  },
+  "Excelsior|over15|2026-09-13|Excelsior|FC Utrecht": {
+   "home": true,
+   "id": "Excelsior|over15|2026-09-13|Excelsior|FC Utrecht",
+   "key": "over15",
+   "kickoff": "2026-09-13T10:15Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 13,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "FC Utrecht",
+   "rate": 0.0782312925170068,
+   "status": "pending",
+   "team": "Excelsior",
+   "test_date": "2026-09-13"
   },
   "Excelsior|scoring1|2026-09-05|Excelsior|Willem II": {
    "graded_at": "2026-09-06T04:46:57+00:00",
@@ -1997,6 +2014,7 @@
    "test_date": "2026-09-05"
   },
   "Excelsior|scoring1|2026-09-08|Excelsior|NEC Nijmegen": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "Excelsior|scoring1|2026-09-08|Excelsior|NEC Nijmegen",
    "key": "scoring1",
@@ -2007,9 +2025,25 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "NEC Nijmegen",
    "rate": 0.18229166666666666,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "Excelsior",
    "test_date": "2026-09-08"
+  },
+  "Excelsior|scoring1|2026-09-13|Excelsior|FC Utrecht": {
+   "home": true,
+   "id": "Excelsior|scoring1|2026-09-13|Excelsior|FC Utrecht",
+   "key": "scoring1",
+   "kickoff": "2026-09-13T10:15Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 10,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "FC Utrecht",
+   "rate": 0.11224489795918367,
+   "status": "pending",
+   "team": "Excelsior",
+   "test_date": "2026-09-13"
   },
   "F.C. K\u00f8benhavn|over15|2026-09-11|F.C. K\u00f8benhavn|AC Horsens": {
    "home": true,
@@ -2411,6 +2445,7 @@
    "test_date": "2026-09-04"
   },
   "FC Porto|scoring1|2026-09-08|FC Porto|Manchester City": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": true,
    "id": "FC Porto|scoring1|2026-09-08|FC Porto|Manchester City",
    "key": "scoring1",
@@ -2421,7 +2456,8 @@
    "logged_at": "2026-09-04T20:49:52+00:00",
    "opp": "Manchester City",
    "rate": 0.17708333333333334,
-   "status": "pending",
+   "result": "0-2",
+   "status": "broke",
    "team": "FC Porto",
    "test_date": "2026-09-08"
   },
@@ -3026,6 +3062,7 @@
    "test_date": "2026-09-05"
   },
   "Internazionale|scoring1|2026-09-08|Internazionale|Real Madrid": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "Internazionale|scoring1|2026-09-08|Internazionale|Real Madrid",
    "key": "scoring1",
@@ -3036,9 +3073,25 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Real Madrid",
    "rate": 0.026041666666666668,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Internazionale",
    "test_date": "2026-09-08"
+  },
+  "Internazionale|scoring1|2026-09-14|Internazionale|Udinese": {
+   "home": true,
+   "id": "Internazionale|scoring1|2026-09-14|Internazionale|Udinese",
+   "key": "scoring1",
+   "kickoff": "2026-09-14T18:45Z",
+   "label": "scored in",
+   "league": "Serie A",
+   "length": 18,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "Udinese",
+   "rate": 0.01020408163265306,
+   "status": "pending",
+   "team": "Internazionale",
+   "test_date": "2026-09-14"
   },
   "Istanbul Basaksehir|over15|2026-09-13|Istanbul Basaksehir|Amed SFK": {
    "home": false,
@@ -3161,6 +3214,7 @@
    "test_date": "2026-09-12"
   },
   "LASK Linz|over15|2026-09-08|LASK Linz|AEK Athens": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "LASK Linz|over15|2026-09-08|LASK Linz|AEK Athens",
    "key": "over15",
@@ -3171,11 +3225,13 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "AEK Athens",
    "rate": 0.03741496598639456,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "LASK Linz",
    "test_date": "2026-09-08"
   },
   "LASK Linz|scoring1|2026-09-08|LASK Linz|AEK Athens": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "LASK Linz|scoring1|2026-09-08|LASK Linz|AEK Athens",
    "key": "scoring1",
@@ -3186,7 +3242,8 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "AEK Athens",
    "rate": 0.02040816326530612,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "LASK Linz",
    "test_date": "2026-09-08"
   },
@@ -3270,6 +3327,7 @@
    "test_date": "2026-09-05"
   },
   "Manchester City|over15|2026-09-08|Manchester City|FC Porto": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "Manchester City|over15|2026-09-08|Manchester City|FC Porto",
    "key": "over15",
@@ -3280,7 +3338,8 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "FC Porto",
    "rate": 0.21354166666666666,
-   "status": "pending",
+   "result": "2-0",
+   "status": "extended",
    "team": "Manchester City",
    "test_date": "2026-09-08"
   },
@@ -3302,6 +3361,7 @@
    "test_date": "2026-09-05"
   },
   "Manchester City|scoring1|2026-09-08|Manchester City|FC Porto": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "Manchester City|scoring1|2026-09-08|Manchester City|FC Porto",
    "key": "scoring1",
@@ -3312,9 +3372,25 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "FC Porto",
    "rate": 0.057291666666666664,
-   "status": "pending",
+   "result": "2-0",
+   "status": "extended",
    "team": "Manchester City",
    "test_date": "2026-09-08"
+  },
+  "Manchester City|scoring1|2026-09-13|Manchester City|Manchester United": {
+   "home": false,
+   "id": "Manchester City|scoring1|2026-09-13|Manchester City|Manchester United",
+   "key": "scoring1",
+   "kickoff": "2026-09-13T15:30Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 15,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "Manchester United",
+   "rate": 0.023809523809523808,
+   "status": "pending",
+   "team": "Manchester City",
+   "test_date": "2026-09-13"
   },
   "Molde|btts|2026-09-06|Molde|KFUM Oslo": {
    "graded_at": "2026-09-06T18:09:14+00:00",
@@ -3494,6 +3570,7 @@
    "test_date": "2026-09-05"
   },
   "NEC Nijmegen|btts|2026-09-08|NEC Nijmegen|Excelsior": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": true,
    "id": "NEC Nijmegen|btts|2026-09-08|NEC Nijmegen|Excelsior",
    "key": "btts",
@@ -3504,9 +3581,25 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Excelsior",
    "rate": 0.036458333333333336,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-08"
+  },
+  "NEC Nijmegen|btts|2026-09-12|NEC Nijmegen|SC Cambuur": {
+   "home": false,
+   "id": "NEC Nijmegen|btts|2026-09-12|NEC Nijmegen|SC Cambuur",
+   "key": "btts",
+   "kickoff": "2026-09-12T19:00Z",
+   "label": "both teams scored",
+   "league": "Eredivisie",
+   "length": 10,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "SC Cambuur",
+   "rate": 0.013605442176870748,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-12"
   },
   "NEC Nijmegen|over15|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -3526,6 +3619,7 @@
    "test_date": "2026-09-05"
   },
   "NEC Nijmegen|over15|2026-09-08|NEC Nijmegen|Excelsior": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": true,
    "id": "NEC Nijmegen|over15|2026-09-08|NEC Nijmegen|Excelsior",
    "key": "over15",
@@ -3536,9 +3630,25 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Excelsior",
    "rate": 0.125,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-08"
+  },
+  "NEC Nijmegen|over15|2026-09-12|NEC Nijmegen|SC Cambuur": {
+   "home": false,
+   "id": "NEC Nijmegen|over15|2026-09-12|NEC Nijmegen|SC Cambuur",
+   "key": "over15",
+   "kickoff": "2026-09-12T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 13,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "SC Cambuur",
+   "rate": 0.0782312925170068,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-12"
   },
   "NEC Nijmegen|porous|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -3558,6 +3668,7 @@
    "test_date": "2026-09-05"
   },
   "NEC Nijmegen|porous|2026-09-08|NEC Nijmegen|Excelsior": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": true,
    "id": "NEC Nijmegen|porous|2026-09-08|NEC Nijmegen|Excelsior",
    "key": "porous",
@@ -3568,9 +3679,25 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Excelsior",
    "rate": 0.19270833333333334,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-08"
+  },
+  "NEC Nijmegen|porous|2026-09-12|NEC Nijmegen|SC Cambuur": {
+   "home": false,
+   "id": "NEC Nijmegen|porous|2026-09-12|NEC Nijmegen|SC Cambuur",
+   "key": "porous",
+   "kickoff": "2026-09-12T19:00Z",
+   "label": "conceded in",
+   "league": "Eredivisie",
+   "length": 10,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "SC Cambuur",
+   "rate": 0.09523809523809523,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-12"
   },
   "NEC Nijmegen|scoring1|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -3590,6 +3717,7 @@
    "test_date": "2026-09-05"
   },
   "NEC Nijmegen|scoring1|2026-09-08|NEC Nijmegen|Excelsior": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": true,
    "id": "NEC Nijmegen|scoring1|2026-09-08|NEC Nijmegen|Excelsior",
    "key": "scoring1",
@@ -3600,9 +3728,25 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Excelsior",
    "rate": 0.11458333333333333,
-   "status": "pending",
+   "result": "2-2",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-08"
+  },
+  "NEC Nijmegen|scoring1|2026-09-12|NEC Nijmegen|SC Cambuur": {
+   "home": false,
+   "id": "NEC Nijmegen|scoring1|2026-09-12|NEC Nijmegen|SC Cambuur",
+   "key": "scoring1",
+   "kickoff": "2026-09-12T19:00Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 13,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "SC Cambuur",
+   "rate": 0.061224489795918366,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-12"
   },
   "Napoli|scoring1|2026-09-09|Napoli|Arsenal": {
    "home": true,
@@ -4539,6 +4683,7 @@
    "test_date": "2026-09-04"
   },
   "Real Madrid|scoring1|2026-09-08|Real Madrid|Internazionale": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": true,
    "id": "Real Madrid|scoring1|2026-09-08|Real Madrid|Internazionale",
    "key": "scoring1",
@@ -4549,7 +4694,8 @@
    "logged_at": "2026-09-04T20:49:52+00:00",
    "opp": "Internazionale",
    "rate": 0.125,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Real Madrid",
    "test_date": "2026-09-08"
   },
@@ -5682,6 +5828,7 @@
    "test_date": "2026-09-05"
   },
   "Villarreal|porous|2026-09-08|Villarreal|Borussia Dortmund": {
+   "graded_at": "2026-09-08T21:14:49+00:00",
    "home": false,
    "id": "Villarreal|porous|2026-09-08|Villarreal|Borussia Dortmund",
    "key": "porous",
@@ -5692,9 +5839,25 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Borussia Dortmund",
    "rate": 0.020833333333333332,
-   "status": "pending",
+   "result": "2-3",
+   "status": "extended",
    "team": "Villarreal",
    "test_date": "2026-09-08"
+  },
+  "Villarreal|porous|2026-09-14|Villarreal|Real Betis": {
+   "home": true,
+   "id": "Villarreal|porous|2026-09-14|Villarreal|Real Betis",
+   "key": "porous",
+   "kickoff": "2026-09-14T19:00Z",
+   "label": "conceded in",
+   "league": "La Liga",
+   "length": 18,
+   "logged_at": "2026-09-08T21:14:49+00:00",
+   "opp": "Real Betis",
+   "rate": 0.01020408163265306,
+   "status": "pending",
+   "team": "Villarreal",
+   "test_date": "2026-09-14"
   },
   "Volos NFC|over15|2026-09-13|Volos NFC|Kalamata": {
    "home": false,
@@ -5821,5 +5984,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-08T16:42:53+00:00"
+ "updated_at": "2026-09-08T21:14:49+00:00"
 }

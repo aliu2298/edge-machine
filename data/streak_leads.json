@@ -1715,14 +1715,16 @@
     "n": 3
    },
    "date": "2026-09-08",
+   "final": "1-0",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 2.5 goals",
    "home": "AEK Athens",
    "id": "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals",
    "kickoff": "2026-09-08T16:45Z",
    "league": "Champions League",
    "match": "AEK Athens v LASK Linz",
-   "status": "pending",
+   "status": "miss",
    "strength": 11
   },
   "2026-09-08|Al Qadsiah|Al Ahli|Over 1.5 goals": {
@@ -1739,14 +1741,16 @@
     "n": 2
    },
    "date": "2026-09-08",
+   "final": "3-2",
    "first_seen": "2026-09-03",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 1.5 goals",
    "home": "Al Qadsiah",
    "id": "2026-09-08|Al Qadsiah|Al Ahli|Over 1.5 goals",
    "kickoff": "2026-09-08T18:00Z",
    "league": "Saudi Pro League",
    "match": "Al Qadsiah v Al Ahli",
-   "status": "pending",
+   "status": "hit",
    "strength": 6
   },
   "2026-09-08|FC Porto|Manchester City|FC Porto to score": {
@@ -1765,14 +1769,16 @@
     "team": "FC Porto"
    },
    "date": "2026-09-08",
+   "final": "0-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "FC Porto to score",
    "home": "FC Porto",
    "id": "2026-09-08|FC Porto|Manchester City|FC Porto to score",
    "kickoff": "2026-09-08T19:00Z",
    "league": "Champions League",
    "match": "FC Porto v Manchester City",
-   "status": "pending",
+   "status": "miss",
    "strength": 8
   },
   "2026-09-08|FC Porto|Manchester City|Over 1.5 goals": {
@@ -1789,14 +1795,16 @@
     "n": 2
    },
    "date": "2026-09-08",
+   "final": "0-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 1.5 goals",
    "home": "FC Porto",
    "id": "2026-09-08|FC Porto|Manchester City|Over 1.5 goals",
    "kickoff": "2026-09-08T19:00Z",
    "league": "Champions League",
    "match": "FC Porto v Manchester City",
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-08|FC Porto|Manchester City|Over 2.5 goals": {
@@ -1813,14 +1821,16 @@
     "n": 3
    },
    "date": "2026-09-08",
+   "final": "0-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 2.5 goals",
    "home": "FC Porto",
    "id": "2026-09-08|FC Porto|Manchester City|Over 2.5 goals",
    "kickoff": "2026-09-08T19:00Z",
    "league": "Champions League",
    "match": "FC Porto v Manchester City",
-   "status": "pending",
+   "status": "miss",
    "strength": 11
   },
   "2026-09-08|Lille|Real Betis|Over 1.5 goals": {
@@ -1837,14 +1847,16 @@
     "n": 2
    },
    "date": "2026-09-08",
+   "final": "2-3",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 1.5 goals",
    "home": "Lille",
    "id": "2026-09-08|Lille|Real Betis|Over 1.5 goals",
    "kickoff": "2026-09-08T19:00Z",
    "league": "Champions League",
    "match": "Lille v Real Betis",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals": {
@@ -1861,14 +1873,16 @@
     "n": 3
    },
    "date": "2026-09-08",
+   "final": "2-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 2.5 goals",
    "home": "NEC Nijmegen",
    "id": "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals",
    "kickoff": "2026-09-08T16:45Z",
    "league": "Eredivisie",
    "match": "NEC Nijmegen v Excelsior",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-09|Al Kholood|Al Shabab|Over 1.5 goals": {
@@ -3068,6 +3082,30 @@
    "match": "Al Khaleej v Al Nassr",
    "status": "pending",
    "strength": 9
+  },
+  "2026-09-12|Al Shabab|Al Fayha|Over 1.5 goals": {
+   "a": "Al Shabab",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "Al Fayha",
+   "b": "Al Fayha",
+   "b_key": "over15",
+   "b_run": 3,
+   "base_rate": 0.5294117647058824,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-12",
+   "first_seen": "2026-09-08",
+   "headline": "Over 1.5 goals",
+   "home": "Al Shabab",
+   "id": "2026-09-12|Al Shabab|Al Fayha|Over 1.5 goals",
+   "kickoff": "2026-09-12T18:00Z",
+   "league": "Saudi Pro League",
+   "match": "Al Shabab v Al Fayha",
+   "status": "pending",
+   "strength": 6
   },
   "2026-09-12|Athletic Club|Elche|Over 1.5 goals": {
    "a": "Athletic Club",
@@ -6928,5 +6966,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-08T16:42:51+00:00"
+ "updated_at": "2026-09-08T21:14:47+00:00"
 }

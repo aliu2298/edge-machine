@@ -2439,6 +2439,8 @@
    },
    "date": "2026-09-08",
    "drawn_at": "2026-09-06T20:29:24+00:00",
+   "final": "1-0",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 2.5 goals",
    "home": "AEK Athens",
    "id": "2026-09-08|AEK Athens|LASK Linz|Over 2.5 goals",
@@ -2446,7 +2448,7 @@
    "league": "Champions League",
    "match": "AEK Athens v LASK Linz",
    "rank_pct": 0.3488372093023256,
-   "status": "live",
+   "status": "miss",
    "strength": 11,
    "why": "LASK Linz have scored 2+ in 5 straight and AEK Athens have scored in 6 \u2014 two plus one clears 2.5."
   },
@@ -2567,6 +2569,8 @@
    },
    "date": "2026-09-08",
    "drawn_at": "2026-09-07T21:35:32+00:00",
+   "final": "0-2",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 2.5 goals",
    "home": "FC Porto",
    "id": "2026-09-08|FC Porto|Manchester City|Over 2.5 goals",
@@ -2574,7 +2578,7 @@
    "league": "Champions League",
    "match": "FC Porto v Manchester City",
    "rank_pct": 0.35,
-   "status": "live",
+   "status": "miss",
    "strength": 11,
    "why": "FC Porto have scored 2+ in 5 straight and Manchester City have scored in 6 \u2014 two plus one clears 2.5."
   },
@@ -2695,6 +2699,8 @@
    },
    "date": "2026-09-08",
    "drawn_at": "2026-09-06T20:29:24+00:00",
+   "final": "2-2",
+   "graded_at": "2026-09-08T21:14:47+00:00",
    "headline": "Over 2.5 goals",
    "home": "NEC Nijmegen",
    "id": "2026-09-08|NEC Nijmegen|Excelsior|Over 2.5 goals",
@@ -2702,10 +2708,394 @@
    "league": "Eredivisie",
    "match": "NEC Nijmegen v Excelsior",
    "rank_pct": 0.046511627906976744,
-   "status": "live",
+   "status": "hit",
    "strength": 11,
    "why": "NEC Nijmegen have gone over 2.5 in 6 straight; Excelsior in 5 straight."
+  },
+  "2026-09-09|Napoli|Arsenal|Over 1.5 goals": {
+   "a": "Napoli",
+   "a_key": "scoring1",
+   "a_label": "scored in",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Internazionale",
+     "s": "2-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Como",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Genoa",
+     "s": "2-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Aris",
+     "s": "6-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Celta Vigo",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Udinese",
+     "s": "1-0"
+    }
+   ],
+   "a_run": 6,
+   "away": "Arsenal",
+   "b": "Arsenal",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Chelsea",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Aston Villa",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Coventry City",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Real Betis",
+     "s": "1-3"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Girona",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Premier League",
+     "opp": "Crystal Palace",
+     "s": "2-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2260061919504644,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-09",
+   "drawn_at": "2026-09-08T21:14:47+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Napoli",
+   "id": "2026-09-09|Napoli|Arsenal|Over 1.5 goals",
+   "kickoff": "2026-09-09T19:00Z",
+   "league": "Champions League",
+   "match": "Napoli v Arsenal",
+   "rank_pct": 0.019230769230769232,
+   "status": "live",
+   "strength": 12,
+   "why": "Both sides have scored in every recent game \u2014 Napoli 6 straight, Arsenal 6 straight \u2014 and one apiece clears 1.5."
+  },
+  "2026-09-09|Rangers|St Mirren|Over 1.5 goals": {
+   "a": "Rangers",
+   "a_key": "scoring1",
+   "a_label": "scored in",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Motherwell",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Falkirk",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Aberdeen",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Hibernian",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Dundee United",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Falkirk",
+     "s": "5-2"
+    }
+   ],
+   "a_run": 6,
+   "away": "St Mirren",
+   "b": "St Mirren",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Celtic",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Kilmarnock",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Motherwell",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "St Johnstone",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Falkirk",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Scottish Premiership",
+     "opp": "Dundee United",
+     "s": "1-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2260061919504644,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-09",
+   "drawn_at": "2026-09-08T21:14:47+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Rangers",
+   "id": "2026-09-09|Rangers|St Mirren|Over 1.5 goals",
+   "kickoff": "2026-09-09T18:45Z",
+   "league": "Scottish Premiership",
+   "match": "Rangers v St Mirren",
+   "rank_pct": 0.0,
+   "status": "live",
+   "strength": 12,
+   "why": "Both sides have scored in every recent game \u2014 Rangers 6 straight, St Mirren 6 straight \u2014 and one apiece clears 1.5."
+  },
+  "2026-09-09|Sporting CP|Galatasaray|Over 2.5 goals": {
+   "a": "Sporting CP",
+   "a_key": "scoring",
+   "a_label": "scored 2+",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "C.D. Nacional",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Rio Ave",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Alverca",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Vit\u00f3ria de Guimaraes",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Estrela",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Gil Vicente",
+     "s": "3-0"
+    }
+   ],
+   "a_run": 6,
+   "away": "Galatasaray",
+   "b": "Galatasaray",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Istanbul Basaksehir",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Goztepe",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Erzurum BB",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "\u00c7orum FK",
+     "s": "2-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Villarreal",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Stade Rennais",
+     "s": "3-3"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.2260061919504644,
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-09-09",
+   "drawn_at": "2026-09-08T21:14:47+00:00",
+   "headline": "Over 2.5 goals",
+   "home": "Sporting CP",
+   "id": "2026-09-09|Sporting CP|Galatasaray|Over 2.5 goals",
+   "kickoff": "2026-09-09T19:00Z",
+   "league": "Champions League",
+   "match": "Sporting CP v Galatasaray",
+   "rank_pct": 0.2631578947368421,
+   "status": "live",
+   "strength": 12,
+   "why": "Sporting CP have scored 2+ in 6 straight and Galatasaray have scored in 6 \u2014 two plus one clears 2.5."
   }
  },
- "updated_at": "2026-09-08T16:42:52+00:00"
+ "updated_at": "2026-09-08T21:14:47+00:00"
 }
