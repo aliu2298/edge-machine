@@ -2829,6 +2829,8 @@
    },
    "date": "2026-09-09",
    "drawn_at": "2026-09-08T21:14:47+00:00",
+   "final": "0-1",
+   "graded_at": "2026-09-09T20:59:40+00:00",
    "headline": "Over 1.5 goals",
    "home": "Napoli",
    "id": "2026-09-09|Napoli|Arsenal|Over 1.5 goals",
@@ -2836,7 +2838,7 @@
    "league": "Champions League",
    "match": "Napoli v Arsenal",
    "rank_pct": 0.019230769230769232,
-   "status": "live",
+   "status": "miss",
    "strength": 12,
    "why": "Both sides have scored in every recent game \u2014 Napoli 6 straight, Arsenal 6 straight \u2014 and one apiece clears 1.5."
   },
@@ -2957,6 +2959,8 @@
    },
    "date": "2026-09-09",
    "drawn_at": "2026-09-08T21:14:47+00:00",
+   "final": "1-0",
+   "graded_at": "2026-09-09T20:59:40+00:00",
    "headline": "Over 1.5 goals",
    "home": "Rangers",
    "id": "2026-09-09|Rangers|St Mirren|Over 1.5 goals",
@@ -2964,7 +2968,7 @@
    "league": "Scottish Premiership",
    "match": "Rangers v St Mirren",
    "rank_pct": 0.0,
-   "status": "live",
+   "status": "miss",
    "strength": 12,
    "why": "Both sides have scored in every recent game \u2014 Rangers 6 straight, St Mirren 6 straight \u2014 and one apiece clears 1.5."
   },
@@ -3085,6 +3089,8 @@
    },
    "date": "2026-09-09",
    "drawn_at": "2026-09-08T21:14:47+00:00",
+   "final": "3-1",
+   "graded_at": "2026-09-09T20:59:40+00:00",
    "headline": "Over 2.5 goals",
    "home": "Sporting CP",
    "id": "2026-09-09|Sporting CP|Galatasaray|Over 2.5 goals",
@@ -3092,10 +3098,394 @@
    "league": "Champions League",
    "match": "Sporting CP v Galatasaray",
    "rank_pct": 0.2631578947368421,
-   "status": "live",
+   "status": "hit",
    "strength": 12,
    "why": "Sporting CP have scored 2+ in 6 straight and Galatasaray have scored in 6 \u2014 two plus one clears 2.5."
+  },
+  "2026-09-10|Chicago Fire FC|Inter Miami CF|Over 1.5 goals": {
+   "a": "Chicago Fire FC",
+   "a_key": "scoring1",
+   "a_label": "scored in",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Toronto FC",
+     "s": "4-4"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Seattle Sounders FC",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Red Bull New York",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Orlando City SC",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Portland Timbers",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Charlotte FC",
+     "s": "2-1"
+    }
+   ],
+   "a_run": 6,
+   "away": "Inter Miami CF",
+   "b": "Inter Miami CF",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Atlanta United FC",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "CF Montr\u00e9al",
+     "s": "7-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Toronto FC",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Philadelphia Union",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Nashville SC",
+     "s": "1-4"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Columbus Crew",
+     "s": "2-2"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.22910216718266255,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "drawn_at": "2026-09-09T20:59:40+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Chicago Fire FC",
+   "id": "2026-09-10|Chicago Fire FC|Inter Miami CF|Over 1.5 goals",
+   "kickoff": "2026-09-10T00:30Z",
+   "league": "MLS",
+   "match": "Chicago Fire FC v Inter Miami CF",
+   "rank_pct": 0.0,
+   "status": "live",
+   "strength": 12,
+   "why": "Both sides have scored in every recent game \u2014 Chicago Fire FC 6 straight, Inter Miami CF 6 straight \u2014 and one apiece clears 1.5."
+  },
+  "2026-09-10|Estrela|Braga|Over 1.5 goals": {
+   "a": "Estrela",
+   "a_key": "scoring1",
+   "a_label": "scored in",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "FC Famalicao",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "C.D. Nacional",
+     "s": "3-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Alverca",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Sporting CP",
+     "s": "2-2"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Al Nassr",
+     "s": "4-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Braga",
+     "s": "2-2"
+    }
+   ],
+   "a_run": 6,
+   "away": "Braga",
+   "b": "Braga",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Alverca",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Vit\u00f3ria de Guimaraes",
+     "s": "1-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Moreirense",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Estrela",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Primeira Liga",
+     "opp": "Benfica",
+     "s": "2-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Europa League",
+     "opp": "SC Freiburg",
+     "s": "1-3"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.22910216718266255,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "drawn_at": "2026-09-09T20:59:40+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Estrela",
+   "id": "2026-09-10|Estrela|Braga|Over 1.5 goals",
+   "kickoff": "2026-09-10T19:15Z",
+   "league": "Primeira Liga",
+   "match": "Estrela v Braga",
+   "rank_pct": 0.024691358024691357,
+   "status": "live",
+   "strength": 12,
+   "why": "Both sides have scored in every recent game \u2014 Estrela 6 straight, Braga 6 straight \u2014 and one apiece clears 1.5."
+  },
+  "2026-09-10|Portland Timbers|St. Louis CITY SC|Over 1.5 goals": {
+   "a": "Portland Timbers",
+   "a_key": "scoring1",
+   "a_label": "scored in",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Minnesota United FC",
+     "s": "5-4"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Austin FC",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "LAFC",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "San Diego FC",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Chicago Fire FC",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Seattle Sounders FC",
+     "s": "2-1"
+    }
+   ],
+   "a_run": 6,
+   "away": "St. Louis CITY SC",
+   "b": "St. Louis CITY SC",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Vancouver Whitecaps",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "FC Dallas",
+     "s": "3-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Houston Dynamo FC",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Sporting Kansas City",
+     "s": "1-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "San Jose Earthquakes",
+     "s": "3-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "MLS",
+     "opp": "Real Salt Lake",
+     "s": "1-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.22910216718266255,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "drawn_at": "2026-09-09T20:59:40+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Portland Timbers",
+   "id": "2026-09-10|Portland Timbers|St. Louis CITY SC|Over 1.5 goals",
+   "kickoff": "2026-09-10T02:30Z",
+   "league": "MLS",
+   "match": "Portland Timbers v St. Louis CITY SC",
+   "rank_pct": 0.012345679012345678,
+   "status": "live",
+   "strength": 12,
+   "why": "Both sides have scored in every recent game \u2014 Portland Timbers 6 straight, St. Louis CITY SC 6 straight \u2014 and one apiece clears 1.5."
   }
  },
- "updated_at": "2026-09-09T16:44:19+00:00"
+ "updated_at": "2026-09-09T20:59:40+00:00"
 }
