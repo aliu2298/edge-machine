@@ -1,132 +1,7 @@
 {
- "built_at": "2026-09-09T11:31:51+00:00",
+ "built_at": "2026-09-09T16:44:19+00:00",
  "teams_tracked": 323,
  "leads": [
-  {
-   "date": "2026-09-09",
-   "kickoff": "2026-09-09T15:55Z",
-   "league": "Saudi Pro League",
-   "match": "Al Kholood v Al Shabab",
-   "home": "Al Kholood",
-   "away": "Al Shabab",
-   "headline": "Over 1.5 goals",
-   "why": "Al Kholood have gone over 1.5 in 5 straight; Al Shabab in 3 straight.",
-   "a": "Al Kholood",
-   "b": "Al Shabab",
-   "a_run": 5,
-   "b_run": 3,
-   "a_key": "over15",
-   "b_key": "over15",
-   "a_label": "over 1.5 goals",
-   "b_label": "over 1.5 goals",
-   "strength": 8,
-   "base_rate": 0.5294117647058824,
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "a_recent": [
-    {
-     "s": "2-2",
-     "opp": "Al Fayha",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-1",
-     "opp": "Al Ahli",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Diriyah",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-2",
-     "opp": "Al Taawoun",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Ittihad",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-0",
-     "opp": "Al Fateh",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "0-2",
-     "opp": "Al Hilal",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Al Hazem",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "3-3",
-     "opp": "Al Riyadh",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-0",
-     "opp": "Al Khaleej",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "1-3",
-     "opp": "Al Qadsiah",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Al Najma",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Saudi Pro League"
-    }
-   ],
-   "market": "https://www.bovada.lv/sports/soccer/asia/saudi-arabia/professional-league/al-kholood-al-shabab-202609091155"
-  },
   {
    "date": "2026-09-09",
    "kickoff": "2026-09-09T16:45Z",
@@ -625,7 +500,7 @@
      "lg": "Premier League"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/international-club/uefa-champions-league/napoli-arsenal-202609091500"
   },
   {
    "date": "2026-09-09",
@@ -750,7 +625,7 @@
      "lg": "Club Friendly"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/international-club/uefa-champions-league/sporting-cp-galatasaray-202609091500"
   },
   {
    "date": "2026-09-09",
@@ -992,7 +867,7 @@
      "lg": "Club Friendly"
     }
    ],
-   "market": null
+   "market": "https://www.bovada.lv/sports/soccer/international-club/uefa-champions-league/liverpool-atletico-madrid-202609091500"
   },
   {
    "date": "2026-09-09",
@@ -17250,11 +17125,11 @@
    "best_rate": 0.07430340557275542,
    "longest": 5,
    "next": {
-    "opp": "Al Shabab",
-    "date": "2026-09-09",
-    "kickoff": "2026-09-09T15:55Z",
+    "opp": "Al Riyadh",
+    "date": "2026-09-13",
+    "kickoff": "2026-09-13T18:00Z",
     "league": "Saudi Pro League",
-    "home": true
+    "home": false
    },
    "recent": [
     {
@@ -26095,11 +25970,11 @@
    "best_rate": 0.44891640866873067,
    "longest": 3,
    "next": {
-    "opp": "Al Kholood",
-    "date": "2026-09-09",
-    "kickoff": "2026-09-09T15:55Z",
+    "opp": "Al Fayha",
+    "date": "2026-09-12",
+    "kickoff": "2026-09-12T18:00Z",
     "league": "Saudi Pro League",
-    "home": false
+    "home": true
    },
    "recent": [
     {
