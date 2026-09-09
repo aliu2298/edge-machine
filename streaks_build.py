@@ -84,35 +84,47 @@ STREAK_BY_KEY = {s[0]: s for s in STREAKS}
 #   team_eq   — the subject team scores exactly n
 #   btts      — both teams score
 #   total_gte / total_lte — combined goals
-# Leads and picks are TOTAL-GOALS only: over 1.5 and over 2.5. Nothing else.
+# Leads and picks are ONE market: over 1.5. Nothing else.
 #
-# WHY THE MARKET LIST IS THIS SHORT
-# ---------------------------------
+# WHY A SINGLE MARKET
+# -------------------
 # Eight bet types across two boards meant every market carried a thin, separately
 # underpowered sample, and the slate had to compare rarity ACROSS markets whose base
-# rates differ by 40 points. Two markets on one axis pool the evidence instead of
-# splitting it, and the picks board can rank on a single scale.
+# rates differ by 40 points. Narrowing to two pooled the evidence; narrowing to one
+# pools it completely, and the picks board ranks on a single scale with no cross-market
+# correction needed at all.
 #
-# WHY THESE FOUR PAIRINGS AND NOT MORE
-# ------------------------------------
+# Over 1.5 rather than over 2.5 for two reasons, one measured and one structural:
+#   * on the ledger to date it is the only market with a positive lift (+4.7pp at n=19,
+#     NOT significant), while over 2.5 ran -12.5pp at n=14. Thin evidence, and choosing
+#     the leader of five after seeing the table is a multiple-comparisons trap — this is
+#     a decision taken on top of the numbers, not one the numbers established.
+#   * a lopsided outcome is CHEAPER to test. Binomial variance is p(1-p), so at an 85%
+#     base rate each graded lead carries ~1.8x the information about a fixed percentage-
+#     point lift than one at over 2.5's 62%. Detecting +5pp needs ~760 graded leads here
+#     versus ~1470 there.
+# The cost is that over 1.5 lands ~85% of the time unflagged, so the board is publishing
+# claims that are usually right for reasons that have nothing to do with the streaks.
+# Lift against the teams' own rate is the only reading that means anything.
+#
+# WHY THESE TWO PAIRINGS AND NOT MORE
+# -----------------------------------
 # Each pairing must IMPLY its bet arithmetically. That rules out the pairing that looks
 # most natural: "{a} have scored in N straight" + "{b} have conceded in M straight" is
 # not two pieces of evidence at all — in a match between them, A scoring and B conceding
 # are THE SAME EVENT, counted twice. It also only implies one goal, so it says nothing
-# about a 1.5 line. The four below each survive the arithmetic:
+# about a 1.5 line. The two below each survive the arithmetic:
 #
 #   over 1.5  <-  both sides' matches go over 1.5           (direct)
 #   over 1.5  <-  both sides score           => 1 + 1 >= 2  (implies the line)
-#   over 2.5  <-  both sides' matches go over 2.5           (direct)
-#   over 2.5  <-  A scores 2+ and B scores   => 2 + 1 >= 3  (implies the line)
+#
+# They are not the same SHAPE of evidence, and the board should not pretend otherwise.
+# "Both sides score" is a true confluence: two DIFFERENT events about this fixture that
+# add up to clear the line. "Both go over 1.5" is evidence stacking: each leg on its own
+# already implies the bet, because this fixture is one of A's matches and one of B's.
+# Both are legitimate, but only the first matches the "one team's run meets the other's"
+# framing the Streaks board uses.
 PAIRINGS = [
-    ("over25",   "over25",   "Over 2.5 goals",
-     "{a} have gone over 2.5 in {ra} straight; {b} in {rb} straight.",
-     {"kind": "total_gte", "n": 3}),
-    ("scoring",  "scoring1", "Over 2.5 goals",
-     "{a} have scored 2+ in {ra} straight and {b} have scored in {rb} — two plus one "
-     "clears 2.5.",
-     {"kind": "total_gte", "n": 3}),
     ("over15",   "over15",   "Over 1.5 goals",
      "{a} have gone over 1.5 in {ra} straight; {b} in {rb} straight.",
      {"kind": "total_gte", "n": 2}),
@@ -418,22 +430,12 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
         seen.add(k)
         uniq.append(l)
 
-    # A stronger claim implies the weaker one: over 2.5 means over 1.5 was also met, so a
-    # fixture hitting both would show two cards for one idea. Keep the sharper.
-    #
-    # Keyed on the BET, not on the streak that produced it. The earlier version tested
-    # a_key == "over25", which only caught the direct over25+over25 pairing; once
-    # "scored 2+ AND scored" also began implying over 2.5, 34 fixtures started showing
-    # both cards again. What makes one card redundant is the CLAIM it settles, so that is
-    # what the key must be — the same lesson as the headline guard below.
-    #
-    # A totals bet has no subject team, so the fixture alone is the key.
-    def _total(l, n):
-        b = l.get("bet") or {}
-        return b.get("kind") == "total_gte" and b.get("n") == n
-
-    strong = {l["match"] for l in uniq if _total(l, 3)}
-    uniq = [l for l in uniq if not (_total(l, 2) and l["match"] in strong)]
+    # There is no longer an over-2.5 card to suppress an over-1.5 one: every pairing
+    # settles the SAME claim, so the cross-market guard that used to live here (keyed on
+    # the bet, after an earlier version keyed on the streak let 34 fixtures show both
+    # cards) is now subsumed by the headline guard below — every lead on a fixture reads
+    # "Over 1.5 goals", so that guard already collapses them to one card per fixture.
+    # Restore an explicit bet-level guard here if a second market is ever reintroduced.
 
     # Final guard: identical HEADLINE on the same fixture is the same claim however it was
     # reached. `solid` (A keeps clean sheets, B fails to score) and `blanked` (B fails to
@@ -616,15 +618,20 @@ def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
         for l in leagues if l in shown_leagues)
 
     if "leads" in tabs:
-        explain_summary = ("How a lead is chosen — and why only two lines")
+        explain_summary = ("How a lead is chosen — and why only one line")
         explain_body = f"""
 <p>A streak on its own is not an edge; plenty of good sides score freely. A <b>lead</b> is
 two runs meeting in a fixture not yet played, where the pair <b>implies the line
-arithmetically</b>:</p>
-<p>&nbsp;&nbsp;• <b>Over 1.5</b> — both sides' matches go over 1.5, or both sides score
-(1&nbsp;+&nbsp;1&nbsp;≥&nbsp;2).<br>
-&nbsp;&nbsp;• <b>Over 2.5</b> — both sides' matches go over 2.5, or one scores 2+ while the
-other scores (2&nbsp;+&nbsp;1&nbsp;≥&nbsp;3).</p>
+arithmetically</b>. Every lead settles one market, <b>Over 1.5</b>, reached two ways:</p>
+<p>&nbsp;&nbsp;• both sides score (1&nbsp;+&nbsp;1&nbsp;≥&nbsp;2) — two different events
+about this fixture that add up to clear the line.<br>
+&nbsp;&nbsp;• both sides' matches go over 1.5 — the same claim supported twice, since this
+fixture is one of each side's matches.</p>
+<p><b>Over 1.5 lands in roughly 85% of matches without any flag at all</b>, so a hit is
+not evidence of anything on its own. One market rather than two pools the whole sample
+behind a single question, and a lopsided line is cheaper to test: each graded lead here
+carries about 1.9&times; the information about a given lift than an over-2.5 one would.
+The <b>Record</b> page is where that question gets answered.</p>
 <p>That rules out the pairing that looks most natural. "A have scored in 6 straight" plus
 "B have conceded in 6 straight" reads like two pieces of evidence, but in a match between
 them <b>A scoring and B conceding are the same event</b>, counted twice — and it only

@@ -92,9 +92,11 @@ check("unknown team voids",
       T.settle_bet({"kind": "team_gte", "n": 1, "team": "Z"}, "A", "B", 1, 1), None)
 check("unknown kind voids", T.settle_bet({"kind": "nope"}, "A", "B", 1, 1), None)
 
-print("\n== find_leads: end-to-end, totals only ==")
-# Leads and picks are TOTAL-GOALS only now: over 1.5 and over 2.5, nothing else.
-# Aces score 2+ every game; Bees score every game. 2 + 1 clears 2.5.
+print("\n== find_leads: end-to-end, over 1.5 only ==")
+# Leads and picks settle ONE market now: over 1.5. Aces score 3 every game (so their
+# matches also clear 1.5); Bees win 1-0 every game, so Bees have a scored-in run but
+# NO over-1.5 run. The surviving pairing is therefore scoring1+scoring1: one apiece
+# clears 1.5.
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
@@ -112,9 +114,13 @@ check("every lead is a totals bet",
       sorted({l["bet"]["kind"] for l in leads}), ["total_gte"])
 check("no team-subject bet survives",
       [l["headline"] for l in leads if l["bet"].get("team")], [])
-check("'Over 2.5 goals' lead present", "Over 2.5 goals" in heads, True)
-o25 = [l for l in leads if l["headline"] == "Over 2.5 goals"][0]
-check("bet is total_gte 3", (o25["bet"]["kind"], o25["bet"]["n"]), ("total_gte", 3))
+check("'Over 1.5 goals' lead present", "Over 1.5 goals" in heads, True)
+o15 = [l for l in leads if l["headline"] == "Over 1.5 goals"][0]
+check("bet is total_gte 2", (o15["bet"]["kind"], o15["bet"]["n"]), ("total_gte", 2))
+# Regression guard for the narrowing: no pairing may settle any line but 1.5.
+check("no over-2.5 bet is produced",
+      [l["headline"] for l in leads if l["bet"].get("n") != 2], [])
+check("every headline is the one market", sorted(heads), ["Over 1.5 goals"])
 check("no lead points at a played fixture",
       all(l["date"] >= datetime.date.today().isoformat() for l in leads), True)
 
@@ -129,20 +135,23 @@ st = B.team_streaks(B.team_games(rows))
 leads = B.find_leads(rows, st, B.base_rates(st))
 check("one card per fixture, not one per orientation", len(leads), 1)
 
-print("\n== find_leads: over 2.5 suppresses over 1.5 on the same fixture ==")
-# Keyed on the BET, not the streak that produced it. Keying on a_key == "over25" only
-# caught the direct pairing; once "scored 2+ AND scored" also implied over 2.5, 34
-# fixtures started rendering both cards for one idea.
+print("\n== find_leads: both over-1.5 pairings collapse to one card ==")
+# Both sides score AND both sides' matches clear 1.5, so over15+over15 and
+# scoring1+scoring1 each fire on this fixture. They settle the SAME claim, so the
+# fixture must still render one card — the headline guard is what enforces it now that
+# there is no second market for a bet-level guard to separate.
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
-    rows.append(fx(d, "Aces", f"opp{i}", 3, 1))        # over 2.5 and over 1.5 every game
-    rows.append(fx(d, "Bees", f"foe{i}", 2, 1))
+    rows.append(fx(d, "Aces", f"opp{i}", 3, 1))        # total 4: over 1.5, and Aces score
+    rows.append(fx(d, "Bees", f"foe{i}", 2, 1))        # total 3: over 1.5, and Bees score
 rows.append(fx(future, "Aces", "Bees", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
 leads = B.find_leads(rows, st, B.base_rates(st))
+check("both pairings qualify", 
+      (st["Aces"]["runs"].get("over15"), st["Aces"]["runs"].get("scoring1")), (6, 6))
 check("exactly one card for the fixture", len(leads), 1)
-check("and it is the sharper line", leads[0]["bet"]["n"], 3)
+check("and it settles over 1.5", leads[0]["bet"]["n"], 2)
 
 print("\n== a form-only league never produces a lead ==")
 # Belgian/Norwegian/Greek feeds exist so a European tie has form on BOTH sides. They are
@@ -249,18 +258,20 @@ check("parses ESPN Z form",
 check("None when absent", B.kickoff_dt({}), None)
 check("None when unparseable", B.kickoff_dt({"kickoff": "not-a-date"}), None)
 
-print("\n== over 2.5 implies over 1.5: only the sharper card survives ==")
+print("\n== high-scoring form still yields exactly one over-1.5 card ==")
+# Previously this fixture produced an over-2.5 card that suppressed the over-1.5 one.
+# With a single market it must simply produce one over-1.5 card and nothing else.
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
-    rows.append(fx(d, "Goals", f"o{i}", 3, 1))     # total 4 -> over 2.5 AND over 1.5
-    rows.append(fx(d, "Nets", f"p{i}", 2, 2))      # total 4 -> both
+    rows.append(fx(d, "Goals", f"o{i}", 3, 1))     # total 4
+    rows.append(fx(d, "Nets", f"p{i}", 2, 2))      # total 4
 rows.append(fx(future, "Goals", "Nets", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
 got = B.find_leads(rows, st, B.base_rates(st))
 heads = [l["headline"] for l in got]
-check("Over 2.5 card present", "Over 2.5 goals" in heads, True)
-check("Over 1.5 card suppressed", "Over 1.5 goals" in heads, False)
+check("one card only", len(got), 1)
+check("and it is over 1.5", heads, ["Over 1.5 goals"])
 
 print("\n== one claim, one card: identical headline never duplicates ==")
 import collections as _c

@@ -25,10 +25,10 @@ OUT_DIR = os.path.join(ROOT, "public_site")
 
 # bet kind -> (corner abbreviation, suit pip). Suits distinguish market families at a
 # glance; they carry no ranking, they are just the card's index.
-# The board runs on TWO markets now, so they must be told apart at a glance — both were
-# spades before, which was fine when the suit only separated totals from team bets.
-# The rest are retained so picks drawn before the change still render their own market
-# rather than falling through to a generic star.
+# The board draws ONE market now (over 1.5, the diamond). Every other entry is retained
+# so picks and leads drawn before the narrowings still render their own market rather
+# than falling through to a generic star — 50 over-2.5 leads are still pending in the
+# ledger and will grade into the record long after the board stopped publishing them.
 MARKETS = {
     "total_gte:3":  ("O2.5", "♠"),
     "total_gte:2":  ("O1.5", "♦"),
@@ -373,14 +373,14 @@ final score · all times CT · updated {esc(now)}</div>
 
 {settling_html}
 
-<div class="note">Picks are drawn from the <b>Streaks</b> board and are
-<b>total goals only — over 1.5 or over 2.5</b>. A lead is two runs meeting in one
-fixture, and the pair has to <b>imply the line arithmetically</b>: both sides scoring
-means 1 + 1 clears 1.5; one side scoring twice while the other scores at all clears 2.5.
-Rarest first <b>within its own line</b> — the two are not on the same scale, since the
-most unusual over-1.5 confluence that exists is still a 22% base rate — and
-<b>one pick per fixture and one per team</b>, so the three are independent rather than
-three angles on the same match.
+<div class="note">Picks are drawn from the <b>Streaks</b> board and settle
+<b>one market: over 1.5 goals</b>. A lead is two runs meeting in one fixture, and the
+pair has to <b>imply the line arithmetically</b> — both sides scoring means 1 + 1
+clears 1.5. Rarest first, and <b>one pick per fixture and one per team</b>, so the
+three are independent rather than three angles on the same match.
+<b>Over 1.5 lands in about 85% of matches anyway</b>, so a hit here is unremarkable on
+its own; the only number worth reading is the lift against what these teams manage
+without the flag, on the <b>Record</b> page.
 A slot refills <b>at kickoff</b>, not when the pick finally settles — a fixture that has
 started cannot be backed and its market is gone, so holding the slot until a final score
 arrives just fills the board with cards you cannot use. The pick keeps settling in the

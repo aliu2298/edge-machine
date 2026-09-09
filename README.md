@@ -154,21 +154,34 @@ Croatian, Ukrainian, Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani, Armenia
 a data limit, and `verify_coverage.py` now names them rather than letting the gap pass as
 silence.
 
-**Leads and picks are total-goals only: over 1.5 and over 2.5.** Eight bet types meant
-every market carried a thin, separately underpowered sample, and the slate had to compare
-rarity across markets whose base rates differ by 40 points. Two markets on one axis pool
-the evidence instead of splitting it.
+**Leads and picks settle one market: over 1.5.** Eight bet types meant every market
+carried a thin, separately underpowered sample; narrowing to two pooled it, and narrowing
+to one pools it completely, so the whole board answers a single question.
 
-A **lead** is not a streak on its own — plenty of good sides score freely. It is a
-*confluence*: two runs meeting in a fixture that has not been played yet. Both legs must
+Over 1.5 rather than over 2.5 for two reasons, one measured and one structural:
+
+* on the ledger to date it is the only market with a **positive lift** — +4.7pp at n=19,
+  **not significant** — while over 2.5 ran −12.5pp at n=14. That is thin evidence, and
+  picking the leader of five markets after seeing the table is a multiple-comparisons
+  trap. This was a decision taken *on top of* the numbers, not one they established.
+* a lopsided line is **cheaper to test**. Binomial variance is p(1−p), so at an 85% base
+  rate each graded lead carries ~1.9× the information about a fixed percentage-point lift
+  than one at over 2.5's 62%. Detecting +5pp needs ~760 graded leads here versus ~1470.
+
+The cost is that **over 1.5 lands in ~85% of matches with no flag at all**, so the board
+now publishes claims that are usually right for reasons having nothing to do with streaks.
+Lift against the teams' own rate is the only reading that means anything — see Record.
+
+A **lead** is not a streak on its own — plenty of good sides score freely. Both legs must
 run at least 3 games, and **the pair must imply the bet arithmetically**:
 
-| line | evidence |
+| evidence | shape |
 |---|---|
-| Over 1.5 | both sides' matches go over 1.5 |
-| Over 1.5 | both sides score — 1 + 1 ≥ 2 |
-| Over 2.5 | both sides' matches go over 2.5 |
-| Over 2.5 | A scores 2+ and B scores — 2 + 1 ≥ 3 |
+| both sides score — 1 + 1 ≥ 2 | a true *confluence*: two different events about this fixture, adding up to clear the line |
+| both sides' matches go over 1.5 | evidence *stacking*: each leg alone already implies the bet, since this fixture is one of each side's matches |
+
+Only the first matches the "one side's run meets the other's" framing. Both are legitimate
+evidence; they are not the same logical shape, and the board says which is which.
 
 That rules out the pairing that looks most natural. "A have scored in N straight" plus "B
 have conceded in M straight" reads like two pieces of evidence, but in a match between them
