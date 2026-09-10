@@ -516,6 +516,31 @@ ok(not any(q["source"] == "polymarket" for q in d["quotes"]),
    "the market never self-quotes on soccer, where the price comes from a book instead")
 
 # ---------------------------------------------------------------------------
+print("\nfeed health check")
+# ---------------------------------------------------------------------------
+import sandbox_build as BUILD
+
+# Silent on a healthy run, or the reader learns to ignore it.
+healthy = {"coverage": {"cricket": {"oddspedia": 4}, "nfl": {"covers": 12},
+                        "mlb": {"covers": 1}}, "quotes": []}
+eq(BUILD.feed_health(healthy), "", "no warning when every source reported something")
+
+# One quiet sport is an empty fixture list, not a broken feed.
+quiet = {"coverage": {"nfl": {"covers": 0}, "mlb": {"covers": 3}}, "quotes": []}
+eq(BUILD.feed_health(quiet), "",
+   "a source quiet in ONE sport is not flagged — NFL has no games on a Tuesday")
+
+# Dark everywhere is the real failure and must be loud.
+dark = {"coverage": {"nfl": {"covers": 0}, "mlb": {"covers": 0}}, "quotes": []}
+out = BUILD.feed_health(dark)
+ok("Feed check" in out and "Covers" in out,
+   "a source empty across every sport it covers IS flagged as a broken feed")
+
+# A source never asked about must not be reported as dark.
+eq(BUILD.feed_health({"coverage": {"nfl": {}}, "quotes": []}), "",
+   "a source with no coverage entry at all is not accused of being down")
+
+# ---------------------------------------------------------------------------
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

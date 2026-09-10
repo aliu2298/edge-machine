@@ -43,6 +43,38 @@ def cls(x):
 
 
 
+
+def feed_health(d):
+    """Name any connected source that returned NOTHING on the last run.
+
+    The coverage grid this replaces was removed for being noise on a healthy day, but
+    the failure it guarded against is real and silent: a source whose feed has broken
+    and a source with nothing to say produce the identical empty row, and the board
+    would keep reporting "no bets" for weeks without anyone knowing why.
+
+    Flagged only when a source is empty across EVERY sport it covers. A single quiet
+    sport is just an empty fixture list — NFL has no games on a Tuesday — and warning
+    about that would train the reader to ignore this line.
+    """
+    cov = d.get("coverage") or {}
+    if not cov:
+        return ""
+    dark = []
+    for name, meta in S.SOURCES.items():
+        if not meta["connected"] or name == "polymarket":
+            continue
+        counts = [(cov.get(sp) or {}).get(name) for sp in meta["sports"]]
+        seen = [c for c in counts if c is not None]
+        if seen and not any(seen):
+            dark.append(meta["label"])
+    if not dark:
+        return ""
+    return (f'<div class="note warn"><b>Feed check:</b> '
+            f'{esc(", ".join(dark))} returned nothing anywhere on the last run. That is '
+            f'a broken feed, not an absence of opinion — until it is fixed, the row '
+            f'below understates that source rather than describing it.</div>')
+
+
 def sport_matrix(d):
     """Source x sport: ROI where there is enough settled to say, sample size always shown.
 
@@ -299,6 +331,7 @@ skill. {esc(verdict)}</div>
 </div>
 
 <h2>Which tipster is profitable, and at what?</h2>
+{feed_health(d)}
 {sport_matrix(d)}
 <div class="note"><b>ROI per source, per sport</b>, at the price actually available.
 Greyed figures are under {MIN_N} settled bets and mean nothing yet — the sample is
