@@ -2758,14 +2758,16 @@
     "n": 2
    },
    "date": "2026-09-10",
+   "final": "1-1",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-10T20:56:20+00:00",
    "headline": "Over 1.5 goals",
    "home": "Fenerbahce",
    "id": "2026-09-10|Fenerbahce|AS Roma|Over 1.5 goals",
    "kickoff": "2026-09-10T16:45Z",
    "league": "Champions League",
    "match": "Fenerbahce v AS Roma",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-10|Fenerbahce|AS Roma|Over 2.5 goals": {
@@ -2782,14 +2784,16 @@
     "n": 3
    },
    "date": "2026-09-10",
+   "final": "1-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-10T20:56:20+00:00",
    "headline": "Over 2.5 goals",
    "home": "Fenerbahce",
    "id": "2026-09-10|Fenerbahce|AS Roma|Over 2.5 goals",
    "kickoff": "2026-09-10T16:45Z",
    "league": "Champions League",
    "match": "Fenerbahce v AS Roma",
-   "status": "pending",
+   "status": "miss",
    "strength": 10
   },
   "2026-09-10|Minnesota United FC|FC Dallas|Minnesota United FC to score 2+": {
@@ -7688,5 +7692,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-10T16:30:17+00:00"
+ "updated_at": "2026-09-10T20:56:20+00:00"
 }

@@ -240,6 +240,7 @@
    "test_date": "2026-09-05"
   },
   "AS Roma|over15|2026-09-10|AS Roma|Fenerbahce": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": false,
    "id": "AS Roma|over15|2026-09-10|AS Roma|Fenerbahce",
    "key": "over15",
@@ -250,11 +251,28 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Fenerbahce",
    "rate": 0.03125,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "AS Roma",
    "test_date": "2026-09-10"
   },
+  "AS Roma|over15|2026-09-14|AS Roma|Torino": {
+   "home": false,
+   "id": "AS Roma|over15|2026-09-14|AS Roma|Torino",
+   "key": "over15",
+   "kickoff": "2026-09-14T16:30Z",
+   "label": "over 1.5 goals",
+   "league": "Serie A",
+   "length": 17,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Torino",
+   "rate": 0.023809523809523808,
+   "status": "pending",
+   "team": "AS Roma",
+   "test_date": "2026-09-14"
+  },
   "AS Roma|over25|2026-09-10|AS Roma|Fenerbahce": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": false,
    "id": "AS Roma|over25|2026-09-10|AS Roma|Fenerbahce",
    "key": "over25",
@@ -265,7 +283,8 @@
    "logged_at": "2026-09-06T04:46:57+00:00",
    "opp": "Fenerbahce",
    "rate": 0.03125,
-   "status": "pending",
+   "result": "1-1",
+   "status": "broke",
    "team": "AS Roma",
    "test_date": "2026-09-10"
   },
@@ -1471,6 +1490,21 @@
    "team": "Bodo/Glimt",
    "test_date": "2026-09-10"
   },
+  "Bodo/Glimt|scoring1|2026-09-14|Bodo/Glimt|Sandefjord": {
+   "home": true,
+   "id": "Bodo/Glimt|scoring1|2026-09-14|Bodo/Glimt|Sandefjord",
+   "key": "scoring1",
+   "kickoff": "2026-09-14T17:00Z",
+   "label": "scored in",
+   "league": "Eliteserien",
+   "length": 12,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Sandefjord",
+   "rate": 0.08163265306122448,
+   "status": "pending",
+   "team": "Bodo/Glimt",
+   "test_date": "2026-09-14"
+  },
   "Braga|scoring1|2026-08-31|Braga|Vit\u00f3ria de Guimaraes": {
    "graded_at": "2026-08-31T22:54:37+00:00",
    "home": true,
@@ -1519,6 +1553,21 @@
    "status": "pending",
    "team": "Braga",
    "test_date": "2026-09-10"
+  },
+  "Braga|scoring1|2026-09-14|Braga|Estoril": {
+   "home": true,
+   "id": "Braga|scoring1|2026-09-14|Braga|Estoril",
+   "key": "scoring1",
+   "kickoff": "2026-09-14T19:45Z",
+   "label": "scored in",
+   "league": "Primeira Liga",
+   "length": 17,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Estoril",
+   "rate": 0.017006802721088437,
+   "status": "pending",
+   "team": "Braga",
+   "test_date": "2026-09-14"
   },
   "Brentford|over15|2026-09-05|Brentford|Sunderland": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -2911,6 +2960,7 @@
    "test_date": "2026-09-13"
   },
   "Fenerbahce|over15|2026-09-10|Fenerbahce|AS Roma": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": true,
    "id": "Fenerbahce|over15|2026-09-10|Fenerbahce|AS Roma",
    "key": "over15",
@@ -2921,11 +2971,28 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "AS Roma",
    "rate": 0.06802721088435375,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "Fenerbahce",
    "test_date": "2026-09-10"
   },
+  "Fenerbahce|over15|2026-09-14|Fenerbahce|Gaziantep FK": {
+   "home": false,
+   "id": "Fenerbahce|over15|2026-09-14|Fenerbahce|Gaziantep FK",
+   "key": "over15",
+   "kickoff": "2026-09-14T17:00Z",
+   "label": "over 1.5 goals",
+   "league": "Champions League",
+   "length": 14,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Gaziantep FK",
+   "rate": 0.05442176870748299,
+   "status": "pending",
+   "team": "Fenerbahce",
+   "test_date": "2026-09-14"
+  },
   "Fenerbahce|scoring1|2026-09-10|Fenerbahce|AS Roma": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": true,
    "id": "Fenerbahce|scoring1|2026-09-10|Fenerbahce|AS Roma",
    "key": "scoring1",
@@ -2936,9 +3003,25 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "AS Roma",
    "rate": 0.11904761904761904,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "Fenerbahce",
    "test_date": "2026-09-10"
+  },
+  "Fenerbahce|scoring1|2026-09-14|Fenerbahce|Gaziantep FK": {
+   "home": false,
+   "id": "Fenerbahce|scoring1|2026-09-14|Fenerbahce|Gaziantep FK",
+   "key": "scoring1",
+   "kickoff": "2026-09-14T17:00Z",
+   "label": "scored in",
+   "league": "Champions League",
+   "length": 11,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Gaziantep FK",
+   "rate": 0.09863945578231292,
+   "status": "pending",
+   "team": "Fenerbahce",
+   "test_date": "2026-09-14"
   },
   "Feyenoord Rotterdam|scoring1|2026-08-30|Feyenoord Rotterdam|ADO Den Haag": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -3847,6 +3930,21 @@
    "team": "Manchester City",
    "test_date": "2026-09-13"
   },
+  "Manchester United|over15|2026-09-13|Manchester United|Manchester City": {
+   "home": true,
+   "id": "Manchester United|over15|2026-09-13|Manchester United|Manchester City",
+   "key": "over15",
+   "kickoff": "2026-09-13T15:30Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Manchester City",
+   "rate": 0.22108843537414966,
+   "status": "pending",
+   "team": "Manchester United",
+   "test_date": "2026-09-13"
+  },
   "Molde|btts|2026-09-06|Molde|KFUM Oslo": {
    "graded_at": "2026-09-06T18:09:14+00:00",
    "home": true,
@@ -4596,6 +4694,7 @@
    "test_date": "2026-09-05"
   },
   "PSV Eindhoven|over15|2026-09-10|PSV Eindhoven|Shakhtar Donetsk": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": true,
    "id": "PSV Eindhoven|over15|2026-09-10|PSV Eindhoven|Shakhtar Donetsk",
    "key": "over15",
@@ -4606,9 +4705,25 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Shakhtar Donetsk",
    "rate": 0.026041666666666668,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "PSV Eindhoven",
    "test_date": "2026-09-10"
+  },
+  "PSV Eindhoven|over15|2026-09-13|PSV Eindhoven|Sparta Rotterdam": {
+   "home": true,
+   "id": "PSV Eindhoven|over15|2026-09-13|PSV Eindhoven|Sparta Rotterdam",
+   "key": "over15",
+   "kickoff": "2026-09-13T18:00Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 18,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Sparta Rotterdam",
+   "rate": 0.017006802721088437,
+   "status": "pending",
+   "team": "PSV Eindhoven",
+   "test_date": "2026-09-13"
   },
   "PSV Eindhoven|over25|2026-08-30|PSV Eindhoven|FC Utrecht": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -4645,6 +4760,7 @@
    "test_date": "2026-09-05"
   },
   "PSV Eindhoven|over25|2026-09-10|PSV Eindhoven|Shakhtar Donetsk": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": true,
    "id": "PSV Eindhoven|over25|2026-09-10|PSV Eindhoven|Shakhtar Donetsk",
    "key": "over25",
@@ -4655,7 +4771,8 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Shakhtar Donetsk",
    "rate": 0.005208333333333333,
-   "status": "pending",
+   "result": "1-1",
+   "status": "broke",
    "team": "PSV Eindhoven",
    "test_date": "2026-09-10"
   },
@@ -4694,6 +4811,7 @@
    "test_date": "2026-09-05"
   },
   "PSV Eindhoven|scoring1|2026-09-10|PSV Eindhoven|Shakhtar Donetsk": {
+   "graded_at": "2026-09-10T20:56:22+00:00",
    "home": true,
    "id": "PSV Eindhoven|scoring1|2026-09-10|PSV Eindhoven|Shakhtar Donetsk",
    "key": "scoring1",
@@ -4704,9 +4822,25 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Shakhtar Donetsk",
    "rate": 0.026041666666666668,
-   "status": "pending",
+   "result": "1-1",
+   "status": "extended",
    "team": "PSV Eindhoven",
    "test_date": "2026-09-10"
+  },
+  "PSV Eindhoven|scoring1|2026-09-13|PSV Eindhoven|Sparta Rotterdam": {
+   "home": true,
+   "id": "PSV Eindhoven|scoring1|2026-09-13|PSV Eindhoven|Sparta Rotterdam",
+   "key": "scoring1",
+   "kickoff": "2026-09-13T18:00Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 18,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Sparta Rotterdam",
+   "rate": 0.013605442176870748,
+   "status": "pending",
+   "team": "PSV Eindhoven",
+   "test_date": "2026-09-13"
   },
   "Panetolikos|over15|2026-09-13|Panetolikos|Panathinaikos": {
    "home": false,
@@ -5159,6 +5293,21 @@
    "status": "pending",
    "team": "RB Leipzig",
    "test_date": "2026-09-10"
+  },
+  "RB Leipzig|over15|2026-09-13|RB Leipzig|Hamburg SV": {
+   "home": true,
+   "id": "RB Leipzig|over15|2026-09-13|RB Leipzig|Hamburg SV",
+   "key": "over15",
+   "kickoff": "2026-09-13T13:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 9,
+   "logged_at": "2026-09-10T20:56:22+00:00",
+   "opp": "Hamburg SV",
+   "rate": 0.1836734693877551,
+   "status": "pending",
+   "team": "RB Leipzig",
+   "test_date": "2026-09-13"
   },
   "RB Salzburg|scoring1|2026-09-11|RB Salzburg|SV Josko Ried": {
    "home": false,
@@ -6809,5 +6958,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-10T16:30:21+00:00"
+ "updated_at": "2026-09-10T20:56:22+00:00"
 }
