@@ -3219,6 +3219,8 @@
    },
    "date": "2026-09-10",
    "drawn_at": "2026-09-09T20:59:40+00:00",
+   "final": "1-1",
+   "graded_at": "2026-09-10T04:51:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "Chicago Fire FC",
    "id": "2026-09-10|Chicago Fire FC|Inter Miami CF|Over 1.5 goals",
@@ -3226,9 +3228,137 @@
    "league": "MLS",
    "match": "Chicago Fire FC v Inter Miami CF",
    "rank_pct": 0.0,
-   "status": "live",
+   "status": "hit",
    "strength": 12,
    "why": "Both sides have scored in every recent game \u2014 Chicago Fire FC 6 straight, Inter Miami CF 6 straight \u2014 and one apiece clears 1.5."
+  },
+  "2026-09-10|Como|RB Leipzig|Over 1.5 goals": {
+   "a": "Como",
+   "a_key": "scoring1",
+   "a_label": "scored in",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Genoa",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Napoli",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Udinese",
+     "s": "1-1"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Liverpool",
+     "s": "0-0"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Serie A",
+     "opp": "Cremonese",
+     "s": "4-1"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Serie A",
+     "opp": "Parma",
+     "s": "1-0"
+    }
+   ],
+   "a_run": 3,
+   "away": "RB Leipzig",
+   "b": "RB Leipzig",
+   "b_key": "scoring1",
+   "b_label": "scored in",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "Werder Bremen",
+     "s": "1-3"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Bundesliga",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "s": "3-0"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Bayern Munich",
+     "s": "1-3"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": false,
+     "lg": "Club Friendly",
+     "opp": "Leeds United",
+     "s": "0-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": false,
+     "lg": "Bundesliga",
+     "opp": "SC Freiburg",
+     "s": "1-4"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": false,
+     "lg": "Bundesliga",
+     "opp": "St. Pauli",
+     "s": "2-1"
+    }
+   ],
+   "b_run": 3,
+   "base_rate": 0.4520123839009288,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "drawn_at": "2026-09-10T04:51:23+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Como",
+   "id": "2026-09-10|Como|RB Leipzig|Over 1.5 goals",
+   "kickoff": "2026-09-10T19:00Z",
+   "league": "Champions League",
+   "match": "Como v RB Leipzig",
+   "rank_pct": 0.88,
+   "status": "live",
+   "strength": 6,
+   "why": "Both sides have scored in every recent game \u2014 Como 3 straight, RB Leipzig 3 straight \u2014 and one apiece clears 1.5."
   },
   "2026-09-10|Estrela|Braga|Over 1.5 goals": {
    "a": "Estrela",
@@ -3358,6 +3488,134 @@
    "strength": 12,
    "why": "Both sides have scored in every recent game \u2014 Estrela 6 straight, Braga 6 straight \u2014 and one apiece clears 1.5."
   },
+  "2026-09-10|Fenerbahce|AS Roma|Over 1.5 goals": {
+   "a": "Fenerbahce",
+   "a_key": "over15",
+   "a_label": "over 1.5 goals",
+   "a_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Besiktas",
+     "s": "1-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Samsunspor",
+     "s": "2-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Konyaspor",
+     "s": "4-2"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Turkish Super Lig",
+     "opp": "Genclerbirligi",
+     "s": "1-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "LASK Linz",
+     "s": "2-1"
+    },
+    {
+     "comp": false,
+     "h": true,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Pogon Szczecin",
+     "s": "4-0"
+    }
+   ],
+   "a_run": 6,
+   "away": "AS Roma",
+   "b": "AS Roma",
+   "b_key": "over15",
+   "b_label": "over 1.5 goals",
+   "b_recent": [
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Atalanta",
+     "s": "2-1"
+    },
+    {
+     "comp": true,
+     "h": false,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Lecce",
+     "s": "4-0"
+    },
+    {
+     "comp": true,
+     "h": true,
+     "hit": true,
+     "lg": "Serie A",
+     "opp": "Fiorentina",
+     "s": "4-0"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Borussia Dortmund",
+     "s": "2-2"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Brighton & Hove Albion",
+     "s": "0-3"
+    },
+    {
+     "comp": false,
+     "h": false,
+     "hit": true,
+     "lg": "Club Friendly",
+     "opp": "Newport County",
+     "s": "4-1"
+    }
+   ],
+   "b_run": 6,
+   "base_rate": 0.30340557275541796,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-10",
+   "drawn_at": "2026-09-10T04:51:23+00:00",
+   "headline": "Over 1.5 goals",
+   "home": "Fenerbahce",
+   "id": "2026-09-10|Fenerbahce|AS Roma|Over 1.5 goals",
+   "kickoff": "2026-09-10T16:45Z",
+   "league": "Champions League",
+   "match": "Fenerbahce v AS Roma",
+   "rank_pct": 0.30666666666666664,
+   "status": "live",
+   "strength": 12,
+   "why": "Fenerbahce have gone over 1.5 in 6 straight; AS Roma in 6 straight."
+  },
   "2026-09-10|Portland Timbers|St. Louis CITY SC|Over 1.5 goals": {
    "a": "Portland Timbers",
    "a_key": "scoring1",
@@ -3475,6 +3733,8 @@
    },
    "date": "2026-09-10",
    "drawn_at": "2026-09-09T20:59:40+00:00",
+   "final": "2-2",
+   "graded_at": "2026-09-10T04:51:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "Portland Timbers",
    "id": "2026-09-10|Portland Timbers|St. Louis CITY SC|Over 1.5 goals",
@@ -3482,10 +3742,10 @@
    "league": "MLS",
    "match": "Portland Timbers v St. Louis CITY SC",
    "rank_pct": 0.012345679012345678,
-   "status": "live",
+   "status": "hit",
    "strength": 12,
    "why": "Both sides have scored in every recent game \u2014 Portland Timbers 6 straight, St. Louis CITY SC 6 straight \u2014 and one apiece clears 1.5."
   }
  },
- "updated_at": "2026-09-09T20:59:40+00:00"
+ "updated_at": "2026-09-10T04:51:23+00:00"
 }
