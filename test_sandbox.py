@@ -249,6 +249,12 @@ ODDS = {"items": [{"provider": {"name": "DraftKings"},
                    "awayTeamOdds": {"moneyLine": 142}}]}
 
 
+# The scoreboard host is load-bearing and was the entire cause of both ESPN sources
+# returning zero in production. site.api 403s from the runner; site.web.api does not.
+eq(S.ESPN_SITE, "https://site.web.api.espn.com",
+   "ESPN scoreboard uses the host that is not server-side blocked")
+
+
 def fake_get(url, **kw):
     if "scoreboard" in url:
         return SCOREBOARD

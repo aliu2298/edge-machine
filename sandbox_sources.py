@@ -147,7 +147,7 @@ def _get(url, tries=3, timeout=30):
             return json.loads(out.stdout)
     except Exception:
         pass
-    raise RuntimeError(f"fetch failed: {url} ({last})")
+    raise RuntimeError(f"fetch failed [{type(last).__name__}: {last}] {url}")
 
 
 # ---------------------------------------------------------------------------
@@ -576,6 +576,13 @@ def fetch_kalshi(sport):
     return out
 
 
+# site.api.espn.com has 403-ed every request since 2026-08-08 — this machine AND the
+# GitHub runner, any user-agent. It is a server-side block, not a header problem, and
+# streaks_fetch.py hit the same wall and moved to this host. site.web.api serves the
+# identical payload. sports.core.api (predictor/odds) is unaffected.
+ESPN_SITE = "https://site.web.api.espn.com"
+
+
 def _espn_events(sport, days=4):
     """ESPN scoreboard events across a small date window."""
     site, _ = ESPN_PATHS[sport]
@@ -584,7 +591,7 @@ def _espn_events(sport, days=4):
     for i in range(days):
         d = (base + timedelta(days=i)).strftime("%Y%m%d")
         try:
-            sb = _get(f"https://site.api.espn.com/apis/site/v2/sports/{site}/scoreboard?dates={d}",
+            sb = _get(f"{ESPN_SITE}/apis/site/v2/sports/{site}/scoreboard?dates={d}",
                       tries=2)
         except RuntimeError as e:
             if not evs:
@@ -722,7 +729,7 @@ def _get_html(url, tries=2, timeout=30):
             return out.stdout
     except Exception:
         pass
-    raise RuntimeError(f"html fetch failed: {url} ({last})")
+    raise RuntimeError(f"html fetch failed [{type(last).__name__}: {last}] {url}")
 
 
 def _text(h):
