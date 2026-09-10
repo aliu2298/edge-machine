@@ -31,7 +31,7 @@
   "table_tennis": {
    "polymarket": 40,
    "polymarket_listed": 341,
-   "polymarket_priced": 28
+   "polymarket_priced": 32
   },
   "tennis": {
    "kalshi": 1,
@@ -42,8 +42,8 @@
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
-  "runs": 3,
-  "updated": "2026-09-10T04:57:37+00:00"
+  "runs": 4,
+  "updated": "2026-09-10T04:59:17+00:00"
  },
  "quotes": [
   {
@@ -5219,6 +5219,32 @@
    "status": "open",
    "untraded": false,
    "url": "https://polymarket.com/event/mlb-hou-phi-2026-09-10"
+  },
+  {
+   "bet": false,
+   "date": "2026-09-10",
+   "edge": 0.0,
+   "id": "polymarket:4411806",
+   "label": "Lyman Oleksandr vs Prylepa Dmytro",
+   "logged": "2026-09-10T04:58:10+00:00",
+   "market_id": "4411806",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.51,
+   "price_b": 0.49,
+   "prob_a": 0.51,
+   "result": null,
+   "settled": null,
+   "side_a": "Lyman Oleksandr",
+   "side_b": "Prylepa Dmytro",
+   "source": "polymarket",
+   "sport": "table_tennis",
+   "stake": 0.0,
+   "start": "2026-09-10T06:30:00+00:00",
+   "status": "open",
+   "untraded": false,
+   "url": "https://polymarket.com/event/setkameua-lymanol-dmytro-2026-09-10"
   }
  ],
  "retired": {}
