@@ -1,0 +1,101 @@
+name: Sandbox Tracker
+
+# Logs what every connected prediction source says about six sports, settles the old
+# calls against real market resolutions, and republishes public_site/sandbox.html.
+#
+# Runs on GitHub's servers on purpose. The whole method depends on a prediction being
+# stamped BEFORE the contest starts, so it cannot depend on a laptop being awake.
+
+on:
+  schedule:
+    # Every 6h at :37, twenty minutes after the boards run at :17. The offset is not
+    # cosmetic — the two workflows share a concurrency group (see below), so starting
+    # them together would just make one sit in the queue.
+    - cron: "37 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Deliberately the SAME group as refresh-boards.yml. Concurrency groups are matched by
+# name across the whole repository, so this makes the two workflows mutually exclusive
+# without editing the existing one. They both publish the same public_site directory to
+# the same Pages site, and two overlapping deployments would race to decide whose
+# checkout wins. Queue, never cancel: GitHub's own guidance is that an in-progress
+# production deployment must be allowed to finish.
+concurrency:
+  group: refresh-boards
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      # stdlib only — no pip install step needed
+
+      # Correctness gate, BEFORE anything is fetched or written. Every assertion in here
+      # covers a failure that is invisible on the finished page: a flipped probability, a
+      # price booked against the wrong game of a baseball series, a prop market mistaken
+      # for a moneyline. Strict on purpose — this one fails the run.
+      - name: Logic tests
+        run: python3 test_sandbox.py
+
+      # Fetch every source, log new pre-match quotes, settle whatever has resolved.
+      # Never fails the run: a source going dark should show up as an empty column on the
+      # coverage table, which is exactly what that table is for. A hard failure here
+      # would instead mean no GRADING happened either, so losing the run costs more than
+      # a partial one.
+      - name: Collect predictions and settle results
+        run: python3 sandbox_track.py || echo "::warning::tracker run failed — keeping the previous ledger"
+
+      - name: Build the tracker page
+        run: python3 sandbox_build.py || echo "::warning::page build failed — keeping the previous page"
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+
+          PUBLISHED="public_site/sandbox.html data/sandbox_ledger.json"
+
+          for attempt in 1 2 3; do
+            git add $PUBLISHED
+            if git diff --cached --quiet; then
+              echo "no changes — nothing to deploy"
+              break
+            fi
+            git commit -m "Sandbox tracker ($(date -u +%Y-%m-%d\ %H:%MZ))"
+            if git push origin main; then
+              echo "published on attempt $attempt"
+              break
+            fi
+
+            # A rejection here means refresh-boards published while this run was working.
+            # Rebase, do NOT reset: unlike the boards, this ledger is not derivable from
+            # anything — it is the only record of what each source said and when, and a
+            # reset would silently throw away calls that have already been graded. The
+            # rebase is safe because the two workflows write disjoint files: nothing else
+            # in the repo touches sandbox.html or sandbox_ledger.json.
+            echo "push rejected — rebasing onto the newer main (attempt $attempt)"
+            git pull --rebase origin main
+          done
+
+      # Publishes the whole site, so it carries the boards along with it. Safe because
+      # the shared concurrency group means refresh-boards cannot be mid-flight, and the
+      # rebase above leaves this checkout at origin/main.
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: public_site
+      - id: deployment
+        uses: actions/deploy-pages@v5

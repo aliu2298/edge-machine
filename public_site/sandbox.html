@@ -1,0 +1,215 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sandbox Tracker</title>
+<meta name="description" content="Which sports prediction sources actually make money, tracked at real prices across six sports.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
+--pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
+letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+color:var(--mut);margin:34px 0 12px}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.sm{font-size:11px}
+.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
+.nav a:hover{color:var(--fg);border-color:var(--mut)}
+.nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+.note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
+border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.note b{color:var(--fg);font-weight:600}
+.note.warn{border-color:#f0b42944;background:#f0b4290a}
+.tiles{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}
+.tile{flex:1;min-width:112px;background:var(--card);border:1px solid var(--bd);
+border-radius:10px;padding:11px 13px}
+.tile b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+.tile span{font-size:11px;color:var(--mut)}
+.tbl{background:var(--card);border:1px solid var(--bd);border-radius:11px;
+overflow-x:auto;margin-bottom:13px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid #1a1f2b;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.st,.sig{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.05em;
+border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}
+.st.won,.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
+.st.lost,.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
+.st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
+footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
+@media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
+</style></head><body><div class="wrap">
+
+<h1>Sandbox Tracker</h1>
+<div class="sub">Which prediction source actually makes money · six sports · updated 2026-09-10 04:43 UTC</div>
+<div class="nav"><a href="./">Picks</a><a href="./leads.html">Leads</a>
+<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
+<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
+
+<div class="note warn">Every source here is scored the same way: it states a
+<b>probability</b> on a contest that will <b>resolve</b>, logged <b>before the start</b>
+and stamped with the <b>price that existed at that moment</b>. When the source disagrees
+with that price by 3pp or more, the board books a flat
+$100 bet at it and settles for real when the market resolves. A tipster page
+that just says "back the Yankees" cannot be scored against anything, which is why the
+famous ones are listed at the bottom as <b>not connected</b> rather than quietly given a
+number. Nothing is settled yet, so no source has a record. The first fixtures settle within a day of the first run.</div>
+
+<div class="tiles">
+<div class="tile"><b>178</b><span>predictions logged</span></div>
+<div class="tile"><b>2</b><span>bets placed</span></div>
+<div class="tile"><b>0</b><span>settled</span></div>
+<div class="tile"><b class="mut">—</b><span>net P/L</span></div>
+<div class="tile"><b class="mut">—</b><span>ROI on turnover</span></div>
+<div class="tile"><b>2</b><span>bets running</span></div>
+</div>
+
+<h2>Which source is profitable?</h2>
+<div class="tbl"><table>
+<tr><th>Source</th><th class="num">Logged</th><th class="num">Bets</th>
+<th class="num">Settled</th><th class="num">Hit</th><th class="num">ROI</th>
+<th class="num">P/L</th><th class="num">Brier</th><th>Verdict</th></tr>
+<tr>
+<td><b>Polymarket</b><div class="mut sm">Prediction market · polymarket.com</div></td>
+<td class="num">134</td><td class="num">0</td>
+<td class="num">0</td>
+<td class="num">—</td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num mut">—</td>
+<td class="num">—</td>
+<td><span class="sig n">NO READ</span></td></tr>
+<tr>
+<td><b>Kalshi</b><div class="mut sm">Prediction market · kalshi.com</div></td>
+<td class="num">44</td><td class="num">2</td>
+<td class="num">0</td>
+<td class="num">—</td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num mut">—</td>
+<td class="num">—</td>
+<td><span class="sig n">NO READ</span></td></tr>
+<tr>
+<td><b>ESPN FPI / Matchup Predictor</b><div class="mut sm">Statistical model · espn.com</div></td>
+<td class="num">0</td><td class="num">0</td>
+<td class="num">0</td>
+<td class="num">—</td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num mut">—</td>
+<td class="num">—</td>
+<td><span class="sig n">NO READ</span></td></tr>
+<tr>
+<td><b>DraftKings (via ESPN)</b><div class="mut sm">Sportsbook · draftkings.com</div></td>
+<td class="num">0</td><td class="num">0</td>
+<td class="num">0</td>
+<td class="num">—</td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num mut">—</td>
+<td class="num">—</td>
+<td><span class="sig n">NO READ</span></td></tr>
+</table></div>
+<div class="note"><b>ROI</b> is profit over everything staked, at the price actually
+available. <b>Brier</b> scores raw accuracy on every logged probability, bet or not —
+lower is better, 0.25 is a coin flip — and it is the more honest column early on, because
+it uses every prediction instead of only the small slice that cleared the edge threshold.
+<b>Polymarket cannot win this table.</b> Its own price is the price everything is
+measured against, so its ROI is blank by construction; it is here as the accuracy bar and
+as the control that proves the ledger is wired up correctly.</div>
+
+<h2>Does Polymarket really cover these sports?</h2>
+<div class="tbl"><table>
+<tr><th>Sport</th><th class="num">Listed</th><th class="num">Actually priced</th>
+<th>Status</th><th>Reading</th></tr>
+<tr><td><b>Tennis</b></td>
+<td class="num">237</td><td class="num">199</td>
+<td><span class="sig y">LIVE</span></td><td class="mut">a deep, actively priced book</td></tr><tr><td><b>Table Tennis</b></td>
+<td class="num">341</td><td class="num">35</td>
+<td><span class="sig n">MOSTLY PLACEHOLDER</span></td><td class="mut">listed in bulk, but only 10% carries a real price</td></tr><tr><td><b>Boxing</b></td>
+<td class="num">9</td><td class="num">8</td>
+<td><span class="sig n">THIN</span></td><td class="mut">a real book, but only a handful of contests</td></tr><tr><td><b>NFL</b></td>
+<td class="num">14</td><td class="num">14</td>
+<td><span class="sig y">LIVE</span></td><td class="mut">a deep, actively priced book</td></tr><tr><td><b>Cricket</b></td>
+<td class="num">43</td><td class="num">32</td>
+<td><span class="sig y">LIVE</span></td><td class="mut">a deep, actively priced book</td></tr><tr><td><b>MLB</b></td>
+<td class="num">45</td><td class="num">43</td>
+<td><span class="sig y">LIVE</span></td><td class="mut">a deep, actively priced book</td></tr></table></div>
+<div class="note">Counted live from Polymarket's public gamma API on the last run, not
+from documentation. <b>Listed</b> counts pre-match head-to-head markets — the moneyline
+only; inning props, handicaps and over/unders are excluded, and so are season-long
+futures. <b>Actually priced</b> drops the ones still sitting at an untouched 50/50, which
+is the difference between a market existing and a market meaning something. All six
+sports are present; the two that are thin are thin in different ways, and only this
+column tells them apart. Tracking then takes the <b>40 deepest books per sport per
+run</b> — the shallow end of a 300-contest table-tennis list is quoted prices nobody has
+tested, and carrying it would bloat the ledger without sharpening a single verdict.</div>
+
+<h2>Source coverage, last run</h2>
+<div class="tbl"><table>
+<tr><th>Sport</th><th class="num">Polymarket</th><th class="num">Kalshi</th><th class="num">ESPN FPI / Matchup Predictor</th><th class="num">DraftKings</th></tr>
+<tr><td><b>Tennis</b></td><td class="num pos">40</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Table Tennis</b></td><td class="num pos">40</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Boxing</b></td><td class="num pos">9</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>NFL</b></td><td class="num pos">14</td><td class="num pos">14</td><td class="num neg">0</td><td class="num neg">0</td></tr><tr><td><b>Cricket</b></td><td class="num pos">40</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>MLB</b></td><td class="num pos">40</td><td class="num pos">29</td><td class="num neg">0</td><td class="num neg">0</td></tr></table></div>
+<div class="note">What each feed returned on the most recent run, after matching to a
+contest. <b>This row is the smoke alarm.</b> A source that has quietly broken and a
+source that simply has no edge produce the same empty leaderboard, so a red
+<span class="neg">0</span> where a number is expected means the feed is down — not that
+the source is uninterested.</div>
+
+<h2>Running now (2)</h2>
+<div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr><td class="mut">2026-09-12</td>
+<td>MLB</td>
+<td><a href="https://polymarket.com/event/mlb-cle-min-2026-09-11" target="_blank" rel="noopener">Cleveland Guardians vs Minnesota Twins</a></td>
+<td>Kalshi</td>
+<td><b>Cleveland Guardians</b></td>
+<td class="num">0.48</td>
+<td class="num pos">+4.8%</td></tr>
+<tr><td class="mut">2026-09-12</td>
+<td>MLB</td>
+<td><a href="https://polymarket.com/event/mlb-sd-sf-2026-09-11" target="_blank" rel="noopener">San Diego Padres vs San Francisco Giants</a></td>
+<td>Kalshi</td>
+<td><b>San Diego Padres</b></td>
+<td class="num">0.55</td>
+<td class="num pos">+4.3%</td></tr></table></div>
+
+<h2>Settled (0)</h2>
+<div class="note">Nothing settled yet. Bets settle when Polymarket resolves the market, usually within hours of the contest finishing.</div>
+
+<h2>Declared but not connected</h2>
+<div class="tbl"><table>
+<tr><th>Source</th><th>Why it is not scored</th></tr>
+<tr><td><b>The Odds API (bookmaker consensus)</b>
+<div class="mut sm">Sportsbook consensus · the-odds-api.com</div></td>
+<td class="mut">Needs ODDS_API_KEY in repo secrets. Adds real bookmaker prices for the four sports where DraftKings-via-ESPN does not reach. Wired but dormant.</td></tr>
+<tr><td><b>Forebet / PredictZ / tipster pages</b>
+<div class="mut sm">Tipster site · various</div></td>
+<td class="mut">Deliberately not connected. These publish a PICK, not a probability, and rarely a timestamp — so a pick cannot be tied to the price that existed when it was made, and any ROI computed from one is unfalsifiable.</td></tr>
+</table></div>
+
+<h2>Method</h2>
+<div class="note">
+<b>Universe.</b> Every pre-match head-to-head market Polymarket lists across the six
+sports. Polymarket is the spine because it is the only feed that covers all six, carries
+a tradeable price, and resolves itself — which also makes it the settlement oracle for
+boxing and table tennis, where ESPN has no data at all.<br><br>
+<b>Logging.</b> One quote per source per contest, taken the first time that contest is
+seen and never revised. Re-quoting as the price drifts would let a source keep whichever
+version of its opinion aged well.<br><br>
+<b>Betting.</b> Flat $100, no staking plan, only when the source disagrees with
+the price by 3pp or more and the price sits between
+0.05 and 0.95. Longshots are still scored for accuracy but
+never backed: at 0.02 one fluke pays 50x and would own the board.<br><br>
+<b>Settlement.</b> Polymarket's own resolution. A market that closes without a clean
+outcome is voided at zero, never guessed.<br><br>
+<b>What would falsify a source.</b> A positive ROI over fewer than 30 settled bets
+is not a finding, and the board says NO READ until it clears that. Beating the market's
+price is the only test that counts here — a high hit rate on heavy favourites is not an
+edge, it is just backing the favourite.
+</div>
+
+<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+</div></body></html>
