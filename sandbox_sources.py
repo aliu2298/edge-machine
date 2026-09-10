@@ -30,6 +30,7 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 
 # The six sports the board tracks. Key is internal; label is what the page prints.
 SPORTS = {
+    "soccer":       "Soccer",
     "tennis":       "Tennis",
     "table_tennis": "Table Tennis",
     "boxing":       "Boxing",
@@ -42,7 +43,7 @@ SPORTS = {
 # six returns open, tradeable markets. table-tennis is the surprise — Polymarket carries
 # a deep book of Ukrainian/WTT singles matches.
 PM_TAGS = {
-    "tennis": "tennis", "table_tennis": "table-tennis", "boxing": "boxing",
+    "soccer": "soccer", "tennis": "tennis", "table_tennis": "table-tennis", "boxing": "boxing",
     "nfl": "nfl", "cricket": "cricket", "mlb": "mlb",
 }
 
@@ -60,7 +61,10 @@ KALSHI_SERIES = {"nfl": "KXNFLGAME", "mlb": "KXMLBGAME", "tennis": "KXATPMATCH"}
 SOURCES = {
     "polymarket": dict(
         label="Polymarket", kind="Prediction market", connected=True,
-        site="polymarket.com", sports=list(SPORTS),
+        site="polymarket.com",
+        # Not soccer: that spine is ESPN + DraftKings, so Polymarket neither prices nor
+        # quotes it, and claiming coverage would show an empty cell as a failure.
+        sports=[s for s in SPORTS if s != "soccer"],
         note="The benchmark. Its own price is what every other source is priced against, "
              "so it cannot beat itself — a flat ~0% ROI here is the expected result and "
              "is the control that proves the ledger is wired up correctly."),
@@ -85,6 +89,15 @@ SOURCES = {
         note="A published computer pick per game, free and dated. It states a projected "
              "SCORE rather than a probability, so it is backed at the market price with "
              "no edge filter and gets no Brier column — a pick cannot be calibrated."),
+    "oddspedia": dict(
+        label="Oddspedia community tips", kind="Tipster site", connected=True,
+        site="oddspedia.com", sports=["cricket"],
+        note="A public tipster community — named accounts with a visible record — "
+             "reduced to a majority consensus per match, because its tipsters routinely "
+             "take opposite sides of the same game. The only source found that tips the "
+             "niche cricket Polymarket lists. Cloudflare-protected, so it comes through "
+             "the headless browser. Tips carry no date, so each is resolved to the "
+             "soonest fixture between those two sides."),
     "tennisexplorer": dict(
         label="Tennis Explorer", kind="Tipster site", connected=False,
         site="tennisexplorer.com", sports=["tennis"],
@@ -104,7 +117,7 @@ SOURCES = {
              "deliberately does not run."),
     "scores24": dict(
         label="Scores24 (editorial tips)", kind="Tipster site", connected=True,
-        site="scores24.live", sports=list(SPORTS),
+        site="scores24.live", sports=["soccer", "tennis", "nfl", "mlb"],
         note="Named human tipsters publishing a written call per match. Cloudflare 403s "
              "every plain request, so this is the one source fetched through a real "
              "headless browser. Only its MATCH-WINNER tips are scored — its totals and "
@@ -833,6 +846,156 @@ def fetch_tennisexplorer(sport):
 
 
 
+
+# ---------------------------------------------------------------------------
+# Soccer — a second spine, because Polymarket does not price it
+# ---------------------------------------------------------------------------
+#
+# Every other sport here hangs off Polymarket: it supplies the price and it settles
+# itself. Soccer cannot, and the numbers are not close. Polymarket lists one or two
+# soccer MATCHES a day — Chinese Super League and the Colombian top flight — against
+# hundreds of futures markets. There is no Premier League match to bet into. Meanwhile
+# soccer is the sport tipsters overwhelmingly publish on: Scores24 alone had 187 soccer
+# tips against 30 for tennis. Hanging soccer off Polymarket would have produced a column
+# that never matched anything.
+#
+# So soccer runs on ESPN instead: ESPN lists the fixture, DraftKings prices it through
+# ESPN's odds feed, and ESPN's own final score settles it. The rest of this repo already
+# depends on that same feed for the streaks board, so it is well-proven ground.
+#
+# The important structural difference is that soccer is a THREE-way market. A backed side
+# loses to the draw as well as to defeat, which is why the draw price is carried and why
+# a soccer pick is never treated as the complement of the other side.
+# Chosen to overlap with what tipsters actually publish on, not just the marquee
+# leagues. The first soccer tips that arrived were for a USL side and a Copa
+# Sudamericana tie — outside the original ten, so they matched nothing. A tip against a
+# fixture the board never listed is a tip silently thrown away.
+SOCCER_LEAGUES = {
+    "eng.1": "Premier League", "eng.2": "Championship", "esp.1": "La Liga",
+    "ger.1": "Bundesliga", "ita.1": "Serie A", "fra.1": "Ligue 1",
+    "ned.1": "Eredivisie", "por.1": "Primeira Liga", "tur.1": "Super Lig",
+    "usa.1": "MLS", "usa.usl.1": "USL Championship", "mex.1": "Liga MX",
+    "bra.1": "Brasileirao", "arg.1": "Liga Profesional",
+    "uefa.champions": "Champions League", "uefa.europa": "Europa League",
+    "conmebol.sudamericana": "Copa Sudamericana",
+}
+
+
+def _decimal(ml):
+    """American moneyline -> decimal odds (the multiple returned on a winning stake)."""
+    try:
+        ml = float(ml)
+    except (TypeError, ValueError):
+        return None
+    if ml == 0:
+        return None
+    return 1 + (ml / 100.0) if ml > 0 else 1 + (100.0 / abs(ml))
+
+
+def fetch_soccer(horizon_days=4, cap=MAX_PER_SPORT):
+    """Upcoming fixtures across the tracked leagues, priced by DraftKings via ESPN.
+
+    Prices are the RAW implied probabilities, vig included, because the payout has to be
+    the price a bettor could actually have taken. De-vigging here would quietly inflate
+    every settled return.
+    """
+    now = datetime.now(timezone.utc)
+    horizon = now + timedelta(days=horizon_days)
+    rows = []
+    for slug, league in SOCCER_LEAGUES.items():
+        for i in range(horizon_days + 1):
+            d = (now + timedelta(days=i)).strftime("%Y%m%d")
+            try:
+                sb = _get(f"{ESPN_SITE}/apis/site/v2/sports/soccer/{slug}/scoreboard?dates={d}",
+                          tries=2, timeout=25)
+            except RuntimeError:
+                continue
+            for ev in sb.get("events") or []:
+                sides = _espn_sides(ev)
+                if not sides:
+                    continue
+                home, away, cid = sides
+                comp = (ev.get("competitions") or [{}])[0]
+                if (comp.get("status") or {}).get("type", {}).get("state") != "pre":
+                    continue
+                try:
+                    start = datetime.fromisoformat(
+                        str(ev.get("date")).replace("Z", "+00:00")[:25])
+                    if start.tzinfo is None:
+                        start = start.replace(tzinfo=timezone.utc)
+                except (ValueError, TypeError):
+                    continue
+                if not (now - timedelta(minutes=5) <= start <= horizon):
+                    continue
+                try:
+                    o = _get(f"https://sports.core.api.espn.com/v2/sports/soccer/leagues/"
+                             f"{slug}/events/{ev['id']}/competitions/{cid}/odds",
+                             tries=2, timeout=20)
+                except RuntimeError:
+                    continue
+
+                dh = da = dd = None
+                for it in o.get("items") or []:
+                    dh = dh or _decimal((it.get("homeTeamOdds") or {}).get("moneyLine"))
+                    da = da or _decimal((it.get("awayTeamOdds") or {}).get("moneyLine"))
+                    draw = it.get("drawOdds")
+                    dd = dd or _decimal(draw.get("moneyLine") if isinstance(draw, dict) else draw)
+                if not dh or not da:
+                    continue
+
+                rows.append(dict(
+                    sport="soccer", venue="espn",
+                    market_id=f"espn:{slug}:{ev['id']}",
+                    label=f"{home} vs {away}", side_a=home, side_b=away,
+                    price_a=1.0 / dh, price_b=1.0 / da,
+                    price_draw=(1.0 / dd) if dd else None,
+                    start=start.isoformat(), date=start.strftime("%Y-%m-%d"),
+                    volume=0.0, untraded=False, league=league,
+                    url=f"https://www.espn.com/soccer/match/_/gameId/{ev['id']}",
+                ))
+                time.sleep(0.1)
+
+    rows.sort(key=lambda r: r["start"])
+    return rows[:cap] if cap else rows
+
+
+def resolve_soccer(market_id):
+    """Settle a soccer fixture from ESPN's final score.
+
+    Returns 'a' (home win), 'b' (away win), 'draw', or None while unfinished. A backed
+    side loses to the draw, so the draw is a real third outcome and never a void.
+    """
+    try:
+        _, slug, eid = market_id.split(":", 2)
+    except ValueError:
+        return None
+    try:
+        sb = _get(f"{ESPN_SITE}/apis/site/v2/sports/soccer/{slug}/scoreboard?event={eid}",
+                  tries=2, timeout=25)
+    except RuntimeError:
+        return None
+    for ev in sb.get("events") or []:
+        if str(ev.get("id")) != str(eid):
+            continue
+        comp = (ev.get("competitions") or [{}])[0]
+        if not (comp.get("status") or {}).get("type", {}).get("completed"):
+            return None
+        hs = as_ = None
+        for t in comp.get("competitors") or []:
+            try:
+                sc = int(t.get("score"))
+            except (TypeError, ValueError):
+                return None
+            if t.get("homeAway") == "home":
+                hs = sc
+            else:
+                as_ = sc
+        if hs is None or as_ is None:
+            return None
+        return "a" if hs > as_ else ("b" if as_ > hs else "draw")
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Scores24 (behind Cloudflare — needs the headless browser)
 # ---------------------------------------------------------------------------
@@ -842,11 +1005,38 @@ def fetch_tennisexplorer(sport):
 # it bothers with moves with the calendar — boxing has nothing on an ordinary Tuesday and
 # may well have tips on a fight week. Asking for all six costs one page load each and
 # lets the coverage table report an honest zero instead of an omission.
-SCORES24_SLUG = {
-    "tennis": "tennis", "table_tennis": "table-tennis", "boxing": "boxing",
-    "nfl": "american-football", "cricket": "cricket", "mlb": "baseball",
-}
+# Verified live: Scores24's cricket, boxing and table-tennis listing pages contain only
+# a generic cross-sport rail, no tips of their own. Requesting them cost a page load and
+# a Cloudflare challenge each to learn nothing, so they are not requested. Their absence
+# is recorded in this source's `sports` list rather than as a nightly empty fetch.
+SCORES24_SLUG = {"soccer": "soccer", "tennis": "tennis",
+                 "nfl": "american-football", "mlb": "baseball"}
 SCORES24_URL = "https://scores24.live/en/predictions/{slug}"
+
+
+_browser_cache = None
+
+
+def _browser_pages():
+    """Every browser-fetched page, in ONE session, once per process.
+
+    Both Cloudflare-protected sources are scraped together. Two sessions meant two
+    browser launches and two sets of challenges for the same wall clock budget, and this
+    step is already the slowest thing in the run.
+    """
+    global _browser_cache
+    if _browser_cache is not None:
+        return _browser_cache
+    import sandbox_browser as B
+    # Oddspedia first, and paced. It tolerates roughly one page before it starts serving
+    # the interstitial, so whichever of its pages goes last tends to be lost — and its
+    # soccer tips are the ones worth protecting, since soccer is where tipsters actually
+    # publish. Scores24 is far more tolerant and goes at the back of the queue.
+    jobs = ([(ODDSPEDIA_URL.format(slug=s), B.TIPS_JS) for s in ODDSPEDIA_SLUG.values()]
+            + [(SCORES24_URL.format(slug=s), B.ROW_JS) for s in SCORES24_SLUG.values()])
+    _browser_cache = B.fetch_rows(jobs, pace_ms=6000)
+    return _browser_cache
+
 
 _scores24_cache = None
 
@@ -862,9 +1052,8 @@ def _scores24_all():
         return _scores24_cache
 
     import sandbox_browser as B
+    pages = _browser_pages()
     urls = {sport: SCORES24_URL.format(slug=slug) for sport, slug in SCORES24_SLUG.items()}
-    pages = B.fetch_rows(list(urls.values()))
-
     _scores24_cache = {}
     for sport, url in urls.items():
         picks = []
@@ -883,10 +1072,94 @@ def fetch_scores24(sport):
     return _scores24_all().get(sport, [])
 
 
+
+# ---------------------------------------------------------------------------
+# Oddspedia community tips (behind Cloudflare — needs the headless browser)
+# ---------------------------------------------------------------------------
+
+# Oddspedia runs a public tipster community: named accounts with a visible tip count and
+# running ROI, posting a selection per match. It is the one source found that covers the
+# NICHE cricket Polymarket actually lists — European Cricket League sides like Dublin
+# Guardians and Belfast Wolves, not just Test nations.
+# Cricket only. Oddspedia's community covers the niche cricket nothing else touches, but
+# its other sports were empty or duplicated a source already connected — and every extra
+# page in one session makes the whole batch more likely to be challenged. Its table
+# tennis page was checked repeatedly and carries no tips at all.
+# Cricket only, and that is a hard limit rather than a preference: Oddspedia serves
+# roughly ONE page per browser session before it starts returning the interstitial —
+# reordering and pacing to 6s did not move it. Cricket is the page worth spending that
+# single request on, because it is the only source found anywhere that tips the niche
+# cricket Polymarket lists. Soccer tips come from Scores24 instead.
+ODDSPEDIA_SLUG = {"cricket": "cricket"}
+ODDSPEDIA_URL = "https://oddspedia.com/{slug}/tips"
+
+_oddspedia_cache = None
+
+
+def _oddspedia_all():
+    """Scrape every sport's community tips ONCE per process, reduced to a consensus."""
+    global _oddspedia_cache
+    if _oddspedia_cache is not None:
+        return _oddspedia_cache
+
+    import sandbox_browser as B
+    pages = _browser_pages()
+    urls = {sp: ODDSPEDIA_URL.format(slug=slug) for sp, slug in ODDSPEDIA_SLUG.items()}
+    _oddspedia_cache = {}
+    for sport, url in urls.items():
+        tips = [t for t in (B.parse_tip(r) for r in (pages.get(url) or [])) if t]
+        _oddspedia_cache[sport] = consensus(tips)
+    return _oddspedia_cache
+
+
+def consensus(tips):
+    """Reduce many individual tips to one call per contest.
+
+    Community tipsters contradict each other constantly — on the live cricket page two
+    of them had opposite sides of Belfast Wolves vs Amsterdam Flames. Logging both would
+    let "Oddspedia" be simultaneously right and wrong about the same match and guarantee
+    a ~0% ROI that measured nothing. So the community votes: the majority side is the
+    call, and an even split is no call at all rather than a coin flip.
+    """
+    groups = {}
+    for t in tips:
+        key = frozenset({frozenset(tokens(t["a"])), frozenset(tokens(t["b"]))})
+        g = groups.setdefault(key, dict(a=t["a"], b=t["b"], a_votes=0, b_votes=0,
+                                        tipsters=[]))
+        # Orient every tip to the FIRST spelling of the fixture seen, since a later
+        # tipster may list the same match the other way round.
+        flip = sim(t["a"], g["a"]) < sim(t["a"], g["b"])
+        side = t["pick"]
+        if flip:
+            side = "b" if side == "a" else "a"
+        g[f"{side}_votes"] += 1
+        if t.get("tipster"):
+            g["tipsters"].append(t["tipster"])
+
+    out = []
+    for g in groups.values():
+        if g["a_votes"] == g["b_votes"]:
+            continue
+        pick = "a" if g["a_votes"] > g["b_votes"] else "b"
+        n = g["a_votes"] + g["b_votes"]
+        out.append(dict(a=g["a"], b=g["b"], pick=pick, date=None,
+                        detail=f"{max(g['a_votes'], g['b_votes'])}/{n} tipsters"
+                               + (f" ({', '.join(g['tipsters'][:3])})" if g["tipsters"] else "")))
+    return out
+
+
+def fetch_oddspedia(sport):
+    """Oddspedia's community consensus for one sport."""
+    if sport not in ODDSPEDIA_SLUG:
+        return []
+    return _oddspedia_all().get(sport, [])
+
+
 CHALLENGERS = {
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
     "draftkings": fetch_draftkings,
     "covers": fetch_covers,
     "scores24": fetch_scores24,
+    "oddspedia": fetch_oddspedia,
 }

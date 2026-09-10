@@ -450,6 +450,72 @@ finally:
     B.available = real_avail
 
 # ---------------------------------------------------------------------------
+print("\nsoccer (three-way market, ESPN spine)")
+# ---------------------------------------------------------------------------
+close(S._decimal(140), 2.40, "positive moneyline to decimal odds")
+close(S._decimal(-200), 1.50, "negative moneyline to decimal odds")
+ok(S._decimal(0) is None and S._decimal(None) is None, "a missing line yields no price")
+
+def soccer_quote(**kw):
+    q = quote(sport="soccer", venue="espn", market_id="espn:eng.1:1",
+              id="scores24:espn:eng.1:1", source="scores24",
+              side_a="Leeds United", side_b="Newcastle United",
+              price_a=1 / 2.40, price_b=1 / 2.85, pick="a", price=1 / 2.40,
+              bet=True, prob_a=None, edge=None)
+    q.update(kw)
+    return q
+
+# The draw is the whole point of a three-way market.
+d = {"quotes": [soccer_quote()], "meta": {}, "coverage": {}}
+real = S.resolve_soccer
+S.resolve_soccer = lambda mid: "draw"
+T.grade(d, verbose=False)
+eq(d["quotes"][0]["status"], "lost",
+   "a backed side LOSES to the draw — refunding it would flatter every soccer tipster")
+close(d["quotes"][0]["pnl"], -100.0, "and it costs the full stake")
+
+d = {"quotes": [soccer_quote()], "meta": {}, "coverage": {}}
+S.resolve_soccer = lambda mid: "a"
+T.grade(d, verbose=False)
+eq(d["quotes"][0]["status"], "won", "the backed home side settles as won")
+close(d["quotes"][0]["pnl"], round(100.0 * (2.40 - 1), 2),
+      "paying the decimal odds actually available, vig included")
+
+# Settlement must be routed by venue: a soccer fixture has no Polymarket market.
+d = {"quotes": [soccer_quote()], "meta": {}, "coverage": {}}
+S.resolve_soccer = lambda mid: "b"
+called = []
+real_pm = S.resolve_polymarket
+S.resolve_polymarket = lambda mid: called.append(mid) or "a"
+T.grade(d, verbose=False)
+S.resolve_polymarket = real_pm
+eq(called, [], "an ESPN-venue quote is never settled against Polymarket")
+eq(d["quotes"][0]["status"], "lost", "the away win beats the backed home side")
+S.resolve_soccer = real
+
+# A probability on a three-way market must not have its complement inferred.
+three = dict(market_id="espn:eng.1:9", sport="soccer", label="Leeds vs Newcastle",
+             side_a="Leeds United", side_b="Newcastle United",
+             price_a=0.40, price_b=0.35, price_draw=0.25, untraded=False,
+             venue="espn",
+             start=(datetime.now(timezone.utc) + timedelta(days=1)).isoformat(),
+             date="2026-09-14", volume=0.0, url="")
+d = {"quotes": [], "meta": {}, "coverage": {}}
+saved = S.CHALLENGERS
+# scores24 is registered for soccer; espn_fpi is not, and a source that does not
+# cover the sport is correctly skipped before it can be logged.
+S.CHALLENGERS = {"scores24": lambda sp: [dict(a="Leeds United", b="Newcastle United",
+                                              prob_a=0.20, date="2026-09-14")]}
+T.publish(d, {"soccer": [three]}, {}, verbose=False)
+S.CHALLENGERS = saved
+logged = [q for q in d["quotes"] if q["source"] == "scores24"]
+eq(len(logged), 1, "the three-way quote is logged")
+eq(logged[0]["pick"], None,
+   "rating the home side BELOW its price is not an away bet — 1-P(home) contains the draw")
+ok(not any(q["source"] == "polymarket" for q in d["quotes"]),
+   "the market never self-quotes on soccer, where the price comes from a book instead")
+
+# ---------------------------------------------------------------------------
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

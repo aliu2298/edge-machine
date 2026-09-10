@@ -88,7 +88,6 @@ def match_quotes(universe, quotes, day_slack=1):
                 continue
             if q.get("prob_a") is None and q.get("pick") is None:
                 continue
-            dist = 0
             if row["date"] and q.get("date"):
                 try:
                     dist = abs((datetime.strptime(row["date"], "%Y-%m-%d")
@@ -97,6 +96,19 @@ def match_quotes(universe, quotes, day_slack=1):
                     dist = 0
                 if dist > day_slack:
                     continue
+            else:
+                # A dated quote is pinned to its own fixture. An UNDATED one (Oddspedia
+                # community tips carry no date) is resolved to the SOONEST fixture
+                # between those two sides — the tip is hours old and the universe only
+                # holds the next few days, so the nearest game is the one meant. Without
+                # this the tie broke on list order, which in a cricket or baseball
+                # series is a coin flip between two different games.
+                try:
+                    dist = max(0, (datetime.strptime(row["date"], "%Y-%m-%d")
+                                   .replace(tzinfo=timezone.utc)
+                                   - datetime.now(timezone.utc)).days)
+                except (ValueError, TypeError):
+                    dist = 0
             cands.append((-score, dist, i, j, flipped))
 
     cands.sort()
@@ -138,6 +150,17 @@ def collect(verbose=True):
     """Fetch every source across every sport. Returns (universe_by_sport, coverage)."""
     universe, coverage = {}, {}
     for sport in S.SPORTS:
+        if sport == "soccer":
+            # Soccer has its own spine — ESPN fixtures priced by DraftKings — because
+            # Polymarket lists barely any soccer MATCHES. See sandbox_sources.
+            rows = S.fetch_soccer()
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["polymarket"] = len(rows)
+            coverage[sport]["polymarket_listed"] = len(rows)
+            coverage[sport]["polymarket_priced"] = len(rows)
+            if verbose:
+                print(f"  {S.SPORTS[sport]:<13} espn+draftkings: {len(rows)} fixtures priced")
+            continue
         stats = {}
         rows = S.fetch_polymarket(sport, stats=stats)
         universe[sport] = rows
@@ -167,7 +190,14 @@ def publish(d, universe, coverage, verbose=True):
         # The market itself. Priced at its own price, so its edge is 0 by construction
         # and it never bets — it is here for the Brier column, as the accuracy bar every
         # challenger has to clear.
-        source_probs = {"polymarket": {r["market_id"]: ("prob", r["price_a"]) for r in rows}}
+        # The market quoting itself only makes sense where the market IS the price
+        # source. Soccer's price comes from a sportsbook, and that book is already
+        # scored as its own source, so there is no self-quote to add.
+        if sport == "soccer":
+            source_probs = {}
+        else:
+            source_probs = {"polymarket": {r["market_id"]: ("prob", r["price_a"])
+                                           for r in rows}}
 
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
@@ -199,7 +229,14 @@ def publish(d, universe, coverage, verbose=True):
                 kind, value = opinion
                 if kind == "prob":
                     prob_a = value
-                    pick, edge, price = decide(prob_a, r["price_a"], r["price_b"])
+                    if r.get("price_draw") is not None:
+                        # Three-way. 1 - P(home) is not P(away); it also contains the
+                        # draw, so the usual complement would invent an away-side edge
+                        # out of draw probability. Only the quoted side is evaluated.
+                        edge = prob_a - r["price_a"]
+                        pick, price = ("a", r["price_a"]) if edge > 0 else (None, r["price_a"])
+                    else:
+                        pick, edge, price = decide(prob_a, r["price_a"], r["price_b"])
                     has_edge = pick is not None and edge >= EDGE_MIN
                 else:
                     # A bare pick carries no claim about HOW WRONG the price is, so
@@ -223,6 +260,7 @@ def publish(d, universe, coverage, verbose=True):
                     pick=pick, edge=round(edge, 4) if edge is not None else None,
                     price=round(price, 4) if pick else None,
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
+                    venue=r.get("venue", "polymarket"),
                     status="open", pnl=0.0, result=None, settled=None,
                 ))
                 seen.add(qid)
@@ -258,7 +296,8 @@ def grade(d, verbose=True):
 
         mid = q["market_id"]
         if mid not in resolved:
-            resolved[mid] = S.resolve_polymarket(mid)
+            resolved[mid] = (S.resolve_soccer(mid) if q.get("venue") == "espn"
+                             else S.resolve_polymarket(mid))
         res = resolved[mid]
         if res is None:
             continue
@@ -268,11 +307,20 @@ def grade(d, verbose=True):
         if res == "void":
             q["status"] = "void"
             q["pnl"] = 0.0
+        elif res == "draw" and not q["bet"]:
+            q["status"] = "graded"
+            q["pnl"] = 0.0
         elif not q["bet"]:
             # Scored for accuracy, never staked. Kept as a distinct status so a
             # no-bet quote can never be mistaken for a losing one.
             q["status"] = "graded"
             q["pnl"] = 0.0
+        elif res == "draw" and q["bet"]:
+            # A three-way market: backing a side loses to the draw as surely as to
+            # defeat. Treating it as a void would quietly refund every drawn match and
+            # flatter every soccer tipster.
+            q["status"] = "lost"
+            q["pnl"] = -q["stake"]
         elif q["pick"] == res:
             q["status"] = "won"
             q["pnl"] = round(q["stake"] * (1.0 / q["price"] - 1.0), 2)
