@@ -390,6 +390,66 @@ close(sc["roi"], round(100.0 * (1 / 0.35 - 1), 2) / 100.0,
 eq(sc["brier"], None, "but it has no Brier score — there is nothing to calibrate")
 
 # ---------------------------------------------------------------------------
+print("\nscores24 row parsing (headless-browser source)")
+# ---------------------------------------------------------------------------
+# Pure parsing, no browser needed. Every fixture below is a real row shape captured
+# from the live listing pages.
+import sandbox_browser as B
+
+win = B.parse_row({"href": "/en/tennis/m-10-09-2026-sabalenka-aryna-pegula-jessica-prediction",
+                   "lines": ["18:00", "Today", "Aryna Sabalenka", "Jessica Pegula",
+                             "90%", "Aryna Sabalenka Win"]}, "tennis")
+eq(win["a"], "Aryna Sabalenka", "first competitor read from the row")
+eq(win["b"], "Jessica Pegula", "second competitor read from the row")
+eq(win["pick"], "a", "the tip names the first competitor")
+eq(win["date"], "2026-09-10", "date comes from the slug, which is DD-MM-YYYY not ISO")
+
+# The tipped side is NOT always the first one listed.
+away = B.parse_row({"href": "/en/baseball/m-10-09-2026-chicago-white-sox-pittsburgh-pirates-prediction",
+                    "lines": ["18:40", "Today", "Chicago White Sox", "Pittsburgh Pirates",
+                              "Pittsburgh Pirates Win", "-"]}, "baseball")
+eq(away["pick"], "b", "a tip on the second competitor is recorded as side B")
+
+# Totals and handicaps settle on a different question than the moneyline they would be
+# booked against. Scoring one as a match-winner pick records a bet nobody made.
+ok(B.parse_row({"href": "/en/tennis/m-11-09-2026-tiafoe-frances-shelton-ben-prediction",
+                "lines": ["18:00", "Tomorrow", "Frances Tiafoe", "Ben Shelton",
+                          "92%", "Total Over (36,5)"]}, "tennis") is None,
+   "a totals tip is not scored as a match-winner pick")
+ok(B.parse_row({"href": "/en/tennis/m-11-09-2026-zverev-alexander-khachanov-karen-prediction",
+                "lines": ["14:00", "Tomorrow", "Alexander Zverev", "Karen Khachanov",
+                          "Karen Khachanov Total Over (15,5)"]}, "tennis") is None,
+   "a player-totals tip is rejected even though it names a player")
+
+# Every listing page carries a cross-sport rail. On the cricket, boxing and table-tennis
+# pages that rail is the ONLY content, so without the href guard the scraper would
+# return ice-hockey tips as cricket ones.
+ok(B.parse_row({"href": "/en/ice-hockey/m-10-09-2026-sibir-novosibirsk-amur-khabarovsk-prediction",
+                "lines": ["10 Sep,", "07:30", "KHL", "Sibir Novosibirsk",
+                          "Amur Khabarovsk", "Prediction", "13"]}, "cricket") is None,
+   "the cross-sport rail cannot leak into another sport's picks")
+
+# An unfamiliar layout must fail closed rather than guess which line is a competitor.
+ok(B.parse_row({"href": "/en/tennis/m-10-09-2026-a-b-prediction",
+                "lines": ["18:00", "Today", "One", "Two", "Three", "Someone Else Win"]},
+               "tennis") is None,
+   "an unrecognised row shape is dropped, not guessed at")
+
+eq(B.available.__call__() in (True, False), True, "browser availability is a plain bool")
+ok(B.fetch_rows.__doc__ and "Never raises" in B.fetch_rows.__doc__,
+   "the browser fetch is documented as non-fatal")
+
+# Absent Playwright must degrade to an empty column, never an exception.
+real_avail = B.available
+B.available = lambda: False
+try:
+    got = B.fetch_rows(["https://example.invalid/x"], log=lambda *a: None)
+    eq(got, {"https://example.invalid/x": []},
+       "with no browser installed the source reports nothing and does not raise")
+finally:
+    B.available = real_avail
+
+# ---------------------------------------------------------------------------
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

@@ -103,10 +103,13 @@ SOURCES = {
              "runners. Reachable only through a headless browser, which this pipeline "
              "deliberately does not run."),
     "scores24": dict(
-        label="Scores24", kind="Tipster site", connected=False,
-        site="scores24.live", sports=["tennis", "table_tennis", "cricket", "boxing"],
-        note="The one candidate that covers all four thin sports, and the one that 403s "
-             "hardest. Still the best target if this list is ever extended."),
+        label="Scores24 (editorial tips)", kind="Tipster site", connected=True,
+        site="scores24.live", sports=list(SPORTS),
+        note="Named human tipsters publishing a written call per match. Cloudflare 403s "
+             "every plain request, so this is the one source fetched through a real "
+             "headless browser. Only its MATCH-WINNER tips are scored — its totals and "
+             "handicap tips settle on a different question than the market they would "
+             "be booked against."),
     "oddsapi": dict(
         label="The Odds API (bookmaker consensus)", kind="Sportsbook consensus",
         connected=False, site="the-odds-api.com",
@@ -829,9 +832,61 @@ def fetch_tennisexplorer(sport):
     return out
 
 
+
+# ---------------------------------------------------------------------------
+# Scores24 (behind Cloudflare — needs the headless browser)
+# ---------------------------------------------------------------------------
+
+# Every sport this board tracks gets a listing page requested, including the ones that
+# turned out to be empty. Scores24 publishes editorial tips per sport, but which sports
+# it bothers with moves with the calendar — boxing has nothing on an ordinary Tuesday and
+# may well have tips on a fight week. Asking for all six costs one page load each and
+# lets the coverage table report an honest zero instead of an omission.
+SCORES24_SLUG = {
+    "tennis": "tennis", "table_tennis": "table-tennis", "boxing": "boxing",
+    "nfl": "american-football", "cricket": "cricket", "mlb": "baseball",
+}
+SCORES24_URL = "https://scores24.live/en/predictions/{slug}"
+
+_scores24_cache = None
+
+
+def _scores24_all():
+    """Scrape every sport's listing ONCE per process and cache the result.
+
+    fetch_scores24 is called per sport, but launching a browser six times would pay the
+    Cloudflare challenge six times over. One session, one pass, cached.
+    """
+    global _scores24_cache
+    if _scores24_cache is not None:
+        return _scores24_cache
+
+    import sandbox_browser as B
+    urls = {sport: SCORES24_URL.format(slug=slug) for sport, slug in SCORES24_SLUG.items()}
+    pages = B.fetch_rows(list(urls.values()))
+
+    _scores24_cache = {}
+    for sport, url in urls.items():
+        picks = []
+        for row in pages.get(url) or []:
+            got = B.parse_row(row, SCORES24_SLUG[sport])
+            if got:
+                picks.append(got)
+        _scores24_cache[sport] = picks
+    return _scores24_cache
+
+
+def fetch_scores24(sport):
+    """Scores24's published match-winner tips for one sport."""
+    if sport not in SCORES24_SLUG:
+        return []
+    return _scores24_all().get(sport, [])
+
+
 CHALLENGERS = {
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
     "draftkings": fetch_draftkings,
     "covers": fetch_covers,
+    "scores24": fetch_scores24,
 }

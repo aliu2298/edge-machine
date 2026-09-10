@@ -332,12 +332,12 @@ the source is uninterested.</div>
 {unconnected_rows()}
 </table></div>
 <div class="note">These are listed rather than dropped so the roster stays honest: a
-source missing from a board is indistinguishable from a source with nothing to say. Most
-are blocked the same way — the picks are drawn in the browser, or Cloudflare refuses a
-plain fetch — and none of it is solvable by trying harder from a runner. Adding one is a
-single function returning
-<code>{{a, b, pick}}</code> or <code>{{a, b, prob_a}}</code> per contest; the matching,
-staking, settling and scoring are already shared.</div>
+source missing from a board is indistinguishable from a source with nothing to say.
+Adding one is a single function returning <code>{{a, b, pick}}</code> or
+<code>{{a, b, prob_a}}</code> per contest; the matching, staking, settling and scoring
+are already shared. Cloudflare is no longer a blocker either — Scores24 is fetched
+through a real headless browser, and any other site behind the same wall can reuse
+that step.</div>
 
 <h2>Method</h2>
 <div class="note">

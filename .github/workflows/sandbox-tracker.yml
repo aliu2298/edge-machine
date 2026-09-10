@@ -41,7 +41,20 @@ jobs:
         with:
           python-version: "3.12"
 
-      # stdlib only — no pip install step needed
+      # The ONLY dependency in this pipeline, and only this workflow has it. Scores24
+      # sits behind Cloudflare, which 403s every plain request from any user-agent and
+      # from the runner as readily as from a laptop — it wants a real browser engine.
+      # Chromium's --dump-dom was tried first and is not usable: on a live scores page
+      # it never reaches the idle state that ends the dump, so it simply hangs.
+      #
+      # Everything else stays stdlib. sandbox_browser.py degrades to "this source
+      # reported nothing" when Playwright is missing, so a failure in this step costs
+      # one column and never the run.
+      - name: Install headless browser
+        run: |
+          python3 -m pip install --quiet playwright
+          python3 -m playwright install --with-deps chromium
+        continue-on-error: true
 
       # Correctness gate, BEFORE anything is fetched or written. Every assertion in here
       # covers a failure that is invisible on the finished page: a flipped probability, a
