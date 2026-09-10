@@ -7,8 +7,8 @@
   },
   "cricket": {
    "oddspedia": 4,
-   "polymarket": 37,
-   "polymarket_listed": 37,
+   "polymarket": 39,
+   "polymarket_listed": 39,
    "polymarket_priced": 27
   },
   "mlb": {
@@ -39,21 +39,21 @@
   },
   "table_tennis": {
    "polymarket": 40,
-   "polymarket_listed": 107,
-   "polymarket_priced": 27
+   "polymarket_listed": 106,
+   "polymarket_priced": 21
   },
   "tennis": {
    "kalshi": 2,
    "polymarket": 40,
-   "polymarket_listed": 93,
-   "polymarket_priced": 77,
+   "polymarket_listed": 92,
+   "polymarket_priced": 76,
    "scores24": 2
   }
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
-  "runs": 11,
-  "updated": "2026-09-10T17:43:30+00:00"
+  "runs": 12,
+  "updated": "2026-09-10T17:48:03+00:00"
  },
  "quotes": [
   {
@@ -9555,6 +9555,33 @@
    "status": "open",
    "untraded": false,
    "url": "https://polymarket.com/event/mlb-cle-min-2026-09-13",
+   "venue": "polymarket"
+  },
+  {
+   "bet": false,
+   "date": "2026-09-11",
+   "edge": 0.0,
+   "id": "polymarket:4436032",
+   "label": "Max Basing vs Edas Butvilas",
+   "logged": "2026-09-10T17:47:44+00:00",
+   "market_id": "4436032",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.325,
+   "price_b": 0.675,
+   "prob_a": 0.325,
+   "result": null,
+   "settled": null,
+   "side_a": "Max Basing",
+   "side_b": "Edas Butvilas",
+   "source": "polymarket",
+   "sport": "tennis",
+   "stake": 0.0,
+   "start": "2026-09-11T08:00:00+00:00",
+   "status": "open",
+   "untraded": false,
+   "url": "https://polymarket.com/event/atp-basing-butvila-2026-09-11",
    "venue": "polymarket"
   }
  ],
