@@ -17,6 +17,7 @@ point of the board is to tell those two apart.
 """
 
 import json
+import html
 import re
 import subprocess
 import time
@@ -78,17 +79,40 @@ SOURCES = {
         site="draftkings.com", sports=["nfl", "mlb"],
         note="Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line "
              "is the hardest public number to beat, so this is the ceiling."),
+    "covers": dict(
+        label="Covers / OddsShark computer picks", kind="Tipster site", connected=True,
+        site="covers.com", sports=["nfl", "mlb"],
+        note="A published computer pick per game, free and dated. It states a projected "
+             "SCORE rather than a probability, so it is backed at the market price with "
+             "no edge filter and gets no Brier column — a pick cannot be calibrated."),
+    "tennisexplorer": dict(
+        label="Tennis Explorer", kind="Tipster site", connected=False,
+        site="tennisexplorer.com", sports=["tennis"],
+        note="Parser written and kept, but the match page carries a price on only a "
+             "handful of rows — most cells are empty. Connecting it would have produced "
+             "an almost-always-zero column indistinguishable from a broken feed."),
+    "pickwatch": dict(
+        label="NFL Pickwatch (expert consensus)", kind="Tipster site", connected=False,
+        site="nflpickwatch.com", sports=["nfl"],
+        note="Expert consensus is rendered client-side and the useful views sit behind a "
+             "paid trial, so there is nothing a plain fetch can read."),
+    "forebet": dict(
+        label="Forebet", kind="Tipster site", connected=False,
+        site="forebet.com", sports=["nfl", "cricket", "tennis"],
+        note="Cloudflare returns 403 to any non-browser request, including from GitHub's "
+             "runners. Reachable only through a headless browser, which this pipeline "
+             "deliberately does not run."),
+    "scores24": dict(
+        label="Scores24", kind="Tipster site", connected=False,
+        site="scores24.live", sports=["tennis", "table_tennis", "cricket", "boxing"],
+        note="The one candidate that covers all four thin sports, and the one that 403s "
+             "hardest. Still the best target if this list is ever extended."),
     "oddsapi": dict(
         label="The Odds API (bookmaker consensus)", kind="Sportsbook consensus",
-        connected=False, site="the-odds-api.com", sports=["tennis", "boxing", "nfl", "mlb", "cricket"],
+        connected=False, site="the-odds-api.com",
+        sports=["tennis", "boxing", "nfl", "mlb", "cricket"],
         note="Needs ODDS_API_KEY in repo secrets. Adds real bookmaker prices for the four "
              "sports where DraftKings-via-ESPN does not reach. Wired but dormant."),
-    "forebet": dict(
-        label="Forebet / PredictZ / tipster pages", kind="Tipster site", connected=False,
-        site="various", sports=["nfl", "cricket", "tennis"],
-        note="Deliberately not connected. These publish a PICK, not a probability, and "
-             "rarely a timestamp — so a pick cannot be tied to the price that existed "
-             "when it was made, and any ROI computed from one is unfalsifiable."),
 }
 
 
@@ -562,7 +586,9 @@ def _espn_events(sport, days=4):
         try:
             sb = _get(f"https://site.api.espn.com/apis/site/v2/sports/{site}/scoreboard?dates={d}",
                       tries=2)
-        except RuntimeError:
+        except RuntimeError as e:
+            if not evs:
+                print(f"  ! espn scoreboard {sport} {d}: {str(e)[:90]}")
             continue
         for ev in sb.get("events") or []:
             if ev.get("id") in seen:
@@ -595,8 +621,8 @@ def fetch_espn_fpi(sport):
     if sport not in ESPN_PATHS:
         return []
     _, core = ESPN_PATHS[sport]
-    out = []
-    for ev in _espn_events(sport):
+    out, evs, failed = [], _espn_events(sport), 0
+    for ev in evs:
         sides = _espn_sides(ev)
         if not sides:
             continue
@@ -604,7 +630,10 @@ def fetch_espn_fpi(sport):
         try:
             p = _get(f"https://sports.core.api.espn.com/v2/sports/{core}"
                      f"/events/{ev['id']}/competitions/{cid}/predictor", tries=2, timeout=20)
-        except RuntimeError:
+        except RuntimeError as e:
+            failed += 1
+            if failed == 1:
+                print(f"  ! espn_fpi/{sport} predictor unreachable: {str(e)[:90]}")
             continue
         stats = {s.get("name"): s.get("displayValue")
                  for s in (p.get("homeTeam") or {}).get("statistics") or []}
@@ -616,6 +645,9 @@ def fetch_espn_fpi(sport):
             continue
         out.append(dict(a=home, b=away, prob_a=proj, date=day(ev.get("date"))))
         time.sleep(0.12)
+    if evs and not out:
+        print(f"  ! espn_fpi/{sport}: {len(evs)} games seen, 0 predictions "
+              f"({failed} predictor calls failed)")
     return out
 
 
@@ -624,8 +656,8 @@ def fetch_draftkings(sport):
     if sport not in ESPN_PATHS:
         return []
     _, core = ESPN_PATHS[sport]
-    out = []
-    for ev in _espn_events(sport):
+    out, evs, failed = [], _espn_events(sport), 0
+    for ev in evs:
         sides = _espn_sides(ev)
         if not sides:
             continue
@@ -633,7 +665,10 @@ def fetch_draftkings(sport):
         try:
             o = _get(f"https://sports.core.api.espn.com/v2/sports/{core}"
                      f"/events/{ev['id']}/competitions/{cid}/odds", tries=2, timeout=20)
-        except RuntimeError:
+        except RuntimeError as e:
+            failed += 1
+            if failed == 1:
+                print(f"  ! draftkings/{sport} odds unreachable: {str(e)[:90]}")
             continue
         items = o.get("items") or []
         if not items:
@@ -646,6 +681,144 @@ def fetch_draftkings(sport):
             continue
         out.append(dict(a=home, b=away, prob_a=ph, date=day(ev.get("date"))))
         time.sleep(0.12)
+    if evs and not out:
+        print(f"  ! draftkings/{sport}: {len(evs)} games seen, 0 lines "
+              f"({failed} odds calls failed)")
+    return out
+
+
+
+# ---------------------------------------------------------------------------
+# Tipster sites
+# ---------------------------------------------------------------------------
+#
+# A tipster states a PICK, not a probability. That is scoreable — back the named side at
+# the market price, flat stake, and the ROI is as real as anyone else's — but it costs
+# two things, and the board says so rather than hiding it: a bare pick gets no Brier
+# score (there is no number to be calibrated), and no edge filter (a pick carries no
+# claim about how big the disagreement is), so every pick inside the price band is
+# backed. That makes a tipster's turnover much higher than a model's, which is exactly
+# how tipsters are actually followed.
+
+def _get_html(url, tries=2, timeout=30):
+    """GET a page as text. Same urllib-then-curl fallback as the JSON fetcher."""
+    last = None
+    for i in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={
+                "User-Agent": UA,
+                "Accept": "text/html,application/xhtml+xml",
+                "Accept-Language": "en-US,en;q=0.9",
+            })
+            with urllib.request.urlopen(req, timeout=timeout) as f:
+                return f.read().decode("utf-8", "replace")
+        except Exception as e:
+            last = e
+            time.sleep(1.0 * (i + 1))
+    try:
+        out = subprocess.run(["curl", "-sL", "--max-time", str(timeout), "-A", UA, url],
+                             capture_output=True, text=True, timeout=timeout + 10)
+        if out.stdout:
+            return out.stdout
+    except Exception:
+        pass
+    raise RuntimeError(f"html fetch failed: {url} ({last})")
+
+
+def _text(h):
+    """HTML -> collapsed visible text."""
+    h = re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", h)
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h)))
+
+
+COVERS_URL = {"nfl": "https://www.covers.com/picks/nfl", "mlb": "https://www.covers.com/picks/mlb"}
+
+# "Predicted Score  SF SF 21.62 @ 28.09 LA ... 49ers vs Rams ·"
+# The projected scores come first with team ABBREVIATIONS, then the same matchup is
+# repeated with full nicknames. Both are captured and the nicknames are what get matched:
+# the abbreviations are ambiguous in exactly the place it matters (LA is both the Rams
+# and the Chargers), and a mis-resolved abbreviation books a pick against another team's
+# game rather than failing visibly.
+COVERS_RE = re.compile(
+    r"Predicted Score\s+\S+\s+\S+\s+(\d+\.\d+)\s*@?\s*\S*\s*(\d+\.\d+)\s+\S+"
+    r".{0,140}?([A-Za-z0-9 .&'-]{3,28}?)\s+vs\s+([A-Za-z0-9 .&'-]{3,28}?)\s*[\u00b7]")
+
+
+def fetch_covers(sport):
+    """Covers / OddsShark computer picks — a projected score per game, turned into a pick."""
+    url = COVERS_URL.get(sport)
+    if not url:
+        return []
+    try:
+        txt = _text(_get_html(url))
+    except RuntimeError as e:
+        print(f"  ! covers/{sport}: {str(e)[:80]}")
+        return []
+
+    out = []
+    for sa, sb, na, nb in COVERS_RE.findall(txt):
+        try:
+            sa, sb = float(sa), float(sb)
+        except ValueError:
+            continue
+        if sa == sb:
+            continue                      # a dead-level projection is not a pick
+        a, b = na.strip(), nb.strip()
+        # The nickname capture can pick up the trailing abbreviation of the block before
+        # it ("LA 49ers"). canon() resolves that correctly, but trim it anyway so the
+        # label the board prints is the team's actual name.
+        a = re.sub(r"^[A-Z]{2,3}\s+(?=[A-Z0-9])", "", a)
+        if len(a) < 2 or len(b) < 2:
+            continue
+        out.append(dict(a=a, b=b, pick="a" if sa > sb else "b", date=None,
+                        detail=f"projected {sa:.1f}-{sb:.1f}"))
+    return out
+
+
+TENNIS_EXPLORER = "https://www.tennisexplorer.com/matches/"
+
+
+def fetch_tennisexplorer(sport):
+    """Tennis Explorer's per-match win probabilities.
+
+    Its match table prints each player's forecast as a percentage pair. Anything that
+    does not parse into a clean complementary pair is dropped rather than guessed.
+    """
+    if sport != "tennis":
+        return []
+    try:
+        h = _get_html(TENNIS_EXPLORER)
+    except RuntimeError as e:
+        print(f"  ! tennisexplorer: {str(e)[:80]}")
+        return []
+
+    out = []
+    # Rows pair up: the first row is player one, the row after it is the opponent.
+    rows = re.findall(r"(?is)<tr[^>]*>(.*?)</tr>", h)
+    pending = None
+    for r in rows:
+        name = re.search(r'(?is)<td class="t-name"[^>]*>\s*(?:<a[^>]*>)?([^<]{3,40})', r)
+        prob = re.search(r'(?is)<td class="[^"]*course[^"]*"[^>]*>\s*([\d.]+)\s*</td>', r)
+        if not name:
+            continue
+        nm = name.group(1).strip()
+        pr = None
+        if prob:
+            try:
+                pr = float(prob.group(1))
+            except ValueError:
+                pr = None
+        if pending is None:
+            pending = (nm, pr)
+            continue
+        a, pa = pending
+        pending = None
+        if pa and pr and pa > 1 and pr > 1:
+            # Two decimal odds -> de-vigged probabilities.
+            ia, ib = 1.0 / pa, 1.0 / pr
+            ia, ib = devig(ia, ib)
+            if ia:
+                out.append(dict(a=a, b=nm, prob_a=ia, date=None))
     return out
 
 
@@ -653,4 +826,5 @@ CHALLENGERS = {
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
     "draftkings": fetch_draftkings,
+    "covers": fetch_covers,
 }

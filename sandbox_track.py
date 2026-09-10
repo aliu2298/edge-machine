@@ -61,7 +61,11 @@ def save(d):
 def match_quotes(universe, quotes, day_slack=1):
     """Attach each challenger quote to the universe row it is about, ONE-TO-ONE.
 
-    Returns {market_id: prob_a_oriented_to_that_row}.
+    Returns {market_id: ("prob", p) | ("pick", "a"|"b")} oriented to that row.
+
+    Two kinds of opinion arrive here. A model or an exchange gives a PROBABILITY; a
+    tipster gives a bare PICK. Both are scoreable for profit, so both are carried — the
+    difference only shows up later, in what can be asked of them.
 
     Two things here are load-bearing.
 
@@ -82,6 +86,8 @@ def match_quotes(universe, quotes, day_slack=1):
                                           q["a"], q["b"], sport=row["sport"])
             if score <= 0:
                 continue
+            if q.get("prob_a") is None and q.get("pick") is None:
+                continue
             dist = 0
             if row["date"] and q.get("date"):
                 try:
@@ -100,8 +106,15 @@ def match_quotes(universe, quotes, day_slack=1):
             continue
         used_rows.add(i)
         used_quotes.add(j)
-        p = quotes[j]["prob_a"]
-        out[universe[i]["market_id"]] = 1 - p if flipped else p
+        q = quotes[j]
+        if q.get("prob_a") is not None:
+            p = q["prob_a"]
+            out[universe[i]["market_id"]] = ("prob", 1 - p if flipped else p)
+        else:
+            side = q["pick"]
+            if flipped:
+                side = "b" if side == "a" else "a"
+            out[universe[i]["market_id"]] = ("pick", side)
     return out
 
 
@@ -154,7 +167,7 @@ def publish(d, universe, coverage, verbose=True):
         # The market itself. Priced at its own price, so its edge is 0 by construction
         # and it never bets — it is here for the Brier column, as the accuracy bar every
         # challenger has to clear.
-        source_probs = {"polymarket": {r["market_id"]: r["price_a"] for r in rows}}
+        source_probs = {"polymarket": {r["market_id"]: ("prob", r["price_a"]) for r in rows}}
 
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
@@ -172,7 +185,7 @@ def publish(d, universe, coverage, verbose=True):
                       f"{len(matched)} matched")
 
         for name, probs in source_probs.items():
-            for mid, prob_a in probs.items():
+            for mid, opinion in probs.items():
                 qid = f"{name}:{mid}"
                 if qid in seen:
                     continue
@@ -182,19 +195,32 @@ def publish(d, universe, coverage, verbose=True):
                 # is nearly half of every run, almost all of it table tennis.
                 if r["untraded"] and name == "polymarket":
                     continue
-                pick, edge, price = decide(prob_a, r["price_a"], r["price_b"])
+
+                kind, value = opinion
+                if kind == "prob":
+                    prob_a = value
+                    pick, edge, price = decide(prob_a, r["price_a"], r["price_b"])
+                    has_edge = pick is not None and edge >= EDGE_MIN
+                else:
+                    # A bare pick carries no claim about HOW WRONG the price is, so
+                    # there is no edge to threshold. It is simply backed at the going
+                    # price — which is how a tipster is actually followed, and it means
+                    # a tipster turns over far more bets than a model does.
+                    prob_a, pick = None, value
+                    price = r["price_a"] if pick == "a" else r["price_b"]
+                    edge, has_edge = None, True
                 # An untraded 0.50/0.50 book is a placeholder, not a price. Scoring a
                 # source against it would manufacture a 'edge' out of nothing.
-                bet = bool(pick and edge >= EDGE_MIN and not r["untraded"]
+                bet = bool(pick and has_edge and not r["untraded"]
                            and PRICE_FLOOR <= price <= PRICE_CEIL)
                 d["quotes"].append(dict(
                     id=qid, source=name, sport=sport, market_id=mid,
                     label=r["label"], side_a=r["side_a"], side_b=r["side_b"],
                     url=r["url"], date=r["date"], start=r["start"],
                     logged=now_iso(),
-                    prob_a=round(prob_a, 4),
+                    prob_a=round(prob_a, 4) if prob_a is not None else None,
                     price_a=round(r["price_a"], 4), price_b=round(r["price_b"], 4),
-                    pick=pick, edge=round(edge, 4),
+                    pick=pick, edge=round(edge, 4) if edge is not None else None,
                     price=round(price, 4) if pick else None,
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
                     status="open", pnl=0.0, result=None, settled=None,
@@ -279,8 +305,11 @@ def score(d, sport=None):
         # An untraded 0.50/0.50 book is excluded from Brier as well as from betting.
         # Table tennis is overwhelmingly made of these, and scoring a flat 0.5 against a
         # coin flip would bury every real forecast under 0.25s that mean nothing.
+        # Brier needs a probability. A tipster that only names a side has nothing to
+        # calibrate, so it gets no Brier column rather than a fabricated 0/1 stand-in.
         briered = [q for q in rows if q["status"] in ("won", "lost", "graded")
-                   and q.get("result") in ("a", "b") and not q.get("untraded")]
+                   and q.get("result") in ("a", "b") and not q.get("untraded")
+                   and q.get("prob_a") is not None]
         n_quotes, n_bets, n_done, n_won = len(rows), len(bets), len(done), len(won)
         brier_sum = sum((q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
                         for q in briered)
@@ -306,7 +335,9 @@ def score(d, sport=None):
             staked=staked, pnl=pnl,
             roi=(pnl / staked) if staked else None,
             brier=(brier_sum / brier_n) if brier_n else None, brier_n=brier_n,
-            avg_edge=(sum(q["edge"] for q in bets) / len(bets)) if bets else None,
+            avg_edge=(sum(q["edge"] for q in bets if q.get("edge") is not None)
+                      / max(1, sum(1 for q in bets if q.get("edge") is not None))
+                      if any(q.get("edge") is not None for q in bets) else None),
         )
     return out
 
@@ -341,7 +372,8 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
             r["won"] += 1 if q["status"] == "won" else 0
             r["staked"] += q["stake"]
             r["pnl"] += q["pnl"]
-        if q.get("result") in ("a", "b") and not q.get("untraded"):
+        if (q.get("result") in ("a", "b") and not q.get("untraded")
+                and q.get("prob_a") is not None):
             r["brier_sum"] += (q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
             r["brier_n"] += 1
         rolled += 1

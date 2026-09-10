@@ -150,7 +150,7 @@ def open_rows(d, limit=25):
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td><b>{esc(side)}</b></td>
 <td class="num">{q['price']:.2f}</td>
-<td class="num pos">{pct(q['edge'], sign=True)}</td></tr>""")
+<td class="num pos">{pct(q['edge'], sign=True) if q.get('edge') is not None else '<span class="mut">pick</span>'}</td></tr>""")
     return "\n".join(out), len(live)
 
 
@@ -260,14 +260,15 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
 
-<div class="note warn">Every source here is scored the same way: it states a
-<b>probability</b> on a contest that will <b>resolve</b>, logged <b>before the start</b>
-and stamped with the <b>price that existed at that moment</b>. When the source disagrees
-with that price by {int(T.EDGE_MIN*100)}pp or more, the board books a flat
-${int(T.STAKE)} bet at it and settles for real when the market resolves. A tipster page
-that just says "back the Yankees" cannot be scored against anything, which is why the
-famous ones are listed at the bottom as <b>not connected</b> rather than quietly given a
-number. {esc(verdict)}</div>
+<div class="note warn">Every source here is logged <b>before the contest starts</b> and
+stamped with the <b>price that existed at that moment</b>, then settled for real when the
+market resolves. Two kinds of source are tracked and they are staked differently.
+<b>Tipsters</b> name a side: that side is backed at the going price, every time, because
+that is how a tipster is actually followed — high turnover, no Brier score, and a real
+ROI. <b>Models, books and exchanges</b> state a probability: they are backed only when
+they disagree with the price by {int(T.EDGE_MIN*100)}pp or more, and they also get an
+accuracy score. Everything is flat ${int(T.STAKE)} a bet, so nothing here is bet-sizing
+skill. {esc(verdict)}</div>
 
 <div class="tiles">
 <div class="tile"><b>{quotes:,}</b><span>predictions logged</span></div>
@@ -289,9 +290,15 @@ number. {esc(verdict)}</div>
 available. <b>Brier</b> scores raw accuracy on every logged probability, bet or not —
 lower is better, 0.25 is a coin flip — and it is the more honest column early on, because
 it uses every prediction instead of only the small slice that cleared the edge threshold.
+A blank Brier is not a
+gap in the data: a tipster names a side and states no probability, so there is nothing to
+calibrate and the column is left empty rather than filled with a 0/1 stand-in.
 <b>Polymarket cannot win this table.</b> Its own price is the price everything is
 measured against, so its ROI is blank by construction; it is here as the accuracy bar and
-as the control that proves the ledger is wired up correctly.</div>
+as the control that proves the ledger is wired up correctly.<br><br>
+<b>Turnover is not comparable across kinds.</b> A tipster bets every game it calls and a
+model bets only where it disagrees with the market, so the tipster will always show far
+more bets. Compare them on ROI, never on P/L.</div>
 
 <h2>Does Polymarket really cover these sports?</h2>
 {polymarket_panel(d)}
@@ -324,6 +331,13 @@ the source is uninterested.</div>
 <tr><th>Source</th><th>Why it is not scored</th></tr>
 {unconnected_rows()}
 </table></div>
+<div class="note">These are listed rather than dropped so the roster stays honest: a
+source missing from a board is indistinguishable from a source with nothing to say. Most
+are blocked the same way — the picks are drawn in the browser, or Cloudflare refuses a
+plain fetch — and none of it is solvable by trying harder from a runner. Adding one is a
+single function returning
+<code>{{a, b, pick}}</code> or <code>{{a, b, prob_a}}</code> per contest; the matching,
+staking, settling and scoring are already shared.</div>
 
 <h2>Method</h2>
 <div class="note">

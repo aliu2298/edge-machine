@@ -123,19 +123,20 @@ one_quote = [dict(a="Cincinnati", b="Los Angeles D", prob_a=0.35, date="2026-09-
 m = T.match_quotes(series, one_quote)
 eq(len(m), 1, "one price cannot be booked against two games of the same series")
 eq(list(m), ["g1"], "it lands on the nearer date")
+eq(m["g1"][0], "prob", "a probability source is carried as a probability")
 
 both = [dict(a="Cincinnati", b="Los Angeles D", prob_a=0.35, date="2026-09-10"),
         dict(a="Cincinnati", b="Los Angeles D", prob_a=0.42, date="2026-09-11")]
 m = T.match_quotes(series, both)
 eq(len(m), 2, "two prices for two games both land")
-close(m["g1"], 0.35, "…and each lands on its own date")
-close(m["g2"], 0.42, "…both of them")
+close(m["g1"][1], 0.35, "…and each lands on its own date")
+close(m["g2"][1], 0.42, "…both of them")
 
 flip = T.match_quotes(
     [dict(market_id="x", sport="mlb", side_a="Los Angeles Dodgers",
           side_b="Cincinnati Reds", date="2026-09-10")],
     [dict(a="Cincinnati", b="Los Angeles D", prob_a=0.35, date="2026-09-10")])
-close(flip["x"], 0.65, "a reversed fixture has its probability inverted, not copied")
+close(flip["x"][1], 0.65, "a reversed fixture has its probability inverted, not copied")
 
 # ---------------------------------------------------------------------------
 print("\nsettlement and P/L")
@@ -333,6 +334,54 @@ ok("stats" in S.fetch_polymarket.__code__.co_varnames,
    "fetch_polymarket reports pre-cap totals separately from the capped rows")
 ok(T.RETAIN_DAYS * 6 * S.MAX_PER_SPORT < 15000,
    "cap and retention together keep the committed ledger to a few thousand rows")
+
+# ---------------------------------------------------------------------------
+print("\ntipsters (bare picks)")
+# ---------------------------------------------------------------------------
+# A tipster names a side and no probability. That is still fully scoreable for PROFIT,
+# which is the whole question — it just cannot be calibrated.
+tip = T.match_quotes(
+    [dict(market_id="t1", sport="nfl", side_a="Giants", side_b="Rams", date="2026-09-14")],
+    [dict(a="New York G", b="Los Angeles R", pick="b", date="2026-09-14")])
+eq(tip["t1"], ("pick", "b"), "a bare pick is carried as a pick, not coerced to a probability")
+
+flipped_tip = T.match_quotes(
+    [dict(market_id="t2", sport="nfl", side_a="Rams", side_b="Giants", date="2026-09-14")],
+    [dict(a="New York G", b="Los Angeles R", pick="b", date="2026-09-14")])
+eq(flipped_tip["t2"], ("pick", "a"),
+   "a reversed fixture flips WHICH SIDE was picked — the opposite bet otherwise")
+
+row_tip = dict(market_id="t3", sport="nfl", label="Giants vs Rams", side_a="Giants",
+               side_b="Rams", price_a=0.35, price_b=0.65, untraded=False,
+               start=(datetime.now(timezone.utc) + timedelta(days=1)).isoformat(),
+               date="2026-09-14", volume=500.0, url="")
+d = {"quotes": [], "meta": {}, "coverage": {}}
+saved = S.CHALLENGERS
+S.CHALLENGERS = {"covers": lambda sp: [dict(a="Giants", b="Rams", pick="a", date="2026-09-14")]}
+T.publish(d, {"nfl": [row_tip]}, {}, verbose=False)
+S.CHALLENGERS = saved
+tips = [q for q in d["quotes"] if q["source"] == "covers"]
+eq(len(tips), 1, "the tipster's pick is logged")
+eq(tips[0]["pick"], "a", "on the side it actually named")
+eq(tips[0]["bet"], True, "a bare pick is backed with no edge threshold to clear")
+close(tips[0]["price"], 0.35, "…at the price of the side it picked")
+eq(tips[0]["prob_a"], None, "and carries no invented probability")
+eq(tips[0]["edge"], None, "and no invented edge")
+
+# It must still settle and pay like any other bet.
+S_resolve = S.resolve_polymarket
+S.resolve_polymarket = lambda mid: "a"
+tips[0]["start"] = (datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
+T.grade(d, verbose=False)
+S.resolve_polymarket = S_resolve
+eq(tips[0]["status"], "won", "a tipster's winning pick settles as won")
+close(tips[0]["pnl"], round(100.0 * (1 / 0.35 - 1), 2),
+      "and pays at the price it was backed at")
+
+sc = T.score(d)["covers"]
+close(sc["roi"], round(100.0 * (1 / 0.35 - 1), 2) / 100.0,
+      "the tipster's ROI is real")
+eq(sc["brier"], None, "but it has no Brier score — there is nothing to calibrate")
 
 # ---------------------------------------------------------------------------
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
