@@ -45,6 +45,12 @@ ROW_JS = """() => [...document.querySelectorAll('a[href*="-prediction"]')].map(a
 }))"""
 
 
+# {url: "ok" | reason} for every page asked for on the last fetch. Whether a page LOADED is
+# the only honest feed-health signal: a page that loads and carries no usable tip is a
+# quiet day, and must not be reported the same way as a page that never arrived.
+STATUS = {}
+
+
 def available():
     """Is a headless browser usable in this process?"""
     try:
@@ -86,6 +92,8 @@ def fetch_rows(jobs, js=None, settle_ms=2000, challenge_ms=10000, timeout_ms=450
     # browser per site doubled the wall clock for no benefit.
     jobs = [(j, js) if isinstance(j, str) else j for j in jobs]
     out = {u: [] for u, _ in jobs}
+    for u, _ in jobs:
+        STATUS[u] = "not fetched"
     if not available():
         log("  ! browser: playwright not installed — skipping the browser step")
         return out
@@ -147,6 +155,7 @@ def fetch_rows(jobs, js=None, settle_ms=2000, challenge_ms=10000, timeout_ms=450
                             page.wait_for_timeout(2000)
                             waited += 2000
                     if any(c in (page.title() or "").lower() for c in CHALLENGE):
+                        STATUS[u] = "challenge not cleared"
                         log(f"  ! browser: challenge did not clear for {u}")
                         continue
                     # These listings lazy-load. Without scrolling, Scores24's soccer
@@ -157,7 +166,9 @@ def fetch_rows(jobs, js=None, settle_ms=2000, challenge_ms=10000, timeout_ms=450
                         page.mouse.wheel(0, 6000)
                         page.wait_for_timeout(900)
                     out[u] = page.evaluate(page_js or js or ROW_JS) or []
+                    STATUS[u] = "ok"
                 except Exception as e:
+                    STATUS[u] = f"error: {type(e).__name__}"
                     log(f"  ! browser: {u} failed ({type(e).__name__}: {str(e)[:70]})")
             browser.close()
     except Exception as e:

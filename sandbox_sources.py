@@ -155,6 +155,29 @@ SOURCES = {
 # HTTP
 # ---------------------------------------------------------------------------
 
+# {source: "ok" | "down: reason"} for the current run, written by the adapters that fetch
+# pages. It separates "the site could not be read" from "the site had nothing to say":
+# Oddspedia's cricket page once carried exactly two tips, on opposite sides of the same
+# match, so its consensus rightly made no call — and a count-based alarm reported the
+# feed as broken while the page was loading fine.
+FEED_STATUS = {}
+
+
+def _mark(name, ok, why="unreachable"):
+    """Record a source's health; one successful page anywhere makes the source "ok"."""
+    if ok:
+        FEED_STATUS[name] = "ok"
+    elif FEED_STATUS.get(name) != "ok":
+        FEED_STATUS[name] = f"down: {why}"
+
+
+def _mark_urls(name, urls):
+    import sandbox_browser as B
+    states = [B.STATUS.get(u, "not fetched") for u in urls]
+    bad = next((st for st in states if st != "ok"), "not fetched")
+    _mark(name, any(st == "ok" for st in states), bad)
+
+
 def _get(url, tries=3, timeout=20):
     """GET JSON, with a curl fallback.
 
@@ -969,8 +992,10 @@ def fetch_covers(sport):
         txt = _text(_get_html(url))
     except RuntimeError as e:
         print(f"  ! covers/{sport}: {str(e)[:80]}")
+        _mark("covers", False, "picks page unreachable")
         return []
 
+    _mark("covers", True)
     out = []
     for sa, sb, na, nb in COVERS_RE.findall(txt):
         try:
@@ -1325,6 +1350,7 @@ def _scores24_all():
     import sandbox_browser as B
     pages = _browser_pages()
     urls = {sport: SCORES24_URL.format(slug=slug) for sport, slug in SCORES24_SLUG.items()}
+    _mark_urls("scores24", urls.values())
     _scores24_cache = {}
     for sport, url in urls.items():
         picks = []
@@ -1376,6 +1402,7 @@ def _oddspedia_all():
     import sandbox_browser as B
     pages = _browser_pages()
     urls = {sp: ODDSPEDIA_URL.format(slug=slug) for sp, slug in ODDSPEDIA_SLUG.items()}
+    _mark_urls("oddspedia", urls.values())
     _oddspedia_cache = {}
     for sport, url in urls.items():
         tips = [t for t in (B.parse_tip(r) for r in (pages.get(url) or [])) if t]
@@ -1524,19 +1551,21 @@ def _sportsgambler_all():
     now = datetime.now(timezone.utc)
     days = {(now + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(5)}
 
-    links, seen = [], set()
+    links, seen, loaded = [], set(), 0
     for league in SPORTSGAMBLER_LEAGUES:
         try:
             index = _get_html(f"{SPORTSGAMBLER}/betting-tips/football/{league}-predictions/")
         except RuntimeError as e:
             print(f"  ! sportsgambler/{league}: {str(e)[:80]}")
             continue
+        loaded += 1
         for path, d in SG_MATCH_RE.findall(index):
             if d in days and path not in seen:
                 seen.add(path)
                 links.append((path, d))
         time.sleep(0.6)
 
+    _mark("sportsgambler", loaded > 0, "no league page loaded")
     rows = (UNIVERSE or {}).get("soccer") if UNIVERSE is not None else None
     priced = sportsgambler_priced(links, rows)
     todo = sorted(priced, key=lambda x: x[1])[:SPORTSGAMBLER_MAX_PAGES]
@@ -1602,18 +1631,20 @@ def fetch_soccerpredictions(sport):
     if sport != "soccer":
         return []
     if _soccerpredictions_cache is None:
-        rows, seen = [], set()
+        rows, seen, loaded = [], set(), 0
         for url in SOCCERPREDICTIONS_URLS:
             try:
                 page = _get_html(url, timeout=25)
             except RuntimeError as e:
                 print(f"  ! soccerpredictions: {str(e)[:80]}")
                 continue
+            loaded += 1
             for r in parse_soccerpredictions(page):
                 key = (r["a"], r["b"], r["date"])
                 if key not in seen:
                     seen.add(key)
                     rows.append(r)
+        _mark("soccerpredictions", loaded > 0, "site unreachable")
         _soccerpredictions_cache = rows
     return _soccerpredictions_cache
 

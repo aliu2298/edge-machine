@@ -715,6 +715,54 @@ ok("Feed check" in out and "Covers" in out,
 eq(BUILD.feed_health({"coverage": {"nfl": {}}, "quotes": []}), "",
    "a source with no coverage entry at all is not accused of being down")
 
+# A page that LOADED is healthy even with no call. Oddspedia's cricket page once carried
+# exactly two tips on opposite sides of one match; consensus made no call, and the old
+# count-based check reported the feed as broken.
+eq(BUILD.feed_health({"coverage": {"cricket": {"oddspedia": 0}},
+                      "feed_status": {"oddspedia": "ok"}, "quotes": []}), "",
+   "a feed whose page loaded is not flagged just because it produced no call")
+out = BUILD.feed_health({"coverage": {"cricket": {"oddspedia": 3}},
+                         "feed_status": {"oddspedia": "down: challenge not cleared"},
+                         "quotes": []})
+ok("Oddspedia" in out and "challenge not cleared" in out,
+   "a feed whose page did NOT load is flagged, with the reason, whatever the counts say")
+
+# Adapters mark themselves; one loaded page anywhere keeps a multi-page source healthy.
+S.FEED_STATUS.clear()
+S._mark("covers", False, "picks page unreachable")
+S._mark("covers", True)
+S._mark("covers", False, "picks page unreachable")
+eq(S.FEED_STATUS["covers"], "ok", "one page loading keeps a source healthy even if another failed")
+S.FEED_STATUS.clear()
+S._mark("sportsgambler", False, "no league page loaded")
+eq(S.FEED_STATUS["sportsgambler"], "down: no league page loaded", "a source with no page loaded is down")
+S.FEED_STATUS.clear()
+
+real_avail_ = B.available
+B.available = lambda: False
+try:
+    B.fetch_rows(["https://example.invalid/y"], log=lambda *a: None)
+    eq(B.STATUS["https://example.invalid/y"], "not fetched",
+       "a page the browser never reached is recorded as not fetched, not as ok")
+finally:
+    B.available = real_avail_
+
+# ---------------------------------------------------------------------------
+print("\nretired venue")
+# ---------------------------------------------------------------------------
+real_pm_ = S.resolve_polymarket
+called_ = []
+S.resolve_polymarket = lambda mid: called_.append(mid) or "a"
+d = {"quotes": [quote(id="scores24:espn:ger.1:1", source="scores24", sport="soccer",
+                      venue="espn", market_id="espn:ger.1:1", pick="a", price=0.6)],
+     "meta": {}, "coverage": {}}
+T.grade(d, verbose=False)
+S.resolve_polymarket = real_pm_
+eq(d["quotes"][0]["status"], "void",
+   "a bet on the retired ESPN venue is refunded — nothing can settle it any more")
+close(d["quotes"][0]["pnl"], 0.0, "and it never invents P/L")
+eq(called_, [], "it is never sent to Polymarket, which has no such market")
+
 # ---------------------------------------------------------------------------
 print("\nnetwork failures never crash the run")
 # ---------------------------------------------------------------------------

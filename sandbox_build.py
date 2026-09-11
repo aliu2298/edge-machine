@@ -45,23 +45,35 @@ def cls(x):
 
 
 def feed_health(d):
-    """Name any connected source that returned NOTHING on the last run.
+    """Name any connected source whose feed could not be READ on the last run.
 
-    The coverage grid this replaces was removed for being noise on a healthy day, but
-    the failure it guarded against is real and silent: a source whose feed has broken
-    and a source with nothing to say produce the identical empty row, and the board
-    would keep reporting "no bets" for weeks without anyone knowing why.
+    A source that could not be fetched and a source with nothing to say produce the same
+    empty row, and the board would keep reporting "no bets" for weeks without anyone
+    knowing why. So this separates the two.
 
-    Flagged only when a source is empty across EVERY sport it covers. A single quiet
-    sport is just an empty fixture list — NFL has no games on a Tuesday — and warning
-    about that would train the reader to ignore this line.
+    Where an adapter reports whether its pages loaded (the tipster sites), that is used:
+    a page that loaded is healthy even with no usable tip. The first version counted
+    matched calls instead, and flagged Oddspedia as broken on a day its page loaded fine
+    carrying two tips on opposite sides of one match — which the consensus rule rightly
+    turns into no call at all.
+
+    Sources that report no status fall back to counts, flagged only when empty across
+    EVERY sport they cover: a single quiet sport is just an empty fixture list, and
+    warning about that would train the reader to ignore this line.
     """
     cov = d.get("coverage") or {}
-    if not cov:
+    status = d.get("feed_status") or {}
+    if not cov and not status:
         return ""
     dark = []
     for name, meta in S.SOURCES.items():
         if not meta["connected"] or name == "polymarket":
+            continue
+        st = status.get(name)
+        if st is not None:
+            if st.startswith("down"):
+                reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
+                dark.append(f"{meta['label']} ({reason})")
             continue
         counts = [(cov.get(sp) or {}).get(name) for sp in meta["sports"]]
         seen = [c for c in counts if c is not None]
@@ -70,9 +82,9 @@ def feed_health(d):
     if not dark:
         return ""
     return (f'<div class="note warn"><b>Feed check:</b> '
-            f'{esc(", ".join(dark))} returned nothing anywhere on the last run. That is '
-            f'a broken feed, not an absence of opinion — until it is fixed, the row '
-            f'below understates that source rather than describing it.</div>')
+            f'{esc(", ".join(dark))} could not be read on the last run. That is a broken '
+            f'feed, not an absence of opinion — until it is fixed, the row below '
+            f'understates that source rather than describing it.</div>')
 
 
 def sport_matrix(d):

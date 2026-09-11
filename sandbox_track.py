@@ -210,6 +210,7 @@ def publish(d, universe, coverage, verbose=True):
     # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
     # prices — a page that can never be scored is not worth a polite second of waiting.
     S.UNIVERSE = universe
+    S.FEED_STATUS.clear()
 
     for sport, rows in universe.items():
         if not rows:
@@ -306,6 +307,7 @@ def publish(d, universe, coverage, verbose=True):
                 added += 1
 
     d["coverage"] = coverage
+    d["feed_status"] = dict(S.FEED_STATUS)
     if verbose:
         print(f"  logged {added} new quotes")
     return added
@@ -322,6 +324,15 @@ def grade(d, verbose=True):
 
     for q in d["quotes"]:
         if q["status"] != "open":
+            continue
+        if q.get("venue") == "espn":
+            # Soccer was priced on ESPN + DraftKings until that venue was retired for
+            # Kalshi. Nothing can settle a quote on it any more, and the one bet it left
+            # behind was also re-logged on Kalshi — kept open it would sit unsettled for
+            # ever AND count that tip twice. Refunded, never guessed.
+            q["status"], q["result"], q["pnl"] = "void", "void", 0.0
+            q["settled"] = now_iso()
+            settled += 1
             continue
         # Don't ask about a market that cannot possibly have finished yet.
         try:
