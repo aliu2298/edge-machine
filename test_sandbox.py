@@ -450,60 +450,129 @@ finally:
     B.available = real_avail
 
 # ---------------------------------------------------------------------------
-print("\nsoccer (three-way market, ESPN spine)")
+print("\nKalshi as a venue")
 # ---------------------------------------------------------------------------
-close(S._decimal(140), 2.40, "positive moneyline to decimal odds")
-close(S._decimal(-200), 1.50, "negative moneyline to decimal odds")
-ok(S._decimal(0) is None and S._decimal(None) is None, "a missing line yields no price")
 
-def soccer_quote(**kw):
-    q = quote(sport="soccer", venue="espn", market_id="espn:eng.1:1",
-              id="scores24:espn:eng.1:1", source="scores24",
-              side_a="Leeds United", side_b="Newcastle United",
-              price_a=1 / 2.40, price_b=1 / 2.85, pick="a", price=1 / 2.40,
-              bet=True, prob_a=None, edge=None)
-    q.update(kw)
-    return q
+def km(code, title, status="active", result="", bid="0.40", ask="0.42", event="EV", exp=None):
+    return dict(ticker=f"{event}-{code}", event_ticker=event, yes_sub_title=title,
+                status=status, result=result, yes_bid_dollars=bid, yes_ask_dollars=ask,
+                expected_expiration_time=exp)
 
-# The draw is the whole point of a three-way market.
-d = {"quotes": [soccer_quote()], "meta": {}, "coverage": {}}
-real = S.resolve_soccer
-S.resolve_soccer = lambda mid: "draw"
-T.grade(d, verbose=False)
-eq(d["quotes"][0]["status"], "lost",
-   "a backed side LOSES to the draw — refunding it would flatter every soccer tipster")
-close(d["quotes"][0]["pnl"], -100.0, "and it costs the full stake")
+eq(S.kalshi_sides("KXEPLGAME-26SEP06ARSCFC",
+                  [km("ARS", "Arsenal"), km("CFC", "Chelsea"), km("TIE", "Tie")]),
+   {"ARS": "a", "CFC": "b", "TIE": "draw"},
+   "side A is the team the event code starts with (Arsenal at home)")
+eq(S.kalshi_sides("KXEPLGAME-26SEP06ARSCFC",
+                  [km("TIE", "Tie"), km("CFC", "Chelsea"), km("ARS", "Arsenal")]),
+   {"ARS": "a", "CFC": "b", "TIE": "draw"},
+   "the order Kalshi returns markets in never changes which side is home")
+eq(S.kalshi_sides("KXMLBGAME-26SEP131920SDSF", [km("SF", "San Francisco"), km("SD", "San Diego")]),
+   {"SD": "a", "SF": "b"}, "an embedded four-digit start time is stripped before reading the home code")
+eq(S.kalshi_sides("KXBOXING-26SEP12GARCIAMORALE",
+                  [km("MORALE", "Abraham Morales"), km("GARCIA", "Sean Garcia")]),
+   {"GARCIA": "a", "MORALE": "b"}, "codes of any length resolve — the suffix is never split by width")
+eq(S.kalshi_sides("KXCONMEBOLSUDGAME-26SEP16SPABOC",
+                  [km("SPA", "Reg Time: Sao Paulo"), km("BOC", "Reg Time: Boca Juniors"),
+                   km("TIE", "Reg Time: Tie")])["TIE"], "draw",
+   "a 'Reg Time: Tie' outcome is still recognised as the draw")
+eq(S._kalshi_name(km("SPA", "Reg Time: Sao Paulo")), "Sao Paulo",
+   "the 'Reg Time:' prefix is not part of the club's name")
 
-d = {"quotes": [soccer_quote()], "meta": {}, "coverage": {}}
-S.resolve_soccer = lambda mid: "a"
-T.grade(d, verbose=False)
-eq(d["quotes"][0]["status"], "won", "the backed home side settles as won")
-close(d["quotes"][0]["pnl"], round(100.0 * (2.40 - 1), 2),
-      "paying the decimal odds actually available, vig included")
 
-# Settlement must be routed by venue: a soccer fixture has no Polymarket market.
-d = {"quotes": [soccer_quote()], "meta": {}, "coverage": {}}
-S.resolve_soccer = lambda mid: "b"
-called = []
-real_pm = S.resolve_polymarket
-S.resolve_polymarket = lambda mid: called.append(mid) or "a"
-T.grade(d, verbose=False)
-S.resolve_polymarket = real_pm
-eq(called, [], "an ESPN-venue quote is never settled against Polymarket")
-eq(d["quotes"][0]["status"], "lost", "the away win beats the backed home side")
-S.resolve_soccer = real
+def resolving(markets):
+    real = S._get
+    S._get = lambda url, **kw: {"markets": markets}
+    try:
+        return S.resolve_kalshi("KXEPLGAME-26SEP06ARSCFC")
+    finally:
+        S._get = real
 
-# A probability on a three-way market must not have its complement inferred.
-three = dict(market_id="espn:eng.1:9", sport="soccer", label="Leeds vs Newcastle",
-             side_a="Leeds United", side_b="Newcastle United",
-             price_a=0.40, price_b=0.35, price_draw=0.25, untraded=False,
-             venue="espn",
-             start=(datetime.now(timezone.utc) + timedelta(days=1)).isoformat(),
-             date="2026-09-14", volume=0.0, url="")
+eq(resolving([km("ARS", "Arsenal", "finalized", "yes"), km("CFC", "Chelsea", "finalized", "no"),
+              km("TIE", "Tie", "finalized", "no")]), "a", "a finalized home win settles side A")
+eq(resolving([km("ARS", "Arsenal", "finalized", "no"), km("CFC", "Chelsea", "finalized", "no"),
+              km("TIE", "Tie", "finalized", "yes")]), "draw", "a finalized Tie settles as a draw")
+eq(resolving([km("ARS", "Arsenal"), km("CFC", "Chelsea"), km("TIE", "Tie")]), None,
+   "a live event is not settled")
+eq(resolving([km("ARS", "Arsenal", "active", "yes"), km("CFC", "Chelsea"), km("TIE", "Tie")]), None,
+   "a provisional yes is not settled until the market is final")
+eq(resolving([km("ARS", "Arsenal", "finalized", "no"), km("CFC", "Chelsea", "finalized", "no"),
+              km("TIE", "Tie", "finalized", "no")]), "void",
+   "all final with no winner is a refund, never a guess")
+
+now_ = datetime.now(timezone.utc)
+soon = now_ + timedelta(days=1)
+far = now_ + timedelta(days=9)
+tag = lambda d_: f"{d_:%y}{d_.strftime('%b').upper()}{d_:%d}"
+ev, ev_far = f"KXEPLGAME-{tag(soon)}LEENEW", f"KXEPLGAME-{tag(far)}ARSCFC"
+exp = (now_ + timedelta(hours=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
+book = [km("LEE", "Leeds United", bid="0.39", ask="0.40", event=ev, exp=exp),
+        km("NEW", "Newcastle", bid="0.02", ask="0.81", event=ev, exp=exp),
+        km("TIE", "Tie", bid="0.27", ask="0.28", event=ev, exp=exp),
+        km("ARS", "Arsenal", event=ev_far, exp=exp), km("CFC", "Chelsea", event=ev_far, exp=exp),
+        km("TIE", "Tie", event=ev_far, exp=exp)]
+real_open = S._kalshi_open
+S._kalshi_open = lambda series: book if series == "KXEPLGAME" else []
+try:
+    krows = S.fetch_kalshi_venue("soccer")
+finally:
+    S._kalshi_open = real_open
+eq(len(krows), 1, "only fixtures inside the horizon become contests")
+kr = krows[0]
+eq((kr["side_a"], kr["side_b"]), ("Leeds United", "Newcastle"), "home and away read from the event code")
+close(kr["price_a"], 0.40, "a side is priced at the ASK — what backing it would actually cost")
+close(kr["price_draw"], 0.28, "the draw carries its own ask")
+eq(kr["tradeable"], {"a": True, "b": False, "draw": True},
+   "a 0.02/0.81 book is untradeable even when the rest of the event is tight")
+eq(kr["venue"], "kalshi", "the row is marked as a Kalshi venue")
+
+for sp_, series_ in S.KALSHI_VENUE_SERIES.items():
+    eq(len(series_), len(set(series_)), f"no Kalshi series is listed twice for {sp_} — "
+       "a duplicate doubles every event's markets and silently drops the event")
+ok(isinstance(S.tokens("Leeds United"), frozenset),
+   "cached name tokens are frozen, so no caller can corrupt the cache")
+
+# ---------------------------------------------------------------------------
+print("\ndraw picks and Kalshi-venue publishing")
+# ---------------------------------------------------------------------------
+m = T.match_quotes(
+    [dict(market_id="k1", sport="soccer", side_a="Newcastle", side_b="Leeds United", date="2026-09-12")],
+    [dict(a="Leeds United", b="Newcastle", pick="draw", date="2026-09-12")])
+eq(m["k1"], ("pick", "draw"), "a draw stays a draw when the fixture is listed the other way round")
+
+krow = dict(kr, start=(now_ + timedelta(days=1)).isoformat())
 d = {"quotes": [], "meta": {}, "coverage": {}}
 saved = S.CHALLENGERS
-# scores24 is registered for soccer; espn_fpi is not, and a source that does not
-# cover the sport is correctly skipped before it can be logged.
+S.CHALLENGERS = {
+    "soccerpredictions": lambda sp: [dict(a="Leeds", b="Newcastle United", pick="draw", date=krow["date"])],
+    "sportsgambler": lambda sp: [dict(a="Leeds United", b="Newcastle", pick="b", date=krow["date"])],
+}
+T.publish(d, {"soccer": [krow]}, {}, verbose=False)
+S.CHALLENGERS = saved
+byq = {q["source"]: q for q in d["quotes"]}
+eq(byq["soccerpredictions"]["pick"], "draw", "a Draw tip is logged as a draw")
+close(byq["soccerpredictions"]["price"], 0.28, "and priced at the Tie ask")
+eq(byq["soccerpredictions"]["bet"], True, "a Draw tip on a tight Tie book is backed")
+eq(byq["sportsgambler"]["bet"], False, "a tip on an untradeable side is logged but never backed")
+ok("polymarket" not in byq, "no Polymarket self-quote is invented on a Kalshi-venue contest")
+
+nfl_k = dict(sport="nfl", venue="kalshi", market_id="KXNFLGAME-X", label="Denver vs Kansas City",
+             side_a="Denver", side_b="Kansas City", price_a=0.44, price_b=0.57, price_draw=None,
+             tradeable={"a": True, "b": True}, untraded=False,
+             start=(now_ + timedelta(days=1)).isoformat(), date="2026-09-14", volume=0.0, url="")
+d = {"quotes": [], "meta": {}, "coverage": {}}
+S.CHALLENGERS = {"kalshi": lambda sp: [dict(a="Denver", b="Kansas City", prob_a=0.9, date="2026-09-14")]}
+T.publish(d, {"nfl": [nfl_k]}, {}, verbose=False)
+S.CHALLENGERS = saved
+eq([q for q in d["quotes"] if q["source"] == "kalshi"], [],
+   "Kalshi is never scored on a contest where Kalshi IS the price")
+
+# A probability on a three-way market must not have its complement inferred.
+three = dict(market_id="KXEPLGAME-9", sport="soccer", label="Leeds vs Newcastle",
+             side_a="Leeds United", side_b="Newcastle United", price_a=0.40, price_b=0.35,
+             price_draw=0.25, untraded=False, venue="kalshi",
+             tradeable={"a": True, "b": True, "draw": True},
+             start=(now_ + timedelta(days=1)).isoformat(), date="2026-09-14", volume=0.0, url="")
+d = {"quotes": [], "meta": {}, "coverage": {}}
 S.CHALLENGERS = {"scores24": lambda sp: [dict(a="Leeds United", b="Newcastle United",
                                               prob_a=0.20, date="2026-09-14")]}
 T.publish(d, {"soccer": [three]}, {}, verbose=False)
@@ -512,8 +581,114 @@ logged = [q for q in d["quotes"] if q["source"] == "scores24"]
 eq(len(logged), 1, "the three-way quote is logged")
 eq(logged[0]["pick"], None,
    "rating the home side BELOW its price is not an away bet — 1-P(home) contains the draw")
-ok(not any(q["source"] == "polymarket" for q in d["quotes"]),
-   "the market never self-quotes on soccer, where the price comes from a book instead")
+
+# ---------------------------------------------------------------------------
+print("\nsettling three-way Kalshi bets")
+# ---------------------------------------------------------------------------
+def kq(**kw):
+    q = quote(sport="soccer", venue="kalshi", market_id="KXEPLGAME-26SEP20FULMUN",
+              id="soccerpredictions:KXEPLGAME-26SEP20FULMUN", source="soccerpredictions",
+              side_a="Fulham", side_b="Manchester United", price_a=0.27, price_b=0.49,
+              pick="draw", price=0.26, bet=True, prob_a=None, edge=None)
+    q.update(kw)
+    return q
+
+real_k, real_pm = S.resolve_kalshi, S.resolve_polymarket
+calls = []
+S.resolve_polymarket = lambda mid: calls.append(mid) or "a"
+S.resolve_kalshi = lambda mid: "draw"
+d = {"quotes": [kq(), kq(id="sportsgambler:X", source="sportsgambler", pick="a", price=0.27)],
+     "meta": {}, "coverage": {}}
+T.grade(d, verbose=False)
+eq(d["quotes"][0]["status"], "won",
+   "a correct Draw tip WINS — the previous grader would have scored it lost")
+close(d["quotes"][0]["pnl"], round(100 * (1 / 0.26 - 1), 2), "paid at the Tie price it was backed at")
+eq(d["quotes"][1]["status"], "lost", "a side backed in a drawn match loses")
+close(d["quotes"][1]["pnl"], -100.0, "and costs the full stake — never refunded")
+eq(calls, [], "a Kalshi-venue bet is settled by Kalshi, never by Polymarket")
+S.resolve_kalshi, S.resolve_polymarket = real_k, real_pm
+
+# ---------------------------------------------------------------------------
+print("\ngap-fill de-duplication")
+# ---------------------------------------------------------------------------
+pm_row = dict(sport="nfl", side_a="Broncos", side_b="Chiefs", date="2026-09-14")
+ok(T._same_contest(dict(sport="nfl", side_a="Denver", side_b="Kansas City", date="2026-09-15"), pm_row),
+   "a Kalshi game Polymarket already lists is not added a second time")
+ok(not T._same_contest(dict(sport="nfl", side_a="Denver", side_b="Kansas City", date="2026-09-21"), pm_row),
+   "the same two teams a week later are a different game")
+ok(not T._same_contest(dict(sport="nfl", side_a="Seattle", side_b="Arizona", date="2026-09-14"), pm_row),
+   "a different fixture is kept as a gap-fill")
+
+# ---------------------------------------------------------------------------
+print("\nsoccer club names")
+# ---------------------------------------------------------------------------
+# The failure that matters is a WRONG match, not a missed one: a tip on AC Milan booked
+# against Inter corrupts the record silently.
+for x, y, same in [
+    ("Manchester United", "Manchester City", False), ("Man Utd", "Manchester United", True),
+    ("Inter", "AC Milan", False), ("Milan", "AC Milan", True), ("Inter Milan", "Inter", True),
+    ("Internacional", "Inter", False), ("PSG", "Paris FC", False),
+    ("Paris Saint-Germain", "PSG", True), ("LA Galaxy", "Los Angeles G", True),
+    ("São Paulo", "Sao Paulo", True), ("Newcastle", "Newcastle United", True),
+    ("Hertha Berlin", "Union Berlin", False), ("Real Madrid", "Atletico", False),
+    ("Rennes", "Stade Rennais", True), ("Stade Brest 29", "Brest", True),
+    ("FC Köln", "Cologne", True), ("M´gladbach", "Borussia Monchengladbach", True),
+    ("United", "Leeds United", False), ("Inter Miami", "Inter", False),
+    ("Twente", "Enschede", True), ("Santos Laguna", "Santos", False),
+]:
+    got = S._score(x, y, "soccer") >= 0.5
+    eq(got, same, f"{x} vs {y}")
+
+# ---------------------------------------------------------------------------
+print("\nSportsGambler and SoccerPredictions.ai parsing")
+# ---------------------------------------------------------------------------
+
+# Only pages for fixtures a venue prices are fetched — the rest can never be scored.
+sg_links = [("/betting-tips/football/aston-villa-vs-nottingham-forest-prediction-lineups-odds-2026-09-12/",
+             "2026-09-12"),
+            ("/betting-tips/football/shelbourne-vs-derry-city-prediction-lineups-odds-2026-09-12/",
+             "2026-09-12")]
+sg_rows = [dict(sport="soccer", side_a="Aston Villa", side_b="Nottingham Forest", date="2026-09-12")]
+eq([p for p, _ in S.sportsgambler_priced(sg_links, sg_rows)], [sg_links[0][0]],
+   "a SportsGambler page is fetched only when Kalshi prices that fixture")
+eq(S.sportsgambler_priced(sg_links, None), sg_links,
+   "with no universe known (a standalone run) nothing is filtered out")
+eq(S.sportsgambler_priced(sg_links, []), [],
+   "with an empty universe nothing is fetched, since nothing could be priced")
+def sg_page(title, home="Osasuna", away="Espanyol"):
+    return (f'<h2>{home} vs {away} Predictions</h2><div class="content-block">'
+            f'<div class="expert-pick"><span>Main Match Prediction</span></div>'
+            f'<div class="tip--card__block"><h3 class="tip--card__title"> {title} </h3></div>')
+
+eq(S.parse_sportsgambler(sg_page("Osasuna To Win @ +107"))["pick"], "a",
+   "a home To Win tip backs side A")
+eq(S.parse_sportsgambler(sg_page("Espanyol To Win @ +250"))["pick"], "b",
+   "an away To Win tip backs side B")
+eq(S.parse_sportsgambler(sg_page("Draw @ +230"))["pick"], "draw", "a Draw tip is kept as a draw")
+for t_ in ("Over 2.5 Goals @ -115", "Bournemouth Asian Hcp 0.0 @ -132",
+           "Both Teams To Score - Yes @ -116", "Osasuna To Win & Over 2.5 @ +300"):
+    eq(S.parse_sportsgambler(sg_page(t_)), None, f"not a result pick, not scored: {t_}")
+eq(S.parse_sportsgambler("<h2>Nothing here</h2>"), None, "a page with no main prediction yields nothing")
+
+
+def sp_row(url, home, away, tip):
+    return (f'<div class="tipsrow"><div class="ml__link"><a href="{url}" class="ml__link p-0" title="x">'
+            f'<div class="tipscell tipscell--time muted"><div class="tipscell__text">19:30</div></div>'
+            f'<div class="tipscell tipscell--grow"><div class="tipscell__text">'
+            f'<div class="tipscell__text__name">{home}</div></div><div class="tipscell__text">'
+            f'<div class="tipscell__text__name">{away}</div></div></div>'
+            f'<div class="tipscell tipscell--right tipscell--score"><div class="tipscell__text fw-500">'
+            f'<span>{tip}</span></div><div class="tipscell__text muted"><span class="oddspan">Odds:</span>'
+            f'<span>2.30</span></div></div></a></div></div>')
+
+base = "https://soccerpredictions.ai/"
+page = (sp_row(base + "union-berlin-v-schalke-prediction-date-2026-09-11", "Union Berlin", "Schalke", "Home")
+        + sp_row(base + "rennes-v-marseille-prediction-date-2026-09-11", "Rennes", "Marseille", "Home & Over 2.5")
+        + sp_row(base + "nurnberg-v-hannover-96-prediction-date-2026-09-11", "Nurnberg", "Hannover 96", "Draw")
+        + sp_row(base + "venezia-v-fiorentina-prediction-date-2026-09-12", "Venezia", "Fiorentina", "Away"))
+eq([(g["a"], g["pick"], g["date"]) for g in S.parse_soccerpredictions(page)],
+   [("Union Berlin", "a", "2026-09-11"), ("Nurnberg", "draw", "2026-09-11"), ("Venezia", "b", "2026-09-12")],
+   "only plain Home / Away / Draw survive, combined tips are dropped, the date comes from the URL")
 
 # ---------------------------------------------------------------------------
 print("\nfeed health check")
@@ -539,6 +714,44 @@ ok("Feed check" in out and "Covers" in out,
 # A source never asked about must not be reported as dark.
 eq(BUILD.feed_health({"coverage": {"nfl": {}}, "quotes": []}), "",
    "a source with no coverage entry at all is not accused of being down")
+
+# ---------------------------------------------------------------------------
+print("\nnetwork failures never crash the run")
+# ---------------------------------------------------------------------------
+# Both of these were real: a Polymarket connection dropped mid-run and, because the fetch
+# helper did not catch that exception type, the whole run died without grading or saving.
+import http.client
+import subprocess as _sp
+import urllib.request as _ur
+
+real_open, real_run, real_sleep = _ur.urlopen, _sp.run, S.time.sleep
+def _dropped(*a, **k):
+    raise http.client.RemoteDisconnected("Remote end closed connection without response")
+_ur.urlopen = _dropped
+_sp.run = lambda *a, **k: type("R", (), {"stdout": ""})()
+S.time.sleep = lambda s_: None
+try:
+    try:
+        S._get("https://example.invalid/x", tries=2, timeout=1)
+        ok(False, "a dropped connection surfaces as a handled RuntimeError")
+    except RuntimeError:
+        ok(True, "a dropped connection surfaces as a handled RuntimeError, not a crash")
+finally:
+    _ur.urlopen, _sp.run, S.time.sleep = real_open, real_run, real_sleep
+
+real_pm_fetch, real_kv_fetch = S.fetch_polymarket, S.fetch_kalshi_venue
+def _pm_flaky(sport, stats=None):
+    if sport == "nfl":
+        raise http.client.RemoteDisconnected("dropped")
+    return []
+S.fetch_polymarket = _pm_flaky
+S.fetch_kalshi_venue = lambda sport, stats=None: []
+try:
+    uni_, cov_ = T.collect(verbose=False)
+    ok(set(uni_) == set(S.SPORTS) and uni_["nfl"] == [],
+       "one venue failing for one sport leaves every other sport's collection intact")
+finally:
+    S.fetch_polymarket, S.fetch_kalshi_venue = real_pm_fetch, real_kv_fetch
 
 # ---------------------------------------------------------------------------
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")

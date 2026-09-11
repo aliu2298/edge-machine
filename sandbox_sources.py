@@ -17,8 +17,12 @@ point of the board is to tell those two apart.
 """
 
 import json
+import concurrent.futures
+import functools
 import html
+import http.client
 import re
+import unicodedata
 import subprocess
 import time
 import urllib.error
@@ -98,6 +102,21 @@ SOURCES = {
              "niche cricket Polymarket lists. Cloudflare-protected, so it comes through "
              "the headless browser. Tips carry no date, so each is resolved to the "
              "soonest fixture between those two sides."),
+    "sportsgambler": dict(
+        label="SportsGambler", kind="Tipster site", connected=True,
+        site="sportsgambler.com", sports=["soccer"],
+        note="A named analyst's Main Match Prediction per fixture across 14 leagues. Only "
+             "its To Win and Draw calls are scored — about one tip in six; the rest are "
+             "over/unders, Asian handicaps and BTTS, which settle a different question. "
+             "Its tennis, table-tennis, cricket and boxing pages are not scored: they "
+             "restate the bookmaker line as prose, so following them only measures the "
+             "favourite."),
+    "soccerpredictions": dict(
+        label="SoccerPredictions.ai", kind="Tipster site", connected=True,
+        site="soccerpredictions.ai", sports=["soccer"],
+        note="One published tip per fixture. Only plain Home / Away / Draw calls are "
+             "scored; combined tips such as 'Home & Over 2.5' are a different bet and are "
+             "dropped rather than read as a result pick."),
     "tennisexplorer": dict(
         label="Tennis Explorer", kind="Tipster site", connected=False,
         site="tennisexplorer.com", sports=["tennis"],
@@ -136,7 +155,7 @@ SOURCES = {
 # HTTP
 # ---------------------------------------------------------------------------
 
-def _get(url, tries=3, timeout=30):
+def _get(url, tries=3, timeout=20):
     """GET JSON, with a curl fallback.
 
     urllib is the repo convention and is what works inside GitHub Actions. It is NOT
@@ -151,8 +170,11 @@ def _get(url, tries=3, timeout=30):
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, timeout=timeout) as f:
                 return json.load(f)
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError,
-                json.JSONDecodeError) as e:
+        # OSError covers URLError, timeouts and a dropped connection; HTTPException covers
+        # a truncated body; ValueError covers bad JSON. The narrower list this replaced
+        # let http.client.RemoteDisconnected through, and one Polymarket hiccup crashed
+        # an entire run — no grading, nothing saved.
+        except (OSError, http.client.HTTPException, ValueError) as e:
             last = e
             time.sleep(1.2 * (i + 1))
     try:
@@ -228,7 +250,7 @@ def canon(name, sport):
     table = NICKNAMES.get(sport)
     if not table:
         return ""
-    n = re.sub(r"[^a-z0-9 ]", " ", str(name).lower())
+    n = re.sub(r"[^a-z0-9 ]", " ", _fold(name))
     n = " ".join(n.split())
     for nick, alts in table.items():
         if nick in n:
@@ -241,10 +263,27 @@ def canon(name, sport):
 
 
 
+def _fold(name):
+    """Lowercase, accents stripped: "São Paulo" -> "sao paulo", "Köln" -> "koln".
+
+    Without this the non-ASCII letter became a separator — "São" tokenized to a lone
+    "s", which the length filter then threw away — so São Paulo could never match
+    Sao Paulo, and every Brazilian, German and French club with an accent was at risk.
+    """
+    s = unicodedata.normalize("NFKD", str(name))
+    return s.encode("ascii", "ignore").decode("ascii").lower()
+
+
+@functools.lru_cache(maxsize=50000)
 def tokens(name):
-    """Lowercase alphanumeric tokens of a team or player name, minus filler."""
-    t = re.sub(r"[^a-z0-9 ]", " ", str(name).lower())
-    return {w for w in t.split() if w and w not in STOP and len(w) > 1}
+    """Lowercase alphanumeric tokens of a team or player name, minus filler.
+
+    Cached, and frozen so a cached result can never be mutated by a caller. Matching is
+    every quote against every fixture, and with soccer on Kalshi that is several
+    hundred fixtures a run — recomputing each name thousands of times was the slow part.
+    """
+    t = re.sub(r"[^a-z0-9 ]", " ", _fold(name))
+    return frozenset(w for w in t.split() if w and w not in STOP and len(w) > 1)
 
 
 def sim(a, b):
@@ -259,6 +298,155 @@ def sim(a, b):
     return len(ta & tb) / min(len(ta), len(tb))
 
 
+# ---------------------------------------------------------------------------
+# Soccer names
+# ---------------------------------------------------------------------------
+#
+# Soccer is where name matching is most dangerous, because the failure is not a missed
+# match but a WRONG one. Clubs share cities (Manchester United / City, Inter / AC Milan,
+# PSG / Paris FC, Hertha / Union Berlin), and the NFL/MLB approach — a substring check on
+# a nickname — would book an AC Milan tip against Inter ("milan" is inside "inter
+# milan"). Three rules replace it:
+#
+#   1. aliases are matched on WORD boundaries, longest first, so "Inter Milan" resolves
+#      before "Milan" can and "internacional" never matches "inter";
+#   2. two known clubs are decisive: same key 1.0, different keys 0;
+#   3. unknown names only match when one is a SUBSET of the other ("Newcastle" in
+#      "Newcastle United"). If each has a word the other lacks, they are two different
+#      clubs — which is exactly the Manchester United / Manchester City case.
+SOCCER_ALIASES = {
+    # England
+    "manchester united": ["manchester united", "man united", "man utd", "manchester utd", "man u"],
+    "manchester city": ["manchester city", "man city"],
+    "tottenham": ["tottenham hotspur", "tottenham", "spurs"],
+    "wolverhampton": ["wolverhampton wanderers", "wolverhampton", "wolves"],
+    "brighton": ["brighton and hove albion", "brighton hove albion", "brighton"],
+    "west ham": ["west ham united", "west ham"],
+    "newcastle": ["newcastle united", "newcastle"],
+    "nottingham forest": ["nottingham forest", "nottm forest", "nott m forest"],
+    "sheffield united": ["sheffield united", "sheffield utd", "sheff utd"],
+    "sheffield wednesday": ["sheffield wednesday", "sheff wed"],
+    "leeds": ["leeds united", "leeds"],
+    "leicester": ["leicester city", "leicester"],
+    "ipswich": ["ipswich town", "ipswich"],
+    # Spain
+    "athletic bilbao": ["athletic club", "athletic bilbao"],
+    "atletico madrid": ["atletico madrid", "atl madrid", "atleti", "atletico"],
+    "rayo vallecano": ["rayo vallecano", "vallecano", "rayo"],
+    "racing santander": ["racing santander", "racing de santander", "santander"],
+    "real sociedad": ["real sociedad", "sociedad"],
+    "real betis": ["real betis", "betis"],
+    "alaves": ["deportivo alaves", "alaves"],
+    "celta vigo": ["celta vigo", "celta"],
+    # Germany
+    "bayern munich": ["bayern munich", "bayern munchen", "fc bayern", "bayern"],
+    "rb leipzig": ["rb leipzig", "rasenballsport leipzig", "leipzig"],
+    "eintracht frankfurt": ["eintracht frankfurt", "frankfurt"],
+    "werder bremen": ["werder bremen", "bremen", "werder"],
+    "monchengladbach": ["borussia monchengladbach", "monchengladbach", "mgladbach",
+                        "m gladbach", "gladbach"],
+    "koln": ["1 fc koln", "fc koln", "koln", "cologne"],
+    "dortmund": ["borussia dortmund", "dortmund", "bvb"],
+    "leverkusen": ["bayer leverkusen", "leverkusen"],
+    "mainz": ["mainz 05", "fsv mainz", "mainz"],
+    "hertha": ["hertha berlin", "hertha bsc", "hertha"],
+    "union berlin": ["1 fc union berlin", "union berlin"],
+    "hamburg": ["hamburger sv", "hamburg", "hsv"],
+    "st pauli": ["fc st pauli", "st pauli", "sankt pauli"],
+    "schalke": ["schalke 04", "schalke"],
+    # Italy
+    "inter": ["inter milan", "internazionale", "inter"],
+    "milan": ["ac milan", "milan"],
+    "roma": ["as roma", "roma"],
+    "lazio": ["ss lazio", "lazio"],
+    "napoli": ["ssc napoli", "napoli"],
+    "parma": ["parma calcio", "parma"],
+    "verona": ["hellas verona", "verona"],
+    # France
+    "psg": ["paris saint germain", "paris sg", "psg"],
+    "paris fc": ["paris fc"],
+    "rennes": ["stade rennais", "rennes"],
+    "brest": ["stade brest 29", "stade brestois", "stade brest", "brest"],
+    "strasbourg": ["strasbourg alsace", "rc strasbourg", "strasbourg"],
+    "marseille": ["olympique de marseille", "olympique marseille", "marseille"],
+    "lyon": ["olympique lyonnais", "olympique lyon", "lyon"],
+    "saint etienne": ["saint etienne", "st etienne"],
+    # Netherlands
+    "psv": ["psv eindhoven", "psv", "eindhoven"],
+    "twente": ["fc twente", "twente", "enschede"],
+    "az": ["az alkmaar", "az"],
+    "go ahead eagles": ["go ahead eagles", "ga eagles"],
+    "nec": ["nec nijmegen", "nijmegen", "nec"],
+    "fortuna sittard": ["fortuna sittard", "sittard"],
+    "pec zwolle": ["pec zwolle", "zwolle"],
+    "sparta rotterdam": ["sparta rotterdam", "sparta"],
+    "ado den haag": ["ado den haag", "den haag"],
+    # USA / MLS
+    "la galaxy": ["los angeles galaxy", "la galaxy", "los angeles g", "galaxy"],
+    "lafc": ["los angeles fc", "lafc", "los angeles f"],
+    "inter miami": ["inter miami cf", "inter miami"],
+    "new york city": ["new york city fc", "nycfc", "new york city"],
+    "new york red bulls": ["new york red bulls", "ny red bulls", "red bulls"],
+    "st louis city": ["st louis city", "saint louis city", "st louis", "saint louis"],
+    "real salt lake": ["real salt lake", "salt lake"],
+    "cf montreal": ["cf montreal", "montreal"],
+    "new england": ["new england revolution", "new england"],
+    "chicago fire": ["chicago fire", "chicago"],
+    "sporting kc": ["sporting kansas city", "sporting kc"],
+    # Mexico
+    "club america": ["club america", "america"],
+    "pumas": ["pumas unam", "unam", "pumas"],
+    "tijuana": ["tijuana de caliente", "club tijuana", "tijuana", "xolos"],
+    "atletico san luis": ["atletico san luis", "san luis"],
+    "guadalajara": ["chivas guadalajara", "guadalajara", "chivas"],
+    "santos laguna": ["santos laguna"],
+    # Brazil / South America
+    "athletico paranaense": ["athletico paranaense", "atletico paranaense", "paranaense"],
+    "atletico mineiro": ["atletico mineiro", "atletico mg"],
+    "america mineiro": ["america mineiro", "america mg"],
+    "vasco": ["vasco da gama", "vasco"],
+    "santos": ["santos fc", "santos"],
+    "independiente santa fe": ["independiente santa fe", "independ santa fe"],
+}
+
+# Words that name no club on their own. A bare "United" or "City" matching any club
+# with that word would be the subset rule's one blind spot.
+SOCCER_FILLER = {"fc", "cf", "afc", "sc", "ac", "club", "cd", "ud", "sd", "calcio", "sv",
+                 "as", "ss", "ssc", "rc", "ogc", "de", "la", "le", "el", "the"}
+SOCCER_GENERIC = {"united", "city", "town", "real", "athletic", "sporting", "rovers",
+                  "wanderers", "county", "albion"}
+
+
+def _phrase(name):
+    return " ".join(re.sub(r"[^a-z0-9 ]", " ", _fold(name)).split())
+
+
+_SOCCER_INDEX = sorted(((_phrase(v), key) for key, vs in SOCCER_ALIASES.items() for v in vs),
+                       key=lambda kv: -len(kv[0]))
+
+
+@functools.lru_cache(maxsize=50000)
+def soccer_canon(name):
+    """Known club -> canonical key, matched on word boundaries, longest alias first."""
+    n = f" {_phrase(name)} "
+    for variant, key in _SOCCER_INDEX:
+        if f" {variant} " in n:
+            return key
+    return ""
+
+
+def soccer_sim(a, b):
+    """Two unknown club names: a match only when one is a subset of the other."""
+    ta, tb = tokens(a) - SOCCER_FILLER, tokens(b) - SOCCER_FILLER
+    if not ta or not tb:
+        return 0.0
+    if (ta - tb) and (tb - ta):
+        return 0.0
+    if min((ta, tb), key=len) <= SOCCER_GENERIC:
+        return 0.0
+    return 1.0
+
+
 def _score(a, b, sport):
     """How strongly do these two names refer to the same competitor?
 
@@ -266,6 +454,11 @@ def _score(a, b, sport):
     overlap. Two DIFFERENT known teams score 0 outright — without that, "Los Angeles
     Rams" and "Los Angeles Chargers" share a city and would otherwise score 0.67.
     """
+    if sport == "soccer":
+        ca, cb = soccer_canon(a), soccer_canon(b)
+        if ca and cb:
+            return 1.0 if ca == cb else 0.0
+        return soccer_sim(a, b)
     ca, cb = canon(a, sport), canon(b, sport)
     if ca and cb:
         return 1.0 if ca == cb else 0.0
@@ -848,151 +1041,229 @@ def fetch_tennisexplorer(sport):
 
 
 # ---------------------------------------------------------------------------
-# Soccer — a second spine, because Polymarket does not price it
+# Kalshi as a VENUE — soccer, and whatever Polymarket does not list
 # ---------------------------------------------------------------------------
 #
-# Every other sport here hangs off Polymarket: it supplies the price and it settles
-# itself. Soccer cannot, and the numbers are not close. Polymarket lists one or two
-# soccer MATCHES a day — Chinese Super League and the Colombian top flight — against
-# hundreds of futures markets. There is no Premier League match to bet into. Meanwhile
-# soccer is the sport tipsters overwhelmingly publish on: Scores24 alone had 187 soccer
-# tips against 30 for tennis. Hanging soccer off Polymarket would have produced a column
-# that never matched anything.
-#
-# So soccer runs on ESPN instead: ESPN lists the fixture, DraftKings prices it through
-# ESPN's odds feed, and ESPN's own final score settles it. The rest of this repo already
-# depends on that same feed for the streaks board, so it is well-proven ground.
-#
-# The important structural difference is that soccer is a THREE-way market. A backed side
-# loses to the draw as well as to defeat, which is why the draw price is carried and why
-# a soccer pick is never treated as the complement of the other side.
-# Chosen to overlap with what tipsters actually publish on, not just the marquee
-# leagues. The first soccer tips that arrived were for a USL side and a Copa
-# Sudamericana tie — outside the original ten, so they matched nothing. A tip against a
-# fixture the board never listed is a tip silently thrown away.
-SOCCER_LEAGUES = {
-    "eng.1": "Premier League", "eng.2": "Championship", "esp.1": "La Liga",
-    "ger.1": "Bundesliga", "ita.1": "Serie A", "fra.1": "Ligue 1",
-    "ned.1": "Eredivisie", "por.1": "Primeira Liga", "tur.1": "Super Lig",
-    "usa.1": "MLS", "usa.usl.1": "USL Championship", "mex.1": "Liga MX",
-    "bra.1": "Brasileirao", "arg.1": "Liga Profesional",
-    "uefa.champions": "Champions League", "uefa.europa": "Europa League",
-    "conmebol.sudamericana": "Copa Sudamericana",
+# Polymarket prices and settles six of the seven sports. Where it cannot, Kalshi does the
+# same job: all of soccer (Polymarket lists one or two soccer MATCHES a day, in leagues no
+# tipster covers, against hundreds of futures) and any individual fight, match or game
+# Polymarket is missing. Kalshi lists one yes/no market per outcome — each team, plus a
+# Tie in soccer — and finalizes exactly one of them "yes".
+KALSHI_API = "https://api.elections.kalshi.com/trade-api/v2/markets"
+
+KALSHI_VENUE_SERIES = {
+    "soccer": [
+        # top flights tipsters cover most
+        "KXEPLGAME", "KXLALIGAGAME", "KXBUNDESLIGAGAME", "KXSERIEAGAME", "KXLIGUE1GAME",
+        "KXEREDIVISIEGAME", "KXLIGAPORTUGALGAME", "KXSCOTTISHPREMGAME", "KXBELGIANPLGAME",
+        "KXSUPERLIGGAME", "KXSWISSLEAGUEGAME", "KXSLGREECEGAME", "KXDENSUPERLIGAGAME",
+        "KXALLSVENSKANGAME", "KXELITESERIENGAME", "KXCZEFLGAME", "KXSRBSLGAME",
+        "KXSVNPLGAME", "KXISRPLGAME", "KXSAUDIPLGAME", "KXUAEPLGAME", "KXEGYPLGAME",
+        # second tiers
+        "KXEFLCHAMPIONSHIPGAME", "KXEFLL1GAME", "KXBUNDESLIGA2GAME", "KXLIGUE2GAME",
+        "KXLALIGA2GAME", "KXCZEFNLGAME", "KXSVK2LGAME", "KXISRNLGAME",
+        # Americas
+        "KXMLSGAME", "KXUSLGAME", "KXCANPLGAME", "KXLIGAMXGAME", "KXLIGAEXPGAME",
+        "KXBRASILEIROGAME", "KXBRASILEIROBGAME", "KXBRASILEIROCGAME", "KXCHLLDPGAME",
+        "KXPERLIGA1GAME", "KXURYPDGAME", "KXECULPGAME", "KXAPFDDHGAME",
+        # Asia
+        "KXJLEAGUEGAME", "KXKLEAGUEGAME", "KXK2LEAGUEGAME", "KXCHNSLGAME", "KXCHNL1GAME",
+        "KXTHAIL1GAME", "KXMYSLGAME", "KXIDNSLGAME", "KXVLEAGUE1GAME", "KXSGPPLGAME",
+        # smaller leagues
+        "KXLVAVIRGAME", "KXFROPLGAME",
+        # continental and domestic cups
+        "KXUCLGAME", "KXUELGAME", "KXCONMEBOLSUDGAME", "KXCONMEBOLLIBGAME",
+        "KXCONCACAFCCUPGAME", "KXAFCCLGAME", "KXEFLCUPGAME", "KXFACUPGAME",
+        "KXCOPADELREYGAME", "KXCOPADOBRASILGAME", "KXSCOCUPGAME", "KXSVKCUPGAME",
+        "KXUSOPENCUPGAME",
+    ],
+    "tennis": ["KXATPMATCH", "KXATPCHALLENGERMATCH", "KXWTAMATCH"],
+    "table_tennis": ["KXTABLETENNIS", "KXTTMATCH", "KXTTELITEGAME", "KXWTTMATCH"],
+    "boxing": ["KXBOXING"],
+    "cricket": ["KXCPLMATCH", "KXT20MATCH", "KXCRICKETT20IMATCH", "KXCRICKETODIMATCH"],
+    "nfl": ["KXNFLGAME"],
+    "mlb": ["KXMLBGAME"],
 }
 
+# A tip is priced at the YES ASK — what backing it would actually cost — and only where
+# the book is tight. Kalshi carries untouched books quoted 0.02 bid / 0.81 ask; a mid of
+# 0.415 on one of those is a number nobody could trade at, and T20 cricket is full of
+# them.
+# De-duplicated on purpose. A series listed twice would load every event's markets twice,
+# the event would then appear to have four teams, and it would be skipped without a word.
+KALSHI_VENUE_SERIES = {k: list(dict.fromkeys(v)) for k, v in KALSHI_VENUE_SERIES.items()}
 
-def _decimal(ml):
-    """American moneyline -> decimal odds (the multiple returned on a winning stake)."""
+KALSHI_MAX_SPREAD = 0.10
+KALSHI_FINAL = {"finalized", "settled", "determined"}
+
+_kalshi_open_cache = {}
+
+
+def _kalshi_open(series):
+    """Every open market in one Kalshi series, cursor-paginated, cached per run."""
+    if series in _kalshi_open_cache:
+        return _kalshi_open_cache[series]
+    out, cursor = [], ""
+    for _ in range(10):
+        url = f"{KALSHI_API}?limit=200&status=open&series_ticker={series}"
+        if cursor:
+            url += f"&cursor={cursor}"
+        try:
+            d = _get(url, tries=2, timeout=30)
+        except RuntimeError:
+            break
+        batch = d.get("markets") or []
+        out += batch
+        cursor = d.get("cursor") or ""
+        if not cursor or not batch:
+            break
+    _kalshi_open_cache[series] = out
+    return out
+
+
+def _num(x):
     try:
-        ml = float(ml)
+        return float(x)
     except (TypeError, ValueError):
         return None
-    if ml == 0:
-        return None
-    return 1 + (ml / 100.0) if ml > 0 else 1 + (100.0 / abs(ml))
 
 
-def fetch_soccer(horizon_days=4, cap=MAX_PER_SPORT):
-    """Upcoming fixtures across the tracked leagues, priced by DraftKings via ESPN.
+def _kalshi_code(m):
+    return str(m.get("ticker", "")).rsplit("-", 1)[-1]
 
-    Prices are the RAW implied probabilities, vig included, because the payout has to be
-    the price a bettor could actually have taken. De-vigging here would quietly inflate
-    every settled return.
+
+def _kalshi_is_tie(m):
+    return (_kalshi_code(m).upper() == "TIE"
+            or str(m.get("yes_sub_title", "")).strip().lower().endswith("tie"))
+
+
+def _kalshi_name(m):
+    # Some cup series prefix every outcome "Reg Time: " — the market settles on 90
+    # minutes. The prefix is not part of the club's name.
+    return str(m.get("yes_sub_title") or "").replace("Reg Time:", "").strip()
+
+
+def kalshi_sides(event_ticker, markets):
+    """{market code: 'a' | 'b' | 'draw'} for one Kalshi event.
+
+    Side A is the home team: the team code the event suffix STARTS with once the date —
+    and, for MLB and cricket, a four-digit start time — is stripped, so
+    KXEPLGAME-26SEP06ARSCFC is Arsenal at home. Codes run two to six characters, so the
+    suffix can never be split by length. Fetch and settlement both call this one
+    function, which is what guarantees a bet placed on side A is settled against the
+    same team it was placed on.
+    """
+    suffix = str(event_ticker).rsplit("-", 1)[-1]
+    body = re.sub(r"^\d{2}[A-Z]{3}\d{2}(\d{4})?", "", suffix)
+    out = {_kalshi_code(m): "draw" for m in markets if _kalshi_is_tie(m)}
+    teams = [_kalshi_code(m) for m in markets if not _kalshi_is_tie(m)]
+    if len(teams) != 2:
+        return out
+    home = [c for c in teams if body.startswith(c)]
+    a = home[0] if len(home) == 1 else sorted(teams)[0]
+    b = teams[1] if teams[0] == a else teams[0]
+    out[a], out[b] = "a", "b"
+    return out
+
+
+def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
+    """Kalshi contests for one sport, as universe rows with Kalshi as the venue.
+
+    The cap is generous on purpose. A Kalshi-venue row adds nothing to the ledger by
+    itself — no self-quote is logged against it — so a wide universe costs nothing but
+    matching time, while a narrow one silently discards every tip on a fixture it cut.
     """
     now = datetime.now(timezone.utc)
-    horizon = now + timedelta(days=horizon_days)
-    rows = []
-    for slug, league in SOCCER_LEAGUES.items():
-        for i in range(horizon_days + 1):
-            d = (now + timedelta(days=i)).strftime("%Y%m%d")
-            try:
-                sb = _get(f"{ESPN_SITE}/apis/site/v2/sports/soccer/{slug}/scoreboard?dates={d}",
-                          tries=2, timeout=25)
-            except RuntimeError:
-                continue
-            for ev in sb.get("events") or []:
-                sides = _espn_sides(ev)
-                if not sides:
-                    continue
-                home, away, cid = sides
-                comp = (ev.get("competitions") or [{}])[0]
-                if (comp.get("status") or {}).get("type", {}).get("state") != "pre":
-                    continue
-                try:
-                    start = datetime.fromisoformat(
-                        str(ev.get("date")).replace("Z", "+00:00")[:25])
-                    if start.tzinfo is None:
-                        start = start.replace(tzinfo=timezone.utc)
-                except (ValueError, TypeError):
-                    continue
-                if not (now - timedelta(minutes=5) <= start <= horizon):
-                    continue
-                try:
-                    o = _get(f"https://sports.core.api.espn.com/v2/sports/soccer/leagues/"
-                             f"{slug}/events/{ev['id']}/competitions/{cid}/odds",
-                             tries=2, timeout=20)
-                except RuntimeError:
-                    continue
+    first = now.strftime("%Y-%m-%d")
+    last = (now + timedelta(days=horizon_days)).strftime("%Y-%m-%d")
+    # Fetched concurrently. Soccer alone is 69 series, and one after another they took
+    # nearly five minutes of a run whose CPU time was under two seconds. Six workers stays
+    # well inside Kalshi's public read limits.
+    series_list = KALSHI_VENUE_SERIES.get(sport) or []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        fetched = dict(zip(series_list, pool.map(_kalshi_open, series_list)))
+    events = {}
+    for series in series_list:
+        for m in fetched[series]:
+            events.setdefault((series, m.get("event_ticker")), []).append(m)
 
-                dh = da = dd = None
-                for it in o.get("items") or []:
-                    dh = dh or _decimal((it.get("homeTeamOdds") or {}).get("moneyLine"))
-                    da = da or _decimal((it.get("awayTeamOdds") or {}).get("moneyLine"))
-                    draw = it.get("drawOdds")
-                    dd = dd or _decimal(draw.get("moneyLine") if isinstance(draw, dict) else draw)
-                if not dh or not da:
-                    continue
+    rows, listed = [], 0
+    for (series, et), ms in events.items():
+        date = kalshi_date(et)
+        if not (first <= date <= last):
+            continue
+        sides = kalshi_sides(et, ms)
+        by_side = {sides[_kalshi_code(m)]: m for m in ms if _kalshi_code(m) in sides}
+        if "a" not in by_side or "b" not in by_side:
+            continue
+        three_way = sport == "soccer"
+        if three_way and "draw" not in by_side:
+            continue
+        listed += 1
 
-                rows.append(dict(
-                    sport="soccer", venue="espn",
-                    market_id=f"espn:{slug}:{ev['id']}",
-                    label=f"{home} vs {away}", side_a=home, side_b=away,
-                    price_a=1.0 / dh, price_b=1.0 / da,
-                    price_draw=(1.0 / dd) if dd else None,
-                    start=start.isoformat(), date=start.strftime("%Y-%m-%d"),
-                    volume=0.0, untraded=False, league=league,
-                    url=f"https://www.espn.com/soccer/match/_/gameId/{ev['id']}",
-                ))
-                time.sleep(0.1)
+        # Kalshi publishes no kickoff time. Expected expiration sits two to three hours
+        # after the start, so three hours before it is a deliberately EARLY estimate:
+        # logging stops before the real kickoff, never after it.
+        try:
+            end = datetime.fromisoformat(
+                str(ms[0].get("expected_expiration_time")).replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            continue
+        start = end - timedelta(hours=3)
+        if start < now - timedelta(minutes=5):
+            continue
+
+        prices, tradeable = {}, {}
+        for side, m in by_side.items():
+            bid, ask = _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars"))
+            prices[side] = ask
+            tradeable[side] = bool(bid is not None and ask is not None and bid > 0
+                                   and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD)
+        if not prices.get("a") or not prices.get("b"):
+            continue
+
+        rows.append(dict(
+            sport=sport, venue="kalshi", market_id=et,
+            label=f"{_kalshi_name(by_side['a'])} vs {_kalshi_name(by_side['b'])}",
+            side_a=_kalshi_name(by_side["a"]), side_b=_kalshi_name(by_side["b"]),
+            price_a=prices["a"], price_b=prices["b"],
+            price_draw=prices.get("draw") if three_way else None,
+            tradeable=tradeable, untraded=not any(tradeable.values()),
+            start=start.isoformat(), date=date, volume=0.0,
+            url=f"https://kalshi.com/markets/{series.lower()}",
+        ))
 
     rows.sort(key=lambda r: r["start"])
+    if stats is not None:
+        stats["listed"] = listed
+        stats["priced"] = sum(1 for r in rows if not r["untraded"])
     return rows[:cap] if cap else rows
 
 
-def resolve_soccer(market_id):
-    """Settle a soccer fixture from ESPN's final score.
+def resolve_kalshi(event_ticker):
+    """Settlement oracle for a Kalshi event: 'a', 'b', 'draw', 'void', or None if open.
 
-    Returns 'a' (home win), 'b' (away win), 'draw', or None while unfinished. A backed
-    side loses to the draw, so the draw is a real third outcome and never a void.
+    The winning side is read through kalshi_sides — the same mapping used when the bet
+    was placed — so side A can never quietly change meaning between placing and settling.
     """
     try:
-        _, slug, eid = market_id.split(":", 2)
-    except ValueError:
-        return None
-    try:
-        sb = _get(f"{ESPN_SITE}/apis/site/v2/sports/soccer/{slug}/scoreboard?event={eid}",
-                  tries=2, timeout=25)
+        ms = _get(f"{KALSHI_API}?event_ticker={event_ticker}&limit=20",
+                  tries=2, timeout=30).get("markets") or []
     except RuntimeError:
         return None
-    for ev in sb.get("events") or []:
-        if str(ev.get("id")) != str(eid):
-            continue
-        comp = (ev.get("competitions") or [{}])[0]
-        if not (comp.get("status") or {}).get("type", {}).get("completed"):
+    if not ms:
+        return None
+    sides = kalshi_sides(event_ticker, ms)
+    yes = [m for m in ms if str(m.get("result")).lower() == "yes"]
+    if yes:
+        if any(str(m.get("status")).lower() not in KALSHI_FINAL for m in yes):
             return None
-        hs = as_ = None
-        for t in comp.get("competitors") or []:
-            try:
-                sc = int(t.get("score"))
-            except (TypeError, ValueError):
-                return None
-            if t.get("homeAway") == "home":
-                hs = sc
-            else:
-                as_ = sc
-        if hs is None or as_ is None:
-            return None
-        return "a" if hs > as_ else ("b" if as_ > hs else "draw")
+        if len(yes) != 1:
+            return "void"
+        return sides.get(_kalshi_code(yes[0])) or "void"
+    if all(str(m.get("status")).lower() in KALSHI_FINAL for m in ms):
+        # Everything final and nothing resolved yes: cancelled or voided. Refund it.
+        return "void"
     return None
 
 
@@ -1155,6 +1426,198 @@ def fetch_oddspedia(sport):
     return _oddspedia_all().get(sport, [])
 
 
+# ---------------------------------------------------------------------------
+# SportsGambler — football match predictions (plain HTTP)
+# ---------------------------------------------------------------------------
+#
+# Every match page carries one "Main Match Prediction" from a named analyst. Only its
+# To Win and Draw calls are scored. That is roughly one tip in six: the rest are
+# over/unders, Asian handicaps and both-teams-to-score, which settle a different question
+# than the result market they would be priced against.
+#
+# Football only. Its tennis, table-tennis, cricket and boxing pages were checked and are
+# not tips at all — they restate the bookmaker line as prose ("odds of -192 that Jorgic
+# lands victory"). Scoring those would only ever measure the favourite.
+SPORTSGAMBLER = "https://www.sportsgambler.com"
+# Only leagues Kalshi prices: a tip on a fixture with no price cannot be scored.
+SPORTSGAMBLER_LEAGUES = [
+    "premier-league", "la-liga", "bundesliga", "serie-a", "ligue-1", "eredivisie",
+    "primeira-liga", "scottish-premiership", "belgium-first-division-a", "super-lig",
+    "swiss-super-league", "greece-super-league-1", "denmark-superliga", "allsvenskan",
+    "eliteserien", "championship", "league-one", "2-bundesliga", "la-liga-2", "mls",
+    "liga-mx", "brazil-serie-a", "brazil-serie-b", "peru-liga-1", "j1-league",
+    "k-league-1", "chinese-super-league", "uefa-champions-league", "europa-league",
+    "copa-sudamericana", "copa-libertadores", "afc-champions-league", "efl-cup",
+    "fa-cup", "copa-del-rey", "copa-do-brasil",
+]
+SPORTSGAMBLER_MAX_PAGES = 50        # ~1 request a second; this is the slowest source
+SG_MATCH_RE = re.compile(
+    r'href="(?:https://www\.sportsgambler\.com)?'
+    r'(/betting-tips/football/[a-z0-9\-]+-vs-[a-z0-9\-]+-(\d{4}-\d{2}-\d{2})/)"')
+
+_sportsgambler_cache = None
+
+# Set by the tracker before publishing: {sport: universe rows}. None when run standalone.
+UNIVERSE = None
+SG_SLUG_RE = re.compile(r"/football/(.+?)-vs-(.+?)-prediction")
+
+
+def sportsgambler_priced(links, rows):
+    """Keep only match pages whose fixture a venue actually prices.
+
+    Every SportsGambler tip costs a page load and a polite second, and most of its 36
+    league pages list fixtures Kalshi does not carry. A tip on one of those can never be
+    scored, so fetching it is pure waiting. The home and away teams are in the URL slug,
+    which is enough to check against the universe before spending the request.
+
+    rows=None means no universe is known (a standalone run) and nothing is filtered.
+    """
+    if rows is None:
+        return links
+    out = []
+    for path, d in links:
+        m = SG_SLUG_RE.search(path)
+        if not m:
+            continue
+        home, away = m.group(1).replace("-", " "), m.group(2).replace("-", " ")
+        for r in rows:
+            try:
+                gap = abs((datetime.strptime(r["date"], "%Y-%m-%d")
+                           - datetime.strptime(d, "%Y-%m-%d")).days)
+            except (ValueError, TypeError):
+                continue
+            if gap <= 1 and pair_match(r["side_a"], r["side_b"], home, away,
+                                       sport="soccer")[0] > 0:
+                out.append((path, d))
+                break
+    return out
+
+
+def parse_sportsgambler(page):
+    """A match page -> {a, b, pick, detail} from its MAIN prediction, or None."""
+    head = re.search(r"<h2>\s*([^<]+?)\s+vs\s+([^<]+?)\s+Predictions\s*</h2>", page)
+    tip = re.search(r'Main Match Prediction</span>.*?<h3 class="tip--card__title">(.*?)</h3>',
+                    page, re.S)
+    if not head or not tip:
+        return None
+    a = html.unescape(head.group(1)).strip()
+    b = html.unescape(head.group(2)).strip()
+    text = " ".join(html.unescape(re.sub(r"<[^>]+>", " ", tip.group(1))).split())
+
+    if re.match(r"^Draw\s*@", text, re.I):
+        return dict(a=a, b=b, pick="draw", detail=text)
+    # "@" straight after "To Win" — so "Arsenal To Win & Over 2.5 @" is rejected too.
+    m = re.match(r"^(.+?)\s+To Win\s*@", text, re.I)
+    if not m:
+        return None
+    team = m.group(1).strip()
+    sa, sb = _score(team, a, "soccer"), _score(team, b, "soccer")
+    if max(sa, sb) < 0.5 or sa == sb:
+        return None
+    return dict(a=a, b=b, pick="a" if sa > sb else "b", detail=text)
+
+
+def _sportsgambler_all():
+    global _sportsgambler_cache
+    if _sportsgambler_cache is not None:
+        return _sportsgambler_cache
+    now = datetime.now(timezone.utc)
+    days = {(now + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(5)}
+
+    links, seen = [], set()
+    for league in SPORTSGAMBLER_LEAGUES:
+        try:
+            index = _get_html(f"{SPORTSGAMBLER}/betting-tips/football/{league}-predictions/")
+        except RuntimeError as e:
+            print(f"  ! sportsgambler/{league}: {str(e)[:80]}")
+            continue
+        for path, d in SG_MATCH_RE.findall(index):
+            if d in days and path not in seen:
+                seen.add(path)
+                links.append((path, d))
+        time.sleep(0.6)
+
+    rows = (UNIVERSE or {}).get("soccer") if UNIVERSE is not None else None
+    priced = sportsgambler_priced(links, rows)
+    todo = sorted(priced, key=lambda x: x[1])[:SPORTSGAMBLER_MAX_PAGES]
+    print(f"  sportsgambler: {len(links)} fixtures in horizon, {len(priced)} priced, "
+          f"fetching {len(todo)}")
+    out = []
+    for path, d in todo:
+        try:
+            page = _get_html(SPORTSGAMBLER + path)
+        except RuntimeError:
+            continue
+        got = parse_sportsgambler(page)
+        if got:
+            got["date"] = d
+            out.append(got)
+        time.sleep(0.6)
+    _sportsgambler_cache = out
+    return out
+
+
+def fetch_sportsgambler(sport):
+    return _sportsgambler_all() if sport == "soccer" else []
+
+
+# ---------------------------------------------------------------------------
+# SoccerPredictions.ai (plain HTTP)
+# ---------------------------------------------------------------------------
+SOCCERPREDICTIONS_URLS = ["https://soccerpredictions.ai/soccer-predictions/",
+                          "https://soccerpredictions.ai/"]
+SP_LINK_RE = re.compile(
+    r'<a href="(https://soccerpredictions\.ai/[^"]+-prediction-date-(\d{4}-\d{2}-\d{2}))"'
+    r'[^>]*>(.*?)</a>', re.S)
+# Only the plain result calls. "Home & Over 2.5" is a different, combined bet.
+SP_PICK = {"home": "a", "away": "b", "draw": "draw"}
+
+_soccerpredictions_cache = None
+
+
+def parse_soccerpredictions(page):
+    """Listing page -> [{a, b, pick, date, detail}] for plain Home / Away / Draw tips.
+
+    Each row is parsed inside its own <a>…</a>, so a malformed row can never borrow the
+    team names of the row after it.
+    """
+    out, seen = [], set()
+    for url, d, inner in SP_LINK_RE.findall(page):
+        names = re.findall(r'tipscell__text__name">([^<]+)<', inner)
+        tip = re.search(r'tipscell--score"><div class="tipscell__text fw-500"><span>([^<]+)</span>',
+                        inner)
+        if len(names) != 2 or not tip or url in seen:
+            continue
+        pick = SP_PICK.get(" ".join(tip.group(1).split()).lower())
+        if not pick:
+            continue
+        seen.add(url)
+        out.append(dict(a=html.unescape(names[0]).strip(), b=html.unescape(names[1]).strip(),
+                        pick=pick, date=d, detail=tip.group(1).strip()))
+    return out
+
+
+def fetch_soccerpredictions(sport):
+    global _soccerpredictions_cache
+    if sport != "soccer":
+        return []
+    if _soccerpredictions_cache is None:
+        rows, seen = [], set()
+        for url in SOCCERPREDICTIONS_URLS:
+            try:
+                page = _get_html(url, timeout=25)
+            except RuntimeError as e:
+                print(f"  ! soccerpredictions: {str(e)[:80]}")
+                continue
+            for r in parse_soccerpredictions(page):
+                key = (r["a"], r["b"], r["date"])
+                if key not in seen:
+                    seen.add(key)
+                    rows.append(r)
+        _soccerpredictions_cache = rows
+    return _soccerpredictions_cache
+
+
 CHALLENGERS = {
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
@@ -1162,4 +1625,6 @@ CHALLENGERS = {
     "covers": fetch_covers,
     "scores24": fetch_scores24,
     "oddspedia": fetch_oddspedia,
+    "sportsgambler": fetch_sportsgambler,
+    "soccerpredictions": fetch_soccerpredictions,
 }

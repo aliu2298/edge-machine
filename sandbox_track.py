@@ -18,6 +18,7 @@ its opinion that happened to age well, which is the single easiest way to fake a
 import json
 import os
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 
 import sandbox_sources as S
@@ -124,7 +125,8 @@ def match_quotes(universe, quotes, day_slack=1):
             out[universe[i]["market_id"]] = ("prob", 1 - p if flipped else p)
         else:
             side = q["pick"]
-            if flipped:
+            # A draw is the same call whichever way round the fixture is listed.
+            if flipped and side in ("a", "b"):
                 side = "b" if side == "a" else "a"
             out[universe[i]["market_id"]] = ("pick", side)
     return out
@@ -147,40 +149,67 @@ def decide(prob_a, price_a, price_b):
 # ---------------------------------------------------------------------------
 
 def collect(verbose=True):
-    """Fetch every source across every sport. Returns (universe_by_sport, coverage)."""
+    """Fetch the universe for every sport. Returns (universe_by_sport, coverage).
+
+    Polymarket is the venue wherever it lists a contest. Kalshi fills in what it does
+    not: all of soccer — Polymarket lists one or two soccer MATCHES a day, in leagues no
+    tipster covers — and any individual fight, match or game Polymarket is missing in the
+    other sports. A contest listed on both stays on Polymarket, so nothing is priced
+    twice and no bet can be booked against two different prices for one game.
+    """
     universe, coverage = {}, {}
     for sport in S.SPORTS:
-        if sport == "soccer":
-            # Soccer has its own spine — ESPN fixtures priced by DraftKings — because
-            # Polymarket lists barely any soccer MATCHES. See sandbox_sources.
-            rows = S.fetch_soccer()
-            universe[sport] = rows
-            coverage.setdefault(sport, {})["polymarket"] = len(rows)
-            coverage[sport]["polymarket_listed"] = len(rows)
-            coverage[sport]["polymarket_priced"] = len(rows)
-            if verbose:
-                print(f"  {S.SPORTS[sport]:<13} espn+draftkings: {len(rows)} fixtures priced")
-            continue
+        t0 = time.time()
+        # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
+        # used to take the whole run down with it — no grading, nothing saved — when the
+        # right outcome is one empty sport and everything else carrying on.
         stats = {}
-        rows = S.fetch_polymarket(sport, stats=stats)
-        universe[sport] = rows
-        traded = stats.get("priced", 0)
-        # Both numbers are kept because they answer different questions: how many
-        # contests Polymarket LISTS, and how many of them anyone is actually pricing.
-        # Table tennis lists hundreds and prices a couple of dozen.
-        coverage.setdefault(sport, {})["polymarket"] = len(rows)
-        coverage[sport]["polymarket_listed"] = stats.get("listed", len(rows))
-        coverage[sport]["polymarket_priced"] = traded
+        try:
+            pm = [] if sport == "soccer" else S.fetch_polymarket(sport, stats=stats)
+        except Exception as e:
+            print(f"  ! polymarket/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
+            pm = []
+        kstats = {}
+        try:
+            ks = S.fetch_kalshi_venue(sport, stats=kstats)
+        except Exception as e:
+            print(f"  ! kalshi/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
+            ks = []
+        extra = [k for k in ks if not any(_same_contest(k, p) for p in pm)]
+        universe[sport] = pm + extra
+        cov = coverage.setdefault(sport, {})
+        cov["polymarket"] = len(pm)
+        cov["polymarket_listed"] = stats.get("listed", len(pm))
+        cov["polymarket_priced"] = stats.get("priced", 0)
+        cov["kalshi_venue"] = len(extra)
         if verbose:
-            print(f"  {S.SPORTS[sport]:<13} polymarket: {stats.get('listed', 0)} listed, "
-                  f"{traded} priced, {len(rows)} taken")
+            print(f"  {S.SPORTS[sport]:<13} polymarket: {len(pm)} taken | kalshi: "
+                  f"{kstats.get('listed', len(ks))} listed, {len(extra)} added "
+                  f"({time.time() - t0:.0f}s)")
     return universe, coverage
+
+
+def _same_contest(a, b, day_slack=1):
+    """Is Kalshi row `a` the same contest as Polymarket row `b`?"""
+    score, _ = S.pair_match(a["side_a"], a["side_b"], b["side_a"], b["side_b"],
+                            sport=a["sport"])
+    if score <= 0:
+        return False
+    try:
+        dist = abs((datetime.strptime(a["date"], "%Y-%m-%d")
+                    - datetime.strptime(b["date"], "%Y-%m-%d")).days)
+    except (ValueError, TypeError):
+        return True
+    return dist <= day_slack
 
 
 def publish(d, universe, coverage, verbose=True):
     """Log one quote per (source, market) for every source with an opinion."""
     seen = {q["id"] for q in d["quotes"]}
     added = 0
+    # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
+    # prices — a page that can never be scored is not worth a polite second of waiting.
+    S.UNIVERSE = universe
 
     for sport, rows in universe.items():
         if not rows:
@@ -190,29 +219,31 @@ def publish(d, universe, coverage, verbose=True):
         # The market itself. Priced at its own price, so its edge is 0 by construction
         # and it never bets — it is here for the Brier column, as the accuracy bar every
         # challenger has to clear.
-        # The market quoting itself only makes sense where the market IS the price
-        # source. Soccer's price comes from a sportsbook, and that book is already
-        # scored as its own source, so there is no self-quote to add.
-        if sport == "soccer":
-            source_probs = {}
-        else:
-            source_probs = {"polymarket": {r["market_id"]: ("prob", r["price_a"])
-                                           for r in rows}}
+        # Only where Polymarket IS the venue. A Kalshi-venue row carries Kalshi's price,
+        # and a Polymarket "self-quote" at someone else's price would be a fiction.
+        source_probs = {"polymarket": {r["market_id"]: ("prob", r["price_a"])
+                                       for r in rows
+                                       if r.get("venue", "polymarket") == "polymarket"}}
 
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
                 continue
+            t0 = time.time()
             try:
                 quotes = fetch(sport)
             except Exception as e:                      # never let one dead feed kill the run
                 print(f"  ! {name}/{sport} fetch failed: {str(e)[:70]}")
                 quotes = []
-            matched = match_quotes(rows, quotes)
+            # Kalshi cannot be scored where Kalshi IS the venue: its opinion and the
+            # price it would be measured against are the same number.
+            pool = (rows if name != "kalshi"
+                    else [r for r in rows if r.get("venue", "polymarket") != "kalshi"])
+            matched = match_quotes(pool, quotes)
             source_probs[name] = matched
             coverage.setdefault(sport, {})[name] = len(matched)
             if verbose:
                 print(f"  {S.SPORTS[sport]:<13} {name}: {len(quotes)} quotes -> "
-                      f"{len(matched)} matched")
+                      f"{len(matched)} matched ({time.time() - t0:.0f}s)")
 
         for name, probs in source_probs.items():
             for mid, opinion in probs.items():
@@ -244,12 +275,18 @@ def publish(d, universe, coverage, verbose=True):
                     # price — which is how a tipster is actually followed, and it means
                     # a tipster turns over far more bets than a model does.
                     prob_a, pick = None, value
-                    price = r["price_a"] if pick == "a" else r["price_b"]
+                    if pick == "draw":
+                        price = r.get("price_draw")
+                    else:
+                        price = r["price_a"] if pick == "a" else r["price_b"]
                     edge, has_edge = None, True
                 # An untraded 0.50/0.50 book is a placeholder, not a price. Scoring a
                 # source against it would manufacture a 'edge' out of nothing.
-                bet = bool(pick and has_edge and not r["untraded"]
-                           and PRICE_FLOOR <= price <= PRICE_CEIL)
+                # Liquidity is per OUTCOME: on Kalshi one side of an event can be a tight
+                # book while another is an untraded 0.02/0.81 placeholder.
+                tradeable = (r.get("tradeable") or {}).get(pick, True) if pick else False
+                bet = bool(pick and has_edge and not r["untraded"] and tradeable
+                           and price is not None and PRICE_FLOOR <= price <= PRICE_CEIL)
                 d["quotes"].append(dict(
                     id=qid, source=name, sport=sport, market_id=mid,
                     label=r["label"], side_a=r["side_a"], side_b=r["side_b"],
@@ -257,8 +294,10 @@ def publish(d, universe, coverage, verbose=True):
                     logged=now_iso(),
                     prob_a=round(prob_a, 4) if prob_a is not None else None,
                     price_a=round(r["price_a"], 4), price_b=round(r["price_b"], 4),
+                    price_draw=(round(r["price_draw"], 4)
+                                if r.get("price_draw") is not None else None),
                     pick=pick, edge=round(edge, 4) if edge is not None else None,
-                    price=round(price, 4) if pick else None,
+                    price=round(price, 4) if pick and price is not None else None,
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
                     venue=r.get("venue", "polymarket"),
                     status="open", pnl=0.0, result=None, settled=None,
@@ -296,7 +335,7 @@ def grade(d, verbose=True):
 
         mid = q["market_id"]
         if mid not in resolved:
-            resolved[mid] = (S.resolve_soccer(mid) if q.get("venue") == "espn"
+            resolved[mid] = (S.resolve_kalshi(mid) if q.get("venue") == "kalshi"
                              else S.resolve_polymarket(mid))
         res = resolved[mid]
         if res is None:
@@ -307,24 +346,20 @@ def grade(d, verbose=True):
         if res == "void":
             q["status"] = "void"
             q["pnl"] = 0.0
-        elif res == "draw" and not q["bet"]:
-            q["status"] = "graded"
-            q["pnl"] = 0.0
         elif not q["bet"]:
             # Scored for accuracy, never staked. Kept as a distinct status so a
             # no-bet quote can never be mistaken for a losing one.
             q["status"] = "graded"
             q["pnl"] = 0.0
-        elif res == "draw" and q["bet"]:
-            # A three-way market: backing a side loses to the draw as surely as to
-            # defeat. Treating it as a void would quietly refund every drawn match and
-            # flatter every soccer tipster.
-            q["status"] = "lost"
-            q["pnl"] = -q["stake"]
         elif q["pick"] == res:
+            # Compared BEFORE any draw handling. The previous version asked "was it a
+            # draw?" first and marked every bet on a drawn match lost — which would
+            # have scored a correct Draw tip as a loss.
             q["status"] = "won"
             q["pnl"] = round(q["stake"] * (1.0 / q["price"] - 1.0), 2)
         else:
+            # Includes a side backed in a match that was drawn: in a three-way market
+            # the draw beats it as surely as defeat does, and it is never refunded.
             q["status"] = "lost"
             q["pnl"] = -q["stake"]
         settled += 1
@@ -435,12 +470,21 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
 def main():
     print("Sandbox Tracker")
     d = load()
+    # Stage timings are printed so a slow run in CI names its own culprit. The first
+    # run with soccer on Kalshi took 14.6 minutes against 3 before it, with only 25s of
+    # CPU — all of it waiting on the network, and no log line said where.
+    t0 = time.time()
     print(" collecting…")
     universe, coverage = collect()
+    print(f"  ({time.time() - t0:.0f}s)")
+    t1 = time.time()
     print(" publishing…")
     publish(d, universe, coverage)
+    print(f"  ({time.time() - t1:.0f}s)")
+    t2 = time.time()
     print(" grading…")
     grade(d)
+    print(f"  ({time.time() - t2:.0f}s, run total {time.time() - t0:.0f}s)")
     prune(d)
     save(d)
 

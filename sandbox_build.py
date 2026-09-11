@@ -377,11 +377,12 @@ Every source is logged <b>before kick-off</b> at the <b>price available then</b>
 flat ${int(T.STAKE)}, and settled on the real result. Tipsters name a side and are backed
 every time; models and books state a probability and are backed only on a
 {int(T.EDGE_MIN*100)}pp disagreement with the price.<br><br>
-<b>Prices and settlement.</b> Every sport but soccer runs on Polymarket, which carries a
-tradeable price and resolves itself. Soccer runs on ESPN fixtures priced by DraftKings,
-because Polymarket lists barely any soccer matches — one or two a day, in leagues no
-tipster covers. Soccer is also <b>three-way</b>: a backed side loses to the draw, and is
-never refunded for it.<br><br>
+<b>Prices and settlement.</b> Polymarket is the venue wherever it lists a contest,
+and settles it. <b>Kalshi</b> is the venue for soccer — Polymarket lists barely any
+soccer matches — and for any fight, match or game Polymarket is missing. On Kalshi a tip
+is backed at the <b>ask</b>, the price backing it would actually cost, and only where
+that book is tight (a spread of 10¢ or less). Soccer is <b>three-way</b>: a Draw tip wins
+on a draw, and a backed side loses to it and is never refunded.<br><br>
 <b>What would falsify a source.</b> A positive ROI under {MIN_N} settled bets is not a
 finding. Beating the price is the only test that counts — a high hit rate on heavy
 favourites is not an edge, it is just backing the favourite.
