@@ -15,6 +15,7 @@ time it is seen. Re-quoting as the price drifts would let a source keep the vers
 its opinion that happened to age well, which is the single easiest way to fake an edge.
 """
 
+import difflib
 import json
 import os
 import sys
@@ -190,17 +191,39 @@ def collect(verbose=True):
 
 
 def _same_contest(a, b, day_slack=1):
-    """Is Kalshi row `a` the same contest as Polymarket row `b`?"""
-    score, _ = S.pair_match(a["side_a"], a["side_b"], b["side_a"], b["side_b"],
-                            sport=a["sport"])
-    if score <= 0:
-        return False
+    """Is Kalshi row `a` the same contest as Polymarket row `b`?
+
+    This check errs toward YES — the opposite of tipster matching — because the two
+    mistakes are not equal. Calling two contests the same wrongly drops one gap-fill
+    game. Calling one contest two different ones puts the same game in the universe
+    twice, once per venue, and a source can then be logged against the Polymarket copy
+    in one run and the Kalshi copy in the next: one bet, counted twice. Kalshi's "A's"
+    against Polymarket's "Athletics", and "Mikaelyan" against "Mikaelian", both slipped
+    through the strict matcher exactly that way.
+    """
     try:
         dist = abs((datetime.strptime(a["date"], "%Y-%m-%d")
                     - datetime.strptime(b["date"], "%Y-%m-%d")).days)
+        if dist > day_slack:
+            return False
     except (ValueError, TypeError):
+        pass
+    score, _ = S.pair_match(a["side_a"], a["side_b"], b["side_a"], b["side_b"],
+                            sport=a["sport"])
+    if score > 0:
         return True
-    return dist <= day_slack
+    return ((_loosely_same(a["side_a"], b["side_a"]) and _loosely_same(a["side_b"], b["side_b"]))
+            or (_loosely_same(a["side_a"], b["side_b"])
+                and _loosely_same(a["side_b"], b["side_a"])))
+
+
+def _loosely_same(x, y, ratio=0.8):
+    """Share a word, or have a long word spelled almost the same (a transliteration)."""
+    tx, ty = S.tokens(x), S.tokens(y)
+    if tx & ty:
+        return True
+    return any(difflib.SequenceMatcher(None, p, q).ratio() >= ratio
+               for p in tx for q in ty if len(p) > 3 and len(q) > 3)
 
 
 def publish(d, universe, coverage, verbose=True):

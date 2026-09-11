@@ -254,7 +254,7 @@ NICKNAMES = {
         "royals": ["kansas city"], "angels": ["los angeles a"],
         "dodgers": ["los angeles d"], "marlins": ["miami"], "brewers": ["milwaukee"],
         "twins": ["minnesota"], "mets": ["new york m"], "yankees": ["new york y"],
-        "athletics": ["oakland", "sacramento"], "phillies": ["philadelphia"],
+        "athletics": ["oakland", "sacramento", "a s", "as"], "phillies": ["philadelphia"],
         "pirates": ["pittsburgh"], "padres": ["san diego"], "giants": ["san francisco"],
         "mariners": ["seattle"], "cardinals": ["st louis", "saint louis"],
         "rays": ["tampa bay"], "rangers": ["texas"], "blue jays": ["toronto"],

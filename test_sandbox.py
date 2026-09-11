@@ -618,6 +618,17 @@ ok(not T._same_contest(dict(sport="nfl", side_a="Denver", side_b="Kansas City", 
    "the same two teams a week later are a different game")
 ok(not T._same_contest(dict(sport="nfl", side_a="Seattle", side_b="Arizona", date="2026-09-14"), pm_row),
    "a different fixture is kept as a gap-fill")
+# Both found live: the same game sat in the universe once per venue.
+eq(S.canon("A's", "mlb"), "athletics", "Kalshi's \"A's\" resolves to the Athletics")
+ok(T._same_contest(dict(sport="mlb", side_a="Seattle", side_b="A's", date="2026-09-11"),
+                   dict(sport="mlb", side_a="Seattle Mariners", side_b="Athletics", date="2026-09-11")),
+   "Kalshi's Seattle vs A's is Polymarket's Mariners vs Athletics, not a second copy")
+ok(T._same_contest(dict(sport="boxing", side_a="Opetaia J.", side_b="Mikaelyan N.", date="2026-09-12"),
+                   dict(sport="boxing", side_a="Opetaia", side_b="Mikaelian", date="2026-09-12")),
+   "a transliteration (Mikaelyan / Mikaelian) does not put one fight in twice")
+ok(not T._same_contest(dict(sport="boxing", side_a="Sean Garcia", side_b="Abraham Morales", date="2026-09-12"),
+                       dict(sport="boxing", side_a="Garcia", side_b="Benn", date="2026-09-12")),
+   "one shared surname is not enough — a different opponent is a different fight")
 
 # ---------------------------------------------------------------------------
 print("\nsoccer club names")
