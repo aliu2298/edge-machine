@@ -1476,6 +1476,7 @@
    "test_date": "2026-09-13"
   },
   "Bodo/Glimt|scoring1|2026-09-10|Bodo/Glimt|Bayern Munich": {
+   "graded_at": "2026-09-11T04:48:30+00:00",
    "home": false,
    "id": "Bodo/Glimt|scoring1|2026-09-10|Bodo/Glimt|Bayern Munich",
    "key": "scoring1",
@@ -1486,7 +1487,8 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "Bayern Munich",
    "rate": 0.0782312925170068,
-   "status": "pending",
+   "result": "0-5",
+   "status": "broke",
    "team": "Bodo/Glimt",
    "test_date": "2026-09-10"
   },
@@ -1540,6 +1542,7 @@
    "test_date": "2026-09-05"
   },
   "Braga|scoring1|2026-09-10|Braga|Estrela": {
+   "graded_at": "2026-09-11T04:48:30+00:00",
    "home": false,
    "id": "Braga|scoring1|2026-09-10|Braga|Estrela",
    "key": "scoring1",
@@ -1550,7 +1553,8 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Estrela",
    "rate": 0.026041666666666668,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Braga",
    "test_date": "2026-09-10"
   },
@@ -5280,6 +5284,7 @@
    "test_date": "2026-09-05"
   },
   "RB Leipzig|over15|2026-09-10|RB Leipzig|Como": {
+   "graded_at": "2026-09-11T04:48:30+00:00",
    "home": false,
    "id": "RB Leipzig|over15|2026-09-10|RB Leipzig|Como",
    "key": "over15",
@@ -5290,7 +5295,8 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Como",
    "rate": 0.21354166666666666,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "RB Leipzig",
    "test_date": "2026-09-10"
   },
@@ -6958,5 +6964,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-10T20:56:22+00:00"
+ "updated_at": "2026-09-11T04:48:30+00:00"
 }
