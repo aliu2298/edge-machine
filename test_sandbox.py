@@ -747,7 +747,12 @@ def _pm_flaky(sport, stats=None):
 S.fetch_polymarket = _pm_flaky
 S.fetch_kalshi_venue = lambda sport, stats=None: []
 try:
-    uni_, cov_ = T.collect(verbose=False)
+    # The failure line collect() prints is correct behaviour, but printed from a test it
+    # lands in every CI log as "! polymarket/nfl failed" — a false alarm on each run,
+    # which is exactly how a real failure line gets ignored.
+    import contextlib, io
+    with contextlib.redirect_stdout(io.StringIO()):
+        uni_, cov_ = T.collect(verbose=False)
     ok(set(uni_) == set(S.SPORTS) and uni_["nfl"] == [],
        "one venue failing for one sport leaves every other sport's collection intact")
 finally:
