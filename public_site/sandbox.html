@@ -50,7 +50,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox Tracker</h1>
-<div class="sub">Which tipster actually makes money · 7 sports · updated 2026-09-11 11:48 UTC</div>
+<div class="sub">Which tipster actually makes money · 7 sports · updated 2026-09-11 16:11 UTC</div>
 <div class="nav"><a href="./">Picks</a><a href="./leads.html">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
@@ -84,7 +84,11 @@ skill. 11 settled bets so far. Still under the 30 needed before any ROI here mea
 <div class="sm mut">Tipster site</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num"><span class="mut">-100.0%</span><div class="sm mut">n=1</div></td><td class="num mut">·</td>
 <td class="num"><span class="mut">-100.0%</span><div class="sm mut">n=1</div></td></tr><tr><td><b>Scores24 (editorial tips)</b>
 <div class="sm mut">Tipster site</div></td><td class="num mut">1 open</td><td class="num"><span class="mut">-22.5%</span><div class="sm mut">n=2</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num"><span class="mut">+102.0%</span><div class="sm mut">n=1</div></td>
-<td class="num"><span class="mut">+19.0%</span><div class="sm mut">n=3</div></td></tr><tr><td><b>DraftKings (via ESPN)</b>
+<td class="num"><span class="mut">+19.0%</span><div class="sm mut">n=3</div></td></tr><tr><td><b>SoccerPredictions.ai</b>
+<div class="sm mut">Tipster site</div></td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
+<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>SportsGambler</b>
+<div class="sm mut">Tipster site</div></td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
+<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>DraftKings (via ESPN)</b>
 <div class="sm mut">Sportsbook</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">—</td>
 <td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>ESPN FPI / Matchup Predictor</b>
 <div class="sm mut">Statistical model</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num"><span class="mut">+181.7%</span><div class="sm mut">n=1</div></td><td class="num mut">·</td><td class="num"><span class="mut">-4.8%</span><div class="sm mut">n=2</div></td>
@@ -165,6 +169,24 @@ the source does not cover that sport at all.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num mut">—</td>
 <td class="num">0.2556</td>
+<td><span class="sig n">NO READ</span></td></tr>
+<tr>
+<td><b>SportsGambler</b><div class="mut sm">Tipster site · sportsgambler.com</div></td>
+<td class="num">0</td><td class="num">0</td>
+<td class="num">0</td>
+<td class="num">—</td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num mut">—</td>
+<td class="num">—</td>
+<td><span class="sig n">NO READ</span></td></tr>
+<tr>
+<td><b>SoccerPredictions.ai</b><div class="mut sm">Tipster site · soccerpredictions.ai</div></td>
+<td class="num">0</td><td class="num">0</td>
+<td class="num">0</td>
+<td class="num">—</td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num mut">—</td>
+<td class="num">—</td>
 <td><span class="sig n">NO READ</span></td></tr>
 </table></div>
 <div class="note"><b>Brier</b> scores raw accuracy on every logged probability, bet or
@@ -449,11 +471,12 @@ Every source is logged <b>before kick-off</b> at the <b>price available then</b>
 flat $100, and settled on the real result. Tipsters name a side and are backed
 every time; models and books state a probability and are backed only on a
 3pp disagreement with the price.<br><br>
-<b>Prices and settlement.</b> Every sport but soccer runs on Polymarket, which carries a
-tradeable price and resolves itself. Soccer runs on ESPN fixtures priced by DraftKings,
-because Polymarket lists barely any soccer matches — one or two a day, in leagues no
-tipster covers. Soccer is also <b>three-way</b>: a backed side loses to the draw, and is
-never refunded for it.<br><br>
+<b>Prices and settlement.</b> Polymarket is the venue wherever it lists a contest,
+and settles it. <b>Kalshi</b> is the venue for soccer — Polymarket lists barely any
+soccer matches — and for any fight, match or game Polymarket is missing. On Kalshi a tip
+is backed at the <b>ask</b>, the price backing it would actually cost, and only where
+that book is tight (a spread of 10¢ or less). Soccer is <b>three-way</b>: a Draw tip wins
+on a draw, and a backed side loses to it and is never refunded.<br><br>
 <b>What would falsify a source.</b> A positive ROI under 30 settled bets is not a
 finding. Beating the price is the only test that counts — a high hit rate on heavy
 favourites is not an edge, it is just backing the favourite.
