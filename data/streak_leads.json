@@ -3109,14 +3109,16 @@
     "n": 2
    },
    "date": "2026-09-11",
+   "final": "1-0",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-11T21:02:29+00:00",
    "headline": "Over 1.5 goals",
    "home": "Stade Rennais",
    "id": "2026-09-11|Stade Rennais|Marseille|Over 1.5 goals",
    "kickoff": "2026-09-11T18:45Z",
    "league": "Ligue 1",
    "match": "Stade Rennais v Marseille",
-   "status": "pending",
+   "status": "miss",
    "strength": 11
   },
   "2026-09-11|Stade Rennais|Marseille|Over 2.5 goals": {
@@ -3133,14 +3135,16 @@
     "n": 3
    },
    "date": "2026-09-11",
+   "final": "1-0",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-11T21:02:29+00:00",
    "headline": "Over 2.5 goals",
    "home": "Stade Rennais",
    "id": "2026-09-11|Stade Rennais|Marseille|Over 2.5 goals",
    "kickoff": "2026-09-11T18:45Z",
    "league": "Ligue 1",
    "match": "Stade Rennais v Marseille",
-   "status": "pending",
+   "status": "miss",
    "strength": 10
   },
   "2026-09-11|Venezia|Fiorentina|Over 1.5 goals": {
@@ -3157,14 +3161,16 @@
     "n": 2
    },
    "date": "2026-09-11",
+   "final": "2-4",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-11T21:02:29+00:00",
    "headline": "Over 1.5 goals",
    "home": "Venezia",
    "id": "2026-09-11|Venezia|Fiorentina|Over 1.5 goals",
    "kickoff": "2026-09-11T18:45Z",
    "league": "Serie A",
    "match": "Venezia v Fiorentina",
-   "status": "pending",
+   "status": "hit",
    "strength": 11
   },
   "2026-09-12|AFC Bournemouth|Brentford|Brentford to score": {
@@ -5353,6 +5359,30 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals": {
+   "a": "Ajax Amsterdam",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Willem II",
+   "b": "Willem II",
+   "b_key": "over15",
+   "b_run": 5,
+   "base_rate": 0.3773006134969325,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-11",
+   "headline": "Over 1.5 goals",
+   "home": "Ajax Amsterdam",
+   "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
+   "kickoff": "2026-09-15T18:00Z",
+   "league": "Eredivisie",
+   "match": "Ajax Amsterdam v Willem II",
+   "status": "pending",
+   "strength": 11
+  },
   "2026-09-15|Elche|Real Madrid|Over 1.5 goals": {
    "a": "Elche",
    "a_key": "over15",
@@ -6660,6 +6690,30 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals": {
+   "a": "Willem II",
+   "a_key": "over15",
+   "a_run": 5,
+   "away": "Fortuna Sittard",
+   "b": "Fortuna Sittard",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.3773006134969325,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-11",
+   "headline": "Over 1.5 goals",
+   "home": "Willem II",
+   "id": "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals",
+   "kickoff": "2026-09-19T19:00Z",
+   "league": "Eredivisie",
+   "match": "Willem II v Fortuna Sittard",
+   "status": "pending",
+   "strength": 11
+  },
   "2026-09-20|AFC Bournemouth|Liverpool|Liverpool to score": {
    "a": "Liverpool",
    "a_key": "scoring",
@@ -7704,5 +7758,5 @@
    "strength": 9
   }
  },
- "updated_at": "2026-09-11T16:35:04+00:00"
+ "updated_at": "2026-09-11T21:02:29+00:00"
 }
