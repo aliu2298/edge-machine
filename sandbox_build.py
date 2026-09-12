@@ -90,44 +90,65 @@ def feed_health(d):
 def sport_matrix(d):
     """Source x sport: ROI where there is enough settled to say, sample size always shown.
 
-    This is the board's answer to the actual question. The overall leaderboard hides the
-    thing that matters — a tipster can be strong at one sport and hopeless at another,
-    and a single blended ROI averages that away into a number describing nobody.
+    This is the board's answer to the actual question. A single blended ROI per source
+    hides the thing that matters — a tipster can be strong at one sport and hopeless at
+    another — and rows are grouped by kind because tipsters, models and markets are
+    staked differently and are not comparable on turnover.
     """
-    order = sorted(S.SOURCES.items(),
-                   key=lambda kv: (kv[1]["kind"] != "Tipster site", kv[1]["label"]))
     head = "".join(f'<th class="num">{esc(l)}</th>' for l in S.SPORTS.values())
-    rows = []
-    for name, meta in order:
-        if not meta["connected"]:
+    ncols = 2 + len(S.SPORTS)
+    groups = [("Tipsters", ("Tipster site",)),
+              ("Models and books", ("Statistical model", "Sportsbook", "Sportsbook consensus")),
+              ("Prediction markets", ("Prediction market",))]
+    out = []
+    for title, kinds in groups:
+        names = [n for n, m in S.SOURCES.items() if m["connected"] and m["kind"] in kinds]
+        if not names:
             continue
-        cells = []
-        for sport in S.SPORTS:
-            if sport not in meta["sports"]:
-                cells.append('<td class="num mut">·</td>')
-                continue
-            s = T.score(d, sport=sport)[name]
-            if not s["settled"]:
-                pend = s["bets"]
-                cells.append(f'<td class="num mut">{("%d open" % pend) if pend else "—"}</td>')
-                continue
-            thin = s["settled"] < MIN_N
-            roi = pct(s["roi"], sign=True)
-            klass = "mut" if thin else cls(s["pnl"])
-            cells.append(f'<td class="num"><span class="{klass}">{roi}</span>'
-                         f'<div class="sm mut">n={s["settled"]}</div></td>')
-        tot = T.score(d)[name]
-        tot_roi = (f'<span class="{cls(tot["pnl"]) if tot["settled"] >= MIN_N else "mut"}">'
-                   f'{pct(tot["roi"], sign=True)}</span>' if tot["settled"] else '<span class="mut">—</span>')
-        rows.append(f"""<tr><td><b>{esc(meta['label'])}</b>
-<div class="sm mut">{esc(meta['kind'])}</div></td>{''.join(cells)}
+        out.append(f'<tr class="grp"><td colspan="{ncols}">{esc(title)}</td></tr>')
+        for name in sorted(names, key=lambda n: S.SOURCES[n]["label"]):
+            meta = S.SOURCES[name]
+            cells = []
+            for sport in S.SPORTS:
+                if sport not in meta["sports"]:
+                    cells.append('<td class="num mut">·</td>')
+                    continue
+                s = T.score(d, sport=sport)[name]
+                if not s["settled"]:
+                    pend = s["bets"]
+                    cells.append(f'<td class="num mut">{("%d open" % pend) if pend else "—"}</td>')
+                    continue
+                thin = s["settled"] < MIN_N
+                klass = "mut" if thin else cls(s["pnl"])
+                cells.append(f'<td class="num"><span class="{klass}">{pct(s["roi"], sign=True)}</span>'
+                             f'<div class="sm mut">n={s["settled"]}</div></td>')
+            tot = T.score(d)[name]
+            tot_roi = (f'<span class="{cls(tot["pnl"]) if tot["settled"] >= MIN_N else "mut"}">'
+                       f'{pct(tot["roi"], sign=True)}</span>' if tot["settled"]
+                       else '<span class="mut">—</span>')
+            out.append(f"""<tr><td><b>{esc(meta['label'])}</b></td>{''.join(cells)}
 <td class="num">{tot_roi}<div class="sm mut">n={tot['settled']}</div></td></tr>""")
     return f"""<div class="tbl"><table>
 <tr><th>Source</th>{head}<th class="num">All</th></tr>
-{''.join(rows)}</table></div>"""
+{''.join(out)}</table></div>"""
 
 
-def leaderboard(scores):
+def vs_price(d, name, sport=None):
+    """Wins, and the wins the PRICES implied. Returns (won, expected) or None.
+
+    At these sample sizes this says more than ROI does. Each backed price is the
+    market's own probability that the bet lands, so adding them up gives the number of
+    winners a source should have had by luck alone. Beating the price is the whole test;
+    a hot ROI on heavy favourites is not an edge.
+    """
+    rows = [q for q in d["quotes"] if q["source"] == name and q["bet"]
+            and q["status"] in ("won", "lost") and (sport is None or q["sport"] == sport)]
+    if not rows:
+        return None
+    return sum(1 for q in rows if q["status"] == "won"), sum(q["price"] for q in rows)
+
+
+def leaderboard(scores, d):
     rows = []
     for name, s in sorted(scores.items(),
                           key=lambda kv: (kv[1]["connected"], kv[1]["settled"]), reverse=True):
@@ -140,11 +161,18 @@ def leaderboard(scores):
         verdict = ('<span class="sig n">NO READ</span>' if thin else
                    '<span class="sig y">PROFITABLE</span>' if (s["roi"] or 0) > 0 else
                    '<span class="st miss">LOSING</span>')
+        vp = vs_price(d, name)
+        vp_cell = "—"
+        if vp:
+            won, exp = vp
+            vp_cell = (f'{won} v {exp:.1f}<div class="sm mut">'
+                       f'{"+" if won - exp >= 0 else ""}{won - exp:.1f}</div>')
         rows.append(f"""<tr>
 <td><b>{esc(s['label'])}</b><div class="mut sm">{esc(s['kind'])} · {esc(s['site'])}</div></td>
 <td class="num">{s['quotes']:,}</td><td class="num">{s['bets']:,}</td>
 <td class="num">{s['settled']:,}</td>
 <td class="num">{pct(s['hit']) if s['hit'] is not None else '—'}</td>
+<td class="num">{vp_cell}</td>
 <td class="num">{roi}</td>
 <td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['settled'] else '—'}</td>
 <td class="num">{f"{s['brier']:.4f}" if s['brier'] is not None else '—'}</td>
@@ -152,7 +180,22 @@ def leaderboard(scores):
     return "\n".join(rows)
 
 
-def leaderboard(scores):
+def vs_price(d, name, sport=None):
+    """Wins, and the wins the PRICES implied. Returns (won, expected) or None.
+
+    At these sample sizes this says more than ROI does. Each backed price is the
+    market's own probability that the bet lands, so adding them up gives the number of
+    winners a source should have had by luck alone. Beating the price is the whole test;
+    a hot ROI on heavy favourites is not an edge.
+    """
+    rows = [q for q in d["quotes"] if q["source"] == name and q["bet"]
+            and q["status"] in ("won", "lost") and (sport is None or q["sport"] == sport)]
+    if not rows:
+        return None
+    return sum(1 for q in rows if q["status"] == "won"), sum(q["price"] for q in rows)
+
+
+def leaderboard(scores, d):
     rows = []
     for name, s in sorted(scores.items(),
                           key=lambda kv: (kv[1]["connected"], kv[1]["settled"]), reverse=True):
@@ -165,11 +208,18 @@ def leaderboard(scores):
         verdict = ('<span class="sig n">NO READ</span>' if thin else
                    '<span class="sig y">PROFITABLE</span>' if (s["roi"] or 0) > 0 else
                    '<span class="st miss">LOSING</span>')
+        vp = vs_price(d, name)
+        vp_cell = "—"
+        if vp:
+            won, exp = vp
+            vp_cell = (f'{won} v {exp:.1f}<div class="sm mut">'
+                       f'{"+" if won - exp >= 0 else ""}{won - exp:.1f}</div>')
         rows.append(f"""<tr>
 <td><b>{esc(s['label'])}</b><div class="mut sm">{esc(s['kind'])} · {esc(s['site'])}</div></td>
 <td class="num">{s['quotes']:,}</td><td class="num">{s['bets']:,}</td>
 <td class="num">{s['settled']:,}</td>
 <td class="num">{pct(s['hit']) if s['hit'] is not None else '—'}</td>
+<td class="num">{vp_cell}</td>
 <td class="num">{roi}</td>
 <td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['settled'] else '—'}</td>
 <td class="num">{f"{s['brier']:.4f}" if s['brier'] is not None else '—'}</td>
@@ -201,12 +251,18 @@ def coverage_table(cov):
 {''.join(rows)}</table></div>"""
 
 
-def open_rows(d, limit=25):
+def open_rows(d, limit=30):
+    """Running bets, grouped by sport and soonest first."""
     live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]]
-    live.sort(key=lambda q: q["start"])
-    out = []
+    live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
+    out, seen_sport = [], None
     for q in live[:limit]:
-        side = q["side_a"] if q["pick"] == "a" else q["side_b"]
+        if q["sport"] != seen_sport:
+            seen_sport = q["sport"]
+            n = sum(1 for x in live if x["sport"] == seen_sport)
+            out.append(f'<tr class="grp"><td colspan="7">{esc(S.SPORTS[seen_sport])} '
+                       f'· {n} running</td></tr>')
+        side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td>
 <td><a href="{esc(q['url'])}" target="_blank" rel="noopener">{esc(q['label'])}</a></td>
@@ -218,11 +274,20 @@ def open_rows(d, limit=25):
 
 
 def settled_rows(d, limit=40):
+    """Settled bets, newest first, grouped by the day they settled."""
     done = [q for q in d["quotes"] if q["status"] in ("won", "lost", "void") and q["bet"]]
     done.sort(key=lambda q: q.get("settled") or "", reverse=True)
-    out = []
+    out, seen_day = [], None
     for q in done[:limit]:
-        side = q["side_a"] if q["pick"] == "a" else q["side_b"]
+        day = (q.get("settled") or "")[:10]
+        if day != seen_day:
+            seen_day = day
+            won = sum(1 for x in done if (x.get("settled") or "")[:10] == day and x["status"] == "won")
+            n = sum(1 for x in done if (x.get("settled") or "")[:10] == day)
+            pl = sum(x["pnl"] for x in done if (x.get("settled") or "")[:10] == day)
+            out.append(f'<tr class="grp"><td colspan="8">{esc(day)} · {won}/{n} won · '
+                       f'{money(pl)}</td></tr>')
+        side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td><td>{esc(q['label'])}</td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
@@ -313,6 +378,7 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.won,.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
 .st.lost,.st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
 .st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
+.grp td{{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
 </style></head><body><div class="wrap">
@@ -353,11 +419,14 @@ the source does not cover that sport at all.</div>
 <h2>Overall record</h2>
 <div class="tbl"><table>
 <tr><th>Source</th><th class="num">Logged</th><th class="num">Bets</th>
-<th class="num">Settled</th><th class="num">Hit</th><th class="num">ROI</th>
+<th class="num">Settled</th><th class="num">Hit</th><th class="num">Won v priced</th><th class="num">ROI</th>
 <th class="num">P/L</th><th class="num">Brier</th><th>Verdict</th></tr>
-{leaderboard(scores)}
+{leaderboard(scores, d)}
 </table></div>
-<div class="note"><b>Brier</b> scores raw accuracy on every logged probability, bet or
+<div class="note"><b>Won v priced</b> is the honest column while samples are small: each backed price is
+the market's own chance that the bet lands, so their sum is how many winners luck alone
+would have produced. Two wins from bets the market priced at 1.6 is noise, not an edge.
+<b>Brier</b> scores raw accuracy on every logged probability, bet or
 not — lower is better, 0.25 is a coin flip. It is blank for tipsters by design: naming a
 side states no probability, so there is nothing to calibrate. <b>Compare on ROI, never on
 P/L</b> — a tipster backs every game it calls while a model bets only where it disagrees
