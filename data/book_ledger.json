@@ -2059,6 +2059,86 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Celta Vigo|M\u00e1laga": {
+   "away": "M\u00e1laga",
+   "date": "2026-09-13",
+   "home": "Celta Vigo",
+   "id": "2026-09-13|Celta Vigo|M\u00e1laga",
+   "kickoff": "2026-09-13T12:00Z",
+   "lead_source": true,
+   "league": "La Liga",
+   "model": {
+    "away2plus": 0.2931,
+    "btts": 0.5122,
+    "home2plus": 0.4411,
+    "over15": 0.7278,
+    "over25": 0.4754
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.2244,
+     "price": 4.25
+    },
+    "btts": {
+     "fair": 0.4797,
+     "price": 1.952
+    },
+    "home2plus": {
+     "fair": 0.4826,
+     "price": 1.98
+    },
+    "over15": {
+     "fair": 0.6621,
+     "price": 1.444
+    },
+    "over25": {
+     "fair": 0.3927,
+     "price": 2.43
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-13|Club Brugge|Antwerp": {
+   "away": "Antwerp",
+   "date": "2026-09-13",
+   "home": "Club Brugge",
+   "id": "2026-09-13|Club Brugge|Antwerp",
+   "kickoff": "2026-09-13T11:30Z",
+   "lead_source": false,
+   "league": "Belgian Pro League",
+   "model": {
+    "away2plus": 0.2974,
+    "btts": 0.5984,
+    "home2plus": 0.6731,
+    "over15": 0.854,
+    "over25": 0.6616
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.222,
+     "price": 4.3
+    },
+    "btts": {
+     "fair": 0.5408,
+     "price": 1.741
+    },
+    "home2plus": {
+     "fair": 0.7383,
+     "price": 1.294
+    },
+    "over15": {
+     "fair": 0.854,
+     "price": 1.111
+    },
+    "over25": {
+     "fair": 0.6818,
+     "price": 1.4
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|Colorado Rapids|CF Montr\u00e9al": {
    "away": "CF Montr\u00e9al",
    "date": "2026-09-13",
@@ -2179,6 +2259,46 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Heerenveen|Telstar": {
+   "away": "Telstar",
+   "date": "2026-09-13",
+   "home": "Heerenveen",
+   "id": "2026-09-13|Heerenveen|Telstar",
+   "kickoff": "2026-09-13T12:30Z",
+   "lead_source": true,
+   "league": "Eredivisie",
+   "model": {
+    "away2plus": 0.4915,
+    "btts": 0.6774,
+    "home2plus": 0.5433,
+    "over15": 0.8612,
+    "over25": 0.674
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3822,
+     "price": 2.5
+    },
+    "btts": {
+     "fair": 0.6586,
+     "price": 1.426
+    },
+    "home2plus": {
+     "fair": 0.6643,
+     "price": 1.441
+    },
+    "over15": {
+     "fair": 0.854,
+     "price": 1.111
+    },
+    "over25": {
+     "fair": 0.6866,
+     "price": 1.392
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|LA Galaxy|Seattle Sounders FC": {
    "away": "Seattle Sounders FC",
    "date": "2026-09-13",
@@ -2215,6 +2335,46 @@
     "over25": {
      "fair": 0.5913,
      "price": 1.617
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-13|Lyngby Boldklub|S\u00f8nderjyske Fodbold": {
+   "away": "S\u00f8nderjyske Fodbold",
+   "date": "2026-09-13",
+   "home": "Lyngby Boldklub",
+   "id": "2026-09-13|Lyngby Boldklub|S\u00f8nderjyske Fodbold",
+   "kickoff": "2026-09-13T12:00Z",
+   "lead_source": false,
+   "league": "Danish Superliga",
+   "model": {
+    "away2plus": 0.3408,
+    "btts": 0.5997,
+    "home2plus": 0.5743,
+    "over15": 0.8206,
+    "over25": 0.6071
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3031,
+     "price": 3.15
+    },
+    "btts": {
+     "fair": 0.5802,
+     "price": 1.613
+    },
+    "home2plus": {
+     "fair": 0.595,
+     "price": 1.606
+    },
+    "over15": {
+     "fair": 0.8073,
+     "price": 1.182
+    },
+    "over25": {
+     "fair": 0.5881,
+     "price": 1.625
     }
    },
    "status": "pending"
@@ -2299,6 +2459,46 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Silkeborg IF|Viborg FF": {
+   "away": "Viborg FF",
+   "date": "2026-09-13",
+   "home": "Silkeborg IF",
+   "id": "2026-09-13|Silkeborg IF|Viborg FF",
+   "kickoff": "2026-09-13T12:00Z",
+   "lead_source": false,
+   "league": "Danish Superliga",
+   "model": {
+    "away2plus": 0.4333,
+    "btts": 0.603,
+    "home2plus": 0.4503,
+    "over15": 0.8005,
+    "over25": 0.5763
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.5483,
+     "price": 1.746
+    },
+    "btts": {
+     "fair": 0.625,
+     "price": 1.5
+    },
+    "home2plus": {
+     "fair": 0.3864,
+     "price": 2.47
+    },
+    "over15": {
+     "fair": 0.8099,
+     "price": 1.174
+    },
+    "over25": {
+     "fair": 0.6178,
+     "price": 1.546
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|Sporting Kansas City|LAFC": {
    "away": "LAFC",
    "date": "2026-09-13",
@@ -2378,7 +2578,87 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-13|Viking FK|Kristiansund BK": {
+   "away": "Kristiansund BK",
+   "date": "2026-09-13",
+   "home": "Viking FK",
+   "id": "2026-09-13|Viking FK|Kristiansund BK",
+   "kickoff": "2026-09-13T12:30Z",
+   "lead_source": false,
+   "league": "Eliteserien",
+   "model": {
+    "away2plus": 0.2329,
+    "btts": 0.5189,
+    "home2plus": 0.5963,
+    "over15": 0.7891,
+    "over25": 0.5594
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.2446,
+     "price": 3.9
+    },
+    "btts": {
+     "fair": 0.5633,
+     "price": 1.667
+    },
+    "home2plus": {
+     "fair": 0.7421,
+     "price": 1.286
+    },
+    "over15": {
+     "fair": 0.8593,
+     "price": 1.105
+    },
+    "over25": {
+     "fair": 0.6969,
+     "price": 1.37
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-13|WSG Swarovski Tirol|TSV Hartberg": {
+   "away": "TSV Hartberg",
+   "date": "2026-09-13",
+   "home": "WSG Swarovski Tirol",
+   "id": "2026-09-13|WSG Swarovski Tirol|TSV Hartberg",
+   "kickoff": "2026-09-13T12:30Z",
+   "lead_source": false,
+   "league": "Austrian Bundesliga",
+   "model": {
+    "away2plus": 0.3636,
+    "btts": 0.5675,
+    "home2plus": 0.4595,
+    "over15": 0.7732,
+    "over25": 0.5366
+   },
+   "priced_at": "2026-09-12T12:41:36+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3798,
+     "price": 2.47
+    },
+    "btts": {
+     "fair": 0.5894,
+     "price": 1.588
+    },
+    "home2plus": {
+     "fair": 0.4735,
+     "price": 1.98
+    },
+    "over15": {
+     "fair": 0.7711,
+     "price": 1.217
+    },
+    "over25": {
+     "fair": 0.5482,
+     "price": 1.714
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-12T10:55:20+00:00"
+ "updated_at": "2026-09-12T12:41:45+00:00"
 }
