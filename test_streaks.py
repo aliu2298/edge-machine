@@ -442,6 +442,20 @@ check("reverse fixture is not a match",
       V.venue_link("Arsenal vs Chelsea", "2026-09-06", rev), None)
 check("date outside the window is not a match",
       V.venue_link("Angers vs Stade Rennais", "2026-09-20", evs), None)
+_d = datetime.date(2026, 9, 12)
+_evs = [("u1", "Auxerre vs Nice", _d), ("u2", "AJ Auxerre vs Nice", _d),
+        ("u3", "Mainz vs Eintracht Frankfurt", _d), ("u4", "FSV Mainz U19 vs FSV Frankfurt U19", _d),
+        ("u5", "Orlando City SC vs Toronto FC", _d), ("u6", "Orlando City (R) vs Toronto FC (R)", _d),
+        ("u7", "FC Köln vs Werder Bremen", _d)]
+check("same fixture under two spellings is not an ambiguity",
+      V.venue_link("AJ Auxerre vs Nice", "2026-09-12", _evs) in ("u1", "u2"), True)
+check("U19 listing does not shadow the senior fixture",
+      V.venue_link("Mainz vs Eintracht Frankfurt", "2026-09-12", _evs), "u3")
+check("reserve (R) listing does not shadow the first team",
+      V.venue_link("Orlando City SC vs Toronto FC", "2026-09-12", _evs), "u5")
+check("a reserve fixture still finds its own listing",
+      V.venue_link("Orlando City (R) vs Toronto FC (R)", "2026-09-12", _evs), "u6")
+check("Cologne / Köln alias", V.venue_link("FC Cologne vs Werder Bremen", "2026-09-12", _evs), "u7")
 
 print("\n== pricing: captured once, before kickoff, never after ==")
 NOWP = datetime.datetime.now(datetime.timezone.utc)

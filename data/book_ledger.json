@@ -40,6 +40,46 @@
    },
    "status": "pending"
   },
+  "2026-09-12|AJ Auxerre|Nice": {
+   "away": "Nice",
+   "date": "2026-09-12",
+   "home": "AJ Auxerre",
+   "id": "2026-09-12|AJ Auxerre|Nice",
+   "kickoff": "2026-09-12T18:45Z",
+   "lead_source": true,
+   "league": "Ligue 1",
+   "model": {
+    "away2plus": 0.3397,
+    "btts": 0.5685,
+    "home2plus": 0.4965,
+    "over15": 0.7812,
+    "over25": 0.5479
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3898,
+     "price": 2.45
+    },
+    "btts": {
+     "fair": 0.5482,
+     "price": 1.714
+    },
+    "home2plus": {
+     "fair": 0.3753,
+     "price": 2.55
+    },
+    "over15": {
+     "fair": 0.7258,
+     "price": 1.323
+    },
+    "over25": {
+     "fair": 0.4892,
+     "price": 1.952
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-12|Acad\u00e9mico de Viseu|Vit\u00f3ria de Guimaraes": {
    "away": "Vit\u00f3ria de Guimaraes",
    "date": "2026-09-12",
@@ -181,6 +221,46 @@
     "over25": {
      "fair": 0.6202,
      "price": 1.513
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-12|Alanyaspor|Goztepe": {
+   "away": "Goztepe",
+   "date": "2026-09-12",
+   "home": "Alanyaspor",
+   "id": "2026-09-12|Alanyaspor|Goztepe",
+   "kickoff": "2026-09-12T17:00Z",
+   "lead_source": false,
+   "league": "Turkish Super Lig",
+   "model": {
+    "away2plus": 0.291,
+    "btts": 0.5545,
+    "home2plus": 0.5519,
+    "over15": 0.7891,
+    "over25": 0.5594
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3231,
+     "price": 2.95
+    },
+    "btts": {
+     "fair": 0.5347,
+     "price": 1.758
+    },
+    "home2plus": {
+     "fair": 0.4344,
+     "price": 2.2
+    },
+    "over15": {
+     "fair": 0.7342,
+     "price": 1.303
+    },
+    "over25": {
+     "fair": 0.4826,
+     "price": 1.98
     }
    },
    "status": "pending"
@@ -574,6 +654,46 @@
    },
    "status": "pending"
   },
+  "2026-09-12|Eyupspor|Caykur Rizespor": {
+   "away": "Caykur Rizespor",
+   "date": "2026-09-12",
+   "home": "Eyupspor",
+   "id": "2026-09-12|Eyupspor|Caykur Rizespor",
+   "kickoff": "2026-09-12T14:00Z",
+   "lead_source": false,
+   "league": "Turkish Super Lig",
+   "model": {
+    "away2plus": 0.3162,
+    "btts": 0.5592,
+    "home2plus": 0.5138,
+    "over15": 0.7797,
+    "over25": 0.5458
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.4826,
+     "price": 1.98
+    },
+    "btts": {
+     "fair": 0.5061,
+     "price": 1.847
+    },
+    "home2plus": {
+     "fair": 0.2579,
+     "price": 3.7
+    },
+    "over15": {
+     "fair": 0.7301,
+     "price": 1.312
+    },
+    "over25": {
+     "fair": 0.4783,
+     "price": 2.0
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-12|FC Augsburg|Bayer Leverkusen": {
    "away": "Bayer Leverkusen",
    "date": "2026-09-12",
@@ -645,6 +765,41 @@
     "over25": {
      "fair": 0.6937,
      "price": 1.377
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-12|FC Cologne|Werder Bremen": {
+   "away": "Werder Bremen",
+   "date": "2026-09-12",
+   "home": "FC Cologne",
+   "id": "2026-09-12|FC Cologne|Werder Bremen",
+   "kickoff": "2026-09-12T16:30Z",
+   "lead_source": true,
+   "league": "Bundesliga",
+   "model": {
+    "away2plus": 0.5143,
+    "btts": 0.7258,
+    "home2plus": 0.6326,
+    "over25": 0.7426
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.4119,
+     "price": 2.32
+    },
+    "btts": {
+     "fair": 0.6334,
+     "price": 1.476
+    },
+    "home2plus": {
+     "fair": 0.5387,
+     "price": 1.781
+    },
+    "over25": {
+     "fair": 0.5656,
+     "price": 1.69
     }
    },
    "status": "pending"
@@ -924,6 +1079,46 @@
    },
    "status": "pending"
   },
+  "2026-09-12|Konyaspor|Trabzonspor": {
+   "away": "Trabzonspor",
+   "date": "2026-09-12",
+   "home": "Konyaspor",
+   "id": "2026-09-12|Konyaspor|Trabzonspor",
+   "kickoff": "2026-09-12T17:00Z",
+   "lead_source": false,
+   "league": "Turkish Super Lig",
+   "model": {
+    "away2plus": 0.34,
+    "btts": 0.5504,
+    "home2plus": 0.4547,
+    "over15": 0.7594,
+    "over25": 0.5173
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.5174,
+     "price": 1.847
+    },
+    "btts": {
+     "fair": 0.5894,
+     "price": 1.588
+    },
+    "home2plus": {
+     "fair": 0.3492,
+     "price": 2.73
+    },
+    "over15": {
+     "fair": 0.7833,
+     "price": 1.217
+    },
+    "over25": {
+     "fair": 0.5108,
+     "price": 1.87
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-12|Lazio|AC Milan": {
    "away": "AC Milan",
    "date": "2026-09-12",
@@ -1124,6 +1319,41 @@
    },
    "status": "pending"
   },
+  "2026-09-12|Mainz|Eintracht Frankfurt": {
+   "away": "Eintracht Frankfurt",
+   "date": "2026-09-12",
+   "home": "Mainz",
+   "id": "2026-09-12|Mainz|Eintracht Frankfurt",
+   "kickoff": "2026-09-12T13:30Z",
+   "lead_source": true,
+   "league": "Bundesliga",
+   "model": {
+    "away2plus": 0.4319,
+    "btts": 0.6963,
+    "home2plus": 0.68,
+    "over25": 0.7339
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3982,
+     "price": 2.4
+    },
+    "btts": {
+     "fair": 0.6538,
+     "price": 1.435
+    },
+    "home2plus": {
+     "fair": 0.6136,
+     "price": 1.556
+    },
+    "over25": {
+     "fair": 0.6206,
+     "price": 1.541
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-12|OH Leuven|Cercle Brugge KSV": {
    "away": "Cercle Brugge KSV",
    "date": "2026-09-12",
@@ -1200,6 +1430,46 @@
     "over25": {
      "fair": 0.5881,
      "price": 1.625
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-12|Orlando City SC|Toronto FC": {
+   "away": "Toronto FC",
+   "date": "2026-09-12",
+   "home": "Orlando City SC",
+   "id": "2026-09-12|Orlando City SC|Toronto FC",
+   "kickoff": "2026-09-12T23:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.5522,
+    "btts": 0.7466,
+    "home2plus": 0.6377,
+    "over15": 0.9099,
+    "over25": 0.7648
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.4344,
+     "price": 2.2
+    },
+    "btts": {
+     "fair": 0.6768,
+     "price": 1.385
+    },
+    "home2plus": {
+     "fair": 0.6136,
+     "price": 1.556
+    },
+    "over15": {
+     "fair": 0.8483,
+     "price": 1.118
+    },
+    "over25": {
+     "fair": 0.6769,
+     "price": 1.408
     }
    },
    "status": "pending"
@@ -1510,6 +1780,46 @@
     "over25": {
      "fair": 0.5061,
      "price": 1.847
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-12|Samsunspor|\u00c7orum FK": {
+   "away": "\u00c7orum FK",
+   "date": "2026-09-12",
+   "home": "Samsunspor",
+   "id": "2026-09-12|Samsunspor|\u00c7orum FK",
+   "kickoff": "2026-09-12T14:00Z",
+   "lead_source": false,
+   "league": "Turkish Super Lig",
+   "model": {
+    "away2plus": 0.3582,
+    "btts": 0.6174,
+    "home2plus": 0.5898,
+    "over15": 0.8342,
+    "over25": 0.6289
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3753,
+     "price": 2.55
+    },
+    "btts": {
+     "fair": 0.5894,
+     "price": 1.588
+    },
+    "home2plus": {
+     "fair": 0.4739,
+     "price": 2.02
+    },
+    "over15": {
+     "fair": 0.7731,
+     "price": 1.233
+    },
+    "over25": {
+     "fair": 0.4957,
+     "price": 1.926
     }
    },
    "status": "pending"
@@ -1949,6 +2259,46 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Sporting Kansas City|LAFC": {
+   "away": "LAFC",
+   "date": "2026-09-13",
+   "home": "Sporting Kansas City",
+   "id": "2026-09-13|Sporting Kansas City|LAFC",
+   "kickoff": "2026-09-13T00:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.5821,
+    "btts": 0.6426,
+    "home2plus": 0.4012,
+    "over15": 0.8458,
+    "over25": 0.6479
+   },
+   "priced_at": "2026-09-12T07:49:49+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.595,
+     "price": 1.606
+    },
+    "btts": {
+     "fair": 0.6017,
+     "price": 1.556
+    },
+    "home2plus": {
+     "fair": 0.3296,
+     "price": 2.9
+    },
+    "over15": {
+     "fair": 0.8099,
+     "price": 1.174
+    },
+    "over25": {
+     "fair": 0.5656,
+     "price": 1.69
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC": {
    "away": "Minnesota United FC",
    "date": "2026-09-13",
@@ -1990,5 +2340,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-12T07:35:09+00:00"
+ "updated_at": "2026-09-12T07:50:02+00:00"
 }

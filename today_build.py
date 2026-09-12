@@ -1,43 +1,96 @@
 #!/usr/bin/env python3
-"""today_build.py — every tracked fixture kicking off today: public_site/today.html.
+"""today_build.py — every tracked fixture kicking off today, as the leads' CONTROL GROUP:
+public_site/today.html.
 
-Its own page rather than a tab, because "what is on tonight" is a different question from
-"who is on a run" and gets asked far more often. Burying it three clicks into another board
-made the most frequently wanted view the hardest to reach.
+WHAT THIS PAGE IS FOR
+---------------------
+The Leads board shows the fixtures the rules picked. Record measures them against "what
+would have happened anyway" — but nowhere could you SEE the rest of the day's fixtures next
+to the picked ones. This page is that set: every fixture on the Central day, in kickoff
+order, marked as a lead or not, with the reason it is not, and with the book's line and
+the model's probability on every one of them whether the rules fired or not. The same
+numbers a lead card carries, on the fixtures the rules passed over.
+
+Two things follow from that:
+
+  * SORTED BY KICKOFF, not rarity. Rarity is shown on the chip, but every measurement on
+    this board says a rare run predicts nothing beyond the team's own rate, so it must not
+    decide the order of a "tonight" page.
+  * MODEL-VALUE FLAGS ARE A TEST, NOT A TIP. A fixture is flagged where model.py beats the
+    book's vig-free probability by streaks_track.VALUE_MARGIN — the same pre-registered
+    split Record scores. Until that split has proved itself there, a flag is a hypothesis
+    being counted, and the page says so.
 
 THE DAY IS CENTRAL, NOT UTC
 ---------------------------
-A 01:30Z kickoff is the previous evening in the Americas, so a UTC day files it a day late
-relative to the time the row itself prints. Every board here renders in Central; the day
-boundary has to agree with that or the page contradicts its own timestamps.
-
-Refreshes on its own — the pipeline runs every 6h, so the list empties as the day passes
-and fills again overnight. It also states tomorrow's count: opened late in the evening an
-almost-empty list reads as a fault rather than as the day being over.
+A 01:30Z kickoff is the previous evening in the Americas. Every board here renders in
+Central; the day boundary has to agree with that or the page contradicts its own
+timestamps. America/Chicago via zoneinfo, NOT a fixed UTC-5: the page's JavaScript uses
+the IANA zone, and a fixed offset disagreed with it by an hour after the November change,
+filing an 11:30pm CST kickoff on the next day.
 
 Usage:  python3 today_build.py   →  public_site/today.html
 """
 import json, os, html, datetime
+from zoneinfo import ZoneInfo
 
 import streaks_fetch
 import streaks_build as B
+import streaks_track as T
+import book_track as K
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(ROOT, "public_site")
-CT = datetime.timezone(datetime.timedelta(hours=-5))    # Central
+LEADS_JSON = os.path.join(ROOT, "data", "streaks.json")
+CT = ZoneInfo("America/Chicago")
+
+MARKET_SHORT = {"over15": "O 1.5", "over25": "O 2.5", "btts": "BTTS",
+                "home2plus": "{home} 2+", "away2plus": "{away} 2+"}
 
 
 def esc(x):
     return html.escape(str(x if x is not None else ""))
 
 
+def why_not(home, away, lead_grade):
+    """Why a fixture produced no lead — the coverage diagnostic, per fixture."""
+    reasons = []
+    runs = {}
+    for team in (home, away):
+        info = lead_grade.get(team)
+        if not info:
+            reasons.append(f"{team}: no competitive games on record")
+            continue
+        if info["played"] < B.MIN_PLAYED:
+            reasons.append(f"{team}: only {info['played']} game"
+                           f"{'' if info['played'] == 1 else 's'} (needs {B.MIN_PLAYED})")
+            continue
+        r = {k: n for k, n in info["runs"].items() if n >= B.MIN_RUN}
+        if not r:
+            reasons.append(f"{team}: no run of {B.MIN_RUN}+")
+        runs[team] = r
+    if not reasons and len(runs) == 2:
+        reasons.append("both on a run, but the runs do not pair into a claim")
+    return reasons
+
+
 def gather():
-    """(rows, tomorrow_count, leagues) for the current Central day."""
+    """(rows, summary, tomorrow_count, leagues) for the current Central day."""
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
     by_team = B.team_games(fixtures)
-    shown = B.team_streaks(by_team, B.MIN_PLAYED_SHOWN)
-    rates = B.base_rates(B.team_streaks(by_team))
+    shown = B.team_streaks(by_team, B.MIN_PLAYED_SHOWN)     # browse-grade form
+    lead_grade = B.team_streaks(by_team)                     # what find_leads sees
+    rates = B.base_rates(lead_grade)
     league_of, _ = B.team_lookups(by_team, fixtures)
+
+    try:
+        leads_pub = json.load(open(LEADS_JSON)).get("leads", [])
+    except Exception:
+        leads_pub = []
+    leads_by = {}
+    for l in leads_pub:
+        leads_by.setdefault((l["date"], l["home"], l["away"]), []).append(l)
+    book = {(r["date"], r["home"], r["away"]): r for r in K.load()["rows"].values()}
 
     now = datetime.datetime.now(datetime.timezone.utc)
     today_ct = now.astimezone(CT).date()
@@ -61,9 +114,7 @@ def gather():
         if not f.get("competitive", True):
             continue
         # Competitive FORM feeds (Belgian, Norwegian, Greek, Turkish...) are pulled so a
-        # European tie has form on both sides. They are not part of this board, and
-        # letting them through put 13 extra fixtures on Today from leagues the site does
-        # not otherwise mention.
+        # European tie has form on both sides; they are not part of this board.
         if not f.get("lead_source", True):
             continue
         ko = B.kickoff_dt(f)
@@ -74,31 +125,56 @@ def gather():
             n_tom += 1
         if d != today_ct:
             continue
-        h, a = side(f["home"]), side(f["away"])
-        rs = [x["rate"] for sd in (h, a) for x in sd["runs"]]
+        key = (f["date"], f["home"], f["away"])
+        leads = [{"headline": l["headline"], "price": l.get("price"),
+                  "fair": l.get("fair"), "model": l.get("model")}
+                 for l in leads_by.get(key, [])]
+        bk = book.get(key)
+        markets, value = [], []
+        if bk:
+            for mk in K.MARKETS:
+                q = bk["prices"].get(mk)
+                if not q:
+                    continue
+                m = (bk.get("model") or {}).get(mk)
+                flag = m is not None and (m - q["fair"]) >= T.VALUE_MARGIN - 1e-9
+                markets.append({"mk": mk, "price": q["price"], "fair": q["fair"],
+                                "model": m, "value": flag})
+                if flag:
+                    value.append(mk)
         rows.append({
-            "match": f"{f['home']} v {f['away']}", "home": h, "away": a,
-            "league": f["league"], "kickoff": f.get("kickoff"), "date": f["date"],
-            "played": bool(f.get("played")),
+            "match": f"{f['home']} v {f['away']}", "home": side(f["home"]),
+            "away": side(f["away"]), "league": f["league"], "kickoff": f.get("kickoff"),
+            "date": f["date"], "played": bool(f.get("played")),
             "final": (f"{f['home_goals']}-{f['away_goals']}"
                       if f.get("played") and f.get("home_goals") is not None else None),
-            "best_rate": min(rs) if rs else 1.0, "has_run": bool(rs),
+            "leads": leads,
+            "why_not": [] if leads else why_not(f["home"], f["away"], lead_grade),
+            "markets": markets, "value": value,
+            "market_url": B.venue_market_link(f),
         })
 
-    # a fixture where someone is on a run leads; then by kickoff
-    rows.sort(key=lambda r: (not r["has_run"], r["best_rate"], r.get("kickoff") or ""))
+    rows.sort(key=lambda r: (r.get("kickoff") or "", r["match"]))
     leagues = sorted({r["league"] for r in rows})
-    return rows, n_tom, leagues
+    summary = {
+        "fixtures": len(rows),
+        "lead_fixtures": sum(1 for r in rows if r["leads"]),
+        "priced": sum(1 for r in rows if r["markets"]),
+        "value_non_lead": sum(len(r["value"]) for r in rows if not r["leads"]),
+        "value_lead": sum(len(r["value"]) for r in rows if r["leads"]),
+    }
+    return rows, summary, n_tom, leagues
 
 
-def page_html(rows, n_tom, leagues, now):
+def page_html(rows, summary, n_tom, leagues, now):
     payload = json.dumps(rows).replace("</", "<\\/")
     btns = "".join(f'<button class="lg" data-lg="{esc(l)}">{esc(l)}</button>'
                    for l in leagues)
+    s = summary
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Today</title>
-<meta name="description" content="Every tracked fixture kicking off today, with each side's current runs.">
+<meta name="description" content="Every tracked fixture kicking off today — the leads' control group, with the book's line and the model on every one.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -119,9 +195,15 @@ border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
 .note{{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
 border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-top:15px}}
 .note b{{color:var(--fg);font-weight:600}}
+.tiles{{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}}
+.tile{{flex:1;min-width:110px;background:var(--card);border:1px solid var(--bd);
+border-radius:10px;padding:10px 13px}}
+.tile b{{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}}
+.tile span{{font-size:11px;color:var(--mut)}}
 .controls{{position:sticky;top:0;z-index:20;background:var(--bg);
 padding:14px 0 10px;margin-top:16px;border-bottom:1px solid var(--bd)}}
 .lgs{{display:flex;gap:6px;flex-wrap:wrap}}
+.lgs+.lgs{{margin-top:8px}}
 .lg{{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);cursor:pointer;
 background:none;border:1px solid var(--bd);border-radius:999px;padding:5px 12px}}
 .lg:hover{{color:var(--fg);border-color:var(--mut)}}
@@ -133,10 +215,15 @@ border:1px solid var(--bd);border-radius:9px;padding:8px 12px;outline:none}}
 .cnt{{font-size:11.5px;color:var(--mut);white-space:nowrap;font-variant-numeric:tabular-nums}}
 .row{{background:var(--card);border:1px solid var(--bd);border-radius:11px;
 margin-bottom:9px;overflow:hidden}}
+.row.islead{{border-color:#7aa2f766}}
 .hd{{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
 padding:12px 15px 10px;border-bottom:1px solid var(--bd)}}
 .mt{{font-weight:700;font-size:15px;letter-spacing:-.012em}}
 .meta{{font-size:11.5px;color:var(--mut);margin-left:auto;white-space:nowrap}}
+.kbtn{{font-size:11px;font-weight:700;color:var(--acc);text-decoration:none;
+border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;padding:3px 10px;
+white-space:nowrap}}
+.kbtn:hover{{background:#7aa2f72a}}
 .cd{{font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;border:1px solid;
 white-space:nowrap;font-variant-numeric:tabular-nums}}
 .cd.soon{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
@@ -156,6 +243,20 @@ white-space:nowrap;font-variant-numeric:tabular-nums}}
 padding:1px 5px;background:#0c1017;border:1px solid var(--bd);color:var(--mut)}}
 .sc.hit{{color:var(--fg);border-color:#3fb97044;background:#3fb9700f}}
 .sc.fr{{border-style:dashed;border-color:#f0b42966;color:var(--warn)}}
+.strip{{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:9px 15px;
+border-top:1px solid var(--bd);font-size:12px}}
+.lbl{{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:var(--mut)}}
+.lead .lbl{{color:var(--acc)}}
+.hl{{font-weight:700}}
+.px{{font-size:11px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;
+white-space:nowrap}}
+.why{{color:var(--mut);font-size:11.5px}}
+.mk{{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;border-radius:999px;
+padding:2px 9px;border:1px solid var(--bd);color:var(--mut);white-space:nowrap}}
+.mk b{{color:var(--fg)}}
+.mk.val{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
+.mk.val b{{color:var(--pos)}}
 .empty{{color:var(--mut);padding:26px 0;text-align:center;line-height:1.6}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:640px){{
@@ -165,17 +266,30 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 }}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Today</h1>
-<div class="sub">Every tracked fixture kicking off today · all times CT · updated {esc(now)}</div>
+<div class="sub">Every tracked fixture kicking off today · the leads' control group · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 
-<div class="note">Both sides' current runs, shown against each fixture. Matches where a
-team is on a run come first, rarest first. The list empties as the day passes and fills
-again overnight — the pipeline refreshes every 6 hours.{
+<div class="note">The whole day, in kickoff order: <b>what the rules picked, what they
+passed over, and what the book and the model say about all of it.</b> A fixture with a lead
+carries the lead's claim at the price it was captured; a fixture without one says why not.
+Every fixture inside 24h carries the book's line on five markets with the book's vig-free
+probability and the model's estimate beside it. A market is marked <b>value</b> where the
+model beats the book by 5pp or more — that is the pre-registered split the Record page
+scores, <b>a hypothesis being counted, not a tip</b>: until it has proved itself there,
+a flag means only that the model and the book disagree.{
   f' <b>{n_tom} fixture{"" if n_tom == 1 else "s"} tomorrow.</b>' if n_tom else ''}</div>
+<div class="tiles">
+  <div class="tile"><b>{s['fixtures']}</b><span>fixtures today</span></div>
+  <div class="tile"><b>{s['lead_fixtures']}</b><span>carry a lead</span></div>
+  <div class="tile"><b>{s['priced']}</b><span>priced by the book</span></div>
+  <div class="tile"><b>{s['value_non_lead']}</b><span>value flags on non-leads</span></div>
+  <div class="tile"><b>{s['value_lead']}</b><span>value flags on leads</span></div>
+</div>
 
 <div class="controls">
+  <div class="lgs"><button class="vw on" data-vw="">All fixtures</button><button class="vw" data-vw="lead">Leads</button><button class="vw" data-vw="rest">Not leads</button><button class="vw" data-vw="value">Model value, no lead</button></div>
   <div class="lgs"><button class="lg on" data-lg="">All leagues</button>{btns}</div>
   <div class="srch">
     <input id="q" type="search" placeholder="Filter by team…" autocomplete="off">
@@ -191,12 +305,13 @@ again overnight — the pipeline refreshes every 6 hours.{
 <script>
 const ROWS = {payload};
 const TOM = {n_tom};
+const SHORT = {json.dumps(MARKET_SHORT)};
 const TZ = 'America/Chicago';
 const list = document.getElementById('list');
 const cnt  = document.getElementById('cnt');
 const empty= document.getElementById('empty');
 const q    = document.getElementById('q');
-let league = '';
+let league = '', view = '';
 
 function esc(s) {{
   return String(s).replace(/[&<>"']/g, c => (
@@ -216,10 +331,11 @@ function countdown(iso) {{
   return [mins <= 720 ? 'soon' : 'later',
           hrs > 0 ? `in ${{hrs}}h ${{String(m).padStart(2,'0')}}m` : `in ${{m}}m`];
 }}
+function pctOf(r) {{ const p = Math.round(r*100); return p === 0 && r > 0 ? '<1%' : p + '%'; }}
 function rarity(r) {{
-  if (r <= 0.10) return ['hot', 'rare · ' + Math.round(r*100) + '%'];
-  if (r <= 0.25) return ['mid', 'uncommon · ' + Math.round(r*100) + '%'];
-  return ['common', 'common · ' + Math.round(r*100) + '%'];
+  if (r <= 0.10) return ['hot', 'rare · ' + pctOf(r)];
+  if (r <= 0.25) return ['mid', 'uncommon · ' + pctOf(r)];
+  return ['common', 'common · ' + pctOf(r)];
 }}
 function seq(games) {{
   return `<div class="seq">` + games.map(g =>
@@ -230,26 +346,57 @@ function seq(games) {{
 function side(sd) {{
   const chips = sd.runs.slice(0,2).map(r => {{
     const [cls] = rarity(r.rate);
-    return `<span class="rare ${{cls}}">${{esc(r.label)}} · ${{r.n}} · ${{
-      Math.round(r.rate*100)}}%</span>`;
+    return `<span class="rare ${{cls}}">${{esc(r.label)}} · ${{r.n}} · ${{pctOf(r.rate)}}</span>`;
   }}).join('');
   return `<div class="side"><div class="nm">${{esc(sd.team)}}</div>
     <div class="runs">${{chips || '<span class="norun">no current run</span>'}}</div>
     ${{sd.recent.length ? seq(sd.recent) : ''}}</div>`;
 }}
+function pc(x) {{ return x == null ? '—' : Math.round(x*100) + '%'; }}
+function leadStrip(m) {{
+  if (m.leads.length) {{
+    return m.leads.map(l => `<div class="strip lead"><span class="lbl">Lead</span>
+      <span class="hl">${{esc(l.headline)}}</span>
+      ${{l.price ? `<span class="px">@ ${{l.price.toFixed(2)}} · book ${{pc(l.fair)}}${{
+        l.model != null ? ' · model ' + pc(l.model) : ''}}</span>` : '<span class="px">not priced yet</span>'}}
+    </div>`).join('');
+  }}
+  return `<div class="strip"><span class="lbl">No lead</span>
+    <span class="why">${{esc(m.why_not.join(' · ') || '—')}}</span></div>`;
+}}
+function bookStrip(m) {{
+  if (!m.markets.length) return `<div class="strip"><span class="lbl">Book</span>
+    <span class="why">${{m.played ? 'settled' : 'not priced yet — fixtures are priced inside 24h of kickoff'}}</span></div>`;
+  const [home, away] = m.match.split(' v ');
+  const chips = m.markets.map(k => {{
+    const name = SHORT[k.mk].replace('{{home}}', home).replace('{{away}}', away);
+    return `<span class="mk${{k.value ? ' val' : ''}}" title="price · book's vig-free probability · model">${{
+      esc(name)}} <b>${{k.price.toFixed(2)}}</b> · book ${{pc(k.fair)}}${{
+      k.model != null ? ' · model ' + pc(k.model) : ''}}${{k.value ? ' · value' : ''}}</span>`;
+  }}).join('');
+  return `<div class="strip"><span class="lbl">Book</span>${{chips}}</div>`;
+}}
 function row(m) {{
   const [cls, txt] = m.played ? ['ft', 'FT ' + (m.final || '')] : countdown(m.kickoff);
-  return `<div class="row">
+  return `<div class="row${{m.leads.length ? ' islead' : ''}}">
     <div class="hd"><span class="mt">${{esc(m.match)}}</span>
       <span class="cd ${{cls}}" ${{m.played ? '' : `data-ko="${{esc(m.kickoff||'')}}"`}}>${{
         esc(txt)}}</span>
-      <span class="meta">${{esc(m.league)}} · ${{esc(when(m.kickoff) || m.date)}}</span></div>
+      <span class="meta">${{esc(m.league)}} · ${{esc(when(m.kickoff) || m.date)}}</span>
+      ${{m.market_url && !m.played ? `<a class="kbtn" href="${{esc(m.market_url)}}" target="_blank" rel="noopener">Bovada ↗</a>` : ''}}</div>
     <div class="body">${{side(m.home)}}${{side(m.away)}}</div>
+    ${{leadStrip(m)}}${{bookStrip(m)}}
   </div>`;
+}}
+function keep(m) {{
+  if (view === 'lead') return m.leads.length > 0;
+  if (view === 'rest') return m.leads.length === 0;
+  if (view === 'value') return m.leads.length === 0 && m.value.length > 0;
+  return true;
 }}
 function render() {{
   const term = q.value.trim().toLowerCase();
-  const rows = ROWS.filter(m => (!league || m.league === league) &&
+  const rows = ROWS.filter(m => keep(m) && (!league || m.league === league) &&
                                 (!term || m.match.toLowerCase().includes(term)));
   list.innerHTML = rows.map(row).join('');
   cnt.textContent = rows.length + ' of ' + ROWS.length;
@@ -261,9 +408,13 @@ function render() {{
 for (const b of document.querySelectorAll('.lg')) {{
   b.addEventListener('click', () => {{
     document.querySelectorAll('.lg').forEach(x => x.classList.remove('on'));
-    b.classList.add('on');
-    league = b.dataset.lg;
-    render();
+    b.classList.add('on'); league = b.dataset.lg; render();
+  }});
+}}
+for (const b of document.querySelectorAll('.vw')) {{
+  b.addEventListener('click', () => {{
+    document.querySelectorAll('.vw').forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); view = b.dataset.vw; render();
   }});
 }}
 q.addEventListener('input', render);
@@ -278,14 +429,16 @@ setInterval(() => {{
 
 
 def build():
-    rows, n_tom, leagues = gather()
+    rows, summary, n_tom, leagues = gather()
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "today.html")
     with open(out, "w") as f:
-        f.write(page_html(rows, n_tom, leagues, now))
+        f.write(page_html(rows, summary, n_tom, leagues, now))
     print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
-          f"{len(rows)} fixtures today, {n_tom} tomorrow")
+          f"{summary['fixtures']} fixtures today ({summary['lead_fixtures']} leads, "
+          f"{summary['priced']} priced, {summary['value_non_lead']} value flags on "
+          f"non-leads), {n_tom} tomorrow")
 
 
 if __name__ == "__main__":

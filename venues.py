@@ -26,7 +26,15 @@ BOVADA_API = "https://www.bovada.lv/services/sports/event/coupon/events/A/descri
 BOVADA_ALL = (BOVADA_API + "?marketFilterId=def&preMatchOnly=true&lang=en")
 # our team-name token → alternate token some venues use (tried alongside the raw token)
 ALIASES = {"athletico": "paranaense", "angeles": "lafc",
-           "hearts": "midlothian"}   # some feeds spell it "Heart of Midlothian"
+           "hearts": "midlothian",   # some feeds spell it "Heart of Midlothian"
+           "cologne": "koln"}        # ESPN "FC Cologne", Bovada "FC Köln" (NFKD -> koln)
+# Youth and reserve sides. Bovada lists "FSV Mainz U19 vs FSV Frankfurt U19" and
+# "Orlando City (R) vs Toronto FC (R)" on the same day as the first teams, and the
+# token matcher scored both a perfect 1.0 against the senior fixture — "mainz" is the
+# whole of the short side, so it matched. A listing carrying one of these markers is a
+# different team unless ours carries it too.
+RESERVE = {"u17", "u18", "u19", "u20", "u21", "u23", "r", "ii", "reserves", "reserve",
+           "women", "w"}
 
 # Corporate/legal noise that carries no identity. "Real" and "Atletico" are deliberately
 # NOT here: they are the only thing separating Real Madrid from Real Sociedad.
@@ -89,6 +97,11 @@ def _sides(text):
     if len(parts) != 2:
         return None
     return [" ".join(t for t in _norm(p).split() if t not in NOISE) for p in parts]
+
+
+def _reserve(text):
+    """True when a listing names a youth or reserve side."""
+    return any(t in RESERVE for t in _norm(text).split())
 
 
 def side_score(a, b):
@@ -169,9 +182,12 @@ def venue_link(match, kickoff, events):
     ours = _sides(match)
     if not ours:
         return None
+    ours_reserve = _reserve(match)
     scored = {}
     for url, title, d in events:
         if d is None or abs((d - ko).days) > 1: continue  # listing dates are ET/UTC-fuzzy
+        if _reserve(title) != ours_reserve:
+            continue                     # U19s and reserves play the same day as the firsts
         theirs = _sides(title)
         if not theirs:
             continue
@@ -187,10 +203,20 @@ def venue_link(match, kickoff, events):
             scored[key] = (s, url)
     if not scored:
         return None
-    ranked = sorted(scored.values(), key=lambda x: -x[0])
-    if len(ranked) > 1 and ranked[0][0] - ranked[1][0] < AMBIGUITY_GAP:
+    # The same fixture under two spellings ("Auxerre vs Nice" and "AJ Auxerre vs Nice")
+    # is one candidate, not two rivals — without this the ambiguity guard below vetoed
+    # it. Two keys are the same fixture when their sides match each other in order.
+    merged = []
+    for key, (s, url) in sorted(scored.items(), key=lambda kv: -kv[1][0]):
+        for m in merged:
+            if (side_score(key[0], m["key"][0]) >= SIDE_MATCH and
+                    side_score(key[1], m["key"][1]) >= SIDE_MATCH):
+                break                    # same teams: keep the better-scored listing
+        else:
+            merged.append({"key": key, "score": s, "url": url})
+    if len(merged) > 1 and merged[0]["score"] - merged[1]["score"] < AMBIGUITY_GAP:
         return None                      # two DIFFERENT fixtures both fit: refuse to guess
-    return ranked[0][1]
+    return merged[0]["url"]
 
 
 # ---------------------------------------------------------------- prices
