@@ -21,6 +21,13 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "s
 # board refuses to call a winner until the number can carry the claim.
 MIN_N = 30
 
+# The board covers two different things now, and one table of fourteen columns would be
+# unreadable. Sports are contests between two named sides; the rest are yes/no questions
+# with a forecaster on the other side of them.
+SPORT_KEYS = ["soccer", "tennis", "table_tennis", "boxing", "nfl", "cricket", "mlb"]
+MARKET_KEYS = ["climate", "crypto", "economics", "commodities", "finance", "politics",
+               "elections"]
+
 
 def esc(x):
     return html.escape(str(x))
@@ -87,7 +94,7 @@ def feed_health(d):
             f'understates that source rather than describing it.</div>')
 
 
-def sport_matrix(d):
+def sport_matrix(d, keys=None):
     """Source x sport: ROI where there is enough settled to say, sample size always shown.
 
     This is the board's answer to the actual question. A single blended ROI per source
@@ -95,21 +102,23 @@ def sport_matrix(d):
     another — and rows are grouped by kind because tipsters, models and markets are
     staked differently and are not comparable on turnover.
     """
-    head = "".join(f'<th class="num">{esc(l)}</th>' for l in S.SPORTS.values())
-    ncols = 2 + len(S.SPORTS)
+    keys = keys or list(S.SPORTS)
+    head = "".join(f'<th class="num">{esc(S.SPORTS[k])}</th>' for k in keys)
+    ncols = 2 + len(keys)
     groups = [("Tipsters", ("Tipster site",)),
               ("Models and books", ("Statistical model", "Sportsbook", "Sportsbook consensus")),
               ("Prediction markets", ("Prediction market",))]
     out = []
     for title, kinds in groups:
-        names = [n for n, m in S.SOURCES.items() if m["connected"] and m["kind"] in kinds]
+        names = [n for n, m in S.SOURCES.items() if m["connected"] and m["kind"] in kinds
+                 and any(k in m["sports"] for k in keys)]
         if not names:
             continue
         out.append(f'<tr class="grp"><td colspan="{ncols}">{esc(title)}</td></tr>')
         for name in sorted(names, key=lambda n: S.SOURCES[n]["label"]):
             meta = S.SOURCES[name]
             cells = []
-            for sport in S.SPORTS:
+            for sport in keys:
                 if sport not in meta["sports"]:
                     cells.append('<td class="num mut">·</td>')
                     continue
@@ -122,7 +131,7 @@ def sport_matrix(d):
                 klass = "mut" if thin else cls(s["pnl"])
                 cells.append(f'<td class="num"><span class="{klass}">{pct(s["roi"], sign=True)}</span>'
                              f'<div class="sm mut">n={s["settled"]}</div></td>')
-            tot = T.score(d)[name]
+            tot = T.score(d)[name]  # lifetime, across every domain
             tot_roi = (f'<span class="{cls(tot["pnl"]) if tot["settled"] >= MIN_N else "mut"}">'
                        f'{pct(tot["roi"], sign=True)}</span>' if tot["settled"]
                        else '<span class="mut">—</span>')
@@ -410,11 +419,22 @@ skill. {esc(verdict)}</div>
 
 <h2>Which tipster is profitable, and at what?</h2>
 {feed_health(d)}
-{sport_matrix(d)}
+{sport_matrix(d, SPORT_KEYS)}
 <div class="note"><b>ROI per source, per sport</b>, at the price actually available.
 Greyed figures are under {MIN_N} settled bets and mean nothing yet — the sample is
 printed under every number so a hot streak cannot be mistaken for an edge. A dot means
 the source does not cover that sport at all.</div>
+
+<h2>Markets beyond sport</h2>
+{sport_matrix(d, MARKET_KEYS)}
+<div class="note">Yes/no markets rather than contests, so the opponent is the market
+price itself. <b>Climate</b> is the one with a genuinely independent forecaster — the
+National Weather Service against Kalshi's temperature buckets for the same city and day —
+and it settles overnight, so it reaches a readable sample in about a week. <b>Crypto</b>
+carries a no-change spot baseline, which is the null hypothesis rather than a forecast.
+<b>Politics</b> and <b>elections</b> are listed but not fetched: Kalshi has thousands of
+political questions and almost none resolve inside this board's horizon, so nothing there
+could settle and be scored.</div>
 
 <h2>Overall record</h2>
 <div class="tbl"><table>

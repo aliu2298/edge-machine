@@ -81,9 +81,30 @@ def match_quotes(universe, quotes, day_slack=1):
     contests on the first run. Pairs are therefore assigned greedily by match strength
     and then date distance, and each quote is consumed at most once.
     """
+    out, used_rows, used_quotes = {}, set(), set()
+    # A forecast on a yes/no market names the market itself. There are no team names to
+    # compare — "83° or above" against "No" means nothing — so those quotes are matched
+    # by id and never go near the name matcher.
+    index = {r["market_id"]: i for i, r in enumerate(universe)}
+    for j, q in enumerate(quotes):
+        mid = q.get("market_id")
+        if not mid:
+            continue
+        used_quotes.add(j)
+        i = index.get(mid)
+        if i is None or i in used_rows:
+            continue
+        used_rows.add(i)
+        out[mid] = (("prob", q["prob_a"]) if q.get("prob_a") is not None
+                    else ("pick", q["pick"]))
+
     cands = []
     for i, row in enumerate(universe):
+        if i in used_rows:
+            continue
         for j, q in enumerate(quotes):
+            if j in used_quotes:
+                continue
             score, flipped = S.pair_match(row["side_a"], row["side_b"],
                                           q["a"], q["b"], sport=row["sport"])
             if score <= 0:
@@ -114,7 +135,6 @@ def match_quotes(universe, quotes, day_slack=1):
             cands.append((-score, dist, i, j, flipped))
 
     cands.sort()
-    used_rows, used_quotes, out = set(), set(), {}
     for _neg, _dist, i, j, flipped in cands:
         if i in used_rows or j in used_quotes:
             continue
@@ -164,6 +184,26 @@ def collect(verbose=True):
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
+        if sport in S.KALSHI_BINARY:
+            kstats = {}
+            try:
+                rows = S.fetch_kalshi_binary(sport, stats=kstats)
+            except Exception as e:
+                print(f"  ! kalshi/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
+                rows = []
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["kalshi_venue"] = len(rows)
+            if verbose:
+                print(f"  {S.SPORTS[sport]:<13} kalshi yes/no: {kstats.get('listed', 0)} "
+                      f"near-dated, {len(rows)} taken ({time.time() - t0:.0f}s)")
+            continue
+        if sport in ("politics", "elections"):
+            # Tracked as domains, but not fetched: Kalshi lists thousands of political
+            # questions and almost none resolve inside this board's horizon, so there is
+            # nothing here that could settle and be scored.
+            universe[sport] = []
+            continue
+
         stats = {}
         try:
             pm = [] if sport == "soccer" else S.fetch_polymarket(sport, stats=stats)
@@ -369,7 +409,9 @@ def grade(d, verbose=True):
 
         mid = q["market_id"]
         if mid not in resolved:
-            resolved[mid] = (S.resolve_kalshi(mid) if q.get("venue") == "kalshi"
+            venue = q.get("venue")
+            resolved[mid] = (S.resolve_kalshi(mid) if venue == "kalshi"
+                             else S.resolve_kalshi_market(mid) if venue == "kalshi_binary"
                              else S.resolve_polymarket(mid))
         res = resolved[mid]
         if res is None:

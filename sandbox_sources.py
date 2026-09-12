@@ -26,6 +26,7 @@ import unicodedata
 import subprocess
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
@@ -34,6 +35,8 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 
 # The six sports the board tracks. Key is internal; label is what the page prints.
 SPORTS = {
+    # Sports first, then the non-sport markets. The key is used throughout as the
+    # domain id; "sport" in the code means "one of these", nothing narrower.
     "soccer":       "Soccer",
     "tennis":       "Tennis",
     "table_tennis": "Table Tennis",
@@ -41,6 +44,13 @@ SPORTS = {
     "nfl":          "NFL",
     "cricket":      "Cricket",
     "mlb":          "MLB",
+    "climate":      "Climate",
+    "crypto":       "Crypto",
+    "economics":    "Economics",
+    "commodities":  "Commodities",
+    "finance":      "Finance",
+    "politics":     "Politics",
+    "elections":    "Elections",
 }
 
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
@@ -102,6 +112,19 @@ SOURCES = {
              "niche cricket Polymarket lists. Cloudflare-protected, so it comes through "
              "the headless browser. Tips carry no date, so each is resolved to the "
              "soonest fixture between those two sides."),
+    "nws": dict(
+        label="National Weather Service", kind="Forecaster", connected=True,
+        site="weather.gov", sports=["climate"],
+        note="The public forecast for each city, against Kalshi's temperature buckets for "
+             "the same city and day. The one non-sport domain with a genuinely "
+             "independent forecaster — and it settles overnight, so it reaches a readable "
+             "sample in a week rather than months."),
+    "spot": dict(
+        label="Spot price (no-change baseline)", kind="Baseline", connected=True,
+        site="coingecko.com", sports=["crypto"],
+        note="Today's price carried forward, backing whichever bucket it already sits in. "
+             "Not really a forecast — the null hypothesis. A crypto source that cannot "
+             "beat assuming nothing changes is not worth connecting."),
     "sportsgambler": dict(
         label="SportsGambler", kind="Tipster site", connected=True,
         site="sportsgambler.com", sports=["soccer"],
@@ -1649,6 +1672,286 @@ def fetch_soccerpredictions(sport):
     return _soccerpredictions_cache
 
 
+# ---------------------------------------------------------------------------
+# Non-sport markets: one row per yes/no contract
+# ---------------------------------------------------------------------------
+#
+# A sports contest has two named sides. A Kalshi question does not — it is a single
+# yes/no contract ("Will the maximum temperature be 77-78° on Sep 12?"), so each market
+# becomes its own contest: side A is the outcome happening, side B is it not happening,
+# each priced at its own ask.
+#
+# Series are chosen by Kalshi's own `frequency` field. Daily ones are what make this
+# worth tracking: they settle overnight, so a forecaster reaches a readable sample in a
+# week where the soccer tipsters need months. Politics and Elections are deliberately
+# absent here — Kalshi lists 2,335 political series and 4 of them are daily; the rest
+# are one-off questions resolving months out, and nothing would settle inside a horizon
+# this board can measure.
+# Kalshi city series -> the point the NWS forecast is taken from (the airport the market
+# settles on, not the city centre: Kalshi settles NY on Central Park, LAX on the airport).
+NWS_CITIES = {
+    "KXHIGHNY": (40.7790, -73.9692), "KXHIGHCHI": (41.7860, -87.7524),
+    "KXHIGHMIA": (25.7884, -80.3167), "KXHIGHAUS": (30.1830, -97.6800),
+    "KXHIGHDEN": (39.8466, -104.6562), "KXHIGHLAX": (33.9382, -118.3866),
+    "KXHIGHPHIL": (39.8683, -75.2311),
+}
+
+# Kalshi daily coin series -> CoinGecko id.
+COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
+         "KXLINKD": "chainlink", "KXXRP": "ripple", "KXXLM": "stellar",
+         "KXZECD": "zcash", "KXNEAR": "near", "KXHYPED": "hyperliquid"}
+
+# Where a forecaster exists, the series are named explicitly rather than taken from the
+# category. Selecting a whole category and then capping by soonest expiry starved the
+# markets that can actually be scored: the climate cap filled with overnight-low markets
+# and the crypto cap with Shiba Inu strikes, and both forecasters produced nothing. The
+# tracked-only domains still take a category slice, since nothing prices them yet.
+KALSHI_BINARY = {
+    "climate":     dict(series=list(NWS_CITIES), lead_h=12, cap=80),
+    "crypto":      dict(series=list(COINS), lead_h=2, cap=60),
+    "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
+    "commodities": dict(category="Commodities", freq=("daily",), lead_h=6, cap=30),
+    "finance":     dict(category="Financials",  freq=("daily",), lead_h=6, cap=30),
+}
+
+_series_cache = {}
+
+
+def kalshi_series(category, freqs):
+    """Tickers in one Kalshi category at the given frequencies."""
+    key = (category, freqs)
+    if key in _series_cache:
+        return _series_cache[key]
+    try:
+        ser = _get("https://api.elections.kalshi.com/trade-api/v2/series?category="
+                   + urllib.parse.quote(category), tries=2, timeout=30).get("series") or []
+    except RuntimeError:
+        ser = []
+    _series_cache[key] = [s["ticker"] for s in ser if str(s.get("frequency")) in freqs]
+    return _series_cache[key]
+
+
+def market_range(m):
+    """(low, high) the market pays out on; None on either side means unbounded."""
+    lo, hi = _num(m.get("floor_strike")), _num(m.get("cap_strike"))
+    kind = str(m.get("strike_type"))
+    if kind == "greater":
+        return (lo, None)
+    if kind == "less":
+        return (None, hi)
+    if kind == "between":
+        return (lo, hi)
+    return (None, None) if lo is None and hi is None else (lo, hi)
+
+
+def in_range(value, m):
+    """Would a reading of `value` settle this market YES?
+
+    The boundaries are not uniform, and reading them wrongly is how a forecast silently
+    matches nothing. Kalshi's own wording is the spec: a "between" market titled
+    "77° to 78°" INCLUDES 77 and 78; a "greater" market with floor 82 is titled "83° or
+    above", so 82 does not count; a "less" market with cap 75 is "74° or below", so 75
+    does not count. Treating every floor as exclusive dropped New York, Chicago and LA
+    on the days their forecast landed exactly on a bucket edge.
+    """
+    kind = str(m.get("strike_type"))
+    lo, hi = _num(m.get("floor_strike")), _num(m.get("cap_strike"))
+    if kind == "greater":
+        return lo is not None and value > lo
+    if kind == "less":
+        return hi is not None and value < hi
+    if kind == "between":
+        return (lo is None or value >= lo) and (hi is None or value <= hi)
+    return None
+
+
+def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
+    """Every near-dated yes/no market in one domain, as universe rows.
+
+    `lead_h` is an integrity rule, not tuning. A daily high-temperature market that
+    expires in two hours has already effectively happened — the afternoon peak is in —
+    and a forecast logged against it would be scored on something already known. Each
+    domain therefore only accepts markets with real uncertainty still left in them.
+    """
+    cfg = KALSHI_BINARY.get(domain)
+    if not cfg:
+        return []
+    now = datetime.now(timezone.utc)
+    horizon = now + timedelta(days=horizon_days)
+    earliest = now + timedelta(hours=cfg["lead_h"])
+    series = cfg.get("series") or kalshi_series(cfg["category"], cfg["freq"])
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        fetched = dict(zip(series, pool.map(_kalshi_open, series)))
+
+    rows, listed = [], 0
+    for s in series:
+        for m in fetched.get(s) or []:
+            try:
+                exp = datetime.fromisoformat(
+                    str(m.get("expected_expiration_time")).replace("Z", "+00:00"))
+            except (ValueError, TypeError):
+                continue
+            if not (earliest <= exp <= horizon):
+                continue
+            listed += 1
+            ya, yb = _num(m.get("yes_ask_dollars")), _num(m.get("yes_bid_dollars"))
+            na, nb = _num(m.get("no_ask_dollars")), _num(m.get("no_bid_dollars"))
+            if ya is None or na is None:
+                continue
+            tight = lambda bid, ask: bool(bid is not None and ask is not None and bid > 0
+                                          and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD)
+            tradeable = {"a": tight(yb, ya), "b": tight(nb, na)}
+            rows.append(dict(
+                sport=domain, venue="kalshi_binary", market_id=m["ticker"],
+                label=str(m.get("title") or m["ticker"])[:90],
+                side_a=str(m.get("yes_sub_title") or "Yes"), side_b="No",
+                price_a=ya, price_b=na, price_draw=None,
+                tradeable=tradeable, untraded=not any(tradeable.values()),
+                start=exp.isoformat(), date=exp.strftime("%Y-%m-%d"), volume=0.0,
+                series=s, market=m,
+                url=f"https://kalshi.com/markets/{s.lower()}"))
+
+    rows.sort(key=lambda r: r["start"])
+    # Cap whole ladders, never part of one. A yes/no series is a set of mutually
+    # exclusive buckets, and slicing it mid-ladder can remove exactly the bucket a
+    # forecast lands in — which silently dropped four of the seven weather cities while
+    # looking like the forecaster simply had no opinion.
+    groups, order = {}, []
+    for r in rows:
+        key = (r["series"], r["date"])
+        if key not in groups:
+            groups[key] = []
+            order.append(key)
+        groups[key].append(r)
+    kept = []
+    for key in order:
+        if len(kept) >= cfg["cap"]:
+            break
+        kept += groups[key]
+
+    if stats is not None:
+        stats["listed"] = listed
+        stats["priced"] = sum(1 for r in kept if not r["untraded"])
+        stats["ladders"] = len(set((r["series"], r["date"]) for r in kept))
+    return kept
+
+
+def resolve_kalshi_market(ticker):
+    """Settle one yes/no market: 'a' (YES), 'b' (NO), 'void', or None while open."""
+    try:
+        d = _get(f"https://api.elections.kalshi.com/trade-api/v2/markets/{ticker}",
+                 tries=2, timeout=20)
+    except RuntimeError:
+        return None
+    m = d.get("market") if isinstance(d, dict) else None
+    if not m:
+        return None
+    if str(m.get("status")).lower() not in KALSHI_FINAL:
+        return None
+    result = str(m.get("result")).lower()
+    return {"yes": "a", "no": "b"}.get(result, "void")
+
+
+# ---------------------------------------------------------------------------
+# The National Weather Service — a real forecaster, on daily markets
+# ---------------------------------------------------------------------------
+#
+# The one non-sport domain with a genuine independent forecaster. NWS publishes a daily
+# high for each city; Kalshi prices mutually exclusive buckets for the same city and day.
+# The forecast therefore picks exactly one bucket, at a real price, and it settles the
+# next morning.
+NWS_UA = "sandbox-tracker (github.com/aliu2298/edge-machine)"
+_nws_cache = {}
+
+
+def nws_highs(lat, lon):
+    """{date: forecast high F} for one point, from the NWS daytime periods."""
+    key = (round(lat, 3), round(lon, 3))
+    if key in _nws_cache:
+        return _nws_cache[key]
+    out = {}
+    try:
+        point = _get(f"https://api.weather.gov/points/{lat},{lon}", tries=2, timeout=20)
+        url = point["properties"]["forecast"]
+        for per in _get(url, tries=2, timeout=20)["properties"]["periods"]:
+            if per.get("isDaytime") and per.get("temperatureUnit") == "F":
+                out[str(per["startTime"])[:10]] = float(per["temperature"])
+    except (RuntimeError, KeyError, TypeError, ValueError) as e:
+        print(f"  ! nws {lat},{lon}: {type(e).__name__}")
+    _nws_cache[key] = out
+    return out
+
+
+def _most_uncertain(rows):
+    """Of several markets a forecast settles YES, the one still genuinely in doubt.
+
+    Ladder series carry a dozen strikes at once and a forecast settles most of them
+    trivially — spot at $102 makes "$58 or above" a certainty priced at 1.00, which is
+    both untradeable and says nothing. The market nearest a coin flip is the one the
+    forecast is actually being tested on.
+    """
+    return min(rows, key=lambda r: (not (r.get("tradeable") or {}).get("a", True),
+                                    abs((r.get("price_a") or 0.5) - 0.5)))
+
+
+def fetch_nws(domain):
+    """One pick per city per day: the bucket the NWS forecast lands in."""
+    if domain != "climate":
+        return []
+    groups = {}
+    for r in (UNIVERSE or {}).get("climate") or []:
+        series = r.get("series")
+        if series not in NWS_CITIES:
+            continue
+        temp = nws_highs(*NWS_CITIES[series]).get(kalshi_date(r["market_id"]))
+        if temp is None or not in_range(temp, r["market"]):
+            continue
+        # One pick per city per day: betting NO on the other seven buckets would be seven
+        # near-certainties at prices the band rejects anyway.
+        groups.setdefault((series, r["date"], round(temp)), []).append(r)
+    return [dict(market_id=_most_uncertain(rs)["market_id"], pick="a",
+                 detail=f"NWS forecast {t}F")
+            for (_s, _d, t), rs in groups.items()]
+
+
+# ---------------------------------------------------------------------------
+# Spot price — the "nothing changes" baseline
+# ---------------------------------------------------------------------------
+#
+# Not a forecast so much as the null hypothesis: today's price, carried forward. If a
+# crypto market cannot be beaten by assuming no change, nothing subtler is worth adding.
+_spot_cache = {}
+
+
+def spot_price(coin):
+    if coin in _spot_cache:
+        return _spot_cache[coin]
+    try:
+        d = _get("https://api.coingecko.com/api/v3/simple/price?ids="
+                 f"{coin}&vs_currencies=usd", tries=2, timeout=20)
+        _spot_cache[coin] = float(d[coin]["usd"])
+    except (RuntimeError, KeyError, TypeError, ValueError):
+        _spot_cache[coin] = None
+    return _spot_cache[coin]
+
+
+def fetch_spot(domain):
+    """Back the bucket today's spot price already sits in."""
+    if domain != "crypto":
+        return []
+    groups = {}
+    for r in (UNIVERSE or {}).get("crypto") or []:
+        coin = COINS.get(r.get("series"))
+        price = spot_price(coin) if coin else None
+        if price is None or not in_range(price, r["market"]):
+            continue
+        groups.setdefault((r["series"], r["date"], round(price, 2)), []).append(r)
+    return [dict(market_id=_most_uncertain(rs)["market_id"], pick="a",
+                 detail=f"spot ${p:,.2f}")
+            for (_s, _d, p), rs in groups.items()]
+
+
 CHALLENGERS = {
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
@@ -1658,4 +1961,6 @@ CHALLENGERS = {
     "oddspedia": fetch_oddspedia,
     "sportsgambler": fetch_sportsgambler,
     "soccerpredictions": fetch_soccerpredictions,
+    "nws": fetch_nws,
+    "spot": fetch_spot,
 }

@@ -818,6 +818,96 @@ finally:
     S.fetch_polymarket, S.fetch_kalshi_venue = real_pm_fetch, real_kv_fetch
 
 # ---------------------------------------------------------------------------
+print("\nyes/no markets (climate, crypto and the rest)")
+# ---------------------------------------------------------------------------
+def bm(**kw):
+    m = dict(ticker="KXHIGHNY-26SEP12-B77.5", strike_type="between", floor_strike=77,
+             cap_strike=78, yes_sub_title="77° to 78°", title="Will the maximum temperature be 77-78°?")
+    m.update(kw)
+    return m
+
+eq(S.market_range(bm()), (77, 78), "a between market pays out inside its two strikes")
+eq(S.market_range(bm(strike_type="greater", floor_strike=82, cap_strike=None)), (82, None),
+   "a greater market is unbounded above")
+eq(S.market_range(bm(strike_type="less", floor_strike=None, cap_strike=75)), (None, 75),
+   "a less market is unbounded below")
+ok(S.in_range(77, bm()) and S.in_range(78, bm()),
+   "a bucket titled \"77° to 78°\" includes BOTH 77 and 78")
+ok(not S.in_range(76, bm()) and not S.in_range(79, bm()),
+   "and nothing outside it")
+ok(not S.in_range(82, bm(strike_type="greater", floor_strike=82, cap_strike=None)),
+   "a >82 market is titled \"83° or above\", so 82 does not settle it")
+ok(not S.in_range(75, bm(strike_type="less", floor_strike=None, cap_strike=75)),
+   "a <75 market is titled \"74° or below\", so 75 does not settle it")
+ok(S.in_range(83, bm(strike_type="greater", floor_strike=82, cap_strike=None)),
+   "83 settles a >82 market yes")
+ok(S.in_range(74, bm(strike_type="less", floor_strike=None, cap_strike=75)),
+   "74 settles a <75 market yes")
+
+# The NWS forecast must pick exactly ONE bucket for a city and day.
+rows = [dict(sport="climate", venue="kalshi_binary", market_id=f"KXHIGHNY-26SEP12-{t}",
+             series="KXHIGHNY", date="2026-09-12", market=m, price_a=p,
+             tradeable={"a": True, "b": True})
+        for t, m, p in (("B75.5", bm(floor_strike=75, cap_strike=76), 0.05),
+                        ("B77.5", bm(floor_strike=77, cap_strike=78), 0.34),
+                        ("B79.5", bm(floor_strike=79, cap_strike=80), 0.46),
+                        ("T82", bm(strike_type="greater", floor_strike=82, cap_strike=None), 0.02))]
+real_uni, real_nws = S.UNIVERSE, S.nws_highs
+S.UNIVERSE = {"climate": rows}
+S.nws_highs = lambda lat, lon: {"2026-09-12": 78.0}
+try:
+    picks = S.fetch_nws("climate")
+finally:
+    S.UNIVERSE, S.nws_highs = real_uni, real_nws
+eq(len(picks), 1, "one forecast backs one bucket, never several")
+eq(picks[0]["market_id"], "KXHIGHNY-26SEP12-B77.5", "and it is the bucket holding 78F")
+eq(picks[0]["pick"], "a", "backed as YES on that bucket")
+
+# A ladder settles many strikes at once; back the one still in doubt, not a certainty.
+ladder = [dict(sport="crypto", venue="kalshi_binary", market_id=f"KXSOLD-26SEP12-T{k}",
+               series="KXSOLD", date="2026-09-12", price_a=p, tradeable={"a": tr, "b": True},
+               market=bm(strike_type="greater", floor_strike=k, cap_strike=None))
+          for k, p, tr in ((58, 1.00, False), (101, 0.68, True), (95, 0.93, True))]
+real_uni2, real_spot = S.UNIVERSE, S.spot_price
+S.UNIVERSE = {"crypto": ladder}
+S.spot_price = lambda coin: 101.62
+try:
+    sp = S.fetch_spot("crypto")
+finally:
+    S.UNIVERSE, S.spot_price = real_uni2, real_spot
+eq(len(sp), 1, "one spot reading backs one strike")
+eq(sp[0]["market_id"], "KXSOLD-26SEP12-T101",
+   "the strike nearest a coin flip, not the $58 certainty priced at 1.00")
+
+# A quote that names its market is matched by id — there are no names to compare.
+uni = [dict(market_id="KXHIGHNY-26SEP12-B77.5", sport="climate", side_a="77° to 78°",
+            side_b="No", date="2026-09-12"),
+       dict(market_id="KXHIGHNY-26SEP12-B79.5", sport="climate", side_a="79° to 80°",
+            side_b="No", date="2026-09-12")]
+m = T.match_quotes(uni, [dict(market_id="KXHIGHNY-26SEP12-B77.5", pick="a")])
+eq(m, {"KXHIGHNY-26SEP12-B77.5": ("pick", "a")}, "a market-id quote lands on that market only")
+eq(T.match_quotes(uni, [dict(market_id="KXHIGHNY-26SEP99-XX", pick="a")]), {},
+   "a quote naming a market this universe does not hold matches nothing")
+
+# Settlement reads the market's own yes/no result.
+real_get = S._get
+S._get = lambda url, **kw: {"market": {"status": "finalized", "result": "yes"}}
+try:
+    eq(S.resolve_kalshi_market("KXHIGHNY-26SEP10-B77.5"), "a", "a YES result settles side A")
+    S._get = lambda url, **kw: {"market": {"status": "finalized", "result": "no"}}
+    eq(S.resolve_kalshi_market("KXHIGHNY-26SEP10-B77.5"), "b", "a NO result settles side B")
+    S._get = lambda url, **kw: {"market": {"status": "active", "result": ""}}
+    eq(S.resolve_kalshi_market("KXHIGHNY-26SEP10-B77.5"), None, "an open market is not settled")
+finally:
+    S._get = real_get
+
+# Lead time is an integrity rule: a market about to expire has already happened.
+eq(S.KALSHI_BINARY["climate"]["lead_h"], 12,
+   "a daily temperature market is only taken with half a day of uncertainty left")
+ok(all(cfg["lead_h"] >= 2 for cfg in S.KALSHI_BINARY.values()),
+   "no domain logs a forecast against a market that is about to expire")
+
+# ---------------------------------------------------------------------------
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
