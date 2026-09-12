@@ -403,9 +403,9 @@ pay". Sandbox asks **"does anyone's signal pay"** — it logs what published for
 across 14 sports, stamps each one with the price that existed at that moment, and settles
 it on the real result.
 
-Twelve sources, staked two different ways because they are followed two different ways:
+Thirteen sources, staked two different ways because they are followed two different ways:
 
-* **Tipsters name a side** (Covers, Oddspedia, Scores24, SoccerPredictions.ai,
+* **Tipsters name a side** (Covers, OLBG, Oddspedia, Scores24, SoccerPredictions.ai,
   SportsGambler). That side is backed at the going price, every time — high turnover, no
   Brier score, and a real ROI, because that is how a tipster is actually followed.
 * **Models, books and exchanges state a probability** (ESPN FPI, DraftKings, Pinnacle,
@@ -456,6 +456,15 @@ in both halves of its record. Below 30 settled bets a source is **no read**; rea
 ahead of the price but short of a gate is **watch**; readable and not ahead is **failing**.
 SoccerPredictions.ai's first weekend (+24.5%) sits exactly at back-every-draw on the same
 contests (+24.9%), which is why a hot ROI alone earns nothing.
+
+**OLBG** is the boxing tipster: a community whose members post a Win Fight tip per bout, one
+listing page per run. A fight is a call only when a fighter is the most popular selection with
+at least three tips and a strict majority of them. Its tipsters compete on profit and often
+pile onto the draw at 15/1 (10 of 14 tips on Magsayo v Cortes); the venue boxing markets are
+two-way, so a draw-led fight is no call. The page also lists UFC bouts, which cannot match a
+boxing contest and fall away. Boxing names are transliterated differently by every feed
+("Mikaelian" / "Mikaeljan"), so boxing alone accepts a long word spelled almost identically as
+the same name — both fighters must still match.
 
 **Pinnacle** is read through The Odds API (`ODDS_API_KEY`, a repository secret) for boxing,
 cricket and tennis — the three sports with no dependable tipster — de-vigged to a fair

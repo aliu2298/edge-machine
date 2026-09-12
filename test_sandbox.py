@@ -1322,6 +1322,71 @@ eq(_crit["baseline"][2], False,
 ok("draw" in _crit["baseline"][3], "and the page names the rule it failed to beat")
 ok(T.APPROVAL["min_bets"] > T.READ_FLOOR, "the stamp asks for more than the read floor")
 
+# ---------------------------------------------------------------------------
+print("\nOLBG boxing consensus")
+# ---------------------------------------------------------------------------
+def _olbg_row(fight, when, choice, n, total, market="Win Fight"):
+    return (f'<li><div class="grd tip content-visibility-auto"><div class="rw ev">'
+            f'<a itemprop="url" href="https://www.olbg.com/betting-tips/Boxing/All_Boxing/x/16">'
+            f'<h5 class="truncate" itemprop="name">{fight}</h5></a>'
+            f'<time itemprop="startDate" datetime="{when}"> Today 01:15</time></div>'
+            f'<div class="rw sel"><a href="#"><h4 class=" my-3 text-lg">{choice}</h4></a> '
+            f'<p class="truncate text-sm">{market}</p></div>'
+            f'<div class="rw odds"><span data-decimal="1.50"></span></div>'
+            f'<div class="rw tips"><b class="text-xs truncate">{n}/{total} Win Tips</b></div></div></li>')
+
+
+_page = "<html>" + "".join([
+    _olbg_row("Jai Opetaia v Norair Mikaeljan", "2026-09-13T02:00:00.000Z", "Jai Opetaia", 9, 14),
+    _olbg_row("DaMazzion Vanhouter v Raphael Akpejiori", "2026-09-13T01:15:00.000Z", "Raphael Akpejiori", 9, 17),
+    _olbg_row("Ryan Garcia v Conor Benn", "2026-09-13T03:30:00.000Z", "Ryan Garcia", 10, 25),
+    _olbg_row("Mark Magsayo v Andres Cortes", "2026-09-13T00:15:00.000Z", "Draw", 10, 14),
+    _olbg_row("Takuma Inoue v Tenshin Nasukawa", "2026-09-27T09:00:00.000Z", "Takuma Inoue", 2, 2),
+    _olbg_row("Gable Steveson v Sean Sharaf", "2026-09-20T02:30:00.000Z", "Gable Steveson", 3, 3),
+    _olbg_row("A Fighter v B Fighter", "2026-09-20T02:30:00.000Z", "A Fighter", 5, 6, market="Method of Victory"),
+]) + "</html>"
+_calls = {c["a"]: c for c in S.parse_olbg(_page)}
+eq(sorted(_calls), ["DaMazzion Vanhouter", "Gable Steveson", "Jai Opetaia"],
+   "only fights where a fighter holds a strict majority of 3+ Win Fight tips are calls")
+eq(_calls["Jai Opetaia"]["pick"], "a", "9/14 on the first-named fighter is side a")
+eq(_calls["DaMazzion Vanhouter"]["pick"], "b", "a majority on the second-named fighter is side b")
+eq(_calls["Jai Opetaia"]["date"], "2026-09-13", "dated from the page's own start time")
+ok("Garcia" not in str(_calls), "10 of 25 is a plurality, not a consensus: no call")
+ok("Magsayo" not in str(_calls), "a fight whose top tip is the draw is no call on a two-way market")
+ok("Inoue" not in str(_calls), "two tips are not a consensus")
+ok("A Fighter" not in str(_calls), "only the Win Fight market is read")
+eq(S.parse_olbg("<html>nothing here</html>"), [], "a page with no rows parses to nothing")
+
+_saved_html = S._get_html
+try:
+    S._olbg_cache.clear(); S.FEED_STATUS.clear()
+    S._get_html = lambda url, **kw: "<html><title>Just a moment...</title>challenge-platform</html>"
+    eq(S.fetch_olbg("boxing"), [], "a Cloudflare interstitial yields no calls")
+    eq(S.FEED_STATUS.get("olbg"), "down: Cloudflare challenge", "and is reported as a wall, not as silence")
+
+    S._olbg_cache.clear(); S.FEED_STATUS.clear()
+    _hits = []
+    S._get_html = lambda url, **kw: (_hits.append(url), _page)[1]
+    eq(len(S.fetch_olbg("boxing")), 3, "the live path returns the parsed calls")
+    S.fetch_olbg("boxing")
+    eq(len(_hits), 1, "one request per run, however often it is asked")
+    eq(S.FEED_STATUS.get("olbg"), "ok", "a readable page reports ok")
+    eq(S.fetch_olbg("tennis"), [], "boxing only")
+finally:
+    S._get_html = _saved_html
+    S._olbg_cache.clear(); S.FEED_STATUS.clear()
+
+m_ = T.match_quotes(
+    [dict(market_id="kb1", sport="boxing", side_a="Opetaia J.", side_b="Mikaelian N.", date="2026-09-13")],
+    [dict(a="Jai Opetaia", b="Norair Mikaeljan", pick="a", date="2026-09-13")])
+eq(m_.get("kb1"), ("pick", "a"), "OLBG's 'Mikaeljan' matches the venue's 'Mikaelian'")
+eq(S.pair_match("Garcia", "Benn", "Sean Garcia", "Abraham Morales", sport="boxing")[0], 0.0,
+   "one shared surname cannot match a different bout")
+eq(S.pair_match("Molina", "Rubio", "Mark Magsayo", "Andres Cortes", sport="boxing")[0], 0.0,
+   "unrelated fighters never match")
+eq(S.pair_match("Mikaelian", "Opetaia", "Mikaeljan", "Opetaia", sport="tennis")[1], False,
+   "the near-spelling rule is boxing only")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

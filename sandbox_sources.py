@@ -16,6 +16,7 @@ A source that is silently missing looks identical to a source with no edge, and 
 point of the board is to tell those two apart.
 """
 
+import difflib
 import json
 import concurrent.futures
 import functools
@@ -135,6 +136,15 @@ SOURCES = {
              "Its tennis, table-tennis, cricket and boxing pages are not scored: they "
              "restate the bookmaker line as prose, so following them only measures the "
              "favourite."),
+    "olbg": dict(
+        label="OLBG community tips", kind="Tipster site", connected=True,
+        site="olbg.com", sports=["boxing"],
+        note="A tipster community whose members post a Win Fight tip per bout. Reduced to "
+             "one call per fight: a fighter must be the most popular selection, with at "
+             "least three tips and a strict majority of them. Its tipsters compete on "
+             "profit and often pile onto the draw at long odds; a fight whose top tip is "
+             "the draw is no call, because the venue boxing markets are two-way. The only "
+             "connected tipster for boxing."),
     "soccerpredictions": dict(
         label="SoccerPredictions.ai", kind="Tipster site", connected=True,
         site="soccerpredictions.ai", sports=["soccer"],
@@ -514,7 +524,18 @@ def _score(a, b, sport):
     ca, cb = canon(a, sport), canon(b, sport)
     if ca and cb:
         return 1.0 if ca == cb else 0.0
-    return sim(a, b)
+    s = sim(a, b)
+    if s == 0 and sport == "boxing":
+        # Fighters' names are transliterated, and every feed does it differently: Kalshi
+        # and Polymarket write "Mikaelian", OLBG "Mikaeljan", for the same Armenian
+        # fighter. A long word spelled almost identically is the same name. Scored below
+        # an exact hit, and pair_match still needs BOTH fighters to clear the floor, so a
+        # near-miss on one side cannot drag a wrong bout along with it.
+        if any(len(x) >= 5 and len(y) >= 5
+               and difflib.SequenceMatcher(None, x, y).ratio() >= 0.85
+               for x in tokens(a) for y in tokens(b)):
+            return 0.75
+    return s
 
 
 def pair_match(a1, a2, b1, b2, sport=None, floor=0.5):
@@ -2004,6 +2025,85 @@ def fetch_spot(domain):
 
 
 # ---------------------------------------------------------------------------
+# OLBG community tips — boxing (plain HTTP)
+# ---------------------------------------------------------------------------
+#
+# OLBG runs a tipster community: named accounts post a tip per fight, and the boxing
+# listing prints each fight's MOST POPULAR "Win Fight" selection with its share of the
+# tips ("9/14 Win Tips"). One page covers every upcoming card, so a run costs one request;
+# robots.txt allows it for any user agent.
+#
+# Three things about this community decide the rule, all seen on the live page on
+# 2026-09-12:
+#   * its tipsters compete on PROFIT, so the most popular selection is often the draw at
+#     15/1 or 17/1 (10 of 14 tips on Magsayo v Cortes). The venue boxing markets are
+#     two-way and cannot back a draw, so a fight whose top tip is the draw is no call —
+#     reading its second choice would put words in the community's mouth.
+#   * a thin fight carries one or two tips. One account is not a consensus.
+#   * the page lists UFC and other MMA bouts under the same boxing path. They cannot match
+#     a boxing contest in the venue universe, so they fall away at matching.
+# So a fight is a call only when a FIGHTER is the most popular selection, with at least
+# OLBG_MIN_TIPS tips and a strict majority of them. A plurality (10 of 25 on Garcia v Benn,
+# the rest split between Benn and the draw) is not a majority and is no call.
+OLBG_URLS = {"boxing": "https://www.olbg.com/betting-tips/Boxing/16"}
+OLBG_MIN_TIPS = 3
+_olbg_cache = {}
+
+
+def parse_olbg(page):
+    """OLBG listing page -> [{a, b, pick, date, detail}] for clear fighter consensus only."""
+    out = []
+    for block in re.split(r'<div class="grd tip', page)[1:]:
+        name = re.search(r'itemprop="name">([^<]+)<', block)
+        when = re.search(r'itemprop="startDate" datetime="([^"]+)"', block)
+        sel = re.search(r'<div class="rw sel">.*?<h4[^>]*>([^<]+)</h4>\s*.*?'
+                        r'<p class="truncate text-sm">([^<]+)</p>', block, re.S)
+        tips = re.search(r'>(\d+)/(\d+) Win Tips<', block)
+        if not (name and when and sel and tips):
+            continue
+        sides = re.split(r"\s+v\s+", html.unescape(name.group(1)).strip(), maxsplit=1)
+        if len(sides) != 2:
+            continue
+        a, b = (x.strip() for x in sides)
+        choice, market = html.unescape(sel.group(1)).strip(), sel.group(2).strip()
+        n, total = int(tips.group(1)), int(tips.group(2))
+        if market.lower() != "win fight" or total < OLBG_MIN_TIPS or n * 2 <= total:
+            continue
+        if choice.lower() in ("draw", "draw or technical draw"):
+            continue
+        if choice == a or (choice != b and sim(choice, a) > sim(choice, b)):
+            pick = "a"
+        else:
+            pick = "b"
+        out.append(dict(a=a, b=b, pick=pick, date=day(when.group(1)),
+                        detail=f"{choice} {n}/{total} tips"))
+    return out
+
+
+def fetch_olbg(sport):
+    if sport not in OLBG_URLS:
+        return []
+    if sport not in _olbg_cache:
+        try:
+            page = _get_html(OLBG_URLS[sport], timeout=25)
+        except RuntimeError as e:
+            print(f"  ! olbg/{sport}: {str(e)[:80]}")
+            _mark("olbg", False, "page unreachable")
+            _olbg_cache[sport] = []
+            return []
+        # A Cloudflare interstitial answers 200 with no rows. Say so, rather than report
+        # "no consensus" for a page that was never actually read.
+        if 'class="grd tip' not in page:
+            wall = re.search(r"(?i)just a moment|challenge-platform|cf-chl", page)
+            _mark("olbg", False, "Cloudflare challenge" if wall else "no tip rows on the page")
+            _olbg_cache[sport] = []
+            return []
+        _mark("olbg", True)
+        _olbg_cache[sport] = parse_olbg(page)
+    return _olbg_cache[sport]
+
+
+# ---------------------------------------------------------------------------
 # Pinnacle, through The Odds API
 # ---------------------------------------------------------------------------
 #
@@ -2155,6 +2255,7 @@ def fetch_pinnacle(sport):
 
 CHALLENGERS = {
     "pinnacle": fetch_pinnacle,
+    "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
     "draftkings": fetch_draftkings,
