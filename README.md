@@ -12,18 +12,30 @@ whether an idea actually holds up.
 | [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Every tracked team's current runs, and the sides on the longest ones |
 | [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — leads and on-fire runs — against what those teams do anyway |
 | [Today](https://aliu2298.github.io/edge-machine/today.html) | Every tracked fixture kicking off today, with both sides' current runs |
+| [Sandbox](https://aliu2298.github.io/edge-machine/sandbox.html) | Which forecasters actually make money, tracked per sport at real prices |
 
 ## Architecture
 
 ```mermaid
 flowchart TB
-    subgraph CI["GitHub Actions — daily cron"]
+    subgraph CI["refresh-boards.yml — every 6h (17 */6)"]
         direction TB
-        HC["health.py<br/>guardrails (warn-only)"]
-        SF["streaks_fetch.py<br/>12 leagues → fixtures"]
-        SB["streaks_build.py<br/>runs → confluences · log · grade"]
-        RB["record_build.py<br/>lift vs the teams' own rates"]
-        HC --> SF --> SB --> RB
+        TS["tests · health · coverage<br/>warn-only gates"]
+        SF["streaks_fetch.py<br/>12 lead leagues + 7 form feeds"]
+        SB["streaks_build.py<br/>runs → leads · log · grade"]
+        BT["book_track.py<br/>price every fixture inside 24h"]
+        FT["fire_track.py<br/>long runs vs a shuffled null"]
+        RB["record_build.py<br/>vs the teams' own rates AND the price"]
+        TD["today_build.py<br/>today's fixtures (control group)"]
+        TS --> SF --> SB --> BT --> FT --> RB --> TD
+    end
+
+    subgraph SX["sandbox-tracker.yml — every 6h (37 */6)"]
+        direction TB
+        SS["sandbox_sources.py<br/>11 forecasters + venues"]
+        ST["sandbox_track.py<br/>log at price · settle · ROI"]
+        SBD["sandbox_build.py<br/>per-source, per-sport board"]
+        SS --> ST --> SBD
     end
 
     subgraph EXT["External sources (public, no auth)"]
@@ -34,7 +46,10 @@ flowchart TB
     subgraph REPO["Repo (committed)"]
         SJ["data/streaks.json<br/>computed leads"]
         SLJ["data/streak_leads.json<br/>lead ledger"]
-        OUT["public_site/<br/>index (leads) · streaks<br/>record · today"]
+        BLJ["data/book_ledger.json<br/>every fixture, priced"]
+        FRJ["data/fire_runs.json<br/>long-run ledger"]
+        SXJ["data/sandbox_ledger.json<br/>forecaster ledger"]
+        OUT["public_site/<br/>index (leads) · streaks · record<br/>today · sandbox"]
     end
 
     subgraph LOCAL["Local Mac (optional)"]
@@ -43,20 +58,28 @@ flowchart TB
         APP <--> DB
     end
 
-    BOV -.link lookup.-> SB
+    BOV -.link + price.-> SB
+    BOV -.price every fixture.-> BT
     ESPN --> SF
     ESPN -.final scores.-> SB
+    MKT["Polymarket · Kalshi · DraftKings<br/>tipsters and models"] --> SS
 
-    SF --> SB --> SJ
+    SB --> SJ
     SB --> SLJ --> RB
+    BT --> BLJ --> RB
+    FT --> FRJ --> RB
+    ST --> SXJ --> SBD
     SB --> OUT
     RB --> OUT
+    TD --> OUT
+    SBD --> OUT
 
     OUT --> PAGES["GitHub Pages<br/>aliu2298.github.io/edge-machine"]
 
     style DB fill:#3a1f1f,stroke:#e06c75,color:#eee
     style PAGES fill:#1f3a2a,stroke:#3fb970,color:#eee
     style CI fill:#161b26,stroke:#2b3245,color:#eee
+    style SX fill:#161b26,stroke:#2b3245,color:#eee
 ```
 
 The pipeline runs entirely on GitHub's servers, so the board stays current whether or not
@@ -67,7 +90,7 @@ and graded against ESPN final scores once its fixture is played.
 
 | File | Role |
 |---|---|
-| `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, slate, base rates, auto-settlement. |
+| `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, base rates, auto-settlement. Read-only; it places nothing. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
 | `venues.py` | Shared fixture→market matcher (Bovada). |
 | `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
@@ -83,8 +106,14 @@ and graded against ESPN final scores once its fixture is played.
 | `health.py` | Warn-only guardrails: lead freshness, stuck or vanished leads, dead venue feed. |
 | `verify_coverage.py` | Proves every league's squad reaches the board. |
 | `fire_track.py` | Logs long runs; tests them against a shuffled-schedule null. |
-| `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
-| `.github/workflows/backup-refresh.yml` | Watchdog 12h out of phase; takes over only if the primary failed or the live board is stale. |
+| `sandbox_sources.py` | One adapter per forecaster and venue: what each publishes, and how to read it. |
+| `sandbox_track.py` | Logs every forecast at the price that existed, settles it, scores ROI and Brier. |
+| `sandbox_build.py` | Renders the Sandbox board to `public_site/sandbox.html`. |
+| `sandbox_browser.py` | Headless fetch for the sources that need a real browser. |
+| `test_sandbox.py` | Logic tests for the Sandbox adapters, staking rules and scoring. |
+| `.github/workflows/refresh-boards.yml` | Six-hourly (`17 */6`): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
+| `.github/workflows/backup-refresh.yml` | Watchdog on `17 3,9,15,21`, out of phase with the primary; takes over only if that run failed or the live board is stale. |
+| `.github/workflows/sandbox-tracker.yml` | Six-hourly (`37 */6`), 20 minutes after the primary: collect forecasts, settle, rebuild the Sandbox board. |
 
 ## Run locally
 
@@ -93,10 +122,18 @@ python3 app.py            # tracker UI + API on :8787
 npm --prefix web run dev  # frontend dev server on :5173
 ```
 
-Rebuild the public boards by hand:
+Rebuild the public boards by hand, in the order the workflow uses (later steps read what
+earlier ones write):
 
 ```bash
-python3 streaks_build.py && python3 record_build.py
+python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
+  && python3 record_build.py && python3 today_build.py
+```
+
+The Sandbox board is a separate pipeline on its own schedule:
+
+```bash
+python3 sandbox_track.py && python3 sandbox_build.py
 ```
 
 ## The Picks board (retired 2026-09-12)
@@ -123,9 +160,12 @@ Champions/Europa Leagues.
 Seven more — Belgian, Norwegian, Greek, Austrian, Danish, Cypriot and Turkish top flights —
 are pulled as **competitive form feeds**. The European competitions drag in opponents from
 leagues the board does not track, and those sides arrived with *no form at all*: 21 teams
-in upcoming fixtures had zero games. Since `find_leads` skips a fixture when either side
-lacks form, 48 of 273 upcoming fixtures could never produce a lead — silently, because a
-skipped fixture looks exactly like "no confluence today". These feeds close 10 of those.
+in upcoming fixtures had zero games, so 48 of 273 upcoming fixtures could never produce a
+lead — silently, because `find_leads` skips a fixture when either side lacks form and a
+skipped fixture looks exactly like "no confluence today". With the feeds in place that gap
+is now **13 of 208**, from **10** sides with no form at all (leagues ESPN does not serve:
+Czech, Polish, Croatian, Ukrainian, Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani,
+Armenian). `verify_coverage.py` names them rather than letting the gap pass as silence.
 They are real football, so they count as form and enter the baselines, but they carry
 `lead_source: False`: the tracked league list is deliberate, and quietly turning seven more
 leagues into lead sources would change the product rather than fix the gap.
@@ -226,9 +266,9 @@ rather than showing an empty league.
 
 Lift says whether a confluence carries information; it cannot say whether it pays, because
 the sportsbook already prices what the teams do. Measured the day this was added: over 1.5
-on lead fixtures traded at **~1.20 on Bovada — a break-even hit rate of 83.4%**, which is
-exactly what leads hit (82.5% live, 84.4% in the walk-forward). So every lead is now priced
-as well as graded:
+on lead fixtures traded at **~1.20 on Bovada — a break-even hit rate of 83.3%**, which is
+essentially what leads hit (82.5% live, 79.7% in the walk-forward). So every lead is now
+priced as well as graded:
 
 * the line is captured the **first build it is listed** (Bovada's per-event page, one paced
   request per fixture — the bulk feed only carries the main 2.5 total), never revised, and
@@ -293,9 +333,24 @@ league. **Lift is the number that counts.**
 side's form only from games *before* the fixture in question (no lookahead). It exists so
 the idea is falsifiable today rather than in a month, and so the grader itself is verified.
 
-**Current state (Aug 2026, n=135 backtested): no bet type's confidence interval clears its
-league-adjusted baseline.** Lifts are mostly positive but none are distinguishable from
-chance at this sample. No edge is claimed.
+**Current state (Sep 12 2026): the two live lanes are answered, and the answer is no.**
+113 graded leads hit 75.2% overall; 738 on the walk-forward hit 79.7%. Against the teams'
+own rates *and* against the price the book actually offers, both live markets are negative:
+
+| lane | n | hit | teams' own rate | break-even at the price | edge |
+|---|---|---|---|---|---|
+| over 1.5 | 40 | 82.5% | 84.0% | 83.3% (≈1.20) | **−0.8pp** |
+| over 2.5 | 24 | 54.2% | 65.0% | 60.4% (≈1.67) | **−5.8pp** |
+
+Two independent references agree, which is the point of having both. The over-1.5 case is
+worth understanding because it is not a tuning problem: at 1.20 you need 83.3%, and those
+teams' own rate is 84.0% — the book has priced the market at essentially the teams' true
+rate, leaving under a point of room, and the leads land below it. **No threshold change
+recovers that**; the signal knows what the market already knows.
+
+No edge is claimed. What the fixed cadence buys is a clean, uncorrelated, continuously
+accumulating sample, and the `book_track` ledger below now measures the same question at
+roughly seven times the rate.
 
 ### On-fire runs: measured against a shuffled schedule, not a base rate
 
@@ -324,12 +379,56 @@ Two implementation choices turned out to matter more than the data:
   often none in a shuffle — culling ~25% of teams from the null and none from the
   observation. That mismatch alone produced p = 0.005–0.015.
 
-**Current state (Sep 2026, n=145): nothing survives correction** — the best type ("scored
-in") sits +0.7pp outside a 10.6pp band, p adj 0.21. And it will not resolve with patience:
-the band narrows as 1/sqrt(teams), so separating a margin that thin needs roughly **400x
-the data**. The tab is a browse surface for what is happening, not a signal.
+**Current state (Sep 12 2026, n=265 graded, 80.0% extension): nothing survives
+correction.** The closest is **over 1.5**, whose on-minus-off gap of −17.5pp sits just
+outside a [−37.6, −20.8] shuffled band: p = 0.012, but **p adj = 0.084** across the seven
+streak types tested together. It is stable across seeds (p = 0.008–0.012 at 2000
+shuffles) and it is the nearest thing this repo has produced to a signal, so it is worth
+watching — but it is not significant, and one marginal cell out of seven is the expected
+outcome even when nothing is there.
+
+⚠️ At **400** shuffles the same data flagged SIGNIFICANT (p adj 0.035). That was
+permutation noise, which is why `PERMUTATIONS` is 2000 and why `iters`/`seed` are resolved
+at call time — bound as signature defaults they silently ignored an override, and a
+seed-stability audit ran the same seed four times and looked reassuring.
+
+The tab remains a browse surface for what is happening, not a signal.
 
 Leads are research to look at. Nothing here places or stages a bet.
+
+## The Sandbox board
+
+A different question from the rest of the repo. The Streaks lanes ask "does *this* signal
+pay". Sandbox asks **"does anyone's signal pay"** — it logs what published forecasters say
+across 14 sports, stamps each one with the price that existed at that moment, and settles
+it on the real result.
+
+Eleven sources, staked two different ways because they are followed two different ways:
+
+* **Tipsters name a side** (Covers, Oddspedia, Scores24, SoccerPredictions.ai,
+  SportsGambler). That side is backed at the going price, every time — high turnover, no
+  Brier score, and a real ROI, because that is how a tipster is actually followed.
+* **Models, books and exchanges state a probability** (ESPN FPI, DraftKings, Kalshi,
+  Polymarket, NWS, spot price). They are backed only when they disagree with the price by
+  3pp or more, and they also get an accuracy score.
+
+Everything is a flat $100, so nothing on the board is bet-sizing skill. Polymarket is the
+spine and the settlement oracle: it supplies the price and the resolution, so most of its
+rows are **price observations with zero stake**, not bets. That distinction matters when
+reading the ledger — 788 quotes have produced 187 bets and 57 settled positions, and
+aggregating the quotes instead of the bets would show 294 phantom zero-P/L "bets".
+
+**The floor is judged per source, not on the total.** Every ROI cell greys itself below 30
+settled bets, and the banner above the table names the best single-source count while
+nothing has reached it. At 57 settled across seven sources the best is 15, so *nothing on
+that board is readable yet* — an earlier version compared the lifetime total against the
+floor and announced the column was readable while greying out every figure in it. A total
+is not a sample; nobody bets "all sources".
+
+Beyond sport the same machinery runs on yes/no markets where the opponent is the market
+price itself — climate (National Weather Service against Kalshi's temperature buckets for
+the same city and day) is the one with a genuinely independent forecaster, and it settles
+overnight, so it reaches a readable sample fastest.
 
 ## Data handling
 
