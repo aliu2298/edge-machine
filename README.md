@@ -211,6 +211,24 @@ Confluences are genuinely rare — whole leagues can have none on a given day. T
 on a run** tab exists for that: it browses every tracked team's current runs directly,
 rather than showing an empty league.
 
+### Prices (added 2026-09-12)
+
+Lift says whether a confluence carries information; it cannot say whether it pays, because
+the sportsbook already prices what the teams do. Measured the day this was added: over 1.5
+on lead fixtures traded at **~1.20 on Bovada — a break-even hit rate of 83.4%**, which is
+exactly what leads hit (82.5% live, 84.4% in the walk-forward). So every lead is now priced
+as well as graded:
+
+* the line is captured the **first build it is listed** (Bovada's per-event page, one paced
+  request per fixture — the bulk feed only carries the main 2.5 total), never revised, and
+  **never taken after kickoff**;
+* **three fixture-level markets** are logged on every lead — over 1.5 (the claim), over 2.5
+  and BTTS — fixed in advance so no market is chosen after seeing which one paid;
+* P/L is a flat 1 unit; the Record page shows each market's hit rate against the
+  **break-even** rate the average price demands and the book's own **vig-free probability**.
+
+A lead graded before pricing existed simply does not appear in that section.
+
 ### Tracking and grading
 
 Every lead is logged to `data/streak_leads.json` when it is published and graded once its

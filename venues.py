@@ -9,7 +9,7 @@ quietly disappear rather than fail loudly.
 Public, unauthenticated feeds only. No keys, no auth, fail-soft: a missing link is normal,
 since plenty of fixtures simply have no market.
 """
-import json, re, difflib, datetime, unicodedata, urllib.request, urllib.error
+import json, re, time, difflib, datetime, unicodedata, urllib.request, urllib.error
 
 # ---------------------------------------------------------------- venue links
 # Public, unauthenticated feeds only. Extend the lists as leagues open.
@@ -191,3 +191,102 @@ def venue_link(match, kickoff, events):
     if len(ranked) > 1 and ranked[0][0] - ranked[1][0] < AMBIGUITY_GAP:
         return None                      # two DIFFERENT fixtures both fit: refuse to guess
     return ranked[0][1]
+
+
+# ---------------------------------------------------------------- prices
+# The bulk coupon above carries only the 3-way moneyline, the goal spread and the MAIN
+# total (2.5). Over 1.5 and BTTS live on the per-event page, which is one request per
+# fixture — so prices are fetched only for leads, and only until each is priced once.
+BOVADA_EVENT = "https://www.bovada.lv/services/sports/event/coupon/events/A/description"
+BOVADA_SITE = "https://www.bovada.lv/sports"
+# Bovada answers HTTP 429 after ~10 per-event calls at 0.3s spacing (measured Sep 12
+# 2026). 1.5s between calls is the pacing that held; one back-off retry on a 429, and a
+# second 429 marks the feed BLOCKED for the rest of the process so a rate-limit storm
+# costs one build's worth of pricing rather than a stream of failed calls.
+PRICE_PACE_S = 1.5
+PRICE_BACKOFF_S = 8.0
+_last_price_call = 0.0
+BLOCKED = False
+
+
+def parse_bovada_prices(event):
+    """{market: {"price": decimal, "fair": vig-free prob}} from one Bovada event blob.
+
+    Three fixture-level markets, full time only: over15 / over25 from the totals ladder,
+    btts from the Both Teams To Score prop. `fair` is the two-way price with the
+    overround removed — the probability the book itself implies, which is the yardstick
+    a hit rate has to clear before any of this is an edge. A market with only one side
+    listed is skipped rather than guessed.
+    """
+    pairs = {}                                    # market -> (yes decimal, no decimal)
+
+    def dec(o):
+        try:
+            return float((o.get("price") or {})["decimal"])
+        except (KeyError, TypeError, ValueError):
+            return None
+
+    for dg in event.get("displayGroups") or []:
+        for m in dg.get("markets") or []:
+            if (m.get("period") or {}).get("description") != "Regulation Time":
+                continue                          # half-time ladders carry the same names
+            desc = m.get("description") or ""
+            outs = m.get("outcomes") or []
+            if desc in ("Total", "Total Goals O/U"):
+                by = {}
+                for o in outs:
+                    hc = (o.get("price") or {}).get("handicap")
+                    d = dec(o)
+                    if hc is not None and d:
+                        by[((o.get("description") or "").lower(), str(hc))] = d
+                for mk, line in (("over15", "1.5"), ("over25", "2.5")):
+                    yes, no = by.get(("over", line)), by.get(("under", line))
+                    if yes and no and mk not in pairs:   # first listing wins (Game Lines)
+                        pairs[mk] = (yes, no)
+            elif desc == "Both Teams To Score":
+                by = {(o.get("description") or "").lower(): dec(o) for o in outs}
+                if by.get("yes") and by.get("no"):
+                    pairs["btts"] = (by["yes"], by["no"])
+
+    out = {}
+    for mk, (yes, no) in pairs.items():
+        out[mk] = {"price": round(yes, 3),
+                   "fair": round((1 / yes) / ((1 / yes) + (1 / no)), 4)}
+    return out
+
+
+def fetch_bovada_prices(link):
+    """Prices for the fixture behind a Bovada game-page link, or None if unavailable.
+
+    None means "could not read the book" (bad link, network, rate limit) and {} means
+    "read it, none of the three markets is up yet" — the caller retries both on a later
+    build, so the distinction only matters for logging. Paced, see PRICE_PACE_S.
+    """
+    global _last_price_call, BLOCKED
+    if BLOCKED or not link or not link.startswith(BOVADA_SITE + "/"):
+        return None
+    path = link[len(BOVADA_SITE):]
+    url = BOVADA_EVENT + path + "?lang=en"
+
+    for attempt in (1, 2):
+        wait = PRICE_PACE_S - (time.time() - _last_price_call)
+        if wait > 0:
+            time.sleep(wait)
+        _last_price_call = time.time()
+        try:
+            groups = _get_json(url)
+            break
+        except urllib.error.HTTPError as e:
+            if e.code != 429:
+                return None
+            if attempt == 2:
+                BLOCKED = True
+                print("  (bovada prices: rate-limited twice — no more pricing this run)")
+                return None
+            time.sleep(PRICE_BACKOFF_S)
+        except Exception:
+            return None
+    for grp in groups or []:
+        for ev in grp.get("events") or []:
+            return parse_bovada_prices(ev)
+    return None

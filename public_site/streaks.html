@@ -112,6 +112,8 @@ color:var(--mut);cursor:default}
 border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;
 padding:3px 10px;white-space:nowrap}
 .kbtn:hover{background:#7aa2f72a}
+.px{font-size:11px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;
+white-space:nowrap}
 .frn{font-size:11px;color:var(--warn);margin:-4px 0 9px}
 /* date grouping + countdown */
 .dhd{display:flex;align-items:baseline;gap:9px;margin:22px 0 9px;
@@ -168,7 +170,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 }
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Streaks</h1>
-<div class="sub">Every tracked team&#x27;s current runs · all times CT · updated Sep 12 2026 · 06:10 UTC</div>
+<div class="sub">Every tracked team&#x27;s current runs · all times CT · updated Sep 12 2026 · 06:27 UTC</div>
 <div class="nav"><a href="./">Leads</a><a class="on" href="./streaks.html">Streaks</a>
 <a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 
@@ -316,6 +318,7 @@ function card(l) {
       <span class="fxm">${esc(l.league)} · ${esc(when(l.kickoff) || l.date)}</span>
       ${l.market ? `<a class="kbtn" href="${esc(l.market)}" target="_blank"
          rel="noopener">Bovada ↗</a>` : ''}
+      ${l.price ? `<span class="px" title="Over 1.5 price when this lead was first listed">@ ${l.price.toFixed(2)}</span>` : ''}
     </div>
     <div class="ev">
       ${leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}

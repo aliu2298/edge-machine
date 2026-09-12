@@ -4,9 +4,8 @@ fixture is played, and measure whether the confluence actually carried informati
 
 WHAT THIS MEASURES, AND WHAT IT DOES NOT
 ----------------------------------------
-There are no odds here — the board links no price, so **profitability cannot be measured**
-and nothing in this file should be read as ROI. A hit rate on its own is equally useless:
-"over 2.5 landed 60%" means nothing without something to compare it against.
+Lift first. A hit rate on its own is useless: "over 2.5 landed 60%" means nothing without
+something to compare it against.
 
 So the comparison is to the **population base rate** — the same outcome measured across
 every played fixture in the window, flagged or not. If leads hit over-2.5 at 60% while all
@@ -22,6 +21,18 @@ compared to.
 Leads are recorded ONCE, when first published, and graded ONCE, after the match. A lead is
 never re-scored or re-priced after the fact.
 
+PRICES (added 2026-09-12)
+-------------------------
+Lift against the teams' own rate answers "does the confluence carry information". It does
+not answer "does it pay", because a sportsbook already prices what the teams do: on the
+day this was added, over 1.5 on lead fixtures traded at ~1.20 — a break-even hit rate of
+83.4%, which is exactly what leads hit. So every lead is also priced: the Bovada line is
+captured the FIRST build where one is listed (see price()), never revised and never taken
+after kickoff, and three fixture-level markets are logged on every lead — the claim
+(over 1.5) plus over 2.5 and BTTS, pre-registered in PRICED_MARKETS so no market is chosen
+after seeing which one paid. P/L is a flat 1 unit at the captured price. The yardstick for
+that section is the book's own vig-free probability, not the teams' rate.
+
 Usage:  python3 streaks_track.py [--report]
         (streaks_build.py calls record() and grade() automatically each build)
 """
@@ -33,6 +44,20 @@ LEDGER = os.path.join(ROOT, "data", "streak_leads.json")
 # Only grade leads whose fixture is comfortably finished. ESPN can carry a fixture as
 # scheduled past kickoff, and a postponed match must not silently grade as a miss.
 GRADE_GRACE_DAYS = 1
+
+# Fixture-level markets priced on EVERY lead, whatever its headline claims. Fixed here,
+# in advance, so the record shows ROI on the same fixture set for all three and none is
+# picked after the fact. Keys match venues.parse_bovada_prices().
+PRICED_MARKETS = {
+    "over15": {"kind": "total_gte", "n": 2},
+    "over25": {"kind": "total_gte", "n": 3},
+    "btts":   {"kind": "btts"},
+}
+MARKET_LABEL = {"over15": "Over 1.5 goals", "over25": "Over 2.5 goals",
+                "btts": "Both teams to score"}
+# Per build. One paced request each (~1.5s), so this bounds the step at ~90s; anything
+# left over is picked up next build — lines beyond three days out rarely exist anyway.
+MAX_PRICE_FETCHES = 60
 
 
 # ---------------------------------------------------------------- bet evaluation
@@ -119,6 +144,81 @@ def record(leads, blob=None):
     return blob, added
 
 
+def _kickoff(e):
+    ko = e.get("kickoff")
+    if not ko:
+        return None
+    try:
+        return datetime.datetime.fromisoformat(ko.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def price(blob, leads, fetch, now=None):
+    """Capture the book's price on pending leads that do not have one yet.
+
+    `leads` are the leads as published this build (they carry the venue link; the ledger
+    never does). `fetch(link)` returns {market: {price, fair}}, {} when no line is up
+    yet, or None when the book could not be read. Rules, each of which is a test:
+
+      * ONCE. A priced lead is never touched again, whatever the line does afterwards.
+      * BEFORE KICKOFF ONLY. A lead whose fixture has started is never priced, so a price
+        can never be captured with the result already known.
+      * NO LINE, NO PRICE. An empty or failed read leaves the lead unpriced and it is
+        retried next build — a sportsbook posts distant fixtures closer to kickoff.
+      * THE CLAIM MUST BE PRICED. A book that lists BTTS but not over 1.5 (Bovada often
+        posts the alternate totals ladder later than the props — 8 of the first 47 leads
+        priced came back that way) is treated as no line: nothing is stored, so the lead
+        is retried until the claim's own market is up. Storing the companions alone would
+        mark the lead priced and lose the one market it is actually about.
+
+    Returns (blob, n_priced, n_fetched).
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    today = now.date().isoformat()
+    link_of = {lead_id(l): l.get("market") for l in leads if l.get("market")}
+    cache = {}                                    # link -> result, within this run
+    n_priced = n_fetched = 0
+    for lid, e in blob["leads"].items():
+        if e.get("status") != "pending" or e.get("prices"):
+            continue
+        link = link_of.get(lid)
+        if not link:
+            continue
+        ko = _kickoff(e)
+        if ko is not None:
+            if ko <= now:
+                continue
+        elif (e.get("date") or "") <= today:
+            continue                              # no kickoff time: date must be ahead
+        if link not in cache:
+            if n_fetched >= MAX_PRICE_FETCHES:
+                break
+            n_fetched += 1
+            cache[link] = fetch(link)
+        got = cache[link]
+        if not got or "over15" not in got:      # the claim's own line must be up
+            continue
+        e["prices"] = {k: dict(v) for k, v in got.items() if k in PRICED_MARKETS}
+        e["priced_at"] = now.isoformat(timespec="seconds")
+        n_priced += 1
+    return blob, n_priced, n_fetched
+
+
+def _settle_prices(e, hg, ag):
+    """P/L per priced market at a flat 1 unit. Only called with a real final score."""
+    out = {}
+    for mk, pr in (e.get("prices") or {}).items():
+        bet = PRICED_MARKETS.get(mk)
+        if not bet:
+            continue
+        got = settle_bet(bet, e["home"], e["away"], hg, ag)
+        if got is None:
+            continue
+        out[mk] = {"hit": bool(got), "pnl": round(pr["price"] - 1, 4) if got else -1.0}
+    return out
+
+
 def grade(fixtures, blob=None):
     """Settle pending leads whose fixture has a final score."""
     blob = blob if blob is not None else load()
@@ -152,10 +252,45 @@ def grade(fixtures, blob=None):
         else:
             e["status"] = "hit" if got else "miss"
         e["final"] = f"{hg}-{ag}"
+        if e.get("prices"):
+            e["pnl"] = _settle_prices(e, hg, ag)
         e["graded_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat(
             timespec="seconds")
         graded += 1
     return blob, graded
+
+
+def price_report(blob):
+    """Per priced market: hit rate against the book's break-even and its vig-free
+    probability, and flat-stake ROI. Only leads that were priced BEFORE kickoff and have
+    since settled count; a lead graded before pricing existed is simply absent."""
+    settled = [e for e in blob["leads"].values()
+               if e.get("prices") and e.get("pnl") and e["status"] in ("hit", "miss")]
+    rows = []
+    for mk in PRICED_MARKETS:
+        es = [e for e in settled if mk in e["pnl"] and mk in e["prices"]]
+        n = len(es)
+        if not n:
+            continue
+        hits = sum(1 for e in es if e["pnl"][mk]["hit"])
+        pnl = sum(e["pnl"][mk]["pnl"] for e in es)
+        avg_price = sum(e["prices"][mk]["price"] for e in es) / n
+        fair = sum(e["prices"][mk]["fair"] for e in es) / n
+        breakeven = 1 / avg_price
+        p, lo, hi = _wilson(hits, n)
+        rows.append({
+            "market": mk, "label": MARKET_LABEL[mk], "n": n, "hits": hits,
+            "rate": p, "lo": lo, "hi": hi, "avg_price": avg_price, "fair": fair,
+            "breakeven": breakeven, "pnl": pnl, "roi": pnl / n,
+            "lift": p - fair,
+            # Only a hit rate whose interval clears the break-even line is a result.
+            "significant": bool(lo > breakeven or hi < breakeven),
+        })
+    pending = sum(1 for e in blob["leads"].values()
+                  if e.get("prices") and e["status"] == "pending")
+    claim = next((r for r in rows if r["market"] == "over15"), None)
+    return {"rows": rows, "graded": len(settled), "pending": pending,
+            "claim_roi": claim["roi"] if claim else None}
 
 
 # ---------------------------------------------------------------- measurement
@@ -351,6 +486,7 @@ def report(fixtures, blob=None):
 
     tot_n = sum(r["n"] for r in rows)
     tot_h = sum(r["hits"] for r in rows)
+    priced = price_report(blob)
     bt_n = sum(r["n"] for r in backtest_rows)
     bt_h = sum(r["hits"] for r in backtest_rows)
     return {
@@ -363,6 +499,7 @@ def report(fixtures, blob=None):
         "overall_rate": (tot_h / tot_n) if tot_n else None,
         "population_fixtures": pop.get("_fixtures", 0),
         "rows": rows,
+        "priced": priced,
         "recent": sorted([e for e in settled if e.get("graded_at")],
                          key=lambda e: e["date"], reverse=True)[:25],
     }
@@ -387,3 +524,11 @@ if __name__ == "__main__":
                   f"  {'YES' if row['significant'] else 'no'}")
     else:
         print("nothing graded yet — leads settle as their fixtures are played")
+    pr = r["priced"]
+    if pr["rows"]:
+        print(f"\npriced: {pr['graded']} settled at a price | {pr['pending']} pending")
+        print(f"{'market':22s} {'n':>4s} {'hit':>7s} {'b/e':>7s} {'fair':>7s} {'price':>6s} {'ROI':>8s}")
+        for row in pr["rows"]:
+            print(f"{row['label']:22s} {row['n']:4d} {row['rate']:7.1%} {row['breakeven']:7.1%} "
+                  f"{row['fair']:7.1%} {row['avg_price']:6.2f} {row['roi']:+8.1%}"
+                  f"  {'SIG' if row['significant'] else ''}")

@@ -781,6 +781,8 @@ color:var(--mut);cursor:default}}
 border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;
 padding:3px 10px;white-space:nowrap}}
 .kbtn:hover{{background:#7aa2f72a}}
+.px{{font-size:11px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;
+white-space:nowrap}}
 .frn{{font-size:11px;color:var(--warn);margin:-4px 0 9px}}
 /* date grouping + countdown */
 .dhd{{display:flex;align-items:baseline;gap:9px;margin:22px 0 9px;
@@ -975,6 +977,7 @@ function card(l) {{
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
       ${{l.market ? `<a class="kbtn" href="${{esc(l.market)}}" target="_blank"
          rel="noopener">Bovada ↗</a>` : ''}}
+      ${{l.price ? `<span class="px" title="Over 1.5 price when this lead was first listed">@ ${{l.price.toFixed(2)}}</span>` : ''}}
     </div>
     <div class="ev">
       ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}
@@ -1216,11 +1219,27 @@ def build(force=False):
     # publish time so the ledger holds the claim as it was actually made, not a later
     # rationalisation of it.
     ledger, added = streaks_track.record(leads)
+    # Price BEFORE grading, and only leads still ahead of kickoff (price() enforces it).
+    # One paced request per unpriced fixture; a failure here must not cost the board.
+    try:
+        from venues import fetch_bovada_prices
+        ledger, n_priced, n_fetched = streaks_track.price(ledger, leads,
+                                                          fetch_bovada_prices)
+    except Exception as e:
+        print(f"  (pricing skipped: {e})")
+        n_priced = n_fetched = 0
     ledger, newly_graded = streaks_track.grade(fixtures, ledger)
     streaks_track.save(ledger)
     track = streaks_track.report(fixtures, ledger)
-    print(f"  ledger: +{added} new, {newly_graded} graded now, "
-          f"{track['graded']} settled / {track['pending']} pending")
+    print(f"  ledger: +{added} new, {n_priced} priced ({n_fetched} fetched), "
+          f"{newly_graded} graded now, {track['graded']} settled / "
+          f"{track['pending']} pending")
+    # The card shows the captured price for the claim, read back from the ledger so
+    # the page and the record can never disagree about what the line was.
+    for l in leads:
+        pr = (ledger["leads"].get(streaks_track.lead_id(l)) or {}).get("prices") or {}
+        if pr.get("over15"):
+            l["price"] = pr["over15"]["price"]
 
     # League buttons must cover BOTH views, so draw them from the teams index too —
     # scoping them to fixtures alone hid every league that had runs but no confluence.

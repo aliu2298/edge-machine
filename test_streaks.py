@@ -408,6 +408,96 @@ check("reverse fixture is not a match",
 check("date outside the window is not a match",
       V.venue_link("Angers vs Stade Rennais", "2026-09-20", evs), None)
 
+print("\n== pricing: captured once, before kickoff, never after ==")
+NOWP = datetime.datetime.now(datetime.timezone.utc)
+_soon = NOWP + datetime.timedelta(days=2)
+lp = dict(lead, date=_soon.date().isoformat(), kickoff=_soon.strftime("%Y-%m-%dT%H:%MZ"),
+          headline="Over 1.5 goals", bet={"kind": "total_gte", "n": 2},
+          market="https://www.bovada.lv/sports/soccer/x/h-a-1")
+BOOK = {"over15": {"price": 1.25, "fair": 0.78}, "over25": {"price": 1.6, "fair": 0.6},
+        "btts": {"price": 1.7, "fair": 0.57}, "corners": {"price": 2.0, "fair": 0.5}}
+calls = []
+def fake_fetch(link):
+    calls.append(link)
+    return BOOK
+blob, _ = T.record([lp], {"leads": {}})
+blob, n_priced, n_fetched = T.price(blob, [lp], fake_fetch, now=NOWP)
+check("priced one", (n_priced, n_fetched), (1, 1))
+e = list(blob["leads"].values())[0]
+check("only the pre-registered markets are stored", sorted(e["prices"]),
+      ["btts", "over15", "over25"])
+check("no url in the ledger", any("://" in str(v) for v in e.values()), False)
+blob, n2, f2 = T.price(blob, [lp], fake_fetch, now=NOWP)
+check("never re-priced, never re-fetched", (n2, f2), (0, 0))
+gone = dict(lp, headline="Over 1.5 goals (started)",
+            kickoff=(NOWP - datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%MZ"))
+blob, _ = T.record([gone], blob)
+blob, n3, f3 = T.price(blob, [gone], fake_fetch, now=NOWP)
+check("a lead that has kicked off is never priced", (n3, f3), (0, 0))
+blob4, _ = T.record([lp], {"leads": {}})
+blob4, n4, _ = T.price(blob4, [lp], lambda link: {}, now=NOWP)
+check("no line up yet -> unpriced", n4, 0)
+check("so it is retried next build", T.price(blob4, [lp], fake_fetch, now=NOWP)[1], 1)
+blob8, _ = T.record([lp], {"leads": {}})
+blob8, n8, _ = T.price(blob8, [lp], lambda l: {"btts": BOOK["btts"]}, now=NOWP)
+check("companions without the claim's line -> not priced", n8, 0)
+check("nothing stored for it", "prices" in list(blob8["leads"].values())[0], False)
+check("retried once over 1.5 is up", T.price(blob8, [lp], fake_fetch, now=NOWP)[1], 1)
+blob5, _ = T.record([lp], {"leads": {}})
+check("a failed read leaves it unpriced", T.price(blob5, [lp], lambda l: None, now=NOWP)[1], 0)
+unlinked = dict(lp, headline="Over 1.5 goals (no book)")
+unlinked.pop("market")
+blob6, _ = T.record([unlinked], {"leads": {}})
+check("no venue link -> nothing to fetch",
+      T.price(blob6, [unlinked], fake_fetch, now=NOWP)[2], 0)
+
+print("\n== pricing: P/L graded per market at the captured price ==")
+blob, n = T.grade([fx(lp["date"], "H", "A", 2, 0)], blob)    # 2-0: over15 hit, rest miss
+e = blob["leads"][T.lead_id(lp)]
+check("status hit (the claim is over 1.5)", e["status"], "hit")
+check("over15 pnl = price - 1", round(e["pnl"]["over15"]["pnl"], 2), 0.25)
+check("over25 miss loses the unit", e["pnl"]["over25"]["pnl"], -1.0)
+check("btts miss", e["pnl"]["btts"]["hit"], False)
+pr = T.price_report(blob)
+row = {r["market"]: r for r in pr["rows"]}
+check("over15 row: n=1, ROI +25%", (row["over15"]["n"], round(row["over15"]["roi"], 2)), (1, 0.25))
+check("break-even is 1/price", round(row["over15"]["breakeven"], 2), 0.8)
+check("lift is measured against the book, not the teams", round(row["over15"]["lift"], 2),
+      round(1 - 0.78, 2))
+check("claim ROI surfaced", round(pr["claim_roi"], 2), 0.25)
+_unpriced = dict(lead, headline="Never priced")
+blob7, _ = T.record([_unpriced], {"leads": {}})
+blob7, _ = T.grade([played], blob7)
+check("a lead graded without a price has no pnl", "pnl" in list(blob7["leads"].values())[0], False)
+check("and does not count as settled at a price", T.price_report(blob7)["graded"], 0)
+
+print("\n== venues: Bovada event parse ==")
+_ev = {"displayGroups": [{"markets": [
+    {"description": "Total", "period": {"description": "Regulation Time"}, "outcomes": [
+        {"description": "Over", "price": {"handicap": "2.5", "decimal": "1.95"}},
+        {"description": "Under", "price": {"handicap": "2.5", "decimal": "1.87"}}]},
+    {"description": "Total Goals O/U", "period": {"description": "Regulation Time"}, "outcomes": [
+        {"description": "Over", "price": {"handicap": "1.5", "decimal": "1.32"}},
+        {"description": "Under", "price": {"handicap": "1.5", "decimal": "3.50"}},
+        {"description": "Over", "price": {"handicap": "2.5", "decimal": "1.99"}},
+        {"description": "Under", "price": {"handicap": "2.5", "decimal": "1.85"}},
+        {"description": "Over", "price": {"handicap": "0.5", "decimal": "1.05"}}]},
+    {"description": "Total Goals O/U", "period": {"description": "1st Half"}, "outcomes": [
+        {"description": "Over", "price": {"handicap": "1.5", "decimal": "9.0"}},
+        {"description": "Under", "price": {"handicap": "1.5", "decimal": "1.05"}}]},
+    {"description": "Both Teams To Score", "period": {"description": "Regulation Time"}, "outcomes": [
+        {"description": "Yes", "price": {"decimal": "1.74"}},
+        {"description": "No", "price": {"decimal": "2.05"}}]}]}]}
+_pr = V.parse_bovada_prices(_ev)
+check("over 1.5 comes off the alternate ladder", _pr["over15"]["price"], 1.32)
+check("fair prob strips the vig", _pr["over15"]["fair"],
+      round((1 / 1.32) / ((1 / 1.32) + (1 / 3.5)), 4))
+check("the main 2.5 line wins over its alternate copy", _pr["over25"]["price"], 1.95)
+check("btts", _pr["btts"]["price"], 1.74)
+check("half-time ladders are ignored", _pr["over15"]["price"] != 9.0, True)
+check("one-sided market is skipped, not guessed", "over05" in _pr, False)
+check("empty event -> empty book", V.parse_bovada_prices({}), {})
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

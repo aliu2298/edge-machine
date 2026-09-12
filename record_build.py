@@ -15,8 +15,8 @@ evidence.
 
 WHAT IS MEASURED, AND AGAINST WHAT
 ----------------------------------
-No odds anywhere, so nothing here is profit and none of it should be read as ROI. Every
-section compares a hit rate against **what the teams involved manage anyway**:
+The lift sections carry no odds and are not profit. They compare a hit rate against **what
+the teams involved manage anyway**:
 
   * leads -> the named side's own rate (or the two sides' mean for a fixture-level
     outcome). A league average would credit the lead for team quality — measured, that
@@ -27,6 +27,10 @@ section compares a hit rate against **what the teams involved manage anyway**:
 
 LIFT IS THE NUMBER where a reference exists. A hit rate on its own is unreadable, and
 three lanes in this repo have already died from being read without a reference.
+
+The PRICED section (added 2026-09-12) is the one place profit is measured: every lead is
+graded at a flat 1 unit on the Bovada line captured the first build it was listed, on
+three pre-registered markets. Its yardstick is the book's vig-free probability.
 
 Usage:  python3 record_build.py   →  public_site/record.html
 """
@@ -81,6 +85,29 @@ def perf_table(rows, label_of, base_head="team base"):
 {body}</table></div>"""
 
 
+def price_table(rows):
+    if not rows:
+        return ""
+    body = "".join(
+        f"""<tr><td>{esc(r['label'])}{' <span class="mut">· the claim</span>' if r['market'] == 'over15' else ''}</td>
+        <td class="num">{r['n']}</td>
+        <td class="num">{r['hits']}</td>
+        <td class="num">{pct(r['rate'])}</td>
+        <td class="num mut">{r['avg_price']:.2f}</td>
+        <td class="num mut" title="hit rate needed to break even at the average price">{pct(r['breakeven'])}</td>
+        <td class="num mut" title="the book's own probability, vig removed">{pct(r['fair'])}</td>
+        {lift_cell(r['lift'])}
+        <td class="num {'pos' if r['roi'] >= 0 else 'neg'}">{'+' if r['roi'] >= 0 else ''}{r['roi']*100:.1f}%</td>
+        <td><span class="sig {'y' if r['significant'] else 'n'}">
+          {'SIGNIFICANT' if r['significant'] else 'not sig'}</span></td></tr>"""
+        for r in rows)
+    return f"""<div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+    <th class="num">avg price</th><th class="num">break-even</th><th class="num">book fair</th>
+    <th class="num">lift v book</th><th class="num">ROI</th><th></th></tr>
+{body}</table></div>"""
+
+
 def fire_tables(fr):
     """Ledger and test, rendered apart on purpose.
 
@@ -127,6 +154,12 @@ def page_html(ld, fr, now):
     leads_body = tiles([("Graded", ld["graded"]), ("Hit rate", pct(ld["overall_rate"])),
                         ("Pending", ld["pending"]), ("Void", ld["void"])]) + \
         perf_table(ld["rows"], lambda r: BET_NAME.get(r["kind"], r["kind"]))
+    pr = ld.get("priced") or {"rows": [], "graded": 0, "pending": 0, "claim_roi": None}
+    priced_body = tiles([("Settled at a price", pr["graded"]),
+                         ("Over 1.5 ROI", "—" if pr["claim_roi"] is None
+                          else f"{pr['claim_roi']*100:+.1f}%"),
+                         ("Priced, pending", pr["pending"])]) + price_table(pr["rows"])
+    priced_rep = {"graded": pr["graded"]}
     fire_led, fire_test = fire_tables(fr)
     fire_body = (tiles([("Graded", fr["graded"]), ("Extended", pct(fr["rate"])),
                         ("Pending", fr["pending"])]) + fire_led +
@@ -205,8 +238,9 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 
-<div class="note warn">There are no odds anywhere on this site, so <b>none of this is
-profit</b> and none of it should be read as ROI. Each rate is compared against
+<div class="note warn">The lift sections carry no odds and <b>are not profit</b>; the one
+place money is measured is the priced section, which grades every lead at the Bovada line
+captured when it was first listed. Everywhere else each rate is compared against
 <b>what the teams involved manage anyway</b> — the named side's own rate for a claim about
 one team, the two sides' mean for a fixture-level outcome. A league average would credit a
 lead for team quality: measured here, that difference moved "team to score" from
@@ -220,6 +254,18 @@ repo have already died from being read without one.</div>
          "fixture is played.",
          ld, leads_body,
          "Nothing graded yet.")}
+
+{section("Leads at the price — does it pay?",
+         "Flat 1 unit on every lead at the Bovada line captured the <b>first build it was "
+         "listed</b> — never revised, never taken after kickoff. Three fixture-level "
+         "markets are logged on every lead, fixed in advance, so no market is chosen "
+         "after seeing which one paid. <b>Break-even</b> is the hit rate the average price "
+         "demands; <b>book fair</b> is the probability the sportsbook itself implies with "
+         "the vig stripped out — a real edge has to clear both, and on the day this was "
+         "added over 1.5 traded at ~1.20, a break-even of 83% against leads that hit 82%.",
+         priced_rep, priced_body,
+         "Nothing settled at a price yet — pricing started 2026-09-12 and a lead counts "
+         "only if it was priced before kickoff and has since been played.")}
 
 {section("On fire — do long runs continue?",
          "Each long run logged against the fixture that tests it. The question is not "
