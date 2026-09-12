@@ -1211,6 +1211,21 @@
    "team": "Bayer Leverkusen",
    "test_date": "2026-09-12"
   },
+  "Bayer Leverkusen|over15|2026-09-16|Bayer Leverkusen|NK Celje": {
+   "home": true,
+   "id": "Bayer Leverkusen|over15|2026-09-16|Bayer Leverkusen|NK Celje",
+   "key": "over15",
+   "kickoff": "2026-09-16T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 10,
+   "logged_at": "2026-09-12T13:36:11+00:00",
+   "opp": "NK Celje",
+   "rate": 0.15753424657534246,
+   "status": "pending",
+   "team": "Bayer Leverkusen",
+   "test_date": "2026-09-16"
+  },
   "Bayer Leverkusen|porous|2026-09-05|Bayer Leverkusen|1. FC Union Berlin": {
    "graded_at": "2026-09-05T20:27:59+00:00",
    "home": true,
@@ -1274,6 +1289,21 @@
    "status": "pending",
    "team": "Bayer Leverkusen",
    "test_date": "2026-09-12"
+  },
+  "Bayer Leverkusen|scoring1|2026-09-16|Bayer Leverkusen|NK Celje": {
+   "home": true,
+   "id": "Bayer Leverkusen|scoring1|2026-09-16|Bayer Leverkusen|NK Celje",
+   "key": "scoring1",
+   "kickoff": "2026-09-16T19:00Z",
+   "label": "scored in",
+   "league": "Bundesliga",
+   "length": 13,
+   "logged_at": "2026-09-12T13:36:11+00:00",
+   "opp": "NK Celje",
+   "rate": 0.06164383561643835,
+   "status": "pending",
+   "team": "Bayer Leverkusen",
+   "test_date": "2026-09-16"
   },
   "Bayern Munich|btts|2026-09-05|Bayern Munich|Schalke 04": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -2372,6 +2402,21 @@
    "team": "Eintracht Frankfurt",
    "test_date": "2026-09-12"
   },
+  "Eintracht Frankfurt|over15|2026-09-19|Eintracht Frankfurt|SC Freiburg": {
+   "home": true,
+   "id": "Eintracht Frankfurt|over15|2026-09-19|Eintracht Frankfurt|SC Freiburg",
+   "key": "over15",
+   "kickoff": "2026-09-19T13:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 14,
+   "logged_at": "2026-09-12T13:36:11+00:00",
+   "opp": "SC Freiburg",
+   "rate": 0.04794520547945205,
+   "status": "pending",
+   "team": "Eintracht Frankfurt",
+   "test_date": "2026-09-19"
+  },
   "Espanyol|over15|2026-09-06|Espanyol|Sevilla": {
    "graded_at": "2026-09-07T02:56:04+00:00",
    "home": true,
@@ -2631,6 +2676,21 @@
    "status": "pending",
    "team": "FC Augsburg",
    "test_date": "2026-09-12"
+  },
+  "FC Augsburg|over15|2026-09-19|FC Augsburg|Werder Bremen": {
+   "home": false,
+   "id": "FC Augsburg|over15|2026-09-19|FC Augsburg|Werder Bremen",
+   "key": "over15",
+   "kickoff": "2026-09-19T13:30Z",
+   "label": "over 1.5 goals",
+   "league": "Bundesliga",
+   "length": 12,
+   "logged_at": "2026-09-12T13:36:11+00:00",
+   "opp": "Werder Bremen",
+   "rate": 0.09246575342465753,
+   "status": "pending",
+   "team": "FC Augsburg",
+   "test_date": "2026-09-19"
   },
   "FC Augsburg|porous|2026-08-30|FC Augsburg|Schalke 04": {
    "graded_at": "2026-08-30T20:31:13+00:00",
@@ -6953,6 +7013,21 @@
    "team": "VfB Stuttgart",
    "test_date": "2026-09-12"
   },
+  "VfB Stuttgart|porous|2026-09-19|VfB Stuttgart|Borussia Dortmund": {
+   "home": true,
+   "id": "VfB Stuttgart|porous|2026-09-19|VfB Stuttgart|Borussia Dortmund",
+   "key": "porous",
+   "kickoff": "2026-09-19T16:30Z",
+   "label": "conceded in",
+   "league": "Bundesliga",
+   "length": 10,
+   "logged_at": "2026-09-12T13:36:11+00:00",
+   "opp": "Borussia Dortmund",
+   "rate": 0.09931506849315068,
+   "status": "pending",
+   "team": "VfB Stuttgart",
+   "test_date": "2026-09-19"
+  },
   "Viking FK|over15|2026-09-09|Viking FK|VfB Stuttgart": {
    "graded_at": "2026-09-09T20:59:41+00:00",
    "home": false,
@@ -7191,5 +7266,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-12T13:13:19+00:00"
+ "updated_at": "2026-09-12T13:36:11+00:00"
 }

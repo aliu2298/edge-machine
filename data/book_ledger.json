@@ -2499,6 +2499,41 @@
    },
    "status": "pending"
   },
+  "2026-09-13|RB Leipzig|Hamburg SV": {
+   "away": "Hamburg SV",
+   "date": "2026-09-13",
+   "home": "RB Leipzig",
+   "id": "2026-09-13|RB Leipzig|Hamburg SV",
+   "kickoff": "2026-09-13T13:30Z",
+   "lead_source": true,
+   "league": "Bundesliga",
+   "model": {
+    "away2plus": 0.4349,
+    "btts": 0.7108,
+    "home2plus": 0.7198,
+    "over25": 0.7638
+   },
+   "priced_at": "2026-09-12T13:36:10+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.2658,
+     "price": 3.6
+    },
+    "btts": {
+     "fair": 0.5835,
+     "price": 1.606
+    },
+    "home2plus": {
+     "fair": 0.7221,
+     "price": 1.328
+    },
+    "over25": {
+     "fair": 0.6565,
+     "price": 1.455
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|Real Salt Lake|New York City FC": {
    "away": "New York City FC",
    "date": "2026-09-13",
@@ -2780,5 +2815,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-12T13:13:19+00:00"
+ "updated_at": "2026-09-12T13:36:11+00:00"
 }
