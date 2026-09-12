@@ -5978,6 +5978,7 @@
    "test_date": "2026-09-06"
   },
   "Sevilla|porous|2026-09-11|Sevilla|Valencia": {
+   "graded_at": "2026-09-12T04:42:52+00:00",
    "home": true,
    "id": "Sevilla|porous|2026-09-11|Sevilla|Valencia",
    "key": "porous",
@@ -5988,7 +5989,8 @@
    "logged_at": "2026-09-06T20:29:25+00:00",
    "opp": "Valencia",
    "rate": 0.15306122448979592,
-   "status": "pending",
+   "result": "1-0",
+   "status": "broke",
    "team": "Sevilla",
    "test_date": "2026-09-11"
   },
@@ -7174,5 +7176,5 @@
    "test_date": "2026-09-12"
   }
  },
- "updated_at": "2026-09-11T21:02:34+00:00"
+ "updated_at": "2026-09-12T04:42:52+00:00"
 }

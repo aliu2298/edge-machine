@@ -7756,7 +7756,55 @@
    "match": "St. Louis CITY SC v Toronto FC",
    "status": "pending",
    "strength": 9
+  },
+  "2026-09-26|CF Montr\u00e9al|FC Cincinnati|Over 1.5 goals": {
+   "a": "CF Montr\u00e9al",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "FC Cincinnati",
+   "b": "FC Cincinnati",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.29754601226993865,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-26",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "CF Montr\u00e9al",
+   "id": "2026-09-26|CF Montr\u00e9al|FC Cincinnati|Over 1.5 goals",
+   "kickoff": "2026-09-26T23:30Z",
+   "league": "MLS",
+   "match": "CF Montr\u00e9al v FC Cincinnati",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-26|Philadelphia Union|Orlando City SC|Over 1.5 goals": {
+   "a": "Philadelphia Union",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Orlando City SC",
+   "b": "Orlando City SC",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2361963190184049,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-26",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Philadelphia Union",
+   "id": "2026-09-26|Philadelphia Union|Orlando City SC|Over 1.5 goals",
+   "kickoff": "2026-09-26T23:30Z",
+   "league": "MLS",
+   "match": "Philadelphia Union v Orlando City SC",
+   "status": "pending",
+   "strength": 12
   }
  },
- "updated_at": "2026-09-11T21:02:29+00:00"
+ "updated_at": "2026-09-12T04:42:48+00:00"
 }
