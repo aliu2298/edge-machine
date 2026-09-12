@@ -2099,6 +2099,46 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Excelsior|FC Utrecht": {
+   "away": "FC Utrecht",
+   "date": "2026-09-13",
+   "home": "Excelsior",
+   "id": "2026-09-13|Excelsior|FC Utrecht",
+   "kickoff": "2026-09-13T10:15Z",
+   "lead_source": true,
+   "league": "Eredivisie",
+   "model": {
+    "away2plus": 0.5045,
+    "btts": 0.7458,
+    "home2plus": 0.703,
+    "over15": 0.9185,
+    "over25": 0.7825
+   },
+   "priced_at": "2026-09-12T10:55:20+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.4158,
+     "price": 2.3
+    },
+    "btts": {
+     "fair": 0.6202,
+     "price": 1.513
+    },
+    "home2plus": {
+     "fair": 0.5,
+     "price": 1.909
+    },
+    "over15": {
+     "fair": 0.8013,
+     "price": 1.19
+    },
+    "over25": {
+     "fair": 0.5427,
+     "price": 1.769
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|FC Dallas|Portland Timbers": {
    "away": "Portland Timbers",
    "date": "2026-09-13",
@@ -2340,5 +2380,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-12T07:50:02+00:00"
+ "updated_at": "2026-09-12T10:55:20+00:00"
 }
