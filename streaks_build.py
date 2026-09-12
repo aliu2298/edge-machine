@@ -84,15 +84,14 @@ STREAK_BY_KEY = {s[0]: s for s in STREAKS}
 #   team_eq   — the subject team scores exactly n
 #   btts      — both teams score
 #   total_gte / total_lte — combined goals
-# Leads and picks are ONE market: over 1.5. Nothing else.
+# Leads are ONE market: over 1.5. Nothing else.
 #
 # WHY A SINGLE MARKET
 # -------------------
-# Eight bet types across two boards meant every market carried a thin, separately
-# underpowered sample, and the slate had to compare rarity ACROSS markets whose base
-# rates differ by 40 points. Narrowing to two pooled the evidence; narrowing to one
-# pools it completely, and the picks board ranks on a single scale with no cross-market
-# correction needed at all.
+# Eight bet types meant every market carried a thin, separately underpowered sample, and
+# the (since retired) 3-card slate had to compare rarity ACROSS markets whose base rates
+# differ by 40 points. Narrowing to two pooled the evidence; narrowing to one pools it
+# completely, and every lead ranks on a single scale with no cross-market correction.
 #
 # Over 1.5 rather than over 2.5 for two reasons, one measured and one structural:
 #   * on the ledger to date it is the only market with a positive lift (+4.7pp at n=19,
@@ -567,7 +566,10 @@ def team_rows(streaks, by_team, fixtures, rates):
 # ---------------------------------------------------------------- rendering
 PAGES = {
     # id -> (file, nav label, h1, <title>, meta description, sub-heading)
-    "leads": ("leads.html", "Leads", "Edge Machine · Leads",
+    # index.html: the Leads page IS the site root now that the 3-card slate is retired
+    # (it only ever re-drew three of these). leads.html is kept as a redirect stub so
+    # links published before the switch still land.
+    "leads": ("index.html", "Leads", "Edge Machine · Leads",
               "Edge Machine · Leads",
               "Upcoming fixtures where both sides' runs point at the same total. "
               "Research, not betting advice.",
@@ -579,6 +581,13 @@ PAGES = {
                 "Every tracked team's current runs"),
 }
 TAB_LABEL = {"leads": "Leads", "fire": "🔥 On fire", "teams": "All teams"}
+LEADS_ALIAS = "leads.html"     # redirect stub for links that predate index.html
+
+
+def _href(filename):
+    """Link to the site root as "./", never "./index.html" — the two are different URLs
+    to a browser and the watchdog fetches the root."""
+    return "" if filename == "index.html" else filename
 
 
 def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
@@ -587,8 +596,8 @@ def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
 
     Leads used to be the first of three tabs on Streaks, which meant the page shipped
     ALL THREE payloads — 598 KB — just to show the one list most people open first.
-    Splitting them lets each page carry only what it renders, and puts Leads one click
-    from the picks rather than two.
+    Splitting them lets each page carry only what it renders; Leads is now the site
+    root.
     """
     _f, _lbl, h1, title, desc, sub = PAGES[page]
     # Only embed the payloads this page actually renders.
@@ -601,7 +610,7 @@ def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
         f'<button class="tb{" on" if t == initial_tab else ""}" data-tab="{t}">'
         f'{TAB_LABEL[t]}</button>' for t in tabs))
     nav = "".join(
-        f'<a{" class=\"on\"" if p == page else ""} href="./{PAGES[p][0]}">'
+        f'<a{" class=\"on\"" if p == page else ""} href="./{_href(PAGES[p][0])}">'
         f'{PAGES[p][1]}</a>' for p in ("leads", "streaks"))
     # Buttons must reflect what THIS page can actually filter. The Leads page listing
     # the Belgian, Danish and Turkish leagues was a dead end — those are form feeds and
@@ -829,7 +838,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>{esc(h1)}</h1>
 <div class="sub">{esc(sub)} · all times CT · updated {esc(now)}</div>
-<div class="nav"><a href="./">Picks</a>{nav}
+<div class="nav">{nav}
 <a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 
 <details class="how">
@@ -1230,8 +1239,8 @@ def build(force=False):
 
     os.makedirs(OUT_DIR, exist_ok=True)
     # Two pages from ONE computation. Leads are the list most people open first, so they
-    # get their own page next to the picks instead of being the first tab behind Streaks
-    # — and each page now ships only the payload it renders.
+    # are the site root rather than the first tab behind Streaks — and each page ships
+    # only the payload it renders.
     written = []
     for page, tabs in (("leads", ("leads",)), ("streaks", ("fire", "teams"))):
         out = os.path.join(OUT_DIR, PAGES[page][0])
@@ -1239,6 +1248,14 @@ def build(force=False):
             f.write(page_html(leads, teams, fire, track, meta, leagues, now,
                               page=page, tabs=tabs))
         written.append((out, os.path.getsize(out) / 1024))
+
+    # leads.html was the Leads page's address until the slate was retired and Leads
+    # took over the root. Old links (README, shared URLs) still point there.
+    with open(os.path.join(OUT_DIR, LEADS_ALIAS), "w") as f:
+        f.write('<!doctype html><meta charset="utf-8">'
+                '<meta http-equiv="refresh" content="0; url=./">'
+                '<title>Edge Machine · Leads</title>'
+                '<a href="./">Leads moved to the front page.</a>\n')
 
     # machine-readable companion, same shape the page consumes
     with open(DATA_OUT, "w") as f:

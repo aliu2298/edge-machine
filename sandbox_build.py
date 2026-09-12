@@ -398,7 +398,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 
 <h1>Sandbox Tracker</h1>
 <div class="sub">Which tipster actually makes money · {len(S.SPORTS)} sports · updated {esc(now)}</div>
-<div class="nav"><a href="./">Picks</a><a href="./leads.html">Leads</a>
+<div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
 

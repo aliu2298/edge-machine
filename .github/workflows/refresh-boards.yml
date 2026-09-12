@@ -51,7 +51,6 @@ jobs:
       - name: Logic tests
         run: |
           python3 test_streaks.py
-          python3 test_slate.py
 
       # Guardrails. The failure mode here is SILENT — a live pick that never matches a
       # final score just sits on the board looking normal. Warn-only: a stale board beats
@@ -75,16 +74,11 @@ jobs:
       - name: Rebuild streaks board and grade leads
         run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
 
-      # MUST run after streaks_build: the slate draws from the leads it just published.
-      # Also grades any live pick whose fixture has finished, then refills the slot.
-      - name: Draw and grade the slate
-        run: python3 slate_build.py || echo "slate build failed — keeping previous board"
-
       # Logs teams on a long run and grades whether the run actually continued.
       - name: Track on-fire runs
         run: python3 fire_track.py || echo "fire tracking failed — continuing"
 
-      # Record page LAST: it reads all three ledgers, so it must follow every step that
+      # Record page LAST: it reads both ledgers, so it must follow every step that
       # writes to one.
       - name: Build the record page
         run: python3 record_build.py || echo "record build failed — keeping previous page"
@@ -99,7 +93,7 @@ jobs:
 
           PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
                      public_site/record.html public_site/today.html \
-                     data/streaks.json data/streak_leads.json data/slate.json data/fire_runs.json"
+                     data/streaks.json data/streak_leads.json data/fire_runs.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -127,7 +121,7 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 streaks_build.py && python3 slate_build.py && python3 fire_track.py \
+            python3 streaks_build.py && python3 fire_track.py \
               && python3 record_build.py && python3 today_build.py
           done
 

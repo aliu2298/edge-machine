@@ -8,10 +8,9 @@ whether an idea actually holds up.
 
 | Board | What it is |
 |---|---|
-| [Picks](https://aliu2298.github.io/edge-machine/) | Three auto-drawn picks from streak confluences, graded on the final score |
-| [Leads](https://aliu2298.github.io/edge-machine/leads.html) | Upcoming fixtures where both sides' runs point at the same total |
+| [Leads](https://aliu2298.github.io/edge-machine/) | Upcoming fixtures where both sides' runs point at the same total |
 | [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Every tracked team's current runs, and the sides on the longest ones |
-| [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — picks, leads and on-fire runs — against what those teams do anyway |
+| [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — leads and on-fire runs — against what those teams do anyway |
 | [Today](https://aliu2298.github.io/edge-machine/today.html) | Every tracked fixture kicking off today, with both sides' current runs |
 
 ## Architecture
@@ -22,9 +21,9 @@ flowchart TB
         direction TB
         HC["health.py<br/>guardrails (warn-only)"]
         SF["streaks_fetch.py<br/>12 leagues → fixtures"]
-        SB["streaks_build.py<br/>runs → confluences"]
-        SL["slate_build.py<br/>draw 3 · grade · refill"]
-        HC --> SF --> SB --> SL
+        SB["streaks_build.py<br/>runs → confluences · log · grade"]
+        RB["record_build.py<br/>lift vs the teams' own rates"]
+        HC --> SF --> SB --> RB
     end
 
     subgraph EXT["External sources (public, no auth)"]
@@ -34,8 +33,8 @@ flowchart TB
 
     subgraph REPO["Repo (committed)"]
         SJ["data/streaks.json<br/>computed leads"]
-        SLJ["data/slate.json<br/>pick ledger"]
-        OUT["public_site/<br/>index · streaks<br/>record · today"]
+        SLJ["data/streak_leads.json<br/>lead ledger"]
+        OUT["public_site/<br/>index (leads) · streaks<br/>record · today"]
     end
 
     subgraph LOCAL["Local Mac (optional)"]
@@ -46,11 +45,12 @@ flowchart TB
 
     BOV -.link lookup.-> SB
     ESPN --> SF
-    ESPN -.final scores.-> SL
+    ESPN -.final scores.-> SB
 
-    SF --> SB --> SJ --> SL --> SLJ
+    SF --> SB --> SJ
+    SB --> SLJ --> RB
     SB --> OUT
-    SL --> OUT
+    RB --> OUT
 
     OUT --> PAGES["GitHub Pages<br/>aliu2298.github.io/edge-machine"]
 
@@ -60,8 +60,8 @@ flowchart TB
 ```
 
 The pipeline runs entirely on GitHub's servers, so the board stays current whether or not
-the Mac is on. Nothing is entered by hand: the slate draws from the streak leads, grades
-itself against ESPN final scores, and refills each slot as its pick settles.
+the Mac is on. Nothing is entered by hand: every published lead is logged at publish time
+and graded against ESPN final scores once its fixture is played.
 
 ## Components
 
@@ -70,20 +70,16 @@ itself against ESPN final scores, and refills each slot as its pick settles.
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, slate, base rates, auto-settlement. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
 | `venues.py` | Shared fixture→market matcher (Bovada). |
-| `slate.py` | Draws three picks, grades them, keeps `data/slate.json`. |
-| `slate_build.py` | Renders the card board to `public_site/index.html`. |
 | `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
 | `today_build.py` | Renders today's fixtures to `public_site/today.html`. |
-| `slate_backtest.py` | Replays the board day by day over past fixtures. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
-| `streaks_build.py` | Finds streak confluences; renders `leads.html` and `streaks.html`. |
+| `streaks_build.py` | Finds streak confluences; renders `index.html` (Leads) and `streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
-| `health.py` | Warn-only guardrails: lead freshness, stuck picks, dead venue feed. |
+| `health.py` | Warn-only guardrails: lead freshness, stuck or vanished leads, dead venue feed. |
 | `verify_coverage.py` | Proves every league's squad reaches the board. |
 | `fire_track.py` | Logs long runs; tests them against a shuffled-schedule null. |
-| `test_slate.py` | Logic tests for slate selection and lifecycle. |
 | `.github/workflows/refresh-boards.yml` | Daily cron: check → build → publish to Pages. |
 | `.github/workflows/backup-refresh.yml` | Watchdog 12h out of phase; takes over only if the primary failed or the live board is stale. |
 
@@ -97,41 +93,23 @@ npm --prefix web run dev  # frontend dev server on :5173
 Rebuild the public boards by hand:
 
 ```bash
-python3 streaks_build.py && python3 slate_build.py
+python3 streaks_build.py && python3 record_build.py
 ```
 
-## The Picks board
+## The Picks board (retired 2026-09-12)
 
-Three cards, drawn automatically from the Streaks leads — nothing is entered by hand.
-Rarest confluence first, with **one pick per fixture and one per team**, so the three are
-independent bets rather than three angles on the same match. Each is **locked when drawn**:
-the runs behind a lead keep moving, so the card shows what was claimed at the time.
+For two weeks the site root was a 3-card slate: three leads re-drawn automatically
+(rarest first, one per fixture, one per team), locked at draw and graded on the final
+score. It was retired because it only ever re-drew three of the leads the Leads board
+already publishes and the Record page already grades — its 28 settled picks were a strict
+subset of the leads ledger, so the section was a second, smaller read of the same
+evidence. The Leads page now sits at the root; `leads.html` redirects there. The code is
+in git history (`slate.py`, `slate_build.py`, `slate_backtest.py`, `test_slate.py`).
 
-**A slot refills at kickoff, not at settlement.** A started fixture cannot be backed and
-the sportsbook has already pulled its pre-match market, so holding the slot until a final
-score arrives fills the board with cards that have no link and no use. Worse, a postponed
-fixture *vanishes from the ESPN feed* and can never grade at all: FC Utrecht v Go Ahead
-Eagles (2026-09-05) was dropped from the feed and would have blocked a third of the board
-for the full 7-day void. The pick keeps settling in the background and is listed under
-"in play · awaiting result" until it does. `health.py` flags a fixture that is a day
-overdue *and* absent from the feed, rather than waiting out the void.
-
-Slots also refill one at a time rather than waiting for all three — batch replacement
-stalls for days whenever one pick is on a Saturday fixture and another on a Wednesday one.
-The window starts at 24h and widens only when it must.
-
-`slate_backtest.py` replays the board day by day over past fixtures with no lookahead. Two
-things it established that are worth knowing:
-
-* **In season the slate is full every day** (91 of 91). It goes dark for about six weeks
-  each summer — in 2026 that is the World Cup plus the European off-season, when there are
-  genuinely no fixtures anywhere.
-* **Picks span more than 24h** — median 2.3 days from draw to kickoff, because three held
-  slots turning over every ~2 days structurally reach further than one night. Re-ranking
-  does not change it; the binding constraint is slot turnover, not ranking order.
-
-**Current state: no bet type clears its league-adjusted baseline.** No edge is claimed —
-what the fixed cadence buys is a clean, uncorrelated, continuously accumulating sample.
+One lesson from it survives in `health.py`: a fixture that is **abandoned or postponed
+vanishes from the ESPN feed** and can never grade. FC Utrecht v Go Ahead Eagles
+(2026-09-05) sat pending for a week that way, so the guardrail now flags a lead that is a
+day overdue *and* absent from the feed rather than waiting out the ledger's 7-day void.
 
 ## The Streaks board
 
@@ -154,7 +132,7 @@ Croatian, Ukrainian, Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani, Armenia
 a data limit, and `verify_coverage.py` now names them rather than letting the gap pass as
 silence.
 
-**Leads and picks settle one market: over 1.5.** Eight bet types meant every market
+**Leads settle one market: over 1.5.** Eight bet types meant every market
 carried a thin, separately underpowered sample; narrowing to two pooled it, and narrowing
 to one pools it completely, so the whole board answers a single question.
 
@@ -295,7 +273,7 @@ Leads are research to look at. Nothing here places or stages a bet.
 
 `predictions.db` is **git-ignored** and stays local, so the raw database is never
 committed. `data/predictions.json` is a frozen archive of the 118 manually-entered sports picks
-that predate the auto-drawn slate; nothing writes to it any more, and stake was stripped
+that predate the leads ledger; nothing writes to it any more, and stake was stripped
 from it because the repo is public.
 
 Secrets (`.apifootball_key`, `*.pem`) are git-ignored. A fresh checkout creates empty

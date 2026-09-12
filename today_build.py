@@ -166,7 +166,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Today</h1>
 <div class="sub">Every tracked fixture kicking off today · all times CT · updated {esc(now)}</div>
-<div class="nav"><a href="./">Picks</a><a href="./leads.html">Leads</a>
+<div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 

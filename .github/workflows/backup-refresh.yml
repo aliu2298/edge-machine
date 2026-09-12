@@ -117,7 +117,6 @@ jobs:
         if: steps.check.outputs.run == 'true'
         run: |
           python3 test_streaks.py
-          python3 test_slate.py
 
       - name: Health check
         if: steps.check.outputs.run == 'true'
@@ -131,15 +130,11 @@ jobs:
         if: steps.check.outputs.run == 'true'
         run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
 
-      - name: Draw and grade the slate
-        if: steps.check.outputs.run == 'true'
-        run: python3 slate_build.py || echo "slate build failed — keeping previous board"
-
       - name: Track on-fire runs
         if: steps.check.outputs.run == 'true'
         run: python3 fire_track.py || echo "fire tracking failed — continuing"
 
-      # Record page LAST: it reads all three ledgers.
+      # Record page LAST: it reads both ledgers.
       - name: Build the record page
         if: steps.check.outputs.run == 'true'
         run: python3 record_build.py || echo "record build failed — keeping previous page"
@@ -156,7 +151,7 @@ jobs:
 
           PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
                      public_site/record.html public_site/today.html \
-                     data/streaks.json data/streak_leads.json data/slate.json data/fire_runs.json"
+                     data/streaks.json data/streak_leads.json data/fire_runs.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -184,7 +179,7 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 streaks_build.py && python3 slate_build.py && python3 fire_track.py \
+            python3 streaks_build.py && python3 fire_track.py \
               && python3 record_build.py && python3 today_build.py
           done
 

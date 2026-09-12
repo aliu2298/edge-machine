@@ -93,7 +93,7 @@ check("unknown team voids",
 check("unknown kind voids", T.settle_bet({"kind": "nope"}, "A", "B", 1, 1), None)
 
 print("\n== find_leads: end-to-end, over 1.5 only ==")
-# Leads and picks settle ONE market now: over 1.5. Aces score 3 every game (so their
+# Leads settle ONE market now: over 1.5. Aces score 3 every game (so their
 # matches also clear 1.5); Bees win 1-0 every game, so Bees have a scored-in run but
 # NO over-1.5 run. The surviving pairing is therefore scoring1+scoring1: one apiece
 # clears 1.5.

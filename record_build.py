@@ -3,20 +3,24 @@
 
 WHY IT IS ITS OWN PAGE
 ----------------------
-The numbers were split across two boards — the slate's record sat under the picks, the
-leads' record sat behind a tab on Streaks, and the fire runs were measured in a file nobody
-opened. Each page showed a slice and none showed the answer. Since whether any of this
-works is the only question that matters, it gets its own page rather than a footnote on two
-others.
+The numbers were split across boards — the leads' record sat behind a tab on Streaks,
+and the fire runs were measured in a file nobody opened. Each page showed a slice and none
+showed the answer. Since whether any of this works is the only question that matters, it
+gets its own page rather than a footnote on two others.
+
+The 3-card slate that used to head this page was retired on 2026-09-12: it only ever
+re-drew three of the leads already measured below, so its 28 graded picks were a strict
+subset of the leads ledger and its section added a second, smaller read of the same
+evidence.
 
 WHAT IS MEASURED, AND AGAINST WHAT
 ----------------------------------
 No odds anywhere, so nothing here is profit and none of it should be read as ROI. Every
 section compares a hit rate against **what the teams involved manage anyway**:
 
-  * picks and leads -> the named side's own rate (or the two sides' mean for a
-    fixture-level outcome). A league average would credit the pick for team quality —
-    measured, that inflated "team to score" from -1.5pp to +9.3pp.
+  * leads -> the named side's own rate (or the two sides' mean for a fixture-level
+    outcome). A league average would credit the lead for team quality — measured, that
+    inflated "team to score" from -1.5pp to +9.3pp.
   * fire runs -> NOTHING. There is no honest baseline for a streak, so the fire section
     shows the ledger descriptively and puts significance in a separate permutation test.
     Three baselines were tried and all three were wrong; see fire_track's docstring.
@@ -31,7 +35,6 @@ import os, html, datetime
 import streaks_fetch
 import streaks_track as T
 import fire_track as F
-import slate as S
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(ROOT, "public_site")
@@ -115,15 +118,12 @@ def tiles(pairs):
         for k, v in pairs) + '</div>')
 
 
-def page_html(sl, ld, fr, hist, now):
+def page_html(ld, fr, now):
     def section(title, blurb, rep, rows_html, empty):
         if not rep["graded"]:
             return f'<h2>{title}</h2><div class="note">{blurb}</div><div class="note">{empty}</div>'
         return f'<h2>{title}</h2><div class="note">{blurb}</div>{rows_html}'
 
-    slate_body = tiles([("Graded", sl["graded"]), ("Hit rate", pct(sl["rate"])),
-                        ("Live", sl["live"]), ("Void", sl["void"])]) + \
-        perf_table(sl["rows"], lambda r: BET_NAME.get(r["kind"], r["kind"]))
     leads_body = tiles([("Graded", ld["graded"]), ("Hit rate", pct(ld["overall_rate"])),
                         ("Pending", ld["pending"]), ("Void", ld["void"])]) + \
         perf_table(ld["rows"], lambda r: BET_NAME.get(r["kind"], r["kind"]))
@@ -141,12 +141,15 @@ def page_html(sl, ld, fr, hist, now):
                  'games after one are pre-selected against. <b>Only a diff outside that '
                  'band means anything.</b></div>' + fire_test)
 
+    # Every graded lead, newest first. This used to be the slate's settled picks; the
+    # leads ledger is the superset, so it is the list shown now.
+    hist = ld.get("recent") or []
     hist_rows = "".join(
         f"""<tr><td class="mut">{esc((p.get('kickoff') or p['date'])[:10])}</td>
         <td>{esc(p['match'])}</td><td>{esc(p['headline'])}</td>
         <td class="num">{esc(p.get('final') or '—')}</td>
         <td><span class="st {p['status']}">{esc(p['status'].upper())}</span></td></tr>"""
-        for p in hist[:60])
+        for p in hist)
 
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -198,7 +201,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Record</h1>
 <div class="sub">Everything that has been graded · all times CT · updated {esc(now)}</div>
-<div class="nav"><a href="./">Picks</a><a href="./leads.html">Leads</a>
+<div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 
@@ -206,19 +209,15 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 profit</b> and none of it should be read as ROI. Each rate is compared against
 <b>what the teams involved manage anyway</b> — the named side's own rate for a claim about
 one team, the two sides' mean for a fixture-level outcome. A league average would credit a
-pick for team quality: measured here, that difference moved "team to score" from
+lead for team quality: measured here, that difference moved "team to score" from
 <b>-1.5pp to +9.3pp</b>. On-fire runs get no baseline at all — three were tried and all
 three were wrong, so that section is measured against a shuffled schedule instead.
 <b>The reference is the number</b>; a rate alone is unreadable, and three lanes in this
 repo have already died from being read without one.</div>
 
-{section("Picks — the 3-card slate",
-         "Three picks drawn automatically, graded on the final score.", sl, slate_body,
-         "Nothing graded yet — the first picks settle as their fixtures are played.")}
-
 {section("Leads — every confluence published",
-         "Every lead the Streaks board has shown, graded whether or not it was picked. "
-         "A wider sample than the slate, since the slate only ever holds three.",
+         "Every lead the Leads board has shown, graded on the final score once the "
+         "fixture is played.",
          ld, leads_body,
          "Nothing graded yet.")}
 
@@ -229,29 +228,27 @@ repo have already died from being read without one.</div>
          fr, fire_body,
          "Nothing graded yet.")}
 
-{f'''<h2>Settled picks ({len(hist)})</h2>
+{f'''<h2>Recently settled leads ({len(hist)})</h2>
 <div class="tbl"><table>
 <tr><th>Date</th><th>Match</th><th>Pick</th><th class="num">Final</th><th></th></tr>
 {hist_rows}</table></div>''' if hist else ''}
 
-<footer>Read-only static export · auto-drawn research, not betting advice.</footer>
+<footer>Read-only static export · research, not betting advice.</footer>
 </div></body></html>"""
 
 
 def build():
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
-    sl = S.report(fixtures)
     ld = T.report(fixtures)
     fr = F.report(fixtures)
-    hist = S.report(fixtures)["history"]
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "record.html")
     with open(out, "w") as f:
-        f.write(page_html(sl, ld, fr, hist, now))
+        f.write(page_html(ld, fr, now))
     print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
-          f"slate {sl['graded']}, leads {ld['graded']}, fire {fr['graded']} graded")
+          f"leads {ld['graded']}, fire {fr['graded']} graded")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """health.py — guardrails for the boards.
 
-The real risk here is SILENT failure, not loud failure. A pick whose fixture never matches
-a final score just sits "live" forever; a venue feed that quietly returns nothing
+The real risk here is SILENT failure, not loud failure. A lead whose fixture never matches
+a final score just sits "pending" forever; a venue feed that quietly returns nothing
 makes every market button vanish with no error anywhere. Both look fine on the page.
 
 Writes GitHub Actions annotations so problems land on the run summary rather than being
@@ -16,11 +16,12 @@ Usage:  python3 health.py [--strict]
 import json, os, sys, datetime
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SLATE = os.path.join(ROOT, "data", "slate.json")
 LEADS = os.path.join(ROOT, "data", "streaks.json")
+LEDGER = os.path.join(ROOT, "data", "streak_leads.json")
 
 SETTLE_GRACE_DAYS = 2      # a match may legitimately be ungraded the morning after
 LEADS_STALE_HOURS = 36     # the daily job should be refreshing this
+LINK_HORIZON_DAYS = 3      # a sportsbook prices this far out; beyond it no line is normal
 
 
 def note(level, msg):
@@ -48,71 +49,75 @@ def main():
             problems += 1
         print(f"  leads: {n_leads} ({hrs:.1f}h old)")
         if n_leads == 0:
-            note("warning", "NO LEADS — the slate cannot refill. Expected during the "
-                            "summer break (World Cup + European off-season); "
-                            "suspicious otherwise.")
+            note("warning", "NO LEADS — expected during the summer break (World Cup + "
+                            "European off-season); suspicious otherwise.")
             problems += 1
     except Exception as e:
         note("error", f"LEADS unreadable: {e}")
         return 1
 
-    # 2. SLATE — stuck picks, and whether the board is actually full.
+    # 2. LEDGER — pending leads that can never grade.
+    #
+    # A lead whose match finished days ago and never matched a final score is the silent
+    # failure this file exists for: it renders as a normal pending row. A fixture that
+    # VANISHES from the feed can never grade, so waiting out the ledger's 7-day void tells
+    # us nothing new. FC Utrecht v Go Ahead Eagles (2026-09-05) was abandoned, dropped out
+    # of ESPN entirely, and sat pending for a week. Flag it as soon as it is a day overdue
+    # AND absent from the feed.
+    board = []                            # near-term leads, for the venue check below
     try:
-        import slate as S
-        sb = S.load(SLATE)
-        live = S.live_picks(sb)               # everything still to be graded
-        board = S.board_picks(sb)             # the subset that can still be backed
-        settled = [p for p in sb["picks"].values() if p["status"] != "live"]
-        print(f"  slate: {len(board)} on board, "
-              f"{len(live) - len(board)} awaiting result, {len(settled)} settled")
-
-        # A live pick whose match finished days ago never matched a final score. That is
-        # the silent failure this file exists for — it renders as a normal pending card.
-        # A fixture that vanishes from the feed can NEVER grade, so waiting the full
-        # grace period tells us nothing new. FC Utrecht v Go Ahead Eagles (2026-09-05)
-        # was postponed, dropped out of ESPN entirely, and would have sat live for the
-        # 7-day void. Flag it as soon as it is a day overdue AND absent from the feed.
+        ledger = json.load(open(LEDGER)).get("leads", {})
+        pending = [e for e in ledger.values() if e.get("status") == "pending"]
+        settled = len(ledger) - len(pending)
+        print(f"  ledger: {len(pending)} pending, {settled} settled")
         try:
             import streaks_fetch
-            known = {S.fixture_key(f)
+            known = {(f["date"], f["home"], f["away"])
                      for f in streaks_fetch.load_or_fetch()["fixtures"]}
         except Exception:
             known = set()             # no feed, no claim: stay silent rather than guess
-        for p in S.awaiting_result(sb):
-            ko = S._dt(p.get("kickoff"))
-            overdue = ko and (now - ko).total_seconds() > 24 * 3600
-            if overdue and known and S.fixture_key(p) not in known:
-                note("warning", f"GONE {p['match']} ({p['date']}) kicked off "
-                                f"{(now-ko).days}d ago and is no longer in the fixture "
-                                f"feed — postponed or moved; it can never grade")
+        today = now.date()
+        flagged = set()
+        for e in pending:
+            try:
+                age = (today - datetime.date.fromisoformat(e["date"])).days
+            except (KeyError, ValueError):
+                continue
+            key = (e["date"], e["home"], e["away"])
+            if age > 1 and known and key not in known and key not in flagged:
+                flagged.add(key)
+                note("warning", f"GONE {e['match']} ({e['date']}) was {age}d ago and is "
+                                f"no longer in the fixture feed — abandoned, postponed "
+                                f"or moved; it can never grade")
                 problems += 1
-
-        for p in live:
-            ko = S._dt(p.get("kickoff"))
-            if ko and (now - ko).days > SETTLE_GRACE_DAYS:
-                note("warning", f"STUCK live pick {p['match']} ({p['date']}, "
-                                f"{(now-ko).days}d ago) never graded — the fixture may "
-                                f"have moved, or team names drifted from ESPN's")
+            elif age > SETTLE_GRACE_DAYS and key not in flagged:
+                flagged.add(key)
+                note("warning", f"STUCK pending lead {e['match']} ({e['date']}, {age}d "
+                                f"ago) never graded — the fixture may have moved, or "
+                                f"team names drifted from ESPN's")
                 problems += 1
 
         # The ledger must never carry a venue URL. Links resolve at RENDER time so a
-        # venue switch takes effect on picks already drawn; a stored URL silently
-        # outlives the switch, which is exactly how three live cards kept stale links
-        # under a "Bovada" label. A dead field named for the old venue is one careless
-        # read away from being rendered again.
-        stored = sorted({k for p in sb["picks"].values() if isinstance(p, dict)
-                         for k, v in p.items() if isinstance(v, str) and "://" in v})
+        # venue switch takes effect on leads already logged; a stored URL silently
+        # outlives the switch.
+        stored = sorted({k for e in ledger.values() if isinstance(e, dict)
+                         for k, v in e.items() if isinstance(v, str) and "://" in v})
         if stored:
-            note("warning", f"SLATE ledger stores venue URLs in {stored} — links must "
-                            f"resolve at render time, not be frozen at draw")
+            note("warning", f"LEDGER stores venue URLs in {stored} — links must "
+                            f"resolve at render time, not be frozen at publish")
             problems += 1
 
-        if len(board) < S.SLATE_SIZE and n_leads:
-            note("warning", f"SLATE only {len(board)}/{S.SLATE_SIZE} filled while "
-                            f"{n_leads} leads exist — selection may be over-constrained")
-            problems += 1
+        horizon = now + datetime.timedelta(days=LINK_HORIZON_DAYS)
+        for l in blob.get("leads", []):
+            try:
+                ko = datetime.datetime.fromisoformat(
+                    (l.get("kickoff") or "").replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            if now < ko <= horizon:
+                board.append(l)
     except Exception as e:
-        note("warning", f"SLATE check skipped: {e}")
+        note("warning", f"LEDGER check skipped: {e}")
 
     # 3. VENUE LINKS — the board links Bovada. A feed returning nothing is
     # indistinguishable from "no market exists" unless something explicitly looks, which
@@ -120,9 +125,9 @@ def main():
     #
     # Coverage is only meaningful NEAR TERM: a sportsbook prices the next few days and
     # posts distant fixtures closer to kickoff, so a lead two weeks out legitimately has
-    # no line yet. Only the BOARD is checked — a pick whose fixture has kicked off has no
-    # pre-match market by definition, and counting those as misses made the check read
-    # "3/5" while the board was in fact fully linked.
+    # no line yet. Only leads inside LINK_HORIZON_DAYS are checked — a fixture that has
+    # kicked off has no pre-match market by definition, and counting those as misses
+    # made the check read "3/5" while the board was in fact fully linked.
     try:
         from venues import fetch_bovada_events, venue_link
         events = fetch_bovada_events()
@@ -133,7 +138,8 @@ def main():
             miss = [p for p in board
                     if not venue_link(p["match"].replace(" v ", " vs "),
                                       p.get("kickoff") or p["date"], events)]
-            print(f"  bovada links: {len(board)-len(miss)}/{len(board)} board picks")
+            print(f"  bovada links: {len(board)-len(miss)}/{len(board)} leads inside "
+                  f"{LINK_HORIZON_DAYS}d")
             for p in miss:
                 print(f"    (no line for {p['match']})")
     except Exception as e:
