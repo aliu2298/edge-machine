@@ -2179,6 +2179,46 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Coventry City|Brighton & Hove Albion": {
+   "away": "Brighton & Hove Albion",
+   "date": "2026-09-13",
+   "home": "Coventry City",
+   "id": "2026-09-13|Coventry City|Brighton & Hove Albion",
+   "kickoff": "2026-09-13T13:00Z",
+   "lead_source": true,
+   "league": "Premier League",
+   "model": {
+    "away2plus": 0.3915,
+    "btts": 0.5621,
+    "home2plus": 0.415,
+    "over15": 0.7641,
+    "over25": 0.5238
+   },
+   "priced_at": "2026-09-12T13:03:56+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.5108,
+     "price": 1.87
+    },
+    "btts": {
+     "fair": 0.5633,
+     "price": 1.667
+    },
+    "home2plus": {
+     "fair": 0.3134,
+     "price": 3.05
+    },
+    "over15": {
+     "fair": 0.7677,
+     "price": 1.241
+    },
+    "over25": {
+     "fair": 0.5387,
+     "price": 1.781
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|Excelsior|FC Utrecht": {
    "away": "FC Utrecht",
    "date": "2026-09-13",
@@ -2335,6 +2375,86 @@
     "over25": {
      "fair": 0.5913,
      "price": 1.617
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-13|Lecce|Monza": {
+   "away": "Monza",
+   "date": "2026-09-13",
+   "home": "Lecce",
+   "id": "2026-09-13|Lecce|Monza",
+   "kickoff": "2026-09-13T13:00Z",
+   "lead_source": true,
+   "league": "Serie A",
+   "model": {
+    "away2plus": 0.346,
+    "btts": 0.4957,
+    "home2plus": 0.3414,
+    "over15": 0.6991,
+    "over25": 0.4394
+   },
+   "priced_at": "2026-09-12T13:03:56+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.3182,
+     "price": 3.0
+    },
+    "btts": {
+     "fair": 0.4858,
+     "price": 1.926
+    },
+    "home2plus": {
+     "fair": 0.3357,
+     "price": 2.85
+    },
+    "over15": {
+     "fair": 0.6704,
+     "price": 1.426
+    },
+    "over25": {
+     "fair": 0.4191,
+     "price": 2.28
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-13|Lille|Troyes": {
+   "away": "Troyes",
+   "date": "2026-09-13",
+   "home": "Lille",
+   "id": "2026-09-13|Lille|Troyes",
+   "kickoff": "2026-09-13T13:00Z",
+   "lead_source": true,
+   "league": "Ligue 1",
+   "model": {
+    "away2plus": 0.3386,
+    "btts": 0.5706,
+    "home2plus": 0.5035,
+    "over15": 0.7843,
+    "over25": 0.5524
+   },
+   "priced_at": "2026-09-12T13:03:56+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.2051,
+     "price": 4.65
+    },
+    "btts": {
+     "fair": 0.5,
+     "price": 1.87
+    },
+    "home2plus": {
+     "fair": 0.6247,
+     "price": 1.532
+    },
+    "over15": {
+     "fair": 0.7833,
+     "price": 1.217
+    },
+    "over25": {
+     "fair": 0.562,
+     "price": 1.699
     }
    },
    "status": "pending"
@@ -2660,5 +2780,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-12T12:46:06+00:00"
+ "updated_at": "2026-09-12T13:04:00+00:00"
 }
