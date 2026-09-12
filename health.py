@@ -18,6 +18,7 @@ import json, os, sys, datetime
 ROOT = os.path.dirname(os.path.abspath(__file__))
 LEADS = os.path.join(ROOT, "data", "streaks.json")
 LEDGER = os.path.join(ROOT, "data", "streak_leads.json")
+BOOK = os.path.join(ROOT, "data", "book_ledger.json")
 
 SETTLE_GRACE_DAYS = 2      # a match may legitimately be ungraded the morning after
 LEADS_STALE_HOURS = 36     # the daily job should be refreshing this
@@ -118,6 +119,25 @@ def main():
                 board.append(l)
     except Exception as e:
         note("warning", f"LEDGER check skipped: {e}")
+
+    # 2b. BOOK LEDGER — prices every fixture inside 24h. A silently-empty book feed
+    # shows up here as a ledger that stops growing while fixtures keep kicking off.
+    try:
+        bk = json.load(open(BOOK))
+        rows = bk.get("rows", {})
+        pend = sum(1 for r in rows.values() if r.get("status") == "pending")
+        upd = datetime.datetime.fromisoformat(bk["updated_at"]) if bk.get("updated_at") else None
+        age = (now - upd).total_seconds() / 3600 if upd else None
+        print(f"  book: {len(rows)} fixtures priced, {pend} pending"
+              + (f", written {age:.1f}h ago" if age is not None else ""))
+        if age is not None and age > LEADS_STALE_HOURS:
+            note("warning", f"BOOK ledger last written {age:.0f}h ago — is book_track "
+                            f"running?")
+            problems += 1
+    except FileNotFoundError:
+        print("  book: no ledger yet")
+    except Exception as e:
+        note("warning", f"BOOK check skipped: {e}")
 
     # 3. VENUE LINKS — the board links Bovada. A feed returning nothing is
     # indistinguishable from "no market exists" unless something explicitly looks, which

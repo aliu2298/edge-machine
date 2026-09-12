@@ -525,7 +525,17 @@ def team_lookups(by_team, fixtures):
     return league_of, nxt
 
 
-def team_rows(streaks, by_team, fixtures, rates):
+def book_index():
+    """team -> its record against the book (book_track), or {} if none yet."""
+    try:
+        import book_track
+        return book_track.team_index(book_track.load())
+    except Exception as e:
+        print(f"  (book index unavailable: {e})")
+        return {}
+
+
+def team_rows(streaks, by_team, fixtures, rates, book=None):
     """Every tracked team with its current runs — the browse view.
 
     This exists because a confluence is genuinely rare: the Premier League currently has
@@ -534,6 +544,7 @@ def team_rows(streaks, by_team, fixtures, rates):
     answer, so the runs are browsable on their own terms.
     """
     league_of, nxt = team_lookups(by_team, fixtures)
+    book = book_index() if book is None else book
 
     # Only teams that belong to the tracked competitions. The friendlies feed drags in
     # reserve and lower-division sides (Espanyol B, Pozuelo Alarcón) that played one
@@ -568,6 +579,11 @@ def team_rows(streaks, by_team, fixtures, rates):
             # below the lead threshold: visible, but never half of a confluence
             "thin": info["played"] < MIN_PLAYED,
             "friendlies": sum(1 for g in info["recent"] if not g.get("comp", True)),
+            # Record against the BOOK across every priced game (book_track), not the
+            # run: n, hit rate v the book's fair rate, z, ROI, and the PAYING tag past
+            # the floor. Absent until the team has a settled priced fixture.
+            "book": ({k: book[team][k] for k in ("n", "rate", "fair", "z", "roi", "paying")}
+                     if team in book else None),
         })
     # thin-sample rows sink below properly-evidenced ones regardless of how rare they look
     # teams on a run lead; then thin samples; then rarity. Teams with no current run
@@ -801,6 +817,11 @@ padding:3px 10px;white-space:nowrap}}
 .kbtn:hover{{background:#7aa2f72a}}
 .px{{font-size:11px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;
 white-space:nowrap}}
+.bk{{font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums;margin-top:6px}}
+.bk b{{color:var(--fg);font-weight:600}}
+.bk .pay{{color:var(--pos);font-weight:800;letter-spacing:.05em;font-size:9.5px;
+border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:1px 7px;
+margin-left:6px}}
 .frn{{font-size:11px;color:var(--warn);margin:-4px 0 9px}}
 /* date grouping + countdown */
 .dhd{{display:flex;align-items:baseline;gap:9px;margin:22px 0 9px;
@@ -1024,6 +1045,10 @@ function teamRow(t) {{
           esc(countdown(t.next.kickoff)[1])}}</span>`
       + ` · ${{esc(t.next.league)}}</div>`
     : `<div class="tnx">No fixture scheduled in the next 14 days</div>`;
+  const bk = t.book
+    ? `<div class="bk" title="Every priced market in this team's games, graded against the book's vig-free probability. z = excess hits in standard deviations; PAYING needs the floor and z ≥ 2.">At the price: <b>${{t.book.n}}</b> obs · hit <b>${{Math.round(t.book.rate*100)}}%</b> v book ${{Math.round(t.book.fair*100)}}% · z <b>${{(t.book.z>=0?'+':'')+t.book.z.toFixed(2)}}</b> · ROI <b>${{(t.book.roi>=0?'+':'')+(t.book.roi*100).toFixed(1)}}%</b>${{
+        t.book.paying ? '<span class="pay">PAYING</span>' : ''}}</div>`
+    : '';
   return `<div class="trow">
     <div class="th"><span class="tn">${{esc(t.team)}}</span>
       ${{t.no_run ? '<span class="norun">no current run</span>' : ''}}
@@ -1034,6 +1059,7 @@ function teamRow(t) {{
       <div class="truns">${{chips}}</div>
       ${{seq(t.recent)}}
       ${{n}}
+      ${{bk}}
     </div>
   </div>`;
 }}

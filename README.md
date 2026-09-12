@@ -77,6 +77,8 @@ and graded against ESPN final scores once its fixture is played.
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
 | `model.py` | Shrunk-Poisson probability per priced market, scored against the book on Record. |
+| `book_track.py` | Prices every fixture inside 24h and grades it: the book's calibration ledger, `data/book_ledger.json`. |
+| `test_book.py` | Logic tests for the book ledger. |
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
 | `health.py` | Warn-only guardrails: lead freshness, stuck or vanished leads, dead venue feed. |
 | `verify_coverage.py` | Proves every league's squad reaches the board. |
@@ -255,6 +257,21 @@ not, the book is the better estimate and no selection rule built on form can bea
 
 On the walk-forward the model beats a flat league rate only marginally (Brier −0.002 to
 −0.007); the book will be a much harder yardstick. That is the honest prior.
+
+### The book, on every fixture (added 2026-09-12)
+
+A per-team "profitable" tag built from leads would confound the team with the streak all
+over again — leads only observe a side while it is on a run, exactly when its next result
+regresses — and grow at one lead a week. So `book_track.py` keeps a separate ledger: **every
+competitive fixture is priced once it is inside 24h of kickoff**, whatever the form on
+either side, on five markets (over 1.5, over 2.5, BTTS, each side to score 2+), with the
+model's probability logged beside each price, and graded on the final score. That makes it a
+calibration ledger for the book itself: hits against the hits the book's own vig-free
+probabilities predicted, as **excess** and **z**, by market, by league, by home/away, by
+price band, and — as a drill-down — by team. A team is tagged **PAYING** on the All-teams
+tab only past 20 observations with z ≥ 2, and the page says how many teams were tested,
+because with ~230 of them about six reach z = 2 by chance. Read the league and price-band
+tables first; they pool dozens of teams and are readable weeks before any team row.
 
 ### Tracking and grading
 

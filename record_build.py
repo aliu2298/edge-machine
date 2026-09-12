@@ -39,6 +39,7 @@ import os, html, datetime
 import streaks_fetch
 import streaks_track as T
 import fire_track as F
+import book_track as K
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(ROOT, "public_site")
@@ -140,6 +141,61 @@ def model_tables(mr):
     return brier_t, value_t
 
 
+def book_tables(bk):
+    """The book on every fixture: by market, league, venue, price band; the value
+    split; and the teams past the floor. z is the number to read (see book_track)."""
+    def zcell(z):
+        cls = "pos" if z >= 0 else "neg"
+        return f'<td class="num {cls}">{z:+.2f}</td>'
+
+    def roicell(v):
+        cls = "pos" if v >= 0 else "neg"
+        return f'<td class="num {cls}">{"+" if v >= 0 else ""}{v*100:.1f}%</td>'
+
+    def seg_rows(rows, label_of):
+        return "".join(
+            f"""<tr><td>{esc(label_of(r))}</td><td class="num">{r['n']}</td>
+            <td class="num">{pct(r['rate'])}</td><td class="num mut">{pct(r['fair'])}</td>
+            <td class="num">{r['excess']:+.1f}</td>{zcell(r['z'])}{roicell(r['roi'])}</tr>"""
+            for r in rows)
+    head = ('<tr><th>{}</th><th class="num">n</th><th class="num">hit</th>'
+            '<th class="num">book fair</th><th class="num">excess</th><th class="num">z</th>'
+            '<th class="num">ROI</th></tr>')
+    tbl = lambda label, rows, lo: (f'<div class="tbl"><table>{head.format(label)}'
+                                  f'{seg_rows(rows, lo)}</table></div>') if rows else ""
+    market_t = tbl("Market", bk["by_market"], lambda r: r["label"])
+    league_t = tbl("League", bk["by_league"], lambda r: r["league"])
+    band_t = tbl("Book fair prob", bk["bands"],
+                 lambda r: f"{r['lo']*100:.0f}–{r['hi']*100:.0f}%")
+    brier = "".join(
+        f"""<tr><td>{esc(r['label'])}</td><td class="num">{r.get('n_model', 0)}</td>
+        <td class="num">{r['brier_model']:.4f}</td><td class="num">{r['brier_book']:.4f}</td>
+        <td><span class="sig {'y' if r['model_better'] else 'n'}">
+          {'MODEL AHEAD' if r['model_better'] else 'book ahead'}</span></td></tr>"""
+        for r in bk["by_market"] if r.get("n_model"))
+    brier_t = (f'<div class="tbl"><table><tr><th>Market</th><th class="num">n</th>'
+               f'<th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr>'
+               f'{brier}</table></div>') if brier else ""
+    vr = []
+    for label, g in (("Value (model ≥ book + %dpp)" % round(bk["margin"] * 100), bk["value"]),
+                     ("Rest", bk["rest"])):
+        if g:
+            vr.append(dict(g, label=label))
+    value_t = tbl("Model v book", vr, lambda r: r["label"])
+    teams = bk["paying"] or bk["top_teams"]
+    team_rows = "".join(
+        f"""<tr><td>{esc(t)}{' <span class="sig y">PAYING</span>' if a['paying'] else ''}</td>
+        <td class="num">{a['n']}</td><td class="num">{pct(a['rate'])}</td>
+        <td class="num mut">{pct(a['fair'])}</td><td class="num">{a['excess']:+.1f}</td>
+        {zcell(a['z'])}{roicell(a['roi'])}</tr>"""
+        for t, a in teams)
+    team_t = (f'<div class="tbl"><table>{head.format("Team")}{team_rows}</table></div>'
+              if team_rows else
+              f'<div class="note">No team has reached the floor of {bk["team_floor"]} '
+              f'priced observations yet ({bk["teams_tested"]} teams tested so far).</div>')
+    return market_t, league_t, band_t, brier_t, value_t, team_t
+
+
 def fire_tables(fr):
     """Ledger and test, rendered apart on purpose.
 
@@ -177,7 +233,7 @@ def tiles(pairs):
         for k, v in pairs) + '</div>')
 
 
-def page_html(ld, fr, now):
+def page_html(ld, fr, bk, now):
     def section(title, blurb, rep, rows_html, empty):
         if not rep["graded"]:
             return f'<h2>{title}</h2><div class="note">{blurb}</div><div class="note">{empty}</div>'
@@ -206,6 +262,32 @@ def page_html(ld, fr, now):
                   'book does not, the value group should out-hit and out-earn the rest. '
                   'The margin was fixed before any of this settled.</div>' + value_t)
     model_rep = {"graded": mr["graded"]}
+    ov = bk.get("overall") or {}
+    market_t, league_t, band_t, brier_t, value_t, team_t = book_tables(bk) if ov else ("",) * 6
+    book_body = (tiles([("Fixtures priced", bk["fixtures"]), ("Settled", bk["graded"]),
+                        ("Observations", bk["observations"]),
+                        ("Hit v book", f"{pct(ov.get('rate'))} v {pct(ov.get('fair'))}"),
+                        ("z", f"{ov.get('z', 0):+.2f}"),
+                        ("ROI", "—" if ov.get("roi") is None else f"{ov['roi']*100:+.1f}%")]) +
+                 market_t +
+                 '<div class="note"><b>By league.</b> A mispricing is far more likely to be '
+                 'structural — a thin market, a shaded favourite — than a property of one '
+                 'club, and a league pools dozens of teams, so this reads weeks before any '
+                 'team row can.</div>' + league_t +
+                 '<div class="note"><b>Calibration of the book.</b> Each band groups '
+                 'observations by the probability the book implied; a well-priced book hits '
+                 'at that rate in every band. Excess in a band is where the price is wrong '
+                 'for everyone, not for one team.</div>' + band_t +
+                 ('<div class="note"><b>Model v book, on every fixture</b> — the same test as '
+                  'the section above, on a sample nobody hand-picked.</div>' + brier_t + value_t
+                  if brier_t else '') +
+                 f'<div class="note"><b>Teams.</b> Pooled across every priced market in a '
+                 f'team\'s games (its own 2+ counts for it alone). A team is tagged '
+                 f'<b>PAYING</b> only past <b>{bk["team_floor"]}</b> observations with '
+                 f'<b>z ≥ {bk["team_z"]:.0f}</b> — and with <b>{bk["teams_tested"]}</b> teams '
+                 f'tested, about {max(1, round(bk["teams_tested"] * 0.023))} would reach that by '
+                 f'chance, so read the tag as a shortlist, not a verdict.</div>' + team_t)
+    book_rep = {"graded": bk["graded"]}
     fire_led, fire_test = fire_tables(fr)
     fire_body = (tiles([("Graded", fr["graded"]), ("Extended", pct(fr["rate"])),
                         ("Pending", fr["pending"])]) + fire_led +
@@ -326,6 +408,18 @@ repo have already died from being read without one.</div>
          model_rep, model_body,
          "Nothing scored yet — model probabilities started 2026-09-12, alongside prices.")}
 
+{section("The book, on every fixture — who pays at the price?",
+         "Every competitive fixture in the pull is priced once it is inside 24h of "
+         "kickoff — whatever the form on either side — and graded on the final score. "
+         "That makes it a calibration ledger for the <b>book</b> itself, with no "
+         "selection by streak: hits against the hits the book's own vig-free "
+         "probabilities predicted. <b>Excess</b> is hits minus expected; <b>z</b> is that "
+         "in standard deviations, and it is the number to read — flat-stake ROI is shown "
+         "for the money view, but at n=10 its standard deviation is about 24 points.",
+         book_rep, book_body,
+         "Nothing settled yet — the book ledger started 2026-09-12; fixtures are priced "
+         "the day before kickoff and graded the day after.")}
+
 {section("On fire — do long runs continue?",
          "Each long run logged against the fixture that tests it. The question is not "
          "whether a side on a hot run keeps scoring — it is whether they do it more than "
@@ -346,14 +440,15 @@ def build():
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
     ld = T.report(fixtures)
     fr = F.report(fixtures)
+    bk = K.report(K.load())
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "record.html")
     with open(out, "w") as f:
-        f.write(page_html(ld, fr, now))
+        f.write(page_html(ld, fr, bk, now))
     print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
-          f"leads {ld['graded']}, fire {fr['graded']} graded")
+          f"leads {ld['graded']}, fire {fr['graded']}, book {bk['graded']} graded")
 
 
 if __name__ == "__main__":

@@ -117,6 +117,7 @@ jobs:
         if: steps.check.outputs.run == 'true'
         run: |
           python3 test_streaks.py
+          python3 test_book.py
 
       - name: Health check
         if: steps.check.outputs.run == 'true'
@@ -129,6 +130,10 @@ jobs:
       - name: Rebuild streaks board and grade leads
         if: steps.check.outputs.run == 'true'
         run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
+
+      - name: Price every fixture inside 24h against the book
+        if: steps.check.outputs.run == 'true'
+        run: python3 book_track.py || echo "book tracking failed — continuing"
 
       - name: Track on-fire runs
         if: steps.check.outputs.run == 'true'
@@ -151,7 +156,8 @@ jobs:
 
           PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
                      public_site/record.html public_site/today.html \
-                     data/streaks.json data/streak_leads.json data/fire_runs.json"
+                     data/streaks.json data/streak_leads.json data/fire_runs.json \
+                     data/book_ledger.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -179,7 +185,7 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 streaks_build.py && python3 fire_track.py \
+            python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
               && python3 record_build.py && python3 today_build.py
           done
 
