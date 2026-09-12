@@ -3570,14 +3570,16 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "FC Augsburg",
    "id": "2026-09-12|FC Augsburg|Bayer Leverkusen|Over 1.5 goals",
    "kickoff": "2026-09-12T13:30Z",
    "league": "Bundesliga",
    "match": "FC Augsburg v Bayer Leverkusen",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-12|FC Augsburg|Bayer Leverkusen|Over 2.5 goals": {
@@ -3594,14 +3596,16 @@
     "n": 3
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "headline": "Over 2.5 goals",
    "home": "FC Augsburg",
    "id": "2026-09-12|FC Augsburg|Bayer Leverkusen|Over 2.5 goals",
    "kickoff": "2026-09-12T13:30Z",
    "league": "Bundesliga",
    "match": "FC Augsburg v Bayer Leverkusen",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|FC Cincinnati|Charlotte FC|Both teams to score": {
@@ -4394,14 +4398,16 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "5-0",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "SC Freiburg",
    "id": "2026-09-12|SC Freiburg|Borussia M\u00f6nchengladbach|Over 1.5 goals",
    "kickoff": "2026-09-12T13:30Z",
    "league": "Bundesliga",
    "match": "SC Freiburg v Borussia M\u00f6nchengladbach",
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-12|Sunderland|Arsenal|Over 1.5 goals": {
@@ -4464,14 +4470,16 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "2-1",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "TSG Hoffenheim",
    "id": "2026-09-12|TSG Hoffenheim|VfB Stuttgart|Over 1.5 goals",
    "kickoff": "2026-09-12T13:30Z",
    "league": "Bundesliga",
    "match": "TSG Hoffenheim v VfB Stuttgart",
-   "status": "pending",
+   "status": "hit",
    "strength": 6
   },
   "2026-09-12|TSG Hoffenheim|VfB Stuttgart|TSG Hoffenheim to score": {
@@ -4490,14 +4498,16 @@
     "team": "TSG Hoffenheim"
    },
    "date": "2026-09-12",
+   "final": "2-1",
    "first_seen": "2026-09-05",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "headline": "TSG Hoffenheim to score",
    "home": "TSG Hoffenheim",
    "id": "2026-09-12|TSG Hoffenheim|VfB Stuttgart|TSG Hoffenheim to score",
    "kickoff": "2026-09-12T13:30Z",
    "league": "Bundesliga",
    "match": "TSG Hoffenheim v VfB Stuttgart",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|TSG Hoffenheim|VfB Stuttgart|TSG Hoffenheim to score 2+": {
@@ -4516,7 +4526,9 @@
     "team": "TSG Hoffenheim"
    },
    "date": "2026-09-12",
+   "final": "2-1",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "headline": "TSG Hoffenheim to score 2+",
    "home": "TSG Hoffenheim",
    "id": "2026-09-12|TSG Hoffenheim|VfB Stuttgart|TSG Hoffenheim to score 2+",
@@ -4529,6 +4541,20 @@
     "team2plus": 0.6279
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.286
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.392
+    },
+    "team2plus": {
+     "hit": true,
+     "pnl": 0.625
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -4544,7 +4570,7 @@
      "price": 1.625
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|Tottenham Hotspur|Everton|Over 1.5 goals": {
@@ -6700,6 +6726,31 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals": {
+   "a": "Barcelona",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Racing Santander",
+   "b": "Racing Santander",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4648318042813456,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-16",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Barcelona",
+   "id": "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals",
+   "kickoff": "2026-09-16T19:30Z",
+   "last_seen": "2026-09-12",
+   "league": "La Liga",
+   "match": "Barcelona v Racing Santander",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-16|Deportivo|Sevilla|Both teams to score": {
    "a": "Deportivo",
    "a_key": "btts",
@@ -7673,6 +7724,7 @@
    "home": "Eintracht Frankfurt",
    "id": "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
+   "last_seen": "2026-09-12",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v SC Freiburg",
    "status": "pending",
@@ -8113,6 +8165,33 @@
    "last_seen": "2026-09-12",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-19|Werder Bremen|FC Augsburg|FC Augsburg to score 2+": {
+   "a": "FC Augsburg",
+   "a_key": "scoring",
+   "a_run": 3,
+   "away": "FC Augsburg",
+   "b": "Werder Bremen",
+   "b_key": "porous",
+   "b_run": 6,
+   "base_rate": 0.22629969418960244,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "FC Augsburg"
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-12",
+   "headline": "FC Augsburg to score 2+",
+   "home": "Werder Bremen",
+   "id": "2026-09-19|Werder Bremen|FC Augsburg|FC Augsburg to score 2+",
+   "kickoff": "2026-09-19T13:30Z",
+   "last_seen": "2026-09-12",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v FC Augsburg",
    "status": "pending",
    "strength": 9
   },
@@ -8907,6 +8986,31 @@
    "status": "pending",
    "strength": 11
   },
+  "2026-09-20|Frosinone|Como|Over 1.5 goals": {
+   "a": "Frosinone",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Como",
+   "b": "Como",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.4648318042813456,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Frosinone",
+   "id": "2026-09-20|Frosinone|Como|Over 1.5 goals",
+   "kickoff": "2026-09-20T13:00Z",
+   "last_seen": "2026-09-12",
+   "league": "Serie A",
+   "match": "Frosinone v Como",
+   "status": "pending",
+   "strength": 7
+  },
   "2026-09-20|Fulham|Manchester United|Manchester United to score 2+": {
    "a": "Manchester United",
    "a_key": "scoring",
@@ -9577,5 +9681,5 @@
    "strength": 12
   }
  },
- "updated_at": "2026-09-12T13:52:38+00:00"
+ "updated_at": "2026-09-12T15:36:23+00:00"
 }

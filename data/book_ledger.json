@@ -388,11 +388,19 @@
   "2026-09-12|Borussia Dortmund|SC Paderborn 07": {
    "away": "SC Paderborn 07",
    "date": "2026-09-12",
+   "final": "3-0",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "Borussia Dortmund",
    "id": "2026-09-12|Borussia Dortmund|SC Paderborn 07",
    "kickoff": "2026-09-12T13:30Z",
    "lead_source": true,
    "league": "Bundesliga",
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.233,
+    "over25": 0.408
+   },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
     "away2plus": {
@@ -412,7 +420,13 @@
      "price": 1.408
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-12|C.D. Nacional|Alverca": {
    "away": "Alverca",
@@ -697,6 +711,8 @@
   "2026-09-12|FC Augsburg|Bayer Leverkusen": {
    "away": "Bayer Leverkusen",
    "date": "2026-09-12",
+   "final": "2-2",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "FC Augsburg",
    "id": "2026-09-12|FC Augsburg|Bayer Leverkusen",
    "kickoff": "2026-09-12T13:30Z",
@@ -707,6 +723,12 @@
     "btts": 0.7534,
     "home2plus": 0.656,
     "over25": 0.7754
+   },
+   "pnl": {
+    "away2plus": 0.556,
+    "btts": 0.385,
+    "home2plus": 1.2,
+    "over25": 0.495
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -727,7 +749,13 @@
      "price": 1.495
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-12|FC Cincinnati|Charlotte FC": {
    "away": "Charlotte FC",
@@ -882,6 +910,8 @@
   "2026-09-12|Genoa|Frosinone": {
    "away": "Frosinone",
    "date": "2026-09-12",
+   "final": "1-1",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "Genoa",
    "id": "2026-09-12|Genoa|Frosinone",
    "kickoff": "2026-09-12T13:00Z",
@@ -893,6 +923,13 @@
     "home2plus": 0.2647,
     "over15": 0.6774,
     "over25": 0.4135
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.69,
+    "home2plus": -1.0,
+    "over15": 0.294,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -917,7 +954,14 @@
      "price": 1.87
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen": {
    "away": "FC Groningen",
@@ -1322,6 +1366,8 @@
   "2026-09-12|Mainz|Eintracht Frankfurt": {
    "away": "Eintracht Frankfurt",
    "date": "2026-09-12",
+   "final": "1-3",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "Mainz",
    "id": "2026-09-12|Mainz|Eintracht Frankfurt",
    "kickoff": "2026-09-12T13:30Z",
@@ -1332,6 +1378,12 @@
     "btts": 0.6963,
     "home2plus": 0.68,
     "over25": 0.7339
+   },
+   "pnl": {
+    "away2plus": 1.4,
+    "btts": 0.435,
+    "home2plus": -1.0,
+    "over25": 0.541
    },
    "priced_at": "2026-09-12T07:49:49+00:00",
    "prices": {
@@ -1352,7 +1404,13 @@
      "price": 1.541
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-12|OH Leuven|Cercle Brugge KSV": {
    "away": "Cercle Brugge KSV",
@@ -1557,6 +1615,8 @@
   "2026-09-12|Racing Santander|Alav\u00e9s": {
    "away": "Alav\u00e9s",
    "date": "2026-09-12",
+   "final": "2-1",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "Racing Santander",
    "id": "2026-09-12|Racing Santander|Alav\u00e9s",
    "kickoff": "2026-09-12T12:00Z",
@@ -1568,6 +1628,13 @@
     "home2plus": 0.5018,
     "over15": 0.8156,
     "over25": 0.5994
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.546,
+    "home2plus": 1.18,
+    "over15": 0.25,
+    "over25": 0.87
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -1592,7 +1659,14 @@
      "price": 1.87
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-12|Real Madrid|Rayo Vallecano": {
    "away": "Rayo Vallecano",
@@ -1712,6 +1786,8 @@
   "2026-09-12|SC Freiburg|Borussia M\u00f6nchengladbach": {
    "away": "Borussia M\u00f6nchengladbach",
    "date": "2026-09-12",
+   "final": "5-0",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "SC Freiburg",
    "id": "2026-09-12|SC Freiburg|Borussia M\u00f6nchengladbach",
    "kickoff": "2026-09-12T13:30Z",
@@ -1722,6 +1798,12 @@
     "btts": 0.7022,
     "home2plus": 0.6748,
     "over25": 0.7361
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.588,
+    "over25": 0.667
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -1742,7 +1824,13 @@
      "price": 1.667
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-12|SC Rheindorf Altach|Grazer AK": {
    "away": "Grazer AK",
@@ -1907,6 +1995,8 @@
   "2026-09-12|TSG Hoffenheim|VfB Stuttgart": {
    "away": "VfB Stuttgart",
    "date": "2026-09-12",
+   "final": "2-1",
+   "graded_at": "2026-09-12T15:36:23+00:00",
    "home": "TSG Hoffenheim",
    "id": "2026-09-12|TSG Hoffenheim|VfB Stuttgart",
    "kickoff": "2026-09-12T13:30Z",
@@ -1917,6 +2007,12 @@
     "btts": 0.7772,
     "home2plus": 0.6279,
     "over25": 0.7984
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.286,
+    "home2plus": 0.625,
+    "over25": 0.392
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -1937,7 +2033,13 @@
      "price": 1.392
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-12|Tottenham Hotspur|Everton": {
    "away": "Everton",
@@ -2815,5 +2917,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-12T13:52:41+00:00"
+ "updated_at": "2026-09-12T15:36:24+00:00"
 }
