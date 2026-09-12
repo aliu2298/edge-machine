@@ -285,7 +285,10 @@ def publish(d, universe, coverage, verbose=True):
         # challenger has to clear.
         # Only where Polymarket IS the venue. A Kalshi-venue row carries Kalshi's price,
         # and a Polymarket "self-quote" at someone else's price would be a fiction.
-        source_probs = {"polymarket": {r["market_id"]: ("prob", r["price_a"])
+        # Its probability is the MIDPOINT: the row's price_a is now the ask a follower
+        # pays, and scoring the market's own accuracy on an ask would add half the spread
+        # to every Brier term.
+        source_probs = {"polymarket": {r["market_id"]: ("prob", r.get("mid_a", r["price_a"]))
                                        for r in rows
                                        if r.get("venue", "polymarket") == "polymarket"}}
 
@@ -315,10 +318,12 @@ def publish(d, universe, coverage, verbose=True):
                 if qid in seen:
                     continue
                 r = by_id[mid]
-                # An untouched 50/50 book is not a forecast. It is already barred from
-                # betting and from Brier, so logging it only grows the ledger — and it
-                # is nearly half of every run, almost all of it table tennis.
-                if r["untraded"] and name == "polymarket":
+                # No book, no quote — for ANY source, not just the market's own. A quote
+                # is logged once and never revised, so logging a tip against a placeholder
+                # price would freeze it at a price that never existed. Skipping instead
+                # leaves the contest to be quoted on a later run, once money arrives and
+                # the price is real — still before the start, so still a prediction.
+                if r["untraded"]:
                     continue
 
                 kind, value = opinion
@@ -364,6 +369,7 @@ def publish(d, universe, coverage, verbose=True):
                     price=round(price, 4) if pick and price is not None else None,
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
                     venue=r.get("venue", "polymarket"),
+                    spread=r.get("spread"), liquidity=r.get("liquidity"),
                     status="open", pnl=0.0, result=None, settled=None,
                 ))
                 seen.add(qid)
@@ -371,6 +377,8 @@ def publish(d, universe, coverage, verbose=True):
 
     d["coverage"] = coverage
     d["feed_status"] = dict(S.FEED_STATUS)
+    if S.ODDS_USAGE:
+        d["meta"]["odds_api"] = dict(S.ODDS_USAGE, at=now_iso())
     if verbose:
         print(f"  logged {added} new quotes")
     return added
@@ -503,6 +511,54 @@ def score(d, sport=None):
 
 RETAIN_DAYS = 45
 
+# Sports whose Polymarket prices were measured to be placeholders before the book gate
+# existed (MAX_SPREAD in sandbox_sources): boxing and cricket against Pinnacle, table
+# tennis at 91% of rows logged within 0.47-0.53. Tennis, MLB and NFL books were real
+# (tennis within 2pp of Pinnacle), so their history is left alone.
+PRE_GATE_SPORTS = ("boxing", "cricket", "table_tennis")
+PRE_GATE_NOTE = "pre-gate: logged at an unverified Polymarket placeholder price"
+
+
+def retire_pre_gate(d, now=None, verbose=True):
+    """One rule, applied blind to outcomes, for quotes logged before the book gate.
+
+    A Polymarket-venue quote in a PRE_GATE_SPORTS sport that carries no `spread` was
+    priced off a midpoint with no book check. It cannot be verified after the fact, so:
+
+      * not yet started -> removed, so the contest is quoted again under the gate on the
+        next run, at a real price and still before the start;
+      * started or settled -> voided with PRE_GATE_NOTE: no stake, no P/L, no Brier.
+
+    Idempotent: removed rows are gone and voided rows are skipped. Returns (removed, voided).
+    """
+    now = now or datetime.now(timezone.utc)
+    keep, removed, voided = [], 0, 0
+    for q in d["quotes"]:
+        pre_gate = (q.get("venue", "polymarket") == "polymarket"
+                    and q.get("sport") in PRE_GATE_SPORTS and "spread" not in q
+                    and q.get("note") != PRE_GATE_NOTE)
+        if not pre_gate:
+            keep.append(q)
+            continue
+        try:
+            start = datetime.fromisoformat(q["start"])
+            if start.tzinfo is None:
+                start = start.replace(tzinfo=timezone.utc)
+        except (KeyError, TypeError, ValueError):
+            start = now
+        if q["status"] == "open" and start > now:
+            removed += 1
+            continue
+        q["status"], q["pnl"], q["note"] = "void", 0.0, PRE_GATE_NOTE
+        q["settled"] = q.get("settled") or now_iso()
+        voided += 1
+        keep.append(q)
+    d["quotes"] = keep
+    if verbose and (removed or voided):
+        print(f"  pre-gate prices: removed {removed} unstarted quotes for re-quoting, "
+              f"voided {voided} started or settled")
+    return removed, voided
+
 
 def prune(d, retain_days=RETAIN_DAYS, verbose=True):
     """Fold long-settled quotes into per-source totals and drop the rows.
@@ -546,6 +602,7 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
 def main():
     print("Sandbox Tracker")
     d = load()
+    retire_pre_gate(d)
     # Stage timings are printed so a slow run in CI names its own culprit. The first
     # run with soccer on Kalshi took 14.6 minutes against 3 before it, with only 25s of
     # CPU — all of it waiting on the network, and no log line said where.

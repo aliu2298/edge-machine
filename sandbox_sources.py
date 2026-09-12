@@ -166,12 +166,17 @@ SOURCES = {
              "headless browser. Only its MATCH-WINNER tips are scored — its totals and "
              "handicap tips settle on a different question than the market they would "
              "be booked against."),
-    "oddsapi": dict(
-        label="The Odds API (bookmaker consensus)", kind="Sportsbook consensus",
-        connected=False, site="the-odds-api.com",
-        sports=["tennis", "boxing", "nfl", "mlb", "cricket"],
-        note="Needs ODDS_API_KEY in repo secrets. Adds real bookmaker prices for the four "
-             "sports where DraftKings-via-ESPN does not reach. Wired but dormant."),
+    "pinnacle": dict(
+        label="Pinnacle (via The Odds API)", kind="Sportsbook", connected=True,
+        site="pinnacle.com", sports=["boxing", "cricket", "tennis"],
+        note="The sharpest book there is — it takes the largest limits and moves on sharp "
+             "money rather than shading against the public — de-vigged to a fair "
+             "probability and read through The Odds API (ODDS_API_KEY). It covers the three "
+             "sports with no dependable tipster, and it is the price every other number on "
+             "the board should be judged against. Coverage is partial: boxing well, "
+             "cricket on major leagues and internationals only, tennis only at the big "
+             "tournaments the API lists — ITF and Challenger matches are not there. The "
+             "free tier is 500 credits a month, so each run spends at most a few."),
 }
 
 
@@ -613,6 +618,45 @@ def _is_head_to_head(question, side_a, side_b):
 # price nobody has tested, and it is the deep books that make a source's error visible.
 MAX_PER_SPORT = 40
 
+# A Polymarket price is only a price when there is a book behind it. gamma's
+# `outcomePrices` is a MIDPOINT, and a market that has just been listed shows a midpoint
+# near 0.50 with nothing on either side of it. Measured 2026-09-12: boxing bouts logged at
+# 0.51-0.515 were 0.88-0.90 hours later, once money arrived (Panin v Linger: $59 traded,
+# $49 on the book), and against Pinnacle the logged prices were off by a mean of 20pp in
+# boxing and 12pp in cricket — but under 2pp in tennis, where the books are real. The old
+# check only caught an exact 0.50/0.50, so 0.51/0.49 sailed through and any source
+# backing the favourite would have been paid at a price that never existed.
+#
+# So a row counts as priced only when the spread is tight AND there is money on the book,
+# and a priced row is booked at the ASK — the price a follower would actually pay — not
+# at the midpoint. The midpoint is kept, as `mid_a`, for Polymarket's own Brier score.
+MAX_SPREAD = 0.05
+MIN_LIQUIDITY = 100.0
+
+
+def pm_book(m):
+    """(tradeable, ask_a, ask_b, spread, liquidity) for one gamma market.
+
+    ask_b is 1 - best bid on outcome A: buying B is selling A. Missing or one-sided books
+    are never tradeable.
+    """
+    try:
+        bid = float(m.get("bestBid")) if m.get("bestBid") is not None else None
+        ask = float(m.get("bestAsk")) if m.get("bestAsk") is not None else None
+        spread = float(m.get("spread")) if m.get("spread") is not None else None
+    except (TypeError, ValueError):
+        return False, None, None, None, 0.0
+    try:
+        liq = float(m.get("liquidityNum") or m.get("liquidity") or 0)
+    except (TypeError, ValueError):
+        liq = 0.0
+    if bid is None or ask is None or not (0 < bid < ask < 1):
+        return False, None, None, spread, liq
+    if spread is None:
+        spread = ask - bid
+    ok = spread <= MAX_SPREAD + 1e-9 and liq >= MIN_LIQUIDITY
+    return ok, round(ask, 4), round(1 - bid, 4), round(spread, 4), liq
+
 
 def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_SPORT,
                      stats=None):
@@ -661,9 +705,10 @@ def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_S
                 continue
             if pa <= 0 or pb <= 0 or abs(pa + pb - 1) > 0.08:
                 continue
-            # A book pinned at exactly 0.50/0.50 has never traded. Its "probability" is a
-            # placeholder, not a crowd view, and table tennis is full of them.
-            untraded = (pa == 0.5 and pb == 0.5)
+            # Priced only with a real book behind it — see MAX_SPREAD. An untraded row
+            # keeps its midpoints for display, but nothing is logged against it.
+            tradeable, ask_a, ask_b, spread, liq = pm_book(m)
+            untraded = not tradeable
 
             when = m.get("gameStartTime") or ev.get("startDate")
             try:
@@ -684,17 +729,22 @@ def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_S
                 market_id=str(m.get("id")),
                 label=f"{outs[0]} vs {outs[1]}",
                 side_a=str(outs[0]), side_b=str(outs[1]),
-                price_a=pa, price_b=pb,
+                price_a=ask_a if tradeable else pa, price_b=ask_b if tradeable else pb,
+                mid_a=pa, spread=spread, liquidity=round(liq, 2),
                 start=wdt.isoformat(), date=wdt.strftime("%Y-%m-%d"),
                 volume=vol, untraded=untraded,
                 url=f"https://polymarket.com/event/{ev.get('slug')}",
             )
-            if key not in best or vol > best[key]["volume"]:
+            # A priced row always beats an unpriced one for the same contest, whatever
+            # the volumes: the unpriced one cannot be logged at all.
+            if (key not in best or (untraded, -vol) < (best[key]["untraded"],
+                                                       -best[key]["volume"])):
                 best[key] = row
 
-    # Deepest books first, then cut. Placeholder 50/50 books sort to the bottom on
-    # volume, so the cap drops those before it drops anything real.
-    rows = sorted(best.values(), key=lambda r: (-r["volume"], r["start"]))
+    # Priced books first, deepest first, then cut — so the intake cap is never spent on
+    # rows that cannot be logged. (Sorting on volume alone let a high-volume market with
+    # a 30c spread take a slot from a tight one.)
+    rows = sorted(best.values(), key=lambda r: (r["untraded"], -r["volume"], r["start"]))
 
     # Pre-cap totals, reported separately. The coverage panel exists to answer whether
     # Polymarket really carries these six sports, and answering that with a number the
@@ -1953,7 +2003,158 @@ def fetch_spot(domain):
             for (_s, _d, p), rs in groups.items()]
 
 
+# ---------------------------------------------------------------------------
+# Pinnacle, through The Odds API
+# ---------------------------------------------------------------------------
+#
+# Pinnacle closed its own public API on 2025-07-23. The Odds API carries its lines under
+# the bookmaker key "pinnacle" (EU region) behind a keyed, documented, paid-or-free-tier
+# API, which is the legitimate route — the pinnacle.com site's own guest endpoint answers
+# too, but it is undocumented and Pinnacle does not serve US customers, so it is not used.
+#
+# CREDITS. /v4/sports and /v4/sports/{key}/events are free; /odds costs one credit per
+# market per region, and `bookmakers=pinnacle` counts as one region. The free tier is 500
+# a month and this workflow runs four times a day, so every paid call is earned: a sport
+# key is only priced when its free event list has a contest inside the horizon that the
+# venue universe actually lists, at most ODDS_MAX_CALLS per run, and never once the
+# account is down to ODDS_RESERVE credits.
+#
+# THE KEY never appears in a log line: it travels in the query string, so errors are
+# reported by status code alone, never by URL.
+
+ODDS_API = "https://api.the-odds-api.com/v4"
+ODDS_GROUPS = {"boxing": "Boxing", "cricket": "Cricket", "tennis": "Tennis"}
+ODDS_HORIZON_DAYS = 4          # the same horizon the venue universe is fetched over
+ODDS_MAX_CALLS = 4             # paid calls per run; 4 runs a day x 4 x 30 = 480 < 500
+ODDS_RESERVE = 25              # stop spending below this many remaining credits
+ODDS_USAGE = {}                # {"remaining", "used", "calls"} for this run, for the page
+_odds_sports = None
+
+
+def _odds_key():
+    import os
+    return os.environ.get("ODDS_API_KEY", "").strip()
+
+
+def _odds_get(path, params):
+    """GET one Odds API endpoint -> (json, headers). Raises RuntimeError without the URL."""
+    key = _odds_key()
+    q = urllib.parse.urlencode(dict(params, apiKey=key))
+    req = urllib.request.Request(f"{ODDS_API}{path}?{q}", headers={"User-Agent": UA})
+    try:
+        with urllib.request.urlopen(req, timeout=25) as f:
+            return json.load(f), dict(f.headers)
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"HTTP {e.code} on {path}") from None
+    except (OSError, http.client.HTTPException, ValueError) as e:
+        raise RuntimeError(f"{type(e).__name__} on {path}") from None
+
+
+def _odds_note_usage(headers):
+    for h, k in (("x-requests-remaining", "remaining"), ("x-requests-used", "used")):
+        v = next((val for name, val in headers.items() if name.lower() == h), None)
+        if v is not None:
+            try:
+                ODDS_USAGE[k] = int(float(v))
+            except ValueError:
+                pass
+
+
+def pinnacle_prob(event, side_a):
+    """De-vigged Pinnacle probability that `side_a` wins, from one /odds event.
+
+    A draw outcome (boxing, Test cricket) is dropped before normalising: the venue markets
+    this is booked against are two-way, and a draw there resolves as neither side.
+    Returns None when Pinnacle has no two-sided h2h line on the event.
+    """
+    for bk in event.get("bookmakers") or []:
+        if bk.get("key") != "pinnacle":
+            continue
+        for mk in bk.get("markets") or []:
+            if mk.get("key") != "h2h":
+                continue
+            prices = {o.get("name"): o.get("price") for o in mk.get("outcomes") or []
+                      if o.get("name") and str(o.get("name")).lower() != "draw"}
+            a = prices.get(side_a)
+            others = [p for n, p in prices.items() if n != side_a]
+            if not a or len(others) != 1 or not others[0]:
+                return None
+            try:
+                pa, pb = devig(1 / float(a), 1 / float(others[0]))
+            except (TypeError, ValueError, ZeroDivisionError):
+                return None
+            return pa
+    return None
+
+
+def fetch_pinnacle(sport):
+    """Pinnacle's fair probability on every contest it prices that the universe lists."""
+    global _odds_sports
+    if sport not in ODDS_GROUPS:
+        return []
+    if not _odds_key():
+        _mark("pinnacle", False, "no ODDS_API_KEY in the environment")
+        return []
+    if _odds_sports is None:
+        try:
+            _odds_sports, headers = _odds_get("/sports", {})
+            _odds_note_usage(headers)
+        except RuntimeError as e:
+            _mark("pinnacle", False, str(e))
+            _odds_sports = []
+            return []
+    # Checked before anything else is read: past this point a readable events list marks
+    # the feed "ok", and the page would then never say why no prices arrived.
+    if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
+        _mark("pinnacle", False, f"credit reserve reached ({ODDS_USAGE['remaining']} left)")
+        return []
+    keys = [s["key"] for s in _odds_sports
+            if s.get("group") == ODDS_GROUPS[sport] and s.get("active")
+            and not s.get("has_outrights")]
+    now = datetime.now(timezone.utc)
+    window = dict(commenceTimeFrom=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                  commenceTimeTo=(now + timedelta(days=ODDS_HORIZON_DAYS))
+                  .strftime("%Y-%m-%dT%H:%M:%SZ"))
+    rows = (UNIVERSE or {}).get(sport) or []
+    out = []
+    for key in keys:
+        try:
+            events, _h = _odds_get(f"/sports/{key}/events", window)
+        except RuntimeError as e:
+            _mark("pinnacle", False, str(e))
+            continue
+        _mark("pinnacle", True)
+        # Spend a credit only where a listed contest is waiting for this price.
+        wanted = [ev for ev in events
+                  if any(pair_match(r["side_a"], r["side_b"], ev.get("home_team", ""),
+                                    ev.get("away_team", ""), sport=sport)[0] > 0
+                         for r in rows if not r.get("untraded"))]
+        if not wanted:
+            continue
+        if ODDS_USAGE.get("calls", 0) >= ODDS_MAX_CALLS:
+            break
+        if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
+            break                               # reached mid-run, after a paid call
+        try:
+            odds, headers = _odds_get(f"/sports/{key}/odds",
+                                      dict(window, bookmakers="pinnacle", markets="h2h",
+                                           oddsFormat="decimal", dateFormat="iso"))
+        except RuntimeError as e:
+            _mark("pinnacle", False, str(e))
+            continue
+        ODDS_USAGE["calls"] = ODDS_USAGE.get("calls", 0) + 1
+        _odds_note_usage(headers)
+        for ev in odds:
+            home, away = ev.get("home_team"), ev.get("away_team")
+            p = pinnacle_prob(ev, home)
+            if p is None or not home or not away:
+                continue
+            out.append(dict(a=home, b=away, prob_a=p, date=day(ev.get("commence_time"))))
+    return out
+
+
 CHALLENGERS = {
+    "pinnacle": fetch_pinnacle,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
     "draftkings": fetch_draftkings,

@@ -958,6 +958,228 @@ ok(_verdict({"a": SB.MIN_N, "b": SB.MIN_N, "c": 4}) == "readable:2",
 ok(_verdict({"a": SB.MIN_N - 1}) == f"not-readable:best={SB.MIN_N - 1}",
    "one short of the floor is still not readable")
 
+# ---------------------------------------------------------------------------
+print("\nPolymarket book gate")
+# ---------------------------------------------------------------------------
+# The defect: a just-listed market shows a MIDPOINT near 0.50 with no book behind it, and
+# only an exact 0.50/0.50 was caught. Panin v Linger was logged at 0.515 and was 0.88 once
+# money arrived. Every case below is a shape seen live on 2026-09-12.
+eq(S.pm_book(dict(bestBid="0.7", bestAsk="0.71", spread="0.01", liquidityNum=101568))[:3],
+   (True, 0.71, 0.3), "a tight, funded book is tradeable and booked at the asks")
+eq(S.pm_book(dict(bestBid="0.85", bestAsk="0.91", spread="0.06", liquidityNum=49))[0], False,
+   "Panin v Linger's book (6c spread, $49) is not a price")
+eq(S.pm_book(dict(bestBid="0.54", bestAsk="0.84", spread="0.3", liquidityNum=107))[0], False,
+   "a 30c spread is not a price, however much volume traded")
+eq(S.pm_book(dict(bestBid="0.49", bestAsk="0.51", spread="0.02", liquidityNum=20))[0], False,
+   "a tight spread with $20 behind it is one quote, not a market")
+eq(S.pm_book(dict(bestBid=None, bestAsk="1", spread="0.69", liquidityNum=0))[0], False,
+   "a one-sided book is never tradeable")
+eq(S.pm_book(dict(bestBid="0.48", bestAsk="0.53", spread="0.05", liquidityNum=100))[0], True,
+   "exactly at the spread and liquidity limits still counts")
+
+_start = (datetime.now(timezone.utc) + timedelta(hours=10)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _pm_market(mid, a, b, px, bid, ask, spread, liq, vol):
+    return dict(id=mid, outcomes=f'["{a}", "{b}"]', outcomePrices=f'["{px}", "{1 - px:.3f}"]',
+                bestBid=bid, bestAsk=ask, spread=spread, liquidityNum=liq, volumeNum=vol,
+                acceptingOrders=True, closed=False, gameStartTime=_start,
+                question=f"{a} vs. {b}")
+
+
+_events = [
+    dict(slug="e1", title="Vlad Panin vs. Dakota Linger", startDate=_start, markets=[
+        _pm_market("thin", "Vlad Panin", "Dakota Linger", 0.515, "0.02", "0.99", "0.97", 49, 90000)]),
+    dict(slug="e2", title="Ryan Garcia vs. Conor Benn", startDate=_start, markets=[
+        _pm_market("deep", "Ryan Garcia", "Conor Benn", 0.705, "0.70", "0.71", "0.01", 101568, 500)]),
+]
+_saved_get = S._get
+S._get = lambda url, **kw: _events if "offset=0" in url else []
+try:
+    _stats = {}
+    _rows = S.fetch_polymarket("boxing", stats=_stats)
+finally:
+    S._get = _saved_get
+_by = {r["market_id"]: r for r in _rows}
+eq(_rows[0]["market_id"], "deep", "a priced book sorts ahead of an unpriced one with 180x the volume")
+eq((_by["thin"]["untraded"], _by["deep"]["untraded"]), (True, False),
+   "the placeholder is flagged untraded; the real book is not")
+eq((_by["deep"]["price_a"], _by["deep"]["price_b"], _by["deep"]["mid_a"]), (0.71, 0.3, 0.705),
+   "a priced row carries the two asks, and the midpoint separately")
+eq(_stats["priced"], 1, "the coverage count reports priced books under the gate")
+
+# publish: nothing at all is logged against an unpriced row — tipsters included — and the
+# market's own quote is its midpoint, not its ask.
+_saved_ch = S.CHALLENGERS
+S.CHALLENGERS = {"oddspedia": lambda sp: [dict(a="Vlad Panin", b="Dakota Linger", pick="a", date=_start[:10]),
+                                          dict(a="Ryan Garcia", b="Conor Benn", pick="a", date=_start[:10])]}
+S.SOURCES["oddspedia"]["sports"].append("boxing")
+try:
+    d = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(d, {"boxing": _rows}, {}, verbose=False)
+finally:
+    S.SOURCES["oddspedia"]["sports"].remove("boxing")
+    S.CHALLENGERS = _saved_ch
+_logged = {(q["source"], q["market_id"]): q for q in d["quotes"]}
+ok(not any(mid == "thin" for _s, mid in _logged),
+   "no source is logged against the placeholder book, so it can be quoted later at a real price")
+close(_logged[("polymarket", "deep")]["prob_a"], 0.705, "Polymarket's own quote is the midpoint")
+close(_logged[("oddspedia", "deep")]["price"], 0.71, "a tip is booked at the ask a follower pays")
+eq((_logged[("oddspedia", "deep")]["spread"], _logged[("oddspedia", "deep")]["liquidity"]),
+   (0.01, 101568.0), "every quote records the book it was priced against")
+
+# ---------------------------------------------------------------------------
+print("\npre-gate history")
+# ---------------------------------------------------------------------------
+_now = datetime.now(timezone.utc)
+_future = (_now + timedelta(hours=5)).isoformat()
+_past = (_now - timedelta(days=1)).isoformat()
+d = {"quotes": [
+    dict(id="1", source="polymarket", sport="boxing", venue="polymarket", status="open", start=_future, pnl=0.0),
+    dict(id="2", source="oddspedia", sport="cricket", venue="polymarket", status="lost", start=_past,
+         pnl=-100.0, bet=True, settled=_past),
+    dict(id="3", source="polymarket", sport="cricket", venue="polymarket", status="open", start=_past, pnl=0.0),
+    dict(id="4", source="covers", sport="mlb", venue="polymarket", status="won", start=_past, pnl=80.0),
+    dict(id="5", source="kalshi", sport="cricket", venue="kalshi", status="open", start=_future, pnl=0.0),
+    dict(id="6", source="polymarket", sport="boxing", venue="polymarket", status="open", start=_future,
+         pnl=0.0, spread=0.01),
+], "meta": {}}
+eq(T.retire_pre_gate(d, now=_now, verbose=False), (1, 2),
+   "unstarted pre-gate quotes are removed; started or settled ones are voided")
+_q = {q["id"]: q for q in d["quotes"]}
+ok("1" not in _q, "an unstarted pre-gate quote is removed so it can be re-quoted under the gate")
+eq((_q["2"]["status"], _q["2"]["pnl"], _q["2"]["note"]), ("void", 0.0, T.PRE_GATE_NOTE),
+   "a settled pre-gate bet is voided: no stake, no P/L")
+eq(_q["3"]["status"], "void", "a started-but-unsettled pre-gate quote is voided, never graded")
+eq(_q["4"]["status"], "won", "sports whose books were real (MLB) are untouched")
+eq(_q["5"]["status"], "open", "Kalshi-venue quotes were ask-priced all along and are untouched")
+eq(_q["6"]["status"], "open", "a quote logged under the gate is untouched")
+eq(T.retire_pre_gate(d, now=_now, verbose=False), (0, 0), "running it again changes nothing")
+for _x in d["quotes"]:
+    _x.setdefault("bet", False)
+eq(T.score(d)["oddspedia"]["settled"], 0, "a voided pre-gate bet leaves the source's record")
+
+# ---------------------------------------------------------------------------
+print("\nPinnacle via The Odds API")
+# ---------------------------------------------------------------------------
+_ev = dict(home_team="Ryan Garcia", away_team="Conor Benn", commence_time=_start, bookmakers=[
+    dict(key="pinnacle", markets=[dict(key="h2h", outcomes=[
+        dict(name="Ryan Garcia", price=1.36), dict(name="Conor Benn", price=3.25),
+        dict(name="Draw", price=26.0)])])])
+close(S.pinnacle_prob(_ev, "Ryan Garcia"), (1 / 1.36) / (1 / 1.36 + 1 / 3.25),
+      "de-vigged over the two sides, the draw dropped", tol=1e-9)
+close(S.pinnacle_prob(_ev, "Conor Benn"), (1 / 3.25) / (1 / 1.36 + 1 / 3.25),
+      "and oriented to whichever side is asked for", tol=1e-9)
+eq(S.pinnacle_prob(dict(bookmakers=[dict(key="betfair_ex_eu", markets=[])]), "X"), None,
+   "no Pinnacle line on the event -> no probability, never another book's")
+
+import os as _os
+_calls = []
+_remaining = [480]
+
+
+def _fake_odds(path, params):
+    _calls.append(path)
+    if "apiKey" in params:
+        ok(False, "the key is added inside _odds_get, never passed around")
+    if path == "/sports":
+        return [dict(key="boxing_boxing", group="Boxing", active=True, has_outrights=False),
+                dict(key="boxing_outrights", group="Boxing", active=True, has_outrights=True)], \
+            {"x-requests-remaining": str(_remaining[0])}
+    if path.endswith("/events"):
+        return [dict(home_team="Ryan Garcia", away_team="Conor Benn"),
+                dict(home_team="Nobody Listed", away_team="Also Nobody")], {}
+    if path.endswith("/odds"):
+        return [_ev], {"x-requests-remaining": str(_remaining[0] - 1), "x-requests-used": "21"}
+    raise AssertionError(path)
+
+
+def _reset_odds():
+    S._odds_sports = None
+    S.ODDS_USAGE.clear()
+    S.FEED_STATUS.clear()
+    _calls.clear()
+
+
+_saved_odds_get, _saved_key = S._odds_get, _os.environ.get("ODDS_API_KEY")
+S._odds_get = _fake_odds
+S.UNIVERSE = {"boxing": [dict(side_a="Garcia", side_b="Benn", untraded=False)]}
+try:
+    _os.environ.pop("ODDS_API_KEY", None)
+    _reset_odds()
+    eq(S.fetch_pinnacle("boxing"), [], "no key -> nothing fetched")
+    eq((_calls, S.FEED_STATUS.get("pinnacle", "")[:4]), ([], "down"),
+       "and the feed is reported down rather than silently empty")
+
+    _os.environ["ODDS_API_KEY"] = "test-key-not-real"
+    _reset_odds()
+    _got = S.fetch_pinnacle("boxing")
+    eq(len(_got), 1, "one priced bout")
+    eq((_got[0]["a"], _got[0]["b"]), ("Ryan Garcia", "Conor Benn"), "quote carries both sides")
+    eq(_calls, ["/sports", "/sports/boxing_boxing/events", "/sports/boxing_boxing/odds"],
+       "free calls first; outright keys skipped; one paid call")
+    eq((S.ODDS_USAGE["remaining"], S.ODDS_USAGE["calls"]), (479, 1), "credit usage is tracked")
+    eq(S.FEED_STATUS.get("pinnacle"), "ok", "a readable feed reports ok")
+    S.fetch_pinnacle("cricket")
+    eq(_calls.count("/sports"), 1, "the free sport list is fetched once per run, not per sport")
+    ok(not any("apiKey" in c for c in _calls), "the key is added inside _odds_get, never passed around")
+
+    _reset_odds()
+    S.UNIVERSE = {"boxing": [dict(side_a="Somebody", side_b="Else", untraded=False)]}
+    S.fetch_pinnacle("boxing")
+    ok(not any(c.endswith("/odds") for c in _calls),
+       "no credit is spent when no listed contest is waiting for the price")
+
+    _reset_odds()
+    S.UNIVERSE = {"boxing": [dict(side_a="Garcia", side_b="Benn", untraded=True)]}
+    S.fetch_pinnacle("boxing")
+    ok(not any(c.endswith("/odds") for c in _calls),
+       "nor for a contest whose venue book is unpriced — it cannot be logged this run")
+
+    _reset_odds()
+    _remaining[0] = S.ODDS_RESERVE - 1
+    S.UNIVERSE = {"boxing": [dict(side_a="Garcia", side_b="Benn", untraded=False)]}
+    S.fetch_pinnacle("boxing")
+    ok(not any(c.endswith("/odds") for c in _calls), "below the credit reserve, nothing is spent")
+    ok("reserve" in S.FEED_STATUS.get("pinnacle", ""), "and the page says why")
+    _remaining[0] = 480
+
+    _reset_odds()
+    S.ODDS_USAGE["calls"] = S.ODDS_MAX_CALLS
+    S.fetch_pinnacle("boxing")
+    ok(not any(c.endswith("/odds") for c in _calls), "the per-run paid-call cap holds")
+    ok(S.ODDS_MAX_CALLS * 4 * 30 <= 500, "the per-run cap fits the free tier at four runs a day")
+finally:
+    S._odds_get = _saved_odds_get
+    S.UNIVERSE = None
+    _reset_odds()
+    if _saved_key is None:
+        _os.environ.pop("ODDS_API_KEY", None)
+    else:
+        _os.environ["ODDS_API_KEY"] = _saved_key
+
+_saved_urlopen = S.urllib.request.urlopen
+
+
+def _boom(req, timeout=None):
+    raise S.urllib.error.HTTPError(req.full_url, 401, "Unauthorized", {}, None)
+
+
+S.urllib.request.urlopen = _boom
+_os.environ["ODDS_API_KEY"] = "secret-value-123"
+try:
+    S._odds_get("/sports", {})
+    ok(False, "a 401 raises")
+except RuntimeError as e:
+    ok("secret-value-123" not in str(e) and "apiKey" not in str(e),
+       "an error message never carries the key or the URL")
+finally:
+    S.urllib.request.urlopen = _saved_urlopen
+    if _saved_key is None:
+        _os.environ.pop("ODDS_API_KEY", None)
+    else:
+        _os.environ["ODDS_API_KEY"] = _saved_key
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

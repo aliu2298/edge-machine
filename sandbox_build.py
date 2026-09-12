@@ -326,6 +326,13 @@ def build():
     scores = T.score(d)
     cov = d.get("coverage") or {}
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # Pinnacle is read through a metered API; showing the balance keeps a quota running
+    # dry from looking like Pinnacle having nothing to price.
+    ou = (d.get("meta") or {}).get("odds_api") or {}
+    odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} paid "
+                 f"call{'s' if ou.get('calls', 0) != 1 else ''} last run, "
+                 f"{ou['remaining']} credits left this month."
+                 if ou.get("remaining") is not None else "")
 
     quotes = len(d["quotes"])
     bets = sum(1 for q in d["quotes"] if q["bet"])
@@ -494,7 +501,13 @@ flat ${int(T.STAKE)}, and settled on the real result. Tipsters name a side and a
 every time; models and books state a probability and are backed only on a
 {int(T.EDGE_MIN*100)}pp disagreement with the price.<br><br>
 <b>Prices and settlement.</b> Polymarket is the venue wherever it lists a contest,
-and settles it. <b>Kalshi</b> is the venue for soccer — Polymarket lists barely any
+and settles it — but a Polymarket contest is only logged once it has a <b>real book</b>:
+a spread of {int(S.MAX_SPREAD*100)}¢ or less with at least ${int(S.MIN_LIQUIDITY)} on it,
+booked at the <b>ask</b>. A just-listed market shows a midpoint near 50¢ with nothing
+behind it; before this rule, boxing bouts were logged at 51¢ that traded at 88¢ once
+money arrived. Boxing, cricket and table-tennis quotes logged before the rule were voided
+({esc(T.PRE_GATE_NOTE)}).{odds_line}<br><br>
+<b>Kalshi</b> is the venue for soccer — Polymarket lists barely any
 soccer matches — and for any fight, match or game Polymarket is missing. On Kalshi a tip
 is backed at the <b>ask</b>, the price backing it would actually cost, and only where
 that book is tight (a spread of 10¢ or less). Soccer is <b>three-way</b>: a Draw tip wins

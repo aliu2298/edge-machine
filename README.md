@@ -403,13 +403,13 @@ pay". Sandbox asks **"does anyone's signal pay"** — it logs what published for
 across 14 sports, stamps each one with the price that existed at that moment, and settles
 it on the real result.
 
-Eleven sources, staked two different ways because they are followed two different ways:
+Twelve sources, staked two different ways because they are followed two different ways:
 
 * **Tipsters name a side** (Covers, Oddspedia, Scores24, SoccerPredictions.ai,
   SportsGambler). That side is backed at the going price, every time — high turnover, no
   Brier score, and a real ROI, because that is how a tipster is actually followed.
-* **Models, books and exchanges state a probability** (ESPN FPI, DraftKings, Kalshi,
-  Polymarket, NWS, spot price). They are backed only when they disagree with the price by
+* **Models, books and exchanges state a probability** (ESPN FPI, DraftKings, Pinnacle,
+  Kalshi, Polymarket, NWS, spot price). They are backed only when they disagree with the price by
   3pp or more, and they also get an accuracy score.
 
 Everything is a flat $100, so nothing on the board is bet-sizing skill. Polymarket is the
@@ -424,6 +424,26 @@ nothing has reached it. At 57 settled across seven sources the best is 15, so *n
 that board is readable yet* — an earlier version compared the lifetime total against the
 floor and announced the column was readable while greying out every figure in it. A total
 is not a sample; nobody bets "all sources".
+
+**A Polymarket price needs a book behind it.** gamma's `outcomePrices` is a midpoint, and a
+just-listed market shows a midpoint near 0.50 with nothing on either side. Until
+2026-09-12 only an exact 0.50/0.50 was screened out, so boxing bouts were logged at 0.51
+that traded at 0.88 once money arrived — against Pinnacle, logged prices were off by a mean
+of 20pp in boxing and 12pp in cricket, and under 2pp in tennis. A contest is now logged
+only when its spread is 5¢ or less with at least $100 on the book, and it is booked at the
+**ask**, the price a follower pays (the midpoint is kept for Polymarket's own Brier score).
+Nothing is logged against an unpriced book, for any source, so the contest is quoted on a
+later run once it is real. Boxing, cricket and table-tennis quotes logged before the rule
+were voided or, if not yet started, removed for re-quoting.
+
+**Pinnacle** is read through The Odds API (`ODDS_API_KEY`, a repository secret) for boxing,
+cricket and tennis — the three sports with no dependable tipster — de-vigged to a fair
+probability. Pinnacle closed its own public API in July 2025; the pinnacle.com site's guest
+endpoint also answers, but it is undocumented and Pinnacle does not serve US customers, so
+it is not used. The Odds API lists Pinnacle only for major cricket and the big tennis
+tournaments, not ITF or Challenger. Credits are rationed: event lists are free, and a paid
+odds call is made only for a sport with a listed, priced contest waiting, at most four a
+run, stopping at a reserve of 25 — which fits the free tier's 500 a month.
 
 Beyond sport the same machinery runs on yes/no markets where the opponent is the market
 price itself — climate (National Weather Service against Kalshi's temperature buckets for

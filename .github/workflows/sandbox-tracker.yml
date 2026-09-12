@@ -68,7 +68,14 @@ jobs:
       # coverage table, which is exactly what that table is for. A hard failure here
       # would instead mean no GRADING happened either, so losing the run costs more than
       # a partial one.
+      #
+      # ODDS_API_KEY reads Pinnacle's lines through The Odds API. It is a repository
+      # secret: GitHub masks it in logs, never passes it to workflows triggered from a
+      # fork, and the adapter never prints the URL it travels in. Without it the Pinnacle
+      # column reports itself down and every other source runs as before.
       - name: Collect predictions and settle results
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python3 sandbox_track.py || echo "::warning::tracker run failed — keeping the previous ledger"
 
       - name: Build the tracker page
