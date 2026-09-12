@@ -3205,14 +3205,16 @@
     "team": "Brentford"
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Brentford to score",
    "home": "AFC Bournemouth",
    "id": "2026-09-12|AFC Bournemouth|Brentford|Brentford to score",
    "kickoff": "2026-09-12T14:00Z",
    "league": "Premier League",
    "match": "AFC Bournemouth v Brentford",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|AFC Bournemouth|Brentford|Brentford to score 2+": {
@@ -3231,14 +3233,16 @@
     "team": "Brentford"
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Brentford to score 2+",
    "home": "AFC Bournemouth",
    "id": "2026-09-12|AFC Bournemouth|Brentford|Brentford to score 2+",
    "kickoff": "2026-09-12T14:00Z",
    "league": "Premier League",
    "match": "AFC Bournemouth v Brentford",
-   "status": "pending",
+   "status": "hit",
    "strength": 6
   },
   "2026-09-12|AFC Bournemouth|Brentford|Over 1.5 goals": {
@@ -3255,7 +3259,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "AFC Bournemouth",
    "id": "2026-09-12|AFC Bournemouth|Brentford|Over 1.5 goals",
@@ -3269,6 +3275,20 @@
     "over25": 0.5
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.5
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.2
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.625
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -3284,7 +3304,7 @@
      "price": 1.625
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-12|AFC Bournemouth|Brentford|Over 2.5 goals": {
@@ -3301,14 +3321,16 @@
     "n": 3
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 2.5 goals",
    "home": "AFC Bournemouth",
    "id": "2026-09-12|AFC Bournemouth|Brentford|Over 2.5 goals",
    "kickoff": "2026-09-12T14:00Z",
    "league": "Premier League",
    "match": "AFC Bournemouth v Brentford",
-   "status": "pending",
+   "status": "hit",
    "strength": 6
   },
   "2026-09-12|Al Khaleej|Al Nassr|Al Nassr to score": {
@@ -3327,14 +3349,16 @@
     "team": "Al Nassr"
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-09-03",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Al Nassr to score",
    "home": "Al Khaleej",
    "id": "2026-09-12|Al Khaleej|Al Nassr|Al Nassr to score",
    "kickoff": "2026-09-12T18:00Z",
    "league": "Saudi Pro League",
    "match": "Al Khaleej v Al Nassr",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-12|Al Khaleej|Al Nassr|Over 1.5 goals": {
@@ -3351,14 +3375,16 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-09-03",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Al Khaleej",
    "id": "2026-09-12|Al Khaleej|Al Nassr|Over 1.5 goals",
    "kickoff": "2026-09-12T18:00Z",
    "league": "Saudi Pro League",
    "match": "Al Khaleej v Al Nassr",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|Al Shabab|Al Fayha|Over 1.5 goals": {
@@ -3375,7 +3401,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "0-0",
    "first_seen": "2026-09-08",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Al Shabab",
    "id": "2026-09-12|Al Shabab|Al Fayha|Over 1.5 goals",
@@ -3383,7 +3411,7 @@
    "last_seen": "2026-09-12",
    "league": "Saudi Pro League",
    "match": "Al Shabab v Al Fayha",
-   "status": "pending",
+   "status": "miss",
    "strength": 6
   },
   "2026-09-12|Athletic Club|Elche|Over 1.5 goals": {
@@ -3400,7 +3428,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Athletic Club",
    "id": "2026-09-12|Athletic Club|Elche|Over 1.5 goals",
@@ -3414,6 +3444,20 @@
     "over25": 0.5436
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.87
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.256
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -3429,7 +3473,7 @@
      "price": 1.847
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-09-12|Casa Pia|FC Porto|Casa Pia to fail to score": {
@@ -3448,14 +3492,16 @@
     "team": "Casa Pia"
    },
    "date": "2026-09-12",
+   "final": "1-4",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Casa Pia to fail to score",
    "home": "Casa Pia",
    "id": "2026-09-12|Casa Pia|FC Porto|Casa Pia to fail to score",
    "kickoff": "2026-09-12T17:00Z",
    "league": "Primeira Liga",
    "match": "Casa Pia v FC Porto",
-   "status": "pending",
+   "status": "miss",
    "strength": 9
   },
   "2026-09-12|Casa Pia|FC Porto|FC Porto to score": {
@@ -3474,14 +3520,16 @@
     "team": "FC Porto"
    },
    "date": "2026-09-12",
+   "final": "1-4",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "FC Porto to score",
    "home": "Casa Pia",
    "id": "2026-09-12|Casa Pia|FC Porto|FC Porto to score",
    "kickoff": "2026-09-12T17:00Z",
    "league": "Primeira Liga",
    "match": "Casa Pia v FC Porto",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|Crystal Palace|Ipswich Town|Over 1.5 goals": {
@@ -3498,7 +3546,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "2-3",
    "first_seen": "2026-09-05",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Crystal Palace",
    "id": "2026-09-12|Crystal Palace|Ipswich Town|Over 1.5 goals",
@@ -3512,6 +3562,20 @@
     "over25": 0.5819
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.69
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.263
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.781
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -3527,7 +3591,7 @@
      "price": 1.781
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 11
   },
   "2026-09-12|D.C. United|Atlanta United FC|Atlanta United FC to score": {
@@ -3695,7 +3759,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "2-0",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "FC Twente",
    "id": "2026-09-12|FC Twente|ADO Den Haag|Over 1.5 goals",
@@ -3703,7 +3769,7 @@
    "last_seen": "2026-09-12",
    "league": "Eredivisie",
    "match": "FC Twente v ADO Den Haag",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-12|FC Twente|ADO Den Haag|Over 2.5 goals": {
@@ -3720,14 +3786,16 @@
     "n": 3
    },
    "date": "2026-09-12",
+   "final": "2-0",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 2.5 goals",
    "home": "FC Twente",
    "id": "2026-09-12|FC Twente|ADO Den Haag|Over 2.5 goals",
    "kickoff": "2026-09-12T14:30Z",
    "league": "Eredivisie",
    "match": "FC Twente v ADO Den Haag",
-   "status": "pending",
+   "status": "miss",
    "strength": 7
   },
   "2026-09-12|Fortuna Sittard|Ajax Amsterdam|Ajax Amsterdam to score": {
@@ -3746,14 +3814,16 @@
     "team": "Ajax Amsterdam"
    },
    "date": "2026-09-12",
+   "final": "1-5",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Ajax Amsterdam to score",
    "home": "Fortuna Sittard",
    "id": "2026-09-12|Fortuna Sittard|Ajax Amsterdam|Ajax Amsterdam to score",
    "kickoff": "2026-09-12T18:00Z",
    "league": "Eredivisie",
    "match": "Fortuna Sittard v Ajax Amsterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-12|Fortuna Sittard|Ajax Amsterdam|Over 1.5 goals": {
@@ -3770,7 +3840,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "1-5",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Fortuna Sittard",
    "id": "2026-09-12|Fortuna Sittard|Ajax Amsterdam|Over 1.5 goals",
@@ -3784,6 +3856,20 @@
     "over25": 0.6479
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.526
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.111
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.385
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -3799,7 +3885,7 @@
      "price": 1.385
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 11
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen|Both teams to score": {
@@ -3815,14 +3901,16 @@
     "kind": "btts"
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Both teams to score",
    "home": "Go Ahead Eagles",
    "id": "2026-09-12|Go Ahead Eagles|FC Groningen|Both teams to score",
    "kickoff": "2026-09-12T16:45Z",
    "league": "Eredivisie",
    "match": "Go Ahead Eagles v FC Groningen",
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen|Go Ahead Eagles to score": {
@@ -3841,14 +3929,16 @@
     "team": "Go Ahead Eagles"
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Go Ahead Eagles to score",
    "home": "Go Ahead Eagles",
    "id": "2026-09-12|Go Ahead Eagles|FC Groningen|Go Ahead Eagles to score",
    "kickoff": "2026-09-12T16:45Z",
    "league": "Eredivisie",
    "match": "Go Ahead Eagles v FC Groningen",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen|Go Ahead Eagles to score 2+": {
@@ -3867,7 +3957,9 @@
     "team": "Go Ahead Eagles"
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Go Ahead Eagles to score 2+",
    "home": "Go Ahead Eagles",
    "id": "2026-09-12|Go Ahead Eagles|FC Groningen|Go Ahead Eagles to score 2+",
@@ -3882,6 +3974,24 @@
     "team2plus": 0.5907
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.37
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.118
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "team2plus": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -3901,7 +4011,7 @@
      "price": 1.746
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 8
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen|Over 1.5 goals": {
@@ -3918,7 +4028,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Go Ahead Eagles",
    "id": "2026-09-12|Go Ahead Eagles|FC Groningen|Over 1.5 goals",
@@ -3932,6 +4044,20 @@
     "over25": 0.7296
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.37
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.118
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -3947,7 +4073,7 @@
      "price": 1.513
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-12|Go Ahead Eagles|FC Groningen|Over 2.5 goals": {
@@ -3964,14 +4090,16 @@
     "n": 3
    },
    "date": "2026-09-12",
+   "final": "1-1",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 2.5 goals",
    "home": "Go Ahead Eagles",
    "id": "2026-09-12|Go Ahead Eagles|FC Groningen|Over 2.5 goals",
    "kickoff": "2026-09-12T16:45Z",
    "league": "Eredivisie",
    "match": "Go Ahead Eagles v FC Groningen",
-   "status": "pending",
+   "status": "miss",
    "strength": 10
   },
   "2026-09-12|Lazio|AC Milan|Over 1.5 goals": {
@@ -3988,7 +4116,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-09-07",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Lazio",
    "id": "2026-09-12|Lazio|AC Milan|Over 1.5 goals",
@@ -4002,6 +4132,20 @@
     "over25": 0.4102
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 1.02
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.426
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 1.34
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -4017,7 +4161,7 @@
      "price": 2.34
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-09-12|Lazio|AC Milan|Over 2.5 goals": {
@@ -4034,14 +4178,16 @@
     "n": 3
    },
    "date": "2026-09-12",
+   "final": "2-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 2.5 goals",
    "home": "Lazio",
    "id": "2026-09-12|Lazio|AC Milan|Over 2.5 goals",
    "kickoff": "2026-09-12T16:00Z",
    "league": "Serie A",
    "match": "Lazio v AC Milan",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-12|Liverpool|Fulham|Liverpool to score": {
@@ -4060,14 +4206,16 @@
     "team": "Liverpool"
    },
    "date": "2026-09-12",
+   "final": "0-0",
    "first_seen": "2026-09-05",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Liverpool to score",
    "home": "Liverpool",
    "id": "2026-09-12|Liverpool|Fulham|Liverpool to score",
    "kickoff": "2026-09-12T14:00Z",
    "league": "Premier League",
    "match": "Liverpool v Fulham",
-   "status": "pending",
+   "status": "miss",
    "strength": 6
   },
   "2026-09-12|Liverpool|Fulham|Liverpool to score 2+": {
@@ -4086,7 +4234,9 @@
     "team": "Liverpool"
    },
    "date": "2026-09-12",
+   "final": "0-0",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Liverpool to score 2+",
    "home": "Liverpool",
    "id": "2026-09-12|Liverpool|Fulham|Liverpool to score 2+",
@@ -4101,6 +4251,24 @@
     "team2plus": 0.5054
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "team2plus": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -4120,7 +4288,7 @@
      "price": 1.408
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 7
   },
   "2026-09-12|Orlando City SC|Toronto FC|Both teams to score": {
@@ -4232,7 +4400,9 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "0-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Osasuna",
    "id": "2026-09-12|Osasuna|Espanyol|Over 1.5 goals",
@@ -4246,6 +4416,20 @@
     "over25": 0.4511
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.518
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -4261,7 +4445,7 @@
      "price": 2.73
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-12|Real Madrid|Rayo Vallecano|Over 1.5 goals": {
@@ -4587,14 +4771,16 @@
     "n": 2
    },
    "date": "2026-09-12",
+   "final": "0-0",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-12T20:39:03+00:00",
    "headline": "Over 1.5 goals",
    "home": "Tottenham Hotspur",
    "id": "2026-09-12|Tottenham Hotspur|Everton|Over 1.5 goals",
    "kickoff": "2026-09-12T16:30Z",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Everton",
-   "status": "pending",
+   "status": "miss",
    "strength": 11
   },
   "2026-09-13|Braga|Estoril|Braga to score": {
@@ -7587,6 +7773,31 @@
    "status": "pending",
    "strength": 7
   },
+  "2026-09-19|Athletic Club|Alav\u00e9s|Over 1.5 goals": {
+   "a": "Athletic Club",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Alav\u00e9s",
+   "b": "Alav\u00e9s",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.4725609756097561,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Athletic Club",
+   "id": "2026-09-19|Athletic Club|Alav\u00e9s|Over 1.5 goals",
+   "kickoff": "2026-09-19T14:15Z",
+   "last_seen": "2026-09-12",
+   "league": "La Liga",
+   "match": "Athletic Club v Alav\u00e9s",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals": {
    "a": "Brighton & Hove Albion",
    "a_key": "scoring1",
@@ -7826,6 +8037,52 @@
    "match": "Kilmarnock v Heart of Midlothian",
    "status": "pending",
    "strength": 9
+  },
+  "2026-09-19|Le Mans|Lorient|Over 1.5 goals": {
+   "a": "Le Mans",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Lorient",
+   "b": "Lorient",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4725609756097561,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Le Mans",
+   "id": "2026-09-19|Le Mans|Lorient|Over 1.5 goals",
+   "kickoff": "2026-09-19T18:45Z",
+   "last_seen": "2026-09-12",
+   "league": "Ligue 1",
+   "match": "Le Mans v Lorient",
+   "model": {
+    "btts": 0.5928,
+    "over15": 0.7923,
+    "over25": 0.564
+   },
+   "modelled_at": "2026-09-12T20:38:48+00:00",
+   "priced_at": "2026-09-12T20:38:48+00:00",
+   "prices": {
+    "btts": {
+     "fair": 0.5752,
+     "price": 1.625
+    },
+    "over15": {
+     "fair": 0.7587,
+     "price": 1.256
+    },
+    "over25": {
+     "fair": 0.5108,
+     "price": 1.87
+    }
+   },
+   "status": "pending",
+   "strength": 6
   },
   "2026-09-19|Lyon|Stade Rennais|Over 1.5 goals": {
    "a": "Lyon",
@@ -8192,8 +8449,54 @@
    "last_seen": "2026-09-12",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
+   "model": {
+    "btts": 0.7066,
+    "over25": 0.7104,
+    "team2plus": 0.5331
+   },
+   "modelled_at": "2026-09-12T20:38:48+00:00",
+   "priced_at": "2026-09-12T20:38:48+00:00",
+   "prices": {
+    "btts": {
+     "fair": 0.6498,
+     "price": 1.444
+    },
+    "over25": {
+     "fair": 0.5842,
+     "price": 1.637
+    },
+    "team2plus": {
+     "fair": 0.4613,
+     "price": 2.08
+    }
+   },
    "status": "pending",
    "strength": 9
+  },
+  "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals": {
+   "a": "Werder Bremen",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "FC Augsburg",
+   "b": "FC Augsburg",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4725609756097561,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Werder Bremen",
+   "id": "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals",
+   "kickoff": "2026-09-19T13:30Z",
+   "last_seen": "2026-09-12",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v FC Augsburg",
+   "status": "pending",
+   "strength": 6
   },
   "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals": {
    "a": "Willem II",
@@ -8740,6 +9043,33 @@
    "status": "pending",
    "strength": 8
   },
+  "2026-09-20|FC Porto|Benfica|Benfica to score 2+": {
+   "a": "Benfica",
+   "a_key": "scoring",
+   "a_run": 6,
+   "away": "Benfica",
+   "b": "FC Porto",
+   "b_key": "porous",
+   "b_run": 3,
+   "base_rate": 0.43902439024390244,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "Benfica"
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-12",
+   "headline": "Benfica to score 2+",
+   "home": "FC Porto",
+   "id": "2026-09-20|FC Porto|Benfica|Benfica to score 2+",
+   "kickoff": "2026-09-20T19:30Z",
+   "last_seen": "2026-09-12",
+   "league": "Primeira Liga",
+   "match": "FC Porto v Benfica",
+   "status": "pending",
+   "strength": 9
+  },
   "2026-09-20|FC Porto|Benfica|Over 1.5 goals": {
    "a": "FC Porto",
    "a_key": "over15",
@@ -9008,6 +9338,27 @@
    "last_seen": "2026-09-12",
    "league": "Serie A",
    "match": "Frosinone v Como",
+   "model": {
+    "btts": 0.5203,
+    "over15": 0.7284,
+    "over25": 0.4761
+   },
+   "modelled_at": "2026-09-12T20:38:48+00:00",
+   "priced_at": "2026-09-12T20:38:48+00:00",
+   "prices": {
+    "btts": {
+     "fair": 0.5633,
+     "price": 1.667
+    },
+    "over15": {
+     "fair": 0.7883,
+     "price": 1.208
+    },
+    "over25": {
+     "fair": 0.5913,
+     "price": 1.617
+    }
+   },
    "status": "pending",
    "strength": 7
   },
@@ -9109,6 +9460,52 @@
    },
    "status": "pending",
    "strength": 12
+  },
+  "2026-09-20|Leeds United|Crystal Palace|Over 1.5 goals": {
+   "a": "Leeds United",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Crystal Palace",
+   "b": "Crystal Palace",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4725609756097561,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-12",
+   "headline": "Over 1.5 goals",
+   "home": "Leeds United",
+   "id": "2026-09-20|Leeds United|Crystal Palace|Over 1.5 goals",
+   "kickoff": "2026-09-20T13:00Z",
+   "last_seen": "2026-09-12",
+   "league": "Premier League",
+   "match": "Leeds United v Crystal Palace",
+   "model": {
+    "btts": 0.5344,
+    "over15": 0.7774,
+    "over25": 0.5426
+   },
+   "modelled_at": "2026-09-12T20:38:48+00:00",
+   "priced_at": "2026-09-12T20:38:48+00:00",
+   "prices": {
+    "btts": {
+     "fair": 0.5482,
+     "price": 1.714
+    },
+    "over15": {
+     "fair": 0.7383,
+     "price": 1.294
+    },
+    "over25": {
+     "fair": 0.5043,
+     "price": 1.893
+    }
+   },
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-20|Manchester City|Sunderland|Over 1.5 goals": {
    "a": "Manchester City",
@@ -9681,5 +10078,5 @@
    "strength": 12
   }
  },
- "updated_at": "2026-09-12T15:36:23+00:00"
+ "updated_at": "2026-09-12T20:39:03+00:00"
 }
