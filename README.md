@@ -436,6 +436,27 @@ Nothing is logged against an unpriced book, for any source, so the contest is qu
 later run once it is real. Boxing, cricket and table-tennis quotes logged before the rule
 were voided or, if not yet started, removed for re-quoting.
 
+**Nothing is logged once a contest has started** — checked for every source and venue at
+the moment of logging. The venue feeds keep a contest for five minutes past its start to
+absorb clock skew, and that window let a SoccerPredictions.ai tip on Al Wahda v Sharjah be
+logged 74 seconds after kickoff (it won, +$178). Anything logged at or after its start is
+voided.
+
+**Blind baselines.** Every sport shows what a fixed rule that ignores every source made on
+the same contests — back the favourite, back the underdog, back every draw — priced at the
+first moment any source looked. They are the weather a source's record is read against: on
+2026-09-12 the tracked leagues drew 34% of the time, and back-the-underdog made +31% across
+the weekend's soccer.
+
+**The stamp of approval** is pre-registered (2026-09-12) and identical for tipsters, models,
+books and exchanges. Every criterion must hold, and it is re-judged every run:
+50+ settled bets over 4+ different weeks; wins beat the prices paid by z ≥ 2; ROI beats every
+blind rule on the same contests; still profitable without its single biggest win; profitable
+in both halves of its record. Below 30 settled bets a source is **no read**; readable and
+ahead of the price but short of a gate is **watch**; readable and not ahead is **failing**.
+SoccerPredictions.ai's first weekend (+24.5%) sits exactly at back-every-draw on the same
+contests (+24.9%), which is why a hot ROI alone earns nothing.
+
 **Pinnacle** is read through The Odds API (`ODDS_API_KEY`, a repository secret) for boxing,
 cricket and tennis — the three sports with no dependable tipster — de-vigged to a fair
 probability. Pinnacle closed its own public API in July 2025; the pinnacle.com site's guest

@@ -32,6 +32,30 @@ EDGE_MIN = 0.03      # 3pp. Below this a "disagreement" is just the tick size.
 PRICE_FLOOR = 0.05   # Longshots are excluded from BETTING, not from scoring: at 0.02 a
 PRICE_CEIL = 0.95    # single fluke pays 50x and one lucky pick would own the board.
 
+# Below this many settled bets a record is not read at all (the page greys it).
+READ_FLOOR = 30
+
+# THE STAMP OF APPROVAL — pre-registered 2026-09-12, before any source had met it. Every
+# criterion must hold, for every betting source alike (tipsters, models, books, markets),
+# and it is re-judged on every run, so a stamp can be lost as well as won.
+#
+#   sample     at least MIN_BETS settled bets, across at least MIN_WEEKS different weeks.
+#              One weekend is one draw of the weather, not 36 independent bets: on
+#              Sep 12 2026 the tracked leagues drew 34% of the time against a normal ~26%,
+#              and a tipster that picks draws looked brilliant for exactly that reason.
+#   the price  wins beat the wins the prices paid implied, by Z_MIN standard deviations.
+#              With a dozen sources and seven sports under test, a z of 2 turns up by
+#              chance, so the bar is set there and the other criteria carry the rest.
+#   baseline   ROI beats EVERY blind rule on the same contests — back the favourite, back
+#              the underdog, back the draw (three-way only). Each is a fixed rule that
+#              ignores the source entirely, so beating all of them means the choices
+#              added something. (A first version compared each bet with the blind bet of
+#              the same type — the draw for a draw pick — which is the identical bet
+#              whenever the pick IS the favourite, so the test could never differ.)
+#   no one hit ROI stays positive with its single biggest win removed.
+#   both halves ROI is positive in the earlier and the later half of its settled bets.
+APPROVAL = dict(min_bets=50, min_weeks=4, z_min=2.0)
+
 
 def now_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -266,6 +290,17 @@ def _loosely_same(x, y, ratio=0.8):
                for p in tx for q in ty if len(p) > 3 and len(q) > 3)
 
 
+def _started(row, now):
+    """Has this contest started (or is its start unreadable)? Either way, no quote."""
+    try:
+        start = datetime.fromisoformat(str(row["start"]))
+    except (KeyError, TypeError, ValueError):
+        return True
+    if start.tzinfo is None:
+        start = start.replace(tzinfo=timezone.utc)
+    return start <= now
+
+
 def publish(d, universe, coverage, verbose=True):
     """Log one quote per (source, market) for every source with an opinion."""
     seen = {q["id"] for q in d["quotes"]}
@@ -318,6 +353,13 @@ def publish(d, universe, coverage, verbose=True):
                 if qid in seen:
                     continue
                 r = by_id[mid]
+                # Strictly before the start, for every source and every venue, checked at
+                # the moment of logging. The venue feeds keep a contest for five minutes
+                # past its start to absorb clock skew, and that window let a tip on Al
+                # Wahda v Sharjah be logged 74 seconds after kickoff — it won, +$178. A
+                # quote logged once play has begun is not a prediction.
+                if _started(r, datetime.now(timezone.utc)):
+                    continue
                 # No book, no quote — for ANY source, not just the market's own. A quote
                 # is logged once and never revised, so logging a tip against a placeholder
                 # price would freeze it at a price that never existed. Skipping instead
@@ -509,6 +551,140 @@ def score(d, sport=None):
     return out
 
 
+# ---------------------------------------------------------------------------
+# Baselines and the stamp of approval
+# ---------------------------------------------------------------------------
+
+BLIND_KINDS = ("favourite", "underdog", "draw")
+
+
+def blind_pnl(q, kind):
+    """P/L of a blind strategy on the contest behind quote `q`, at q's own prices.
+
+    kind = "draw" backs the draw (three-way only); "favourite" backs whichever side the
+    venue priced higher; "underdog" the side it priced lower. Same contest, same moment, same prices and the same price band
+    as the source it is compared with — so the only thing that differs is the choice.
+    None when the strategy has no bet there or the contest has no clean result.
+    """
+    if q.get("result") not in ("a", "b", "draw"):
+        return None
+    if kind == "draw":
+        side, price = "draw", q.get("price_draw")
+    else:
+        pa, pb = q.get("price_a"), q.get("price_b")
+        if pa is None or pb is None:
+            return None
+        fav = ("a", pa) if pa >= pb else ("b", pb)
+        dog = ("b", pb) if pa >= pb else ("a", pa)
+        side, price = fav if kind == "favourite" else dog
+    if price is None or not (PRICE_FLOOR <= price <= PRICE_CEIL):
+        return None
+    return round(STAKE * (1.0 / price - 1.0), 2) if q["result"] == side else -STAKE
+
+
+def baselines(d, sport=None):
+    """The two blind strategies across every contest the ledger holds a result for.
+
+    Each contest counted ONCE, priced at its earliest quote — the first moment any source
+    looked at it, before the start. Void and late quotes are ignored.
+    Returns {kind: dict(n, won, pnl, roi, expected)}.
+    """
+    first = {}
+    for q in d["quotes"]:
+        if q.get("status") == "void" or (sport and q["sport"] != sport):
+            continue
+        if q.get("venue") == "kalshi_binary" or q.get("result") not in ("a", "b", "draw"):
+            continue
+        cur = first.get(q["market_id"])
+        if cur is None or q["logged"] < cur["logged"]:
+            first[q["market_id"]] = q
+    out = {}
+    for kind in BLIND_KINDS:
+        rows = [(q, blind_pnl(q, kind)) for q in first.values()]
+        rows = [(q, p) for q, p in rows if p is not None]
+        n = len(rows)
+        pnl = sum(p for _q, p in rows)
+        exp = 0.0
+        for q, _p in rows:
+            exp += (q["price_draw"] if kind == "draw" else
+                    max(q["price_a"], q["price_b"]) if kind == "favourite" else
+                    min(q["price_a"], q["price_b"]))
+        out[kind] = dict(n=n, won=sum(1 for _q, p in rows if p > 0), pnl=pnl,
+                         roi=(pnl / (n * STAKE)) if n else None, expected=exp)
+    return out
+
+
+def assess(d, name, sport=None):
+    """Judge one source (optionally in one sport) against APPROVAL.
+
+    Returns dict(status, criteria=[(key, label, passed, detail)], and the metrics).
+    status: "unproven" under READ_FLOOR settled bets; "approved" when every criterion
+    holds; "failing" when it is readable and not ahead of the price at all; else "watch".
+    """
+    bets = sorted((q for q in d["quotes"] if q["source"] == name and q.get("bet")
+                   and q["status"] in ("won", "lost")
+                   and (sport is None or q["sport"] == sport)),
+                  key=lambda q: q["start"])
+    n = len(bets)
+    won = sum(1 for q in bets if q["status"] == "won")
+    pnl = sum(q["pnl"] for q in bets)
+    roi = pnl / (n * STAKE) if n else None
+    expected = sum(q["price"] for q in bets)
+    var = sum(q["price"] * (1 - q["price"]) for q in bets)
+    z = (won - expected) / var ** 0.5 if var > 0 else 0.0
+    weeks = len({datetime.fromisoformat(q["start"]).isocalendar()[:2] for q in bets})
+
+    # Against each blind rule on the contests where that rule has a bet, the source's own
+    # ROI on exactly those contests. The hardest of them is the one reported.
+    blind = []
+    for kind in BLIND_KINDS:
+        pairs = [(q, blind_pnl(q, kind)) for q in bets]
+        pairs = [(q, b) for q, b in pairs if b is not None]
+        if not pairs:
+            continue
+        k = len(pairs) * STAKE
+        blind.append((kind, sum(q["pnl"] for q, _b in pairs) / k, sum(b for _q, b in pairs) / k))
+    beats_all = bool(blind) and all(own > base for _k, own, base in blind)
+    hardest = max(blind, key=lambda t: t[2] - t[1]) if blind else None
+    base_roi = hardest[2] if hardest else None
+    own_roi = hardest[1] if hardest else None
+
+    top = max((q["pnl"] for q in bets if q["status"] == "won"), default=0.0)
+    roi_wo_top = ((pnl - top) / ((n - 1) * STAKE)) if n > 1 else None
+    half = n // 2
+    roi_h1 = (sum(q["pnl"] for q in bets[:half]) / (half * STAKE)) if half else None
+    roi_h2 = (sum(q["pnl"] for q in bets[half:]) / ((n - half) * STAKE)) if n - half else None
+
+    A = APPROVAL
+    criteria = [
+        ("sample", f"{A['min_bets']}+ settled bets over {A['min_weeks']}+ weeks",
+         n >= A["min_bets"] and weeks >= A["min_weeks"], f"{n} bets, {weeks} week{'s' if weeks != 1 else ''}"),
+        ("price", f"wins beat the price by z ≥ {A['z_min']:g}",
+         n > 0 and z >= A["z_min"], f"{won} won v {expected:.1f} priced, z {z:+.2f}"),
+        ("baseline", "beats every blind rule on the same contests",
+         beats_all,
+         (f"{own_roi*100:+.1f}% v {base_roi*100:+.1f}% back the {hardest[0]}"
+          if hardest else "no comparable contests")),
+        ("one_hit", "still profitable without its biggest win",
+         roi_wo_top is not None and roi_wo_top > 0,
+         f"{roi_wo_top*100:+.1f}% without it" if roi_wo_top is not None else "—"),
+        ("halves", "profitable in both halves of its record",
+         bool(roi_h1 and roi_h2 and roi_h1 > 0 and roi_h2 > 0),
+         (f"{roi_h1*100:+.1f}% then {roi_h2*100:+.1f}%" if roi_h1 is not None
+          and roi_h2 is not None else "—")),
+    ]
+    if n < READ_FLOOR:
+        status = "unproven"
+    elif all(c[2] for c in criteria):
+        status = "approved"
+    elif (roi or 0) <= 0 or z <= 0:
+        status = "failing"
+    else:
+        status = "watch"
+    return dict(status=status, criteria=criteria, n=n, won=won, roi=roi, pnl=pnl,
+                z=z, weeks=weeks, base_roi=base_roi, own_roi=own_roi)
+
+
 RETAIN_DAYS = 45
 
 # Sports whose Polymarket prices were measured to be placeholders before the book gate
@@ -517,6 +693,32 @@ RETAIN_DAYS = 45
 # (tennis within 2pp of Pinnacle), so their history is left alone.
 PRE_GATE_SPORTS = ("boxing", "cricket", "table_tennis")
 PRE_GATE_NOTE = "pre-gate: logged at an unverified Polymarket placeholder price"
+
+
+LATE_NOTE = "logged at or after the start: not a prediction"
+
+
+def retire_late(d, verbose=True):
+    """Void every quote logged at or after its contest's start, whatever its result.
+
+    The rule publish() now enforces, applied to what was logged before it was. Idempotent.
+    Returns the number voided.
+    """
+    voided = 0
+    for q in d["quotes"]:
+        if q.get("status") == "void":
+            continue
+        try:
+            late = (datetime.fromisoformat(q["logged"]) >= datetime.fromisoformat(q["start"]))
+        except (KeyError, TypeError, ValueError):
+            continue
+        if late:
+            q["status"], q["pnl"], q["note"] = "void", 0.0, LATE_NOTE
+            q["settled"] = q.get("settled") or now_iso()
+            voided += 1
+    if verbose and voided:
+        print(f"  late quotes: voided {voided} logged at or after the start")
+    return voided
 
 
 def retire_pre_gate(d, now=None, verbose=True):
@@ -603,6 +805,7 @@ def main():
     print("Sandbox Tracker")
     d = load()
     retire_pre_gate(d)
+    retire_late(d)
     # Stage timings are printed so a slow run in CI names its own culprit. The first
     # run with soccer on Kalshi took 14.6 minutes against 3 before it, with only 25s of
     # CPU — all of it waiting on the network, and no log line said where.

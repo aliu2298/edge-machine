@@ -19,7 +19,14 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "s
 # Below this many settled bets, ROI is noise dressed as a finding. Three lanes in this
 # repo have already died from a rate being read without the sample behind it, so the
 # board refuses to call a winner until the number can carry the claim.
-MIN_N = 30
+MIN_N = T.READ_FLOOR
+
+STAMP = {
+    "approved": '<span class="sig y">✓ APPROVED</span>',
+    "watch":    '<span class="sig w">WATCH</span>',
+    "failing":  '<span class="st miss">FAILING</span>',
+    "unproven": '<span class="sig n">NO READ</span>',
+}
 
 # The board covers two different things now, and one table of fourteen columns would be
 # unreadable. Sports are contests between two named sides; the rest are yes/no questions
@@ -133,8 +140,10 @@ def sport_matrix(d, keys=None):
                     continue
                 thin = s["settled"] < MIN_N
                 klass = "mut" if thin else cls(s["pnl"])
+                tick = (' <span class="pos">✓</span>'
+                        if T.assess(d, name, sport)["status"] == "approved" else "")
                 cells.append(f'<td class="num"><span class="{klass}">{pct(s["roi"], sign=True)}</span>'
-                             f'<div class="sm mut">n={s["settled"]}</div></td>')
+                             f'{tick}<div class="sm mut">n={s["settled"]}</div></td>')
             tot = T.score(d)[name]  # lifetime, across every domain
             tot_roi = (f'<span class="{cls(tot["pnl"]) if tot["settled"] >= MIN_N else "mut"}">'
                        f'{pct(tot["roi"], sign=True)}</span>' if tot["settled"]
@@ -171,9 +180,10 @@ def leaderboard(scores, d):
         roi = (f'<span class="{cls(s["roi"])}">{pct(s["roi"], sign=True)}</span>'
                if s["roi"] is not None and not thin
                else f'<span class="mut">{pct(s["roi"], sign=True)}</span>')
-        verdict = ('<span class="sig n">NO READ</span>' if thin else
-                   '<span class="sig y">PROFITABLE</span>' if (s["roi"] or 0) > 0 else
-                   '<span class="st miss">LOSING</span>')
+        # The verdict IS the stamp: "profitable" on its own was a hot ROI with nothing
+        # behind it. Sources that never bet (Polymarket, the spine) carry no stamp.
+        verdict = (STAMP[T.assess(d, name)["status"]] if s["bets"]
+                   else '<span class="mut sm">price only</span>')
         vp = vs_price(d, name)
         vp_cell = "—"
         if vp:
@@ -193,51 +203,46 @@ def leaderboard(scores, d):
     return "\n".join(rows)
 
 
-def vs_price(d, name, sport=None):
-    """Wins, and the wins the PRICES implied. Returns (won, expected) or None.
-
-    At these sample sizes this says more than ROI does. Each backed price is the
-    market's own probability that the bet lands, so adding them up gives the number of
-    winners a source should have had by luck alone. Beating the price is the whole test;
-    a hot ROI on heavy favourites is not an edge.
-    """
-    rows = [q for q in d["quotes"] if q["source"] == name and q["bet"]
-            and q["status"] in ("won", "lost") and (sport is None or q["sport"] == sport)]
-    if not rows:
-        return None
-    return sum(1 for q in rows if q["status"] == "won"), sum(q["price"] for q in rows)
-
-
-def leaderboard(scores, d):
+def approval_table(d, scores):
+    """Every betting source against every criterion, so a stamp can be checked, not trusted."""
+    head = "".join(f'<th>{esc(label)}</th>' for _k, label, _p, _d in
+                   T.assess(d, "__none__")["criteria"])
     rows = []
-    for name, s in sorted(scores.items(),
-                          key=lambda kv: (kv[1]["connected"], kv[1]["settled"]), reverse=True):
-        if not s["connected"]:
-            continue
-        thin = s["settled"] < MIN_N
-        roi = (f'<span class="{cls(s["roi"])}">{pct(s["roi"], sign=True)}</span>'
-               if s["roi"] is not None and not thin
-               else f'<span class="mut">{pct(s["roi"], sign=True)}</span>')
-        verdict = ('<span class="sig n">NO READ</span>' if thin else
-                   '<span class="sig y">PROFITABLE</span>' if (s["roi"] or 0) > 0 else
-                   '<span class="st miss">LOSING</span>')
-        vp = vs_price(d, name)
-        vp_cell = "—"
-        if vp:
-            won, exp = vp
-            vp_cell = (f'{won} v {exp:.1f}<div class="sm mut">'
-                       f'{"+" if won - exp >= 0 else ""}{won - exp:.1f}</div>')
-        rows.append(f"""<tr>
-<td><b>{esc(s['label'])}</b><div class="mut sm">{esc(s['kind'])} · {esc(s['site'])}</div></td>
-<td class="num">{s['quotes']:,}</td><td class="num">{s['bets']:,}</td>
-<td class="num">{s['settled']:,}</td>
-<td class="num">{pct(s['hit']) if s['hit'] is not None else '—'}</td>
-<td class="num">{vp_cell}</td>
-<td class="num">{roi}</td>
-<td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['settled'] else '—'}</td>
-<td class="num">{f"{s['brier']:.4f}" if s['brier'] is not None else '—'}</td>
-<td>{verdict}</td></tr>""")
-    return "\n".join(rows)
+    order = {"approved": 0, "watch": 1, "failing": 2, "unproven": 3}
+    judged = [(name, T.assess(d, name)) for name, s in scores.items()
+              if s["connected"] and s["bets"]]
+    for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
+        cells = "".join(
+            f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
+            f'<div class="sm mut">{esc(detail)}</div></td>'
+            for _k, _l, passed, detail in a["criteria"])
+        rows.append(f'<tr><td><b>{esc(S.SOURCES[name]["label"])}</b></td>'
+                    f'<td>{STAMP[a["status"]]}</td>{cells}</tr>')
+    return f"""<div class="tbl"><table>
+<tr><th>Source</th><th>Stamp</th>{head}</tr>
+{''.join(rows)}</table></div>"""
+
+
+def baseline_table(d):
+    """The blind strategies, per sport — the bar every source's choices have to clear."""
+    rows = []
+    for sport in SPORT_KEYS:
+        b = T.baselines(d, sport)
+        for kind, label in (("favourite", "Back the favourite"),
+                            ("underdog", "Back the underdog"), ("draw", "Back every draw")):
+            r = b[kind]
+            if not r["n"]:
+                continue
+            rows.append(f"""<tr><td>{esc(S.SPORTS[sport])}</td><td><b>{label}</b></td>
+<td class="num">{r['n']}</td><td class="num">{r['won']} v {r['expected']:.1f}</td>
+<td class="num"><span class="{cls(r['pnl']) if r['n'] >= MIN_N else 'mut'}">{pct(r['roi'], sign=True)}</span></td>
+<td class="num {cls(r['pnl'])}">{money(r['pnl'])}</td></tr>""")
+    if not rows:
+        return '<div class="note">No settled contests yet.</div>'
+    return f"""<div class="tbl"><table>
+<tr><th>Sport</th><th>Blind strategy</th><th class="num">Contests</th>
+<th class="num">Won v priced</th><th class="num">ROI</th><th class="num">P/L</th></tr>
+{''.join(rows)}</table></div>"""
 
 
 def coverage_table(cov):
@@ -409,6 +414,7 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.won,.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
 .st.lost,.st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
 .st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
+.sig.w{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
 .grp td{{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
@@ -446,6 +452,28 @@ skill. {esc(verdict)}</div>
 Greyed figures are under {MIN_N} settled bets and mean nothing yet — the sample is
 printed under every number so a hot streak cannot be mistaken for an edge. A dot means
 the source does not cover that sport at all.</div>
+
+<h2>Stamp of approval</h2>
+<div class="note">A source earns the stamp only when <b>every</b> criterion holds, and it is
+re-judged every run, so it can be lost. The rules were fixed on 2026-09-12, before any
+source had met them, and they are the same for tipsters, models, books and exchanges:
+<b>{T.APPROVAL['min_bets']}+ settled bets across {T.APPROVAL['min_weeks']}+ different weeks</b>
+(one weekend is one draw of the weather — on 2026-09-12 the tracked leagues drew 34% of the
+time against a normal ~26%); <b>wins beat the price</b> by z ≥ {T.APPROVAL['z_min']:g};
+<b>ROI beats every blind rule on the same contests</b> — back the favourite, back the
+underdog, back the draw — each a fixed rule that ignores the source, so beating all three
+means its choices added something; <b>still profitable without its single biggest win</b>;
+and <b>profitable in both halves</b> of its record. <b>Watch</b> means readable and ahead of
+the price but not yet through every gate; <b>failing</b> means readable and not ahead of
+the price at all; <b>no read</b> means under {MIN_N} settled bets.</div>
+{approval_table(d, scores)}
+
+<h2>Blind baselines</h2>
+<div class="note">What choosing nothing would have made on the same contests, priced at the
+first moment any source looked at each one. A source whose record is no better than
+<b>back the favourite</b>, <b>back the underdog</b> or <b>back every draw</b> has not shown it
+can pick — it has shown what the weather was.</div>
+{baseline_table(d)}
 
 <h2>Markets beyond sport</h2>
 {sport_matrix(d, MARKET_KEYS)}

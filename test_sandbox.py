@@ -1180,6 +1180,148 @@ finally:
     else:
         _os.environ["ODDS_API_KEY"] = _saved_key
 
+# ---------------------------------------------------------------------------
+print("\nnothing is logged once a contest has started")
+# ---------------------------------------------------------------------------
+# Al Wahda v Sharjah was logged 74 seconds after kickoff and won +$178: the venue feeds
+# keep a contest for five minutes past its start. The rule is for every source and venue.
+_n = datetime.now(timezone.utc)
+_rows_late = [
+    dict(market_id="k-started", sport="soccer", venue="kalshi", label="Al Wahda vs Sharjah",
+         side_a="Al Wahda", side_b="Sharjah", price_a=0.36, price_b=0.38, price_draw=0.30,
+         tradeable={"a": True, "b": True, "draw": True}, untraded=False,
+         start=(_n - timedelta(seconds=74)).isoformat(), date=_n.strftime("%Y-%m-%d"),
+         volume=0.0, url=""),
+    dict(market_id="k-future", sport="soccer", venue="kalshi", label="Hoffenheim vs Stuttgart",
+         side_a="Hoffenheim", side_b="Stuttgart", price_a=0.41, price_b=0.33, price_draw=0.27,
+         tradeable={"a": True, "b": True, "draw": True}, untraded=False,
+         start=(_n + timedelta(hours=3)).isoformat(), date=_n.strftime("%Y-%m-%d"),
+         volume=0.0, url=""),
+]
+_saved_ch = S.CHALLENGERS
+S.CHALLENGERS = {"soccerpredictions": lambda sp: [
+    dict(market_id="k-started", pick="a"), dict(market_id="k-future", pick="draw")]}
+try:
+    d = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(d, {"soccer": _rows_late}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch
+eq(sorted(q["market_id"] for q in d["quotes"]), ["k-future"],
+   "a contest 74 seconds past its start is not logged; one still ahead is")
+ok(T._started(dict(start="not a date"), _n), "an unreadable start counts as started, never as open")
+ok(T._started(dict(start=_n.replace(tzinfo=None).isoformat()), _n + timedelta(seconds=1)),
+   "a naive timestamp is read as UTC")
+
+_ledger = {"quotes": [
+    dict(id="late", source="soccerpredictions", status="won", pnl=177.78, bet=True,
+         logged="2026-09-11T16:16:14+00:00", start="2026-09-11T16:15:00+00:00", settled="x"),
+    dict(id="edge", source="covers", status="open", pnl=0.0, bet=True,
+         logged="2026-09-11T16:15:00+00:00", start="2026-09-11T16:15:00+00:00"),
+    dict(id="fine", source="covers", status="lost", pnl=-100.0, bet=True,
+         logged="2026-09-11T06:00:00+00:00", start="2026-09-11T16:15:00+00:00", settled="x"),
+]}
+eq(T.retire_late(_ledger, verbose=False), 2, "a late win and a quote logged AT the start are voided")
+_q = {q["id"]: q for q in _ledger["quotes"]}
+eq((_q["late"]["status"], _q["late"]["pnl"], _q["late"]["note"]), ("void", 0.0, T.LATE_NOTE),
+   "the late win leaves the record entirely")
+eq(_q["fine"]["status"], "lost", "a quote logged ten hours ahead is untouched")
+eq(T.retire_late(_ledger, verbose=False), 0, "running it again changes nothing")
+
+# ---------------------------------------------------------------------------
+print("\nblind baselines")
+# ---------------------------------------------------------------------------
+_c = dict(result="draw", price_a=0.41, price_b=0.33, price_draw=0.27)
+close(T.blind_pnl(_c, "draw"), 100 * (1 / 0.27 - 1), "back the draw on a drawn match pays the Tie price", tol=0.01)
+eq(T.blind_pnl(_c, "favourite"), -100.0, "the favourite loses to a draw")
+eq(T.blind_pnl(_c, "underdog"), -100.0, "and so does the underdog")
+close(T.blind_pnl(dict(result="b", price_a=0.62, price_b=0.40), "underdog"), 150.0,
+      "the underdog is the lower-priced side", tol=0.01)
+eq(T.blind_pnl(dict(result="a", price_a=0.62, price_b=0.40), "draw"), None,
+   "no draw bet exists on a two-way contest")
+eq(T.blind_pnl(dict(result="a", price_a=0.97, price_b=0.04), "favourite"), None,
+   "the same price band as every source: no blind bet at 0.97")
+eq(T.blind_pnl(dict(result="void", price_a=0.5, price_b=0.5), "favourite"), None,
+   "no result, no baseline")
+
+_bl = {"quotes": [
+    dict(market_id="m1", sport="soccer", status="won", result="draw", logged="2026-09-12T01:00:00+00:00",
+         price_a=0.41, price_b=0.33, price_draw=0.27),
+    dict(market_id="m1", sport="soccer", status="graded", result="draw", logged="2026-09-12T09:00:00+00:00",
+         price_a=0.50, price_b=0.30, price_draw=0.20),
+    dict(market_id="m2", sport="soccer", status="void", result="a", logged="2026-09-12T01:00:00+00:00",
+         price_a=0.60, price_b=0.20, price_draw=0.20),
+]}
+_b = T.baselines(_bl, "soccer")
+eq(_b["draw"]["n"], 1, "each contest once; void quotes ignored")
+close(_b["draw"]["pnl"], 100 * (1 / 0.27 - 1), "priced at the EARLIEST quote on the contest", tol=0.01)
+
+# ---------------------------------------------------------------------------
+print("\nstamp of approval")
+# ---------------------------------------------------------------------------
+_wk = datetime(2026, 9, 1, 15, tzinfo=timezone.utc)
+
+
+def _bet(i, won, price=0.5, pick="a", week=0, pnl=None, pa=None, pb=None, pd=None, source="tip"):
+    res = pick if won else ("b" if pick == "a" else "a")
+    return dict(source=source, sport="soccer", bet=True, status="won" if won else "lost",
+                pick=pick, price=price, result=res,
+                pnl=(pnl if pnl is not None else (round(100 * (1 / price - 1), 2) if won else -100.0)),
+                start=(_wk + timedelta(weeks=week, hours=i)).isoformat(),
+                price_a=pa if pa is not None else price, price_b=pb if pb is not None else 1 - price,
+                price_draw=pd)
+
+
+# A genuinely good record CHOOSES: on half the contests it takes the underdog (0.40) and
+# wins 60%, on the other half the favourite (0.62) and wins 90%. Always taking one side
+# would just be that blind rule under another name — see the tests below.
+_good = []
+for i in range(60):
+    if i % 2 == 0:
+        _good.append(_bet(i, i % 10 < 6, price=0.40, pick="a", week=i // 10, pa=0.40, pb=0.62))
+    else:
+        _good.append(_bet(i, i % 10 != 9, price=0.62, pick="b", week=i // 10, pa=0.40, pb=0.62))
+_a = T.assess({"quotes": _good}, "tip")
+eq(_a["status"], "approved", "60 bets over 6 weeks that beat the price and every blind rule")
+ok(all(c[2] for c in _a["criteria"]), "…with every criterion ticked")
+_a = T.assess({"quotes": [_bet(i, i % 5 < 3, price=0.40, pick="a", week=i // 10, pa=0.40, pb=0.62)
+                          for i in range(60)]}, "tip")
+eq(dict((c[0], c[2]) for c in _a["criteria"])["baseline"], False,
+   "a source that always takes the underdog is 'back the underdog', however well it did")
+
+_a = T.assess({"quotes": [_bet(i, i % 5 < 3, price=0.40, pa=0.40, pb=0.62) for i in range(60)]}, "tip")
+eq((_a["status"], dict((c[0], c[2]) for c in _a["criteria"])["sample"]), ("watch", False),
+   "the same record inside ONE week is not approved — one weekend is one draw of the weather")
+
+_a = T.assess({"quotes": [_bet(i, i % 5 < 3, price=0.60, pa=0.60, pb=0.42, week=i // 10) for i in range(60)]}, "tip")
+eq(dict((c[0], c[2]) for c in _a["criteria"])["baseline"], False,
+   "a source that only ever backs the favourite cannot beat 'back the favourite'")
+
+_luck = [_bet(i, False, price=0.40, pa=0.40, pb=0.62, week=i // 10) for i in range(59)]
+_luck.append(_bet(59, True, price=0.05, pnl=10000.0, pa=0.05, pb=0.96, week=5))
+_a = T.assess({"quotes": _luck}, "tip")
+eq(dict((c[0], c[2]) for c in _a["criteria"])["one_hit"], False,
+   "one enormous win cannot carry a record")
+
+_fade = ([_bet(i, i % 5 < 4, price=0.40, pa=0.40, pb=0.62, week=i // 10) for i in range(30)] +
+         [_bet(30 + i, i % 5 < 1, price=0.40, pa=0.40, pb=0.62, week=3 + i // 10) for i in range(30)])
+_a = T.assess({"quotes": _fade}, "tip")
+eq(dict((c[0], c[2]) for c in _a["criteria"])["halves"], False,
+   "a record that made its money early and lost it late is not approved")
+
+eq(T.assess({"quotes": _good[:20]}, "tip")["status"], "unproven", "under the read floor there is no stamp at all")
+_a = T.assess({"quotes": [_bet(i, i % 5 < 1, price=0.40, pa=0.40, pb=0.62, week=i // 10) for i in range(40)]}, "tip")
+eq(_a["status"], "failing", "readable and behind the price is failing")
+eq(T.assess({"quotes": _good}, "someone-else")["n"], 0, "a stamp is per source")
+
+_draws = [_bet(i, i % 2 == 0, price=0.28, pick="draw", pa=0.40, pb=0.34, pd=0.28, week=i // 10)
+          for i in range(60)]
+_a = T.assess({"quotes": _draws}, "tip")
+_crit = {c[0]: c for c in _a["criteria"]}
+eq(_crit["baseline"][2], False,
+   "picking the draw on every contest cannot beat 'back every draw' on those contests")
+ok("draw" in _crit["baseline"][3], "and the page names the rule it failed to beat")
+ok(T.APPROVAL["min_bets"] > T.READ_FLOOR, "the stamp asks for more than the read floor")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

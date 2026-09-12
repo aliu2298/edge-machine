@@ -45,13 +45,14 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}
 .st.won,.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
 .st.lost,.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
 .st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
+.sig.w{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
 .grp td{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}
 footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox Tracker</h1>
-<div class="sub">Which tipster actually makes money · 14 sports · updated 2026-09-12 21:26 UTC</div>
+<div class="sub">Which tipster actually makes money · 14 sports · updated 2026-09-12 21:57 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
@@ -95,6 +96,66 @@ Greyed figures are under 30 settled bets and mean nothing yet — the sample is
 printed under every number so a hot streak cannot be mistaken for an edge. A dot means
 the source does not cover that sport at all.</div>
 
+<h2>Stamp of approval</h2>
+<div class="note">A source earns the stamp only when <b>every</b> criterion holds, and it is
+re-judged every run, so it can be lost. The rules were fixed on 2026-09-12, before any
+source had met them, and they are the same for tipsters, models, books and exchanges:
+<b>50+ settled bets across 4+ different weeks</b>
+(one weekend is one draw of the weather — on 2026-09-12 the tracked leagues drew 34% of the
+time against a normal ~26%); <b>wins beat the price</b> by z ≥ 2;
+<b>ROI beats every blind rule on the same contests</b> — back the favourite, back the
+underdog, back the draw — each a fixed rule that ignores the source, so beating all three
+means its choices added something; <b>still profitable without its single biggest win</b>;
+and <b>profitable in both halves</b> of its record. <b>Watch</b> means readable and ahead of
+the price but not yet through every gate; <b>failing</b> means readable and not ahead of
+the price at all; <b>no read</b> means under 30 settled bets.</div>
+<div class="tbl"><table>
+<tr><th>Source</th><th>Stamp</th><th>50+ settled bets over 4+ weeks</th><th>wins beat the price by z ≥ 2</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th><th>profitable in both halves of its record</th></tr>
+<tr><td><b>SoccerPredictions.ai</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">36 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">15 won v 12.5 priced, z +0.89</div></td><td><span class="pos">✓</span><div class="sm mut">+28.8% v +21.4% back the draw</div></td><td><span class="pos">✓</span><div class="sm mut">+21.9% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+45.0% then +12.7%</div></td></tr><tr><td><b>Covers / OddsShark computer picks</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">17 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">12 won v 10.1 priced, z +0.94</div></td><td><span class="neg">✗</span><div class="sm mut">+21.9% v +21.9% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+17.2% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+27.8% then +16.7%</div></td></tr><tr><td><b>Scores24 (editorial tips)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">16 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">10 won v 9.0 priced, z +0.51</div></td><td><span class="neg">✗</span><div class="sm mut">+8.3% v +28.8% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+2.0% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+4.5% then +12.1%</div></td></tr><tr><td><b>ESPN FPI / Matchup Predictor</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">13 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">9 won v 6.4 priced, z +1.45</div></td><td><span class="pos">✓</span><div class="sm mut">+44.0% v +30.7% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+32.5% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+45.4% then +42.8%</div></td></tr><tr><td><b>SportsGambler</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">13 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">5 won v 6.5 priced, z -0.83</div></td><td><span class="neg">✗</span><div class="sm mut">-26.3% v +59.3% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-38.7% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-72.2% then +13.1%</div></td></tr><tr><td><b>Kalshi</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.0 priced, z +1.37</div></td><td><span class="pos">✓</span><div class="sm mut">+94.8% v +3.1% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+83.5% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+106.2% then +83.5%</div></td></tr><tr><td><b>DraftKings (via ESPN)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">0 bets, 0 weeks</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.0 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">no comparable contests</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>Oddspedia community tips</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">0 bets, 0 weeks</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.0 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">no comparable contests</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>National Weather Service</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">0 bets, 0 weeks</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.0 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">no comparable contests</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>Spot price (no-change baseline)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">0 bets, 0 weeks</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.0 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">no comparable contests</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr></table></div>
+
+<h2>Blind baselines</h2>
+<div class="note">What choosing nothing would have made on the same contests, priced at the
+first moment any source looked at each one. A source whose record is no better than
+<b>back the favourite</b>, <b>back the underdog</b> or <b>back every draw</b> has not shown it
+can pick — it has shown what the weather was.</div>
+<div class="tbl"><table>
+<tr><th>Sport</th><th>Blind strategy</th><th class="num">Contests</th>
+<th class="num">Won v priced</th><th class="num">ROI</th><th class="num">P/L</th></tr>
+<tr><td>Soccer</td><td><b>Back the favourite</b></td>
+<td class="num">49</td><td class="num">15 v 20.7</td>
+<td class="num"><span class="neg">-27.0%</span></td>
+<td class="num neg">−$1,325</td></tr><tr><td>Soccer</td><td><b>Back the underdog</b></td>
+<td class="num">49</td><td class="num">20 v 15.7</td>
+<td class="num"><span class="pos">+31.0%</span></td>
+<td class="num pos">+$1,519</td></tr><tr><td>Soccer</td><td><b>Back every draw</b></td>
+<td class="num">49</td><td class="num">14 v 13.4</td>
+<td class="num"><span class="pos">+6.4%</span></td>
+<td class="num pos">+$315</td></tr><tr><td>Tennis</td><td><b>Back the favourite</b></td>
+<td class="num">202</td><td class="num">136 v 132.9</td>
+<td class="num"><span class="pos">+2.6%</span></td>
+<td class="num pos">+$524</td></tr><tr><td>Tennis</td><td><b>Back the underdog</b></td>
+<td class="num">202</td><td class="num">66 v 69.1</td>
+<td class="num"><span class="neg">-10.2%</span></td>
+<td class="num neg">−$2,058</td></tr><tr><td>NFL</td><td><b>Back the favourite</b></td>
+<td class="num">1</td><td class="num">0 v 0.6</td>
+<td class="num"><span class="mut">-100.0%</span></td>
+<td class="num neg">−$100</td></tr><tr><td>NFL</td><td><b>Back the underdog</b></td>
+<td class="num">1</td><td class="num">1 v 0.4</td>
+<td class="num"><span class="mut">+181.7%</span></td>
+<td class="num pos">+$182</td></tr><tr><td>Cricket</td><td><b>Back the favourite</b></td>
+<td class="num">2</td><td class="num">0 v 1.2</td>
+<td class="num"><span class="mut">-100.0%</span></td>
+<td class="num neg">−$200</td></tr><tr><td>Cricket</td><td><b>Back the underdog</b></td>
+<td class="num">2</td><td class="num">2 v 0.9</td>
+<td class="num"><span class="mut">+120.4%</span></td>
+<td class="num pos">+$241</td></tr><tr><td>MLB</td><td><b>Back the favourite</b></td>
+<td class="num">22</td><td class="num">14 v 12.7</td>
+<td class="num"><span class="mut">+9.8%</span></td>
+<td class="num pos">+$216</td></tr><tr><td>MLB</td><td><b>Back the underdog</b></td>
+<td class="num">22</td><td class="num">8 v 9.3</td>
+<td class="num"><span class="mut">-15.0%</span></td>
+<td class="num neg">−$330</td></tr></table></div>
+
 <h2>Markets beyond sport</h2>
 <div class="tbl"><table>
 <tr><th>Source</th><th class="num">Climate</th><th class="num">Crypto</th><th class="num">Economics</th><th class="num">Commodities</th><th class="num">Finance</th><th class="num">Politics</th><th class="num">Elections</th><th class="num">All</th></tr>
@@ -124,7 +185,7 @@ could settle and be scored.</div>
 <td class="num"><span class="pos">+28.8%</span></td>
 <td class="num pos">+$1,037</td>
 <td class="num">—</td>
-<td><span class="sig y">PROFITABLE</span></td></tr>
+<td><span class="sig w">WATCH</span></td></tr>
 <tr>
 <td><b>Covers / OddsShark computer picks</b><div class="mut sm">Tipster site · covers.com</div></td>
 <td class="num">44</td><td class="num">44</td>
@@ -184,7 +245,7 @@ could settle and be scored.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num mut">—</td>
 <td class="num">0.2094</td>
-<td><span class="sig n">NO READ</span></td></tr>
+<td><span class="mut sm">price only</span></td></tr>
 <tr>
 <td><b>DraftKings (via ESPN)</b><div class="mut sm">Sportsbook · draftkings.com</div></td>
 <td class="num">62</td><td class="num">3</td>
@@ -234,7 +295,7 @@ could settle and be scored.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num mut">—</td>
 <td class="num">—</td>
-<td><span class="sig n">NO READ</span></td></tr>
+<td><span class="mut sm">price only</span></td></tr>
 </table></div>
 <div class="note"><b>Won v priced</b> is the honest column while samples are small: each backed price is
 the market's own chance that the bet lands, so their sum is how many winners luck alone
