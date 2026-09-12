@@ -72,6 +72,9 @@ def claim_market(bet):
 # Per build. One paced request each (~1.5s), so this bounds the step at ~90s; anything
 # left over is picked up next build — lines beyond three days out rarely exist anyway.
 MAX_PRICE_FETCHES = 60
+# A lead is "value" when the model's probability beats the book's vig-free probability by
+# this much. Fixed here, in advance: the split below is pre-registered, not fitted.
+VALUE_MARGIN = 0.05
 
 
 # ---------------------------------------------------------------- bet evaluation
@@ -168,8 +171,33 @@ def _kickoff(e):
         return None
 
 
-def price(blob, leads, fetch, now=None):
+def _model_probs(m, e, markets):
+    """Model probability for each priced market on a lead, or None if the model cannot
+    rate both sides. Team markets resolve to the claim's side."""
+    import model as M
+    if not (M.known(m, e.get("home")) and M.known(m, e.get("away"))):
+        return None
+    p = M.probs(m, e["home"], e["away"], e.get("league"))
+    out = {}
+    for mk in markets:
+        if mk in TEAM_MARKETS:
+            team = (e.get("bet") or {}).get("team")
+            key = "home2plus" if team == e.get("home") else "away2plus" if team == e.get("away") else None
+            if key:
+                out[mk] = round(p[key], 4)
+        elif mk in p:
+            out[mk] = round(p[mk], 4)
+    return out or None
+
+
+def price(blob, leads, fetch, now=None, model=None):
     """Capture the book's price on pending leads that do not have one yet.
+
+    With `model` (see model.fit) the model's own probability for every priced market is
+    logged next to the quote, under the same rules — before kickoff, once, never revised —
+    so the record can score model against book on identical leads. A lead priced before
+    the model existed is back-filled while still pending and unplayed, which keeps the
+    no-lookahead guarantee: the model sees only games before the fixture either way.
 
     `leads` are the leads as published this build (they carry the venue link; the ledger
     never does). `fetch(link)` returns {market: {price, fair}}, {} when no line is up
@@ -194,10 +222,7 @@ def price(blob, leads, fetch, now=None):
     cache = {}                                    # link -> result, within this run
     n_priced = n_fetched = 0
     for lid, e in blob["leads"].items():
-        if e.get("status") != "pending" or e.get("prices"):
-            continue
-        link = link_of.get(lid)
-        if not link:
+        if e.get("status") != "pending":
             continue
         ko = _kickoff(e)
         if ko is not None:
@@ -205,6 +230,16 @@ def price(blob, leads, fetch, now=None):
                 continue
         elif (e.get("date") or "") <= today:
             continue                              # no kickoff time: date must be ahead
+        if e.get("prices"):
+            if model is not None and not e.get("model"):
+                mp = _model_probs(model, e, e["prices"])
+                if mp:
+                    e["model"] = mp
+                    e["modelled_at"] = now.isoformat(timespec="seconds")
+            continue
+        link = link_of.get(lid)
+        if not link:
+            continue
         if link not in cache:
             if n_fetched >= MAX_PRICE_FETCHES:
                 break
@@ -226,6 +261,11 @@ def price(blob, leads, fetch, now=None):
             continue
         e["prices"] = quotes
         e["priced_at"] = now.isoformat(timespec="seconds")
+        if model is not None:
+            mp = _model_probs(model, e, quotes)
+            if mp:
+                e["model"] = mp
+                e["modelled_at"] = e["priced_at"]
         n_priced += 1
     return blob, n_priced, n_fetched
 
@@ -326,6 +366,48 @@ def price_report(blob):
     return {"rows": rows, "graded": len(settled), "pending": pending,
             "lane_roi": lane_roi,
             "claim_roi": lane_roi.get("over15")}
+
+
+def model_report(blob):
+    """Model against book on the SAME settled leads: Brier score each, and the
+    pre-registered value split (model beats the book's fair probability by VALUE_MARGIN)
+    with its hit rate and flat-stake ROI against everything else."""
+    settled = [e for e in blob["leads"].values()
+               if e.get("prices") and e.get("pnl") and e.get("model")
+               and e["status"] in ("hit", "miss")]
+    rows = []
+    for mk in list(PRICED_MARKETS) + list(TEAM_MARKETS):
+        es = [e for e in settled if mk in e["pnl"] and mk in e["prices"] and mk in e["model"]]
+        n = len(es)
+        if not n:
+            continue
+        ys = [1.0 if e["pnl"][mk]["hit"] else 0.0 for e in es]
+        pm = [e["model"][mk] for e in es]
+        pb = [e["prices"][mk]["fair"] for e in es]
+        b_model = sum((p - y) ** 2 for p, y in zip(pm, ys)) / n
+        b_book = sum((p - y) ** 2 for p, y in zip(pb, ys)) / n
+        # 1e-9: 0.70 - 0.65 is 0.04999... in floating point and must still count
+        value = [e for e in es
+                 if e["model"][mk] - e["prices"][mk]["fair"] >= VALUE_MARGIN - 1e-9]
+        rest = [e for e in es if e not in value]
+
+        def split(group):
+            g = len(group)
+            if not g:
+                return {"n": 0, "hits": 0, "rate": None, "roi": None}
+            h = sum(1 for e in group if e["pnl"][mk]["hit"])
+            return {"n": g, "hits": h, "rate": h / g,
+                    "roi": sum(e["pnl"][mk]["pnl"] for e in group) / g}
+        rows.append({
+            "market": mk, "label": MARKET_LABEL[mk], "n": n,
+            "actual": sum(ys) / n, "model_avg": sum(pm) / n, "book_avg": sum(pb) / n,
+            "brier_model": b_model, "brier_book": b_book,
+            "model_better": b_model < b_book,
+            "value": split(value), "rest": split(rest),
+        })
+    return {"rows": rows, "graded": len(settled), "margin": VALUE_MARGIN,
+            "pending": sum(1 for e in blob["leads"].values()
+                           if e.get("model") and e["status"] == "pending")}
 
 
 # ---------------------------------------------------------------- measurement
@@ -535,6 +617,7 @@ def report(fixtures, blob=None):
         "population_fixtures": pop.get("_fixtures", 0),
         "rows": rows,
         "priced": priced,
+        "model": model_report(blob),
         "recent": sorted([e for e in settled if e.get("graded_at")],
                          key=lambda e: e["date"], reverse=True)[:25],
     }

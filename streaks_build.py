@@ -995,7 +995,9 @@ function card(l) {{
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
       ${{l.market ? `<a class="kbtn" href="${{esc(l.market)}}" target="_blank"
          rel="noopener">Bovada ↗</a>` : ''}}
-      ${{l.price ? `<span class="px" title="Price of this claim when the lead was first listed">@ ${{l.price.toFixed(2)}}</span>` : ''}}
+      ${{l.price ? `<span class="px" title="Price of this claim when the lead was first listed · book = the book's vig-free probability · model = shrunk Poisson estimate">@ ${{l.price.toFixed(2)}}${{
+          l.fair ? ` · book ${{Math.round(l.fair*100)}}%` : ''}}${{
+          l.model != null ? ` · model ${{Math.round(l.model*100)}}%` : ''}}</span>` : ''}}
     </div>
     <div class="ev">
       ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}
@@ -1239,10 +1241,18 @@ def build(force=False):
     ledger, added = streaks_track.record(leads)
     # Price BEFORE grading, and only leads still ahead of kickoff (price() enforces it).
     # One paced request per unpriced fixture; a failure here must not cost the board.
+    # The model is fitted on the same fixture pull, so its probability for a lead is a
+    # pure function of games already played — no lookahead, same as the walk-forward.
+    try:
+        import model as M
+        mdl = M.fit(fixtures)
+    except Exception as e:
+        print(f"  (model skipped: {e})")
+        mdl = None
     try:
         from venues import fetch_bovada_prices
         ledger, n_priced, n_fetched = streaks_track.price(ledger, leads,
-                                                          fetch_bovada_prices)
+                                                          fetch_bovada_prices, model=mdl)
     except Exception as e:
         print(f"  (pricing skipped: {e})")
         n_priced = n_fetched = 0
@@ -1256,10 +1266,14 @@ def build(force=False):
     # 2+), read back from the ledger so the page and the record can never disagree
     # about what the line was.
     for l in leads:
-        pr = (ledger["leads"].get(streaks_track.lead_id(l)) or {}).get("prices") or {}
+        entry = ledger["leads"].get(streaks_track.lead_id(l)) or {}
+        pr = entry.get("prices") or {}
         mk = streaks_track.claim_market(l.get("bet") or {})
         if mk and pr.get(mk):
             l["price"] = pr[mk]["price"]
+            l["fair"] = pr[mk]["fair"]
+            if (entry.get("model") or {}).get(mk) is not None:
+                l["model"] = entry["model"][mk]
 
     # League buttons must cover BOTH views, so draw them from the teams index too —
     # scoping them to fixtures alone hid every league that had runs but no confluence.

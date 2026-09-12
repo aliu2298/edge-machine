@@ -108,6 +108,38 @@ def price_table(rows):
 {body}</table></div>"""
 
 
+def model_tables(mr):
+    if not mr["rows"]:
+        return "", ""
+    brier = "".join(
+        f"""<tr><td>{esc(r['label'])}</td><td class="num">{r['n']}</td>
+        <td class="num">{pct(r['actual'])}</td>
+        <td class="num mut">{pct(r['model_avg'])}</td><td class="num mut">{pct(r['book_avg'])}</td>
+        <td class="num">{r['brier_model']:.4f}</td><td class="num">{r['brier_book']:.4f}</td>
+        <td><span class="sig {'y' if r['model_better'] else 'n'}">
+          {'MODEL AHEAD' if r['model_better'] else 'book ahead'}</span></td></tr>"""
+        for r in mr["rows"])
+    brier_t = f"""<div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">actual</th><th class="num">model avg</th>
+    <th class="num">book fair</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr>
+{brier}</table></div>"""
+
+    def cell(g):
+        if not g["n"]:
+            return '<td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td>'
+        cls = "pos" if g["roi"] >= 0 else "neg"
+        return (f'<td class="num">{g["n"]}</td><td class="num">{pct(g["rate"])}</td>'
+                f'<td class="num {cls}">{"+" if g["roi"] >= 0 else ""}{g["roi"]*100:.1f}%</td>')
+    value = "".join(
+        f"""<tr><td>{esc(r['label'])}</td>{cell(r['value'])}{cell(r['rest'])}</tr>"""
+        for r in mr["rows"])
+    value_t = f"""<div class="tbl"><table>
+<tr><th>Market</th><th class="num">value n</th><th class="num">hit</th><th class="num">ROI</th>
+    <th class="num">rest n</th><th class="num">hit</th><th class="num">ROI</th></tr>
+{value}</table></div>"""
+    return brier_t, value_t
+
+
 def fire_tables(fr):
     """Ledger and test, rendered apart on purpose.
 
@@ -162,6 +194,18 @@ def page_html(ld, fr, now):
                          ("Team 2+ lane ROI", roi("team2plus")),
                          ("Priced, pending", pr["pending"])]) + price_table(pr["rows"])
     priced_rep = {"graded": pr["graded"]}
+    mr = ld.get("model") or {"rows": [], "graded": 0, "pending": 0, "margin": 0.05}
+    brier_t, value_t = model_tables(mr)
+    model_body = (tiles([("Scored, model v book", mr["graded"]),
+                         ("Model ahead on", f"{sum(1 for r in mr['rows'] if r['model_better'])}"
+                          f" of {len(mr['rows'])} markets" if mr["rows"] else "—"),
+                         ("Pending, modelled", mr["pending"])]) + brier_t +
+                  '<div class="note">Pre-registered value split: a lead is <b>value</b> when '
+                  f'the model\'s probability beats the book\'s fair probability by '
+                  f'<b>{mr["margin"]*100:.0f}pp</b> or more. If the model carries anything the '
+                  'book does not, the value group should out-hit and out-earn the rest. '
+                  'The margin was fixed before any of this settled.</div>' + value_t)
+    model_rep = {"graded": mr["graded"]}
     fire_led, fire_test = fire_tables(fr)
     fire_body = (tiles([("Graded", fr["graded"]), ("Extended", pct(fr["rate"])),
                         ("Pending", fr["pending"])]) + fire_led +
@@ -269,6 +313,18 @@ repo have already died from being read without one.</div>
          priced_rep, priced_body,
          "Nothing settled at a price yet — pricing started 2026-09-12 and a lead counts "
          "only if it was priced before kickoff and has since been played.")}
+
+{section("Model v book — is any estimate better than the price?",
+         "Every streak rule here was measured against the teams' own rates and none "
+         "lifted them, because a run is the noisiest estimate of a rate there is. The "
+         "number that pays is against the <b>book</b>. So each priced lead also carries a "
+         "<b>model</b> probability — independent Poissons on each side's shrunk attack and "
+         "defence ratings (see model.py), logged at the same moment as the price and "
+         "never revised — and both are scored on the leads that have since settled. "
+         "<b>Brier</b> is the mean squared error of a probability: lower is better, and "
+         "the only question that matters is whether the model's is lower than the book's.",
+         model_rep, model_body,
+         "Nothing scored yet — model probabilities started 2026-09-12, alongside prices.")}
 
 {section("On fire — do long runs continue?",
          "Each long run logged against the fixture that tests it. The question is not "

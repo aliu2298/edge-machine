@@ -76,6 +76,7 @@ and graded against ESPN final scores once its fixture is played.
 | `streaks_build.py` | Finds streak confluences; renders `index.html` (Leads) and `streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
 | `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
+| `model.py` | Shrunk-Poisson probability per priced market, scored against the book on Record. |
 | `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
 | `health.py` | Warn-only guardrails: lead freshness, stuck or vanished leads, dead venue feed. |
 | `verify_coverage.py` | Proves every league's squad reaches the board. |
@@ -236,6 +237,24 @@ as well as graded:
   **break-even** rate the average price demands and the book's own **vig-free probability**.
 
 A lead graded before pricing existed simply does not appear in that section.
+
+### Model v book (added 2026-09-12)
+
+Lift against the teams' own rate cannot be improved by tuning streak rules: a run is the
+noisiest estimate of a rate there is, so selecting on one guarantees regression (the top
+20% of team-games by raw 2+ rate predicted 65% and delivered 56%). The number that pays is
+against the **book**, whose vig-free probability is a better estimate than any form scrape.
+So `model.py` — independent Poissons on each side's attack and defence ratings, pooled
+across competitions and shrunk hard toward average (`SHRINK=24`, chosen on a walk-forward
+where 8 was visibly overconfident) — logs its probability for every priced market at the
+moment the price is captured, never revised. The Record page scores model and book by
+**Brier** on the same settled leads, and reports a **pre-registered value split**: leads
+where the model beats the book's fair probability by 5pp or more, against the rest. If the
+model carries anything the book does not, that group out-hits and out-earns the rest; if
+not, the book is the better estimate and no selection rule built on form can beat it.
+
+On the walk-forward the model beats a flat league rate only marginally (Brier −0.002 to
+−0.007); the book will be a much harder yardstick. That is the honest prior.
 
 ### Tracking and grading
 

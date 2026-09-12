@@ -508,6 +508,70 @@ check("lane ROI is read off each lead's OWN claim",
       round(T.price_report(blob_t)["lane_roi"]["team2plus"], 2), 1.3)
 check("the over-1.5 lane is untouched by it", "over15" in T.price_report(blob_t)["lane_roi"], False)
 
+print("\n== model: probability logged beside the price, scored against the book ==")
+import model as M
+_hist = []
+for i in range(8):
+    d = f"2026-05-{i+1:02d}"
+    _hist.append(fx(d, "H", f"x{i}", 3, 0))        # H: scores 3, concedes 0
+    _hist.append(fx(d, "A", f"y{i}", 0, 2))        # A: scores 0, concedes 2
+    _hist.append(fx(d, f"x{i}", f"y{i}", 1, 1))
+_m = M.fit(_hist)
+check("fit rates both sides", (M.known(_m, "H"), M.known(_m, "A"), M.known(_m, "Nobody")),
+      (True, True, False))
+_pp = M.probs(_m, "H", "A", "L1")
+check("H at home is the stronger attack", _pp["home2plus"] > _pp["away2plus"], True)
+check("probabilities are probabilities",
+      all(0 < _pp[k] < 1 for k in ("over15", "over25", "btts", "home2plus", "away2plus")), True)
+check("a side with no games gets the average, not a crash", M.known(_m, "Nobody"), False)
+check("no lookahead: fit(before=) ignores later games",
+      M.known(M.fit(_hist, before="2026-05-01"), "H"), False)
+blob_m, _ = T.record([lp], {"leads": {}})
+blob_m, _, _ = T.price(blob_m, [lp], fake_fetch, now=NOWP, model=_m)
+em = list(blob_m["leads"].values())[0]
+check("model logged for exactly the priced markets", sorted(em["model"]), sorted(em["prices"]))
+check("stamped when priced", em["modelled_at"], em["priced_at"])
+# team lead: the model value is the claim side's own 2+ probability
+blob_mt, _ = T.record([tl], {"leads": {}})
+blob_mt, _, _ = T.price(blob_mt, [tl], lambda l: BOOK_T, now=NOWP, model=_m)
+emt = list(blob_mt["leads"].values())[0]
+check("team lead's model prob is the away side's 2+ (A is away)",
+      emt["model"]["team2plus"], round(_pp["away2plus"], 4))
+# back-fill: priced before the model existed, still pending -> gets a model prob
+blob_bf, _ = T.record([lp], {"leads": {}})
+blob_bf, _, _ = T.price(blob_bf, [lp], fake_fetch, now=NOWP)
+check("no model yet", "model" in list(blob_bf["leads"].values())[0], False)
+blob_bf, n_bf, f_bf = T.price(blob_bf, [lp], fake_fetch, now=NOWP, model=_m)
+check("back-filled without re-pricing or re-fetching",
+      ("model" in list(blob_bf["leads"].values())[0], n_bf, f_bf), (True, 0, 0))
+_ko = dict(lp, kickoff=(NOWP - datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%MZ"))
+blob_ko, _ = T.record([_ko], {"leads": {}})
+list(blob_ko["leads"].values())[0]["prices"] = {"over15": {"price": 1.2, "fair": 0.8}}
+blob_ko, _, _ = T.price(blob_ko, [_ko], fake_fetch, now=NOWP, model=_m)
+check("never back-filled after kickoff", "model" in list(blob_ko["leads"].values())[0], False)
+# unknown side -> no model entry, price still stored
+_unk = dict(lp, home="Nobody", match="Nobody v A", headline="Over 1.5 goals (unk)")
+blob_u, _ = T.record([_unk], {"leads": {}})
+blob_u, n_u, _ = T.price(blob_u, [_unk], fake_fetch, now=NOWP, model=_m)
+check("unrated side: priced but not modelled",
+      (n_u, "model" in list(blob_u["leads"].values())[0]), (1, False))
+# scoring: hand-built ledger, model right where the book is wrong
+_L = {"leads": {}}
+for i, (y, pm, pb) in enumerate([(1, 0.9, 0.6), (1, 0.8, 0.6), (0, 0.2, 0.6), (1, 0.7, 0.65)]):
+    _L["leads"][f"k{i}"] = {"status": "hit" if y else "miss", "bet": {"kind": "total_gte", "n": 2},
+                            "prices": {"over15": {"price": 1.6, "fair": pb}},
+                            "model": {"over15": pm},
+                            "pnl": {"over15": {"hit": bool(y), "pnl": 0.6 if y else -1.0}}}
+_mr = T.model_report(_L)
+_r = _mr["rows"][0]
+check("brier model", round(_r["brier_model"], 4), round((0.01 + 0.04 + 0.04 + 0.09) / 4, 4))
+check("brier book", round(_r["brier_book"], 4), round((0.16 + 0.16 + 0.36 + 0.1225) / 4, 4))
+check("model ahead", _r["model_better"], True)
+check("value split at the margin: 3 value (0.9, 0.8, 0.7 v 0.6/0.65), 1 rest",
+      (_r["value"]["n"], _r["rest"]["n"]), (3, 1))
+check("value group hit 3/3, ROI +60%", (_r["value"]["hits"], round(_r["value"]["roi"], 2)), (3, 0.6))
+check("rest lost", _r["rest"]["roi"], -1.0)
+
 print("\n== pricing: P/L graded per market at the captured price ==")
 blob, n = T.grade([fx(lp["date"], "H", "A", 2, 0)], blob)    # 2-0: over15 hit, rest miss
 e = blob["leads"][T.lead_id(lp)]
