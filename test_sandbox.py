@@ -902,6 +902,23 @@ finally:
     S._get = real_get
 
 # Lead time is an integrity rule: a market about to expire has already happened.
+# Every connected source must land in a matrix group, or it disappears from the board.
+import sandbox_build as BUILD2
+_grouped = {k for _t, kinds in [("Tipsters", ("Tipster site",)),
+                                ("Forecasters", ("Forecaster", "Baseline")),
+                                ("Models and books", ("Statistical model", "Sportsbook",
+                                                      "Sportsbook consensus")),
+                                ("Prediction markets", ("Prediction market",))] for k in kinds}
+for _n, _m in S.SOURCES.items():
+    if _m["connected"]:
+        ok(_m["kind"] in _grouped,
+           f"{_m['label']} has kind {_m['kind']!r}, which the board groups and shows")
+for _n, _m in S.SOURCES.items():
+    ok(set(_m["sports"]) <= set(S.SPORTS),
+       f"{_m['label']} only claims domains that exist")
+ok("climate" not in S.SOURCES["polymarket"]["sports"],
+   "Polymarket does not claim domains it has never priced")
+
 eq(S.KALSHI_BINARY["climate"]["lead_h"], 12,
    "a daily temperature market is only taken with half a day of uncertainty left")
 ok(all(cfg["lead_h"] >= 2 for cfg in S.KALSHI_BINARY.values()),

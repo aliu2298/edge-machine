@@ -76,9 +76,10 @@ SOURCES = {
     "polymarket": dict(
         label="Polymarket", kind="Prediction market", connected=True,
         site="polymarket.com",
-        # Not soccer: that spine is ESPN + DraftKings, so Polymarket neither prices nor
-        # quotes it, and claiming coverage would show an empty cell as a failure.
-        sports=[s for s in SPORTS if s != "soccer"],
+        # Listed explicitly. This was once "every domain except soccer", which silently
+        # claimed climate, crypto and elections the moment those domains were added —
+        # showing a source as covering markets it has never priced.
+        sports=["tennis", "table_tennis", "boxing", "nfl", "cricket", "mlb"],
         note="The benchmark. Its own price is what every other source is priced against, "
              "so it cannot beat itself — a flat ~0% ROI here is the expected result and "
              "is the control that proves the ledger is wired up correctly."),

@@ -105,7 +105,11 @@ def sport_matrix(d, keys=None):
     keys = keys or list(S.SPORTS)
     head = "".join(f'<th class="num">{esc(S.SPORTS[k])}</th>' for k in keys)
     ncols = 2 + len(keys)
+    # Every connected kind must appear in exactly one group, or the source silently
+    # vanishes from the board — which is what happened to the weather forecaster and the
+    # spot baseline the first time they published.
     groups = [("Tipsters", ("Tipster site",)),
+              ("Forecasters", ("Forecaster", "Baseline")),
               ("Models and books", ("Statistical model", "Sportsbook", "Sportsbook consensus")),
               ("Prediction markets", ("Prediction market",))]
     out = []
