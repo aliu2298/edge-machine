@@ -137,16 +137,31 @@ def save(blob):
 
 
 def record(leads, blob=None):
-    """Log leads not seen before. Existing entries are left untouched — the snapshot is
-    what was claimed at publish time, and rewriting it later would be marking our own
-    homework."""
+    """Log leads not seen before, and stamp `last_seen` on every lead published today.
+
+    The CLAIM is still written once and never revised — the runs, the base rate, the
+    strength and the status are the snapshot as it stood at publish time, and rewriting
+    those later would be marking our own homework.
+
+    `last_seen` is not part of the claim. It records that find_leads still emits this
+    lead, which is a different fact and one nothing else captures. The ledger is
+    append-only, so a lead whose streak has since broken stays `pending` here forever
+    even though the board stopped showing it — leaving no way to ask "is this still on
+    the board?" from the ledger alone. Anything downstream (the trading bot reads this
+    file over HTTPS) was left to guess with proxies like publication age, which is a
+    poor stand-in: it drops live leads for being published early and keeps dead ones that
+    are merely recent.
+    """
     blob = blob if blob is not None else load()
     added = 0
+    today = utc_today().isoformat()
     for l in leads:
         lid = lead_id(l)
         if lid in blob["leads"]:
+            blob["leads"][lid]["last_seen"] = today      # still on the board
             continue
         blob["leads"][lid] = {
+            "last_seen": today,
             "id": lid,
             "first_seen": utc_today().isoformat(),
             "date": l["date"], "kickoff": l.get("kickoff"), "league": l["league"],

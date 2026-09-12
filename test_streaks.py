@@ -225,6 +225,28 @@ blob, added = T.record([lead], {"leads": {}})
 check("recorded once", added, 1)
 blob, added2 = T.record([lead], blob)
 check("re-record is a no-op", added2, 0)
+
+# last_seen: the one thing a re-record DOES update. The ledger is append-only, so a lead
+# whose streak has broken stays pending here forever even though the board stopped
+# showing it. last_seen is how a reader (the trading bot pulls this file) can tell a lead
+# that is still published from one that is merely still ungraded.
+_e = list(blob["leads"].values())[0]
+check("last_seen stamped on first record", _e["last_seen"], T.utc_today().isoformat())
+_before = dict(_e)
+_e["last_seen"] = "2020-01-01"                    # pretend an older build wrote it
+blob, _ = T.record([lead], blob)
+check("re-record refreshes last_seen",
+      list(blob["leads"].values())[0]["last_seen"], T.utc_today().isoformat())
+# ...and refreshes NOTHING else. The claim is the snapshot as published.
+_after = list(blob["leads"].values())[0]
+check("the claim itself is never revised",
+      {k: v for k, v in _after.items() if k != "last_seen"},
+      {k: v for k, v in _before.items() if k != "last_seen"})
+# A lead the board no longer publishes keeps its OLD last_seen — that is the signal.
+_stale = list(blob["leads"].values())[0]["last_seen"]
+blob, _ = T.record([], blob)                      # this build emitted nothing
+check("a lead that fell off the board is not re-stamped",
+      list(blob["leads"].values())[0]["last_seen"], _stale)
 blob, n = T.grade([played], blob)
 check("graded one", n, 1)
 e = list(blob["leads"].values())[0]
