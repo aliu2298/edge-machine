@@ -673,6 +673,32 @@ check("away = Leverkusen, both lines", (_pt["away"]["over15"]["price"], _pt["awa
 check("a team total for neither side is dropped", "Nobody" in str(_pt), False)
 check("no fixture totals on that event -> none claimed", "over15" in V.parse_bovada_prices(_ev2), False)
 
+
+print("\n== fire measurement: iters and seed are read at CALL time ==")
+# `iters=PERMUTATIONS, seed=SEED` in the signature binds at import, so setting
+# fire_track.SEED did nothing — an audit of seed stability ran the SAME seed four times
+# and returned four identical rows, which looks like stability and is no test at all.
+_ser = {f"t{i}": {"k": [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1] * 2}
+        for i in range(30)}
+_a = F.permutation_test(_ser, "k", 4, iters=200, seed=1)
+_b = F.permutation_test(_ser, "k", 4, iters=200, seed=99)
+check("a different seed gives a different null band",
+      _a["null_lo"] != _b["null_lo"] or _a["null_hi"] != _b["null_hi"], True)
+_saved = F.SEED
+try:
+    F.SEED = 99
+    _c = F.permutation_test(_ser, "k", 4, iters=200)
+    check("module-level SEED is honoured, not baked in at import",
+          (_c["null_lo"], _c["null_hi"]), (_b["null_lo"], _b["null_hi"]))
+    F.PERMUTATIONS_saved = F.PERMUTATIONS
+    F.PERMUTATIONS = 60
+    _d = F.permutation_test(_ser, "k", 4, seed=1)
+    check("module-level PERMUTATIONS is honoured too",
+          _d is not None and _d["null_lo"] != _a["null_lo"], True)
+    F.PERMUTATIONS = F.PERMUTATIONS_saved
+finally:
+    F.SEED = _saved
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

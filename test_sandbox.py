@@ -925,6 +925,39 @@ ok(all(cfg["lead_h"] >= 2 for cfg in S.KALSHI_BINARY.values()),
    "no domain logs a forecast against a market that is about to expire")
 
 # ---------------------------------------------------------------------------
+
+print("\n== the readability banner is judged per SOURCE, not on the total ==")
+# Every cell greys itself on its own settled count, but the banner used to compare the
+# lifetime TOTAL against MIN_N. At 57 settled across seven sources it announced "the ROI
+# column is now readable" while greying out every figure in it — the best single source
+# was on n=15. A total is not a sample; nobody bets "all sources".
+import sandbox_build as SB
+
+
+def _verdict(per_source_settled):
+    """Reproduce the banner for a given {source: settled} shape."""
+    settled = sum(per_source_settled.values())
+    scores = {k: {"settled": v} for k, v in per_source_settled.items()}
+    best = max((v["settled"] for v in scores.values()), default=0)
+    ready = [n for n, v in scores.items() if v["settled"] >= SB.MIN_N]
+    if settled == 0:
+        return "none"
+    if not ready:
+        return f"not-readable:best={best}"
+    return f"readable:{len(ready)}"
+
+
+ok(_verdict({}) == "none", "no settled bets -> no record claimed")
+ok(_verdict({"a": 15, "b": 12, "c": 10, "d": 7, "e": 6, "f": 5, "g": 2})
+   == "not-readable:best=15",
+   "57 total spread thin stays UNREADABLE (the bug: it used to read as readable)")
+ok(_verdict({"a": SB.MIN_N}) == "readable:1",
+   "one source reaching the floor on its own is readable")
+ok(_verdict({"a": SB.MIN_N, "b": SB.MIN_N, "c": 4}) == "readable:2",
+   "only the sources past the floor are counted as readable")
+ok(_verdict({"a": SB.MIN_N - 1}) == f"not-readable:best={SB.MIN_N - 1}",
+   "one short of the floor is still not readable")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

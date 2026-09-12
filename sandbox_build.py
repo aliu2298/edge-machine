@@ -335,14 +335,25 @@ def build():
     live_rows, n_live = open_rows(d)
     hist_rows, n_hist = settled_rows(d)
 
-    verdict = ("Nothing is settled yet, so no source has a record. The first fixtures "
-               "settle within a day of the first run."
-               if settled == 0 else
-               f"{settled:,} settled bets so far. "
-               + ("Still under the {n} needed before any ROI here means anything."
-                  .format(n=MIN_N) if settled < MIN_N else
-                  "Past the {n}-bet floor — the ROI column is now readable."
-                  .format(n=MIN_N)))
+    # The floor has to be judged on the SAME unit the table prints. Every cell greys
+    # itself on its own settled count, but this banner used to compare the lifetime
+    # TOTAL against MIN_N — so at 57 settled across seven sources it announced "the ROI
+    # column is now readable" while greying out every figure in it, the best single
+    # source sitting at n=15. A total is not a sample; nobody bets "all sources".
+    best = max((v["settled"] for v in scores.values()), default=0)
+    ready = [n for n, v in scores.items() if v["settled"] >= MIN_N]
+    if settled == 0:
+        verdict = ("Nothing is settled yet, so no source has a record. The first "
+                   "fixtures settle within a day of the first run.")
+    elif not ready:
+        verdict = (f"{settled:,} settled bets across every source, but the most any "
+                   f"single source has is {best}. Nothing here is readable until one "
+                   f"of them reaches {MIN_N} on its own — a total is not a sample.")
+    else:
+        verdict = (f"{settled:,} settled bets. "
+                   f"{len(ready)} source{'' if len(ready) == 1 else 's'} past the "
+                   f"{MIN_N}-bet floor ({', '.join(sorted(ready))}) — only those "
+                   f"figures are readable; the rest stay greyed.")
 
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">

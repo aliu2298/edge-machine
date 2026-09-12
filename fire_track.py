@@ -238,14 +238,23 @@ def paired_diff(series, key, fire_min):
             "on_n": on_tot, "off_n": off_tot}
 
 
-def permutation_test(series, key, fire_min, iters=PERMUTATIONS, seed=SEED):
+def permutation_test(series, key, fire_min, iters=None, seed=None):
     """Compare the real fixture order against `iters` shuffles of each team's own games.
 
     A shuffle keeps every game, every scoreline and every team identical and destroys
     ONLY the order — so any run in a shuffled series is chance by construction. The band
     this returns is therefore what "no signal" actually looks like, and it is nowhere
     near zero: conditioning on a run selects against the games that follow it.
+
+    ⚠️ `iters` and `seed` default to None and are resolved from the module constants
+    HERE, not in the signature. Writing `iters=PERMUTATIONS, seed=SEED` binds the values
+    at import time, so `fire_track.SEED = 11` silently did nothing — an audit of whether
+    the verdict was seed-stable ran the SAME seed four times and returned four identical
+    rows, which reads as reassuring stability and is in fact no test at all. Anything
+    that can be reconfigured has to be read at call time.
     """
+    iters = PERMUTATIONS if iters is None else iters
+    seed = SEED if seed is None else seed
     obs = paired_diff(series, key, fire_min)
     if obs is None:
         return None
@@ -276,7 +285,7 @@ def permutation_test(series, key, fire_min, iters=PERMUTATIONS, seed=SEED):
     return obs
 
 
-def report(fixtures, blob=None, iters=PERMUTATIONS):
+def report(fixtures, blob=None, iters=None, seed=None):
     """Two separate things, deliberately not mixed.
 
     `rows` is the LEDGER: what was published and how it settled. It carries no lift and
@@ -302,7 +311,7 @@ def report(fixtures, blob=None, iters=PERMUTATIONS):
         label = B.STREAK_BY_KEY[key][1]
         rows.append({"key": key, "label": label, "n": n, "extended": ext,
                      "rate": p, "ci_lo": lo, "ci_hi": hi})
-        t = permutation_test(series, key, B.FIRE_MIN, iters=iters)
+        t = permutation_test(series, key, B.FIRE_MIN, iters=iters, seed=seed)
         if t:
             t.update({"key": key, "label": label})
             test.append(t)
@@ -350,7 +359,8 @@ if __name__ == "__main__":
     for r in rep["rows"]:
         print(f"{r['label']:22s} {r['n']:4d} {r['rate']:9.1%}")
 
-    print(f"\nTEST — on-run vs off-run within the same team, vs {PERMUTATIONS} shuffles")
+    print(f"\nTEST — on-run vs off-run within the same team, vs {PERMUTATIONS} shuffles"
+          f" (seed {SEED})")
     print(f"{'streak':22s} {'teams':>6s} {'on':>5s} {'off':>5s} {'diff':>9s} "
           f"{'shuffled 95%':>20s} {'p':>6s} {'p adj':>6s}")
     for t in rep["test"]:
