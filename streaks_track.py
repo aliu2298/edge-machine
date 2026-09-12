@@ -53,8 +53,22 @@ PRICED_MARKETS = {
     "over25": {"kind": "total_gte", "n": 3},
     "btts":   {"kind": "btts"},
 }
+# Team-level market, priced only on a lead whose claim names a side ("X to score 2+"),
+# from the book's team total for THAT side. The bet is completed with the lead's team at
+# grading time; the ledger stores the quote, not Bovada's spelling of the team.
+TEAM_MARKETS = {"team2plus": ("over15", {"kind": "team_gte", "n": 2})}
 MARKET_LABEL = {"over15": "Over 1.5 goals", "over25": "Over 2.5 goals",
-                "btts": "Both teams to score"}
+                "btts": "Both teams to score", "team2plus": "Team to score 2+"}
+
+
+def claim_market(bet):
+    """The priced market a lead's own claim settles on, or None if it has none.
+    over 1.5 leads -> over15; "to score 2+" leads -> team2plus."""
+    if bet.get("kind") == "total_gte" and bet.get("n") == 2:
+        return "over15"
+    if bet.get("kind") == "team_gte" and bet.get("n") == 2 and bet.get("team"):
+        return "team2plus"
+    return None
 # Per build. One paced request each (~1.5s), so this bounds the step at ~90s; anything
 # left over is picked up next build — lines beyond three days out rarely exist anyway.
 MAX_PRICE_FETCHES = 60
@@ -197,9 +211,20 @@ def price(blob, leads, fetch, now=None):
             n_fetched += 1
             cache[link] = fetch(link)
         got = cache[link]
-        if not got or "over15" not in got:      # the claim's own line must be up
+        if not got:
             continue
-        e["prices"] = {k: dict(v) for k, v in got.items() if k in PRICED_MARKETS}
+        quotes = {k: dict(v) for k, v in got.items() if k in PRICED_MARKETS}
+        claim = claim_market(e.get("bet") or {})
+        if claim in TEAM_MARKETS:
+            team = e["bet"]["team"]
+            side = "home" if team == e.get("home") else "away" if team == e.get("away") else None
+            book_key = TEAM_MARKETS[claim][0]
+            q = ((got.get("team") or {}).get(side) or {}).get(book_key) if side else None
+            if q:
+                quotes[claim] = dict(q)
+        if not claim or claim not in quotes:     # the claim's own line must be up
+            continue
+        e["prices"] = quotes
         e["priced_at"] = now.isoformat(timespec="seconds")
         n_priced += 1
     return blob, n_priced, n_fetched
@@ -209,7 +234,10 @@ def _settle_prices(e, hg, ag):
     """P/L per priced market at a flat 1 unit. Only called with a real final score."""
     out = {}
     for mk, pr in (e.get("prices") or {}).items():
-        bet = PRICED_MARKETS.get(mk)
+        if mk in TEAM_MARKETS:
+            bet = dict(TEAM_MARKETS[mk][1], team=(e.get("bet") or {}).get("team"))
+        else:
+            bet = PRICED_MARKETS.get(mk)
         if not bet:
             continue
         got = settle_bet(bet, e["home"], e["away"], hg, ag)
@@ -267,7 +295,7 @@ def price_report(blob):
     settled = [e for e in blob["leads"].values()
                if e.get("prices") and e.get("pnl") and e["status"] in ("hit", "miss")]
     rows = []
-    for mk in PRICED_MARKETS:
+    for mk in list(PRICED_MARKETS) + list(TEAM_MARKETS):
         es = [e for e in settled if mk in e["pnl"] and mk in e["prices"]]
         n = len(es)
         if not n:
@@ -288,9 +316,16 @@ def price_report(blob):
         })
     pending = sum(1 for e in blob["leads"].values()
                   if e.get("prices") and e["status"] == "pending")
-    claim = next((r for r in rows if r["market"] == "over15"), None)
+    # ROI of each lead on ITS OWN claim, per lane — the number a lane lives or dies by.
+    lanes = {}
+    for e in settled:
+        mk = claim_market(e.get("bet") or {})
+        if mk and mk in e["pnl"]:
+            lanes.setdefault(mk, []).append(e["pnl"][mk]["pnl"])
+    lane_roi = {mk: (sum(v) / len(v)) for mk, v in lanes.items()}
     return {"rows": rows, "graded": len(settled), "pending": pending,
-            "claim_roi": claim["roi"] if claim else None}
+            "lane_roi": lane_roi,
+            "claim_roi": lane_roi.get("over15")}
 
 
 # ---------------------------------------------------------------- measurement

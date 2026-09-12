@@ -170,7 +170,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 }
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Streaks</h1>
-<div class="sub">Every tracked team&#x27;s current runs · all times CT · updated Sep 12 2026 · 06:32 UTC</div>
+<div class="sub">Every tracked team&#x27;s current runs · all times CT · updated Sep 12 2026 · 06:42 UTC</div>
 <div class="nav"><a href="./">Leads</a><a class="on" href="./streaks.html">Streaks</a>
 <a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
 
@@ -318,7 +318,7 @@ function card(l) {
       <span class="fxm">${esc(l.league)} · ${esc(when(l.kickoff) || l.date)}</span>
       ${l.market ? `<a class="kbtn" href="${esc(l.market)}" target="_blank"
          rel="noopener">Bovada ↗</a>` : ''}
-      ${l.price ? `<span class="px" title="Over 1.5 price when this lead was first listed">@ ${l.price.toFixed(2)}</span>` : ''}
+      ${l.price ? `<span class="px" title="Price of this claim when the lead was first listed">@ ${l.price.toFixed(2)}</span>` : ''}
     </div>
     <div class="ev">
       ${leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}

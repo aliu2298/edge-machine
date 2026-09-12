@@ -89,7 +89,7 @@ def price_table(rows):
     if not rows:
         return ""
     body = "".join(
-        f"""<tr><td>{esc(r['label'])}{' <span class="mut">· the claim</span>' if r['market'] == 'over15' else ''}</td>
+        f"""<tr><td>{esc(r['label'])}{' <span class="mut">· a lane\'s own claim</span>' if r['market'] in ('over15', 'team2plus') else ''}</td>
         <td class="num">{r['n']}</td>
         <td class="num">{r['hits']}</td>
         <td class="num">{pct(r['rate'])}</td>
@@ -155,9 +155,11 @@ def page_html(ld, fr, now):
                         ("Pending", ld["pending"]), ("Void", ld["void"])]) + \
         perf_table(ld["rows"], lambda r: BET_NAME.get(r["kind"], r["kind"]))
     pr = ld.get("priced") or {"rows": [], "graded": 0, "pending": 0, "claim_roi": None}
+    lane = pr.get("lane_roi") or {}
+    roi = lambda k: "—" if lane.get(k) is None else f"{lane[k]*100:+.1f}%"
     priced_body = tiles([("Settled at a price", pr["graded"]),
-                         ("Over 1.5 ROI", "—" if pr["claim_roi"] is None
-                          else f"{pr['claim_roi']*100:+.1f}%"),
+                         ("Over 1.5 lane ROI", roi("over15")),
+                         ("Team 2+ lane ROI", roi("team2plus")),
                          ("Priced, pending", pr["pending"])]) + price_table(pr["rows"])
     priced_rep = {"graded": pr["graded"]}
     fire_led, fire_test = fire_tables(fr)
@@ -259,7 +261,8 @@ repo have already died from being read without one.</div>
          "Flat 1 unit on every lead at the Bovada line captured the <b>first build it was "
          "listed</b> — never revised, never taken after kickoff. Three fixture-level "
          "markets are logged on every lead, fixed in advance, so no market is chosen "
-         "after seeing which one paid. <b>Break-even</b> is the hit rate the average price "
+         "after seeing which one paid; a <b>side to score 2+</b> lead is also priced on "
+         "its own claim from the book's team total. Each lane is judged on its own claim. <b>Break-even</b> is the hit rate the average price "
          "demands; <b>book fair</b> is the probability the sportsbook itself implies with "
          "the vig stripped out — a real edge has to clear both, and on the day this was "
          "added over 1.5 traded at ~1.20, a break-even of 83% against leads that hit 82%.",

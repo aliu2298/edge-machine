@@ -132,9 +132,17 @@ Croatian, Ukrainian, Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani, Armenia
 a data limit, and `verify_coverage.py` now names them rather than letting the gap pass as
 silence.
 
-**Leads settle one market: over 1.5.** Eight bet types meant every market
-carried a thin, separately underpowered sample; narrowing to two pooled it, and narrowing
-to one pools it completely, so the whole board answers a single question.
+**Leads run in two lanes, one market each: over 1.5, and (since 2026-09-12) a side to
+score 2+.** Eight bet types meant every market carried a thin, separately underpowered
+sample; narrowing to one pooled it completely. The team-2+ lane was added back on top as a
+*priced* second lane — the board's original question ("Barcelona have scored 2-3 in six
+straight and the next opponent concedes 2"), and the one market here that trades near evens
+rather than at 1.20, so an edge, if one exists, would actually pay. Two pairings feed it:
+the team scoring 2+ in every recent game against an opponent that has conceded 2+ in every
+recent game (sharper, rare — 11 fixtures in 763 on the walk-forward) or merely conceded in
+every recent game. Each lane is judged on its own claim and never pooled with the other.
+Go in expecting what the walk-forward says: neither pairing beats the side's own 2+ rate
+(−3 to −5pp, not significant); the test is whether the *book* misprices them.
 
 Over 1.5 rather than over 2.5 for two reasons, one measured and one structural:
 

@@ -84,14 +84,17 @@ STREAK_BY_KEY = {s[0]: s for s in STREAKS}
 #   team_eq   — the subject team scores exactly n
 #   btts      — both teams score
 #   total_gte / total_lte — combined goals
-# Leads are ONE market: over 1.5. Nothing else.
+# Leads are TWO lanes, each one market: over 1.5, and (since 2026-09-12) team to score 2+.
 #
-# WHY A SINGLE MARKET
-# -------------------
+# WHY SO FEW MARKETS
+# ------------------
 # Eight bet types meant every market carried a thin, separately underpowered sample, and
 # the (since retired) 3-card slate had to compare rarity ACROSS markets whose base rates
-# differ by 40 points. Narrowing to two pooled the evidence; narrowing to one pools it
-# completely, and every lead ranks on a single scale with no cross-market correction.
+# differ by 40 points. Narrowing to one pooled the evidence completely. The team-2+ lane
+# was added on top as a PRICED second lane: over 1.5 trades at ~1.20, where a real edge
+# is worth almost nothing, while a side to score 2+ trades near evens — the one market
+# here where an edge, if any exists, would actually pay. It is measured on its own
+# (streaks_track prices each lead's own claim), never pooled with the totals lane.
 #
 # Over 1.5 rather than over 2.5 for two reasons, one measured and one structural:
 #   * on the ledger to date it is the only market with a positive lift (+4.7pp at n=19,
@@ -131,6 +134,18 @@ PAIRINGS = [
      "Both sides have scored in every recent game — {a} {ra} straight, {b} {rb} "
      "straight — and one apiece clears 1.5.",
      {"kind": "total_gte", "n": 2}),
+    # ---- lane 2: a side to score 2+. The original framing of this board ("Barcelona
+    # have scored 2-3 in six straight and the next opponent concedes 2"). Two pairings,
+    # sharper first: the opponent CONCEDING 2+ in every game is the direct match, but it
+    # is rare (11 fixtures in 763 on the walk-forward), so the opponent merely conceding
+    # in every game is accepted too. Both render the same headline on a fixture, and the
+    # headline guard in find_leads keeps whichever is rarer.
+    ("scoring",  "leaky",    "{a} to score 2+",
+     "{a} have scored 2+ in {ra} straight; {b} have conceded 2+ in {rb} straight.",
+     {"kind": "team_gte", "n": 2, "subject": "a"}),
+    ("scoring",  "porous",   "{a} to score 2+",
+     "{a} have scored 2+ in {ra} straight; {b} have conceded in {rb} straight.",
+     {"kind": "team_gte", "n": 2, "subject": "a"}),
 ]
 
 
@@ -429,12 +444,11 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
         seen.add(k)
         uniq.append(l)
 
-    # There is no longer an over-2.5 card to suppress an over-1.5 one: every pairing
-    # settles the SAME claim, so the cross-market guard that used to live here (keyed on
-    # the bet, after an earlier version keyed on the streak let 34 fixtures show both
-    # cards) is now subsumed by the headline guard below — every lead on a fixture reads
-    # "Over 1.5 goals", so that guard already collapses them to one card per fixture.
-    # Restore an explicit bet-level guard here if a second market is ever reintroduced.
+    # No cross-market guard. A fixture can carry BOTH an "Over 1.5 goals" card and an
+    # "X to score 2+" card; the second implies the first, but they are different claims
+    # in different markets at very different prices (~1.20 vs ~2.1), and each lane is
+    # measured on its own. The old guard (which dropped an over-1.5 card behind an
+    # over-2.5 one) existed because those two were the same lane at two lines.
 
     # Final guard: identical HEADLINE on the same fixture is the same claim however it was
     # reached. `solid` (A keeps clean sheets, B fails to score) and `blanked` (B fails to
@@ -627,15 +641,19 @@ def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
         for l in leagues if l in shown_leagues)
 
     if "leads" in tabs:
-        explain_summary = ("How a lead is chosen — and why only one line")
+        explain_summary = ("How a lead is chosen — and why only two lines")
         explain_body = f"""
 <p>A streak on its own is not an edge; plenty of good sides score freely. A <b>lead</b> is
 two runs meeting in a fixture not yet played, where the pair <b>implies the line
-arithmetically</b>. Every lead settles one market, <b>Over 1.5</b>, reached two ways:</p>
+arithmetically</b>. There are two lanes. <b>Over 1.5</b> is reached two ways:</p>
 <p>&nbsp;&nbsp;• both sides score (1&nbsp;+&nbsp;1&nbsp;≥&nbsp;2) — two different events
 about this fixture that add up to clear the line.<br>
 &nbsp;&nbsp;• both sides' matches go over 1.5 — the same claim supported twice, since this
 fixture is one of each side's matches.</p>
+<p><b>A side to score 2+</b> is the board's original question — a team scoring 2+ in
+every recent game meeting an opponent that concedes in every recent game. It trades near
+evens, so it is the one market here where an edge, if one exists, would actually pay;
+each card shows the price captured when it was first listed.</p>
 <p><b>Over 1.5 lands in roughly 85% of matches without any flag at all</b>, so a hit is
 not evidence of anything on its own. One market rather than two pools the whole sample
 behind a single question, and a lopsided line is cheaper to test: each graded lead here
@@ -977,7 +995,7 @@ function card(l) {{
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
       ${{l.market ? `<a class="kbtn" href="${{esc(l.market)}}" target="_blank"
          rel="noopener">Bovada ↗</a>` : ''}}
-      ${{l.price ? `<span class="px" title="Over 1.5 price when this lead was first listed">@ ${{l.price.toFixed(2)}}</span>` : ''}}
+      ${{l.price ? `<span class="px" title="Price of this claim when the lead was first listed">@ ${{l.price.toFixed(2)}}</span>` : ''}}
     </div>
     <div class="ev">
       ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}
@@ -1234,12 +1252,14 @@ def build(force=False):
     print(f"  ledger: +{added} new, {n_priced} priced ({n_fetched} fetched), "
           f"{newly_graded} graded now, {track['graded']} settled / "
           f"{track['pending']} pending")
-    # The card shows the captured price for the claim, read back from the ledger so
-    # the page and the record can never disagree about what the line was.
+    # The card shows the captured price for ITS claim (over 1.5, or the side to score
+    # 2+), read back from the ledger so the page and the record can never disagree
+    # about what the line was.
     for l in leads:
         pr = (ledger["leads"].get(streaks_track.lead_id(l)) or {}).get("prices") or {}
-        if pr.get("over15"):
-            l["price"] = pr["over15"]["price"]
+        mk = streaks_track.claim_market(l.get("bet") or {})
+        if mk and pr.get(mk):
+            l["price"] = pr[mk]["price"]
 
     # League buttons must cover BOTH views, so draw them from the teams index too —
     # scoping them to fixtures alone hid every league that had runs but no confluence.

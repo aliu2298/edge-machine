@@ -217,8 +217,32 @@ def parse_bovada_prices(event):
     overround removed — the probability the book itself implies, which is the yardstick
     a hit rate has to clear before any of this is an edge. A market with only one side
     listed is skipped rather than guessed.
+
+    Team totals ("Total Goals O/U - Augsburg") come back under "team" keyed by SIDE,
+    {"home": {"over05", "over15"}, "away": {...}}, resolved by matching the market's
+    team suffix to the event title "Augsburg vs Bayer Leverkusen" (home first — the same
+    order venue_link relies on). The caller knows which side its claim names; the ledger
+    never needs Bovada's spelling of the team.
     """
     pairs = {}                                    # market -> (yes decimal, no decimal)
+    team_pairs = {"home": {}, "away": {}}
+    sides = re.split(r"\s+vs?\.?\s+", event.get("description") or "", flags=re.I)
+    sides = [x.strip() for x in sides] if len(sides) == 2 else None
+
+    def side_of(name):
+        """'home'/'away' for a team-total market's suffix, or None if unsure."""
+        if not sides or not name:
+            return None
+        if name == sides[0]:
+            return "home"
+        if name == sides[1]:
+            return "away"
+        a = _sides(f"{name} vs {name}")[0]
+        sh, sa = _sides(f"{sides[0]} vs {sides[1]}")
+        s0, s1 = side_score(a, sh), side_score(a, sa)
+        if max(s0, s1) < SIDE_MATCH or abs(s0 - s1) < AMBIGUITY_GAP:
+            return None
+        return "home" if s0 > s1 else "away"
 
     def dec(o):
         try:
@@ -243,15 +267,34 @@ def parse_bovada_prices(event):
                     yes, no = by.get(("over", line)), by.get(("under", line))
                     if yes and no and mk not in pairs:   # first listing wins (Game Lines)
                         pairs[mk] = (yes, no)
+            elif desc.startswith("Total Goals O/U - "):
+                side = side_of(desc[len("Total Goals O/U - "):].strip())
+                if side is None:
+                    continue
+                by = {}
+                for o in outs:
+                    hc = (o.get("price") or {}).get("handicap")
+                    d = dec(o)
+                    if hc is not None and d:
+                        by[((o.get("description") or "").lower(), str(hc))] = d
+                for mk, line in (("over05", "0.5"), ("over15", "1.5")):
+                    yes, no = by.get(("over", line)), by.get(("under", line))
+                    if yes and no and mk not in team_pairs[side]:
+                        team_pairs[side][mk] = (yes, no)
             elif desc == "Both Teams To Score":
                 by = {(o.get("description") or "").lower(): dec(o) for o in outs}
                 if by.get("yes") and by.get("no"):
                     pairs["btts"] = (by["yes"], by["no"])
 
-    out = {}
-    for mk, (yes, no) in pairs.items():
-        out[mk] = {"price": round(yes, 3),
-                   "fair": round((1 / yes) / ((1 / yes) + (1 / no)), 4)}
+    def quote(yes, no):
+        return {"price": round(yes, 3),
+                "fair": round((1 / yes) / ((1 / yes) + (1 / no)), 4)}
+
+    out = {mk: quote(*yn) for mk, yn in pairs.items()}
+    team = {side: {mk: quote(*yn) for mk, yn in d.items()}
+            for side, d in team_pairs.items() if d}
+    if team:
+        out["team"] = team
     return out
 
 

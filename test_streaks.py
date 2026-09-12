@@ -92,11 +92,11 @@ check("unknown team voids",
       T.settle_bet({"kind": "team_gte", "n": 1, "team": "Z"}, "A", "B", 1, 1), None)
 check("unknown kind voids", T.settle_bet({"kind": "nope"}, "A", "B", 1, 1), None)
 
-print("\n== find_leads: end-to-end, over 1.5 only ==")
-# Leads settle ONE market now: over 1.5. Aces score 3 every game (so their
-# matches also clear 1.5); Bees win 1-0 every game, so Bees have a scored-in run but
-# NO over-1.5 run. The surviving pairing is therefore scoring1+scoring1: one apiece
-# clears 1.5.
+print("\n== find_leads: end-to-end, the over 1.5 lane ==")
+# Aces score 3 every game (so their matches also clear 1.5); Bees win 1-0 every game,
+# so Bees have a scored-in run but NO over-1.5 run and concede nothing — so no team-2+
+# lead can form either. The surviving pairing is scoring1+scoring1: one apiece clears
+# 1.5.
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
@@ -110,9 +110,9 @@ leads = B.find_leads(rows, st, rt)
 heads = {l["headline"] for l in leads}
 check("Aces scoring run detected", st["Aces"]["runs"].get("scoring"), 6)
 check("Bees scored-in run detected", st["Bees"]["runs"].get("scoring1"), 6)
-check("every lead is a totals bet",
+check("every lead is a totals bet (Bees concede nothing, so no 2+ lead)",
       sorted({l["bet"]["kind"] for l in leads}), ["total_gte"])
-check("no team-subject bet survives",
+check("no team-subject bet without a conceding opponent",
       [l["headline"] for l in leads if l["bet"].get("team")], [])
 check("'Over 1.5 goals' lead present", "Over 1.5 goals" in heads, True)
 o15 = [l for l in leads if l["headline"] == "Over 1.5 goals"][0]
@@ -123,6 +123,34 @@ check("no over-2.5 bet is produced",
 check("every headline is the one market", sorted(heads), ["Over 1.5 goals"])
 check("no lead points at a played fixture",
       all(l["date"] >= datetime.date.today().isoformat() for l in leads), True)
+
+print("\n== find_leads: the team 2+ lane ==")
+# Guns score 2 and concede 1 every game; Nets lose 1-2 every game (concede 2+). The
+# fixture Guns v Nets carries "Guns to score 2+" (scoring+leaky) AND, since both sides
+# have scored in every game, an over-1.5 card — two lanes, two claims, both listed.
+rows = []
+for i in range(6):
+    d = f"2026-06-{i+1:02d}"
+    rows.append(fx(d, "Guns", f"g{i}", 2, 1))
+    rows.append(fx(d, "Nets", f"n{i}", 1, 2))
+rows.append(fx(future, "Nets", "Guns", None, None, played=False))   # Guns AWAY
+st = B.team_streaks(B.team_games(rows))
+leads = B.find_leads(rows, st, B.base_rates(st))
+heads = sorted(l["headline"] for l in leads)
+check("both lanes fire on the fixture", heads, ["Guns to score 2+", "Over 1.5 goals"])
+t2 = [l for l in leads if l["headline"] == "Guns to score 2+"][0]
+check("claim names the away side correctly",
+      (t2["bet"]["kind"], t2["bet"]["n"], t2["bet"]["team"]), ("team_gte", 2, "Guns"))
+check("the sharper pairing (opponent concedes 2+) is the one kept", (t2["a_key"], t2["b_key"]), ("scoring", "leaky"))
+check("one team-2+ card per fixture, not one per pairing",
+      sum(1 for l in leads if l["headline"] == "Guns to score 2+"), 1)
+check("Nets never get a 2+ card (they score 1)",
+      [l for l in leads if l["bet"].get("team") == "Nets"], [])
+check("settles on the final score: 0-2 is a hit for Guns",
+      T.settle_bet(t2["bet"], "Nets", "Guns", 0, 2), True)
+check("and 1-1 is a miss", T.settle_bet(t2["bet"], "Nets", "Guns", 1, 1), False)
+check("claim market resolves to the team price", T.claim_market(t2["bet"]), "team2plus")
+check("over-1.5 claim market", T.claim_market({"kind": "total_gte", "n": 2}), "over15")
 
 print("\n== find_leads: symmetric pairings are not double-listed ==")
 rows = []
@@ -138,8 +166,9 @@ check("one card per fixture, not one per orientation", len(leads), 1)
 print("\n== find_leads: both over-1.5 pairings collapse to one card ==")
 # Both sides score AND both sides' matches clear 1.5, so over15+over15 and
 # scoring1+scoring1 each fire on this fixture. They settle the SAME claim, so the
-# fixture must still render one card — the headline guard is what enforces it now that
-# there is no second market for a bet-level guard to separate.
+# fixture must still render ONE over-1.5 card — the headline guard enforces it. (Each
+# side also scores 2+ into a porous opponent, so the team-2+ lane adds its own cards;
+# those are a different claim and are counted separately.)
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
@@ -150,7 +179,11 @@ st = B.team_streaks(B.team_games(rows))
 leads = B.find_leads(rows, st, B.base_rates(st))
 check("both pairings qualify", 
       (st["Aces"]["runs"].get("over15"), st["Aces"]["runs"].get("scoring1")), (6, 6))
-check("exactly one card for the fixture", len(leads), 1)
+check("exactly one over-1.5 card for the fixture",
+      sum(1 for l in leads if l["headline"] == "Over 1.5 goals"), 1)
+check("the team-2+ lane adds one card per side, not per pairing",
+      sorted(l["headline"] for l in leads if l["bet"].get("team")),
+      ["Aces to score 2+", "Bees to score 2+"])
 check("and it settles over 1.5", leads[0]["bet"]["n"], 2)
 
 print("\n== a form-only league never produces a lead ==")
@@ -169,7 +202,7 @@ check("form-league fixture yields no lead",
       B.find_leads(rows, st, B.base_rates(st)), [])
 _ff["lead_source"] = True
 check("the same fixture in a tracked league does",
-      len(B.find_leads(rows, st, B.base_rates(st))), 1)
+      "Over 1.5 goals" in {l["headline"] for l in B.find_leads(rows, st, B.base_rates(st))}, True)
 
 print("\n== population_rates ==")
 pool = [fx("2026-01-01", "A", "B", 1, 1),    # btts, total 2
@@ -260,7 +293,8 @@ check("None when unparseable", B.kickoff_dt({"kickoff": "not-a-date"}), None)
 
 print("\n== high-scoring form still yields exactly one over-1.5 card ==")
 # Previously this fixture produced an over-2.5 card that suppressed the over-1.5 one.
-# With a single market it must simply produce one over-1.5 card and nothing else.
+# The totals lane must produce one over-1.5 card; the team lane may add its own claims
+# on top (both sides here score 2+ into a side that concedes every game).
 rows = []
 for i in range(6):
     d = f"2026-06-{i+1:02d}"
@@ -270,8 +304,9 @@ rows.append(fx(future, "Goals", "Nets", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
 got = B.find_leads(rows, st, B.base_rates(st))
 heads = [l["headline"] for l in got]
-check("one card only", len(got), 1)
-check("and it is over 1.5", heads, ["Over 1.5 goals"])
+check("one over-1.5 card only", heads.count("Over 1.5 goals"), 1)
+check("plus one team-2+ card per qualifying side", sorted(heads),
+      ["Goals to score 2+", "Nets to score 2+", "Over 1.5 goals"])
 
 print("\n== one claim, one card: identical headline never duplicates ==")
 import collections as _c
@@ -451,6 +486,28 @@ blob6, _ = T.record([unlinked], {"leads": {}})
 check("no venue link -> nothing to fetch",
       T.price(blob6, [unlinked], fake_fetch, now=NOWP)[2], 0)
 
+print("\n== pricing: a team-2+ lead is priced on ITS side's team total ==")
+tl = dict(lp, headline="A to score 2+", bet={"kind": "team_gte", "n": 2, "team": "A"})
+BOOK_T = dict(BOOK, team={"home": {"over15": {"price": 1.5, "fair": 0.64}},
+                          "away": {"over15": {"price": 2.3, "fair": 0.42}}})
+blob_t, _ = T.record([tl], {"leads": {}})
+blob_t, n_t, _ = T.price(blob_t, [tl], lambda l: BOOK_T, now=NOWP)
+check("priced", n_t, 1)
+et = list(blob_t["leads"].values())[0]
+check("A is the away side, so the away team total is the claim's price",
+      et["prices"]["team2plus"], {"price": 2.3, "fair": 0.42})
+check("fixture-level companions still logged", sorted(et["prices"]),
+      ["btts", "over15", "over25", "team2plus"])
+blob_t2, _ = T.record([tl], {"leads": {}})
+check("team total missing -> team lead is NOT priced (claim first)",
+      T.price(blob_t2, [tl], lambda l: BOOK, now=NOWP)[1], 0)
+blob_t, _ = T.grade([fx(tl["date"], "H", "A", 1, 2)], blob_t)     # A scores 2: hit
+et = blob_t["leads"][T.lead_id(tl)]
+check("team2plus pnl = 2.3 - 1", round(et["pnl"]["team2plus"]["pnl"], 2), 1.3)
+check("lane ROI is read off each lead's OWN claim",
+      round(T.price_report(blob_t)["lane_roi"]["team2plus"], 2), 1.3)
+check("the over-1.5 lane is untouched by it", "over15" in T.price_report(blob_t)["lane_roi"], False)
+
 print("\n== pricing: P/L graded per market at the captured price ==")
 blob, n = T.grade([fx(lp["date"], "H", "A", 2, 0)], blob)    # 2-0: over15 hit, rest miss
 e = blob["leads"][T.lead_id(lp)]
@@ -497,6 +554,24 @@ check("btts", _pr["btts"]["price"], 1.74)
 check("half-time ladders are ignored", _pr["over15"]["price"] != 9.0, True)
 check("one-sided market is skipped, not guessed", "over05" in _pr, False)
 check("empty event -> empty book", V.parse_bovada_prices({}), {})
+_ev2 = {"description": "Augsburg vs Bayer Leverkusen", "displayGroups": [{"markets": [
+    {"description": "Total Goals O/U - Bayer Leverkusen", "period": {"description": "Regulation Time"},
+     "outcomes": [{"description": "Over", "price": {"handicap": "1.5", "decimal": "1.55"}},
+                  {"description": "Under", "price": {"handicap": "1.5", "decimal": "2.47"}},
+                  {"description": "Over", "price": {"handicap": "0.5", "decimal": "1.10"}},
+                  {"description": "Under", "price": {"handicap": "0.5", "decimal": "7.00"}}]},
+    {"description": "Total Goals O/U - Augsburg", "period": {"description": "Regulation Time"},
+     "outcomes": [{"description": "Over", "price": {"handicap": "1.5", "decimal": "2.18"}},
+                  {"description": "Under", "price": {"handicap": "1.5", "decimal": "1.70"}}]},
+    {"description": "Total Goals O/U - Nobody FC", "period": {"description": "Regulation Time"},
+     "outcomes": [{"description": "Over", "price": {"handicap": "1.5", "decimal": "9.9"}},
+                  {"description": "Under", "price": {"handicap": "1.5", "decimal": "1.01"}}]}]}]}
+_pt = V.parse_bovada_prices(_ev2)["team"]
+check("team totals keyed by side from the event title", sorted(_pt), ["away", "home"])
+check("home = Augsburg", _pt["home"]["over15"]["price"], 2.18)
+check("away = Leverkusen, both lines", (_pt["away"]["over15"]["price"], _pt["away"]["over05"]["price"]), (1.55, 1.10))
+check("a team total for neither side is dropped", "Nobody" in str(_pt), False)
+check("no fixture totals on that event -> none claimed", "over15" in V.parse_bovada_prices(_ev2), False)
 
 print()
 if FAILS:
