@@ -11,7 +11,7 @@ whether an idea actually holds up.
 | [Leads](https://aliu2298.github.io/edge-machine/) | Upcoming fixtures where both sides' runs point at the same total |
 | [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Every tracked team's current runs, and the sides on the longest ones |
 | [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — leads and on-fire runs — against what those teams do anyway |
-| [Today](https://aliu2298.github.io/edge-machine/today.html) | Every tracked fixture kicking off today, with both sides' current runs |
+| [Today](https://aliu2298.github.io/edge-machine/today.html) | Today's and tomorrow's fixtures as the leads' control group: every lead (kept after kickoff), games in play, hit/miss and P/L on every lead and book market, and a day scoreboard |
 | [Sandbox](https://aliu2298.github.io/edge-machine/sandbox.html) | Which forecasters actually make money, tracked per sport at real prices |
 | [QA](https://aliu2298.github.io/edge-machine/qa.html) | Sandbox pairs promoted to QA, judged only on fresh bets, closing-line value and fees |
 
@@ -95,7 +95,7 @@ and graded against ESPN final scores once its fixture is played.
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
 | `venues.py` | Shared fixture→market matcher (Bovada). |
 | `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
-| `today_build.py` | Renders today's fixtures to `public_site/today.html`. |
+| `today_build.py` | Renders today's and tomorrow's fixtures to `public_site/today.html`: leads from the ledger, in-play games filled from the book/lead ledgers, results, scoreboard, why-not on form at kickoff. Tested by `test_today.py`. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
 | `streaks_build.py` | Finds streak confluences; renders `index.html` (Leads) and `streaks.html`. |
 | `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |

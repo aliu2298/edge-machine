@@ -118,6 +118,7 @@ jobs:
         run: |
           python3 test_streaks.py
           python3 test_book.py
+          python3 test_today.py
 
       - name: Health check
         if: steps.check.outputs.run == 'true'

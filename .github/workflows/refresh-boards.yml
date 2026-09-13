@@ -52,6 +52,7 @@ jobs:
         run: |
           python3 test_streaks.py
           python3 test_book.py
+          python3 test_today.py
 
       # Guardrails. The failure mode here is SILENT — a live pick that never matches a
       # final score just sits on the board looking normal. Warn-only: a stale board beats
