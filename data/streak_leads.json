@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-13T16:25:33+00:00",
+ "board_built_at": "2026-09-13T20:19:49+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -5152,7 +5152,7 @@
    "id": "2026-09-13|Chicago Fire FC|New England Revolution|Over 1.5 goals",
    "kickoff": "2026-09-13T21:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "MLS",
    "match": "Chicago Fire FC v New England Revolution",
    "model": {
@@ -5548,14 +5548,16 @@
     "team": "Manchester City"
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Manchester City to score",
    "home": "Manchester United",
    "id": "2026-09-13|Manchester United|Manchester City|Manchester City to score",
    "kickoff": "2026-09-13T15:30Z",
    "league": "Premier League",
    "match": "Manchester United v Manchester City",
-   "status": "pending",
+   "status": "hit",
    "strength": 7,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5575,14 +5577,16 @@
     "team": "Manchester City"
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Manchester City to score 2+",
    "home": "Manchester United",
    "id": "2026-09-13|Manchester United|Manchester City|Manchester City to score 2+",
    "kickoff": "2026-09-13T15:30Z",
    "league": "Premier League",
    "match": "Manchester United v Manchester City",
-   "status": "pending",
+   "status": "miss",
    "strength": 6,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5600,7 +5604,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Over 1.5 goals",
    "home": "Manchester United",
    "id": "2026-09-13|Manchester United|Manchester City|Over 1.5 goals",
@@ -5615,6 +5621,20 @@
     "over25": 0.5589
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -5630,7 +5650,7 @@
      "price": 1.546
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 12
   },
   "2026-09-13|Neom SC|Al Fateh|Under 2.5 goals": {
@@ -5647,14 +5667,16 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Under 2.5 goals",
    "home": "Neom SC",
    "id": "2026-09-13|Neom SC|Al Fateh|Under 2.5 goals",
    "kickoff": "2026-09-13T16:20Z",
    "league": "Saudi Pro League",
    "match": "Neom SC v Al Fateh",
-   "status": "pending",
+   "status": "miss",
    "strength": 6,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5672,7 +5694,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "0-7",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Over 1.5 goals",
    "home": "PEC Zwolle",
    "id": "2026-09-13|PEC Zwolle|Feyenoord Rotterdam|Over 1.5 goals",
@@ -5687,6 +5711,20 @@
     "over25": 0.6962
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.1
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.364
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -5702,7 +5740,7 @@
      "price": 1.364
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-13|PEC Zwolle|Feyenoord Rotterdam|Over 2.5 goals": {
@@ -5719,14 +5757,16 @@
     "n": 3
    },
    "date": "2026-09-13",
+   "final": "0-7",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Over 2.5 goals",
    "home": "PEC Zwolle",
    "id": "2026-09-13|PEC Zwolle|Feyenoord Rotterdam|Over 2.5 goals",
    "kickoff": "2026-09-13T14:45Z",
    "league": "Eredivisie",
    "match": "PEC Zwolle v Feyenoord Rotterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 8,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5743,14 +5783,16 @@
     "kind": "btts"
    },
    "date": "2026-09-13",
+   "final": "4-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Both teams to score",
    "home": "PSV Eindhoven",
    "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|Both teams to score",
    "kickoff": "2026-09-13T12:30Z",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 7,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5768,7 +5810,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "4-1",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Over 1.5 goals",
    "home": "PSV Eindhoven",
    "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|Over 1.5 goals",
@@ -5777,7 +5821,7 @@
    "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-13|PSV Eindhoven|Sparta Rotterdam|Over 2.5 goals": {
@@ -5794,14 +5838,16 @@
     "n": 3
    },
    "date": "2026-09-13",
+   "final": "4-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "Over 2.5 goals",
    "home": "PSV Eindhoven",
    "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|Over 2.5 goals",
    "kickoff": "2026-09-13T12:30Z",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5821,14 +5867,16 @@
     "team": "PSV Eindhoven"
    },
    "date": "2026-09-13",
+   "final": "4-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "PSV Eindhoven to score",
    "home": "PSV Eindhoven",
    "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|PSV Eindhoven to score",
    "kickoff": "2026-09-13T12:30Z",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 11,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5848,14 +5896,16 @@
     "team": "PSV Eindhoven"
    },
    "date": "2026-09-13",
+   "final": "4-1",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-13T20:19:49+00:00",
    "headline": "PSV Eindhoven to score 2+",
    "home": "PSV Eindhoven",
    "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|PSV Eindhoven to score 2+",
    "kickoff": "2026-09-13T18:00Z",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
-   "status": "pending",
+   "status": "hit",
    "strength": 8,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -6325,7 +6375,7 @@
    "id": "2026-09-13|Vancouver Whitecaps|Austin FC|Over 1.5 goals",
    "kickoff": "2026-09-13T22:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "MLS",
    "match": "Vancouver Whitecaps v Austin FC",
    "model": {
@@ -6374,7 +6424,7 @@
    "id": "2026-09-14|Como|Parma|Como to score 2+",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Serie A",
    "match": "Como v Parma",
    "model": {
@@ -6426,7 +6476,7 @@
    "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
    "kickoff": "2026-09-14T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Serie A",
    "match": "Internazionale v Udinese",
    "model": {
@@ -6473,7 +6523,7 @@
    "id": "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals",
    "kickoff": "2026-09-14T19:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Premier League",
    "match": "Leeds United v Newcastle United",
    "model": {
@@ -6545,7 +6595,7 @@
    "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
    "kickoff": "2026-09-14T17:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Primeira Liga",
    "match": "Rio Ave v Estrela",
    "model": {
@@ -6619,7 +6669,7 @@
    "id": "2026-09-14|San Diego FC|Philadelphia Union|Philadelphia Union to score 2+",
    "kickoff": "2026-09-14T01:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "MLS",
    "match": "San Diego FC v Philadelphia Union",
    "model": {
@@ -6725,7 +6775,7 @@
    "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T16:25:33+00:00",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Serie A",
    "match": "Torino v AS Roma",
    "model": {
@@ -6797,11 +6847,11 @@
    "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
    "kickoff": "2026-09-15T18:00Z",
    "last_seen": "2026-09-13",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Willem II",
    "status": "pending",
-   "strength": 11,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 11
   },
   "2026-09-15|Elche|Real Madrid|Over 1.5 goals": {
    "a": "Elche",
@@ -6904,11 +6954,11 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-13",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
-   "strength": 7,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 7
   },
   "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals": {
    "a": "Falkirk",
@@ -6930,11 +6980,11 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-13",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
-   "strength": 9,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 9
   },
   "2026-09-15|Falkirk|Heart of Midlothian|Over 2.5 goals": {
    "a": "Heart of Midlothian",
@@ -7006,6 +7056,7 @@
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
    "kickoff": "2026-09-15T17:00Z",
    "last_seen": "2026-09-13",
+   "last_seen_at": "2026-09-13T20:19:49+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "model": {
@@ -7030,8 +7081,7 @@
     }
    },
    "status": "pending",
-   "strength": 12,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 12
   },
   "2026-09-16|AC Milan|Benfica|Over 1.5 goals": {
    "a": "AC Milan",
@@ -10583,5 +10633,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-13T16:25:33+00:00"
+ "updated_at": "2026-09-13T20:19:49+00:00"
 }
