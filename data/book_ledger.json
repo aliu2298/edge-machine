@@ -3203,6 +3203,8 @@
   "2026-09-13|Brest|Paris Saint-Germain": {
    "away": "Paris Saint-Germain",
    "date": "2026-09-13",
+   "final": "0-1",
+   "graded_at": "2026-09-13T23:31:36+00:00",
    "home": "Brest",
    "id": "2026-09-13|Brest|Paris Saint-Germain",
    "kickoff": "2026-09-13T18:45Z",
@@ -3214,6 +3216,13 @@
     "home2plus": 0.3941,
     "over15": 0.8592,
     "over25": 0.6707
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": -1.0,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -3238,7 +3247,14 @@
      "price": 1.408
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": false,
+    "over15": false,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Celta Vigo|M\u00e1laga": {
    "away": "M\u00e1laga",
@@ -3619,6 +3635,8 @@
   "2026-09-13|FC Famalicao|Sporting CP": {
    "away": "Sporting CP",
    "date": "2026-09-13",
+   "final": "1-1",
+   "graded_at": "2026-09-13T23:31:36+00:00",
    "home": "FC Famalicao",
    "id": "2026-09-13|FC Famalicao|Sporting CP",
    "kickoff": "2026-09-13T19:30Z",
@@ -3630,6 +3648,13 @@
     "home2plus": 0.3186,
     "over15": 0.7223,
     "over25": 0.4682
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.847,
+    "home2plus": -1.0,
+    "over15": 0.25,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -3654,7 +3679,14 @@
      "price": 2.0
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Fredrikstad|Sarpsborg FK": {
    "away": "Sarpsborg FK",
@@ -5136,6 +5168,8 @@
   "2026-09-13|Real Sociedad|Atl\u00e9tico Madrid": {
    "away": "Atl\u00e9tico Madrid",
    "date": "2026-09-13",
+   "final": "0-3",
+   "graded_at": "2026-09-13T23:31:36+00:00",
    "home": "Real Sociedad",
    "id": "2026-09-13|Real Sociedad|Atl\u00e9tico Madrid",
    "kickoff": "2026-09-13T19:00Z",
@@ -5146,6 +5180,12 @@
     "btts": 0.5932,
     "home2plus": 0.5125,
     "over25": 0.5771
+   },
+   "pnl": {
+    "away2plus": 0.98,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over25": 0.8
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -5166,7 +5206,13 @@
      "price": 1.8
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": false,
+    "home2plus": false,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|SK Sturm Graz|LASK Linz": {
    "away": "LASK Linz",
@@ -5320,6 +5366,8 @@
   "2026-09-13|Sassuolo|Juventus": {
    "away": "Juventus",
    "date": "2026-09-13",
+   "final": "3-2",
+   "graded_at": "2026-09-13T23:31:36+00:00",
    "home": "Sassuolo",
    "id": "2026-09-13|Sassuolo|Juventus",
    "kickoff": "2026-09-13T18:45Z",
@@ -5331,6 +5379,13 @@
     "home2plus": 0.2739,
     "over15": 0.64,
     "over25": 0.3713
+   },
+   "pnl": {
+    "away2plus": 0.735,
+    "btts": 0.82,
+    "home2plus": 2.9,
+    "over15": 0.27,
+    "over25": 0.833
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -5355,7 +5410,14 @@
      "price": 1.833
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Silkeborg IF|Viborg FF": {
    "away": "Viborg FF",
@@ -6199,5 +6261,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-13T20:33:16+00:00"
+ "updated_at": "2026-09-13T23:31:36+00:00"
 }

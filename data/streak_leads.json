@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-13T20:33:11+00:00",
+ "board_built_at": "2026-09-13T23:31:34+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -4890,14 +4890,16 @@
     "kind": "btts"
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Both teams to score",
    "home": "Brest",
    "id": "2026-09-13|Brest|Paris Saint-Germain|Both teams to score",
    "kickoff": "2026-09-13T18:45Z",
    "league": "Ligue 1",
    "match": "Brest v Paris Saint-Germain",
-   "status": "pending",
+   "status": "miss",
    "strength": 8,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -4917,7 +4919,9 @@
     "team": "Brest"
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Brest to score 2+",
    "home": "Brest",
    "id": "2026-09-13|Brest|Paris Saint-Germain|Brest to score 2+",
@@ -4933,6 +4937,24 @@
     "team2plus": 0.3952
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "team2plus": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -4952,7 +4974,7 @@
      "price": 4.65
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 6
   },
   "2026-09-13|Brest|Paris Saint-Germain|Over 1.5 goals": {
@@ -4969,7 +4991,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Over 1.5 goals",
    "home": "Brest",
    "id": "2026-09-13|Brest|Paris Saint-Germain|Over 1.5 goals",
@@ -4984,6 +5008,20 @@
     "over25": 0.6708
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -4999,7 +5037,7 @@
      "price": 1.408
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 12
   },
   "2026-09-13|Brest|Paris Saint-Germain|Over 2.5 goals": {
@@ -5016,14 +5054,16 @@
     "n": 3
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Over 2.5 goals",
    "home": "Brest",
    "id": "2026-09-13|Brest|Paris Saint-Germain|Over 2.5 goals",
    "kickoff": "2026-09-13T18:45Z",
    "league": "Ligue 1",
    "match": "Brest v Paris Saint-Germain",
-   "status": "pending",
+   "status": "miss",
    "strength": 7,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5043,14 +5083,16 @@
     "team": "Paris Saint-Germain"
    },
    "date": "2026-09-13",
+   "final": "0-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Paris Saint-Germain to score 2+",
    "home": "Brest",
    "id": "2026-09-13|Brest|Paris Saint-Germain|Paris Saint-Germain to score 2+",
    "kickoff": "2026-09-13T18:45Z",
    "league": "Ligue 1",
    "match": "Brest v Paris Saint-Germain",
-   "status": "pending",
+   "status": "miss",
    "strength": 7,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5494,14 +5536,16 @@
     "team": "Sporting CP"
    },
    "date": "2026-09-13",
+   "final": "1-1",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Sporting CP to score",
    "home": "FC Famalicao",
    "id": "2026-09-13|FC Famalicao|Sporting CP|Sporting CP to score",
    "kickoff": "2026-09-13T18:00Z",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Sporting CP",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -6005,14 +6049,16 @@
     "team": "Atl\u00e9tico Madrid"
    },
    "date": "2026-09-13",
+   "final": "0-3",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Atl\u00e9tico Madrid to score",
    "home": "Real Sociedad",
    "id": "2026-09-13|Real Sociedad|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score",
    "kickoff": "2026-09-13T18:00Z",
    "league": "La Liga",
    "match": "Real Sociedad v Atl\u00e9tico Madrid",
-   "status": "pending",
+   "status": "hit",
    "strength": 10,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -6055,7 +6101,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "3-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T23:31:35+00:00",
    "headline": "Over 1.5 goals",
    "home": "Sassuolo",
    "id": "2026-09-13|Sassuolo|Juventus|Over 1.5 goals",
@@ -6070,6 +6118,20 @@
     "over25": 0.3704
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.781
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.27
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.82
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6085,7 +6147,7 @@
      "price": 1.82
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|Both teams to score": {
@@ -6424,7 +6486,7 @@
    "id": "2026-09-14|Como|Parma|Como to score 2+",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Serie A",
    "match": "Como v Parma",
    "model": {
@@ -6476,7 +6538,7 @@
    "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
    "kickoff": "2026-09-14T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Serie A",
    "match": "Internazionale v Udinese",
    "model": {
@@ -6523,7 +6585,7 @@
    "id": "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals",
    "kickoff": "2026-09-14T19:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Premier League",
    "match": "Leeds United v Newcastle United",
    "model": {
@@ -6595,7 +6657,7 @@
    "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
    "kickoff": "2026-09-14T17:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Primeira Liga",
    "match": "Rio Ave v Estrela",
    "model": {
@@ -6669,7 +6731,7 @@
    "id": "2026-09-14|San Diego FC|Philadelphia Union|Philadelphia Union to score 2+",
    "kickoff": "2026-09-14T01:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "MLS",
    "match": "San Diego FC v Philadelphia Union",
    "model": {
@@ -6775,7 +6837,7 @@
    "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Serie A",
    "match": "Torino v AS Roma",
    "model": {
@@ -6847,7 +6909,7 @@
    "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
    "kickoff": "2026-09-15T18:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Willem II",
    "model": {
@@ -6990,7 +7052,7 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
@@ -7016,7 +7078,7 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "model": {
@@ -7128,7 +7190,7 @@
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
    "kickoff": "2026-09-15T17:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:33:11+00:00",
+   "last_seen_at": "2026-09-13T23:31:34+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "model": {
@@ -10705,5 +10767,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-13T20:33:12+00:00"
+ "updated_at": "2026-09-13T23:31:35+00:00"
 }
