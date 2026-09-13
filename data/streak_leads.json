@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-13T20:19:49+00:00",
+ "board_built_at": "2026-09-13T20:33:11+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -5152,7 +5152,7 @@
    "id": "2026-09-13|Chicago Fire FC|New England Revolution|Over 1.5 goals",
    "kickoff": "2026-09-13T21:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "MLS",
    "match": "Chicago Fire FC v New England Revolution",
    "model": {
@@ -6375,7 +6375,7 @@
    "id": "2026-09-13|Vancouver Whitecaps|Austin FC|Over 1.5 goals",
    "kickoff": "2026-09-13T22:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "MLS",
    "match": "Vancouver Whitecaps v Austin FC",
    "model": {
@@ -6424,7 +6424,7 @@
    "id": "2026-09-14|Como|Parma|Como to score 2+",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Serie A",
    "match": "Como v Parma",
    "model": {
@@ -6476,7 +6476,7 @@
    "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
    "kickoff": "2026-09-14T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Serie A",
    "match": "Internazionale v Udinese",
    "model": {
@@ -6523,7 +6523,7 @@
    "id": "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals",
    "kickoff": "2026-09-14T19:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Premier League",
    "match": "Leeds United v Newcastle United",
    "model": {
@@ -6595,7 +6595,7 @@
    "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
    "kickoff": "2026-09-14T17:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Primeira Liga",
    "match": "Rio Ave v Estrela",
    "model": {
@@ -6669,7 +6669,7 @@
    "id": "2026-09-14|San Diego FC|Philadelphia Union|Philadelphia Union to score 2+",
    "kickoff": "2026-09-14T01:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "MLS",
    "match": "San Diego FC v Philadelphia Union",
    "model": {
@@ -6775,7 +6775,7 @@
    "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Serie A",
    "match": "Torino v AS Roma",
    "model": {
@@ -6847,9 +6847,45 @@
    "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
    "kickoff": "2026-09-15T18:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Willem II",
+   "model": {
+    "btts": 0.6556,
+    "over15": 0.8692,
+    "over25": 0.6882
+   },
+   "modelled_at": "2026-09-13T20:33:11+00:00",
+   "priced_at": "2026-09-13T20:33:11+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.57,
+     "bid": 0.55,
+     "fair": 0.56,
+     "fee": 0.0172,
+     "market": "KXEREDIVISIEBTTS-26SEP15AJAWIL-BTTS",
+     "price": 1.703,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.93,
+     "bid": 0.91,
+     "fair": 0.92,
+     "fee": 0.0046,
+     "market": "KXEREDIVISIETOTAL-26SEP15AJAWIL-2",
+     "price": 1.07,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.8,
+     "bid": 0.77,
+     "fair": 0.785,
+     "fee": 0.0112,
+     "market": "KXEREDIVISIETOTAL-26SEP15AJAWIL-3",
+     "price": 1.233,
+     "venue": "kalshi"
+    }
+   },
    "status": "pending",
    "strength": 11
   },
@@ -6954,7 +6990,7 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
@@ -6980,9 +7016,45 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
+   "model": {
+    "btts": 0.6226,
+    "over15": 0.8274,
+    "over25": 0.6178
+   },
+   "modelled_at": "2026-09-13T20:33:11+00:00",
+   "priced_at": "2026-09-13T20:33:11+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.61,
+     "bid": 0.57,
+     "fair": 0.59,
+     "fee": 0.0167,
+     "market": "KXSCOTTISHPREMBTTS-26SEP15FALHOM-BTTS",
+     "price": 1.596,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.78,
+     "bid": 0.77,
+     "fair": 0.775,
+     "fee": 0.0121,
+     "market": "KXSCOTTISHPREMTOTAL-26SEP15FALHOM-2",
+     "price": 1.262,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.55,
+     "bid": 0.54,
+     "fair": 0.545,
+     "fee": 0.0174,
+     "market": "KXSCOTTISHPREMTOTAL-26SEP15FALHOM-3",
+     "price": 1.762,
+     "venue": "kalshi"
+    }
+   },
    "status": "pending",
    "strength": 9
   },
@@ -7056,7 +7128,7 @@
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
    "kickoff": "2026-09-15T17:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T20:19:49+00:00",
+   "last_seen_at": "2026-09-13T20:33:11+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "model": {
@@ -10633,5 +10705,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-13T20:19:49+00:00"
+ "updated_at": "2026-09-13T20:33:12+00:00"
 }

@@ -6605,6 +6605,7 @@
    "test_date": "2026-09-20"
   },
   "Panetolikos|over15|2026-09-13|Panetolikos|Panathinaikos": {
+   "graded_at": "2026-09-13T20:33:16+00:00",
    "home": false,
    "id": "Panetolikos|over15|2026-09-13|Panetolikos|Panathinaikos",
    "key": "over15",
@@ -6615,7 +6616,8 @@
    "logged_at": "2026-09-06T20:29:25+00:00",
    "opp": "Panathinaikos",
    "rate": 0.2108843537414966,
-   "status": "pending",
+   "result": "0-3",
+   "status": "extended",
    "team": "Panetolikos",
    "test_date": "2026-09-13"
   },
@@ -6635,6 +6637,7 @@
    "test_date": "2026-09-20"
   },
   "Panetolikos|scoring1|2026-09-13|Panetolikos|Panathinaikos": {
+   "graded_at": "2026-09-13T20:33:16+00:00",
    "home": false,
    "id": "Panetolikos|scoring1|2026-09-13|Panetolikos|Panathinaikos",
    "key": "scoring1",
@@ -6645,7 +6648,8 @@
    "logged_at": "2026-09-06T20:29:25+00:00",
    "opp": "Panathinaikos",
    "rate": 0.16326530612244897,
-   "status": "pending",
+   "result": "0-3",
+   "status": "broke",
    "team": "Panetolikos",
    "test_date": "2026-09-13"
   },
@@ -9483,5 +9487,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-13T20:19:51+00:00"
+ "updated_at": "2026-09-13T20:33:16+00:00"
 }
