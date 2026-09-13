@@ -1405,7 +1405,8 @@ def main():
         production.save_feed(feed)
         print(f" production: {len(feed['pairs'])} pair(s), "
               f"{sum(1 for l in feed['leads'].values() if l['status'] == 'pending')} open lead(s), "
-              f"{feed['unroutable_skipped']} unroutable bet(s) held back")
+              f"{feed['unroutable_skipped']} unroutable and {feed['unverified_kickoff_skipped']} "
+              f"unverified-kickoff bet(s) held back")
     except Exception as e:
         print(f"  ! production feed failed: {type(e).__name__}: {str(e)[:80]}")
 

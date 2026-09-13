@@ -16,6 +16,9 @@ existing parser, sanity gate and exact-build rule apply unchanged:
   * every bet a Production pair logs AFTER it entered Production, and only those the bot can
     route (sandbox_track.bot_route): today, a soccer side to win on a Kalshi GAME market in a
     league the bot maps
+  * and only with a VERIFIED kickoff (start_source "espn"). Kalshi publishes no kickoff and
+    its estimate has been a day off both ways; the bot's minutes-to-kickoff floor trusts this
+    file, so a kickoff listed too late could let it buy a match in play. Held back and counted.
   * bet {"kind": "match_result", "side": "home" | "away"}, home = the Kalshi event's first
     side (sandbox_sources.kalshi_sides)
   * status pending / hit / miss / void from the Sandbox settlement
@@ -78,12 +81,20 @@ def lead_from_quote(q, pair_key, built):
     return lead
 
 
+def _sandbox_record(d, key, since):
+    source, sport = key.split("|", 1)
+    a = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+    r = lambda x: round(x, 4) if isinstance(x, float) else x
+    return {"sandbox_n": a["n"], "sandbox_roi": r(a["roi"]), "sandbox_roi_fee": r(a["roi_fee"]),
+            "sandbox_clv": r(a["clv"])}
+
+
 def build_feed(d, st, now=None):
     """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage registry."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     built = now.replace(microsecond=0).isoformat()
     pairs = production_pairs(st)
-    leads, skipped = {}, 0
+    leads, skipped, unverified = {}, 0, 0
     for key, pair in pairs.items():
         source, sport = key.split("|", 1)
         for q in T.all_bets(d):
@@ -101,13 +112,19 @@ def build_feed(d, st, now=None):
             if not T.bot_route(q):
                 skipped += 1
                 continue
+            if q.get("start_source") != "espn":
+                unverified += 1
+                continue
             lead = lead_from_quote(q, key, built)
             leads[lead["id"]] = lead
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
-        "pairs": {k: {"ready_at": p["ready_at"], "promoted_at": p.get("promoted_at")}
+        # The Sandbox's own record for each pair since it became ready, at the logged price —
+        # the bot shows it next to what its real fills made on the same pair.
+        "pairs": {k: dict({"ready_at": p["ready_at"], "promoted_at": p.get("promoted_at")},
+                          **_sandbox_record(d, k, p["ready_at"]))
                   for k, p in pairs.items()},
-        "leads": leads, "unroutable_skipped": skipped,
+        "leads": leads, "unroutable_skipped": skipped, "unverified_kickoff_skipped": unverified,
     }
 
 
@@ -186,6 +203,7 @@ window, one position per fixture, and the open-position and daily-loss caps.</di
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
 <div class="tile"><b>{len(open_leads)}</b><span>open leads for the bot</span></div>
 <div class="tile"><b>{blob.get('unroutable_skipped', 0)}</b><span>bets the bot cannot route (not published)</span></div>
+<div class="tile"><b>{blob.get('unverified_kickoff_skipped', 0)}</b><span>held back: kickoff not verified by ESPN</span></div>
 </div>
 
 <h2>Pairs</h2>

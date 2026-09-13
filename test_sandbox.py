@@ -2163,7 +2163,7 @@ _pst = {"pairs": {"soccerpredictions|soccer": dict(stage="qa", promoted_at="2026
 def _pq(i, **kw):
     base = dict(id=f"soccerpredictions:KXEPLGAME-26OCT02LEENEW{i}", source="soccerpredictions", sport="soccer",
                 market_id=f"KXEPLGAME-26OCT02LEENEW{i}", venue="kalshi", bet=True, pick="a", price=0.44, edge=None,
-                side_a="Leeds United", side_b="Newcastle", status="open",
+                side_a="Leeds United", side_b="Newcastle", status="open", start_source="espn",
                 start=(_pnow + timedelta(hours=20 + i)).isoformat(), logged="2026-09-30T06:00:00+00:00")
     base.update(kw)
     return base
@@ -2178,6 +2178,7 @@ _pd = {"quotes": [
         start=(_pnow - timedelta(days=1)).isoformat()),   # settled: kept for results
     _pq(8, bet=False),                                                 # no bet
     dict(_pq(9), source="espn_fpi", sport="mlb", venue="polymarket_us"),   # pair not in Production
+    _pq(10, start_source=None),                                        # Kalshi-estimated kickoff
 ]}
 _feed = PR.build_feed(_pd, _pst, now=_pnow)
 eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in QA with ready_at is in Production")
@@ -2185,6 +2186,10 @@ _fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
 eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "7"],
    "published: open routable bets logged since ready, and recent settled ones; nothing else")
 eq(_feed["unroutable_skipped"], 2, "the draw and the unmapped league are held back and counted")
+eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
+eq(sorted(_feed["pairs"]["soccerpredictions|soccer"]),
+   ["promoted_at", "ready_at", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
+   "each pair carries the Sandbox's own record since ready, for the bot to compare with its fills")
 _l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
 eq((_l1["bet"], _l1["home"], _l1["away"], _l1["league"], _l1["status"]),
    ({"kind": "match_result", "side": "home"}, "Leeds United", "Newcastle", "Premier League", "pending"),
