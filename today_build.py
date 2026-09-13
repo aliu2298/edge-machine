@@ -17,8 +17,8 @@ Two things follow from that:
     this board says a rare run predicts nothing beyond the team's own rate, so it must not
     decide the order of a "tonight" page.
   * MODEL-VALUE FLAGS ARE A TEST, NOT A TIP. A fixture is flagged where model.py beats the
-    book's vig-free probability by streaks_track.VALUE_MARGIN — the same pre-registered
-    split Record scores. Until that split has proved itself there, a flag is a hypothesis
+    price by streaks_track.VALUE_MARGIN (streaks_track.is_value: the effective price paid for
+    an exchange quote, the vig-free line for a Bovada one) — the same split Record scores. Until that split has proved itself there, a flag is a hypothesis
     being counted, and the page says so.
 
 THE DAY IS CENTRAL, NOT UTC
@@ -102,6 +102,9 @@ def ct_day(ko):
     return ko.astimezone(CT).date() if ko else None
 
 
+MOVED_DAYS = 4
+
+
 def lead_view(e):
     """One ledger lead as the page shows it: the claim, the price its own market was
     captured at, and — once graded — whether it landed and what it paid."""
@@ -110,6 +113,10 @@ def lead_view(e):
     settled = (e.get("pnl") or {}).get(claim) if claim else None
     status = e.get("status", "pending")
     return {"headline": e["headline"], "status": status, "claim": claim,
+            # Withdrawn before kickoff: shown, tagged, and kept out of the scoreboard —
+            # the Record judges the rules on leads still published when the match began.
+            "withdrawn": bool(e.get("withdrawn_at")),
+            "source": (q.get("venue") or "bovada") if q else None,
             "price": q["price"] if q else None, "fair": q["fair"] if q else None,
             "model": (e.get("model") or {}).get(claim) if q else None,
             "pnl": settled["pnl"] if settled and status in ("hit", "miss") else None,
@@ -130,19 +137,19 @@ def scoreboard(rows):
     leads, all_mk, on_lead, off_lead, flags = [], [], [], [], []
     for r in rows:
         for l in r["leads"]:
-            if l["status"] in ("hit", "miss"):
+            if l["status"] in ("hit", "miss") and not l.get("withdrawn"):
                 leads.append((l["status"] == "hit", l["pnl"]))
         for m in r["markets"]:
             if m.get("hit") is None:
                 continue
             b = (m["hit"], m["pnl"])
             all_mk.append(b)
-            (on_lead if r["leads"] else off_lead).append(b)
+            (on_lead if any(not l.get("withdrawn") for l in r["leads"]) else off_lead).append(b)
             if m["value"]:
                 flags.append(b)
     return [
         {"label": "Leads — their own claim", "key": "leads", **tally(leads)},
-        {"label": "Every market the book priced", "key": "all", **tally(all_mk)},
+        {"label": "Every market priced", "key": "all", **tally(all_mk)},
         {"label": "… on fixtures with a lead", "key": "on", **tally(on_lead)},
         {"label": "… on fixtures without one", "key": "off", **tally(off_lead)},
         {"label": "Model value flags", "key": "flags", **tally(flags)},
@@ -169,17 +176,32 @@ def day_rows(day, fixtures, by_team, shown, rates, league_of, ledger, published,
                           if len(games) >= B.MIN_PLAYED_SHOWN else []}
 
     fx = {}
+    feed_dates = {}                               # (home, away) -> every date ESPN lists it
     for f in fixtures:
         if not f.get("competitive", True) or not f.get("lead_source", True):
             continue
+        feed_dates.setdefault((f["home"], f["away"]), []).append(f["date"])
         if ct_day(B.kickoff_dt(f)) == day:
             fx[(f["date"], f["home"], f["away"])] = dict(f, in_feed=True)
+
+    def moved(e):
+        """ESPN lists this pairing within MOVED_DAYS of the ledger's date, but not ON it:
+        the fixture was rescheduled (often from a placeholder date) and the ledger kept the
+        date it had when the lead was published. That row is a ghost, not a game in play."""
+        try:
+            d0 = datetime.date.fromisoformat(e["date"])
+        except (KeyError, ValueError):
+            return False
+        near = [d for d in feed_dates.get((e["home"], e["away"]), ())
+                if abs((datetime.date.fromisoformat(d) - d0).days) <= MOVED_DAYS]
+        return bool(near) and e["date"] not in near
+
     for src in (book.values(), ledger.values()):
         for e in src:
             if e.get("lead_source") is False:
                 continue
             key = (e["date"], e["home"], e["away"])
-            if key in fx or ct_day(B.kickoff_dt(e)) != day:
+            if key in fx or ct_day(B.kickoff_dt(e)) != day or moved(e):
                 continue
             fx[key] = {"date": e["date"], "home": e["home"], "away": e["away"],
                        "league": e.get("league", "—"), "kickoff": e.get("kickoff"),
@@ -206,9 +228,10 @@ def day_rows(day, fixtures, by_team, shown, rates, league_of, ledger, published,
             if not q:
                 continue
             m = (bk.get("model") or {}).get(mk)
-            flag = m is not None and (m - q["fair"]) >= T.VALUE_MARGIN - 1e-9
+            flag = T.is_value(m, q)
             hit = (bk.get("result") or {}).get(mk) if graded else None
             markets.append({"mk": mk, "price": q["price"], "fair": q["fair"], "model": m,
+                            "source": q.get("venue") or "bovada",
                             "value": flag, "hit": hit,
                             "pnl": (bk.get("pnl") or {}).get(mk) if hit is not None else None})
             if flag:
@@ -231,16 +254,20 @@ def day_rows(day, fixtures, by_team, shown, rates, league_of, ledger, published,
 
 
 def summarize(rows):
-    leads = [l for r in rows for l in r["leads"]]
+    everything = [l for r in rows for l in r["leads"]]
+    leads = [l for l in everything if not l.get("withdrawn")]
     return {
         "fixtures": len(rows),
-        "lead_fixtures": sum(1 for r in rows if r["leads"]),
+        "lead_fixtures": sum(1 for r in rows if any(not l.get("withdrawn") for l in r["leads"])),
         "leads": len(leads),
+        "withdrawn": len(everything) - len(leads),
         "leads_priced": sum(1 for l in leads if l["price"] is not None),
         "priced": sum(1 for r in rows if r["markets"]),
         "live": sum(1 for r in rows if r["state"] == "live"),
-        "value_non_lead": sum(len(r["value"]) for r in rows if not r["leads"]),
-        "value_lead": sum(len(r["value"]) for r in rows if r["leads"]),
+        "value_non_lead": sum(len(r["value"]) for r in rows
+                              if not any(not l.get("withdrawn") for l in r["leads"])),
+        "value_lead": sum(len(r["value"]) for r in rows
+                          if any(not l.get("withdrawn") for l in r["leads"])),
         "board": scoreboard(rows),
     }
 
@@ -284,7 +311,7 @@ def page_html(data, now):
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Today</title>
-<meta name="description" content="Every tracked fixture kicking off today — the leads' control group, with the book's line and the model on every one.">
+<meta name="description" content="Every tracked fixture kicking off today — the leads' control group, with the market price and the model on every one.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -365,6 +392,7 @@ white-space:nowrap}}
 .mk{{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;border-radius:999px;
 padding:2px 9px;border:1px solid var(--bd);color:var(--mut);white-space:nowrap}}
 .mk b{{color:var(--fg)}}
+.mk .src{{font-size:9.5px;font-weight:600;color:var(--mut)}}
 .mk.val{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
 .mk.val b{{color:var(--pos)}}
 .mk.hit{{border-color:#3fb97055}} .mk.miss{{opacity:.55}}
@@ -397,15 +425,18 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
 
 <div class="note">The whole day, in kickoff order: <b>what the rules picked, what they
-passed over, and what the book and the model say about all of it.</b> A fixture with a lead
+passed over, and what the market and the model say about all of it.</b> A fixture with a lead
 carries the lead's claim at the price it was captured; a fixture without one says why not.
-Every fixture inside 24h carries the book's line on five markets with the book's vig-free
-probability and the model's estimate beside it. A market is marked <b>value</b> where the
-model beats the book by 5pp or more — that is the pre-registered split the Record page
-scores, <b>a hypothesis being counted, not a tip</b>: until it has proved itself there,
-a flag means only that the model and the book disagree. Once a game is over every lead
-and every market is marked <b>hit</b> or <b>miss</b> with what it paid at a flat 1 unit, and
-the scoreboard sets the day's leads beside everything the book priced.{
+Every fixture inside 24h carries a price on up to five markets, labelled with where it came
+from — <b>Kalshi</b> or <b>Polymarket</b> (the ask plus taker fee, with the book's midpoint
+as its probability) since 2026-09-13, <b>Bovada</b> (its line, with the margin removed)
+before — and the model's estimate beside it. A market is marked <b>value</b> where the model
+beats the price by 5pp or more: against the price actually paid for an exchange quote, against
+the margin-free line for a Bovada one. That is the split the Record page scores, <b>a
+hypothesis being counted, not a tip</b>. A lead the board <b>withdrew</b> before kickoff is
+shown and tagged but left out of the scoreboard, as it is on Record. Once a game is over every
+lead and every market is marked <b>hit</b> or <b>miss</b> with what it paid at a flat 1 unit,
+and the scoreboard sets the day's leads beside everything that was priced.{
   f' <b>{n_tom} fixture{"" if n_tom == 1 else "s"} tomorrow.</b>' if n_tom else ''}</div>
 <div class="tiles" id="tiles"></div>
 <div class="board" id="board"></div>
@@ -481,11 +512,14 @@ function res(status, pnl, note) {{
   return `<span class="res ${{status}}"${{note ? ` title="${{esc(note)}}"` : ''}}>${{esc(txt)}}</span>`;
 }}
 function pc(x) {{ return x == null ? '—' : Math.round(x*100) + '%'; }}
+const SRC = {{kalshi: 'Kalshi', polymarket_us: 'Polymarket', bovada: 'Bovada'}};
+function active(m) {{ return m.leads.filter(l => !l.withdrawn); }}
 function leadStrip(m) {{
   if (m.leads.length) {{
-    return m.leads.map(l => `<div class="strip lead"><span class="lbl">Lead</span>
-      <span class="hl">${{esc(l.headline)}}</span>
-      ${{l.price ? `<span class="px">@ ${{l.price.toFixed(2)}} · book ${{pc(l.fair)}}${{
+    return m.leads.map(l => `<div class="strip${{l.withdrawn ? '' : ' lead'}}"><span class="lbl">${{l.withdrawn ? 'Withdrawn' : 'Lead'}}</span>
+      <span class="hl"${{l.withdrawn ? ' style="opacity:.6"' : ''}}>${{esc(l.headline)}}</span>
+      ${{l.withdrawn ? '<span class="why">dropped by the board before kickoff · not scored</span>' : ''}}
+      ${{l.price ? `<span class="px">@ ${{l.price.toFixed(2)}} ${{SRC[l.source] || ''}} · market ${{pc(l.fair)}}${{
         l.model != null ? ' · model ' + pc(l.model) : ''}}</span>` :
         `<span class="px">${{l.claim ? (m.state === 'upcoming' ? 'not priced yet' : 'never priced') : 'no priced market for this claim'}}</span>`}}
       ${{res(l.status, l.pnl, l.note)}}
@@ -495,18 +529,18 @@ function leadStrip(m) {{
     <span class="why">${{esc(m.why_not.join(' · ') || '—')}}</span></div>`;
 }}
 function bookStrip(m) {{
-  if (!m.markets.length) return `<div class="strip"><span class="lbl">Book</span>
+  if (!m.markets.length) return `<div class="strip"><span class="lbl">Market</span>
     <span class="why">${{m.state === 'upcoming' ? 'not priced yet — fixtures are priced inside 24h of kickoff' : 'not priced before kickoff'}}</span></div>`;
   const [home, away] = m.match.split(' v ');
   const chips = m.markets.map(k => {{
     const name = SHORT[k.mk].replace('{{home}}', home).replace('{{away}}', away);
     const st = k.hit == null ? '' : (k.hit ? ' hit' : ' miss');
-    return `<span class="mk${{k.value ? ' val' : ''}}${{st}}" title="price · book's vig-free probability · model">${{
-      esc(name)}} <b>${{k.price.toFixed(2)}}</b> · book ${{pc(k.fair)}}${{
+    return `<span class="mk${{k.value ? ' val' : ''}}${{st}}" title="price (${{SRC[k.source] || k.source}}) · market probability · model">${{
+      esc(name)}} <b>${{k.price.toFixed(2)}}</b> <span class="src">${{SRC[k.source] || ''}}</span> · market ${{pc(k.fair)}}${{
       k.model != null ? ' · model ' + pc(k.model) : ''}}${{k.value ? ' · value' : ''}}${{
       k.hit == null ? '' : res(k.hit ? 'hit' : 'miss', k.pnl)}}</span>`;
   }}).join('');
-  return `<div class="strip"><span class="lbl">Book</span>${{chips}}</div>`;
+  return `<div class="strip"><span class="lbl">Market</span>${{chips}}</div>`;
 }}
 function liveText(iso) {{
   const ms = new Date() - new Date(iso);
@@ -516,10 +550,11 @@ function tiles(s) {{
   const t = [[s.fixtures, day === 'today' ? 'fixtures today' : 'fixtures tomorrow'],
              [s.lead_fixtures, 'carry a lead'],
              [`${{s.leads_priced}}/${{s.leads}}`, 'leads priced'],
-             [s.priced, 'priced by the book'],
+             [s.priced, 'fixtures priced'],
              [s.value_non_lead, 'value flags on non-leads'],
              [s.value_lead, 'value flags on leads']];
   if (s.live) t.splice(1, 0, [s.live, 'in play']);
+  if (s.withdrawn) t.push([s.withdrawn, 'withdrawn leads (not scored)']);
   return t.map(([b, l]) => `<div class="tile"><b>${{esc(b)}}</b><span>${{esc(l)}}</span></div>`).join('');
 }}
 function board(rows) {{
@@ -539,7 +574,7 @@ function row(m) {{
   const [cls, txt] = m.played ? ['ft', 'FT ' + (m.final || '')]
     : m.state === 'live' ? ['live', m.final ? 'FT ' + m.final : liveText(m.kickoff)]
     : countdown(m.kickoff);
-  return `<div class="row${{m.leads.length ? ' islead' : ''}}">
+  return `<div class="row${{active(m).length ? ' islead' : ''}}">
     <div class="hd"><span class="mt">${{esc(m.match)}}</span>
       <span class="cd ${{cls}}" ${{m.state === 'upcoming' ? `data-ko="${{esc(m.kickoff||'')}}"` : ''}}>${{
         esc(txt)}}</span>
@@ -550,9 +585,9 @@ function row(m) {{
   </div>`;
 }}
 function keep(m) {{
-  if (view === 'lead') return m.leads.length > 0;
-  if (view === 'rest') return m.leads.length === 0;
-  if (view === 'value') return m.leads.length === 0 && m.value.length > 0;
+  if (view === 'lead') return active(m).length > 0;
+  if (view === 'rest') return active(m).length === 0;
+  if (view === 'value') return active(m).length === 0 && m.value.length > 0;
   return true;
 }}
 function render() {{

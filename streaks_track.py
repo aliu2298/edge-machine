@@ -78,6 +78,26 @@ MAX_PRICE_FETCHES = 60
 VALUE_MARGIN = 0.05
 
 
+def value_edge(model_p, q):
+    """How far the model beats the price, for the pre-registered VALUE_MARGIN split.
+
+    The yardstick depends on where the price came from, and the change is dated:
+      * Bovada quotes (until 2026-09-13, no `venue`): the book's vig-free probability —
+        the split as it was pre-registered on 2026-09-12, left exactly as it was.
+      * Exchange quotes (Kalshi / Polymarket US, carry `venue`): the EFFECTIVE price paid,
+        1 / price = ask + taker fee. An exchange's midpoint is not a price anyone can buy
+        at; a flag against it could fire on a market that loses at the real price.
+    """
+    if q.get("venue"):
+        return model_p - 1.0 / q["price"]
+    return model_p - q["fair"]
+
+
+def is_value(model_p, q):
+    # 1e-9: 0.70 - 0.65 is 0.04999... in floating point and must still count
+    return model_p is not None and value_edge(model_p, q) >= VALUE_MARGIN - 1e-9
+
+
 # ---------------------------------------------------------------- bet evaluation
 def settle_bet(bet, home, away, hg, ag):
     """True/False for a bet against a final score, or None if it cannot be judged.
@@ -423,7 +443,7 @@ def price_report(blob):
 
 def model_report(blob):
     """Model against book on the SAME settled leads: Brier score each, and the
-    pre-registered value split (model beats the book's fair probability by VALUE_MARGIN)
+    pre-registered value split (model beats the price by VALUE_MARGIN — see value_edge)
     with its hit rate and flat-stake ROI against everything else."""
     settled = [e for e in blob["leads"].values()
                if e.get("prices") and e.get("pnl") and e.get("model")
@@ -439,9 +459,7 @@ def model_report(blob):
         pb = [e["prices"][mk]["fair"] for e in es]
         b_model = sum((p - y) ** 2 for p, y in zip(pm, ys)) / n
         b_book = sum((p - y) ** 2 for p, y in zip(pb, ys)) / n
-        # 1e-9: 0.70 - 0.65 is 0.04999... in floating point and must still count
-        value = [e for e in es
-                 if e["model"][mk] - e["prices"][mk]["fair"] >= VALUE_MARGIN - 1e-9]
+        value = [e for e in es if is_value(e["model"][mk], e["prices"][mk])]
         rest = [e for e in es if e not in value]
 
         def split(group):

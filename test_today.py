@@ -147,6 +147,54 @@ check("form before excludes the day itself",
       len(TB.form_before(by_team, "H", "2026-09-12")), 6)
 check("form after includes it", len(TB.form_before(by_team, "H", "2026-09-13")), 7)
 
+print("rescheduled fixtures are not ghosts; withdrawn leads are not scored")
+import streaks_track as T
+# ESPN first listed C v D on the 12th (a placeholder), then moved it to the 14th. The ledger
+# still holds a lead under the old date; the feed only knows the new one.
+_moved_ledger = dict(ledger)
+_moved_ledger["2026-09-12|C|D|Old placeholder lead"] = {
+    "date": "2026-09-12", "home": "C", "away": "D", "headline": "Old placeholder lead",
+    "kickoff": ko(evening - datetime.timedelta(hours=2)), "league": "L1", "status": "pending",
+    "bet": {"kind": "total_gte", "n": 2}}
+_fx_moved = fixtures + [sched(datetime.datetime(2026, 9, 14, 17, 0, tzinfo=UTC), "C", "D")]
+_d2 = TB.gather(now=NOW, fixtures=_fx_moved, ledger=_moved_ledger, published=[], book={})
+check("a ledger row for a fixture ESPN has moved is not shown as in play",
+      [r["match"] for r in _d2["today"]["rows"] if not r["in_feed"]], [])
+_d3 = TB.gather(now=NOW, fixtures=fixtures, ledger=ledger, published=published, book=book)
+check("a game genuinely missing from the feed is still filled in",
+      [r["match"] for r in _d3["today"]["rows"] if not r["in_feed"]], ["C v D"])
+
+_wd_ledger = dict(ledger)
+_wd_ledger["2026-09-12|H|A|H to score 2+"] = dict(ledger["2026-09-12|H|A|H to score 2+"],
+                                                  withdrawn_at="2026-09-12T06:00:00+00:00")
+_d4 = TB.gather(now=NOW, fixtures=fixtures, ledger=_wd_ledger, published=[], book=book)
+_ha = {r["match"]: r for r in _d4["today"]["rows"]}["H v A"]
+check("a withdrawn lead is still shown, tagged",
+      sorted((l["headline"], l["withdrawn"]) for l in _ha["leads"]),
+      [("H to score", False), ("H to score 2+", True)])
+_b4 = {r["key"]: r for r in _d4["today"]["summary"]["board"]}
+check("but not scored: the leads row counts only the lead still published at kickoff",
+      (_b4["leads"]["n"], _b4["leads"]["priced"]), (1, 0))
+check("and the summary counts it apart", (_d4["today"]["summary"]["leads"], _d4["today"]["summary"]["withdrawn"]), (2, 1))
+
+print("value flags against the price paid")
+_venue_q = {"price": round(1 / 0.62, 3), "fair": 0.60, "venue": "kalshi"}
+_bov_q = {"price": 1.67, "fair": 0.57}
+check("exchange quote: model 0.66 v midpoint 0.60 is +6pp, but v 0.62 paid only +4pp -> not value",
+      T.is_value(0.66, _venue_q), False)
+check("exchange quote: model 0.68 v 0.62 paid -> value", T.is_value(0.68, _venue_q), True)
+check("Bovada quote keeps the pre-registered rule: model 0.62 v fair 0.57 -> value", T.is_value(0.62, _bov_q), True)
+check("no model, no flag", T.is_value(None, _venue_q), False)
+_vbook = {k: dict(v) for k, v in book.items()}
+_vbook["2026-09-12|H|A"]["prices"] = {"over15": {"price": round(1 / 0.80, 3), "fair": 0.78, "venue": "polymarket_us"}}
+_vbook["2026-09-12|H|A"]["model"] = {"over15": 0.84}
+_vbook["2026-09-12|H|A"]["result"] = {"over15": True}
+_vbook["2026-09-12|H|A"]["pnl"] = {"over15": 0.25}
+_d5 = TB.gather(now=NOW, fixtures=fixtures, ledger=ledger, published=[], book=_vbook)
+_m5 = {r["match"]: r for r in _d5["today"]["rows"]}["H v A"]["markets"][0]
+check("a venue chip carries its source", _m5["source"], "polymarket_us")
+check("and is not flagged when the model clears the midpoint but not the price", _m5["value"], False)
+
 print("page renders")
 html = TB.page_html(data, "now")
 check("day tabs present", 'data-dy="tomorrow"' in html, True)

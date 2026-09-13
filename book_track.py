@@ -177,6 +177,7 @@ def _obs(blob):
         for mk, hit in r["result"].items():
             out.append({"row": r, "mk": mk, "hit": bool(hit),
                         "fair": r["prices"][mk]["fair"], "price": r["prices"][mk]["price"],
+                        "q": r["prices"][mk],
                         "pnl": r["pnl"][mk], "model": (r.get("model") or {}).get(mk)})
     return out
 
@@ -248,8 +249,9 @@ def report(blob):
         if a:
             bands.append(dict(a, lo=lo, hi=hi))
     modelled = [o for o in obs if o["model"] is not None]
-    value = _agg([o for o in modelled if o["model"] - o["fair"] >= VALUE_MARGIN - 1e-9])
-    rest = _agg([o for o in modelled if o["model"] - o["fair"] < VALUE_MARGIN - 1e-9])
+    import streaks_track as ST
+    value = _agg([o for o in modelled if ST.is_value(o["model"], o["q"])])
+    rest = _agg([o for o in modelled if not ST.is_value(o["model"], o["q"])])
     teams = team_index(blob)
     ranked = sorted(teams.items(), key=lambda kv: -kv[1]["z"])
     return {

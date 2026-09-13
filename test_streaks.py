@@ -610,6 +610,21 @@ blob7, _ = T.grade([played], blob7)
 check("a lead graded without a price has no pnl", "pnl" in list(blob7["leads"].values())[0], False)
 check("and does not count as settled at a price", T.price_report(blob7)["graded"], 0)
 
+print("\n== value split: yardstick depends on the price's source ==")
+_L2 = {"leads": {
+    "v1": {"status": "hit", "bet": {"kind": "total_gte", "n": 2},
+           "prices": {"over15": {"price": round(1 / 0.80, 3), "fair": 0.78, "venue": "kalshi"}},
+           "model": {"over15": 0.84}, "pnl": {"over15": {"hit": True, "pnl": 0.25}}},
+    "v2": {"status": "hit", "bet": {"kind": "total_gte", "n": 2},
+           "prices": {"over15": {"price": round(1 / 0.80, 3), "fair": 0.78, "venue": "kalshi"}},
+           "model": {"over15": 0.86}, "pnl": {"over15": {"hit": True, "pnl": 0.25}}},
+    "b1": {"status": "hit", "bet": {"kind": "total_gte", "n": 2},
+           "prices": {"over15": {"price": 1.25, "fair": 0.78}},
+           "model": {"over15": 0.84}, "pnl": {"over15": {"hit": True, "pnl": 0.25}}}}}
+_r2 = T.model_report(_L2)["rows"][0]
+check("exchange: 0.84 v 0.80 paid is not value; 0.86 is. Bovada: 0.84 v 0.78 fair is value",
+      (_r2["value"]["n"], _r2["rest"]["n"]), (2, 1))
+
 print("\n== venue book: exchange prices (Kalshi, Polymarket US) ==")
 import venue_book as VB
 for a, b in [("man city", "Manchester City"), ("LA Galaxy", "Los Angeles Galaxy"),
