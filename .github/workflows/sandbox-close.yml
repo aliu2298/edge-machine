@@ -45,15 +45,13 @@ jobs:
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/sandbox_closes/close.json
+          git diff --cached --quiet && { echo "no changes"; exit 0; }
+          git commit -m "Sandbox closing prices ($(date -u +%Y-%m-%d\ %H:%MZ))"
+          # Commit once; retry the push only (re-adding after a rebase finds nothing staged).
           for attempt in 1 2 3; do
-            git add data/sandbox_closes/close.json
-            if git diff --cached --quiet; then
-              echo "no changes"
-              break
-            fi
-            git commit -m "Sandbox closing prices ($(date -u +%Y-%m-%d\ %H:%MZ))"
             if git push origin main; then
-              break
+              exit 0
             fi
             # Only this workflow writes this file, so rebasing onto whatever the boards
             # or the tracker pushed meanwhile cannot conflict.

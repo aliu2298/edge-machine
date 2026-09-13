@@ -90,16 +90,20 @@ jobs:
 
           PUBLISHED="public_site/sandbox.html public_site/qa.html data/sandbox_ledger.json data/stages.json data/sandbox_archive"
 
+          git add $PUBLISHED
+          if git diff --cached --quiet; then
+            echo "no changes — nothing to commit"
+            exit 0
+          fi
+          git commit -m "Sandbox tracker ($(date -u +%Y-%m-%d\ %H:%MZ))"
+          # Commit ONCE, then retry only the push. The loop used to re-run `git add` after a
+          # rebase, find nothing new staged (the commit already held it), print "no changes"
+          # and stop — so a run that lost the push race to the closing-price job reported
+          # success and its ledger update never reached main (2026-09-13 21:26).
           for attempt in 1 2 3; do
-            git add $PUBLISHED
-            if git diff --cached --quiet; then
-              echo "no changes — nothing to deploy"
-              break
-            fi
-            git commit -m "Sandbox tracker ($(date -u +%Y-%m-%d\ %H:%MZ))"
             if git push origin main; then
               echo "published on attempt $attempt"
-              break
+              exit 0
             fi
 
             # A rejection here means refresh-boards published while this run was working.
@@ -111,6 +115,8 @@ jobs:
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
             git pull --rebase origin main
           done
+          echo "::error::could not push the ledger after 3 attempts"
+          exit 1
 
       # Publishes the whole site, so it carries the boards along with it. Safe because
       # the shared concurrency group means refresh-boards cannot be mid-flight, and the
