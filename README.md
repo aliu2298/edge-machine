@@ -464,6 +464,17 @@ promoted. Settled bets are never lost to pruning: `prune()` copies each settled 
 `data/sandbox_archive/YYYY-MM.json` (by settle month) before rolling the row up, and every
 judgement reads the ledger and the archive together.
 
+**QA counts only what the bot can trade (2026-09-13).** QA entry, readiness and demotion read
+only bets on Polymarket US, Kalshi and Kalshi yes/no (`TRADEABLE_VENUES`); polymarket.com bets
+stay on the Sandbox page and in its own stamp. Production-ready also requires every fresh bet to
+have a route in the trading bot (`bot_route`: today a soccer side, home or away, on Kalshi or
+Polymarket US — no draws, no other sport), updated only when the bot learns a market.
+
+**Closing prices from the Mac.** GitHub throttles the frequent schedules, so
+`scripts/local_closes.sh` runs `sandbox_close.py --writer mac` every 15 minutes under launchd
+(`scripts/com.aliu.edge-machine-closes.plist`) from a dedicated clone at `~/edge-machine-closes`,
+committing only `data/sandbox_closes/mac.json`. Log: `/tmp/edge-machine-closes.log`.
+
 **Closing prices.** Every run refreshes, on each open bet, the same venue's current price for
 the side it backed, while that book is tradeable and the contest has not started — so the
 value left behind is the last snapshot before the start. Closing-line value (close minus the

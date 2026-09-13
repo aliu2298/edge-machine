@@ -716,7 +716,7 @@ def qa_page(d, st, style):
     qa_rows, n_ready = [], 0
     for key, pair in sorted(in_qa.items(), key=lambda kv: kv[1]["promoted_at"]):
         name, sport = key.split("|")
-        a = T.assess(d, name, sport, since=pair["promoted_at"])
+        a = T.assess(d, name, sport, since=pair["promoted_at"], venues=T.TRADEABLE_VENUES)
         gate = T.ready_gate(a)
         passed, cells = _ticks(gate)
         ready = passed == len(gate)
@@ -757,7 +757,7 @@ def qa_page(d, st, style):
             pair = pairs.get(key) or {}
             if pair.get("stage") == "qa":
                 continue
-            a = T.assess(d, name, sport, since=pair.get("since"))
+            a = T.assess(d, name, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
             if not a["n"]:
                 continue
             gate = T.qa_entry(a)
@@ -803,7 +803,10 @@ def qa_page(d, st, style):
 <div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
-does it survive the <b>taker fee</b> a follower would pay. The trading bot never reads this page.</div>
+does it survive the <b>taker fee</b> a follower would pay. Only bets on exchanges the trading
+bot can use count here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
+(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair. The
+trading bot never reads this page.</div>
 
 <div class="tiles">
 <div class="tile"><b>{len(in_qa)}</b><span>pairs in QA</span></div>
@@ -819,7 +822,9 @@ does it survive the <b>taker fee</b> a follower would pay. The trading bot never
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
 price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
 {T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US
-0.06·p·(1−p), Kalshi 0.07). The gate is checked every run, so a pair is marked ready only once
+0.06·p·(1−p), Kalshi 0.07), and <b>the bot must be able to place every bet</b> — today that is
+a soccer side (home or away) on Kalshi or Polymarket US; no draws and no other sport, until the
+bot learns them. The gate is checked every run, so a pair is marked ready only once
 it has <b>held for {T.READY_HOLD_DAYS} days</b>, and the mark is withdrawn the first run it fails.
 A pair goes <b>back to the Sandbox</b> after {T.QA_DEMOTE['min_bets']} fresh bets if it is behind the price,
 not beating every blind rule, or behind the closing price — or, at any count, after

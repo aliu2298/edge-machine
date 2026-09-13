@@ -1622,7 +1622,7 @@ print("\nstages: Sandbox -> QA")
 _base = datetime(2026, 9, 1, 15, tzinfo=timezone.utc)
 
 
-def _sb(i, won, pick="a", price=0.40, week=0, source="covers", sport="mlb", logged=None, venue="polymarket"):
+def _sb(i, won, pick="a", price=0.40, week=0, source="covers", sport="mlb", logged=None, venue="polymarket_us"):
     st = _base + timedelta(weeks=week, hours=i)
     return dict(source=source, sport=sport, bet=True, status="won" if won else "lost", pick=pick,
                 price=price, result=pick if won else ("b" if pick == "a" else "a"), venue=venue,
@@ -1645,7 +1645,7 @@ def _chooser(n, week_span, source="covers", sport="mlb", start_i=0, logged=None,
 
 
 _old_sources = S.SOURCES
-S.SOURCES = {"covers": dict(_old_sources["covers"], sports=["mlb", "nfl"]),
+S.SOURCES = {"covers": dict(_old_sources["covers"], sports=["mlb", "nfl", "soccer"]),
              "polymarket": _old_sources["polymarket"]}
 try:
     eq(T.QA_ENTRY["min_bets"] < T.APPROVAL["min_bets"] and T.QA_ENTRY["z_min"] < T.APPROVAL["z_min"], True,
@@ -1683,14 +1683,15 @@ try:
     eq(len(st["events"]), 2, "every change is in the event log")
 
     # Production-ready: the stamp on fresh data + positive CLV + positive after fees.
-    st3 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    fresh = _chooser(60, 6)
+    st3 = {"pairs": {"covers|soccer": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    # Soccer on Kalshi, home or away: a record the bot can actually trade.
+    fresh = [dict(q, sport="soccer", venue="kalshi") for q in _chooser(60, 6)]
     for q in fresh:
         q["close_price"] = q["price"] + 0.02
         q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
     ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t, verbose=False)
     eq(ch, [], "passing the ready gate once is not ready: it must hold")
-    eq(st3["pairs"]["covers|mlb"].get("ready_since"), _t.isoformat(), "the hold starts the first run it passes")
+    eq(st3["pairs"]["covers|soccer"].get("ready_since"), _t.isoformat(), "the hold starts the first run it passes")
     eq(T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=6), verbose=False), [],
        "six days of holding is not yet seven")
     ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=7), verbose=False)
@@ -1703,14 +1704,40 @@ try:
     ch = T.evaluate_stages({"quotes": _thin}, st3, now=_t + timedelta(days=9), verbose=False)
     eq([c["to"] for c in ch], ["unready"], "with only 29 closing prices the gate fails, and ready is withdrawn")
     ok("closing price" in ch[0]["reason"], "naming the criterion it lost")
-    ok("ready_at" not in st3["pairs"]["covers|mlb"] and "ready_since" not in st3["pairs"]["covers|mlb"],
+    ok("ready_at" not in st3["pairs"]["covers|soccer"] and "ready_since" not in st3["pairs"]["covers|soccer"],
        "the hold starts again from nothing")
     for q in fresh:
         q["close_price"] = q["price"] - 0.02
-    st4 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    st4 = {"pairs": {"covers|soccer": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
     ch = T.evaluate_stages({"quotes": fresh}, st4, now=_t, verbose=False)
     eq([c["to"] for c in ch], ["sandbox"], "the same record buying above the closing price is demoted, not ready")
     ok("closing price" in ch[0]["reason"], "because it is behind the close")
+
+    # The bot cannot trade it: the same fresh MLB record clears everything else and is not ready.
+    _mlb = [dict(q, sport="mlb", venue="polymarket_us") for q in _chooser(60, 6)]
+    for q in _mlb:
+        q["close_price"] = q["price"] + 0.02
+        q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
+    _stm = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    T.evaluate_stages({"quotes": _mlb}, _stm, now=_t, verbose=False)
+    ch = T.evaluate_stages({"quotes": _mlb}, _stm, now=_t + timedelta(days=8), verbose=False)
+    eq(ch, [], "an MLB record the bot has no route for never becomes ready")
+    _gate = dict((k, (p, det)) for k, _l, p, det in T.ready_gate(T.assess({"quotes": _mlb}, "covers", "mlb",
+                                                                           venues=T.TRADEABLE_VENUES)))
+    eq(_gate["route"][0], False, "because the route criterion fails")
+    ok("0 of 60" in _gate["route"][1], "and says how many bets had a route")
+    _draws = [dict(q, pick="draw") if i % 10 == 0 else q for i, q in enumerate(fresh)]
+    eq(T.bot_route(_draws[0]), False, "a soccer draw has no route: the bot refuses draws")
+    eq(T.bot_route(_draws[1]), True, "a soccer side on Kalshi does")
+
+    # polymarket.com bets never count toward QA.
+    _com = [dict(q, venue="polymarket") for q in _chooser(32, 3)]
+    eq(T.evaluate_stages({"quotes": _com}, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
+       "a record logged on polymarket.com, which the bot cannot trade, is not promoted")
+    eq(T.assess({"quotes": _com}, "covers", "mlb")["n"], 32,
+       "though the Sandbox's own view still counts it")
+
+
 
     # Demotion also covers the blind rules and a pair that stops betting.
     st5 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}

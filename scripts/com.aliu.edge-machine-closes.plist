@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Sandbox closing prices from this Mac, every 15 minutes. Runs scripts/local_closes.sh from a
+  dedicated clone at ~/edge-machine-closes (never the working copy).
+
+  Install (once):
+    git clone https://github.com/aliu2298/edge-machine.git ~/edge-machine-closes
+    cp ~/edge-machine-closes/scripts/com.aliu.edge-machine-closes.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.aliu.edge-machine-closes.plist
+  Stop:
+    launchctl bootout gui/$(id -u)/com.aliu.edge-machine-closes
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.aliu.edge-machine-closes</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>exec "$HOME/edge-machine-closes/scripts/local_closes.sh"</string>
+  </array>
+  <key>StartInterval</key><integer>900</integer>
+  <key>RunAtLoad</key><true/>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>StandardOutPath</key><string>/tmp/edge-machine-closes.log</string>
+  <key>StandardErrorPath</key><string>/tmp/edge-machine-closes.log</string>
+</dict>
+</plist>

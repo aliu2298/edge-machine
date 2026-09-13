@@ -943,8 +943,28 @@ def pnl_after_fee(q):
     return round(STAKE * (1.0 / (p + fee) - 1.0), 2) if q["status"] == "won" else -STAKE
 
 
-def assess(d, name, sport=None, since=None):
+# ---- QA judges only what the bot could have traded (2026-09-13) ----------------------------
+# The Sandbox's non-soccer venue was polymarket.com until 2026-09-13, an exchange the trading
+# bot cannot use. QA entry, readiness and demotion count only bets on these venues; the .com
+# record stays on the Sandbox page (and in the Sandbox's own stamp) but never moves a pair.
+TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary")
+
+
+def bot_route(q):
+    """Could the polymarket-bot trade this bet as it stands today? Mirrors the bot's mapping
+    (bot/mapping.py, bot/kalshi.py) as of 2026-09-13: soccer only — a named side's win (home
+    or away) on Kalshi or Polymarket US. No draw contract (the bot refuses draws), and no
+    tennis, MLB, NFL, cricket, table tennis, fights or yes/no markets. Update this with the
+    bot, never ahead of it: a "production-ready" pair the bot cannot trade is a label, not a
+    route."""
+    return (q.get("sport") == "soccer" and q.get("pick") in ("a", "b")
+            and (q.get("venue") or "polymarket") in ("kalshi", "polymarket_us"))
+
+
+def assess(d, name, sport=None, since=None, venues=None):
     """Judge one source (optionally in one sport) against APPROVAL.
+
+    `venues`: count only bets on these venues (QA passes TRADEABLE_VENUES).
 
     Returns dict(status, criteria=[(key, label, passed, detail)], and the metrics).
     status: "unproven" under READ_FLOOR settled bets; "approved" when every criterion
@@ -953,7 +973,8 @@ def assess(d, name, sport=None, since=None):
     bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
                    and q["status"] in ("won", "lost")
                    and (sport is None or q["sport"] == sport)
-                   and (since is None or q["logged"] >= since)),
+                   and (since is None or q["logged"] >= since)
+                   and (venues is None or (q.get("venue") or "polymarket") in venues)),
                   key=lambda q: q["start"])
     n = len(bets)
     won = sum(1 for q in bets if q["status"] == "won")
@@ -1030,6 +1051,7 @@ def assess(d, name, sport=None, since=None):
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
+                routed=sum(1 for q in bets if bot_route(q)),
                 clv_beat=(sum(1 for c in clv if c > 0) / len(clv)) if clv else None)
 
 
@@ -1063,6 +1085,11 @@ def ready_gate(a):
          clv_sample(a) and a["clv"] > 0,
          (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} of {a['n']} bets, {a['clv_beat']:.0%} beat the close"
           if a["clv"] is not None else "no closing prices yet")),
+        ("route", "the trading bot can place every one of these bets",
+         a["n"] > 0 and a.get("routed", 0) == a["n"],
+         (f"{a.get('routed', 0)} of {a['n']} bets are a market the bot trades"
+          + ("" if a.get("routed", 0) == a["n"] else " — see sandbox_track.bot_route"))
+         if a["n"] else "—"),
         ("fees", "profitable after the taker fee",
          a["roi_fee"] is not None and a["roi_fee"] > 0,
          f"{a['roi_fee']*100:+.1f}% after fees" if a["roi_fee"] is not None else "—"),
@@ -1092,6 +1119,7 @@ def _last_logged(d, name, sport, since):
     """Latest `logged` of any bet (open or settled) for the pair since `since`, or None."""
     ts = [q["logged"] for q in all_bets(d)
           if q["source"] == name and q["sport"] == sport and q.get("bet")
+          and (q.get("venue") or "polymarket") in TRADEABLE_VENUES
           and q["status"] != "void" and q["logged"] >= since]
     return max(ts) if ts else None
 
@@ -1131,12 +1159,12 @@ def evaluate_stages(d, st, now=None, verbose=True):
             key = f"{name}|{sport}"
             pair = st["pairs"].get(key) or dict(stage="sandbox", since=None)
             if pair["stage"] == "sandbox":
-                a = assess(d, name, sport, since=pair.get("since"))
+                a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
                 if a["n"] and all(p for _k, _l, p, _d in qa_entry(a)):
                     pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a))
                     changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a)))
             elif pair["stage"] == "qa":
-                a = assess(d, name, sport, since=pair["promoted_at"])
+                a = assess(d, name, sport, since=pair["promoted_at"], venues=TRADEABLE_VENUES)
                 why = demote_reason(d, name, sport, pair, a, now)
                 if why:
                     pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
