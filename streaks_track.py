@@ -136,8 +136,18 @@ def save(blob):
         json.dump(blob, f, indent=1, sort_keys=True)
 
 
-def record(leads, blob=None):
+def record(leads, blob=None, now=None):
     """Log leads not seen before, and stamp `last_seen` on every lead published today.
+
+    Added 2026-09-13 (all additive — the bot reads this file):
+      * `last_seen_at` is the exact build time, and the file's top-level `board_built_at`
+        is that same stamp. A lead is on the board NOW only if its `last_seen_at` equals
+        `board_built_at`; the date alone kept a withdrawn lead looking current for a day.
+      * `withdrawn_at` is set on a pending lead that this build no longer publishes while its
+        fixture is still ahead — its run broke, or it fell outside the horizon — and cleared
+        if it comes back. Frozen at kickoff, so after grading it says whether the lead was
+        still the board's claim when the match began. The record judges the rules on the
+        leads that were (see report / price_report); withdrawn ones are counted apart.
 
     The CLAIM is still written once and never revised — the runs, the base rate, the
     strength and the status are the snapshot as it stood at publish time, and rewriting
@@ -154,14 +164,23 @@ def record(leads, blob=None):
     """
     blob = blob if blob is not None else load()
     added = 0
-    today = utc_today().isoformat()
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    stamp = now.replace(microsecond=0).isoformat()
+    today = now.date().isoformat()
+    blob["board_built_at"] = stamp
+    published = set()
     for l in leads:
         lid = lead_id(l)
+        published.add(lid)
         if lid in blob["leads"]:
-            blob["leads"][lid]["last_seen"] = today      # still on the board
+            e = blob["leads"][lid]
+            e["last_seen"] = today      # still on the board
+            e["last_seen_at"] = stamp
+            e.pop("withdrawn_at", None)
             continue
         blob["leads"][lid] = {
             "last_seen": today,
+            "last_seen_at": stamp,
             "id": lid,
             "first_seen": utc_today().isoformat(),
             "date": l["date"], "kickoff": l.get("kickoff"), "league": l["league"],
@@ -173,6 +192,12 @@ def record(leads, blob=None):
             "status": "pending",
         }
         added += 1
+    for lid, e in blob["leads"].items():
+        if lid in published or e.get("status") != "pending" or e.get("withdrawn_at"):
+            continue
+        ko = _kickoff(e)
+        if ko is not None and ko > now:
+            e["withdrawn_at"] = stamp
     return blob, added
 
 
@@ -348,7 +373,8 @@ def price_report(blob):
     probability, and flat-stake ROI. Only leads that were priced BEFORE kickoff and have
     since settled count; a lead graded before pricing existed is simply absent."""
     settled = [e for e in blob["leads"].values()
-               if e.get("prices") and e.get("pnl") and e["status"] in ("hit", "miss")]
+               if e.get("prices") and e.get("pnl") and e["status"] in ("hit", "miss")
+               and not e.get("withdrawn_at")]
     rows = []
     for mk in list(PRICED_MARKETS) + list(TEAM_MARKETS):
         es = [e for e in settled if mk in e["pnl"] and mk in e["prices"]]
@@ -389,7 +415,7 @@ def model_report(blob):
     with its hit rate and flat-stake ROI against everything else."""
     settled = [e for e in blob["leads"].values()
                if e.get("prices") and e.get("pnl") and e.get("model")
-               and e["status"] in ("hit", "miss")]
+               and e["status"] in ("hit", "miss") and not e.get("withdrawn_at")]
     rows = []
     for mk in list(PRICED_MARKETS) + list(TEAM_MARKETS):
         es = [e for e in settled if mk in e["pnl"] and mk in e["prices"] and mk in e["model"]]
@@ -565,7 +591,10 @@ def report(fixtures, blob=None):
     pop = population_rates(fixtures)
     per_league = league_baselines(fixtures)
     tr = team_kind_rates(fixtures)
-    settled = [e for e in blob["leads"].values() if e["status"] in ("hit", "miss")]
+    settled = [e for e in blob["leads"].values()
+               if e["status"] in ("hit", "miss") and not e.get("withdrawn_at")]
+    withdrawn = [e for e in blob["leads"].values()
+                 if e["status"] in ("hit", "miss") and e.get("withdrawn_at")]
 
     by_kind = {}
     for e in settled:
@@ -628,6 +657,10 @@ def report(fixtures, blob=None):
         "backtest_any_sig": any(r["significant"] for r in backtest_rows),
         "pending": sum(1 for e in blob["leads"].values() if e["status"] == "pending"),
         "void": sum(1 for e in blob["leads"].values() if e["status"] == "void"),
+        # Leads the board had withdrawn before kickoff. Graded like any other, never judged:
+        # the rules are measured on what was still the board's claim when the match began.
+        "withdrawn": len(withdrawn),
+        "withdrawn_hits": sum(1 for e in withdrawn if e["status"] == "hit"),
         "overall_rate": (tot_h / tot_n) if tot_n else None,
         "population_fixtures": pop.get("_fixtures", 0),
         "rows": rows,
@@ -641,7 +674,9 @@ def report(fixtures, blob=None):
 if __name__ == "__main__":
     import streaks_fetch
     fx = streaks_fetch.load_or_fetch()["fixtures"]
-    b, added = record([], load())
+    # No record() here: this entry point publishes nothing, and recording an empty board
+    # would stamp every pending lead withdrawn and move board_built_at off the real build.
+    b = load()
     b, n = grade(fx, b)
     save(b)
     r = report(fx, b)

@@ -517,6 +517,14 @@ boxing contest and fall away. Boxing names are transliterated differently by eve
 ("Mikaelian" / "Mikaeljan"), so boxing alone accepts a long word spelled almost identically as
 the same name — both fighters must still match.
 
+**Leads horizon and withdrawn leads (2026-09-13).** `find_leads` publishes only fixtures
+kicking off inside `LEAD_HORIZON_H` = 48 hours. Every build stamps `board_built_at` on
+`data/streak_leads.json` and `last_seen_at` (the same stamp) on every lead it publishes; a
+pending lead the build no longer publishes, with its fixture still ahead, gets `withdrawn_at`
+(cleared if it returns). The Record's hit-rate, priced and model-v-book tables count only leads
+not withdrawn at kickoff, and show the withdrawn count apart. The bot trades a lead only when its
+`last_seen_at` equals `board_built_at`, and holds at most one position per fixture.
+
 **Pinnacle v venue on uncovered contests.** Pinnacle is planned *after* every other source
 and across all sports at once: free event lists show how many listed, priced contests each
 Odds API key carries that no tipster, model or book has covered, and the run's paced share of

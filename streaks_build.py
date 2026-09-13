@@ -47,6 +47,12 @@ MIN_PLAYED = 5        # games needed before a team may form one half of a LEAD
 # real form on both sides, so a 3-game team is visible but never generates a lead.
 MIN_PLAYED_SHOWN = 3
 TOP_LEADS = 120     # cards baked into the page; the league filter narrows from here
+# Leads are published only for fixtures kicking off inside this window (set 2026-09-13).
+# A lead published a week out is re-judged by every midweek game in between: 102 of the
+# first 166 graded leads were first published 5+ days early, most withdrawals came from
+# runs breaking before kickoff, and a line that far out is rarely posted to price against.
+# 48h matches the trading bot's own horizon, so the board publishes what can be acted on.
+LEAD_HORIZON_H = 48
 
 # ---- "On fire": genuinely long runs, measured OUTSIDE the 6-game form window.
 # FORM_GAMES caps every run at 6, which is right for a confluence (old form is not current
@@ -366,9 +372,10 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
         # back to the date only when a fixture carries no kickoff time.
         ko = kickoff_dt(f)
         if ko is not None:
-            if ko <= now:
+            if ko <= now or ko > now + datetime.timedelta(hours=LEAD_HORIZON_H):
                 continue
-        elif (f["date"] or "") < today:
+        elif not (today <= (f["date"] or "") <=
+                  (now + datetime.timedelta(hours=LEAD_HORIZON_H)).date().isoformat()):
             continue
         # Friendlies feed FORM but are never themselves a lead — a preseason kickabout is
         # not a fixture to have a read on.
@@ -683,6 +690,10 @@ implies one goal, so it says nothing about a 1.5 line.</p>
 <b>{MIN_PLAYED}</b> played. Form spans <b>all</b> tracked competitions (last
 {FORM_GAMES} games), because form does not reset when a side walks into a European tie.
 A run made up entirely of preseason friendlies is discarded.</p>
+<p>Leads are published only for fixtures kicking off within the next <b>{LEAD_HORIZON_H}
+hours</b>. A lead published a week out is re-judged by every midweek game in between, and a
+lead the board later drops is recorded as <b>withdrawn</b>: graded, but kept out of the
+Record's verdict on the rules.</p>
 <p>Every lead carries a <b>rarity</b> chip — the share of tracked teams currently on a run
 that long, taken from the <b>weaker</b> leg, since a pair is only as unusual as its most
 ordinary half. When that share is high the pattern is ordinary and the chip says so.

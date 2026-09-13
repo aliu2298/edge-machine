@@ -240,7 +240,9 @@ def page_html(ld, fr, bk, now):
         return f'<h2>{title}</h2><div class="note">{blurb}</div>{rows_html}'
 
     leads_body = tiles([("Graded", ld["graded"]), ("Hit rate", pct(ld["overall_rate"])),
-                        ("Pending", ld["pending"]), ("Void", ld["void"])]) + \
+                        ("Pending", ld["pending"]), ("Void", ld["void"]),
+                        ("Withdrawn before kickoff", f"{ld.get('withdrawn', 0)}"
+                         + (f" · {ld['withdrawn_hits']/ld['withdrawn']:.0%} hit" if ld.get("withdrawn") else ""))]) + \
         perf_table(ld["rows"], lambda r: BET_NAME.get(r["kind"], r["kind"]))
     pr = ld.get("priced") or {"rows": [], "graded": 0, "pending": 0, "claim_roi": None}
     lane = pr.get("lane_roi") or {}

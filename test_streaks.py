@@ -102,7 +102,7 @@ for i in range(6):
     d = f"2026-06-{i+1:02d}"
     rows.append(fx(d, "Aces", f"opp{i}", 3, 0))       # Aces score 3
     rows.append(fx(d, "Bees", f"foe{i}", 1, 0))        # Bees score 1
-future = (datetime.date.today() + datetime.timedelta(days=3)).isoformat()
+future = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=1)).date().isoformat()
 rows.append(fx(future, "Aces", "Bees", None, None, played=False))
 st = B.team_streaks(B.team_games(rows))
 rt = B.base_rates(st)
@@ -240,8 +240,8 @@ check("re-record refreshes last_seen",
 # ...and refreshes NOTHING else. The claim is the snapshot as published.
 _after = list(blob["leads"].values())[0]
 check("the claim itself is never revised",
-      {k: v for k, v in _after.items() if k != "last_seen"},
-      {k: v for k, v in _before.items() if k != "last_seen"})
+      {k: v for k, v in _after.items() if k not in ("last_seen", "last_seen_at")},
+      {k: v for k, v in _before.items() if k not in ("last_seen", "last_seen_at")})
 # A lead the board no longer publishes keeps its OLD last_seen — that is the signal.
 _stale = list(blob["leads"].values())[0]["last_seen"]
 blob, _ = T.record([], blob)                      # this build emitted nothing
@@ -254,6 +254,33 @@ check("status hit", e["status"], "hit")
 check("final recorded", e["final"], "2-1")
 blob, n2 = T.grade([played], blob)
 check("re-grade is a no-op", n2, 0)
+
+print("\n== last_seen_at, board_built_at and withdrawn leads ==")
+_t0 = datetime.datetime(2026, 9, 13, 6, 0, tzinfo=datetime.timezone.utc)
+_up = dict(lead, date="2026-09-14", kickoff="2026-09-14T15:00Z")
+_up2 = dict(_up, headline="Over 1.5 goals", bet={"kind": "total_gte", "n": 2})
+wb, _ = T.record([_up, _up2], {"leads": {}}, now=_t0)
+check("the build time is stamped on the file", wb["board_built_at"], _t0.isoformat())
+check("and on every published lead", sorted(e["last_seen_at"] for e in wb["leads"].values()),
+      [_t0.isoformat()] * 2)
+_t1 = _t0 + datetime.timedelta(hours=6)
+wb, _ = T.record([_up2], wb, now=_t1)
+_w = wb["leads"][T.lead_id(_up)]
+check("a pending lead this build dropped is withdrawn", _w.get("withdrawn_at"), _t1.isoformat())
+check("its last_seen_at stays at the build it was last on", _w["last_seen_at"], _t0.isoformat())
+check("the one still published is not", "withdrawn_at" in wb["leads"][T.lead_id(_up2)], False)
+wb, _ = T.record([_up, _up2], wb, now=_t1 + datetime.timedelta(hours=6))
+check("a lead that comes back is no longer withdrawn", "withdrawn_at" in wb["leads"][T.lead_id(_up)], False)
+_past = dict(lead, date="2026-09-13", kickoff="2026-09-13T05:00Z", headline="Past claim")
+wb["leads"][T.lead_id(_past)] = dict(_past, id=T.lead_id(_past), status="pending", first_seen="2026-09-12")
+wb, _ = T.record([_up, _up2], wb, now=_t1 + datetime.timedelta(hours=12))
+check("a lead whose match has started is never marked withdrawn", "withdrawn_at" in wb["leads"][T.lead_id(_past)], False)
+_hit = lambda h, w: {"id": h, "date": "2026-09-01", "home": "H", "away": "A", "headline": h, "league": "L1",
+                     "bet": {"kind": "total_gte", "n": 2}, "status": "hit", "final": "2-1",
+                     "prices": {"over15": {"price": 1.25, "fair": 0.78}},
+                     "pnl": {"over15": {"hit": True, "pnl": 0.25}}, **({"withdrawn_at": "x"} if w else {})}
+_pb = {"leads": {"a": _hit("a", False), "b": _hit("b", True)}}
+check("priced record counts only leads still published at kickoff", T.price_report(_pb)["graded"], 1)
 
 print("\n== grade: a miss is a miss, not a void ==")
 blob, _ = T.record([dict(lead, headline="Over 2.5 goals",
@@ -293,11 +320,11 @@ check("a match two hours out is a lead",
 
 print("\n== leads are ordered by kickoff ==")
 rows2 = list(rows)
-for h, off in (("Zulu", 50), ("Alpha", 10), ("Mike", 30)):
+for h, off in (("Zulu", 40), ("Alpha", 10), ("Mike", 30)):
     for i in range(6):
         rows2.append(fx(f"2026-06-{i+1:02d}", h, f"q{h}{i}", 2, 2))
 mk = []
-for h, off in (("Zulu", 50), ("Alpha", 10), ("Mike", 30)):
+for h, off in (("Zulu", 40), ("Alpha", 10), ("Mike", 30)):
     g = fx((now + datetime.timedelta(hours=off)).date().isoformat(), h, "Bees",
            None, None, played=False)
     g["kickoff"] = (now + datetime.timedelta(hours=off)).strftime("%Y-%m-%dT%H:%MZ")
@@ -306,6 +333,16 @@ st2 = B.team_streaks(B.team_games(rows2))
 got = B.find_leads(rows2 + mk, st2, B.base_rates(st2))
 kos = [l["kickoff"] for l in got]
 check("kickoffs ascending", kos, sorted(kos))
+
+print("\n== leads only inside the 48h horizon ==")
+far = dict(soon, kickoff=(now + datetime.timedelta(hours=49)).strftime("%Y-%m-%dT%H:%MZ"),
+           date=(now + datetime.timedelta(hours=49)).date().isoformat())
+check("a match 49 hours out is not a lead", len(B.find_leads(rows + [far], st, B.base_rates(st))), 0)
+edge = dict(soon, kickoff=(now + datetime.timedelta(hours=47)).strftime("%Y-%m-%dT%H:%MZ"),
+            date=(now + datetime.timedelta(hours=47)).date().isoformat())
+check("a match 47 hours out is", len(B.find_leads(rows + [edge], st, B.base_rates(st))) > 0, True)
+nodate = dict(soon, kickoff=None, date=(now + datetime.timedelta(days=5)).date().isoformat())
+check("a fixture with no kickoff time five days out is not", len(B.find_leads(rows + [nodate], st, B.base_rates(st))), 0)
 
 print("\n== kickoff_dt ==")
 check("parses ESPN Z form",
@@ -502,7 +539,7 @@ blob, n2, f2 = T.price(blob, [lp], fake_fetch, now=NOWP)
 check("never re-priced, never re-fetched", (n2, f2), (0, 0))
 gone = dict(lp, headline="Over 1.5 goals (started)",
             kickoff=(NOWP - datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%MZ"))
-blob, _ = T.record([gone], blob)
+blob, _ = T.record([lp, gone], blob)     # lp still published, so it is not withdrawn
 blob, n3, f3 = T.price(blob, [gone], fake_fetch, now=NOWP)
 check("a lead that has kicked off is never priced", (n3, f3), (0, 0))
 blob4, _ = T.record([lp], {"leads": {}})
