@@ -1,265 +1,7 @@
 {
- "built_at": "2026-09-13T06:20:24+00:00",
+ "built_at": "2026-09-13T11:59:42+00:00",
  "teams_tracked": 328,
  "leads": [
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T10:15Z",
-   "league": "Eredivisie",
-   "match": "Excelsior v FC Utrecht",
-   "home": "Excelsior",
-   "away": "FC Utrecht",
-   "headline": "Excelsior to score 2+",
-   "why": "Excelsior have scored 2+ in 3 straight; FC Utrecht have conceded 2+ in 6 straight.",
-   "a": "Excelsior",
-   "b": "FC Utrecht",
-   "a_run": 3,
-   "b_run": 6,
-   "a_key": "scoring",
-   "b_key": "leaky",
-   "a_label": "scored 2+",
-   "b_label": "conceded 2+",
-   "strength": 9,
-   "base_rate": 0.11280487804878049,
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "subject": "a",
-    "team": "Excelsior"
-   },
-   "a_recent": [
-    {
-     "s": "2-2",
-     "opp": "NEC Nijmegen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-0",
-     "opp": "Willem II",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Sparta Rotterdam",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "4-0",
-     "opp": "SC Cambuur",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "3-3",
-     "opp": "Go Ahead Eagles",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-6",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-4",
-     "opp": "AZ Alkmaar",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "FC Groningen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Heerenveen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/sbv-excelsior-fc-utrecht-202609130615",
-   "price": 1.909,
-   "fair": 0.5,
-   "model": 0.703
-  },
-  {
-   "date": "2026-09-13",
-   "kickoff": "2026-09-13T10:15Z",
-   "league": "Eredivisie",
-   "match": "Excelsior v FC Utrecht",
-   "home": "Excelsior",
-   "away": "FC Utrecht",
-   "headline": "Over 1.5 goals",
-   "why": "Both sides have scored in every recent game \u2014 Excelsior 6 straight, FC Utrecht 6 straight \u2014 and one apiece clears 1.5.",
-   "a": "Excelsior",
-   "b": "FC Utrecht",
-   "a_run": 6,
-   "b_run": 6,
-   "a_key": "scoring1",
-   "b_key": "scoring1",
-   "a_label": "scored in",
-   "b_label": "scored in",
-   "strength": 12,
-   "base_rate": 0.22560975609756098,
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "a_recent": [
-    {
-     "s": "2-2",
-     "opp": "NEC Nijmegen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-0",
-     "opp": "Willem II",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Sparta Rotterdam",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "4-0",
-     "opp": "SC Cambuur",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "3-3",
-     "opp": "Go Ahead Eagles",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-6",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-4",
-     "opp": "AZ Alkmaar",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "FC Groningen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Heerenveen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "market": "https://www.bovada.lv/sports/soccer/europe/netherlands/eredivisie/sbv-excelsior-fc-utrecht-202609130615",
-   "price": 1.19,
-   "fair": 0.8013,
-   "model": 0.9185
-  },
   {
    "date": "2026-09-13",
    "kickoff": "2026-09-13T13:30Z",
@@ -2811,9 +2553,9 @@
    "best_rate": 0.012195121951219513,
    "longest": 6,
    "next": {
-    "opp": "Excelsior",
-    "date": "2026-09-13",
-    "kickoff": "2026-09-13T10:15Z",
+    "opp": "Feyenoord Rotterdam",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T10:15Z",
     "league": "Eredivisie",
     "home": false
    },
@@ -7389,11 +7131,11 @@
    "best_rate": 0.06402439024390244,
    "longest": 6,
    "next": {
-    "opp": "FC Utrecht",
-    "date": "2026-09-13",
-    "kickoff": "2026-09-13T10:15Z",
+    "opp": "Ajax Amsterdam",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T18:00Z",
     "league": "Eredivisie",
-    "home": true
+    "home": false
    },
    "recent": [
     {
@@ -15049,9 +14791,9 @@
    "best_rate": 0.2896341463414634,
    "longest": 5,
    "next": {
-    "opp": "Antwerp",
-    "date": "2026-09-13",
-    "kickoff": "2026-09-13T11:30Z",
+    "opp": "Racing Genk",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T16:30Z",
     "league": "Belgian Pro League",
     "home": true
    },
@@ -27672,9 +27414,9 @@
    "best_rate": 0.0726643598615917,
    "longest": 13,
    "next": {
-    "opp": "Excelsior",
-    "date": "2026-09-13",
-    "kickoff": "2026-09-13T10:15Z",
+    "opp": "Feyenoord Rotterdam",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T10:15Z",
     "league": "Eredivisie",
     "home": false
    },
@@ -27784,7 +27526,7 @@
      "lg": "Eredivisie"
     }
    ],
-   "next_ko": "2026-09-13T10:15Z"
+   "next_ko": "2026-09-20T10:15Z"
   },
   {
    "team": "FC Cologne",
@@ -28748,11 +28490,11 @@
    "best_rate": 0.10034602076124567,
    "longest": 12,
    "next": {
-    "opp": "FC Utrecht",
-    "date": "2026-09-13",
-    "kickoff": "2026-09-13T10:15Z",
+    "opp": "Ajax Amsterdam",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T18:00Z",
     "league": "Eredivisie",
-    "home": true
+    "home": false
    },
    "recent": [
     {
@@ -28852,7 +28594,7 @@
      "lg": "Eredivisie"
     }
    ],
-   "next_ko": "2026-09-13T10:15Z"
+   "next_ko": "2026-09-19T18:00Z"
   },
   {
    "team": "Newcastle United",

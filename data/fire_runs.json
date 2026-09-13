@@ -2919,6 +2919,21 @@
    "team": "Excelsior",
    "test_date": "2026-09-13"
   },
+  "Excelsior|over15|2026-09-19|Excelsior|Ajax Amsterdam": {
+   "home": false,
+   "id": "Excelsior|over15|2026-09-19|Excelsior|Ajax Amsterdam",
+   "key": "over15",
+   "kickoff": "2026-09-19T18:00Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 12,
+   "logged_at": "2026-09-13T11:59:46+00:00",
+   "opp": "Ajax Amsterdam",
+   "rate": 0.10034602076124567,
+   "status": "pending",
+   "team": "Excelsior",
+   "test_date": "2026-09-19"
+  },
   "Excelsior|scoring1|2026-09-05|Excelsior|Willem II": {
    "graded_at": "2026-09-06T04:46:57+00:00",
    "home": false,
@@ -2967,6 +2982,21 @@
    "status": "pending",
    "team": "Excelsior",
    "test_date": "2026-09-13"
+  },
+  "Excelsior|scoring1|2026-09-19|Excelsior|Ajax Amsterdam": {
+   "home": false,
+   "id": "Excelsior|scoring1|2026-09-19|Excelsior|Ajax Amsterdam",
+   "key": "scoring1",
+   "kickoff": "2026-09-19T18:00Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 10,
+   "logged_at": "2026-09-13T11:59:46+00:00",
+   "opp": "Ajax Amsterdam",
+   "rate": 0.11072664359861592,
+   "status": "pending",
+   "team": "Excelsior",
+   "test_date": "2026-09-19"
   },
   "F.C. K\u00f8benhavn|over15|2026-09-11|F.C. K\u00f8benhavn|AC Horsens": {
    "graded_at": "2026-09-11T21:02:34+00:00",
@@ -3636,6 +3666,21 @@
    "team": "FC Utrecht",
    "test_date": "2026-09-13"
   },
+  "FC Utrecht|over15|2026-09-20|FC Utrecht|Feyenoord Rotterdam": {
+   "home": false,
+   "id": "FC Utrecht|over15|2026-09-20|FC Utrecht|Feyenoord Rotterdam",
+   "key": "over15",
+   "kickoff": "2026-09-20T10:15Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 13,
+   "logged_at": "2026-09-13T11:59:46+00:00",
+   "opp": "Feyenoord Rotterdam",
+   "rate": 0.0726643598615917,
+   "status": "pending",
+   "team": "FC Utrecht",
+   "test_date": "2026-09-20"
+  },
   "FC Utrecht|scoring1|2026-09-05|FC Utrecht|Go Ahead Eagles": {
    "home": true,
    "id": "FC Utrecht|scoring1|2026-09-05|FC Utrecht|Go Ahead Eagles",
@@ -3666,6 +3711,21 @@
    "status": "pending",
    "team": "FC Utrecht",
    "test_date": "2026-09-13"
+  },
+  "FC Utrecht|scoring1|2026-09-20|FC Utrecht|Feyenoord Rotterdam": {
+   "home": false,
+   "id": "FC Utrecht|scoring1|2026-09-20|FC Utrecht|Feyenoord Rotterdam",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T10:15Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 9,
+   "logged_at": "2026-09-13T11:59:46+00:00",
+   "opp": "Feyenoord Rotterdam",
+   "rate": 0.1245674740484429,
+   "status": "pending",
+   "team": "FC Utrecht",
+   "test_date": "2026-09-20"
   },
   "Fenerbahce|over15|2026-09-10|Fenerbahce|AS Roma": {
    "graded_at": "2026-09-10T20:56:22+00:00",
@@ -8615,5 +8675,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-13T06:20:29+00:00"
+ "updated_at": "2026-09-13T11:59:46+00:00"
 }
