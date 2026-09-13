@@ -269,7 +269,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="sub">Every tracked fixture kicking off today · the leads' control group · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
+<a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
 
 <div class="note">The whole day, in kickoff order: <b>what the rules picked, what they
 passed over, and what the book and the model say about all of it.</b> A fixture with a lead

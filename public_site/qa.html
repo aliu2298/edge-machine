@@ -1,1 +1,120 @@
-<!doctype html><meta charset="utf-8"><title>Edge Machine · QA</title><p>QA page is being built.</p>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine · QA</title>
+<meta name="description" content="Sandbox sources promoted to QA, judged only on bets made after promotion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
+--pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
+letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+color:var(--mut);margin:34px 0 12px}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.sm{font-size:11px}
+.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
+.nav a:hover{color:var(--fg);border-color:var(--mut)}
+.nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+.note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
+border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.note b{color:var(--fg);font-weight:600}
+.note.warn{border-color:#f0b42944;background:#f0b4290a}
+.tiles{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}
+.tile{flex:1;min-width:112px;background:var(--card);border:1px solid var(--bd);
+border-radius:10px;padding:11px 13px}
+.tile b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+.tile span{font-size:11px;color:var(--mut)}
+.tbl{background:var(--card);border:1px solid var(--bd);border-radius:11px;
+overflow-x:auto;margin-bottom:13px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid #1a1f2b;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.st,.sig{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.05em;
+border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}
+.st.won,.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
+.st.lost,.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
+.st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
+.sig.w{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
+details.more{margin:-4px 0 14px}
+details.more>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--acc);
+padding:6px 2px;list-style:none}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::before{content:"▸ "}
+details.more[open]>summary::before{content:"▾ "}
+.grp td{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}
+footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
+@media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
+</style></head><body><div class="wrap">
+
+<h1>QA</h1>
+<div class="sub">Where the real deal is separated from the noise · updated 2026-09-13 01:38 UTC</div>
+<div class="nav"><a href="./">Leads</a>
+<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
+<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a></div>
+
+<div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
+is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
+never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
+does it survive the <b>taker fee</b> a follower would pay. The trading bot never reads this page.</div>
+
+<div class="tiles">
+<div class="tile"><b>0</b><span>pairs in QA</span></div>
+<div class="tile"><b class="">0</b><span>production-ready</span></div>
+<div class="tile"><b>0</b><span>through the entry gate</span></div>
+<div class="tile"><b>0</b><span>demotions</span></div>
+</div>
+
+<h2>In QA</h2>
+<div class="note">Nothing has been promoted yet. The first pairs to reach QA will appear here, judged only on bets they make from that moment on.</div>
+<div class="note"><b>Production-ready</b> is the full stamp applied to the fresh QA record —
+50+ bets over 4+ weeks, z ≥ 2, beats every blind rule, still
+profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
+price on average and staying profitable after the taker fee (Polymarket US 0.06·p·(1−p),
+Kalshi 0.07). A pair whose fresh record is behind the price after 30 bets goes
+back to the Sandbox and must re-qualify on bets logged after the demotion.</div>
+
+<h2>On deck</h2>
+<div class="note">Sandbox pairs against the <b>QA entry gate</b>: 30+ settled bets over
+2+ weeks, wins beat the price by z ≥ 1, beats every blind rule on the same
+contests, still profitable without its biggest win. It is lighter than the stamp on purpose —
+QA re-tests on fresh data, so a pair that got lucky finds out there.</div>
+<div class="tbl"><table><tr><th>Pair</th><th class="num">Gates</th><th class="num">ROI</th><th>30+ settled bets over 2+ weeks</th><th>wins beat the price by z ≥ 1</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th></tr><tr><td><b>ESPN FPI · MLB</b></td>
+<td class="num">3/4</td>
+<td class="num"><span class="mut">+35.6%</span></td><td><span class="neg">✗</span><div class="sm mut">18 bets, 1 week</div></td><td><span class="pos">✓</span><div class="sm mut">12 won v 8.9 priced, z +1.48</div></td><td><span class="pos">✓</span><div class="sm mut">+35.6% v +6.5% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+26.3% without it</div></td></tr><tr><td><b>Kalshi · MLB</b></td>
+<td class="num">3/4</td>
+<td class="num"><span class="mut">+94.8%</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets, 1 week</div></td><td><span class="pos">✓</span><div class="sm mut">2 won v 1.0 priced, z +1.37</div></td><td><span class="pos">✓</span><div class="sm mut">+94.8% v +3.1% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+83.5% without it</div></td></tr><tr><td><b>Covers · MLB</b></td>
+<td class="num">2/4</td>
+<td class="num"><span class="mut">+42.8%</span></td><td><span class="neg">✗</span><div class="sm mut">21 bets, 1 week</div></td><td><span class="pos">✓</span><div class="sm mut">17 won v 12.2 priced, z +2.15</div></td><td><span class="neg">✗</span><div class="sm mut">+42.8% v +42.8% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+40.0% without it</div></td></tr><tr><td><b>SoccerPredictions.ai · Soccer</b></td>
+<td class="num">1/4</td>
+<td class="num"><span class="mut">+21.1%</span></td><td><span class="neg">✗</span><div class="sm mut">36 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">14 won v 12.4 priced, z +0.55</div></td><td><span class="neg">✗</span><div class="sm mut">+21.1% v +21.4% back the draw</div></td><td><span class="pos">✓</span><div class="sm mut">+14.0% without it</div></td></tr><tr><td><b>ESPN FPI · NFL</b></td>
+<td class="num">1/4</td>
+<td class="num"><span class="mut">+181.7%</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets, 1 week</div></td><td><span class="pos">✓</span><div class="sm mut">1 won v 0.4 priced, z +1.35</div></td><td><span class="neg">✗</span><div class="sm mut">+181.7% v +181.7% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>SportsGambler · Soccer</b></td>
+<td class="num">0/4</td>
+<td class="num"><span class="mut">-26.3%</span></td><td><span class="neg">✗</span><div class="sm mut">13 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">5 won v 6.5 priced, z -0.83</div></td><td><span class="neg">✗</span><div class="sm mut">-26.3% v +59.3% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-38.7% without it</div></td></tr><tr><td><b>Scores24 · MLB</b></td>
+<td class="num">0/4</td>
+<td class="num"><span class="mut">-8.8%</span></td><td><span class="neg">✗</span><div class="sm mut">13 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">7 won v 7.3 priced, z -0.20</div></td><td><span class="neg">✗</span><div class="sm mut">-8.8% v +15.8% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-18.0% without it</div></td></tr><tr><td><b>Scores24 · Tennis</b></td>
+<td class="num">0/4</td>
+<td class="num"><span class="mut">+16.3%</span></td><td><span class="neg">✗</span><div class="sm mut">6 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 3.4 priced, z +0.53</div></td><td><span class="neg">✗</span><div class="sm mut">+16.3% v +49.3% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-0.0% without it</div></td></tr></table></div><details class="more"><summary>Show 3 more sandbox pairs</summary><div class="tbl"><table><tr><th>Pair</th><th class="num">Gates</th><th class="num">ROI</th><th>30+ settled bets over 2+ weeks</th><th>wins beat the price by z ≥ 1</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th></tr><tr><td><b>Spot price · Crypto</b></td>
+<td class="num">0/4</td>
+<td class="num"><span class="mut">-26.5%</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.2 priced, z -0.34</div></td><td><span class="neg">✗</span><div class="sm mut">-26.5% v +0.0% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td></tr><tr><td><b>Scores24 · Soccer</b></td>
+<td class="num">0/4</td>
+<td class="num"><span class="mut">-13.8%</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.2 priced, z -0.30</div></td><td><span class="neg">✗</span><div class="sm mut">-13.8% v +177.8% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td></tr><tr><td><b>Covers · NFL</b></td>
+<td class="num">0/4</td>
+<td class="num"><span class="mut">-100.0%</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets, 1 week</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.6 priced, z -1.35</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% v +181.7% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr></table></div></details>
+
+<h2>History</h2>
+<div class="note">No promotions or demotions yet.</div>
+
+<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+</div></body></html>

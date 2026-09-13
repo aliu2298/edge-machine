@@ -364,7 +364,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="sub">Everything that has been graded · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
-<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
+<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
 
 <div class="note warn">The lift sections carry no odds and <b>are not profit</b>; the one
 place money is measured is the priced section, which grades every lead at the Bovada line

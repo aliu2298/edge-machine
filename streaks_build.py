@@ -880,7 +880,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>{esc(h1)}</h1>
 <div class="sub">{esc(sub)} · all times CT · updated {esc(now)}</div>
 <div class="nav">{nav}
-<a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a></div>
+<a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
 
 <details class="how">
 <summary>{explain_summary}</summary>

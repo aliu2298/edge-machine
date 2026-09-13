@@ -1737,6 +1737,33 @@ _ac = T.assess({"quotes": [dict(_q, status="won", result="a", pnl=150.0, logged=
 close(_ac["clv"], 0.07, "CLV is close minus price: bought at 0.40, closed at 0.47", tol=1e-9)
 eq(_ac["clv_beat"], 1.0, "and it beat the close")
 
+# ---------------------------------------------------------------------------
+print("\nQA page")
+# ---------------------------------------------------------------------------
+_qd = {"quotes": [dict(source="espn_fpi", sport="mlb", bet=True, status="won", pick="a", price=0.40,
+                       result="a", pnl=150.0, venue="kalshi", price_a=0.40, price_b=0.62, price_draw=None,
+                       logged="2026-09-12T01:00:00+00:00", start="2026-09-12T20:00:00+00:00",
+                       close_price=0.44),
+                  dict(source="espn_fpi", sport="mlb", bet=True, status="won", pick="a", price=0.40,
+                       result="a", pnl=150.0, venue="kalshi", price_a=0.40, price_b=0.62, price_draw=None,
+                       logged="2026-09-09T01:00:00+00:00", start="2026-09-09T20:00:00+00:00")]}
+_st = {"pairs": {"espn_fpi|mlb": dict(stage="qa", promoted_at="2026-09-11T00:00:00+00:00", entry=dict(n=31))},
+       "events": [dict(pair="espn_fpi|mlb", to="qa", at="2026-09-11T00:00:00+00:00",
+                       evidence=dict(n=31, z=1.3, roi=0.2))]}
+_html = SB.qa_page(_qd, _st, "<style></style>")
+ok("IN QA · " in _html, "a promoted pair is listed in QA with its progress")
+ok(">1<div" in _html.replace(" ", "") or "<td class=\"num\">1<div" in _html,
+   "and judged on 1 fresh bet — the pre-promotion bet does not count")
+ok("+4.0¢" in _html, "its closing-line value is shown")
+ok("→ QA" in _html, "the promotion is in the history")
+ok("ESPN FPI · MLB" in _html, "pairs are labelled source · sport")
+_empty = SB.qa_page({"quotes": []}, {"pairs": {}, "events": []}, "<style></style>")
+ok("Nothing has been promoted yet" in _empty and "No promotions or demotions yet" in _empty,
+   "an empty registry says so rather than showing empty tables")
+ok('href="./qa.html">QA</a>' in open("sandbox_build.py").read(), "the Sandbox nav links to QA")
+eq(T.assess(_qd, "espn_fpi", "mlb", since="2026-09-11T00:00:00+00:00")["n"], 1,
+   "QA's record counts only the bet logged after promotion")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

@@ -13,6 +13,7 @@ whether an idea actually holds up.
 | [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — leads and on-fire runs — against what those teams do anyway |
 | [Today](https://aliu2298.github.io/edge-machine/today.html) | Every tracked fixture kicking off today, with both sides' current runs |
 | [Sandbox](https://aliu2298.github.io/edge-machine/sandbox.html) | Which forecasters actually make money, tracked per sport at real prices |
+| [QA](https://aliu2298.github.io/edge-machine/qa.html) | Sandbox pairs promoted to QA, judged only on fresh bets, closing-line value and fees |
 
 ## Architecture
 

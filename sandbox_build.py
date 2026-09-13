@@ -503,7 +503,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="sub">Which tipster actually makes money · {len(S.SPORTS)} sports · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
+<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
 
 <div class="note warn">Every source here is logged <b>before the contest starts</b> and
 stamped with the <b>price that existed at that moment</b>, then settled for real when the
@@ -631,11 +631,153 @@ favourites is not an edge, it is just backing the favourite.
 </div></body></html>"""
 
 
+QA_OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "qa.html")
+
+
+def _ticks(gate):
+    passed = sum(1 for _k, _l, p, _d in gate if p)
+    cells = "".join(
+        f'<td><span class="{"pos" if p else "neg"}">{"✓" if p else "✗"}</span>'
+        f'<div class="sm mut">{esc(det)}</div></td>' for _k, _l, p, det in gate)
+    return passed, cells
+
+
+def qa_page(d, st, style):
+    """QA: promoted (source, sport) pairs, judged only on bets logged after promotion."""
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    pairs = st.get("pairs") or {}
+    in_qa = {k: v for k, v in pairs.items() if v.get("stage") == "qa"}
+    label = lambda key: (f'{S.SOURCES[key.split("|")[0]]["label"].split(" (")[0].split(" /")[0]} · '
+                         f'{S.SPORTS.get(key.split("|")[1], key.split("|")[1])}')
+
+    # In QA
+    ready_head = "".join(f"<th>{esc(l)}</th>" for _k, l, _p, _d in T.ready_gate(T.assess(d, "__none__")))
+    qa_rows, n_ready = [], 0
+    for key, pair in sorted(in_qa.items(), key=lambda kv: kv[1]["promoted_at"]):
+        name, sport = key.split("|")
+        a = T.assess(d, name, sport, since=pair["promoted_at"])
+        gate = T.ready_gate(a)
+        passed, cells = _ticks(gate)
+        ready = passed == len(gate)
+        n_ready += ready
+        status = ('<span class="sig y">✓ PRODUCTION-READY</span>' if ready else
+                  f'<span class="sig w">IN QA · {passed}/{len(gate)}</span>')
+        qa_rows.append(f"""<tr><td><b>{esc(label(key))}</b>
+<div class="sm mut">promoted {esc(pair['promoted_at'][:10])} on {pair.get('entry', {}).get('n', '?')} sandbox bets</div></td>
+<td>{status}</td>
+<td class="num">{a['n']}<div class="sm mut">{a['weeks']} wk</div></td>
+<td class="num"><span class="{cls(a['roi']) if a['n'] >= MIN_N else 'mut'}">{pct(a['roi'], sign=True)}</span>
+<div class="sm mut">{pct(a['roi_fee'], sign=True)} after fees</div></td>
+<td class="num">{f"{a['clv']*100:+.1f}¢" if a['clv'] is not None else '—'}
+<div class="sm mut">{f"{a['clv_beat']:.0%} beat close" if a['clv'] is not None else ''}</div></td>
+{cells}</tr>""")
+    qa_table = (f"""<div class="tbl"><table>
+<tr><th>Pair</th><th>Status</th><th class="num">Fresh bets</th><th class="num">ROI</th>
+<th class="num">CLV</th>{ready_head}</tr>
+{''.join(qa_rows)}</table></div>""" if qa_rows else
+        '<div class="note">Nothing has been promoted yet. The first pairs to reach QA will '
+        'appear here, judged only on bets they make from that moment on.</div>')
+
+    # On deck: sandbox pairs, closest to the entry gate first
+    entry_head = "".join(f"<th>{esc(l)}</th>" for _k, l, _p, _d in T.qa_entry(T.assess(d, "__none__")))
+    deck = []
+    for name, meta in S.SOURCES.items():
+        if not meta["connected"]:
+            continue
+        for sport in meta["sports"]:
+            key = f"{name}|{sport}"
+            pair = pairs.get(key) or {}
+            if pair.get("stage") == "qa":
+                continue
+            a = T.assess(d, name, sport, since=pair.get("since"))
+            if not a["n"]:
+                continue
+            gate = T.qa_entry(a)
+            passed, cells = _ticks(gate)
+            deck.append((passed, a["n"], key, a, cells, pair))
+    deck.sort(key=lambda t: (-t[0], -t[1]))
+    deck_rows = "".join(
+        f"""<tr><td><b>{esc(label(key))}</b>{'<div class="sm neg">demoted ' + esc(pair['demoted_at'][:10]) + '</div>' if pair.get('demoted_at') else ''}</td>
+<td class="num">{passed}/{len(T.qa_entry(a))}</td>
+<td class="num"><span class="mut">{pct(a['roi'], sign=True)}</span></td>{cells}</tr>"""
+        for passed, _n, key, a, cells, pair in deck)
+    deck_table = (collapse(deck_rows, f'<tr><th>Pair</th><th class="num">Gates</th>'
+                                      f'<th class="num">ROI</th>{entry_head}</tr>',
+                           len(deck), "sandbox pairs") if deck_rows else
+                  '<div class="note">No settled sandbox bets yet.</div>')
+
+    # History
+    events = list(reversed(st.get("events") or []))
+    hist = "".join(
+        f"""<tr><td class="mut">{esc(e['at'][:16].replace('T', ' '))}</td><td><b>{esc(label(e['pair']))}</b></td>
+<td>{'<span class="sig y">→ QA</span>' if e['to'] == 'qa' else '<span class="sig y">✓ READY</span>' if e['to'] == 'ready' else '<span class="st miss">→ SANDBOX</span>'}</td>
+<td class="sm mut">{esc(e.get('reason') or '')} n={e['evidence'].get('n')} · z {e['evidence'].get('z', 0):+.2f} · ROI {pct(e['evidence'].get('roi'), sign=True)}</td></tr>"""
+        for e in events)
+    hist_table = (collapse(hist, "<tr><th>When</th><th>Pair</th><th>Change</th><th>Evidence</th></tr>",
+                           len(events), "changes") if hist else
+                  '<div class="note">No promotions or demotions yet.</div>')
+
+    E, A = T.QA_ENTRY, T.APPROVAL
+    return f"""<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine · QA</title>
+<meta name="description" content="Sandbox sources promoted to QA, judged only on bets made after promotion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{style}</head><body><div class="wrap">
+
+<h1>QA</h1>
+<div class="sub">Where the real deal is separated from the noise · updated {esc(now)}</div>
+<div class="nav"><a href="./">Leads</a>
+<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
+<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a></div>
+
+<div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
+is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
+never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
+does it survive the <b>taker fee</b> a follower would pay. The trading bot never reads this page.</div>
+
+<div class="tiles">
+<div class="tile"><b>{len(in_qa)}</b><span>pairs in QA</span></div>
+<div class="tile"><b class="{'pos' if n_ready else ''}">{n_ready}</b><span>production-ready</span></div>
+<div class="tile"><b>{sum(1 for t in deck if t[0] == len(T.qa_entry(t[3])))}</b><span>through the entry gate</span></div>
+<div class="tile"><b>{sum(1 for e in st.get('events') or [] if e['to'] == 'sandbox')}</b><span>demotions</span></div>
+</div>
+
+<h2>In QA</h2>
+{qa_table}
+<div class="note"><b>Production-ready</b> is the full stamp applied to the fresh QA record —
+{A['min_bets']}+ bets over {A['min_weeks']}+ weeks, z ≥ {A['z_min']:g}, beats every blind rule, still
+profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
+price on average and staying profitable after the taker fee (Polymarket US 0.06·p·(1−p),
+Kalshi 0.07). A pair whose fresh record is behind the price after {T.QA_DEMOTE['min_bets']} bets goes
+back to the Sandbox and must re-qualify on bets logged after the demotion.</div>
+
+<h2>On deck</h2>
+<div class="note">Sandbox pairs against the <b>QA entry gate</b>: {E['min_bets']}+ settled bets over
+{E['min_weeks']}+ weeks, wins beat the price by z ≥ {E['z_min']:g}, beats every blind rule on the same
+contests, still profitable without its biggest win. It is lighter than the stamp on purpose —
+QA re-tests on fresh data, so a pair that got lucky finds out there.</div>
+{deck_table}
+
+<h2>History</h2>
+{hist_table}
+
+<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+</div></body></html>"""
+
+
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    page = build()
     with open(OUT, "w") as f:
-        f.write(build())
+        f.write(page)
     print(f"wrote {OUT}")
+    # QA shares the Sandbox page's stylesheet rather than keeping a second copy of it.
+    style = re.search(r"<style>.*?</style>", page, re.S).group(0)
+    with open(QA_OUT, "w") as f:
+        f.write(qa_page(T.load(), T.load_stages(), style))
+    print(f"wrote {QA_OUT}")
     return 0
 
 
