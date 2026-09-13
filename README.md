@@ -285,7 +285,10 @@ across competitions and shrunk hard toward average (`SHRINK=24`, chosen on a wal
 where 8 was visibly overconfident) — logs its probability for every priced market at the
 moment the price is captured, never revised. The Record page scores model and book by
 **Brier** on the same settled leads, and reports a **pre-registered value split**: leads
-where the model beats the book's fair probability by 5pp or more, against the rest. If the
+where the model beats the book's fair probability by 5pp or more, against the rest. (Since
+2026-09-13 an exchange-priced quote is judged against the effective price paid — ask plus
+fee — not its midpoint; Bovada-priced quotes keep the original vig-free rule. See
+`streaks_track.value_edge`, shared by Today, Record and the book ledger.) If the
 model carries anything the book does not, that group out-hits and out-earns the rest; if
 not, the book is the better estimate and no selection rule built on form can beat it.
 
