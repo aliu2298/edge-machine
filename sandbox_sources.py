@@ -2158,8 +2158,17 @@ ODDS_API = "https://api.the-odds-api.com/v4"
 ODDS_GROUPS = {"boxing": "Boxing", "mma": "Mixed Martial Arts", "cricket": "Cricket",
                "tennis": "Tennis"}
 ODDS_HORIZON_DAYS = 4          # the same horizon the venue universe is fetched over
-ODDS_MAX_CALLS = 4             # paid calls per run; 4 runs a day x 4 x 30 = 480 < 500
-ODDS_RESERVE = 25              # stop spending below this many remaining credits
+ODDS_MAX_CALLS = 4             # hard ceiling per run, whatever the budget says
+ODDS_RESERVE = 25              # never spend the last few credits
+# The free tier is 500 credits a month and they reset on the 1st (the-odds-api.com FAQ).
+# A flat per-run cap cannot make that last: it does not know how many days are left, and
+# every manual dispatch spends like a scheduled run — the first evening spent 17 credits in
+# five runs, four of them dispatched by hand. So each run is allowed its fair share of what
+# remains: (remaining - reserve) / runs left until the reset, where runs left assumes the
+# four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
+# day late in case it lands on the 1st in a timezone behind UTC.
+ODDS_RUNS_PER_DAY = 4
+ODDS_RUN_SLACK = 1.25
 ODDS_USAGE = {}                # {"remaining", "used", "calls"} for this run, for the page
 _odds_sports = None
 
@@ -2181,6 +2190,18 @@ def _odds_get(path, params):
         raise RuntimeError(f"HTTP {e.code} on {path}") from None
     except (OSError, http.client.HTTPException, ValueError) as e:
         raise RuntimeError(f"{type(e).__name__} on {path}") from None
+
+
+def odds_allowance(remaining, now=None):
+    """Paid calls this run may make so `remaining` credits last until the monthly reset."""
+    if remaining is None:
+        return 1                                   # balance unknown: spend cautiously
+    now = now or datetime.now(timezone.utc)
+    nxt = (datetime(now.year + (now.month == 12), now.month % 12 + 1, 1, tzinfo=timezone.utc)
+           + timedelta(days=1))
+    runs_left = max(1.0, (nxt - now).total_seconds() / 86400 * ODDS_RUNS_PER_DAY
+                    * ODDS_RUN_SLACK)
+    return max(0, min(ODDS_MAX_CALLS, int((remaining - ODDS_RESERVE) // runs_left)))
 
 
 def _odds_note_usage(headers):
@@ -2254,7 +2275,11 @@ def fetch_pinnacle(sport):
                          for r in rows if not r.get("untraded"))]
         if not wanted:
             continue
-        if ODDS_USAGE.get("calls", 0) >= ODDS_MAX_CALLS:
+        if "allowance" not in ODDS_USAGE:
+            ODDS_USAGE["allowance"] = odds_allowance(ODDS_USAGE.get("remaining"))
+        if ODDS_USAGE.get("calls", 0) >= ODDS_USAGE["allowance"]:
+            if ODDS_USAGE["allowance"] == 0:
+                _mark("pinnacle", False, "credit budget paced out until the monthly reset")
             break
         if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
             break                               # reached mid-run, after a paid call

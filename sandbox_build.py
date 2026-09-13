@@ -374,9 +374,10 @@ def build():
     # Pinnacle is read through a metered API; showing the balance keeps a quota running
     # dry from looking like Pinnacle having nothing to price.
     ou = (d.get("meta") or {}).get("odds_api") or {}
-    odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} paid "
-                 f"call{'s' if ou.get('calls', 0) != 1 else ''} last run, "
-                 f"{ou['remaining']} credits left this month."
+    odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} of "
+                 f"{ou.get('allowance', '?')} allowed paid calls last run, "
+                 f"{ou['remaining']} credits left until they reset on the 1st — each run "
+                 f"is paced to its share of what remains."
                  if ou.get("remaining") is not None else "")
 
     quotes = len(d["quotes"])

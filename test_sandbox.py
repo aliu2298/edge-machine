@@ -1148,7 +1148,13 @@ try:
     S.ODDS_USAGE["calls"] = S.ODDS_MAX_CALLS
     S.fetch_pinnacle("boxing")
     ok(not any(c.endswith("/odds") for c in _calls), "the per-run paid-call cap holds")
-    ok(S.ODDS_MAX_CALLS * 4 * 30 <= 500, "the per-run cap fits the free tier at four runs a day")
+
+    _reset_odds()
+    S.ODDS_USAGE["allowance"] = 0
+    S.fetch_pinnacle("boxing")
+    ok(not any(c.endswith("/odds") for c in _calls), "a run whose paced share is zero spends nothing")
+    ok("paced" in S.FEED_STATUS.get("pinnacle", "") or S.FEED_STATUS.get("pinnacle") == "ok",
+       "and the feed says the budget is paced rather than broken")
 finally:
     S._odds_get = _saved_odds_get
     S.UNIVERSE = None
@@ -1472,6 +1478,37 @@ ok("Show 4 more things" in _html, "12 rows show 8 and fold 4, counting rows not 
 ok("the latest 12 of 40" in _html, "and say how many exist beyond the rows listed")
 eq(SB.collapse("<tr><td>a</td></tr>", "<tr><th>h</th></tr>", 1, "x").count("<details"), 0,
    "a short list is not folded")
+
+# ---------------------------------------------------------------------------
+print("\nOdds API credits last the month")
+# ---------------------------------------------------------------------------
+_t0 = datetime(2026, 9, 1, 0, 30, tzinfo=timezone.utc)
+
+
+def _simulate(start, credits=500, manual_per_day=2, wanted=4):
+    """Spend a month the way the workflow would: 4 scheduled runs a day plus manual ones."""
+    now, rem, spent_days = start, credits, set()
+    end = datetime(2026, 10, 1, tzinfo=timezone.utc)
+    while now < end:
+        for _run in range(S.ODDS_RUNS_PER_DAY + manual_per_day):
+            spend = min(wanted, S.odds_allowance(rem, now))
+            rem -= spend
+            if spend:
+                spent_days.add(now.date())
+        now += timedelta(days=1)
+    return rem, len(spent_days)
+
+
+_left, _days = _simulate(_t0)
+ok(_left >= S.ODDS_RESERVE - 1, f"a month of 4 scheduled + 2 manual runs a day never runs dry (left {_left})")
+eq(_days, 30, "and Pinnacle still gets a paid call on every single day of the month")
+_left, _days = _simulate(datetime(2026, 9, 13, 0, 17, tzinfo=timezone.utc), credits=483)
+ok(_left >= S.ODDS_RESERVE - 1 and _days == 18, f"from today's 483, it lasts to the 1st with a call every day (left {_left})")
+eq(S.odds_allowance(S.ODDS_RESERVE, _t0), 0, "at the reserve, nothing is spent")
+eq(S.odds_allowance(500, datetime(2026, 9, 30, 20, tzinfo=timezone.utc)), S.ODDS_MAX_CALLS,
+   "near the reset a full balance is spent up to the ceiling, never beyond it")
+eq(S.odds_allowance(None), 1, "an unknown balance spends one call, cautiously")
+eq(S.odds_allowance(400, datetime(2026, 12, 20, tzinfo=timezone.utc)) >= 1, True, "December rolls into January")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

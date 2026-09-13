@@ -486,9 +486,12 @@ cricket and tennis — the three sports with no dependable tipster — de-vigged
 probability. Pinnacle closed its own public API in July 2025; the pinnacle.com site's guest
 endpoint also answers, but it is undocumented and Pinnacle does not serve US customers, so
 it is not used. The Odds API lists Pinnacle only for major cricket and the big tennis
-tournaments, not ITF or Challenger. Credits are rationed: event lists are free, and a paid
-odds call is made only for a sport with a listed, priced contest waiting, at most four a
-run, stopping at a reserve of 25 — which fits the free tier's 500 a month.
+tournaments, not ITF or Challenger. Credits are paced to last the month: event lists are free, a
+paid odds call is made only for a sport with a listed, priced contest waiting, and each run
+may spend only its share of what remains — (remaining − 25 reserve) ÷ the runs left before
+the credits reset on the 1st, counting four scheduled runs a day plus 25% for manual ones,
+never more than four. A simulated month of six runs a day never runs dry and still makes a
+paid call every day.
 
 Beyond sport the same machinery runs on yes/no markets where the opponent is the market
 price itself — climate (National Weather Service against Kalshi's temperature buckets for
