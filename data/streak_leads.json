@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-13T11:59:39+00:00",
+ "board_built_at": "2026-09-13T16:25:33+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -4923,7 +4923,7 @@
    "id": "2026-09-13|Brest|Paris Saint-Germain|Brest to score 2+",
    "kickoff": "2026-09-13T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Ligue 1",
    "match": "Brest v Paris Saint-Germain",
    "model": {
@@ -4975,7 +4975,7 @@
    "id": "2026-09-13|Brest|Paris Saint-Germain|Over 1.5 goals",
    "kickoff": "2026-09-13T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Ligue 1",
    "match": "Brest v Paris Saint-Germain",
    "model": {
@@ -5152,7 +5152,7 @@
    "id": "2026-09-13|Chicago Fire FC|New England Revolution|Over 1.5 goals",
    "kickoff": "2026-09-13T21:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "MLS",
    "match": "Chicago Fire FC v New England Revolution",
    "model": {
@@ -5195,7 +5195,9 @@
     "team": "Excelsior"
    },
    "date": "2026-09-13",
+   "final": "1-2",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-13T16:25:33+00:00",
    "headline": "Excelsior to score 2+",
    "home": "Excelsior",
    "id": "2026-09-13|Excelsior|FC Utrecht|Excelsior to score 2+",
@@ -5211,6 +5213,24 @@
     "team2plus": 0.703
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.513
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.19
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.769
+    },
+    "team2plus": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -5230,7 +5250,7 @@
      "price": 1.909
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 9
   },
   "2026-09-13|Excelsior|FC Utrecht|Over 1.5 goals": {
@@ -5247,7 +5267,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "1-2",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-13T16:25:33+00:00",
    "headline": "Over 1.5 goals",
    "home": "Excelsior",
    "id": "2026-09-13|Excelsior|FC Utrecht|Over 1.5 goals",
@@ -5262,6 +5284,20 @@
     "over25": 0.7825
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.513
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.19
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.769
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -5277,7 +5313,7 @@
      "price": 1.769
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-13|Excelsior|FC Utrecht|Over 2.5 goals": {
@@ -5294,14 +5330,16 @@
     "n": 3
    },
    "date": "2026-09-13",
+   "final": "1-2",
    "first_seen": "2026-08-30",
+   "graded_at": "2026-09-13T16:25:33+00:00",
    "headline": "Over 2.5 goals",
    "home": "Excelsior",
    "id": "2026-09-13|Excelsior|FC Utrecht|Over 2.5 goals",
    "kickoff": "2026-09-13T10:15Z",
    "league": "Eredivisie",
    "match": "Excelsior v FC Utrecht",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5481,14 +5519,16 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "0-0",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-13T16:25:33+00:00",
    "headline": "Over 1.5 goals",
    "home": "Heerenveen",
    "id": "2026-09-13|Heerenveen|Telstar|Over 1.5 goals",
    "kickoff": "2026-09-13T12:30Z",
    "league": "Eredivisie",
    "match": "Heerenveen v Telstar",
-   "status": "pending",
+   "status": "miss",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5734,7 +5774,7 @@
    "id": "2026-09-13|PSV Eindhoven|Sparta Rotterdam|Over 1.5 goals",
    "kickoff": "2026-09-13T18:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Eredivisie",
    "match": "PSV Eindhoven v Sparta Rotterdam",
    "status": "pending",
@@ -5833,7 +5873,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "5-0",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T16:25:33+00:00",
    "headline": "Over 1.5 goals",
    "home": "RB Leipzig",
    "id": "2026-09-13|RB Leipzig|Hamburg SV|Over 1.5 goals",
@@ -5842,7 +5884,7 @@
    "last_seen_at": "2026-09-13T11:59:39+00:00",
    "league": "Bundesliga",
    "match": "RB Leipzig v Hamburg SV",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-13|Real Madrid|Rayo Vallecano|Real Madrid to score": {
@@ -5969,7 +6011,7 @@
    "id": "2026-09-13|Sassuolo|Juventus|Over 1.5 goals",
    "kickoff": "2026-09-13T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Serie A",
    "match": "Sassuolo v Juventus",
    "model": {
@@ -6283,7 +6325,7 @@
    "id": "2026-09-13|Vancouver Whitecaps|Austin FC|Over 1.5 goals",
    "kickoff": "2026-09-13T22:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "MLS",
    "match": "Vancouver Whitecaps v Austin FC",
    "model": {
@@ -6332,7 +6374,7 @@
    "id": "2026-09-14|Como|Parma|Como to score 2+",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Serie A",
    "match": "Como v Parma",
    "model": {
@@ -6384,7 +6426,7 @@
    "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
    "kickoff": "2026-09-14T18:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Serie A",
    "match": "Internazionale v Udinese",
    "model": {
@@ -6431,7 +6473,7 @@
    "id": "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals",
    "kickoff": "2026-09-14T19:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Premier League",
    "match": "Leeds United v Newcastle United",
    "model": {
@@ -6503,7 +6545,7 @@
    "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
    "kickoff": "2026-09-14T17:45Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Primeira Liga",
    "match": "Rio Ave v Estrela",
    "model": {
@@ -6577,7 +6619,7 @@
    "id": "2026-09-14|San Diego FC|Philadelphia Union|Philadelphia Union to score 2+",
    "kickoff": "2026-09-14T01:00Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "MLS",
    "match": "San Diego FC v Philadelphia Union",
    "model": {
@@ -6683,7 +6725,7 @@
    "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
    "kickoff": "2026-09-14T16:30Z",
    "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T11:59:39+00:00",
+   "last_seen_at": "2026-09-13T16:25:33+00:00",
    "league": "Serie A",
    "match": "Torino v AS Roma",
    "model": {
@@ -10541,5 +10583,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-13T11:59:42+00:00"
+ "updated_at": "2026-09-13T16:25:33+00:00"
 }

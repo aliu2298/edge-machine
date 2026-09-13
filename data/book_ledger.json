@@ -3153,6 +3153,8 @@
   "2026-09-13|Celta Vigo|M\u00e1laga": {
    "away": "M\u00e1laga",
    "date": "2026-09-13",
+   "final": "1-1",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Celta Vigo",
    "id": "2026-09-13|Celta Vigo|M\u00e1laga",
    "kickoff": "2026-09-13T12:00Z",
@@ -3164,6 +3166,13 @@
     "home2plus": 0.4411,
     "over15": 0.7278,
     "over25": 0.4754
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.952,
+    "home2plus": -1.0,
+    "over15": 0.444,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -3188,7 +3197,14 @@
      "price": 2.43
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Chicago Fire FC|New England Revolution": {
    "away": "New England Revolution",
@@ -3233,6 +3249,8 @@
   "2026-09-13|Club Brugge|Antwerp": {
    "away": "Antwerp",
    "date": "2026-09-13",
+   "final": "3-1",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Club Brugge",
    "id": "2026-09-13|Club Brugge|Antwerp",
    "kickoff": "2026-09-13T11:30Z",
@@ -3244,6 +3262,13 @@
     "home2plus": 0.6731,
     "over15": 0.854,
     "over25": 0.6616
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.741,
+    "home2plus": 0.294,
+    "over15": 0.111,
+    "over25": 0.4
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -3268,7 +3293,14 @@
      "price": 1.4
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Colorado Rapids|CF Montr\u00e9al": {
    "away": "CF Montr\u00e9al",
@@ -3329,6 +3361,8 @@
   "2026-09-13|Coventry City|Brighton & Hove Albion": {
    "away": "Brighton & Hove Albion",
    "date": "2026-09-13",
+   "final": "0-5",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Coventry City",
    "id": "2026-09-13|Coventry City|Brighton & Hove Albion",
    "kickoff": "2026-09-13T13:00Z",
@@ -3340,6 +3374,13 @@
     "home2plus": 0.415,
     "over15": 0.7641,
     "over25": 0.5238
+   },
+   "pnl": {
+    "away2plus": 0.87,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": 0.241,
+    "over25": 0.781
    },
    "priced_at": "2026-09-12T13:03:56+00:00",
    "prices": {
@@ -3364,11 +3405,20 @@
      "price": 1.781
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": false,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Excelsior|FC Utrecht": {
    "away": "FC Utrecht",
    "date": "2026-09-13",
+   "final": "1-2",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Excelsior",
    "id": "2026-09-13|Excelsior|FC Utrecht",
    "kickoff": "2026-09-13T10:15Z",
@@ -3380,6 +3430,13 @@
     "home2plus": 0.703,
     "over15": 0.9185,
     "over25": 0.7825
+   },
+   "pnl": {
+    "away2plus": 1.3,
+    "btts": 0.513,
+    "home2plus": -1.0,
+    "over15": 0.19,
+    "over25": 0.769
    },
    "priced_at": "2026-09-12T10:55:20+00:00",
    "prices": {
@@ -3404,7 +3461,14 @@
      "price": 1.769
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|FC Dallas|Portland Timbers": {
    "away": "Portland Timbers",
@@ -3585,6 +3649,8 @@
   "2026-09-13|Genclerbirligi|Kasimpasa": {
    "away": "Kasimpasa",
    "date": "2026-09-13",
+   "final": "1-2",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Genclerbirligi",
    "id": "2026-09-13|Genclerbirligi|Kasimpasa",
    "kickoff": "2026-09-13T14:00Z",
@@ -3596,6 +3662,13 @@
     "home2plus": 0.4375,
     "over15": 0.7432,
     "over25": 0.4954
+   },
+   "pnl": {
+    "away2plus": 2.1,
+    "btts": 0.847,
+    "home2plus": -1.0,
+    "over15": 0.455,
+    "over25": 1.56
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -3620,7 +3693,14 @@
      "price": 2.56
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Getafe|Deportivo": {
    "away": "Deportivo",
@@ -3665,6 +3745,8 @@
   "2026-09-13|Heerenveen|Telstar": {
    "away": "Telstar",
    "date": "2026-09-13",
+   "final": "0-0",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Heerenveen",
    "id": "2026-09-13|Heerenveen|Telstar",
    "kickoff": "2026-09-13T12:30Z",
@@ -3676,6 +3758,13 @@
     "home2plus": 0.5433,
     "over15": 0.8612,
     "over25": 0.674
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": -1.0,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -3700,7 +3789,14 @@
      "price": 1.392
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": false,
+    "over15": false,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|IK Start|SK Brann": {
    "away": "SK Brann",
@@ -3961,6 +4057,8 @@
   "2026-09-13|Lecce|Monza": {
    "away": "Monza",
    "date": "2026-09-13",
+   "final": "3-2",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Lecce",
    "id": "2026-09-13|Lecce|Monza",
    "kickoff": "2026-09-13T13:00Z",
@@ -3972,6 +4070,13 @@
     "home2plus": 0.3414,
     "over15": 0.6991,
     "over25": 0.4394
+   },
+   "pnl": {
+    "away2plus": 2.0,
+    "btts": 0.926,
+    "home2plus": 1.85,
+    "over15": 0.426,
+    "over25": 1.28
    },
    "priced_at": "2026-09-12T13:03:56+00:00",
    "prices": {
@@ -3996,11 +4101,20 @@
      "price": 2.28
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Levante|Barcelona": {
    "away": "Barcelona",
    "date": "2026-09-13",
+   "final": "2-4",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Levante",
    "id": "2026-09-13|Levante|Barcelona",
    "kickoff": "2026-09-13T14:15Z",
@@ -4010,6 +4124,11 @@
     "away2plus": 0.472,
     "btts": 0.5918,
     "home2plus": 0.3942
+   },
+   "pnl": {
+    "away2plus": 0.148,
+    "btts": 0.781,
+    "home2plus": 3.8
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -4026,11 +4145,18 @@
      "price": 4.8
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Lille|Troyes": {
    "away": "Troyes",
    "date": "2026-09-13",
+   "final": "2-0",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Lille",
    "id": "2026-09-13|Lille|Troyes",
    "kickoff": "2026-09-13T13:00Z",
@@ -4042,6 +4168,13 @@
     "home2plus": 0.5035,
     "over15": 0.7843,
     "over25": 0.5524
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.532,
+    "over15": 0.217,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T13:03:56+00:00",
    "prices": {
@@ -4066,11 +4199,20 @@
      "price": 1.699
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Lyngby Boldklub|S\u00f8nderjyske Fodbold": {
    "away": "S\u00f8nderjyske Fodbold",
    "date": "2026-09-13",
+   "final": "1-1",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Lyngby Boldklub",
    "id": "2026-09-13|Lyngby Boldklub|S\u00f8nderjyske Fodbold",
    "kickoff": "2026-09-13T12:00Z",
@@ -4082,6 +4224,13 @@
     "home2plus": 0.5743,
     "over15": 0.8206,
     "over25": 0.6071
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.613,
+    "home2plus": -1.0,
+    "over15": 0.182,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -4106,7 +4255,14 @@
      "price": 1.625
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Manchester United|Manchester City": {
    "away": "Manchester City",
@@ -4421,6 +4577,8 @@
   "2026-09-13|RB Leipzig|Hamburg SV": {
    "away": "Hamburg SV",
    "date": "2026-09-13",
+   "final": "5-0",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "RB Leipzig",
    "id": "2026-09-13|RB Leipzig|Hamburg SV",
    "kickoff": "2026-09-13T13:30Z",
@@ -4431,6 +4589,12 @@
     "btts": 0.7108,
     "home2plus": 0.7198,
     "over25": 0.7638
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.328,
+    "over25": 0.455
    },
    "priced_at": "2026-09-12T13:36:10+00:00",
    "prices": {
@@ -4451,11 +4615,19 @@
      "price": 1.455
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Racing Genk|KAA Gent": {
    "away": "KAA Gent",
    "date": "2026-09-13",
+   "final": "1-1",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Racing Genk",
    "id": "2026-09-13|Racing Genk|KAA Gent",
    "kickoff": "2026-09-13T14:00Z",
@@ -4467,6 +4639,13 @@
     "home2plus": 0.4549,
     "over15": 0.7527,
     "over25": 0.5082
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.667,
+    "home2plus": -1.0,
+    "over15": 0.25,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -4491,11 +4670,20 @@
      "price": 1.82
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Randers FC|Odense Boldklub": {
    "away": "Odense Boldklub",
    "date": "2026-09-13",
+   "final": "1-2",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Randers FC",
    "id": "2026-09-13|Randers FC|Odense Boldklub",
    "kickoff": "2026-09-13T14:00Z",
@@ -4507,6 +4695,13 @@
     "home2plus": 0.4156,
     "over15": 0.7602,
     "over25": 0.5184
+   },
+   "pnl": {
+    "away2plus": 1.58,
+    "btts": 0.588,
+    "home2plus": -1.0,
+    "over15": 0.238,
+    "over25": 0.714
    },
    "priced_at": "2026-09-12T20:39:08+00:00",
    "prices": {
@@ -4531,7 +4726,14 @@
      "price": 1.714
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Real Salt Lake|New York City FC": {
    "away": "New York City FC",
@@ -4788,6 +4990,8 @@
   "2026-09-13|Silkeborg IF|Viborg FF": {
    "away": "Viborg FF",
    "date": "2026-09-13",
+   "final": "1-1",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Silkeborg IF",
    "id": "2026-09-13|Silkeborg IF|Viborg FF",
    "kickoff": "2026-09-13T12:00Z",
@@ -4799,6 +5003,13 @@
     "home2plus": 0.4503,
     "over15": 0.8005,
     "over25": 0.5763
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.5,
+    "home2plus": -1.0,
+    "over15": 0.174,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -4823,7 +5034,14 @@
      "price": 1.546
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Sporting Kansas City|LAFC": {
    "away": "LAFC",
@@ -4980,6 +5198,8 @@
   "2026-09-13|Viking FK|Kristiansund BK": {
    "away": "Kristiansund BK",
    "date": "2026-09-13",
+   "final": "8-1",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "Viking FK",
    "id": "2026-09-13|Viking FK|Kristiansund BK",
    "kickoff": "2026-09-13T12:30Z",
@@ -4991,6 +5211,13 @@
     "home2plus": 0.5963,
     "over15": 0.7891,
     "over25": 0.5594
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.667,
+    "home2plus": 0.286,
+    "over15": 0.105,
+    "over25": 0.37
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -5015,11 +5242,20 @@
      "price": 1.37
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|WSG Swarovski Tirol|TSV Hartberg": {
    "away": "TSV Hartberg",
    "date": "2026-09-13",
+   "final": "2-2",
+   "graded_at": "2026-09-13T16:25:34+00:00",
    "home": "WSG Swarovski Tirol",
    "id": "2026-09-13|WSG Swarovski Tirol|TSV Hartberg",
    "kickoff": "2026-09-13T12:30Z",
@@ -5031,6 +5267,13 @@
     "home2plus": 0.4595,
     "over15": 0.7732,
     "over25": 0.5366
+   },
+   "pnl": {
+    "away2plus": 1.47,
+    "btts": 0.588,
+    "home2plus": 0.98,
+    "over15": 0.217,
+    "over25": 0.714
    },
    "priced_at": "2026-09-12T12:41:36+00:00",
    "prices": {
@@ -5055,7 +5298,14 @@
      "price": 1.714
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|Zulte-Waregem|Royal Charleroi SC": {
    "away": "Royal Charleroi SC",
@@ -5138,5 +5388,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-13T11:59:46+00:00"
+ "updated_at": "2026-09-13T16:25:35+00:00"
 }
