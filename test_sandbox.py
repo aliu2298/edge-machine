@@ -1674,11 +1674,11 @@ try:
     _fresh_bad = [_sb(100 + i, i % 5 == 0, "a", 0.40, 4 + i // 10, logged=_t + timedelta(hours=1 + i))
                   for i in range(30)]
     d2 = {"quotes": d["quotes"] + _fresh_bad}
-    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=30), verbose=False)
+    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=2), verbose=False)
     eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "sandbox")],
        "30 fresh QA bets behind the price demote the pair")
     ok("behind the price" in ch[0]["reason"], "with the reason recorded")
-    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=31), verbose=False)
+    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=3), verbose=False)
     eq(ch, [], "after demotion the old promoting record cannot re-promote it: it must re-qualify on new bets")
     eq(len(st["events"]), 2, "every change is in the event log")
 
@@ -1689,12 +1689,55 @@ try:
         q["close_price"] = q["price"] + 0.02
         q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
     ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t, verbose=False)
-    eq([c["to"] for c in ch], ["ready"], "a fresh QA record through the stamp, with CLV and fees positive, is ready")
+    eq(ch, [], "passing the ready gate once is not ready: it must hold")
+    eq(st3["pairs"]["covers|mlb"].get("ready_since"), _t.isoformat(), "the hold starts the first run it passes")
+    eq(T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=6), verbose=False), [],
+       "six days of holding is not yet seven")
+    ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=7), verbose=False)
+    eq([c["to"] for c in ch], ["ready"], "held for seven days, with CLV and fees positive, it is ready")
+    eq(T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=8), verbose=False), [],
+       "ready is marked once")
+    _thin = [dict(q) for q in fresh]
+    for q in _thin[29:]:
+        q.pop("close_price"); q.pop("close_at")
+    ch = T.evaluate_stages({"quotes": _thin}, st3, now=_t + timedelta(days=9), verbose=False)
+    eq([c["to"] for c in ch], ["unready"], "with only 29 closing prices the gate fails, and ready is withdrawn")
+    ok("closing price" in ch[0]["reason"], "naming the criterion it lost")
+    ok("ready_at" not in st3["pairs"]["covers|mlb"] and "ready_since" not in st3["pairs"]["covers|mlb"],
+       "the hold starts again from nothing")
     for q in fresh:
         q["close_price"] = q["price"] - 0.02
     st4 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    eq(T.evaluate_stages({"quotes": fresh}, st4, now=_t, verbose=False), [],
-       "the same record buying above the closing price is not ready")
+    ch = T.evaluate_stages({"quotes": fresh}, st4, now=_t, verbose=False)
+    eq([c["to"] for c in ch], ["sandbox"], "the same record buying above the closing price is demoted, not ready")
+    ok("closing price" in ch[0]["reason"], "because it is behind the close")
+
+    # Demotion also covers the blind rules and a pair that stops betting.
+    st5 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    ch = T.evaluate_stages(fav_only, st5, now=_t, verbose=False)
+    eq([c["to"] for c in ch], ["sandbox"], "30+ fresh bets that are just 'back the favourite' are demoted")
+    ok("blind rule" in ch[0]["reason"], "for not beating every blind rule")
+    st6 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    _few = _chooser(5, 1)
+    eq(T.evaluate_stages({"quotes": _few}, st6, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False), [],
+       "a young QA pair with few bets is left alone")
+    ch = T.evaluate_stages({"quotes": _few}, st6, now=datetime(2026, 9, 30, tzinfo=timezone.utc), verbose=False)
+    eq([(c["to"], c["reason"]) for c in ch], [("sandbox", "no new bet in 21 days")],
+       "21 days without a new bet sends it back, whatever the count")
+
+    # The sample is a span of days, not calendar weeks touched.
+    _sun_mon = [dict(q, start=(datetime(2026, 9, 13, 12, tzinfo=timezone.utc) + timedelta(hours=i)).isoformat())
+                for i, q in enumerate(_chooser(32, 1))]
+    _am = T.assess({"quotes": _sun_mon}, "covers", "mlb")
+    eq(_am["span_days"] < 2, True, "32 bets from a Sunday into a Monday span under two days")
+    eq(dict((k, p) for k, _l, p, _d in T.qa_entry(_am))["sample"], False,
+       "and do not pass QA's 14-day sample, though they touch two calendar weeks")
+
+    # Baselines are never promoted.
+    S.SOURCES = {"spot": dict(_old_sources["spot"], sports=["mlb"])}
+    eq(T.evaluate_stages({"quotes": [dict(q, source="spot") for q in _chooser(32, 3)]},
+                         {"pairs": {}, "events": []}, now=_t, verbose=False), [],
+       "a baseline with a promotable record is not promoted")
 finally:
     S.SOURCES = _old_sources
 
@@ -1852,6 +1895,37 @@ ok("net P/L</span>" not in _src and "ROI on turnover" not in _src, "the blended 
 ok("sources past the" in _src and "stamped</span>" in _src, "replaced by sources past the floor and stamped")
 ok("<th class=\"num\">v blind</th>" in _src and "Beat the close</th>" in _src,
    "the overall record carries v blind and beat-the-close columns")
+
+# ---------------------------------------------------------------------------
+print("\nsettled bets are archived, not lost")
+# ---------------------------------------------------------------------------
+import tempfile as _tf, json
+_old_set = (datetime.now(timezone.utc) - timedelta(days=60)).isoformat()
+_arch_bets = [dict(_sb(i, i % 10 < 6, "a", 0.40, i // 10), id=f"covers:ar{i}", market_id=f"ar{i}",
+                   settled=_old_set, stake=100.0) for i in range(40)]
+_nonbet = dict(_arch_bets[0], id="polymarket:nb", source="polymarket", bet=False, status="graded", prob_a=0.4)
+_da = {"quotes": [dict(q) for q in _arch_bets] + [_nonbet], "_archive": []}
+_before = T.assess(_da, "covers", "mlb")["n"]
+T.prune(_da, verbose=False)
+eq(len(_da["quotes"]), 0, "old settled rows leave the ledger")
+eq(len(_da["_archive"]), 40, "every settled bet goes to the archive; the non-bet quote does not")
+eq(T.assess(_da, "covers", "mlb")["n"], _before, "judgement reads the archive, so nothing is lost")
+eq(_da["retired"]["covers"]["settled"], 40, "the rolled-up totals still count them")
+T.prune(_da, verbose=False)
+eq(len(_da["_archive"]), 40, "pruning again never duplicates")
+_tmpd = _tf.mkdtemp()
+_saved_ledger = T.LEDGER
+T.LEDGER = _os.path.join(_tmpd, "ledger.json")
+try:
+    _da["meta"] = {}
+    T.save(_da, archive_dir=_os.path.join(_tmpd, "arch"))
+    ok("_archive" not in json.load(open(T.LEDGER)), "the archive is never written into the ledger")
+    _files = _os.listdir(_os.path.join(_tmpd, "arch"))
+    eq(_files, [f"{_old_set[:7]}.json"], "it is stored by the month the bets settled")
+    eq(len(T.load_archive(_os.path.join(_tmpd, "arch"))), 40, "and loads back whole")
+    eq(len(_da["_archive"]), 40, "saving leaves the in-memory archive in place")
+finally:
+    T.LEDGER = _saved_ledger
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

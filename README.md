@@ -453,13 +453,22 @@ the weekend's soccer.
 
 **Stages: Sandbox → QA.** Promotion is per (source, sport) and recorded in `data/stages.json`
 with the evidence it was made on. The **QA entry gate** is lighter than the stamp because QA
-re-tests on fresh data only — bets logged after the promotion: 30+ settled bets over 2+ weeks,
+re-tests on fresh data only — bets logged after the promotion: 30+ settled bets spanning 14+ days,
 wins beat the price by z ≥ 1, beats every blind rule on the same contests, still profitable
 without its biggest win. In QA the stamp is applied to the fresh record, plus positive
 closing-line value and positive ROI after the taker fee (Polymarket US 0.06·p·(1−p), Kalshi
 0.07): that is **production-ready**. A QA pair whose fresh record is behind the price after 30
 bets is demoted and must re-qualify on bets logged after the demotion. The trading bot never
 reads QA.
+
+**QA rules, tightened 2026-09-13 before any promotion.** Production-ready needs CLV on 30+
+closing prices covering at least half the fresh bets, and the ready gate must hold for 7 days
+(checked every run; the mark is withdrawn, and logged, the first run it fails). A QA pair is
+demoted after 30 fresh bets if it is behind the price, not beating every blind rule, or behind
+the closing price — and at any count after 21 days with no new bet. Baseline sources are never
+promoted. Settled bets are never lost to pruning: `prune()` copies each settled bet whole into
+`data/sandbox_archive/YYYY-MM.json` (by settle month) before rolling the row up, and every
+judgement reads the ledger and the archive together.
 
 **Closing prices.** Every run refreshes, on each open bet, the same venue's current price for
 the side it backed, while that book is tradeable and the contest has not started — so the
@@ -477,7 +486,7 @@ concurrency group, so it can neither conflict with nor cancel a queued board or 
 
 **The stamp of approval** is pre-registered (2026-09-12) and identical for tipsters, models,
 books and exchanges. Every criterion must hold, and it is re-judged every run:
-50+ settled bets over 4+ different weeks; wins beat the prices paid by z ≥ 2; ROI beats every
+50+ settled bets spanning 28+ days (first start to last — calendar weeks touched let a Sunday and a Monday count as two); wins beat the prices paid by z ≥ 2; ROI beats every
 blind rule on the same contests; still profitable without its single biggest win; profitable
 in both halves of its record. Below 30 settled bets a source is **no read**; readable and
 ahead of the price but short of a gate is **watch**; readable and not ahead is **failing**.

@@ -39,7 +39,10 @@ READ_FLOOR = 30
 # criterion must hold, for every betting source alike (tipsters, models, books, markets),
 # and it is re-judged on every run, so a stamp can be lost as well as won.
 #
-#   sample     at least MIN_BETS settled bets, across at least MIN_WEEKS different weeks.
+#   sample     at least MIN_BETS settled bets, spanning at least MIN_DAYS from the first
+#              start to the last. (Counted as calendar weeks touched until 2026-09-13,
+#              which let "4 weeks" pass after three weeks and a day, and QA's "2 weeks"
+#              after a Sunday and a Monday.)
 #              One weekend is one draw of the weather, not 36 independent bets: on
 #              Sep 12 2026 the tracked leagues drew 34% of the time against a normal ~26%,
 #              and a tipster that picks draws looked brilliant for exactly that reason.
@@ -54,21 +57,37 @@ READ_FLOOR = 30
 #              whenever the pick IS the favourite, so the test could never differ.)
 #   no one hit ROI stays positive with its single biggest win removed.
 #   both halves ROI is positive in the earlier and the later half of its settled bets.
-APPROVAL = dict(min_bets=50, min_weeks=4, z_min=2.0)
+APPROVAL = dict(min_bets=50, min_days=28, z_min=2.0)
 
 # ---- Stages: Sandbox -> QA (set 2026-09-13) -----------------------------------------------
 # Promotion is per (source, sport): a tipster can be in QA for MLB and still in the Sandbox
 # for soccer. The QA ENTRY gate is deliberately lighter than the stamp, because QA re-tests
 # on FRESH data — only bets logged after the promotion — so a lucky run cannot carry a
 # source through twice. Every criterion must hold:
-#   30+ settled bets over 2+ weeks · wins beat the price by z >= 1 · beats every blind rule on
+#   30+ settled bets spanning 14+ days · wins beat the price by z >= 1 · beats every blind rule on
 #   the same contests · still profitable without its single biggest win.
 # In QA, the stamp (APPROVAL) is applied to the fresh data, plus positive closing-line value
-# and positive ROI after fees: that is "production-ready". A QA pair whose fresh record falls
-# behind the price (z < 0 after 30 bets) is demoted, and must then re-qualify on bets logged
-# after the demotion.
-QA_ENTRY = dict(min_bets=30, min_weeks=2, z_min=1.0)
+# and positive ROI after fees: that is "production-ready".
+#
+# Tightened 2026-09-13, before any pair had been promoted:
+#   * CLV must rest on READY_CLV["min_n"]+ bets with a closing price, covering at least
+#     READY_CLV["min_share"] of the fresh bets — one lucky close is not evidence.
+#   * READY must HOLD: the gate is checked every run, and taking the first run it passes
+#     would turn four looks a day into a lucky crossing. A pair is marked ready only after
+#     passing continuously for READY_HOLD_DAYS, and the mark is withdrawn (logged) the
+#     first run it fails.
+#   * DEMOTION after QA_DEMOTE["min_bets"] fresh bets when ANY of: behind the price (z < 0),
+#     not beating every blind rule, or behind the closing price (on the READY_CLV sample).
+#     And whatever the count, when the pair has logged no new bet for STALE_DAYS — its
+#     source went dark or its season ended — so nothing can sit in QA untested.
+#   * Baselines are benchmarks, not forecasters, and are never promoted.
+# A demoted pair must re-qualify on bets logged after the demotion.
+QA_ENTRY = dict(min_bets=30, min_days=14, z_min=1.0)
 QA_DEMOTE = dict(min_bets=30, z_below=0.0)
+READY_CLV = dict(min_n=30, min_share=0.5)
+READY_HOLD_DAYS = 7
+STALE_DAYS = 21
+NEVER_PROMOTED_KINDS = ("Baseline",)
 STAGES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stages.json")
 # Taker fee per $1 contract at price p, per venue: fee = rate * p * (1 - p). Polymarket US
 # charges 0.06, Kalshi 0.07. QA scores what following a source would actually cost.
@@ -89,6 +108,32 @@ def now_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
+# SETTLED BETS ARE NEVER THROWN AWAY. prune() keeps the ledger small by folding old rows
+# into per-source totals, but the stamp and QA are judged on individual bets per sport — a
+# rolled-up total cannot say which sport a win was in, at what price, or against which blind
+# rule. So every settled BET leaving the ledger is copied, whole, into a month file here
+# (keyed by the month it settled, so old months never change again and git stores each
+# once). assess() reads the ledger and the archive together. Non-bet quotes are still only
+# rolled up: nothing is judged on them.
+ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandbox_archive")
+
+
+def load_archive(path=None):
+    path = path or ARCHIVE_DIR
+    out = []
+    if os.path.isdir(path):
+        for fn in sorted(os.listdir(path)):
+            if fn.endswith(".json"):
+                with open(os.path.join(path, fn)) as f:
+                    out += json.load(f)
+    return out
+
+
+def all_bets(d):
+    """Ledger rows plus archived settled bets — everything a judgement may read."""
+    return d["quotes"] + (d.get("_archive") or [])
+
+
 def load():
     if os.path.exists(LEDGER):
         with open(LEDGER) as f:
@@ -96,16 +141,36 @@ def load():
         d.setdefault("quotes", [])
         d.setdefault("meta", {})
         d.setdefault("coverage", {})
-        return d
-    return {"meta": {"created": now_iso()}, "quotes": [], "coverage": {}}
+    else:
+        d = {"meta": {"created": now_iso()}, "quotes": [], "coverage": {}}
+    d["_archive"] = load_archive()
+    return d
 
 
-def save(d):
+def save(d, archive_dir=None):
     d["meta"]["updated"] = now_iso()
     d["meta"]["runs"] = d["meta"].get("runs", 0) + 1
     os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
-    with open(LEDGER, "w") as f:
-        json.dump(d, f, indent=1, sort_keys=True)
+    dirty = d.pop("_archive_dirty", set())
+    archive = d.pop("_archive", None)
+    try:
+        with open(LEDGER, "w") as f:
+            json.dump(d, f, indent=1, sort_keys=True)
+        if dirty and archive is not None:
+            save_archive(archive, dirty, archive_dir)
+    finally:
+        if archive is not None:
+            d["_archive"] = archive
+
+
+def save_archive(archive, months, path=None):
+    path = path or ARCHIVE_DIR
+    os.makedirs(path, exist_ok=True)
+    for month in sorted(months):
+        rows = sorted((q for q in archive if str(q.get("settled", ""))[:7] == month),
+                      key=lambda q: (q["settled"], q["id"]))
+        with open(os.path.join(path, f"{month}.json"), "w") as f:
+            json.dump(rows, f, indent=1, sort_keys=True)
 
 
 # ---------------------------------------------------------------------------
@@ -830,7 +895,7 @@ def assess(d, name, sport=None, since=None):
     status: "unproven" under READ_FLOOR settled bets; "approved" when every criterion
     holds; "failing" when it is readable and not ahead of the price at all; else "watch".
     """
-    bets = sorted((q for q in d["quotes"] if q["source"] == name and q.get("bet")
+    bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
                    and q["status"] in ("won", "lost")
                    and (sport is None or q["sport"] == sport)
                    and (since is None or q["logged"] >= since)),
@@ -842,7 +907,9 @@ def assess(d, name, sport=None, since=None):
     expected = sum(q["price"] for q in bets)
     var = sum(q["price"] * (1 - q["price"]) for q in bets)
     z = (won - expected) / var ** 0.5 if var > 0 else 0.0
-    weeks = len({datetime.fromisoformat(q["start"]).isocalendar()[:2] for q in bets})
+    span_days = ((datetime.fromisoformat(bets[-1]["start"]) - datetime.fromisoformat(bets[0]["start"]))
+                 .total_seconds() / 86400) if n else 0.0
+    weeks = int(span_days // 7)
 
     # Against each blind rule on the contests where that rule has a bet, the source's own
     # ROI on exactly those contests. The hardest of them is the one reported.
@@ -867,8 +934,8 @@ def assess(d, name, sport=None, since=None):
 
     A = APPROVAL
     criteria = [
-        ("sample", f"{A['min_bets']}+ settled bets over {A['min_weeks']}+ weeks",
-         n >= A["min_bets"] and weeks >= A["min_weeks"], f"{n} bets, {weeks} week{'s' if weeks != 1 else ''}"),
+        ("sample", f"{A['min_bets']}+ settled bets spanning {A['min_days']}+ days",
+         n >= A["min_bets"] and span_days >= A["min_days"], f"{n} bets over {span_days:.0f} day{'' if round(span_days) == 1 else 's'}"),
         ("price", f"wins beat the price by z ≥ {A['z_min']:g}",
          n > 0 and z >= A["z_min"], f"{won} won v {expected:.1f} priced, z {z:+.2f}"),
         ("baseline", "beats every blind rule on the same contests",
@@ -894,7 +961,7 @@ def assess(d, name, sport=None, since=None):
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
     return dict(status=status, criteria=criteria, n=n, won=won, roi=roi, pnl=pnl,
-                z=z, weeks=weeks, base_roi=base_roi, own_roi=own_roi, expected=expected,
+                z=z, weeks=weeks, span_days=span_days, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
                 clv_beat=(sum(1 for c in clv if c > 0) / len(clv)) if clv else None)
@@ -905,9 +972,9 @@ def qa_entry(a):
     c = {k: (p, det) for k, _l, p, det in a["criteria"]}
     E = QA_ENTRY
     return [
-        ("sample", f"{E['min_bets']}+ settled bets over {E['min_weeks']}+ weeks",
-         a["n"] >= E["min_bets"] and a["weeks"] >= E["min_weeks"],
-         f"{a['n']} bets, {a['weeks']} week{'s' if a['weeks'] != 1 else ''}"),
+        ("sample", f"{E['min_bets']}+ settled bets spanning {E['min_days']}+ days",
+         a["n"] >= E["min_bets"] and a["span_days"] >= E["min_days"],
+         f"{a['n']} bets over {a['span_days']:.0f} day{'' if round(a['span_days']) == 1 else 's'}"),
         ("price", f"wins beat the price by z ≥ {E['z_min']:g}", a["n"] > 0 and a["z"] >= E["z_min"],
          f"{a['won']} won v {a['expected']:.1f} priced, z {a['z']:+.2f}"),
         ("baseline", "beats every blind rule on the same contests", *c["baseline"]),
@@ -915,13 +982,20 @@ def qa_entry(a):
     ]
 
 
+def clv_sample(a):
+    """Is there enough closing-price evidence to judge CLV at all? See READY_CLV."""
+    return (a["clv"] is not None and a["clv_n"] >= READY_CLV["min_n"]
+            and a["clv_n"] >= READY_CLV["min_share"] * a["n"])
+
+
 def ready_gate(a):
     """Production-ready, judged on QA's fresh data: the stamp, positive CLV, positive after fees."""
     stamp = [(k, l, p, det) for k, l, p, det in a["criteria"]]
     return stamp + [
-        ("clv", "beats the closing price on average",
-         a["clv"] is not None and a["clv"] > 0,
-         (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} bets, {a['clv_beat']:.0%} beat the close"
+        ("clv", f"beats the closing price on average ({READY_CLV['min_n']}+ closes, "
+                f"{READY_CLV['min_share']:.0%}+ of bets)",
+         clv_sample(a) and a["clv"] > 0,
+         (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} of {a['n']} bets, {a['clv_beat']:.0%} beat the close"
           if a["clv"] is not None else "no closing prices yet")),
         ("fees", "profitable after the taker fee",
          a["roi_fee"] is not None and a["roi_fee"] > 0,
@@ -945,19 +1019,47 @@ def save_stages(st, path=None):
 
 def _snapshot(a):
     return {k: (round(v, 4) if isinstance(v, float) else v) for k, v in a.items()
-            if k in ("n", "weeks", "z", "roi", "roi_fee", "base_roi", "own_roi", "clv", "clv_n")}
+            if k in ("n", "weeks", "span_days", "z", "roi", "roi_fee", "base_roi", "own_roi", "clv", "clv_n")}
+
+
+def _last_logged(d, name, sport, since):
+    """Latest `logged` of any bet (open or settled) for the pair since `since`, or None."""
+    ts = [q["logged"] for q in all_bets(d)
+          if q["source"] == name and q["sport"] == sport and q.get("bet")
+          and q["status"] != "void" and q["logged"] >= since]
+    return max(ts) if ts else None
+
+
+def demote_reason(d, name, sport, pair, a, now):
+    """Why a QA pair goes back to the Sandbox this run, or None."""
+    since = pair["promoted_at"]
+    last = _last_logged(d, name, sport, since) or since
+    if now - datetime.fromisoformat(last) >= timedelta(days=STALE_DAYS):
+        return f"no new bet in {STALE_DAYS} days"
+    if a["n"] < QA_DEMOTE["min_bets"]:
+        return None
+    if a["z"] < QA_DEMOTE["z_below"]:
+        return f"fresh QA record behind the price, z {a['z']:+.2f}"
+    base = dict((k, (p, det)) for k, _l, p, det in a["criteria"])["baseline"]
+    if not base[0]:
+        return f"not beating every blind rule ({base[1]})"
+    if clv_sample(a) and a["clv"] < 0:
+        return f"behind the closing price, {a['clv']*100:+.1f}¢ on {a['clv_n']} bets"
+    return None
 
 
 def evaluate_stages(d, st, now=None, verbose=True):
-    """Promote Sandbox pairs that pass QA_ENTRY; demote QA pairs whose fresh record fails.
+    """Promote Sandbox pairs that pass QA_ENTRY; demote QA pairs that fail; mark (and unmark)
+    production-ready once the ready gate has held for READY_HOLD_DAYS.
 
     Every change is appended to st["events"] with the evidence it was made on. Returns the
     list of changes made this run.
     """
-    now_s = (now or datetime.now(timezone.utc)).replace(microsecond=0).isoformat()
+    now = (now or datetime.now(timezone.utc)).replace(microsecond=0)
+    now_s = now.isoformat()
     changes = []
     for name, meta in S.SOURCES.items():
-        if not meta["connected"]:
+        if not meta["connected"] or meta.get("kind") in NEVER_PROMOTED_KINDS:
             continue
         for sport in meta["sports"]:
             key = f"{name}|{sport}"
@@ -969,13 +1071,25 @@ def evaluate_stages(d, st, now=None, verbose=True):
                     changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a)))
             elif pair["stage"] == "qa":
                 a = assess(d, name, sport, since=pair["promoted_at"])
-                if a["n"] >= QA_DEMOTE["min_bets"] and a["z"] < QA_DEMOTE["z_below"]:
+                why = demote_reason(d, name, sport, pair, a, now)
+                if why:
                     pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
                     changes.append(dict(pair=key, to="sandbox", at=now_s, evidence=_snapshot(a),
-                                        reason=f"fresh QA record behind the price, z {a['z']:+.2f}"))
-                elif all(p for _k, _l, p, _d in ready_gate(a)) and not pair.get("ready_at"):
-                    pair = dict(pair, ready_at=now_s)
-                    changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a)))
+                                        reason=why))
+                elif all(p for _k, _l, p, _d in ready_gate(a)):
+                    if not pair.get("ready_since"):
+                        pair = dict(pair, ready_since=now_s)
+                    elif (not pair.get("ready_at") and now - datetime.fromisoformat(pair["ready_since"])
+                          >= timedelta(days=READY_HOLD_DAYS)):
+                        pair = dict(pair, ready_at=now_s)
+                        changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a),
+                                            reason=f"held the ready gate {READY_HOLD_DAYS}+ days"))
+                else:
+                    failed = next(l for _k, l, p, _d in ready_gate(a) if not p)
+                    if pair.get("ready_at"):
+                        changes.append(dict(pair=key, to="unready", at=now_s, evidence=_snapshot(a),
+                                            reason=f"lost the ready gate: {failed}"))
+                    pair = {k: v for k, v in pair.items() if k not in ("ready_since", "ready_at")}
             if pair.get("stage") != "sandbox" or pair.get("since") or key in st["pairs"]:
                 st["pairs"][key] = pair
     st["events"].extend(changes)
@@ -1064,7 +1178,8 @@ def retire_pre_gate(d, now=None, verbose=True):
 
 
 def prune(d, retain_days=RETAIN_DAYS, verbose=True):
-    """Fold long-settled quotes into per-source totals and drop the rows.
+    """Fold long-settled quotes into per-source totals and drop the rows — settled BETS are
+    first copied whole into the monthly archive (ARCHIVE_DIR), so nothing judged is lost.
 
     The ledger is rewritten and committed four times a day, so every row kept is a row
     re-stored in git forever. Left alone this grows by roughly a megabyte a week. Old
@@ -1074,11 +1189,18 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
     cutoff = (datetime.now(timezone.utc) - timedelta(days=retain_days)).isoformat()
     keep, rolled = [], 0
     ret = d.setdefault("retired", {})
+    archived = {x["id"] for x in d.get("_archive") or []}
 
     for q in d["quotes"]:
         if q["status"] == "open" or not q.get("settled") or q["settled"] >= cutoff:
             keep.append(q)
             continue
+        if q.get("bet") and q["status"] in ("won", "lost"):
+            arch = d.setdefault("_archive", [])
+            if q["id"] not in archived:
+                arch.append(q)
+                archived.add(q["id"])
+                d.setdefault("_archive_dirty", set()).add(str(q["settled"])[:7])
         r = ret.setdefault(q["source"], dict(quotes=0, bets=0, settled=0, won=0,
                                              staked=0.0, pnl=0.0,
                                              brier_sum=0.0, brier_n=0))

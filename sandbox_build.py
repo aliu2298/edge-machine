@@ -568,7 +568,7 @@ the source does not cover that sport at all.</div>
 <div class="note">A source earns the stamp only when <b>every</b> criterion holds, and it is
 re-judged every run, so it can be lost. The rules were fixed on 2026-09-12, before any
 source had met them, and they are the same for tipsters, models, books and exchanges:
-<b>{T.APPROVAL['min_bets']}+ settled bets across {T.APPROVAL['min_weeks']}+ different weeks</b>
+<b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>
 (one weekend is one draw of the weather — on 2026-09-12 the tracked leagues drew 34% of the
 time against a normal ~26%); <b>wins beat the price</b> by z ≥ {T.APPROVAL['z_min']:g};
 <b>ROI beats every blind rule on the same contests</b> — back the favourite, back the
@@ -696,12 +696,19 @@ def qa_page(d, st, style):
         passed, cells = _ticks(gate)
         ready = passed == len(gate)
         n_ready += ready
-        status = ('<span class="sig y">✓ PRODUCTION-READY</span>' if ready else
-                  f'<span class="sig w">IN QA · {passed}/{len(gate)}</span>')
+        if pair.get("ready_at"):
+            status = '<span class="sig y">✓ PRODUCTION-READY</span>'
+        elif ready and pair.get("ready_since"):
+            held = (datetime.now(timezone.utc) - datetime.fromisoformat(pair["ready_since"])).days
+            status = (f'<span class="sig w">HOLDING · day {held} of {T.READY_HOLD_DAYS}</span>'
+                      f'<div class="sm mut">gate passing since {esc(pair["ready_since"][:10])}</div>')
+        else:
+            status = f'<span class="sig w">IN QA · {passed}/{len(gate)}</span>'
+        ready = bool(pair.get("ready_at"))
         qa_rows.append(f"""<tr><td><b>{esc(label(key))}</b>
 <div class="sm mut">promoted {esc(pair['promoted_at'][:10])} on {pair.get('entry', {}).get('n', '?')} sandbox bets</div></td>
 <td>{status}</td>
-<td class="num">{a['n']}<div class="sm mut">{a['weeks']} wk</div></td>
+<td class="num">{a['n']}<div class="sm mut">{a['span_days']:.0f} days</div></td>
 <td class="num"><span class="{cls(a['roi']) if a['n'] >= MIN_N else 'mut'}">{pct(a['roi'], sign=True)}</span>
 <div class="sm mut">{pct(a['roi_fee'], sign=True)} after fees</div></td>
 <td class="num">{f"{a['clv']*100:+.1f}¢" if a['clv'] is not None else '—'}
@@ -718,7 +725,7 @@ def qa_page(d, st, style):
     entry_head = "".join(f"<th>{esc(l)}</th>" for _k, l, _p, _d in T.qa_entry(T.assess(d, "__none__")))
     deck = []
     for name, meta in S.SOURCES.items():
-        if not meta["connected"]:
+        if not meta["connected"] or meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             continue
         for sport in meta["sports"]:
             key = f"{name}|{sport}"
@@ -746,7 +753,7 @@ def qa_page(d, st, style):
     events = list(reversed(st.get("events") or []))
     hist = "".join(
         f"""<tr><td class="mut">{esc(e['at'][:16].replace('T', ' '))}</td><td><b>{esc(label(e['pair']))}</b></td>
-<td>{'<span class="sig y">→ QA</span>' if e['to'] == 'qa' else '<span class="sig y">✓ READY</span>' if e['to'] == 'ready' else '<span class="st miss">→ SANDBOX</span>'}</td>
+<td>{'<span class="sig y">→ QA</span>' if e['to'] == 'qa' else '<span class="sig y">✓ READY</span>' if e['to'] == 'ready' else '<span class="st miss">READY WITHDRAWN</span>' if e['to'] == 'unready' else '<span class="st miss">→ SANDBOX</span>'}</td>
 <td class="sm mut">{esc(e.get('reason') or '')} n={e['evidence'].get('n')} · z {e['evidence'].get('z', 0):+.2f} · ROI {pct(e['evidence'].get('roi'), sign=True)}</td></tr>"""
         for e in events)
     hist_table = (collapse(hist, "<tr><th>When</th><th>Pair</th><th>Change</th><th>Evidence</th></tr>",
@@ -783,15 +790,20 @@ does it survive the <b>taker fee</b> a follower would pay. The trading bot never
 <h2>In QA</h2>
 {qa_table}
 <div class="note"><b>Production-ready</b> is the full stamp applied to the fresh QA record —
-{A['min_bets']}+ bets over {A['min_weeks']}+ weeks, z ≥ {A['z_min']:g}, beats every blind rule, still
+{A['min_bets']}+ bets spanning {A['min_days']}+ days, z ≥ {A['z_min']:g}, beats every blind rule, still
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
-price on average and staying profitable after the taker fee (Polymarket US 0.06·p·(1−p),
-Kalshi 0.07). A pair whose fresh record is behind the price after {T.QA_DEMOTE['min_bets']} bets goes
-back to the Sandbox and must re-qualify on bets logged after the demotion.</div>
+price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
+{T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US
+0.06·p·(1−p), Kalshi 0.07). The gate is checked every run, so a pair is marked ready only once
+it has <b>held for {T.READY_HOLD_DAYS} days</b>, and the mark is withdrawn the first run it fails.
+A pair goes <b>back to the Sandbox</b> after {T.QA_DEMOTE['min_bets']} fresh bets if it is behind the price,
+not beating every blind rule, or behind the closing price — or, at any count, after
+{T.STALE_DAYS} days without a new bet — and must re-qualify on bets logged after the demotion.
+Baselines are benchmarks and are never promoted.</div>
 
 <h2>On deck</h2>
-<div class="note">Sandbox pairs against the <b>QA entry gate</b>: {E['min_bets']}+ settled bets over
-{E['min_weeks']}+ weeks, wins beat the price by z ≥ {E['z_min']:g}, beats every blind rule on the same
+<div class="note">Sandbox pairs against the <b>QA entry gate</b>: {E['min_bets']}+ settled bets spanning
+{E['min_days']}+ days, wins beat the price by z ≥ {E['z_min']:g}, beats every blind rule on the same
 contests, still profitable without its biggest win. It is lighter than the stamp on purpose —
 QA re-tests on fresh data, so a pair that got lucky finds out there.</div>
 {deck_table}
