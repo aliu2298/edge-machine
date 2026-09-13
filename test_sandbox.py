@@ -1387,6 +1387,92 @@ eq(S.pair_match("Molina", "Rubio", "Mark Magsayo", "Andres Cortes", sport="boxin
 eq(S.pair_match("Mikaelian", "Opetaia", "Mikaeljan", "Opetaia", sport="tennis")[1], False,
    "the near-spelling rule is boxing only")
 
+# ---------------------------------------------------------------------------
+print("\nfight nights: Pinnacle start times, and MMA")
+# ---------------------------------------------------------------------------
+_now = datetime(2026, 9, 12, 22, 30, tzinfo=timezone.utc)
+_ev = [dict(a="Jai Opetaia", b="Norair Mikaeljan", start=datetime(2026, 9, 13, 2, 0, tzinfo=timezone.utc)),
+       dict(a="DaMazzion Vanhouter", b="Raphael Akpejiori", start=datetime(2026, 9, 13, 1, 15, tzinfo=timezone.utc)),
+       dict(a="Somebody", b="Else", start=datetime(2026, 9, 20, 2, 0, tzinfo=timezone.utc))]
+_fr = [
+    # Kalshi's 3h-early estimate has passed, the bout has not: re-timed and kept.
+    dict(side_a="Opetaia J.", side_b="Mikaelian N.", start="2026-09-12T23:00:00+00:00", label="x"),
+    # Polymarket stamped the card start for this bout: re-timed and kept.
+    dict(side_a="Vanhouter", side_b="Akpejiori", start="2026-09-12T21:00:00+00:00", label="y"),
+    # No Pinnacle event and its venue start has passed: dropped, exactly as before.
+    dict(side_a="Panin", side_b="Linger", start="2026-09-12T21:00:00+00:00", label="z"),
+    # No Pinnacle event and still ahead: kept on the venue's own start.
+    dict(side_a="Conway", side_b="Jeffers", start="2026-09-19T18:00:00+00:00", label="w"),
+    # Same surnames on a card a month away: a match over a day off is not trusted.
+    dict(side_a="Somebody", side_b="Else", start="2026-10-20T02:00:00+00:00", label="v"),
+]
+_kept, _st = S.apply_pinnacle_starts("boxing", _fr, events=_ev, now=_now)
+_by = {r["label"]: r for r in _kept}
+eq(sorted(_by), ["v", "w", "x", "y"], "re-timed bouts kept, a started unmatched bout dropped")
+eq((_by["v"]["start_source"], _by["v"]["start"]), ("venue", "2026-10-20T02:00:00+00:00"),
+   "a Pinnacle match more than a day off the venue is not trusted: the venue start stands")
+eq(_by["x"]["start"], "2026-09-13T01:30:00+00:00",
+   "start = Pinnacle commence minus the margin, never Pinnacle's exact time")
+eq((_by["x"]["start_source"], _by["w"]["start_source"]), ("pinnacle", "venue"), "every row says where its start came from")
+eq(_by["x"]["venue_start"], "2026-09-12T23:00:00+00:00", "the venue's own start is kept alongside")
+eq(_by["y"]["date"], "2026-09-13", "the date follows the re-timed start")
+eq((_st["matched"], _st["dropped"]), (2, 1), "stats count the re-timed and the dropped")
+ok(S.PINNACLE_START_MARGIN_MIN >= 15, "the margin allows for a card running ahead of schedule")
+ok(not T._started(_by["x"], _now), "so Opetaia can be logged at 22:30 for a 02:00 walk-out")
+ok(T._started(_by["x"], datetime(2026, 9, 13, 1, 31, tzinfo=timezone.utc)),
+   "and stops being loggable half an hour before Pinnacle's time")
+
+_t = S.apply_pinnacle_starts("boxing", [dict(side_a="Panin", side_b="Linger",
+                                             start="2026-09-12T21:00:00", label="naive")],
+                             events=[], now=_now)[0]
+eq(_t, [], "a naive venue timestamp is read as UTC, and a passed one is still dropped")
+
+# The fight lookback is for fights only.
+ok("mma" in S.START_FROM_PINNACLE and "boxing" in S.START_FROM_PINNACLE and "tennis" not in S.START_FROM_PINNACLE,
+   "only boxing and MMA are re-timed")
+_pm_old = S._get
+_start_past = (datetime.now(timezone.utc) - timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
+_evs = [dict(slug="c", title="Garcia vs. Benn", startDate=_start_past, markets=[
+    dict(id="gb", outcomes='["Ryan Garcia", "Conor Benn"]', outcomePrices='["0.70", "0.30"]',
+         bestBid="0.70", bestAsk="0.71", spread="0.01", liquidityNum=5000, volumeNum=9,
+         acceptingOrders=True, closed=False, gameStartTime=_start_past,
+         question="Ryan Garcia vs. Conor Benn")])]
+S._get = lambda url, **kw: _evs if "offset=0" in url else []
+try:
+    eq([r["market_id"] for r in S.fetch_polymarket("boxing")], ["gb"],
+       "a boxing market whose card start passed two hours ago is kept for re-timing")
+    eq(S.fetch_polymarket("tennis"), [], "a tennis market two hours past its start is not")
+finally:
+    S._get = _pm_old
+
+eq((S.SPORTS.get("mma"), S.PM_TAGS.get("mma"), S.KALSHI_VENUE_SERIES.get("mma"), S.ODDS_GROUPS.get("mma")),
+   ("MMA", "ufc", ["KXUFCFIGHT", "KXMMAFIGHT"], "Mixed Martial Arts"), "MMA is wired to every venue and to Pinnacle")
+ok("mma" in S.SOURCES["olbg"]["sports"] and "mma" in S.SOURCES["pinnacle"]["sports"],
+   "OLBG and Pinnacle both cover MMA")
+eq(S.pair_match("Silva", "Delgado", "Jean Silva", "Jose Miguel Delgado", sport="mma")[1], False,
+   "a UFC bout matches its fuller spelling")
+ok(S.pair_match("Mikaelian", "Opetaia", "Mikaeljan", "Opetaia", sport="mma")[0] > 0,
+   "transliterations match in MMA as in boxing")
+
+_saved_html = S._get_html
+_hits = []
+try:
+    S._olbg_cache.clear(); S.FEED_STATUS.clear()
+    S._get_html = lambda url, **kw: (_hits.append(url), _page)[1]
+    S.fetch_olbg("boxing"); S.fetch_olbg("mma")
+    eq(len(_hits), 1, "boxing and MMA read OLBG's one shared listing with a single request")
+finally:
+    S._get_html = _saved_html
+    S._olbg_cache.clear(); S.FEED_STATUS.clear()
+
+import sandbox_build as SB
+_rows = "\n".join([f'<tr class="grp"><td>G</td></tr>'] + [f"<tr><td>r{i}</td>\n<td>x</td></tr>" for i in range(12)])
+_html = SB.collapse(_rows, "<tr><th>h</th></tr>", 40, "things")
+ok("Show 4 more things" in _html, "12 rows show 8 and fold 4, counting rows not template lines")
+ok("the latest 12 of 40" in _html, "and say how many exist beyond the rows listed")
+eq(SB.collapse("<tr><td>a</td></tr>", "<tr><th>h</th></tr>", 1, "x").count("<details"), 0,
+   "a short list is not folded")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

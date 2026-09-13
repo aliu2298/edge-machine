@@ -242,6 +242,24 @@ def collect(verbose=True):
             ks = []
         extra = [k for k in ks if not any(_same_contest(k, p) for p in pm)]
         universe[sport] = pm + extra
+        if sport in S.START_FROM_PINNACLE:
+            # Fight nights: re-time every bout from Pinnacle's own commence time. Rows
+            # it cannot re-time keep the venue's start and follow the usual rule.
+            try:
+                universe[sport], rt = S.apply_pinnacle_starts(sport, universe[sport])
+            except Exception as e:
+                print(f"  ! pinnacle start times/{sport} failed: {type(e).__name__}: "
+                      f"{str(e)[:60]}")
+                now_ = datetime.now(timezone.utc)
+                universe[sport] = [r for r in universe[sport]
+                                   if datetime.fromisoformat(str(r["start"]))
+                                   >= now_ - timedelta(minutes=5)]
+                rt = dict(matched=0, dropped=0, shifts=[])
+            if verbose:
+                sh = sorted(rt["shifts"])
+                med = f", median shift {sh[len(sh) // 2]:+.0f} min" if sh else ""
+                print(f"  {S.SPORTS[sport]:<13} start times: {rt['matched']} from Pinnacle, "
+                      f"{rt['dropped']} dropped as started{med}")
         cov = coverage.setdefault(sport, {})
         cov["polymarket"] = len(pm)
         cov["polymarket_listed"] = stats.get("listed", len(pm))
@@ -412,6 +430,9 @@ def publish(d, universe, coverage, verbose=True):
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
                     venue=r.get("venue", "polymarket"),
                     spread=r.get("spread"), liquidity=r.get("liquidity"),
+                    # Fight rows: where the start came from, and the venue's own, so a
+                    # re-timed bout can be audited against the real walk-out later.
+                    start_source=r.get("start_source"), venue_start=r.get("venue_start"),
                     status="open", pnl=0.0, result=None, settled=None,
                 ))
                 seen.add(qid)

@@ -457,7 +457,22 @@ ahead of the price but short of a gate is **watch**; readable and not ahead is *
 SoccerPredictions.ai's first weekend (+24.5%) sits exactly at back-every-draw on the same
 contests (+24.9%), which is why a hot ROI alone earns nothing.
 
-**OLBG** is the boxing tipster: a community whose members post a Win Fight tip per bout, one
+**Fight nights are re-timed from Pinnacle.** Neither venue says when a *bout* starts:
+Polymarket stamps every bout with the card's start, and Kalshi's estimate is three hours
+before expected expiration — both safely early, but they closed Vanhouter v Akpejiori and
+Opetaia v Mikaelian to logging hours before either fought. Boxing and MMA rows are kept for
+up to 12 hours past their venue start while the market is open, then re-timed from
+Pinnacle's per-bout commence time **minus 30 minutes** (a card runs ahead when earlier fights
+end early). The event list is a free Odds API call. A row Pinnacle cannot re-time keeps its
+venue start and is dropped once that passes, exactly as before; a Pinnacle match more than a
+day off the venue is not trusted. Every fight quote records `start_source` and the venue's own
+start for audit.
+
+**MMA** is its own sport: UFC on Polymarket (`ufc` tag) and Kalshi (`KXUFCFIGHT`, `KXMMAFIGHT`),
+Pinnacle via the Odds API's Mixed Martial Arts group, and OLBG's tips — boxing and UFC share
+OLBG's one listing page, read with a single request.
+
+**OLBG** is the boxing and MMA tipster: a community whose members post a Win Fight tip per bout, one
 listing page per run. A fight is a call only when a fighter is the most popular selection with
 at least three tips and a strict majority of them. Its tipsters compete on profit and often
 pile onto the draw at 15/1 (10 of 14 tips on Magsayo v Cortes); the venue boxing markets are

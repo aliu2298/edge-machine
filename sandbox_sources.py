@@ -42,6 +42,7 @@ SPORTS = {
     "tennis":       "Tennis",
     "table_tennis": "Table Tennis",
     "boxing":       "Boxing",
+    "mma":          "MMA",
     "nfl":          "NFL",
     "cricket":      "Cricket",
     "mlb":          "MLB",
@@ -59,6 +60,7 @@ SPORTS = {
 # a deep book of Ukrainian/WTT singles matches.
 PM_TAGS = {
     "soccer": "soccer", "tennis": "tennis", "table_tennis": "table-tennis", "boxing": "boxing",
+    "mma": "ufc",
     "nfl": "nfl", "cricket": "cricket", "mlb": "mlb",
 }
 
@@ -138,13 +140,14 @@ SOURCES = {
              "favourite."),
     "olbg": dict(
         label="OLBG community tips", kind="Tipster site", connected=True,
-        site="olbg.com", sports=["boxing"],
+        site="olbg.com", sports=["boxing", "mma"],
         note="A tipster community whose members post a Win Fight tip per bout. Reduced to "
              "one call per fight: a fighter must be the most popular selection, with at "
              "least three tips and a strict majority of them. Its tipsters compete on "
              "profit and often pile onto the draw at long odds; a fight whose top tip is "
-             "the draw is no call, because the venue boxing markets are two-way. The only "
-             "connected tipster for boxing."),
+             "the draw is no call, because the venue fight markets are two-way. Boxing, "
+             "UFC and other MMA share its one listing page. The only connected tipster "
+             "for either."),
     "soccerpredictions": dict(
         label="SoccerPredictions.ai", kind="Tipster site", connected=True,
         site="soccerpredictions.ai", sports=["soccer"],
@@ -178,7 +181,7 @@ SOURCES = {
              "be booked against."),
     "pinnacle": dict(
         label="Pinnacle (via The Odds API)", kind="Sportsbook", connected=True,
-        site="pinnacle.com", sports=["boxing", "cricket", "tennis"],
+        site="pinnacle.com", sports=["boxing", "mma", "cricket", "tennis"],
         note="The sharpest book there is — it takes the largest limits and moves on sharp "
              "money rather than shading against the public — de-vigged to a fair "
              "probability and read through The Odds API (ODDS_API_KEY). It covers the three "
@@ -525,7 +528,7 @@ def _score(a, b, sport):
     if ca and cb:
         return 1.0 if ca == cb else 0.0
     s = sim(a, b)
-    if s == 0 and sport == "boxing":
+    if s == 0 and sport in ("boxing", "mma"):
         # Fighters' names are transliterated, and every feed does it differently: Kalshi
         # and Polymarket write "Mikaelian", OLBG "Mikaeljan", for the same Armenian
         # fighter. A long word spelled almost identically is the same name. Scored below
@@ -639,6 +642,17 @@ def _is_head_to_head(question, side_a, side_b):
 # price nobody has tested, and it is the deep books that make a source's error visible.
 MAX_PER_SPORT = 40
 
+# Fight nights. Neither venue publishes when a BOUT starts: Polymarket stamps every bout
+# with the card's start and Kalshi's estimate is three hours before expected expiration,
+# which on a card is hours before the later bouts. Both are safe — too early, never too
+# late — but they closed Vanhouter v Akpejiori and Opetaia v Mikaelian to logging hours
+# before either fought, with an OLBG consensus on each. Pinnacle prices each bout with its
+# own commence time, so boxing and MMA rows are re-timed from it, minus a margin because a
+# card runs ahead of schedule when the fights before it end early.
+START_FROM_PINNACLE = ("boxing", "mma")
+PINNACLE_START_MARGIN_MIN = 30
+FIGHT_LOOKBACK_H = 12
+
 # A Polymarket price is only a price when there is a book behind it. gamma's
 # `outcomePrices` is a MIDPOINT, and a market that has just been listed shows a midpoint
 # near 0.50 with nothing on either side of it. Measured 2026-09-12: boxing bouts logged at
@@ -739,7 +753,14 @@ def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_S
                     wdt = wdt.replace(tzinfo=timezone.utc)
             except (ValueError, TypeError):
                 continue
-            if not (now - timedelta(minutes=5) <= wdt <= horizon):
+            # Fight markets list the CARD's start for every bout (a whole Zuffa card at
+            # 21:00Z, a Noche UFC main event at 18:00Z that walked out hours later), so a
+            # passed start there does not mean the bout has begun. Those rows are kept
+            # while the market is open and re-timed from Pinnacle in apply_pinnacle_starts,
+            # which drops any it cannot re-time.
+            early = (now - timedelta(hours=FIGHT_LOOKBACK_H) if sport in START_FROM_PINNACLE
+                     else now - timedelta(minutes=5))
+            if not (early <= wdt <= horizon):
                 continue
 
             vol = float(m.get("volumeNum") or 0)
@@ -1200,6 +1221,9 @@ KALSHI_VENUE_SERIES = {
     "tennis": ["KXATPMATCH", "KXATPCHALLENGERMATCH", "KXWTAMATCH"],
     "table_tennis": ["KXTABLETENNIS", "KXTTMATCH", "KXTTELITEGAME", "KXWTTMATCH"],
     "boxing": ["KXBOXING"],
+    # UFC bouts, and other promotions' MMA bouts. Verified 2026-09-12: KXUFCFIGHT carries
+    # one event per bout with a staggered expected expiration 20 minutes apart.
+    "mma": ["KXUFCFIGHT", "KXMMAFIGHT"],
     "cricket": ["KXCPLMATCH", "KXT20MATCH", "KXCRICKETT20IMATCH", "KXCRICKETODIMATCH"],
     "nfl": ["KXNFLGAME"],
     "mlb": ["KXMLBGAME"],
@@ -1330,7 +1354,11 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
         except (ValueError, TypeError):
             continue
         start = end - timedelta(hours=3)
-        if start < now - timedelta(minutes=5):
+        # Fight cards: the 3h-early estimate lands hours before the later bouts, so a
+        # passed estimate is kept while the market is open and re-timed from Pinnacle.
+        early = (now - timedelta(hours=FIGHT_LOOKBACK_H) if sport in START_FROM_PINNACLE
+                 else now - timedelta(minutes=5))
+        if start < early:
             continue
 
         prices, tradeable = {}, {}
@@ -2045,7 +2073,10 @@ def fetch_spot(domain):
 # So a fight is a call only when a FIGHTER is the most popular selection, with at least
 # OLBG_MIN_TIPS tips and a strict majority of them. A plurality (10 of 25 on Garcia v Benn,
 # the rest split between Benn and the draw) is not a majority and is no call.
-OLBG_URLS = {"boxing": "https://www.olbg.com/betting-tips/Boxing/16"}
+# Boxing, UFC and other MMA share one listing (OLBG sport 16). The page cannot tell them
+# apart, so both sports read the same calls and matching sorts a bout into its sport.
+OLBG_URLS = {"boxing": "https://www.olbg.com/betting-tips/Boxing/16",
+             "mma": "https://www.olbg.com/betting-tips/Boxing/16"}
 OLBG_MIN_TIPS = 3
 _olbg_cache = {}
 
@@ -2083,24 +2114,25 @@ def parse_olbg(page):
 def fetch_olbg(sport):
     if sport not in OLBG_URLS:
         return []
-    if sport not in _olbg_cache:
+    url = OLBG_URLS[sport]
+    if url not in _olbg_cache:
         try:
-            page = _get_html(OLBG_URLS[sport], timeout=25)
+            page = _get_html(url, timeout=25)
         except RuntimeError as e:
             print(f"  ! olbg/{sport}: {str(e)[:80]}")
             _mark("olbg", False, "page unreachable")
-            _olbg_cache[sport] = []
+            _olbg_cache[url] = []
             return []
         # A Cloudflare interstitial answers 200 with no rows. Say so, rather than report
         # "no consensus" for a page that was never actually read.
         if 'class="grd tip' not in page:
             wall = re.search(r"(?i)just a moment|challenge-platform|cf-chl", page)
             _mark("olbg", False, "Cloudflare challenge" if wall else "no tip rows on the page")
-            _olbg_cache[sport] = []
+            _olbg_cache[url] = []
             return []
         _mark("olbg", True)
-        _olbg_cache[sport] = parse_olbg(page)
-    return _olbg_cache[sport]
+        _olbg_cache[url] = parse_olbg(page)
+    return _olbg_cache[url]
 
 
 # ---------------------------------------------------------------------------
@@ -2123,7 +2155,8 @@ def fetch_olbg(sport):
 # reported by status code alone, never by URL.
 
 ODDS_API = "https://api.the-odds-api.com/v4"
-ODDS_GROUPS = {"boxing": "Boxing", "cricket": "Cricket", "tennis": "Tennis"}
+ODDS_GROUPS = {"boxing": "Boxing", "mma": "Mixed Martial Arts", "cricket": "Cricket",
+               "tennis": "Tennis"}
 ODDS_HORIZON_DAYS = 4          # the same horizon the venue universe is fetched over
 ODDS_MAX_CALLS = 4             # paid calls per run; 4 runs a day x 4 x 30 = 480 < 500
 ODDS_RESERVE = 25              # stop spending below this many remaining credits
@@ -2195,22 +2228,12 @@ def fetch_pinnacle(sport):
     if not _odds_key():
         _mark("pinnacle", False, "no ODDS_API_KEY in the environment")
         return []
-    if _odds_sports is None:
-        try:
-            _odds_sports, headers = _odds_get("/sports", {})
-            _odds_note_usage(headers)
-        except RuntimeError as e:
-            _mark("pinnacle", False, str(e))
-            _odds_sports = []
-            return []
+    keys = _odds_keys(sport)
     # Checked before anything else is read: past this point a readable events list marks
     # the feed "ok", and the page would then never say why no prices arrived.
     if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
         _mark("pinnacle", False, f"credit reserve reached ({ODDS_USAGE['remaining']} left)")
         return []
-    keys = [s["key"] for s in _odds_sports
-            if s.get("group") == ODDS_GROUPS[sport] and s.get("active")
-            and not s.get("has_outrights")]
     now = datetime.now(timezone.utc)
     window = dict(commenceTimeFrom=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
                   commenceTimeTo=(now + timedelta(days=ODDS_HORIZON_DAYS))
@@ -2251,6 +2274,91 @@ def fetch_pinnacle(sport):
                 continue
             out.append(dict(a=home, b=away, prob_a=p, date=day(ev.get("commence_time"))))
     return out
+
+
+def _odds_keys(sport):
+    """Active, non-outright Odds API sport keys for one of our sports (free /sports)."""
+    global _odds_sports
+    if _odds_sports is None:
+        try:
+            _odds_sports, headers = _odds_get("/sports", {})
+            _odds_note_usage(headers)
+        except RuntimeError as e:
+            _mark("pinnacle", False, str(e))
+            _odds_sports = []
+    return [s["key"] for s in _odds_sports
+            if s.get("group") == ODDS_GROUPS.get(sport) and s.get("active")
+            and not s.get("has_outrights")]
+
+
+_pinnacle_event_cache = {}
+
+
+def pinnacle_events(sport):
+    """[{a, b, start}] for every event the Odds API lists in `sport`. Free: /events only.
+
+    Cached per sport for the run, so re-timing the universe and pricing it share one call.
+    """
+    if sport in _pinnacle_event_cache:
+        return _pinnacle_event_cache[sport]
+    out = []
+    if _odds_key() and sport in ODDS_GROUPS:
+        now = datetime.now(timezone.utc)
+        window = dict(commenceTimeFrom=(now - timedelta(hours=FIGHT_LOOKBACK_H))
+                      .strftime("%Y-%m-%dT%H:%M:%SZ"),
+                      commenceTimeTo=(now + timedelta(days=ODDS_HORIZON_DAYS))
+                      .strftime("%Y-%m-%dT%H:%M:%SZ"))
+        for key in _odds_keys(sport):
+            try:
+                events, _h = _odds_get(f"/sports/{key}/events", window)
+            except RuntimeError as e:
+                _mark("pinnacle", False, str(e))
+                continue
+            for ev in events:
+                try:
+                    st = datetime.fromisoformat(str(ev["commence_time"]).replace("Z", "+00:00"))
+                except (KeyError, TypeError, ValueError):
+                    continue
+                out.append(dict(a=ev.get("home_team", ""), b=ev.get("away_team", ""),
+                                start=st, key=key))
+    _pinnacle_event_cache[sport] = out
+    return out
+
+
+def apply_pinnacle_starts(sport, rows, events=None, now=None):
+    """Re-time fight rows from Pinnacle's per-bout commence time. Returns (rows, stats).
+
+    A row matched to a Pinnacle event gets start = commence - PINNACLE_START_MARGIN_MIN
+    and start_source "pinnacle". A row with no match keeps its venue start, and is dropped
+    if that start has already passed — exactly the rule every other sport runs under, so
+    an un-retimed bout can never be logged later than before.
+    """
+    now = now or datetime.now(timezone.utc)
+    events = pinnacle_events(sport) if events is None else events
+    kept, matched, shifts = [], 0, []
+    for r in rows:
+        best = None
+        for ev in events:
+            score, _flip = pair_match(r["side_a"], r["side_b"], ev["a"], ev["b"], sport=sport)
+            if score > 0 and (best is None or score > best[0]):
+                best = (score, ev)
+        venue_start = datetime.fromisoformat(str(r["start"]))
+        if venue_start.tzinfo is None:
+            venue_start = venue_start.replace(tzinfo=timezone.utc)
+        if best:
+            st = best[1]["start"] - timedelta(minutes=PINNACLE_START_MARGIN_MIN)
+            # Never trust a match that disagrees with the venue by more than a day: two
+            # bouts between the same surnames on different cards is a wrong match.
+            if abs((st - venue_start).total_seconds()) <= 24 * 3600:
+                shifts.append((st - venue_start).total_seconds() / 60)
+                r = dict(r, start=st.isoformat(), date=st.strftime("%Y-%m-%d"),
+                         start_source="pinnacle", venue_start=venue_start.isoformat())
+                matched += 1
+                kept.append(r)
+                continue
+        if venue_start >= now - timedelta(minutes=5):
+            kept.append(dict(r, start_source="venue"))
+    return kept, dict(matched=matched, dropped=len(rows) - len(kept), shifts=shifts)
 
 
 CHALLENGERS = {

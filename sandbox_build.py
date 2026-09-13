@@ -8,6 +8,7 @@ bug can never cost a settled result.
 import html
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -31,7 +32,12 @@ STAMP = {
 # The board covers two different things now, and one table of fourteen columns would be
 # unreadable. Sports are contests between two named sides; the rest are yes/no questions
 # with a forecaster on the other side of them.
-SPORT_KEYS = ["soccer", "tennis", "table_tennis", "boxing", "nfl", "cricket", "mlb"]
+SPORT_KEYS = ["soccer", "tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb"]
+
+# Long lists are the part of the page that grows without bound. The first few rows show
+# what the list is; the rest sit behind a toggle so the tables that carry the verdicts
+# stay near the top.
+SHOW_ROWS = 8
 MARKET_KEYS = ["climate", "crypto", "economics", "commodities", "finance", "politics",
                "elections"]
 
@@ -315,6 +321,40 @@ def settled_rows(d, limit=40):
     return "\n".join(out), len(done)
 
 
+LIVE_HEAD = ('<tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th>'
+             '<th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>')
+HIST_HEAD = ('<tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th>'
+             '<th class="num">Price</th><th></th><th class="num">P/L</th></tr>')
+
+
+def collapse(rows_html, head, total, noun):
+    """The first SHOW_ROWS rows in the open, the rest behind a toggle.
+
+    Group header rows (class="grp") travel with the rows they introduce and do not count
+    toward the limit, so a header is never left stranded above an empty table.
+    """
+    # Split on row tags: each row template spans several lines of source.
+    rows = [r for r in re.split(r"(?=<tr[\s>])", rows_html) if r.strip()]
+    grp = 'class="grp"'
+    shown, hidden, real = [], [], 0
+    for r in rows:
+        if grp not in r:
+            real += 1
+        (shown if real <= SHOW_ROWS else hidden).append(r)
+    # A header whose rows all fell into the hidden part belongs with them.
+    while shown and grp in shown[-1]:
+        hidden.insert(0, shown.pop())
+    table = f'<div class="tbl"><table>{head}{"".join(shown)}</table></div>'
+    if not hidden:
+        return table
+    n_hidden = sum(1 for r in hidden if grp not in r)
+    n_listed = sum(1 for r in rows if grp not in r)
+    extra = f" — the latest {n_listed} of {total:,}" if total > n_listed else ""
+    return (table + f'<details class="more"><summary>Show {n_hidden} more {noun}{extra}'
+            f'</summary><div class="tbl"><table>{head}{"".join(hidden)}</table></div>'
+            f'</details>')
+
+
 def unconnected_rows():
     out = []
     for name, m in S.SOURCES.items():
@@ -345,6 +385,7 @@ def build():
     pnl = sum(q["pnl"] for q in d["quotes"] if q["status"] in ("won", "lost"))
     staked = sum(q["stake"] for q in d["quotes"] if q["status"] in ("won", "lost"))
     live_rows, n_live = open_rows(d)
+    n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     hist_rows, n_hist = settled_rows(d)
 
     # The floor has to be judged on the SAME unit the table prints. Every cell greys
@@ -415,6 +456,12 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.lost,.st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
 .st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
 .sig.w{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
+details.more{{margin:-4px 0 14px}}
+details.more>summary{{cursor:pointer;font-size:12px;font-weight:700;color:var(--acc);
+padding:6px 2px;list-style:none}}
+details.more>summary::-webkit-details-marker{{display:none}}
+details.more>summary::before{{content:"▸ "}}
+details.more[open]>summary::before{{content:"▾ "}}
 .grp td{{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
@@ -504,12 +551,12 @@ with the price, so turnover differs by an order of magnitude. Polymarket cannot 
 own table: its price is what everything else is measured against.</div>
 
 <h2>Running now ({n_live:,})</h2>
-{f'<div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>{live_rows}</table></div>' if n_live else '<div class="note">No open bets — no source currently disagrees with the market by enough to act on.</div>'}
+{collapse(live_rows, LIVE_HEAD, n_live, "running bets") if n_live else '<div class="note">No open bets — no source currently disagrees with the market by enough to act on.</div>'}
 
 <h2>Settled ({n_hist:,})</h2>
-{f'<div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>{hist_rows}</table></div>' if n_hist else '<div class="note">Nothing settled yet. Bets settle when Polymarket resolves the market, usually within hours of the contest finishing.</div>'}
+{collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") if n_hist else '<div class="note">Nothing settled yet. Bets settle when Polymarket resolves the market, usually within hours of the contest finishing.</div>'}
 
-<h2>Declared but not connected</h2>
+<details class="more"><summary>Declared but not connected ({n_unconnected})</summary>
 <div class="tbl"><table>
 <tr><th>Source</th><th>Why it is not scored</th></tr>
 {unconnected_rows()}
@@ -520,7 +567,7 @@ Adding one is a single function returning <code>{{a, b, pick}}</code> or
 <code>{{a, b, prob_a}}</code> per contest; the matching, staking, settling and scoring
 are already shared. Cloudflare is no longer a blocker either — Scores24 is fetched
 through a real headless browser, and any other site behind the same wall can reuse
-that step.</div>
+that step.</div></details>
 
 <h2>Method</h2>
 <div class="note">

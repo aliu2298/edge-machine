@@ -46,13 +46,19 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}
 .st.lost,.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
 .st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
 .sig.w{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
+details.more{margin:-4px 0 14px}
+details.more>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--acc);
+padding:6px 2px;list-style:none}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::before{content:"▸ "}
+details.more[open]>summary::before{content:"▾ "}
 .grp td{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}
 footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox Tracker</h1>
-<div class="sub">Which tipster actually makes money · 14 sports · updated 2026-09-12 23:59 UTC</div>
+<div class="sub">Which tipster actually makes money · 15 sports · updated 2026-09-13 00:10 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a></div>
@@ -79,18 +85,18 @@ skill. 114 settled bets. 1 source past the 30-bet floor (soccerpredictions) — 
 <h2>Which tipster is profitable, and at what?</h2>
 
 <div class="tbl"><table>
-<tr><th>Source</th><th class="num">Soccer</th><th class="num">Tennis</th><th class="num">Table Tennis</th><th class="num">Boxing</th><th class="num">NFL</th><th class="num">Cricket</th><th class="num">MLB</th><th class="num">All</th></tr>
-<tr class="grp"><td colspan="9">Tipsters</td></tr><tr><td><b>Covers / OddsShark computer picks</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num"><span class="mut">-100.0%</span><div class="sm mut">n=1</div></td><td class="num mut">·</td><td class="num"><span class="mut">+42.8%</span><div class="sm mut">n=21</div></td>
-<td class="num"><span class="mut">+36.3%</span><div class="sm mut">n=22</div></td></tr><tr><td><b>OLBG community tips</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
-<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>Oddspedia community tips</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">8 open</td><td class="num mut">·</td>
-<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>Scores24 (editorial tips)</b></td><td class="num"><span class="mut">-13.8%</span><div class="sm mut">n=2</div></td><td class="num"><span class="mut">+16.3%</span><div class="sm mut">n=6</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">3 open</td><td class="num mut">·</td><td class="num"><span class="mut">-8.8%</span><div class="sm mut">n=13</div></td>
-<td class="num"><span class="mut">-2.1%</span><div class="sm mut">n=21</div></td></tr><tr><td><b>SoccerPredictions.ai</b></td><td class="num"><span class="pos">+24.5%</span><div class="sm mut">n=35</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
-<td class="num"><span class="pos">+24.5%</span><div class="sm mut">n=35</div></td></tr><tr><td><b>SportsGambler</b></td><td class="num"><span class="mut">-26.3%</span><div class="sm mut">n=13</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
-<td class="num"><span class="mut">-26.3%</span><div class="sm mut">n=13</div></td></tr><tr class="grp"><td colspan="9">Models and books</td></tr><tr><td><b>DraftKings (via ESPN)</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">4 open</td>
-<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>ESPN FPI / Matchup Predictor</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num"><span class="mut">+181.7%</span><div class="sm mut">n=1</div></td><td class="num mut">·</td><td class="num"><span class="mut">+35.6%</span><div class="sm mut">n=18</div></td>
-<td class="num"><span class="mut">+43.3%</span><div class="sm mut">n=19</div></td></tr><tr><td><b>Pinnacle (via The Odds API)</b></td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td>
-<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr class="grp"><td colspan="9">Prediction markets</td></tr><tr><td><b>Kalshi</b></td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num"><span class="mut">+94.8%</span><div class="sm mut">n=2</div></td>
-<td class="num"><span class="mut">+94.8%</span><div class="sm mut">n=2</div></td></tr><tr><td><b>Polymarket</b></td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td>
+<tr><th>Source</th><th class="num">Soccer</th><th class="num">Tennis</th><th class="num">Table Tennis</th><th class="num">Boxing</th><th class="num">MMA</th><th class="num">NFL</th><th class="num">Cricket</th><th class="num">MLB</th><th class="num">All</th></tr>
+<tr class="grp"><td colspan="10">Tipsters</td></tr><tr><td><b>Covers / OddsShark computer picks</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num"><span class="mut">-100.0%</span><div class="sm mut">n=1</div></td><td class="num mut">·</td><td class="num"><span class="mut">+42.8%</span><div class="sm mut">n=21</div></td>
+<td class="num"><span class="mut">+36.3%</span><div class="sm mut">n=22</div></td></tr><tr><td><b>OLBG community tips</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
+<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>Oddspedia community tips</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">8 open</td><td class="num mut">·</td>
+<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>Scores24 (editorial tips)</b></td><td class="num"><span class="mut">-13.8%</span><div class="sm mut">n=2</div></td><td class="num"><span class="mut">+16.3%</span><div class="sm mut">n=6</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">3 open</td><td class="num mut">·</td><td class="num"><span class="mut">-8.8%</span><div class="sm mut">n=13</div></td>
+<td class="num"><span class="mut">-2.1%</span><div class="sm mut">n=21</div></td></tr><tr><td><b>SoccerPredictions.ai</b></td><td class="num"><span class="pos">+24.5%</span><div class="sm mut">n=35</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
+<td class="num"><span class="pos">+24.5%</span><div class="sm mut">n=35</div></td></tr><tr><td><b>SportsGambler</b></td><td class="num"><span class="mut">-26.3%</span><div class="sm mut">n=13</div></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td>
+<td class="num"><span class="mut">-26.3%</span><div class="sm mut">n=13</div></td></tr><tr class="grp"><td colspan="10">Models and books</td></tr><tr><td><b>DraftKings (via ESPN)</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">4 open</td>
+<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr><td><b>ESPN FPI / Matchup Predictor</b></td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num"><span class="mut">+181.7%</span><div class="sm mut">n=1</div></td><td class="num mut">·</td><td class="num"><span class="mut">+35.6%</span><div class="sm mut">n=18</div></td>
+<td class="num"><span class="mut">+43.3%</span><div class="sm mut">n=19</div></td></tr><tr><td><b>Pinnacle (via The Odds API)</b></td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td>
+<td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr><tr class="grp"><td colspan="10">Prediction markets</td></tr><tr><td><b>Kalshi</b></td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">·</td><td class="num"><span class="mut">+94.8%</span><div class="sm mut">n=2</div></td>
+<td class="num"><span class="mut">+94.8%</span><div class="sm mut">n=2</div></td></tr><tr><td><b>Polymarket</b></td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">·</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td>
 <td class="num"><span class="mut">—</span><div class="sm mut">n=0</div></td></tr></table></div>
 <div class="note"><b>ROI per source, per sport</b>, at the price actually available.
 Greyed figures are under 30 settled bets and mean nothing yet — the sample is
@@ -376,7 +382,7 @@ own table: its price is what everything else is measured against.</div>
 <td><b>Salt Lake</b></td>
 <td class="num">0.47</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-12</td>
+</table></div><details class="more"><summary>Show 22 more running bets — the latest 30 of 142</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr><td class="mut">2026-09-12</td>
 <td>Soccer</td>
 <td><a href="https://kalshi.com/markets/kxmlsgame" target="_blank" rel="noopener">Colorado vs Montreal</a></td>
 <td>SportsGambler</td>
@@ -529,7 +535,7 @@ own table: its price is what everything else is measured against.</div>
 <td>SoccerPredictions.ai</td>
 <td><b>KFUM Oslo</b></td>
 <td class="num">0.42</td>
-<td class="num pos"><span class="mut">pick</span></td></tr></table></div>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
 
 <h2>Settled (123)</h2>
 <div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr class="grp"><td colspan="8">2026-09-12 · 55/100 won · +$2,177</td></tr>
@@ -581,7 +587,7 @@ own table: its price is what everything else is measured against.</div>
 <td>Boston Red Sox</td><td class="num">0.65</td>
 <td><span class="st won">WON</span></td>
 <td class="num pos">+$55</td></tr>
-<tr><td class="mut">2026-09-12</td>
+</table></div><details class="more"><summary>Show 32 more settled bets — the latest 40 of 123</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr><td class="mut">2026-09-12</td>
 <td>Crypto</td><td>SOL price on Sep 12, 2026?</td>
 <td>Spot price</td>
 <td>$101 or above</td><td class="num">0.68</td>
@@ -772,9 +778,9 @@ own table: its price is what everything else is measured against.</div>
 <td>SoccerPredictions.ai</td>
 <td>Draw</td><td class="num">0.29</td>
 <td><span class="st lost">LOST</span></td>
-<td class="num neg">−$100</td></tr></table></div>
+<td class="num neg">−$100</td></tr></table></div></details>
 
-<h2>Declared but not connected</h2>
+<details class="more"><summary>Declared but not connected (3)</summary>
 <div class="tbl"><table>
 <tr><th>Source</th><th>Why it is not scored</th></tr>
 <tr><td><b>Tennis Explorer</b>
@@ -793,7 +799,7 @@ Adding one is a single function returning <code>{a, b, pick}</code> or
 <code>{a, b, prob_a}</code> per contest; the matching, staking, settling and scoring
 are already shared. Cloudflare is no longer a blocker either — Scores24 is fetched
 through a real headless browser, and any other site behind the same wall can reuse
-that step.</div>
+that step.</div></details>
 
 <h2>Method</h2>
 <div class="note">
