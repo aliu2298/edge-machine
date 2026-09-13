@@ -481,6 +481,14 @@ boxing contest and fall away. Boxing names are transliterated differently by eve
 ("Mikaelian" / "Mikaeljan"), so boxing alone accepts a long word spelled almost identically as
 the same name — both fighters must still match.
 
+**Pinnacle v venue on uncovered contests.** Pinnacle is planned *after* every other source
+and across all sports at once: free event lists show how many listed, priced contests each
+Odds API key carries that no tipster, model or book has covered, and the run's paced share of
+credits is spent on the keys with the most uncovered contests first. Soccer is priced
+three-way, with the draw kept in the de-vig. Lines more than 60 minutes old are skipped, and
+every Pinnacle quote records whether its contest was uncovered, so the rule's own lane is
+reported separately on the page.
+
 **Pinnacle** is read through The Odds API (`ODDS_API_KEY`, a repository secret) for boxing,
 cricket and tennis — the three sports with no dependable tipster — de-vigged to a fair
 probability. Pinnacle closed its own public API in July 2025; the pinnacle.com site's guest

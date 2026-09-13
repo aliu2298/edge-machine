@@ -181,15 +181,15 @@ SOURCES = {
              "be booked against."),
     "pinnacle": dict(
         label="Pinnacle (via The Odds API)", kind="Sportsbook", connected=True,
-        site="pinnacle.com", sports=["boxing", "mma", "cricket", "tennis"],
+        site="pinnacle.com", sports=["soccer", "boxing", "mma", "cricket", "tennis"],
         note="The sharpest book there is — it takes the largest limits and moves on sharp "
              "money rather than shading against the public — de-vigged to a fair "
-             "probability and read through The Odds API (ODDS_API_KEY). It covers the three "
-             "sports with no dependable tipster, and it is the price every other number on "
-             "the board should be judged against. Coverage is partial: boxing well, "
-             "cricket on major leagues and internationals only, tennis only at the big "
-             "tournaments the API lists — ITF and Challenger matches are not there. The "
-             "free tier is 500 credits a month, so each run spends at most a few."),
+             "probability and read through The Odds API (ODDS_API_KEY), and backed where it "
+             "beats the venue's ask by 3pp. Planned after every other source: the month's "
+             "paced credits go first to the sport keys with the most contests no tipster, "
+             "model or book covers. Soccer is de-vigged three-way. Coverage is partial: "
+             "boxing and MMA well, soccer by league, cricket on majors and internationals, "
+             "tennis only at the big tournaments — not ITF or Challenger."),
 }
 
 
@@ -2156,7 +2156,17 @@ def fetch_olbg(sport):
 
 ODDS_API = "https://api.the-odds-api.com/v4"
 ODDS_GROUPS = {"boxing": "Boxing", "mma": "Mixed Martial Arts", "cricket": "Cricket",
-               "tennis": "Tennis"}
+               "tennis": "Tennis", "soccer": "Soccer"}
+# Sports whose venue markets are three-way: Pinnacle's draw price stays IN the de-vig there,
+# because the venue row prices the draw separately and "home" must mean home, not "not away".
+ODDS_THREE_WAY = ("soccer",)
+# Pinnacle lines older than this are not logged. The Odds API warns its bookmaker odds can
+# lag the bookmaker's site; a venue that has already moved on news would otherwise look like
+# an edge against a price Pinnacle itself has abandoned.
+PINNACLE_MAX_AGE_MIN = 60
+# Which kinds count as "someone already covers this contest". Prediction markets do not:
+# Kalshi quoting a Polymarket contest is another price, not a forecast.
+COVERING_KINDS = ("Tipster site", "Statistical model", "Sportsbook", "Forecaster", "Baseline")
 ODDS_HORIZON_DAYS = 4          # the same horizon the venue universe is fetched over
 ODDS_MAX_CALLS = 4             # hard ceiling per run, whatever the budget says
 ODDS_RESERVE = 25              # never spend the last few credits
@@ -2214,13 +2224,8 @@ def _odds_note_usage(headers):
                 pass
 
 
-def pinnacle_prob(event, side_a):
-    """De-vigged Pinnacle probability that `side_a` wins, from one /odds event.
-
-    A draw outcome (boxing, Test cricket) is dropped before normalising: the venue markets
-    this is booked against are two-way, and a draw there resolves as neither side.
-    Returns None when Pinnacle has no two-sided h2h line on the event.
-    """
+def pinnacle_line(event):
+    """(prices {name: decimal}, last_update datetime|None) for Pinnacle's h2h, or (None, None)."""
     for bk in event.get("bookmakers") or []:
         if bk.get("key") != "pinnacle":
             continue
@@ -2228,55 +2233,108 @@ def pinnacle_prob(event, side_a):
             if mk.get("key") != "h2h":
                 continue
             prices = {o.get("name"): o.get("price") for o in mk.get("outcomes") or []
-                      if o.get("name") and str(o.get("name")).lower() != "draw"}
-            a = prices.get(side_a)
-            others = [p for n, p in prices.items() if n != side_a]
-            if not a or len(others) != 1 or not others[0]:
-                return None
+                      if o.get("name")}
+            stamp = mk.get("last_update") or bk.get("last_update")
             try:
-                pa, pb = devig(1 / float(a), 1 / float(others[0]))
-            except (TypeError, ValueError, ZeroDivisionError):
-                return None
-            return pa
-    return None
+                upd = datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) if stamp else None
+            except ValueError:
+                upd = None
+            return prices, upd
+    return None, None
 
 
-def fetch_pinnacle(sport):
-    """Pinnacle's fair probability on every contest it prices that the universe lists."""
-    global _odds_sports
-    if sport not in ODDS_GROUPS:
-        return []
+def pinnacle_prob(event, side_a, three_way=False):
+    """De-vigged Pinnacle probability that `side_a` wins, from one /odds event.
+
+    Two-way (boxing, MMA, tennis, cricket): a draw outcome is dropped before normalising —
+    the venue markets are two-way and a draw there resolves as neither side.
+    Three-way (soccer): the draw stays in the normalisation, because the venue prices the
+    draw separately and the home side's probability must not absorb it.
+    Returns None when Pinnacle has no usable h2h line on the event.
+    """
+    prices, _upd = pinnacle_line(event)
+    if not prices:
+        return None
+    try:
+        inv = {n: 1 / float(p) for n, p in prices.items() if p}
+    except (TypeError, ValueError, ZeroDivisionError):
+        return None
+    if side_a not in inv:
+        return None
+    if three_way:
+        if len(inv) != 3 or not any(str(n).lower() == "draw" for n in inv):
+            return None
+        return inv[side_a] / sum(inv.values())
+    two = {n: v for n, v in inv.items() if str(n).lower() != "draw"}
+    others = [v for n, v in two.items() if n != side_a]
+    if len(others) != 1:
+        return None
+    pa, _pb = devig(two[side_a], others[0])
+    return pa
+
+
+def plan_pinnacle(universe, covered=None, now=None):
+    """Pinnacle quotes for every sport it covers, spending credits where nothing else looks.
+
+    One pass across ALL sports rather than one sport at a time, so the run's credit
+    allowance goes to the sport keys with the most contests that no tipster, model or book
+    has covered — not to whichever sport the loop happens to reach first. Event lists are
+    free; each paid /odds call prices a whole key, and every contest it returns is quoted,
+    covered or not, since that costs nothing more.
+
+    `covered` is {sport: set(market_id)} of contests some covering source already has.
+    Returns {sport: [quote]}.
+    """
+    now = now or datetime.now(timezone.utc)
+    covered = covered or {}
+    out = {sp: [] for sp in universe if sp in ODDS_GROUPS}
+    if not out:
+        return out
     if not _odds_key():
         _mark("pinnacle", False, "no ODDS_API_KEY in the environment")
-        return []
-    keys = _odds_keys(sport)
-    # Checked before anything else is read: past this point a readable events list marks
-    # the feed "ok", and the page would then never say why no prices arrived.
+        return out
+    _odds_keys(next(iter(out)))                 # free: loads the sport list and the balance
+    # Checked before any event list is read: past this point a readable list marks the feed
+    # "ok", and the page would then never say why no prices arrived.
     if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
         _mark("pinnacle", False, f"credit reserve reached ({ODDS_USAGE['remaining']} left)")
-        return []
-    now = datetime.now(timezone.utc)
+        return out
     window = dict(commenceTimeFrom=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
                   commenceTimeTo=(now + timedelta(days=ODDS_HORIZON_DAYS))
                   .strftime("%Y-%m-%dT%H:%M:%SZ"))
-    rows = (UNIVERSE or {}).get(sport) or []
-    out = []
-    for key in keys:
-        try:
-            events, _h = _odds_get(f"/sports/{key}/events", window)
-        except RuntimeError as e:
-            _mark("pinnacle", False, str(e))
+
+    # 1. Free: which keys carry contests the venue universe lists with a real price, and how
+    #    many of those contests are uncovered.
+    candidates = []
+    for sport in out:
+        rows = [r for r in (universe.get(sport) or []) if not r.get("untraded")]
+        if not rows:
             continue
-        _mark("pinnacle", True)
-        # Spend a credit only where a listed contest is waiting for this price.
-        wanted = [ev for ev in events
-                  if any(pair_match(r["side_a"], r["side_b"], ev.get("home_team", ""),
-                                    ev.get("away_team", ""), sport=sport)[0] > 0
-                         for r in rows if not r.get("untraded"))]
-        if not wanted:
-            continue
-        if "allowance" not in ODDS_USAGE:
-            ODDS_USAGE["allowance"] = odds_allowance(ODDS_USAGE.get("remaining"))
+        cov = covered.get(sport) or set()
+        for key in _odds_keys(sport):
+            try:
+                events, _h = _odds_get(f"/sports/{key}/events", window)
+            except RuntimeError as e:
+                _mark("pinnacle", False, str(e))
+                continue
+            _mark("pinnacle", True)
+            listed = uncovered = 0
+            for r in rows:
+                if any(pair_match(r["side_a"], r["side_b"], ev.get("home_team", ""),
+                                  ev.get("away_team", ""), sport=sport)[0] > 0
+                       for ev in events):
+                    listed += 1
+                    uncovered += r.get("market_id") not in cov
+            if listed:
+                candidates.append((uncovered, listed, sport, key))
+
+    # 2. Paid: most uncovered contests first, then most listed. Never past the run's share.
+    candidates.sort(key=lambda c: (-c[0], -c[1]))
+    if "allowance" not in ODDS_USAGE:
+        ODDS_USAGE["allowance"] = odds_allowance(ODDS_USAGE.get("remaining"), now)
+    ODDS_USAGE["planned"] = [dict(sport=sp, key=k, uncovered=u, listed=l)
+                             for u, l, sp, k in candidates]
+    for uncovered, listed, sport, key in candidates:
         if ODDS_USAGE.get("calls", 0) >= ODDS_USAGE["allowance"]:
             if ODDS_USAGE["allowance"] == 0:
                 _mark("pinnacle", False, "credit budget paced out until the monthly reset")
@@ -2291,14 +2349,25 @@ def fetch_pinnacle(sport):
             _mark("pinnacle", False, str(e))
             continue
         ODDS_USAGE["calls"] = ODDS_USAGE.get("calls", 0) + 1
+        ODDS_USAGE.setdefault("spent_on", []).append(dict(sport=sport, key=key,
+                                                          uncovered=uncovered))
         _odds_note_usage(headers)
         for ev in odds:
             home, away = ev.get("home_team"), ev.get("away_team")
-            p = pinnacle_prob(ev, home)
+            _prices, upd = pinnacle_line(ev)
+            if upd is not None and (now - upd).total_seconds() > PINNACLE_MAX_AGE_MIN * 60:
+                ODDS_USAGE["stale"] = ODDS_USAGE.get("stale", 0) + 1
+                continue
+            p = pinnacle_prob(ev, home, three_way=sport in ODDS_THREE_WAY)
             if p is None or not home or not away:
                 continue
-            out.append(dict(a=home, b=away, prob_a=p, date=day(ev.get("commence_time"))))
+            out[sport].append(dict(a=home, b=away, prob_a=p, date=day(ev.get("commence_time"))))
     return out
+
+
+def fetch_pinnacle(sport):
+    """One sport's Pinnacle quotes, for callers outside the planned publish pass."""
+    return plan_pinnacle({sport: (UNIVERSE or {}).get(sport) or []}).get(sport, [])
 
 
 def _odds_keys(sport):
@@ -2386,8 +2455,9 @@ def apply_pinnacle_starts(sport, rows, events=None, now=None):
     return kept, dict(matched=matched, dropped=len(rows) - len(kept), shifts=shifts)
 
 
+# Pinnacle is not in here: it is planned across every sport after these have run, so its
+# credits go to the contests none of them cover (plan_pinnacle, called from publish).
 CHALLENGERS = {
-    "pinnacle": fetch_pinnacle,
     "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,

@@ -251,6 +251,37 @@ def baseline_table(d):
 {''.join(rows)}</table></div>"""
 
 
+def pinnacle_table(d):
+    """The Pinnacle-versus-venue rule, on contests nothing else covers and on the rest."""
+    rows = []
+    for label, flag in (("Contests nothing else covers", True), ("Contests others also cover", False)):
+        qs = [q for q in d["quotes"] if q["source"] == "pinnacle" and q.get("uncovered") is flag
+              and q["status"] != "void"]
+        bets = [q for q in qs if q["bet"]]
+        done = [q for q in bets if q["status"] in ("won", "lost")]
+        won = sum(1 for q in done if q["status"] == "won")
+        pnl = sum(q["pnl"] for q in done)
+        exp = sum(q["price"] for q in done)
+        edges = [q["edge"] for q in qs if q.get("edge") is not None]
+        rows.append(f"""<tr><td><b>{label}</b></td><td class="num">{len(qs)}</td>
+<td class="num">{len(bets)}</td><td class="num">{len(done)}</td>
+<td class="num">{f"{won} v {exp:.1f}" if done else "—"}</td>
+<td class="num"><span class="{cls(pnl) if len(done) >= MIN_N else 'mut'}">{pct(pnl / (len(done) * T.STAKE), sign=True) if done else '—'}</span></td>
+<td class="num mut">{f"{max(edges)*100:+.1f}pp" if edges else "—"}</td></tr>""")
+    ou = (d.get("meta") or {}).get("odds_api") or {}
+    spent = ", ".join(f"{x['key']} ({x['uncovered']} uncovered)" for x in ou.get("spent_on", [])) or "none"
+    return f"""<div class="tbl"><table>
+<tr><th>Pinnacle v venue</th><th class="num">Quotes</th><th class="num">Bets</th>
+<th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th>
+<th class="num">Largest gap</th></tr>
+{''.join(rows)}</table></div>
+<div class="note">Pinnacle's de-vigged probability against the venue's ask, backed only where it
+beats the ask by {int(T.EDGE_MIN*100)}pp or more. Credits are spent where nothing else looks: every run
+ranks the sports by how many listed contests have no tipster, model or book, and spends its
+paced share of the month's credits from the top. Lines more than {S.PINNACLE_MAX_AGE_MIN} minutes old
+are skipped ({ou.get('stale', 0)} last run). Last run's paid calls: {esc(spent)}.</div>"""
+
+
 def coverage_table(cov):
     """Sport x source grid of what each feed actually returned on the last run."""
     names = [n for n, m in S.SOURCES.items() if m["connected"]]
@@ -522,6 +553,9 @@ first moment any source looked at each one. A source whose record is no better t
 <b>back the favourite</b>, <b>back the underdog</b> or <b>back every draw</b> has not shown it
 can pick — it has shown what the weather was.</div>
 {baseline_table(d)}
+
+<h2>Pinnacle v venue</h2>
+{pinnacle_table(d)}
 
 <h2>Markets beyond sport</h2>
 {sport_matrix(d, MARKET_KEYS)}

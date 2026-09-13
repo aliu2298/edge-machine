@@ -328,6 +328,14 @@ def publish(d, universe, coverage, verbose=True):
     S.UNIVERSE = universe
     S.FEED_STATUS.clear()
 
+    # Contests some covering source (tipster, model, book, forecaster) has ever quoted.
+    covering = {n for n, m in S.SOURCES.items() if m["kind"] in S.COVERING_KINDS}
+    covered = {}
+    for q in d["quotes"]:
+        if q["source"] in covering:
+            covered.setdefault(q["sport"], set()).add(q["market_id"])
+    per_sport = {}
+
     for sport, rows in universe.items():
         if not rows:
             continue
@@ -361,10 +369,39 @@ def publish(d, universe, coverage, verbose=True):
             matched = match_quotes(pool, quotes)
             source_probs[name] = matched
             coverage.setdefault(sport, {})[name] = len(matched)
+            if name in covering:
+                covered.setdefault(sport, set()).update(matched)
             if verbose:
                 print(f"  {S.SPORTS[sport]:<13} {name}: {len(quotes)} quotes -> "
                       f"{len(matched)} matched ({time.time() - t0:.0f}s)")
+        per_sport[sport] = (by_id, source_probs)
 
+    # Pinnacle LAST and across every sport at once, so its credits go to the contests
+    # nothing above covered.
+    t0 = time.time()
+    try:
+        pin = S.plan_pinnacle(universe, covered)
+    except Exception as e:
+        print(f"  ! pinnacle plan failed: {type(e).__name__}: {str(e)[:70]}")
+        pin = {}
+    for sport, quotes in pin.items():
+        if sport not in per_sport:
+            continue
+        by_id, source_probs = per_sport[sport]
+        matched = match_quotes(universe[sport], quotes)
+        source_probs["pinnacle"] = matched
+        coverage.setdefault(sport, {})["pinnacle"] = len(matched)
+        if verbose:
+            unc = sum(1 for mid in matched if mid not in (covered.get(sport) or set()))
+            print(f"  {S.SPORTS[sport]:<13} pinnacle: {len(quotes)} quotes -> {len(matched)} "
+                  f"matched, {unc} on contests nothing else covers")
+    if verbose and S.ODDS_USAGE:
+        u = S.ODDS_USAGE
+        print(f"  pinnacle credits: {u.get('calls', 0)}/{u.get('allowance', '?')} paid calls, "
+              f"{u.get('remaining', '?')} left, {u.get('stale', 0)} stale lines skipped "
+              f"({time.time() - t0:.0f}s)")
+
+    for sport, (by_id, source_probs) in per_sport.items():
         for name, probs in source_probs.items():
             for mid, opinion in probs.items():
                 qid = f"{name}:{mid}"
@@ -433,6 +470,10 @@ def publish(d, universe, coverage, verbose=True):
                     # Fight rows: where the start came from, and the venue's own, so a
                     # re-timed bout can be audited against the real walk-out later.
                     start_source=r.get("start_source"), venue_start=r.get("venue_start"),
+                    # Pinnacle only: was this a contest nothing else had covered? That is
+                    # the Pinnacle-versus-venue rule's own lane, reported separately.
+                    uncovered=(mid not in (covered.get(sport) or set())
+                               if name == "pinnacle" else None),
                     status="open", pnl=0.0, result=None, settled=None,
                 ))
                 seen.add(qid)

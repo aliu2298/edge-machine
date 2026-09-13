@@ -1510,6 +1510,112 @@ eq(S.odds_allowance(500, datetime(2026, 9, 30, 20, tzinfo=timezone.utc)), S.ODDS
 eq(S.odds_allowance(None), 1, "an unknown balance spends one call, cautiously")
 eq(S.odds_allowance(400, datetime(2026, 12, 20, tzinfo=timezone.utc)) >= 1, True, "December rolls into January")
 
+# ---------------------------------------------------------------------------
+print("\nPinnacle v venue: credits go to contests nothing else covers")
+# ---------------------------------------------------------------------------
+_now = datetime.now(timezone.utc)
+_soon = (_now + timedelta(hours=6)).isoformat()
+_hr = lambda h: (_now - timedelta(minutes=h)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _pev(home, away, prices, age_min=5):
+    return dict(home_team=home, away_team=away, commence_time=_soon, bookmakers=[
+        dict(key="pinnacle", markets=[dict(key="h2h", last_update=_hr(age_min),
+             outcomes=[dict(name=n, price=p) for n, p in prices.items()])])])
+
+
+close(S.pinnacle_prob(_pev("Leeds United", "Newcastle United",
+                           {"Leeds United": 3.0, "Draw": 3.4, "Newcastle United": 2.4}),
+                      "Leeds United", three_way=True),
+      (1 / 3.0) / (1 / 3.0 + 1 / 3.4 + 1 / 2.4), "soccer keeps the draw in the de-vig", tol=1e-9)
+eq(S.pinnacle_prob(_pev("A", "B", {"A": 1.9, "B": 1.9}), "A", three_way=True), None,
+   "a three-way sport with no draw price is not priced at all")
+
+_univ = {
+    "boxing": [dict(market_id="bx1", side_a="Garcia", side_b="Benn", untraded=False)],
+    "soccer": [dict(market_id="sc1", side_a="Leeds United", side_b="Newcastle United", untraded=False),
+               dict(market_id="sc2", side_a="Brentford", side_b="Chelsea", untraded=False),
+               dict(market_id="sc3", side_a="Everton", side_b="Ipswich Town", untraded=False)],
+}
+_ev_lists = {
+    "/sports/boxing_boxing/events": [dict(home_team="Ryan Garcia", away_team="Conor Benn")],
+    "/sports/soccer_epl/events": [dict(home_team="Leeds United", away_team="Newcastle United"),
+                                  dict(home_team="Brentford", away_team="Chelsea"),
+                                  dict(home_team="Everton", away_team="Ipswich Town")],
+}
+_odds = {
+    "/sports/boxing_boxing/odds": [_pev("Ryan Garcia", "Conor Benn", {"Ryan Garcia": 1.4, "Conor Benn": 3.1})],
+    "/sports/soccer_epl/odds": [
+        _pev("Leeds United", "Newcastle United", {"Leeds United": 3.0, "Draw": 3.4, "Newcastle United": 2.4}),
+        _pev("Brentford", "Chelsea", {"Brentford": 3.6, "Draw": 3.6, "Chelsea": 2.0}, age_min=240),
+        _pev("Everton", "Ipswich Town", {"Everton": 2.1, "Draw": 3.3, "Ipswich Town": 3.6})],
+}
+_paid = []
+
+
+def _fake_plan_get(path, params):
+    if path == "/sports":
+        return [dict(key="boxing_boxing", group="Boxing", active=True, has_outrights=False),
+                dict(key="soccer_epl", group="Soccer", active=True, has_outrights=False)], \
+            {"x-requests-remaining": "400"}
+    if path.endswith("/events"):
+        return _ev_lists.get(path, []), {}
+    _paid.append(path)
+    return _odds[path], {"x-requests-remaining": str(400 - len(_paid))}
+
+
+_saved_get2, _saved_key2 = S._odds_get, _os.environ.get("ODDS_API_KEY")
+S._odds_get = _fake_plan_get
+_os.environ["ODDS_API_KEY"] = "test-key-not-real"
+try:
+    _reset_odds(); _paid.clear()
+    S.ODDS_USAGE["allowance"] = 1
+    _plan = S.plan_pinnacle(_univ, covered={"soccer": {"sc2"}, "boxing": set()})
+    eq(_paid, ["/sports/soccer_epl/odds"],
+       "with one credit, it goes to the key with the most uncovered contests (EPL 2, boxing 1)")
+    eq(S.ODDS_USAGE["calls"], 1, "and the run's allowance is never exceeded")
+    eq(sorted(q["a"] for q in _plan["soccer"]), ["Everton", "Leeds United"],
+       "every fresh line on the paid key is quoted, covered or not")
+    eq(S.ODDS_USAGE.get("stale"), 1, "a Pinnacle line four hours old is skipped, and counted")
+    eq(_plan["boxing"], [], "no credit left for boxing this run")
+    eq(S.ODDS_USAGE["planned"][0]["uncovered"], 2, "the plan is recorded, most uncovered first")
+
+    _reset_odds(); _paid.clear()
+    S.ODDS_USAGE["allowance"] = 0
+    S.plan_pinnacle(_univ, covered={})
+    eq(_paid, [], "an allowance of zero spends nothing, whatever is uncovered")
+
+    # publish: Pinnacle is planned after every other source, and flags its uncovered contests
+    _reset_odds(); _paid.clear()
+    S.ODDS_USAGE["allowance"] = 2
+    _rows = {"soccer": [dict(r, sport="soccer", venue="kalshi", label=f"{r['side_a']} vs {r['side_b']}",
+                             price_a=0.30, price_b=0.40, price_draw=0.28,
+                             tradeable={"a": True, "b": True, "draw": True},
+                             start=_soon, date=_soon[:10], volume=0.0, url="")
+                        for r in _univ["soccer"]]}
+    _saved_ch = S.CHALLENGERS
+    S.CHALLENGERS = {"soccerpredictions": lambda sp: [dict(market_id="sc1", pick="draw")]}
+    try:
+        d = {"quotes": [], "meta": {}, "coverage": {}}
+        T.publish(d, _rows, {}, verbose=False)
+    finally:
+        S.CHALLENGERS = _saved_ch
+    _pq = {q["market_id"]: q for q in d["quotes"] if q["source"] == "pinnacle"}
+    eq((_pq["sc1"]["uncovered"], _pq["sc3"]["uncovered"]), (False, True),
+       "a contest a tipster covered this run is not uncovered; one nobody touched is")
+    close(_pq["sc3"]["prob_a"], (1 / 2.1) / (1 / 2.1 + 1 / 3.3 + 1 / 3.6), "soccer Pinnacle probability includes the draw", tol=1e-3)
+    eq(_pq["sc3"]["bet"], True, "Everton at 0.30 against a Pinnacle 0.45 is a bet")
+    ok(all(q.get("uncovered") is None for q in d["quotes"] if q["source"] != "pinnacle"),
+       "only Pinnacle quotes carry the uncovered flag")
+    ok("pinnacle" not in S.CHALLENGERS, "Pinnacle is planned, not fetched sport by sport")
+finally:
+    S._odds_get = _saved_get2
+    _reset_odds()
+    if _saved_key2 is None:
+        _os.environ.pop("ODDS_API_KEY", None)
+    else:
+        _os.environ["ODDS_API_KEY"] = _saved_key2
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
