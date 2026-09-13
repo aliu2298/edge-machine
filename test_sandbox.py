@@ -1685,7 +1685,8 @@ try:
     # Production-ready: the stamp on fresh data + positive CLV + positive after fees.
     st3 = {"pairs": {"covers|soccer": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
     # Soccer on Kalshi, home or away: a record the bot can actually trade.
-    fresh = [dict(q, sport="soccer", venue="kalshi") for q in _chooser(60, 6)]
+    fresh = [dict(q, sport="soccer", venue="kalshi", market_id=f"KXEPLGAME-26SEP01X{i:02d}")
+             for i, q in enumerate(_chooser(60, 6))]
     for q in fresh:
         q["close_price"] = q["price"] + 0.02
         q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
@@ -1729,6 +1730,8 @@ try:
     _draws = [dict(q, pick="draw") if i % 10 == 0 else q for i, q in enumerate(fresh)]
     eq(T.bot_route(_draws[0]), False, "a soccer draw has no route: the bot refuses draws")
     eq(T.bot_route(_draws[1]), True, "a soccer side on Kalshi does")
+    eq(T.bot_route(dict(_draws[1], market_id="KXALLSVENSKANGAME-26SEP01X")), False,
+       "but not in a league the bot does not map")
 
     # polymarket.com bets never count toward QA.
     _com = [dict(q, venue="polymarket") for q in _chooser(32, 3)]
@@ -2147,6 +2150,57 @@ finally:
     S.CHALLENGERS = _saved_ch3
 eq([q["id"] for q in _dpub["quotes"] if q["source"] == "espn_fpi"], ["espn_fpi:4287261"],
    "publish refuses a source's second quote on a contest it already priced elsewhere")
+
+# ---------------------------------------------------------------------------
+print("\nProduction: pairs that hold the ready gate, published for the bot")
+# ---------------------------------------------------------------------------
+import production as PR
+_pnow = datetime(2026, 10, 1, 12, tzinfo=timezone.utc)
+_ready = "2026-09-30T00:00:00+00:00"
+_pst = {"pairs": {"soccerpredictions|soccer": dict(stage="qa", promoted_at="2026-09-20T00:00:00+00:00", ready_at=_ready),
+                  "espn_fpi|mlb": dict(stage="qa", promoted_at="2026-09-20T00:00:00+00:00"),
+                  "covers|soccer": dict(stage="sandbox", since="2026-09-01T00:00:00+00:00")}, "events": []}
+def _pq(i, **kw):
+    base = dict(id=f"soccerpredictions:KXEPLGAME-26OCT02LEENEW{i}", source="soccerpredictions", sport="soccer",
+                market_id=f"KXEPLGAME-26OCT02LEENEW{i}", venue="kalshi", bet=True, pick="a", price=0.44, edge=None,
+                side_a="Leeds United", side_b="Newcastle", status="open",
+                start=(_pnow + timedelta(hours=20 + i)).isoformat(), logged="2026-09-30T06:00:00+00:00")
+    base.update(kw)
+    return base
+_pd = {"quotes": [
+    _pq(1),                                                            # open, routable -> published
+    _pq(2, pick="b"),                                                  # away side
+    _pq(3, pick="draw"),                                               # draw: no bot route
+    _pq(4, logged="2026-09-29T06:00:00+00:00"),                        # logged before Production
+    _pq(5, market_id="KXALLSVENSKANGAME-26OCT02AIKHAM", id="sp:5"),    # league the bot does not map
+    _pq(6, start=(_pnow - timedelta(hours=1)).isoformat()),            # already started
+    _pq(7, status="won", pnl=127.27, result="a", price_a=0.44, price_b=0.3, price_draw=0.3,
+        start=(_pnow - timedelta(days=1)).isoformat()),   # settled: kept for results
+    _pq(8, bet=False),                                                 # no bet
+    dict(_pq(9), source="espn_fpi", sport="mlb", venue="polymarket_us"),   # pair not in Production
+]}
+_feed = PR.build_feed(_pd, _pst, now=_pnow)
+eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in QA with ready_at is in Production")
+_fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
+eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "7"],
+   "published: open routable bets logged since ready, and recent settled ones; nothing else")
+eq(_feed["unroutable_skipped"], 2, "the draw and the unmapped league are held back and counted")
+_l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
+eq((_l1["bet"], _l1["home"], _l1["away"], _l1["league"], _l1["status"]),
+   ({"kind": "match_result", "side": "home"}, "Leeds United", "Newcastle", "Premier League", "pending"),
+   "a Production lead is a match_result on the bot's own league name")
+eq(next(l for l in _fl if l["sandbox_quote"].endswith("2"))["bet"]["side"], "away", "side b is the away side")
+eq((_l1["last_seen_at"], _feed["board_built_at"]), (_pnow.isoformat(), _pnow.isoformat()),
+   "open leads carry the build stamp the bot's exact-build rule reads")
+_l7 = next(l for l in _fl if l["sandbox_quote"].endswith("7"))
+eq((_l7["status"], "last_seen_at" in _l7), ("hit", False), "a settled lead is graded and never looks current")
+ok(_l1["id"].startswith(_l1["date"] + "|Leeds United|Newcastle|"),
+   "ids start date|home|away, so the bot's one-position-per-fixture rule applies")
+_empty = PR.build_feed({"quotes": []}, {"pairs": {}}, now=_pnow)
+eq((_empty["leads"], _empty["pairs"]), ({}, {}), "with nothing in Production the feed is empty, not missing")
+_html = PR.page(_pd, _pst, _feed, "<style></style>", now=_pnow)
+ok("Leeds United to win" in _html and "SoccerPredictions.ai · Soccer" in _html, "the page lists the open leads by source label")
+ok('href="./production.html">Production</a>' in open("streaks_build.py").read(), "every board links Production")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

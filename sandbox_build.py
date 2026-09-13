@@ -539,7 +539,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="sub">Which tipster actually makes money · {len(S.SPORTS)} sports · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
+<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
 <div class="note warn">Every source here is logged <b>before the contest starts</b> and
 stamped with the <b>price that existed at that moment</b>, then settled for real when the
@@ -798,7 +798,7 @@ def qa_page(d, st, style):
 <div class="sub">Where the real deal is separated from the noise · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a></div>
+<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
 <div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
@@ -856,6 +856,11 @@ def main():
     with open(QA_OUT, "w") as f:
         f.write(qa_page(T.load(), T.load_stages(), style))
     print(f"wrote {QA_OUT}")
+    import production
+    prod_out = os.path.join(os.path.dirname(QA_OUT), "production.html")
+    with open(prod_out, "w") as f:
+        f.write(production.page(T.load(), T.load_stages(), production.load_feed(), style))
+    print(f"wrote {prod_out}")
     return 0
 
 

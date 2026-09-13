@@ -1935,6 +1935,26 @@ NWS_CITIES = {
     "KXHIGHPHIL": (39.8683, -75.2311),
 }
 
+# Kalshi soccer GAME series -> the board's league name, for the leagues the trading bot maps
+# (polymarket-bot bot/kalshi.py LEAGUES, as KX{FRAG}GAME). A Production lead must carry a
+# league the bot knows, or it filters the lead as "no market".
+KALSHI_GAME_LEAGUES = {
+    "KXEPLGAME": "Premier League", "KXLALIGAGAME": "La Liga", "KXSERIEAGAME": "Serie A",
+    "KXBUNDESLIGAGAME": "Bundesliga", "KXLIGUE1GAME": "Ligue 1",
+    "KXUCLGAME": "Champions League", "KXUELGAME": "Europa League", "KXMLSGAME": "MLS",
+    "KXEREDIVISIEGAME": "Eredivisie", "KXLIGAPORTUGALGAME": "Primeira Liga",
+    "KXSAUDIPLGAME": "Saudi Pro League", "KXSCOTTISHPREMGAME": "Scottish Premiership",
+    "KXBRASILEIROGAME": "Brasileirão",
+}
+
+
+def quote_league(q):
+    """The board league name for a Kalshi soccer quote, or None."""
+    if q.get("venue") == "kalshi":
+        return KALSHI_GAME_LEAGUES.get(str(q.get("market_id") or "").split("-")[0])
+    return None
+
+
 NWS_CITY_NAMES = {"KXHIGHNY": "New York", "KXHIGHCHI": "Chicago", "KXHIGHMIA": "Miami",
                   "KXHIGHAUS": "Austin", "KXHIGHDEN": "Denver", "KXHIGHLAX": "Los Angeles",
                   "KXHIGHPHIL": "Philadelphia"}

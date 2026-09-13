@@ -953,12 +953,13 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary")
 def bot_route(q):
     """Could the polymarket-bot trade this bet as it stands today? Mirrors the bot's mapping
     (bot/mapping.py, bot/kalshi.py) as of 2026-09-13: soccer only — a named side's win (home
-    or away) on Kalshi or Polymarket US. No draw contract (the bot refuses draws), and no
+    or away) on a Kalshi GAME market in a league the bot maps (S.KALSHI_GAME_LEAGUES; the
+    Sandbox prices soccer on Kalshi only). No draw contract (the bot refuses draws), and no
     tennis, MLB, NFL, cricket, table tennis, fights or yes/no markets. Update this with the
     bot, never ahead of it: a "production-ready" pair the bot cannot trade is a label, not a
     route."""
     return (q.get("sport") == "soccer" and q.get("pick") in ("a", "b")
-            and (q.get("venue") or "polymarket") in ("kalshi", "polymarket_us"))
+            and q.get("venue") == "kalshi" and S.quote_league(q) is not None)
 
 
 def assess(d, name, sport=None, since=None, venues=None):
@@ -1397,6 +1398,16 @@ def main():
     st = load_stages()
     evaluate_stages(d, st)
     save_stages(st)
+    # Production: the feed the trading bot reads next to the Leads ledger.
+    try:
+        import production
+        feed = production.build_feed(d, st)
+        production.save_feed(feed)
+        print(f" production: {len(feed['pairs'])} pair(s), "
+              f"{sum(1 for l in feed['leads'].values() if l['status'] == 'pending')} open lead(s), "
+              f"{feed['unroutable_skipped']} unroutable bet(s) held back")
+    except Exception as e:
+        print(f"  ! production feed failed: {type(e).__name__}: {str(e)[:80]}")
 
     print("\n source                     quotes  bets  settled   hit      ROI   Brier")
     for name, s in score(d).items():

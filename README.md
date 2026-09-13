@@ -464,6 +464,15 @@ promoted. Settled bets are never lost to pruning: `prune()` copies each settled 
 `data/sandbox_archive/YYYY-MM.json` (by settle month) before rolling the row up, and every
 judgement reads the ledger and the archive together.
 
+**Production (2026-09-13).** `production.py`. A (source, sport) pair is in Production while it
+sits in QA with `ready_at` set (held the ready gate 7 days) and leaves on the first run the gate
+fails — no manual promotion. Each tracker run writes `data/production_leads.json` in the lead
+ledger's shape (`leads`, `updated_at`, `board_built_at`): every bet a Production pair logged since
+it became ready that the bot can route (a soccer side to win on a mapped Kalshi GAME market) as a
+`match_result` lead with `side` home/away, `last_seen_at` = the build stamp while open, status
+pending/hit/miss/void. Empty until a pair is ready. `public_site/production.html` lists the pairs
+and open leads. **The trading bot reads this feed next to the Leads ledger** under the same checks.
+
 **QA counts only what the bot can trade (2026-09-13).** QA entry, readiness and demotion read
 only bets on Polymarket US, Kalshi and Kalshi yes/no (`TRADEABLE_VENUES`); polymarket.com bets
 stay on the Sandbox page and in its own stamp. Production-ready also requires every fresh bet to
