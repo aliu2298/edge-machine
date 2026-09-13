@@ -8,10 +8,12 @@ name: Sandbox Tracker
 
 on:
   schedule:
-    # Every 6h at :37, twenty minutes after the boards run at :17. The offset is not
-    # cosmetic — the two workflows share a concurrency group (see below), so starting
-    # them together would just make one sit in the queue.
-    - cron: "37 */6 * * *"
+    # Every 3h since 2026-09-13, at :11 on 02, 05, ... UTC — ninety minutes clear of the
+    # boards (41 */3). The offset is not cosmetic: the two workflows share a concurrency
+    # group (see below). Six-hourly slots started up to 4.5h late, which priced tips hours
+    # before kickoff and missed any tip published between runs for an early start.
+    # sandbox_sources.ODDS_RUNS_PER_DAY must match this cadence, or credit pacing overspends.
+    - cron: "11 2-23/3 * * *"
   workflow_dispatch:
 
 permissions:

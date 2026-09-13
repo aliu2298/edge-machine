@@ -798,12 +798,12 @@ try:
 finally:
     _ur.urlopen, _sp.run, S.time.sleep = real_open, real_run, real_sleep
 
-real_pm_fetch, real_kv_fetch = S.fetch_polymarket, S.fetch_kalshi_venue
+real_pm_fetch, real_kv_fetch = S.fetch_polymarket_us, S.fetch_kalshi_venue
 def _pm_flaky(sport, stats=None):
     if sport == "nfl":
         raise http.client.RemoteDisconnected("dropped")
     return []
-S.fetch_polymarket = _pm_flaky
+S.fetch_polymarket_us = _pm_flaky
 S.fetch_kalshi_venue = lambda sport, stats=None: []
 try:
     # The failure line collect() prints is correct behaviour, but printed from a test it
@@ -815,7 +815,7 @@ try:
     ok(set(uni_) == set(S.SPORTS) and uni_["nfl"] == [],
        "one venue failing for one sport leaves every other sport's collection intact")
 finally:
-    S.fetch_polymarket, S.fetch_kalshi_venue = real_pm_fetch, real_kv_fetch
+    S.fetch_polymarket_us, S.fetch_kalshi_venue = real_pm_fetch, real_kv_fetch
 
 # ---------------------------------------------------------------------------
 print("\nyes/no markets (climate, crypto and the rest)")
@@ -1486,7 +1486,7 @@ _t0 = datetime(2026, 9, 1, 0, 30, tzinfo=timezone.utc)
 
 
 def _simulate(start, credits=500, manual_per_day=2, wanted=4):
-    """Spend a month the way the workflow would: 4 scheduled runs a day plus manual ones."""
+    """Spend a month the way the workflow would: the scheduled runs a day plus manual ones."""
     now, rem, spent_days = start, credits, set()
     end = datetime(2026, 10, 1, tzinfo=timezone.utc)
     while now < end:
@@ -1500,7 +1500,7 @@ def _simulate(start, credits=500, manual_per_day=2, wanted=4):
 
 
 _left, _days = _simulate(_t0)
-ok(_left >= S.ODDS_RESERVE - 1, f"a month of 4 scheduled + 2 manual runs a day never runs dry (left {_left})")
+ok(_left >= S.ODDS_RESERVE - 1, f"a month of {S.ODDS_RUNS_PER_DAY} scheduled + 2 manual runs a day never runs dry (left {_left})")
 eq(_days, 30, "and Pinnacle still gets a paid call on every single day of the month")
 _left, _days = _simulate(datetime(2026, 9, 13, 0, 17, tzinfo=timezone.utc), credits=483)
 ok(_left >= S.ODDS_RESERVE - 1 and _days == 18, f"from today's 483, it lasts to the 1st with a call every day (left {_left})")
@@ -1954,6 +1954,125 @@ try:
     eq(len(_da["_archive"]), 40, "saving leaves the in-memory archive in place")
 finally:
     T.LEDGER = _saved_ledger
+
+# ---------------------------------------------------------------------------
+print("\nPolymarket US is the venue")
+# ---------------------------------------------------------------------------
+_now_us = datetime.now(timezone.utc)
+_soon_us = (_now_us + timedelta(hours=5)).strftime("%Y-%m-%dT%H:%M:%SZ")
+def _usm(slug, a, b, bid, ask, mtype="tennis_match_winner", **kw):
+    return dict(dict(slug=slug, sportsMarketType=mtype, outcomes=json.dumps([a, b]), closed=False,
+                     bestBidQuote={"value": str(bid)}, bestAskQuote={"value": str(ask)},
+                     gameStartTime=_soon_us), **kw)
+_us_payload = {
+    "/v2/sports": {"sports": [{"name": "Tennis", "leagues": [{"slug": "wta"}]},
+                              {"name": "Baseball", "leagues": [{"slug": "mlb"}, {"slug": "kbo"}]}]},
+    "/v2/leagues/wta/events?limit=100": {"events": [
+        {"slug": "ev1", "period": "NS", "markets": [
+            _usm("m1", "Iga Swiatek", "Coco Gauff", 0.60, 0.62),
+            _usm("m1-sets", "Over", "Under", 0.4, 0.5, mtype="tennis_match_total_sets")]},
+        {"slug": "ev2", "period": "S2", "markets": [_usm("m2", "A B", "C D", 0.5, 0.52)]},
+        {"slug": "ev3", "period": "NS", "markets": [_usm("m3", "E F", "G H", 0.30, 0.45)]},
+        {"slug": "ev4", "period": "NS", "closed": True, "markets": [_usm("m4", "I J", "K L", 0.5, 0.51)]}]},
+    "/v1/markets/m1/settlement": {"slug": "m1", "settlement": 1},
+    "/v1/markets/m5/settlement": {"slug": "m5", "settlement": 0},
+    "/v1/markets/m1/bbo": {"marketData": {"bestBid": {"value": "0.63"}, "bestAsk": {"value": "0.65"}}},
+}
+_saved_get_us, _saved_leagues = S._get, S._pmus_leagues
+def _fake_us_get(url, tries=3, timeout=20):
+    for k, v in _us_payload.items():
+        if url == S.PMUS + k:
+            return v
+    raise RuntimeError("404")
+S._get, S._pmus_leagues = _fake_us_get, None
+try:
+    eq(S.pmus_leagues("mlb"), ["mlb"], "MLB takes the mlb league only, not KBO")
+    _us_rows = S.fetch_polymarket_us("tennis")
+    _by = {r["market_id"]: r for r in _us_rows}
+    eq(sorted(_by), ["m1", "m3"], "in-play (period S2) and closed events are never listed")
+    eq((_by["m1"]["venue"], _by["m1"]["price_a"], _by["m1"]["price_b"], _by["m1"]["mid_a"]),
+       ("polymarket_us", 0.62, 0.4, 0.61), "side A at the ask, side B at 1 - bid, the midpoint kept")
+    eq((_by["m1"]["untraded"], _by["m3"]["untraded"]), (False, True), "a 15c spread is not a tradeable book")
+    eq(_by["m1"]["url"], "https://polymarket.us/event/ev1", "linked to the Polymarket US event")
+    eq((S.resolve_polymarket_us("m1"), S.resolve_polymarket_us("m5"), S.resolve_polymarket_us("m9")),
+       ("a", "b", None), "settlement 1 = first outcome won, 0 = lost, 404 = not yet")
+    eq(S.venue_price(dict(venue="polymarket_us", market_id="m1", pick="b")), 0.37,
+       "the closing price for side B is 1 - bid on the US book")
+finally:
+    S._get, S._pmus_leagues = _saved_get_us, _saved_leagues
+eq(S.SOURCES["polymarket_us"]["kind"], "Prediction market", "Polymarket US is listed as a source")
+ok("polymarket" in S.CHALLENGERS, "polymarket.com is now a comparison source")
+_uni = {"tennis": [dict(market_id="u1", venue="polymarket_us", sport="tennis", label="Iga Swiatek vs Coco Gauff",
+                        side_a="Iga Swiatek", side_b="Coco Gauff", price_a=0.62, price_b=0.40, mid_a=0.61,
+                        untraded=False, start=(_now_us + timedelta(hours=5)).isoformat(),
+                        date=_now_us.strftime("%Y-%m-%d"), volume=0.0, url="")]}
+_saved_ch2 = S.CHALLENGERS
+S.CHALLENGERS = {"polymarket": lambda sp: [dict(a="Iga Swiatek", b="Coco Gauff", prob_a=0.70,
+                                                 date=_now_us.strftime("%Y-%m-%d"))]}
+try:
+    _dp = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_dp, _uni, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch2
+_qs = {q["source"]: q for q in _dp["quotes"]}
+eq((_qs["polymarket_us"]["bet"], _qs["polymarket_us"]["prob_a"]), (False, 0.61),
+   "the US exchange's own midpoint is logged for Brier and never bets")
+eq((_qs["polymarket"]["bet"], _qs["polymarket"]["venue"], _qs["polymarket"]["price"]), (True, "polymarket_us", 0.62),
+   "polymarket.com at 0.70 against a 0.62 US ask is a bet, booked on the US venue")
+eq(T.FEE_RATE["polymarket_us"], 0.06, "Polymarket US taker fee applies to QA's after-fee ROI")
+
+# ---------------------------------------------------------------------------
+print("\nKalshi soccer starts from ESPN")
+# ---------------------------------------------------------------------------
+_e0 = datetime(2026, 9, 13, 8, 0, tzinfo=timezone.utc)
+_krows = [dict(market_id="KXSERIEAGAME-26SEP13TORROM", side_a="Torino", side_b="Roma",
+               start=(_e0 + timedelta(hours=2, minutes=30)).isoformat(), date="2026-09-13"),
+          dict(market_id="K2", side_a="Leeds United", side_b="Newcastle",
+               start=(_e0 + timedelta(hours=6)).isoformat(), date="2026-09-13"),
+          dict(market_id="K3", side_a="Real Madrid", side_b="Rayo Vallecano",
+               start=(_e0 + timedelta(hours=10)).isoformat(), date="2026-09-13"),
+          dict(market_id="K4", side_a="Nowhere FC", side_b="Elsewhere",
+               start=(_e0 + timedelta(hours=3)).isoformat(), date="2026-09-13")]
+_efx = [dict(home="Torino", away="AS Roma", kickoff="2026-09-14T16:30Z", played=False),
+        dict(home="Newcastle United", away="Leeds United", kickoff="2026-09-13T14:00Z", played=False),
+        dict(home="Real Madrid", away="Rayo Vallecano", kickoff="2026-09-12T19:00Z", played=True)]
+_rt, _st = S.apply_espn_starts(_krows, fixtures=_efx, now=_e0)
+_rb = {r["market_id"]: r for r in _rt}
+eq((_rb["KXSERIEAGAME-26SEP13TORROM"]["start"][:16], _rb["KXSERIEAGAME-26SEP13TORROM"]["start_source"]),
+   ("2026-09-14T16:30", "espn"), "a Kalshi placeholder date takes ESPN's real kickoff, the estimate kept")
+eq(_rb["K2"].get("start_source"), None, "the reverse fixture (away v home) is never used")
+ok("K3" not in _rb, "a row whose ESPN fixture has already been played is dropped")
+eq(_rb["K4"].get("start_source"), None, "an unmatched row keeps Kalshi's estimate")
+eq(_st["matched"], 1, "and the run reports how many were re-timed")
+
+# ---------------------------------------------------------------------------
+print("\nweather: city labels and one ladder = one outcome")
+# ---------------------------------------------------------------------------
+eq(S.display_label(dict(label="Will the maximum temperature be 80-81° on Sep 13, 2026?",
+                        market_id="KXHIGHLAX-26SEP13-B80.5")),
+   "Los Angeles: Will the maximum temperature be 80-81° on Sep 13, 2026?", "the city is named")
+eq(S.display_label(dict(label="Cowboys vs Giants", market_id="x")), "Cowboys vs Giants", "other labels are untouched")
+eq(S.outcome_cluster(dict(venue="kalshi_binary", market_id="KXHIGHNY-26SEP13-B80.5", id="a")),
+   S.outcome_cluster(dict(venue="kalshi_binary", market_id="KXHIGHNY-26SEP13-B82.5", id="b")),
+   "two buckets of one city's day share a cluster")
+_wb = lambda mid, won, price: dict(id=f"nws:{mid}", source="nws", sport="climate", bet=True, venue="kalshi_binary",
+                                   market_id=mid, status="won" if won else "lost", pick="a", price=price,
+                                   pnl=round(100 * (1 / price - 1), 2) if won else -100.0,
+                                   start="2026-09-13T19:00:00+00:00", logged="2026-09-13T01:00:00+00:00",
+                                   result="a" if won else "b", price_a=price, price_b=1 - price, price_draw=None)
+_pair = [_wb("KXHIGHNY-26SEP13-B80.5", True, 0.3), _wb("KXHIGHNY-26SEP13-B82.5", False, 0.3)]
+_ap = T.assess({"quotes": _pair}, "nws")
+close(_ap["z"], (1 - 0.6) / (0.6 * 0.4) ** 0.5, "z uses the ladder as one draw: P = 0.6, var 0.24", tol=1e-9)
+eq((_ap["n"], _ap["n_eff"]), (2, 1), "two bets, one independent outcome")
+
+# ---------------------------------------------------------------------------
+print("\nbet lists: every bet, searchable, counts that agree")
+# ---------------------------------------------------------------------------
+_lsrc = open("sandbox_build.py").read()
+ok('class="flt"' in _lsrc and "input.flt" in _lsrc, "running and settled lists carry a filter box")
+ok("def open_rows(d, limit=None)" in _lsrc and "def settled_rows(d, limit=None)" in _lsrc,
+   "no bet is cut from the lists any more")
+ok('{n_hist - n_void:,}{f" · {n_void} void"' in _lsrc, "the settled heading counts won/lost apart from voids")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

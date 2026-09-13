@@ -116,7 +116,7 @@ and graded against ESPN final scores once its fixture is played.
 | `.github/workflows/refresh-boards.yml` | Three-hourly (`41 */3`; six-hourly slots started up to 7h apart): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
 | `.github/workflows/backup-refresh.yml` | Hourly watchdog (`53 * * * *`): snapshots Sandbox closing prices, and takes over (in the boards concurrency group, as a separate job) only when the primary has not succeeded or the live board is over 5h old — before the bot's 8h feed limit. |
 | `.github/workflows/sandbox-close.yml` | Every 30 minutes (`11,41 * * * *`): closing-price snapshots only; own concurrency group, no deploy. |
-| `.github/workflows/sandbox-tracker.yml` | Six-hourly (`37 */6`), 20 minutes after the primary: collect forecasts, settle, rebuild the Sandbox board. |
+| `.github/workflows/sandbox-tracker.yml` | Three-hourly (`11 2-23/3`), 90 minutes clear of the boards: collect forecasts, settle, rebuild the Sandbox board. |
 
 ## Run locally
 
@@ -520,6 +520,19 @@ pending lead the build no longer publishes, with its fixture still ahead, gets `
 not withdrawn at kickoff, and show the withdrawn count apart. The bot trades a lead only when its
 `last_seen_at` equals `board_built_at`, and holds at most one position per fixture.
 
+**Sandbox venue (2026-09-13).** Non-soccer contests are priced and settled on **Polymarket
+US** (`fetch_polymarket_us`, `resolve_polymarket_us`) — the exchange the trading bot trades —
+instead of polymarket.com, which the bot cannot use. Each event's single two-outcome winner
+market is the contest; its bid/ask quote the first outcome (side B's ask is 1 − bid); an event
+not at period "NS" is in play and never quoted; settlement 1/0 = first outcome won/lost.
+polymarket.com stays as the comparison source `polymarket`, backed at a 3pp disagreement with
+the US ask; bets logged on it before the switch still settle there. Kalshi remains the soccer
+venue and the gap-filler, with soccer starts taken from ESPN's kickoff where a fixture matches
+(`apply_espn_starts`). The tracker runs every 3h (`11 2-23/3`), and Odds API pacing counts 8
+runs a day. Weather quotes show their city, and a weather ladder (one series, one day) counts
+as one independent outcome in z and in the sample size (`outcome_cluster`). The running and
+settled lists carry every bet with a filter box.
+
 **Pinnacle v venue on uncovered contests.** Pinnacle is planned *after* every other source
 and across all sports at once: free event lists show how many listed, priced contests each
 Odds API key carries that no tipster, model or book has covered, and the run's paced share of
@@ -539,7 +552,7 @@ it is not used. The Odds API lists Pinnacle only for major cricket and the big t
 tournaments, not ITF or Challenger. Credits are paced to last the month: event lists are free, a
 paid odds call is made only for a sport with a listed, priced contest waiting, and each run
 may spend only its share of what remains — (remaining − 25 reserve) ÷ the runs left before
-the credits reset on the 1st, counting four scheduled runs a day plus 25% for manual ones,
+the credits reset on the 1st, counting eight scheduled runs a day (the tracker runs every 3h) plus 25% for manual ones,
 never more than four. A simulated month of six runs a day never runs dry and still makes a
 paid call every day.
 

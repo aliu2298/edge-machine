@@ -91,7 +91,7 @@ NEVER_PROMOTED_KINDS = ("Baseline",)
 STAGES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stages.json")
 # Taker fee per $1 contract at price p, per venue: fee = rate * p * (1 - p). Polymarket US
 # charges 0.06, Kalshi 0.07. QA scores what following a source would actually cost.
-FEE_RATE = {"polymarket": 0.06, "kalshi": 0.07, "kalshi_binary": 0.07}
+FEE_RATE = {"polymarket": 0.06, "polymarket_us": 0.06, "kalshi": 0.07, "kalshi_binary": 0.07}
 
 # CLOSING PRICES. The tracker runs every 6h, so its last snapshot before a start could be
 # hours early — the first 103 snapshots sat a median 16h before the start. A separate job
@@ -328,9 +328,10 @@ def collect(verbose=True):
 
         stats = {}
         try:
-            pm = [] if sport == "soccer" else S.fetch_polymarket(sport, stats=stats)
+            # Polymarket US, not polymarket.com: the venue has to be one the bot can trade.
+            pm = [] if sport == "soccer" else S.fetch_polymarket_us(sport, stats=stats)
         except Exception as e:
-            print(f"  ! polymarket/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
+            print(f"  ! polymarket_us/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
             pm = []
         kstats = {}
         try:
@@ -340,6 +341,18 @@ def collect(verbose=True):
             ks = []
         extra = [k for k in ks if not any(_same_contest(k, p) for p in pm)]
         universe[sport] = pm + extra
+        if sport == "soccer":
+            # Kalshi has no kickoff time; ESPN does. See S.apply_espn_starts.
+            try:
+                universe[sport], et = S.apply_espn_starts(universe[sport])
+                if verbose:
+                    sh = sorted(abs(x) for x in et["shifts"])
+                    print(f"  {S.SPORTS[sport]:<13} start times: {et['matched']} from ESPN, "
+                          f"{et['dropped']} dropped as started"
+                          + (f", median |shift| {sh[len(sh)//2]:.0f} min, largest {sh[-1]:.0f}"
+                             if sh else ""))
+            except Exception as e:
+                print(f"  ! espn start times failed: {type(e).__name__}: {str(e)[:60]}")
         if sport in S.START_FROM_PINNACLE:
             # Fight nights: re-time every bout from Pinnacle's own commence time. Rows
             # it cannot re-time keep the venue's start and follow the usual rule.
@@ -359,12 +372,12 @@ def collect(verbose=True):
                 print(f"  {S.SPORTS[sport]:<13} start times: {rt['matched']} from Pinnacle, "
                       f"{rt['dropped']} dropped as started{med}")
         cov = coverage.setdefault(sport, {})
-        cov["polymarket"] = len(pm)
-        cov["polymarket_listed"] = stats.get("listed", len(pm))
-        cov["polymarket_priced"] = stats.get("priced", 0)
+        cov["polymarket_us"] = len(pm)
+        cov["polymarket_us_listed"] = stats.get("listed", len(pm))
+        cov["polymarket_us_priced"] = stats.get("priced", 0)
         cov["kalshi_venue"] = len(extra)
         if verbose:
-            print(f"  {S.SPORTS[sport]:<13} polymarket: {len(pm)} taken | kalshi: "
+            print(f"  {S.SPORTS[sport]:<13} polymarket US: {len(pm)} taken | kalshi: "
                   f"{kstats.get('listed', len(ks))} listed, {len(extra)} added "
                   f"({time.time() - t0:.0f}s)")
     return universe, coverage
@@ -460,9 +473,14 @@ def publish(d, universe, coverage, verbose=True):
         # Its probability is the MIDPOINT: the row's price_a is now the ask a follower
         # pays, and scoring the market's own accuracy on an ask would add half the spread
         # to every Brier term.
-        source_probs = {"polymarket": {r["market_id"]: ("prob", r.get("mid_a", r["price_a"]))
-                                       for r in rows
-                                       if r.get("venue", "polymarket") == "polymarket"}}
+        # The exchange's own midpoint, under the exchange's own name: Polymarket US rows as
+        # "polymarket_us"; a row with no venue, or "polymarket", is polymarket.com (the
+        # venue before 2026-09-13) and keeps the name it always had.
+        source_probs = {"polymarket_us": {}, "polymarket": {}}
+        for r in rows:
+            v = r.get("venue", "polymarket")
+            if v in source_probs:
+                source_probs[v][r["market_id"]] = ("prob", r.get("mid_a", r["price_a"]))
 
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
@@ -477,6 +495,10 @@ def publish(d, universe, coverage, verbose=True):
             # price it would be measured against are the same number.
             pool = (rows if name != "kalshi"
                     else [r for r in rows if r.get("venue", "polymarket") != "kalshi"])
+            if name == "polymarket":
+                # polymarket.com is a comparison source, not the venue: only against rows
+                # priced on another exchange.
+                pool = [r for r in pool if r.get("venue", "polymarket") != "polymarket"]
             matched = match_quotes(pool, quotes)
             source_probs[name] = matched
             coverage.setdefault(sport, {})[name] = len(matched)
@@ -750,6 +772,7 @@ def grade(d, verbose=True):
             venue = q.get("venue")
             resolved[mid] = (S.resolve_kalshi(mid) if venue == "kalshi"
                              else S.resolve_kalshi_market(mid) if venue == "kalshi_binary"
+                             else S.resolve_polymarket_us(mid) if venue == "polymarket_us"
                              else S.resolve_polymarket(mid))
         res = resolved[mid]
         if res is None:
@@ -926,7 +949,16 @@ def assess(d, name, sport=None, since=None):
     pnl = sum(q["pnl"] for q in bets)
     roi = pnl / (n * STAKE) if n else None
     expected = sum(q["price"] for q in bets)
-    var = sum(q["price"] * (1 - q["price"]) for q in bets)
+    # Significance counts INDEPENDENT outcomes. Bets that cannot all win together (two
+    # buckets of one weather ladder) form one cluster: its wins are a single 0/1 draw with
+    # probability P = the sum of its prices, variance P(1-P) — not the sum of p(1-p), which
+    # would treat one day's weather as two coin flips. A singleton cluster is p(1-p) exactly.
+    clusters = {}
+    for q in bets:
+        clusters.setdefault(S.outcome_cluster(q), []).append(q)
+    var = sum(min(1.0, sum(q["price"] for q in c)) * (1 - min(1.0, sum(q["price"] for q in c)))
+              for c in clusters.values())
+    n_eff = len(clusters)
     z = (won - expected) / var ** 0.5 if var > 0 else 0.0
     span_days = ((datetime.fromisoformat(bets[-1]["start"]) - datetime.fromisoformat(bets[0]["start"]))
                  .total_seconds() / 86400) if n else 0.0
@@ -956,7 +988,9 @@ def assess(d, name, sport=None, since=None):
     A = APPROVAL
     criteria = [
         ("sample", f"{A['min_bets']}+ settled bets spanning {A['min_days']}+ days",
-         n >= A["min_bets"] and span_days >= A["min_days"], f"{n} bets over {span_days:.0f} day{'' if round(span_days) == 1 else 's'}"),
+         n_eff >= A["min_bets"] and span_days >= A["min_days"],
+         f"{n} bets" + (f" ({n_eff} independent)" if n_eff != n else "")
+         + f" over {span_days:.0f} day{'' if round(span_days) == 1 else 's'}"),
         ("price", f"wins beat the price by z ≥ {A['z_min']:g}",
          n > 0 and z >= A["z_min"], f"{won} won v {expected:.1f} priced, z {z:+.2f}"),
         ("baseline", "beats every blind rule on the same contests",
@@ -971,7 +1005,7 @@ def assess(d, name, sport=None, since=None):
          (f"{roi_h1*100:+.1f}% then {roi_h2*100:+.1f}%" if roi_h1 is not None
           and roi_h2 is not None else "—")),
     ]
-    if n < READ_FLOOR:
+    if n_eff < READ_FLOOR:
         status = "unproven"
     elif all(c[2] for c in criteria):
         status = "approved"
@@ -982,7 +1016,7 @@ def assess(d, name, sport=None, since=None):
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
     return dict(status=status, criteria=criteria, n=n, won=won, roi=roi, pnl=pnl,
-                z=z, weeks=weeks, span_days=span_days, base_roi=base_roi, own_roi=own_roi, expected=expected,
+                z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
                 clv_beat=(sum(1 for c in clv if c > 0) / len(clv)) if clv else None)
@@ -994,7 +1028,7 @@ def qa_entry(a):
     E = QA_ENTRY
     return [
         ("sample", f"{E['min_bets']}+ settled bets spanning {E['min_days']}+ days",
-         a["n"] >= E["min_bets"] and a["span_days"] >= E["min_days"],
+         a.get("n_eff", a["n"]) >= E["min_bets"] and a["span_days"] >= E["min_days"],
          f"{a['n']} bets over {a['span_days']:.0f} day{'' if round(a['span_days']) == 1 else 's'}"),
         ("price", f"wins beat the price by z ≥ {E['z_min']:g}", a["n"] > 0 and a["z"] >= E["z_min"],
          f"{a['won']} won v {a['expected']:.1f} priced, z {a['z']:+.2f}"),

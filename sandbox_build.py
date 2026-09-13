@@ -87,7 +87,7 @@ def feed_health(d):
         return ""
     dark = []
     for name, meta in S.SOURCES.items():
-        if not meta["connected"] or name == "polymarket":
+        if not meta["connected"] or name == "polymarket_us":
             continue
         st = status.get(name)
         if st is not None:
@@ -325,12 +325,12 @@ def coverage_table(cov):
 {''.join(rows)}</table></div>"""
 
 
-def open_rows(d, limit=30):
+def open_rows(d, limit=None):
     """Running bets, grouped by sport and soonest first."""
     live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]]
     live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
     out, seen_sport = [], None
-    for q in live[:limit]:
+    for q in (live[:limit] if limit else live):
         if q["sport"] != seen_sport:
             seen_sport = q["sport"]
             n = sum(1 for x in live if x["sport"] == seen_sport)
@@ -339,7 +339,7 @@ def open_rows(d, limit=30):
         side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td>
-<td><a href="{esc(q['url'])}" target="_blank" rel="noopener">{esc(q['label'])}</a></td>
+<td><a href="{esc(q['url'])}" target="_blank" rel="noopener">{esc(S.display_label(q))}</a></td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td><b>{esc(side)}</b></td>
 <td class="num">{q['price']:.2f}</td>
@@ -347,12 +347,12 @@ def open_rows(d, limit=30):
     return "\n".join(out), len(live)
 
 
-def settled_rows(d, limit=40):
+def settled_rows(d, limit=None):
     """Settled bets, newest first, grouped by the day they settled."""
     done = [q for q in d["quotes"] if q["status"] in ("won", "lost", "void") and q["bet"]]
     done.sort(key=lambda q: q.get("settled") or "", reverse=True)
     out, seen_day = [], None
-    for q in done[:limit]:
+    for q in (done[:limit] if limit else done):
         day = (q.get("settled") or "")[:10]
         if day != seen_day:
             seen_day = day
@@ -363,7 +363,7 @@ def settled_rows(d, limit=40):
                        f'{money(pl)}</td></tr>')
         side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
-<td>{esc(S.SPORTS[q['sport']])}</td><td>{esc(q['label'])}</td>
+<td>{esc(S.SPORTS[q['sport']])}</td><td>{esc(S.display_label(q))}</td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td>{esc(side)}</td><td class="num">{q['price']:.2f}</td>
 <td><span class="st {q['status']}">{q['status'].upper()}</span></td>
@@ -451,6 +451,7 @@ def build():
                   + (f", median {leads[len(leads)//2]:.0f} min before" if leads else "") + ").")
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     hist_rows, n_hist = settled_rows(d)
+    n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
 
     # The floor has to be judged on the SAME unit the table prints. Every cell greys
     # itself on its own settled count, but this banner used to compare the lifetime
@@ -521,6 +522,9 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
 .sig.w{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
 details.more{{margin:-4px 0 14px}}
+input.flt{{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
+border-radius:9px;padding:8px 12px;outline:none;width:100%;margin-bottom:9px}}
+input.flt:focus{{border-color:var(--acc)}}
 details.more>summary{{cursor:pointer;font-size:12px;font-weight:700;color:var(--acc);
 padding:6px 2px;list-style:none}}
 details.more>summary::-webkit-details-marker{{display:none}}
@@ -614,18 +618,18 @@ would have produced. Two wins from bets the market priced at 1.6 is noise, not a
 not — lower is better, 0.25 is a coin flip. It is blank for tipsters by design: naming a
 side states no probability, so there is nothing to calibrate. <b>Compare on ROI, never on
 P/L</b> — a tipster backs every game it calls while a model bets only where it disagrees
-with the price, so turnover differs by an order of magnitude. Polymarket cannot win its
-own table: its price is what everything else is measured against. <b>v blind</b> is the
+with the price, so turnover differs by an order of magnitude. <b>Polymarket US</b> cannot win
+its own table: its price is what everything else is measured against. <b>v blind</b> is the
 source's ROI minus the best blind rule's (back the favourite, the underdog or the draw) on
 exactly the contests it bet — zero means its picks added nothing over the rule.
 <b>Beat the close</b> is the average closing price minus the price paid, in cents: buying
 below where the market closed is the earliest sign of an edge.{close_line}</div>
 
 <h2>Running now ({n_live:,})</h2>
-{collapse(live_rows, LIVE_HEAD, n_live, "running bets") if n_live else '<div class="note">No open bets — no source currently disagrees with the market by enough to act on.</div>'}
+{('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets — no source currently disagrees with the market by enough to act on.</div>'}
 
-<h2>Settled ({n_hist:,})</h2>
-{collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") if n_hist else '<div class="note">Nothing settled yet. Bets settle when Polymarket resolves the market, usually within hours of the contest finishing.</div>'}
+<h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""})</h2>
+{('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") + '</div>') if n_hist else '<div class="note">Nothing settled yet. Bets settle when the venue resolves the market, usually within hours of the contest finishing.</div>'}
 
 <details class="more"><summary>Declared but not connected ({n_unconnected})</summary>
 <div class="tbl"><table>
@@ -646,15 +650,18 @@ Every source is logged <b>before kick-off</b> at the <b>price available then</b>
 flat ${int(T.STAKE)}, and settled on the real result. Tipsters name a side and are backed
 every time; models and books state a probability and are backed only on a
 {int(T.EDGE_MIN*100)}pp disagreement with the price.<br><br>
-<b>Prices and settlement.</b> Polymarket is the venue wherever it lists a contest,
-and settles it — but a Polymarket contest is only logged once it has a <b>real book</b>:
-a spread of {int(S.MAX_SPREAD*100)}¢ or less with at least ${int(S.MIN_LIQUIDITY)} on it,
-booked at the <b>ask</b>. A just-listed market shows a midpoint near 50¢ with nothing
+<b>Prices and settlement.</b> <b>Polymarket US</b> is the venue wherever it lists a contest,
+and settles it — the exchange the trading bot actually trades. Until 2026-09-13 the venue
+was polymarket.com, the international exchange the bot cannot use; bets logged there still
+settle there, and polymarket.com is now a comparison source backed, like any exchange, on a
+{int(T.EDGE_MIN*100)}pp disagreement with the US price. A contest is only logged once it has a
+<b>real book</b> (a spread of {int(S.MAX_SPREAD*100)}¢ or less), booked at the <b>ask</b>. A just-listed market shows a midpoint near 50¢ with nothing
 behind it; before this rule, boxing bouts were logged at 51¢ that traded at 88¢ once
 money arrived. Boxing, cricket and table-tennis quotes logged before the rule were voided
 ({esc(T.PRE_GATE_NOTE)}).{odds_line}<br><br>
-<b>Kalshi</b> is the venue for soccer — Polymarket lists barely any
-soccer matches — and for any fight, match or game Polymarket is missing. On Kalshi a tip
+<b>Kalshi</b> is the venue for soccer and for any fight, match or game Polymarket US is
+missing. Kalshi publishes no kickoff time, so a soccer contest takes its start from <b>ESPN's
+fixture</b> where one matches; the rest keep Kalshi's estimate. On Kalshi a tip
 is backed at the <b>ask</b>, the price backing it would actually cost, and only where
 that book is tight (a spread of 10¢ or less). Soccer is <b>three-way</b>: a Draw tip wins
 on a draw, and a backed side loses to it and is never refunded.<br><br>
@@ -664,6 +671,24 @@ favourites is not an edge, it is just backing the favourite.
 </div>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+<script>
+// Filter a bet list by any text in its rows. Opens the "show more" part while filtering so a
+// match is never hidden behind the toggle; a group header shows only if a row under it does.
+document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {{
+  const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
+  box.querySelectorAll('details').forEach(dt => {{ if (q) dt.open = true; }});
+  box.querySelectorAll('table').forEach(t => {{
+    let grp = null, any = false;
+    t.querySelectorAll('tr').forEach(tr => {{
+      if (tr.querySelector('th')) return;
+      if (tr.classList.contains('grp')) {{ if (grp) grp.hidden = !any; grp = tr; any = false; return; }}
+      const hit = !q || tr.textContent.toLowerCase().includes(q);
+      tr.hidden = !hit; any = any || hit;
+    }});
+    if (grp) grp.hidden = !any;
+  }});
+}}));
+</script>
 </div></body></html>"""
 
 

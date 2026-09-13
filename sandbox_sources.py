@@ -76,16 +76,22 @@ KALSHI_SERIES = {"nfl": "KXNFLGAME", "mlb": "KXMLBGAME", "tennis": "KXATPMATCH"}
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
 SOURCES = {
+    "polymarket_us": dict(
+        label="Polymarket US", kind="Prediction market", connected=True,
+        site="polymarket.us",
+        sports=["tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb"],
+        note="The venue since 2026-09-13 — the exchange the trading bot actually trades. "
+             "Its own midpoint is logged for the Brier column; it cannot beat its own price."),
     "polymarket": dict(
-        label="Polymarket", kind="Prediction market", connected=True,
+        label="Polymarket (international)", kind="Prediction market", connected=True,
         site="polymarket.com",
         # Listed explicitly. This was once "every domain except soccer", which silently
         # claimed climate, crypto and elections the moment those domains were added —
         # showing a source as covering markets it has never priced.
         sports=["tennis", "table_tennis", "boxing", "nfl", "cricket", "mlb"],
-        note="The benchmark. Its own price is what every other source is priced against, "
-             "so it cannot beat itself — a flat ~0% ROI here is the expected result and "
-             "is the control that proves the ledger is wired up correctly."),
+        note="The venue until 2026-09-13, now a comparison source: its midpoint against the "
+             "Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. "
+             "Before the switch it was the benchmark and could not bet."),
     "kalshi": dict(
         label="Kalshi", kind="Prediction market", connected=True,
         site="kalshi.com", sports=["nfl", "mlb", "tennis"],
@@ -796,6 +802,139 @@ def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_S
         stats["priced"] = sum(1 for r in rows if not r["untraded"])
 
     return rows[:cap] if cap else rows
+
+
+# ---------------------------------------------------------------------------
+# Polymarket US — the venue (2026-09-13)
+# ---------------------------------------------------------------------------
+#
+# Until 2026-09-13 every non-soccer contest was priced and settled on polymarket.com, the
+# international exchange. The trading bot cannot trade there; it trades Polymarket US and
+# Kalshi. A source promoted to Production on .com prices would have been judged on a book,
+# a spread and a liquidity the bot never gets — so the venue is now Polymarket US (CFTC-
+# regulated, USD), and .com stays only as a price-comparison source ("polymarket").
+#
+# Structure (gateway.polymarket.us, public): sport -> leagues -> events, each event carrying
+# its markets. The contest's own market is a two-outcome "winner" market whose best bid and
+# ask quote the FIRST outcome; buying the second outcome is selling the first, so its ask
+# is 1 - bid — the same arithmetic as .com. Settlement (/v1/markets/{slug}/settlement) is 1
+# when the first outcome won, 0 when it lost. An event whose `period` is anything but
+# not-started is in play and never quoted.
+PMUS = "https://gateway.polymarket.us"
+PMUS_SPORT = {"tennis": ("Tennis", None), "table_tennis": ("Table Tennis", None),
+              "boxing": ("Boxing", None), "mma": ("MMA", None),
+              "cricket": ("Cricket", None), "nfl": ("Football", {"nfl"}),
+              "mlb": ("Baseball", {"mlb"})}
+PMUS_NOT_WINNER = ("first", "half", "set", "quarter", "period", "inning", "five", "round")
+_pmus_leagues = None
+
+
+def pmus_leagues(sport):
+    """League slugs Polymarket US lists for one of our sports (one cached /v2/sports call)."""
+    global _pmus_leagues
+    if _pmus_leagues is None:
+        try:
+            _pmus_leagues = {s.get("name"): [l.get("slug") for l in s.get("leagues") or []]
+                             for s in (_get(f"{PMUS}/v2/sports") or {}).get("sports") or []}
+        except RuntimeError:
+            _pmus_leagues = {}
+    name, only = PMUS_SPORT.get(sport, (None, None))
+    slugs = _pmus_leagues.get(name) or []
+    return [s for s in slugs if not only or s in only]
+
+
+def _pmus_amt(x):
+    if isinstance(x, dict):
+        x = x.get("value")
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return None
+
+
+def pmus_book(m):
+    """(tradeable, ask_a, ask_b, spread, mid_a) for one Polymarket US winner market."""
+    bid, ask = _pmus_amt(m.get("bestBidQuote")), _pmus_amt(m.get("bestAskQuote"))
+    if bid is None or ask is None or not (0 < bid < ask < 1):
+        return False, None, None, None, None
+    spread = round(ask - bid, 4)
+    return (spread <= MAX_SPREAD + 1e-9, round(ask, 4), round(1 - bid, 4), spread,
+            round((bid + ask) / 2, 4))
+
+
+def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
+    """Every pre-match head-to-head contest Polymarket US lists for one sport, as universe rows."""
+    now = datetime.now(timezone.utc)
+    horizon = now + timedelta(days=horizon_days)
+    early = (now - timedelta(hours=FIGHT_LOOKBACK_H) if sport in START_FROM_PINNACLE
+             else now - timedelta(minutes=5))
+    rows, listed = [], 0
+    for slug in pmus_leagues(sport):
+        try:
+            events = (_get(f"{PMUS}/v2/leagues/{slug}/events?limit=100", tries=2) or {}).get("events") or []
+        except RuntimeError:
+            continue
+        for ev in events:
+            if ev.get("closed") or (ev.get("period") not in (None, "", "NS")):
+                continue                              # finished, or in play
+            winners = [m for m in ev.get("markets") or []
+                       if not m.get("closed")
+                       and ("winner" in str(m.get("sportsMarketType")) or m.get("sportsMarketType") == "moneyline")
+                       and not any(w in str(m.get("sportsMarketType")) for w in PMUS_NOT_WINNER)
+                       and len(_pm_json(m.get("outcomes"), [])) == 2]
+            if len(winners) != 1:
+                continue                              # none, or ambiguous: no guess
+            m = winners[0]
+            outs = _pm_json(m.get("outcomes"), [])
+            when = m.get("gameStartTime") or ev.get("startTime") or ev.get("startDate")
+            try:
+                wdt = datetime.fromisoformat(str(when).replace("Z", "+00:00"))
+            except (ValueError, TypeError):
+                continue
+            if not (early <= wdt <= horizon):
+                continue
+            listed += 1
+            tradeable, ask_a, ask_b, spread, mid_a = pmus_book(m)
+            rows.append(dict(
+                sport=sport, venue="polymarket_us", market_id=str(m.get("slug")),
+                label=f"{outs[0]} vs {outs[1]}", side_a=str(outs[0]), side_b=str(outs[1]),
+                price_a=ask_a if ask_a is not None else 0.5,
+                price_b=ask_b if ask_b is not None else 0.5,
+                mid_a=mid_a if mid_a is not None else 0.5, spread=spread, liquidity=None,
+                start=wdt.isoformat(), date=wdt.strftime("%Y-%m-%d"), volume=0.0,
+                untraded=not tradeable, url=f"https://polymarket.us/event/{ev.get('slug')}",
+            ))
+    rows.sort(key=lambda r: (r["untraded"], r["start"]))
+    if stats is not None:
+        stats["listed"] = listed
+        stats["priced"] = sum(1 for r in rows if not r["untraded"])
+    return rows[:cap] if cap else rows
+
+
+def resolve_polymarket_us(slug):
+    """'a' / 'b' / 'void' from Polymarket US's settlement, or None while unsettled."""
+    try:
+        d = _get(f"{PMUS}/v1/markets/{urllib.parse.quote(str(slug))}/settlement", tries=1)
+    except RuntimeError:
+        return None                                   # 404 until it settles
+    st = (d or {}).get("settlement") if isinstance(d, dict) else None
+    try:
+        st = float(st)
+    except (TypeError, ValueError):
+        return None
+    return "a" if st >= 0.99 else "b" if st <= 0.01 else "void"
+
+
+def polymarket_com_probs(sport):
+    """polymarket.com's midpoint on every contest it prices — a comparison source since the
+    venue moved to Polymarket US. Quotes only priced books; matched onto the US universe."""
+    out = []
+    for r in fetch_polymarket(sport):
+        if r["untraded"]:
+            continue
+        out.append(dict(a=r["side_a"], b=r["side_b"], prob_a=r.get("mid_a", r["price_a"]),
+                        date=r["date"]))
+    return out
 
 
 def resolve_polymarket(market_id):
@@ -1796,6 +1935,29 @@ NWS_CITIES = {
     "KXHIGHPHIL": (39.8683, -75.2311),
 }
 
+NWS_CITY_NAMES = {"KXHIGHNY": "New York", "KXHIGHCHI": "Chicago", "KXHIGHMIA": "Miami",
+                  "KXHIGHAUS": "Austin", "KXHIGHDEN": "Denver", "KXHIGHLAX": "Los Angeles",
+                  "KXHIGHPHIL": "Philadelphia"}
+
+
+def display_label(q):
+    """A quote's label, with the city added to a weather market's. Kalshi titles every city's
+    bucket identically ("Will the maximum temperature be 80-81° on Sep 13?"), so New York and
+    Los Angeles read as the same market. Applied at render, so old ledger rows get it too."""
+    label = str(q.get("label") or "")
+    city = NWS_CITY_NAMES.get(str(q.get("market_id") or "").split("-")[0])
+    return f"{city}: {label}" if city and not label.startswith(city) else label
+
+
+def outcome_cluster(q):
+    """Quotes that cannot all win together share a cluster. A Kalshi yes/no ladder (one
+    series, one day) is a set of mutually exclusive buckets — at most one can land — so two
+    bets on New York's high for Sep 13 are one draw of the weather, not two."""
+    if q.get("venue") == "kalshi_binary" and q.get("market_id"):
+        return str(q["market_id"]).rsplit("-", 1)[0]
+    return q.get("id") or ("row", id(q))          # no id: every quote is its own outcome
+
+
 # Kalshi daily coin series -> CoinGecko id.
 COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
          "KXLINKD": "chainlink", "KXXRP": "ripple", "KXXLM": "stellar",
@@ -1904,7 +2066,8 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
             tradeable = {"a": tight(yb, ya), "b": tight(nb, na)}
             rows.append(dict(
                 sport=domain, venue="kalshi_binary", market_id=m["ticker"],
-                label=str(m.get("title") or m["ticker"])[:90],
+                label=display_label(dict(label=str(m.get("title") or m["ticker"])[:90],
+                                         market_id=m["ticker"])),
                 side_a=str(m.get("yes_sub_title") or "Yes"), side_b="No",
                 price_a=ya, price_b=na, price_draw=None,
                 tradeable=tradeable, untraded=not any(tradeable.values()),
@@ -1963,6 +2126,13 @@ def venue_price(q):
     or the read fails; the last good snapshot then stands."""
     venue, pick = q.get("venue") or "polymarket", q.get("pick")
     try:
+        if venue == "polymarket_us":
+            d = (_get(f"{PMUS}/v1/markets/{urllib.parse.quote(str(q['market_id']))}/bbo", tries=2,
+                      timeout=20) or {}).get("marketData") or {}
+            bid, ask = _pmus_amt(d.get("bestBid")), _pmus_amt(d.get("bestAsk"))
+            if bid is None or ask is None or not (0 < bid < ask < 1) or ask - bid > MAX_SPREAD + 1e-9:
+                return None
+            return round(ask, 4) if pick == "a" else round(1 - bid, 4) if pick == "b" else None
         if venue == "polymarket":
             m = _get(f"{GAMMA}/markets/{q['market_id']}", tries=2, timeout=20)
             if not isinstance(m, dict) or m.get("closed") or not m.get("acceptingOrders"):
@@ -2216,7 +2386,7 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # remains: (remaining - reserve) / runs left until the reset, where runs left assumes the
 # four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
 # day late in case it lands on the 1st in a timezone behind UTC.
-ODDS_RUNS_PER_DAY = 4
+ODDS_RUNS_PER_DAY = 8          # = the tracker's cron (every 3h); pacing divides by it
 # Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
 # sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
 # with the venue by the betting edge, that sport's venue already prices like Pinnacle and a
@@ -2505,9 +2675,72 @@ def apply_pinnacle_starts(sport, rows, events=None, now=None):
     return kept, dict(matched=matched, dropped=len(rows) - len(kept), shifts=shifts)
 
 
+ESPN_MATCH_DAYS = 3
+
+
+def apply_espn_starts(rows, fixtures=None, now=None):
+    """Re-time Kalshi soccer rows from ESPN's kickoff. Returns (rows, stats).
+
+    Kalshi publishes no kickoff: a soccer row's start is its expected expiration minus three
+    hours, and its ticker date can be a placeholder — Torino v Roma was listed for Sep 13 at
+    10:30 while ESPN had it on Sep 14 at 16:30. ESPN's fixture feed (the one the boards use)
+    has the real kickoff, so a row matched to an ESPN fixture — same two clubs, home first,
+    within ESPN_MATCH_DAYS — takes that kickoff (start_source "espn", the Kalshi estimate
+    kept as venue_start). A row whose ESPN fixture has started or finished is dropped. An
+    unmatched row keeps Kalshi's estimate under the usual rule. Fail-soft: no ESPN feed, no
+    change.
+    """
+    now = now or datetime.now(timezone.utc)
+    if fixtures is None:
+        try:
+            import streaks_fetch
+            fixtures = streaks_fetch.load_or_fetch()["fixtures"]
+        except Exception:
+            return rows, dict(matched=0, dropped=0, shifts=[], feed=False)
+    fx = []
+    for f in fixtures:
+        try:
+            ko = datetime.fromisoformat(str(f.get("kickoff")).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            continue
+        fx.append((ko, f))
+    kept, matched, shifts = [], 0, []
+    for r in rows:
+        try:
+            est = datetime.fromisoformat(str(r["start"]))
+        except (KeyError, TypeError, ValueError):
+            kept.append(r)
+            continue
+        if est.tzinfo is None:
+            est = est.replace(tzinfo=timezone.utc)
+        best, second = None, None
+        for ko, f in fx:
+            if abs((ko - est).total_seconds()) > ESPN_MATCH_DAYS * 86400:
+                continue
+            score, flip = pair_match(r["side_a"], r["side_b"], f["home"], f["away"], sport="soccer")
+            if score <= 0 or flip:
+                continue
+            if best is None or score > best[0]:
+                best, second = (score, ko, f), best
+            elif second is None or score > second[0]:
+                second = (score, ko, f)
+        if best and not (second and abs(best[0] - second[0]) < 1e-9 and second[1] != best[1]):
+            _score, ko, f = best
+            if f.get("played") or ko <= now:
+                continue                              # already under way or finished
+            shifts.append((ko - est).total_seconds() / 60)
+            matched += 1
+            kept.append(dict(r, start=ko.isoformat(), date=ko.strftime("%Y-%m-%d"),
+                             start_source="espn", venue_start=est.isoformat()))
+            continue
+        kept.append(r)
+    return kept, dict(matched=matched, dropped=len(rows) - len(kept), shifts=shifts, feed=True)
+
+
 # Pinnacle is not in here: it is planned across every sport after these have run, so its
 # credits go to the contests none of them cover (plan_pinnacle, called from publish).
 CHALLENGERS = {
+    "polymarket": polymarket_com_probs,
     "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
