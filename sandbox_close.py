@@ -6,11 +6,13 @@ be hours old, and closing-line value measured against it is noise. This job runs
 minutes, finds the open bets whose deadline (sandbox_track.close_deadline) falls in the
 next CLOSE_WINDOW_MIN, and reads just those markets' current price on the bet's own venue.
 
-It writes ONLY data/sandbox_closes.json. The ledger belongs to the tracker, which merges
-this file on its next run (apply_closes) — so the two workflows never write the same file
-and a rebase between their commits can never conflict. No Odds API credits are spent here.
+It writes ONLY data/sandbox_closes/<writer>.json — one file per workflow that runs it (the
+close job, the hourly watchdog, the board refresh), because GitHub honours none of their
+schedules reliably and more chances to snapshot means more real closes. The ledger belongs
+to the tracker, which merges every writer's file on its next run (apply_closes), so no two
+workflows ever commit the same file. No Odds API credits are spent here.
 
-Usage:  python3 sandbox_close.py
+Usage:  python3 sandbox_close.py [--writer close|watchdog|boards]
 """
 import json, os, sys
 from datetime import datetime, timedelta, timezone
@@ -18,7 +20,7 @@ from datetime import datetime, timedelta, timezone
 import sandbox_sources as S
 import sandbox_track as T
 
-CLOSE_WINDOW_MIN = 35       # a 30-minute schedule, with slack for a late start
+CLOSE_WINDOW_MIN = 60       # = CLOSE_MAX_LEAD_MIN: every snapshot taken still counts toward CLV
 KEEP_DAYS = 10
 
 
@@ -55,14 +57,22 @@ def run(d, closes, now=None, price=S.venue_price):
     return taken, len(todo)
 
 
-def main():
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    writer = argv[argv.index("--writer") + 1] if "--writer" in argv else "close"
+    if not writer.isidentifier():
+        raise SystemExit(f"bad writer name: {writer!r}")
+    path = os.path.join(T.CLOSES_DIR, f"{writer}.json")
     d = T.load()
-    closes = T.load_closes()
+    closes = T.load_closes(path)
+    before = len(closes["closes"])
     taken, n = run(d, closes)
-    print(f"closing prices: {taken} of {n} due bets snapshotted, {len(closes['closes'])} on file")
-    if taken:
-        os.makedirs(os.path.dirname(T.CLOSES), exist_ok=True)
-        with open(T.CLOSES, "w") as f:
+    print(f"closing prices [{writer}]: {taken} of {n} due bets snapshotted, "
+          f"{len(closes['closes'])} on file")
+    # Written only when something changed, so an hourly run with nothing due makes no commit.
+    if taken or len(closes["closes"]) != before or not os.path.exists(path):
+        os.makedirs(T.CLOSES_DIR, exist_ok=True)
+        with open(path, "w") as f:
             json.dump(closes, f, indent=1, sort_keys=True)
     return 0
 

@@ -101,6 +101,11 @@ FEE_RATE = {"polymarket": 0.06, "kalshi": 0.07, "kalshi_binary": 0.07}
 # within CLOSE_MAX_LEAD_MIN of the bet's deadline. An older one is kept and shown, never
 # scored — a price from the morning is not where the market closed.
 CLOSES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandbox_closes.json")
+# One file per WRITER (2026-09-13). GitHub ran the 30-minute close job 3 times in 13 hours,
+# so the snapshot also runs inside the hourly watchdog and every board refresh. Each writes
+# only data/sandbox_closes/<writer>.json, so workflows in different concurrency groups
+# never commit the same file; load_closes() merges them all, latest snapshot per bet.
+CLOSES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandbox_closes")
 CLOSE_MAX_LEAD_MIN = 60
 
 
@@ -632,14 +637,30 @@ def fresh_close(q):
     return lead is not None and 0 <= lead <= CLOSE_MAX_LEAD_MIN
 
 
-def load_closes(path=None):
+def _read_closes(path):
     try:
-        with open(path or CLOSES) as f:
+        with open(path) as f:
             blob = json.load(f)
         blob.setdefault("closes", {})
         return blob
     except (OSError, ValueError):
         return {"closes": {}}
+
+
+def load_closes(path=None, directory=None):
+    """One writer's file when `path` is given; otherwise every writer's, merged — the latest
+    snapshot per bet wins (apply_closes still refuses anything after the deadline)."""
+    if path:
+        return _read_closes(path)
+    directory = directory or CLOSES_DIR
+    files = [CLOSES] + ([os.path.join(directory, f) for f in sorted(os.listdir(directory))
+                         if f.endswith(".json")] if os.path.isdir(directory) else [])
+    merged = {}
+    for fp in files:
+        for qid, c in _read_closes(fp)["closes"].items():
+            if qid not in merged or str(c.get("at")) > str(merged[qid].get("at")):
+                merged[qid] = c
+    return {"closes": merged}
 
 
 def apply_closes(d, closes):

@@ -5,7 +5,7 @@ name: Sandbox closing prices
 # before it (the tracker itself only runs every 6h). Free venue reads only — no Odds API
 # credits are spent here.
 #
-# Writes ONLY data/sandbox_closes.json. The ledger belongs to sandbox-tracker.yml, which
+# Writes ONLY data/sandbox_closes/close.json. The ledger belongs to sandbox-tracker.yml, which
 # merges this file on its next run, so the two workflows never commit the same file and a
 # rebase between them cannot conflict. No Pages deploy: the page shows the merged values
 # after the next tracker run.
@@ -39,14 +39,14 @@ jobs:
           python-version: "3.12"
 
       - name: Snapshot closing prices
-        run: python3 sandbox_close.py || echo "::warning::close snapshot failed — the tracker's own snapshots still stand"
+        run: python3 sandbox_close.py --writer close || echo "::warning::close snapshot failed — the tracker's own snapshots still stand"
 
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           for attempt in 1 2 3; do
-            git add data/sandbox_closes.json 2>/dev/null || true
+            git add data/sandbox_closes/close.json
             if git diff --cached --quiet; then
               echo "no changes"
               break

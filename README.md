@@ -113,8 +113,8 @@ and graded against ESPN final scores once its fixture is played.
 | `sandbox_close.py` | Every 30 minutes: closing prices for bets about to start → `data/sandbox_closes.json`. |
 | `sandbox_browser.py` | Headless fetch for the sources that need a real browser. |
 | `test_sandbox.py` | Logic tests for the Sandbox adapters, staking rules and scoring. |
-| `.github/workflows/refresh-boards.yml` | Six-hourly (`17 */6`): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
-| `.github/workflows/backup-refresh.yml` | Watchdog on `17 3,9,15,21`, out of phase with the primary; takes over only if that run failed or the live board is stale. |
+| `.github/workflows/refresh-boards.yml` | Three-hourly (`41 */3`; six-hourly slots started up to 7h apart): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
+| `.github/workflows/backup-refresh.yml` | Hourly watchdog (`53 * * * *`): snapshots Sandbox closing prices, and takes over (in the boards concurrency group, as a separate job) only when the primary has not succeeded or the live board is over 5h old — before the bot's 8h feed limit. |
 | `.github/workflows/sandbox-close.yml` | Every 30 minutes (`11,41 * * * *`): closing-price snapshots only; own concurrency group, no deploy. |
 | `.github/workflows/sandbox-tracker.yml` | Six-hourly (`37 */6`), 20 minutes after the primary: collect forecasts, settle, rebuild the Sandbox board. |
 
@@ -475,10 +475,11 @@ the side it backed, while that book is tradeable and the contest has not started
 value left behind is the last snapshot before the start. Closing-line value (close minus the
 price paid) says whether a source buys below where the market ends up, and it is readable
 long before enough results settle to judge ROI. Because the Sandbox runs every six hours,
-`sandbox_close.py` (`sandbox-close.yml`, every 30 minutes, `11,41 * * * *`) reads the venue's
-price for just the open bets whose deadline is in the next 35 minutes and writes
-`data/sandbox_closes.json`; the tracker merges that file on its next run, the later snapshot
-before the deadline winning. The deadline is the start, or for a yes/no market its expiry
+`sandbox_close.py` reads the venue's price for just the open bets whose deadline is in the
+next 60 minutes. GitHub honours none of the schedules reliably, so it runs from three places —
+`sandbox-close.yml` (`11,41 * * * *`), the hourly watchdog and every board refresh — each writing
+only its own `data/sandbox_closes/<writer>.json`; the tracker merges every writer's file on its next run, the latest
+snapshot before the deadline winning. The deadline is the start, or for a yes/no market its expiry
 minus the domain's quoting lead (a price after that has the answer in it). Pre-registered:
 a snapshot counts toward CLV only when taken within 60 minutes of the deadline; older ones
 are kept and shown, never scored. The close job writes no other file and has its own

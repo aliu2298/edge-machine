@@ -12,7 +12,11 @@ on:
     # Six-hourly bounds staleness, makes one skipped run nearly invisible, and lets the
     # watchdog use a threshold tight enough to actually fire. Runs are ~45s and Actions
     # minutes are free on public repos, so the extra cost is nil.
-    - cron: "17 */6 * * *"     # 00:17, 06:17, 12:17, 18:17 UTC
+    #
+    # Every 3h since 2026-09-13: GitHub started the 6-hourly slots up to seven hours apart
+    # (04:54, 11:58, 16:24), which put the board near the bot's 8h feed limit and slowed
+    # every withdrawal reaching it. More slots make a late or dropped one matter less.
+    - cron: "41 */3 * * *"     # 00:41, 03:41, ... UTC
   workflow_dispatch:            # manual "Refresh now" from the Actions tab
 
 # contents: push the regenerated board back to main.
@@ -94,6 +98,11 @@ jobs:
       - name: Build today's fixtures page
         run: python3 today_build.py || echo "today build failed — keeping previous page"
 
+      # Sandbox closing prices, taken on every refresh as well as by the close job and the
+      # hourly watchdog. Writes only data/sandbox_closes/boards.json.
+      - name: Snapshot Sandbox closing prices
+        run: python3 sandbox_close.py --writer boards || echo "close snapshot failed — continuing"
+
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
@@ -102,7 +111,7 @@ jobs:
           PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
                      public_site/record.html public_site/today.html \
                      data/streaks.json data/streak_leads.json data/fire_runs.json \
-                     data/book_ledger.json"
+                     data/book_ledger.json data/sandbox_closes/boards.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -131,7 +140,8 @@ jobs:
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
             python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
-              && python3 record_build.py && python3 today_build.py
+              && python3 record_build.py && python3 today_build.py \
+              && { python3 sandbox_close.py --writer boards || true; }
           done
 
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"

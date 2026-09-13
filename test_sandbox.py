@@ -1835,6 +1835,34 @@ ok("covers:old" not in _cl["closes"], "entries older than the keep window are pr
 _cl2 = {"closes": {}}
 eq(SC.run(_dd, _cl2, now=_c0, price=lambda q: None), (0, 1), "an unreadable or untradeable book takes nothing")
 
+import json, tempfile as _tfc
+_cdir = _tfc.mkdtemp()
+for _w, _snap in (("close", {"covers:c1": {"price": 0.40, "at": (_c0 - timedelta(minutes=30)).isoformat()}}),
+                  ("watchdog", {"covers:c1": {"price": 0.42, "at": (_c0 - timedelta(minutes=10)).isoformat()},
+                                "covers:c9": {"price": 0.55, "at": _c0.isoformat()}})):
+    with open(_os.path.join(_cdir, f"{_w}.json"), "w") as _f:
+        json.dump({"closes": _snap}, _f)
+_merged = T.load_closes(directory=_cdir)["closes"]
+eq(sorted(_merged), ["covers:c1", "covers:c9"], "every writer's file is read")
+eq(_merged["covers:c1"]["price"], 0.42, "and the latest snapshot of a bet wins across writers")
+eq(SC.CLOSE_WINDOW_MIN <= T.CLOSE_MAX_LEAD_MIN, True, "the close window never takes a snapshot too early to count")
+_saved_cd = T.CLOSES_DIR
+T.CLOSES_DIR = _cdir
+_saved_load = T.load
+T.load = lambda: {"quotes": [_cq(start=(datetime.now(timezone.utc) + timedelta(minutes=20)).isoformat())]}
+_saved_vp = S.venue_price
+SC.S.venue_price = lambda q: 0.44
+try:
+    SC.run.__defaults__ = (None, lambda q: 0.44)
+    SC.main(["--writer", "boards"])
+    ok(_os.path.exists(_os.path.join(_cdir, "boards.json")), "a writer writes only its own file")
+    eq(json.load(open(_os.path.join(_cdir, "boards.json")))["closes"]["covers:c1"]["price"], 0.44,
+       "with the snapshot it took")
+    eq(json.load(open(_os.path.join(_cdir, "close.json")))["closes"]["covers:c1"]["price"], 0.40,
+       "and never touches another writer's")
+finally:
+    T.CLOSES_DIR, T.load, SC.S.venue_price = _saved_cd, _saved_load, _saved_vp
+    SC.run.__defaults__ = (None, S.venue_price)
 _dm = {"quotes": [_cq(close_price=0.41, close_at=(_c0 - timedelta(hours=5)).isoformat())]}
 eq(T.apply_closes(_dm, _cl), 1, "the close job's later snapshot is merged into the ledger")
 eq((_dm["quotes"][0]["close_price"], _dm["quotes"][0]["close_at"]), (0.43, _c0.isoformat()), "and replaces the older one")

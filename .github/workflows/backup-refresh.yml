@@ -12,14 +12,18 @@ name: Backup refresh (watchdog)
 #      the Pages deploy has flaked before on an OIDC token timeout)
 # Either being wrong is enough to take over.
 #
-# It shares the primary's concurrency group, so if the primary is mid-run this queues
-# behind it rather than pushing at the same time.
+# Two jobs (2026-09-13). GitHub started the 6-hourly primary as much as seven hours apart,
+# and the trading bot rejects a feed older than 8 hours — so a watchdog that only acted at
+# 8 hours could only ever act after the bot had stopped. It now checks HOURLY and takes over
+# at 5 hours. `watch` is cheap and runs outside the boards' concurrency group: a group holds
+# one pending run and a newer one replaces it, so an hourly job inside the group could
+# silently cancel a queued primary or tracker run. Only `takeover` joins the group, and only
+# when it actually runs. `watch` also snapshots Sandbox closing prices every hour.
 
 on:
   schedule:
-    # Offset 3h from each primary slot, so a skipped primary is caught within 3 hours
-    # instead of waiting for the next daily cycle.
-    - cron: "17 3,9,15,21 * * *"
+    # Hourly, off the top of the hour. Most runs only look and exit.
+    - cron: "53 * * * *"
   workflow_dispatch:
     inputs:
       force:
@@ -33,22 +37,18 @@ permissions:
   id-token: write
   actions: read                # to read the primary workflow's run history
 
-concurrency:
-  group: refresh-boards        # MUST match the primary, or the two can push together
-  cancel-in-progress: false
-
 env:
-  # The primary runs every 6h and this checks 3h after each slot, so a healthy last
-  # success is ~3h old and a single missed slot shows as ~9h. 8h therefore fires on one
-  # miss without false-positiving on a normal cycle — the tight threshold is only possible
-  # BECAUSE the primary is frequent; at daily cadence no value worked.
-  STALE_AFTER_HOURS: 8
+  # The primary runs every 3h, so a healthy board is under ~3h old (plus GitHub's start
+  # delay). 5h fires on one missed or badly late slot, and before the bot's 8h feed limit.
+  STALE_AFTER_HOURS: 5
   BOARD_URL: https://aliu2298.github.io/edge-machine/
 
 jobs:
-  watchdog:
+  watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
+    outputs:
+      run: ${{ steps.check.outputs.run }}
 
     steps:
       - uses: actions/checkout@v7
@@ -107,50 +107,72 @@ jobs:
           fi
 
       - uses: actions/setup-python@v7
-        if: steps.check.outputs.run == 'true'
+        with:
+          python-version: "3.12"
+
+      # Every hour, whatever the board's state. Writes only data/sandbox_closes/watchdog.json,
+      # which nothing else commits, so the rebase below cannot conflict.
+      - name: Snapshot Sandbox closing prices
+        run: |
+          python3 sandbox_close.py --writer watchdog || { echo "::warning::close snapshot failed"; exit 0; }
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/sandbox_closes/watchdog.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Sandbox closing prices via watchdog ($(date -u +%Y-%m-%d\ %H:%MZ))"
+          for attempt in 1 2 3; do
+            git push origin main && exit 0
+            git pull --rebase origin main
+          done
+          echo "::warning::could not push closing prices"
+
+  takeover:
+    needs: watch
+    if: needs.watch.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    concurrency:
+      group: refresh-boards    # MUST match the primary, or the two can push together
+      cancel-in-progress: false
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
       # From here the steps mirror the primary. Kept warn-only in the same places: the
       # backup exists to get a board out, so a failing guardrail must not stop the deploy.
       - name: Logic tests
-        if: steps.check.outputs.run == 'true'
         run: |
           python3 test_streaks.py
           python3 test_book.py
           python3 test_today.py
 
       - name: Health check
-        if: steps.check.outputs.run == 'true'
         run: python3 health.py
 
       - name: Verify league coverage
-        if: steps.check.outputs.run == 'true'
         run: python3 verify_coverage.py
 
       - name: Rebuild streaks board and grade leads
-        if: steps.check.outputs.run == 'true'
         run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
 
       - name: Price every fixture inside 24h against the book
-        if: steps.check.outputs.run == 'true'
         run: python3 book_track.py || echo "book tracking failed — continuing"
 
       - name: Track on-fire runs
-        if: steps.check.outputs.run == 'true'
         run: python3 fire_track.py || echo "fire tracking failed — continuing"
 
       # Record page LAST: it reads both ledgers.
       - name: Build the record page
-        if: steps.check.outputs.run == 'true'
         run: python3 record_build.py || echo "record build failed — keeping previous page"
 
       - name: Build today's fixtures page
-        if: steps.check.outputs.run == 'true'
         run: python3 today_build.py || echo "today build failed — keeping previous page"
 
       - name: Commit and push if changed
-        if: steps.check.outputs.run == 'true'
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
@@ -196,11 +218,8 @@ jobs:
       # Deploy runs whenever the backup took over, even if nothing changed — a stale LIVE
       # board with an unchanged repo is exactly the failure this workflow exists to fix.
       - uses: actions/configure-pages@v6
-        if: steps.check.outputs.run == 'true'
       - uses: actions/upload-pages-artifact@v5
-        if: steps.check.outputs.run == 'true'
         with:
           path: public_site
       - id: deployment
-        if: steps.check.outputs.run == 'true'
         uses: actions/deploy-pages@v5
