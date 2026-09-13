@@ -2045,6 +2045,7 @@
    "test_date": "2026-09-09"
   },
   "CF Montr\u00e9al|porous|2026-09-13|CF Montr\u00e9al|Colorado Rapids": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": false,
    "id": "CF Montr\u00e9al|porous|2026-09-13|CF Montr\u00e9al|Colorado Rapids",
    "key": "porous",
@@ -2055,7 +2056,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "Colorado Rapids",
    "rate": 0.12244897959183673,
-   "status": "pending",
+   "result": "0-1",
+   "status": "extended",
    "team": "CF Montr\u00e9al",
    "test_date": "2026-09-13"
   },
@@ -4922,6 +4924,66 @@
    "team": "Manchester United",
    "test_date": "2026-09-13"
   },
+  "Minnesota United FC|btts|2026-09-20|Minnesota United FC|LA Galaxy": {
+   "home": true,
+   "id": "Minnesota United FC|btts|2026-09-20|Minnesota United FC|LA Galaxy",
+   "key": "btts",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "both teams scored",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "LA Galaxy",
+   "rate": 0.02768166089965398,
+   "status": "pending",
+   "team": "Minnesota United FC",
+   "test_date": "2026-09-20"
+  },
+  "Minnesota United FC|over15|2026-09-20|Minnesota United FC|LA Galaxy": {
+   "home": true,
+   "id": "Minnesota United FC|over15|2026-09-20|Minnesota United FC|LA Galaxy",
+   "key": "over15",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "over 1.5 goals",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "LA Galaxy",
+   "rate": 0.22491349480968859,
+   "status": "pending",
+   "team": "Minnesota United FC",
+   "test_date": "2026-09-20"
+  },
+  "Minnesota United FC|porous|2026-09-20|Minnesota United FC|LA Galaxy": {
+   "home": true,
+   "id": "Minnesota United FC|porous|2026-09-20|Minnesota United FC|LA Galaxy",
+   "key": "porous",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "LA Galaxy",
+   "rate": 0.16262975778546712,
+   "status": "pending",
+   "team": "Minnesota United FC",
+   "test_date": "2026-09-20"
+  },
+  "Minnesota United FC|scoring1|2026-09-20|Minnesota United FC|LA Galaxy": {
+   "home": true,
+   "id": "Minnesota United FC|scoring1|2026-09-20|Minnesota United FC|LA Galaxy",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "LA Galaxy",
+   "rate": 0.1695501730103806,
+   "status": "pending",
+   "team": "Minnesota United FC",
+   "test_date": "2026-09-20"
+  },
   "Molde|btts|2026-09-06|Molde|KFUM Oslo": {
    "graded_at": "2026-09-06T18:09:14+00:00",
    "home": true,
@@ -6146,6 +6208,7 @@
    "test_date": "2026-09-10"
   },
   "Portland Timbers|btts|2026-09-13|Portland Timbers|FC Dallas": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": false,
    "id": "Portland Timbers|btts|2026-09-13|Portland Timbers|FC Dallas",
    "key": "btts",
@@ -6156,7 +6219,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "FC Dallas",
    "rate": 0.006802721088435374,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-09-13"
   },
@@ -6210,6 +6274,7 @@
    "test_date": "2026-09-10"
   },
   "Portland Timbers|over15|2026-09-13|Portland Timbers|FC Dallas": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": false,
    "id": "Portland Timbers|over15|2026-09-13|Portland Timbers|FC Dallas",
    "key": "over15",
@@ -6220,7 +6285,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "FC Dallas",
    "rate": 0.003401360544217687,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-09-13"
   },
@@ -6291,6 +6357,7 @@
    "test_date": "2026-09-10"
   },
   "Portland Timbers|porous|2026-09-13|Portland Timbers|FC Dallas": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": false,
    "id": "Portland Timbers|porous|2026-09-13|Portland Timbers|FC Dallas",
    "key": "porous",
@@ -6301,7 +6368,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "FC Dallas",
    "rate": 0.047619047619047616,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-09-13"
   },
@@ -6372,6 +6440,7 @@
    "test_date": "2026-09-10"
   },
   "Portland Timbers|scoring1|2026-09-13|Portland Timbers|FC Dallas": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": false,
    "id": "Portland Timbers|scoring1|2026-09-13|Portland Timbers|FC Dallas",
    "key": "scoring1",
@@ -6382,7 +6451,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "FC Dallas",
    "rate": 0.09523809523809523,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Portland Timbers",
    "test_date": "2026-09-13"
   },
@@ -6762,6 +6832,7 @@
    "test_date": "2026-09-10"
   },
   "Real Salt Lake|porous|2026-09-13|Real Salt Lake|New York City FC": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": true,
    "id": "Real Salt Lake|porous|2026-09-13|Real Salt Lake|New York City FC",
    "key": "porous",
@@ -6772,7 +6843,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "New York City FC",
    "rate": 0.07482993197278912,
-   "status": "pending",
+   "result": "0-2",
+   "status": "extended",
    "team": "Real Salt Lake",
    "test_date": "2026-09-13"
   },
@@ -7352,6 +7424,7 @@
    "test_date": "2026-09-06"
   },
   "Sporting Kansas City|over15|2026-09-13|Sporting Kansas City|LAFC": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": true,
    "id": "Sporting Kansas City|over15|2026-09-13|Sporting Kansas City|LAFC",
    "key": "over15",
@@ -7362,7 +7435,8 @@
    "logged_at": "2026-09-06T04:46:57+00:00",
    "opp": "LAFC",
    "rate": 0.010416666666666666,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Sporting Kansas City",
    "test_date": "2026-09-13"
   },
@@ -7416,6 +7490,7 @@
    "test_date": "2026-09-06"
   },
   "Sporting Kansas City|porous|2026-09-13|Sporting Kansas City|LAFC": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": true,
    "id": "Sporting Kansas City|porous|2026-09-13|Sporting Kansas City|LAFC",
    "key": "porous",
@@ -7426,7 +7501,8 @@
    "logged_at": "2026-09-06T04:46:57+00:00",
    "opp": "LAFC",
    "rate": 0.005208333333333333,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Sporting Kansas City",
    "test_date": "2026-09-13"
   },
@@ -7443,6 +7519,51 @@
    "rate": 0.0034602076124567475,
    "status": "pending",
    "team": "Sporting Kansas City",
+   "test_date": "2026-09-20"
+  },
+  "St. Louis CITY SC|btts|2026-09-20|St. Louis CITY SC|Toronto FC": {
+   "home": true,
+   "id": "St. Louis CITY SC|btts|2026-09-20|St. Louis CITY SC|Toronto FC",
+   "key": "btts",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "both teams scored",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "Toronto FC",
+   "rate": 0.02768166089965398,
+   "status": "pending",
+   "team": "St. Louis CITY SC",
+   "test_date": "2026-09-20"
+  },
+  "St. Louis CITY SC|over15|2026-09-20|St. Louis CITY SC|Toronto FC": {
+   "home": true,
+   "id": "St. Louis CITY SC|over15|2026-09-20|St. Louis CITY SC|Toronto FC",
+   "key": "over15",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "over 1.5 goals",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "Toronto FC",
+   "rate": 0.22491349480968859,
+   "status": "pending",
+   "team": "St. Louis CITY SC",
+   "test_date": "2026-09-20"
+  },
+  "St. Louis CITY SC|porous|2026-09-20|St. Louis CITY SC|Toronto FC": {
+   "home": true,
+   "id": "St. Louis CITY SC|porous|2026-09-20|St. Louis CITY SC|Toronto FC",
+   "key": "porous",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "conceded in",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-13T04:55:36+00:00",
+   "opp": "Toronto FC",
+   "rate": 0.16262975778546712,
+   "status": "pending",
+   "team": "St. Louis CITY SC",
    "test_date": "2026-09-20"
   },
   "St. Louis CITY SC|scoring1|2026-08-30|St. Louis CITY SC|FC Dallas": {
@@ -7497,6 +7618,7 @@
    "test_date": "2026-09-10"
   },
   "St. Louis CITY SC|scoring1|2026-09-13|St. Louis CITY SC|Minnesota United FC": {
+   "graded_at": "2026-09-13T04:55:36+00:00",
    "home": true,
    "id": "St. Louis CITY SC|scoring1|2026-09-13|St. Louis CITY SC|Minnesota United FC",
    "key": "scoring1",
@@ -7507,7 +7629,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "Minnesota United FC",
    "rate": 0.04421768707482993,
-   "status": "pending",
+   "result": "4-2",
+   "status": "extended",
    "team": "St. Louis CITY SC",
    "test_date": "2026-09-13"
   },
@@ -8492,5 +8615,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-13T01:45:49+00:00"
+ "updated_at": "2026-09-13T04:55:36+00:00"
 }

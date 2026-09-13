@@ -3190,6 +3190,46 @@
    },
    "status": "pending"
   },
+  "2026-09-13|Chicago Fire FC|New England Revolution": {
+   "away": "New England Revolution",
+   "date": "2026-09-13",
+   "home": "Chicago Fire FC",
+   "id": "2026-09-13|Chicago Fire FC|New England Revolution",
+   "kickoff": "2026-09-13T21:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.4252,
+    "btts": 0.6484,
+    "home2plus": 0.56,
+    "over15": 0.8448,
+    "over25": 0.6462
+   },
+   "priced_at": "2026-09-13T04:55:31+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.4087,
+     "price": 2.34
+    },
+    "btts": {
+     "fair": 0.6498,
+     "price": 1.444
+    },
+    "home2plus": {
+     "fair": 0.5809,
+     "price": 1.645
+    },
+    "over15": {
+     "fair": 0.8305,
+     "price": 1.143
+    },
+    "over25": {
+     "fair": 0.6018,
+     "price": 1.588
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-13|Club Brugge|Antwerp": {
    "away": "Antwerp",
    "date": "2026-09-13",
@@ -3233,6 +3273,8 @@
   "2026-09-13|Colorado Rapids|CF Montr\u00e9al": {
    "away": "CF Montr\u00e9al",
    "date": "2026-09-13",
+   "final": "1-0",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "Colorado Rapids",
    "id": "2026-09-13|Colorado Rapids|CF Montr\u00e9al",
    "kickoff": "2026-09-13T01:30Z",
@@ -3244,6 +3286,13 @@
     "home2plus": 0.5772,
     "over15": 0.8326,
     "over25": 0.6262
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": -1.0,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -3268,7 +3317,14 @@
      "price": 1.8
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": false,
+    "over15": false,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Coventry City|Brighton & Hove Albion": {
    "away": "Brighton & Hove Albion",
@@ -3353,6 +3409,8 @@
   "2026-09-13|FC Dallas|Portland Timbers": {
    "away": "Portland Timbers",
    "date": "2026-09-13",
+   "final": "2-1",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "FC Dallas",
    "id": "2026-09-13|FC Dallas|Portland Timbers",
    "kickoff": "2026-09-13T00:30Z",
@@ -3364,6 +3422,13 @@
     "home2plus": 0.6587,
     "over15": 0.9112,
     "over25": 0.7675
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.377,
+    "home2plus": 0.513,
+    "over15": 0.111,
+    "over25": 0.4
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -3388,7 +3453,14 @@
      "price": 1.4
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|FC Famalicao|Sporting CP": {
    "away": "Sporting CP",
@@ -3793,6 +3865,8 @@
   "2026-09-13|LA Galaxy|Seattle Sounders FC": {
    "away": "Seattle Sounders FC",
    "date": "2026-09-13",
+   "final": "1-1",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "LA Galaxy",
    "id": "2026-09-13|LA Galaxy|Seattle Sounders FC",
    "kickoff": "2026-09-13T02:30Z",
@@ -3804,6 +3878,13 @@
     "home2plus": 0.4811,
     "over15": 0.7828,
     "over25": 0.5503
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.435,
+    "home2plus": -1.0,
+    "over15": 0.143,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -3828,7 +3909,14 @@
      "price": 1.617
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Le Mans|Lens": {
    "away": "Lens",
@@ -4448,6 +4536,8 @@
   "2026-09-13|Real Salt Lake|New York City FC": {
    "away": "New York City FC",
    "date": "2026-09-13",
+   "final": "0-2",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "Real Salt Lake",
    "id": "2026-09-13|Real Salt Lake|New York City FC",
    "kickoff": "2026-09-13T01:30Z",
@@ -4459,6 +4549,13 @@
     "home2plus": 0.5559,
     "over15": 0.8401,
     "over25": 0.6384
+   },
+   "pnl": {
+    "away2plus": 1.52,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": 0.182,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -4483,7 +4580,14 @@
      "price": 1.758
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": false,
+    "home2plus": false,
+    "over15": true,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Real Sociedad|Atl\u00e9tico Madrid": {
    "away": "Atl\u00e9tico Madrid",
@@ -4588,6 +4692,8 @@
   "2026-09-13|San Jose Earthquakes|Houston Dynamo FC": {
    "away": "Houston Dynamo FC",
    "date": "2026-09-13",
+   "final": "1-0",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "San Jose Earthquakes",
    "id": "2026-09-13|San Jose Earthquakes|Houston Dynamo FC",
    "kickoff": "2026-09-13T02:30Z",
@@ -4599,6 +4705,13 @@
     "home2plus": 0.5164,
     "over15": 0.8257,
     "over25": 0.6151
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": -1.0,
+    "over25": -1.0
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -4623,7 +4736,14 @@
      "price": 1.82
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": false,
+    "over15": false,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-13|Sassuolo|Juventus": {
    "away": "Juventus",
@@ -4708,6 +4828,8 @@
   "2026-09-13|Sporting Kansas City|LAFC": {
    "away": "LAFC",
    "date": "2026-09-13",
+   "final": "3-1",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "Sporting Kansas City",
    "id": "2026-09-13|Sporting Kansas City|LAFC",
    "kickoff": "2026-09-13T00:30Z",
@@ -4719,6 +4841,13 @@
     "home2plus": 0.4012,
     "over15": 0.8458,
     "over25": 0.6479
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.556,
+    "home2plus": 1.9,
+    "over15": 0.174,
+    "over25": 0.69
    },
    "priced_at": "2026-09-12T07:49:49+00:00",
    "prices": {
@@ -4743,11 +4872,20 @@
      "price": 1.69
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC": {
    "away": "Minnesota United FC",
    "date": "2026-09-13",
+   "final": "4-2",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC",
    "kickoff": "2026-09-13T00:30Z",
@@ -4759,6 +4897,13 @@
     "home2plus": 0.5814,
     "over15": 0.8472,
     "over25": 0.6502
+   },
+   "pnl": {
+    "away2plus": 1.36,
+    "btts": 0.488,
+    "home2plus": 0.8,
+    "over15": 0.174,
+    "over25": 0.714
    },
    "priced_at": "2026-09-12T07:25:56+00:00",
    "prices": {
@@ -4781,6 +4926,53 @@
     "over25": {
      "fair": 0.5564,
      "price": 1.714
+    }
+   },
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
+  },
+  "2026-09-13|Vancouver Whitecaps|Austin FC": {
+   "away": "Austin FC",
+   "date": "2026-09-13",
+   "home": "Vancouver Whitecaps",
+   "id": "2026-09-13|Vancouver Whitecaps|Austin FC",
+   "kickoff": "2026-09-13T22:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.3175,
+    "btts": 0.6118,
+    "home2plus": 0.6634,
+    "over15": 0.8555,
+    "over25": 0.6642
+   },
+   "priced_at": "2026-09-13T04:55:31+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.222,
+     "price": 4.3
+    },
+    "btts": {
+     "fair": 0.5408,
+     "price": 1.741
+    },
+    "home2plus": {
+     "fair": 0.7383,
+     "price": 1.294
+    },
+    "over15": {
+     "fair": 0.8483,
+     "price": 1.118
+    },
+    "over25": {
+     "fair": 0.6425,
+     "price": 1.485
     }
    },
    "status": "pending"
@@ -4904,7 +5096,47 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-14|San Diego FC|Philadelphia Union": {
+   "away": "Philadelphia Union",
+   "date": "2026-09-14",
+   "home": "San Diego FC",
+   "id": "2026-09-14|San Diego FC|Philadelphia Union",
+   "kickoff": "2026-09-14T01:00Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.5135,
+    "btts": 0.6985,
+    "home2plus": 0.5665,
+    "over15": 0.8765,
+    "over25": 0.7012
+   },
+   "priced_at": "2026-09-13T04:55:31+00:00",
+   "prices": {
+    "away2plus": {
+     "fair": 0.5217,
+     "price": 1.833
+    },
+    "btts": {
+     "fair": 0.6654,
+     "price": 1.408
+    },
+    "home2plus": {
+     "fair": 0.4783,
+     "price": 2.0
+    },
+    "over15": {
+     "fair": 0.8305,
+     "price": 1.143
+    },
+    "over25": {
+     "fair": 0.5987,
+     "price": 1.595
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-13T01:45:49+00:00"
+ "updated_at": "2026-09-13T04:55:35+00:00"
 }

@@ -5307,7 +5307,9 @@
     "team": "FC Dallas"
    },
    "date": "2026-09-13",
+   "final": "2-1",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "FC Dallas to score 2+",
    "home": "FC Dallas",
    "id": "2026-09-13|FC Dallas|Portland Timbers|FC Dallas to score 2+",
@@ -5322,6 +5324,24 @@
     "team2plus": 0.6587
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.377
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.111
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.4
+    },
+    "team2plus": {
+     "hit": true,
+     "pnl": 0.513
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -5341,7 +5361,7 @@
      "price": 1.513
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 6
   },
   "2026-09-13|FC Dallas|Portland Timbers|Over 1.5 goals": {
@@ -5358,7 +5378,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "2-1",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "Over 1.5 goals",
    "home": "FC Dallas",
    "id": "2026-09-13|FC Dallas|Portland Timbers|Over 1.5 goals",
@@ -5372,6 +5394,20 @@
     "over25": 0.7675
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.377
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.111
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.4
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -5387,7 +5423,7 @@
      "price": 1.4
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-13|FC Famalicao|Sporting CP|Sporting CP to score": {
@@ -5820,14 +5856,16 @@
     "kind": "btts"
    },
    "date": "2026-09-13",
+   "final": "0-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "Both teams to score",
    "home": "Real Salt Lake",
    "id": "2026-09-13|Real Salt Lake|New York City FC|Both teams to score",
    "kickoff": "2026-09-13T01:30Z",
    "league": "MLS",
    "match": "Real Salt Lake v New York City FC",
-   "status": "pending",
+   "status": "miss",
    "strength": 12
   },
   "2026-09-13|Real Sociedad|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score": {
@@ -5939,14 +5977,16 @@
     "kind": "btts"
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-08-29",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "Both teams to score",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC|Both teams to score",
    "kickoff": "2026-09-13T00:30Z",
    "league": "MLS",
    "match": "St. Louis CITY SC v Minnesota United FC",
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|Minnesota United FC to score": {
@@ -5965,14 +6005,16 @@
     "team": "Minnesota United FC"
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "Minnesota United FC to score",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC|Minnesota United FC to score",
    "kickoff": "2026-09-13T00:30Z",
    "league": "MLS",
    "match": "St. Louis CITY SC v Minnesota United FC",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|Over 1.5 goals": {
@@ -5989,7 +6031,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "Over 1.5 goals",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC|Over 1.5 goals",
@@ -6003,6 +6047,20 @@
     "over25": 0.6502
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.476
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.167
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.676
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6018,7 +6076,7 @@
      "price": 1.676
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 10
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|Over 2.5 goals": {
@@ -6035,14 +6093,16 @@
     "n": 3
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "Over 2.5 goals",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC|Over 2.5 goals",
    "kickoff": "2026-09-13T00:30Z",
    "league": "MLS",
    "match": "St. Louis CITY SC v Minnesota United FC",
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|St. Louis CITY SC to score": {
@@ -6061,14 +6121,16 @@
     "team": "St. Louis CITY SC"
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "St. Louis CITY SC to score",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC|St. Louis CITY SC to score",
    "kickoff": "2026-09-13T00:30Z",
    "league": "MLS",
    "match": "St. Louis CITY SC v Minnesota United FC",
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-13|St. Louis CITY SC|Minnesota United FC|St. Louis CITY SC to score 2+": {
@@ -6087,7 +6149,9 @@
     "team": "St. Louis CITY SC"
    },
    "date": "2026-09-13",
+   "final": "4-2",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-13T04:55:30+00:00",
    "headline": "St. Louis CITY SC to score 2+",
    "home": "St. Louis CITY SC",
    "id": "2026-09-13|St. Louis CITY SC|Minnesota United FC|St. Louis CITY SC to score 2+",
@@ -6102,6 +6166,24 @@
     "team2plus": 0.5814
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.488
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.174
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.714
+    },
+    "team2plus": {
+     "hit": true,
+     "pnl": 0.8
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -6121,7 +6203,7 @@
      "price": 1.8
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-13|Torino|AS Roma|Over 2.5 goals": {
@@ -8075,6 +8157,27 @@
    "last_seen": "2026-09-13",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
+   "model": {
+    "btts": 0.7429,
+    "over15": 0.9066,
+    "over25": 0.7583
+   },
+   "modelled_at": "2026-09-13T04:55:19+00:00",
+   "priced_at": "2026-09-13T04:55:19+00:00",
+   "prices": {
+    "btts": {
+     "fair": 0.6091,
+     "price": 1.541
+    },
+    "over15": {
+     "fair": 0.7677,
+     "price": 1.241
+    },
+    "over25": {
+     "fair": 0.5174,
+     "price": 1.847
+    }
+   },
    "status": "pending",
    "strength": 9
   },
@@ -8269,6 +8372,31 @@
    "match": "Osasuna v Rayo Vallecano",
    "status": "pending",
    "strength": 7
+  },
+  "2026-09-19|San Jose Earthquakes|LAFC|Over 1.5 goals": {
+   "a": "San Jose Earthquakes",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "LAFC",
+   "b": "LAFC",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4634146341463415,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-13",
+   "headline": "Over 1.5 goals",
+   "home": "San Jose Earthquakes",
+   "id": "2026-09-19|San Jose Earthquakes|LAFC|Over 1.5 goals",
+   "kickoff": "2026-09-19T23:30Z",
+   "last_seen": "2026-09-13",
+   "league": "MLS",
+   "match": "San Jose Earthquakes v LAFC",
+   "status": "pending",
+   "strength": 6
   },
   "2026-09-19|Sevilla|Barcelona|Barcelona to score": {
    "a": "Barcelona",
@@ -9891,6 +10019,31 @@
    "status": "pending",
    "strength": 12
   },
+  "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Over 1.5 goals": {
+   "a": "Real Salt Lake",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "Vancouver Whitecaps",
+   "b": "Vancouver Whitecaps",
+   "b_key": "over15",
+   "b_run": 4,
+   "base_rate": 0.5060975609756098,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-13",
+   "headline": "Over 1.5 goals",
+   "home": "Real Salt Lake",
+   "id": "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Over 1.5 goals",
+   "kickoff": "2026-09-20T01:30Z",
+   "last_seen": "2026-09-13",
+   "league": "MLS",
+   "match": "Real Salt Lake v Vancouver Whitecaps",
+   "status": "pending",
+   "strength": 7
+  },
   "2026-09-20|Santa Clara|Braga|Over 1.5 goals": {
    "a": "Santa Clara",
    "a_key": "scoring1",
@@ -10142,7 +10295,82 @@
    "match": "Philadelphia Union v Orlando City SC",
    "status": "pending",
    "strength": 12
+  },
+  "2026-09-27|FC Dallas|LAFC|Over 1.5 goals": {
+   "a": "FC Dallas",
+   "a_key": "scoring1",
+   "a_run": 4,
+   "away": "LAFC",
+   "b": "LAFC",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4634146341463415,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-27",
+   "first_seen": "2026-09-13",
+   "headline": "Over 1.5 goals",
+   "home": "FC Dallas",
+   "id": "2026-09-27|FC Dallas|LAFC|Over 1.5 goals",
+   "kickoff": "2026-09-27T00:30Z",
+   "last_seen": "2026-09-13",
+   "league": "MLS",
+   "match": "FC Dallas v LAFC",
+   "status": "pending",
+   "strength": 7
+  },
+  "2026-09-27|Real Salt Lake|New England Revolution|Over 1.5 goals": {
+   "a": "Real Salt Lake",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "New England Revolution",
+   "b": "New England Revolution",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.5060975609756098,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-27",
+   "first_seen": "2026-09-13",
+   "headline": "Over 1.5 goals",
+   "home": "Real Salt Lake",
+   "id": "2026-09-27|Real Salt Lake|New England Revolution|Over 1.5 goals",
+   "kickoff": "2026-09-27T01:30Z",
+   "last_seen": "2026-09-13",
+   "league": "MLS",
+   "match": "Real Salt Lake v New England Revolution",
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-27|San Jose Earthquakes|Portland Timbers|Over 1.5 goals": {
+   "a": "San Jose Earthquakes",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Portland Timbers",
+   "b": "Portland Timbers",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.4634146341463415,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-27",
+   "first_seen": "2026-09-13",
+   "headline": "Over 1.5 goals",
+   "home": "San Jose Earthquakes",
+   "id": "2026-09-27|San Jose Earthquakes|Portland Timbers|Over 1.5 goals",
+   "kickoff": "2026-09-27T02:30Z",
+   "last_seen": "2026-09-13",
+   "league": "MLS",
+   "match": "San Jose Earthquakes v Portland Timbers",
+   "status": "pending",
+   "strength": 9
   }
  },
- "updated_at": "2026-09-13T01:45:47+00:00"
+ "updated_at": "2026-09-13T04:55:30+00:00"
 }
