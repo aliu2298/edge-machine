@@ -446,6 +446,12 @@ def pinnacle_retired(d, n=None):
 def publish(d, universe, coverage, verbose=True):
     """Log one quote per (source, market) for every source with an opinion."""
     seen = {q["id"] for q in d["quotes"]}
+    # What each source has already said, by contest — so a contest listed under a new market
+    # id (a venue switch, or the same game on two exchanges) is never quoted twice.
+    prior = {}
+    for q in d["quotes"]:
+        if q.get("status") != "void":
+            prior.setdefault((q["source"], q["sport"]), []).append(q)
     added = 0
     # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
     # prices — a page that can never be scored is not worth a polite second of waiting.
@@ -541,6 +547,10 @@ def publish(d, universe, coverage, verbose=True):
                 if qid in seen:
                     continue
                 r = by_id[mid]
+                probe = dict(sport=sport, start=r["start"], side_a=r["side_a"], side_b=r["side_b"],
+                             market_id=mid, venue=r.get("venue", "polymarket"))
+                if any(_same_contest_quote(p, probe) for p in prior.get((name, sport), ())):
+                    continue
                 # Strictly before the start, for every source and every venue, checked at
                 # the moment of logging. The venue feeds keep a contest for five minutes
                 # past its start to absorb clock skew, and that window let a tip on Al
@@ -610,6 +620,7 @@ def publish(d, universe, coverage, verbose=True):
                     status="open", pnl=0.0, result=None, settled=None,
                 ))
                 seen.add(qid)
+                prior.setdefault((name, sport), []).append(d["quotes"][-1])
                 added += 1
 
     snapped = snap_closing(d, universe)
@@ -1191,6 +1202,58 @@ def retire_late(d, verbose=True):
     return voided
 
 
+SAME_CONTEST_H = 3          # doubleheaders start 3.5h+ apart; one contest never moves more
+# Table tennis leagues (Setka Cup, TT Elite) replay the same pairing within the same evening,
+# so there two quotes are one contest only if their starts agree to the minute-scale.
+SAME_CONTEST_H_BY_SPORT = {"table_tennis": 10 / 60}
+DUPLICATE_SINCE = "2026-09-13T21:00:00+00:00"   # the venue switch; settled history is not rewritten
+DUPLICATE_NOTE = "duplicate: this source already had a quote on this contest on another venue"
+
+
+def _same_contest_quote(a, b):
+    """Are two quotes about the same contest, whatever venue or market id each carries?"""
+    if a["sport"] != b["sport"]:
+        return False
+    try:
+        gap = abs((datetime.fromisoformat(str(a["start"])) -
+                   datetime.fromisoformat(str(b["start"]))).total_seconds())
+    except (KeyError, TypeError, ValueError):
+        return False
+    if gap > SAME_CONTEST_H_BY_SPORT.get(a["sport"], SAME_CONTEST_H) * 3600:
+        return False
+    if a.get("venue") == "kalshi_binary" or b.get("venue") == "kalshi_binary":
+        return a.get("market_id") == b.get("market_id")
+    score, _flip = S.pair_match(a["side_a"], a["side_b"], b["side_a"], b["side_b"], sport=a["sport"])
+    return score > 0
+
+
+def retire_venue_duplicates(d, verbose=True):
+    """Void a quote when the SAME source already had one on the same contest on another venue.
+
+    A quote is logged once per (source, market id). When the venue moved from polymarket.com
+    to Polymarket US on 2026-09-13, every contest got a new market id, and the first run
+    re-quoted 98 contests its sources had already priced on .com — 20 as a second bet on the
+    same game. The earliest quote stands (logged once, never revised); later ones are voided.
+    publish() now refuses them up front. Idempotent. Returns the number voided.
+    """
+    by = {}
+    for q in sorted(d["quotes"], key=lambda q: q.get("logged") or ""):
+        if q.get("status") == "void":
+            continue
+        pool = by.setdefault((q["source"], q["sport"]), [])
+        if (q.get("status") == "open" and (q.get("logged") or "") >= DUPLICATE_SINCE
+                and any(p.get("market_id") != q.get("market_id") and _same_contest_quote(p, q)
+                        for p in pool)):
+            q["status"], q["pnl"], q["note"] = "void", 0.0, DUPLICATE_NOTE
+            q["settled"] = q.get("settled") or now_iso()
+            continue
+        pool.append(q)
+    voided = sum(1 for q in d["quotes"] if q.get("note") == DUPLICATE_NOTE)
+    if verbose and voided:
+        print(f"  venue duplicates: {voided} voided in total")
+    return voided
+
+
 def retire_pre_gate(d, now=None, verbose=True):
     """One rule, applied blind to outcomes, for quotes logged before the book gate.
 
@@ -1285,6 +1348,7 @@ def main():
     print(f" closing prices merged from the close job: {apply_closes(d, load_closes())}")
     retire_pre_gate(d)
     retire_late(d)
+    retire_venue_duplicates(d)
     # Stage timings are printed so a slow run in CI names its own culprit. The first
     # run with soccer on Kalshi took 14.6 minutes against 3 before it, with only 25s of
     # CPU — all of it waiting on the network, and no log line said where.

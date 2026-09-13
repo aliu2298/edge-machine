@@ -2074,6 +2074,53 @@ ok("def open_rows(d, limit=None)" in _lsrc and "def settled_rows(d, limit=None)"
    "no bet is cut from the lists any more")
 ok('{n_hist - n_void:,}{f" · {n_void} void"' in _lsrc, "the settled heading counts won/lost apart from voids")
 
+# ---------------------------------------------------------------------------
+print("\na venue switch never quotes a contest twice")
+# ---------------------------------------------------------------------------
+_t9 = "2026-09-14T23:10:00+00:00"
+_old = dict(id="espn_fpi:4287261", source="espn_fpi", sport="mlb", market_id="4287261", venue="polymarket",
+            side_a="San Diego Padres", side_b="San Francisco Giants", start=_t9, logged="2026-09-13T12:00:00+00:00",
+            status="open", bet=True, pick="a", price=0.55, pnl=0.0)
+_new = dict(_old, id="espn_fpi:aec-mlb-sd-sf-2026-09-14", market_id="aec-mlb-sd-sf-2026-09-14",
+            venue="polymarket_us", logged="2026-09-13T21:16:00+00:00", price=0.57)
+_dh = dict(_new, id="espn_fpi:aec-mlb-sd-sf-2026-09-14-g2", market_id="aec-mlb-sd-sf-2026-09-14-g2",
+           start="2026-09-15T03:40:00+00:00")
+_other = dict(_new, id="covers:aec-mlb-sd-sf-2026-09-14", source="covers")
+_ddup = {"quotes": [dict(_old), dict(_new), dict(_dh), dict(_other)]}
+eq(T.retire_venue_duplicates(_ddup, verbose=False), 1, "one duplicate found")
+_st9 = {q["id"]: q["status"] for q in _ddup["quotes"]}
+eq((_st9["espn_fpi:4287261"], _st9["espn_fpi:aec-mlb-sd-sf-2026-09-14"]), ("open", "void"),
+   "the earliest quote stands; the re-quote on the new venue is voided")
+eq(_st9["espn_fpi:aec-mlb-sd-sf-2026-09-14-g2"], "open", "a doubleheader's second game 4.5h later is its own contest")
+eq(_st9["covers:aec-mlb-sd-sf-2026-09-14"], "open", "another source on the same contest is untouched")
+eq(T.retire_venue_duplicates(_ddup, verbose=False), 1, "idempotent")
+_settled_dup = {"quotes": [dict(_old), dict(_new, status="won", logged="2026-09-13T12:30:00+00:00")]}
+T.retire_venue_duplicates(_settled_dup, verbose=False)
+eq(_settled_dup["quotes"][1]["status"], "won", "settled history from before the switch is never rewritten")
+_tt = [dict(_old, sport="table_tennis", source="polymarket_us", venue="polymarket_us", id="p:1", market_id="1",
+            side_a="Rak Serhii", side_b="Pesternikov Denys", start="2026-09-14T00:30:00+00:00",
+            logged="2026-09-13T21:16:00+00:00", bet=False),
+       dict(_old, sport="table_tennis", source="polymarket_us", venue="polymarket_us", id="p:2", market_id="2",
+            side_a="Rak Serhii", side_b="Pesternikov Denys", start="2026-09-14T01:05:00+00:00",
+            logged="2026-09-13T21:16:00+00:00", bet=False)]
+eq(T.retire_venue_duplicates({"quotes": _tt}, verbose=False), 0,
+   "a table-tennis rematch 35 minutes later is a different match")
+_up_row = dict(market_id="aec-mlb-sd-sf-2026-09-14", venue="polymarket_us", sport="mlb", label="x",
+               side_a="San Diego Padres", side_b="San Francisco Giants", price_a=0.57, price_b=0.45, mid_a=0.56,
+               untraded=False, start=(datetime.now(timezone.utc) + timedelta(hours=3)).isoformat(),
+               date="2026-09-14", volume=0.0, url="")
+_prev = dict(_old, start=_up_row["start"], source="espn_fpi")
+_saved_ch3 = S.CHALLENGERS
+S.CHALLENGERS = {"espn_fpi": lambda sp: [dict(a="San Diego Padres", b="San Francisco Giants", prob_a=0.70,
+                                              date="2026-09-14")]}
+try:
+    _dpub = {"quotes": [_prev], "meta": {}, "coverage": {}}
+    T.publish(_dpub, {"mlb": [_up_row]}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch3
+eq([q["id"] for q in _dpub["quotes"] if q["source"] == "espn_fpi"], ["espn_fpi:4287261"],
+   "publish refuses a source's second quote on a contest it already priced elsewhere")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
