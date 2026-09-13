@@ -1703,6 +1703,40 @@ close(T.pnl_after_fee(dict(price=0.5, status="won", venue="kalshi")), 100 * (1 /
       "Kalshi's fee rate is 0.07", tol=0.01)
 eq(T.pnl_after_fee(dict(price=0.5, status="lost", venue="kalshi")), -100.0, "a lost bet loses the stake")
 
+# ---------------------------------------------------------------------------
+print("\nclosing prices")
+# ---------------------------------------------------------------------------
+_n0 = datetime.now(timezone.utc)
+_row = dict(market_id="cl1", sport="mlb", venue="kalshi", label="A vs B", side_a="A", side_b="B",
+            price_a=0.40, price_b=0.62, price_draw=None, tradeable={"a": True, "b": True},
+            untraded=False, start=(_n0 + timedelta(hours=5)).isoformat(), date=_n0.strftime("%Y-%m-%d"),
+            volume=0.0, url="")
+_q = dict(id="covers:cl1", source="covers", sport="mlb", market_id="cl1", venue="kalshi", pick="a",
+          price=0.40, bet=True, status="open")
+d = {"quotes": [dict(_q)]}
+eq(T.snap_closing(d, {"mlb": [dict(_row, price_a=0.44)]}, now=_n0), 1, "an open bet takes the venue's current price")
+eq(d["quotes"][0]["close_price"], 0.44, "for the side it backed")
+T.snap_closing(d, {"mlb": [dict(_row, price_a=0.47)]}, now=_n0 + timedelta(hours=1))
+eq(d["quotes"][0]["close_price"], 0.47, "refreshed every run, so the last one before the start stands")
+T.snap_closing(d, {"mlb": [dict(_row, price_a=0.30)]}, now=_n0 + timedelta(hours=6))
+eq(d["quotes"][0]["close_price"], 0.47, "a snapshot after the start is never taken")
+T.snap_closing(d, {"mlb": [dict(_row, price_a=0.30, untraded=True)]}, now=_n0 + timedelta(hours=2))
+eq(d["quotes"][0]["close_price"], 0.47, "an untraded book leaves the last good snapshot")
+T.snap_closing(d, {"mlb": [dict(_row, price_a=0.30, tradeable={"a": False, "b": True})]}, now=_n0 + timedelta(hours=2))
+eq(d["quotes"][0]["close_price"], 0.47, "nor does a side whose own book is not tradeable")
+T.snap_closing(d, {"mlb": [dict(_row, venue="polymarket", price_a=0.30)]}, now=_n0 + timedelta(hours=2))
+eq(d["quotes"][0]["close_price"], 0.47, "a different venue's price is never a closing price")
+d2 = {"quotes": [dict(_q, bet=False), dict(_q, status="won")]}
+eq(T.snap_closing(d2, {"mlb": [_row]}, now=_n0), 0, "no-bet quotes and settled bets are left alone")
+d3 = {"quotes": [dict(_q, pick="draw", sport="soccer")]}
+T.snap_closing(d3, {"soccer": [dict(_row, price_draw=0.29, tradeable={"a": True, "b": True, "draw": True})]}, now=_n0)
+eq(d3["quotes"][0]["close_price"], 0.29, "a draw bet closes on the draw price")
+_ac = T.assess({"quotes": [dict(_q, status="won", result="a", pnl=150.0, logged=_n0.isoformat(),
+                                start=(_n0 + timedelta(hours=5)).isoformat(), price_a=0.40, price_b=0.62,
+                                close_price=0.47)]}, "covers")
+close(_ac["clv"], 0.07, "CLV is close minus price: bought at 0.40, closed at 0.47", tol=1e-9)
+eq(_ac["clv_beat"], 1.0, "and it beat the close")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

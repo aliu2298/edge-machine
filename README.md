@@ -458,6 +458,13 @@ closing-line value and positive ROI after the taker fee (Polymarket US 0.06·p·
 bets is demoted and must re-qualify on bets logged after the demotion. The trading bot never
 reads QA.
 
+**Closing prices.** Every run refreshes, on each open bet, the same venue's current price for
+the side it backed, while that book is tradeable and the contest has not started — so the
+value left behind is the last snapshot before the start. Closing-line value (close minus the
+price paid) says whether a source buys below where the market ends up, and it is readable
+long before enough results settle to judge ROI. The Sandbox runs every six hours, so the
+"close" can be up to six hours before the start.
+
 **The stamp of approval** is pre-registered (2026-09-12) and identical for tipsters, models,
 books and exchanges. Every criterion must hold, and it is re-judged every run:
 50+ settled bets over 4+ different weeks; wins beat the prices paid by z ≥ 2; ROI beats every

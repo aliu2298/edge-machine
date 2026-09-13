@@ -497,13 +497,46 @@ def publish(d, universe, coverage, verbose=True):
                 seen.add(qid)
                 added += 1
 
+    snapped = snap_closing(d, universe)
+
     d["coverage"] = coverage
     d["feed_status"] = dict(S.FEED_STATUS)
     if S.ODDS_USAGE:
         d["meta"]["odds_api"] = dict(S.ODDS_USAGE, at=now_iso())
     if verbose:
-        print(f"  logged {added} new quotes")
+        print(f"  logged {added} new quotes, closing price refreshed on {snapped} open bets")
     return added
+
+
+def snap_closing(d, universe, now=None):
+    """Record the venue's current price for the backed side of every open bet.
+
+    Refreshed on every run until the contest starts, so the value left behind is the last
+    snapshot before the start: the closing price. A bet bought below where the market closed
+    (close_price > price) beat the close — the earliest sign of a real edge, readable long
+    before enough results settle to judge ROI. Only the same venue's price counts, and only
+    while that side's book is tradeable; a vanished or untraded row leaves the last good
+    snapshot in place. Returns the number of bets updated.
+    """
+    now = now or datetime.now(timezone.utc)
+    stamp = now.replace(microsecond=0).isoformat()
+    rows = {r["market_id"]: r for rs in universe.values() for r in rs}
+    n = 0
+    for q in d["quotes"]:
+        if q["status"] != "open" or not q.get("bet") or not q.get("pick"):
+            continue
+        r = rows.get(q["market_id"])
+        if (not r or r.get("untraded") or _started(r, now)
+                or r.get("venue", "polymarket") != q.get("venue", "polymarket")):
+            continue
+        pick = q["pick"]
+        price = (r.get("price_draw") if pick == "draw"
+                 else r["price_a"] if pick == "a" else r["price_b"])
+        if price is None or not (r.get("tradeable") or {}).get(pick, True):
+            continue
+        q["close_price"], q["close_at"] = round(price, 4), stamp
+        n += 1
+    return n
 
 
 # ---------------------------------------------------------------------------
