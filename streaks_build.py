@@ -312,31 +312,13 @@ def base_rates(streaks):
     return rates
 
 
-_VENUE_EVENTS = None
-
-
 def venue_market_link(f):
-    """Bovada market URL for a fixture, or None.
-
-    Reuses the shared matcher in venues.py rather than writing a second one. Fail-soft: a
-    missing link is normal, since not every fixture is priced.
-
-    NB `venue_link` expects "A vs B" and allows only a ±1 day gap on the date.
-    """
-    global _VENUE_EVENTS
-    if _VENUE_EVENTS is None:
-        try:
-            from venues import fetch_bovada_events
-            _VENUE_EVENTS = fetch_bovada_events()
-        except Exception as e:
-            print(f"  (bovada links unavailable: {e})")
-            _VENUE_EVENTS = []
-    if not _VENUE_EVENTS:
-        return None
+    """Pricing key for a fixture on the exchanges (venue_book.fixture_key), or None when
+    neither Kalshi nor Polymarket US lists its league. Replaced the Bovada game link on
+    2026-09-13; the card's button now links the claim's own venue market (market_url)."""
     try:
-        from venues import venue_link
-        return venue_link(f"{f['home']} vs {f['away']}",
-                          f.get("kickoff") or f.get("date"), _VENUE_EVENTS)
+        import venue_book
+        return venue_book.fixture_key(f)
     except Exception:
         return None
 
@@ -1025,10 +1007,10 @@ function card(l) {{
       <span class="fx">${{esc(l.match)}}</span>
       <span class="cd ${{cdCls}}" data-ko="${{esc(l.kickoff || '')}}">${{esc(cdTxt)}}</span>
       <span class="fxm">${{esc(l.league)}} · ${{esc(when(l.kickoff) || l.date)}}</span>
-      ${{l.market ? `<a class="kbtn" href="${{esc(l.market)}}" target="_blank"
-         rel="noopener">Bovada ↗</a>` : ''}}
-      ${{l.price ? `<span class="px" title="Price of this claim when the lead was first listed · book = the book's vig-free probability · model = shrunk Poisson estimate">@ ${{l.price.toFixed(2)}}${{
-          l.fair ? ` · book ${{Math.round(l.fair*100)}}%` : ''}}${{
+      ${{l.market_url ? `<a class="kbtn" href="${{esc(l.market_url)}}" target="_blank"
+         rel="noopener">${{esc(l.venue_name || 'Market')}} ↗</a>` : ''}}
+      ${{l.price ? `<span class="px" title="Price of this claim when the lead was first listed, at the venue ask plus its taker fee · market = the book's midpoint · model = shrunk Poisson estimate">@ ${{l.price.toFixed(2)}}${{
+          l.fair ? ` · market ${{Math.round(l.fair*100)}}%` : ''}}${{
           l.model != null ? ` · model ${{Math.round(l.model*100)}}%` : ''}}</span>` : ''}}
     </div>
     <div class="ev">
@@ -1287,9 +1269,9 @@ def build(force=False):
         print(f"  (model skipped: {e})")
         mdl = None
     try:
-        from venues import fetch_bovada_prices
+        from venue_book import fetch_prices
         ledger, n_priced, n_fetched = streaks_track.price(ledger, leads,
-                                                          fetch_bovada_prices, model=mdl)
+                                                          fetch_prices, model=mdl)
     except Exception as e:
         print(f"  (pricing skipped: {e})")
         n_priced = n_fetched = 0
@@ -1309,6 +1291,11 @@ def build(force=False):
         if mk and pr.get(mk):
             l["price"] = pr[mk]["price"]
             l["fair"] = pr[mk]["fair"]
+            import venue_book
+            if venue_book.market_url(pr[mk]):
+                l["market_url"] = venue_book.market_url(pr[mk])
+                l["venue_name"] = {"kalshi": "Kalshi", "polymarket_us": "Polymarket"}.get(
+                    pr[mk].get("venue"), "Market")
             if (entry.get("model") or {}).get(mk) is not None:
                 l["model"] = entry["model"][mk]
 

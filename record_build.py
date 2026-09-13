@@ -29,8 +29,10 @@ LIFT IS THE NUMBER where a reference exists. A hit rate on its own is unreadable
 three lanes in this repo have already died from being read without a reference.
 
 The PRICED section (added 2026-09-12) is the one place profit is measured: every lead is
-graded at a flat 1 unit on the Bovada line captured the first build it was listed, on
-three pre-registered markets. Its yardstick is the book's vig-free probability.
+graded at a flat 1 unit on the price captured the first build it was listed, on
+three pre-registered markets — the Bovada line until 2026-09-13, the Kalshi or Polymarket US
+ask plus taker fee since. Its yardstick is the book's fair probability (vig-free for Bovada,
+the midpoint for an exchange).
 
 Usage:  python3 record_build.py   →  public_site/record.html
 """
@@ -250,7 +252,10 @@ def page_html(ld, fr, bk, now):
     priced_body = tiles([("Settled at a price", pr["graded"]),
                          ("Over 1.5 lane ROI", roi("over15")),
                          ("Team 2+ lane ROI", roi("team2plus")),
-                         ("Priced, pending", pr["pending"])]) + price_table(pr["rows"])
+                         ("Priced, pending", pr["pending"]),
+                         ("Claims priced on", " · ".join(
+                             f"{ {'bovada': 'Bovada', 'kalshi': 'Kalshi', 'polymarket_us': 'Polymarket'}.get(k, k)} {v}"
+                             for k, v in sorted((pr.get("by_source") or {}).items())) or "—")]) + price_table(pr["rows"])
     priced_rep = {"graded": pr["graded"]}
     mr = ld.get("model") or {"rows": [], "graded": 0, "pending": 0, "margin": 0.05}
     brier_t, value_t = model_tables(mr)
@@ -369,8 +374,9 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a></div>
 
 <div class="note warn">The lift sections carry no odds and <b>are not profit</b>; the one
-place money is measured is the priced section, which grades every lead at the Bovada line
-captured when it was first listed. Everywhere else each rate is compared against
+place money is measured is the priced section, which grades every lead at the price
+captured when it was first listed — the Kalshi or Polymarket US ask plus fee since 2026-09-13,
+the Bovada line before. Everywhere else each rate is compared against
 <b>what the teams involved manage anyway</b> — the named side's own rate for a claim about
 one team, the two sides' mean for a fixture-level outcome. A league average would credit a
 lead for team quality: measured here, that difference moved "team to score" from
@@ -386,8 +392,9 @@ repo have already died from being read without one.</div>
          "Nothing graded yet.")}
 
 {section("Leads at the price — does it pay?",
-         "Flat 1 unit on every lead at the Bovada line captured the <b>first build it was "
-         "listed</b> — never revised, never taken after kickoff. Three fixture-level "
+         "Flat 1 unit on every lead at the price captured the <b>first build it was "
+         "listed</b> (the exchange ask plus taker fee since 2026-09-13, Bovada before) — "
+         "never revised, never taken after kickoff. Three fixture-level "
          "markets are logged on every lead, fixed in advance, so no market is chosen "
          "after seeing which one paid; a <b>side to score 2+</b> lead is also priced on "
          "its own claim from the book's team total. Each lane is judged on its own claim. <b>Break-even</b> is the hit rate the average price "

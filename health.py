@@ -139,9 +139,10 @@ def main():
     except Exception as e:
         note("warning", f"BOOK check skipped: {e}")
 
-    # 3. VENUE LINKS — the board links Bovada. A feed returning nothing is
-    # indistinguishable from "no market exists" unless something explicitly looks, which
-    # is how a silently-empty upstream feed once removed every Europa button.
+    # 3. VENUE PRICES — leads are priced on Kalshi and Polymarket US (Bovada until
+    # 2026-09-13, when it started failing every request and nothing said so). A feed
+    # returning nothing is indistinguishable from "no market exists" unless something
+    # explicitly looks, so both venues answering nothing at all is a warning.
     #
     # Coverage is only meaningful NEAR TERM: a sportsbook prices the next few days and
     # posts distant fixtures closer to kickoff, so a lead two weeks out legitimately has
@@ -149,21 +150,23 @@ def main():
     # kicked off has no pre-match market by definition, and counting those as misses
     # made the check read "3/5" while the board was in fact fully linked.
     try:
-        from venues import fetch_bovada_events, venue_link
-        events = fetch_bovada_events()
-        if not events:
-            note("warning", "LINKS bovada returned 0 events — endpoint or filter changed?")
-            problems += 1
-        elif board:
-            miss = [p for p in board
-                    if not venue_link(p["match"].replace(" v ", " vs "),
-                                      p.get("kickoff") or p["date"], events)]
-            print(f"  bovada links: {len(board)-len(miss)}/{len(board)} leads inside "
-                  f"{LINK_HORIZON_DAYS}d")
+        import venue_book as VB
+        if board:
+            miss = []
+            for p in board:
+                k = VB.fixture_key(p)
+                if not (k and VB.fixture_quotes(k)):
+                    miss.append(p)
+            print(f"  venue prices: {len(board)-len(miss)}/{len(board)} leads inside "
+                  f"{LINK_HORIZON_DAYS}d ({VB.STATS['calls']} calls, {VB.STATS['errors']} failed)")
             for p in miss:
-                print(f"    (no line for {p['match']})")
+                print(f"    (no venue price for {p['match']})")
+            if len(miss) == len(board) and VB.STATS["errors"]:
+                note("warning", f"PRICES no lead priced on either venue and {VB.STATS['errors']} "
+                                f"venue reads failed — Kalshi / Polymarket US unreachable?")
+                problems += 1
     except Exception as e:
-        note("warning", f"LINKS check skipped: {e}")
+        note("warning", f"PRICES check skipped: {e}")
 
     print(f"  issues: {problems}")
     if not problems:

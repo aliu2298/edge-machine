@@ -40,7 +40,7 @@ flowchart TB
     end
 
     subgraph EXT["External sources (public, no auth)"]
-        BOV["Bovada public API<br/>market links"]
+        BOV["Kalshi + Polymarket US<br/>public prices (venue_book.py)"]
         ESPN["ESPN scoreboard<br/>results + fixtures"]
     end
 
@@ -93,7 +93,7 @@ and graded against ESPN final scores once its fixture is played.
 |---|---|
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, base rates, auto-settlement. Read-only; it places nothing. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
-| `venues.py` | Shared fixture→market matcher (Bovada). |
+| `venue_book.py` | Prices every lead and fixture on Kalshi and Polymarket US (ask + taker fee, midpoint as fair); matcher copied from the trading bot. Replaced Bovada 2026-09-13. |
 | `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
 | `today_build.py` | Renders today's and tomorrow's fixtures to `public_site/today.html`: leads from the ledger, in-play games filled from the book/lead ledgers, results, scoreboard, why-not on form at kickoff. Tested by `test_today.py`. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
@@ -220,29 +220,20 @@ have conceded in M straight" reads like two pieces of evidence, but in a match b
 **A scoring and B conceding are the same event**, counted twice — and it only implies one
 goal, so it says nothing about a 1.5 line.
 
-Each lead links to its **Bovada market** where a line exists, via the shared matcher in
-`venues.py`. Coverage inside three days is **51/53** of fixtures Bovada has posted; the
-remainder are simply not listed yet. Beyond that it thins out — a sportsbook prices the
-next few days and posts distant fixtures closer to kickoff, so a lead two weeks out has no
-line yet and gains one as it approaches. A live card whose market has been pulled at
-kickoff says **in play** rather than showing an empty corner.
-
-The matcher compares the two sides **in order** and scores each on its most distinctive
-token, because venues disagree about descriptors and not identity — ESPN's "Stade Rennais"
-is Bovada's "Rennes", "Internazionale" is "Inter Milan", "Al Taawoun" is "Al Taawon". Three
-things it has to get right, each of which was a real bug:
-
-* **The side with fewer distinctive tokens must have all of them matched.** Scoring on the
-  single best token alone rated "Real Madrid" vs "Real Sociedad" a perfect 1.0.
-* **Names built entirely of short words must still match.** The old matcher required a
-  token of 4+ characters, so "Rio Ave" could never link even though Bovada listed the
-  fixture under exactly that name.
-* **A duplicate listing is not an ambiguity.** Bovada publishes the same fixture more than
-  once; counting a duplicate as a rival candidate made the ambiguity guard veto every
-  ordinary match and dropped coverage from 46 to 36.
-
-When two genuinely different fixtures both fit, it returns no link rather than guessing —
-a wrong link is worse than none, since the card still reads as though it were checked.
+**Prices come from the exchanges (since 2026-09-13).** Bovada was the book until it began
+answering every request with a cookie redirect loop. `venue_book.py` now prices each lead and
+every fixture inside 24h on **Kalshi and Polymarket US**, the venues the trading bot routes to:
+over 1.5 / 2.5 from Polymarket US's totals ladder or Kalshi `KX{LEAGUE}TOTAL`, BTTS from Kalshi
+`KX{LEAGUE}BTTS`, a side to score 2+ from Kalshi `KX{LEAGUE}TEAMTOTAL`. Where both list a market
+the cheaper effective price wins. `price` is decimal odds at the ask **plus taker fee** (what a
+follower pays); `fair` is the book's midpoint. A one-sided book, or a spread over 10¢, is no
+price. No URL is stored in a ledger — `market_url()` builds the card's Kalshi / Polymarket
+button at render time. The matcher (both sides must match, same day, near-ties refused) is
+copied from the trading bot, thresholds unchanged. Coverage is narrower than a sportsbook: on
+the bot's own record, 60% of over-1.5 leads and 31% of team-2+ leads had a venue market — the
+rest cannot be traded and are graded on hit rate only. Leads priced before the switch keep
+their Bovada price (a price is never revised), and the Record shows how the priced sample
+splits between the two.
 
 Two design choices worth knowing:
 

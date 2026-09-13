@@ -50,6 +50,7 @@ import streaks_fetch
 import streaks_build as B
 import streaks_track as T
 import book_track as K
+import venue_book as VB
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(ROOT, "public_site")
@@ -222,7 +223,8 @@ def day_rows(day, fixtures, by_team, shown, rates, league_of, ledger, published,
             "leads": leads,
             "why_not": [] if leads else why_not(f["home"], f["away"], by_team, f["date"]),
             "markets": markets, "value": value,
-            "market_url": B.venue_market_link(f) if f["in_feed"] else None,
+            "market_url": next((u for u in (VB.market_url(m) for m in
+                                (bk or {}).get("prices", {}).values()) if u), None),
         })
     rows.sort(key=lambda r: (r.get("kickoff") or "", r["match"]))
     return rows
@@ -542,7 +544,7 @@ function row(m) {{
       <span class="cd ${{cls}}" ${{m.state === 'upcoming' ? `data-ko="${{esc(m.kickoff||'')}}"` : ''}}>${{
         esc(txt)}}</span>
       <span class="meta">${{esc(m.league)}} · ${{esc(when(m.kickoff) || m.date)}}</span>
-      ${{m.market_url && m.state === 'upcoming' ? `<a class="kbtn" href="${{esc(m.market_url)}}" target="_blank" rel="noopener">Bovada ↗</a>` : ''}}</div>
+      ${{m.market_url && m.state === 'upcoming' ? `<a class="kbtn" href="${{esc(m.market_url)}}" target="_blank" rel="noopener">Market ↗</a>` : ''}}</div>
     <div class="body">${{side(m.home)}}${{side(m.away)}}</div>
     ${{leadStrip(m)}}${{bookStrip(m)}}
   </div>`;

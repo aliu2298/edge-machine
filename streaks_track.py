@@ -26,7 +26,8 @@ PRICES (added 2026-09-12)
 Lift against the teams' own rate answers "does the confluence carry information". It does
 not answer "does it pay", because a sportsbook already prices what the teams do: on the
 day this was added, over 1.5 on lead fixtures traded at ~1.20 — a break-even hit rate of
-83.4%, which is exactly what leads hit. So every lead is also priced: the Bovada line is
+83.4%, which is exactly what leads hit. So every lead is also priced: the price (the Bovada
+line until 2026-09-13; since then the Kalshi or Polymarket US ask plus fee, venue_book.py) is
 captured the FIRST build where one is listed (see price()), never revised and never taken
 after kickoff, and three fixture-level markets are logged on every lead — the claim
 (over 1.5) plus over 2.5 and BTTS, pre-registered in PRICED_MARKETS so no market is chosen
@@ -248,7 +249,8 @@ def price(blob, leads, fetch, now=None, model=None):
         can never be captured with the result already known.
       * NO LINE, NO PRICE. An empty or failed read leaves the lead unpriced and it is
         retried next build — a sportsbook posts distant fixtures closer to kickoff.
-      * THE CLAIM MUST BE PRICED. A book that lists BTTS but not over 1.5 (Bovada often
+      * THE CLAIM MUST BE PRICED. A book that lists BTTS but not over 1.5 (Bovada, the
+        original book, often
         posts the alternate totals ladder later than the props — 8 of the first 47 leads
         priced came back that way) is treated as no line: nothing is stored, so the lead
         is retried until the claim's own market is up. Storing the companions alone would
@@ -404,7 +406,17 @@ def price_report(blob):
         if mk and mk in e["pnl"]:
             lanes.setdefault(mk, []).append(e["pnl"][mk]["pnl"])
     lane_roi = {mk: (sum(v) / len(v)) for mk, v in lanes.items()}
-    return {"rows": rows, "graded": len(settled), "pending": pending,
+    # Which book each settled lead's own claim was priced on. Bovada until 2026-09-13, the
+    # exchanges after (venue_book.py): the two are different prices — a sportsbook line with
+    # its margin, against an ask plus fee — so the record says how its sample splits.
+    by_source = {}
+    for e in settled:
+        mk = claim_market(e.get("bet") or {})
+        q = (e.get("prices") or {}).get(mk) if mk else None
+        if q:
+            src = q.get("venue") or "bovada"
+            by_source[src] = by_source.get(src, 0) + 1
+    return {"rows": rows, "graded": len(settled), "pending": pending, "by_source": by_source,
             "lane_roi": lane_roi,
             "claim_roi": lane_roi.get("over15")}
 

@@ -461,67 +461,12 @@ check("a lone marginal p does not survive alone",
       [x["significant"] for x in fake], [True, False])
 
 
-print("\n== venue matcher: identity vs descriptors ==")
-import venues as V
-# Venues disagree about DESCRIPTORS, never identity. The short side is the abbreviation.
-for a, b in [("stade rennais", "rennes"), ("inter milan", "internazionale"),
-             ("heart midlothian", "hearts"), ("lafc", "los angeles"),
-             ("taawoun", "taawon"), ("red bull new york", "new york red bulls")]:
-    check(f"same club: {a} / {b}", V.side_score(a, b) >= V.SIDE_MATCH, True)
-# The shared word must NOT carry the match — scoring on the single best token alone
-# rated "Real Madrid" vs "Real Sociedad" a perfect 1.0.
-for a, b in [("real madrid", "real sociedad"), ("atletico madrid", "atletico bilbao"),
-             ("manchester united", "manchester city"), ("bayern munich", "bayer leverkusen")]:
-    check(f"different clubs: {a} / {b}", V.side_score(a, b) >= V.SIDE_MATCH, False)
-
-print("\n== venue matcher: names made only of short words ==")
-# "Rio Ave" has no token of 4+ chars. The old matcher required one and so could never
-# link it, even though Bovada listed the fixture under exactly that name.
-check("rio ave matches itself", V.side_score("rio ave", "rio ave") >= V.SIDE_MATCH, True)
-check("rio ave is not santa clara", V.side_score("rio ave", "santa clara") >= V.SIDE_MATCH, False)
-
-print("\n== venue matcher: link selection ==")
-_d = datetime.date(2026, 9, 6)
-evs = [("u/angers-rennes", "Angers vs Rennes", _d)]
-check("descriptor difference still links",
-      V.venue_link("Angers vs Stade Rennais", "2026-09-06", evs), "u/angers-rennes")
-# Bovada publishes the same fixture more than once. A duplicate is not a rival candidate;
-# treating it as one made the ambiguity guard veto every ordinary match (46 -> 36).
-dup = evs + [("u/angers-rennes-2", "Angers vs Rennes", _d)]
-check("duplicate listing is not ambiguity",
-      bool(V.venue_link("Angers vs Stade Rennais", "2026-09-06", dup)), True)
-# Two DIFFERENT fixtures that both fit: refuse rather than guess. A wrong link is worse
-# than no link, because the card still reads as though it were checked.
-amb = [("u/a", "Rennes vs Lyon", _d), ("u/b", "Rennes vs Lille", _d)]
-check("ambiguous pair returns no link",
-      V.venue_link("Stade Rennais vs L", "2026-09-06", amb), None)
-# Sides are matched in order, so the reverse fixture is never returned as a match.
-rev = [("u/rev", "Chelsea vs Arsenal", _d)]
-check("reverse fixture is not a match",
-      V.venue_link("Arsenal vs Chelsea", "2026-09-06", rev), None)
-check("date outside the window is not a match",
-      V.venue_link("Angers vs Stade Rennais", "2026-09-20", evs), None)
-_d = datetime.date(2026, 9, 12)
-_evs = [("u1", "Auxerre vs Nice", _d), ("u2", "AJ Auxerre vs Nice", _d),
-        ("u3", "Mainz vs Eintracht Frankfurt", _d), ("u4", "FSV Mainz U19 vs FSV Frankfurt U19", _d),
-        ("u5", "Orlando City SC vs Toronto FC", _d), ("u6", "Orlando City (R) vs Toronto FC (R)", _d),
-        ("u7", "FC Köln vs Werder Bremen", _d)]
-check("same fixture under two spellings is not an ambiguity",
-      V.venue_link("AJ Auxerre vs Nice", "2026-09-12", _evs) in ("u1", "u2"), True)
-check("U19 listing does not shadow the senior fixture",
-      V.venue_link("Mainz vs Eintracht Frankfurt", "2026-09-12", _evs), "u3")
-check("reserve (R) listing does not shadow the first team",
-      V.venue_link("Orlando City SC vs Toronto FC", "2026-09-12", _evs), "u5")
-check("a reserve fixture still finds its own listing",
-      V.venue_link("Orlando City (R) vs Toronto FC (R)", "2026-09-12", _evs), "u6")
-check("Cologne / Köln alias", V.venue_link("FC Cologne vs Werder Bremen", "2026-09-12", _evs), "u7")
-
 print("\n== pricing: captured once, before kickoff, never after ==")
 NOWP = datetime.datetime.now(datetime.timezone.utc)
 _soon = NOWP + datetime.timedelta(days=2)
 lp = dict(lead, date=_soon.date().isoformat(), kickoff=_soon.strftime("%Y-%m-%dT%H:%MZ"),
           headline="Over 1.5 goals", bet={"kind": "total_gte", "n": 2},
-          market="https://www.bovada.lv/sports/soccer/x/h-a-1")
+          market='{"away": "A", "day": "x", "home": "H", "league": "L1"}')
 BOOK = {"over15": {"price": 1.25, "fair": 0.78}, "over25": {"price": 1.6, "fair": 0.6},
         "btts": {"price": 1.7, "fair": 0.57}, "corners": {"price": 2.0, "fair": 0.5}}
 calls = []
@@ -665,51 +610,74 @@ blob7, _ = T.grade([played], blob7)
 check("a lead graded without a price has no pnl", "pnl" in list(blob7["leads"].values())[0], False)
 check("and does not count as settled at a price", T.price_report(blob7)["graded"], 0)
 
-print("\n== venues: Bovada event parse ==")
-_ev = {"displayGroups": [{"markets": [
-    {"description": "Total", "period": {"description": "Regulation Time"}, "outcomes": [
-        {"description": "Over", "price": {"handicap": "2.5", "decimal": "1.95"}},
-        {"description": "Under", "price": {"handicap": "2.5", "decimal": "1.87"}}]},
-    {"description": "Total Goals O/U", "period": {"description": "Regulation Time"}, "outcomes": [
-        {"description": "Over", "price": {"handicap": "1.5", "decimal": "1.32"}},
-        {"description": "Under", "price": {"handicap": "1.5", "decimal": "3.50"}},
-        {"description": "Over", "price": {"handicap": "2.5", "decimal": "1.99"}},
-        {"description": "Under", "price": {"handicap": "2.5", "decimal": "1.85"}},
-        {"description": "Over", "price": {"handicap": "0.5", "decimal": "1.05"}}]},
-    {"description": "Total Goals O/U", "period": {"description": "1st Half"}, "outcomes": [
-        {"description": "Over", "price": {"handicap": "1.5", "decimal": "9.0"}},
-        {"description": "Under", "price": {"handicap": "1.5", "decimal": "1.05"}}]},
-    {"description": "Both Teams To Score", "period": {"description": "Regulation Time"}, "outcomes": [
-        {"description": "Yes", "price": {"decimal": "1.74"}},
-        {"description": "No", "price": {"decimal": "2.05"}}]}]}]}
-_pr = V.parse_bovada_prices(_ev)
-check("over 1.5 comes off the alternate ladder", _pr["over15"]["price"], 1.32)
-check("fair prob strips the vig", _pr["over15"]["fair"],
-      round((1 / 1.32) / ((1 / 1.32) + (1 / 3.5)), 4))
-check("the main 2.5 line wins over its alternate copy", _pr["over25"]["price"], 1.95)
-check("btts", _pr["btts"]["price"], 1.74)
-check("half-time ladders are ignored", _pr["over15"]["price"] != 9.0, True)
-check("one-sided market is skipped, not guessed", "over05" in _pr, False)
-check("empty event -> empty book", V.parse_bovada_prices({}), {})
-_ev2 = {"description": "Augsburg vs Bayer Leverkusen", "displayGroups": [{"markets": [
-    {"description": "Total Goals O/U - Bayer Leverkusen", "period": {"description": "Regulation Time"},
-     "outcomes": [{"description": "Over", "price": {"handicap": "1.5", "decimal": "1.55"}},
-                  {"description": "Under", "price": {"handicap": "1.5", "decimal": "2.47"}},
-                  {"description": "Over", "price": {"handicap": "0.5", "decimal": "1.10"}},
-                  {"description": "Under", "price": {"handicap": "0.5", "decimal": "7.00"}}]},
-    {"description": "Total Goals O/U - Augsburg", "period": {"description": "Regulation Time"},
-     "outcomes": [{"description": "Over", "price": {"handicap": "1.5", "decimal": "2.18"}},
-                  {"description": "Under", "price": {"handicap": "1.5", "decimal": "1.70"}}]},
-    {"description": "Total Goals O/U - Nobody FC", "period": {"description": "Regulation Time"},
-     "outcomes": [{"description": "Over", "price": {"handicap": "1.5", "decimal": "9.9"}},
-                  {"description": "Under", "price": {"handicap": "1.5", "decimal": "1.01"}}]}]}]}
-_pt = V.parse_bovada_prices(_ev2)["team"]
-check("team totals keyed by side from the event title", sorted(_pt), ["away", "home"])
-check("home = Augsburg", _pt["home"]["over15"]["price"], 2.18)
-check("away = Leverkusen, both lines", (_pt["away"]["over15"]["price"], _pt["away"]["over05"]["price"]), (1.55, 1.10))
-check("a team total for neither side is dropped", "Nobody" in str(_pt), False)
-check("no fixture totals on that event -> none claimed", "over15" in V.parse_bovada_prices(_ev2), False)
-
+print("\n== venue book: exchange prices (Kalshi, Polymarket US) ==")
+import venue_book as VB
+for a, b in [("man city", "Manchester City"), ("LA Galaxy", "Los Angeles Galaxy"),
+             ("Leeds United FC", "Leeds United"), ("inter", "Internazionale")]:
+    check(f"same club: {a} / {b}", VB.sim(a, b) >= VB.SIDE_MATCH, True)
+check("different clubs", VB.sim("Real Madrid", "Real Sociedad") >= VB.SIDE_MATCH, False)
+_evs = [(("Leeds United FC", "Newcastle United FC"), "e1"), (("Arsenal", "Chelsea"), "e2")]
+check("both sides must match", VB._pick_event(_evs, "Leeds United", "Newcastle United")[0], "e1")
+check("the reverse fixture is not a match", VB._pick_event(_evs, "Chelsea", "Arsenal")[0], None)
+check("two equal candidates are refused",
+      VB._pick_event([(("Leeds", "Newcastle"), "a"), (("Leeds", "Newcastle"), "b")], "Leeds", "Newcastle")[0], None)
+_q = VB._quote(VB.POLY, 0.78, 0.77, "tsc-x-1pt5", "epl-lee-new")
+check("a quote is priced at ask + taker fee", _q["price"], round(1 / (0.78 + 0.06 * 0.78 * 0.22), 3))
+check("its fair probability is the midpoint", _q["fair"], 0.775)
+check("a one-sided book is no quote", VB._quote(VB.KALSHI, 0.5, 0.0, "t"), None)
+check("a wide book is no quote", VB._quote(VB.KALSHI, 0.6, 0.45, "t"), None)
+check("no URL is stored in a quote", "url" in _q, False)
+check("Polymarket URL is built from the event", VB.market_url(_q), "https://polymarket.us/event/epl-lee-new")
+check("Kalshi URL is built from the series",
+      VB.market_url({"venue": "kalshi", "market": "KXEPLTEAMTOTAL-26SEP14LEENEW-LEE2"}),
+      "https://kalshi.com/markets/kxeplteamtotal")
+check("a league neither venue lists has no key", VB.fixture_key({"league": "Belgian Pro League"}), None)
+_key = VB.fixture_key({"league": "Premier League", "kickoff": "2026-09-14T19:00Z",
+                       "home": "Leeds United", "away": "Newcastle United"})
+_saved_pe, _saved_ks, _saved_ke = VB.poly_events, VB.kalshi_series, VB.kalshi_events
+VB.poly_events = lambda slug: [{"slug": "epl-lee-new-2026-09-14", "title": "Leeds United FC vs. Newcastle United FC",
+    "startDate": "2026-09-14T19:00:00Z", "markets": [
+        {"sportsMarketType": "soccer_team_full_game_total", "title": "Over 1.5 total goals", "slug": "tsc-1pt5",
+         "bestBidQuote": {"value": "0.77"}, "bestAskQuote": {"value": "0.78"}},
+        {"sportsMarketType": "soccer_team_full_game_total", "title": "Over 2.5 total goals", "slug": "tsc-2pt5",
+         "bestBidQuote": {"value": "0.40"}, "bestAskQuote": {"value": "0.60"}},
+        {"sportsMarketType": "soccer_team_first_half_total", "title": "Over 1.5 total goals", "slug": "1h",
+         "bestBidQuote": {"value": "0.20"}, "bestAskQuote": {"value": "0.21"}}]}]
+VB.kalshi_series = lambda: {"KXEPLTOTAL", "KXEPLBTTS", "KXEPLTEAMTOTAL"}
+def _kev(series):
+    base = {"event_ticker": f"{series}-26SEP14LEENEW", "title": "Leeds United vs Newcastle: x"}
+    if series == "KXEPLTOTAL":
+        return [dict(base, markets=[{"ticker": "T2", "yes_sub_title": "Over 1.5 goals", "status": "active",
+                                     "yes_bid_dollars": "0.70", "yes_ask_dollars": "0.72"},
+                                    {"ticker": "T3", "yes_sub_title": "Over 2.5 goals", "status": "active",
+                                     "yes_bid_dollars": "0.52", "yes_ask_dollars": "0.54"}])]
+    if series == "KXEPLBTTS":
+        return [dict(base, markets=[{"ticker": "X-BTTS", "status": "active",
+                                     "yes_bid_dollars": "0.58", "yes_ask_dollars": "0.59"}])]
+    return [dict(base, markets=[
+        {"ticker": "LEE2", "yes_sub_title": "Leeds United over 1.5 goals", "status": "active",
+         "yes_bid_dollars": "0.43", "yes_ask_dollars": "0.45"},
+        {"ticker": "NEW2", "yes_sub_title": "Newcastle over 1.5 goals", "status": "active",
+         "yes_bid_dollars": "0.36", "yes_ask_dollars": "0.39"},
+        {"ticker": "NEW1", "yes_sub_title": "Newcastle over 0.5 goals", "status": "active",
+         "yes_bid_dollars": "0.74", "yes_ask_dollars": "0.75"}]),
+        dict(base, event_ticker=f"{series}-26SEP21LEENEW", markets=[])]
+VB.kalshi_events = _kev
+try:
+    _fq = VB.fixture_quotes(_key)
+    check("every market found across both venues", sorted(_fq), ["away2plus", "btts", "home2plus", "over15", "over25"])
+    check("the cheaper effective price wins: Kalshi 0.72 over Polymarket 0.78", _fq["over15"]["venue"], "kalshi")
+    check("a wide Polymarket book leaves the Kalshi quote", (_fq["over25"]["venue"], _fq["over25"]["ask"]), ("kalshi", 0.54))
+    check("team totals go to the right side", (_fq["home2plus"]["market"], _fq["away2plus"]["market"]), ("LEE2", "NEW2"))
+    _fp = VB.fetch_prices(_key)
+    check("fetch_prices keeps the ledger's shape", (sorted(_fp), sorted(_fp["team"])),
+          (["btts", "over15", "over25", "team"], ["away", "home"]))
+    check("an unreadable key is None, not a guess", VB.fetch_prices("not json"), None)
+finally:
+    VB.poly_events, VB.kalshi_series, VB.kalshi_events = _saved_pe, _saved_ks, _saved_ke
+check("Bovada is gone from the pipeline",
+      any("bovada" in open(f).read().lower().split("retired")[0] and "import venues" in open(f).read()
+          for f in ("streaks_build.py", "book_track.py", "today_build.py", "health.py")), False)
 
 print("\n== fire measurement: iters and seed are read at CALL time ==")
 # `iters=PERMUTATIONS, seed=SEED` in the signature binds at import, so setting

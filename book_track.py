@@ -89,7 +89,7 @@ def save(blob, path=LEDGER):
 
 
 def quotes_from(book):
-    """Flatten venues.parse_bovada_prices() output to this ledger's market keys."""
+    """Flatten venue_book.fetch_prices() output to this ledger's market keys."""
     if not book:
         return {}
     q = {mk: dict(book[mk]) for mk in ("over15", "over25", "btts") if book.get(mk)}
@@ -271,18 +271,12 @@ def report(blob):
 def run(fixtures, blob=None, now=None):
     """One cycle: grade what finished, then price what has entered the window."""
     import model as M
-    from venues import fetch_bovada_events, venue_link, fetch_bovada_prices
+    from venue_book import fixture_key, fetch_prices
     blob = load() if blob is None else blob
     blob, graded = grade(fixtures, blob, now)
-    events = fetch_bovada_events()
     mdl = M.fit(fixtures)
-
-    def link_for(f):
-        if not events:
-            return None
-        return venue_link(f"{f['home']} vs {f['away']}", f.get("kickoff") or f.get("date"),
-                          events)
-    blob, priced, fetched = record(fixtures, blob, link_for, fetch_bovada_prices, mdl, now)
+    # Priced on the exchanges (Kalshi, Polymarket US) since 2026-09-13; Bovada before.
+    blob, priced, fetched = record(fixtures, blob, fixture_key, fetch_prices, mdl, now)
     return blob, graded, priced, fetched
 
 
