@@ -61,15 +61,18 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>QA</h1>
-<div class="sub">Where the real deal is separated from the noise · updated 2026-09-13 21:32 UTC</div>
+<div class="sub">Where the real deal is separated from the noise · updated 2026-09-13 23:08 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a></div>
+<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
 <div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
-does it survive the <b>taker fee</b> a follower would pay. The trading bot never reads this page.</div>
+does it survive the <b>taker fee</b> a follower would pay. Only bets on exchanges the trading
+bot can use count here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
+(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair. The
+trading bot never reads this page.</div>
 
 <div class="tiles">
 <div class="tile"><b>0</b><span>pairs in QA</span></div>
@@ -85,7 +88,9 @@ does it survive the <b>taker fee</b> a follower would pay. The trading bot never
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
 price on average, measured on 30+ closing prices covering at least
 50% of the bets, and staying profitable after the taker fee (Polymarket US
-0.06·p·(1−p), Kalshi 0.07). The gate is checked every run, so a pair is marked ready only once
+0.06·p·(1−p), Kalshi 0.07), and <b>the bot must be able to place every bet</b> — today that is
+a soccer side (home or away) on Kalshi or Polymarket US; no draws and no other sport, until the
+bot learns them. The gate is checked every run, so a pair is marked ready only once
 it has <b>held for 7 days</b>, and the mark is withdrawn the first run it fails.
 A pair goes <b>back to the Sandbox</b> after 30 fresh bets if it is behind the price,
 not beating every blind rule, or behind the closing price — or, at any count, after
@@ -97,37 +102,19 @@ Baselines are benchmarks and are never promoted.</div>
 14+ days, wins beat the price by z ≥ 1, beats every blind rule on the same
 contests, still profitable without its biggest win. It is lighter than the stamp on purpose —
 QA re-tests on fresh data, so a pair that got lucky finds out there.</div>
-<div class="tbl"><table><tr><th>Pair</th><th class="num">Gates</th><th class="num">ROI</th><th>30+ settled bets spanning 14+ days</th><th>wins beat the price by z ≥ 1</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th></tr><tr><td><b>ESPN FPI · MLB</b></td>
-<td class="num">3/4</td>
-<td class="num"><span class="mut">+24.1%</span></td><td><span class="neg">✗</span><div class="sm mut">29 bets over 3 days</div></td><td><span class="pos">✓</span><div class="sm mut">18 won v 14.6 priced, z +1.30</div></td><td><span class="pos">✓</span><div class="sm mut">+24.1% v +10.3% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+18.0% without it</div></td></tr><tr><td><b>SoccerPredictions.ai · Soccer</b></td>
+<div class="tbl"><table><tr><th>Pair</th><th class="num">Gates</th><th class="num">ROI</th><th>30+ settled bets spanning 14+ days</th><th>wins beat the price by z ≥ 1</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th></tr><tr><td><b>SoccerPredictions.ai · Soccer</b></td>
 <td class="num">2/4</td>
-<td class="num"><span class="mut">+10.6%</span></td><td><span class="neg">✗</span><div class="sm mut">61 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">23 won v 21.8 priced, z +0.32</div></td><td><span class="pos">✓</span><div class="sm mut">+10.6% v +9.2% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+6.2% without it</div></td></tr><tr><td><b>Covers · MLB</b></td>
-<td class="num">2/4</td>
-<td class="num"><span class="mut">+35.8%</span></td><td><span class="neg">✗</span><div class="sm mut">31 bets over 3 days</div></td><td><span class="pos">✓</span><div class="sm mut">24 won v 17.9 priced, z +2.23</div></td><td><span class="neg">✗</span><div class="sm mut">+35.8% v +35.8% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+33.8% without it</div></td></tr><tr><td><b>Scores24 · Tennis</b></td>
-<td class="num">1/4</td>
-<td class="num"><span class="mut">+10.7%</span></td><td><span class="neg">✗</span><div class="sm mut">11 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">7 won v 6.0 priced, z +0.63</div></td><td><span class="neg">✗</span><div class="sm mut">+10.7% v +43.2% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+2.0% without it</div></td></tr><tr><td><b>DraftKings · MLB</b></td>
-<td class="num">1/4</td>
-<td class="num"><span class="mut">+42.6%</span></td><td><span class="neg">✗</span><div class="sm mut">3 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.6 priced, z +0.52</div></td><td><span class="neg">✗</span><div class="sm mut">+42.6% v +128.1% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+6.4% without it</div></td></tr><tr><td><b>SportsGambler · Soccer</b></td>
+<td class="num"><span class="mut">+10.6%</span></td><td><span class="neg">✗</span><div class="sm mut">61 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">23 won v 21.8 priced, z +0.32</div></td><td><span class="pos">✓</span><div class="sm mut">+10.6% v +9.2% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+6.2% without it</div></td></tr><tr><td><b>SportsGambler · Soccer</b></td>
 <td class="num">0/4</td>
-<td class="num"><span class="mut">-14.5%</span></td><td><span class="neg">✗</span><div class="sm mut">34 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">15 won v 16.7 priced, z -0.59</div></td><td><span class="neg">✗</span><div class="sm mut">-14.5% v +13.4% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-18.6% without it</div></td></tr><tr><td><b>Scores24 · MLB</b></td>
+<td class="num"><span class="mut">-8.5%</span></td><td><span class="neg">✗</span><div class="sm mut">37 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">17 won v 18.1 priced, z -0.37</div></td><td><span class="neg">✗</span><div class="sm mut">-8.5% v +4.2% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-13.1% without it</div></td></tr><tr><td><b>National Weather Service · Climate</b></td>
 <td class="num">0/4</td>
-<td class="num"><span class="mut">-11.5%</span></td><td><span class="neg">✗</span><div class="sm mut">19 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">10 won v 11.0 priced, z -0.45</div></td><td><span class="neg">✗</span><div class="sm mut">-11.5% v +5.4% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-17.8% without it</div></td></tr><tr><td><b>Covers · NFL</b></td>
+<td class="num"><span class="mut">-85.6%</span></td><td><span class="neg">✗</span><div class="sm mut">8 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 4.0 priced, z -2.61</div></td><td><span class="neg">✗</span><div class="sm mut">-85.6% v +15.9% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td></tr><tr><td><b>Scores24 · Soccer</b></td>
 <td class="num">0/4</td>
-<td class="num"><span class="mut">-28.2%</span></td><td><span class="neg">✗</span><div class="sm mut">8 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 4.7 priced, z -0.54</div></td><td><span class="neg">✗</span><div class="sm mut">-28.2% v +37.0% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-40.5% without it</div></td></tr></table></div><details class="more"><summary>Show 7 more sandbox pairs</summary><div class="tbl"><table><tr><th>Pair</th><th class="num">Gates</th><th class="num">ROI</th><th>30+ settled bets spanning 14+ days</th><th>wins beat the price by z ≥ 1</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th></tr><tr><td><b>National Weather Service · Climate</b></td>
+<td class="num"><span class="mut">+7.2%</span></td><td><span class="neg">✗</span><div class="sm mut">3 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.9 priced, z +0.14</div></td><td><span class="neg">✗</span><div class="sm mut">+7.2% v +85.2% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-25.4% without it</div></td></tr><tr><td><b>Scores24 · Tennis</b></td>
 <td class="num">0/4</td>
-<td class="num"><span class="mut">-85.6%</span></td><td><span class="neg">✗</span><div class="sm mut">8 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 4.0 priced, z -2.61</div></td><td><span class="neg">✗</span><div class="sm mut">-85.6% v +15.9% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td></tr><tr><td><b>Kalshi · MLB</b></td>
+<td class="num"><span class="mut">-13.8%</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.1 priced, z -0.09</div></td><td><span class="neg">✗</span><div class="sm mut">-13.8% v +80.5% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td></tr><tr><td><b>Oddspedia community tips · Cricket</b></td>
 <td class="num">0/4</td>
-<td class="num"><span class="mut">-10.3%</span></td><td><span class="neg">✗</span><div class="sm mut">7 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">3 won v 3.3 priced, z -0.25</div></td><td><span class="neg">✗</span><div class="sm mut">-10.3% v +4.6% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-35.1% without it</div></td></tr><tr><td><b>ESPN FPI · NFL</b></td>
-<td class="num">0/4</td>
-<td class="num"><span class="mut">-6.1%</span></td><td><span class="neg">✗</span><div class="sm mut">3 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.2 priced, z -0.28</div></td><td><span class="neg">✗</span><div class="sm mut">-6.1% v +62.6% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td></tr><tr><td><b>Oddspedia community tips · Cricket</b></td>
-<td class="num">0/4</td>
-<td class="num"><span class="mut">+11.1%</span></td><td><span class="neg">✗</span><div class="sm mut">3 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.6 priced, z +0.42</div></td><td><span class="neg">✗</span><div class="sm mut">+11.1% v +69.6% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-16.7% without it</div></td></tr><tr><td><b>Scores24 · Soccer</b></td>
-<td class="num">0/4</td>
-<td class="num"><span class="mut">+7.2%</span></td><td><span class="neg">✗</span><div class="sm mut">3 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.9 priced, z +0.14</div></td><td><span class="neg">✗</span><div class="sm mut">+7.2% v +85.2% back the underdog</div></td><td><span class="neg">✗</span><div class="sm mut">-25.4% without it</div></td></tr><tr><td><b>OLBG community tips · Boxing</b></td>
-<td class="num">0/4</td>
-<td class="num"><span class="mut">+12.4%</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 0.9 priced, z +0.35</div></td><td><span class="neg">✗</span><div class="sm mut">+12.4% v +12.4% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>Scores24 · NFL</b></td>
-<td class="num">0/4</td>
-<td class="num"><span class="mut">-100.0%</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.5 priced, z -0.95</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% v +90.5% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr></table></div></details>
+<td class="num"><span class="mut">+66.7%</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 0.6 priced, z +0.82</div></td><td><span class="neg">✗</span><div class="sm mut">+66.7% v +66.7% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr></table></div>
 
 <h2>History</h2>
 <div class="note">No promotions or demotions yet.</div>
