@@ -109,11 +109,13 @@ and graded against ESPN final scores once its fixture is played.
 | `fire_track.py` | Logs long runs; tests them against a shuffled-schedule null. |
 | `sandbox_sources.py` | One adapter per forecaster and venue: what each publishes, and how to read it. |
 | `sandbox_track.py` | Logs every forecast at the price that existed, settles it, scores ROI and Brier. |
-| `sandbox_build.py` | Renders the Sandbox board to `public_site/sandbox.html`. |
+| `sandbox_build.py` | Renders the Sandbox board to `public_site/sandbox.html`: headline counts readable and stamped sources (no blended P/L); the overall record adds v blind and beat-the-close. |
+| `sandbox_close.py` | Every 30 minutes: closing prices for bets about to start → `data/sandbox_closes.json`. |
 | `sandbox_browser.py` | Headless fetch for the sources that need a real browser. |
 | `test_sandbox.py` | Logic tests for the Sandbox adapters, staking rules and scoring. |
 | `.github/workflows/refresh-boards.yml` | Six-hourly (`17 */6`): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
 | `.github/workflows/backup-refresh.yml` | Watchdog on `17 3,9,15,21`, out of phase with the primary; takes over only if that run failed or the live board is stale. |
+| `.github/workflows/sandbox-close.yml` | Every 30 minutes (`11,41 * * * *`): closing-price snapshots only; own concurrency group, no deploy. |
 | `.github/workflows/sandbox-tracker.yml` | Six-hourly (`37 */6`), 20 minutes after the primary: collect forecasts, settle, rebuild the Sandbox board. |
 
 ## Run locally
@@ -463,8 +465,15 @@ reads QA.
 the side it backed, while that book is tradeable and the contest has not started — so the
 value left behind is the last snapshot before the start. Closing-line value (close minus the
 price paid) says whether a source buys below where the market ends up, and it is readable
-long before enough results settle to judge ROI. The Sandbox runs every six hours, so the
-"close" can be up to six hours before the start.
+long before enough results settle to judge ROI. Because the Sandbox runs every six hours,
+`sandbox_close.py` (`sandbox-close.yml`, every 30 minutes, `11,41 * * * *`) reads the venue's
+price for just the open bets whose deadline is in the next 35 minutes and writes
+`data/sandbox_closes.json`; the tracker merges that file on its next run, the later snapshot
+before the deadline winning. The deadline is the start, or for a yes/no market its expiry
+minus the domain's quoting lead (a price after that has the answer in it). Pre-registered:
+a snapshot counts toward CLV only when taken within 60 minutes of the deadline; older ones
+are kept and shown, never scored. The close job writes no other file and has its own
+concurrency group, so it can neither conflict with nor cancel a queued board or tracker run.
 
 **The stamp of approval** is pre-registered (2026-09-12) and identical for tipsters, models,
 books and exchanges. Every criterion must hold, and it is re-judged every run:
@@ -505,7 +514,10 @@ Odds API key carries that no tipster, model or book has covered, and the run's p
 credits is spent on the keys with the most uncovered contests first. Soccer is priced
 three-way, with the draw kept in the de-vig. Lines more than 60 minutes old are skipped, and
 every Pinnacle quote records whether its contest was uncovered, so the rule's own lane is
-reported separately on the page.
+reported separately on the page. A key with no uncovered contest is never paid for, and a
+sport stops getting paid calls once it has 30 Pinnacle quotes without one reaching the 3pp
+edge (soccer on Kalshi retired this way: 35 quotes, largest gap 1.3pp); unspent credits stay in
+the balance and the pacing passes them to later runs.
 
 **Pinnacle** is read through The Odds API (`ODDS_API_KEY`, a repository secret) for boxing,
 cricket and tennis — the three sports with no dependable tipster — de-vigged to a fair

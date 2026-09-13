@@ -190,6 +190,18 @@ def leaderboard(scores, d):
         # behind it. Sources that never bet (Polymarket, the spine) carry no stamp.
         verdict = (STAMP[T.assess(d, name)["status"]] if s["bets"]
                    else '<span class="mut sm">price only</span>')
+        a = T.assess(d, name) if s["bets"] else None
+        vb_cell = "—"
+        if a and a["base_roi"] is not None:
+            gap = a["own_roi"] - a["base_roi"]
+            kind = a["criteria"][2][3].split(" back the ")[-1]
+            vb_cell = (f'<span class="{cls(gap) if not thin else "mut"}">{"+" if gap >= 0 else ""}'
+                       f'{gap*100:.1f}pp</span><div class="sm mut">v back the {esc(kind)}</div>')
+        clv_cell = "—"
+        if a and a["clv"] is not None:
+            clv_cell = (f'<span class="{cls(a["clv"]) if a["clv_n"] >= MIN_N else "mut"}">'
+                        f'{"+" if a["clv"] >= 0 else ""}{a["clv"]*100:.1f}¢</span>'
+                        f'<div class="sm mut">{a["clv_n"]} bet{"" if a["clv_n"] == 1 else "s"}</div>')
         vp = vs_price(d, name)
         vp_cell = "—"
         if vp:
@@ -203,6 +215,8 @@ def leaderboard(scores, d):
 <td class="num">{pct(s['hit']) if s['hit'] is not None else '—'}</td>
 <td class="num">{vp_cell}</td>
 <td class="num">{roi}</td>
+<td class="num">{vb_cell}</td>
+<td class="num">{clv_cell}</td>
 <td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['settled'] else '—'}</td>
 <td class="num">{f"{s['brier']:.4f}" if s['brier'] is not None else '—'}</td>
 <td>{verdict}</td></tr>""")
@@ -270,6 +284,7 @@ def pinnacle_table(d):
 <td class="num mut">{f"{max(edges)*100:+.1f}pp" if edges else "—"}</td></tr>""")
     ou = (d.get("meta") or {}).get("odds_api") or {}
     spent = ", ".join(f"{x['key']} ({x['uncovered']} uncovered)" for x in ou.get("spent_on", [])) or "none"
+    retired = ", ".join(ou.get("retired") or []) or "none"
     return f"""<div class="tbl"><table>
 <tr><th>Pinnacle v venue</th><th class="num">Quotes</th><th class="num">Bets</th>
 <th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th>
@@ -278,7 +293,11 @@ def pinnacle_table(d):
 <div class="note">Pinnacle's de-vigged probability against the venue's ask, backed only where it
 beats the ask by {int(T.EDGE_MIN*100)}pp or more. Credits are spent where nothing else looks: every run
 ranks the sports by how many listed contests have no tipster, model or book, and spends its
-paced share of the month's credits from the top. Lines more than {S.PINNACLE_MAX_AGE_MIN} minutes old
+paced share of the month's credits from the top, and only on sport keys with at least one
+uncovered contest. A sport stops getting paid calls once Pinnacle has {S.PINNACLE_RETIRE_N} quotes
+there without one reaching the {int(T.EDGE_MIN*100)}pp edge — its venue already prices like Pinnacle
+(retired now: {esc(retired)}). Unspent credits stay in the
+balance for later runs. Lines more than {S.PINNACLE_MAX_AGE_MIN} minutes old
 are skipped ({ou.get('stale', 0)} last run). Last run's paid calls: {esc(spent)}.</div>"""
 
 
@@ -417,6 +436,19 @@ def build():
     pnl = sum(q["pnl"] for q in d["quotes"] if q["status"] in ("won", "lost"))
     staked = sum(q["stake"] for q in d["quotes"] if q["status"] in ("won", "lost"))
     live_rows, n_live = open_rows(d)
+    # No blended P/L up here. A total across every source, almost all of them under the
+    # floor, read as "the Sandbox makes money" when it was one source backing favourites
+    # in a week favourites won. The headline counts what is readable instead.
+    n_betting = sum(1 for v in scores.values() if v["connected"] and v["bets"])
+    n_stamped = sum(1 for n, v in scores.items()
+                    if v["connected"] and v["bets"] and T.assess(d, n)["status"] == "approved")
+    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"] if q.get("bet"))
+                   if x is not None and x >= 0)
+    close_line = (f" Closing prices are read every 30 minutes for bets about to start; a snapshot "
+                  f"counts toward <b>beat the close</b> only when taken within "
+                  f"{T.CLOSE_MAX_LEAD_MIN} minutes of the deadline "
+                  f"({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far"
+                  + (f", median {leads[len(leads)//2]:.0f} min before" if leads else "") + ").")
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     hist_rows, n_hist = settled_rows(d)
 
@@ -519,8 +551,8 @@ skill. {esc(verdict)}</div>
 <div class="tile"><b>{quotes:,}</b><span>predictions logged</span></div>
 <div class="tile"><b>{bets:,}</b><span>bets placed</span></div>
 <div class="tile"><b>{settled:,}</b><span>settled</span></div>
-<div class="tile"><b class="{cls(pnl)}">{money(pnl) if settled else '—'}</b><span>net P/L</span></div>
-<div class="tile"><b class="{cls(pnl)}">{pct(pnl/staked, sign=True) if staked else '—'}</b><span>ROI on turnover</span></div>
+<div class="tile"><b>{len(ready)} of {n_betting}</b><span>sources past the {MIN_N}-bet floor</span></div>
+<div class="tile"><b class="{'pos' if n_stamped else ''}">{n_stamped}</b><span>stamped</span></div>
 <div class="tile"><b>{n_live:,}</b><span>bets running</span></div>
 </div>
 
@@ -572,7 +604,7 @@ could settle and be scored.</div>
 <div class="tbl"><table>
 <tr><th>Source</th><th class="num">Logged</th><th class="num">Bets</th>
 <th class="num">Settled</th><th class="num">Hit</th><th class="num">Won v priced</th><th class="num">ROI</th>
-<th class="num">P/L</th><th class="num">Brier</th><th>Verdict</th></tr>
+<th class="num">v blind</th><th class="num">Beat the close</th><th class="num">P/L</th><th class="num">Brier</th><th>Verdict</th></tr>
 {leaderboard(scores, d)}
 </table></div>
 <div class="note"><b>Won v priced</b> is the honest column while samples are small: each backed price is
@@ -583,7 +615,11 @@ not — lower is better, 0.25 is a coin flip. It is blank for tipsters by design
 side states no probability, so there is nothing to calibrate. <b>Compare on ROI, never on
 P/L</b> — a tipster backs every game it calls while a model bets only where it disagrees
 with the price, so turnover differs by an order of magnitude. Polymarket cannot win its
-own table: its price is what everything else is measured against.</div>
+own table: its price is what everything else is measured against. <b>v blind</b> is the
+source's ROI minus the best blind rule's (back the favourite, the underdog or the draw) on
+exactly the contests it bet — zero means its picks added nothing over the rule.
+<b>Beat the close</b> is the average closing price minus the price paid, in cents: buying
+below where the market closed is the earliest sign of an edge.{close_line}</div>
 
 <h2>Running now ({n_live:,})</h2>
 {collapse(live_rows, LIVE_HEAD, n_live, "running bets") if n_live else '<div class="note">No open bets — no source currently disagrees with the market by enough to act on.</div>'}

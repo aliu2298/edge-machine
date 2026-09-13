@@ -74,6 +74,16 @@ STAGES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stage
 # charges 0.06, Kalshi 0.07. QA scores what following a source would actually cost.
 FEE_RATE = {"polymarket": 0.06, "kalshi": 0.07, "kalshi_binary": 0.07}
 
+# CLOSING PRICES. The tracker runs every 6h, so its last snapshot before a start could be
+# hours early — the first 103 snapshots sat a median 16h before the start. A separate job
+# (sandbox_close.py, every 30 minutes) reads the venue's price for just the bets about to
+# close and writes CLOSES; this ledger only ever reads that file. Fixed in advance, before
+# any CLV was read: a snapshot counts toward closing-line value only when it was taken
+# within CLOSE_MAX_LEAD_MIN of the bet's deadline. An older one is kept and shown, never
+# scored — a price from the morning is not where the market closed.
+CLOSES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandbox_closes.json")
+CLOSE_MAX_LEAD_MIN = 60
+
 
 def now_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -337,6 +347,19 @@ def _started(row, now):
     return start <= now
 
 
+def pinnacle_retired(d, n=None):
+    """Sports where Pinnacle has PINNACLE_RETIRE_N quotes and never once reached the edge."""
+    n = n or S.PINNACLE_RETIRE_N
+    seen = {}
+    for q in d["quotes"]:
+        if q["source"] != "pinnacle" or q["status"] == "void":
+            continue
+        k = seen.setdefault(q["sport"], [0, False])
+        k[0] += 1
+        k[1] = k[1] or bool(q.get("bet"))
+    return {sp for sp, (cnt, bet) in seen.items() if cnt >= n and not bet}
+
+
 def publish(d, universe, coverage, verbose=True):
     """Log one quote per (source, market) for every source with an opinion."""
     seen = {q["id"] for q in d["quotes"]}
@@ -398,7 +421,7 @@ def publish(d, universe, coverage, verbose=True):
     # nothing above covered.
     t0 = time.time()
     try:
-        pin = S.plan_pinnacle(universe, covered)
+        pin = S.plan_pinnacle(universe, covered, retired=pinnacle_retired(d))
     except Exception as e:
         print(f"  ! pinnacle plan failed: {type(e).__name__}: {str(e)[:70]}")
         pin = {}
@@ -508,6 +531,71 @@ def publish(d, universe, coverage, verbose=True):
     return added
 
 
+def close_deadline(q):
+    """The last moment `q`'s contest could be quoted — where its closing price belongs.
+
+    The start, for contests. A yes/no market's "start" is its expiry, and each domain stops
+    accepting quotes lead_h before it (a temperature market two hours from expiry has
+    effectively happened), so its close is that cut-off: a price taken after it has the
+    answer in it and would make every forecaster look like it beat the close."""
+    try:
+        start = datetime.fromisoformat(str(q["start"]))
+    except (KeyError, TypeError, ValueError):
+        return None
+    if start.tzinfo is None:
+        start = start.replace(tzinfo=timezone.utc)
+    if q.get("venue") == "kalshi_binary":
+        start -= timedelta(hours=(S.KALSHI_BINARY.get(q.get("sport")) or {}).get("lead_h", 0))
+    return start
+
+
+def close_lead_min(q):
+    """Minutes between the closing snapshot and the deadline, or None."""
+    if q.get("close_price") is None or not q.get("close_at"):
+        return None
+    dl = close_deadline(q)
+    try:
+        at = datetime.fromisoformat(str(q["close_at"]))
+    except (TypeError, ValueError):
+        return None
+    return None if dl is None else (dl - at).total_seconds() / 60
+
+
+def fresh_close(q):
+    """Does this bet's closing price count toward CLV? See CLOSE_MAX_LEAD_MIN."""
+    lead = close_lead_min(q)
+    return lead is not None and 0 <= lead <= CLOSE_MAX_LEAD_MIN
+
+
+def load_closes(path=None):
+    try:
+        with open(path or CLOSES) as f:
+            blob = json.load(f)
+        blob.setdefault("closes", {})
+        return blob
+    except (OSError, ValueError):
+        return {"closes": {}}
+
+
+def apply_closes(d, closes):
+    """Merge the close job's snapshots into the ledger: the later snapshot before the
+    deadline wins, whichever job took it. Returns the number of bets updated."""
+    n = 0
+    by_id = {q["id"]: q for q in d["quotes"]}
+    for qid, c in (closes.get("closes") or {}).items():
+        q = by_id.get(qid)
+        if not q or not q.get("bet") or c.get("price") is None:
+            continue
+        if q.get("close_at") and str(q["close_at"]) >= str(c["at"]):
+            continue
+        dl = close_deadline(q)
+        if dl is None or datetime.fromisoformat(str(c["at"])) > dl:
+            continue
+        q["close_price"], q["close_at"] = c["price"], c["at"]
+        n += 1
+    return n
+
+
 def snap_closing(d, universe, now=None):
     """Record the venue's current price for the backed side of every open bet.
 
@@ -526,7 +614,8 @@ def snap_closing(d, universe, now=None):
         if q["status"] != "open" or not q.get("bet") or not q.get("pick"):
             continue
         r = rows.get(q["market_id"])
-        if (not r or r.get("untraded") or _started(r, now)
+        dl = close_deadline(q)
+        if (not r or r.get("untraded") or _started(r, now) or dl is None or dl <= now
                 or r.get("venue", "polymarket") != q.get("venue", "polymarket")):
             continue
         pick = q["pick"]
@@ -803,7 +892,7 @@ def assess(d, name, sport=None, since=None):
     else:
         status = "watch"
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
-    clv = [q["close_price"] - q["price"] for q in bets if q.get("close_price") is not None]
+    clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
     return dict(status=status, criteria=criteria, n=n, won=won, roi=roi, pnl=pnl,
                 z=z, weeks=weeks, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
@@ -1016,6 +1105,7 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
 def main():
     print("Sandbox Tracker")
     d = load()
+    print(f" closing prices merged from the close job: {apply_closes(d, load_closes())}")
     retire_pre_gate(d)
     retire_late(d)
     # Stage timings are printed so a slow run in CI names its own culprit. The first

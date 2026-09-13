@@ -1953,6 +1953,45 @@ def resolve_kalshi_market(ticker):
     return {"yes": "a", "no": "b"}.get(result, "void")
 
 
+def venue_price(q):
+    """The price backing `q`'s side would cost right now on its own venue, or None.
+
+    For the closing-price job: one targeted read per bet instead of a whole sport's
+    universe. The same books and the same tradeability rules as the fetchers — the ask,
+    and only while that side's book is tight — so a closing price is comparable with the
+    price the bet was logged at. None when the market is closed, the book is untradeable,
+    or the read fails; the last good snapshot then stands."""
+    venue, pick = q.get("venue") or "polymarket", q.get("pick")
+    try:
+        if venue == "polymarket":
+            m = _get(f"{GAMMA}/markets/{q['market_id']}", tries=2, timeout=20)
+            if not isinstance(m, dict) or m.get("closed") or not m.get("acceptingOrders"):
+                return None
+            ok, ask_a, ask_b, _sp, _liq = pm_book(m)
+            return (ask_a if pick == "a" else ask_b if pick == "b" else None) if ok else None
+        if venue == "kalshi":
+            et = q["market_id"]
+            ms = (_get(f"{KALSHI_API}?event_ticker={et}", tries=2, timeout=20) or {}).get("markets") or []
+            sides = kalshi_sides(et, ms)
+            m = next((m for m in ms if sides.get(_kalshi_code(m)) == pick), None)
+            if not m or str(m.get("status")).lower() not in ("open", "active"):
+                return None
+            bid, ask = _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars"))
+        elif venue == "kalshi_binary":
+            m = (_get(f"{KALSHI_API}/{q['market_id']}", tries=2, timeout=20) or {}).get("market")
+            if not m or str(m.get("status")).lower() not in ("open", "active"):
+                return None
+            side = "yes" if pick == "a" else "no"
+            bid, ask = _num(m.get(f"{side}_bid_dollars")), _num(m.get(f"{side}_ask_dollars"))
+        else:
+            return None
+    except (RuntimeError, KeyError, TypeError, AttributeError):
+        return None
+    if bid is None or ask is None or not (bid > 0 and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD):
+        return None
+    return round(ask, 4)
+
+
 # ---------------------------------------------------------------------------
 # The National Weather Service — a real forecaster, on daily markets
 # ---------------------------------------------------------------------------
@@ -2178,6 +2217,14 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
 # day late in case it lands on the 1st in a timezone behind UTC.
 ODDS_RUNS_PER_DAY = 4
+# Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
+# sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
+# with the venue by the betting edge, that sport's venue already prices like Pinnacle and a
+# paid call there buys a quote that can never be a bet. The first 35 soccer quotes against
+# Kalshi had a largest gap of 1.3pp. Re-judged every run from the retained ledger, so a
+# sport comes back if its old quotes age out. A key with no uncovered contest is never paid
+# for either; credits not spent stay in the balance, and the pacing hands them to later runs.
+PINNACLE_RETIRE_N = 30
 ODDS_RUN_SLACK = 1.25
 ODDS_USAGE = {}                # {"remaining", "used", "calls"} for this run, for the page
 _odds_sports = None
@@ -2273,7 +2320,7 @@ def pinnacle_prob(event, side_a, three_way=False):
     return pa
 
 
-def plan_pinnacle(universe, covered=None, now=None):
+def plan_pinnacle(universe, covered=None, now=None, retired=None):
     """Pinnacle quotes for every sport it covers, spending credits where nothing else looks.
 
     One pass across ALL sports rather than one sport at a time, so the run's credit
@@ -2283,11 +2330,14 @@ def plan_pinnacle(universe, covered=None, now=None):
     covered or not, since that costs nothing more.
 
     `covered` is {sport: set(market_id)} of contests some covering source already has.
+    `retired` is the set of sports no paid call goes to (see PINNACLE_RETIRE_N).
     Returns {sport: [quote]}.
     """
     now = now or datetime.now(timezone.utc)
     covered = covered or {}
-    out = {sp: [] for sp in universe if sp in ODDS_GROUPS}
+    retired = set(retired or ())
+    out = {sp: [] for sp in universe if sp in ODDS_GROUPS and sp not in retired}
+    ODDS_USAGE["retired"] = sorted(sp for sp in universe if sp in ODDS_GROUPS and sp in retired)
     if not out:
         return out
     if not _odds_key():
@@ -2325,7 +2375,7 @@ def plan_pinnacle(universe, covered=None, now=None):
                        for ev in events):
                     listed += 1
                     uncovered += r.get("market_id") not in cov
-            if listed:
+            if uncovered:
                 candidates.append((uncovered, listed, sport, key))
 
     # 2. Paid: most uncovered contests first, then most listed. Never past the run's share.

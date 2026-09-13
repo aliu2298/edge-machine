@@ -1687,6 +1687,7 @@ try:
     fresh = _chooser(60, 6)
     for q in fresh:
         q["close_price"] = q["price"] + 0.02
+        q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
     ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t, verbose=False)
     eq([c["to"] for c in ch], ["ready"], "a fresh QA record through the stamp, with CLV and fees positive, is ready")
     for q in fresh:
@@ -1712,7 +1713,7 @@ _row = dict(market_id="cl1", sport="mlb", venue="kalshi", label="A vs B", side_a
             untraded=False, start=(_n0 + timedelta(hours=5)).isoformat(), date=_n0.strftime("%Y-%m-%d"),
             volume=0.0, url="")
 _q = dict(id="covers:cl1", source="covers", sport="mlb", market_id="cl1", venue="kalshi", pick="a",
-          price=0.40, bet=True, status="open")
+          price=0.40, bet=True, status="open", start=_row["start"])
 d = {"quotes": [dict(_q)]}
 eq(T.snap_closing(d, {"mlb": [dict(_row, price_a=0.44)]}, now=_n0), 1, "an open bet takes the venue's current price")
 eq(d["quotes"][0]["close_price"], 0.44, "for the side it backed")
@@ -1733,7 +1734,8 @@ T.snap_closing(d3, {"soccer": [dict(_row, price_draw=0.29, tradeable={"a": True,
 eq(d3["quotes"][0]["close_price"], 0.29, "a draw bet closes on the draw price")
 _ac = T.assess({"quotes": [dict(_q, status="won", result="a", pnl=150.0, logged=_n0.isoformat(),
                                 start=(_n0 + timedelta(hours=5)).isoformat(), price_a=0.40, price_b=0.62,
-                                close_price=0.47)]}, "covers")
+                                close_price=0.47,
+                                close_at=(_n0 + timedelta(hours=5, minutes=-20)).isoformat())]}, "covers")
 close(_ac["clv"], 0.07, "CLV is close minus price: bought at 0.40, closed at 0.47", tol=1e-9)
 eq(_ac["clv_beat"], 1.0, "and it beat the close")
 
@@ -1743,7 +1745,7 @@ print("\nQA page")
 _qd = {"quotes": [dict(source="espn_fpi", sport="mlb", bet=True, status="won", pick="a", price=0.40,
                        result="a", pnl=150.0, venue="kalshi", price_a=0.40, price_b=0.62, price_draw=None,
                        logged="2026-09-12T01:00:00+00:00", start="2026-09-12T20:00:00+00:00",
-                       close_price=0.44),
+                       close_price=0.44, close_at="2026-09-12T19:40:00+00:00"),
                   dict(source="espn_fpi", sport="mlb", bet=True, status="won", pick="a", price=0.40,
                        result="a", pnl=150.0, venue="kalshi", price_a=0.40, price_b=0.62, price_draw=None,
                        logged="2026-09-09T01:00:00+00:00", start="2026-09-09T20:00:00+00:00")]}
@@ -1763,6 +1765,93 @@ ok("Nothing has been promoted yet" in _empty and "No promotions or demotions yet
 ok('href="./qa.html">QA</a>' in open("sandbox_build.py").read(), "the Sandbox nav links to QA")
 eq(T.assess(_qd, "espn_fpi", "mlb", since="2026-09-11T00:00:00+00:00")["n"], 1,
    "QA's record counts only the bet logged after promotion")
+
+# ---------------------------------------------------------------------------
+print("\nclosing prices near the deadline")
+# ---------------------------------------------------------------------------
+import sandbox_close as SC
+_c0 = datetime(2026, 9, 13, 12, 0, tzinfo=timezone.utc)
+_cq = lambda **kw: dict(dict(id="covers:c1", source="covers", sport="mlb", market_id="c1", venue="polymarket",
+                             pick="a", price=0.40, bet=True, status="open",
+                             start=(_c0 + timedelta(minutes=20)).isoformat()), **kw)
+eq(T.close_deadline(_cq()), _c0 + timedelta(minutes=20), "a contest's deadline is its start")
+_lh = S.KALSHI_BINARY["climate"]["lead_h"]
+eq(T.close_deadline(_cq(venue="kalshi_binary", sport="climate")),
+   _c0 + timedelta(minutes=20) - timedelta(hours=_lh),
+   "a yes/no market's deadline is its expiry minus the domain's quoting lead")
+_dd = {"quotes": [_cq(), _cq(id="covers:c2", start=(_c0 + timedelta(hours=3)).isoformat()),
+                  _cq(id="covers:c3", bet=False), _cq(id="covers:c4", status="won"),
+                  _cq(id="covers:c5", start=(_c0 - timedelta(minutes=1)).isoformat())]}
+eq([q["id"] for q in SC.due(_dd, _c0)], ["covers:c1"],
+   "only open bets whose deadline is inside the next window are due — not later, not started, not no-bets")
+_cl = {"closes": {"covers:old": {"price": 0.5, "at": "2026-08-01T00:00:00+00:00"}}}
+eq(SC.run(_dd, _cl, now=_c0, price=lambda q: 0.43), (1, 1), "the due bet is snapshotted")
+eq(_cl["closes"]["covers:c1"], {"price": 0.43, "at": _c0.isoformat(), "lead_min": 20.0},
+   "with its price, the time, and how far before the deadline it was taken")
+ok("covers:old" not in _cl["closes"], "entries older than the keep window are pruned")
+_cl2 = {"closes": {}}
+eq(SC.run(_dd, _cl2, now=_c0, price=lambda q: None), (0, 1), "an unreadable or untradeable book takes nothing")
+
+_dm = {"quotes": [_cq(close_price=0.41, close_at=(_c0 - timedelta(hours=5)).isoformat())]}
+eq(T.apply_closes(_dm, _cl), 1, "the close job's later snapshot is merged into the ledger")
+eq((_dm["quotes"][0]["close_price"], _dm["quotes"][0]["close_at"]), (0.43, _c0.isoformat()), "and replaces the older one")
+eq(T.apply_closes(_dm, {"closes": {"covers:c1": {"price": 0.3, "at": (_c0 - timedelta(hours=1)).isoformat()}}}), 0,
+   "an older snapshot never replaces a newer one")
+eq(T.apply_closes(_dm, {"closes": {"covers:c1": {"price": 0.3, "at": (_c0 + timedelta(hours=1)).isoformat()}}}), 0,
+   "a snapshot after the deadline is never merged")
+eq(T.close_lead_min(_dm["quotes"][0]), 20.0, "lead is measured from the snapshot to the deadline")
+ok(T.fresh_close(_dm["quotes"][0]), "a snapshot 20 minutes out counts toward CLV")
+ok(not T.fresh_close(_cq(close_price=0.41, close_at=(_c0 - timedelta(hours=5)).isoformat())),
+   "a snapshot five hours out does not")
+_early = dict(_cq(status="won", result="a", pnl=150.0, logged=_c0.isoformat(), price_a=0.40, price_b=0.62),
+              close_price=0.50, close_at=(_c0 - timedelta(hours=5)).isoformat())
+eq(T.assess({"quotes": [_early]}, "covers")["clv"], None, "so an early snapshot is never scored as closing-line value")
+_bq = _cq(venue="kalshi_binary", sport="climate", start=(_c0 + timedelta(hours=_lh, minutes=30)).isoformat())
+eq(T.snap_closing({"quotes": [_bq]}, {"climate": [dict(market_id="c1", venue="kalshi_binary", price_a=0.9, price_b=0.1,
+                                                     untraded=False, tradeable={"a": True, "b": True},
+                                                     start=_bq["start"])]},
+                  now=_c0 + timedelta(hours=1)), 0,
+   "the tracker's own snapshot also stops at a yes/no market's quoting cut-off")
+
+# ---------------------------------------------------------------------------
+print("\nPinnacle credits: efficient sports and covered keys get nothing")
+# ---------------------------------------------------------------------------
+_pr = lambda sport, n, bet_at=None: [dict(source="pinnacle", sport=sport, status="open", bet=(i == bet_at))
+                                     for i in range(n)]
+eq(T.pinnacle_retired({"quotes": _pr("soccer", 30) + _pr("cricket", 40, bet_at=3) + _pr("boxing", 29)}),
+   {"soccer"}, "30 quotes and never an edge retires a sport; one bet, or under 30 quotes, does not")
+eq(T.pinnacle_retired({"quotes": [dict(q, status="void") for q in _pr("soccer", 30)]}), set(),
+   "voided quotes do not count")
+_saved_get3, _saved_key3 = S._odds_get, _os.environ.get("ODDS_API_KEY")
+S._odds_get = _fake_plan_get
+_os.environ["ODDS_API_KEY"] = "test-key-not-real"
+try:
+    _reset_odds(); _paid.clear()
+    S.ODDS_USAGE["allowance"] = 4
+    _plan = S.plan_pinnacle(_univ, covered={"soccer": {"sc2"}, "boxing": set()}, retired={"soccer"})
+    eq(_paid, ["/sports/boxing_boxing/odds"], "a retired sport gets no paid call, even with the most uncovered")
+    eq(S.ODDS_USAGE["retired"], ["soccer"], "and the page is told which sports are retired")
+    ok("soccer" not in _plan, "no soccer quotes are produced")
+    _reset_odds(); _paid.clear()
+    S.ODDS_USAGE["allowance"] = 4
+    S.plan_pinnacle(_univ, covered={"soccer": {"sc1", "sc2", "sc3"}, "boxing": {"bx1"}})
+    eq(_paid, [], "keys with no uncovered contest are never paid for, whatever the allowance")
+finally:
+    S._odds_get = _saved_get3
+    _reset_odds()
+    if _saved_key3 is None:
+        _os.environ.pop("ODDS_API_KEY", None)
+    else:
+        _os.environ["ODDS_API_KEY"] = _saved_key3
+
+# ---------------------------------------------------------------------------
+print("\nheadline: no blended P/L")
+# ---------------------------------------------------------------------------
+_src = open("sandbox_build.py").read()
+ok("net P/L</span>" not in _src and "ROI on turnover" not in _src, "the blended P/L and ROI tiles are gone")
+ok("sources past the" in _src and "stamped</span>" in _src, "replaced by sources past the floor and stamped")
+ok("<th class=\"num\">v blind</th>" in _src and "Beat the close</th>" in _src,
+   "the overall record carries v blind and beat-the-close columns")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

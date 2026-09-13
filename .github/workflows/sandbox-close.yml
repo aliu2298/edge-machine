@@ -1,0 +1,61 @@
+name: Sandbox closing prices
+
+# Reads the venue's current price for every open Sandbox bet whose deadline is in the next
+# 35 minutes, so closing-line value is measured at the close and not up to six hours
+# before it (the tracker itself only runs every 6h). Free venue reads only — no Odds API
+# credits are spent here.
+#
+# Writes ONLY data/sandbox_closes.json. The ledger belongs to sandbox-tracker.yml, which
+# merges this file on its next run, so the two workflows never commit the same file and a
+# rebase between them cannot conflict. No Pages deploy: the page shows the merged values
+# after the next tracker run.
+
+on:
+  schedule:
+    - cron: "11,41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Its OWN group, not refresh-boards. A group holds one pending run and a newer pending run
+# replaces it, so a job this frequent sharing the boards' group could silently cancel a
+# queued board or tracker run. It needs no mutual exclusion: its file is written by nothing
+# else.
+concurrency:
+  group: sandbox-close
+  cancel-in-progress: false
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Snapshot closing prices
+        run: python3 sandbox_close.py || echo "::warning::close snapshot failed — the tracker's own snapshots still stand"
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git add data/sandbox_closes.json 2>/dev/null || true
+            if git diff --cached --quiet; then
+              echo "no changes"
+              break
+            fi
+            git commit -m "Sandbox closing prices ($(date -u +%Y-%m-%d\ %H:%MZ))"
+            if git push origin main; then
+              break
+            fi
+            # Only this workflow writes this file, so rebasing onto whatever the boards
+            # or the tracker pushed meanwhile cannot conflict.
+            git pull --rebase origin main
+          done
