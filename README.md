@@ -448,6 +448,16 @@ first moment any source looked. They are the weather a source's record is read a
 2026-09-12 the tracked leagues drew 34% of the time, and back-the-underdog made +31% across
 the weekend's soccer.
 
+**Stages: Sandbox → QA.** Promotion is per (source, sport) and recorded in `data/stages.json`
+with the evidence it was made on. The **QA entry gate** is lighter than the stamp because QA
+re-tests on fresh data only — bets logged after the promotion: 30+ settled bets over 2+ weeks,
+wins beat the price by z ≥ 1, beats every blind rule on the same contests, still profitable
+without its biggest win. In QA the stamp is applied to the fresh record, plus positive
+closing-line value and positive ROI after the taker fee (Polymarket US 0.06·p·(1−p), Kalshi
+0.07): that is **production-ready**. A QA pair whose fresh record is behind the price after 30
+bets is demoted and must re-qualify on bets logged after the demotion. The trading bot never
+reads QA.
+
 **The stamp of approval** is pre-registered (2026-09-12) and identical for tipsters, models,
 books and exchanges. Every criterion must hold, and it is re-judged every run:
 50+ settled bets over 4+ different weeks; wins beat the prices paid by z ≥ 2; ROI beats every

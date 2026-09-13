@@ -86,7 +86,7 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/sandbox.html data/sandbox_ledger.json"
+          PUBLISHED="public_site/sandbox.html public_site/qa.html data/sandbox_ledger.json data/stages.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -105,7 +105,7 @@ jobs:
             # anything — it is the only record of what each source said and when, and a
             # reset would silently throw away calls that have already been graded. The
             # rebase is safe because the two workflows write disjoint files: nothing else
-            # in the repo touches sandbox.html or sandbox_ledger.json.
+            # in the repo touches sandbox.html, qa.html, sandbox_ledger.json or stages.json.
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
             git pull --rebase origin main
           done

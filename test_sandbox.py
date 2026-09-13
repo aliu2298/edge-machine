@@ -1616,6 +1616,93 @@ finally:
     else:
         _os.environ["ODDS_API_KEY"] = _saved_key2
 
+# ---------------------------------------------------------------------------
+print("\nstages: Sandbox -> QA")
+# ---------------------------------------------------------------------------
+_base = datetime(2026, 9, 1, 15, tzinfo=timezone.utc)
+
+
+def _sb(i, won, pick="a", price=0.40, week=0, source="covers", sport="mlb", logged=None, venue="polymarket"):
+    st = _base + timedelta(weeks=week, hours=i)
+    return dict(source=source, sport=sport, bet=True, status="won" if won else "lost", pick=pick,
+                price=price, result=pick if won else ("b" if pick == "a" else "a"), venue=venue,
+                pnl=round(100 * (1 / price - 1), 2) if won else -100.0, start=st.isoformat(),
+                logged=(logged or (st - timedelta(hours=5))).isoformat(),
+                price_a=price if pick == "a" else 0.40, price_b=0.62 if pick == "a" else price,
+                price_draw=None)
+
+
+def _chooser(n, week_span, source="covers", sport="mlb", start_i=0, logged=None, win_every=(6, 9)):
+    """A source that CHOOSES: underdog on even contests (wins 6 in 10), favourite on odd (9 in 10)."""
+    out = []
+    for i in range(n):
+        wk = (i * week_span) // n
+        if i % 2 == 0:
+            out.append(_sb(start_i + i, i % 10 < win_every[0], "a", 0.40, wk, source, sport, logged))
+        else:
+            out.append(_sb(start_i + i, i % 10 < win_every[1], "b", 0.62, wk, source, sport, logged))
+    return out
+
+
+_old_sources = S.SOURCES
+S.SOURCES = {"covers": dict(_old_sources["covers"], sports=["mlb", "nfl"]),
+             "polymarket": _old_sources["polymarket"]}
+try:
+    eq(T.QA_ENTRY["min_bets"] < T.APPROVAL["min_bets"] and T.QA_ENTRY["z_min"] < T.APPROVAL["z_min"], True,
+       "the QA entry gate is lighter than the stamp")
+    d = {"quotes": _chooser(32, 3)}
+    st = {"pairs": {}, "events": []}
+    _t = datetime(2026, 9, 25, tzinfo=timezone.utc)
+    ch = T.evaluate_stages(d, st, now=_t, verbose=False)
+    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "qa")], "32 good bets over 3 weeks promote MLB, not NFL")
+    eq(st["pairs"]["covers|mlb"]["stage"], "qa", "the registry records the stage")
+    eq(st["pairs"]["covers|mlb"]["entry"]["n"], 32, "with the evidence it was promoted on")
+    ok("covers|nfl" not in st["pairs"], "an untouched sandbox pair is not written to the registry")
+    eq(T.evaluate_stages(d, st, now=_t, verbose=False), [], "re-running changes nothing")
+
+    one_week = {"quotes": _chooser(32, 1)}
+    eq(T.evaluate_stages(one_week, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
+       "the same record inside one week is not promoted")
+    fav_only = {"quotes": [_sb(i, i % 10 < 9, "b", 0.62, i // 11) for i in range(33)]}
+    eq(T.evaluate_stages(fav_only, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
+       "a source that only backs the favourite is not promoted however well it did")
+
+    # QA judges fresh data only: the promoting history does not count.
+    _promo = st["pairs"]["covers|mlb"]["promoted_at"]
+    a = T.assess(d, "covers", "mlb", since=_promo)
+    eq(a["n"], 0, "QA starts from zero bets at promotion")
+    _fresh_bad = [_sb(100 + i, i % 5 == 0, "a", 0.40, 4 + i // 10, logged=_t + timedelta(hours=1 + i))
+                  for i in range(30)]
+    d2 = {"quotes": d["quotes"] + _fresh_bad}
+    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=30), verbose=False)
+    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "sandbox")],
+       "30 fresh QA bets behind the price demote the pair")
+    ok("behind the price" in ch[0]["reason"], "with the reason recorded")
+    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=31), verbose=False)
+    eq(ch, [], "after demotion the old promoting record cannot re-promote it: it must re-qualify on new bets")
+    eq(len(st["events"]), 2, "every change is in the event log")
+
+    # Production-ready: the stamp on fresh data + positive CLV + positive after fees.
+    st3 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    fresh = _chooser(60, 6)
+    for q in fresh:
+        q["close_price"] = q["price"] + 0.02
+    ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t, verbose=False)
+    eq([c["to"] for c in ch], ["ready"], "a fresh QA record through the stamp, with CLV and fees positive, is ready")
+    for q in fresh:
+        q["close_price"] = q["price"] - 0.02
+    st4 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
+    eq(T.evaluate_stages({"quotes": fresh}, st4, now=_t, verbose=False), [],
+       "the same record buying above the closing price is not ready")
+finally:
+    S.SOURCES = _old_sources
+
+close(T.pnl_after_fee(dict(price=0.5, status="won", venue="polymarket")), 100 * (1 / (0.5 + 0.06 * 0.25) - 1),
+      "a won bet pays the price plus the Polymarket taker fee", tol=0.01)
+close(T.pnl_after_fee(dict(price=0.5, status="won", venue="kalshi")), 100 * (1 / (0.5 + 0.07 * 0.25) - 1),
+      "Kalshi's fee rate is 0.07", tol=0.01)
+eq(T.pnl_after_fee(dict(price=0.5, status="lost", venue="kalshi")), -100.0, "a lost bet loses the stake")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

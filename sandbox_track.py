@@ -56,6 +56,24 @@ READ_FLOOR = 30
 #   both halves ROI is positive in the earlier and the later half of its settled bets.
 APPROVAL = dict(min_bets=50, min_weeks=4, z_min=2.0)
 
+# ---- Stages: Sandbox -> QA (set 2026-09-13) -----------------------------------------------
+# Promotion is per (source, sport): a tipster can be in QA for MLB and still in the Sandbox
+# for soccer. The QA ENTRY gate is deliberately lighter than the stamp, because QA re-tests
+# on FRESH data — only bets logged after the promotion — so a lucky run cannot carry a
+# source through twice. Every criterion must hold:
+#   30+ settled bets over 2+ weeks · wins beat the price by z >= 1 · beats every blind rule on
+#   the same contests · still profitable without its single biggest win.
+# In QA, the stamp (APPROVAL) is applied to the fresh data, plus positive closing-line value
+# and positive ROI after fees: that is "production-ready". A QA pair whose fresh record falls
+# behind the price (z < 0 after 30 bets) is demoted, and must then re-qualify on bets logged
+# after the demotion.
+QA_ENTRY = dict(min_bets=30, min_weeks=2, z_min=1.0)
+QA_DEMOTE = dict(min_bets=30, z_below=0.0)
+STAGES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stages.json")
+# Taker fee per $1 contract at price p, per venue: fee = rate * p * (1 - p). Polymarket US
+# charges 0.06, Kalshi 0.07. QA scores what following a source would actually cost.
+FEE_RATE = {"polymarket": 0.06, "kalshi": 0.07, "kalshi_binary": 0.07}
+
 
 def now_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -676,7 +694,14 @@ def baselines(d, sport=None):
     return out
 
 
-def assess(d, name, sport=None):
+def pnl_after_fee(q):
+    """A settled bet's P/L if the taker fee had been paid on top of the price."""
+    p = q["price"]
+    fee = FEE_RATE.get(q.get("venue") or "polymarket", 0.07) * p * (1 - p)
+    return round(STAKE * (1.0 / (p + fee) - 1.0), 2) if q["status"] == "won" else -STAKE
+
+
+def assess(d, name, sport=None, since=None):
     """Judge one source (optionally in one sport) against APPROVAL.
 
     Returns dict(status, criteria=[(key, label, passed, detail)], and the metrics).
@@ -685,7 +710,8 @@ def assess(d, name, sport=None):
     """
     bets = sorted((q for q in d["quotes"] if q["source"] == name and q.get("bet")
                    and q["status"] in ("won", "lost")
-                   and (sport is None or q["sport"] == sport)),
+                   and (sport is None or q["sport"] == sport)
+                   and (since is None or q["logged"] >= since)),
                   key=lambda q: q["start"])
     n = len(bets)
     won = sum(1 for q in bets if q["status"] == "won")
@@ -743,8 +769,99 @@ def assess(d, name, sport=None):
         status = "failing"
     else:
         status = "watch"
+    pnl_fee = sum(pnl_after_fee(q) for q in bets)
+    clv = [q["close_price"] - q["price"] for q in bets if q.get("close_price") is not None]
     return dict(status=status, criteria=criteria, n=n, won=won, roi=roi, pnl=pnl,
-                z=z, weeks=weeks, base_roi=base_roi, own_roi=own_roi)
+                z=z, weeks=weeks, base_roi=base_roi, own_roi=own_roi, expected=expected,
+                roi_fee=(pnl_fee / (n * STAKE)) if n else None,
+                clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
+                clv_beat=(sum(1 for c in clv if c > 0) / len(clv)) if clv else None)
+
+
+def qa_entry(a):
+    """[(key, label, passed, detail)] for the QA entry gate, from an assess() result."""
+    c = {k: (p, det) for k, _l, p, det in a["criteria"]}
+    E = QA_ENTRY
+    return [
+        ("sample", f"{E['min_bets']}+ settled bets over {E['min_weeks']}+ weeks",
+         a["n"] >= E["min_bets"] and a["weeks"] >= E["min_weeks"],
+         f"{a['n']} bets, {a['weeks']} week{'s' if a['weeks'] != 1 else ''}"),
+        ("price", f"wins beat the price by z ≥ {E['z_min']:g}", a["n"] > 0 and a["z"] >= E["z_min"],
+         f"{a['won']} won v {a['expected']:.1f} priced, z {a['z']:+.2f}"),
+        ("baseline", "beats every blind rule on the same contests", *c["baseline"]),
+        ("one_hit", "still profitable without its biggest win", *c["one_hit"]),
+    ]
+
+
+def ready_gate(a):
+    """Production-ready, judged on QA's fresh data: the stamp, positive CLV, positive after fees."""
+    stamp = [(k, l, p, det) for k, l, p, det in a["criteria"]]
+    return stamp + [
+        ("clv", "beats the closing price on average",
+         a["clv"] is not None and a["clv"] > 0,
+         (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} bets, {a['clv_beat']:.0%} beat the close"
+          if a["clv"] is not None else "no closing prices yet")),
+        ("fees", "profitable after the taker fee",
+         a["roi_fee"] is not None and a["roi_fee"] > 0,
+         f"{a['roi_fee']*100:+.1f}% after fees" if a["roi_fee"] is not None else "—"),
+    ]
+
+
+def load_stages(path=None):
+    path = path or STAGES
+    if os.path.exists(path):
+        with open(path) as f:
+            return json.load(f)
+    return {"pairs": {}, "events": []}
+
+
+def save_stages(st, path=None):
+    path = path or STAGES
+    with open(path, "w") as f:
+        json.dump(st, f, indent=1, sort_keys=True)
+
+
+def _snapshot(a):
+    return {k: (round(v, 4) if isinstance(v, float) else v) for k, v in a.items()
+            if k in ("n", "weeks", "z", "roi", "roi_fee", "base_roi", "own_roi", "clv", "clv_n")}
+
+
+def evaluate_stages(d, st, now=None, verbose=True):
+    """Promote Sandbox pairs that pass QA_ENTRY; demote QA pairs whose fresh record fails.
+
+    Every change is appended to st["events"] with the evidence it was made on. Returns the
+    list of changes made this run.
+    """
+    now_s = (now or datetime.now(timezone.utc)).replace(microsecond=0).isoformat()
+    changes = []
+    for name, meta in S.SOURCES.items():
+        if not meta["connected"]:
+            continue
+        for sport in meta["sports"]:
+            key = f"{name}|{sport}"
+            pair = st["pairs"].get(key) or dict(stage="sandbox", since=None)
+            if pair["stage"] == "sandbox":
+                a = assess(d, name, sport, since=pair.get("since"))
+                if a["n"] and all(p for _k, _l, p, _d in qa_entry(a)):
+                    pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a))
+                    changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a)))
+            elif pair["stage"] == "qa":
+                a = assess(d, name, sport, since=pair["promoted_at"])
+                if a["n"] >= QA_DEMOTE["min_bets"] and a["z"] < QA_DEMOTE["z_below"]:
+                    pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
+                    changes.append(dict(pair=key, to="sandbox", at=now_s, evidence=_snapshot(a),
+                                        reason=f"fresh QA record behind the price, z {a['z']:+.2f}"))
+                elif all(p for _k, _l, p, _d in ready_gate(a)) and not pair.get("ready_at"):
+                    pair = dict(pair, ready_at=now_s)
+                    changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a)))
+            if pair.get("stage") != "sandbox" or pair.get("since") or key in st["pairs"]:
+                st["pairs"][key] = pair
+    st["events"].extend(changes)
+    st["updated"] = now_s
+    if verbose:
+        for c in changes:
+            print(f"  stage: {c['pair']} -> {c['to']}")
+    return changes
 
 
 RETAIN_DAYS = 45
@@ -885,6 +1002,9 @@ def main():
     print(f"  ({time.time() - t2:.0f}s, run total {time.time() - t0:.0f}s)")
     prune(d)
     save(d)
+    st = load_stages()
+    evaluate_stages(d, st)
+    save_stages(st)
 
     print("\n source                     quotes  bets  settled   hit      ROI   Brier")
     for name, s in score(d).items():
