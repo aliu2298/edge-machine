@@ -1,5 +1,34 @@
 {
- "events": [],
- "pairs": {},
- "updated": "2026-09-14T01:17:44+00:00"
+ "events": [
+  {
+   "at": "2026-09-14T02:51:24+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "team1_form_l5|soccer_team1",
+   "reason": "0 of 30 settled bets",
+   "to": "fast_track_probation"
+  }
+ ],
+ "pairs": {
+  "team1_form_l5|soccer_team1": {
+   "fast_track": {
+    "checked": "0 of 30 settled bets",
+    "since": "2026-09-14T00:00:00+00:00",
+    "state": "probation"
+   },
+   "since": null,
+   "stage": "sandbox"
+  }
+ },
+ "updated": "2026-09-14T02:51:24+00:00"
 }

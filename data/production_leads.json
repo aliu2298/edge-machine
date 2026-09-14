@@ -1,9 +1,130 @@
 {
- "board_built_at": "2026-09-14T02:44:30+00:00",
- "leads": {},
- "pairs": {},
+ "board_built_at": "2026-09-14T02:51:24+00:00",
+ "leads": {
+  "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Udinese",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Internazionale"
+   },
+   "date": "2026-09-14",
+   "edge_at_log": null,
+   "first_seen": "2026-09-14",
+   "headline": "Internazionale to score 1+",
+   "home": "Internazionale",
+   "id": "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-14T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:51:24+00:00",
+   "league": "Serie A",
+   "match": "Internazionale v Udinese",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.94,
+   "sandbox_quote": "team1_form_l5:KXSERIEATEAMTOTAL-26SEP14INTUDI-INT1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-14|Torino|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "AS Roma",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "AS Roma"
+   },
+   "date": "2026-09-14",
+   "edge_at_log": null,
+   "first_seen": "2026-09-14",
+   "headline": "AS Roma to score 1+",
+   "home": "Torino",
+   "id": "2026-09-14|Torino|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-14T16:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:51:24+00:00",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.9,
+   "sandbox_quote": "team1_form_l5:KXSERIEATEAMTOTAL-26SEP14TORROM-ROM1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-14|Villarreal|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Real Betis",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Real Betis"
+   },
+   "date": "2026-09-14",
+   "edge_at_log": null,
+   "first_seen": "2026-09-14",
+   "headline": "Real Betis to score 1+",
+   "home": "Villarreal",
+   "id": "2026-09-14|Villarreal|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-14T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:51:24+00:00",
+   "league": "La Liga",
+   "match": "Villarreal v Real Betis",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.75,
+   "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP14VILRBB-RBB1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-15|Rayo Vallecano|Espanyol|Espanyol to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Espanyol",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Espanyol"
+   },
+   "date": "2026-09-15",
+   "edge_at_log": null,
+   "first_seen": "2026-09-14",
+   "headline": "Espanyol to score 1+",
+   "home": "Rayo Vallecano",
+   "id": "2026-09-15|Rayo Vallecano|Espanyol|Espanyol to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-15T17:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:51:24+00:00",
+   "league": "La Liga",
+   "match": "Rayo Vallecano v Espanyol",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.7,
+   "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP15RVCESP-ESP1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
+  }
+ },
+ "pairs": {
+  "team1_form_l5|soccer_team1": {
+   "entered_at": "2026-09-14T00:00:00+00:00",
+   "fast_track": {
+    "checked": "0 of 30 settled bets",
+    "since": "2026-09-14T00:00:00+00:00",
+    "state": "probation"
+   },
+   "promoted_at": null,
+   "ready_at": null,
+   "route": "fast track \u00b7 probation",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  }
+ },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-14T02:44:30+00:00"
+ "updated_at": "2026-09-14T02:51:24+00:00"
 }
