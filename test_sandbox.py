@@ -2428,6 +2428,9 @@ _at = T.assess(_dt, "tennis_fav_band", "tennis")
 _ct = dict((k, (p, det)) for k, _l, p, det in _at["criteria"])
 ok("the favourite on every match" in _ct["baseline"][1], "judged against backing the favourite on every match")
 eq(_ct["baseline"][0], True, "and beats it here (+25% v favourites losing two of three)")
+eq((S.SOURCES["mma_fav_band"]["sports"], S.CHALLENGERS["mma_fav_band"] is S.CHALLENGERS["tennis_fav_band"],
+    S.SOURCES["mma_fav_band"]["baseline"]), (["mma"], True, "favourite_population"),
+   "MMA runs the same band rule, judged the same way")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

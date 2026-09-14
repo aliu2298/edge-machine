@@ -492,6 +492,9 @@ Elo rule on ESPN tour-level results was researched the same day and not added: i
 the 427 matches (ESPN has no Challenger or ITF results), its probabilities scored worse than the
 market's (Brier 0.241 v 0.212), and its 50 bets won 42% against 44% priced (−12.4%).
 
+`mma_fav_band` runs the same band, unchanged, on MMA — not fitted there (the Sandbox had no settled,
+priced MMA fight when it was added), so it tests whether the bias carries across sports.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into

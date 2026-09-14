@@ -158,6 +158,15 @@ SOURCES = {
              "documented in tennis. Not significant on its own. Judged against backing the "
              "favourite on every match over the same period, so it only counts if this band "
              "beats favourites in general."),
+    "mma_fav_band": dict(
+        label="MMA favourite-band rule (priced 0.75-0.90)", kind="Rule", connected=True,
+        site="edge-machine", sports=["mma"], baseline="favourite_population",
+        note="Pre-registered 2026-09-14: the tennis favourite-band rule applied unchanged to "
+             "MMA — back the fighter the exchange prices between 0.75 and 0.90. Not fitted on "
+             "MMA at all: the Sandbox had no settled, priced MMA fight when it was added, so "
+             "this is a clean test of whether the favourite-longshot bias carries across sports. "
+             "Judged against backing the favourite in every fight over the same period. MMA "
+             "lists only a handful of fights a week, so it will take months to read."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2"],
@@ -2495,7 +2504,8 @@ FAV_BAND = (0.75, 0.90)
 
 
 def fetch_tennis_fav_band(sport, universe=None):
-    """Back the side whose ask sits in FAV_BAND (lower bound inclusive, upper exclusive)."""
+    """Back the side whose ask sits in FAV_BAND (lower bound inclusive, upper exclusive). Used
+    for tennis and, unchanged, for MMA (mma_fav_band)."""
     out = []
     for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
         for side in ("a", "b"):
@@ -3193,6 +3203,7 @@ CHALLENGERS = {
     "btts_form_l10": fetch_btts_form_l10,
     "goals_market": fetch_goals_market,
     "tennis_fav_band": fetch_tennis_fav_band,
+    "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
     "o15_form_l10": fetch_o15_form_l10,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
