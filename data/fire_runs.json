@@ -6857,6 +6857,21 @@
    "team": "Paris Saint-Germain",
    "test_date": "2026-09-20"
   },
+  "Philadelphia Union|over15|2026-09-20|Philadelphia Union|Sporting Kansas City": {
+   "home": false,
+   "id": "Philadelphia Union|over15|2026-09-20|Philadelphia Union|Sporting Kansas City",
+   "key": "over15",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "over 1.5 goals",
+   "league": "MLS",
+   "length": 8,
+   "logged_at": "2026-09-14T05:27:39+00:00",
+   "opp": "Sporting Kansas City",
+   "rate": 0.2226027397260274,
+   "status": "pending",
+   "team": "Philadelphia Union",
+   "test_date": "2026-09-20"
+  },
   "Philadelphia Union|scoring1|2026-08-29|Philadelphia Union|Red Bull New York": {
    "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
@@ -6909,6 +6924,7 @@
    "test_date": "2026-09-09"
   },
   "Philadelphia Union|scoring1|2026-09-14|Philadelphia Union|San Diego FC": {
+   "graded_at": "2026-09-14T05:27:39+00:00",
    "home": false,
    "id": "Philadelphia Union|scoring1|2026-09-14|Philadelphia Union|San Diego FC",
    "key": "scoring1",
@@ -6919,7 +6935,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "San Diego FC",
    "rate": 0.06462585034013606,
-   "status": "pending",
+   "result": "5-0",
+   "status": "extended",
    "team": "Philadelphia Union",
    "test_date": "2026-09-14"
   },
@@ -9635,5 +9652,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-14T02:53:31+00:00"
+ "updated_at": "2026-09-14T05:27:39+00:00"
 }

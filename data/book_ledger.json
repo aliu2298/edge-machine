@@ -6121,6 +6121,8 @@
   "2026-09-14|San Diego FC|Philadelphia Union": {
    "away": "Philadelphia Union",
    "date": "2026-09-14",
+   "final": "0-5",
+   "graded_at": "2026-09-14T05:27:37+00:00",
    "home": "San Diego FC",
    "id": "2026-09-14|San Diego FC|Philadelphia Union",
    "kickoff": "2026-09-14T01:00Z",
@@ -6132,6 +6134,13 @@
     "home2plus": 0.5665,
     "over15": 0.8765,
     "over25": 0.7012
+   },
+   "pnl": {
+    "away2plus": 0.833,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": 0.143,
+    "over25": 0.595
    },
    "priced_at": "2026-09-13T04:55:31+00:00",
    "prices": {
@@ -6156,7 +6165,14 @@
      "price": 1.595
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": false,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-14|Torino|AS Roma": {
    "away": "AS Roma",
@@ -6293,5 +6309,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-14T02:53:31+00:00"
+ "updated_at": "2026-09-14T05:27:38+00:00"
 }
