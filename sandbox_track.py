@@ -1073,6 +1073,22 @@ def assess(d, name, sport=None, since=None, venues=None):
         own = sum(q["pnl"] for q in bets) / (len(bets) * STAKE)
         blind = ([(f"{'Yes' if sides == {'a'} else 'the same side'} on every match", own,
                    sum(pnls) / (len(pnls) * STAKE))] if pnls else [])
+    # A PRICE-BAND rule (back whoever the market prices 0.75-0.90) is "back the favourite" on
+    # every one of its own contests, so it too needs a population: backing the FAVOURITE on
+    # every contest of the sport over the same period, one quote per contest.
+    if (S.SOURCES.get(name) or {}).get("baseline") == "favourite_population" and bets:
+        seen_c, fav = set(), []
+        for q in all_bets(d):
+            if (q["sport"] not in {b["sport"] for b in bets} or q.get("result") not in ("a", "b")
+                    or q["market_id"] in seen_c or (since is not None and q["logged"] < since)
+                    or (venues is not None and (q.get("venue") or "polymarket") not in venues)):
+                continue
+            pnl_f = blind_pnl(q, "favourite")
+            if pnl_f is not None:
+                seen_c.add(q["market_id"])
+                fav.append(pnl_f)
+        own = sum(q["pnl"] for q in bets) / (len(bets) * STAKE)
+        blind = [("the favourite on every match", own, sum(fav) / (len(fav) * STAKE))] if fav else []
     beats_all = bool(blind) and all(own > base for _k, own, base in blind)
     hardest = max(blind, key=lambda t: t[2] - t[1]) if blind else None
     base_roi = hardest[2] if hardest else None

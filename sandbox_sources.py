@@ -148,6 +148,16 @@ SOURCES = {
              "+10pp over the teams' own earlier rate on 77 matches, but inside one period, not "
              "significant across the rules tried, and on 14 priced matches the market already "
              "charged for it. The Sandbox decides."),
+    "tennis_fav_band": dict(
+        label="Tennis favourite-band rule (priced 0.75-0.90)", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis"], baseline="favourite_population",
+        note="Pre-registered 2026-09-14. Back the player the exchange prices between 0.75 and "
+             "0.90 (the ask), on every tennis match the Sandbox lists. Found in 427 settled "
+             "matches over four days: players priced 0.75-0.90 won 86.4% against 81.1% priced "
+             "(+5.2% after fees, z +1.26, 88 bets) — the favourite-longshot bias, which is well "
+             "documented in tennis. Not significant on its own. Judged against backing the "
+             "favourite on every match over the same period, so it only counts if this band "
+             "beats favourites in general."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2"],
@@ -2481,6 +2491,21 @@ def _rule_rows(sport, universe):
             continue
 
 
+FAV_BAND = (0.75, 0.90)
+
+
+def fetch_tennis_fav_band(sport, universe=None):
+    """Back the side whose ask sits in FAV_BAND (lower bound inclusive, upper exclusive)."""
+    out = []
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        for side in ("a", "b"):
+            p = r.get(f"price_{side}")
+            if p is not None and FAV_BAND[0] <= p < FAV_BAND[1] and r.get("price_draw") is None:
+                out.append(dict(market_id=r["market_id"], pick=side))
+                break
+    return out
+
+
 def fetch_goals_market(sport, universe=None):
     """The Kalshi midpoint on every listed goals market — never a bet (edge 0 by construction)."""
     rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
@@ -3167,6 +3192,7 @@ CHALLENGERS = {
     "btts_market": fetch_btts_market,
     "btts_form_l10": fetch_btts_form_l10,
     "goals_market": fetch_goals_market,
+    "tennis_fav_band": fetch_tennis_fav_band,
     "o15_form_l10": fetch_o15_form_l10,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,

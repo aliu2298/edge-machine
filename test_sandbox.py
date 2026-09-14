@@ -2404,6 +2404,31 @@ eq(PR.lead_from_quote(_o15, "o15_form_l10|soccer_o15", "2026-09-15T12:00:00+00:0
    {"kind": "total_gte", "n": 2}, "an over-1.5 bet is total_gte 2")
 ok("fast track" in PR.page({"quotes": [_open]}, _st_p, _fd, ""), "the Production page shows how a pair got there")
 
+
+print("\ntennis favourite-band rule")
+_tr = [dict(market_id="t1", price_a=0.80, price_b=0.22, price_draw=None),
+       dict(market_id="t2", price_a=0.30, price_b=0.75, price_draw=None),
+       dict(market_id="t3", price_a=0.90, price_b=0.12, price_draw=None),
+       dict(market_id="t4", price_a=0.60, price_b=0.42, price_draw=None)]
+eq(S.fetch_tennis_fav_band("tennis", universe={"tennis": _tr}), [dict(market_id="t1", pick="a"), dict(market_id="t2", pick="b")],
+   "backs the side priced 0.75 up to (not including) 0.90, on either side of the contest")
+def _tq(mid, src, pick, pa, pb, result, bet):
+    price = (pa if pick == "a" else pb) if bet else None
+    won = bet and result == pick
+    return dict(id=f"{src}:{mid}", source=src, sport="tennis", market_id=mid, venue="polymarket_us", bet=bet,
+                pick=pick if bet else None, price=price, price_a=pa, price_b=pb, result=result,
+                status=("won" if won else "lost") if bet else "graded",
+                pnl=(round(100 * (1 / price - 1), 2) if won else -100.0) if bet else 0.0,
+                start=f"2026-09-1{mid[-1]}T18:00:00+00:00", logged="2026-09-10T00:00:00+00:00")
+_dt = {"quotes": [_tq("m1", "tennis_fav_band", "a", 0.80, 0.22, "a", True),
+                  _tq("m1", "polymarket_us", None, 0.80, 0.22, "a", False),
+                  _tq("m2", "polymarket_us", None, 0.55, 0.47, "b", False),     # favourite loses
+                  _tq("m3", "polymarket_us", None, 0.65, 0.37, "b", False)]}    # favourite loses
+_at = T.assess(_dt, "tennis_fav_band", "tennis")
+_ct = dict((k, (p, det)) for k, _l, p, det in _at["criteria"])
+ok("the favourite on every match" in _ct["baseline"][1], "judged against backing the favourite on every match")
+eq(_ct["baseline"][0], True, "and beats it here (+25% v favourites losing two of three)")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
