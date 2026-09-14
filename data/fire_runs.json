@@ -483,6 +483,7 @@
    "test_date": "2026-09-10"
   },
   "AS Roma|over15|2026-09-14|AS Roma|Torino": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": false,
    "id": "AS Roma|over15|2026-09-14|AS Roma|Torino",
    "key": "over15",
@@ -493,9 +494,25 @@
    "logged_at": "2026-09-10T20:56:22+00:00",
    "opp": "Torino",
    "rate": 0.023809523809523808,
-   "status": "pending",
+   "result": "2-0",
+   "status": "extended",
    "team": "AS Roma",
    "test_date": "2026-09-14"
+  },
+  "AS Roma|over15|2026-09-19|AS Roma|Internazionale": {
+   "home": true,
+   "id": "AS Roma|over15|2026-09-19|AS Roma|Internazionale",
+   "key": "over15",
+   "kickoff": "2026-09-19T16:00Z",
+   "label": "over 1.5 goals",
+   "league": "Serie A",
+   "length": 18,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Internazionale",
+   "rate": 0.017123287671232876,
+   "status": "pending",
+   "team": "AS Roma",
+   "test_date": "2026-09-19"
   },
   "AS Roma|over25|2026-09-10|AS Roma|Fenerbahce": {
    "graded_at": "2026-09-10T20:56:22+00:00",
@@ -2084,6 +2101,36 @@
    "team": "Benfica",
    "test_date": "2026-09-16"
   },
+  "Bodo/Glimt|over15|2026-09-20|Bodo/Glimt|SK Brann": {
+   "home": false,
+   "id": "Bodo/Glimt|over15|2026-09-20|Bodo/Glimt|SK Brann",
+   "key": "over15",
+   "kickoff": "2026-09-20T17:15Z",
+   "label": "over 1.5 goals",
+   "league": "Champions League",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "SK Brann",
+   "rate": 0.22602739726027396,
+   "status": "pending",
+   "team": "Bodo/Glimt",
+   "test_date": "2026-09-20"
+  },
+  "Bodo/Glimt|over25|2026-09-20|Bodo/Glimt|SK Brann": {
+   "home": false,
+   "id": "Bodo/Glimt|over25|2026-09-20|Bodo/Glimt|SK Brann",
+   "key": "over25",
+   "kickoff": "2026-09-20T17:15Z",
+   "label": "over 2.5 goals",
+   "league": "Champions League",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "SK Brann",
+   "rate": 0.02054794520547945,
+   "status": "pending",
+   "team": "Bodo/Glimt",
+   "test_date": "2026-09-20"
+  },
   "Bodo/Glimt|scoring1|2026-09-10|Bodo/Glimt|Bayern Munich": {
    "graded_at": "2026-09-11T04:48:30+00:00",
    "home": false,
@@ -2102,6 +2149,7 @@
    "test_date": "2026-09-10"
   },
   "Bodo/Glimt|scoring1|2026-09-14|Bodo/Glimt|Sandefjord": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": true,
    "id": "Bodo/Glimt|scoring1|2026-09-14|Bodo/Glimt|Sandefjord",
    "key": "scoring1",
@@ -2112,7 +2160,8 @@
    "logged_at": "2026-09-10T20:56:22+00:00",
    "opp": "Sandefjord",
    "rate": 0.08163265306122448,
-   "status": "pending",
+   "result": "3-2",
+   "status": "extended",
    "team": "Bodo/Glimt",
    "test_date": "2026-09-14"
   },
@@ -2181,6 +2230,21 @@
    "status": "pending",
    "team": "Braga",
    "test_date": "2026-09-14"
+  },
+  "Braga|scoring1|2026-09-20|Braga|Santa Clara": {
+   "home": false,
+   "id": "Braga|scoring1|2026-09-20|Braga|Santa Clara",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T17:00Z",
+   "label": "scored in",
+   "league": "Primeira Liga",
+   "length": 18,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Santa Clara",
+   "rate": 0.0136986301369863,
+   "status": "pending",
+   "team": "Braga",
+   "test_date": "2026-09-20"
   },
   "Brentford|over15|2026-09-05|Brentford|Sunderland": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -3206,6 +3270,96 @@
    "team": "Estoril",
    "test_date": "2026-09-07"
   },
+  "Estrela|btts|2026-09-20|Estrela|Acad\u00e9mico de Viseu": {
+   "home": true,
+   "id": "Estrela|btts|2026-09-20|Estrela|Acad\u00e9mico de Viseu",
+   "key": "btts",
+   "kickoff": "2026-09-20T14:30Z",
+   "label": "both teams scored",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Acad\u00e9mico de Viseu",
+   "rate": 0.030821917808219176,
+   "status": "pending",
+   "team": "Estrela",
+   "test_date": "2026-09-20"
+  },
+  "Estrela|over15|2026-09-20|Estrela|Acad\u00e9mico de Viseu": {
+   "home": true,
+   "id": "Estrela|over15|2026-09-20|Estrela|Acad\u00e9mico de Viseu",
+   "key": "over15",
+   "kickoff": "2026-09-20T14:30Z",
+   "label": "over 1.5 goals",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Acad\u00e9mico de Viseu",
+   "rate": 0.22602739726027396,
+   "status": "pending",
+   "team": "Estrela",
+   "test_date": "2026-09-20"
+  },
+  "Estrela|over25|2026-09-20|Estrela|Acad\u00e9mico de Viseu": {
+   "home": true,
+   "id": "Estrela|over25|2026-09-20|Estrela|Acad\u00e9mico de Viseu",
+   "key": "over25",
+   "kickoff": "2026-09-20T14:30Z",
+   "label": "over 2.5 goals",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Acad\u00e9mico de Viseu",
+   "rate": 0.02054794520547945,
+   "status": "pending",
+   "team": "Estrela",
+   "test_date": "2026-09-20"
+  },
+  "Estrela|porous|2026-09-20|Estrela|Acad\u00e9mico de Viseu": {
+   "home": true,
+   "id": "Estrela|porous|2026-09-20|Estrela|Acad\u00e9mico de Viseu",
+   "key": "porous",
+   "kickoff": "2026-09-20T14:30Z",
+   "label": "conceded in",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Acad\u00e9mico de Viseu",
+   "rate": 0.15753424657534246,
+   "status": "pending",
+   "team": "Estrela",
+   "test_date": "2026-09-20"
+  },
+  "Estrela|scoring1|2026-09-20|Estrela|Acad\u00e9mico de Viseu": {
+   "home": true,
+   "id": "Estrela|scoring1|2026-09-20|Estrela|Acad\u00e9mico de Viseu",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T14:30Z",
+   "label": "scored in",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Acad\u00e9mico de Viseu",
+   "rate": 0.17123287671232876,
+   "status": "pending",
+   "team": "Estrela",
+   "test_date": "2026-09-20"
+  },
+  "Estrela|scoring|2026-09-20|Estrela|Acad\u00e9mico de Viseu": {
+   "home": true,
+   "id": "Estrela|scoring|2026-09-20|Estrela|Acad\u00e9mico de Viseu",
+   "key": "scoring",
+   "kickoff": "2026-09-20T14:30Z",
+   "label": "scored 2+",
+   "league": "Primeira Liga",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Acad\u00e9mico de Viseu",
+   "rate": 0.00684931506849315,
+   "status": "pending",
+   "team": "Estrela",
+   "test_date": "2026-09-20"
+  },
   "Excelsior|over15|2026-09-05|Excelsior|Willem II": {
    "graded_at": "2026-09-06T04:46:57+00:00",
    "home": false,
@@ -3927,6 +4081,7 @@
    "test_date": "2026-09-18"
   },
   "FC Midtjylland|scoring1|2026-09-14|FC Midtjylland|Br\u00f8ndby IF": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": true,
    "id": "FC Midtjylland|scoring1|2026-09-14|FC Midtjylland|Br\u00f8ndby IF",
    "key": "scoring1",
@@ -3937,9 +4092,25 @@
    "logged_at": "2026-09-07T21:35:37+00:00",
    "opp": "Br\u00f8ndby IF",
    "rate": 0.16666666666666666,
-   "status": "pending",
+   "result": "4-1",
+   "status": "extended",
    "team": "FC Midtjylland",
    "test_date": "2026-09-14"
+  },
+  "FC Midtjylland|scoring1|2026-09-19|FC Midtjylland|Odense Boldklub": {
+   "home": false,
+   "id": "FC Midtjylland|scoring1|2026-09-19|FC Midtjylland|Odense Boldklub",
+   "key": "scoring1",
+   "kickoff": "2026-09-19T16:00Z",
+   "label": "scored in",
+   "league": "Danish Superliga",
+   "length": 9,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Odense Boldklub",
+   "rate": 0.136986301369863,
+   "status": "pending",
+   "team": "FC Midtjylland",
+   "test_date": "2026-09-19"
   },
   "FC Porto|scoring1|2026-09-04|FC Porto|Moreirense": {
    "graded_at": "2026-09-05T04:36:43+00:00",
@@ -4089,6 +4260,7 @@
    "test_date": "2026-09-10"
   },
   "Fenerbahce|over15|2026-09-14|Fenerbahce|Gaziantep FK": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": false,
    "id": "Fenerbahce|over15|2026-09-14|Fenerbahce|Gaziantep FK",
    "key": "over15",
@@ -4099,7 +4271,8 @@
    "logged_at": "2026-09-10T20:56:22+00:00",
    "opp": "Gaziantep FK",
    "rate": 0.05442176870748299,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "Fenerbahce",
    "test_date": "2026-09-14"
   },
@@ -4121,6 +4294,7 @@
    "test_date": "2026-09-10"
   },
   "Fenerbahce|scoring1|2026-09-14|Fenerbahce|Gaziantep FK": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": false,
    "id": "Fenerbahce|scoring1|2026-09-14|Fenerbahce|Gaziantep FK",
    "key": "scoring1",
@@ -4131,7 +4305,8 @@
    "logged_at": "2026-09-10T20:56:22+00:00",
    "opp": "Gaziantep FK",
    "rate": 0.09863945578231292,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "Fenerbahce",
    "test_date": "2026-09-14"
   },
@@ -5012,6 +5187,21 @@
    "team": "Internazionale",
    "test_date": "2026-09-14"
   },
+  "Internazionale|scoring1|2026-09-19|Internazionale|AS Roma": {
+   "home": false,
+   "id": "Internazionale|scoring1|2026-09-19|Internazionale|AS Roma",
+   "key": "scoring1",
+   "kickoff": "2026-09-19T16:00Z",
+   "label": "scored in",
+   "league": "Serie A",
+   "length": 17,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "AS Roma",
+   "rate": 0.017123287671232876,
+   "status": "pending",
+   "team": "Internazionale",
+   "test_date": "2026-09-19"
+  },
   "Istanbul Basaksehir|over15|2026-09-13|Istanbul Basaksehir|Amed SFK": {
    "graded_at": "2026-09-13T20:19:51+00:00",
    "home": false,
@@ -5271,6 +5461,21 @@
    "status": "pending",
    "team": "Leeds United",
    "test_date": "2026-09-14"
+  },
+  "Leeds United|scoring1|2026-09-20|Leeds United|Crystal Palace": {
+   "home": true,
+   "id": "Leeds United|scoring1|2026-09-20|Leeds United|Crystal Palace",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Crystal Palace",
+   "rate": 0.17123287671232876,
+   "status": "pending",
+   "team": "Leeds United",
+   "test_date": "2026-09-20"
   },
   "Lillestrom|over15|2026-09-12|Lillestrom|V\u00e5lerenga": {
    "graded_at": "2026-09-12T20:39:58+00:00",
@@ -6256,6 +6461,21 @@
    "team": "Newcastle United",
    "test_date": "2026-09-14"
   },
+  "Newcastle United|over15|2026-09-19|Newcastle United|Hull City": {
+   "home": true,
+   "id": "Newcastle United|over15|2026-09-19|Newcastle United|Hull City",
+   "key": "over15",
+   "kickoff": "2026-09-19T14:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 12,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Hull City",
+   "rate": 0.09931506849315068,
+   "status": "pending",
+   "team": "Newcastle United",
+   "test_date": "2026-09-19"
+  },
   "Newcastle United|porous|2026-09-05|Newcastle United|AFC Bournemouth": {
    "graded_at": "2026-09-05T15:19:06+00:00",
    "home": true,
@@ -6287,6 +6507,21 @@
    "status": "pending",
    "team": "Newcastle United",
    "test_date": "2026-09-14"
+  },
+  "Newcastle United|scoring1|2026-09-19|Newcastle United|Hull City": {
+   "home": true,
+   "id": "Newcastle United|scoring1|2026-09-19|Newcastle United|Hull City",
+   "key": "scoring1",
+   "kickoff": "2026-09-19T14:00Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Hull City",
+   "rate": 0.17123287671232876,
+   "status": "pending",
+   "team": "Newcastle United",
+   "test_date": "2026-09-19"
   },
   "OFI Crete|over15|2026-09-06|OFI Crete|Kifisia": {
    "graded_at": "2026-09-06T20:29:25+00:00",
@@ -9034,6 +9269,7 @@
    "test_date": "2026-09-09"
   },
   "Torino|over15|2026-09-14|Torino|AS Roma": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": true,
    "id": "Torino|over15|2026-09-14|Torino|AS Roma",
    "key": "over15",
@@ -9044,11 +9280,28 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "AS Roma",
    "rate": 0.21354166666666666,
-   "status": "pending",
+   "result": "0-2",
+   "status": "extended",
    "team": "Torino",
    "test_date": "2026-09-14"
   },
+  "Torino|over15|2026-09-19|Torino|Bologna": {
+   "home": false,
+   "id": "Torino|over15|2026-09-19|Torino|Bologna",
+   "key": "over15",
+   "kickoff": "2026-09-19T13:00Z",
+   "label": "over 1.5 goals",
+   "league": "Serie A",
+   "length": 9,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Bologna",
+   "rate": 0.1815068493150685,
+   "status": "pending",
+   "team": "Torino",
+   "test_date": "2026-09-19"
+  },
   "Torino|porous|2026-09-14|Torino|AS Roma": {
+   "graded_at": "2026-09-14T19:58:19+00:00",
    "home": true,
    "id": "Torino|porous|2026-09-14|Torino|AS Roma",
    "key": "porous",
@@ -9059,9 +9312,25 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "AS Roma",
    "rate": 0.19270833333333334,
-   "status": "pending",
+   "result": "0-2",
+   "status": "extended",
    "team": "Torino",
    "test_date": "2026-09-14"
+  },
+  "Torino|porous|2026-09-19|Torino|Bologna": {
+   "home": false,
+   "id": "Torino|porous|2026-09-19|Torino|Bologna",
+   "key": "porous",
+   "kickoff": "2026-09-19T13:00Z",
+   "label": "conceded in",
+   "league": "Serie A",
+   "length": 9,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "Bologna",
+   "rate": 0.1267123287671233,
+   "status": "pending",
+   "team": "Torino",
+   "test_date": "2026-09-19"
   },
   "Toronto FC|btts|2026-09-12|Toronto FC|Orlando City SC": {
    "graded_at": "2026-09-13T01:45:49+00:00",
@@ -9440,6 +9709,21 @@
    "team": "Villarreal",
    "test_date": "2026-09-14"
   },
+  "Villarreal|porous|2026-09-17|Villarreal|M\u00e1laga": {
+   "home": false,
+   "id": "Villarreal|porous|2026-09-17|Villarreal|M\u00e1laga",
+   "key": "porous",
+   "kickoff": "2026-09-17T19:30Z",
+   "label": "conceded in",
+   "league": "La Liga",
+   "length": 17,
+   "logged_at": "2026-09-14T19:58:19+00:00",
+   "opp": "M\u00e1laga",
+   "rate": 0.00684931506849315,
+   "status": "pending",
+   "team": "Villarreal",
+   "test_date": "2026-09-17"
+  },
   "Volos NFC|over15|2026-09-13|Volos NFC|Kalamata": {
    "graded_at": "2026-09-13T20:19:51+00:00",
    "home": false,
@@ -9667,5 +9951,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-14T13:22:05+00:00"
+ "updated_at": "2026-09-14T19:58:19+00:00"
 }

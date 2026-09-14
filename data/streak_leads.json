@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-14T13:22:03+00:00",
+ "board_built_at": "2026-09-14T19:58:12+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -6514,7 +6514,9 @@
     "team": "Como"
    },
    "date": "2026-09-14",
+   "final": "2-1",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-14T19:58:15+00:00",
    "headline": "Como to score 2+",
    "home": "Como",
    "id": "2026-09-14|Como|Parma|Como to score 2+",
@@ -6530,6 +6532,24 @@
     "team2plus": 0.4185
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 1.5
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.213
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.714
+    },
+    "team2plus": {
+     "hit": true,
+     "pnl": 0.392
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -6549,7 +6569,7 @@
      "price": 1.392
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 7
   },
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
@@ -6687,7 +6707,9 @@
     "n": 2
    },
    "date": "2026-09-14",
+   "final": "3-3",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-14T19:58:15+00:00",
    "headline": "Over 1.5 goals",
    "home": "Rio Ave",
    "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
@@ -6702,6 +6724,20 @@
     "over25": 0.4762
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.82
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.444
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 1.5
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6717,7 +6753,7 @@
      "price": 2.5
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 8,
    "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
@@ -6838,14 +6874,16 @@
     "team": "AS Roma"
    },
    "date": "2026-09-14",
+   "final": "0-2",
    "first_seen": "2026-09-05",
+   "graded_at": "2026-09-14T19:58:15+00:00",
    "headline": "AS Roma to score",
    "home": "Torino",
    "id": "2026-09-14|Torino|AS Roma|AS Roma to score",
    "kickoff": "2026-09-14T16:30Z",
    "league": "Serie A",
    "match": "Torino v AS Roma",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -6865,14 +6903,16 @@
     "team": "AS Roma"
    },
    "date": "2026-09-14",
+   "final": "0-2",
    "first_seen": "2026-08-31",
+   "graded_at": "2026-09-14T19:58:15+00:00",
    "headline": "AS Roma to score 2+",
    "home": "Torino",
    "id": "2026-09-14|Torino|AS Roma|AS Roma to score 2+",
    "kickoff": "2026-09-14T16:30Z",
    "league": "Serie A",
    "match": "Torino v AS Roma",
-   "status": "pending",
+   "status": "hit",
    "strength": 7,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -6890,7 +6930,9 @@
     "n": 2
    },
    "date": "2026-09-14",
+   "final": "0-2",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-14T19:58:15+00:00",
    "headline": "Over 1.5 goals",
    "home": "Torino",
    "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
@@ -6905,6 +6947,20 @@
     "over25": 0.4876
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.263
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6920,7 +6976,7 @@
      "price": 1.8
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-14|Torino|AS Roma|Over 2.5 goals": {
@@ -6937,14 +6993,16 @@
     "n": 3
    },
    "date": "2026-09-14",
+   "final": "0-2",
    "first_seen": "2026-08-31",
+   "graded_at": "2026-09-14T19:58:15+00:00",
    "headline": "Over 2.5 goals",
    "home": "Torino",
    "id": "2026-09-14|Torino|AS Roma|Over 2.5 goals",
    "kickoff": "2026-09-14T16:30Z",
    "league": "Serie A",
    "match": "Torino v AS Roma",
-   "status": "pending",
+   "status": "miss",
    "strength": 11,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7112,7 +7170,7 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T13:22:03+00:00",
+   "last_seen_at": "2026-09-14T19:58:12+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
@@ -7251,7 +7309,7 @@
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
    "kickoff": "2026-09-15T17:00Z",
    "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T13:22:03+00:00",
+   "last_seen_at": "2026-09-14T19:58:12+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "model": {
@@ -7398,12 +7456,12 @@
    "home": "Barcelona",
    "id": "2026-09-16|Barcelona|Racing Santander|Barcelona to score 2+",
    "kickoff": "2026-09-16T19:30Z",
-   "last_seen": "2026-09-13",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T19:58:12+00:00",
    "league": "La Liga",
    "match": "Barcelona v Racing Santander",
    "status": "pending",
-   "strength": 11,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 11
   },
   "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals": {
    "a": "Barcelona",
@@ -7521,7 +7579,8 @@
    "home": "SK Sturm Graz",
    "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
-   "last_seen": "2026-09-13",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T19:58:12+00:00",
    "league": "Europa League",
    "match": "SK Sturm Graz v Stade Rennais",
    "model": {
@@ -7546,8 +7605,7 @@
     }
    },
    "status": "pending",
-   "strength": 12,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 12
   },
   "2026-09-16|SK Sturm Graz|Stade Rennais|Over 2.5 goals": {
    "a": "Stade Rennais",
@@ -10828,5 +10886,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-14T13:22:04+00:00"
+ "updated_at": "2026-09-14T19:58:15+00:00"
 }
