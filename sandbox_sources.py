@@ -44,6 +44,7 @@ SPORTS = {
     "soccer_team1": "Soccer · Team 1+",
     "soccer_team2": "Soccer · Team 2+",
     "soccer_u35":   "Soccer · Under 3.5",
+    "soccer_p05":   "Soccer · Team +0.5",
     "tennis":       "Tennis",
     "table_tennis": "Table Tennis",
     "boxing":       "Boxing",
@@ -190,7 +191,7 @@ SOURCES = {
              "the same games."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
-        site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35"],
+        site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05"],
         note="The market's own midpoint on every Kalshi over-1.5 and team-total market the "
              "Sandbox lists. Never bets. The population each goals rule is judged against: "
              "backing Yes on every listed match of that market over the same period."),
@@ -217,6 +218,17 @@ SOURCES = {
              "earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. "
              "Fast-tracked to Production on probation: 30 settled bets, profitable after fees, "
              "z of at least 1 against the prices paid — or back to the normal ladder."),
+    "p05_unbeaten": dict(
+        label="Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_p05"], baseline="population",
+        note="Pre-registered 2026-09-14. Back a team not to lose (+0.5: No on Kalshi's market for "
+             "its opponent to win) where the team is unbeaten in 8+ of its last 10 games in this "
+             "competition and the opponent won 3 or fewer of its last 10 there (HOF's windows, "
+             "10+ games each, ESPN results before kickoff). Research: 82.5% on 97 against the "
+             "teams' own earlier 70.6% (z +2.56); none of 1,000 shuffled worlds produced a spread "
+             "rule this strong across the six tried; at Kalshi's price just before kickoff 54 of "
+             "64 won at ~77% (+11.2% after fees). 37 of those 64 were MLS. Judged against backing "
+             "No on every Kalshi win market over the same period."),
     "u35_low_scoring": dict(
         label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_u35"], baseline="population",
@@ -2378,7 +2390,7 @@ def fetch_btts_form_l10(sport, universe=None, fixtures=None):
 #   soccer_team2  KX{LEAGUE}TEAMTOTAL  "{Team} over 1.5 goals"
 # Kalshi lists no team totals for the Eredivisie or Primeira Liga (checked 2026-09-14); those
 # fixtures simply produce no team rows.
-GOALS_SPORTS = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35")
+GOALS_SPORTS = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
 
 # The three rules found in the ESPN research of 2026-09-13 (530 matches, cutoffs fixed before
 # the run). Every count is over COMPETITIVE games that kicked off strictly before the match,
@@ -2471,6 +2483,28 @@ def fetch_kalshi_goals(horizon_days=4, fixtures=None, now=None, stats=None, even
                                           hit[0], hit[1], league, series)
                 if row:
                     out[sport].append(row)
+        # soccer_p05: each side's win market on the GAME event. Side a = Yes (that side wins),
+        # side b = No — the OTHER team does not lose, i.e. the other team +0.5. The row's
+        # `team` is that other team (the +0.5 side), `opponent` the market's own side.
+        series = f"KX{frag}GAME"
+        for ev in _kalshi_open_events(series, events_by_series):
+            hit = _espn_fixture_for(ev, upcoming)
+            for m in ev.get("markets") or []:
+                if _kalshi_is_tie(m) or str(m.get("status", "")).lower() not in ("active", "open"):
+                    continue
+                listed += 1
+                if not hit:
+                    continue
+                ko, f = hit
+                who = str(m.get("yes_sub_title") or "")
+                sh, sa = _score(who, f["home"], "soccer"), _score(who, f["away"], "soccer")
+                if max(sh, sa) < 0.5 or sh == sa:
+                    continue
+                winner, other = (f["home"], f["away"]) if sh > sa else (f["away"], f["home"])
+                row = _yes_no_row(m, "soccer_p05", f"{f['home']} v {f['away']}: {winner} to win (No = {other} +0.5)",
+                                  ko, f, league, series, team=other, opponent=winner)
+                if row:
+                    out["soccer_p05"].append(row)
         series = f"KX{frag}TEAMTOTAL"
         for ev in _kalshi_open_events(series, events_by_series):
             hit = _espn_fixture_for(ev, upcoming)
@@ -2659,6 +2693,22 @@ def _team_rule(sport, universe, fixtures, n, window, need):
         c, _cn, call = team_form(fixtures, r.get("opponent"), ko, lambda gf, ga: ga >= n, window)
         if min(sall, call) >= GOALS_MIN_GAMES and s >= need and c >= need:
             out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
+P05_WINDOW, P05_UNBEATEN_MIN, P05_OPP_WINS_MAX = 10, 8, 3
+
+
+def fetch_p05_unbeaten(sport, universe=None, fixtures=None):
+    """Back a team +0.5 (No on its opponent winning) where the team is unbeaten in 8+ of its last
+    10 games in this competition and the opponent won 3 or fewer of its last 10 there."""
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    out = []
+    for r, ko in _rule_rows(sport, universe):
+        u, _un, uall = team_form(fixtures, r.get("team"), ko, lambda gf, ga: gf >= ga, P05_WINDOW, league=r.get("league"))
+        w, _wn, wall = team_form(fixtures, r.get("opponent"), ko, lambda gf, ga: gf > ga, P05_WINDOW, league=r.get("league"))
+        if min(uall, wall) >= P05_WINDOW and u >= P05_UNBEATEN_MIN and w <= P05_OPP_WINS_MAX:
+            out.append(dict(market_id=r["market_id"], pick="b"))
     return out
 
 
@@ -3343,6 +3393,7 @@ CHALLENGERS = {
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,
+    "p05_unbeaten": fetch_p05_unbeaten,
     "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,

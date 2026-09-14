@@ -2327,7 +2327,7 @@ eq({k: sorted(r["market_id"] for r in v) for k, v in _grows.items()},
    {"soccer_o15": ["KXEPLTOTAL-26SEP15GOALEA-2", "KXEPLTOTAL-26SEP16DULSIE-2"],
     "soccer_team1": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", "KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"],
     "soccer_team2": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"],
-    "soccer_u35": ["KXEPLTOTAL-26SEP15GOALEA-4"]},
+    "soccer_u35": ["KXEPLTOTAL-26SEP15GOALEA-4"], "soccer_p05": []},
    "over 1.5 from the totals ladder; over 0.5 / 1.5 per side from team totals; other lines ignored")
 _t1 = {r["market_id"]: r for r in _grows["soccer_team1"]}
 eq((_t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["team"], _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["opponent"],
@@ -2486,6 +2486,22 @@ _uu = {"soccer_u35": [dict(market_id="u1", start="2026-09-15T18:00:00+00:00", le
 eq(S.fetch_u35_low_scoring("soccer_u35", universe=_uu, fixtures=_ux), [dict(market_id="u1", pick="b")],
    "backs the under (No) only where both teams scored <=1 in 7+ of 10 in THIS competition")
 eq(S.SOURCES["u35_low_scoring"]["baseline"], "population", "judged against backing the under on every match")
+
+
+print("\nteam +0.5 unbeaten rule")
+_pevs = {"KXSERIEAGAME": [{"event_ticker": "KXSERIEAGAME-26SEP15TIGLOO", "title": "Tight FC vs Loose FC",
+                           "markets": [_gm("KXSERIEAGAME-26SEP15TIGLOO-TIG", "Tight FC", 0.45, 0.44),
+                                       _gm("KXSERIEAGAME-26SEP15TIGLOO-LOO", "Loose FC", 0.30, 0.29),
+                                       _gm("KXSERIEAGAME-26SEP15TIGLOO-TIE", "Tie", 0.27, 0.26)]}]}
+_pup = [dict(home="Tight FC", away="Loose FC", kickoff="2026-09-15T18:00Z", played=False, home_goals=None, away_goals=None, league="Serie A")]
+_prow = S.fetch_kalshi_goals(fixtures=_ux + _pup, now=_g0, events_by_series=_pevs)["soccer_p05"]
+eq(sorted((r["market_id"], r["team"], r["opponent"], r["price_b"]) for r in _prow),
+   [("KXSERIEAGAME-26SEP15TIGLOO-LOO", "Tight FC", "Loose FC", 0.71), ("KXSERIEAGAME-26SEP15TIGLOO-TIG", "Loose FC", "Tight FC", 0.56)],
+   "each win market is a row whose No is the other team +0.5; the tie market is skipped")
+# Tight FC won all 10 (unbeaten 10/10); Loose FC drew all 10 (won 0/10, but unbeaten)
+eq(S.fetch_p05_unbeaten("soccer_p05", universe={"soccer_p05": _prow}, fixtures=_ux + _pup),
+   [dict(market_id="KXSERIEAGAME-26SEP15TIGLOO-LOO", pick="b")],
+   "backs Tight FC +0.5 (No on Loose FC winning); Loose FC +0.5 fails because Tight FC won 10 of 10")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

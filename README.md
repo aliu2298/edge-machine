@@ -513,6 +513,14 @@ HOF's on the fixtures checked). Research: 80.5% on 41 v the teams' own 61.7%; 23
 under price (~71%), +20.2% after fees. Under 4.5 on the same selection was priced at ~86% and made
 +3%, so it was left out. Judged against backing the under on every Kalshi match.
 
+**Team +0.5 unbeaten rule (2026-09-14).** `soccer_p05` lists each side's win market on Kalshi's soccer
+GAME events as a yes/no row whose No is the OTHER team +0.5 (does not lose); `team` is that side.
+`p05_unbeaten` backs it where the team is unbeaten in 8+ of its last 10 in the competition and the
+opponent won 3 or fewer of its last 10 there. Research: 82.5% on 97 v the teams' own 70.6% (z +2.56,
+0 of 1,000 shuffled worlds across six spread rules); 54 of 64 at Kalshi's price (~77%), +11.2% after
+fees, 37 of them MLS. The +1.5 rules beat the teams' own rate but Kalshi priced them at ~88% and they
+made +2-6%, so they were left out.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into

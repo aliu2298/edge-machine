@@ -32,7 +32,7 @@ STAMP = {
 # The board covers two different things now, and one table of fourteen columns would be
 # unreadable. Sports are contests between two named sides; the rest are yes/no questions
 # with a forecaster on the other side of them.
-SPORT_KEYS = ["soccer", "soccer_btts", "soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb"]
+SPORT_KEYS = ["soccer", "soccer_btts", "soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05", "tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb"]
 
 # Long lists are the part of the page that grows without bound. The first few rows show
 # what the list is; the rest sit behind a toggle so the tables that carry the verdicts
