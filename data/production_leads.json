@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-14T17:58:25+00:00",
+ "board_built_at": "2026-09-14T20:59:53+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -16,8 +16,6 @@
    "id": "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-14T18:45Z",
    "lane": "production",
-   "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T17:58:25+00:00",
    "league": "Serie A",
    "match": "Internazionale v Udinese",
    "pair": "team1_form_l5|soccer_team1",
@@ -25,33 +23,31 @@
    "sandbox_quote": "team1_form_l5:KXSERIEATEAMTOTAL-26SEP14INTUDI-INT1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
-   "status": "pending"
+   "status": "hit"
   },
-  "2026-09-14|Villarreal|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Real Betis",
+  "2026-09-14|Torino|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "AS Roma",
    "bet": {
     "kind": "team_gte",
     "n": 1,
-    "team": "Real Betis"
+    "team": "AS Roma"
    },
    "date": "2026-09-14",
    "edge_at_log": null,
    "first_seen": "2026-09-14",
-   "headline": "Real Betis to score 1+",
-   "home": "Villarreal",
-   "id": "2026-09-14|Villarreal|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-14T19:00Z",
+   "headline": "AS Roma to score 1+",
+   "home": "Torino",
+   "id": "2026-09-14|Torino|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-14T16:30Z",
    "lane": "production",
-   "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T17:58:25+00:00",
-   "league": "La Liga",
-   "match": "Villarreal v Real Betis",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
    "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.75,
-   "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP14VILRBB-RBB1",
+   "price_at_log": 0.9,
+   "sandbox_quote": "team1_form_l5:KXSERIEATEAMTOTAL-26SEP14TORROM-ROM1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-09-15|Rayo Vallecano|Espanyol|Espanyol to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Espanyol",
@@ -69,7 +65,7 @@
    "kickoff": "2026-09-15T17:00Z",
    "lane": "production",
    "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T17:58:25+00:00",
+   "last_seen_at": "2026-09-14T20:59:53+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "pair": "team1_form_l5|soccer_team1",
@@ -84,21 +80,21 @@
   "team1_form_l5|soccer_team1": {
    "entered_at": "2026-09-14T00:00:00+00:00",
    "fast_track": {
-    "checked": "0 of 30 settled bets",
+    "checked": "2 of 30 settled bets",
     "since": "2026-09-14T00:00:00+00:00",
     "state": "probation"
    },
    "promoted_at": null,
    "ready_at": null,
    "route": "fast track \u00b7 probation",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": 0.01,
+   "sandbox_n": 2,
+   "sandbox_roi": 0.0874,
+   "sandbox_roi_fee": 0.0814
   }
  },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-14T17:58:25+00:00"
+ "updated_at": "2026-09-14T20:59:53+00:00"
 }
