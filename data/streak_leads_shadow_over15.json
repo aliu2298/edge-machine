@@ -1,3 +1,448 @@
 {
- "leads": {}
+ "board_built_at": "2026-09-14T02:53:25+00:00",
+ "leads": {
+  "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
+   "a": "Internazionale",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Udinese",
+   "b": "Udinese",
+   "b_key": "scoring1",
+   "b_run": 3,
+   "base_rate": 0.4622356495468278,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Internazionale",
+   "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
+   "kickoff": "2026-09-14T18:45Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "Serie A",
+   "match": "Internazionale v Udinese",
+   "model": {
+    "btts": 0.5381,
+    "over15": 0.7459,
+    "over25": 0.499
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.48,
+     "bid": 0.47,
+     "fair": 0.475,
+     "fee": 0.0175,
+     "market": "KXSERIEABTTS-26SEP14INTUDI-BTTS",
+     "price": 2.01,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.85,
+     "bid": 0.84,
+     "event": "sea-int-udi-2026-09-14",
+     "fair": 0.845,
+     "fee": 0.0077,
+     "market": "tsc-sea-int-udi-2026-09-14-1pt5",
+     "price": 1.166,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.65,
+     "bid": 0.63,
+     "event": "sea-int-udi-2026-09-14",
+     "fair": 0.64,
+     "fee": 0.0136,
+     "market": "tsc-sea-int-udi-2026-09-14-2pt5",
+     "price": 1.507,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals": {
+   "a": "Leeds United",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Newcastle United",
+   "b": "Newcastle United",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.229607250755287,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Leeds United",
+   "id": "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals",
+   "kickoff": "2026-09-14T19:00Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "Premier League",
+   "match": "Leeds United v Newcastle United",
+   "model": {
+    "btts": 0.5463,
+    "over15": 0.7689,
+    "over25": 0.5305
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.6,
+     "bid": 0.59,
+     "fair": 0.595,
+     "fee": 0.0169,
+     "market": "KXEPLBTTS-26SEP14LEENEW-BTTS",
+     "price": 1.621,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.78,
+     "bid": 0.77,
+     "event": "epl-lee-new-2026-09-14",
+     "fair": 0.775,
+     "fee": 0.0103,
+     "market": "tsc-epl-lee-new-2026-09-14-1pt5",
+     "price": 1.265,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.54,
+     "bid": 0.53,
+     "event": "epl-lee-new-2026-09-14",
+     "fair": 0.535,
+     "fee": 0.0149,
+     "market": "tsc-epl-lee-new-2026-09-14-2pt5",
+     "price": 1.802,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-14|Rio Ave|Estrela|Over 1.5 goals": {
+   "a": "Rio Ave",
+   "a_key": "over15",
+   "a_run": 4,
+   "away": "Estrela",
+   "b": "Estrela",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.4229607250755287,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Rio Ave",
+   "id": "2026-09-14|Rio Ave|Estrela|Over 1.5 goals",
+   "kickoff": "2026-09-14T17:45Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "Primeira Liga",
+   "match": "Rio Ave v Estrela",
+   "model": {
+    "btts": 0.5309,
+    "over15": 0.7346,
+    "over25": 0.4841
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.55,
+     "bid": 0.54,
+     "fair": 0.545,
+     "fee": 0.0174,
+     "market": "KXLIGAPORTUGALBTTS-26SEP14RAVESA-BTTS",
+     "price": 1.762,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.74,
+     "bid": 0.72,
+     "fair": 0.73,
+     "fee": 0.0135,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP14RAVESA-2",
+     "price": 1.327,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.48,
+     "bid": 0.46,
+     "fair": 0.47,
+     "fee": 0.0175,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP14RAVESA-3",
+     "price": 2.01,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 10
+  },
+  "2026-09-14|Torino|AS Roma|Over 1.5 goals": {
+   "a": "Torino",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "AS Roma",
+   "b": "AS Roma",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.2930513595166163,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-14",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Torino",
+   "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
+   "kickoff": "2026-09-14T16:30Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "Serie A",
+   "match": "Torino v AS Roma",
+   "model": {
+    "btts": 0.5207,
+    "over15": 0.7383,
+    "over25": 0.4891
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.53,
+     "bid": 0.52,
+     "fair": 0.525,
+     "fee": 0.0175,
+     "market": "KXSERIEABTTS-26SEP14TORROM-BTTS",
+     "price": 1.826,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.79,
+     "bid": 0.78,
+     "event": "sea-tor-rom-2026-09-14",
+     "fair": 0.785,
+     "fee": 0.01,
+     "market": "tsc-sea-tor-rom-2026-09-14-1pt5",
+     "price": 1.25,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.56,
+     "bid": 0.54,
+     "event": "sea-tor-rom-2026-09-14",
+     "fair": 0.55,
+     "fee": 0.0148,
+     "market": "tsc-sea-tor-rom-2026-09-14-2pt5",
+     "price": 1.74,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals": {
+   "a": "Ajax Amsterdam",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Willem II",
+   "b": "Willem II",
+   "b_key": "over15",
+   "b_run": 5,
+   "base_rate": 0.3776435045317221,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Ajax Amsterdam",
+   "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
+   "kickoff": "2026-09-15T18:00Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "Eredivisie",
+   "match": "Ajax Amsterdam v Willem II",
+   "model": {
+    "btts": 0.6557,
+    "over15": 0.8692,
+    "over25": 0.6882
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.56,
+     "bid": 0.55,
+     "fair": 0.555,
+     "fee": 0.0173,
+     "market": "KXEREDIVISIEBTTS-26SEP15AJAWIL-BTTS",
+     "price": 1.732,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.93,
+     "bid": 0.91,
+     "fair": 0.92,
+     "fee": 0.0046,
+     "market": "KXEREDIVISIETOTAL-26SEP15AJAWIL-2",
+     "price": 1.07,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.8,
+     "bid": 0.78,
+     "fair": 0.79,
+     "fee": 0.0112,
+     "market": "KXEREDIVISIETOTAL-26SEP15AJAWIL-3",
+     "price": 1.233,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 11
+  },
+  "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals": {
+   "a": "Falkirk",
+   "a_key": "scoring1",
+   "a_run": 3,
+   "away": "Heart of Midlothian",
+   "b": "Heart of Midlothian",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.4622356495468278,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Falkirk",
+   "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
+   "kickoff": "2026-09-15T18:45Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "Scottish Premiership",
+   "match": "Falkirk v Heart of Midlothian",
+   "model": {
+    "btts": 0.6227,
+    "over15": 0.8274,
+    "over25": 0.6179
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.6,
+     "bid": 0.55,
+     "fair": 0.575,
+     "fee": 0.0169,
+     "market": "KXSCOTTISHPREMBTTS-26SEP15FALHOM-BTTS",
+     "price": 1.621,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.78,
+     "bid": 0.77,
+     "fair": 0.775,
+     "fee": 0.0121,
+     "market": "KXSCOTTISHPREMTOTAL-26SEP15FALHOM-2",
+     "price": 1.262,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.55,
+     "bid": 0.54,
+     "fair": 0.545,
+     "fee": 0.0174,
+     "market": "KXSCOTTISHPREMTOTAL-26SEP15FALHOM-3",
+     "price": 1.762,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 9
+  },
+  "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals": {
+   "a": "Rayo Vallecano",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Espanyol",
+   "b": "Espanyol",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.2930513595166163,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-15",
+   "first_seen": "2026-09-14",
+   "headline": "Over 1.5 goals",
+   "home": "Rayo Vallecano",
+   "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
+   "kickoff": "2026-09-15T17:00Z",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:25+00:00",
+   "league": "La Liga",
+   "match": "Rayo Vallecano v Espanyol",
+   "model": {
+    "btts": 0.5198,
+    "over15": 0.7317,
+    "over25": 0.4803
+   },
+   "modelled_at": "2026-09-14T02:53:25+00:00",
+   "priced_at": "2026-09-14T02:53:25+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.55,
+     "bid": 0.52,
+     "fair": 0.535,
+     "fee": 0.0174,
+     "market": "KXLALIGABTTS-26SEP15RVCESP-BTTS",
+     "price": 1.762,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.74,
+     "bid": 0.73,
+     "event": "lal-ray-esp-2026-09-15",
+     "fair": 0.735,
+     "fee": 0.0115,
+     "market": "tsc-lal-ray-esp-2026-09-15-1pt5",
+     "price": 1.331,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.49,
+     "bid": 0.47,
+     "event": "lal-ray-esp-2026-09-15",
+     "fair": 0.48,
+     "fee": 0.015,
+     "market": "tsc-lal-ray-esp-2026-09-15-2pt5",
+     "price": 1.98,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  }
+ },
+ "updated_at": "2026-09-14T02:53:29+00:00"
 }

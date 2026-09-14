@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-13T23:31:34+00:00",
+ "board_built_at": "2026-09-14T02:53:23+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -5163,14 +5163,16 @@
     "kind": "btts"
    },
    "date": "2026-09-13",
+   "final": "1-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-14T02:53:25+00:00",
    "headline": "Both teams to score",
    "home": "Chicago Fire FC",
    "id": "2026-09-13|Chicago Fire FC|New England Revolution|Both teams to score",
    "kickoff": "2026-09-13T21:30Z",
    "league": "MLS",
    "match": "Chicago Fire FC v New England Revolution",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -5188,7 +5190,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "1-2",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-14T02:53:25+00:00",
    "headline": "Over 1.5 goals",
    "home": "Chicago Fire FC",
    "id": "2026-09-13|Chicago Fire FC|New England Revolution|Over 1.5 goals",
@@ -5203,6 +5207,20 @@
     "over25": 0.6493
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.455
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.143
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.595
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -5218,7 +5236,7 @@
      "price": 1.595
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-13|Excelsior|FC Utrecht|Excelsior to score 2+": {
@@ -6431,7 +6449,9 @@
     "n": 2
    },
    "date": "2026-09-13",
+   "final": "1-2",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-14T02:53:25+00:00",
    "headline": "Over 1.5 goals",
    "home": "Vancouver Whitecaps",
    "id": "2026-09-13|Vancouver Whitecaps|Austin FC|Over 1.5 goals",
@@ -6446,6 +6466,20 @@
     "over25": 0.667
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.741
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.118
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.485
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6461,7 +6495,7 @@
      "price": 1.485
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 8
   },
   "2026-09-14|Como|Parma|Como to score 2+": {
@@ -6485,8 +6519,8 @@
    "home": "Como",
    "id": "2026-09-14|Como|Parma|Como to score 2+",
    "kickoff": "2026-09-14T16:30Z",
-   "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T23:31:34+00:00",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:23+00:00",
    "league": "Serie A",
    "match": "Como v Parma",
    "model": {
@@ -6563,7 +6597,8 @@
     }
    },
    "status": "pending",
-   "strength": 9
+   "strength": 9,
+   "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
   "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals": {
    "a": "Leeds United",
@@ -6610,7 +6645,8 @@
     }
    },
    "status": "pending",
-   "strength": 12
+   "strength": 12,
+   "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
   "2026-09-14|Leeds United|Newcastle United|Over 2.5 goals": {
    "a": "Newcastle United",
@@ -6682,7 +6718,8 @@
     }
    },
    "status": "pending",
-   "strength": 8
+   "strength": 8,
+   "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
   "2026-09-14|San Diego FC|Philadelphia Union|Over 1.5 goals": {
    "a": "San Diego FC",
@@ -6836,8 +6873,8 @@
    "home": "Torino",
    "id": "2026-09-14|Torino|AS Roma|Over 1.5 goals",
    "kickoff": "2026-09-14T16:30Z",
-   "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T23:31:34+00:00",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:23+00:00",
    "league": "Serie A",
    "match": "Torino v AS Roma",
    "model": {
@@ -6949,7 +6986,8 @@
     }
    },
    "status": "pending",
-   "strength": 11
+   "strength": 11,
+   "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
   "2026-09-15|Elche|Real Madrid|Over 1.5 goals": {
    "a": "Elche",
@@ -7051,8 +7089,8 @@
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
    "kickoff": "2026-09-15T18:45Z",
-   "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T23:31:34+00:00",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:23+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
@@ -7118,7 +7156,8 @@
     }
    },
    "status": "pending",
-   "strength": 9
+   "strength": 9,
+   "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
   "2026-09-15|Falkirk|Heart of Midlothian|Over 2.5 goals": {
    "a": "Heart of Midlothian",
@@ -7189,8 +7228,8 @@
    "home": "Rayo Vallecano",
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
    "kickoff": "2026-09-15T17:00Z",
-   "last_seen": "2026-09-13",
-   "last_seen_at": "2026-09-13T23:31:34+00:00",
+   "last_seen": "2026-09-14",
+   "last_seen_at": "2026-09-14T02:53:23+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "model": {
@@ -10767,5 +10806,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-13T23:31:35+00:00"
+ "updated_at": "2026-09-14T02:53:25+00:00"
 }

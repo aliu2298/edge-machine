@@ -1425,6 +1425,7 @@
    "test_date": "2026-09-10"
   },
   "Austin FC|porous|2026-09-13|Austin FC|Vancouver Whitecaps": {
+   "graded_at": "2026-09-14T02:53:31+00:00",
    "home": false,
    "id": "Austin FC|porous|2026-09-13|Austin FC|Vancouver Whitecaps",
    "key": "porous",
@@ -1435,7 +1436,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "Vancouver Whitecaps",
    "rate": 0.047619047619047616,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Austin FC",
    "test_date": "2026-09-13"
   },
@@ -2494,6 +2496,7 @@
    "test_date": "2026-09-10"
   },
   "Chicago Fire FC|btts|2026-09-13|Chicago Fire FC|New England Revolution": {
+   "graded_at": "2026-09-14T02:53:31+00:00",
    "home": true,
    "id": "Chicago Fire FC|btts|2026-09-13|Chicago Fire FC|New England Revolution",
    "key": "btts",
@@ -2504,7 +2507,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "New England Revolution",
    "rate": 0.017006802721088437,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Chicago Fire FC",
    "test_date": "2026-09-13"
   },
@@ -2558,6 +2562,7 @@
    "test_date": "2026-09-10"
   },
   "Chicago Fire FC|over15|2026-09-13|Chicago Fire FC|New England Revolution": {
+   "graded_at": "2026-09-14T02:53:31+00:00",
    "home": true,
    "id": "Chicago Fire FC|over15|2026-09-13|Chicago Fire FC|New England Revolution",
    "key": "over15",
@@ -2568,7 +2573,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "New England Revolution",
    "rate": 0.027210884353741496,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Chicago Fire FC",
    "test_date": "2026-09-13"
   },
@@ -2622,6 +2628,7 @@
    "test_date": "2026-09-10"
   },
   "Chicago Fire FC|porous|2026-09-13|Chicago Fire FC|New England Revolution": {
+   "graded_at": "2026-09-14T02:53:31+00:00",
    "home": true,
    "id": "Chicago Fire FC|porous|2026-09-13|Chicago Fire FC|New England Revolution",
    "key": "porous",
@@ -2632,7 +2639,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "New England Revolution",
    "rate": 0.09863945578231292,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Chicago Fire FC",
    "test_date": "2026-09-13"
   },
@@ -2703,6 +2711,7 @@
    "test_date": "2026-09-10"
   },
   "Chicago Fire FC|scoring1|2026-09-13|Chicago Fire FC|New England Revolution": {
+   "graded_at": "2026-09-14T02:53:31+00:00",
    "home": true,
    "id": "Chicago Fire FC|scoring1|2026-09-13|Chicago Fire FC|New England Revolution",
    "key": "scoring1",
@@ -2713,7 +2722,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "New England Revolution",
    "rate": 0.006802721088435374,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Chicago Fire FC",
    "test_date": "2026-09-13"
   },
@@ -6049,6 +6059,7 @@
    "test_date": "2026-09-10"
   },
   "New England Revolution|over15|2026-09-13|New England Revolution|Chicago Fire FC": {
+   "graded_at": "2026-09-14T02:53:31+00:00",
    "home": false,
    "id": "New England Revolution|over15|2026-09-13|New England Revolution|Chicago Fire FC",
    "key": "over15",
@@ -6059,7 +6070,8 @@
    "logged_at": "2026-09-10T04:51:25+00:00",
    "opp": "Chicago Fire FC",
    "rate": 0.1836734693877551,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "New England Revolution",
    "test_date": "2026-09-13"
   },
@@ -6910,6 +6922,21 @@
    "status": "pending",
    "team": "Philadelphia Union",
    "test_date": "2026-09-14"
+  },
+  "Philadelphia Union|scoring1|2026-09-20|Philadelphia Union|Sporting Kansas City": {
+   "home": false,
+   "id": "Philadelphia Union|scoring1|2026-09-20|Philadelphia Union|Sporting Kansas City",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T00:30Z",
+   "label": "scored in",
+   "league": "MLS",
+   "length": 13,
+   "logged_at": "2026-09-14T02:53:31+00:00",
+   "opp": "Sporting Kansas City",
+   "rate": 0.0684931506849315,
+   "status": "pending",
+   "team": "Philadelphia Union",
+   "test_date": "2026-09-20"
   },
   "Portland Timbers|btts|2026-08-30|Portland Timbers|Austin FC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -9608,5 +9635,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-13T23:31:37+00:00"
+ "updated_at": "2026-09-14T02:53:31+00:00"
 }
