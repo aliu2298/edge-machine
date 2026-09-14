@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-14T05:27:37+00:00",
+ "built_at": "2026-09-14T13:22:04+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -1482,7 +1482,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 4,
+    "rate": 0.75,
+    "fair": 0.654075,
+    "z": 0.4153998862398491,
+    "roi": 0.14275,
+    "paying": false
+   }
   },
   {
    "team": "Aberdeen",
@@ -13840,7 +13847,13 @@
    ],
    "best_rate": 0.2930513595166163,
    "longest": 6,
-   "next": null,
+   "next": {
+    "opp": "VfB Stuttgart",
+    "date": "2026-09-25",
+    "kickoff": "2026-09-25T14:30Z",
+    "league": "Club Friendly",
+    "home": false
+   },
    "recent": [
     {
      "s": "2-4",
@@ -14846,7 +14859,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 4,
+    "rate": 0.5,
+    "fair": 0.643225,
+    "z": -0.6202308960823808,
+    "roi": -0.3155,
+    "paying": false
+   }
   },
   {
    "team": "Valencia",
@@ -30980,7 +31000,13 @@
    ],
    "best_rate": 0.1815068493150685,
    "longest": 9,
-   "next": null,
+   "next": {
+    "opp": "VfB Stuttgart",
+    "date": "2026-09-25",
+    "kickoff": "2026-09-25T14:30Z",
+    "league": "Club Friendly",
+    "home": false
+   },
    "recent": [
     {
      "s": "2-4",
@@ -31055,7 +31081,7 @@
      "lg": "Bundesliga"
     }
    ],
-   "next_ko": ""
+   "next_ko": "2026-09-25T14:30Z"
   },
   {
    "team": "Olympiacos",
