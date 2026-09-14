@@ -908,6 +908,7 @@ _grouped = {k for _t, kinds in [("Tipsters", ("Tipster site",)),
                                 ("Forecasters", ("Forecaster", "Baseline")),
                                 ("Models and books", ("Statistical model", "Sportsbook",
                                                       "Sportsbook consensus")),
+                                ("Rules", ("Rule",)),
                                 ("Prediction markets", ("Prediction market",))] for k in kinds}
 for _n, _m in S.SOURCES.items():
     if _m["connected"]:
@@ -2206,6 +2207,83 @@ eq((_empty["leads"], _empty["pairs"]), ({}, {}), "with nothing in Production the
 _html = PR.page(_pd, _pst, _feed, "<style></style>", now=_pnow)
 ok("Leeds United to win" in _html and "SoccerPredictions.ai · Soccer" in _html, "the page lists the open leads by source label")
 ok('href="./production.html">Production</a>' in open("streaks_build.py").read(), "every board links Production")
+
+# ---------------------------------------------------------------------------
+print("\nsoccer BTTS on Kalshi and the pre-registered form rule")
+# ---------------------------------------------------------------------------
+_b0 = datetime(2026, 9, 14, 12, tzinfo=timezone.utc)
+def _bfx(day, home, away, hg, ag, played=True):
+    ko = datetime(2026, 9, day, 15, tzinfo=timezone.utc) if day > 0 else _b0 + timedelta(days=-day)
+    return dict(home=home, away=away, kickoff=ko.strftime("%Y-%m-%dT%H:%MZ"), played=played,
+                home_goals=hg, away_goals=ag, competitive=True)
+_hist = []
+for i in range(10):                       # Hot FC: 8 of last 10 BTTS; Warm FC: 7; Cold FC: 3; Short FC: 9 games
+    _hist.append(dict(_bfx(1, "Hot FC", f"X{i}", 1, 1 if i < 8 else 0), kickoff=f"2026-08-{i+1:02d}T15:00Z"))
+    _hist.append(dict(_bfx(1, f"Y{i}", "Warm FC", 2, 1 if i < 7 else 0), kickoff=f"2026-08-{i+1:02d}T15:00Z"))
+    _hist.append(dict(_bfx(1, "Cold FC", f"Z{i}", 1, 1 if i < 3 else 0), kickoff=f"2026-08-{i+1:02d}T15:00Z"))
+    if i < 9:
+        _hist.append(dict(_bfx(1, "Short FC", f"W{i}", 1, 1), kickoff=f"2026-08-{i+1:02d}T15:00Z"))
+# a BTTS game AFTER kickoff must never count
+_hist.append(dict(_bfx(1, "Cold FC", "Late", 1, 1), kickoff="2026-09-20T15:00Z"))
+_up = [dict(home="Hot FC", away="Warm FC", kickoff="2026-09-15T18:00Z", played=False, home_goals=None, away_goals=None),
+       dict(home="Hot FC", away="Cold FC", kickoff="2026-09-16T18:00Z", played=False, home_goals=None, away_goals=None),
+       dict(home="Short FC", away="Hot FC", kickoff="2026-09-17T18:00Z", played=False, home_goals=None, away_goals=None)]
+_fx_all = _hist + _up
+def _kev(ticker, title, ya, yb, na, nb):
+    return {"event_ticker": ticker, "title": title, "markets": [
+        {"ticker": ticker + "-BTTS", "status": "active", "yes_ask_dollars": str(ya), "yes_bid_dollars": str(yb),
+         "no_ask_dollars": str(na), "no_bid_dollars": str(nb)}]}
+_evs = {"KXEPLBTTS": [_kev("KXEPLBTTS-26SEP15HOTWAR", "Hot FC vs Warm FC: BTTS", 0.62, 0.60, 0.40, 0.38),
+                      _kev("KXEPLBTTS-26SEP16HOTCOL", "Hot FC vs Cold FC: BTTS", 0.55, 0.53, 0.47, 0.45),
+                      _kev("KXEPLBTTS-26SEP17SHOHOT", "Short FC vs Hot FC: BTTS", 0.70, 0.68, 0.32, 0.30),
+                      _kev("KXEPLBTTS-26SEP15NOWNOW", "Nowhere vs Nobody: BTTS", 0.5, 0.48, 0.52, 0.5),
+                      _kev("KXEPLBTTS-26SEP15WARHOT", "Warm FC vs Hot FC: BTTS", 0.6, 0.58, 0.42, 0.4)]}
+_brows = S.fetch_kalshi_btts(fixtures=_fx_all, now=_b0, events_by_series=_evs)
+eq(sorted(r["market_id"] for r in _brows),
+   ["KXEPLBTTS-26SEP15HOTWAR-BTTS", "KXEPLBTTS-26SEP16HOTCOL-BTTS", "KXEPLBTTS-26SEP17SHOHOT-BTTS"],
+   "only markets matched to an ESPN fixture, home first, are listed")
+_br = {r["market_id"]: r for r in _brows}["KXEPLBTTS-26SEP15HOTWAR-BTTS"]
+eq((_br["side_a"], _br["price_a"], _br["price_b"], _br["start"][:16], _br["venue"], _br["start_source"]),
+   ("Yes", 0.62, 0.40, "2026-09-15T18:00", "kalshi_binary", "espn"),
+   "Yes at its ask, No at its ask, kicked off at ESPN's time, settled as a yes/no market")
+eq(S.btts_form(_fx_all, "Cold FC", datetime(2026, 9, 16, 18, tzinfo=timezone.utc)), (3, 10),
+   "form counts only games before kickoff (a later BTTS is ignored)")
+_rule = S.fetch_btts_form_l10("soccer_btts", universe={"soccer_btts": _brows}, fixtures=_fx_all)
+eq([q["market_id"] for q in _rule], ["KXEPLBTTS-26SEP15HOTWAR-BTTS"],
+   "the rule backs Yes only where BOTH teams are 7+ of 10 (not 8 v 3, not a side with 9 games)")
+eq(_rule[0]["pick"], "a", "and it backs Yes")
+eq(len(S.fetch_btts_market("soccer_btts", universe={"soccer_btts": _brows})), 3, "the market's own price is logged on every match")
+eq((S.SOURCES["btts_form_l10"]["kind"], S.SOURCES["btts_market"]["kind"]), ("Rule", "Baseline"),
+   "the rule can be promoted; the market's own price never is")
+
+_pnow = datetime(2026, 9, 14, 12, tzinfo=timezone.utc)
+_saved_ch4 = S.CHALLENGERS
+S.CHALLENGERS = {"btts_market": lambda sp: S.fetch_btts_market(sp, universe={"soccer_btts": _brows}),
+                 "btts_form_l10": lambda sp: S.fetch_btts_form_l10(sp, universe={"soccer_btts": _brows}, fixtures=_fx_all)}
+try:
+    _db = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_db, {"soccer_btts": _brows}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch4
+_bq = {(q["source"], q["market_id"]): q for q in _db["quotes"]}
+_rq = _bq[("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS")]
+eq((_rq["bet"], _rq["pick"], _rq["price"]), (True, "a", 0.62), "the rule's bet is booked at the Yes ask")
+ok(not any(q["bet"] for q in _db["quotes"] if q["source"] == "btts_market"), "the market's own price never bets")
+
+# population baseline: rule 2/2 at 0.62 against backing Yes on all 4 matches (2 won at 0.62, 2 lost at 0.55)
+def _pb(mid, src, won, price, bet):
+    return dict(id=f"{src}:{mid}", source=src, sport="soccer_btts", market_id=mid, venue="kalshi_binary",
+                bet=bet, pick="a" if bet else None, price=price if bet else None, price_a=price, price_b=1 - price,
+                result="a" if won else "b", status=("won" if won else "lost") if bet else "graded",
+                pnl=(round(100 * (1 / price - 1), 2) if won else -100.0) if bet else 0.0,
+                start=f"2026-09-1{mid}T18:00:00+00:00", logged="2026-09-10T00:00:00+00:00")
+_dpop = {"quotes": [_pb(1, "btts_form_l10", True, 0.62, True), _pb(2, "btts_form_l10", True, 0.62, True),
+                    _pb(1, "btts_market", True, 0.62, False), _pb(2, "btts_market", True, 0.62, False),
+                    _pb(3, "btts_market", False, 0.55, False), _pb(4, "btts_market", False, 0.55, False)]}
+_ap2 = T.assess(_dpop, "btts_form_l10", "soccer_btts")
+_crit = dict((k, (p, det)) for k, _l, p, det in _ap2["criteria"])
+ok("back Yes on every match" in _crit["baseline"][1], "the rule is judged against backing Yes on every match")
+eq(_crit["baseline"][0], True, "and beats it here (+61% v backing all four)")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

@@ -306,6 +306,19 @@ def collect(verbose=True):
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
+        if sport == "soccer_btts":
+            bstats = {}
+            try:
+                rows = S.fetch_kalshi_btts(stats=bstats)
+            except Exception as e:
+                print(f"  ! kalshi/soccer_btts failed: {type(e).__name__}: {str(e)[:70]}")
+                rows = []
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["kalshi_venue"] = len(rows)
+            if verbose:
+                print(f"  {S.SPORTS[sport]:<13} kalshi BTTS: {bstats.get('listed', 0)} listed, "
+                      f"{len(rows)} matched to an ESPN fixture ({time.time() - t0:.0f}s)")
+            continue
         if sport in S.KALSHI_BINARY:
             kstats = {}
             try:
@@ -1007,6 +1020,28 @@ def assess(d, name, sport=None, since=None, venues=None):
             continue
         k = len(pairs) * STAKE
         blind.append((kind, sum(q["pnl"] for q, _b in pairs) / k, sum(b for _q, b in pairs) / k))
+    # A RULE that always backs one side (the BTTS form rule backs Yes, and Yes is usually the
+    # favourite on the matches it picks) would be "back the favourite" on its own contests by
+    # construction, so the same-contest test could never tell it apart. Its blind rule is
+    # therefore the POPULATION: backing the same side on EVERY contest of that market over
+    # the same period (logged by the market's own never-betting source). Set per source with
+    # baseline="population"; nothing else changes.
+    if (S.SOURCES.get(name) or {}).get("baseline") == "population" and bets:
+        pop_source = next((n for n, m in S.SOURCES.items()
+                           if m.get("kind") == "Baseline" and set(m["sports"]) & {q["sport"] for q in bets}), None)
+        sides = {q["pick"] for q in bets}
+        pop = [q for q in all_bets(d) if q["source"] == pop_source and q["sport"] in {b["sport"] for b in bets}
+               and q.get("result") in ("a", "b") and (since is None or q["logged"] >= since)
+               and (venues is None or (q.get("venue") or "polymarket") in venues)]
+        pnls = []
+        for q in pop:
+            for side in sides:
+                price = q.get("price_a") if side == "a" else q.get("price_b")
+                if price is not None and PRICE_FLOOR <= price <= PRICE_CEIL:
+                    pnls.append(STAKE * (1.0 / price - 1.0) if q["result"] == side else -STAKE)
+        own = sum(q["pnl"] for q in bets) / (len(bets) * STAKE)
+        blind = ([(f"{'Yes' if sides == {'a'} else 'the same side'} on every match", own,
+                   sum(pnls) / (len(pnls) * STAKE))] if pnls else [])
     beats_all = bool(blind) and all(own > base for _k, own, base in blind)
     hardest = max(blind, key=lambda t: t[2] - t[1]) if blind else None
     base_roi = hardest[2] if hardest else None
@@ -1028,7 +1063,8 @@ def assess(d, name, sport=None, since=None, venues=None):
          n > 0 and z >= A["z_min"], f"{won} won v {expected:.1f} priced, z {z:+.2f}"),
         ("baseline", "beats every blind rule on the same contests",
          beats_all,
-         (f"{own_roi*100:+.1f}% v {base_roi*100:+.1f}% back the {hardest[0]}"
+         (f"{own_roi*100:+.1f}% v {base_roi*100:+.1f}% back "
+          f"{'' if 'every match' in hardest[0] else 'the '}{hardest[0]}"
           if hardest else "no comparable contests")),
         ("one_hit", "still profitable without its biggest win",
          roi_wo_top is not None and roi_wo_top > 0,

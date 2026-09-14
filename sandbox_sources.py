@@ -39,6 +39,7 @@ SPORTS = {
     # Sports first, then the non-sport markets. The key is used throughout as the
     # domain id; "sport" in the code means "one of these", nothing narrower.
     "soccer":       "Soccer",
+    "soccer_btts":  "Soccer · BTTS",
     "tennis":       "Tennis",
     "table_tennis": "Table Tennis",
     "boxing":       "Boxing",
@@ -129,6 +130,21 @@ SOURCES = {
              "the same city and day. The one non-sport domain with a genuinely "
              "independent forecaster — and it settles overnight, so it reaches a readable "
              "sample in a week rather than months."),
+    "btts_market": dict(
+        label="Kalshi BTTS price (every match)", kind="Baseline", connected=True,
+        site="kalshi.com", sports=["soccer_btts"],
+        note="The market's own midpoint on every Kalshi both-teams-to-score market the Sandbox "
+             "lists. Never bets. It is the population a BTTS rule is judged against: what "
+             "backing Yes on every match would have made over the same period."),
+    "btts_form_l10": dict(
+        label="BTTS form rule (both teams 7+ of last 10)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_btts"], baseline="population",
+        note="Pre-registered 2026-09-13, with no fitted number. Back Yes at the Kalshi ask on "
+             "every match where BOTH teams saw both teams score in at least 7 of their last 10 "
+             "competitive games (ESPN results strictly before kickoff). Found in research: "
+             "+10pp over the teams' own earlier rate on 77 matches, but inside one period, not "
+             "significant across the rules tried, and on 14 priced matches the market already "
+             "charged for it. The Sandbox decides."),
     "spot": dict(
         label="Spot price (no-change baseline)", kind="Baseline", connected=True,
         site="coingecko.com", sports=["crypto"],
@@ -2120,6 +2136,139 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
     return kept
 
 
+# ---------------------------------------------------------------------------
+# Soccer both-teams-to-score on Kalshi (2026-09-13)
+# ---------------------------------------------------------------------------
+BTTS_LEAGUES = {                 # Kalshi fragment -> board league name (ESPN form exists)
+    "EPL": "Premier League", "LALIGA": "La Liga", "SERIEA": "Serie A",
+    "BUNDESLIGA": "Bundesliga", "LIGUE1": "Ligue 1", "UCL": "Champions League",
+    "UEL": "Europa League", "MLS": "MLS", "EREDIVISIE": "Eredivisie",
+    "LIGAPORTUGAL": "Primeira Liga", "SAUDIPL": "Saudi Pro League",
+    "SCOTTISHPREM": "Scottish Premiership",
+}
+BTTS_FORM_WINDOW = 10
+BTTS_FORM_MIN = 7
+
+
+def _espn_fixtures():
+    try:
+        import streaks_fetch
+        return streaks_fetch.load_or_fetch()["fixtures"]
+    except Exception:
+        return []
+
+
+def fetch_kalshi_btts(horizon_days=4, fixtures=None, now=None, stats=None, events_by_series=None):
+    """Kalshi soccer BTTS markets as yes/no universe rows, each tied to its ESPN fixture.
+
+    A row is kept only when the Kalshi event (home first) matches an upcoming ESPN fixture
+    within 3 days: that fixture gives the real kickoff (Kalshi publishes none) and the club
+    names the form rule looks up. Side a = Yes, side b = No, each at its own ask, tradeable
+    only while that side's book is tight. Settled by resolve_kalshi_market."""
+    now = now or datetime.now(timezone.utc)
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    upcoming = []
+    for f in fixtures:
+        if f.get("played") or not f.get("kickoff"):
+            continue
+        try:
+            ko = datetime.fromisoformat(str(f["kickoff"]).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if now < ko <= now + timedelta(days=horizon_days):
+            upcoming.append((ko, f))
+    rows, listed = [], 0
+    for frag, league in BTTS_LEAGUES.items():
+        series = f"KX{frag}BTTS"
+        if events_by_series is not None:
+            events = events_by_series.get(series, [])
+        else:
+            try:
+                events = (_get(f"https://api.elections.kalshi.com/trade-api/v2/events?series_ticker={series}"
+                               f"&status=open&limit=200&with_nested_markets=true", tries=2, timeout=30)
+                          or {}).get("events") or []
+            except RuntimeError:
+                continue
+        for ev in events:
+            title = str(ev.get("title") or "").split(":")[0]
+            parts = [p.strip() for p in title.replace(" vs. ", " vs ").split(" vs ")]
+            m = next((x for x in ev.get("markets") or [] if str(x.get("ticker", "")).endswith("-BTTS")), None)
+            if len(parts) != 2 or not m or str(m.get("status", "")).lower() not in ("active", "open"):
+                continue
+            listed += 1
+            best = None
+            for ko, f in upcoming:
+                score, flip = pair_match(parts[0], parts[1], f["home"], f["away"], sport="soccer")
+                if score > 0 and not flip and (best is None or score > best[0]):
+                    best = (score, ko, f)
+            if not best:
+                continue
+            _s, ko, f = best
+            ya, yb, na, nb = (_num(m.get("yes_ask_dollars")), _num(m.get("yes_bid_dollars")),
+                              _num(m.get("no_ask_dollars")), _num(m.get("no_bid_dollars")))
+            if ya is None or na is None:
+                continue
+            tight = lambda bid, ask: bool(bid is not None and ask is not None and bid > 0
+                                          and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD)
+            tradeable = {"a": tight(yb, ya), "b": tight(nb, na)}
+            rows.append(dict(
+                sport="soccer_btts", venue="kalshi_binary", market_id=m["ticker"],
+                label=f"{f['home']} v {f['away']}: both teams to score",
+                side_a="Yes", side_b="No", price_a=ya, price_b=na, price_draw=None,
+                mid_a=round((ya + (yb if yb is not None else ya)) / 2, 4),
+                tradeable=tradeable, untraded=not any(tradeable.values()),
+                start=ko.isoformat(), date=ko.strftime("%Y-%m-%d"), volume=0.0,
+                start_source="espn", league=league, espn_home=f["home"], espn_away=f["away"],
+                url=f"https://kalshi.com/markets/{series.lower()}"))
+    rows.sort(key=lambda r: r["start"])
+    if stats is not None:
+        stats["listed"] = listed
+        stats["priced"] = sum(1 for r in rows if not r["untraded"])
+    return rows
+
+
+def btts_form(fixtures, team, before, window=BTTS_FORM_WINDOW):
+    """(both-teams-scored count, games) over `team`'s last `window` competitive games that
+    kicked off strictly before `before`. ESPN results only."""
+    games = []
+    for f in fixtures:
+        if (not f.get("played") or f.get("home_goals") is None or not f.get("competitive", True)
+                or team not in (f.get("home"), f.get("away")) or not f.get("kickoff")):
+            continue
+        try:
+            ko = datetime.fromisoformat(str(f["kickoff"]).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if ko < before:
+            games.append((ko, f["home_goals"] > 0 and f["away_goals"] > 0))
+    games.sort()
+    last = [b for _k, b in games[-window:]]
+    return sum(last), len(last)
+
+
+def fetch_btts_market(sport, universe=None):
+    """The Kalshi BTTS midpoint on every listed match — never a bet (edge 0 by construction)."""
+    rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
+    return [dict(market_id=r["market_id"], prob_a=r.get("mid_a", r["price_a"])) for r in rows]
+
+
+def fetch_btts_form_l10(sport, universe=None, fixtures=None):
+    """The pre-registered rule: back Yes where BOTH teams are 7+ of their last 10."""
+    rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    out = []
+    for r in rows:
+        try:
+            ko = datetime.fromisoformat(str(r["start"]))
+        except (KeyError, ValueError):
+            continue
+        hb, hn = btts_form(fixtures, r.get("espn_home"), ko)
+        ab, an = btts_form(fixtures, r.get("espn_away"), ko)
+        if hn >= BTTS_FORM_WINDOW and an >= BTTS_FORM_WINDOW and hb >= BTTS_FORM_MIN and ab >= BTTS_FORM_MIN:
+            out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
 def resolve_kalshi_market(ticker):
     """Settle one yes/no market: 'a' (YES), 'b' (NO), 'void', or None while open."""
     try:
@@ -2761,6 +2910,8 @@ def apply_espn_starts(rows, fixtures=None, now=None):
 # credits go to the contests none of them cover (plan_pinnacle, called from publish).
 CHALLENGERS = {
     "polymarket": polymarket_com_probs,
+    "btts_market": fetch_btts_market,
+    "btts_form_l10": fetch_btts_form_l10,
     "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,

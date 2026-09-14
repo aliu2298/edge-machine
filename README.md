@@ -464,6 +464,15 @@ promoted. Settled bets are never lost to pruning: `prune()` copies each settled 
 `data/sandbox_archive/YYYY-MM.json` (by settle month) before rolling the row up, and every
 judgement reads the ledger and the archive together.
 
+**Soccer BTTS and the form rule (2026-09-13).** The Sandbox lists Kalshi both-teams-to-score
+markets as the domain `soccer_btts` (`fetch_kalshi_btts`): yes/no rows tied to an ESPN fixture
+(home first, kickoff from ESPN), Yes and No at their own asks, settled as yes/no markets. Two
+sources: `btts_market` (Baseline, never bets) logs the midpoint on every match; `btts_form_l10`
+(kind Rule) is the pre-registered rule — back Yes where BOTH teams saw both teams score in 7+ of
+their last 10 competitive games (ESPN results strictly before kickoff). No fitted threshold. Because
+a rule that always backs Yes would equal "back the favourite" on its own contests, its blind rule is
+the population (`baseline="population"`): backing Yes on every BTTS match over the same period.
+
 **Production (2026-09-13).** `production.py`. A (source, sport) pair is in Production while it
 sits in QA with `ready_at` set (held the ready gate 7 days) and leaves on the first run the gate
 fails — no manual promotion. Each tracker run writes `data/production_leads.json` in the lead
