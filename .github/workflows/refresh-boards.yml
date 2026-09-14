@@ -14,8 +14,8 @@ on:
     # minutes are free on public repos, so the extra cost is nil.
     #
     # Every 3h since 2026-09-13: GitHub started the 6-hourly slots up to seven hours apart
-    # (04:54, 11:58, 16:24), which put the board near the bot's 8h feed limit and slowed
-    # every withdrawal reaching it. More slots make a late or dropped one matter less.
+    # (04:54, 11:58, 16:24), which left the board up to 8h stale and slowed every
+    # withdrawal reaching it. More slots make a late or dropped one matter less.
     - cron: "41 */3 * * *"     # 00:41, 03:41, ... UTC
   workflow_dispatch:            # manual "Refresh now" from the Actions tab
 
@@ -110,7 +110,8 @@ jobs:
 
           PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
                      public_site/record.html public_site/today.html \
-                     data/streaks.json data/streak_leads.json data/fire_runs.json \
+                     data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
+                     data/fire_runs.json \
                      data/book_ledger.json data/sandbox_closes/boards.json"
 
           for attempt in 1 2 3; do

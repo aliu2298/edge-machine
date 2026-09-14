@@ -1685,7 +1685,7 @@ try:
 
     # Production-ready: the stamp on fresh data + positive CLV + positive after fees.
     st3 = {"pairs": {"covers|soccer": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    # Soccer on Kalshi, home or away: a record the bot can actually trade.
+    # Soccer on Kalshi, home or away: a record the feed can publish.
     fresh = [dict(q, sport="soccer", venue="kalshi", market_id=f"KXEPLGAME-26SEP01X{i:02d}")
              for i, q in enumerate(_chooser(60, 6))]
     for q in fresh:
@@ -1715,7 +1715,7 @@ try:
     eq([c["to"] for c in ch], ["sandbox"], "the same record buying above the closing price is demoted, not ready")
     ok("closing price" in ch[0]["reason"], "because it is behind the close")
 
-    # The bot cannot trade it: the same fresh MLB record clears everything else and is not ready.
+    # The feed cannot publish it: the same fresh MLB record clears everything else and is not ready.
     _mlb = [dict(q, sport="mlb", venue="polymarket_us") for q in _chooser(60, 6)]
     for q in _mlb:
         q["close_price"] = q["price"] + 0.02
@@ -1723,21 +1723,21 @@ try:
     _stm = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
     T.evaluate_stages({"quotes": _mlb}, _stm, now=_t, verbose=False)
     ch = T.evaluate_stages({"quotes": _mlb}, _stm, now=_t + timedelta(days=8), verbose=False)
-    eq(ch, [], "an MLB record the bot has no route for never becomes ready")
+    eq(ch, [], "an MLB record the feed cannot publish never becomes ready")
     _gate = dict((k, (p, det)) for k, _l, p, det in T.ready_gate(T.assess({"quotes": _mlb}, "covers", "mlb",
                                                                            venues=T.TRADEABLE_VENUES)))
     eq(_gate["route"][0], False, "because the route criterion fails")
     ok("0 of 60" in _gate["route"][1], "and says how many bets had a route")
     _draws = [dict(q, pick="draw") if i % 10 == 0 else q for i, q in enumerate(fresh)]
-    eq(T.bot_route(_draws[0]), False, "a soccer draw has no route: the bot refuses draws")
-    eq(T.bot_route(_draws[1]), True, "a soccer side on Kalshi does")
-    eq(T.bot_route(dict(_draws[1], market_id="KXALLSVENSKANGAME-26SEP01X")), False,
-       "but not in a league the bot does not map")
+    eq(T.placeable(_draws[0]), False, "a soccer draw is not publishable: no draw claim")
+    eq(T.placeable(_draws[1]), True, "a soccer side on Kalshi does")
+    eq(T.placeable(dict(_draws[1], market_id="KXALLSVENSKANGAME-26SEP01X")), False,
+       "but not in an unmapped league")
 
     # polymarket.com bets never count toward QA.
     _com = [dict(q, venue="polymarket") for q in _chooser(32, 3)]
     eq(T.evaluate_stages({"quotes": _com}, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
-       "a record logged on polymarket.com, which the bot cannot trade, is not promoted")
+       "a record logged on polymarket.com, closed to US accounts, is not promoted")
     eq(T.assess({"quotes": _com}, "covers", "mlb")["n"], 32,
        "though the Sandbox's own view still counts it")
 
@@ -2153,7 +2153,7 @@ eq([q["id"] for q in _dpub["quotes"] if q["source"] == "espn_fpi"], ["espn_fpi:4
    "publish refuses a source's second quote on a contest it already priced elsewhere")
 
 # ---------------------------------------------------------------------------
-print("\nProduction: pairs that hold the ready gate, published for the bot")
+print("\nProduction: pairs that hold the ready gate, published as a feed")
 # ---------------------------------------------------------------------------
 import production as PR
 _pnow = datetime(2026, 10, 1, 12, tzinfo=timezone.utc)
@@ -2171,9 +2171,9 @@ def _pq(i, **kw):
 _pd = {"quotes": [
     _pq(1),                                                            # open, routable -> published
     _pq(2, pick="b"),                                                  # away side
-    _pq(3, pick="draw"),                                               # draw: no bot route
+    _pq(3, pick="draw"),                                               # draw: not publishable
     _pq(4, logged="2026-09-29T06:00:00+00:00"),                        # logged before Production
-    _pq(5, market_id="KXALLSVENSKANGAME-26OCT02AIKHAM", id="sp:5"),    # league the bot does not map
+    _pq(5, market_id="KXALLSVENSKANGAME-26OCT02AIKHAM", id="sp:5"),    # unmapped league
     _pq(6, start=(_pnow - timedelta(hours=1)).isoformat()),            # already started
     _pq(7, status="won", pnl=127.27, result="a", price_a=0.44, price_b=0.3, price_draw=0.3,
         start=(_pnow - timedelta(days=1)).isoformat()),   # settled: kept for results
@@ -2186,22 +2186,22 @@ eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in QA with
 _fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
 eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "7"],
    "published: open routable bets logged since ready, and recent settled ones; nothing else")
-eq(_feed["unroutable_skipped"], 2, "the draw and the unmapped league are held back and counted")
+eq(_feed["unlisted_skipped"], 2, "the draw and the unmapped league are held back and counted")
 eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
 eq(sorted(_feed["pairs"]["soccerpredictions|soccer"]),
-   ["promoted_at", "ready_at", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
-   "each pair carries the Sandbox's own record since ready, for the bot to compare with its fills")
+   ["entered_at", "fast_track", "promoted_at", "ready_at", "route", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
+   "each pair carries the Sandbox's own record since ready, to compare real fills with")
 _l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
 eq((_l1["bet"], _l1["home"], _l1["away"], _l1["league"], _l1["status"]),
    ({"kind": "match_result", "side": "home"}, "Leeds United", "Newcastle", "Premier League", "pending"),
-   "a Production lead is a match_result on the bot's own league name")
+   "a Production lead is a match_result on the board's league name")
 eq(next(l for l in _fl if l["sandbox_quote"].endswith("2"))["bet"]["side"], "away", "side b is the away side")
 eq((_l1["last_seen_at"], _feed["board_built_at"]), (_pnow.isoformat(), _pnow.isoformat()),
-   "open leads carry the build stamp the bot's exact-build rule reads")
+   "open leads carry the build stamp, as the Leads ledger does")
 _l7 = next(l for l in _fl if l["sandbox_quote"].endswith("7"))
 eq((_l7["status"], "last_seen_at" in _l7), ("hit", False), "a settled lead is graded and never looks current")
 ok(_l1["id"].startswith(_l1["date"] + "|Leeds United|Newcastle|"),
-   "ids start date|home|away, so the bot's one-position-per-fixture rule applies")
+   "ids start date|home|away, as the Leads ledger's do")
 _empty = PR.build_feed({"quotes": []}, {"pairs": {}}, now=_pnow)
 eq((_empty["leads"], _empty["pairs"]), ({}, {}), "with nothing in Production the feed is empty, not missing")
 _html = PR.page(_pd, _pst, _feed, "<style></style>", now=_pnow)
@@ -2288,6 +2288,121 @@ _ap2 = T.assess(_dpop, "btts_form_l10", "soccer_btts")
 _crit = dict((k, (p, det)) for k, _l, p, det in _ap2["criteria"])
 ok("back Yes on every match" in _crit["baseline"][1], "the rule is judged against backing Yes on every match")
 eq(_crit["baseline"][0], True, "and beats it here (+61% v backing all four)")
+
+
+print("\nsoccer goals on Kalshi: over 1.5, team 1+, team 2+, and the fast track")
+_g0 = datetime(2026, 9, 14, 12, tzinfo=timezone.utc)
+def _gfx(home, away, hg, ag, day):
+    return dict(home=home, away=away, home_goals=hg, away_goals=ag, played=True, competitive=True,
+                kickoff=f"2026-08-{day:02d}T15:00Z")
+_gh = []
+for i in range(10):
+    _gh.append(_gfx("Goal FC", f"G{i}", 2, 1 if i < 9 else 0, i + 1))      # 10/10 over 1.5 · scored 2+ 10/10
+    _gh.append(_gfx(f"S{i}", "Sieve FC", 1, 2 if i < 8 else 0, i + 1))     # Sieve: 8/10 over 1.5, conceded 2+ 8/10, conceded in 8/10
+    _gh.append(_gfx("Dull FC", f"D{i}", 0, 0 if i < 5 else 1, i + 1))      # Dull: under
+    _gh.append(_gfx(f"L{i}", "Leak FC", 3, 1, i + 1))                      # Leak: scored 1, conceded 3 every game
+_gh.append(dict(_gfx("Leak FC", "Late", 0, 0, 1), kickoff="2026-09-20T15:00Z"))   # after kickoff: ignored
+_gup = [dict(home="Goal FC", away="Leak FC", kickoff="2026-09-15T18:00Z", played=False, home_goals=None, away_goals=None),
+        dict(home="Dull FC", away="Sieve FC", kickoff="2026-09-16T18:00Z", played=False, home_goals=None, away_goals=None)]
+_gall = _gh + _gup
+def _gm(ticker, sub, ya, yb):
+    return {"ticker": ticker, "yes_sub_title": sub, "status": "active", "yes_ask_dollars": str(ya),
+            "yes_bid_dollars": str(yb), "no_ask_dollars": str(round(1 - yb, 2)), "no_bid_dollars": str(round(1 - ya, 2))}
+_gevs = {
+    "KXEPLTOTAL": [{"event_ticker": "KXEPLTOTAL-26SEP15GOALEA", "title": "Goal FC vs Leak FC: Total Goals",
+                    "markets": [_gm("KXEPLTOTAL-26SEP15GOALEA-1", "Over 0.5 goals scored", 0.95, 0.94),
+                                _gm("KXEPLTOTAL-26SEP15GOALEA-2", "Over 1.5 goals scored", 0.84, 0.83)]},
+                   {"event_ticker": "KXEPLTOTAL-26SEP16DULSIE", "title": "Dull FC vs Sieve FC: Total Goals",
+                    "markets": [_gm("KXEPLTOTAL-26SEP16DULSIE-2", "Over 1.5 goals scored", 0.70, 0.69)]}],
+    "KXEPLTEAMTOTAL": [{"event_ticker": "KXEPLTEAMTOTAL-26SEP15GOALEA", "title": "Goal FC vs Leak FC: Team Total",
+                        "markets": [_gm("KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", "Goal FC over 0.5 goals", 0.86, 0.85),
+                                    _gm("KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2", "Goal FC over 1.5 goals", 0.55, 0.54),
+                                    _gm("KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1", "Leak FC over 0.5 goals", 0.60, 0.59),
+                                    _gm("KXEPLTEAMTOTAL-26SEP15GOALEA-GOA3", "Goal FC over 2.5 goals", 0.30, 0.29)]}],
+}
+_gst = {}
+_grows = S.fetch_kalshi_goals(fixtures=_gall, now=_g0, events_by_series=_gevs, stats=_gst)
+eq({k: sorted(r["market_id"] for r in v) for k, v in _grows.items()},
+   {"soccer_o15": ["KXEPLTOTAL-26SEP15GOALEA-2", "KXEPLTOTAL-26SEP16DULSIE-2"],
+    "soccer_team1": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", "KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"],
+    "soccer_team2": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"]},
+   "over 1.5 from the totals ladder; over 0.5 / 1.5 per side from team totals; other lines ignored")
+_t1 = {r["market_id"]: r for r in _grows["soccer_team1"]}
+eq((_t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["team"], _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["opponent"],
+    _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["league"], _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["start_source"]),
+   ("Leak FC", "Goal FC", "Premier League", "espn"), "a team-total row names its side, the opponent, the league and ESPN's kickoff")
+eq(S.team_form(_gall, "Leak FC", datetime(2026, 9, 15, 18, tzinfo=timezone.utc), lambda gf, ga: gf + ga >= 2, 10)[:2],
+   (10, 10), "form counts only games before kickoff")
+eq([q["market_id"] for q in S.fetch_o15_form_l10("soccer_o15", universe=_grows, fixtures=_gall)],
+   ["KXEPLTOTAL-26SEP15GOALEA-2"], "over 1.5 rule: both 9+/10 (Goal 10, Leak 10) yes; Dull v Sieve (8/10) no")
+eq(sorted(q["market_id"] for q in S.fetch_team1_form_l5("soccer_team1", universe=_grows, fixtures=_gall)),
+   ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1"],
+   "team 1+ rule: each side on its own — Leak FC scored in 5/5, but Goal FC kept a clean sheet last time out")
+eq([q["market_id"] for q in S.fetch_team2_form_l10("soccer_team2", universe=_grows, fixtures=_gall)],
+   ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"], "team 2+ rule: Goal FC 10/10 scored 2+, Leak FC 10/10 conceded 2+")
+ok(S.outcome_cluster(dict(venue="kalshi_binary", sport="soccer_team1", market_id="KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", id="x"))
+   != S.outcome_cluster(dict(venue="kalshi_binary", sport="soccer_team1", market_id="KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1", id="y")),
+   "both sides of one team total can land: two outcomes, not one ladder")
+
+_saved_ch5 = S.CHALLENGERS
+S.CHALLENGERS = {"goals_market": lambda sp: S.fetch_goals_market(sp, universe=_grows),
+                 "team1_form_l5": lambda sp: S.fetch_team1_form_l5(sp, universe=_grows, fixtures=_gall)}
+try:
+    _gdb = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_gdb, _grows, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch5
+_gq = {(q["source"], q["market_id"]): q for q in _gdb["quotes"]}
+_tq = _gq[("team1_form_l5", "KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1")]
+eq((_tq["bet"], _tq["price"], _tq["team"], _tq["espn_home"], _tq["league"]), (True, 0.86, "Goal FC", "Goal FC", "Premier League"),
+   "the rule's bet is booked at the Yes ask and keeps its side and fixture")
+ok(not any(q["bet"] for q in _gdb["quotes"] if q["source"] == "goals_market"), "the goals market's own price never bets")
+eq(T.placeable(_tq), True, "Yes on a team-goals market in a mapped league is publishable")
+eq(T.placeable(dict(_tq, pick="b")), False, "No is not")
+eq(T.placeable(dict(_tq, league="Allsvenskan")), False, "nor an unmapped league")
+
+# fast track: probation -> cleared / failed, and Production publishes it from the first bet
+def _ftq(i, won, price=0.8, logged="2026-09-14T06:00:00+00:00"):
+    return dict(id=f"team1_form_l5:M{i}", source="team1_form_l5", sport="soccer_team1", market_id=f"KXEPLTEAMTOTAL-26SEP{15+i%10}X-A{i}",
+                venue="kalshi_binary", bet=True, pick="a", price=price, price_a=price, price_b=1 - price,
+                status="won" if won else "lost", result="a" if won else "b",
+                pnl=round(100 * (1 / price - 1), 2) if won else -100.0,
+                start=(datetime(2026, 9, 15, 18, tzinfo=timezone.utc) + timedelta(hours=i)).isoformat(), logged=logged,
+                label="x", side_a="Yes", side_b="No", league="Premier League", espn_home="Goal FC", espn_away="Leak FC",
+                team="Goal FC", start_source="espn")
+_meta = S.SOURCES["team1_form_l5"]
+_st_ft = {"pairs": {}, "events": []}
+_d_ft = {"quotes": [_ftq(i, True) for i in range(5)]}
+T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False)
+eq((_st_ft["pairs"]["team1_form_l5|soccer_team1"]["stage"], _st_ft["pairs"]["team1_form_l5|soccer_team1"]["fast_track"]["state"]),
+   ("sandbox", "probation"), "a fast-tracked pair is on probation below its sample")
+ok("team1_form_l5|soccer_team1" in PR.production_pairs(_st_ft), "and in Production from the first bet")
+_d_ft = {"quotes": [_ftq(i, i % 10 != 0, price=0.8) for i in range(30)]}            # 27/30 at 0.80
+eq(T.fast_track_status(_d_ft, "team1_form_l5", "soccer_team1", _meta)[0], "cleared",
+   "30 bets, profitable after fees and z >= 1: cleared")
+_d_fail = {"quotes": [_ftq(i, i % 5 != 0, price=0.8) for i in range(30)]}         # 24/30 at 0.80
+T.evaluate_stages(_d_fail, _st_ft, now=datetime(2026, 10, 10, tzinfo=timezone.utc), verbose=False)
+_pf = _st_ft["pairs"]["team1_form_l5|soccer_team1"]
+eq((_pf["fast_track"]["state"], _pf["since"][:10]), ("failed", "2026-10-10"),
+   "at the price paid and no better: failed, back to the ladder on fresh evidence")
+ok("team1_form_l5|soccer_team1" not in PR.production_pairs(_st_ft), "and out of Production")
+T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 10, 11, tzinfo=timezone.utc), verbose=False)
+eq(_st_ft["pairs"]["team1_form_l5|soccer_team1"]["fast_track"]["state"], "failed", "a failed fast track is never re-opened")
+
+_open = dict(_ftq(99, True), status="open", pnl=0.0, result=None,
+             start=datetime(2026, 9, 16, 18, tzinfo=timezone.utc).isoformat(), logged="2026-09-15T00:00:00+00:00")
+_st_p = {"pairs": {"team1_form_l5|soccer_team1": dict(stage="sandbox", since=None,
+                                                     fast_track=dict(since="2026-09-14T00:00:00+00:00", state="probation"))}}
+_fd = PR.build_feed({"quotes": [_open]}, _st_p, now=datetime(2026, 9, 15, 12, tzinfo=timezone.utc))
+_gl = list(_fd["leads"].values())
+eq([(l["bet"], l["home"], l["away"], l["headline"], l["league"], l["status"]) for l in _gl],
+   [({"kind": "team_gte", "n": 1, "team": "Goal FC"}, "Goal FC", "Leak FC", "Goal FC to score 1+", "Premier League", "pending")],
+   "a fast-tracked team-goals bet is published in the Leads board's bet vocabulary")
+eq(_fd["pairs"]["team1_form_l5|soccer_team1"]["route"], "fast track · probation", "and the pair says how it got there")
+_o15 = dict(_open, sport="soccer_o15", source="o15_form_l10", id="o15_form_l10:Z", team=None)
+eq(PR.lead_from_quote(_o15, "o15_form_l10|soccer_o15", "2026-09-15T12:00:00+00:00")["bet"],
+   {"kind": "total_gte", "n": 2}, "an over-1.5 bet is total_gte 2")
+ok("fast track" in PR.page({"quotes": [_open]}, _st_p, _fd, ""), "the Production page shows how a pair got there")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

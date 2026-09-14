@@ -235,7 +235,29 @@ def tiles(pairs):
         for k, v in pairs) + '</div>')
 
 
-def page_html(ld, fr, bk, now):
+def rule_change_html(rc):
+    """The over-1.5 rule change: the published 9-of-10 rule against the retired run pairings."""
+    if not rc:
+        return ""
+    def row(name, r):
+        price = "—" if r["avg_price"] is None else f"{r['avg_price']:.2f}"
+        roi = "—" if r["roi"] is None else f"{r['roi'] * 100:+.1f}%"
+        return (f'<tr><td><b>{name}</b></td><td class="num">{r["graded"]}</td>'
+                f'<td class="num">{pct(r["rate"])}</td><td class="num">{r["priced"]}</td>'
+                f'<td class="num">{price}</td><td class="num">{roi}</td>'
+                f'<td class="num">{r["pending"]}</td></tr>')
+    return f"""<h2>Over 1.5 — the rule change of {esc(rc['since'])}</h2>
+<div class="note">On {esc(rc['since'])} the over-1.5 lane changed rule: both sides' games over 1.5
+in <b>9+ of their last 10</b>, replacing the run pairings (both sides over 1.5, or both scoring, in
+every recent game). The old rule still runs, unpublished, on the same fixtures, so the two are
+compared on the same weeks at the same exchange prices. Only leads still on the board at
+kickoff count. {rc['both']} fixture(s) were picked by both.</div>
+<div class="tbl"><table><tr><th>Rule</th><th class="num">Graded</th><th class="num">Hit</th>
+<th class="num">Priced</th><th class="num">Avg price</th><th class="num">ROI</th><th class="num">Pending</th></tr>
+{row("9+ of last 10 (published)", rc["v2"])}{row("Run pairings (retired, shadow)", rc["v1"])}</table></div>"""
+
+
+def page_html(ld, fr, bk, now, rc=None):
     def section(title, blurb, rep, rows_html, empty):
         if not rep["graded"]:
             return f'<h2>{title}</h2><div class="note">{blurb}</div><div class="note">{empty}</div>'
@@ -405,6 +427,8 @@ repo have already died from being read without one.</div>
          "Nothing settled at a price yet — pricing started 2026-09-12 and a lead counts "
          "only if it was priced before kickoff and has since been played.")}
 
+{rule_change_html(rc)}
+
 {section("Model v book — is any estimate better than the price?",
          "Every streak rule here was measured against the teams' own rates and none "
          "lifted them, because a run is the noisiest estimate of a rate there is. The "
@@ -448,6 +472,12 @@ repo have already died from being read without one.</div>
 def build():
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
     ld = T.report(fixtures)
+    try:
+        import streaks_build as SB
+        rc = T.rule_compare(T.load(), T.load(T.SHADOW_LEDGER), SB.RULE_CHANGE)
+    except Exception as e:
+        print(f"  (rule comparison skipped: {e})")
+        rc = None
     fr = F.report(fixtures)
     bk = K.report(K.load())
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
@@ -455,7 +485,7 @@ def build():
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "record.html")
     with open(out, "w") as f:
-        f.write(page_html(ld, fr, bk, now))
+        f.write(page_html(ld, fr, bk, now, rc))
     print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
           f"leads {ld['graded']}, fire {fr['graded']}, book {bk['graded']} graded")
 

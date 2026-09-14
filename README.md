@@ -93,7 +93,7 @@ and graded against ESPN final scores once its fixture is played.
 |---|---|
 | `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, base rates, auto-settlement. Read-only; it places nothing. |
 | `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
-| `venue_book.py` | Prices every lead and fixture on Kalshi and Polymarket US (ask + taker fee, midpoint as fair); matcher copied from the trading bot. Replaced Bovada 2026-09-13. |
+| `venue_book.py` | Prices every lead and fixture on Kalshi and Polymarket US (ask + taker fee, midpoint as fair). Replaced Bovada 2026-09-13. |
 | `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
 | `today_build.py` | Renders today's and tomorrow's fixtures to `public_site/today.html`: leads from the ledger, in-play games filled from the book/lead ledgers, results, scoreboard, why-not on form at kickoff. Tested by `test_today.py`. |
 | `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
@@ -114,7 +114,7 @@ and graded against ESPN final scores once its fixture is played.
 | `sandbox_browser.py` | Headless fetch for the sources that need a real browser. |
 | `test_sandbox.py` | Logic tests for the Sandbox adapters, staking rules and scoring. |
 | `.github/workflows/refresh-boards.yml` | Three-hourly (`41 */3`; six-hourly slots started up to 7h apart): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
-| `.github/workflows/backup-refresh.yml` | Hourly watchdog (`53 * * * *`): snapshots Sandbox closing prices, and takes over (in the boards concurrency group, as a separate job) only when the primary has not succeeded or the live board is over 5h old — before the bot's 8h feed limit. |
+| `.github/workflows/backup-refresh.yml` | Hourly watchdog (`53 * * * *`): snapshots Sandbox closing prices, and takes over (in the boards concurrency group, as a separate job) only when the primary has not succeeded or the live board is over 5h old. |
 | `.github/workflows/sandbox-close.yml` | Every 30 minutes (`11,41 * * * *`): closing-price snapshots only; own concurrency group, no deploy. |
 | `.github/workflows/sandbox-tracker.yml` | Three-hourly (`11 2-23/3`), 90 minutes clear of the boards: collect forecasts, settle, rebuild the Sandbox board. |
 
@@ -222,15 +222,15 @@ goal, so it says nothing about a 1.5 line.
 
 **Prices come from the exchanges (since 2026-09-13).** Bovada was the book until it began
 answering every request with a cookie redirect loop. `venue_book.py` now prices each lead and
-every fixture inside 24h on **Kalshi and Polymarket US**, the venues the trading bot routes to:
+every fixture inside 24h on **Kalshi and Polymarket US**, the two regulated US exchanges:
 over 1.5 / 2.5 from Polymarket US's totals ladder or Kalshi `KX{LEAGUE}TOTAL`, BTTS from Kalshi
 `KX{LEAGUE}BTTS`, a side to score 2+ from Kalshi `KX{LEAGUE}TEAMTOTAL`. Where both list a market
 the cheaper effective price wins. `price` is decimal odds at the ask **plus taker fee** (what a
 follower pays); `fair` is the book's midpoint. A one-sided book, or a spread over 10¢, is no
 price. No URL is stored in a ledger — `market_url()` builds the card's Kalshi / Polymarket
 button at render time. The matcher (both sides must match, same day, near-ties refused) is
-copied from the trading bot, thresholds unchanged. Coverage is narrower than a sportsbook: on
-the bot's own record, 60% of over-1.5 leads and 31% of team-2+ leads had a venue market — the
+kept from an earlier matcher, thresholds unchanged. Coverage is narrower than a sportsbook: when
+measured, 60% of over-1.5 leads and 31% of team-2+ leads had a venue market — the
 rest cannot be traded and are graded on hit rate only. Leads priced before the switch keep
 their Bovada price (a price is never revised), and the Record shows how the priced sample
 splits between the two.
@@ -452,8 +452,7 @@ wins beat the price by z ≥ 1, beats every blind rule on the same contests, sti
 without its biggest win. In QA the stamp is applied to the fresh record, plus positive
 closing-line value and positive ROI after the taker fee (Polymarket US 0.06·p·(1−p), Kalshi
 0.07): that is **production-ready**. A QA pair whose fresh record is behind the price after 30
-bets is demoted and must re-qualify on bets logged after the demotion. The trading bot never
-reads QA.
+bets is demoted and must re-qualify on bets logged after the demotion.
 
 **QA rules, tightened 2026-09-13 before any promotion.** Production-ready needs CLV on 30+
 closing prices covering at least half the fresh bets, and the ready gate must hold for 7 days
@@ -473,20 +472,45 @@ their last 10 competitive games (ESPN results strictly before kickoff). No fitte
 a rule that always backs Yes would equal "back the favourite" on its own contests, its blind rule is
 the population (`baseline="population"`): backing Yes on every BTTS match over the same period.
 
+**Soccer goals markets and three rules (2026-09-14).** `fetch_kalshi_goals` lists Kalshi over 1.5
+(`KX{LEAGUE}TOTAL`) and team totals (`KX{LEAGUE}TEAMTOTAL`, one row per side) as three domains —
+`soccer_o15`, `soccer_team1` (over 0.5) and `soccer_team2` (over 1.5) — each row tied to its ESPN
+fixture and side. `goals_market` (Baseline) logs every midpoint; the rules are pre-registered from
+research fixed before it ran (competitive games only, 10+ each, results strictly before kickoff):
+`o15_form_l10` both sides' games over 1.5 in 9+ of 10; `team1_form_l5` side scored in 5/5 and the
+opponent conceded in 5/5 (fast-tracked, see below); `team2_form_l10` side scored 2+ in 7+/10 and the
+opponent conceded 2+ in 7+/10. Each is judged against its own market's population. Both sides of a
+team total are separate outcomes (`outcome_cluster`). Kalshi lists no team totals for the Eredivisie
+or Primeira Liga.
+
+**Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
+`over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
+unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into
+`data/streak_leads_shadow_over15.json`, never published, and the Record's rule-change table
+(`rule_compare`) sets the two side by side from `RULE_CHANGE`.
+
 **Production (2026-09-13).** `production.py`. A (source, sport) pair is in Production while it
 sits in QA with `ready_at` set (held the ready gate 7 days) and leaves on the first run the gate
 fails — no manual promotion. Each tracker run writes `data/production_leads.json` in the lead
 ledger's shape (`leads`, `updated_at`, `board_built_at`): every bet a Production pair logged since
-it became ready that the bot can route (a soccer side to win on a mapped Kalshi GAME market) as a
-`match_result` lead with `side` home/away, `last_seen_at` = the build stamp while open, status
-pending/hit/miss/void. Empty until a pair is ready. `public_site/production.html` lists the pairs
-and open leads. **The trading bot reads this feed next to the Leads ledger** under the same checks.
+it entered Production that the feed can express (`placeable`: a soccer side to win on a mapped
+Kalshi GAME market as `match_result` with `side` home/away, or Yes on a Kalshi over-1.5 / team-goals
+market as `total_gte` / `team_gte`), `last_seen_at` = the build stamp while open, status
+pending/hit/miss/void. Empty until a pair arrives. `public_site/production.html` lists the pairs
+and open leads.
 
-**QA counts only what the bot can trade (2026-09-13).** QA entry, readiness and demotion read
+**Fast track (2026-09-14).** A source with `fast_track` in its registry entry (today
+`team1_form_l5`, team scores 1+) is in Production on probation from its first bet, without the QA
+gate, and judged by `fast_track_status` on every settled bet since `since`: under 30 bets it is on
+probation; at 30+ it stays only while profitable after fees with z ≥ 1 against the prices paid.
+Failing sends it back to the normal ladder on fresh evidence, and a failed fast track never
+re-opens.
+
+**QA counts only the US exchanges (2026-09-13).** QA entry, readiness and demotion read
 only bets on Polymarket US, Kalshi and Kalshi yes/no (`TRADEABLE_VENUES`); polymarket.com bets
 stay on the Sandbox page and in its own stamp. Production-ready also requires every fresh bet to
-have a route in the trading bot (`bot_route`: today a soccer side, home or away, on Kalshi or
-Polymarket US — no draws, no other sport), updated only when the bot learns a market.
+be a market the Production feed can publish (`placeable`: a soccer side on a Kalshi game
+market, or Yes on a Kalshi soccer goals market — no draws, no other sport yet).
 
 **Closing prices from the Mac.** GitHub throttles the frequent schedules, so
 `scripts/local_closes.sh` runs `sandbox_close.py --writer mac` every 15 minutes under launchd
@@ -546,12 +570,12 @@ kicking off inside `LEAD_HORIZON_H` = 48 hours. Every build stamps `board_built_
 `data/streak_leads.json` and `last_seen_at` (the same stamp) on every lead it publishes; a
 pending lead the build no longer publishes, with its fixture still ahead, gets `withdrawn_at`
 (cleared if it returns). The Record's hit-rate, priced and model-v-book tables count only leads
-not withdrawn at kickoff, and show the withdrawn count apart. The bot trades a lead only when its
-`last_seen_at` equals `board_built_at`, and holds at most one position per fixture.
+not withdrawn at kickoff, and show the withdrawn count apart. A lead is on the board now only
+when its `last_seen_at` equals `board_built_at`.
 
 **Sandbox venue (2026-09-13).** Non-soccer contests are priced and settled on **Polymarket
-US** (`fetch_polymarket_us`, `resolve_polymarket_us`) — the exchange the trading bot trades —
-instead of polymarket.com, which the bot cannot use. Each event's single two-outcome winner
+US** (`fetch_polymarket_us`, `resolve_polymarket_us`) — the regulated US exchange —
+instead of polymarket.com, which is closed to US accounts. Each event's single two-outcome winner
 market is the contest; its bid/ask quote the first outcome (side B's ask is 1 − bid); an event
 not at period "NS" is in play and never quoted; settlement 1/0 = first outcome won/lost.
 polymarket.com stays as the comparison source `polymarket`, backed at a 3pp disagreement with

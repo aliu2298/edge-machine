@@ -3,9 +3,9 @@
 
 Replaces the Bovada sportsbook feed (retired 2026-09-13: it began answering every request
 with a cookie redirect loop, and a sportsbook line was never the price anyone here pays).
-Every quote is now the ask on Kalshi or Polymarket US — the two venues the trading bot
-routes to — so a lead's price, its break-even and its P/L are all measured at a price that
-could really have been bought.
+Every quote is now the ask on Kalshi or Polymarket US — the two regulated US exchanges — so
+a lead's price, its break-even and its P/L are all measured at a price that could really have
+been bought.
 
 Markets, per fixture, under the ledger's existing keys:
 
@@ -14,7 +14,7 @@ Markets, per fixture, under the ledger's existing keys:
   home2plus/away2plus  Kalshi KX{LEAGUE}TEAMTOTAL, "<team> over 1.5 goals" (none on PM US)
 
 Where both venues list a market the cheaper EFFECTIVE price wins (ask plus that venue's
-taker fee) — the same rule the bot routes on. Each quote carries:
+taker fee) — the price a follower would choose. Each quote carries:
 
   price   decimal odds at the effective price, 1 / (ask + fee): what a follower pays
   fair    the book's midpoint, (bid + ask) / 2: the market's own probability
@@ -25,9 +25,8 @@ taker fee) — the same rule the bot routes on. Each quote carries:
 A market is only quoted when its book is two-sided and tight (spread <= MAX_SPREAD); a
 one-sided or wide book is no price at all, the same rule the Sandbox applies.
 
-The fixture matcher and the venue adapters are copied from the polymarket-bot
-(bot/venue.py, bot/kalshi.py, bot/mapping.py) — public, read-only endpoints only. Its
-thresholds were paid for by silent mismatches there and are kept exactly.
+Public, read-only endpoints only. The matcher's thresholds were paid for by silent
+mismatches elsewhere and are kept exactly.
 """
 import datetime, difflib, json, re, time, unicodedata, urllib.parse, urllib.request
 
@@ -41,7 +40,7 @@ KALSHI = "kalshi"
 MAX_SPREAD = 0.10
 PACE_S = 0.25                   # between Kalshi calls; one call per series per build
 
-# Board league name -> Polymarket US league slug (bot/venue.py). None: not listed there.
+# Board league name -> Polymarket US league slug. None: not listed there.
 POLY_LEAGUES = {
     "Premier League": "epl", "La Liga": "lal", "Serie A": "sea", "Bundesliga": "bun",
     "Ligue 1": "lg1", "MLS": "mls", "Primeira Liga": "ligpor", "Brasileirao": "bra",
@@ -50,8 +49,8 @@ POLY_LEAGUES = {
 }
 POLY_TOTALS = "soccer_team_full_game_total"
 
-# Board league name -> Kalshi ticker fragment, matched EXACTLY as KX{FRAG}{SUFFIX}
-# (bot/kalshi.py): a substring match pulls KXSCOTTISHPREMBTTS into "EPL".
+# Board league name -> Kalshi ticker fragment, matched EXACTLY as KX{FRAG}{SUFFIX}:
+# a substring match pulls KXSCOTTISHPREMBTTS into "EPL".
 KALSHI_LEAGUES = {
     "Premier League": "EPL", "La Liga": "LALIGA", "Serie A": "SERIEA",
     "Bundesliga": "BUNDESLIGA", "Ligue 1": "LIGUE1", "Champions League": "UCL",
@@ -61,7 +60,7 @@ KALSHI_LEAGUES = {
     "Brasileirão": "BRASILEIRO",
 }
 
-# ---------------------------------------------------------------- fees (bot/venue, bot/kalshi)
+# ---------------------------------------------------------------- fees
 def poly_fee(p):
     return 0.06 * p * (1.0 - p)
 
@@ -71,7 +70,7 @@ def kalshi_fee(p):
     return min(0.035, math.ceil(0.07 * p * (1.0 - p) / 0.0001) * 0.0001)
 
 
-# ---------------------------------------------------------------- matching (bot/venue.py)
+# ---------------------------------------------------------------- matching
 NOISE = {"fc", "afc", "cf", "sc", "ac", "as", "ss", "us", "cd", "ud", "sv", "vfl", "vfb",
          "tsg", "bsc", "fsv", "sk", "bk", "if", "nk", "hk", "club", "clube", "calcio",
          "futbol", "football", "the", "de", "do", "da", "of"}
@@ -84,6 +83,9 @@ ALIASES = {
     "hearts": "heart of midlothian", "man city": "manchester city",
     "man utd": "manchester united", "spurs": "tottenham hotspur",
     "psg": "paris saint germain", "inter": "internazionale",
+    # Kalshi's MLS titles (2026-09-14): "Saint Louis" scored 0.67 against ESPN's
+    # "St. Louis CITY SC", so every St. Louis event went unpriced.
+    "saint louis": "st louis city", "st louis": "st louis city",
 }
 
 

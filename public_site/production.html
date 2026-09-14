@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Production</title>
-<meta name="description" content="Sandbox sources that passed QA, and the leads the trading bot takes from them.">
+<meta name="description" content="Sandbox sources that earned a place in Production, and their published leads.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -61,23 +61,24 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">What the trading bot takes from the Sandbox ladder · updated 2026-09-14 01:17 UTC</div>
+<div class="sub">Sources that earned their place on the Sandbox ladder · updated 2026-09-14 02:44 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a class="on" href="./production.html">Production</a></div>
 
 <div class="note warn"><b>Sandbox → QA → Production.</b> A (source, sport) pair is in Production
 while it holds the QA ready gate — the full stamp on bets made after its promotion, beating the
-closing price, profitable after fees, and every bet a market the bot can place — and it has held
-it for 7 days. It leaves on the first run the gate fails. Every bet a Production pair
-logs is published to <code>data/production_leads.json</code>, which the <b>trading bot reads next to
-the Leads board</b> under the same checks: only leads in the latest build, inside its kickoff
-window, one position per fixture, and the open-position and daily-loss caps.</div>
+closing price, profitable after fees, and every bet a standard exchange market — and it has held
+it for 7 days. It leaves on the first run the gate fails. A rule with strong
+pre-registered research can instead be <b>fast-tracked</b>: listed here on probation from its first
+bet and judged on a fixed gate at a fixed sample. Every bet a Production pair logs is published to
+<code>data/production_leads.json</code>, in the same shape as the Leads ledger.
+<ul class="sm" style="margin-top:8px"><li><b>Team scores 1+ form rule · Soccer · Team 1+</b>: on probation from 2026-09-14; stays only with 30 settled bets, profitable after fees and z ≥ 1 against the prices paid — otherwise back to the normal ladder.</li></ul></div>
 
 <div class="tiles">
 <div class="tile"><b>0</b><span>pairs in Production</span></div>
-<div class="tile"><b>0</b><span>open leads for the bot</span></div>
-<div class="tile"><b>0</b><span>bets the bot cannot route (not published)</span></div>
+<div class="tile"><b>0</b><span>open leads</span></div>
+<div class="tile"><b>0</b><span>bets not expressible as a standard market (not published)</span></div>
 <div class="tile"><b>0</b><span>held back: kickoff not verified by ESPN</span></div>
 </div>
 

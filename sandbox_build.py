@@ -32,7 +32,7 @@ STAMP = {
 # The board covers two different things now, and one table of fourteen columns would be
 # unreadable. Sports are contests between two named sides; the rest are yes/no questions
 # with a forecaster on the other side of them.
-SPORT_KEYS = ["soccer", "soccer_btts", "tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb"]
+SPORT_KEYS = ["soccer", "soccer_btts", "soccer_o15", "soccer_team1", "soccer_team2", "tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb"]
 
 # Long lists are the part of the page that grows without bound. The first few rows show
 # what the list is; the rest sit behind a toggle so the tables that carry the verdicts
@@ -652,8 +652,8 @@ flat ${int(T.STAKE)}, and settled on the real result. Tipsters name a side and a
 every time; models and books state a probability and are backed only on a
 {int(T.EDGE_MIN*100)}pp disagreement with the price.<br><br>
 <b>Prices and settlement.</b> <b>Polymarket US</b> is the venue wherever it lists a contest,
-and settles it — the exchange the trading bot actually trades. Until 2026-09-13 the venue
-was polymarket.com, the international exchange the bot cannot use; bets logged there still
+and settles it — the regulated US exchange. Until 2026-09-13 the venue
+was polymarket.com, the international exchange closed to US accounts; bets logged there still
 settle there, and polymarket.com is now a comparison source backed, like any exchange, on a
 {int(T.EDGE_MIN*100)}pp disagreement with the US price. A contest is only logged once it has a
 <b>real book</b> (a spread of {int(S.MAX_SPREAD*100)}¢ or less), booked at the <b>ask</b>. A just-listed market shows a midpoint near 50¢ with nothing
@@ -804,10 +804,9 @@ def qa_page(d, st, style):
 <div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
-does it survive the <b>taker fee</b> a follower would pay. Only bets on exchanges the trading
-bot can use count here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
-(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair. The
-trading bot never reads this page.</div>
+does it survive the <b>taker fee</b> a follower would pay. Only bets on the US exchanges count
+here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
+(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair.</div>
 
 <div class="tiles">
 <div class="tile"><b>{len(in_qa)}</b><span>pairs in QA</span></div>
@@ -823,9 +822,9 @@ trading bot never reads this page.</div>
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
 price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
 {T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US
-0.06·p·(1−p), Kalshi 0.07), and <b>the bot must be able to place every bet</b> — today that is
-a soccer side (home or away) on Kalshi or Polymarket US; no draws and no other sport, until the
-bot learns them. The gate is checked every run, so a pair is marked ready only once
+0.06·p·(1−p), Kalshi 0.07), and <b>every bet must be a standard exchange market the Production
+feed can publish</b> — today a soccer side (home or away) on a Kalshi game market, or Yes on a
+Kalshi over-1.5 or team-goals market; no draws and no other sport yet. The gate is checked every run, so a pair is marked ready only once
 it has <b>held for {T.READY_HOLD_DAYS} days</b>, and the mark is withdrawn the first run it fails.
 A pair goes <b>back to the Sandbox</b> after {T.QA_DEMOTE['min_bets']} fresh bets if it is behind the price,
 not beating every blind rule, or behind the closing price — or, at any count, after

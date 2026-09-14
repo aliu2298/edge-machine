@@ -41,6 +41,10 @@ import json, os, math, datetime, collections
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 LEDGER = os.path.join(ROOT, "data", "streak_leads.json")
+# The over-1.5 run pairings retired from the board on 2026-09-14 (streaks_build.RULE_CHANGE),
+# still logged, priced and graded here exactly as before — never published — so the Record can
+# compare the new rule with the one it replaced on the same weeks.
+SHADOW_LEDGER = os.path.join(ROOT, "data", "streak_leads_shadow_over15.json")
 
 # Only grade leads whose fixture is comfortably finished. ESPN can carry a fixture as
 # scheduled past kickoff, and a postponed match must not silently grade as a miss.
@@ -140,27 +144,29 @@ def lead_id(l):
 
 
 # ---------------------------------------------------------------- ledger
-def load():
-    if os.path.exists(LEDGER):
+def load(path=None):
+    path = path or LEDGER
+    if os.path.exists(path):
         try:
-            return json.load(open(LEDGER))
+            return json.load(open(path))
         except Exception:
             pass
     return {"leads": {}}
 
 
-def save(blob):
+def save(blob, path=None):
+    path = path or LEDGER
     blob["updated_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat(
         timespec="seconds")
-    os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
-    with open(LEDGER, "w") as f:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
         json.dump(blob, f, indent=1, sort_keys=True)
 
 
 def record(leads, blob=None, now=None):
     """Log leads not seen before, and stamp `last_seen` on every lead published today.
 
-    Added 2026-09-13 (all additive — the bot reads this file):
+    Added 2026-09-13 (all additive — this file is read over HTTPS as a feed):
       * `last_seen_at` is the exact build time, and the file's top-level `board_built_at`
         is that same stamp. A lead is on the board NOW only if its `last_seen_at` equals
         `board_built_at`; the date alone kept a withdrawn lead looking current for a day.
@@ -178,8 +184,8 @@ def record(leads, blob=None, now=None):
     lead, which is a different fact and one nothing else captures. The ledger is
     append-only, so a lead whose streak has since broken stays `pending` here forever
     even though the board stopped showing it — leaving no way to ask "is this still on
-    the board?" from the ledger alone. Anything downstream (the trading bot reads this
-    file over HTTPS) was left to guess with proxies like publication age, which is a
+    the board?" from the ledger alone. Anything downstream reading this file over HTTPS
+    was left to guess with proxies like publication age, which is a
     poor stand-in: it drops live leads for being published early and keeps dead ones that
     are merely recent.
     """
@@ -212,6 +218,8 @@ def record(leads, blob=None, now=None):
             "base_rate": l["base_rate"], "strength": l["strength"],
             "status": "pending",
         }
+        if l.get("rule"):
+            blob["leads"][lid]["rule"] = l["rule"]
         added += 1
     for lid, e in blob["leads"].items():
         if lid in published or e.get("status") != "pending" or e.get("withdrawn_at"):
@@ -439,6 +447,28 @@ def price_report(blob):
     return {"rows": rows, "graded": len(settled), "pending": pending, "by_source": by_source,
             "lane_roi": lane_roi,
             "claim_roi": lane_roi.get("over15")}
+
+
+def rule_compare(blob, shadow, since):
+    """The over-1.5 rule change, side by side from `since`: the published v2 rule against the
+    retired run pairings (the shadow ledger). Same measures for both: graded leads not withdrawn
+    before kickoff, hit rate, and flat 1-unit ROI on the over-1.5 claim where it was priced."""
+    def side(entries):
+        es = [e for e in entries if (e.get("bet") or {}).get("kind") == "total_gte"
+              and (e.get("date") or "") >= since and not e.get("withdrawn_at")]
+        done = [e for e in es if e["status"] in ("hit", "miss")]
+        priced = [e for e in done if "over15" in (e.get("pnl") or {})]
+        pnl = sum(e["pnl"]["over15"]["pnl"] for e in priced)
+        return {"graded": len(done), "hits": sum(1 for e in done if e["status"] == "hit"),
+                "rate": (sum(1 for e in done if e["status"] == "hit") / len(done)) if done else None,
+                "pending": sum(1 for e in es if e["status"] == "pending"),
+                "priced": len(priced), "roi": (pnl / len(priced)) if priced else None,
+                "avg_price": (sum(e["prices"]["over15"]["price"] for e in priced) / len(priced)) if priced else None}
+    v2 = [e for e in blob["leads"].values() if e.get("rule") == "v2"]
+    v1 = list(shadow["leads"].values())
+    ids = {e["id"] for e in v2}
+    return {"since": since, "v2": side(v2), "v1": side(v1),
+            "both": sum(1 for e in v1 if e["id"] in ids and (e.get("date") or "") >= since)}
 
 
 def model_report(blob):

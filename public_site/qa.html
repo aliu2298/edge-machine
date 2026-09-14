@@ -61,7 +61,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>QA</h1>
-<div class="sub">Where the real deal is separated from the noise · updated 2026-09-14 01:17 UTC</div>
+<div class="sub">Where the real deal is separated from the noise · updated 2026-09-14 02:44 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a><a href="./production.html">Production</a></div>
@@ -69,10 +69,9 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 <div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
-does it survive the <b>taker fee</b> a follower would pay. Only bets on exchanges the trading
-bot can use count here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
-(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair. The
-trading bot never reads this page.</div>
+does it survive the <b>taker fee</b> a follower would pay. Only bets on the US exchanges count
+here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
+(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair.</div>
 
 <div class="tiles">
 <div class="tile"><b>0</b><span>pairs in QA</span></div>
@@ -88,9 +87,9 @@ trading bot never reads this page.</div>
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
 price on average, measured on 30+ closing prices covering at least
 50% of the bets, and staying profitable after the taker fee (Polymarket US
-0.06·p·(1−p), Kalshi 0.07), and <b>the bot must be able to place every bet</b> — today that is
-a soccer side (home or away) on Kalshi or Polymarket US; no draws and no other sport, until the
-bot learns them. The gate is checked every run, so a pair is marked ready only once
+0.06·p·(1−p), Kalshi 0.07), and <b>every bet must be a standard exchange market the Production
+feed can publish</b> — today a soccer side (home or away) on a Kalshi game market, or Yes on a
+Kalshi over-1.5 or team-goals market; no draws and no other sport yet. The gate is checked every run, so a pair is marked ready only once
 it has <b>held for 7 days</b>, and the mark is withdrawn the first run it fails.
 A pair goes <b>back to the Sandbox</b> after 30 fresh bets if it is behind the price,
 not beating every blind rule, or behind the closing price — or, at any count, after

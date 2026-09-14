@@ -301,6 +301,7 @@ def collect(verbose=True):
     twice and no bet can be booked against two different prices for one game.
     """
     universe, coverage = {}, {}
+    goals = None
     for sport in S.SPORTS:
         t0 = time.time()
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
@@ -318,6 +319,21 @@ def collect(verbose=True):
             if verbose:
                 print(f"  {S.SPORTS[sport]:<13} kalshi BTTS: {bstats.get('listed', 0)} listed, "
                       f"{len(rows)} matched to an ESPN fixture ({time.time() - t0:.0f}s)")
+            continue
+        if sport in S.GOALS_SPORTS:
+            if goals is None:                         # one fetch serves all three domains
+                gstats = {}
+                try:
+                    goals = S.fetch_kalshi_goals(stats=gstats)
+                except Exception as e:
+                    print(f"  ! kalshi/soccer goals failed: {type(e).__name__}: {str(e)[:70]}")
+                    goals, gstats = {}, {}
+                if verbose:
+                    print(f"  Soccer goals  kalshi totals: {gstats.get('listed', 0)} listed, "
+                          + ", ".join(f"{len(goals.get(g) or [])} {S.SPORTS[g]}" for g in S.GOALS_SPORTS)
+                          + f" matched to an ESPN fixture ({time.time() - t0:.0f}s)")
+            universe[sport] = goals.get(sport) or []
+            coverage.setdefault(sport, {})["kalshi_venue"] = len(universe[sport])
             continue
         if sport in S.KALSHI_BINARY:
             kstats = {}
@@ -341,7 +357,7 @@ def collect(verbose=True):
 
         stats = {}
         try:
-            # Polymarket US, not polymarket.com: the venue has to be one the bot can trade.
+            # Polymarket US, not polymarket.com: the venue has to be one a US account can use.
             pm = [] if sport == "soccer" else S.fetch_polymarket_us(sport, stats=stats)
         except Exception as e:
             print(f"  ! polymarket_us/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
@@ -626,6 +642,10 @@ def publish(d, universe, coverage, verbose=True):
                     # Fight rows: where the start came from, and the venue's own, so a
                     # re-timed bout can be audited against the real walk-out later.
                     start_source=r.get("start_source"), venue_start=r.get("venue_start"),
+                    # Soccer yes/no rows: the ESPN fixture and side the market is about, so a
+                    # Production lead can name them without re-matching.
+                    **{k: r[k] for k in ("league", "espn_home", "espn_away", "team", "opponent")
+                       if r.get(k) and r.get("venue") == "kalshi_binary"},
                     # Pinnacle only: was this a contest nothing else had covered? That is
                     # the Pinnacle-versus-venue rule's own lane, reported separately.
                     uncovered=(mid not in (covered.get(sport) or set())
@@ -956,23 +976,34 @@ def pnl_after_fee(q):
     return round(STAKE * (1.0 / (p + fee) - 1.0), 2) if q["status"] == "won" else -STAKE
 
 
-# ---- QA judges only what the bot could have traded (2026-09-13) ----------------------------
-# The Sandbox's non-soccer venue was polymarket.com until 2026-09-13, an exchange the trading
-# bot cannot use. QA entry, readiness and demotion count only bets on these venues; the .com
-# record stays on the Sandbox page (and in the Sandbox's own stamp) but never moves a pair.
+# ---- QA judges only bets on the exchanges a follower can use (2026-09-13) --------------------
+# The Sandbox's non-soccer venue was polymarket.com until 2026-09-13, an international exchange
+# unavailable to US accounts. QA entry, readiness and demotion count only bets on these venues;
+# the .com record stays on the Sandbox page (and in the Sandbox's own stamp) but never moves a pair.
 TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary")
 
+# The claim each soccer yes/no domain publishes to the Production feed, in the Leads board's
+# bet vocabulary.
+FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
+             "soccer_team1": {"kind": "team_gte", "n": 1},
+             "soccer_team2": {"kind": "team_gte", "n": 2}}
 
-def bot_route(q):
-    """Could the polymarket-bot trade this bet as it stands today? Mirrors the bot's mapping
-    (bot/mapping.py, bot/kalshi.py) as of 2026-09-13: soccer only — a named side's win (home
-    or away) on a Kalshi GAME market in a league the bot maps (S.KALSHI_GAME_LEAGUES; the
-    Sandbox prices soccer on Kalshi only). No draw contract (the bot refuses draws), and no
-    tennis, MLB, NFL, cricket, table tennis, fights or yes/no markets. Update this with the
-    bot, never ahead of it: a "production-ready" pair the bot cannot trade is a label, not a
-    route."""
-    return (q.get("sport") == "soccer" and q.get("pick") in ("a", "b")
-            and q.get("venue") == "kalshi" and S.quote_league(q) is not None)
+
+def placeable(q):
+    """Is this bet one the Production feed can publish as a standard claim? Today: a soccer
+    side to win (home or away) on a Kalshi GAME market in a mapped league
+    (S.KALSHI_GAME_LEAGUES; no draw contract), or Yes on a soccer goals market (FEED_BETS) in
+    one of those leagues. Nothing else — no tennis, MLB, NFL, cricket, table tennis, fights,
+    BTTS, weather or crypto yet. A "production-ready" pair whose bets the feed cannot express
+    is a label, not a result anyone can follow."""
+    if q.get("sport") == "soccer":
+        return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi"
+                and S.quote_league(q) is not None)
+    if q.get("sport") in FEED_BETS:
+        return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"
+                and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
+                and (FEED_BETS[q["sport"]]["kind"] != "team_gte" or bool(q.get("team"))))
+    return False
 
 
 def assess(d, name, sport=None, since=None, venues=None):
@@ -1088,7 +1119,7 @@ def assess(d, name, sport=None, since=None, venues=None):
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
-                routed=sum(1 for q in bets if bot_route(q)),
+                routed=sum(1 for q in bets if placeable(q)),
                 clv_beat=(sum(1 for c in clv if c > 0) / len(clv)) if clv else None)
 
 
@@ -1122,10 +1153,10 @@ def ready_gate(a):
          clv_sample(a) and a["clv"] > 0,
          (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} of {a['n']} bets, {a['clv_beat']:.0%} beat the close"
           if a["clv"] is not None else "no closing prices yet")),
-        ("route", "the trading bot can place every one of these bets",
+        ("route", "every one of these bets is a standard exchange market the feed can publish",
          a["n"] > 0 and a.get("routed", 0) == a["n"],
-         (f"{a.get('routed', 0)} of {a['n']} bets are a market the bot trades"
-          + ("" if a.get("routed", 0) == a["n"] else " — see sandbox_track.bot_route"))
+         (f"{a.get('routed', 0)} of {a['n']} bets are a publishable exchange market"
+          + ("" if a.get("routed", 0) == a["n"] else " — see sandbox_track.placeable"))
          if a["n"] else "—"),
         ("fees", "profitable after the taker fee",
          a["roi_fee"] is not None and a["roi_fee"] > 0,
@@ -1179,6 +1210,25 @@ def demote_reason(d, name, sport, pair, a, now):
     return None
 
 
+def fast_track_status(d, name, sport, meta, now=None):
+    """(state, assess result, reason) for a fast-tracked pair — see SOURCES[...]["fast_track"].
+
+    A fast-tracked pair is published to Production ON PROBATION from its first bet, without the
+    QA gate, and judged on every settled bet since `since` (exchange venues only):
+      probation  fewer than min_n settled bets — nothing is decided yet
+      cleared    min_n+ bets, profitable after fees AND z >= min_z against the prices paid
+      failed     min_n+ bets and either of those fails; the pair returns to the normal ladder
+    Cleared is not a lifetime pass: the running record is re-checked on every run."""
+    ft = meta["fast_track"]
+    a = assess(d, name, sport, since=ft["since"], venues=TRADEABLE_VENUES)
+    if a["n"] < ft["min_n"]:
+        return "probation", a, f"{a['n']} of {ft['min_n']} settled bets"
+    ok = a["roi_fee"] is not None and a["roi_fee"] > 0 and a["z"] >= ft["min_z"]
+    reason = (f"{a['n']} bets, {a['roi_fee']*100:+.1f}% after fees, z {a['z']:+.2f} "
+              f"(needs > 0% and z ≥ {ft['min_z']:g})")
+    return ("cleared" if ok else "failed"), a, reason
+
+
 def evaluate_stages(d, st, now=None, verbose=True):
     """Promote Sandbox pairs that pass QA_ENTRY; demote QA pairs that fail; mark (and unmark)
     production-ready once the ready gate has held for READY_HOLD_DAYS.
@@ -1195,6 +1245,20 @@ def evaluate_stages(d, st, now=None, verbose=True):
         for sport in meta["sports"]:
             key = f"{name}|{sport}"
             pair = st["pairs"].get(key) or dict(stage="sandbox", since=None)
+            ft = pair.get("fast_track") or {}
+            if meta.get("fast_track") and ft.get("state") != "failed" and pair["stage"] == "sandbox":
+                state, a, reason = fast_track_status(d, name, sport, meta, now)
+                if state != ft.get("state"):
+                    changes.append(dict(pair=key, to=f"fast_track_{state}", at=now_s,
+                                        evidence=_snapshot(a), reason=reason))
+                ft = dict(since=meta["fast_track"]["since"], state=state, checked=reason)
+                if state == "failed":
+                    # Back to the ladder on evidence gathered from here on.
+                    pair = dict(stage="sandbox", since=now_s, fast_track=dict(ft, ended_at=now_s))
+                else:
+                    pair = dict(pair, fast_track=ft)
+                st["pairs"][key] = pair
+                continue
             if pair["stage"] == "sandbox":
                 a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
                 if a["n"] and all(p for _k, _l, p, _d in qa_entry(a)):
@@ -1434,14 +1498,14 @@ def main():
     st = load_stages()
     evaluate_stages(d, st)
     save_stages(st)
-    # Production: the feed the trading bot reads next to the Leads ledger.
+    # Production: the machine-readable feed of Production leads, next to the Leads ledger.
     try:
         import production
         feed = production.build_feed(d, st)
         production.save_feed(feed)
         print(f" production: {len(feed['pairs'])} pair(s), "
               f"{sum(1 for l in feed['leads'].values() if l['status'] == 'pending')} open lead(s), "
-              f"{feed['unroutable_skipped']} unroutable and {feed['unverified_kickoff_skipped']} "
+              f"{feed['unlisted_skipped']} unpublishable and {feed['unverified_kickoff_skipped']} "
               f"unverified-kickoff bet(s) held back")
     except Exception as e:
         print(f"  ! production feed failed: {type(e).__name__}: {str(e)[:80]}")

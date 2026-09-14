@@ -51,7 +51,7 @@ TOP_LEADS = 120     # cards baked into the page; the league filter narrows from 
 # A lead published a week out is re-judged by every midweek game in between: 102 of the
 # first 166 graded leads were first published 5+ days early, most withdrawals came from
 # runs breaking before kickoff, and a line that far out is rarely posted to price against.
-# 48h matches the trading bot's own horizon, so the board publishes what can be acted on.
+# 48h: prices have formed and team news is in, so the board publishes what can be acted on.
 LEAD_HORIZON_H = 48
 
 # ---- "On fire": genuinely long runs, measured OUTSIDE the 6-game form window.
@@ -153,6 +153,21 @@ PAIRINGS = [
      "{a} have scored 2+ in {ra} straight; {b} have conceded in {rb} straight.",
      {"kind": "team_gte", "n": 2, "subject": "a"}),
 ]
+
+# ---- LEADS v2 (2026-09-14): the over-1.5 lane changes rule --------------------------------
+# The two run pairings above no longer SELECT the over-1.5 cards. Research on 530 matches
+# (cutoffs fixed before it ran) found a stricter, count-based rule held up where the runs did
+# not: both teams' competitive games went over 1.5 in at least 9 of their last 10 — 92.9% on
+# 84 matches against the teams' own earlier 81.4% (z 2.5; 3% of shuffled worlds did as well).
+# Its first real-price week earned about what the run lane did (+2.0% v +2.2%), so this is a
+# measured swap, not a proven upgrade: the old pairings keep running as a SHADOW ledger
+# (streaks_track.SHADOW_LEDGER), never published, and the Record compares the two from the
+# change date. The team 2+ lane is unchanged.
+RULE_CHANGE = "2026-09-14"
+LEAD_PAIRINGS = [p for p in PAIRINGS if p[4]["kind"] != "total_gte"]    # published
+SHADOW_PAIRINGS = [p for p in PAIRINGS if p[4]["kind"] == "total_gte"]  # the retired over-1.5 rule
+O15_WINDOW, O15_MIN, O15_MIN_GAMES = 10, 9, 10
+O15_KEY = "over15_l10"
 
 
 
@@ -334,7 +349,68 @@ def kickoff_dt(f):
         return None
 
 
-def find_leads(fixtures, streaks, rates, now=None, links=True):
+def _upcoming_lead_fixture(f, now):
+    """Is `f` a fixture the board may list a lead on right now? (Shared by both lead finders.)"""
+    if f["played"]:
+        return False
+    ko = kickoff_dt(f)
+    if ko is not None:
+        if ko <= now or ko > now + datetime.timedelta(hours=LEAD_HORIZON_H):
+            return False
+    elif not (now.date().isoformat() <= (f["date"] or "") <=
+              (now + datetime.timedelta(hours=LEAD_HORIZON_H)).date().isoformat()):
+        return False
+    return bool(f.get("competitive", True) and f.get("lead_source", True))
+
+
+def over15_form_leads(fixtures, by_team, now=None, links=True):
+    """The v2 over-1.5 lane: both teams' last 10 competitive games went over 1.5 at least 9
+    times (and each has 10+ competitive games). Same lead shape as find_leads, so the ledger,
+    pricing and grading are untouched; `a_run`/`b_run` hold the count out of 10."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    over = lambda g: g["gf"] + g["ga"] >= 2
+    comp = {t: [g for g in gs if g.get("comp", True)] for t, gs in by_team.items()}
+    counts = {t: sum(1 for g in gs[:O15_WINDOW] if over(g))
+              for t, gs in comp.items() if len(gs) >= O15_MIN_GAMES}
+    # Rarity chip: the share of tracked teams currently at 9+/10 — the same kind of number the
+    # run leads quote, so the chip reads the same on both lanes.
+    rate = (sum(1 for c in counts.values() if c >= O15_MIN) / len(counts)) if counts else 0.0
+    leads = []
+    for f in fixtures:
+        if not _upcoming_lead_fixture(f, now):
+            continue
+        h, a = f["home"], f["away"]
+        if counts.get(h, 0) < O15_MIN or counts.get(a, 0) < O15_MIN:
+            continue
+        pills = lambda t: [dict(e, hit=over(g)) for e, g in
+                           zip(form_seq(comp[t], 0, limit=O15_WINDOW), comp[t][:O15_WINDOW])]
+        leads.append({
+            "date": f["date"], "kickoff": f["kickoff"], "league": f["league"],
+            "match": f"{h} v {a}", "home": h, "away": a,
+            "headline": "Over 1.5 goals",
+            "why": f"{h}'s games went over 1.5 in {counts[h]} of their last 10; {a}'s in {counts[a]}.",
+            "a": h, "b": a, "a_run": counts[h], "b_run": counts[a],
+            "a_key": O15_KEY, "b_key": O15_KEY,
+            "a_label": "over 1.5", "b_label": "over 1.5",
+            "a_text": f"over 1.5 · {counts[h]} of last 10", "b_text": f"over 1.5 · {counts[a]} of last 10",
+            "strength": counts[h] + counts[a], "base_rate": rate,
+            "rule": "v2", "bet": {"kind": "total_gte", "n": 2},
+            "a_recent": pills(h), "b_recent": pills(a),
+            "market": venue_market_link(f) if links else None,
+        })
+    return leads
+
+
+def board_leads(fixtures, by_team, streaks, rates, now=None, links=True):
+    """What the Leads board publishes: the team 2+ run pairings and the v2 over-1.5 rule,
+    soonest first."""
+    leads = (find_leads(fixtures, streaks, rates, now=now, links=links, pairings=LEAD_PAIRINGS)
+             + over15_form_leads(fixtures, by_team, now=now, links=links))
+    leads.sort(key=lambda x: (x["kickoff"] or x["date"], x["base_rate"], -x["strength"]))
+    return leads
+
+
+def find_leads(fixtures, streaks, rates, now=None, links=True, pairings=None):
     """Upcoming fixtures where both sides' runs point the same way.
 
     `now` is a parameter so a backtest can ask what the board WOULD have shown at a past
@@ -372,7 +448,7 @@ def find_leads(fixtures, streaks, rates, now=None, links=True):
         sh, sa = streaks.get(home), streaks.get(away)
         if not sh or not sa:
             continue
-        for a_key, b_key, headline, why, bet in PAIRINGS:
+        for a_key, b_key, headline, why, bet in (PAIRINGS if pairings is None else pairings):
             # try both orientations: home as "A", then away as "A"
             for (a, b, sa_, sb_) in ((home, away, sh, sa), (away, home, sa, sh)):
                 ra = sa_["runs"].get(a_key, 0)
@@ -646,29 +722,26 @@ def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
         for l in leagues if l in shown_leagues)
 
     if "leads" in tabs:
-        explain_summary = ("How a lead is chosen — and why only two lines")
+        explain_summary = ("How a lead is chosen — and why only two lanes")
         explain_body = f"""
-<p>A streak on its own is not an edge; plenty of good sides score freely. A <b>lead</b> is
-two runs meeting in a fixture not yet played, where the pair <b>implies the line
-arithmetically</b>. There are two lanes. <b>Over 1.5</b> is reached two ways:</p>
-<p>&nbsp;&nbsp;• both sides score (1&nbsp;+&nbsp;1&nbsp;≥&nbsp;2) — two different events
-about this fixture that add up to clear the line.<br>
-&nbsp;&nbsp;• both sides' matches go over 1.5 — the same claim supported twice, since this
-fixture is one of each side's matches.</p>
+<p>A streak on its own is not an edge; plenty of good sides score freely. There are two
+lanes, each one market.</p>
+<p><b>Over 1.5</b> (rule changed {RULE_CHANGE}): both sides' competitive games went over 1.5
+in at least <b>{O15_MIN} of their last {O15_WINDOW}</b>, each with {O15_MIN_GAMES}+ games. The
+rule was fixed before it was tested on 530 past matches, where it hit 92.9% against the
+same teams' own earlier 81.4%. It replaced the run pairings (both sides over 1.5, or both
+scoring, in every recent game), which still run unpublished so the <b>Record</b> can compare
+the two from the change date. Over 1.5 lands in roughly 85% of matches without any flag, so
+a hit proves nothing on its own: the price is the test.</p>
 <p><b>A side to score 2+</b> is the board's original question — a team scoring 2+ in
 every recent game meeting an opponent that concedes in every recent game. It trades near
 evens, so it is the one market here where an edge, if one exists, would actually pay;
 each card shows the price captured when it was first listed.</p>
-<p><b>Over 1.5 lands in roughly 85% of matches without any flag at all</b>, so a hit is
-not evidence of anything on its own. One market rather than two pools the whole sample
-behind a single question, and a lopsided line is cheaper to test: each graded lead here
-carries about 1.9&times; the information about a given lift than an over-2.5 one would.
-The <b>Record</b> page is where that question gets answered.</p>
-<p>That rules out the pairing that looks most natural. "A have scored in 6 straight" plus
-"B have conceded in 6 straight" reads like two pieces of evidence, but in a match between
-them <b>A scoring and B conceding are the same event</b>, counted twice — and it only
-implies one goal, so it says nothing about a 1.5 line.</p>
-<p>Both legs must run at least <b>{MIN_RUN} games</b>, on a side with at least
+<p>A pair has to <b>imply the line arithmetically</b>. That rules out the pairing that looks
+most natural: "A have scored in 6 straight" plus "B have conceded in 6 straight" reads like
+two pieces of evidence, but in a match between them <b>A scoring and B conceding are the same
+event</b>, counted twice.</p>
+<p>Team 2+ legs must run at least <b>{MIN_RUN} games</b>, on a side with at least
 <b>{MIN_PLAYED}</b> played. Form spans <b>all</b> tracked competitions (last
 {FORM_GAMES} games), because form does not reset when a side walks into a European tie.
 A run made up entirely of preseason friendlies is discarded.</p>
@@ -677,9 +750,9 @@ hours</b>. A lead published a week out is re-judged by every midweek game in bet
 lead the board later drops is recorded as <b>withdrawn</b>: graded, but kept out of the
 Record's verdict on the rules.</p>
 <p>Every lead carries a <b>rarity</b> chip — the share of tracked teams currently on a run
-that long, taken from the <b>weaker</b> leg, since a pair is only as unusual as its most
-ordinary half. When that share is high the pattern is ordinary and the chip says so.
-Over 2.5 suppresses over 1.5 on the same fixture: the sharper claim implies the weaker one.</p>
+that long (for over 1.5, at {O15_MIN}+ of {O15_WINDOW}), taken from the <b>weaker</b> leg, since a
+pair is only as unusual as its most ordinary half. When that share is high the pattern is
+ordinary and the chip says so.</p>
 <p>Leads to look at — not picks, and not betting advice.</p>"""
     else:
         explain_summary = "What these runs are, and what the rarity chip means"
@@ -994,9 +1067,9 @@ function seq(games) {{
   // once, so every card does not repeat the same sentence.
   return `<div class="seq">${{pills}}</div>`;
 }}
-function leg(name, label, n, side, games) {{
+function leg(name, label, n, side, games, text) {{
   return `<div class="leg"><span class="lgn">${{esc(name)}}</span>`
-       + `<span class="lgr ${{side}}">${{esc(label)}} · ${{n}} straight</span></div>`
+       + `<span class="lgr ${{side}}">${{esc(text || (label + ' · ' + n + ' straight'))}}</span></div>`
        + seq(games);
 }}
 function card(l) {{
@@ -1014,8 +1087,8 @@ function card(l) {{
           l.model != null ? ` · model ${{Math.round(l.model*100)}}%` : ''}}</span>` : ''}}
     </div>
     <div class="ev">
-      ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent)}}
-      ${{leg(l.b, l.b_label, l.b_run, 'b', l.b_recent)}}
+      ${{leg(l.a, l.a_label, l.a_run, 'a', l.a_recent, l.a_text)}}
+      ${{leg(l.b, l.b_label, l.b_run, 'b', l.b_recent, l.b_text)}}
     </div>
     <div class="lead">
       <span class="lbl">Lead</span>
@@ -1250,7 +1323,8 @@ def build(force=False):
                for t in (f["home"], f["away"])}
     fire = [r for r in fire_rows(by_team, fixtures, _league_of, _nxt)
             if r["team"] in tracked]
-    leads = find_leads(fixtures, streaks, rates)[:TOP_LEADS]
+    leads = board_leads(fixtures, by_team, streaks, rates)[:TOP_LEADS]
+    shadow_leads = find_leads(fixtures, streaks, rates, pairings=SHADOW_PAIRINGS)
     teams = [r for r in team_rows(shown, by_team, fixtures, rates)
              if r["team"] in tracked]
 
@@ -1277,6 +1351,21 @@ def build(force=False):
         n_priced = n_fetched = 0
     ledger, newly_graded = streaks_track.grade(fixtures, ledger)
     streaks_track.save(ledger)
+    # The retired over-1.5 rule, kept running unpublished for the Record's comparison. Its
+    # fixtures mostly overlap the board's, and venue_book caches per run, so pricing it costs
+    # little. A failure here must never cost the board.
+    try:
+        shadow, s_added = streaks_track.record(shadow_leads, streaks_track.load(streaks_track.SHADOW_LEDGER))
+        try:
+            from venue_book import fetch_prices
+            shadow, _sp, _sf = streaks_track.price(shadow, shadow_leads, fetch_prices, model=mdl)
+        except Exception as e:
+            print(f"  (shadow pricing skipped: {e})")
+        shadow, _sg = streaks_track.grade(fixtures, shadow)
+        streaks_track.save(shadow, streaks_track.SHADOW_LEDGER)
+        print(f"  shadow (retired over-1.5 rule): +{s_added} new, {len(shadow_leads)} on its board")
+    except Exception as e:
+        print(f"  (shadow ledger skipped: {e})")
     track = streaks_track.report(fixtures, ledger)
     print(f"  ledger: +{added} new, {n_priced} priced ({n_fetched} fetched), "
           f"{newly_graded} graded now, {track['graded']} settled / "

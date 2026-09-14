@@ -13,8 +13,8 @@ name: Backup refresh (watchdog)
 # Either being wrong is enough to take over.
 #
 # Two jobs (2026-09-13). GitHub started the 6-hourly primary as much as seven hours apart,
-# and the trading bot rejects a feed older than 8 hours — so a watchdog that only acted at
-# 8 hours could only ever act after the bot had stopped. It now checks HOURLY and takes over
+# and a watchdog that only acted at 8 hours left the published leads that stale before it
+# did anything. It now checks HOURLY and takes over
 # at 5 hours. `watch` is cheap and runs outside the boards' concurrency group: a group holds
 # one pending run and a newer one replaces it, so an hourly job inside the group could
 # silently cancel a queued primary or tracker run. Only `takeover` joins the group, and only
@@ -39,7 +39,7 @@ permissions:
 
 env:
   # The primary runs every 3h, so a healthy board is under ~3h old (plus GitHub's start
-  # delay). 5h fires on one missed or badly late slot, and before the bot's 8h feed limit.
+  # delay). 5h fires on one missed or badly late slot.
   STALE_AFTER_HOURS: 5
   BOARD_URL: https://aliu2298.github.io/edge-machine/
 
@@ -179,7 +179,8 @@ jobs:
 
           PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
                      public_site/record.html public_site/today.html \
-                     data/streaks.json data/streak_leads.json data/fire_runs.json \
+                     data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
+                     data/fire_runs.json \
                      data/book_ledger.json"
 
           for attempt in 1 2 3; do

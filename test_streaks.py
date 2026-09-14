@@ -228,7 +228,7 @@ check("re-record is a no-op", added2, 0)
 
 # last_seen: the one thing a re-record DOES update. The ledger is append-only, so a lead
 # whose streak has broken stays pending here forever even though the board stopped
-# showing it. last_seen is how a reader (the trading bot pulls this file) can tell a lead
+# showing it. last_seen is how a reader (anything pulling this file) can tell a lead
 # that is still published from one that is merely still ungraded.
 _e = list(blob["leads"].values())[0]
 check("last_seen stamped on first record", _e["last_seen"], T.utc_today().isoformat())
@@ -718,6 +718,54 @@ try:
     F.PERMUTATIONS = F.PERMUTATIONS_saved
 finally:
     F.SEED = _saved
+
+print("\n== Leads v2 (2026-09-14): the over-1.5 lane is the 9-of-10 rule ==")
+_now = datetime.datetime(2026, 9, 14, 12, tzinfo=datetime.timezone.utc)
+_r = []
+for i in range(10):
+    d = f"2026-08-{i+1:02d}"
+    _r.append(fx(d, "Nine", f"n{i}", 2, 0 if i == 0 else 1))       # 10/10 over 1.5
+    _r.append(fx(d, "Tenn", f"t{i}", 1, 1 if i else 0))             # 9/10 (first game 1-0)
+    _r.append(fx(d, "Eight", f"e{i}", 1, 1 if i > 1 else 0))        # 8/10
+    _r.append(fx(d, "Run", f"r{i}", 3, 0))                          # scores every game
+_r.append(fx("2026-07-01", "Short", "s0", 3, 3))
+for i in range(5):
+    _r.append(fx(f"2026-08-{i+1:02d}", "Short", f"s{i+1}", 3, 3))  # 6 games only
+_r += [dict(fx("2026-09-15", "Nine", "Tenn", None, None, played=False), kickoff="2026-09-15T18:00Z"),
+       dict(fx("2026-09-15", "Nine", "Eight", None, None, played=False), kickoff="2026-09-15T20:00Z"),
+       dict(fx("2026-09-15", "Short", "Nine", None, None, played=False), kickoff="2026-09-15T21:00Z"),
+       dict(fx("2026-09-15", "Run", "Nine", None, None, played=False), kickoff="2026-09-15T22:00Z")]
+_bt = B.team_games(_r)
+_v2 = B.over15_form_leads(_r, _bt, now=_now, links=False)
+check("both 9+/10 is a lead; 8/10 is not; a side with 6 games is not",
+      sorted(l["match"] for l in _v2), ["Nine v Tenn", "Run v Nine"])
+_l = [l for l in _v2 if l["match"] == "Nine v Tenn"][0]
+check("the claim is over 1.5, tagged v2, with the counts out of 10",
+      (_l["bet"], _l["rule"], _l["a_run"], _l["b_run"], _l["a_text"]),
+      ({"kind": "total_gte", "n": 2}, "v2", 10, 9, "over 1.5 · 10 of last 10"))
+check("pills light the games that went over, not a prefix",
+      [g["hit"] for g in _l["b_recent"]][:2], [True, True])
+_st = B.team_streaks(_bt)
+_board = B.board_leads(_r, _bt, _st, B.base_rates(_st), now=_now, links=False)
+check("the board's over-1.5 cards all come from the v2 rule",
+      {l.get("rule") for l in _board if l["bet"]["kind"] == "total_gte"}, {"v2"})
+_shadow = B.find_leads(_r, _st, B.base_rates(_st), now=_now, links=False, pairings=B.SHADOW_PAIRINGS)
+check("the retired run pairings still find their own leads for the shadow ledger",
+      "Run v Nine" in {l["match"] for l in _shadow} and all(l["bet"]["kind"] == "total_gte" for l in _shadow), True)
+check("the shadow never reaches the board's team-2+ lane", all(p[4]["kind"] == "team_gte" for p in B.LEAD_PAIRINGS), True)
+_blob, _ = T.record(_board, {"leads": {}}, now=_now)
+check("the ledger keeps the rule tag", {e.get("rule") for e in _blob["leads"].values() if e["bet"]["kind"] == "total_gte"}, {"v2"})
+_mk = lambda lid, st, pnl=None, rule=None, date="2026-09-15": dict(
+    id=lid, date=date, bet={"kind": "total_gte", "n": 2}, status=st, **({"rule": rule} if rule else {}),
+    **({"pnl": {"over15": {"pnl": pnl, "hit": st == "hit"}}, "prices": {"over15": {"price": 1.2}}} if pnl is not None else {}))
+_main = {"leads": {"a": _mk("a", "hit", 0.2, "v2"), "b": _mk("b", "miss", -1.0, "v2"), "c": _mk("c", "hit", rule="v2"),
+                   "old": _mk("old", "hit", 0.2, date="2026-09-01")}}
+_sh = {"leads": {"a": _mk("a", "hit", 0.2), "x": _mk("x", "hit", 0.25), "y": _mk("y", "pending")}}
+_cmp = T.rule_compare(_main, _sh, "2026-09-14")
+check("rule compare: v2 graded, hits, priced ROI", (_cmp["v2"]["graded"], _cmp["v2"]["hits"], _cmp["v2"]["priced"], round(_cmp["v2"]["roi"], 3)),
+      (3, 2, 2, -0.4))
+check("rule compare: the old rule from the shadow, and the overlap", (_cmp["v1"]["graded"], _cmp["v1"]["pending"], round(_cmp["v1"]["roi"], 3), _cmp["both"]),
+      (2, 1, 0.225, 1))
 
 print()
 if FAILS:
