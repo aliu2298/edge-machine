@@ -176,6 +176,17 @@ SOURCES = {
              "this is a clean test of whether the favourite-longshot bias carries across sports. "
              "Judged against backing the favourite in every fight over the same period. MMA "
              "lists only a handful of fights a week, so it will take months to read."),
+    "mlb_fade_streak": dict(
+        label="MLB fade-the-streak rule (cold team v hot team, last 10)", kind="Rule",
+        connected=True, site="edge-machine", sports=["mlb"],
+        note="Pre-registered 2026-09-14. Back the team that won 3 or fewer of its last 10 games "
+             "when it plays a team that won 7 or more of its last 10 (regular season, each with "
+             "20+ games played, MLB Stats API results strictly before first pitch). Research on "
+             "every 2025 and 2026 game at Kalshi's last price before first pitch: the hot team was "
+             "priced ~57% and won 51-56%, so backing the cold team made +3.0% on 239 games in "
+             "2025 and +4.6% on 149 in 2026 — found in one season, repeated in the next, but "
+             "small (z +0.1 and +1.1). Judged against backing the favourite and the underdog on "
+             "the same games."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2"],
@@ -2535,6 +2546,68 @@ def fetch_tt_band(sport, universe=None):
     return band_picks(sport, TT_BAND, universe)
 
 
+MLB_STREAK_WINDOW, MLB_HOT, MLB_COLD, MLB_MIN_GAMES = 10, 7, 3, 20
+_MLB_GAMES = None
+
+
+def mlb_games(season=None, refresh=False):
+    """Completed regular-season games this season from the MLB Stats API, oldest first:
+    [{"start", "home", "away", "home_runs", "away_runs"}]. Cached for the run."""
+    global _MLB_GAMES
+    if _MLB_GAMES is not None and not refresh:
+        return _MLB_GAMES
+    now = datetime.now(timezone.utc)
+    season = season or now.year
+    try:
+        d = _get(f"https://statsapi.mlb.com/api/v1/schedule?sportId=1&gameType=R"
+                 f"&startDate={season}-03-01&endDate={now.strftime('%Y-%m-%d')}", tries=2, timeout=60) or {}
+    except RuntimeError:
+        return []
+    out = []
+    for day in d.get("dates") or []:
+        for g in day.get("games") or []:
+            h, a = (g.get("teams") or {}).get("home") or {}, (g.get("teams") or {}).get("away") or {}
+            if (g.get("status") or {}).get("codedGameState") != "F" or h.get("score") is None or a.get("score") is None:
+                continue
+            out.append(dict(start=g["gameDate"], home=h["team"]["name"], away=a["team"]["name"],
+                            home_runs=h["score"], away_runs=a["score"]))
+    out.sort(key=lambda g: g["start"])
+    _MLB_GAMES = out
+    return out
+
+
+def mlb_form(games, team, before):
+    """(wins in the last MLB_STREAK_WINDOW games, games played this season) for the MLB Stats API
+    team best matching `team`, from games that started strictly before `before`."""
+    names = {g["home"] for g in games} | {g["away"] for g in games}
+    scored = sorted(((_score(team, n, "mlb"), n) for n in names), reverse=True)
+    if not scored or scored[0][0] < 0.8 or (len(scored) > 1 and scored[1][0] == scored[0][0]):
+        return None, 0
+    name = scored[0][1]
+    cut = before.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M")
+    mine = [g for g in games if name in (g["home"], g["away"]) and g["start"][:16] < cut]
+    wins = [(g["home_runs"] > g["away_runs"]) == (g["home"] == name) for g in mine]
+    return sum(wins[-MLB_STREAK_WINDOW:]), len(mine)
+
+
+def fetch_mlb_fade_streak(sport, universe=None, games=None):
+    """Back the cold team (<= MLB_COLD of its last 10) against a hot one (>= MLB_HOT of 10)."""
+    games = mlb_games() if games is None else games
+    out = []
+    for r, ko in _rule_rows(sport, universe):
+        if ko.tzinfo is None:
+            ko = ko.replace(tzinfo=timezone.utc)
+        wa, na = mlb_form(games, r["side_a"], ko)
+        wb, nb = mlb_form(games, r["side_b"], ko)
+        if wa is None or wb is None or min(na, nb) < MLB_MIN_GAMES:
+            continue
+        if wa <= MLB_COLD and wb >= MLB_HOT:
+            out.append(dict(market_id=r["market_id"], pick="a"))
+        elif wb <= MLB_COLD and wa >= MLB_HOT:
+            out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
 def fetch_goals_market(sport, universe=None):
     """The Kalshi midpoint on every listed goals market — never a bet (edge 0 by construction)."""
     rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
@@ -3224,6 +3297,7 @@ CHALLENGERS = {
     "tennis_fav_band": fetch_tennis_fav_band,
     "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
     "tt_band_55_60": fetch_tt_band,
+    "mlb_fade_streak": fetch_mlb_fade_streak,
     "o15_form_l10": fetch_o15_form_l10,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,

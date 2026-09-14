@@ -2435,6 +2435,22 @@ eq(S.fetch_tt_band("table_tennis", universe={"table_tennis": [dict(market_id="x"
                                                               dict(market_id="y", price_a=0.60, price_b=0.42, price_draw=None)]}),
    [dict(market_id="x", pick="b")], "table tennis backs the 0.55-0.60 side only (0.60 itself is out)")
 
+
+print("\nMLB fade-the-streak rule")
+_mg = []
+for i in range(25):
+    ts = f"2026-08-{i+1:02d}T23:05Z"
+    _mg.append(dict(start=ts, home="Hot Sox", away=f"X{i}", home_runs=5, away_runs=2 if i >= 17 else 9))   # Hot: won last 8 of 10
+    _mg.append(dict(start=ts, home="Cold Cubs", away=f"Y{i}", home_runs=1, away_runs=4 if i >= 16 else 0))  # Cold: lost last 9 of 10
+    _mg.append(dict(start=ts, home="Mid Mets", away=f"Z{i}", home_runs=3 if i % 2 else 1, away_runs=2))  # 5 of 10
+_mg.append(dict(start="2026-09-20T23:05Z", home="Cold Cubs", away="Q", home_runs=9, away_runs=0))      # after first pitch: ignored
+_mrows = {"mlb": [dict(market_id="m1", side_a="Hot Sox", side_b="Cold Cubs", start="2026-09-10T23:05:00+00:00", price_a=0.6, price_b=0.42),
+                  dict(market_id="m2", side_a="Mid Mets", side_b="Cold Cubs", start="2026-09-10T23:05:00+00:00", price_a=0.5, price_b=0.52),
+                  dict(market_id="m3", side_a="Cold Cubs", side_b="Hot Sox", start="2026-09-10T23:05:00+00:00", price_a=0.4, price_b=0.62)]}
+eq(S.mlb_form(_mg, "Cold Cubs", datetime(2026, 9, 10, 23, 5, tzinfo=timezone.utc)), (1, 25), "form counts only games before first pitch")
+eq(S.fetch_mlb_fade_streak("mlb", universe=_mrows, games=_mg), [dict(market_id="m1", pick="b"), dict(market_id="m3", pick="a")],
+   "backs the cold team against a hot one, from either side; a cold team v a .500 team is no bet")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

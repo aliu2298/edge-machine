@@ -499,6 +499,13 @@ priced MMA fight when it was added), so it tests whether the bias carries across
 settled matches (0.55-0.60 won 78.8% v 57.2% priced, z +2.51 on 33, with losing bands either side),
 backed on every new match to see whether it is noise.
 
+**MLB fade-the-streak rule (2026-09-14).** `mlb_fade_streak` backs the team that won 3 or fewer of its
+last 10 when it plays a team that won 7 or more of its last 10 (regular season, 20+ games each, MLB
+Stats API results before first pitch, `mlb_games`). Researched on every 2025 and 2026 game at Kalshi's
+last price before first pitch: +3.0% on 239 games in 2025 and +4.6% on 149 in 2026 — found in one
+season, repeated in the next, but small. Last-5 and last-20 windows and every run-total rule (team
+5+, game 9+ over/under) were tested in the same run and did not repeat or contradicted themselves.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into
