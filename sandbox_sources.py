@@ -2593,10 +2593,18 @@ def mlb_form(games, team, before):
 def fetch_mlb_fade_streak(sport, universe=None, games=None):
     """Back the cold team (<= MLB_COLD of its last 10) against a hot one (>= MLB_HOT of 10)."""
     games = mlb_games() if games is None else games
+    rows = list(_rule_rows(sport, universe))
     out = []
-    for r, ko in _rule_rows(sport, universe):
+    for r, ko in rows:
         if ko.tzinfo is None:
             ko = ko.replace(tzinfo=timezone.utc)
+        # Only each team's NEXT listed game. Form is read now, so a bet on game 2 or 3 of a series
+        # would use form that game 1 is about to change — and repeat the same bet three times.
+        # The later games are picked up by later runs, once the games before them are final.
+        teams = (r["side_a"], r["side_b"])
+        if any(o is not r and o2 < ko and any(_score(t, x, "mlb") >= 0.8 for t in teams for x in (o["side_a"], o["side_b"]))
+               for o, o2 in ((o, o2 if o2.tzinfo else o2.replace(tzinfo=timezone.utc)) for o, o2 in rows)):
+            continue
         wa, na = mlb_form(games, r["side_a"], ko)
         wb, nb = mlb_form(games, r["side_b"], ko)
         if wa is None or wb is None or min(na, nb) < MLB_MIN_GAMES:

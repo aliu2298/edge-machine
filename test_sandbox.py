@@ -2450,6 +2450,9 @@ _mrows = {"mlb": [dict(market_id="m1", side_a="Hot Sox", side_b="Cold Cubs", sta
 eq(S.mlb_form(_mg, "Cold Cubs", datetime(2026, 9, 10, 23, 5, tzinfo=timezone.utc)), (1, 25), "form counts only games before first pitch")
 eq(S.fetch_mlb_fade_streak("mlb", universe=_mrows, games=_mg), [dict(market_id="m1", pick="b"), dict(market_id="m3", pick="a")],
    "backs the cold team against a hot one, from either side; a cold team v a .500 team is no bet")
+_mrows2 = {"mlb": _mrows["mlb"][:1] + [dict(market_id="m4", side_a="Hot Sox", side_b="Cold Cubs", start="2026-09-11T23:05:00+00:00", price_a=0.6, price_b=0.42)]}
+eq(S.fetch_mlb_fade_streak("mlb", universe=_mrows2, games=_mg), [dict(market_id="m1", pick="b")],
+   "only each team's next game: game 2 of the series waits until game 1 is final")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
