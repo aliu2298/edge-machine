@@ -56,12 +56,25 @@ details.more>summary::-webkit-details-marker{display:none}
 details.more>summary::before{content:"▸ "}
 details.more[open]>summary::before{content:"▾ "}
 .grp td{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.tabs button{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:6px 13px;cursor:pointer}
+.tabs button.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+.tabs button b{margin-left:5px}
+.grp.ok td{color:var(--pos)}.grp.bad td{color:var(--neg)}
+details.src>summary{cursor:pointer;list-style:none}details.src>summary::-webkit-details-marker{display:none}
+details.src .sm{margin-top:6px;max-width:420px;line-height:1.5}
+details.ref{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;margin-bottom:10px}
+details.ref>summary{cursor:pointer;font-size:12.5px;font-weight:700}
+details.ref[open]>summary{margin-bottom:10px}
+.bar{display:inline-block;width:64px;height:5px;border-radius:3px;background:#1a1f2b;vertical-align:middle;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc)}
 footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style></head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">Sources that earned their place on the Sandbox ladder · updated 2026-09-14 21:17 UTC</div>
+<div class="sub">Sources that earned their place on the Sandbox ladder · updated 2026-09-14 21:24 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a class="on" href="./production.html">Production</a></div>

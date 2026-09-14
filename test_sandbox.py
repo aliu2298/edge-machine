@@ -1951,9 +1951,9 @@ print("\nheadline: no blended P/L")
 # ---------------------------------------------------------------------------
 _src = open("sandbox_build.py").read()
 ok("net P/L</span>" not in _src and "ROI on turnover" not in _src, "the blended P/L and ROI tiles are gone")
-ok("sources past the" in _src and "stamped</span>" in _src, "replaced by sources past the floor and stamped")
-ok("<th class=\"num\">v blind</th>" in _src and "Beat the close</th>" in _src,
-   "the overall record carries v blind and beat-the-close columns")
+ok("working</span>" in _src and "not working</span>" in _src, "replaced by working / not working counts")
+ok("v blind</th>" in _src and "Beat the close</th>" in _src,
+   "the pair table carries v blind and beat-the-close columns")
 
 # ---------------------------------------------------------------------------
 print("\nsettled bets are archived, not lost")
@@ -2453,6 +2453,23 @@ eq(S.fetch_mlb_fade_streak("mlb", universe=_mrows, games=_mg), [dict(market_id="
 _mrows2 = {"mlb": _mrows["mlb"][:1] + [dict(market_id="m4", side_a="Hot Sox", side_b="Cold Cubs", start="2026-09-11T23:05:00+00:00", price_a=0.6, price_b=0.42)]}
 eq(S.fetch_mlb_fade_streak("mlb", universe=_mrows2, games=_mg), [dict(market_id="m1", pick="b")],
    "only each team's next game: game 2 of the series waits until game 1 is final")
+
+
+print("\nSandbox page: pairs sorted into working / not working / too early; QA lists only promoted pairs")
+def _pq2(src, sport, i, won, price=0.5):
+    return dict(id=f"{src}:{sport}:{i}", source=src, sport=sport, market_id=f"{sport}{i}", venue="polymarket_us", bet=True,
+                pick="a", price=price, price_a=price, price_b=1 - price, result="a" if won else "b",
+                status="won" if won else "lost", pnl=100.0 if won else -100.0, stake=100.0,
+                start=f"2026-08-{1 + i % 28:02d}T18:00:00+00:00", logged=f"2026-08-{1 + i % 28:02d}T10:00:00+00:00")
+_pd = {"quotes": [_pq2("covers", "mlb", i, i % 3 != 0) for i in range(36)]          # 24/36 at 0.5: working
+                + [_pq2("covers", "nfl", i, i % 3 == 0) for i in range(33)]         # 11/33: not working
+                + [_pq2("espn_fpi", "mlb", i, i % 2 == 0) for i in range(5)]}      # too early
+_g, _c = SB.pair_rows(_pd, {"pairs": {}})
+eq((_c["working"], _c["failing"]), (1, 1), "a readable pair ahead of the price is working; one behind it is not")
+ok(_c["leaning"] + _c["behind"] == 1, "a pair under the floor is too early, sorted by its lean")
+ok("Covers" in "".join(_g["working"]) and "MLB" in "".join(_g["working"]), "rows name the source and the sport")
+ok("On deck" not in SB.qa_page(_pd, {"pairs": {}, "events": []}, "<style></style>"),
+   "QA no longer lists sandbox pairs that have not succeeded")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

@@ -89,6 +89,9 @@ def feed_health(d):
     for name, meta in S.SOURCES.items():
         if not meta["connected"] or name == "polymarket_us":
             continue
+        # A rule reads data we already hold; zero picks means no match qualified, not a dead feed.
+        if meta.get("kind") == "Rule":
+            continue
         st = status.get(name)
         if st is not None:
             if st.startswith("down"):
@@ -417,67 +420,129 @@ def unconnected_rows():
     return "\n".join(out)
 
 
+GROUPS = [
+    ("working", "Working", "ok", "30+ settled bets and ahead of the price: wins beat what the prices implied and ROI is positive."),
+    ("failing", "Not working", "bad", "30+ settled bets and not ahead of the price. Kept running — a record can turn — but nothing here is an edge today."),
+    ("leaning", "Too early · leaning ahead", "", "Under 30 settled bets, ahead of the price so far. Unreadable yet: watch, don't trust."),
+    ("behind", "Too early · leaning behind", "", "Under 30 settled bets, behind the price so far."),
+    ("waiting", "Waiting for results", "", "Bets logged, nothing settled yet."),
+]
+
+
+def pair_status(d, st, name, sport):
+    """(group, sandbox record, QA-entry record, open bets, last logged) for one (source, sport)."""
+    pair = (st.get("pairs") or {}).get(f"{name}|{sport}") or {}
+    since = pair.get("since")
+    a = T.assess(d, name, sport, since=since)
+    qa = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
+    mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")]
+    open_n = sum(1 for q in mine if q["status"] == "open")
+    last = max((str(q.get("logged") or "") for q in mine), default="")
+    if not a["n"]:
+        group = "waiting" if open_n else None
+    elif a["n"] >= MIN_N:
+        group = "working" if (a["roi"] or 0) > 0 and a["z"] > 0 else "failing"
+    else:
+        group = "leaning" if (a["roi"] or 0) > 0 and a["z"] > 0 else "behind"
+    return group, a, qa, open_n, last, pair
+
+
+def pair_rows(d, st):
+    """Every betting (source, sport) pair, sorted into GROUPS. -> ({group: [html rows]}, counts)."""
+    rows = {g[0]: [] for g in GROUPS}
+    for name, meta in S.SOURCES.items():
+        if not meta["connected"]:
+            continue
+        for sport in meta["sports"]:
+            group, a, qa, open_n, last, pair = pair_status(d, st, name, sport)
+            if group is None:
+                continue
+            if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
+                continue
+            gates = T.qa_entry(qa) if qa["n"] else []
+            passed = sum(1 for _k, _l, p, _d in gates if p)
+            if pair.get("stage") == "qa":
+                stage = f'<span class="sig y">IN QA</span><div class="sm mut">since {esc(pair["promoted_at"][:10])}</div>'
+            elif (pair.get("fast_track") or {}).get("state") in ("probation", "cleared"):
+                stage = f'<span class="sig w">FAST TRACK</span><div class="sm mut">{esc(pair["fast_track"]["state"])}</div>'
+            else:
+                need = T.QA_ENTRY["min_bets"]
+                fill = min(100, int(100 * qa["n"] / need)) if need else 0
+                stage = (f'<span class="bar"><i style="width:{fill}%"></i></span> '
+                         f'<span class="sm">{qa["n"]}/{need}</span>'
+                         f'<div class="sm mut">{passed}/{len(gates) or 4} QA gates</div>')
+            won_exp = f'{a["won"]} v {a["expected"]:.1f}' if a["n"] else "—"
+            thin = a["n"] < MIN_N
+            vb = "—"
+            if a["base_roi"] is not None:
+                gap = a["own_roi"] - a["base_roi"]
+                vb = f'<span class="{"mut" if thin else cls(gap)}">{gap*100:+.1f}pp</span>'
+            clv = (f'<span class="{"mut" if a["clv_n"] < MIN_N else cls(a["clv"])}">{a["clv"]*100:+.1f}¢</span>'
+                   f'<div class="sm mut">{a["clv_n"]} closes</div>') if a["clv"] is not None else "—"
+            rows[group].append((a["z"] if a["n"] else -99, f"""<tr data-g="{group}">
+<td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>
+<div class="sm mut">{esc(S.SPORTS.get(sport, sport))} · {esc(meta['kind'])}</div></summary>
+<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
+<td class="num">{a['n']}<div class="sm mut">{open_n} open</div></td>
+<td class="num">{won_exp}<div class="sm mut">{f"z {a['z']:+.2f}" if a['n'] else ''}</div></td>
+<td class="num"><span class="{'mut' if thin else cls(a['roi'])}">{pct(a['roi'], sign=True)}</span></td>
+<td class="num">{vb}</td>
+<td class="num">{clv}</td>
+<td>{stage}</td>
+<td class="num mut sm">{esc(last[:10]) or '—'}</td></tr>"""))
+    counts = {g: len(v) for g, v in rows.items()}
+    return {g: [r for _z, r in sorted(v, key=lambda t: -t[0])] for g, v in rows.items()}, counts
+
+
+PAIR_HEAD = ('<tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th>'
+             '<th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th>'
+             '<th>Road to QA</th><th class="num">Last bet</th></tr>')
+
+
 def build():
     d = T.load()
+    st = T.load_stages()
     scores = T.score(d)
     cov = d.get("coverage") or {}
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    # Pinnacle is read through a metered API; showing the balance keeps a quota running
-    # dry from looking like Pinnacle having nothing to price.
     ou = (d.get("meta") or {}).get("odds_api") or {}
     odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} of "
                  f"{ou.get('allowance', '?')} allowed paid calls last run, "
-                 f"{ou['remaining']} credits left until they reset on the 1st — each run "
-                 f"is paced to its share of what remains."
+                 f"{ou['remaining']} credits left until they reset on the 1st."
                  if ou.get("remaining") is not None else "")
-
-    quotes = len(d["quotes"])
-    bets = sum(1 for q in d["quotes"] if q["bet"])
-    settled = sum(1 for q in d["quotes"] if q["status"] in ("won", "lost"))
-    pnl = sum(q["pnl"] for q in d["quotes"] if q["status"] in ("won", "lost"))
-    staked = sum(q["stake"] for q in d["quotes"] if q["status"] in ("won", "lost"))
     live_rows, n_live = open_rows(d)
-    # No blended P/L up here. A total across every source, almost all of them under the
-    # floor, read as "the Sandbox makes money" when it was one source backing favourites
-    # in a week favourites won. The headline counts what is readable instead.
-    n_betting = sum(1 for v in scores.values() if v["connected"] and v["bets"])
-    n_stamped = sum(1 for n, v in scores.items()
-                    if v["connected"] and v["bets"] and T.assess(d, n)["status"] == "approved")
-    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"] if q.get("bet"))
-                   if x is not None and x >= 0)
-    close_line = (f" Closing prices are read every 30 minutes for bets about to start; a snapshot "
-                  f"counts toward <b>beat the close</b> only when taken within "
-                  f"{T.CLOSE_MAX_LEAD_MIN} minutes of the deadline "
-                  f"({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far"
-                  + (f", median {leads[len(leads)//2]:.0f} min before" if leads else "") + ").")
-    n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     hist_rows, n_hist = settled_rows(d)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
+    n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    settled_today = [q for q in d["quotes"] if q["bet"] and q["status"] in ("won", "lost")
+                     and str(q.get("settled") or "")[:10] == today]
+    in_qa = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "qa")
+    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"] if q.get("bet"))
+                   if x is not None and x >= 0)
+    close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
+                  f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far).")
 
-    # The floor has to be judged on the SAME unit the table prints. Every cell greys
-    # itself on its own settled count, but this banner used to compare the lifetime
-    # TOTAL against MIN_N — so at 57 settled across seven sources it announced "the ROI
-    # column is now readable" while greying out every figure in it, the best single
-    # source sitting at n=15. A total is not a sample; nobody bets "all sources".
-    best = max((v["settled"] for v in scores.values()), default=0)
-    ready = [n for n, v in scores.items() if v["settled"] >= MIN_N]
-    if settled == 0:
-        verdict = ("Nothing is settled yet, so no source has a record. The first "
-                   "fixtures settle within a day of the first run.")
-    elif not ready:
-        verdict = (f"{settled:,} settled bets across every source, but the most any "
-                   f"single source has is {best}. Nothing here is readable until one "
-                   f"of them reaches {MIN_N} on its own — a total is not a sample.")
-    else:
-        verdict = (f"{settled:,} settled bets. "
-                   f"{len(ready)} source{'' if len(ready) == 1 else 's'} past the "
-                   f"{MIN_N}-bet floor ({', '.join(sorted(ready))}) — only those "
-                   f"figures are readable; the rest stay greyed.")
+    groups, counts = pair_rows(d, st)
+    on = ' class="on"'
+    # Open on the first group that has anything in it.
+    first = next((g for g, *_r in GROUPS if counts[g]), "working")
+    tabs = "".join(f'<button type="button" data-tab="{g}"{on if g == first else ""}>{esc(t)}<b>{counts[g]}</b></button>'
+                   for g, t, _c, _n in GROUPS)
+    body = []
+    for g, title, klass, note in GROUPS:
+        if not groups[g]:
+            body.append(f'<tr class="grp {klass}" data-g="{g}"><td colspan="8">{esc(title)} · none right now</td></tr>'
+                        f'<tr data-g="{g}"><td colspan="8" class="mut sm">{esc(note)}</td></tr>')
+            continue
+        body.append(f'<tr class="grp {klass}" data-g="{g}"><td colspan="8">{esc(title)} · {len(groups[g])}</td></tr>'
+                    f'<tr data-g="{g}"><td colspan="8" class="mut sm">{esc(note)}</td></tr>')
+        body.extend(groups[g])
 
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sandbox Tracker</title>
-<meta name="description" content="Which sports tipsters actually make money, tracked per sport at real prices and settled on real results.">
+<meta name="description" content="Every source and rule under test, per sport, at real prices and settled on real results — what is working and what is not.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -532,149 +597,87 @@ details.more>summary::-webkit-details-marker{{display:none}}
 details.more>summary::before{{content:"▸ "}}
 details.more[open]>summary::before{{content:"▾ "}}
 .grp td{{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}}
+.tabs{{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}}
+.tabs button{{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:6px 13px;cursor:pointer}}
+.tabs button.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
+.tabs button b{{margin-left:5px}}
+.grp.ok td{{color:var(--pos)}}.grp.bad td{{color:var(--neg)}}
+details.src>summary{{cursor:pointer;list-style:none}}details.src>summary::-webkit-details-marker{{display:none}}
+details.src .sm{{margin-top:6px;max-width:420px;line-height:1.5}}
+details.ref{{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;margin-bottom:10px}}
+details.ref>summary{{cursor:pointer;font-size:12.5px;font-weight:700}}
+details.ref[open]>summary{{margin-bottom:10px}}
+.bar{{display:inline-block;width:64px;height:5px;border-radius:3px;background:#1a1f2b;vertical-align:middle;overflow:hidden}}
+.bar i{{display:block;height:100%;background:var(--acc)}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
 </style></head><body><div class="wrap">
 
-<h1>Sandbox Tracker</h1>
-<div class="sub">Which tipster actually makes money · {len(S.SPORTS)} sports · updated {esc(now)}</div>
+<h1>Sandbox</h1>
+<div class="sub">Every source and rule under test, per sport · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
-<div class="note warn">Every source here is logged <b>before the contest starts</b> and
-stamped with the <b>price that existed at that moment</b>, then settled for real when the
-market resolves. Two kinds of source are tracked and they are staked differently.
-<b>Tipsters</b> name a side: that side is backed at the going price, every time, because
-that is how a tipster is actually followed — high turnover, no Brier score, and a real
-ROI. <b>Models, books and exchanges</b> state a probability: they are backed only when
-they disagree with the price by {int(T.EDGE_MIN*100)}pp or more, and they also get an
-accuracy score. Everything is flat ${int(T.STAKE)} a bet, so nothing here is bet-sizing
-skill. {esc(verdict)}</div>
+<div class="note warn">Each <b>source in a sport</b> is tracked on its own: logged before the start at the price
+available then, flat ${int(T.STAKE)} a bet, settled on the real result. A pair is only <b>readable at
+{MIN_N}+ settled bets</b>; below that it is sorted by which way it leans, nothing more. Pairs that
+clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 
 <div class="tiles">
-<div class="tile"><b>{quotes:,}</b><span>predictions logged</span></div>
-<div class="tile"><b>{bets:,}</b><span>bets placed</span></div>
-<div class="tile"><b>{settled:,}</b><span>settled</span></div>
-<div class="tile"><b>{len(ready)} of {n_betting}</b><span>sources past the {MIN_N}-bet floor</span></div>
-<div class="tile"><b class="{'pos' if n_stamped else ''}">{n_stamped}</b><span>stamped</span></div>
+<div class="tile"><b class="{'pos' if counts['working'] else ''}">{counts['working']}</b><span>working</span></div>
+<div class="tile"><b class="{'neg' if counts['failing'] else ''}">{counts['failing']}</b><span>not working</span></div>
+<div class="tile"><b>{counts['leaning'] + counts['behind'] + counts['waiting']}</b><span>too early to tell</span></div>
+<div class="tile"><b>{in_qa}</b><span>in QA</span></div>
 <div class="tile"><b>{n_live:,}</b><span>bets running</span></div>
+<div class="tile"><b>{sum(1 for q in settled_today if q['status'] == 'won')}/{len(settled_today)}</b><span>won today</span></div>
 </div>
-
-<h2>Which tipster is profitable, and at what?</h2>
 {feed_health(d)}
-{sport_matrix(d, SPORT_KEYS)}
-<div class="note"><b>ROI per source, per sport</b>, at the price actually available.
-Greyed figures are under {MIN_N} settled bets and mean nothing yet — the sample is
-printed under every number so a hot streak cannot be mistaken for an edge. A dot means
-the source does not cover that sport at all.</div>
 
-<h2>Stamp of approval</h2>
-<div class="note">A source earns the stamp only when <b>every</b> criterion holds, and it is
-re-judged every run, so it can be lost. The rules were fixed on 2026-09-12, before any
-source had met them, and they are the same for tipsters, models, books and exchanges:
-<b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>
-(one weekend is one draw of the weather — on 2026-09-12 the tracked leagues drew 34% of the
-time against a normal ~26%); <b>wins beat the price</b> by z ≥ {T.APPROVAL['z_min']:g};
-<b>ROI beats every blind rule on the same contests</b> — back the favourite, back the
-underdog, back the draw — each a fixed rule that ignores the source, so beating all three
-means its choices added something; <b>still profitable without its single biggest win</b>;
-and <b>profitable in both halves</b> of its record. <b>Watch</b> means readable and ahead of
-the price but not yet through every gate; <b>failing</b> means readable and not ahead of
-the price at all; <b>no read</b> means under {MIN_N} settled bets.</div>
-{approval_table(d, scores)}
-
-<h2>Blind baselines</h2>
-<div class="note">What choosing nothing would have made on the same contests, priced at the
-first moment any source looked at each one. A source whose record is no better than
-<b>back the favourite</b>, <b>back the underdog</b> or <b>back every draw</b> has not shown it
-can pick — it has shown what the weather was.</div>
-{baseline_table(d)}
-
-<h2>Pinnacle v venue</h2>
-{pinnacle_table(d)}
-
-<h2>Markets beyond sport</h2>
-{sport_matrix(d, MARKET_KEYS)}
-<div class="note">Yes/no markets rather than contests, so the opponent is the market
-price itself. <b>Climate</b> is the one with a genuinely independent forecaster — the
-National Weather Service against Kalshi's temperature buckets for the same city and day —
-and it settles overnight, so it reaches a readable sample in about a week. <b>Crypto</b>
-carries a no-change spot baseline, which is the null hypothesis rather than a forecast.
-<b>Politics</b> and <b>elections</b> are listed but not fetched: Kalshi has thousands of
-political questions and almost none resolve inside this board's horizon, so nothing there
-could settle and be scored.</div>
-
-<h2>Overall record</h2>
-<div class="tbl"><table>
-<tr><th>Source</th><th class="num">Logged</th><th class="num">Bets</th>
-<th class="num">Settled</th><th class="num">Hit</th><th class="num">Won v priced</th><th class="num">ROI</th>
-<th class="num">v blind</th><th class="num">Beat the close</th><th class="num">P/L</th><th class="num">Brier</th><th>Verdict</th></tr>
-{leaderboard(scores, d)}
-</table></div>
-<div class="note"><b>Won v priced</b> is the honest column while samples are small: each backed price is
-the market's own chance that the bet lands, so their sum is how many winners luck alone
-would have produced. Two wins from bets the market priced at 1.6 is noise, not an edge.
-<b>Brier</b> scores raw accuracy on every logged probability, bet or
-not — lower is better, 0.25 is a coin flip. It is blank for tipsters by design: naming a
-side states no probability, so there is nothing to calibrate. <b>Compare on ROI, never on
-P/L</b> — a tipster backs every game it calls while a model bets only where it disagrees
-with the price, so turnover differs by an order of magnitude. <b>Polymarket US</b> cannot win
-its own table: its price is what everything else is measured against. <b>v blind</b> is the
-source's ROI minus the best blind rule's (back the favourite, the underdog or the draw) on
-exactly the contests it bet — zero means its picks added nothing over the rule.
-<b>Beat the close</b> is the average closing price minus the price paid, in cents: buying
-below where the market closed is the earliest sign of an edge.{close_line}</div>
+<h2>Sources and rules</h2>
+<div class="tabs" id="tabs">{tabs}<button type="button" data-tab="all">All</button></div>
+<div class="tbl"><table id="pairs">{PAIR_HEAD}{''.join(body)}</table></div>
+<div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
+samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
+the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
+<b>Road to QA</b>: settled bets on the US exchanges against the {T.QA_ENTRY['min_bets']} QA needs, and how many of its
+four entry gates hold. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
 
 <h2>Running now ({n_live:,})</h2>
-{('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets — no source currently disagrees with the market by enough to act on.</div>'}
+{('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets.</div>'}
 
 <h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""})</h2>
-{('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") + '</div>') if n_hist else '<div class="note">Nothing settled yet. Bets settle when the venue resolves the market, usually within hours of the contest finishing.</div>'}
+{('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
 
-<details class="more"><summary>Declared but not connected ({n_unconnected})</summary>
-<div class="tbl"><table>
-<tr><th>Source</th><th>Why it is not scored</th></tr>
-{unconnected_rows()}
-</table></div>
-<div class="note">These are listed rather than dropped so the roster stays honest: a
-source missing from a board is indistinguishable from a source with nothing to say.
-Adding one is a single function returning <code>{{a, b, pick}}</code> or
-<code>{{a, b, prob_a}}</code> per contest; the matching, staking, settling and scoring
-are already shared. Cloudflare is no longer a blocker either — Scores24 is fetched
-through a real headless browser, and any other site behind the same wall can reuse
-that step.</div></details>
-
-<h2>Method</h2>
-<div class="note">
-Every source is logged <b>before kick-off</b> at the <b>price available then</b>, staked
-flat ${int(T.STAKE)}, and settled on the real result. Tipsters name a side and are backed
-every time; models and books state a probability and are backed only on a
-{int(T.EDGE_MIN*100)}pp disagreement with the price.<br><br>
-<b>Prices and settlement.</b> <b>Polymarket US</b> is the venue wherever it lists a contest,
-and settles it — the regulated US exchange. Until 2026-09-13 the venue
-was polymarket.com, the international exchange closed to US accounts; bets logged there still
-settle there, and polymarket.com is now a comparison source backed, like any exchange, on a
-{int(T.EDGE_MIN*100)}pp disagreement with the US price. A contest is only logged once it has a
-<b>real book</b> (a spread of {int(S.MAX_SPREAD*100)}¢ or less), booked at the <b>ask</b>. A just-listed market shows a midpoint near 50¢ with nothing
-behind it; before this rule, boxing bouts were logged at 51¢ that traded at 88¢ once
-money arrived. Boxing, cricket and table-tennis quotes logged before the rule were voided
-({esc(T.PRE_GATE_NOTE)}).{odds_line}<br><br>
-<b>Kalshi</b> is the venue for soccer and for any fight, match or game Polymarket US is
-missing. Kalshi publishes no kickoff time, so a soccer contest takes its start from <b>ESPN's
-fixture</b> where one matches; the rest keep Kalshi's estimate. On Kalshi a tip
-is backed at the <b>ask</b>, the price backing it would actually cost, and only where
-that book is tight (a spread of 10¢ or less). Soccer is <b>three-way</b>: a Draw tip wins
-on a draw, and a backed side loses to it and is never refunded.<br><br>
-<b>What would falsify a source.</b> A positive ROI under {MIN_N} settled bets is not a
-finding. Beating the price is the only test that counts — a high hit rate on heavy
-favourites is not an edge, it is just backing the favourite.
-</div>
+<h2>Reference</h2>
+<details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
+<div class="note">The stamp needs <b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>,
+wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind rule on the same contests,
+still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
+{approval_table(d, scores)}</details>
+<details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
+<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>
+<details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
+<details class="ref"><summary>Declared but not connected ({n_unconnected})</summary>
+<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows()}</table></div></details>
+<details class="ref"><summary>Method</summary><div class="note">
+Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
+and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue
+wherever it lists a contest; <b>Kalshi</b> is the venue for soccer and anything Polymarket US is missing, with
+soccer kickoffs taken from ESPN. A contest is logged only with a real book (spread ≤ {int(S.MAX_SPREAD*100)}¢), at the
+ask. Until 2026-09-13 the venue was polymarket.com; those bets still settle there but never count toward QA.
+Quotes logged before the book rule on boxing, cricket and table tennis were voided ({esc(T.PRE_GATE_NOTE)}).{odds_line}{close_line}
+A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
-// Filter a bet list by any text in its rows. Opens the "show more" part while filtering so a
-// match is never hidden behind the toggle; a group header shows only if a row under it does.
+document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => {{
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  const t = b.dataset.tab;
+  document.querySelectorAll('#pairs tr[data-g]').forEach(tr => tr.hidden = t !== 'all' && tr.dataset.g !== t);
+}}));
+document.querySelector('#tabs button.on')?.click();
 document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {{
   const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
   box.querySelectorAll('details').forEach(dt => {{ if (q) dt.open = true; }});
@@ -744,42 +747,14 @@ def qa_page(d, st, style):
 <tr><th>Pair</th><th>Status</th><th class="num">Fresh bets</th><th class="num">ROI</th>
 <th class="num">CLV</th>{ready_head}</tr>
 {''.join(qa_rows)}</table></div>""" if qa_rows else
-        '<div class="note">Nothing has been promoted yet. The first pairs to reach QA will '
-        'appear here, judged only on bets they make from that moment on.</div>')
-
-    # On deck: sandbox pairs, closest to the entry gate first
-    entry_head = "".join(f"<th>{esc(l)}</th>" for _k, l, _p, _d in T.qa_entry(T.assess(d, "__none__")))
-    deck = []
-    for name, meta in S.SOURCES.items():
-        if not meta["connected"] or meta.get("kind") in T.NEVER_PROMOTED_KINDS:
-            continue
-        for sport in meta["sports"]:
-            key = f"{name}|{sport}"
-            pair = pairs.get(key) or {}
-            if pair.get("stage") == "qa":
-                continue
-            a = T.assess(d, name, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
-            if not a["n"]:
-                continue
-            gate = T.qa_entry(a)
-            passed, cells = _ticks(gate)
-            deck.append((passed, a["n"], key, a, cells, pair))
-    deck.sort(key=lambda t: (-t[0], -t[1]))
-    deck_rows = "".join(
-        f"""<tr><td><b>{esc(label(key))}</b>{'<div class="sm neg">demoted ' + esc(pair['demoted_at'][:10]) + '</div>' if pair.get('demoted_at') else ''}</td>
-<td class="num">{passed}/{len(T.qa_entry(a))}</td>
-<td class="num"><span class="mut">{pct(a['roi'], sign=True)}</span></td>{cells}</tr>"""
-        for passed, _n, key, a, cells, pair in deck)
-    deck_table = (collapse(deck_rows, f'<tr><th>Pair</th><th class="num">Gates</th>'
-                                      f'<th class="num">ROI</th>{entry_head}</tr>',
-                           len(deck), "sandbox pairs") if deck_rows else
-                  '<div class="note">No settled sandbox bets yet.</div>')
+        '<div class="note">Nothing has been promoted yet — no Sandbox pair has cleared the entry gate. '
+        'The first to do so will appear here, judged only on bets they make from that moment on.</div>')
 
     # History
     events = list(reversed(st.get("events") or []))
     hist = "".join(
         f"""<tr><td class="mut">{esc(e['at'][:16].replace('T', ' '))}</td><td><b>{esc(label(e['pair']))}</b></td>
-<td>{'<span class="sig y">→ QA</span>' if e['to'] == 'qa' else '<span class="sig y">✓ READY</span>' if e['to'] == 'ready' else '<span class="st miss">READY WITHDRAWN</span>' if e['to'] == 'unready' else '<span class="st miss">→ SANDBOX</span>'}</td>
+<td>{('<span class="sig w">FAST TRACK · ' + esc(e['to'].split('_')[-1].upper()) + '</span>') if e['to'].startswith('fast_track') else '<span class="sig y">→ QA</span>' if e['to'] == 'qa' else '<span class="sig y">✓ READY</span>' if e['to'] == 'ready' else '<span class="st miss">READY WITHDRAWN</span>' if e['to'] == 'unready' else '<span class="st miss">→ SANDBOX</span>'}</td>
 <td class="sm mut">{esc(e.get('reason') or '')} n={e['evidence'].get('n')} · z {e['evidence'].get('z', 0):+.2f} · ROI {pct(e['evidence'].get('roi'), sign=True)}</td></tr>"""
         for e in events)
     hist_table = (collapse(hist, "<tr><th>When</th><th>Pair</th><th>Change</th><th>Evidence</th></tr>",
@@ -790,7 +765,7 @@ def qa_page(d, st, style):
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · QA</title>
-<meta name="description" content="Sandbox sources promoted to QA, judged only on bets made after promotion.">
+<meta name="description" content="Only the Sandbox pairs that succeeded, re-tested on fresh bets before Production.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 {style}</head><body><div class="wrap">
@@ -801,7 +776,10 @@ def qa_page(d, st, style):
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
-<div class="note warn">A (source, sport) pair reaches QA from the Sandbox, and from then on it
+<div class="note warn">QA lists only what has <b>succeeded in the Sandbox</b>: a (source, sport) pair
+arrives here once it clears the entry gate — {E['min_bets']}+ settled bets spanning {E['min_days']}+ days, wins beating
+the price by z ≥ {E['z_min']:g}, beating every blind rule, still profitable without its biggest win.
+Pairs still working towards that are on the <a href="./sandbox.html">Sandbox</a> page. From promotion on, a pair
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
 does it survive the <b>taker fee</b> a follower would pay. Only bets on the US exchanges count
@@ -811,7 +789,6 @@ here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
 <div class="tiles">
 <div class="tile"><b>{len(in_qa)}</b><span>pairs in QA</span></div>
 <div class="tile"><b class="{'pos' if n_ready else ''}">{n_ready}</b><span>production-ready</span></div>
-<div class="tile"><b>{sum(1 for t in deck if t[0] == len(T.qa_entry(t[3])))}</b><span>through the entry gate</span></div>
 <div class="tile"><b>{sum(1 for e in st.get('events') or [] if e['to'] == 'sandbox')}</b><span>demotions</span></div>
 </div>
 
@@ -830,13 +807,6 @@ A pair goes <b>back to the Sandbox</b> after {T.QA_DEMOTE['min_bets']} fresh bet
 not beating every blind rule, or behind the closing price — or, at any count, after
 {T.STALE_DAYS} days without a new bet — and must re-qualify on bets logged after the demotion.
 Baselines are benchmarks and are never promoted.</div>
-
-<h2>On deck</h2>
-<div class="note">Sandbox pairs against the <b>QA entry gate</b>: {E['min_bets']}+ settled bets spanning
-{E['min_days']}+ days, wins beat the price by z ≥ {E['z_min']:g}, beats every blind rule on the same
-contests, still profitable without its biggest win. It is lighter than the stamp on purpose —
-QA re-tests on fresh data, so a pair that got lucky finds out there.</div>
-{deck_table}
 
 <h2>History</h2>
 {hist_table}
