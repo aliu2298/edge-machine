@@ -2431,6 +2431,9 @@ eq(_ct["baseline"][0], True, "and beats it here (+25% v favourites losing two of
 eq((S.SOURCES["mma_fav_band"]["sports"], S.CHALLENGERS["mma_fav_band"] is S.CHALLENGERS["tennis_fav_band"],
     S.SOURCES["mma_fav_band"]["baseline"]), (["mma"], True, "favourite_population"),
    "MMA runs the same band rule, judged the same way")
+eq(S.fetch_tt_band("table_tennis", universe={"table_tennis": [dict(market_id="x", price_a=0.44, price_b=0.57, price_draw=None),
+                                                              dict(market_id="y", price_a=0.60, price_b=0.42, price_draw=None)]}),
+   [dict(market_id="x", pick="b")], "table tennis backs the 0.55-0.60 side only (0.60 itself is out)")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

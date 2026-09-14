@@ -158,6 +158,15 @@ SOURCES = {
              "documented in tennis. Not significant on its own. Judged against backing the "
              "favourite on every match over the same period, so it only counts if this band "
              "beats favourites in general."),
+    "tt_band_55_60": dict(
+        label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=True,
+        site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
+        note="Pre-registered 2026-09-14 as a CONFIRMATION test, not a finding. In the first 129 "
+             "settled table tennis matches (Sep 13-14, nearly all Setka Cup) players priced "
+             "0.55-0.60 won 78.8% against 57.2% priced (+34.5%, z +2.51 on 33) while the bands "
+             "either side lost 15-25% — one spike among 11 bands, which chance produces about "
+             "that often. Backed on every new match from here to see whether it holds; if it "
+             "is noise it will sit at the price. Judged against backing every favourite."),
     "mma_fav_band": dict(
         label="MMA favourite-band rule (priced 0.75-0.90)", kind="Rule", connected=True,
         site="edge-machine", sports=["mma"], baseline="favourite_population",
@@ -2501,19 +2510,29 @@ def _rule_rows(sport, universe):
 
 
 FAV_BAND = (0.75, 0.90)
+TT_BAND = (0.55, 0.60)
 
 
-def fetch_tennis_fav_band(sport, universe=None):
-    """Back the side whose ask sits in FAV_BAND (lower bound inclusive, upper exclusive). Used
-    for tennis and, unchanged, for MMA (mma_fav_band)."""
+def band_picks(sport, band, universe=None):
+    """Back the side whose ask sits in `band` (lower bound inclusive, upper exclusive)."""
     out = []
     for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
         for side in ("a", "b"):
             p = r.get(f"price_{side}")
-            if p is not None and FAV_BAND[0] <= p < FAV_BAND[1] and r.get("price_draw") is None:
+            if p is not None and band[0] <= p < band[1] and r.get("price_draw") is None:
                 out.append(dict(market_id=r["market_id"], pick=side))
                 break
     return out
+
+
+def fetch_tennis_fav_band(sport, universe=None):
+    """FAV_BAND. Used for tennis and, unchanged, for MMA (mma_fav_band)."""
+    return band_picks(sport, FAV_BAND, universe)
+
+
+def fetch_tt_band(sport, universe=None):
+    """TT_BAND, table tennis only — a confirmation test of one suspect band (see SOURCES)."""
+    return band_picks(sport, TT_BAND, universe)
 
 
 def fetch_goals_market(sport, universe=None):
@@ -3204,6 +3223,7 @@ CHALLENGERS = {
     "goals_market": fetch_goals_market,
     "tennis_fav_band": fetch_tennis_fav_band,
     "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
+    "tt_band_55_60": fetch_tt_band,
     "o15_form_l10": fetch_o15_form_l10,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,

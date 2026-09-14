@@ -495,6 +495,10 @@ market's (Brier 0.241 v 0.212), and its 50 bets won 42% against 44% priced (−1
 `mma_fav_band` runs the same band, unchanged, on MMA — not fitted there (the Sandbox had no settled,
 priced MMA fight when it was added), so it tests whether the bias carries across sports.
 
+`tt_band_55_60` is a confirmation test on table tennis: the one band that spiked in the first 129
+settled matches (0.55-0.60 won 78.8% v 57.2% priced, z +2.51 on 33, with losing bands either side),
+backed on every new match to see whether it is noise.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into
