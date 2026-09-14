@@ -506,6 +506,13 @@ last price before first pitch: +3.0% on 239 games in 2025 and +4.6% on 149 in 20
 season, repeated in the next, but small. Last-5 and last-20 windows and every run-total rule (team
 5+, game 9+ over/under) were tested in the same run and did not repeat or contradicted themselves.
 
+**Under 3.5 low-scoring rule (2026-09-14).** `soccer_u35` lists Kalshi's Over 3.5 market (side b = No,
+the under). `u35_low_scoring` backs the under where both teams scored 1 or fewer in 7+ of their last 10
+games in the same competition (`team_form(..., league=)`, HOF's way of counting; ESPN's counts matched
+HOF's on the fixtures checked). Research: 80.5% on 41 v the teams' own 61.7%; 23 of 27 at Kalshi's
+under price (~71%), +20.2% after fees. Under 4.5 on the same selection was priced at ~86% and made
++3%, so it was left out. Judged against backing the under on every Kalshi match.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into

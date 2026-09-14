@@ -2311,7 +2311,8 @@ def _gm(ticker, sub, ya, yb):
 _gevs = {
     "KXEPLTOTAL": [{"event_ticker": "KXEPLTOTAL-26SEP15GOALEA", "title": "Goal FC vs Leak FC: Total Goals",
                     "markets": [_gm("KXEPLTOTAL-26SEP15GOALEA-1", "Over 0.5 goals scored", 0.95, 0.94),
-                                _gm("KXEPLTOTAL-26SEP15GOALEA-2", "Over 1.5 goals scored", 0.84, 0.83)]},
+                                _gm("KXEPLTOTAL-26SEP15GOALEA-2", "Over 1.5 goals scored", 0.84, 0.83),
+                                _gm("KXEPLTOTAL-26SEP15GOALEA-4", "Over 3.5 goals scored", 0.33, 0.32)]},
                    {"event_ticker": "KXEPLTOTAL-26SEP16DULSIE", "title": "Dull FC vs Sieve FC: Total Goals",
                     "markets": [_gm("KXEPLTOTAL-26SEP16DULSIE-2", "Over 1.5 goals scored", 0.70, 0.69)]}],
     "KXEPLTEAMTOTAL": [{"event_ticker": "KXEPLTEAMTOTAL-26SEP15GOALEA", "title": "Goal FC vs Leak FC: Team Total",
@@ -2325,7 +2326,8 @@ _grows = S.fetch_kalshi_goals(fixtures=_gall, now=_g0, events_by_series=_gevs, s
 eq({k: sorted(r["market_id"] for r in v) for k, v in _grows.items()},
    {"soccer_o15": ["KXEPLTOTAL-26SEP15GOALEA-2", "KXEPLTOTAL-26SEP16DULSIE-2"],
     "soccer_team1": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", "KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"],
-    "soccer_team2": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"]},
+    "soccer_team2": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"],
+    "soccer_u35": ["KXEPLTOTAL-26SEP15GOALEA-4"]},
    "over 1.5 from the totals ladder; over 0.5 / 1.5 per side from team totals; other lines ignored")
 _t1 = {r["market_id"]: r for r in _grows["soccer_team1"]}
 eq((_t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["team"], _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["opponent"],
@@ -2470,6 +2472,20 @@ ok(_c["leaning"] + _c["behind"] == 1, "a pair under the floor is too early, sort
 ok("Covers" in "".join(_g["working"]) and "MLB" in "".join(_g["working"]), "rows name the source and the sport")
 ok("On deck" not in SB.qa_page(_pd, {"pairs": {}, "events": []}, "<style></style>"),
    "QA no longer lists sandbox pairs that have not succeeded")
+
+
+print("\nunder 3.5 low-scoring rule")
+_ux = []
+for i in range(10):
+    _ux.append(dict(_gfx("Tight FC", f"T{i}", 1 if i < 8 else 3, 0, i + 1), league="Serie A"))   # scored <=1 in 8/10
+    _ux.append(dict(_gfx(f"B{i}", "Blunt FC", 0, 1 if i < 7 else 2, i + 1), league="Serie A"))   # scored <=1 in 7/10
+    _ux.append(dict(_gfx("Tight FC", f"C{i}", 4, 0, i + 1), league="Coppa Italia"))              # other competition: ignored
+_ux += [dict(_gfx("Loose FC", f"L{i}", 3, 3, i + 1), league="Serie A") for i in range(10)]
+_uu = {"soccer_u35": [dict(market_id="u1", start="2026-09-15T18:00:00+00:00", league="Serie A", espn_home="Tight FC", espn_away="Blunt FC", price_a=0.3, price_b=0.72),
+                      dict(market_id="u2", start="2026-09-15T18:00:00+00:00", league="Serie A", espn_home="Tight FC", espn_away="Loose FC", price_a=0.4, price_b=0.62)]}
+eq(S.fetch_u35_low_scoring("soccer_u35", universe=_uu, fixtures=_ux), [dict(market_id="u1", pick="b")],
+   "backs the under (No) only where both teams scored <=1 in 7+ of 10 in THIS competition")
+eq(S.SOURCES["u35_low_scoring"]["baseline"], "population", "judged against backing the under on every match")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

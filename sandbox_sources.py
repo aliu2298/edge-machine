@@ -43,6 +43,7 @@ SPORTS = {
     "soccer_o15":   "Soccer · Over 1.5",
     "soccer_team1": "Soccer · Team 1+",
     "soccer_team2": "Soccer · Team 2+",
+    "soccer_u35":   "Soccer · Under 3.5",
     "tennis":       "Tennis",
     "table_tennis": "Table Tennis",
     "boxing":       "Boxing",
@@ -189,7 +190,7 @@ SOURCES = {
              "the same games."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
-        site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2"],
+        site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35"],
         note="The market's own midpoint on every Kalshi over-1.5 and team-total market the "
              "Sandbox lists. Never bets. The population each goals rule is judged against: "
              "backing Yes on every listed match of that market over the same period."),
@@ -216,6 +217,17 @@ SOURCES = {
              "earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. "
              "Fast-tracked to Production on probation: 30 settled bets, profitable after fees, "
              "z of at least 1 against the prices paid — or back to the normal ladder."),
+    "u35_low_scoring": dict(
+        label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_u35"], baseline="population",
+        note="Pre-registered 2026-09-14. Back under 3.5 goals (No on Kalshi's Over 3.5) where BOTH "
+             "teams scored 1 or fewer in at least 7 of their last 10 games in this competition "
+             "(HOF's way of counting form; 10+ games each, ESPN results before kickoff). Research: "
+             "80.5% on 41 matches against the teams' own earlier 61.7% (z +2.48); at Kalshi's under "
+             "price just before kickoff 23 of 27 won at ~71% (+20.2% after fees). The same form "
+             "counted across all competitions gave the same answer. Not significant across the 10 "
+             "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
+             "Judged against backing the under on every Kalshi match."),
     "team2_form_l10": dict(
         label="Team scores 2+ form rule (7+/10 scored 2+, opponent 7+/10 conceded 2+)",
         kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2"],
@@ -2366,7 +2378,7 @@ def fetch_btts_form_l10(sport, universe=None, fixtures=None):
 #   soccer_team2  KX{LEAGUE}TEAMTOTAL  "{Team} over 1.5 goals"
 # Kalshi lists no team totals for the Eredivisie or Primeira Liga (checked 2026-09-14); those
 # fixtures simply produce no team rows.
-GOALS_SPORTS = ("soccer_o15", "soccer_team1", "soccer_team2")
+GOALS_SPORTS = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35")
 
 # The three rules found in the ESPN research of 2026-09-13 (530 matches, cutoffs fixed before
 # the run). Every count is over COMPETITIVE games that kicked off strictly before the match,
@@ -2446,17 +2458,19 @@ def fetch_kalshi_goals(horizon_days=4, fixtures=None, now=None, stats=None, even
     for frag, league in BTTS_LEAGUES.items():
         series = f"KX{frag}TOTAL"
         for ev in _kalshi_open_events(series, events_by_series):
-            m = next((x for x in ev.get("markets") or []
-                      if "over 1.5" in str(x.get("yes_sub_title") or "").lower()
-                      and str(x.get("status", "")).lower() in ("active", "open")), None)
-            if not m:
-                continue
-            listed += 1
             hit = _espn_fixture_for(ev, upcoming)
-            row = hit and _yes_no_row(m, "soccer_o15", f"{hit[1]['home']} v {hit[1]['away']}: over 1.5 goals",
-                                      hit[0], hit[1], league, series)
-            if row:
-                out["soccer_o15"].append(row)
+            # soccer_u35 is the Over 3.5 market itself: side a = Yes (over), side b = No (under).
+            for line, sport in (("over 1.5", "soccer_o15"), ("over 3.5", "soccer_u35")):
+                m = next((x for x in ev.get("markets") or []
+                          if line in str(x.get("yes_sub_title") or "").lower()
+                          and str(x.get("status", "")).lower() in ("active", "open")), None)
+                if not m:
+                    continue
+                listed += 1
+                row = hit and _yes_no_row(m, sport, f"{hit[1]['home']} v {hit[1]['away']}: {line} goals",
+                                          hit[0], hit[1], league, series)
+                if row:
+                    out[sport].append(row)
         series = f"KX{frag}TEAMTOTAL"
         for ev in _kalshi_open_events(series, events_by_series):
             hit = _espn_fixture_for(ev, upcoming)
@@ -2490,13 +2504,15 @@ def fetch_kalshi_goals(horizon_days=4, fixtures=None, now=None, stats=None, even
     return out
 
 
-def team_form(fixtures, team, before, pred, window):
+def team_form(fixtures, team, before, pred, window, league=None):
     """(games where pred(goals_for, goals_against) held, games) over `team`'s last `window`
-    competitive games that kicked off strictly before `before`, plus the total available."""
+    competitive games that kicked off strictly before `before`, plus the total available.
+    `league`: count only games in that competition (HOF's way of counting form)."""
     games = []
     for f in fixtures:
         if (not f.get("played") or f.get("home_goals") is None or not f.get("competitive", True)
-                or team not in (f.get("home"), f.get("away")) or not f.get("kickoff")):
+                or team not in (f.get("home"), f.get("away")) or not f.get("kickoff")
+                or (league is not None and f.get("league") != league)):
             continue
         try:
             ko = datetime.fromisoformat(str(f["kickoff"]).replace("Z", "+00:00"))
@@ -2643,6 +2659,23 @@ def _team_rule(sport, universe, fixtures, n, window, need):
         c, _cn, call = team_form(fixtures, r.get("opponent"), ko, lambda gf, ga: ga >= n, window)
         if min(sall, call) >= GOALS_MIN_GAMES and s >= need and c >= need:
             out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
+U35_WINDOW, U35_MIN, U35_MAX_SCORED = 10, 7, 1
+
+
+def fetch_u35_low_scoring(sport, universe=None, fixtures=None):
+    """Back UNDER 3.5 (No on Kalshi's Over 3.5) where BOTH teams scored 1 or fewer in 7+ of their
+    last 10 games in this competition, each with 10+ such games."""
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    low = lambda gf, ga: gf <= U35_MAX_SCORED
+    out = []
+    for r, ko in _rule_rows(sport, universe):
+        h, _hn, hall = team_form(fixtures, r.get("espn_home"), ko, low, U35_WINDOW, league=r.get("league"))
+        a, _an, aall = team_form(fixtures, r.get("espn_away"), ko, low, U35_WINDOW, league=r.get("league"))
+        if min(hall, aall) >= U35_WINDOW and h >= U35_MIN and a >= U35_MIN:
+            out.append(dict(market_id=r["market_id"], pick="b"))
     return out
 
 
@@ -3309,6 +3342,7 @@ CHALLENGERS = {
     "o15_form_l10": fetch_o15_form_l10,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "u35_low_scoring": fetch_u35_low_scoring,
     "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,
