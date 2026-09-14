@@ -417,7 +417,7 @@ SOCCER_ALIASES = {
     "leicester": ["leicester city", "leicester"],
     "ipswich": ["ipswich town", "ipswich"],
     # Spain
-    "athletic bilbao": ["athletic club", "athletic bilbao"],
+    "athletic bilbao": ["athletic club", "athletic bilbao", "bilbao"],
     "atletico madrid": ["atletico madrid", "atl madrid", "atleti", "atletico"],
     "rayo vallecano": ["rayo vallecano", "vallecano", "rayo"],
     "racing santander": ["racing santander", "racing de santander", "santander"],
@@ -473,7 +473,12 @@ SOCCER_ALIASES = {
     "lafc": ["los angeles fc", "lafc", "los angeles f"],
     "inter miami": ["inter miami cf", "inter miami"],
     "new york city": ["new york city fc", "nycfc", "new york city"],
-    "new york red bulls": ["new york red bulls", "ny red bulls", "red bulls"],
+    "new york red bulls": ["new york red bulls", "ny red bulls", "red bulls", "red bull new york",
+                           "new york rb"],
+    # Kalshi BTTS event titles (2026-09-13): "DC United", "Ferencvarosi", "Lillestroem"
+    "dc united": ["d c united", "dc united"],
+    "ferencvaros": ["ferencvaros", "ferencvarosi"],
+    "lillestrom": ["lillestrom", "lillestroem"],
     "st louis city": ["st louis city", "saint louis city", "st louis", "saint louis"],
     "real salt lake": ["real salt lake", "salt lake"],
     "cf montreal": ["cf montreal", "montreal"],

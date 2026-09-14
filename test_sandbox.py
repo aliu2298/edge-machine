@@ -2246,6 +2246,10 @@ _br = {r["market_id"]: r for r in _brows}["KXEPLBTTS-26SEP15HOTWAR-BTTS"]
 eq((_br["side_a"], _br["price_a"], _br["price_b"], _br["start"][:16], _br["venue"], _br["start_source"]),
    ("Yes", 0.62, 0.40, "2026-09-15T18:00", "kalshi_binary", "espn"),
    "Yes at its ask, No at its ask, kicked off at ESPN's time, settled as a yes/no market")
+for _ka, _eb in [("Bilbao", "Athletic Club"), ("New York RB", "Red Bull New York"), ("DC United", "D.C. United"),
+                 ("Ferencvarosi", "Ferencvaros"), ("Lillestroem", "Lillestrom")]:
+    ok(S._score(_ka, _eb, "soccer") > 0.9, f"Kalshi's {_ka!r} matches ESPN's {_eb!r}")
+ok(S._score("New York City", "Red Bull New York", "soccer") == 0, "the two New York clubs stay apart")
 eq(S.btts_form(_fx_all, "Cold FC", datetime(2026, 9, 16, 18, tzinfo=timezone.utc)), (3, 10),
    "form counts only games before kickoff (a later BTTS is ignored)")
 _rule = S.fetch_btts_form_l10("soccer_btts", universe={"soccer_btts": _brows}, fixtures=_fx_all)
