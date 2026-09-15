@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-15T13:34:56+00:00",
+ "board_built_at": "2026-09-15T21:01:36+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -88,8 +88,6 @@
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Espanyol to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-15T17:00Z",
    "lane": "production",
-   "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T13:34:56+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "pair": "team1_form_l5|soccer_team1",
@@ -97,28 +95,28 @@
    "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP15RVCESP-ESP1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
-   "status": "pending"
+   "status": "hit"
   }
  },
  "pairs": {
   "team1_form_l5|soccer_team1": {
    "entered_at": "2026-09-14T00:00:00+00:00",
    "fast_track": {
-    "checked": "3 of 30 settled bets",
+    "checked": "4 of 30 settled bets",
     "since": "2026-09-14T00:00:00+00:00",
     "state": "probation"
    },
    "promoted_at": null,
    "ready_at": null,
    "route": "fast track \u00b7 probation",
-   "sandbox_clv": 0.025,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.1694,
-   "sandbox_roi_fee": 0.1577
+   "sandbox_clv": 0.0133,
+   "sandbox_n": 4,
+   "sandbox_roi": 0.2342,
+   "sandbox_roi_fee": 0.2181
   }
  },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-15T13:34:56+00:00"
+ "updated_at": "2026-09-15T21:01:36+00:00"
 }
