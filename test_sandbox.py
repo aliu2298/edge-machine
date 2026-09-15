@@ -2266,7 +2266,14 @@ S.CHALLENGERS = {"btts_market": lambda sp: S.fetch_btts_market(sp, universe={"so
                  "btts_form_l10": lambda sp: S.fetch_btts_form_l10(sp, universe={"soccer_btts": _brows}, fixtures=_fx_all)}
 try:
     _db = {"quotes": [], "meta": {}, "coverage": {}}
-    T.publish(_db, {"soccer_btts": _brows}, {}, verbose=False)
+    # Publishing checks "has it started?" against the real clock. Pin it to the fixture set's own
+    # "now", or these fixed Sep 15-17 kickoffs start failing the moment they are in the past.
+    _real_started = T._started
+    T._started = lambda r, _now, _f=_real_started: _f(r, _b0)
+    try:
+        T.publish(_db, {"soccer_btts": _brows}, {}, verbose=False)
+    finally:
+        T._started = _real_started
 finally:
     S.CHALLENGERS = _saved_ch4
 _bq = {(q["source"], q["market_id"]): q for q in _db["quotes"]}
@@ -2351,7 +2358,14 @@ S.CHALLENGERS = {"goals_market": lambda sp: S.fetch_goals_market(sp, universe=_g
                  "team1_form_l5": lambda sp: S.fetch_team1_form_l5(sp, universe=_grows, fixtures=_gall)}
 try:
     _gdb = {"quotes": [], "meta": {}, "coverage": {}}
-    T.publish(_gdb, _grows, {}, verbose=False)
+    # Publishing checks "has it started?" against the real clock. Pin it to the fixture set's own
+    # "now", or these fixed Sep 15-17 kickoffs start failing the moment they are in the past.
+    _real_started = T._started
+    T._started = lambda r, _now, _f=_real_started: _f(r, _g0)
+    try:
+        T.publish(_gdb, _grows, {}, verbose=False)
+    finally:
+        T._started = _real_started
 finally:
     S.CHALLENGERS = _saved_ch5
 _gq = {(q["source"], q["market_id"]): q for q in _gdb["quotes"]}
