@@ -774,6 +774,32 @@ check("rule compare: v2 graded, hits, priced ROI", (_cmp["v2"]["graded"], _cmp["
 check("rule compare: the old rule from the shadow, and the overlap", (_cmp["v1"]["graded"], _cmp["v1"]["pending"], round(_cmp["v1"]["roi"], 3), _cmp["both"]),
       (2, 1, 0.225, 1))
 
+print("\n== ESPN fetch: a month at a time, day by day when a month hits the cap ==")
+import streaks_fetch as SF
+_calls = []
+def _fake_get(url, tries=3):
+    q = url.split("dates=")[1]
+    _calls.append(q)
+    if q == "202608":   # a capped month: re-read day by day
+        return {"events": [{"id": f"cap{i}", "date": "2026-08-15T12:00Z"} for i in range(SF.MONTH_CAP)]}
+    if len(q) == 8:
+        return {"events": [{"id": f"d{q}", "date": f"{q[:4]}-{q[4:6]}-{q[6:]}T12:00Z"}]}
+    dd = "25" if q.endswith("07") else "02"
+    return {"events": [{"id": f"m{q}", "date": f"{q[:4]}-{q[4:6]}-{dd}T12:00Z"},
+                       {"id": f"m{q}", "date": f"{q[:4]}-{q[4:6]}-{dd}T12:00Z"},
+                       {"id": f"old{q}", "date": "2026-06-01T12:00Z"}]}
+_saved_get, _saved_sleep = SF.get, SF.time.sleep
+SF.get, SF.time.sleep = _fake_get, (lambda s: None)
+try:
+    _ev = SF.fetch_range("eng.1", datetime.date(2026, 7, 20), datetime.date(2026, 9, 5))
+finally:
+    SF.get, SF.time.sleep = _saved_get, _saved_sleep
+check("never asks ESPN for a date range", any("-" in c for c in _calls), False)
+check("months first, then every day of a capped month", _calls[:2] + [_calls[-1]], ["202607", "202608", "202609"])
+check("a capped month is re-read one day at a time", sum(1 for c in _calls if c.startswith("202608") and len(c) == 8), 31)
+check("events are de-duplicated and kept only inside the window",
+      sorted(e["id"] for e in _ev if not e["id"].startswith("d")), ["m202607", "m202609"])
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILURE(S)")

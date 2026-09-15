@@ -90,7 +90,7 @@ def get(url, tries=3):
             with urllib.request.urlopen(req, timeout=30) as f:
                 return json.load(f)
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
-            if i == tries - 1:
+            if i == tries - 1 or (isinstance(e, urllib.error.HTTPError) and e.code == 400):
                 raise
             time.sleep(1.5 * (i + 1))
     return {}
@@ -143,6 +143,44 @@ def parse_event(ev, league_slug, league_name, competitive=True, lead_source=True
     }
 
 
+MONTH_CAP = 100      # a month query returns at most this many events (dates=2026 gave exactly 100)
+
+
+def fetch_range(slug, first, last):
+    """Every event for `slug` between two dates, a MONTH at a time (dates=YYYYMM).
+
+    Since 2026-09-15 ESPN answers 400 ("Failed to get events endpoint") to nearly every
+    dates=START-END range, so one 194-day query per league came back empty and the board
+    published 0 leads. Month and single-day queries still work. A month that hits the result
+    cap is re-read day by day, so a busy month is never silently truncated."""
+    events, seen = [], set()
+
+    def take(data, keep_all=False):
+        for ev in data.get("events", []):
+            day = (ev.get("date") or "")[:10]
+            if ev.get("id") in seen or not (first.isoformat() <= day <= last.isoformat()):
+                continue
+            seen.add(ev.get("id"))
+            events.append(ev)
+
+    base = f"{HOST}/apis/site/v2/sports/soccer/{slug}/scoreboard?dates="
+    month = first.replace(day=1)
+    while month <= last:
+        data = get(base + month.strftime("%Y%m"))
+        if len(data.get("events", [])) >= MONTH_CAP:
+            day = max(first, month)
+            nxt = (month.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
+            while day < nxt and day <= last:
+                take(get(base + day.strftime("%Y%m%d")))
+                day += datetime.timedelta(days=1)
+                time.sleep(0.1)
+        else:
+            take(data)
+        month = (month.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
+        time.sleep(0.2)
+    return events
+
+
 def fetch():
     # UTC: ESPN stamps fixtures in UTC, and CI runs there too
     today = datetime.datetime.now(datetime.timezone.utc).date()
@@ -156,16 +194,15 @@ def fetch():
     for n, (slug, name, competitive, lead_source) in enumerate(feeds):
         if n:
             time.sleep(0.4)            # be polite; ESPN has no documented limit
-        url = (f"{HOST}/apis/site/v2/sports/soccer/{slug}/scoreboard"
-               f"?dates={start}-{end}&limit=1000")
         try:
-            data = get(url)
+            events = fetch_range(slug, today - datetime.timedelta(days=HISTORY_DAYS),
+                                 today + datetime.timedelta(days=HORIZON_DAYS))
         except Exception as e:
             print(f"  {name}: FETCH FAILED ({e}) — skipped")
             per_league[name] = 0
             continue
         got = [r for r in (parse_event(e, slug, name, competitive, lead_source)
-                           for e in data.get("events", [])) if r]
+                           for e in events) if r]
         rows += got
         played = sum(1 for r in got if r["played"])
         per_league[name] = len(got)

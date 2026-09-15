@@ -246,8 +246,7 @@ def rule_change_html(rc):
                 f'<td class="num">{pct(r["rate"])}</td><td class="num">{r["priced"]}</td>'
                 f'<td class="num">{price}</td><td class="num">{roi}</td>'
                 f'<td class="num">{r["pending"]}</td></tr>')
-    return f"""<h2>Over 1.5 — the rule change of {esc(rc['since'])}</h2>
-<div class="note">On {esc(rc['since'])} the over-1.5 lane changed rule: both sides' games over 1.5
+    return f"""<div class="note">On {esc(rc['since'])} the over-1.5 lane changed rule: both sides' games over 1.5
 in <b>9+ of their last 10</b>, replacing the run pairings (both sides over 1.5, or both scoring, in
 every recent game). The old rule still runs, unpublished, on the same fixtures, so the two are
 compared on the same weeks at the same exchange prices. Only leads still on the board at
@@ -255,6 +254,106 @@ kickoff count. {rc['both']} fixture(s) were picked by both.</div>
 <div class="tbl"><table><tr><th>Rule</th><th class="num">Graded</th><th class="num">Hit</th>
 <th class="num">Priced</th><th class="num">Avg price</th><th class="num">ROI</th><th class="num">Pending</th></tr>
 {row("9+ of last 10 (published)", rc["v2"])}{row("Run pairings (retired, shadow)", rc["v1"])}</table></div>"""
+
+
+MIN_N = 30          # the same readability floor the Sandbox uses
+
+GROUPS = [
+    ("working", "Working", "ok", "30+ graded and ahead of its reference."),
+    ("failing", "Not working", "bad", "30+ graded and not ahead of its reference — the market, the teams' own rate, or a shuffled schedule already explains it."),
+    ("leaning", "Too early · leaning ahead", "", "Under 30 graded, ahead so far. Unreadable yet."),
+    ("behind", "Too early · leaning behind", "", "Under 30 graded, behind so far."),
+]
+
+
+def _z(rate, base, n):
+    if rate is None or base is None or not n or base <= 0 or base >= 1:
+        return None
+    return (rate - base) / (base * (1 - base) / n) ** 0.5
+
+
+def findings(ld, fr, bk, rc):
+    """Every measured result as one row, so the whole page can be sorted into working / not
+    working / too early and ranked. Each row: area, test, n, result, reference, diff, z, roi,
+    ahead (bool), sig (bool)."""
+    out = []
+
+    def add(area, test, n, result, ref, diff, z, roi, ahead, sig=None):
+        out.append(dict(area=area, test=test, n=n, result=result, ref=ref, diff=diff, z=z, roi=roi,
+                        ahead=ahead, sig=(abs(z) >= 2 if sig is None and z is not None else bool(sig))))
+
+    for r in ld.get("rows") or []:
+        z = _z(r["rate"], r["base"], r["n"])
+        add("Leads", BET_NAME.get(r["kind"], r["kind"]), r["n"], pct(r["rate"]), f"{pct(r['base'])} teams' own",
+            None if r["lift"] is None else f"{r['lift']*100:+.1f}pp", z, None, (r["lift"] or 0) > 0, r["significant"])
+    for r in (ld.get("priced") or {}).get("rows") or []:
+        z = _z(r["rate"], r["fair"], r["n"])
+        add("Leads at the price", r["label"], r["n"], pct(r["rate"]), f"{pct(r['fair'])} market",
+            f"{r['lift']*100:+.1f}pp", z, r["roi"], r["roi"] > 0 and r["lift"] > 0, r["significant"])
+    if rc:
+        for key, name in (("v2", "Over 1.5 · 9+ of last 10 (published)"), ("v1", "Over 1.5 · run pairings (retired, shadow)")):
+            r = rc[key]
+            add("Rule change", name, r["graded"], pct(r["rate"]), "same weeks, same prices",
+                None, None, r["roi"], (r["roi"] or 0) > 0, False)
+    for r in (ld.get("model") or {}).get("rows") or []:
+        gap = r["brier_book"] - r["brier_model"]
+        add("Model v book (leads)", r["label"], r["n"], f"Brier {r['brier_model']:.3f}", f"book {r['brier_book']:.3f}",
+            f"{gap:+.3f}", None, None, r["model_better"], False)
+    for r in bk.get("by_market") or []:
+        add("Book · every fixture", r["label"], r["n"], pct(r["rate"]), f"{pct(r['fair'])} market",
+            f"{r['excess']:+.1f} hits", r["z"], r["roi"], r["z"] > 0 and r["roi"] > 0)
+        if r.get("n_model"):
+            add("Model v book (every fixture)", r["label"], r["n_model"], f"Brier {r['brier_model']:.3f}",
+                f"book {r['brier_book']:.3f}", f"{r['brier_book'] - r['brier_model']:+.3f}", None, None, r["model_better"], False)
+    for r in bk.get("by_league") or []:
+        add("Book · by league", r["league"], r["n"], pct(r["rate"]), f"{pct(r['fair'])} market",
+            f"{r['excess']:+.1f} hits", r["z"], r["roi"], r["z"] > 0 and r["roi"] > 0)
+    for r in bk.get("bands") or []:
+        add("Book · by price", f"priced {r['lo']*100:.0f}–{r['hi']*100:.0f}%", r["n"], pct(r["rate"]), f"{pct(r['fair'])} market",
+            f"{r['excess']:+.1f} hits", r["z"], r["roi"], r["z"] > 0 and r["roi"] > 0)
+    for label, g in ((f"model ≥ book + {round(bk.get('margin', 0.05) * 100)}pp", bk.get("value")), ("the rest", bk.get("rest"))):
+        if g:
+            add("Book · model value split", label, g["n"], pct(g["rate"]), f"{pct(g['fair'])} market",
+                f"{g['excess']:+.1f} hits", g["z"], g["roi"], g["z"] > 0 and g["roi"] > 0)
+    for t, a in (bk.get("paying") or []) + (bk.get("top_teams") or []) + (bk.get("bottom_teams") or []):
+        if any(x["area"] == "Book · by team" and x["test"] == t for x in out):
+            continue
+        add("Book · by team", t, a["n"], pct(a["rate"]), f"{pct(a['fair'])} market",
+            f"{a['excess']:+.1f} hits", a["z"], a["roi"], a["z"] > 0 and a["roi"] > 0, a.get("paying"))
+    for t in fr.get("test") or []:
+        add("On fire", f"{t['label']} runs continue", t["on_n"], f"{t['diff']*100:+.1f}pp on v off",
+            f"shuffled {t['null_lo']*100:+.0f} to {t['null_hi']*100:+.0f}pp", None, None, None,
+            t["significant"] and t["diff"] > t["null_hi"], t["significant"])
+    return out
+
+
+def group_of(f):
+    if f["n"] >= MIN_N:
+        return "working" if f["ahead"] else "failing"
+    return "leaning" if f["ahead"] else "behind"
+
+
+def findings_table(fs):
+    rows = {g[0]: [] for g in GROUPS}
+    for f in fs:
+        rows[group_of(f)].append(f)
+    rank = lambda f: (-(f["z"] if f["z"] is not None else (f["roi"] if f["roi"] is not None else 0) * 10), -f["n"])
+    body = []
+    for g, title, klass, note in GROUPS:
+        items = sorted(rows[g], key=rank) if g in ("working", "leaning") else sorted(rows[g], key=lambda f: tuple(-x for x in rank(f)))
+        body.append(f'<tr class="grp {klass}" data-g="{g}"><td colspan="8">{esc(title)} · {len(items) or "none right now"}</td></tr>'
+                    f'<tr data-g="{g}"><td colspan="8" class="mut sm">{esc(note)}</td></tr>')
+        for n, f in enumerate(items, 1):
+            thin = f["n"] < MIN_N
+            zc = "—" if f["z"] is None else f'<span class="{"mut" if thin else ("pos" if f["z"] > 0 else "neg")}">{f["z"]:+.2f}</span>'
+            roi = "—" if f["roi"] is None else f'<span class="{"mut" if thin else ("pos" if f["roi"] > 0 else "neg")}">{f["roi"]*100:+.1f}%</span>'
+            badge = ' <span class="sig y">SIG</span>' if f["sig"] and not thin else ""
+            body.append(f"""<tr data-g="{g}"><td class="num mut">{n}</td>
+<td><b>{esc(f['test'])}</b>{badge}<div class="sm mut">{esc(f['area'])}</div></td>
+<td class="num">{f['n']}</td><td class="num">{esc(f['result'])}</td><td class="num mut">{esc(f['ref'])}</td>
+<td class="num">{esc(f['diff'] or '—')}</td><td class="num">{zc}</td><td class="num">{roi}</td></tr>""")
+    counts = {g: len(v) for g, v in rows.items()}
+    return "".join(body), counts
 
 
 def page_html(ld, fr, bk, now, rc=None):
@@ -341,6 +440,11 @@ def page_html(ld, fr, bk, now, rc=None):
         <td><span class="st {p['status']}">{esc(p['status'].upper())}</span></td></tr>"""
         for p in hist)
 
+    table, counts = findings_table(findings(ld, fr, bk, rc))
+    first = next((g for g, *_r in GROUPS if counts[g]), "working")
+    on = ' class="on"'
+    tabs = "".join(f'<button type="button" data-tab="{g}"{on if g == first else ""}>{esc(t)}<b>{counts[g]}</b></button>'
+                   for g, t, _c, _n in GROUPS)
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Record</title>
@@ -386,6 +490,17 @@ padding:2px 7px;border:1px solid}}
 .st.hit,.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
 .st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
 .st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
+.sm{{font-size:11px}}
+.tabs{{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}}
+.tabs button{{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:6px 13px;cursor:pointer}}
+.tabs button.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
+.tabs button b{{margin-left:5px}}
+.grp td{{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}}
+.grp.ok td{{color:var(--pos)}}.grp.bad td{{color:var(--neg)}}
+details.ref{{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;margin-bottom:10px}}
+details.ref>summary{{cursor:pointer;font-size:12.5px;font-weight:700}}
+details.ref[open]>summary{{margin-bottom:10px}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
 </style></head><body><div class="wrap">
@@ -395,77 +510,51 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
-<div class="note warn">The lift sections carry no odds and <b>are not profit</b>; the one
-place money is measured is the priced section, which grades every lead at the price
-captured when it was first listed — the Kalshi or Polymarket US ask plus fee since 2026-09-13,
-the Bovada line before. Everywhere else each rate is compared against
-<b>what the teams involved manage anyway</b> — the named side's own rate for a claim about
-one team, the two sides' mean for a fixture-level outcome. A league average would credit a
-lead for team quality: measured here, that difference moved "team to score" from
-<b>-1.5pp to +9.3pp</b>. On-fire runs get no baseline at all — three were tried and all
-three were wrong, so that section is measured against a shuffled schedule instead.
-<b>The reference is the number</b>; a rate alone is unreadable, and three lanes in this
-repo have already died from being read without one.</div>
+<div class="note warn">Every graded result on one table, sorted like the Sandbox: <b>working</b> and <b>not
+working</b> need 30+ graded; under that a result is only leaning. Each row is measured against a
+<b>reference</b> — the market's price, the teams' own rate, the book, or a shuffled schedule — never a
+bare hit rate. Ranked by <b>z</b> (how many standard deviations from the reference), then ROI. <b>SIG</b>
+marks |z| ≥ 2, and with this many rows a few of those appear by chance.</div>
 
-{section("Leads — every confluence published",
-         "Every lead the Leads board has shown, graded on the final score once the "
-         "fixture is played.",
-         ld, leads_body,
-         "Nothing graded yet.")}
+<div class="tiles">
+<div class="tile"><b class="{'pos' if counts['working'] else ''}">{counts['working']}</b><span>working</span></div>
+<div class="tile"><b class="{'neg' if counts['failing'] else ''}">{counts['failing']}</b><span>not working</span></div>
+<div class="tile"><b>{counts['leaning'] + counts['behind']}</b><span>too early to tell</span></div>
+<div class="tile"><b>{ld['graded']}</b><span>leads graded</span></div>
+<div class="tile"><b>{bk.get('graded', 0)}</b><span>fixtures graded at the price</span></div>
+<div class="tile"><b>{ld['pending']}</b><span>leads pending</span></div>
+</div>
 
-{section("Leads at the price — does it pay?",
-         "Flat 1 unit on every lead at the price captured the <b>first build it was "
-         "listed</b> (the exchange ask plus taker fee since 2026-09-13, Bovada before) — "
-         "never revised, never taken after kickoff. Three fixture-level "
-         "markets are logged on every lead, fixed in advance, so no market is chosen "
-         "after seeing which one paid; a <b>side to score 2+</b> lead is also priced on "
-         "its own claim from the book's team total. Each lane is judged on its own claim. <b>Break-even</b> is the hit rate the average price "
-         "demands; <b>book fair</b> is the market's own probability — the exchange midpoint "
-         "since 2026-09-13, the sportsbook's vig-free line before — a real edge has to clear both, and on the day this was "
-         "added over 1.5 traded at ~1.20, a break-even of 83% against leads that hit 82%.",
-         priced_rep, priced_body,
-         "Nothing settled at a price yet — pricing started 2026-09-12 and a lead counts "
-         "only if it was priced before kickoff and has since been played.")}
-
-{rule_change_html(rc)}
-
-{section("Model v book — is any estimate better than the price?",
-         "Every streak rule here was measured against the teams' own rates and none "
-         "lifted them, because a run is the noisiest estimate of a rate there is. The "
-         "number that pays is against the <b>book</b>. So each priced lead also carries a "
-         "<b>model</b> probability — independent Poissons on each side's shrunk attack and "
-         "defence ratings (see model.py), logged at the same moment as the price and "
-         "never revised — and both are scored on the leads that have since settled. "
-         "<b>Brier</b> is the mean squared error of a probability: lower is better, and "
-         "the only question that matters is whether the model's is lower than the book's.",
-         model_rep, model_body,
-         "Nothing scored yet — model probabilities started 2026-09-12, alongside prices.")}
-
-{section("The book, on every fixture — who pays at the price?",
-         "Every competitive fixture in the pull is priced once it is inside 24h of "
-         "kickoff — whatever the form on either side — and graded on the final score. "
-         "That makes it a calibration ledger for the <b>book</b> itself, with no "
-         "selection by streak: hits against the hits the book's own vig-free "
-         "probabilities predicted. <b>Excess</b> is hits minus expected; <b>z</b> is that "
-         "in standard deviations, and it is the number to read — flat-stake ROI is shown "
-         "for the money view, but at n=10 its standard deviation is about 24 points.",
-         book_rep, book_body,
-         "Nothing settled yet — the book ledger started 2026-09-12; fixtures are priced "
-         "the day before kickoff and graded the day after.")}
-
-{section("On fire — do long runs continue?",
-         "Each long run logged against the fixture that tests it. The question is not "
-         "whether a side on a hot run keeps scoring — it is whether they do it more than "
-         "the same side does anyway, and more than a shuffled schedule would fake.",
-         fr, fire_body,
-         "Nothing graded yet.")}
+<h2>Results, ranked</h2>
+<div class="tabs" id="tabs">{tabs}<button type="button" data-tab="all">All</button></div>
+<div class="tbl"><table id="pairs"><tr><th class="num">#</th><th>Test</th><th class="num">n</th><th class="num">Result</th>
+<th class="num">Reference</th><th class="num">Diff</th><th class="num">z</th><th class="num">ROI</th></tr>{table}</table></div>
 
 {f'''<h2>Recently settled leads ({len(hist)})</h2>
 <div class="tbl"><table>
 <tr><th>Date</th><th>Match</th><th>Pick</th><th class="num">Final</th><th></th></tr>
 {hist_rows}</table></div>''' if hist else ''}
 
+<h2>Reference</h2>
+<details class="ref"><summary>Leads — every lead published, against the teams' own rate</summary>{leads_body}</details>
+<details class="ref"><summary>Leads at the price — does it pay?</summary>
+<div class="note">Flat 1 unit at the price captured the first build a lead was listed (the exchange ask plus fee since
+2026-09-13, Bovada before), never revised, never after kickoff. <b>Break-even</b> is the hit rate the average price demands;
+<b>book fair</b> is the market's own probability.</div>{priced_body}</details>
+<details class="ref"><summary>Over 1.5 — the rule change of 2026-09-14</summary>{rule_change_html(rc)}</details>
+<details class="ref"><summary>Model v book on the leads</summary>{model_body}</details>
+<details class="ref"><summary>The book on every fixture — markets, leagues, price bands, teams</summary>{book_body}</details>
+<details class="ref"><summary>On fire — do long runs continue?</summary>{fire_body}</details>
+
 <footer>Read-only static export · research, not betting advice.</footer>
+<script>
+document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => {{
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  const t = b.dataset.tab;
+  document.querySelectorAll('#pairs tr[data-g]').forEach(tr => tr.hidden = t !== 'all' && tr.dataset.g !== t);
+}}));
+document.querySelector('#tabs button.on')?.click();
+</script>
 </div></body></html>"""
 
 
