@@ -3189,6 +3189,21 @@
    "team": "Espanyol",
    "test_date": "2026-09-15"
   },
+  "Espanyol|over15|2026-09-18|Espanyol|Elche": {
+   "home": true,
+   "id": "Espanyol|over15|2026-09-18|Espanyol|Elche",
+   "key": "over15",
+   "kickoff": "2026-09-18T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "La Liga",
+   "length": 11,
+   "logged_at": "2026-09-15T17:17:09+00:00",
+   "opp": "Elche",
+   "rate": 0.13402061855670103,
+   "status": "pending",
+   "team": "Espanyol",
+   "test_date": "2026-09-18"
+  },
   "Espanyol|scoring1|2026-09-06|Espanyol|Sevilla": {
    "graded_at": "2026-09-07T02:56:04+00:00",
    "home": true,
@@ -3237,6 +3252,21 @@
    "status": "pending",
    "team": "Espanyol",
    "test_date": "2026-09-15"
+  },
+  "Espanyol|scoring1|2026-09-18|Espanyol|Elche": {
+   "home": true,
+   "id": "Espanyol|scoring1|2026-09-18|Espanyol|Elche",
+   "key": "scoring1",
+   "kickoff": "2026-09-18T19:00Z",
+   "label": "scored in",
+   "league": "La Liga",
+   "length": 10,
+   "logged_at": "2026-09-15T17:17:09+00:00",
+   "opp": "Elche",
+   "rate": 0.10996563573883161,
+   "status": "pending",
+   "team": "Espanyol",
+   "test_date": "2026-09-18"
   },
   "Estoril|porous|2026-08-31|Estoril|Benfica": {
    "graded_at": "2026-08-31T22:54:37+00:00",
@@ -7807,6 +7837,21 @@
    "team": "Rayo Vallecano",
    "test_date": "2026-09-15"
   },
+  "Rayo Vallecano|over15|2026-09-19|Rayo Vallecano|Osasuna": {
+   "home": false,
+   "id": "Rayo Vallecano|over15|2026-09-19|Rayo Vallecano|Osasuna",
+   "key": "over15",
+   "kickoff": "2026-09-19T12:00Z",
+   "label": "over 1.5 goals",
+   "league": "La Liga",
+   "length": 12,
+   "logged_at": "2026-09-15T17:17:09+00:00",
+   "opp": "Osasuna",
+   "rate": 0.09965635738831616,
+   "status": "pending",
+   "team": "Rayo Vallecano",
+   "test_date": "2026-09-19"
+  },
   "Real Madrid|scoring1|2026-08-30|Real Madrid|M\u00e1laga": {
    "graded_at": "2026-08-30T20:31:13+00:00",
    "home": true,
@@ -9963,5 +10008,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-15T12:08:30+00:00"
+ "updated_at": "2026-09-15T17:17:09+00:00"
 }

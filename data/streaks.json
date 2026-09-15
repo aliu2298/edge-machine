@@ -1,202 +1,7 @@
 {
- "built_at": "2026-09-15T12:08:30+00:00",
+ "built_at": "2026-09-15T17:17:06+00:00",
  "teams_tracked": 331,
  "leads": [
-  {
-   "date": "2026-09-15",
-   "kickoff": "2026-09-15T17:00Z",
-   "league": "La Liga",
-   "match": "Rayo Vallecano v Espanyol",
-   "home": "Rayo Vallecano",
-   "away": "Espanyol",
-   "headline": "Over 1.5 goals",
-   "why": "Rayo Vallecano's games went over 1.5 in 10 of their last 10; Espanyol's in 10.",
-   "a": "Rayo Vallecano",
-   "b": "Espanyol",
-   "a_run": 10,
-   "b_run": 10,
-   "a_key": "over15_l10",
-   "b_key": "over15_l10",
-   "a_label": "over 1.5",
-   "b_label": "over 1.5",
-   "a_text": "over 1.5 \u00b7 10 of last 10",
-   "b_text": "over 1.5 \u00b7 10 of last 10",
-   "strength": 20,
-   "base_rate": 0.42857142857142855,
-   "rule": "v2",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "a_recent": [
-    {
-     "s": "1-4",
-     "opp": "Real Madrid",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "3-2",
-     "opp": "Racing Santander",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-5",
-     "opp": "Barcelona",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Alav\u00e9s",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Sevilla",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Alav\u00e9s",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Villarreal",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Valencia",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Girona",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Getafe",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    }
-   ],
-   "b_recent": [
-    {
-     "s": "2-0",
-     "opp": "Osasuna",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Sevilla",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Real Sociedad",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Real Madrid",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Levante",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Real Sociedad",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Osasuna",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "Athletic Club",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "1-2",
-     "opp": "Sevilla",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    },
-    {
-     "s": "0-2",
-     "opp": "Real Madrid",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "La Liga"
-    }
-   ],
-   "market": "{\"away\": \"Espanyol\", \"day\": \"2026-09-15\", \"home\": \"Rayo Vallecano\", \"league\": \"La Liga\"}",
-   "price": 1.385,
-   "fair": 0.6913,
-   "model": 0.7228
-  },
   {
    "date": "2026-09-15",
    "kickoff": "2026-09-15T18:45Z",
@@ -650,6 +455,201 @@
    "market_url": "https://kalshi.com/markets/kxlaligateamtotal",
    "venue_name": "Kalshi",
    "model": 0.6763
+  },
+  {
+   "date": "2026-09-17",
+   "kickoff": "2026-09-17T16:45Z",
+   "league": "Europa League",
+   "match": "OFI Crete v TSG Hoffenheim",
+   "home": "OFI Crete",
+   "away": "TSG Hoffenheim",
+   "headline": "Over 1.5 goals",
+   "why": "OFI Crete's games went over 1.5 in 9 of their last 10; TSG Hoffenheim's in 9.",
+   "a": "OFI Crete",
+   "b": "TSG Hoffenheim",
+   "a_run": 9,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 9 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 18,
+   "base_rate": 0.42857142857142855,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "1-0",
+     "opp": "Olympiacos",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Kifisia",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "1-2",
+     "opp": "Aris",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Volos NFC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "3-1",
+     "opp": "Volos NFC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "2-3",
+     "opp": "Levadiakos",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "1-3",
+     "opp": "Aris",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Aris",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Levadiakos",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Volos NFC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Greek Super League"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-1",
+     "opp": "VfB Stuttgart",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "Borussia Dortmund",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "FC Cologne",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-4",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Werder Bremen",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-3",
+     "opp": "VfB Stuttgart",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Hamburg SV",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Borussia Dortmund",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Augsburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Mainz",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "market": "{\"away\": \"TSG Hoffenheim\", \"day\": \"2026-09-17\", \"home\": \"OFI Crete\", \"league\": \"Europa League\"}",
+   "price": 1.2,
+   "fair": 0.7838,
+   "model": 0.8484
   }
  ],
  "teams": [
@@ -6969,11 +6969,11 @@
    "best_rate": 0.08459214501510574,
    "longest": 6,
    "next": {
-    "opp": "Espanyol",
-    "date": "2026-09-15",
-    "kickoff": "2026-09-15T17:00Z",
+    "opp": "Osasuna",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T12:00Z",
     "league": "La Liga",
-    "home": true
+    "home": false
    },
    "recent": [
     {
@@ -11641,11 +11641,11 @@
    "best_rate": 0.22658610271903323,
    "longest": 6,
    "next": {
-    "opp": "Rayo Vallecano",
-    "date": "2026-09-15",
-    "kickoff": "2026-09-15T17:00Z",
+    "opp": "Elche",
+    "date": "2026-09-18",
+    "kickoff": "2026-09-18T19:00Z",
     "league": "La Liga",
-    "home": false
+    "home": true
    },
    "recent": [
     {
@@ -28114,11 +28114,11 @@
    "best_rate": 0.09965635738831616,
    "longest": 12,
    "next": {
-    "opp": "Espanyol",
-    "date": "2026-09-15",
-    "kickoff": "2026-09-15T17:00Z",
+    "opp": "Osasuna",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T12:00Z",
     "league": "La Liga",
-    "home": true
+    "home": false
    },
    "recent": [
     {
@@ -28234,7 +28234,7 @@
      "lg": "La Liga"
     }
    ],
-   "next_ko": "2026-09-15T17:00Z"
+   "next_ko": "2026-09-19T12:00Z"
   },
   {
    "team": "FC Groningen",
@@ -29160,11 +29160,11 @@
    "best_rate": 0.10996563573883161,
    "longest": 11,
    "next": {
-    "opp": "Rayo Vallecano",
-    "date": "2026-09-15",
-    "kickoff": "2026-09-15T17:00Z",
+    "opp": "Elche",
+    "date": "2026-09-18",
+    "kickoff": "2026-09-18T19:00Z",
     "league": "La Liga",
-    "home": false
+    "home": true
    },
    "recent": [
     {
@@ -29272,7 +29272,7 @@
      "lg": "La Liga"
     }
    ],
-   "next_ko": "2026-09-15T17:00Z"
+   "next_ko": "2026-09-18T19:00Z"
   },
   {
    "team": "Atl\u00e9tico Madrid",

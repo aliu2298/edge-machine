@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-15T12:08:30+00:00",
+ "board_built_at": "2026-09-15T17:17:05+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
    "a": "Internazionale",
@@ -339,7 +339,7 @@
    "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
    "kickoff": "2026-09-15T18:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T12:08:30+00:00",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Willem II",
    "model": {
@@ -401,7 +401,7 @@
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
    "kickoff": "2026-09-15T18:45Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T12:08:30+00:00",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "model": {
@@ -527,7 +527,7 @@
    "id": "2026-09-16|AC Milan|Benfica|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T12:08:30+00:00",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
    "league": "Europa League",
    "match": "AC Milan v Benfica",
    "model": {
@@ -590,7 +590,7 @@
    "id": "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals",
    "kickoff": "2026-09-16T19:30Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T12:08:30+00:00",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
    "league": "La Liga",
    "match": "Barcelona v Racing Santander",
    "model": {
@@ -652,7 +652,7 @@
    "id": "2026-09-16|Deportivo|Sevilla|Over 1.5 goals",
    "kickoff": "2026-09-16T17:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T12:08:30+00:00",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
    "league": "La Liga",
    "match": "Deportivo v Sevilla",
    "model": {
@@ -716,7 +716,7 @@
    "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T12:08:30+00:00",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
    "league": "Europa League",
    "match": "SK Sturm Graz v Stade Rennais",
    "model": {
@@ -758,7 +758,69 @@
    },
    "status": "pending",
    "strength": 12
+  },
+  "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals": {
+   "a": "OFI Crete",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "TSG Hoffenheim",
+   "b": "TSG Hoffenheim",
+   "b_key": "scoring1",
+   "b_run": 4,
+   "base_rate": 0.3413897280966767,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-17",
+   "first_seen": "2026-09-15",
+   "headline": "Over 1.5 goals",
+   "home": "OFI Crete",
+   "id": "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals",
+   "kickoff": "2026-09-17T16:45Z",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T17:17:05+00:00",
+   "league": "Europa League",
+   "match": "OFI Crete v TSG Hoffenheim",
+   "model": {
+    "btts": 0.6046,
+    "over15": 0.8368,
+    "over25": 0.633
+   },
+   "modelled_at": "2026-09-15T17:17:05+00:00",
+   "priced_at": "2026-09-15T17:17:05+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.54,
+     "bid": 0.51,
+     "fair": 0.525,
+     "fee": 0.0174,
+     "market": "KXUELBTTS-26SEP17OFITSG-BTTS",
+     "price": 1.794,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.82,
+     "bid": 0.81,
+     "fair": 0.815,
+     "fee": 0.0104,
+     "market": "KXUELTOTAL-26SEP17OFITSG-2",
+     "price": 1.204,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.6,
+     "bid": 0.59,
+     "fair": 0.595,
+     "fee": 0.0169,
+     "market": "KXUELTOTAL-26SEP17OFITSG-3",
+     "price": 1.621,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 10
   }
  },
- "updated_at": "2026-09-15T12:08:30+00:00"
+ "updated_at": "2026-09-15T17:17:06+00:00"
 }
