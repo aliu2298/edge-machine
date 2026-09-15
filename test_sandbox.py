@@ -1967,11 +1967,14 @@ _da = {"quotes": [dict(q) for q in _arch_bets] + [_nonbet], "_archive": []}
 _before = T.assess(_da, "covers", "mlb")["n"]
 T.prune(_da, verbose=False)
 eq(len(_da["quotes"]), 0, "old settled rows leave the ledger")
-eq(len(_da["_archive"]), 40, "every settled bet goes to the archive; the non-bet quote does not")
+eq(len(_da["_archive"]), 41, "every settled bet goes to the archive, plus a compact copy of the price-only row")
+_cmp = next(x for x in _da["_archive"] if x.get("compact"))
+ok(_cmp["bet"] is False and "prob_a" not in _cmp and _cmp["result"] == _nonbet["result"],
+   "the compact copy keeps only what a population baseline reads")
 eq(T.assess(_da, "covers", "mlb")["n"], _before, "judgement reads the archive, so nothing is lost")
 eq(_da["retired"]["covers"]["settled"], 40, "the rolled-up totals still count them")
 T.prune(_da, verbose=False)
-eq(len(_da["_archive"]), 40, "pruning again never duplicates")
+eq(len(_da["_archive"]), 41, "pruning again never duplicates")
 _tmpd = _tf.mkdtemp()
 _saved_ledger = T.LEDGER
 T.LEDGER = _os.path.join(_tmpd, "ledger.json")
@@ -1981,8 +1984,8 @@ try:
     ok("_archive" not in json.load(open(T.LEDGER)), "the archive is never written into the ledger")
     _files = _os.listdir(_os.path.join(_tmpd, "arch"))
     eq(_files, [f"{_old_set[:7]}.json"], "it is stored by the month the bets settled")
-    eq(len(T.load_archive(_os.path.join(_tmpd, "arch"))), 40, "and loads back whole")
-    eq(len(_da["_archive"]), 40, "saving leaves the in-memory archive in place")
+    eq(len(T.load_archive(_os.path.join(_tmpd, "arch"))), 41, "and loads back whole")
+    eq(len(_da["_archive"]), 41, "saving leaves the in-memory archive in place")
 finally:
     T.LEDGER = _saved_ledger
 
@@ -2516,6 +2519,25 @@ eq(sorted((r["market_id"], r["team"], r["opponent"], r["price_b"]) for r in _pro
 eq(S.fetch_p05_unbeaten("soccer_p05", universe={"soccer_p05": _prow}, fixtures=_ux + _pup),
    [dict(market_id="KXSERIEAGAME-26SEP15TIGLOO-LOO", pick="b")],
    "backs Tight FC +0.5 (No on Loose FC winning); Loose FC +0.5 fails because Tight FC won 10 of 10")
+
+
+print("\nprice-only rows fold after 7 days; populations survive in compact form")
+_now7 = datetime.now(timezone.utc)
+def _pr(i, src, days, bet=False, market=None, result="a"):
+    st = (_now7 - timedelta(days=days)).isoformat()
+    return dict(id=f"{src}:{i}", source=src, sport="soccer_u35", market_id=market or f"m{i}", venue="kalshi_binary",
+                bet=bet, pick="b" if bet else None, price=0.7 if bet else None, price_a=0.3, price_b=0.72, result=result,
+                status=("won" if result == "b" else "lost") if bet else "graded", pnl=(42.0 if result == "b" else -100.0) if bet else 0.0,
+                stake=100.0 if bet else 0.0, settled=st, logged=st, start=st, prob_a=0.3 if not bet else None)
+_d7 = {"quotes": [_pr(1, "goals_market", 10), _pr(2, "goals_market", 3), _pr(3, "u35_low_scoring", 10, bet=True, market="m1", result="b"),
+                  _pr(4, "pinnacle", 10, market="m1"), _pr(5, "pinnacle", 10, market="m9")], "_archive": []}
+T.prune(_d7, verbose=False)
+eq(sorted(q["id"] for q in _d7["quotes"]), ["goals_market:2", "u35_low_scoring:3"],
+   "a price-only row folds after 7 days; a bet stays for the full 45")
+eq(sorted(x["id"] for x in _d7["_archive"]), ["goals_market:1", "pinnacle:5"],
+   "compact copies: every Baseline row, and one row per contest not already covered")
+_ap7 = T.assess(_d7, "u35_low_scoring", "soccer_u35")
+ok(any("every match" in det for _k, _l, _p, det in _ap7["criteria"]), "the rule's population still reads the folded baseline rows")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

@@ -521,6 +521,13 @@ opponent won 3 or fewer of its last 10 there. Research: 82.5% on 97 v the teams'
 fees, 37 of them MLS. The +1.5 rules beat the teams' own rate but Kalshi priced them at ~88% and they
 made +2-6%, so they were left out.
 
+**Ledger size (2026-09-15).** `prune` folds price-only rows (bet=False — about three quarters of the
+ledger) after `PRICE_RETAIN_DAYS` (7) instead of 45; bets keep 45 days. Brier totals survive in
+`retired`, and a compact copy (`COMPACT_FIELDS`: prices, result, venue, times) goes to the monthly
+archive for every Baseline row and one row per contest, so population baselines still cover a rule's
+whole record. The favourite population reads the first price logged per contest, so pruning never
+changes a judgement. Expected steady state: ledger ~5 MB instead of ~20 MB.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into

@@ -1078,7 +1078,9 @@ def assess(d, name, sport=None, since=None, venues=None):
     # every contest of the sport over the same period, one quote per contest.
     if (S.SOURCES.get(name) or {}).get("baseline") == "favourite_population" and bets:
         seen_c, fav = set(), []
-        for q in all_bets(d):
+        # The FIRST price logged for each contest, whether that row is still in the ledger or was
+        # folded into the archive — so pruning never changes which price a contest is judged at.
+        for q in sorted(all_bets(d), key=lambda q: str(q.get("logged") or "")):
             if (q["sport"] not in {b["sport"] for b in bets} or q.get("result") not in ("a", "b")
                     or q["market_id"] in seen_c or (since is not None and q["logged"] < since)
                     or (venues is not None and (q.get("venue") or "polymarket") not in venues)):
@@ -1440,7 +1442,13 @@ def retire_pre_gate(d, now=None, verbose=True):
     return removed, voided
 
 
-def prune(d, retain_days=RETAIN_DAYS, verbose=True):
+PRICE_RETAIN_DAYS = 7
+# Fields a population baseline reads (assess: baseline="population" / "favourite_population").
+COMPACT_FIELDS = ("id", "source", "sport", "market_id", "venue", "logged", "start", "settled",
+                  "result", "price_a", "price_b", "price_draw", "status")
+
+
+def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS):
     """Fold long-settled quotes into per-source totals and drop the rows — settled BETS are
     first copied whole into the monthly archive (ARCHIVE_DIR), so nothing judged is lost.
 
@@ -1448,22 +1456,40 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
     re-stored in git forever. Left alone this grows by roughly a megabyte a week. Old
     rows are therefore rolled up rather than deleted: the lifetime record survives in
     `retired`, only the per-contest detail is discarded, and nothing OPEN is ever touched.
+
+    Price-only rows (bet=False: the venues' own prices, Baselines, models below the edge) are
+    three quarters of the ledger and are folded after `price_days` (2026-09-15) instead of
+    `retain_days`. Their Brier sample survives in the totals, and a COMPACT copy (the fields a
+    population baseline reads) goes to the archive — for every Baseline row, and for one row
+    per contest otherwise — so a rule's population is still judged over its whole record.
     """
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=retain_days)).isoformat()
+    now = datetime.now(timezone.utc)
+    cutoff = (now - timedelta(days=retain_days)).isoformat()
+    price_cutoff = (now - timedelta(days=price_days)).isoformat()
     keep, rolled = [], 0
     ret = d.setdefault("retired", {})
     archived = {x["id"] for x in d.get("_archive") or []}
+    contests = {(x.get("sport"), x.get("market_id")) for x in d.get("_archive") or [] if x.get("compact")}
+
+    def to_archive(row):
+        d.setdefault("_archive", []).append(row)
+        archived.add(row["id"])
+        d.setdefault("_archive_dirty", set()).add(str(row["settled"])[:7])
 
     for q in d["quotes"]:
-        if q["status"] == "open" or not q.get("settled") or q["settled"] >= cutoff:
+        horizon = cutoff if q.get("bet") else price_cutoff
+        if q["status"] == "open" or not q.get("settled") or q["settled"] >= horizon:
             keep.append(q)
             continue
         if q.get("bet") and q["status"] in ("won", "lost"):
-            arch = d.setdefault("_archive", [])
             if q["id"] not in archived:
-                arch.append(q)
-                archived.add(q["id"])
-                d.setdefault("_archive_dirty", set()).add(str(q["settled"])[:7])
+                to_archive(q)
+        elif (not q.get("bet") and q.get("result") in ("a", "b", "draw") and q.get("price_a") is not None
+              and q["id"] not in archived):
+            baseline = (S.SOURCES.get(q["source"]) or {}).get("kind") == "Baseline"
+            if baseline or (q.get("sport"), q.get("market_id")) not in contests:
+                to_archive(dict({k: q.get(k) for k in COMPACT_FIELDS}, bet=False, compact=True))
+                contests.add((q.get("sport"), q.get("market_id")))
         r = ret.setdefault(q["source"], dict(quotes=0, bets=0, settled=0, won=0,
                                              staked=0.0, pnl=0.0,
                                              brier_sum=0.0, brier_n=0))
@@ -1483,7 +1509,7 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True):
 
     d["quotes"] = keep
     if verbose and rolled:
-        print(f"  rolled up {rolled} settled quotes older than {retain_days}d")
+        print(f"  rolled up {rolled} settled quotes (bets older than {retain_days}d, price-only rows older than {price_days}d)")
     return rolled
 
 
