@@ -47,7 +47,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Record</h1>
-<div class="sub">Everything that has been graded · all times CT · updated Sep 15 2026 · 21:44 UTC</div>
+<div class="sub">Everything that has been graded · all times CT · updated Sep 15 2026 · 21:49 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
@@ -165,7 +165,7 @@ compared on the same weeks at the same exchange prices. Only leads still on the 
 kickoff count. 4 fixture(s) were picked by both.</div>
 <div class="tbl"><table><tr><th>Rule</th><th class="num">Graded</th><th class="num">Hit</th>
 <th class="num">Priced</th><th class="num">Avg price</th><th class="num">ROI</th><th class="num">Pending</th></tr>
-<tr><td><b>9+ of last 10 (published)</b></td><td class="num">1</td><td class="num">100%</td><td class="num">1</td><td class="num">1.26</td><td class="num">+26.3%</td><td class="num">3</td></tr><tr><td><b>Run pairings (retired, shadow)</b></td><td class="num">4</td><td class="num">100%</td><td class="num">4</td><td class="num">1.25</td><td class="num">+25.2%</td><td class="num">8</td></tr></table></div>
+<tr><td><b>9+ of last 10 (published)</b></td><td class="num">1</td><td class="num">100%</td><td class="num">1</td><td class="num">1.26</td><td class="num">+26.3%</td><td class="num">1</td></tr><tr><td><b>Run pairings (retired, shadow)</b></td><td class="num">4</td><td class="num">100%</td><td class="num">4</td><td class="num">1.25</td><td class="num">+25.2%</td><td class="num">3</td></tr></table></div>
 
 <h2>Model v book — is any estimate better than the price?</h2><div class="note">Every streak rule here was measured against the teams' own rates and none lifted them, because a run is the noisiest estimate of a rate there is. The number that pays is against the <b>book</b>. So each priced lead also carries a <b>model</b> probability — independent Poissons on each side's shrunk attack and defence ratings (see model.py), logged at the same moment as the price and never revised — and both are scored on the leads that have since settled. <b>Brier</b> is the mean squared error of a probability: lower is better, and the only question that matters is whether the model's is lower than the book's.</div><div class="tiles"><div class="tile"><b>29</b><span>Scored, model v book</span></div><div class="tile"><b>2 of 4 markets</b><span>Model ahead on</span></div><div class="tile"><b>30</b><span>Pending, modelled</span></div></div><div class="tbl"><table>
 <tr><th>Market</th><th class="num">n</th><th class="num">actual</th><th class="num">model avg</th>

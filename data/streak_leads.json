@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-15T17:17:04+00:00",
+ "board_built_at": "2026-09-15T21:49:29+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -7543,7 +7543,8 @@
     }
    },
    "status": "pending",
-   "strength": 11
+   "strength": 11,
+   "withdrawn_at": "2026-09-15T21:49:29+00:00"
   },
   "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals": {
    "a": "Barcelona",
@@ -7688,7 +7689,8 @@
    },
    "rule": "v2",
    "status": "pending",
-   "strength": 12
+   "strength": 12,
+   "withdrawn_at": "2026-09-15T21:49:29+00:00"
   },
   "2026-09-16|SK Sturm Graz|Stade Rennais|Over 2.5 goals": {
    "a": "Stade Rennais",
@@ -7934,7 +7936,8 @@
    },
    "rule": "v2",
    "status": "pending",
-   "strength": 11
+   "strength": 11,
+   "withdrawn_at": "2026-09-15T21:49:29+00:00"
   },
   "2026-09-17|OFI Crete|TSG Hoffenheim|Over 2.5 goals": {
    "a": "TSG Hoffenheim",
@@ -10970,5 +10973,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-15T21:44:41+00:00"
+ "updated_at": "2026-09-15T21:49:29+00:00"
 }
