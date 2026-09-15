@@ -204,6 +204,10 @@ def record(leads, blob=None, now=None):
             e["last_seen"] = today      # still on the board
             e["last_seen_at"] = stamp
             e.pop("withdrawn_at", None)
+            # A lead first logged under the old rule and published again by the new one is the
+            # new rule's claim from here on (the id is the same claim about the same fixture).
+            if l.get("rule") and not e.get("rule"):
+                e["rule"] = l["rule"]
             continue
         blob["leads"][lid] = {
             "last_seen": today,

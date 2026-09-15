@@ -420,8 +420,8 @@ repo have already died from being read without one.</div>
          "markets are logged on every lead, fixed in advance, so no market is chosen "
          "after seeing which one paid; a <b>side to score 2+</b> lead is also priced on "
          "its own claim from the book's team total. Each lane is judged on its own claim. <b>Break-even</b> is the hit rate the average price "
-         "demands; <b>book fair</b> is the probability the sportsbook itself implies with "
-         "the vig stripped out — a real edge has to clear both, and on the day this was "
+         "demands; <b>book fair</b> is the market's own probability — the exchange midpoint "
+         "since 2026-09-13, the sportsbook's vig-free line before — a real edge has to clear both, and on the day this was "
          "added over 1.5 traded at ~1.20, a break-even of 83% against leads that hit 82%.",
          priced_rep, priced_body,
          "Nothing settled at a price yet — pricing started 2026-09-12 and a lead counts "

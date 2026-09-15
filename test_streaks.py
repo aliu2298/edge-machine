@@ -754,6 +754,13 @@ check("the retired run pairings still find their own leads for the shadow ledger
       "Run v Nine" in {l["match"] for l in _shadow} and all(l["bet"]["kind"] == "total_gte" for l in _shadow), True)
 check("the shadow never reaches the board's team-2+ lane", all(p[4]["kind"] == "team_gte" for p in B.LEAD_PAIRINGS), True)
 _blob, _ = T.record(_board, {"leads": {}}, now=_now)
+_old = {"leads": {}}
+_v1 = [dict(l) for l in _board if l["bet"]["kind"] == "total_gte"]
+for l in _v1: l.pop("rule", None)
+_old, _ = T.record(_v1, _old, now=_now)
+_old, _ = T.record(_board, _old, now=_now)
+check("a lead first logged under the old rule is tagged v2 once the new rule publishes it",
+      {e.get("rule") for e in _old["leads"].values() if e["bet"]["kind"] == "total_gte"}, {"v2"})
 check("the ledger keeps the rule tag", {e.get("rule") for e in _blob["leads"].values() if e["bet"]["kind"] == "total_gte"}, {"v2"})
 _mk = lambda lid, st, pnl=None, rule=None, date="2026-09-15": dict(
     id=lid, date=date, bet={"kind": "total_gte", "n": 2}, status=st, **({"rule": rule} if rule else {}),
