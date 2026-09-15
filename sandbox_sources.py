@@ -129,7 +129,7 @@ SOURCES = {
              "the headless browser. Tips carry no date, so each is resolved to the "
              "soonest fixture between those two sides."),
     "nws": dict(
-        label="National Weather Service", kind="Forecaster", connected=True,
+        label="National Weather Service", kind="Forecaster", connected=False, retired="2026-09-15: 12 won v 13.6 priced on 31 settled (z -0.85, -18.8%). The forecast is already in Kalshi's temperature prices.",
         site="weather.gov", sports=["climate"],
         note="The public forecast for each city, against Kalshi's temperature buckets for "
              "the same city and day. The one non-sport domain with a genuinely "
@@ -161,7 +161,7 @@ SOURCES = {
              "favourite on every match over the same period, so it only counts if this band "
              "beats favourites in general."),
     "tt_band_55_60": dict(
-        label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=True,
+        label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=False, retired='2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.',
         site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
         note="Pre-registered 2026-09-14 as a CONFIRMATION test, not a finding. In the first 129 "
              "settled table tennis matches (Sep 13-14, nearly all Setka Cup) players priced "
@@ -255,7 +255,7 @@ SOURCES = {
              "Not really a forecast — the null hypothesis. A crypto source that cannot "
              "beat assuming nothing changes is not worth connecting."),
     "sportsgambler": dict(
-        label="SportsGambler", kind="Tipster site", connected=True,
+        label="SportsGambler", kind="Tipster site", connected=False, retired='2026-09-15: 20 won v 21.2 priced on 43 settled (z -0.36, -7.0%). Its match tips add nothing over the price.',
         site="sportsgambler.com", sports=["soccer"],
         note="A named analyst's Main Match Prediction per fixture across 14 leagues. Only "
              "its To Win and Draw calls are scored — about one tip in six; the rest are "
@@ -3405,4 +3405,7 @@ CHALLENGERS = {
     "soccerpredictions": fetch_soccerpredictions,
     "nws": fetch_nws,
     "spot": fetch_spot,
-}
+}# Retired sources (connected=False, with a `retired` reason) are dropped from the run: they log
+# nothing new, while their open bets still settle and their record stays on the board.
+CHALLENGERS = {k: v for k, v in CHALLENGERS.items() if SOURCES[k]["connected"]}
+

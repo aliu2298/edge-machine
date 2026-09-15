@@ -409,14 +409,19 @@ def collapse(rows_html, head, total, noun):
             f'</details>')
 
 
-def unconnected_rows():
+def unconnected_rows(d=None):
     out = []
     for name, m in S.SOURCES.items():
         if m["connected"]:
             continue
+        rec = ""
+        if m.get("retired") and d is not None:
+            n = sum(1 for q in T.all_bets(d) if q["source"] == name and q.get("bet") and q["status"] in ("won", "lost"))
+            rec = f'<div class="sm">{n} settled bets kept on record</div>'
+        why = (f'<b class="neg">Retired</b> {esc(m["retired"])}' if m.get("retired") else esc(m["note"]))
         out.append(f"""<tr><td><b>{esc(m['label'])}</b>
-<div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div></td>
-<td class="mut">{esc(m['note'])}</td></tr>""")
+<div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div>{rec}</td>
+<td class="mut">{why}</td></tr>""")
     return "\n".join(out)
 
 
@@ -659,8 +664,8 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 <details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
-<details class="ref"><summary>Declared but not connected ({n_unconnected})</summary>
-<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows()}</table></div></details>
+<details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
+<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
 <details class="ref"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
 and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue
