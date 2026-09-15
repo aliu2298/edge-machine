@@ -58,11 +58,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Record</h1>
-<<<<<<< Updated upstream
-<div class="sub">Everything that has been graded · all times CT · updated Sep 15 2026 · 21:49 UTC</div>
-=======
-<div class="sub">Everything that has been graded · all times CT · updated Sep 15 2026 · 22:09 UTC</div>
->>>>>>> Stashed changes
+<div class="sub">Everything that has been graded · all times CT · updated Sep 15 2026 · 22:13 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
@@ -74,187 +70,18 @@ bare hit rate. Ranked by <b>z</b> (how many standard deviations from the referen
 marks |z| ≥ 2, and with this many rows a few of those appear by chance.</div>
 
 <div class="tiles">
-<div class="tile"><b class="pos">8</b><span>working</span></div>
-<div class="tile"><b class="neg">30</b><span>not working</span></div>
-<div class="tile"><b>18</b><span>too early to tell</span></div>
-<div class="tile"><b>180</b><span>leads graded</span></div>
-<div class="tile"><b>115</b><span>fixtures graded at the price</span></div>
-<div class="tile"><b>130</b><span>leads pending</span></div>
+<div class="tile"><b class="pos">13</b><span>working</span></div>
+<div class="tile"><b class="neg">29</b><span>not working</span></div>
+<div class="tile"><b>16</b><span>too early to tell</span></div>
+<div class="tile"><b>182</b><span>leads graded</span></div>
+<div class="tile"><b>122</b><span>fixtures graded at the price</span></div>
+<div class="tile"><b>121</b><span>leads pending</span></div>
 </div>
 
-<<<<<<< Updated upstream
-<h2>Leads at the price — does it pay?</h2><div class="note">Flat 1 unit on every lead at the price captured the <b>first build it was listed</b> (the exchange ask plus taker fee since 2026-09-13, Bovada before) — never revised, never taken after kickoff. Three fixture-level markets are logged on every lead, fixed in advance, so no market is chosen after seeing which one paid; a <b>side to score 2+</b> lead is also priced on its own claim from the book's team total. Each lane is judged on its own claim. <b>Break-even</b> is the hit rate the average price demands; <b>book fair</b> is the market's own probability — the exchange midpoint since 2026-09-13, the sportsbook's vig-free line before — a real edge has to clear both, and on the day this was added over 1.5 traded at ~1.20, a break-even of 83% against leads that hit 82%.</div><div class="tiles"><div class="tile"><b>29</b><span>Settled at a price</span></div><div class="tile"><b>+9.2%</b><span>Over 1.5 lane ROI</span></div><div class="tile"><b>-8.6%</b><span>Team 2+ lane ROI</span></div><div class="tile"><b>30</b><span>Priced, pending</span></div><div class="tile"><b>Bovada 29</b><span>Claims priced on</span></div></div><div class="tbl"><table>
-<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
-    <th class="num">avg price</th><th class="num">break-even</th><th class="num">book fair</th>
-    <th class="num">lift v book</th><th class="num">ROI</th><th></th></tr>
-<tr><td>Over 1.5 goals <span class="mut">· a lane's own claim</span></td>
-        <td class="num">28</td>
-        <td class="num">24</td>
-        <td class="num">86%</td>
-        <td class="num mut">1.19</td>
-        <td class="num mut" title="hit rate needed to break even at the average price">84%</td>
-        <td class="num mut" title="the book's own probability, vig removed">80%</td>
-        <td class="num pos">+5.2pp</td>
-        <td class="num pos">+2.8%</td>
-        <td><span class="sig n">
-          not sig</span></td></tr><tr><td>Over 2.5 goals</td>
-        <td class="num">29</td>
-        <td class="num">19</td>
-        <td class="num">66%</td>
-        <td class="num mut">1.66</td>
-        <td class="num mut" title="hit rate needed to break even at the average price">60%</td>
-        <td class="num mut" title="the book's own probability, vig removed">59%</td>
-        <td class="num pos">+6.3pp</td>
-        <td class="num pos">+6.0%</td>
-        <td><span class="sig n">
-          not sig</span></td></tr><tr><td>Both teams to score</td>
-        <td class="num">29</td>
-        <td class="num">18</td>
-        <td class="num">62%</td>
-        <td class="num mut">1.62</td>
-        <td class="num mut" title="hit rate needed to break even at the average price">62%</td>
-        <td class="num mut" title="the book's own probability, vig removed">59%</td>
-        <td class="num pos">+2.9pp</td>
-        <td class="num neg">-0.5%</td>
-        <td><span class="sig n">
-          not sig</span></td></tr><tr><td>Team to score 2+ <span class="mut">· a lane's own claim</span></td>
-        <td class="num">9</td>
-        <td class="num">5</td>
-        <td class="num">56%</td>
-        <td class="num mut">1.99</td>
-        <td class="num mut" title="hit rate needed to break even at the average price">50%</td>
-        <td class="num mut" title="the book's own probability, vig removed">54%</td>
-        <td class="num pos">+1.4pp</td>
-        <td class="num neg">-8.6%</td>
-        <td><span class="sig n">
-          not sig</span></td></tr></table></div>
-
-<h2>Over 1.5 — the rule change of 2026-09-14</h2>
-<div class="note">On 2026-09-14 the over-1.5 lane changed rule: both sides' games over 1.5
-in <b>9+ of their last 10</b>, replacing the run pairings (both sides over 1.5, or both scoring, in
-every recent game). The old rule still runs, unpublished, on the same fixtures, so the two are
-compared on the same weeks at the same exchange prices. Only leads still on the board at
-kickoff count. 4 fixture(s) were picked by both.</div>
-<div class="tbl"><table><tr><th>Rule</th><th class="num">Graded</th><th class="num">Hit</th>
-<th class="num">Priced</th><th class="num">Avg price</th><th class="num">ROI</th><th class="num">Pending</th></tr>
-<tr><td><b>9+ of last 10 (published)</b></td><td class="num">1</td><td class="num">100%</td><td class="num">1</td><td class="num">1.26</td><td class="num">+26.3%</td><td class="num">1</td></tr><tr><td><b>Run pairings (retired, shadow)</b></td><td class="num">4</td><td class="num">100%</td><td class="num">4</td><td class="num">1.25</td><td class="num">+25.2%</td><td class="num">3</td></tr></table></div>
-
-<h2>Model v book — is any estimate better than the price?</h2><div class="note">Every streak rule here was measured against the teams' own rates and none lifted them, because a run is the noisiest estimate of a rate there is. The number that pays is against the <b>book</b>. So each priced lead also carries a <b>model</b> probability — independent Poissons on each side's shrunk attack and defence ratings (see model.py), logged at the same moment as the price and never revised — and both are scored on the leads that have since settled. <b>Brier</b> is the mean squared error of a probability: lower is better, and the only question that matters is whether the model's is lower than the book's.</div><div class="tiles"><div class="tile"><b>29</b><span>Scored, model v book</span></div><div class="tile"><b>2 of 4 markets</b><span>Model ahead on</span></div><div class="tile"><b>30</b><span>Pending, modelled</span></div></div><div class="tbl"><table>
-<tr><th>Market</th><th class="num">n</th><th class="num">actual</th><th class="num">model avg</th>
-    <th class="num">book fair</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr>
-<tr><td>Over 1.5 goals</td><td class="num">28</td>
-        <td class="num">86%</td>
-        <td class="num mut">82%</td><td class="num mut">80%</td>
-        <td class="num">0.1307</td><td class="num">0.1394</td>
-        <td><span class="sig y">
-          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">29</td>
-        <td class="num">66%</td>
-        <td class="num mut">62%</td><td class="num mut">59%</td>
-        <td class="num">0.2117</td><td class="num">0.2251</td>
-        <td><span class="sig y">
-          MODEL AHEAD</span></td></tr><tr><td>Both teams to score</td><td class="num">29</td>
-        <td class="num">62%</td>
-        <td class="num mut">63%</td><td class="num mut">59%</td>
-        <td class="num">0.2350</td><td class="num">0.2324</td>
-        <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Team to score 2+</td><td class="num">9</td>
-        <td class="num">56%</td>
-        <td class="num mut">56%</td><td class="num mut">54%</td>
-        <td class="num">0.2506</td><td class="num">0.2131</td>
-        <td><span class="sig n">
-          book ahead</span></td></tr></table></div><div class="note">Pre-registered value split: a lead is <b>value</b> when the model's probability beats the book's fair probability by <b>5pp</b> or more. If the model carries anything the book does not, the value group should out-hit and out-earn the rest. The margin was fixed before any of this settled.</div><div class="tbl"><table>
-<tr><th>Market</th><th class="num">value n</th><th class="num">hit</th><th class="num">ROI</th>
-    <th class="num">rest n</th><th class="num">hit</th><th class="num">ROI</th></tr>
-<tr><td>Over 1.5 goals</td><td class="num">6</td><td class="num">100%</td><td class="num pos">+20.6%</td><td class="num">22</td><td class="num">82%</td><td class="num neg">-2.0%</td></tr><tr><td>Over 2.5 goals</td><td class="num">13</td><td class="num">77%</td><td class="num pos">+21.7%</td><td class="num">16</td><td class="num">56%</td><td class="num neg">-6.7%</td></tr><tr><td>Both teams to score</td><td class="num">13</td><td class="num">62%</td><td class="num pos">+4.5%</td><td class="num">16</td><td class="num">62%</td><td class="num neg">-4.5%</td></tr><tr><td>Team to score 2+</td><td class="num">2</td><td class="num">0%</td><td class="num neg">-100.0%</td><td class="num">7</td><td class="num">71%</td><td class="num pos">+17.5%</td></tr></table></div>
-
-<h2>The book, on every fixture — who pays at the price?</h2><div class="note">Every competitive fixture in the pull is priced once it is inside 24h of kickoff — whatever the form on either side — and graded on the final score. That makes it a calibration ledger for the <b>book</b> itself, with no selection by streak: hits against the hits the book's own vig-free probabilities predicted. <b>Excess</b> is hits minus expected; <b>z</b> is that in standard deviations, and it is the number to read — flat-stake ROI is shown for the money view, but at n=10 its standard deviation is about 24 points.</div><div class="tiles"><div class="tile"><b>126</b><span>Fixtures priced</span></div><div class="tile"><b>115</b><span>Settled</span></div><div class="tile"><b>549</b><span>Observations</span></div><div class="tile"><b>55% v 55%</b><span>Hit v book</span></div><div class="tile"><b>+0.07</b><span>z</span></div><div class="tile"><b>-3.1%</b><span>ROI</span></div></div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Over 1.5 goals</td><td class="num">96</td>
-            <td class="num">80%</td><td class="num mut">78%</td>
-            <td class="num">+2.6</td><td class="num pos">+0.63</td><td class="num neg">-0.0%</td></tr><tr><td>Over 2.5 goals</td><td class="num">113</td>
-            <td class="num">56%</td><td class="num mut">56%</td>
-            <td class="num">-0.3</td><td class="num neg">-0.06</td><td class="num neg">-3.8%</td></tr><tr><td>Both teams to score</td><td class="num">115</td>
-            <td class="num">59%</td><td class="num mut">57%</td>
-            <td class="num">+3.0</td><td class="num pos">+0.57</td><td class="num pos">+0.5%</td></tr><tr><td>Home side scores 2+</td><td class="num">113</td>
-            <td class="num">44%</td><td class="num mut">48%</td>
-            <td class="num">-4.2</td><td class="num neg">-0.84</td><td class="num neg">-10.3%</td></tr><tr><td>Away side scores 2+</td><td class="num">112</td>
-            <td class="num">40%</td><td class="num mut">40%</td>
-            <td class="num">-0.3</td><td class="num neg">-0.05</td><td class="num neg">-1.4%</td></tr></table></div><div class="note"><b>By league.</b> A mispricing is far more likely to be structural — a thin market, a shaded favourite — than a property of one club, and a league pools dozens of teams, so this reads weeks before any team row can.</div><div class="tbl"><table><tr><th>League</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>MLS</td><td class="num">75</td>
-            <td class="num">55%</td><td class="num mut">61%</td>
-            <td class="num">-4.7</td><td class="num neg">-1.17</td><td class="num neg">-11.7%</td></tr><tr><td>Premier League</td><td class="num">50</td>
-            <td class="num">56%</td><td class="num mut">55%</td>
-            <td class="num">+0.3</td><td class="num pos">+0.10</td><td class="num pos">+2.9%</td></tr><tr><td>Serie A</td><td class="num">45</td>
-            <td class="num">71%</td><td class="num mut">50%</td>
-            <td class="num">+9.4</td><td class="num pos">+3.01</td><td class="num pos">+48.6%</td></tr><tr><td>La Liga</td><td class="num">41</td>
-            <td class="num">59%</td><td class="num mut">49%</td>
-            <td class="num">+3.7</td><td class="num pos">+1.24</td><td class="num pos">+9.7%</td></tr><tr><td>Belgian Pro League</td><td class="num">40</td>
-            <td class="num">52%</td><td class="num mut">57%</td>
-            <td class="num">-1.6</td><td class="num neg">-0.56</td><td class="num neg">-18.5%</td></tr><tr><td>Ligue 1</td><td class="num">40</td>
-            <td class="num">35%</td><td class="num mut">55%</td>
-            <td class="num">-7.9</td><td class="num neg">-2.65</td><td class="num neg">-37.4%</td></tr><tr><td>Eredivisie</td><td class="num">38</td>
-            <td class="num">53%</td><td class="num mut">62%</td>
-            <td class="num">-3.6</td><td class="num neg">-1.31</td><td class="num neg">-24.0%</td></tr><tr><td>Greek Super League</td><td class="num">35</td>
-            <td class="num">37%</td><td class="num mut">49%</td>
-            <td class="num">-4.1</td><td class="num neg">-1.47</td><td class="num neg">-35.6%</td></tr><tr><td>Primeira Liga</td><td class="num">35</td>
-            <td class="num">71%</td><td class="num mut">51%</td>
-            <td class="num">+7.1</td><td class="num pos">+2.55</td><td class="num pos">+37.6%</td></tr><tr><td>Turkish Super Lig</td><td class="num">35</td>
-            <td class="num">51%</td><td class="num mut">52%</td>
-            <td class="num">-0.1</td><td class="num neg">-0.04</td><td class="num pos">+0.8%</td></tr><tr><td>Bundesliga</td><td class="num">31</td>
-            <td class="num">61%</td><td class="num mut">57%</td>
-            <td class="num">+1.4</td><td class="num pos">+0.51</td><td class="num neg">-6.1%</td></tr><tr><td>Eliteserien</td><td class="num">30</td>
-            <td class="num">63%</td><td class="num mut">60%</td>
-            <td class="num">+1.1</td><td class="num pos">+0.42</td><td class="num pos">+0.7%</td></tr><tr><td>Saudi Pro League</td><td class="num">24</td>
-            <td class="num">33%</td><td class="num mut">50%</td>
-            <td class="num">-4.1</td><td class="num neg">-1.74</td><td class="num neg">-36.1%</td></tr><tr><td>Austrian Bundesliga</td><td class="num">15</td>
-            <td class="num">87%</td><td class="num mut">56%</td>
-            <td class="num">+4.6</td><td class="num pos">+2.50</td><td class="num pos">+52.4%</td></tr><tr><td>Danish Superliga</td><td class="num">15</td>
-            <td class="num">53%</td><td class="num mut">58%</td>
-            <td class="num">-0.6</td><td class="num neg">-0.35</td><td class="num neg">-16.1%</td></tr></table></div><div class="note"><b>Calibration of the book.</b> Each band groups observations by the probability the book implied; a well-priced book hits at that rate in every band. Excess in a band is where the price is wrong for everyone, not for one team.</div><div class="tbl"><table><tr><th>Book fair prob</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>0–40%</td><td class="num">104</td>
-            <td class="num">40%</td><td class="num mut">30%</td>
-            <td class="num">+10.9</td><td class="num pos">+2.36</td><td class="num pos">+22.0%</td></tr><tr><td>40–50%</td><td class="num">90</td>
-            <td class="num">43%</td><td class="num mut">45%</td>
-            <td class="num">-1.8</td><td class="num neg">-0.39</td><td class="num neg">-9.2%</td></tr><tr><td>50–60%</td><td class="num">143</td>
-            <td class="num">50%</td><td class="num mut">55%</td>
-            <td class="num">-7.4</td><td class="num neg">-1.25</td><td class="num neg">-13.9%</td></tr><tr><td>60–70%</td><td class="num">103</td>
-            <td class="num">62%</td><td class="num mut">64%</td>
-            <td class="num">-2.3</td><td class="num neg">-0.48</td><td class="num neg">-8.5%</td></tr><tr><td>70–80%</td><td class="num">63</td>
-            <td class="num">78%</td><td class="num mut">75%</td>
-            <td class="num">+1.6</td><td class="num pos">+0.48</td><td class="num neg">-0.9%</td></tr><tr><td>80–90%</td><td class="num">46</td>
-            <td class="num">83%</td><td class="num mut">83%</td>
-            <td class="num">-0.1</td><td class="num neg">-0.04</td><td class="num neg">-4.9%</td></tr></table></div><div class="note"><b>Model v book, on every fixture</b> — the same test as the section above, on a sample nobody hand-picked.</div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr><tr><td>Over 1.5 goals</td><td class="num">96</td>
-        <td class="num">0.1642</td><td class="num">0.1685</td>
-        <td><span class="sig y">
-          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">112</td>
-        <td class="num">0.2452</td><td class="num">0.2447</td>
-        <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Both teams to score</td><td class="num">113</td>
-        <td class="num">0.2519</td><td class="num">0.2494</td>
-        <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Home side scores 2+</td><td class="num">111</td>
-        <td class="num">0.2409</td><td class="num">0.2333</td>
-        <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Away side scores 2+</td><td class="num">110</td>
-        <td class="num">0.2467</td><td class="num">0.2377</td>
-        <td><span class="sig n">
-          book ahead</span></td></tr></table></div><div class="tbl"><table><tr><th>Model v book</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Value (model ≥ book + 5pp)</td><td class="num">166</td>
-            <td class="num">50%</td><td class="num mut">47%</td>
-            <td class="num">+5.3</td><td class="num pos">+0.88</td><td class="num neg">-0.1%</td></tr><tr><td>Rest</td><td class="num">376</td>
-            <td class="num">57%</td><td class="num mut">59%</td>
-            <td class="num">-4.6</td><td class="num neg">-0.50</td><td class="num neg">-4.0%</td></tr></table></div><div class="note"><b>Teams.</b> Pooled across every priced market in a team's games (its own 2+ counts for it alone). A team is tagged <b>PAYING</b> only past <b>20</b> observations with <b>z ≥ 2</b> — and with <b>230</b> teams tested, about 5 would reach that by chance, so read the tag as a shortlist, not a verdict.</div><div class="note">No team has reached the floor of 20 priced observations yet (230 teams tested so far).</div>
-
-<h2>On fire — do long runs continue?</h2><div class="note">Each long run logged against the fixture that tests it. The question is not whether a side on a hot run keeps scoring — it is whether they do it more than the same side does anyway, and more than a shuffled schedule would fake.</div><div class="tiles"><div class="tile"><b>418</b><span>Graded</span></div><div class="tile"><b>81%</b><span>Extended</span></div><div class="tile"><b>187</b><span>Pending</span></div></div><div class="tbl"><table>
-<tr><th>Streak</th><th class="num">n</th><th class="num">extended</th>
-    <th class="num">rate</th></tr><tr><td>scored in</td><td class="num">137</td>
-        <td class="num">116</td><td class="num">85%</td></tr><tr><td>over 1.5 goals</td><td class="num">125</td>
-        <td class="num">106</td><td class="num">85%</td></tr><tr><td>conceded in</td><td class="num">99</td>
-        <td class="num">80</td><td class="num">81%</td></tr><tr><td>both teams scored</td><td class="num">26</td>
-        <td class="num">17</td><td class="num">65%</td></tr><tr><td>over 2.5 goals</td><td class="num">23</td>
-        <td class="num">12</td><td class="num">52%</td></tr><tr><td>scored 2+</td><td class="num">7</td>
-        <td class="num">6</td><td class="num">86%</td></tr><tr><td>conceded 2+</td><td class="num">1</td>
-        <td class="num">0</td><td class="num">0%</td></tr></table></div><div class="note">Above is only a tally — it carries no verdict, because a ledger of streaks contains no clean control. Below is the actual test: for each team, its hit rate <b>while on a run</b> against its own rate <b>while not</b>, compared to the same statistic computed on <b>2000 shuffles of that team's own games</b>. Shuffling destroys the runs and nothing else, so the shuffled band is what "no signal" looks like — and it sits far below zero, because a run ends the moment it fails and the games after one are pre-selected against. <b>Only a diff outside that band means anything.</b></div>
-=======
 <h2>Results, ranked</h2>
-<div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>8</b></button><button type="button" data-tab="failing">Not working<b>30</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>9</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>9</b></button><button type="button" data-tab="all">All</button></div>
+<div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>13</b></button><button type="button" data-tab="failing">Not working<b>29</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>8</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>8</b></button><button type="button" data-tab="all">All</button></div>
 <div class="tbl"><table id="pairs"><tr><th class="num">#</th><th>Test</th><th class="num">n</th><th class="num">Result</th>
-<th class="num">Reference</th><th class="num">Diff</th><th class="num">z</th><th class="num">ROI</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 8</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ graded and ahead of its reference.</td></tr><tr data-g="working"><td class="num mut">1</td>
+<th class="num">Reference</th><th class="num">Diff</th><th class="num">z</th><th class="num">ROI</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 13</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ graded and ahead of its reference.</td></tr><tr data-g="working"><td class="num mut">1</td>
 <td><b>Serie A</b> <span class="sig y">SIG</span><div class="sm mut">Book · by league</div></td>
 <td class="num">45</td><td class="num">71%</td><td class="num mut">50% market</td>
 <td class="num">+9.4 hits</td><td class="num"><span class="pos">+3.01</span></td><td class="num"><span class="pos">+48.6%</span></td></tr><tr data-g="working"><td class="num mut">2</td>
@@ -262,173 +89,184 @@ kickoff count. 4 fixture(s) were picked by both.</div>
 <td class="num">35</td><td class="num">71%</td><td class="num mut">51% market</td>
 <td class="num">+7.1 hits</td><td class="num"><span class="pos">+2.55</span></td><td class="num"><span class="pos">+37.6%</span></td></tr><tr data-g="working"><td class="num mut">3</td>
 <td><b>priced 0–40%</b> <span class="sig y">SIG</span><div class="sm mut">Book · by price</div></td>
-<td class="num">104</td><td class="num">40%</td><td class="num mut">30% market</td>
-<td class="num">+10.9 hits</td><td class="num"><span class="pos">+2.36</span></td><td class="num"><span class="pos">+22.0%</span></td></tr><tr data-g="working"><td class="num mut">4</td>
+<td class="num">107</td><td class="num">40%</td><td class="num mut">30% market</td>
+<td class="num">+11.1 hits</td><td class="num"><span class="pos">+2.39</span></td><td class="num"><span class="pos">+22.4%</span></td></tr><tr data-g="working"><td class="num mut">4</td>
 <td><b>La Liga</b><div class="sm mut">Book · by league</div></td>
-<td class="num">41</td><td class="num">59%</td><td class="num mut">49% market</td>
-<td class="num">+3.7 hits</td><td class="num"><span class="pos">+1.24</span></td><td class="num"><span class="pos">+9.7%</span></td></tr><tr data-g="working"><td class="num mut">5</td>
+<td class="num">56</td><td class="num">59%</td><td class="num mut">50% market</td>
+<td class="num">+4.7 hits</td><td class="num"><span class="pos">+1.36</span></td><td class="num"><span class="pos">+10.1%</span></td></tr><tr data-g="working"><td class="num mut">5</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Leads at the price</div></td>
+<td class="num">30</td><td class="num">67%</td><td class="num mut">59% market</td>
+<td class="num">+7.8pp</td><td class="num"><span class="pos">+0.87</span></td><td class="num"><span class="pos">+9.1%</span></td></tr><tr data-g="working"><td class="num mut">6</td>
+<td><b>priced 70–80%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">69</td><td class="num">80%</td><td class="num mut">75% market</td>
+<td class="num">+3.0 hits</td><td class="num"><span class="pos">+0.84</span></td><td class="num"><span class="pos">+1.5%</span></td></tr><tr data-g="working"><td class="num mut">7</td>
 <td><b>Both teams to score</b><div class="sm mut">Book · every fixture</div></td>
-<td class="num">115</td><td class="num">59%</td><td class="num mut">57% market</td>
-<td class="num">+3.0 hits</td><td class="num"><span class="pos">+0.57</span></td><td class="num"><span class="pos">+0.5%</span></td></tr><tr data-g="working"><td class="num mut">6</td>
+<td class="num">122</td><td class="num">59%</td><td class="num mut">56% market</td>
+<td class="num">+3.2 hits</td><td class="num"><span class="pos">+0.59</span></td><td class="num"><span class="pos">+0.4%</span></td></tr><tr data-g="working"><td class="num mut">8</td>
+<td><b>Both teams to score</b><div class="sm mut">Leads at the price</div></td>
+<td class="num">30</td><td class="num">63%</td><td class="num mut">59% market</td>
+<td class="num">+4.4pp</td><td class="num"><span class="pos">+0.49</span></td><td class="num"><span class="pos">+2.1%</span></td></tr><tr data-g="working"><td class="num mut">9</td>
 <td><b>Eliteserien</b><div class="sm mut">Book · by league</div></td>
 <td class="num">30</td><td class="num">63%</td><td class="num mut">60% market</td>
-<td class="num">+1.1 hits</td><td class="num"><span class="pos">+0.42</span></td><td class="num"><span class="pos">+0.7%</span></td></tr><tr data-g="working"><td class="num mut">7</td>
+<td class="num">+1.1 hits</td><td class="num"><span class="pos">+0.42</span></td><td class="num"><span class="pos">+0.7%</span></td></tr><tr data-g="working"><td class="num mut">10</td>
 <td><b>Premier League</b><div class="sm mut">Book · by league</div></td>
 <td class="num">50</td><td class="num">56%</td><td class="num mut">55% market</td>
-<td class="num">+0.3 hits</td><td class="num"><span class="pos">+0.10</span></td><td class="num"><span class="pos">+2.9%</span></td></tr><tr data-g="working"><td class="num mut">8</td>
+<td class="num">+0.3 hits</td><td class="num"><span class="pos">+0.10</span></td><td class="num"><span class="pos">+2.9%</span></td></tr><tr data-g="working"><td class="num mut">11</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Leads</div></td>
+<td class="num">72</td><td class="num">85%</td><td class="num mut">85% teams&#x27; own</td>
+<td class="num">+0.1pp</td><td class="num"><span class="pos">+0.03</span></td><td class="num">—</td></tr><tr data-g="working"><td class="num mut">12</td>
 <td><b>Over 1.5 goals</b><div class="sm mut">Model v book (every fixture)</div></td>
-<td class="num">96</td><td class="num">Brier 0.164</td><td class="num mut">book 0.168</td>
-<td class="num">+0.004</td><td class="num">—</td><td class="num">—</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · 30</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ graded and not ahead of its reference — the market, the teams&#x27; own rate, or a shuffled schedule already explains it.</td></tr><tr data-g="failing"><td class="num mut">1</td>
+<td class="num">103</td><td class="num">Brier 0.167</td><td class="num mut">book 0.170</td>
+<td class="num">+0.003</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="working"><td class="num mut">13</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Model v book (leads)</div></td>
+<td class="num">30</td><td class="num">Brier 0.214</td><td class="num mut">book 0.227</td>
+<td class="num">+0.012</td><td class="num">—</td><td class="num">—</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · 29</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ graded and not ahead of its reference — the market, the teams&#x27; own rate, or a shuffled schedule already explains it.</td></tr><tr data-g="failing"><td class="num mut">1</td>
 <td><b>Ligue 1</b> <span class="sig y">SIG</span><div class="sm mut">Book · by league</div></td>
 <td class="num">40</td><td class="num">35%</td><td class="num mut">55% market</td>
 <td class="num">-7.9 hits</td><td class="num"><span class="neg">-2.65</span></td><td class="num"><span class="neg">-37.4%</span></td></tr><tr data-g="failing"><td class="num mut">2</td>
 <td><b>Greek Super League</b><div class="sm mut">Book · by league</div></td>
 <td class="num">35</td><td class="num">37%</td><td class="num mut">49% market</td>
 <td class="num">-4.1 hits</td><td class="num"><span class="neg">-1.47</span></td><td class="num"><span class="neg">-35.6%</span></td></tr><tr data-g="failing"><td class="num mut">3</td>
-<td><b>Eredivisie</b><div class="sm mut">Book · by league</div></td>
-<td class="num">38</td><td class="num">53%</td><td class="num mut">62% market</td>
-<td class="num">-3.6 hits</td><td class="num"><span class="neg">-1.31</span></td><td class="num"><span class="neg">-24.0%</span></td></tr><tr data-g="failing"><td class="num mut">4</td>
-<td><b>priced 50–60%</b><div class="sm mut">Book · by price</div></td>
-<td class="num">143</td><td class="num">50%</td><td class="num mut">55% market</td>
-<td class="num">-7.4 hits</td><td class="num"><span class="neg">-1.25</span></td><td class="num"><span class="neg">-13.9%</span></td></tr><tr data-g="failing"><td class="num mut">5</td>
 <td><b>MLS</b><div class="sm mut">Book · by league</div></td>
 <td class="num">75</td><td class="num">55%</td><td class="num mut">61% market</td>
-<td class="num">-4.7 hits</td><td class="num"><span class="neg">-1.17</span></td><td class="num"><span class="neg">-11.7%</span></td></tr><tr data-g="failing"><td class="num mut">6</td>
+<td class="num">-4.7 hits</td><td class="num"><span class="neg">-1.17</span></td><td class="num"><span class="neg">-11.7%</span></td></tr><tr data-g="failing"><td class="num mut">4</td>
+<td><b>Eredivisie</b><div class="sm mut">Book · by league</div></td>
+<td class="num">41</td><td class="num">56%</td><td class="num mut">63% market</td>
+<td class="num">-2.9 hits</td><td class="num"><span class="neg">-1.00</span></td><td class="num"><span class="neg">-19.5%</span></td></tr><tr data-g="failing"><td class="num mut">5</td>
+<td><b>priced 50–60%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">151</td><td class="num">51%</td><td class="num mut">55% market</td>
+<td class="num">-5.9 hits</td><td class="num"><span class="neg">-0.97</span></td><td class="num"><span class="neg">-11.5%</span></td></tr><tr data-g="failing"><td class="num mut">6</td>
 <td><b>Team to score</b><div class="sm mut">Leads</div></td>
 <td class="num">36</td><td class="num">81%</td><td class="num mut">86% teams&#x27; own</td>
-<td class="num">-5.4pp</td><td class="num"><span class="neg">-0.94</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">7</td>
+<td class="num">-5.5pp</td><td class="num"><span class="neg">-0.95</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">7</td>
 <td><b>Over 2.5 goals</b><div class="sm mut">Leads</div></td>
 <td class="num">31</td><td class="num">58%</td><td class="num mut">66% teams&#x27; own</td>
 <td class="num">-7.6pp</td><td class="num"><span class="neg">-0.89</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">8</td>
+<td><b>priced 60–70%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">105</td><td class="num">61%</td><td class="num mut">64% market</td>
+<td class="num">-3.7 hits</td><td class="num"><span class="neg">-0.75</span></td><td class="num"><span class="neg">-10.3%</span></td></tr><tr data-g="failing"><td class="num mut">9</td>
 <td><b>Home side scores 2+</b><div class="sm mut">Book · every fixture</div></td>
-<td class="num">113</td><td class="num">44%</td><td class="num mut">48% market</td>
-<td class="num">-4.2 hits</td><td class="num"><span class="neg">-0.84</span></td><td class="num"><span class="neg">-10.3%</span></td></tr><tr data-g="failing"><td class="num mut">9</td>
+<td class="num">116</td><td class="num">45%</td><td class="num mut">48% market</td>
+<td class="num">-3.3 hits</td><td class="num"><span class="neg">-0.65</span></td><td class="num"><span class="neg">-7.1%</span></td></tr><tr data-g="failing"><td class="num mut">10</td>
 <td><b>Belgian Pro League</b><div class="sm mut">Book · by league</div></td>
 <td class="num">40</td><td class="num">52%</td><td class="num mut">57% market</td>
-<td class="num">-1.6 hits</td><td class="num"><span class="neg">-0.56</span></td><td class="num"><span class="neg">-18.5%</span></td></tr><tr data-g="failing"><td class="num mut">10</td>
-<td><b>the rest</b><div class="sm mut">Book · model value split</div></td>
-<td class="num">376</td><td class="num">57%</td><td class="num mut">59% market</td>
-<td class="num">-4.6 hits</td><td class="num"><span class="neg">-0.50</span></td><td class="num"><span class="neg">-4.0%</span></td></tr><tr data-g="failing"><td class="num mut">11</td>
-<td><b>priced 60–70%</b><div class="sm mut">Book · by price</div></td>
-<td class="num">103</td><td class="num">62%</td><td class="num mut">64% market</td>
-<td class="num">-2.3 hits</td><td class="num"><span class="neg">-0.48</span></td><td class="num"><span class="neg">-8.5%</span></td></tr><tr data-g="failing"><td class="num mut">12</td>
+<td class="num">-1.6 hits</td><td class="num"><span class="neg">-0.56</span></td><td class="num"><span class="neg">-18.5%</span></td></tr><tr data-g="failing"><td class="num mut">11</td>
 <td><b>priced 40–50%</b><div class="sm mut">Book · by price</div></td>
-<td class="num">90</td><td class="num">43%</td><td class="num mut">45% market</td>
-<td class="num">-1.8 hits</td><td class="num"><span class="neg">-0.39</span></td><td class="num"><span class="neg">-9.2%</span></td></tr><tr data-g="failing"><td class="num mut">13</td>
-<td><b>Over 2.5 goals</b><div class="sm mut">Book · every fixture</div></td>
-<td class="num">113</td><td class="num">56%</td><td class="num mut">56% market</td>
-<td class="num">-0.3 hits</td><td class="num"><span class="neg">-0.06</span></td><td class="num"><span class="neg">-3.8%</span></td></tr><tr data-g="failing"><td class="num mut">14</td>
-<td><b>Away side scores 2+</b><div class="sm mut">Book · every fixture</div></td>
-<td class="num">112</td><td class="num">40%</td><td class="num mut">40% market</td>
-<td class="num">-0.3 hits</td><td class="num"><span class="neg">-0.05</span></td><td class="num"><span class="neg">-1.4%</span></td></tr><tr data-g="failing"><td class="num mut">15</td>
+<td class="num">95</td><td class="num">43%</td><td class="num mut">45% market</td>
+<td class="num">-2.1 hits</td><td class="num"><span class="neg">-0.44</span></td><td class="num"><span class="neg">-9.6%</span></td></tr><tr data-g="failing"><td class="num mut">12</td>
+<td><b>the rest</b><div class="sm mut">Book · model value split</div></td>
+<td class="num">395</td><td class="num">58%</td><td class="num mut">59% market</td>
+<td class="num">-3.1 hits</td><td class="num"><span class="neg">-0.33</span></td><td class="num"><span class="neg">-3.3%</span></td></tr><tr data-g="failing"><td class="num mut">13</td>
 <td><b>priced 80–90%</b><div class="sm mut">Book · by price</div></td>
-<td class="num">46</td><td class="num">83%</td><td class="num mut">83% market</td>
-<td class="num">-0.1 hits</td><td class="num"><span class="neg">-0.04</span></td><td class="num"><span class="neg">-4.9%</span></td></tr><tr data-g="failing"><td class="num mut">16</td>
+<td class="num">48</td><td class="num">81%</td><td class="num mut">83% market</td>
+<td class="num">-0.8 hits</td><td class="num"><span class="neg">-0.32</span></td><td class="num"><span class="neg">-6.6%</span></td></tr><tr data-g="failing"><td class="num mut">14</td>
+<td><b>Away side scores 2+</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">115</td><td class="num">40%</td><td class="num mut">41% market</td>
+<td class="num">-0.6 hits</td><td class="num"><span class="neg">-0.12</span></td><td class="num"><span class="neg">-2.9%</span></td></tr><tr data-g="failing"><td class="num mut">15</td>
 <td><b>Turkish Super Lig</b><div class="sm mut">Book · by league</div></td>
 <td class="num">35</td><td class="num">51%</td><td class="num mut">52% market</td>
-<td class="num">-0.1 hits</td><td class="num"><span class="neg">-0.04</span></td><td class="num"><span class="pos">+0.8%</span></td></tr><tr data-g="failing"><td class="num mut">17</td>
-<td><b>Over 1.5 goals</b><div class="sm mut">Leads</div></td>
-<td class="num">71</td><td class="num">85%</td><td class="num mut">85% teams&#x27; own</td>
-<td class="num">-0.1pp</td><td class="num"><span class="neg">-0.03</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">18</td>
+<td class="num">-0.1 hits</td><td class="num"><span class="neg">-0.04</span></td><td class="num"><span class="pos">+0.8%</span></td></tr><tr data-g="failing"><td class="num mut">16</td>
+<td><b>Both teams to score</b><div class="sm mut">Model v book (leads)</div></td>
+<td class="num">30</td><td class="num">Brier 0.235</td><td class="num mut">book 0.232</td>
+<td class="num">-0.003</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">17</td>
 <td><b>over 2.5 goals runs continue</b><div class="sm mut">On fire</div></td>
-<td class="num">38</td><td class="num">-33.7pp on v off</td><td class="num mut">shuffled -58 to -16pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">19</td>
+<td class="num">38</td><td class="num">-33.7pp on v off</td><td class="num mut">shuffled -58 to -15pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">18</td>
 <td><b>both teams scored runs continue</b><div class="sm mut">On fire</div></td>
-<td class="num">40</td><td class="num">-26.0pp on v off</td><td class="num mut">shuffled -55 to -12pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">20</td>
+<td class="num">40</td><td class="num">-26.0pp on v off</td><td class="num mut">shuffled -57 to -15pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">19</td>
 <td><b>Away side scores 2+</b><div class="sm mut">Model v book (every fixture)</div></td>
-<td class="num">110</td><td class="num">Brier 0.247</td><td class="num mut">book 0.238</td>
-<td class="num">-0.009</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">21</td>
+<td class="num">113</td><td class="num">Brier 0.245</td><td class="num mut">book 0.233</td>
+<td class="num">-0.012</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">20</td>
 <td><b>Home side scores 2+</b><div class="sm mut">Model v book (every fixture)</div></td>
-<td class="num">111</td><td class="num">Brier 0.241</td><td class="num mut">book 0.233</td>
-<td class="num">-0.008</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">22</td>
+<td class="num">114</td><td class="num">Brier 0.243</td><td class="num mut">book 0.237</td>
+<td class="num">-0.006</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">21</td>
 <td><b>Over 2.5 goals</b><div class="sm mut">Model v book (every fixture)</div></td>
-<td class="num">112</td><td class="num">Brier 0.245</td><td class="num mut">book 0.245</td>
-<td class="num">-0.001</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">23</td>
+<td class="num">119</td><td class="num">Brier 0.244</td><td class="num mut">book 0.242</td>
+<td class="num">-0.003</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">22</td>
 <td><b>Both teams to score</b><div class="sm mut">Model v book (every fixture)</div></td>
-<td class="num">113</td><td class="num">Brier 0.252</td><td class="num mut">book 0.249</td>
-<td class="num">-0.002</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">24</td>
+<td class="num">120</td><td class="num">Brier 0.251</td><td class="num mut">book 0.249</td>
+<td class="num">-0.002</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">23</td>
 <td><b>conceded in runs continue</b><div class="sm mut">On fire</div></td>
-<td class="num">192</td><td class="num">-22.8pp on v off</td><td class="num mut">shuffled -39 to -20pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">25</td>
+<td class="num">192</td><td class="num">-22.8pp on v off</td><td class="num mut">shuffled -40 to -21pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">24</td>
 <td><b>scored in runs continue</b><div class="sm mut">On fire</div></td>
-<td class="num">202</td><td class="num">-27.2pp on v off</td><td class="num mut">shuffled -38 to -19pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">26</td>
+<td class="num">202</td><td class="num">-27.2pp on v off</td><td class="num mut">shuffled -37 to -19pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">25</td>
 <td><b>over 1.5 goals runs continue</b><div class="sm mut">On fire</div></td>
 <td class="num">252</td><td class="num">-18.4pp on v off</td><td class="num mut">shuffled -36 to -20pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">27</td>
-<td><b>priced 70–80%</b><div class="sm mut">Book · by price</div></td>
-<td class="num">63</td><td class="num">78%</td><td class="num mut">75% market</td>
-<td class="num">+1.6 hits</td><td class="num"><span class="pos">+0.48</span></td><td class="num"><span class="neg">-0.9%</span></td></tr><tr data-g="failing"><td class="num mut">28</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">26</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">120</td><td class="num">57%</td><td class="num mut">56% market</td>
+<td class="num">+0.5 hits</td><td class="num"><span class="pos">+0.10</span></td><td class="num"><span class="neg">-2.7%</span></td></tr><tr data-g="failing"><td class="num mut">27</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">103</td><td class="num">80%</td><td class="num mut">78% market</td>
+<td class="num">+1.9 hits</td><td class="num"><span class="pos">+0.46</span></td><td class="num"><span class="neg">-1.0%</span></td></tr><tr data-g="failing"><td class="num mut">28</td>
 <td><b>Bundesliga</b><div class="sm mut">Book · by league</div></td>
 <td class="num">31</td><td class="num">61%</td><td class="num mut">57% market</td>
 <td class="num">+1.4 hits</td><td class="num"><span class="pos">+0.51</span></td><td class="num"><span class="neg">-6.1%</span></td></tr><tr data-g="failing"><td class="num mut">29</td>
-<td><b>Over 1.5 goals</b><div class="sm mut">Book · every fixture</div></td>
-<td class="num">96</td><td class="num">80%</td><td class="num mut">78% market</td>
-<td class="num">+2.6 hits</td><td class="num"><span class="pos">+0.63</span></td><td class="num"><span class="neg">-0.0%</span></td></tr><tr data-g="failing"><td class="num mut">30</td>
 <td><b>model ≥ book + 5pp</b><div class="sm mut">Book · model value split</div></td>
-<td class="num">166</td><td class="num">50%</td><td class="num mut">47% market</td>
-<td class="num">+5.3 hits</td><td class="num"><span class="pos">+0.88</span></td><td class="num"><span class="neg">-0.1%</span></td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 9</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 graded, ahead so far. Unreadable yet.</td></tr><tr data-g="leaning"><td class="num mut">1</td>
+<td class="num">174</td><td class="num">49%</td><td class="num mut">47% market</td>
+<td class="num">+4.8 hits</td><td class="num"><span class="pos">+0.78</span></td><td class="num"><span class="neg">-0.3%</span></td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 8</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 graded, ahead so far. Unreadable yet.</td></tr><tr data-g="leaning"><td class="num mut">1</td>
 <td><b>Over 1.5 · 9+ of last 10 (published)</b><div class="sm mut">Rule change</div></td>
-<td class="num">1</td><td class="num">100%</td><td class="num mut">same weeks, same prices</td>
-<td class="num">—</td><td class="num">—</td><td class="num"><span class="mut">+26.3%</span></td></tr><tr data-g="leaning"><td class="num mut">2</td>
-<td><b>Over 1.5 · run pairings (retired, shadow)</b><div class="sm mut">Rule change</div></td>
-<td class="num">4</td><td class="num">100%</td><td class="num mut">same weeks, same prices</td>
-<td class="num">—</td><td class="num">—</td><td class="num"><span class="mut">+25.2%</span></td></tr><tr data-g="leaning"><td class="num mut">3</td>
+<td class="num">2</td><td class="num">100%</td><td class="num mut">same weeks, same prices</td>
+<td class="num">—</td><td class="num">—</td><td class="num"><span class="mut">+32.4%</span></td></tr><tr data-g="leaning"><td class="num mut">2</td>
 <td><b>Austrian Bundesliga</b><div class="sm mut">Book · by league</div></td>
 <td class="num">15</td><td class="num">87%</td><td class="num mut">56% market</td>
-<td class="num">+4.6 hits</td><td class="num"><span class="mut">+2.50</span></td><td class="num"><span class="mut">+52.4%</span></td></tr><tr data-g="leaning"><td class="num mut">4</td>
+<td class="num">+4.6 hits</td><td class="num"><span class="mut">+2.50</span></td><td class="num"><span class="mut">+52.4%</span></td></tr><tr data-g="leaning"><td class="num mut">3</td>
+<td><b>Over 1.5 · run pairings (retired, shadow)</b><div class="sm mut">Rule change</div></td>
+<td class="num">7</td><td class="num">100%</td><td class="num mut">same weeks, same prices</td>
+<td class="num">—</td><td class="num">—</td><td class="num"><span class="mut">+23.9%</span></td></tr><tr data-g="leaning"><td class="num mut">4</td>
 <td><b>Over 1.5 goals</b><div class="sm mut">Leads at the price</div></td>
-<td class="num">28</td><td class="num">86%</td><td class="num mut">80% market</td>
-<td class="num">+5.2pp</td><td class="num"><span class="mut">+0.70</span></td><td class="num"><span class="mut">+2.8%</span></td></tr><tr data-g="leaning"><td class="num mut">5</td>
-<td><b>Over 2.5 goals</b><div class="sm mut">Leads at the price</div></td>
-<td class="num">29</td><td class="num">66%</td><td class="num mut">59% market</td>
-<td class="num">+6.3pp</td><td class="num"><span class="mut">+0.69</span></td><td class="num"><span class="mut">+6.0%</span></td></tr><tr data-g="leaning"><td class="num mut">6</td>
+<td class="num">29</td><td class="num">86%</td><td class="num mut">80% market</td>
+<td class="num">+6.1pp</td><td class="num"><span class="mut">+0.83</span></td><td class="num"><span class="mut">+4.1%</span></td></tr><tr data-g="leaning"><td class="num mut">5</td>
+<td><b>priced 90–100%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">1</td><td class="num">100%</td><td class="num mut">92% market</td>
+<td class="num">+0.1 hits</td><td class="num"><span class="mut">+0.28</span></td><td class="num"><span class="mut">+7.0%</span></td></tr><tr data-g="leaning"><td class="num mut">6</td>
 <td><b>Team to score 2+</b><div class="sm mut">Leads</div></td>
-<td class="num">17</td><td class="num">65%</td><td class="num mut">57% teams&#x27; own</td>
-<td class="num">+7.2pp</td><td class="num"><span class="mut">+0.60</span></td><td class="num">—</td></tr><tr data-g="leaning"><td class="num mut">7</td>
+<td class="num">18</td><td class="num">61%</td><td class="num mut">58% teams&#x27; own</td>
+<td class="num">+3.2pp</td><td class="num"><span class="mut">+0.28</span></td><td class="num">—</td></tr><tr data-g="leaning"><td class="num mut">7</td>
 <td><b>Both teams to score</b><div class="sm mut">Leads</div></td>
 <td class="num">24</td><td class="num">75%</td><td class="num mut">74% teams&#x27; own</td>
 <td class="num">+1.2pp</td><td class="num"><span class="mut">+0.13</span></td><td class="num">—</td></tr><tr data-g="leaning"><td class="num mut">8</td>
-<td><b>Over 2.5 goals</b><div class="sm mut">Model v book (leads)</div></td>
-<td class="num">29</td><td class="num">Brier 0.212</td><td class="num mut">book 0.225</td>
-<td class="num">+0.013</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="leaning"><td class="num mut">9</td>
 <td><b>Over 1.5 goals</b><div class="sm mut">Model v book (leads)</div></td>
-<td class="num">28</td><td class="num">Brier 0.131</td><td class="num mut">book 0.139</td>
-<td class="num">+0.009</td><td class="num">—</td><td class="num">—</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 9</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 graded, behind so far.</td></tr><tr data-g="behind"><td class="num mut">1</td>
+<td class="num">29</td><td class="num">Brier 0.129</td><td class="num mut">book 0.138</td>
+<td class="num">+0.009</td><td class="num">—</td><td class="num">—</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 8</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 graded, behind so far.</td></tr><tr data-g="behind"><td class="num mut">1</td>
 <td><b>Saudi Pro League</b><div class="sm mut">Book · by league</div></td>
 <td class="num">24</td><td class="num">33%</td><td class="num mut">50% market</td>
 <td class="num">-4.1 hits</td><td class="num"><span class="mut">-1.74</span></td><td class="num"><span class="mut">-36.1%</span></td></tr><tr data-g="behind"><td class="num mut">2</td>
 <td><b>Team to fail to score</b><div class="sm mut">Leads</div></td>
 <td class="num">1</td><td class="num">0%</td><td class="num mut">60% teams&#x27; own</td>
 <td class="num">-60.0pp</td><td class="num"><span class="mut">-1.22</span></td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">3</td>
+<td><b>Scottish Premiership</b><div class="sm mut">Book · by league</div></td>
+<td class="num">9</td><td class="num">56%</td><td class="num mut">65% market</td>
+<td class="num">-0.9 hits</td><td class="num"><span class="mut">-0.62</span></td><td class="num"><span class="mut">-14.5%</span></td></tr><tr data-g="behind"><td class="num mut">4</td>
 <td><b>Danish Superliga</b><div class="sm mut">Book · by league</div></td>
 <td class="num">15</td><td class="num">53%</td><td class="num mut">58% market</td>
-<td class="num">-0.6 hits</td><td class="num"><span class="mut">-0.35</span></td><td class="num"><span class="mut">-16.1%</span></td></tr><tr data-g="behind"><td class="num mut">4</td>
+<td class="num">-0.6 hits</td><td class="num"><span class="mut">-0.35</span></td><td class="num"><span class="mut">-16.1%</span></td></tr><tr data-g="behind"><td class="num mut">5</td>
 <td><b>conceded 2+ runs continue</b><div class="sm mut">On fire</div></td>
-<td class="num">5</td><td class="num">-43.9pp on v off</td><td class="num mut">shuffled -100 to +17pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">5</td>
+<td class="num">5</td><td class="num">-43.9pp on v off</td><td class="num mut">shuffled -91 to +18pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">6</td>
 <td><b>Team to score 2+</b><div class="sm mut">Model v book (leads)</div></td>
 <td class="num">9</td><td class="num">Brier 0.251</td><td class="num mut">book 0.213</td>
-<td class="num">-0.037</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">6</td>
+<td class="num">-0.037</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">7</td>
 <td><b>scored 2+ runs continue</b><div class="sm mut">On fire</div></td>
-<td class="num">26</td><td class="num">-25.7pp on v off</td><td class="num mut">shuffled -66 to -2pp</td>
-<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">7</td>
-<td><b>Both teams to score</b><div class="sm mut">Model v book (leads)</div></td>
-<td class="num">29</td><td class="num">Brier 0.235</td><td class="num mut">book 0.232</td>
-<td class="num">-0.003</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">8</td>
+<td class="num">26</td><td class="num">-25.7pp on v off</td><td class="num mut">shuffled -64 to -4pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">8</td>
 <td><b>Team to score 2+</b><div class="sm mut">Leads at the price</div></td>
 <td class="num">9</td><td class="num">56%</td><td class="num mut">54% market</td>
-<td class="num">+1.4pp</td><td class="num"><span class="mut">+0.08</span></td><td class="num"><span class="mut">-8.6%</span></td></tr><tr data-g="behind"><td class="num mut">9</td>
-<td><b>Both teams to score</b><div class="sm mut">Leads at the price</div></td>
-<td class="num">29</td><td class="num">62%</td><td class="num mut">59% market</td>
-<td class="num">+2.9pp</td><td class="num"><span class="mut">+0.32</span></td><td class="num"><span class="mut">-0.5%</span></td></tr></table></div>
->>>>>>> Stashed changes
+<td class="num">+1.4pp</td><td class="num"><span class="mut">+0.08</span></td><td class="num"><span class="mut">-8.6%</span></td></tr></table></div>
 
 <h2>Recently settled leads (25)</h2>
 <div class="tbl"><table>
 <tr><th>Date</th><th>Match</th><th>Pick</th><th class="num">Final</th><th></th></tr>
-<tr><td class="mut">2026-09-14</td>
+<tr><td class="mut">2026-09-15</td>
+        <td>Falkirk v Heart of Midlothian</td><td>Heart of Midlothian to score 2+</td>
+        <td class="num">2-1</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-15</td>
+        <td>Rayo Vallecano v Espanyol</td><td>Over 1.5 goals</td>
+        <td class="num">2-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-14</td>
         <td>Como v Parma</td><td>Como to score 2+</td>
         <td class="num">2-1</td>
         <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-14</td>
@@ -497,31 +335,25 @@ kickoff count. 4 fixture(s) were picked by both.</div>
         <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
         <td>Vancouver Whitecaps v Austin FC</td><td>Over 1.5 goals</td>
         <td class="num">1-2</td>
-        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-12</td>
-        <td>AFC Bournemouth v Brentford</td><td>Brentford to score</td>
-        <td class="num">2-2</td>
-        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-12</td>
-        <td>AFC Bournemouth v Brentford</td><td>Brentford to score 2+</td>
-        <td class="num">2-2</td>
         <td><span class="st hit">HIT</span></td></tr></table></div>
 
 <h2>Reference</h2>
-<details class="ref"><summary>Leads — every lead published, against the teams' own rate</summary><div class="tiles"><div class="tile"><b>180</b><span>Graded</span></div><div class="tile"><b>76%</b><span>Hit rate</span></div><div class="tile"><b>130</b><span>Pending</span></div><div class="tile"><b>8</b><span>Void</span></div><div class="tile"><b>24 · 71% hit</b><span>Withdrawn before kickoff</span></div></div><div class="tbl"><table>
+<details class="ref"><summary>Leads — every lead published, against the teams' own rate</summary><div class="tiles"><div class="tile"><b>182</b><span>Graded</span></div><div class="tile"><b>75%</b><span>Hit rate</span></div><div class="tile"><b>121</b><span>Pending</span></div><div class="tile"><b>8</b><span>Void</span></div><div class="tile"><b>31 · 74% hit</b><span>Withdrawn before kickoff</span></div></div><div class="tbl"><table>
 <tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
     <th class="num">team base</th><th class="num">lift</th><th></th></tr>
 <tr><td>Over 1.5 goals</td>
-        <td class="num">71</td>
-        <td class="num">60</td>
+        <td class="num">72</td>
+        <td class="num">61</td>
         <td class="num">85%</td>
         <td class="num mut" title="league avg 82%">85%</td>
-        <td class="num neg">-0.1pp</td>
+        <td class="num pos">+0.1pp</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Team to score</td>
         <td class="num">36</td>
         <td class="num">29</td>
         <td class="num">81%</td>
         <td class="num mut" title="league avg 78%">86%</td>
-        <td class="num neg">-5.4pp</td>
+        <td class="num neg">-5.5pp</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Over 2.5 goals</td>
         <td class="num">31</td>
@@ -534,15 +366,15 @@ kickoff count. 4 fixture(s) were picked by both.</div>
         <td class="num">24</td>
         <td class="num">18</td>
         <td class="num">75%</td>
-        <td class="num mut" title="league avg 64%">74%</td>
+        <td class="num mut" title="league avg 65%">74%</td>
         <td class="num pos">+1.2pp</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Team to score 2+</td>
-        <td class="num">17</td>
+        <td class="num">18</td>
         <td class="num">11</td>
-        <td class="num">65%</td>
-        <td class="num mut" title="league avg 46%">57%</td>
-        <td class="num pos">+7.2pp</td>
+        <td class="num">61%</td>
+        <td class="num mut" title="league avg 46%">58%</td>
+        <td class="num pos">+3.2pp</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Team to fail to score</td>
         <td class="num">1</td>
@@ -555,39 +387,39 @@ kickoff count. 4 fixture(s) were picked by both.</div>
 <details class="ref"><summary>Leads at the price — does it pay?</summary>
 <div class="note">Flat 1 unit at the price captured the first build a lead was listed (the exchange ask plus fee since
 2026-09-13, Bovada before), never revised, never after kickoff. <b>Break-even</b> is the hit rate the average price demands;
-<b>book fair</b> is the market's own probability.</div><div class="tiles"><div class="tile"><b>29</b><span>Settled at a price</span></div><div class="tile"><b>+9.2%</b><span>Over 1.5 lane ROI</span></div><div class="tile"><b>-8.6%</b><span>Team 2+ lane ROI</span></div><div class="tile"><b>30</b><span>Priced, pending</span></div><div class="tile"><b>Bovada 29</b><span>Claims priced on</span></div></div><div class="tbl"><table>
+<b>book fair</b> is the market's own probability.</div><div class="tiles"><div class="tile"><b>30</b><span>Settled at a price</span></div><div class="tile"><b>+10.6%</b><span>Over 1.5 lane ROI</span></div><div class="tile"><b>-8.6%</b><span>Team 2+ lane ROI</span></div><div class="tile"><b>27</b><span>Priced, pending</span></div><div class="tile"><b>Bovada 30</b><span>Claims priced on</span></div></div><div class="tbl"><table>
 <tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
     <th class="num">avg price</th><th class="num">break-even</th><th class="num">book fair</th>
     <th class="num">lift v book</th><th class="num">ROI</th><th></th></tr>
 <tr><td>Over 1.5 goals <span class="mut">· a lane's own claim</span></td>
-        <td class="num">28</td>
-        <td class="num">24</td>
+        <td class="num">29</td>
+        <td class="num">25</td>
         <td class="num">86%</td>
-        <td class="num mut">1.19</td>
+        <td class="num mut">1.20</td>
         <td class="num mut" title="hit rate needed to break even at the average price">84%</td>
         <td class="num mut" title="the book's own probability, vig removed">80%</td>
-        <td class="num pos">+5.2pp</td>
-        <td class="num pos">+2.8%</td>
+        <td class="num pos">+6.1pp</td>
+        <td class="num pos">+4.1%</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Over 2.5 goals</td>
-        <td class="num">29</td>
-        <td class="num">19</td>
-        <td class="num">66%</td>
-        <td class="num mut">1.66</td>
+        <td class="num">30</td>
+        <td class="num">20</td>
+        <td class="num">67%</td>
+        <td class="num mut">1.67</td>
         <td class="num mut" title="hit rate needed to break even at the average price">60%</td>
         <td class="num mut" title="the book's own probability, vig removed">59%</td>
-        <td class="num pos">+6.3pp</td>
-        <td class="num pos">+6.0%</td>
+        <td class="num pos">+7.8pp</td>
+        <td class="num pos">+9.1%</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Both teams to score</td>
-        <td class="num">29</td>
-        <td class="num">18</td>
-        <td class="num">62%</td>
-        <td class="num mut">1.62</td>
-        <td class="num mut" title="hit rate needed to break even at the average price">62%</td>
+        <td class="num">30</td>
+        <td class="num">19</td>
+        <td class="num">63%</td>
+        <td class="num mut">1.63</td>
+        <td class="num mut" title="hit rate needed to break even at the average price">61%</td>
         <td class="num mut" title="the book's own probability, vig removed">59%</td>
-        <td class="num pos">+2.9pp</td>
-        <td class="num neg">-0.5%</td>
+        <td class="num pos">+4.4pp</td>
+        <td class="num pos">+2.1%</td>
         <td><span class="sig n">
           not sig</span></td></tr><tr><td>Team to score 2+ <span class="mut">· a lane's own claim</span></td>
         <td class="num">9</td>
@@ -607,24 +439,24 @@ compared on the same weeks at the same exchange prices. Only leads still on the 
 kickoff count. 4 fixture(s) were picked by both.</div>
 <div class="tbl"><table><tr><th>Rule</th><th class="num">Graded</th><th class="num">Hit</th>
 <th class="num">Priced</th><th class="num">Avg price</th><th class="num">ROI</th><th class="num">Pending</th></tr>
-<tr><td><b>9+ of last 10 (published)</b></td><td class="num">1</td><td class="num">100%</td><td class="num">1</td><td class="num">1.26</td><td class="num">+26.3%</td><td class="num">3</td></tr><tr><td><b>Run pairings (retired, shadow)</b></td><td class="num">4</td><td class="num">100%</td><td class="num">4</td><td class="num">1.25</td><td class="num">+25.2%</td><td class="num">8</td></tr></table></div></details>
-<details class="ref"><summary>Model v book on the leads</summary><div class="tiles"><div class="tile"><b>29</b><span>Scored, model v book</span></div><div class="tile"><b>2 of 4 markets</b><span>Model ahead on</span></div><div class="tile"><b>30</b><span>Pending, modelled</span></div></div><div class="tbl"><table>
+<tr><td><b>9+ of last 10 (published)</b></td><td class="num">2</td><td class="num">100%</td><td class="num">2</td><td class="num">1.32</td><td class="num">+32.4%</td><td class="num">2</td></tr><tr><td><b>Run pairings (retired, shadow)</b></td><td class="num">7</td><td class="num">100%</td><td class="num">7</td><td class="num">1.24</td><td class="num">+23.9%</td><td class="num">6</td></tr></table></div></details>
+<details class="ref"><summary>Model v book on the leads</summary><div class="tiles"><div class="tile"><b>30</b><span>Scored, model v book</span></div><div class="tile"><b>2 of 4 markets</b><span>Model ahead on</span></div><div class="tile"><b>27</b><span>Pending, modelled</span></div></div><div class="tbl"><table>
 <tr><th>Market</th><th class="num">n</th><th class="num">actual</th><th class="num">model avg</th>
     <th class="num">book fair</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr>
-<tr><td>Over 1.5 goals</td><td class="num">28</td>
+<tr><td>Over 1.5 goals</td><td class="num">29</td>
         <td class="num">86%</td>
         <td class="num mut">82%</td><td class="num mut">80%</td>
-        <td class="num">0.1307</td><td class="num">0.1394</td>
+        <td class="num">0.1289</td><td class="num">0.1378</td>
         <td><span class="sig y">
-          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">29</td>
-        <td class="num">66%</td>
+          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">30</td>
+        <td class="num">67%</td>
         <td class="num mut">62%</td><td class="num mut">59%</td>
-        <td class="num">0.2117</td><td class="num">0.2251</td>
+        <td class="num">0.2141</td><td class="num">0.2265</td>
         <td><span class="sig y">
-          MODEL AHEAD</span></td></tr><tr><td>Both teams to score</td><td class="num">29</td>
-        <td class="num">62%</td>
-        <td class="num mut">63%</td><td class="num mut">59%</td>
-        <td class="num">0.2350</td><td class="num">0.2324</td>
+          MODEL AHEAD</span></td></tr><tr><td>Both teams to score</td><td class="num">30</td>
+        <td class="num">63%</td>
+        <td class="num mut">62%</td><td class="num mut">59%</td>
+        <td class="num">0.2354</td><td class="num">0.2321</td>
         <td><span class="sig n">
           book ahead</span></td></tr><tr><td>Team to score 2+</td><td class="num">9</td>
         <td class="num">56%</td>
@@ -634,32 +466,32 @@ kickoff count. 4 fixture(s) were picked by both.</div>
           book ahead</span></td></tr></table></div><div class="note">Pre-registered value split: a lead is <b>value</b> when the model's probability beats the book's fair probability by <b>5pp</b> or more. If the model carries anything the book does not, the value group should out-hit and out-earn the rest. The margin was fixed before any of this settled.</div><div class="tbl"><table>
 <tr><th>Market</th><th class="num">value n</th><th class="num">hit</th><th class="num">ROI</th>
     <th class="num">rest n</th><th class="num">hit</th><th class="num">ROI</th></tr>
-<tr><td>Over 1.5 goals</td><td class="num">6</td><td class="num">100%</td><td class="num pos">+20.6%</td><td class="num">22</td><td class="num">82%</td><td class="num neg">-2.0%</td></tr><tr><td>Over 2.5 goals</td><td class="num">13</td><td class="num">77%</td><td class="num pos">+21.7%</td><td class="num">16</td><td class="num">56%</td><td class="num neg">-6.7%</td></tr><tr><td>Both teams to score</td><td class="num">13</td><td class="num">62%</td><td class="num pos">+4.5%</td><td class="num">16</td><td class="num">62%</td><td class="num neg">-4.5%</td></tr><tr><td>Team to score 2+</td><td class="num">2</td><td class="num">0%</td><td class="num neg">-100.0%</td><td class="num">7</td><td class="num">71%</td><td class="num pos">+17.5%</td></tr></table></div></details>
-<details class="ref"><summary>The book on every fixture — markets, leagues, price bands, teams</summary><div class="tiles"><div class="tile"><b>126</b><span>Fixtures priced</span></div><div class="tile"><b>115</b><span>Settled</span></div><div class="tile"><b>549</b><span>Observations</span></div><div class="tile"><b>55% v 55%</b><span>Hit v book</span></div><div class="tile"><b>+0.07</b><span>z</span></div><div class="tile"><b>-3.1%</b><span>ROI</span></div></div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Over 1.5 goals</td><td class="num">96</td>
+<tr><td>Over 1.5 goals</td><td class="num">6</td><td class="num">100%</td><td class="num pos">+20.6%</td><td class="num">23</td><td class="num">83%</td><td class="num neg">-0.3%</td></tr><tr><td>Over 2.5 goals</td><td class="num">13</td><td class="num">77%</td><td class="num pos">+21.7%</td><td class="num">17</td><td class="num">59%</td><td class="num neg">-0.5%</td></tr><tr><td>Both teams to score</td><td class="num">13</td><td class="num">62%</td><td class="num pos">+4.5%</td><td class="num">17</td><td class="num">65%</td><td class="num pos">+0.3%</td></tr><tr><td>Team to score 2+</td><td class="num">2</td><td class="num">0%</td><td class="num neg">-100.0%</td><td class="num">7</td><td class="num">71%</td><td class="num pos">+17.5%</td></tr></table></div></details>
+<details class="ref"><summary>The book on every fixture — markets, leagues, price bands, teams</summary><div class="tiles"><div class="tile"><b>135</b><span>Fixtures priced</span></div><div class="tile"><b>122</b><span>Settled</span></div><div class="tile"><b>576</b><span>Observations</span></div><div class="tile"><b>56% v 55%</b><span>Hit v book</span></div><div class="tile"><b>+0.15</b><span>z</span></div><div class="tile"><b>-2.7%</b><span>ROI</span></div></div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Over 1.5 goals</td><td class="num">103</td>
             <td class="num">80%</td><td class="num mut">78%</td>
-            <td class="num">+2.6</td><td class="num pos">+0.63</td><td class="num neg">-0.0%</td></tr><tr><td>Over 2.5 goals</td><td class="num">113</td>
-            <td class="num">56%</td><td class="num mut">56%</td>
-            <td class="num">-0.3</td><td class="num neg">-0.06</td><td class="num neg">-3.8%</td></tr><tr><td>Both teams to score</td><td class="num">115</td>
-            <td class="num">59%</td><td class="num mut">57%</td>
-            <td class="num">+3.0</td><td class="num pos">+0.57</td><td class="num pos">+0.5%</td></tr><tr><td>Home side scores 2+</td><td class="num">113</td>
-            <td class="num">44%</td><td class="num mut">48%</td>
-            <td class="num">-4.2</td><td class="num neg">-0.84</td><td class="num neg">-10.3%</td></tr><tr><td>Away side scores 2+</td><td class="num">112</td>
-            <td class="num">40%</td><td class="num mut">40%</td>
-            <td class="num">-0.3</td><td class="num neg">-0.05</td><td class="num neg">-1.4%</td></tr></table></div><div class="note"><b>By league.</b> A mispricing is far more likely to be structural — a thin market, a shaded favourite — than a property of one club, and a league pools dozens of teams, so this reads weeks before any team row can.</div><div class="tbl"><table><tr><th>League</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>MLS</td><td class="num">75</td>
+            <td class="num">+1.9</td><td class="num pos">+0.46</td><td class="num neg">-1.0%</td></tr><tr><td>Over 2.5 goals</td><td class="num">120</td>
+            <td class="num">57%</td><td class="num mut">56%</td>
+            <td class="num">+0.5</td><td class="num pos">+0.10</td><td class="num neg">-2.7%</td></tr><tr><td>Both teams to score</td><td class="num">122</td>
+            <td class="num">59%</td><td class="num mut">56%</td>
+            <td class="num">+3.2</td><td class="num pos">+0.59</td><td class="num pos">+0.4%</td></tr><tr><td>Home side scores 2+</td><td class="num">116</td>
+            <td class="num">45%</td><td class="num mut">48%</td>
+            <td class="num">-3.3</td><td class="num neg">-0.65</td><td class="num neg">-7.1%</td></tr><tr><td>Away side scores 2+</td><td class="num">115</td>
+            <td class="num">40%</td><td class="num mut">41%</td>
+            <td class="num">-0.6</td><td class="num neg">-0.12</td><td class="num neg">-2.9%</td></tr></table></div><div class="note"><b>By league.</b> A mispricing is far more likely to be structural — a thin market, a shaded favourite — than a property of one club, and a league pools dozens of teams, so this reads weeks before any team row can.</div><div class="tbl"><table><tr><th>League</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>MLS</td><td class="num">75</td>
             <td class="num">55%</td><td class="num mut">61%</td>
-            <td class="num">-4.7</td><td class="num neg">-1.17</td><td class="num neg">-11.7%</td></tr><tr><td>Premier League</td><td class="num">50</td>
+            <td class="num">-4.7</td><td class="num neg">-1.17</td><td class="num neg">-11.7%</td></tr><tr><td>La Liga</td><td class="num">56</td>
+            <td class="num">59%</td><td class="num mut">50%</td>
+            <td class="num">+4.7</td><td class="num pos">+1.36</td><td class="num pos">+10.1%</td></tr><tr><td>Premier League</td><td class="num">50</td>
             <td class="num">56%</td><td class="num mut">55%</td>
             <td class="num">+0.3</td><td class="num pos">+0.10</td><td class="num pos">+2.9%</td></tr><tr><td>Serie A</td><td class="num">45</td>
             <td class="num">71%</td><td class="num mut">50%</td>
-            <td class="num">+9.4</td><td class="num pos">+3.01</td><td class="num pos">+48.6%</td></tr><tr><td>La Liga</td><td class="num">41</td>
-            <td class="num">59%</td><td class="num mut">49%</td>
-            <td class="num">+3.7</td><td class="num pos">+1.24</td><td class="num pos">+9.7%</td></tr><tr><td>Belgian Pro League</td><td class="num">40</td>
+            <td class="num">+9.4</td><td class="num pos">+3.01</td><td class="num pos">+48.6%</td></tr><tr><td>Eredivisie</td><td class="num">41</td>
+            <td class="num">56%</td><td class="num mut">63%</td>
+            <td class="num">-2.9</td><td class="num neg">-1.00</td><td class="num neg">-19.5%</td></tr><tr><td>Belgian Pro League</td><td class="num">40</td>
             <td class="num">52%</td><td class="num mut">57%</td>
             <td class="num">-1.6</td><td class="num neg">-0.56</td><td class="num neg">-18.5%</td></tr><tr><td>Ligue 1</td><td class="num">40</td>
             <td class="num">35%</td><td class="num mut">55%</td>
-            <td class="num">-7.9</td><td class="num neg">-2.65</td><td class="num neg">-37.4%</td></tr><tr><td>Eredivisie</td><td class="num">38</td>
-            <td class="num">53%</td><td class="num mut">62%</td>
-            <td class="num">-3.6</td><td class="num neg">-1.31</td><td class="num neg">-24.0%</td></tr><tr><td>Greek Super League</td><td class="num">35</td>
+            <td class="num">-7.9</td><td class="num neg">-2.65</td><td class="num neg">-37.4%</td></tr><tr><td>Greek Super League</td><td class="num">35</td>
             <td class="num">37%</td><td class="num mut">49%</td>
             <td class="num">-4.1</td><td class="num neg">-1.47</td><td class="num neg">-35.6%</td></tr><tr><td>Primeira Liga</td><td class="num">35</td>
             <td class="num">71%</td><td class="num mut">51%</td>
@@ -675,44 +507,48 @@ kickoff count. 4 fixture(s) were picked by both.</div>
             <td class="num">87%</td><td class="num mut">56%</td>
             <td class="num">+4.6</td><td class="num pos">+2.50</td><td class="num pos">+52.4%</td></tr><tr><td>Danish Superliga</td><td class="num">15</td>
             <td class="num">53%</td><td class="num mut">58%</td>
-            <td class="num">-0.6</td><td class="num neg">-0.35</td><td class="num neg">-16.1%</td></tr></table></div><div class="note"><b>Calibration of the book.</b> Each band groups observations by the probability the book implied; a well-priced book hits at that rate in every band. Excess in a band is where the price is wrong for everyone, not for one team.</div><div class="tbl"><table><tr><th>Book fair prob</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>0–40%</td><td class="num">104</td>
+            <td class="num">-0.6</td><td class="num neg">-0.35</td><td class="num neg">-16.1%</td></tr><tr><td>Scottish Premiership</td><td class="num">9</td>
+            <td class="num">56%</td><td class="num mut">65%</td>
+            <td class="num">-0.9</td><td class="num neg">-0.62</td><td class="num neg">-14.5%</td></tr></table></div><div class="note"><b>Calibration of the book.</b> Each band groups observations by the probability the book implied; a well-priced book hits at that rate in every band. Excess in a band is where the price is wrong for everyone, not for one team.</div><div class="tbl"><table><tr><th>Book fair prob</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>0–40%</td><td class="num">107</td>
             <td class="num">40%</td><td class="num mut">30%</td>
-            <td class="num">+10.9</td><td class="num pos">+2.36</td><td class="num pos">+22.0%</td></tr><tr><td>40–50%</td><td class="num">90</td>
+            <td class="num">+11.1</td><td class="num pos">+2.39</td><td class="num pos">+22.4%</td></tr><tr><td>40–50%</td><td class="num">95</td>
             <td class="num">43%</td><td class="num mut">45%</td>
-            <td class="num">-1.8</td><td class="num neg">-0.39</td><td class="num neg">-9.2%</td></tr><tr><td>50–60%</td><td class="num">143</td>
-            <td class="num">50%</td><td class="num mut">55%</td>
-            <td class="num">-7.4</td><td class="num neg">-1.25</td><td class="num neg">-13.9%</td></tr><tr><td>60–70%</td><td class="num">103</td>
-            <td class="num">62%</td><td class="num mut">64%</td>
-            <td class="num">-2.3</td><td class="num neg">-0.48</td><td class="num neg">-8.5%</td></tr><tr><td>70–80%</td><td class="num">63</td>
-            <td class="num">78%</td><td class="num mut">75%</td>
-            <td class="num">+1.6</td><td class="num pos">+0.48</td><td class="num neg">-0.9%</td></tr><tr><td>80–90%</td><td class="num">46</td>
-            <td class="num">83%</td><td class="num mut">83%</td>
-            <td class="num">-0.1</td><td class="num neg">-0.04</td><td class="num neg">-4.9%</td></tr></table></div><div class="note"><b>Model v book, on every fixture</b> — the same test as the section above, on a sample nobody hand-picked.</div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr><tr><td>Over 1.5 goals</td><td class="num">96</td>
-        <td class="num">0.1642</td><td class="num">0.1685</td>
+            <td class="num">-2.1</td><td class="num neg">-0.44</td><td class="num neg">-9.6%</td></tr><tr><td>50–60%</td><td class="num">151</td>
+            <td class="num">51%</td><td class="num mut">55%</td>
+            <td class="num">-5.9</td><td class="num neg">-0.97</td><td class="num neg">-11.5%</td></tr><tr><td>60–70%</td><td class="num">105</td>
+            <td class="num">61%</td><td class="num mut">64%</td>
+            <td class="num">-3.7</td><td class="num neg">-0.75</td><td class="num neg">-10.3%</td></tr><tr><td>70–80%</td><td class="num">69</td>
+            <td class="num">80%</td><td class="num mut">75%</td>
+            <td class="num">+3.0</td><td class="num pos">+0.84</td><td class="num pos">+1.5%</td></tr><tr><td>80–90%</td><td class="num">48</td>
+            <td class="num">81%</td><td class="num mut">83%</td>
+            <td class="num">-0.8</td><td class="num neg">-0.32</td><td class="num neg">-6.6%</td></tr><tr><td>90–100%</td><td class="num">1</td>
+            <td class="num">100%</td><td class="num mut">92%</td>
+            <td class="num">+0.1</td><td class="num pos">+0.28</td><td class="num pos">+7.0%</td></tr></table></div><div class="note"><b>Model v book, on every fixture</b> — the same test as the section above, on a sample nobody hand-picked.</div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr><tr><td>Over 1.5 goals</td><td class="num">103</td>
+        <td class="num">0.1675</td><td class="num">0.1703</td>
         <td><span class="sig y">
-          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">112</td>
-        <td class="num">0.2452</td><td class="num">0.2447</td>
+          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">119</td>
+        <td class="num">0.2442</td><td class="num">0.2417</td>
         <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Both teams to score</td><td class="num">113</td>
-        <td class="num">0.2519</td><td class="num">0.2494</td>
+          book ahead</span></td></tr><tr><td>Both teams to score</td><td class="num">120</td>
+        <td class="num">0.2508</td><td class="num">0.2490</td>
         <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Home side scores 2+</td><td class="num">111</td>
-        <td class="num">0.2409</td><td class="num">0.2333</td>
+          book ahead</span></td></tr><tr><td>Home side scores 2+</td><td class="num">114</td>
+        <td class="num">0.2430</td><td class="num">0.2371</td>
         <td><span class="sig n">
-          book ahead</span></td></tr><tr><td>Away side scores 2+</td><td class="num">110</td>
-        <td class="num">0.2467</td><td class="num">0.2377</td>
+          book ahead</span></td></tr><tr><td>Away side scores 2+</td><td class="num">113</td>
+        <td class="num">0.2446</td><td class="num">0.2330</td>
         <td><span class="sig n">
-          book ahead</span></td></tr></table></div><div class="tbl"><table><tr><th>Model v book</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Value (model ≥ book + 5pp)</td><td class="num">166</td>
-            <td class="num">50%</td><td class="num mut">47%</td>
-            <td class="num">+5.3</td><td class="num pos">+0.88</td><td class="num neg">-0.1%</td></tr><tr><td>Rest</td><td class="num">376</td>
-            <td class="num">57%</td><td class="num mut">59%</td>
-            <td class="num">-4.6</td><td class="num neg">-0.50</td><td class="num neg">-4.0%</td></tr></table></div><div class="note"><b>Teams.</b> Pooled across every priced market in a team's games (its own 2+ counts for it alone). A team is tagged <b>PAYING</b> only past <b>20</b> observations with <b>z ≥ 2</b> — and with <b>230</b> teams tested, about 5 would reach that by chance, so read the tag as a shortlist, not a verdict.</div><div class="note">No team has reached the floor of 20 priced observations yet (230 teams tested so far).</div></details>
-<details class="ref"><summary>On fire — do long runs continue?</summary><div class="tiles"><div class="tile"><b>418</b><span>Graded</span></div><div class="tile"><b>81%</b><span>Extended</span></div><div class="tile"><b>187</b><span>Pending</span></div></div><div class="tbl"><table>
+          book ahead</span></td></tr></table></div><div class="tbl"><table><tr><th>Model v book</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Value (model ≥ book + 5pp)</td><td class="num">174</td>
+            <td class="num">49%</td><td class="num mut">47%</td>
+            <td class="num">+4.8</td><td class="num pos">+0.78</td><td class="num neg">-0.3%</td></tr><tr><td>Rest</td><td class="num">395</td>
+            <td class="num">58%</td><td class="num mut">59%</td>
+            <td class="num">-3.1</td><td class="num neg">-0.33</td><td class="num neg">-3.3%</td></tr></table></div><div class="note"><b>Teams.</b> Pooled across every priced market in a team's games (its own 2+ counts for it alone). A team is tagged <b>PAYING</b> only past <b>20</b> observations with <b>z ≥ 2</b> — and with <b>238</b> teams tested, about 5 would reach that by chance, so read the tag as a shortlist, not a verdict.</div><div class="note">No team has reached the floor of 20 priced observations yet (238 teams tested so far).</div></details>
+<details class="ref"><summary>On fire — do long runs continue?</summary><div class="tiles"><div class="tile"><b>426</b><span>Graded</span></div><div class="tile"><b>81%</b><span>Extended</span></div><div class="tile"><b>187</b><span>Pending</span></div></div><div class="tbl"><table>
 <tr><th>Streak</th><th class="num">n</th><th class="num">extended</th>
-    <th class="num">rate</th></tr><tr><td>scored in</td><td class="num">137</td>
-        <td class="num">116</td><td class="num">85%</td></tr><tr><td>over 1.5 goals</td><td class="num">125</td>
-        <td class="num">106</td><td class="num">85%</td></tr><tr><td>conceded in</td><td class="num">99</td>
-        <td class="num">80</td><td class="num">81%</td></tr><tr><td>both teams scored</td><td class="num">26</td>
+    <th class="num">rate</th></tr><tr><td>scored in</td><td class="num">141</td>
+        <td class="num">119</td><td class="num">84%</td></tr><tr><td>over 1.5 goals</td><td class="num">128</td>
+        <td class="num">109</td><td class="num">85%</td></tr><tr><td>conceded in</td><td class="num">100</td>
+        <td class="num">81</td><td class="num">81%</td></tr><tr><td>both teams scored</td><td class="num">26</td>
         <td class="num">17</td><td class="num">65%</td></tr><tr><td>over 2.5 goals</td><td class="num">23</td>
         <td class="num">12</td><td class="num">52%</td></tr><tr><td>scored 2+</td><td class="num">7</td>
         <td class="num">6</td><td class="num">86%</td></tr><tr><td>conceded 2+</td><td class="num">1</td>
@@ -722,43 +558,43 @@ kickoff count. 4 fixture(s) were picked by both.</div>
     <th class="num">p adj</th><th></th></tr><tr><td>scored in</td><td class="num">66</td>
         <td class="num">202/384</td>
         <td class="num neg">-27.2pp</td>
-        <td class="num mut">-38 to -19pp</td>
+        <td class="num mut">-37 to -19pp</td>
         <td class="num mut">1.00</td>
         <td><span class="sig n">
           no result</span></td></tr><tr><td>over 1.5 goals</td><td class="num">76</td>
         <td class="num">252/369</td>
         <td class="num neg">-18.4pp</td>
         <td class="num mut">-36 to -20pp</td>
-        <td class="num mut">0.15</td>
+        <td class="num mut">0.13</td>
         <td><span class="sig n">
           no result</span></td></tr><tr><td>conceded in</td><td class="num">65</td>
         <td class="num">192/358</td>
         <td class="num neg">-22.8pp</td>
-        <td class="num mut">-39 to -20pp</td>
-        <td class="num mut">1.00</td>
+        <td class="num mut">-40 to -21pp</td>
+        <td class="num mut">0.92</td>
         <td><span class="sig n">
           no result</span></td></tr><tr><td>both teams scored</td><td class="num">18</td>
         <td class="num">40/138</td>
         <td class="num neg">-26.0pp</td>
-        <td class="num mut">-55 to -12pp</td>
+        <td class="num mut">-57 to -15pp</td>
         <td class="num mut">1.00</td>
         <td><span class="sig n">
           no result</span></td></tr><tr><td>over 2.5 goals</td><td class="num">19</td>
         <td class="num">38/103</td>
         <td class="num neg">-33.7pp</td>
-        <td class="num mut">-58 to -16pp</td>
+        <td class="num mut">-58 to -15pp</td>
         <td class="num mut">1.00</td>
         <td><span class="sig n">
           no result</span></td></tr><tr><td>scored 2+</td><td class="num">10</td>
         <td class="num">26/60</td>
         <td class="num neg">-25.7pp</td>
-        <td class="num mut">-66 to -2pp</td>
+        <td class="num mut">-64 to -4pp</td>
         <td class="num mut">1.00</td>
         <td><span class="sig n">
           no result</span></td></tr><tr><td>conceded 2+</td><td class="num">3</td>
         <td class="num">5/20</td>
         <td class="num neg">-43.9pp</td>
-        <td class="num mut">-100 to +17pp</td>
+        <td class="num mut">-91 to +18pp</td>
         <td class="num mut">1.00</td>
         <td><span class="sig n">
           no result</span></td></tr></table></div></details>

@@ -659,6 +659,21 @@
    "team": "Aalesund",
    "test_date": "2026-09-19"
   },
+  "Ajax Amsterdam|over15|2026-09-19|Ajax Amsterdam|Excelsior": {
+   "home": true,
+   "id": "Ajax Amsterdam|over15|2026-09-19|Ajax Amsterdam|Excelsior",
+   "key": "over15",
+   "kickoff": "2026-09-19T18:00Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Excelsior",
+   "rate": 0.23367697594501718,
+   "status": "pending",
+   "team": "Ajax Amsterdam",
+   "test_date": "2026-09-19"
+  },
   "Ajax Amsterdam|scoring1|2026-08-30|Ajax Amsterdam|Telstar": {
    "graded_at": "2026-08-30T20:31:13+00:00",
    "home": false,
@@ -711,6 +726,7 @@
    "test_date": "2026-09-12"
   },
   "Ajax Amsterdam|scoring1|2026-09-15|Ajax Amsterdam|Willem II": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": true,
    "id": "Ajax Amsterdam|scoring1|2026-09-15|Ajax Amsterdam|Willem II",
    "key": "scoring1",
@@ -721,9 +737,25 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Willem II",
    "rate": 0.0958904109589041,
-   "status": "pending",
+   "result": "5-1",
+   "status": "extended",
    "team": "Ajax Amsterdam",
    "test_date": "2026-09-15"
+  },
+  "Ajax Amsterdam|scoring1|2026-09-19|Ajax Amsterdam|Excelsior": {
+   "home": true,
+   "id": "Ajax Amsterdam|scoring1|2026-09-19|Ajax Amsterdam|Excelsior",
+   "key": "scoring1",
+   "kickoff": "2026-09-19T18:00Z",
+   "label": "scored in",
+   "league": "Eredivisie",
+   "length": 12,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Excelsior",
+   "rate": 0.08247422680412371,
+   "status": "pending",
+   "team": "Ajax Amsterdam",
+   "test_date": "2026-09-19"
   },
   "Al Ahli|scoring1|2026-09-01|Al Ahli|Al Hilal": {
    "graded_at": "2026-09-02T04:46:11+00:00",
@@ -879,6 +911,7 @@
    "test_date": "2026-09-12"
   },
   "Alav\u00e9s|scoring1|2026-09-15|Alav\u00e9s|Valencia": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": true,
    "id": "Alav\u00e9s|scoring1|2026-09-15|Alav\u00e9s|Valencia",
    "key": "scoring1",
@@ -889,7 +922,8 @@
    "logged_at": "2026-09-12T12:41:45+00:00",
    "opp": "Valencia",
    "rate": 0.04452054794520548,
-   "status": "pending",
+   "result": "0-1",
+   "status": "broke",
    "team": "Alav\u00e9s",
    "test_date": "2026-09-15"
   },
@@ -3140,6 +3174,21 @@
    "team": "Eintracht Frankfurt",
    "test_date": "2026-09-19"
   },
+  "Elche|over15|2026-09-18|Elche|Espanyol": {
+   "home": false,
+   "id": "Elche|over15|2026-09-18|Elche|Espanyol",
+   "key": "over15",
+   "kickoff": "2026-09-18T19:00Z",
+   "label": "over 1.5 goals",
+   "league": "La Liga",
+   "length": 8,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Espanyol",
+   "rate": 0.23367697594501718,
+   "status": "pending",
+   "team": "Elche",
+   "test_date": "2026-09-18"
+  },
   "Espanyol|over15|2026-09-06|Espanyol|Sevilla": {
    "graded_at": "2026-09-07T02:56:04+00:00",
    "home": true,
@@ -3175,6 +3224,7 @@
    "test_date": "2026-09-12"
   },
   "Espanyol|over15|2026-09-15|Espanyol|Rayo Vallecano": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": false,
    "id": "Espanyol|over15|2026-09-15|Espanyol|Rayo Vallecano",
    "key": "over15",
@@ -3185,7 +3235,8 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Rayo Vallecano",
    "rate": 0.15753424657534246,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Espanyol",
    "test_date": "2026-09-15"
   },
@@ -3239,6 +3290,7 @@
    "test_date": "2026-09-12"
   },
   "Espanyol|scoring1|2026-09-15|Espanyol|Rayo Vallecano": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": false,
    "id": "Espanyol|scoring1|2026-09-15|Espanyol|Rayo Vallecano",
    "key": "scoring1",
@@ -3249,7 +3301,8 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Rayo Vallecano",
    "rate": 0.1267123287671233,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Espanyol",
    "test_date": "2026-09-15"
   },
@@ -4865,6 +4918,7 @@
    "test_date": "2026-09-06"
   },
   "Heart of Midlothian|over15|2026-09-15|Heart of Midlothian|Falkirk": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": false,
    "id": "Heart of Midlothian|over15|2026-09-15|Heart of Midlothian|Falkirk",
    "key": "over15",
@@ -4875,9 +4929,40 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "Falkirk",
    "rate": 0.12244897959183673,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Heart of Midlothian",
    "test_date": "2026-09-15"
+  },
+  "Heart of Midlothian|over15|2026-09-19|Heart of Midlothian|Kilmarnock": {
+   "home": false,
+   "id": "Heart of Midlothian|over15|2026-09-19|Heart of Midlothian|Kilmarnock",
+   "key": "over15",
+   "kickoff": "2026-09-19T16:45Z",
+   "label": "over 1.5 goals",
+   "league": "Scottish Premiership",
+   "length": 13,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Kilmarnock",
+   "rate": 0.0859106529209622,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-19"
+  },
+  "Heart of Midlothian|over25|2026-09-19|Heart of Midlothian|Kilmarnock": {
+   "home": false,
+   "id": "Heart of Midlothian|over25|2026-09-19|Heart of Midlothian|Kilmarnock",
+   "key": "over25",
+   "kickoff": "2026-09-19T16:45Z",
+   "label": "over 2.5 goals",
+   "league": "Scottish Premiership",
+   "length": 8,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Kilmarnock",
+   "rate": 0.024054982817869417,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-19"
   },
   "Heart of Midlothian|scoring1|2026-09-03|Heart of Midlothian|Hibernian": {
    "graded_at": "2026-09-03T21:07:04+00:00",
@@ -4914,6 +4999,7 @@
    "test_date": "2026-09-06"
   },
   "Heart of Midlothian|scoring1|2026-09-15|Heart of Midlothian|Falkirk": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": false,
    "id": "Heart of Midlothian|scoring1|2026-09-15|Heart of Midlothian|Falkirk",
    "key": "scoring1",
@@ -4924,9 +5010,25 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "Falkirk",
    "rate": 0.0782312925170068,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Heart of Midlothian",
    "test_date": "2026-09-15"
+  },
+  "Heart of Midlothian|scoring1|2026-09-19|Heart of Midlothian|Kilmarnock": {
+   "home": false,
+   "id": "Heart of Midlothian|scoring1|2026-09-19|Heart of Midlothian|Kilmarnock",
+   "key": "scoring1",
+   "kickoff": "2026-09-19T16:45Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 14,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Kilmarnock",
+   "rate": 0.058419243986254296,
+   "status": "pending",
+   "team": "Heart of Midlothian",
+   "test_date": "2026-09-19"
   },
   "Hibernian|porous|2026-09-03|Hibernian|Heart of Midlothian": {
    "graded_at": "2026-09-03T21:07:04+00:00",
@@ -4963,6 +5065,7 @@
    "test_date": "2026-09-06"
   },
   "Hibernian|porous|2026-09-15|Hibernian|Kilmarnock": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": true,
    "id": "Hibernian|porous|2026-09-15|Hibernian|Kilmarnock",
    "key": "porous",
@@ -4973,9 +5076,25 @@
    "logged_at": "2026-09-06T14:51:38+00:00",
    "opp": "Kilmarnock",
    "rate": 0.09183673469387756,
-   "status": "pending",
+   "result": "0-1",
+   "status": "extended",
    "team": "Hibernian",
    "test_date": "2026-09-15"
+  },
+  "Hibernian|porous|2026-09-19|Hibernian|Aberdeen": {
+   "home": true,
+   "id": "Hibernian|porous|2026-09-19|Hibernian|Aberdeen",
+   "key": "porous",
+   "kickoff": "2026-09-19T14:00Z",
+   "label": "conceded in",
+   "league": "Scottish Premiership",
+   "length": 12,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Aberdeen",
+   "rate": 0.058419243986254296,
+   "status": "pending",
+   "team": "Hibernian",
+   "test_date": "2026-09-19"
   },
   "Houston Dynamo FC|scoring1|2026-08-30|Houston Dynamo FC|San Jose Earthquakes": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -7823,6 +7942,7 @@
    "test_date": "2026-09-12"
   },
   "Rayo Vallecano|over15|2026-09-15|Rayo Vallecano|Espanyol": {
+   "graded_at": "2026-09-15T22:12:26+00:00",
    "home": true,
    "id": "Rayo Vallecano|over15|2026-09-15|Rayo Vallecano|Espanyol",
    "key": "over15",
@@ -7833,7 +7953,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Espanyol",
    "rate": 0.1232876712328767,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "Rayo Vallecano",
    "test_date": "2026-09-15"
   },
@@ -7848,6 +7969,21 @@
    "logged_at": "2026-09-15T17:17:09+00:00",
    "opp": "Osasuna",
    "rate": 0.09965635738831616,
+   "status": "pending",
+   "team": "Rayo Vallecano",
+   "test_date": "2026-09-19"
+  },
+  "Rayo Vallecano|porous|2026-09-19|Rayo Vallecano|Osasuna": {
+   "home": false,
+   "id": "Rayo Vallecano|porous|2026-09-19|Rayo Vallecano|Osasuna",
+   "key": "porous",
+   "kickoff": "2026-09-19T12:00Z",
+   "label": "conceded in",
+   "league": "La Liga",
+   "length": 8,
+   "logged_at": "2026-09-15T22:12:26+00:00",
+   "opp": "Osasuna",
+   "rate": 0.16151202749140894,
    "status": "pending",
    "team": "Rayo Vallecano",
    "test_date": "2026-09-19"
@@ -10008,5 +10144,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-15T21:49:29+00:00"
+ "updated_at": "2026-09-15T22:12:26+00:00"
 }

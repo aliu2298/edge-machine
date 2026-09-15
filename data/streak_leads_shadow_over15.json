@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-15T21:49:29+00:00",
+ "board_built_at": "2026-09-15T22:12:22+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
    "a": "Internazionale",
@@ -333,7 +333,9 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "5-1",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-15T22:12:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "Ajax Amsterdam",
    "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
@@ -348,6 +350,20 @@
     "over25": 0.6882
    },
    "modelled_at": "2026-09-14T02:53:25+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.732
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.07
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.233
+    }
+   },
    "priced_at": "2026-09-14T02:53:25+00:00",
    "prices": {
     "btts": {
@@ -378,7 +394,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 11
   },
   "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals": {
@@ -395,7 +411,9 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-15T22:12:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
@@ -410,6 +428,20 @@
     "over25": 0.6179
    },
    "modelled_at": "2026-09-14T02:53:25+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.621
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.262
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.762
+    }
+   },
    "priced_at": "2026-09-14T02:53:25+00:00",
    "prices": {
     "btts": {
@@ -440,7 +472,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals": {
@@ -457,7 +489,9 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-15T22:12:23+00:00",
    "headline": "Over 1.5 goals",
    "home": "Rayo Vallecano",
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
@@ -472,6 +506,20 @@
     "over25": 0.4803
    },
    "modelled_at": "2026-09-14T02:53:25+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.762
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.331
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.98
+    }
+   },
    "priced_at": "2026-09-14T02:53:25+00:00",
    "prices": {
     "btts": {
@@ -504,7 +552,7 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-16|AC Milan|Benfica|Over 1.5 goals": {
@@ -527,7 +575,7 @@
    "id": "2026-09-16|AC Milan|Benfica|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:05+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "Europa League",
    "match": "AC Milan v Benfica",
    "model": {
@@ -568,8 +616,7 @@
     }
    },
    "status": "pending",
-   "strength": 12,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 12
   },
   "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals": {
    "a": "Barcelona",
@@ -591,7 +638,7 @@
    "id": "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals",
    "kickoff": "2026-09-16T19:30Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:05+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "La Liga",
    "match": "Barcelona v Racing Santander",
    "model": {
@@ -631,8 +678,7 @@
     }
    },
    "status": "pending",
-   "strength": 9,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 9
   },
   "2026-09-16|Deportivo|Sevilla|Over 1.5 goals": {
    "a": "Deportivo",
@@ -654,7 +700,7 @@
    "id": "2026-09-16|Deportivo|Sevilla|Over 1.5 goals",
    "kickoff": "2026-09-16T17:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:05+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "La Liga",
    "match": "Deportivo v Sevilla",
    "model": {
@@ -696,8 +742,7 @@
     }
    },
    "status": "pending",
-   "strength": 11,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 11
   },
   "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals": {
    "a": "SK Sturm Graz",
@@ -719,7 +764,7 @@
    "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:05+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "Europa League",
    "match": "SK Sturm Graz v Stade Rennais",
    "model": {
@@ -760,8 +805,69 @@
     }
    },
    "status": "pending",
-   "strength": 12,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 12
+  },
+  "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals": {
+   "a": "Juventus",
+   "a_key": "over15",
+   "a_run": 3,
+   "away": "NEC Nijmegen",
+   "b": "NEC Nijmegen",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.525679758308157,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-17",
+   "first_seen": "2026-09-15",
+   "headline": "Over 1.5 goals",
+   "home": "Juventus",
+   "id": "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals",
+   "kickoff": "2026-09-17T19:00Z",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
+   "league": "Europa League",
+   "match": "Juventus v NEC Nijmegen",
+   "model": {
+    "btts": 0.538,
+    "over15": 0.7629,
+    "over25": 0.5222
+   },
+   "modelled_at": "2026-09-15T22:12:22+00:00",
+   "priced_at": "2026-09-15T22:12:22+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.49,
+     "bid": 0.47,
+     "fair": 0.48,
+     "fee": 0.0175,
+     "market": "KXUELBTTS-26SEP17JUVNIJ-BTTS",
+     "price": 1.97,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.86,
+     "bid": 0.85,
+     "fair": 0.855,
+     "fee": 0.0085,
+     "market": "KXUELTOTAL-26SEP17JUVNIJ-2",
+     "price": 1.151,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.66,
+     "bid": 0.65,
+     "fair": 0.655,
+     "fee": 0.0158,
+     "market": "KXUELTOTAL-26SEP17JUVNIJ-3",
+     "price": 1.48,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 9
   },
   "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals": {
    "a": "OFI Crete",
@@ -783,7 +889,7 @@
    "id": "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals",
    "kickoff": "2026-09-17T16:45Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:05+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "Europa League",
    "match": "OFI Crete v TSG Hoffenheim",
    "model": {
@@ -823,9 +929,8 @@
     }
    },
    "status": "pending",
-   "strength": 10,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 10
   }
  },
- "updated_at": "2026-09-15T21:49:29+00:00"
+ "updated_at": "2026-09-15T22:12:23+00:00"
 }

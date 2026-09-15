@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-15T21:49:29+00:00",
+ "board_built_at": "2026-09-15T22:12:22+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -7055,7 +7055,9 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "5-1",
    "first_seen": "2026-09-11",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Over 1.5 goals",
    "home": "Ajax Amsterdam",
    "id": "2026-09-15|Ajax Amsterdam|Willem II|Over 1.5 goals",
@@ -7070,6 +7072,20 @@
     "over25": 0.6882
    },
    "modelled_at": "2026-09-13T20:33:11+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.703
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.07
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.233
+    }
+   },
    "priced_at": "2026-09-13T20:33:11+00:00",
    "prices": {
     "btts": {
@@ -7100,7 +7116,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 11,
    "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
@@ -7118,14 +7134,16 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "2-3",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Over 1.5 goals",
    "home": "Elche",
    "id": "2026-09-15|Elche|Real Madrid|Over 1.5 goals",
    "kickoff": "2026-09-15T19:30Z",
    "league": "La Liga",
    "match": "Elche v Real Madrid",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7145,14 +7163,16 @@
     "team": "Real Madrid"
    },
    "date": "2026-09-15",
+   "final": "2-3",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Real Madrid to score",
    "home": "Elche",
    "id": "2026-09-15|Elche|Real Madrid|Real Madrid to score",
    "kickoff": "2026-09-15T19:30Z",
    "league": "La Liga",
    "match": "Elche v Real Madrid",
-   "status": "pending",
+   "status": "hit",
    "strength": 7,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7172,14 +7192,16 @@
     "team": "Heart of Midlothian"
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-05",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Heart of Midlothian to score",
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score",
    "kickoff": "2026-09-15T18:45Z",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
-   "status": "pending",
+   "status": "hit",
    "strength": 6,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7199,7 +7221,9 @@
     "team": "Heart of Midlothian"
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Heart of Midlothian to score 2+",
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
@@ -7208,7 +7232,7 @@
    "last_seen_at": "2026-09-15T17:17:04+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
-   "status": "pending",
+   "status": "miss",
    "strength": 7
   },
   "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals": {
@@ -7225,7 +7249,9 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-05",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Over 1.5 goals",
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 1.5 goals",
@@ -7240,6 +7266,20 @@
     "over25": 0.6178
    },
    "modelled_at": "2026-09-13T20:33:11+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.596
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.262
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.762
+    }
+   },
    "priced_at": "2026-09-13T20:33:11+00:00",
    "prices": {
     "btts": {
@@ -7270,7 +7310,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
@@ -7288,14 +7328,16 @@
     "n": 3
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Over 2.5 goals",
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Over 2.5 goals",
    "kickoff": "2026-09-15T18:45Z",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
-   "status": "pending",
+   "status": "hit",
    "strength": 6,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7313,14 +7355,16 @@
     "n": 3
    },
    "date": "2026-09-15",
+   "final": "0-1",
    "first_seen": "2026-09-02",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Over 2.5 goals",
    "home": "Hibernian",
    "id": "2026-09-15|Hibernian|Kilmarnock|Over 2.5 goals",
    "kickoff": "2026-09-15T18:45Z",
    "league": "Scottish Premiership",
    "match": "Hibernian v Kilmarnock",
-   "status": "pending",
+   "status": "miss",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7338,7 +7382,9 @@
     "n": 2
    },
    "date": "2026-09-15",
+   "final": "2-1",
    "first_seen": "2026-09-01",
+   "graded_at": "2026-09-15T22:12:22+00:00",
    "headline": "Over 1.5 goals",
    "home": "Rayo Vallecano",
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
@@ -7353,6 +7399,20 @@
     "over25": 0.469
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.781
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.385
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.98
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -7369,7 +7429,7 @@
     }
    },
    "rule": "v2",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-16|AC Milan|Benfica|Over 1.5 goals": {
@@ -7493,7 +7553,7 @@
    "id": "2026-09-16|Barcelona|Racing Santander|Barcelona to score 2+",
    "kickoff": "2026-09-16T19:30Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:04+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "La Liga",
    "match": "Barcelona v Racing Santander",
    "model": {
@@ -7543,8 +7603,7 @@
     }
    },
    "status": "pending",
-   "strength": 11,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 11
   },
   "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals": {
    "a": "Barcelona",
@@ -7663,7 +7722,7 @@
    "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:04+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "Europa League",
    "match": "SK Sturm Graz v Stade Rennais",
    "model": {
@@ -7689,8 +7748,7 @@
    },
    "rule": "v2",
    "status": "pending",
-   "strength": 12,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 12
   },
   "2026-09-16|SK Sturm Graz|Stade Rennais|Over 2.5 goals": {
    "a": "Stade Rennais",
@@ -7810,7 +7868,8 @@
    "home": "Besiktas",
    "id": "2026-09-17|Besiktas|Marseille|Besiktas to score 2+",
    "kickoff": "2026-09-17T19:00Z",
-   "last_seen": "2026-09-13",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "Europa League",
    "match": "Besiktas v Marseille",
    "model": {
@@ -7840,8 +7899,7 @@
     }
    },
    "status": "pending",
-   "strength": 6,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 6
   },
   "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals": {
    "a": "Juventus",
@@ -7910,7 +7968,7 @@
    "id": "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals",
    "kickoff": "2026-09-17T16:45Z",
    "last_seen": "2026-09-15",
-   "last_seen_at": "2026-09-15T17:17:04+00:00",
+   "last_seen_at": "2026-09-15T22:12:22+00:00",
    "league": "Europa League",
    "match": "OFI Crete v TSG Hoffenheim",
    "model": {
@@ -7936,8 +7994,7 @@
    },
    "rule": "v2",
    "status": "pending",
-   "strength": 11,
-   "withdrawn_at": "2026-09-15T21:49:29+00:00"
+   "strength": 11
   },
   "2026-09-17|OFI Crete|TSG Hoffenheim|Over 2.5 goals": {
    "a": "TSG Hoffenheim",
@@ -10973,5 +11030,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-15T21:49:29+00:00"
+ "updated_at": "2026-09-15T22:12:22+00:00"
 }
