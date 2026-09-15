@@ -5830,6 +5830,8 @@
   "2026-09-14|Braga|Estoril": {
    "away": "Estoril",
    "date": "2026-09-14",
+   "final": "1-0",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": "Braga",
    "id": "2026-09-14|Braga|Estoril",
    "kickoff": "2026-09-14T19:45Z",
@@ -5839,6 +5841,11 @@
     "btts": 0.493,
     "over15": 0.729,
     "over25": 0.4769
+   },
+   "pnl": {
+    "btts": -1.0,
+    "over15": -1.0,
+    "over25": -1.0
    },
    "priced_at": "2026-09-13T20:33:13+00:00",
    "prices": {
@@ -5870,7 +5877,12 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending"
+   "result": {
+    "btts": false,
+    "over15": false,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-14|Como|Parma": {
    "away": "Parma",
@@ -5958,6 +5970,8 @@
   "2026-09-14|Internazionale|Udinese": {
    "away": "Udinese",
    "date": "2026-09-14",
+   "final": "5-3",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": "Internazionale",
    "id": "2026-09-14|Internazionale|Udinese",
    "kickoff": "2026-09-14T18:45Z",
@@ -5969,6 +5983,13 @@
     "home2plus": 0.4287,
     "over15": 0.7431,
     "over25": 0.4953
+   },
+   "pnl": {
+    "away2plus": 4.559,
+    "btts": 1.01,
+    "home2plus": 0.31,
+    "over15": 0.179,
+    "over25": 0.529
    },
    "priced_at": "2026-09-13T20:33:13+00:00",
    "prices": {
@@ -6020,11 +6041,20 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-14|Leeds United|Newcastle United": {
    "away": "Newcastle United",
    "date": "2026-09-14",
+   "final": "4-1",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": "Leeds United",
    "id": "2026-09-14|Leeds United|Newcastle United",
    "kickoff": "2026-09-14T19:00Z",
@@ -6036,6 +6066,13 @@
     "home2plus": 0.5045,
     "over15": 0.7689,
     "over25": 0.5304
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.647,
+    "home2plus": 1.139,
+    "over15": 0.265,
+    "over25": 0.802
    },
    "priced_at": "2026-09-13T20:33:13+00:00",
    "prices": {
@@ -6087,7 +6124,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-14|Rio Ave|Estrela": {
    "away": "Estrela",
@@ -6288,6 +6332,8 @@
   "2026-09-14|Villarreal|Real Betis": {
    "away": "Real Betis",
    "date": "2026-09-14",
+   "final": "1-2",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": "Villarreal",
    "id": "2026-09-14|Villarreal|Real Betis",
    "kickoff": "2026-09-14T19:00Z",
@@ -6299,6 +6345,13 @@
     "home2plus": 0.5288,
     "over15": 0.816,
     "over25": 0.5999
+   },
+   "pnl": {
+    "away2plus": 1.459,
+    "btts": 0.524,
+    "home2plus": -1.0,
+    "over15": 0.193,
+    "over25": 0.577
    },
    "priced_at": "2026-09-13T20:33:13+00:00",
    "prices": {
@@ -6350,7 +6403,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-15|Ajax Amsterdam|Willem II": {
    "away": "Willem II",
@@ -6732,5 +6792,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-14T19:58:19+00:00"
+ "updated_at": "2026-09-15T00:00:29+00:00"
 }

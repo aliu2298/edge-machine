@@ -2217,6 +2217,7 @@
    "test_date": "2026-09-10"
   },
   "Braga|scoring1|2026-09-14|Braga|Estoril": {
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": true,
    "id": "Braga|scoring1|2026-09-14|Braga|Estoril",
    "key": "scoring1",
@@ -2227,7 +2228,8 @@
    "logged_at": "2026-09-10T20:56:22+00:00",
    "opp": "Estoril",
    "rate": 0.017006802721088437,
-   "status": "pending",
+   "result": "1-0",
+   "status": "extended",
    "team": "Braga",
    "test_date": "2026-09-14"
   },
@@ -5173,6 +5175,7 @@
    "test_date": "2026-09-08"
   },
   "Internazionale|scoring1|2026-09-14|Internazionale|Udinese": {
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": true,
    "id": "Internazionale|scoring1|2026-09-14|Internazionale|Udinese",
    "key": "scoring1",
@@ -5183,7 +5186,8 @@
    "logged_at": "2026-09-08T21:14:49+00:00",
    "opp": "Udinese",
    "rate": 0.01020408163265306,
-   "status": "pending",
+   "result": "5-3",
+   "status": "extended",
    "team": "Internazionale",
    "test_date": "2026-09-14"
   },
@@ -5448,6 +5452,7 @@
    "test_date": "2026-09-08"
   },
   "Leeds United|scoring1|2026-09-14|Leeds United|Newcastle United": {
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": true,
    "id": "Leeds United|scoring1|2026-09-14|Leeds United|Newcastle United",
    "key": "scoring1",
@@ -5458,7 +5463,8 @@
    "logged_at": "2026-09-05T20:27:59+00:00",
    "opp": "Newcastle United",
    "rate": 0.18229166666666666,
-   "status": "pending",
+   "result": "4-1",
+   "status": "extended",
    "team": "Leeds United",
    "test_date": "2026-09-14"
   },
@@ -6447,6 +6453,7 @@
    "test_date": "2026-09-05"
   },
   "Newcastle United|over15|2026-09-14|Newcastle United|Leeds United": {
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": false,
    "id": "Newcastle United|over15|2026-09-14|Newcastle United|Leeds United",
    "key": "over15",
@@ -6457,7 +6464,8 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Leeds United",
    "rate": 0.09375,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "Newcastle United",
    "test_date": "2026-09-14"
   },
@@ -6494,6 +6502,7 @@
    "test_date": "2026-09-05"
   },
   "Newcastle United|scoring1|2026-09-14|Newcastle United|Leeds United": {
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": false,
    "id": "Newcastle United|scoring1|2026-09-14|Newcastle United|Leeds United",
    "key": "scoring1",
@@ -6504,7 +6513,8 @@
    "logged_at": "2026-09-05T15:19:06+00:00",
    "opp": "Leeds United",
    "rate": 0.1875,
-   "status": "pending",
+   "result": "1-4",
+   "status": "extended",
    "team": "Newcastle United",
    "test_date": "2026-09-14"
   },
@@ -9695,6 +9705,7 @@
    "test_date": "2026-09-08"
   },
   "Villarreal|porous|2026-09-14|Villarreal|Real Betis": {
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "home": true,
    "id": "Villarreal|porous|2026-09-14|Villarreal|Real Betis",
    "key": "porous",
@@ -9705,7 +9716,8 @@
    "logged_at": "2026-09-08T21:14:49+00:00",
    "opp": "Real Betis",
    "rate": 0.01020408163265306,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Villarreal",
    "test_date": "2026-09-14"
   },
@@ -9951,5 +9963,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-14T19:58:19+00:00"
+ "updated_at": "2026-09-15T00:00:29+00:00"
 }

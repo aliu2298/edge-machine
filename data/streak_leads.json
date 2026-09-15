@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-14T19:58:12+00:00",
+ "board_built_at": "2026-09-15T00:00:27+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -6586,7 +6586,9 @@
     "n": 2
    },
    "date": "2026-09-14",
+   "final": "5-3",
    "first_seen": "2026-09-07",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "headline": "Over 1.5 goals",
    "home": "Internazionale",
    "id": "2026-09-14|Internazionale|Udinese|Over 1.5 goals",
@@ -6601,6 +6603,20 @@
     "over25": 0.4957
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.167
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.526
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6616,7 +6632,7 @@
      "price": 1.526
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
@@ -6634,7 +6650,9 @@
     "n": 2
    },
    "date": "2026-09-14",
+   "final": "4-1",
    "first_seen": "2026-09-09",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "headline": "Over 1.5 goals",
    "home": "Leeds United",
    "id": "2026-09-14|Leeds United|Newcastle United|Over 1.5 goals",
@@ -6649,6 +6667,20 @@
     "over25": 0.5367
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.613
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.256
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.8
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -6664,7 +6696,7 @@
      "price": 1.8
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12,
    "withdrawn_at": "2026-09-14T02:53:23+00:00"
   },
@@ -6682,14 +6714,16 @@
     "n": 3
    },
    "date": "2026-09-14",
+   "final": "4-1",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-15T00:00:29+00:00",
    "headline": "Over 2.5 goals",
    "home": "Leeds United",
    "id": "2026-09-14|Leeds United|Newcastle United|Over 2.5 goals",
    "kickoff": "2026-09-14T19:00Z",
    "league": "Premier League",
    "match": "Leeds United v Newcastle United",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -7169,8 +7203,8 @@
    "home": "Falkirk",
    "id": "2026-09-15|Falkirk|Heart of Midlothian|Heart of Midlothian to score 2+",
    "kickoff": "2026-09-15T18:45Z",
-   "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T19:58:12+00:00",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T00:00:27+00:00",
    "league": "Scottish Premiership",
    "match": "Falkirk v Heart of Midlothian",
    "status": "pending",
@@ -7308,8 +7342,8 @@
    "home": "Rayo Vallecano",
    "id": "2026-09-15|Rayo Vallecano|Espanyol|Over 1.5 goals",
    "kickoff": "2026-09-15T17:00Z",
-   "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T19:58:12+00:00",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T00:00:27+00:00",
    "league": "La Liga",
    "match": "Rayo Vallecano v Espanyol",
    "model": {
@@ -7456,10 +7490,56 @@
    "home": "Barcelona",
    "id": "2026-09-16|Barcelona|Racing Santander|Barcelona to score 2+",
    "kickoff": "2026-09-16T19:30Z",
-   "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T19:58:12+00:00",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T00:00:27+00:00",
    "league": "La Liga",
    "match": "Barcelona v Racing Santander",
+   "model": {
+    "btts": 0.5926,
+    "over15": 0.8531,
+    "over25": 0.6602,
+    "team2plus": 0.6763
+   },
+   "modelled_at": "2026-09-15T00:00:27+00:00",
+   "priced_at": "2026-09-15T00:00:27+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.53,
+     "bid": 0.52,
+     "fair": 0.525,
+     "fee": 0.0175,
+     "market": "KXLALIGABTTS-26SEP16BARSAN-BTTS",
+     "price": 1.826,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.96,
+     "bid": 0.95,
+     "fair": 0.955,
+     "fee": 0.0027,
+     "market": "KXLALIGATOTAL-26SEP16BARSAN-2",
+     "price": 1.039,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.87,
+     "bid": 0.86,
+     "fair": 0.865,
+     "fee": 0.008,
+     "market": "KXLALIGATOTAL-26SEP16BARSAN-3",
+     "price": 1.139,
+     "venue": "kalshi"
+    },
+    "team2plus": {
+     "ask": 0.93,
+     "bid": 0.91,
+     "fair": 0.92,
+     "fee": 0.0046,
+     "market": "KXLALIGATEAMTOTAL-26SEP16BARSAN-BAR2",
+     "price": 1.07,
+     "venue": "kalshi"
+    }
+   },
    "status": "pending",
    "strength": 11
   },
@@ -7579,8 +7659,8 @@
    "home": "SK Sturm Graz",
    "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
    "kickoff": "2026-09-16T19:00Z",
-   "last_seen": "2026-09-14",
-   "last_seen_at": "2026-09-14T19:58:12+00:00",
+   "last_seen": "2026-09-15",
+   "last_seen_at": "2026-09-15T00:00:27+00:00",
    "league": "Europa League",
    "match": "SK Sturm Graz v Stade Rennais",
    "model": {
@@ -10886,5 +10966,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-14T19:58:15+00:00"
+ "updated_at": "2026-09-15T00:00:29+00:00"
 }
