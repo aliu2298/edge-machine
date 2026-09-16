@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-15T22:12:23+00:00",
+ "built_at": "2026-09-16T05:18:17+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -1867,7 +1867,7 @@
    "team": "Celta Vigo",
    "no_run": false,
    "league": "La Liga",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "under25",
@@ -2407,107 +2407,6 @@
    "thin": false,
    "friendlies": 0,
    "book": null
-  },
-  {
-   "team": "Panathinaikos",
-   "no_run": false,
-   "league": "Europa League",
-   "played": 12,
-   "runs": [
-    {
-     "key": "scoring",
-     "label": "scored 2+",
-     "n": 5,
-     "rate": 0.021148036253776436
-    },
-    {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 3,
-     "rate": 0.21450151057401812
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 5,
-     "rate": 0.29003021148036257
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 5,
-     "rate": 0.3806646525679758
-    }
-   ],
-   "best_rate": 0.021148036253776436,
-   "longest": 5,
-   "next": {
-    "opp": "Kalamata",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T16:30Z",
-    "league": "Greek Super League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "3-0",
-     "opp": "Panetolikos",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Greek Super League"
-    },
-    {
-     "s": "3-1",
-     "opp": "Kifisia",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Greek Super League"
-    },
-    {
-     "s": "3-1",
-     "opp": "PAOK",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Greek Super League"
-    },
-    {
-     "s": "2-0",
-     "opp": "Levadiakos",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Greek Super League"
-    },
-    {
-     "s": "2-2",
-     "opp": "PAOK",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Greek Super League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Olympiacos",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Greek Super League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0,
-   "book": {
-    "n": 4,
-    "rate": 0.75,
-    "fair": 0.5898,
-    "z": 0.6754617727095471,
-    "roi": 0.1315,
-    "paying": false
-   }
   },
   {
    "team": "Chelsea",
@@ -3549,7 +3448,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 0.0,
+    "fair": 0.6849999999999999,
+    "z": -2.6316432714303146,
+    "roi": -1.0,
+    "paying": false
+   }
   },
   {
    "team": "Red Bull New York",
@@ -4731,11 +4637,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 3,
-    "rate": 0.6666666666666666,
-    "fair": 0.47173333333333334,
-    "z": 0.7591672883465683,
-    "roi": 0.057666666666666665,
+    "n": 7,
+    "rate": 0.8571428571428571,
+    "fair": 0.5171714285714286,
+    "z": 1.9231912017862467,
+    "roi": 0.48442857142857143,
     "paying": false
    }
   },
@@ -6148,7 +6054,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 1.0,
+    "fair": 0.635,
+    "z": 1.346704555345161,
+    "roi": 0.5613333333333334,
+    "paying": false
+   }
   },
   {
    "team": "NEC Nijmegen",
@@ -7168,11 +7081,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
+    "n": 7,
     "rate": 1.0,
-    "fair": 0.718275,
-    "z": 1.2774151142942731,
-    "roi": 0.34175,
+    "fair": 0.7311571428571428,
+    "z": 1.676561272866676,
+    "roi": 0.3565714285714286,
     "paying": false
    }
   },
@@ -7780,11 +7693,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 3,
+    "n": 7,
     "rate": 1.0,
-    "fair": 0.6856,
-    "z": 1.2268198851417835,
-    "roi": 0.4423333333333333,
+    "fair": 0.7209714285714286,
+    "z": 1.720644259165563,
+    "roi": 0.3854285714285714,
     "paying": false
    }
   },
@@ -7892,7 +7805,7 @@
    "team": "Besiktas",
    "no_run": false,
    "league": "Europa League",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring",
@@ -9091,11 +9004,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
-    "rate": 0.5,
-    "fair": 0.4953,
-    "z": 0.02044196246659485,
-    "roi": -0.2185,
+    "n": 8,
+    "rate": 0.75,
+    "fair": 0.549525,
+    "z": 1.2874016735592793,
+    "roi": 0.423625,
     "paying": false
    }
   },
@@ -9191,7 +9104,7 @@
    "team": "VfB Stuttgart",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "btts",
@@ -9487,7 +9400,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 1.0,
+    "fair": 0.635,
+    "z": 1.346704555345161,
+    "roi": 0.5613333333333334,
+    "paying": false
+   }
   },
   {
    "team": "Sporting Kansas City",
@@ -11557,11 +11477,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
-    "rate": 0.5,
-    "fair": 0.447675,
-    "z": 0.21848943214191752,
-    "roi": 0.18375,
+    "n": 8,
+    "rate": 0.625,
+    "fair": 0.4863375,
+    "z": 0.8200739295156293,
+    "roi": 0.22075,
     "paying": false
    }
   },
@@ -11824,7 +11744,7 @@
    "team": "Lille",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 16,
+   "played": 15,
    "runs": [
     {
      "key": "scoring1",
@@ -12403,7 +12323,7 @@
    "team": "Real Betis",
    "no_run": false,
    "league": "La Liga",
-   "played": 22,
+   "played": 21,
    "runs": [
     {
      "key": "scoring1",
@@ -13441,7 +13361,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 0.0,
+    "fair": 0.6849999999999999,
+    "z": -2.6316432714303146,
+    "roi": -1.0,
+    "paying": false
+   }
   },
   {
    "team": "Lens",
@@ -13930,7 +13857,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 1.0,
+    "fair": 0.7483333333333334,
+    "z": 1.087795753068753,
+    "roi": 0.37633333333333335,
+    "paying": false
+   }
   },
   {
    "team": "Wolverhampton Wanderers",
@@ -14489,7 +14423,7 @@
    "team": "FC Porto",
    "no_run": false,
    "league": "Primeira Liga",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "over15",
@@ -15010,7 +14944,7 @@
    "team": "SC Freiburg",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "scoring1",
@@ -15546,11 +15480,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
-    "rate": 0.75,
-    "fair": 0.5783,
-    "z": 0.7177055184773543,
-    "roi": 0.1665,
+    "n": 8,
+    "rate": 0.375,
+    "fair": 0.5428999999999999,
+    "z": -0.9824339599422518,
+    "roi": -0.41675,
     "paying": false
    }
   },
@@ -16571,7 +16505,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 0.6666666666666666,
+    "fair": 0.635,
+    "z": 0.11683738151396371,
+    "roi": 0.0030000000000000027,
+    "paying": false
+   }
   },
   {
    "team": "Abha",
@@ -17610,7 +17551,7 @@
    "team": "Aston Villa",
    "no_run": true,
    "league": "Premier League",
-   "played": 22,
+   "played": 21,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19262,7 +19203,7 @@
    "team": "Lyon",
    "no_run": true,
    "league": "Ligue 1",
-   "played": 13,
+   "played": 12,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19616,7 +19557,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 3,
+    "rate": 0.6666666666666666,
+    "fair": 0.635,
+    "z": 0.11683738151396371,
+    "roi": 0.0030000000000000027,
+    "paying": false
+   }
   },
   {
    "team": "M\u00e1laga",
@@ -20214,82 +20162,6 @@
    }
   },
   {
-   "team": "Racing Genk",
-   "no_run": true,
-   "league": "Europa League",
-   "played": 18,
-   "runs": [],
-   "best_rate": 1.0,
-   "longest": 0,
-   "next": {
-    "opp": "Club Brugge",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T16:30Z",
-    "league": "Belgian Pro League",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-1",
-     "opp": "KAA Gent",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Belgian Pro League"
-    },
-    {
-     "s": "0-0",
-     "opp": "Anderlecht",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Belgian Pro League"
-    },
-    {
-     "s": "4-0",
-     "opp": "Waasland-Beveren",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Belgian Pro League"
-    },
-    {
-     "s": "4-4",
-     "opp": "Antwerp",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Belgian Pro League"
-    },
-    {
-     "s": "3-2",
-     "opp": "KVC Westerlo",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Belgian Pro League"
-    },
-    {
-     "s": "1-2",
-     "opp": "Zulte-Waregem",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Belgian Pro League"
-    }
-   ],
-   "thin": false,
-   "friendlies": 0,
-   "book": {
-    "n": 4,
-    "rate": 0.5,
-    "fair": 0.583475,
-    "z": -0.3469069789313214,
-    "roi": -0.27075,
-    "paying": false
-   }
-  },
-  {
    "team": "Real Sociedad",
    "no_run": true,
    "league": "La Liga",
@@ -20714,7 +20586,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 4,
+    "rate": 0.0,
+    "fair": 0.44625,
+    "z": -1.914794120444896,
+    "roi": -1.0,
+    "paying": false
+   }
   },
   {
    "team": "Vit\u00f3ria de Guimaraes",
@@ -20866,28 +20745,28 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 21,
-     "rate": 0.003436426116838488
+     "rate": 0.0034602076124567475
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.003436426116838488,
+   "best_rate": 0.0034602076124567475,
    "longest": 21,
    "next": {
     "opp": "San Diego FC",
@@ -21077,28 +20956,28 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 21,
-     "rate": 0.003436426116838488
+     "rate": 0.0034602076124567475
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 12,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 12,
-     "rate": 0.08247422680412371
+     "rate": 0.08304498269896193
     }
    ],
-   "best_rate": 0.003436426116838488,
+   "best_rate": 0.0034602076124567475,
    "longest": 21,
    "next": {
     "opp": "Atlanta United FC",
@@ -21288,16 +21167,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 20,
-     "rate": 0.003436426116838488
+     "rate": 0.0034602076124567475
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 20,
-     "rate": 0.010309278350515464
+     "rate": 0.010380622837370242
     }
    ],
-   "best_rate": 0.003436426116838488,
+   "best_rate": 0.0034602076124567475,
    "longest": 20,
    "next": {
     "opp": "Philadelphia Union",
@@ -21479,28 +21358,28 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 20,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 17,
-     "rate": 0.024054982817869417
+     "rate": 0.02422145328719723
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 11,
-     "rate": 0.010309278350515464
+     "rate": 0.010380622837370242
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.07903780068728522
+     "rate": 0.07958477508650519
     }
    ],
-   "best_rate": 0.006872852233676976,
+   "best_rate": 0.006920415224913495,
    "longest": 20,
    "next": {
     "opp": "Nashville SC",
@@ -21682,16 +21561,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 20,
-     "rate": 0.010309278350515464
+     "rate": 0.010380622837370242
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     }
    ],
-   "best_rate": 0.010309278350515464,
+   "best_rate": 0.010380622837370242,
    "longest": 20,
    "next": {
     "opp": "Houston Dynamo FC",
@@ -21873,10 +21752,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 18,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     }
    ],
-   "best_rate": 0.006872852233676976,
+   "best_rate": 0.006920415224913495,
    "longest": 18,
    "next": {
     "opp": "M\u00e1laga",
@@ -22042,10 +21921,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 18,
-     "rate": 0.01718213058419244
+     "rate": 0.01730103806228374
     }
    ],
-   "best_rate": 0.01718213058419244,
+   "best_rate": 0.01730103806228374,
    "longest": 18,
    "next": {
     "opp": "Internazionale",
@@ -22219,10 +22098,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 18,
-     "rate": 0.01718213058419244
+     "rate": 0.01730103806228374
     }
    ],
-   "best_rate": 0.01718213058419244,
+   "best_rate": 0.01730103806228374,
    "longest": 18,
    "next": {
     "opp": "Santa Clara",
@@ -22388,10 +22267,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 18,
-     "rate": 0.01718213058419244
+     "rate": 0.01730103806228374
     }
    ],
-   "best_rate": 0.01718213058419244,
+   "best_rate": 0.01730103806228374,
    "longest": 18,
    "next": {
     "opp": "AS Roma",
@@ -22557,16 +22436,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 18,
-     "rate": 0.01718213058419244
+     "rate": 0.01730103806228374
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 18,
-     "rate": 0.01718213058419244
+     "rate": 0.01730103806228374
     }
    ],
-   "best_rate": 0.01718213058419244,
+   "best_rate": 0.01730103806228374,
    "longest": 18,
    "next": {
     "opp": "FC Twente",
@@ -22732,10 +22611,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 16,
-     "rate": 0.03436426116838488
+     "rate": 0.03460207612456748
     }
    ],
-   "best_rate": 0.03436426116838488,
+   "best_rate": 0.03460207612456748,
    "longest": 16,
    "next": null,
    "recent": [
@@ -22895,10 +22774,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 16,
-     "rate": 0.03436426116838488
+     "rate": 0.03460207612456748
     }
    ],
-   "best_rate": 0.03436426116838488,
+   "best_rate": 0.03460207612456748,
    "longest": 16,
    "next": {
     "opp": "Torreense",
@@ -23064,16 +22943,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 15,
-     "rate": 0.010309278350515464
+     "rate": 0.010380622837370242
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 15,
-     "rate": 0.041237113402061855
+     "rate": 0.04152249134948097
     }
    ],
-   "best_rate": 0.010309278350515464,
+   "best_rate": 0.010380622837370242,
    "longest": 15,
    "next": {
     "opp": "Paris FC",
@@ -23215,10 +23094,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 15,
-     "rate": 0.027491408934707903
+     "rate": 0.02768166089965398
     }
    ],
-   "best_rate": 0.027491408934707903,
+   "best_rate": 0.02768166089965398,
    "longest": 15,
    "next": {
     "opp": "Brighton & Hove Albion",
@@ -23376,10 +23255,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 15,
-     "rate": 0.027491408934707903
+     "rate": 0.02768166089965398
     }
    ],
-   "best_rate": 0.027491408934707903,
+   "best_rate": 0.02768166089965398,
    "longest": 15,
    "next": {
     "opp": "FC Utrecht",
@@ -23537,28 +23416,28 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 15,
-     "rate": 0.027491408934707903
+     "rate": 0.02768166089965398
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.027491408934707903,
+   "best_rate": 0.02768166089965398,
    "longest": 15,
    "next": {
     "opp": "Toronto FC",
@@ -23716,10 +23595,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 15,
-     "rate": 0.041237113402061855
+     "rate": 0.04152249134948097
     }
    ],
-   "best_rate": 0.041237113402061855,
+   "best_rate": 0.04152249134948097,
    "longest": 15,
    "next": {
     "opp": "SC Freiburg",
@@ -23861,28 +23740,28 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 14,
-     "rate": 0.05154639175257732
+     "rate": 0.05190311418685121
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     },
     {
      "key": "scoring",
      "label": "scored 2+",
      "n": 12,
-     "rate": 0.003436426116838488
+     "rate": 0.0034602076124567475
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 11,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     }
    ],
-   "best_rate": 0.003436426116838488,
+   "best_rate": 0.0034602076124567475,
    "longest": 14,
    "next": {
     "opp": "AC Milan",
@@ -24016,22 +23895,22 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.024054982817869417
+     "rate": 0.02422145328719723
     }
    ],
-   "best_rate": 0.024054982817869417,
+   "best_rate": 0.02422145328719723,
    "longest": 14,
    "next": {
     "opp": "Kilmarnock",
@@ -24165,28 +24044,28 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.030927835051546393,
+   "best_rate": 0.031141868512110725,
    "longest": 14,
    "next": {
     "opp": "Real Sociedad",
@@ -24320,10 +24199,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     }
    ],
-   "best_rate": 0.030927835051546393,
+   "best_rate": 0.031141868512110725,
    "longest": 14,
    "next": {
     "opp": "Rio Ave",
@@ -24457,10 +24336,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     }
    ],
-   "best_rate": 0.030927835051546393,
+   "best_rate": 0.031141868512110725,
    "longest": 14,
    "next": {
     "opp": "FC Dallas",
@@ -24610,10 +24489,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     }
    ],
-   "best_rate": 0.030927835051546393,
+   "best_rate": 0.031141868512110725,
    "longest": 14,
    "next": {
     "opp": "AJ Auxerre",
@@ -24747,16 +24626,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 14,
-     "rate": 0.05154639175257732
+     "rate": 0.05190311418685121
     }
    ],
-   "best_rate": 0.030927835051546393,
+   "best_rate": 0.031141868512110725,
    "longest": 14,
    "next": {
     "opp": "Lech Poznan",
@@ -24906,16 +24785,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 14,
-     "rate": 0.05154639175257732
+     "rate": 0.05190311418685121
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.10652920962199312
+     "rate": 0.10726643598615918
     }
    ],
-   "best_rate": 0.05154639175257732,
+   "best_rate": 0.05190311418685121,
    "longest": 14,
    "next": {
     "opp": "Feyenoord Rotterdam",
@@ -25049,16 +24928,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13402061855670103
+     "rate": 0.13494809688581316
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 14,
    "next": {
     "opp": "NK Celje",
@@ -25192,10 +25071,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 14,
    "next": {
     "opp": "Ferencvaros",
@@ -25337,10 +25216,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 14,
    "next": {
     "opp": "Sunderland",
@@ -25474,16 +25353,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 14,
    "next": {
     "opp": "Sporting Kansas City",
@@ -25633,10 +25512,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 14,
    "next": {
     "opp": "Celtic",
@@ -25770,10 +25649,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 14,
    "next": {
     "opp": "SK Sturm Graz",
@@ -25915,16 +25794,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 11,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     }
    ],
-   "best_rate": 0.006872852233676976,
+   "best_rate": 0.006920415224913495,
    "longest": 13,
    "next": {
     "opp": "Bayern Munich",
@@ -26050,16 +25929,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.024054982817869417
+     "rate": 0.02422145328719723
     }
    ],
-   "best_rate": 0.024054982817869417,
+   "best_rate": 0.02422145328719723,
    "longest": 13,
    "next": {
     "opp": "Werder Bremen",
@@ -26185,22 +26064,22 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.07903780068728522
+     "rate": 0.07958477508650519
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.024054982817869417
+     "rate": 0.02422145328719723
     }
    ],
-   "best_rate": 0.024054982817869417,
+   "best_rate": 0.02422145328719723,
    "longest": 13,
    "next": {
     "opp": "Juventus",
@@ -26326,16 +26205,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 13,
-     "rate": 0.041237113402061855
+     "rate": 0.04152249134948097
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     }
    ],
-   "best_rate": 0.041237113402061855,
+   "best_rate": 0.04152249134948097,
    "longest": 13,
    "next": {
     "opp": "Willem II",
@@ -26461,10 +26340,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 13,
-     "rate": 0.041237113402061855
+     "rate": 0.04152249134948097
     }
    ],
-   "best_rate": 0.041237113402061855,
+   "best_rate": 0.04152249134948097,
    "longest": 13,
    "next": {
     "opp": "FC Cologne",
@@ -26590,10 +26469,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 13,
-     "rate": 0.06529209621993128
+     "rate": 0.0657439446366782
     }
    ],
-   "best_rate": 0.06529209621993128,
+   "best_rate": 0.0657439446366782,
    "longest": 13,
    "next": {
     "opp": "New England Revolution",
@@ -26735,16 +26614,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 13,
-     "rate": 0.06529209621993128
+     "rate": 0.0657439446366782
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     }
    ],
-   "best_rate": 0.06529209621993128,
+   "best_rate": 0.0657439446366782,
    "longest": 13,
    "next": {
     "opp": "Arouca",
@@ -26886,16 +26765,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09278350515463918
+     "rate": 0.09342560553633218
     }
    ],
-   "best_rate": 0.0859106529209622,
+   "best_rate": 0.08650519031141868,
    "longest": 13,
    "next": {
     "opp": "Ajax Amsterdam",
@@ -27021,16 +26900,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.0859106529209622
+     "rate": 0.08650519031141868
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     }
    ],
-   "best_rate": 0.0859106529209622,
+   "best_rate": 0.08650519031141868,
    "longest": 13,
    "next": {
     "opp": "Osasuna",
@@ -27172,28 +27051,28 @@
      "key": "btts",
      "label": "both teams scored",
      "n": 12,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 12,
-     "rate": 0.08247422680412371
+     "rate": 0.08304498269896193
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.10309278350515463
+     "rate": 0.10380622837370242
     }
    ],
-   "best_rate": 0.006872852233676976,
+   "best_rate": 0.006920415224913495,
    "longest": 12,
    "next": {
     "opp": "Hamburg SV",
@@ -27311,10 +27190,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 12,
    "next": {
     "opp": "Aberdeen",
@@ -27448,10 +27327,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 12,
    "next": {
     "opp": "Vancouver Whitecaps",
@@ -27585,10 +27464,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 12,
    "next": {
     "opp": "Le Havre AC",
@@ -27714,10 +27593,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.058419243986254296
+     "rate": 0.058823529411764705
     }
    ],
-   "best_rate": 0.058419243986254296,
+   "best_rate": 0.058823529411764705,
    "longest": 12,
    "next": {
     "opp": "FC Augsburg",
@@ -27843,16 +27722,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 12,
-     "rate": 0.08247422680412371
+     "rate": 0.08304498269896193
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.08247422680412371,
+   "best_rate": 0.08304498269896193,
    "longest": 12,
    "next": {
     "opp": "Excelsior",
@@ -27986,10 +27865,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 12,
-     "rate": 0.08247422680412371
+     "rate": 0.08304498269896193
     }
    ],
-   "best_rate": 0.08247422680412371,
+   "best_rate": 0.08304498269896193,
    "longest": 12,
    "next": {
     "opp": "Stade Rennais",
@@ -28123,16 +28002,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.10309278350515463
+     "rate": 0.10380622837370242
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09278350515463918
+     "rate": 0.09342560553633218
     }
    ],
-   "best_rate": 0.09278350515463918,
+   "best_rate": 0.09342560553633218,
    "longest": 12,
    "next": {
     "opp": "Elche",
@@ -28266,10 +28145,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.10309278350515463
+     "rate": 0.10380622837370242
     }
    ],
-   "best_rate": 0.10309278350515463,
+   "best_rate": 0.10380622837370242,
    "longest": 12,
    "next": {
     "opp": "Benfica",
@@ -28403,16 +28282,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.10309278350515463
+     "rate": 0.10380622837370242
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     }
    ],
-   "best_rate": 0.10309278350515463,
+   "best_rate": 0.10380622837370242,
    "longest": 12,
    "next": {
     "opp": "Hull City",
@@ -28546,16 +28425,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.07903780068728522
+     "rate": 0.07958477508650519
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13402061855670103
+     "rate": 0.13494809688581316
     }
    ],
-   "best_rate": 0.07903780068728522,
+   "best_rate": 0.07958477508650519,
    "longest": 11,
    "next": {
     "opp": "PEC Zwolle",
@@ -28681,10 +28560,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.07903780068728522
+     "rate": 0.07958477508650519
     }
    ],
-   "best_rate": 0.07903780068728522,
+   "best_rate": 0.07958477508650519,
    "longest": 11,
    "next": null,
    "recent": [
@@ -28804,10 +28683,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.07903780068728522
+     "rate": 0.07958477508650519
     }
    ],
-   "best_rate": 0.07903780068728522,
+   "best_rate": 0.07958477508650519,
    "longest": 11,
    "next": {
     "opp": "Heerenveen",
@@ -28927,16 +28806,16 @@
   {
    "team": "VfB Stuttgart",
    "league": "Bundesliga",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.07903780068728522
+     "rate": 0.07958477508650519
     }
    ],
-   "best_rate": 0.07903780068728522,
+   "best_rate": 0.07958477508650519,
    "longest": 11,
    "next": {
     "opp": "Borussia Dortmund",
@@ -29062,10 +28941,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09278350515463918
+     "rate": 0.09342560553633218
     }
    ],
-   "best_rate": 0.09278350515463918,
+   "best_rate": 0.09342560553633218,
    "longest": 11,
    "next": {
     "opp": "Brest",
@@ -29191,10 +29070,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13402061855670103
+     "rate": 0.13494809688581316
     }
    ],
-   "best_rate": 0.13402061855670103,
+   "best_rate": 0.13494809688581316,
    "longest": 11,
    "next": {
     "opp": "Osasuna",
@@ -29320,16 +29199,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13402061855670103
+     "rate": 0.13494809688581316
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     }
    ],
-   "best_rate": 0.13402061855670103,
+   "best_rate": 0.13494809688581316,
    "longest": 11,
    "next": {
     "opp": "Chelsea",
@@ -29455,10 +29334,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13402061855670103
+     "rate": 0.13494809688581316
     }
    ],
-   "best_rate": 0.13402061855670103,
+   "best_rate": 0.13494809688581316,
    "longest": 11,
    "next": {
     "opp": "Bayer Leverkusen",
@@ -29584,10 +29463,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 10,
-     "rate": 0.09965635738831616
+     "rate": 0.10034602076124567
     }
    ],
-   "best_rate": 0.09965635738831616,
+   "best_rate": 0.10034602076124567,
    "longest": 10,
    "next": {
     "opp": "Columbus Crew",
@@ -29705,10 +29584,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 10,
-     "rate": 0.09965635738831616
+     "rate": 0.10034602076124567
     }
    ],
-   "best_rate": 0.09965635738831616,
+   "best_rate": 0.10034602076124567,
    "longest": 10,
    "next": null,
    "recent": [
@@ -29804,16 +29683,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.10652920962199312
+     "rate": 0.10726643598615918
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 10,
-     "rate": 0.14776632302405499
+     "rate": 0.14878892733564014
     }
    ],
-   "best_rate": 0.10652920962199312,
+   "best_rate": 0.10726643598615918,
    "longest": 10,
    "next": {
     "opp": "Celta Vigo",
@@ -29915,10 +29794,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.10652920962199312
+     "rate": 0.10726643598615918
     }
    ],
-   "best_rate": 0.10652920962199312,
+   "best_rate": 0.10726643598615918,
    "longest": 10,
    "next": {
     "opp": "Levski Sofia",
@@ -30036,16 +29915,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.10652920962199312
+     "rate": 0.10726643598615918
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 10,
-     "rate": 0.14776632302405499
+     "rate": 0.14878892733564014
     }
    ],
-   "best_rate": 0.10652920962199312,
+   "best_rate": 0.10726643598615918,
    "longest": 10,
    "next": {
     "opp": "Lillestrom",
@@ -30163,10 +30042,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 10,
-     "rate": 0.14776632302405499
+     "rate": 0.14878892733564014
     }
    ],
-   "best_rate": 0.14776632302405499,
+   "best_rate": 0.14878892733564014,
    "longest": 10,
    "next": {
     "opp": "Orlando City SC",
@@ -30284,28 +30163,28 @@
      "key": "btts",
      "label": "both teams scored",
      "n": 9,
-     "rate": 0.013745704467353952
+     "rate": 0.01384083044982699
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.12714776632302405
+     "rate": 0.12802768166089964
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 9,
-     "rate": 0.13745704467353953
+     "rate": 0.1384083044982699
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18213058419243985
+     "rate": 0.18339100346020762
     }
    ],
-   "best_rate": 0.013745704467353952,
+   "best_rate": 0.01384083044982699,
    "longest": 9,
    "next": {
     "opp": "NEC Nijmegen",
@@ -30415,10 +30294,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.12714776632302405
+     "rate": 0.12802768166089964
     }
    ],
-   "best_rate": 0.12714776632302405,
+   "best_rate": 0.12802768166089964,
    "longest": 9,
    "next": null,
    "recent": [
@@ -30506,16 +30385,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.12714776632302405
+     "rate": 0.12802768166089964
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18213058419243985
+     "rate": 0.18339100346020762
     }
    ],
-   "best_rate": 0.12714776632302405,
+   "best_rate": 0.12802768166089964,
    "longest": 9,
    "next": {
     "opp": "Bologna",
@@ -30625,16 +30504,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.12714776632302405
+     "rate": 0.12802768166089964
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18213058419243985
+     "rate": 0.18339100346020762
     }
    ],
-   "best_rate": 0.12714776632302405,
+   "best_rate": 0.12802768166089964,
    "longest": 9,
    "next": {
     "opp": "St. Louis CITY SC",
@@ -30744,16 +30623,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 9,
-     "rate": 0.13745704467353953
+     "rate": 0.1384083044982699
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18213058419243985
+     "rate": 0.18339100346020762
     }
    ],
-   "best_rate": 0.13745704467353953,
+   "best_rate": 0.1384083044982699,
    "longest": 9,
    "next": {
     "opp": "Sunderland",
@@ -30863,16 +30742,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 9,
-     "rate": 0.13745704467353953
+     "rate": 0.1384083044982699
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18213058419243985
+     "rate": 0.18339100346020762
     }
    ],
-   "best_rate": 0.13745704467353953,
+   "best_rate": 0.1384083044982699,
    "longest": 9,
    "next": {
     "opp": "Racing Santander",
@@ -30982,10 +30861,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 9,
-     "rate": 0.13745704467353953
+     "rate": 0.1384083044982699
     }
    ],
-   "best_rate": 0.13745704467353953,
+   "best_rate": 0.1384083044982699,
    "longest": 9,
    "next": {
     "opp": "NEC Nijmegen",
@@ -31095,10 +30974,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 9,
-     "rate": 0.13745704467353953
+     "rate": 0.1384083044982699
     }
    ],
-   "best_rate": 0.13745704467353953,
+   "best_rate": 0.1384083044982699,
    "longest": 9,
    "next": {
     "opp": "Crystal Palace",
@@ -31208,10 +31087,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18213058419243985
+     "rate": 0.18339100346020762
     }
    ],
-   "best_rate": 0.18213058419243985,
+   "best_rate": 0.18339100346020762,
    "longest": 9,
    "next": {
     "opp": "VfB Stuttgart",
@@ -31305,10 +31184,10 @@
      "key": "under25",
      "label": "under 2.5 goals",
      "n": 8,
-     "rate": 0.003436426116838488
+     "rate": 0.0034602076124567475
     }
    ],
-   "best_rate": 0.003436426116838488,
+   "best_rate": 0.0034602076124567475,
    "longest": 8,
    "next": {
     "opp": "Jagiellonia Bialystok",
@@ -31410,40 +31289,40 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 8,
-     "rate": 0.006872852233676976
+     "rate": 0.006920415224913495
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.024054982817869417
+     "rate": 0.02422145328719723
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.006872852233676976,
+   "best_rate": 0.006920415224913495,
    "longest": 8,
    "next": {
     "opp": "Acad\u00e9mico de Viseu",
@@ -31545,16 +31424,16 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.024054982817869417
+     "rate": 0.02422145328719723
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.024054982817869417,
+   "best_rate": 0.02422145328719723,
    "longest": 8,
    "next": {
     "opp": "SK Brann",
@@ -31656,28 +31535,28 @@
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.030927835051546393
+     "rate": 0.031141868512110725
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.030927835051546393,
+   "best_rate": 0.031141868512110725,
    "longest": 8,
    "next": {
     "opp": "LA Galaxy",
@@ -31779,10 +31658,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     }
    ],
-   "best_rate": 0.16151202749140894,
+   "best_rate": 0.16262975778546712,
    "longest": 8,
    "next": {
     "opp": "Monza",
@@ -31884,16 +31763,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.16151202749140894
+     "rate": 0.16262975778546712
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.16151202749140894,
+   "best_rate": 0.16262975778546712,
    "longest": 8,
    "next": null,
    "recent": [
@@ -31973,10 +31852,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     }
    ],
-   "best_rate": 0.16838487972508592,
+   "best_rate": 0.1695501730103806,
    "longest": 8,
    "next": {
     "opp": "Volos NFC",
@@ -32078,10 +31957,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     }
    ],
-   "best_rate": 0.16838487972508592,
+   "best_rate": 0.1695501730103806,
    "longest": 8,
    "next": {
     "opp": "Juventus",
@@ -32183,10 +32062,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16838487972508592
+     "rate": 0.1695501730103806
     }
    ],
-   "best_rate": 0.16838487972508592,
+   "best_rate": 0.1695501730103806,
    "longest": 8,
    "next": {
     "opp": "Trabzonspor",
@@ -32288,10 +32167,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.23367697594501718,
+   "best_rate": 0.23529411764705882,
    "longest": 8,
    "next": {
     "opp": "Espanyol",
@@ -32393,10 +32272,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.23367697594501718,
+   "best_rate": 0.23529411764705882,
    "longest": 8,
    "next": {
     "opp": "Napoli",
@@ -32498,10 +32377,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.23367697594501718
+     "rate": 0.23529411764705882
     }
    ],
-   "best_rate": 0.23367697594501718,
+   "best_rate": 0.23529411764705882,
    "longest": 8,
    "next": {
     "opp": "FC Groningen",
