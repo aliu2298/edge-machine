@@ -35,6 +35,11 @@
    "lead_min": 59.7,
    "price": 0.605
   },
+  "covers:aec-mlb-mia-az-2026-09-15": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 14.4,
+   "price": 0.595
+  },
   "covers:aec-mlb-sf-stl-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 34.7,
@@ -89,6 +94,11 @@
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 59.7,
    "price": 0.6
+  },
+  "espn_fpi:4405290": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 14.4,
+   "price": 0.41
   },
   "mlb_fade_streak:aec-mlb-bal-nym-2026-09-14": {
    "at": "2026-09-14T22:44:07+00:00",
@@ -155,10 +165,20 @@
    "lead_min": 15.0,
    "price": 0.445
   },
+  "scores24:aec-mlb-mia-az-2026-09-15": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 14.4,
+   "price": 0.41
+  },
   "scores24:aec-mlb-sea-laa-2026-09-14": {
    "at": "2026-09-15T01:24:59+00:00",
    "lead_min": 13.0,
    "price": 0.505
+  },
+  "scores24:aec-mlb-sea-laa-2026-09-15": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 12.4,
+   "price": 0.615
   },
   "scores24:aec-mlb-sf-stl-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
@@ -245,6 +265,16 @@
    "lead_min": 15.9,
    "price": 0.79
   },
+  "tennis_fav_band:aec-itfme-minzha-chafer-2026-09-16": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 34.4,
+   "price": 0.87
+  },
+  "tennis_fav_band:aec-itfme-stevuj-yuexia-2026-09-16": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 34.4,
+   "price": 0.78
+  },
   "tennis_fav_band:aec-itfme-zihgao-ivador-2026-09-15": {
    "at": "2026-09-15T01:24:59+00:00",
    "lead_min": 35.0,
@@ -254,6 +284,16 @@
    "at": "2026-09-15T01:24:59+00:00",
    "lead_min": 35.0,
    "price": 0.78
+  },
+  "tennis_fav_band:aec-itfwo-hanshi-chezhu-2026-09-16": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 34.4,
+   "price": 0.8
+  },
+  "tennis_fav_band:aec-itfwo-hirkuw-tiaden-2026-09-16": {
+   "at": "2026-09-16T01:25:33+00:00",
+   "lead_min": 34.4,
+   "price": 0.8
   },
   "tennis_fav_band:aec-itfwo-mutuem-miynak-2026-09-15": {
    "at": "2026-09-15T01:24:59+00:00",
@@ -296,5 +336,5 @@
    "price": 0.58
   }
  },
- "updated": "2026-09-15T23:10:15+00:00"
+ "updated": "2026-09-16T01:25:33+00:00"
 }
