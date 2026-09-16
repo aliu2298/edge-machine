@@ -101,9 +101,20 @@ SPORT_RULES = {
     # 2026-09-16, as asked: 50 bets to leave the Sandbox, 50 fresh bets in QA, no day span.
     "high": dict(entry=dict(min_bets=50, min_days=0, z_min=1.5),
                  approval=dict(min_bets=50, min_days=0, z_min=2.5),
-                 demote_bets=50),
+                 demote_bets=50,
+                 # 2026-09-16, as asked: the Sandbox record counts in QA too, so a pair's whole
+                 # record since it last entered the Sandbox is judged, not only fresh bets.
+                 qa_counts_sandbox=True),
     "standard": dict(entry=QA_ENTRY, approval=APPROVAL, demote_bets=QA_DEMOTE["min_bets"]),
 }
+
+
+def qa_since(pair, sport):
+    """Where a QA pair's judged record starts: its promotion, or — where the sport counts the
+    Sandbox record (qa_counts_sandbox) — where its Sandbox record started."""
+    if sport_rules(sport).get("qa_counts_sandbox"):
+        return pair.get("entry_since")          # None = its whole record
+    return pair["promoted_at"]
 
 
 def sport_rules(sport):
@@ -1301,10 +1312,11 @@ def evaluate_stages(d, st, now=None, verbose=True):
             if pair["stage"] == "sandbox":
                 a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
                 if a["n"] and all(p for _k, _l, p, _d in qa_entry(a)):
-                    pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a))
+                    pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a),
+                                entry_since=pair.get("since"))
                     changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a)))
             elif pair["stage"] == "qa":
-                a = assess(d, name, sport, since=pair["promoted_at"], venues=TRADEABLE_VENUES)
+                a = assess(d, name, sport, since=qa_since(pair, sport), venues=TRADEABLE_VENUES)
                 why = demote_reason(d, name, sport, pair, a, now)
                 if why:
                     pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)

@@ -530,7 +530,9 @@ changes a judgement. Expected steady state: ledger ~5 MB instead of ~20 MB.
 
 **Per-sport thresholds (2026-09-16).** `sport_rules(sport)` picks the gate: high-volume sports
 (`HIGH_VOLUME_SPORTS`: tennis, table tennis) need 50+ settled bets at z ≥ 1.5 to enter QA and 50+ fresh
-bets at z ≥ 2.5 in QA for the stamp, with no day span, and 50 fresh bets before a demotion is judged; every other
+bets at z ≥ 2.5 in QA for the stamp, with no day span, and 50 fresh bets before a demotion is judged.
+Their Sandbox record also counts in QA (`qa_counts_sandbox`, `qa_since`): a promoted pair is judged on its
+whole record since it last entered the Sandbox, not only on bets after the promotion; every other
 sport keeps 30 / 14 days / z ≥ 1, 50 / 28 days / z ≥ 2 and 30. A tennis rule logs ~50 bets a day, so it
 met every other gate in two days and then waited two weeks on the calendar alone.
 

@@ -2561,6 +2561,21 @@ eq(dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_d1, "tennis_fav_band", "
    "and no day span: 60 bets inside five hours count")
 eq(T.sport_rules("mlb")["entry"], T.QA_ENTRY, "every other sport keeps the original gate")
 
+
+print("\nhigh-volume sports: the Sandbox record counts in QA")
+# the favourite population: 20 other matches where the 0.60 favourite won only 8
+_dh["quotes"] += [dict(_hv(200 + i, False), id=f"pm:{i}", source="polymarket_us", bet=False, pick=None, price=None,
+                       price_a=0.6, price_b=0.42, result="a" if i < 8 else "b", status="graded", pnl=0.0, stake=0.0)
+                  for i in range(20)]
+_stq = {"pairs": {}, "events": []}
+T.evaluate_stages(_dh, _stq, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False)
+_pq = _stq["pairs"].get("tennis_fav_band|tennis") or {}
+eq(_pq.get("stage"), "qa", "a tennis pair with 110 bets at z >= 1.5 is promoted")
+eq(T.assess(_dh, "tennis_fav_band", "tennis", since=T.qa_since(_pq, "tennis"), venues=T.TRADEABLE_VENUES)["n"], 110,
+   "and QA judges all 110, not only bets logged after the promotion")
+eq(T.qa_since(dict(promoted_at="2026-09-20T00:00:00+00:00"), "mlb"), "2026-09-20T00:00:00+00:00",
+   "every other sport is still judged on fresh bets only")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

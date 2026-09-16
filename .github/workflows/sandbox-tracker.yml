@@ -113,7 +113,11 @@ jobs:
             # rebase is safe because the two workflows write disjoint files: nothing else
             # in the repo touches sandbox.html, qa.html, sandbox_ledger.json, stages.json or sandbox_archive/.
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
-            git pull --rebase origin main
+            # -X theirs: on a conflict, keep THIS run's copy (during a rebase "theirs" is the
+            # commit being replayed). The pages are regenerated from this run's ledger, and a
+            # hand-built copy pushed from a laptop mid-run made the rebase stop and the run lose
+            # its promotions (2026-09-16 22:08).
+            git pull --rebase -X theirs origin main
           done
           echo "::error::could not push the ledger after 3 attempts"
           exit 1
