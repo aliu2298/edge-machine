@@ -529,8 +529,8 @@ whole record. The favourite population reads the first price logged per contest,
 changes a judgement. Expected steady state: ledger ~5 MB instead of ~20 MB.
 
 **Per-sport thresholds (2026-09-16).** `sport_rules(sport)` picks the gate: high-volume sports
-(`HIGH_VOLUME_SPORTS`: tennis, table tennis) need 100+ settled bets over 5+ days at z ≥ 1.5 to enter QA,
-200+ over 10+ days at z ≥ 2.5 for the stamp, and 100 fresh bets before a demotion is judged; every other
+(`HIGH_VOLUME_SPORTS`: tennis, table tennis) need 50+ settled bets at z ≥ 1.5 to enter QA and 50+ fresh
+bets at z ≥ 2.5 in QA for the stamp, with no day span, and 50 fresh bets before a demotion is judged; every other
 sport keeps 30 / 14 days / z ≥ 1, 50 / 28 days / z ≥ 2 and 30. A tennis rule logs ~50 bets a day, so it
 met every other gate in two days and then waited two weeks on the calendar alone.
 

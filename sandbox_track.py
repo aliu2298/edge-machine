@@ -93,15 +93,15 @@ NEVER_PROMOTED_KINDS = ("Baseline",)
 # One set of numbers did not fit every sport. The 14-day span exists because one weekend of
 # football is one draw of the weather; a tennis rule logs ~50 bets a day across dozens of
 # tournaments, so it met every other entry gate in two days and then waited two weeks on the
-# calendar alone. High-volume sports therefore trade calendar for SAMPLE and a HIGHER bar on
-# the price: more bets, a shorter span that still covers several days of different events,
-# and a stricter z (a sample that big shows a real edge quickly, and it gets four looks a day).
+# calendar alone. High-volume sports therefore drop the calendar and keep a HIGHER bar on the
+# price: a stricter z (a sample that big shows a real edge quickly, and it gets four looks a day).
 # Every other sport keeps the original numbers. Set before any pair used them.
 HIGH_VOLUME_SPORTS = ("tennis", "table_tennis")
 SPORT_RULES = {
-    "high": dict(entry=dict(min_bets=100, min_days=5, z_min=1.5),
-                 approval=dict(min_bets=200, min_days=10, z_min=2.5),
-                 demote_bets=100),
+    # 2026-09-16, as asked: 50 bets to leave the Sandbox, 50 fresh bets in QA, no day span.
+    "high": dict(entry=dict(min_bets=50, min_days=0, z_min=1.5),
+                 approval=dict(min_bets=50, min_days=0, z_min=2.5),
+                 demote_bets=50),
     "standard": dict(entry=QA_ENTRY, approval=APPROVAL, demote_bets=QA_DEMOTE["min_bets"]),
 }
 

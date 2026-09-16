@@ -649,7 +649,7 @@ the rule's own population) on the same contests. <b>Beat the close</b>: closing 
 <b>Road to QA</b>: settled bets on the US exchanges against what QA needs for that sport, and how many of its
 four entry gates hold. <b>Thresholds are per sport</b>: most need {T.QA_ENTRY['min_bets']}+ bets over {T.QA_ENTRY['min_days']}+ days
 at z ≥ {T.QA_ENTRY['z_min']:g}; high-volume sports ({', '.join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS)}) need
-{T.SPORT_RULES['high']['entry']['min_bets']}+ bets over {T.SPORT_RULES['high']['entry']['min_days']}+ days at z ≥ {T.SPORT_RULES['high']['entry']['z_min']:g} — more bets and a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
+{T.SPORT_RULES['high']['entry']['min_bets']}+ bets at z ≥ {T.SPORT_RULES['high']['entry']['z_min']:g}, with no day span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
 
 <h2>Running now ({n_live:,})</h2>
 {('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets.</div>'}
@@ -660,7 +660,7 @@ at z ≥ {T.QA_ENTRY['z_min']:g}; high-volume sports ({', '.join(S.SPORTS[x] for
 <h2>Reference</h2>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
 <div class="note">The stamp needs <b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>
-({T.SPORT_RULES['high']['approval']['min_bets']}+ over {T.SPORT_RULES['high']['approval']['min_days']}+ days at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g} in high-volume sports),
+({T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}, no day span, in high-volume sports),
 wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind rule on the same contests,
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
 {approval_table(d, scores)}</details>
@@ -787,7 +787,7 @@ def qa_page(d, st, style):
 
 <div class="note warn">QA lists only what has <b>succeeded in the Sandbox</b>: a (source, sport) pair
 arrives here once it clears the entry gate for its sport — {E['min_bets']}+ settled bets spanning {E['min_days']}+ days and wins beating
-the price by z ≥ {E['z_min']:g} ({H['min_bets']}+ over {H['min_days']}+ days at z ≥ {H['z_min']:g} in {HV}), beating every blind rule, still profitable without its biggest win.
+the price by z ≥ {E['z_min']:g} ({H['min_bets']}+ bets at z ≥ {H['z_min']:g}, no day span, in {HV}), beating every blind rule, still profitable without its biggest win.
 Pairs still working towards that are on the <a href="./sandbox.html">Sandbox</a> page. From promotion on, a pair
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
@@ -804,8 +804,8 @@ here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
 <h2>In QA</h2>
 {qa_table}
 <div class="note"><b>Production-ready</b> is the full stamp applied to the fresh QA record —
-{A['min_bets']}+ bets spanning {A['min_days']}+ days, z ≥ {A['z_min']:g} (for {HV}: {T.SPORT_RULES['high']['approval']['min_bets']}+ over
-{T.SPORT_RULES['high']['approval']['min_days']}+ days, z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}), beats every blind rule, still
+{A['min_bets']}+ bets spanning {A['min_days']}+ days, z ≥ {A['z_min']:g} (for {HV}: {T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets, no day span,
+z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}), beats every blind rule, still
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
 price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
 {T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US

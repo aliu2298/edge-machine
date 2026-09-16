@@ -2549,13 +2549,16 @@ def _hv(i, won, sport="tennis"):
                 logged="2026-09-10T00:00:00+00:00")
 _dh = {"quotes": [_hv(i, i % 10 != 0) for i in range(110)]}     # 99/110 at 0.80 over ~6.4 days
 _eh = dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_dh, "tennis_fav_band", "tennis", venues=T.TRADEABLE_VENUES)))
-eq((_eh["sample"], _eh["price"]), (True, True), "tennis: 110 bets over 6 days at z >= 1.5 clears the entry sample and price gates")
+eq((_eh["sample"], _eh["price"]), (True, True), "tennis: 110 bets at z >= 1.5 clears the entry sample and price gates")
 _ds = {"quotes": [dict(q, sport="soccer") for q in _dh["quotes"]]}
 _es = dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_ds, "tennis_fav_band", "soccer", venues=T.TRADEABLE_VENUES)))
 eq(_es["sample"], False, "the same record in soccer still needs 14 days")
-_dt = {"quotes": [_hv(i, i % 10 != 0) for i in range(60)]}
+_dt = {"quotes": [_hv(i, i % 10 != 0) for i in range(40)]}
 eq(dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_dt, "tennis_fav_band", "tennis")))["sample"], False,
-   "tennis needs 100 bets, not 30")
+   "tennis needs 50 bets, not 30")
+_d1 = {"quotes": [dict(_hv(i, i % 10 != 0), start=(datetime(2026, 9, 10, tzinfo=timezone.utc) + timedelta(minutes=i * 5)).isoformat()) for i in range(60)]}
+eq(dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_d1, "tennis_fav_band", "tennis")))["sample"], True,
+   "and no day span: 60 bets inside five hours count")
 eq(T.sport_rules("mlb")["entry"], T.QA_ENTRY, "every other sport keeps the original gate")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
