@@ -41,9 +41,9 @@
    "price": 0.585
   },
   "covers:aec-mlb-cws-cle-2026-09-16": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 53.7,
-   "price": 0.595
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 27.0,
+   "price": 0.59
   },
   "covers:aec-mlb-mia-az-2026-09-15": {
    "at": "2026-09-16T01:36:21+00:00",
@@ -51,8 +51,8 @@
    "price": 0.595
   },
   "covers:aec-mlb-sf-stl-2026-09-16": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 58.7,
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 32.0,
    "price": 0.595
   },
   "draftkings:aec-mlb-bal-nym-2026-09-14": {
@@ -121,8 +121,13 @@
    "price": 0.41
   },
   "espn_fpi:aec-mlb-cws-cle-2026-09-16": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 53.7,
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 27.0,
+   "price": 0.59
+  },
+  "espn_fpi:aec-mlb-nyy-min-2026-09-16": {
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 57.0,
    "price": 0.595
   },
   "kalshi:4363814": {
@@ -245,6 +250,11 @@
    "lead_min": 3.6,
    "price": 0.41
   },
+  "scores24:aec-mlb-nyy-min-2026-09-16": {
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 57.0,
+   "price": 0.595
+  },
   "scores24:aec-mlb-sd-col-2026-09-14": {
    "at": "2026-09-15T00:29:15+00:00",
    "lead_min": 10.7,
@@ -286,9 +296,9 @@
    "price": 0.41
   },
   "soccerpredictions:KXLALIGAGAME-26SEP16DEPSEV": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 43.7,
-   "price": 0.37
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 17.0,
+   "price": 0.36
   },
   "soccerpredictions:KXLIGAPORTUGALGAME-26SEP14RAVESA": {
    "at": "2026-09-14T17:35:04+00:00",
@@ -311,13 +321,13 @@
    "price": 0.51
   },
   "sportsgambler:KXSWISSLEAGUEGAME-26SEP16LUGSTG": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 43.7,
-   "price": 0.49
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 17.0,
+   "price": 0.45
   },
   "sportsgambler:KXSWISSLEAGUEGAME-26SEP16THUSER": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 43.7,
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 17.0,
    "price": 0.33
   },
   "spot:KXSOLD-26SEP1417-T100.9999": {
@@ -371,8 +381,8 @@
    "price": 0.83
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP16SHIWOL": {
-   "at": "2026-09-16T16:16:19+00:00",
-   "lead_min": 43.7,
+   "at": "2026-09-16T16:43:01+00:00",
+   "lead_min": 17.0,
    "price": 0.79
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP16SINNOG": {
@@ -821,5 +831,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-09-16T16:16:19+00:00"
+ "updated": "2026-09-16T16:43:01+00:00"
 }
