@@ -7662,7 +7662,196 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-17|Levski Sofia|RB Salzburg": {
+   "away": "RB Salzburg",
+   "date": "2026-09-17",
+   "home": "Levski Sofia",
+   "id": "2026-09-17|Levski Sofia|RB Salzburg",
+   "kickoff": "2026-09-17T16:45Z",
+   "lead_source": true,
+   "league": "Europa League",
+   "priced_at": "2026-09-16T17:19:58+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.49,
+     "bid": 0.47,
+     "fair": 0.48,
+     "fee": 0.0175,
+     "market": "KXUELTEAMTOTAL-26SEP17LEVRBS-RBS2",
+     "price": 1.97,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.62,
+     "bid": 0.61,
+     "fair": 0.615,
+     "fee": 0.0165,
+     "market": "KXUELBTTS-26SEP17LEVRBS-BTTS",
+     "price": 1.571,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.41,
+     "bid": 0.39,
+     "fair": 0.4,
+     "fee": 0.017,
+     "market": "KXUELTEAMTOTAL-26SEP17LEVRBS-LEV2",
+     "price": 2.342,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.81,
+     "bid": 0.79,
+     "event": "uel-plsf-rbs-2026-09-17",
+     "fair": 0.8,
+     "fee": 0.0092,
+     "market": "tsc-uel-plsf-rbs-2026-09-17-1pt5",
+     "price": 1.221,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.57,
+     "bid": 0.56,
+     "fair": 0.565,
+     "fee": 0.0172,
+     "market": "KXUELTOTAL-26SEP17LEVRBS-3",
+     "price": 1.703,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-17|OFI Crete|TSG Hoffenheim": {
+   "away": "TSG Hoffenheim",
+   "date": "2026-09-17",
+   "home": "OFI Crete",
+   "id": "2026-09-17|OFI Crete|TSG Hoffenheim",
+   "kickoff": "2026-09-17T16:45Z",
+   "lead_source": true,
+   "league": "Europa League",
+   "model": {
+    "away2plus": 0.3486,
+    "btts": 0.612,
+    "home2plus": 0.5934,
+    "over15": 0.8325,
+    "over25": 0.6261
+   },
+   "priced_at": "2026-09-16T17:19:58+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.7,
+     "bid": 0.67,
+     "fair": 0.685,
+     "fee": 0.0148,
+     "market": "KXUELTEAMTOTAL-26SEP17OFITSG-TSG2",
+     "price": 1.399,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.53,
+     "bid": 0.51,
+     "fair": 0.52,
+     "fee": 0.0175,
+     "market": "KXUELBTTS-26SEP17OFITSG-BTTS",
+     "price": 1.826,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.22,
+     "bid": 0.2,
+     "fair": 0.21,
+     "fee": 0.0121,
+     "market": "KXUELTEAMTOTAL-26SEP17OFITSG-OFI2",
+     "price": 4.308,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.82,
+     "bid": 0.81,
+     "fair": 0.815,
+     "fee": 0.0104,
+     "market": "KXUELTOTAL-26SEP17OFITSG-2",
+     "price": 1.204,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.6,
+     "bid": 0.59,
+     "fair": 0.595,
+     "fee": 0.0169,
+     "market": "KXUELTOTAL-26SEP17OFITSG-3",
+     "price": 1.621,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-17|Real Betis|Getafe": {
+   "away": "Getafe",
+   "date": "2026-09-17",
+   "home": "Real Betis",
+   "id": "2026-09-17|Real Betis|Getafe",
+   "kickoff": "2026-09-17T17:00Z",
+   "lead_source": true,
+   "league": "La Liga",
+   "model": {
+    "away2plus": 0.2654,
+    "btts": 0.4825,
+    "home2plus": 0.4202,
+    "over15": 0.6998,
+    "over25": 0.4403
+   },
+   "priced_at": "2026-09-16T17:19:58+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.2,
+     "bid": 0.17,
+     "fair": 0.185,
+     "fee": 0.0113,
+     "market": "KXLALIGATEAMTOTAL-26SEP17RBBGET-GET2",
+     "price": 4.733,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.46,
+     "bid": 0.45,
+     "fair": 0.455,
+     "fee": 0.0174,
+     "market": "KXLALIGABTTS-26SEP17RBBGET-BTTS",
+     "price": 2.095,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.5,
+     "bid": 0.48,
+     "fair": 0.49,
+     "fee": 0.0175,
+     "market": "KXLALIGATEAMTOTAL-26SEP17RBBGET-RBB2",
+     "price": 1.932,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.7,
+     "bid": 0.69,
+     "fair": 0.695,
+     "fee": 0.0148,
+     "market": "KXLALIGATOTAL-26SEP17RBBGET-2",
+     "price": 1.399,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.44,
+     "bid": 0.43,
+     "fair": 0.435,
+     "fee": 0.0173,
+     "market": "KXLALIGATOTAL-26SEP17RBBGET-3",
+     "price": 2.187,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-16T12:05:44+00:00"
+ "updated_at": "2026-09-16T17:20:01+00:00"
 }

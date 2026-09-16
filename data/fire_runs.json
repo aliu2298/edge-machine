@@ -1388,6 +1388,21 @@
    "team": "Atl\u00e9tico Madrid",
    "test_date": "2026-09-16"
   },
+  "Atl\u00e9tico Madrid|over15|2026-09-20|Atl\u00e9tico Madrid|Real Madrid": {
+   "home": true,
+   "id": "Atl\u00e9tico Madrid|over15|2026-09-20|Atl\u00e9tico Madrid|Real Madrid",
+   "key": "over15",
+   "kickoff": "2026-09-20T14:15Z",
+   "label": "over 1.5 goals",
+   "league": "La Liga",
+   "length": 11,
+   "logged_at": "2026-09-16T17:20:01+00:00",
+   "opp": "Real Madrid",
+   "rate": 0.13494809688581316,
+   "status": "pending",
+   "team": "Atl\u00e9tico Madrid",
+   "test_date": "2026-09-20"
+  },
   "Atl\u00e9tico Madrid|scoring1|2026-08-29|Atl\u00e9tico Madrid|Sevilla": {
    "graded_at": "2026-08-30T14:51:28+00:00",
    "home": false,
@@ -10144,5 +10159,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-16T12:05:44+00:00"
+ "updated_at": "2026-09-16T17:20:01+00:00"
 }
