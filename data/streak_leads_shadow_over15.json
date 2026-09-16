@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-16T17:19:58+00:00",
+ "board_built_at": "2026-09-16T21:44:49+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
    "a": "Internazionale",
@@ -569,7 +569,9 @@
     "n": 2
    },
    "date": "2026-09-16",
+   "final": "0-2",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-16T21:44:50+00:00",
    "headline": "Over 1.5 goals",
    "home": "AC Milan",
    "id": "2026-09-16|AC Milan|Benfica|Over 1.5 goals",
@@ -584,6 +586,20 @@
     "over25": 0.5888
    },
    "modelled_at": "2026-09-14T19:58:15+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.247
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-14T19:58:15+00:00",
    "prices": {
     "btts": {
@@ -615,7 +631,7 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals": {
@@ -632,7 +648,9 @@
     "n": 2
    },
    "date": "2026-09-16",
+   "final": "7-2",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-16T21:44:50+00:00",
    "headline": "Over 1.5 goals",
    "home": "Barcelona",
    "id": "2026-09-16|Barcelona|Racing Santander|Over 1.5 goals",
@@ -647,6 +665,20 @@
     "over25": 0.6607
    },
    "modelled_at": "2026-09-14T19:58:15+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.896
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.039
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.139
+    }
+   },
    "priced_at": "2026-09-14T19:58:15+00:00",
    "prices": {
     "btts": {
@@ -677,7 +709,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-16|Deportivo|Sevilla|Over 1.5 goals": {
@@ -694,7 +726,9 @@
     "n": 2
    },
    "date": "2026-09-16",
+   "final": "0-1",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-16T21:44:50+00:00",
    "headline": "Over 1.5 goals",
    "home": "Deportivo",
    "id": "2026-09-16|Deportivo|Sevilla|Over 1.5 goals",
@@ -709,6 +743,20 @@
     "over25": 0.4982
    },
    "modelled_at": "2026-09-14T19:58:15+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-14T19:58:15+00:00",
    "prices": {
     "btts": {
@@ -741,7 +789,7 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 11
   },
   "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals": {
@@ -758,7 +806,9 @@
     "n": 2
    },
    "date": "2026-09-16",
+   "final": "0-0",
    "first_seen": "2026-09-14",
+   "graded_at": "2026-09-16T21:44:50+00:00",
    "headline": "Over 1.5 goals",
    "home": "SK Sturm Graz",
    "id": "2026-09-16|SK Sturm Graz|Stade Rennais|Over 1.5 goals",
@@ -773,6 +823,20 @@
     "over25": 0.5621
    },
    "modelled_at": "2026-09-14T19:58:15+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over25": {
+     "hit": false,
+     "pnl": -1.0
+    }
+   },
    "priced_at": "2026-09-14T19:58:15+00:00",
    "prices": {
     "btts": {
@@ -804,7 +868,7 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending",
+   "status": "miss",
    "strength": 12
   },
   "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals": {
@@ -827,7 +891,7 @@
    "id": "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals",
    "kickoff": "2026-09-17T19:00Z",
    "last_seen": "2026-09-16",
-   "last_seen_at": "2026-09-16T17:19:58+00:00",
+   "last_seen_at": "2026-09-16T21:44:49+00:00",
    "league": "Europa League",
    "match": "Juventus v NEC Nijmegen",
    "model": {
@@ -889,7 +953,7 @@
    "id": "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals",
    "kickoff": "2026-09-17T16:45Z",
    "last_seen": "2026-09-16",
-   "last_seen_at": "2026-09-16T17:19:58+00:00",
+   "last_seen_at": "2026-09-16T21:44:49+00:00",
    "league": "Europa League",
    "match": "OFI Crete v TSG Hoffenheim",
    "model": {
@@ -930,7 +994,260 @@
    },
    "status": "pending",
    "strength": 10
+  },
+  "2026-09-18|Brentford|Chelsea|Over 1.5 goals": {
+   "a": "Brentford",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Chelsea",
+   "b": "Chelsea",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2175226586102719,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-18",
+   "first_seen": "2026-09-16",
+   "headline": "Over 1.5 goals",
+   "home": "Brentford",
+   "id": "2026-09-18|Brentford|Chelsea|Over 1.5 goals",
+   "kickoff": "2026-09-18T19:00Z",
+   "last_seen": "2026-09-16",
+   "last_seen_at": "2026-09-16T21:44:49+00:00",
+   "league": "Premier League",
+   "match": "Brentford v Chelsea",
+   "model": {
+    "btts": 0.5558,
+    "over15": 0.7827,
+    "over25": 0.5501
+   },
+   "modelled_at": "2026-09-16T21:44:49+00:00",
+   "priced_at": "2026-09-16T21:44:49+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.68,
+     "bid": 0.67,
+     "fair": 0.675,
+     "fee": 0.0153,
+     "market": "KXEPLBTTS-26SEP18BRECFC-BTTS",
+     "price": 1.438,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.86,
+     "bid": 0.85,
+     "event": "epl-bre-cfc-2026-09-18",
+     "fair": 0.855,
+     "fee": 0.0072,
+     "market": "tsc-epl-bre-cfc-2026-09-18-1pt5",
+     "price": 1.153,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.66,
+     "bid": 0.65,
+     "event": "epl-bre-cfc-2026-09-18",
+     "fair": 0.655,
+     "fee": 0.0135,
+     "market": "tsc-epl-bre-cfc-2026-09-18-2pt5",
+     "price": 1.485,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-18|Espanyol|Elche|Over 1.5 goals": {
+   "a": "Espanyol",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Elche",
+   "b": "Elche",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.29003021148036257,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-18",
+   "first_seen": "2026-09-16",
+   "headline": "Over 1.5 goals",
+   "home": "Espanyol",
+   "id": "2026-09-18|Espanyol|Elche|Over 1.5 goals",
+   "kickoff": "2026-09-18T19:00Z",
+   "last_seen": "2026-09-16",
+   "last_seen_at": "2026-09-16T21:44:49+00:00",
+   "league": "La Liga",
+   "match": "Espanyol v Elche",
+   "model": {
+    "btts": 0.5271,
+    "over15": 0.7445,
+    "over25": 0.4971
+   },
+   "modelled_at": "2026-09-16T21:44:49+00:00",
+   "priced_at": "2026-09-16T21:44:49+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.55,
+     "bid": 0.54,
+     "fair": 0.545,
+     "fee": 0.0174,
+     "market": "KXLALIGABTTS-26SEP18ESPELC-BTTS",
+     "price": 1.762,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.77,
+     "bid": 0.76,
+     "event": "lal-esp-elc-2026-09-18",
+     "fair": 0.765,
+     "fee": 0.0106,
+     "market": "tsc-lal-esp-elc-2026-09-18-1pt5",
+     "price": 1.281,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.53,
+     "bid": 0.52,
+     "event": "lal-esp-elc-2026-09-18",
+     "fair": 0.525,
+     "fee": 0.0149,
+     "market": "tsc-lal-esp-elc-2026-09-18-2pt5",
+     "price": 1.835,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals": {
+   "a": "FC Groningen",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "PEC Zwolle",
+   "b": "PEC Zwolle",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.29003021148036257,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-18",
+   "first_seen": "2026-09-16",
+   "headline": "Over 1.5 goals",
+   "home": "FC Groningen",
+   "id": "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals",
+   "kickoff": "2026-09-18T18:00Z",
+   "last_seen": "2026-09-16",
+   "last_seen_at": "2026-09-16T21:44:49+00:00",
+   "league": "Eredivisie",
+   "match": "FC Groningen v PEC Zwolle",
+   "model": {
+    "btts": 0.7035,
+    "over15": 0.899,
+    "over25": 0.7434
+   },
+   "modelled_at": "2026-09-16T21:44:49+00:00",
+   "priced_at": "2026-09-16T21:44:49+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.65,
+     "bid": 0.63,
+     "fair": 0.64,
+     "fee": 0.016,
+     "market": "KXEREDIVISIEBTTS-26SEP18GROZWO-BTTS",
+     "price": 1.502,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.87,
+     "bid": 0.85,
+     "fair": 0.86,
+     "fee": 0.008,
+     "market": "KXEREDIVISIETOTAL-26SEP18GROZWO-2",
+     "price": 1.139,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.67,
+     "bid": 0.65,
+     "fair": 0.66,
+     "fee": 0.0155,
+     "market": "KXEREDIVISIETOTAL-26SEP18GROZWO-3",
+     "price": 1.459,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-18|Monza|Sassuolo|Over 1.5 goals": {
+   "a": "Monza",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Sassuolo",
+   "b": "Sassuolo",
+   "b_key": "scoring1",
+   "b_run": 5,
+   "base_rate": 0.27492447129909364,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-18",
+   "first_seen": "2026-09-16",
+   "headline": "Over 1.5 goals",
+   "home": "Monza",
+   "id": "2026-09-18|Monza|Sassuolo|Over 1.5 goals",
+   "kickoff": "2026-09-18T18:45Z",
+   "last_seen": "2026-09-16",
+   "last_seen_at": "2026-09-16T21:44:49+00:00",
+   "league": "Serie A",
+   "match": "Monza v Sassuolo",
+   "model": {
+    "btts": 0.5616,
+    "over15": 0.7639,
+    "over25": 0.5236
+   },
+   "modelled_at": "2026-09-16T21:44:49+00:00",
+   "priced_at": "2026-09-16T21:44:49+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.59,
+     "bid": 0.57,
+     "fair": 0.58,
+     "fee": 0.017,
+     "market": "KXSERIEABTTS-26SEP18MONSAS-BTTS",
+     "price": 1.647,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.78,
+     "bid": 0.76,
+     "event": "sea-mon-sas-2026-09-18",
+     "fair": 0.77,
+     "fee": 0.0103,
+     "market": "tsc-sea-mon-sas-2026-09-18-1pt5",
+     "price": 1.265,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.53,
+     "bid": 0.52,
+     "fair": 0.525,
+     "fee": 0.0175,
+     "market": "KXSERIEATOTAL-26SEP18MONSAS-3",
+     "price": 1.826,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 11
   }
  },
- "updated_at": "2026-09-16T17:19:58+00:00"
+ "updated_at": "2026-09-16T21:44:50+00:00"
 }
