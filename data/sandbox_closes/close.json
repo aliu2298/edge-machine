@@ -100,6 +100,11 @@
    "lead_min": 14.4,
    "price": 0.41
   },
+  "espn_fpi:aec-mlb-nyy-min-2026-09-16": {
+   "at": "2026-09-16T17:16:20+00:00",
+   "lead_min": 23.7,
+   "price": 0.615
+  },
   "mlb_fade_streak:aec-mlb-bal-nym-2026-09-14": {
    "at": "2026-09-14T22:44:07+00:00",
    "lead_min": 25.9,
@@ -160,6 +165,11 @@
    "lead_min": 50.5,
    "price": 0.55
   },
+  "scores24:KXWTAMATCH-26SEP16SEMKOS": {
+   "at": "2026-09-16T17:16:20+00:00",
+   "lead_min": 43.7,
+   "price": 0.56
+  },
   "scores24:aec-mlb-bos-tex-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 54.7,
@@ -179,6 +189,11 @@
    "at": "2026-09-16T01:25:33+00:00",
    "lead_min": 14.4,
    "price": 0.41
+  },
+  "scores24:aec-mlb-nyy-min-2026-09-16": {
+   "at": "2026-09-16T17:16:20+00:00",
+   "lead_min": 23.7,
+   "price": 0.615
   },
   "scores24:aec-mlb-sea-laa-2026-09-14": {
    "at": "2026-09-15T01:24:59+00:00",
@@ -270,6 +285,16 @@
    "lead_min": 1.1,
    "price": 0.84
   },
+  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP16MALMMO": {
+   "at": "2026-09-16T17:16:20+00:00",
+   "lead_min": 53.7,
+   "price": 0.76
+  },
+  "tennis_fav_band:KXWTAMATCH-26SEP16SONJOV": {
+   "at": "2026-09-16T17:16:20+00:00",
+   "lead_min": 43.7,
+   "price": 0.79
+  },
   "tennis_fav_band:aec-atp-karsel-micmmo-2026-09-14": {
    "at": "2026-09-14T22:44:07+00:00",
    "lead_min": 15.9,
@@ -346,5 +371,5 @@
    "price": 0.58
   }
  },
- "updated": "2026-09-16T12:34:39+00:00"
+ "updated": "2026-09-16T17:16:20+00:00"
 }
