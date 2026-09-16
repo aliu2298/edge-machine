@@ -536,6 +536,11 @@ whole record since it last entered the Sandbox, not only on bets after the promo
 sport keeps 30 / 14 days / z ≥ 1, 50 / 28 days / z ≥ 2 and 30. A tennis rule logs ~50 bets a day, so it
 met every other gate in two days and then waited two weeks on the calendar alone.
 
+**Pairs moved by hand (2026-09-16).** `PAIR_OVERRIDES` lists pairs moved to QA whatever the entry gate
+says, judged on their whole record, and marked production-ready the run that record reaches
+`production_at` settled bets while profitable after fees (no hold period, no other ready check;
+demotion still applies). SoccerPredictions · Soccer is the first: moved at 69 bets, production at 70.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into

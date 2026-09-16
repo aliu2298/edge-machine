@@ -62,7 +62,7 @@ def entered_at(pair):
 def route_label(pair):
     ft = pair.get("fast_track") or {}
     if pair.get("ready_at"):
-        return "passed QA"
+        return "moved by hand" if pair.get("by_hand") else "passed QA"
     return f"fast track · {ft.get('state')}"
 
 

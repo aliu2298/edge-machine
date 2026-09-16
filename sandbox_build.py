@@ -728,7 +728,7 @@ def qa_page(d, st, style):
     qa_rows, n_ready = [], 0
     for key, pair in sorted(in_qa.items(), key=lambda kv: kv[1]["promoted_at"]):
         name, sport = key.split("|")
-        a = T.assess(d, name, sport, since=T.qa_since(pair, sport), venues=T.TRADEABLE_VENUES)
+        a = T.assess(d, name, sport, since=T.qa_since(pair, sport, key), venues=T.TRADEABLE_VENUES)
         gate = T.ready_gate(a)
         passed, cells = _ticks(gate)
         ready = passed == len(gate)
@@ -743,7 +743,7 @@ def qa_page(d, st, style):
             status = f'<span class="sig w">IN QA · {passed}/{len(gate)}</span>'
         ready = bool(pair.get("ready_at"))
         qa_rows.append(f"""<tr><td><b>{esc(label(key))}</b>
-<div class="sm mut">promoted {esc(pair['promoted_at'][:10])} on {pair.get('entry', {}).get('n', '?')} sandbox bets{' · judged on its whole record' if T.sport_rules(sport).get('qa_counts_sandbox') else ''}</div></td>
+<div class="sm mut">promoted {esc(pair['promoted_at'][:10])} on {pair.get('entry', {}).get('n', '?')} sandbox bets{(' · moved by hand · production at ' + str(T.PAIR_OVERRIDES[key]['production_at']) + ' bets') if key in T.PAIR_OVERRIDES else (' · judged on its whole record' if T.sport_rules(sport).get('qa_counts_sandbox') else '')}</div></td>
 <td>{status}</td>
 <td class="num">{a['n']}<div class="sm mut">{a['span_days']:.0f} days</div></td>
 <td class="num"><span class="{cls(a['roi']) if a['n'] >= MIN_N else 'mut'}">{pct(a['roi'], sign=True)}</span>

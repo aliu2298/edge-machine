@@ -109,10 +109,20 @@ SPORT_RULES = {
 }
 
 
-def qa_since(pair, sport):
+# ---- Pairs moved by hand (2026-09-16) -----------------------------------------------------
+# A pair listed here is moved to QA on the next run whatever the entry gate says, is judged on
+# its whole record (Sandbox bets included), and is marked production-ready the run its record
+# reaches `production_at` settled bets while still profitable after fees — no hold period and
+# no other ready check. Demotion still applies. Asked for on 2026-09-16 for SoccerPredictions.
+PAIR_OVERRIDES = {
+    "soccerpredictions|soccer": dict(moved_on="2026-09-16", production_at=70),
+}
+
+
+def qa_since(pair, sport, key=None):
     """Where a QA pair's judged record starts: its promotion, or — where the sport counts the
     Sandbox record (qa_counts_sandbox) — where its Sandbox record started."""
-    if sport_rules(sport).get("qa_counts_sandbox"):
+    if sport_rules(sport).get("qa_counts_sandbox") or key in PAIR_OVERRIDES:
         return pair.get("entry_since")          # None = its whole record
     return pair["promoted_at"]
 
@@ -1309,15 +1319,37 @@ def evaluate_stages(d, st, now=None, verbose=True):
                     pair = dict(pair, fast_track=ft)
                 st["pairs"][key] = pair
                 continue
-            if pair["stage"] == "sandbox":
+            ov = PAIR_OVERRIDES.get(key)
+            if pair["stage"] == "sandbox" and ov and not pair.get("demoted_at"):
+                a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
+                pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a),
+                            entry_since=pair.get("since"), by_hand=ov["moved_on"])
+                changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a),
+                                    reason=f"moved to QA by hand on {ov['moved_on']}"))
+            elif pair["stage"] == "sandbox":
                 a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
                 if a["n"] and all(p for _k, _l, p, _d in qa_entry(a)):
                     pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a),
                                 entry_since=pair.get("since"))
                     changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a)))
             elif pair["stage"] == "qa":
-                a = assess(d, name, sport, since=qa_since(pair, sport), venues=TRADEABLE_VENUES)
+                a = assess(d, name, sport, since=qa_since(pair, sport, key), venues=TRADEABLE_VENUES)
                 why = demote_reason(d, name, sport, pair, a, now)
+                if why:
+                    pass
+                elif ov and ov.get("production_at"):
+                    ok = a["n"] >= ov["production_at"] and (a["roi_fee"] or 0) > 0
+                    if ok and not pair.get("ready_at"):
+                        pair = dict(pair, ready_since=now_s, ready_at=now_s)
+                        changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a),
+                                            reason=f"reached {ov['production_at']} settled bets, profitable after fees (set by hand)"))
+                    elif not ok and pair.get("ready_at"):
+                        changes.append(dict(pair=key, to="unready", at=now_s, evidence=_snapshot(a),
+                                            reason="no longer profitable after fees"))
+                        pair = {k: v for k, v in pair.items() if k not in ("ready_since", "ready_at")}
+                    if pair.get("stage") != "sandbox" or key in st["pairs"]:
+                        st["pairs"][key] = pair
+                    continue
                 if why:
                     pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
                     changes.append(dict(pair=key, to="sandbox", at=now_s, evidence=_snapshot(a),

@@ -2576,6 +2576,32 @@ eq(T.assess(_dh, "tennis_fav_band", "tennis", since=T.qa_since(_pq, "tennis"), v
 eq(T.qa_since(dict(promoted_at="2026-09-20T00:00:00+00:00"), "mlb"), "2026-09-20T00:00:00+00:00",
    "every other sport is still judged on fresh bets only")
 
+
+print("\nSoccerPredictions moved to QA by hand; production at 70 bets")
+def _spq(i, won):
+    # a tipster that mixes favourites and underdogs, so it can beat both blind rules
+    pick = "a" if i % 2 == 0 else "b"
+    price = 0.45 if pick == "a" else 0.33
+    return dict(id=f"sp:{i}", source="soccerpredictions", sport="soccer", market_id=f"KXEPLGAME-26SEP{10+i%9}X{i}",
+                venue="kalshi", bet=True, pick=pick, price=price, price_a=0.45, price_b=0.33, price_draw=0.25,
+                result=pick if won else "draw", status="won" if won else "lost",
+                pnl=round(100 * (1 / price - 1), 2) if won else -100.0, stake=100.0,
+                start=(datetime(2026, 9, 1, tzinfo=timezone.utc) + timedelta(hours=i * 3)).isoformat(),
+                logged="2026-09-01T00:00:00+00:00")
+_spd = {"quotes": [_spq(i, i % 3 != 0) for i in range(20)]}
+_sps = {"pairs": {}, "events": []}
+T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 17, tzinfo=timezone.utc), verbose=False)
+_spp = _sps["pairs"]["soccerpredictions|soccer"]
+eq((_spp["stage"], _spp.get("by_hand"), _spp.get("ready_at")), ("qa", "2026-09-16", None),
+   "moved to QA on the next run with only 20 bets, not ready yet")
+_spd["quotes"] += [_spq(i, i % 3 != 0) for i in range(20, 70)]
+T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 18, tzinfo=timezone.utc), verbose=False)
+ok(_sps["pairs"]["soccerpredictions|soccer"].get("ready_at"), "at 70 settled bets, profitable after fees, it is in Production")
+ok("soccerpredictions|soccer" in PR.production_pairs(_sps), "and the Production feed lists it")
+_spd["quotes"] = [dict(q, status="lost", result="draw", pnl=-100.0) if int(q["id"].split(":")[1]) % 3 else q for q in _spd["quotes"]]
+T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 18, 6, tzinfo=timezone.utc), verbose=False)
+ok(not _sps["pairs"]["soccerpredictions|soccer"].get("ready_at"), "and leaves it the run it stops being profitable")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
