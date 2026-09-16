@@ -74,7 +74,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated 2026-09-16 01:27 UTC</div>
+<div class="sub">Every source and rule under test, per sport · updated 2026-09-16 07:42 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
@@ -86,57 +86,67 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 
 <div class="tiles">
 <div class="tile"><b class="pos">4</b><span>working</span></div>
-<div class="tile"><b class="">0</b><span>not working</span></div>
+<div class="tile"><b class="neg">1</b><span>not working</span></div>
 <div class="tile"><b>23</b><span>too early to tell</span></div>
 <div class="tile"><b>0</b><span>in QA</span></div>
-<div class="tile"><b>214</b><span>bets running</span></div>
-<div class="tile"><b>13/25</b><span>won today</span></div>
+<div class="tile"><b>201</b><span>bets running</span></div>
+<div class="tile"><b>38/74</b><span>won today</span></div>
 </div>
 
 
 <h2>Sources and rules</h2>
-<div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>4</b></button><button type="button" data-tab="failing">Not working<b>0</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>8</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>12</b></button><button type="button" data-tab="waiting">Waiting for results<b>3</b></button><button type="button" data-tab="all">All</button></div>
+<div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>4</b></button><button type="button" data-tab="failing">Not working<b>1</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>8</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>11</b></button><button type="button" data-tab="waiting">Waiting for results<b>4</b></button><button type="button" data-tab="all">All</button></div>
 <div class="tbl"><table id="pairs"><tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th><th>Road to QA</th><th class="num">Last bet</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 4</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ settled bets and ahead of the price: wins beat what the prices implied and ROI is positive.</td></tr><tr data-g="working">
-<td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
-<div class="sm mut">MLB · Tipster site</div></summary>
-<div class="sm mut">A published computer pick per game, free and dated. It states a projected SCORE rather than a probability, so it is backed at the market price with no edge filter and gets no Brier column — a pick cannot be calibrated.</div></details></td>
-<td class="num">41<div class="sm mut">12 open</div></td>
-<td class="num">30 v 23.6<div class="sm mut">z +2.05</div></td>
-<td class="num"><span class="pos">+28.8%</span></td>
-<td class="num"><span class="pos">+5.1pp</span></td>
-<td class="num"><span class="mut">+1.3¢</span><div class="sm mut">12 closes</div></td>
-<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">3/4 QA gates</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
 <div class="sm mut">MLB · Statistical model</div></summary>
 <div class="sm mut">ESPN&#x27;s own win probability (gameProjection). A pure model with no money behind it, which makes it the most likely of the four to be beatable.</div></details></td>
-<td class="num">39<div class="sm mut">39 open</div></td>
-<td class="num">25 v 19.6<div class="sm mut">z +1.74</div></td>
-<td class="num"><span class="pos">+28.3%</span></td>
-<td class="num"><span class="pos">+12.5pp</span></td>
-<td class="num"><span class="mut">+2.8¢</span><div class="sm mut">12 closes</div></td>
+<td class="num">49<div class="sm mut">31 open</div></td>
+<td class="num">31 v 24.4<div class="sm mut">z +1.91</div></td>
+<td class="num"><span class="pos">+26.9%</span></td>
+<td class="num"><span class="pos">+13.2pp</span></td>
+<td class="num"><span class="mut">+4.9¢</span><div class="sm mut">21 closes</div></td>
 <td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td class="num mut sm">2026-09-16</td></tr><tr data-g="working">
+<td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
+<div class="sm mut">MLB · Tipster site</div></summary>
+<div class="sm mut">A published computer pick per game, free and dated. It states a projected SCORE rather than a probability, so it is backed at the market price with no edge filter and gets no Brier column — a pick cannot be calibrated.</div></details></td>
+<td class="num">49<div class="sm mut">6 open</div></td>
+<td class="num">33 v 28.1<div class="sm mut">z +1.44</div></td>
+<td class="num"><span class="pos">+18.5%</span></td>
+<td class="num"><span class="pos">+4.3pp</span></td>
+<td class="num"><span class="mut">+1.6¢</span><div class="sm mut">20 closes</div></td>
+<td><span class="bar"><i style="width:33%"></i></span> <span class="sm">10/30</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>Tennis favourite-band rule</b>
 <div class="sm mut">Tennis · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-14. Back the player the exchange prices between 0.75 and 0.90 (the ask), on every tennis match the Sandbox lists. Found in 427 settled matches over four days: players priced 0.75-0.90 won 86.4% against 81.1% priced (+5.2% after fees, z +1.26, 88 bets) — the favourite-longshot bias, which is well documented in tennis. Not significant on its own. Judged against backing the favourite on every match over the same period, so it only counts if this band beats favourites in general.</div></details></td>
-<td class="num">51<div class="sm mut">27 open</div></td>
-<td class="num">44 v 41.6<div class="sm mut">z +0.88</div></td>
-<td class="num"><span class="pos">+6.2%</span></td>
-<td class="num"><span class="pos">+2.0pp</span></td>
-<td class="num"><span class="neg">-0.5¢</span><div class="sm mut">43 closes</div></td>
-<td><span class="bar"><i style="width:100%"></i></span> <span class="sm">51/30</span><div class="sm mut">2/4 QA gates</div></td>
+<td class="num">62<div class="sm mut">24 open</div></td>
+<td class="num">54 v 50.6<div class="sm mut">z +1.13</div></td>
+<td class="num"><span class="pos">+7.2%</span></td>
+<td class="num"><span class="pos">+2.7pp</span></td>
+<td class="num"><span class="neg">-0.5¢</span><div class="sm mut">54 closes</div></td>
+<td><span class="bar"><i style="width:100%"></i></span> <span class="sm">62/30</span><div class="sm mut">3/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>SoccerPredictions.ai</b>
 <div class="sm mut">Soccer · Tipster site</div></summary>
 <div class="sm mut">One published tip per fixture. Only plain Home / Away / Draw calls are scored; combined tips such as &#x27;Home &amp; Over 2.5&#x27; are a different bet and are dropped rather than read as a result pick.</div></details></td>
-<td class="num">68<div class="sm mut">3 open</div></td>
+<td class="num">68<div class="sm mut">4 open</div></td>
 <td class="num">27 v 24.7<div class="sm mut">z +0.58</div></td>
 <td class="num"><span class="pos">+13.1%</span></td>
 <td class="num"><span class="pos">+10.2pp</span></td>
 <td class="num"><span class="mut">-0.1¢</span><div class="sm mut">13 closes</div></td>
 <td><span class="bar"><i style="width:100%"></i></span> <span class="sm">68/30</span><div class="sm mut">2/4 QA gates</div></td>
-<td class="num mut sm">2026-09-16</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · none right now</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ settled bets and not ahead of the price. Kept running — a record can turn — but nothing here is an edge today.</td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 8</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 settled bets, ahead of the price so far. Unreadable yet: watch, don&#x27;t trust.</td></tr><tr data-g="leaning">
+<td class="num mut sm">2026-09-16</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · 1</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ settled bets and not ahead of the price. Kept running — a record can turn — but nothing here is an edge today.</td></tr><tr data-g="failing">
+<td><details class="src"><summary><b>Scores24</b>
+<div class="sm mut">MLB · Tipster site</div></summary>
+<div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
+<td class="num">33<div class="sm mut">7 open</div></td>
+<td class="num">15 v 18.7<div class="sm mut">z -1.30</div></td>
+<td class="num"><span class="neg">-20.6%</span></td>
+<td class="num"><span class="neg">-37.6pp</span></td>
+<td class="num"><span class="mut">-0.5¢</span><div class="sm mut">13 closes</div></td>
+<td><span class="bar"><i style="width:33%"></i></span> <span class="sm">10/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td class="num mut sm">2026-09-16</td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 8</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 settled bets, ahead of the price so far. Unreadable yet: watch, don&#x27;t trust.</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Team scores 1+ form rule</b>
 <div class="sm mut">Soccer · Team 1+ · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it scored in each of its last 5 competitive games and its opponent conceded in each of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. Fast-tracked to Production on probation: 30 settled bets, profitable after fees, z of at least 1 against the prices paid — or back to the normal ladder.</div></details></td>
@@ -147,20 +157,10 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+1.3¢</span><div class="sm mut">3 closes</div></td>
 <td><span class="sig w">FAST TRACK</span><div class="sm mut">probation</div></td>
 <td class="num mut sm">2026-09-14</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>DraftKings</b>
-<div class="sm mut">MLB · Sportsbook</div></summary>
-<div class="sm mut">Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line is the hardest public number to beat, so this is the ceiling.</div></details></td>
-<td class="num">6<div class="sm mut">2 open</div></td>
-<td class="num">4 v 3.0<div class="sm mut">z +0.82</div></td>
-<td class="num"><span class="mut">+44.2%</span></td>
-<td class="num"><span class="mut">-78.6pp</span></td>
-<td class="num"><span class="mut">-4.7¢</span><div class="sm mut">2 closes</div></td>
-<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">2/4 QA gates</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Over 1.5 form rule</b>
 <div class="sm mut">Soccer · Over 1.5 · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-14 from research fixed before it ran. Back over 1.5 at the Kalshi ask where BOTH teams&#x27; games went over 1.5 in at least 9 of their last 10 competitive games (10+ games each, ESPN results strictly before kickoff). Research: 92.9% on 84 matches against the teams&#x27; own earlier 81.4%. At real Kalshi prices in its first week, +2.0% on 20 — the market charges for most of it. The same rule selects the Leads board&#x27;s over-1.5 cards since 2026-09-14.</div></details></td>
-<td class="num">2<div class="sm mut">12 open</div></td>
+<td class="num">2<div class="sm mut">13 open</div></td>
 <td class="num">2 v 1.5<div class="sm mut">z +0.79</div></td>
 <td class="num"><span class="mut">+30.9%</span></td>
 <td class="num"><span class="mut">+33.7pp</span></td>
@@ -190,13 +190,13 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td><details class="src"><summary><b>Under 3.5 low-scoring rule</b>
 <div class="sm mut">Soccer · Under 3.5 · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-14. Back under 3.5 goals (No on Kalshi&#x27;s Over 3.5) where BOTH teams scored 1 or fewer in at least 7 of their last 10 games in this competition (HOF&#x27;s way of counting form; 10+ games each, ESPN results before kickoff). Research: 80.5% on 41 matches against the teams&#x27; own earlier 61.7% (z +2.48); at Kalshi&#x27;s under price just before kickoff 23 of 27 won at ~71% (+20.2% after fees). The same form counted across all competitions gave the same answer. Not significant across the 10 rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. Judged against backing the under on every Kalshi match.</div></details></td>
-<td class="num">1<div class="sm mut">0 open</div></td>
+<td class="num">1<div class="sm mut">1 open</div></td>
 <td class="num">1 v 0.8<div class="sm mut">z +0.52</div></td>
 <td class="num"><span class="mut">+26.6%</span></td>
 <td class="num"><span class="mut">+44.1pp</span></td>
 <td class="num"><span class="mut">-3.0¢</span><div class="sm mut">1 closes</div></td>
 <td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 QA gates</div></td>
-<td class="num mut sm">2026-09-14</td></tr><tr data-g="leaning">
+<td class="num mut sm">2026-09-16</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Scores24</b>
 <div class="sm mut">Soccer · Tipster site</div></summary>
 <div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
@@ -207,6 +207,16 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num">—</td>
 <td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">1/4 QA gates</div></td>
 <td class="num mut sm">2026-09-13</td></tr><tr data-g="leaning">
+<td><details class="src"><summary><b>DraftKings</b>
+<div class="sm mut">MLB · Sportsbook</div></summary>
+<div class="sm mut">Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line is the hardest public number to beat, so this is the ceiling.</div></details></td>
+<td class="num">7<div class="sm mut">1 open</div></td>
+<td class="num">4 v 3.4<div class="sm mut">z +0.46</div></td>
+<td class="num"><span class="mut">+23.6%</span></td>
+<td class="num"><span class="mut">-67.4pp</span></td>
+<td class="num"><span class="mut">-3.3¢</span><div class="sm mut">3 closes</div></td>
+<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">1/4 QA gates</div></td>
+<td class="num mut sm">2026-09-15</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>OLBG community tips</b>
 <div class="sm mut">Boxing · Tipster site</div></summary>
 <div class="sm mut">A tipster community whose members post a Win Fight tip per bout. Reduced to one call per fight: a fighter must be the most popular selection, with at least three tips and a strict majority of them. Its tipsters compete on profit and often pile onto the draw at long odds; a fight whose top tip is the draw is no call, because the venue fight markets are two-way. Boxing, UFC and other MMA share its one listing page. The only connected tipster for either.</div></details></td>
@@ -216,16 +226,16 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+0.0pp</span></td>
 <td class="num"><span class="mut">+0.0¢</span><div class="sm mut">1 closes</div></td>
 <td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
-<td class="num mut sm">2026-09-13</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 12</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 settled bets, behind the price so far.</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Kalshi</b>
-<div class="sm mut">MLB · Prediction market</div></summary>
-<div class="sm mut">A second regulated exchange. Where the two exchanges disagree, one of them is mispriced, and this is the lane that finds out which.</div></details></td>
-<td class="num">9<div class="sm mut">14 open</div></td>
-<td class="num">4 v 4.3<div class="sm mut">z -0.21</div></td>
-<td class="num"><span class="mut">-10.2%</span></td>
-<td class="num"><span class="mut">-31.0pp</span></td>
-<td class="num"><span class="mut">-0.5¢</span><div class="sm mut">6 closes</div></td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td class="num mut sm">2026-09-13</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 11</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 settled bets, behind the price so far.</td></tr><tr data-g="behind">
+<td><details class="src"><summary><b>Polymarket</b>
+<div class="sm mut">Tennis · Prediction market</div></summary>
+<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
+<td class="num">5<div class="sm mut">2 open</div></td>
+<td class="num">2 v 2.1<div class="sm mut">z -0.14</div></td>
+<td class="num"><span class="mut">-40.2%</span></td>
+<td class="num"><span class="mut">-83.7pp</span></td>
+<td class="num"><span class="mut">+3.0¢</span><div class="sm mut">4 closes</div></td>
+<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
 <div class="sm mut">NFL · Tipster site</div></summary>
@@ -236,16 +246,6 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-43.5pp</span></td>
 <td class="num"><span class="mut">+2.0¢</span><div class="sm mut">11 closes</div></td>
 <td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
-<td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Polymarket</b>
-<div class="sm mut">Tennis · Prediction market</div></summary>
-<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
-<td class="num">3<div class="sm mut">3 open</div></td>
-<td class="num">1 v 1.3<div class="sm mut">z -0.37</div></td>
-<td class="num"><span class="mut">-47.9%</span></td>
-<td class="num"><span class="mut">-101.2pp</span></td>
-<td class="num"><span class="mut">+0.5¢</span><div class="sm mut">2 closes</div></td>
-<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">Tennis · Sportsbook</div></summary>
@@ -267,16 +267,16 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-2.0¢</span><div class="sm mut">1 closes</div></td>
 <td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-15</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Scores24</b>
-<div class="sm mut">Tennis · Tipster site</div></summary>
-<div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
-<td class="num">21<div class="sm mut">4 open</div></td>
-<td class="num">10 v 11.2<div class="sm mut">z -0.53</div></td>
-<td class="num"><span class="mut">-16.2%</span></td>
-<td class="num"><span class="mut">-61.5pp</span></td>
-<td class="num"><span class="mut">+1.1¢</span><div class="sm mut">8 closes</div></td>
-<td><span class="bar"><i style="width:20%"></i></span> <span class="sm">6/30</span><div class="sm mut">0/4 QA gates</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr data-g="behind">
+<td><details class="src"><summary><b>Kalshi</b>
+<div class="sm mut">MLB · Prediction market</div></summary>
+<div class="sm mut">A second regulated exchange. Where the two exchanges disagree, one of them is mispriced, and this is the lane that finds out which.</div></details></td>
+<td class="num">10<div class="sm mut">14 open</div></td>
+<td class="num">4 v 4.9<div class="sm mut">z -0.56</div></td>
+<td class="num"><span class="mut">-19.2%</span></td>
+<td class="num"><span class="mut">-27.9pp</span></td>
+<td class="num"><span class="mut">-0.5¢</span><div class="sm mut">6 closes</div></td>
+<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>OLBG community tips</b>
 <div class="sm mut">MMA · Tipster site</div></summary>
 <div class="sm mut">A tipster community whose members post a Win Fight tip per bout. Reduced to one call per fight: a fighter must be the most popular selection, with at least three tips and a strict majority of them. Its tipsters compete on profit and often pile onto the draw at long odds; a fight whose top tip is the draw is no call, because the venue fight markets are two-way. Boxing, UFC and other MMA share its one listing page. The only connected tipster for either.</div></details></td>
@@ -308,19 +308,19 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-13</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Scores24</b>
-<div class="sm mut">MLB · Tipster site</div></summary>
+<div class="sm mut">Tennis · Tipster site</div></summary>
 <div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
-<td class="num">26<div class="sm mut">7 open</div></td>
-<td class="num">12 v 14.8<div class="sm mut">z -1.12</div></td>
-<td class="num"><span class="mut">-23.0%</span></td>
-<td class="num"><span class="mut">-26.2pp</span></td>
-<td class="num"><span class="mut">+0.2¢</span><div class="sm mut">7 closes</div></td>
-<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">0/4 QA gates</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr data-g="behind">
+<td class="num">23<div class="sm mut">3 open</div></td>
+<td class="num">10 v 12.4<div class="sm mut">z -1.03</div></td>
+<td class="num"><span class="mut">-23.5%</span></td>
+<td class="num"><span class="mut">-56.1pp</span></td>
+<td class="num"><span class="mut">+1.0¢</span><div class="sm mut">9 closes</div></td>
+<td><span class="bar"><i style="width:26%"></i></span> <span class="sm">8/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Team +0.5 unbeaten rule</b>
 <div class="sm mut">Soccer · Team +0.5 · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-14. Back a team not to lose (+0.5: No on Kalshi&#x27;s market for its opponent to win) where the team is unbeaten in 8+ of its last 10 games in this competition and the opponent won 3 or fewer of its last 10 there (HOF&#x27;s windows, 10+ games each, ESPN results before kickoff). Research: 82.5% on 97 against the teams&#x27; own earlier 70.6% (z +2.56); none of 1,000 shuffled worlds produced a spread rule this strong across the six tried; at Kalshi&#x27;s price just before kickoff 54 of 64 won at ~77% (+11.2% after fees). 37 of those 64 were MLS. Judged against backing No on every Kalshi win market over the same period.</div></details></td>
-<td class="num">2<div class="sm mut">7 open</div></td>
+<td class="num">2<div class="sm mut">8 open</div></td>
 <td class="num">1 v 1.7<div class="sm mut">z -1.42</div></td>
 <td class="num"><span class="mut">-46.2%</span></td>
 <td class="num"><span class="mut">-33.6pp</span></td>
@@ -336,7 +336,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-121.2pp</span></td>
 <td class="num"><span class="mut">-0.6¢</span><div class="sm mut">4 closes</div></td>
 <td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">0/4 QA gates</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr class="grp " data-g="waiting"><td colspan="8">Waiting for results · 3</td></tr><tr data-g="waiting"><td colspan="8" class="mut sm">Bets logged, nothing settled yet.</td></tr><tr data-g="waiting">
+<td class="num mut sm">2026-09-15</td></tr><tr class="grp " data-g="waiting"><td colspan="8">Waiting for results · 4</td></tr><tr data-g="waiting"><td colspan="8" class="mut sm">Bets logged, nothing settled yet.</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>Polymarket</b>
 <div class="sm mut">Cricket · Prediction market</div></summary>
 <div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
@@ -350,7 +350,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td><details class="src"><summary><b>Polymarket</b>
 <div class="sm mut">MLB · Prediction market</div></summary>
 <div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
-<td class="num">0<div class="sm mut">10 open</div></td>
+<td class="num">0<div class="sm mut">12 open</div></td>
 <td class="num">—<div class="sm mut"></div></td>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
@@ -360,7 +360,17 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td><details class="src"><summary><b>BTTS form rule</b>
 <div class="sm mut">Soccer · BTTS · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-13, with no fitted number. Back Yes at the Kalshi ask on every match where BOTH teams saw both teams score in at least 7 of their last 10 competitive games (ESPN results strictly before kickoff). Found in research: +10pp over the teams&#x27; own earlier rate on 77 matches, but inside one period, not significant across the rules tried, and on 14 priced matches the market already charged for it. The Sandbox decides.</div></details></td>
-<td class="num">0<div class="sm mut">8 open</div></td>
+<td class="num">0<div class="sm mut">9 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num"><span class="mut">—</span></td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td class="num mut sm">2026-09-16</td></tr><tr data-g="waiting">
+<td><details class="src"><summary><b>Pinnacle</b>
+<div class="sm mut">MMA · Sportsbook</div></summary>
+<div class="sm mut">The sharpest book there is — it takes the largest limits and moves on sharp money rather than shading against the public — de-vigged to a fair probability and read through The Odds API (ODDS_API_KEY), and backed where it beats the venue&#x27;s ask by 3pp. Planned after every other source: the month&#x27;s paced credits go first to the sport keys with the most contests no tipster, model or book covers. Soccer is de-vigged three-way. Coverage is partial: boxing and MMA well, soccer by league, cricket on majors and internationals, tennis only at the big tournaments — not ITF or Challenger.</div></details></td>
+<td class="num">0<div class="sm mut">7 open</div></td>
 <td class="num">—<div class="sm mut"></div></td>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
@@ -373,21 +383,21 @@ the rule's own population) on the same contests. <b>Beat the close</b>: closing 
 <b>Road to QA</b>: settled bets on the US exchanges against the 30 QA needs, and how many of its
 four entry gates hold. Click a source for what it is. Grey figures are under 30 bets.</div>
 
-<h2>Running now (214)</h2>
+<h2>Running now (201)</h2>
 <input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…"><div id="live"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr class="grp"><td colspan="7">Soccer · 9 running</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>Soccer</td>
-<td><a href="https://kalshi.com/markets/kxligamxgame" target="_blank" rel="noopener">Puebla vs Toluca</a></td>
-<td>SportsGambler</td>
-<td><b>Toluca</b></td>
-<td class="num">0.60</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Soccer</td>
 <td><a href="https://kalshi.com/markets/kxegyplgame" target="_blank" rel="noopener">El Gouna vs Petrojet</a></td>
 <td>SoccerPredictions.ai</td>
 <td><b>Petrojet</b></td>
 <td class="num">0.37</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Soccer</td>
+<td><a href="https://kalshi.com/markets/kxsvkcupgame" target="_blank" rel="noopener">Nitra vs Slovan Bratislava</a></td>
+<td>SoccerPredictions.ai</td>
+<td><b>Slovan Bratislava</b></td>
+<td class="num">0.85</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Soccer</td>
@@ -431,14 +441,14 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Draw</b></td>
 <td class="num">0.31</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-</table></div><details class="more"><summary>Show 206 more running bets</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr><td class="mut">2026-09-16</td>
+</table></div><details class="more"><summary>Show 193 more running bets</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr><td class="mut">2026-09-16</td>
 <td>Soccer</td>
 <td><a href="https://kalshi.com/markets/kxconmebollibgame" target="_blank" rel="noopener">Corinthians vs Estudiantes La Plata</a></td>
 <td>SportsGambler</td>
 <td><b>Corinthians</b></td>
 <td class="num">0.50</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · BTTS · 8 running</td></tr>
+<tr class="grp"><td colspan="7">Soccer · BTTS · 9 running</td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Soccer · BTTS</td>
 <td><a href="https://kalshi.com/markets/kxuelbtts" target="_blank" rel="noopener">SK Sturm Graz v Stade Rennais: both teams to score</a></td>
@@ -495,7 +505,14 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Yes</b></td>
 <td class="num">0.63</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Over 1.5 · 12 running</td></tr>
+<tr><td class="mut">2026-09-20</td>
+<td>Soccer · BTTS</td>
+<td><a href="https://kalshi.com/markets/kxmlsbtts" target="_blank" rel="noopener">Portland Timbers v Atlanta United FC: both teams to score</a></td>
+<td>BTTS form rule</td>
+<td><b>Yes</b></td>
+<td class="num">0.68</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr class="grp"><td colspan="7">Soccer · Over 1.5 · 13 running</td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Soccer · Over 1.5</td>
 <td><a href="https://kalshi.com/markets/kxueltotal" target="_blank" rel="noopener">SK Sturm Graz v Stade Rennais: over 1.5 goals</a></td>
@@ -580,7 +597,22 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Yes</b></td>
 <td class="num">0.85</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Team +0.5 · 7 running</td></tr>
+<tr><td class="mut">2026-09-20</td>
+<td>Soccer · Over 1.5</td>
+<td><a href="https://kalshi.com/markets/kxmlstotal" target="_blank" rel="noopener">Portland Timbers v Atlanta United FC: over 1.5 goals</a></td>
+<td>Over 1.5 form rule</td>
+<td><b>Yes</b></td>
+<td class="num">0.84</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr class="grp"><td colspan="7">Soccer · Under 3.5 · 1 running</td></tr>
+<tr><td class="mut">2026-09-20</td>
+<td>Soccer · Under 3.5</td>
+<td><a href="https://kalshi.com/markets/kxmlstotal" target="_blank" rel="noopener">Colorado Rapids v Seattle Sounders FC: over 3.5 goals</a></td>
+<td>Under 3.5 low-scoring rule</td>
+<td><b>No</b></td>
+<td class="num">0.68</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr class="grp"><td colspan="7">Soccer · Team +0.5 · 8 running</td></tr>
 <tr><td class="mut">2026-09-17</td>
 <td>Soccer · Team +0.5</td>
 <td><a href="https://kalshi.com/markets/kxlaligagame" target="_blank" rel="noopener">Real Betis v Getafe: Getafe to win (No = Real Betis +0.5)</a></td>
@@ -630,7 +662,14 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>No</b></td>
 <td class="num">0.81</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Tennis · 34 running</td></tr>
+<tr><td class="mut">2026-09-20</td>
+<td>Soccer · Team +0.5</td>
+<td><a href="https://kalshi.com/markets/kxmlsgame" target="_blank" rel="noopener">Nashville SC v Chicago Fire FC: Chicago Fire FC to win (No = Nashville SC +0.5)</a></td>
+<td>Team +0.5 unbeaten rule</td>
+<td><b>No</b></td>
+<td class="num">0.77</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr class="grp"><td colspan="7">Tennis · 29 running</td></tr>
 <tr><td class="mut">2026-09-14</td>
 <td>Tennis</td>
 <td><a href="https://kalshi.com/markets/kxwtamatch" target="_blank" rel="noopener">Mary Stoiana vs Claire Liu</a></td>
@@ -668,13 +707,6 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-15</td>
 <td>Tennis</td>
-<td><a href="https://kalshi.com/markets/kxwtamatch" target="_blank" rel="noopener">Sloane Stephens vs Janice Tjen</a></td>
-<td>Scores24</td>
-<td><b>Janice Tjen</b></td>
-<td class="num">0.62</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>Tennis</td>
 <td><a href="https://polymarket.us/event/wta-venval-laupig-2026-09-14" target="_blank" rel="noopener">Vendula Valdmannova vs Laura Pigossi</a></td>
 <td>Tennis favourite-band rule</td>
 <td><b>Vendula Valdmannova</b></td>
@@ -682,101 +714,10 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Tennis</td>
-<td><a href="https://polymarket.us/event/wta-sloste-jantje-2026-09-15" target="_blank" rel="noopener">Sloane Stephens vs Janice Tjen</a></td>
-<td>Scores24</td>
-<td><b>Janice Tjen</b></td>
-<td class="num">0.62</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-remoha-kamyod-2026-09-16" target="_blank" rel="noopener">Remika Ohashi vs Kamonwan Yodpetch</a></td>
-<td>Polymarket</td>
-<td><b>Kamonwan Yodpetch</b></td>
-<td class="num">0.70</td>
-<td class="num pos">+7.0%</td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-remoha-kamyod-2026-09-16" target="_blank" rel="noopener">Remika Ohashi vs Kamonwan Yodpetch</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Kamonwan Yodpetch</b></td>
-<td class="num">0.80</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfme-minzha-chafer-2026-09-16" target="_blank" rel="noopener">Chase Ferguson vs Minghui Zhang</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Minghui Zhang</b></td>
-<td class="num">0.89</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfme-stevuj-yuexia-2026-09-16" target="_blank" rel="noopener">Stefan Vujic vs Yue Xia</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Stefan Vujic</b></td>
-<td class="num">0.82</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-hirkuw-tiaden-2026-09-16" target="_blank" rel="noopener">Hiroko Kuwata vs Tiana Tian Deng</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Tiana Tian Deng</b></td>
-<td class="num">0.80</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-hanshi-chezhu-2026-09-16" target="_blank" rel="noopener">Han Shi vs Chenting Zhu</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Han Shi</b></td>
-<td class="num">0.80</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfme-minzha-chafer-2026-09-16" target="_blank" rel="noopener">Chase Ferguson vs Minghui Zhang</a></td>
-<td>Polymarket</td>
-<td><b>Chase Ferguson</b></td>
-<td class="num">0.14</td>
-<td class="num pos">+70.5%</td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-cheyua-darkho-2026-09-16" target="_blank" rel="noopener">Chengyiyi Yuan vs Daria KHOMUTSIANSKAYA</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Daria KHOMUTSIANSKAYA</b></td>
-<td class="num">0.77</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-erishi-micoze-2026-09-16" target="_blank" rel="noopener">Eri Shimizu vs Michika Ozeki</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Eri Shimizu</b></td>
-<td class="num">0.89</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfme-linyu-maxshi-2026-09-16" target="_blank" rel="noopener">Lin Hao-Yu vs Maxim Shin</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Maxim Shin</b></td>
-<td class="num">0.79</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfme-kaiwan-jinlan-2026-09-16" target="_blank" rel="noopener">Kai-i Wang vs jintao Lan</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Kai-i Wang</b></td>
-<td class="num">0.86</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
 <td><a href="https://polymarket.us/event/itfme-lacvic-qiasun-2026-09-16" target="_blank" rel="noopener">Lachlan Vickery vs Qian Sun</a></td>
 <td>Tennis favourite-band rule</td>
 <td><b>Qian Sun</b></td>
 <td class="num">0.83</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfme-seohan-ivador-2026-09-16" target="_blank" rel="noopener">Seonyong Han vs Ivan Dorokhov</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Seonyong Han</b></td>
-<td class="num">0.78</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Tennis</td>
@@ -791,13 +732,6 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td>Tennis favourite-band rule</td>
 <td><b>Li - Yao</b></td>
 <td class="num">0.89</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Tennis</td>
-<td><a href="https://polymarket.us/event/itfwo-yunkitanrnag-hirabeameraj-2026-09-16" target="_blank" rel="noopener">Kitahara - Nagata vs Abe - Rajecki</a></td>
-<td>Tennis favourite-band rule</td>
-<td><b>Abe - Rajecki</b></td>
-<td class="num">0.77</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Tennis</td>
@@ -829,6 +763,55 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Tennis</td>
+<td><a href="https://polymarket.us/event/atp-gerlee-felgil-2026-09-16" target="_blank" rel="noopener">Felix Gill vs Gerard Campana Lee</a></td>
+<td>Polymarket</td>
+<td><b>Felix Gill</b></td>
+<td class="num">0.34</td>
+<td class="num pos">+31.5%</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://polymarket.us/event/wta-noebas-julstr-2026-09-16" target="_blank" rel="noopener">Noemi Basiletti vs Julie Struplova</a></td>
+<td>Scores24</td>
+<td><b>Noemi Basiletti</b></td>
+<td class="num">0.53</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://polymarket.us/event/itfme-erivan-tymbie-2026-09-16" target="_blank" rel="noopener">Eric Vanshelboim vs Tymur Bieldiugin</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Eric Vanshelboim</b></td>
+<td class="num">0.83</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://polymarket.us/event/itfwo-fraszi-angoku-2026-09-16" target="_blank" rel="noopener">Franziska Sziedat vs Angella Okutoyi</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Angella Okutoyi</b></td>
+<td class="num">0.76</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://polymarket.us/event/itfme-aarfun-essqab-2026-09-16" target="_blank" rel="noopener">Aaron Funk vs Essa Qabazard</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Aaron Funk</b></td>
+<td class="num">0.84</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://polymarket.us/event/itfme-samrug-svecor-2026-09-16" target="_blank" rel="noopener">Samuel Vincent Ruggeri vs Sven Corbinais</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Samuel Vincent Ruggeri</b></td>
+<td class="num">0.78</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://polymarket.us/event/itfme-velkrs-henbes-2026-09-15" target="_blank" rel="noopener">Veljko Krstic vs Henry Best</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Veljko Krstic</b></td>
+<td class="num">0.82</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
 <td><a href="https://kalshi.com/markets/kxatpchallengermatch" target="_blank" rel="noopener">Colin Sinclair vs Rio Noguchi</a></td>
 <td>Tennis favourite-band rule</td>
 <td><b>Rio Noguchi</b></td>
@@ -857,6 +840,20 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Tennis</td>
+<td><a href="https://kalshi.com/markets/kxatpchallengermatch" target="_blank" rel="noopener">Michele Ribecai vs Titouan Droguet</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Titouan Droguet</b></td>
+<td class="num">0.82</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
+<td><a href="https://kalshi.com/markets/kxatpchallengermatch" target="_blank" rel="noopener">Braden Shick vs Jeffrey John Wolf</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Jeffrey John Wolf</b></td>
+<td class="num">0.78</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td>
 <td><a href="https://kalshi.com/markets/kxwtamatch" target="_blank" rel="noopener">Zeynep Sonmez vs Iva Jovic</a></td>
 <td>Tennis favourite-band rule</td>
 <td><b>Iva Jovic</b></td>
@@ -869,50 +866,21 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Teodora Kostovic</b></td>
 <td class="num">0.61</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Table Tennis · 6 running</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>Table Tennis</td>
-<td><a href="https://polymarket.us/event/setkameua-panvol-rubedu-2026-09-15" target="_blank" rel="noopener">Panasenko Volodymyr vs Rubtsov Eduard</a></td>
-<td>Table tennis 0.55-0.60 band</td>
-<td><b>Panasenko Volodymyr</b></td>
-<td class="num">0.59</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
-<td>Table Tennis</td>
-<td><a href="https://polymarket.us/event/setkameua-plapav-misole-2026-09-16" target="_blank" rel="noopener">Plakushchyi Pavel vs Mishchenko Oleksandr</a></td>
-<td>Table tennis 0.55-0.60 band</td>
-<td><b>Plakushchyi Pavel</b></td>
-<td class="num">0.55</td>
+<td>Tennis</td>
+<td><a href="https://kalshi.com/markets/kxatpchallengermatch" target="_blank" rel="noopener">Patrick Maloney vs Michael Mmoh</a></td>
+<td>Tennis favourite-band rule</td>
+<td><b>Michael Mmoh</b></td>
+<td class="num">0.76</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Table Tennis</td>
-<td><a href="https://polymarket.us/event/setkameua-kuzgre-chaboh-2026-09-16" target="_blank" rel="noopener">Kuzmenko Gregory vs Chaikovskyi Bohdan</a></td>
-<td>Table tennis 0.55-0.60 band</td>
-<td><b>Chaikovskyi Bohdan</b></td>
-<td class="num">0.58</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Table Tennis</td>
-<td><a href="https://polymarket.us/event/setkamemd-cosale-gridmi-2026-09-16" target="_blank" rel="noopener">Cosogolov Alexandr vs Gribcov Dmitri</a></td>
-<td>Table tennis 0.55-0.60 band</td>
-<td><b>Gribcov Dmitri</b></td>
-<td class="num">0.55</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Table Tennis</td>
-<td><a href="https://polymarket.us/event/setkameua-konrom-sukiho-2026-09-16" target="_blank" rel="noopener">Konkulovskyi Roman vs Sukovatyi Ihor</a></td>
-<td>Table tennis 0.55-0.60 band</td>
-<td><b>Sukovatyi Ihor</b></td>
-<td class="num">0.56</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>Table Tennis</td>
-<td><a href="https://polymarket.us/event/setkameua-skaser-khavit-2026-09-16" target="_blank" rel="noopener">Skachenko Serhii vs Khamurda Vitalii</a></td>
-<td>Table tennis 0.55-0.60 band</td>
-<td><b>Khamurda Vitalii</b></td>
-<td class="num">0.55</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">MMA · 15 running</td></tr>
+<tr class="grp"><td colspan="7">MMA · 22 running</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-michasw-jooyoo-2026-09-19" target="_blank" rel="noopener">JooSang Yoo vs Michael Aswell Jr.</a></td>
+<td>Pinnacle</td>
+<td><b>JooSang Yoo</b></td>
+<td class="num">0.31</td>
+<td class="num pos">+38.0%</td></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>MMA</td>
 <td><a href="https://polymarket.us/event/ufc-gigchi-joabri-2026-09-19" target="_blank" rel="noopener">Joanderson Brito vs Giga Chikadze</a></td>
@@ -929,11 +897,32 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-gigchi-joabri-2026-09-19" target="_blank" rel="noopener">Joanderson Brito vs Giga Chikadze</a></td>
+<td>Pinnacle</td>
+<td><b>Joanderson Brito</b></td>
+<td class="num">0.24</td>
+<td class="num pos">+53.0%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-casone-edumou-2026-09-19" target="_blank" rel="noopener">Eduarda Moura vs Casey O&#x27;Neill</a></td>
+<td>Pinnacle</td>
+<td><b>Casey O&#x27;Neill</b></td>
+<td class="num">0.36</td>
+<td class="num pos">+28.7%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MMA</td>
 <td><a href="https://polymarket.us/event/ufc-edmsha-brufer-2026-09-19" target="_blank" rel="noopener">Brunno Ferreira vs Edmen Shahbazyan</a></td>
 <td>OLBG community tips</td>
 <td><b>Edmen Shahbazyan</b></td>
 <td class="num">0.40</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-edmsha-brufer-2026-09-19" target="_blank" rel="noopener">Brunno Ferreira vs Edmen Shahbazyan</a></td>
+<td>Pinnacle</td>
+<td><b>Edmen Shahbazyan</b></td>
+<td class="num">0.40</td>
+<td class="num pos">+19.4%</td></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>MMA</td>
 <td><a href="https://kalshi.com/markets/kxufcfight" target="_blank" rel="noopener">Michael Aswell vs Joo Sang Yoo</a></td>
@@ -964,6 +953,13 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-marver-chajou-2026-09-19" target="_blank" rel="noopener">Charles Jourdain vs Marlon Vera</a></td>
+<td>Pinnacle</td>
+<td><b>Charles Jourdain</b></td>
+<td class="num">0.34</td>
+<td class="num pos">+32.0%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MMA</td>
 <td><a href="https://kalshi.com/markets/kxufcfight" target="_blank" rel="noopener">Giga Chikadze vs Joanderson Brito</a></td>
 <td>MMA favourite-band rule</td>
 <td><b>Joanderson Brito</b></td>
@@ -976,6 +972,20 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Joanderson Brito</b></td>
 <td class="num">0.79</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-20</td>
+<td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-alomen-iwobar-2026-09-19" target="_blank" rel="noopener">Iwo Baraniewski vs Alonzo Menifield</a></td>
+<td>Pinnacle</td>
+<td><b>Iwo Baraniewski</b></td>
+<td class="num">0.33</td>
+<td class="num pos">+35.2%</td></tr>
+<tr><td class="mut">2026-09-20</td>
+<td>MMA</td>
+<td><a href="https://polymarket.us/event/ufc-gabste-seasha-2026-09-19" target="_blank" rel="noopener">Sean Sharaf vs Gable Steveson</a></td>
+<td>Pinnacle</td>
+<td><b>Gable Steveson</b></td>
+<td class="num">0.09</td>
+<td class="num pos">+82.1%</td></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>MMA</td>
 <td><a href="https://kalshi.com/markets/kxufcfight" target="_blank" rel="noopener">Edmen Shahbazyan vs Brunno Ferreira</a></td>
@@ -1139,196 +1149,7 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>India</b></td>
 <td class="num">0.09</td>
 <td class="num pos">+79.4%</td></tr>
-<tr class="grp"><td colspan="7">MLB · 85 running</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-lad-cin-2026-09-15" target="_blank" rel="noopener">Los Angeles Dodgers vs Cincinnati Reds</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Los Angeles Dodgers</b></td>
-<td class="num">0.49</td>
-<td class="num pos">+23.9%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-cws-cle-2026-09-15" target="_blank" rel="noopener">Chicago White Sox vs Cleveland Guardians</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Cleveland Guardians</b></td>
-<td class="num">0.51</td>
-<td class="num pos">+6.4%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-mil-pit-2026-09-15" target="_blank" rel="noopener">Milwaukee Brewers vs Pittsburgh Pirates</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Pittsburgh Pirates</b></td>
-<td class="num">0.28</td>
-<td class="num pos">+25.3%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-cws-cle-2026-09-15" target="_blank" rel="noopener">Chicago White Sox vs Cleveland Guardians</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>Cleveland Guardians</b></td>
-<td class="num">0.54</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-det-tor-2026-09-15" target="_blank" rel="noopener">Detroit Tigers vs Toronto Blue Jays</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>Toronto Blue Jays</b></td>
-<td class="num">0.56</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-bal-nym-2026-09-15" target="_blank" rel="noopener">Baltimore Orioles vs New York Mets</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>New York Mets</b></td>
-<td class="num">0.49</td>
-<td class="num pos">+3.0%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-bal-nym-2026-09-15" target="_blank" rel="noopener">Baltimore Orioles vs New York Mets</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>New York Mets</b></td>
-<td class="num">0.53</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-bal-nym-2026-09-15" target="_blank" rel="noopener">Baltimore Orioles vs New York Mets</a></td>
-<td>Scores24</td>
-<td><b>Baltimore Orioles</b></td>
-<td class="num">0.46</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-atl-chc-2026-09-15" target="_blank" rel="noopener">Atlanta Braves vs Chicago Cubs</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Chicago Cubs</b></td>
-<td class="num">0.51</td>
-<td class="num pos">+12.2%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-nyy-min-2026-09-15" target="_blank" rel="noopener">New York Yankees vs Minnesota Twins</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>New York Yankees</b></td>
-<td class="num">0.52</td>
-<td class="num pos">+10.9%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-atl-chc-2026-09-15" target="_blank" rel="noopener">Atlanta Braves vs Chicago Cubs</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>Chicago Cubs</b></td>
-<td class="num">0.56</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-nyy-min-2026-09-15" target="_blank" rel="noopener">Minnesota Twins vs New York Yankees</a></td>
-<td>DraftKings</td>
-<td><b>New York Yankees</b></td>
-<td class="num">0.39</td>
-<td class="num pos">+22.6%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-sf-stl-2026-09-15" target="_blank" rel="noopener">San Francisco Giants vs St. Louis Cardinals</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>St. Louis Cardinals</b></td>
-<td class="num">0.51</td>
-<td class="num pos">+17.3%</td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-sf-stl-2026-09-15" target="_blank" rel="noopener">San Francisco Giants vs St. Louis Cardinals</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>St. Louis Cardinals</b></td>
-<td class="num">0.58</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-15</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-sf-stl-2026-09-15" target="_blank" rel="noopener">San Francisco Giants vs St. Louis Cardinals</a></td>
-<td>Scores24</td>
-<td><b>St. Louis Cardinals</b></td>
-<td class="num">0.60</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-bos-tex-2026-09-15" target="_blank" rel="noopener">Boston Red Sox vs Texas Rangers</a></td>
-<td>Scores24</td>
-<td><b>Boston Red Sox</b></td>
-<td class="num">0.52</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-bos-tex-2026-09-15" target="_blank" rel="noopener">Boston Red Sox vs Texas Rangers</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>Texas Rangers</b></td>
-<td class="num">0.56</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-kc-hou-2026-09-15" target="_blank" rel="noopener">Kansas City Royals vs Houston Astros</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Houston Astros</b></td>
-<td class="num">0.58</td>
-<td class="num pos">+3.1%</td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-kc-hou-2026-09-15" target="_blank" rel="noopener">Kansas City Royals vs Houston Astros</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>Houston Astros</b></td>
-<td class="num">0.60</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-kc-hou-2026-09-15" target="_blank" rel="noopener">Kansas City Royals vs Houston Astros</a></td>
-<td>Scores24</td>
-<td><b>Houston Astros</b></td>
-<td class="num">0.60</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-sd-col-2026-09-15" target="_blank" rel="noopener">San Diego Padres vs Colorado Rockies</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Colorado Rockies</b></td>
-<td class="num">0.44</td>
-<td class="num pos">+5.4%</td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-sd-col-2026-09-15" target="_blank" rel="noopener">San Diego Padres vs Colorado Rockies</a></td>
-<td>Kalshi</td>
-<td><b>San Diego Padres</b></td>
-<td class="num">0.57</td>
-<td class="num pos">+5.3%</td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-sd-col-2026-09-15" target="_blank" rel="noopener">San Diego Padres vs Colorado Rockies</a></td>
-<td>Scores24</td>
-<td><b>San Diego Padres</b></td>
-<td class="num">0.64</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-sea-laa-2026-09-15" target="_blank" rel="noopener">Seattle Mariners vs Los Angeles Angels</a></td>
-<td>Scores24</td>
-<td><b>Seattle Mariners</b></td>
-<td class="num">0.61</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.com/event/mlb-mia-ari-2026-09-15" target="_blank" rel="noopener">Miami Marlins vs Arizona Diamondbacks</a></td>
-<td>ESPN FPI / Matchup Predictor</td>
-<td><b>Miami Marlins</b></td>
-<td class="num">0.46</td>
-<td class="num pos">+6.9%</td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-mia-az-2026-09-15" target="_blank" rel="noopener">Miami Marlins vs Arizona Diamondbacks</a></td>
-<td>Covers / OddsShark computer picks</td>
-<td><b>Arizona Diamondbacks</b></td>
-<td class="num">0.56</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr><td class="mut">2026-09-16</td>
-<td>MLB</td>
-<td><a href="https://polymarket.us/event/mlb-mia-az-2026-09-15" target="_blank" rel="noopener">Miami Marlins vs Arizona Diamondbacks</a></td>
-<td>Scores24</td>
-<td><b>Miami Marlins</b></td>
-<td class="num">0.42</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr class="grp"><td colspan="7">MLB · 72 running</td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-cws-cle-2026-09-16" target="_blank" rel="noopener">Chicago White Sox vs Cleveland Guardians</a></td>
@@ -1359,6 +1180,13 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos">+3.5%</td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-nyy-min-2026-09-16" target="_blank" rel="noopener">New York Yankees vs Minnesota Twins</a></td>
+<td>Scores24</td>
+<td><b>New York Yankees</b></td>
+<td class="num">0.57</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-det-tor-2026-09-16" target="_blank" rel="noopener">Detroit Tigers vs Toronto Blue Jays</a></td>
 <td>Polymarket</td>
 <td><b>Toronto Blue Jays</b></td>
@@ -1371,6 +1199,13 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Detroit Tigers</b></td>
 <td class="num">0.51</td>
 <td class="num pos">+10.8%</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-det-tor-2026-09-16" target="_blank" rel="noopener">Detroit Tigers vs Toronto Blue Jays</a></td>
+<td>Scores24</td>
+<td><b>Detroit Tigers</b></td>
+<td class="num">0.47</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-mil-pit-2026-09-16" target="_blank" rel="noopener">Milwaukee Brewers vs Pittsburgh Pirates</a></td>
@@ -1433,6 +1268,27 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td>MLB fade-the-streak rule</td>
 <td><b>Cincinnati Reds</b></td>
 <td class="num">0.35</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-lad-cin-2026-09-16" target="_blank" rel="noopener">Los Angeles Dodgers vs Cincinnati Reds</a></td>
+<td>Scores24</td>
+<td><b>Los Angeles Dodgers</b></td>
+<td class="num">0.66</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-ath-tb-2026-09-16" target="_blank" rel="noopener">Athletics vs Tampa Bay Rays</a></td>
+<td>Scores24</td>
+<td><b>Tampa Bay Rays</b></td>
+<td class="num">0.64</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-mil-pit-2026-09-16" target="_blank" rel="noopener">Milwaukee Brewers vs Pittsburgh Pirates</a></td>
+<td>Scores24</td>
+<td><b>Milwaukee Brewers</b></td>
+<td class="num">0.56</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>MLB</td>
@@ -1520,6 +1376,20 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos">+56.0%</td></tr>
 <tr><td class="mut">2026-09-17</td>
 <td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-kc-hou-2026-09-16" target="_blank" rel="noopener">Kansas City Royals vs Houston Astros</a></td>
+<td>Covers / OddsShark computer picks</td>
+<td><b>Houston Astros</b></td>
+<td class="num">0.57</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-17</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-kc-hou-2026-09-16" target="_blank" rel="noopener">Kansas City Royals vs Houston Astros</a></td>
+<td>Scores24</td>
+<td><b>Houston Astros</b></td>
+<td class="num">0.57</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-17</td>
+<td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-sd-col-2026-09-16" target="_blank" rel="noopener">San Diego Padres vs Colorado Rockies</a></td>
 <td>Polymarket</td>
 <td><b>San Diego Padres</b></td>
@@ -1541,6 +1411,13 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos">+3.1%</td></tr>
 <tr><td class="mut">2026-09-17</td>
 <td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-sd-col-2026-09-16" target="_blank" rel="noopener">San Diego Padres vs Colorado Rockies</a></td>
+<td>Scores24</td>
+<td><b>San Diego Padres</b></td>
+<td class="num">0.61</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
+<tr><td class="mut">2026-09-17</td>
+<td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-sea-laa-2026-09-16" target="_blank" rel="noopener">Seattle Mariners vs Los Angeles Angels</a></td>
 <td>ESPN FPI / Matchup Predictor</td>
 <td><b>Los Angeles Angels</b></td>
@@ -1553,6 +1430,13 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Arizona Diamondbacks</b></td>
 <td class="num">0.36</td>
 <td class="num pos">+19.5%</td></tr>
+<tr><td class="mut">2026-09-17</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-mia-az-2026-09-16" target="_blank" rel="noopener">Miami Marlins vs Arizona Diamondbacks</a></td>
+<td>Covers / OddsShark computer picks</td>
+<td><b>Arizona Diamondbacks</b></td>
+<td class="num">0.56</td>
+<td class="num pos"><span class="mut">pick</span></td></tr>
 <tr><td class="mut">2026-09-17</td>
 <td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-lad-cin-2026-09-17" target="_blank" rel="noopener">Los Angeles Dodgers vs Cincinnati Reds</a></td>
@@ -1681,6 +1565,13 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num pos">+8.0%</td></tr>
 <tr><td class="mut">2026-09-18</td>
 <td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-phi-nym-2026-09-18" target="_blank" rel="noopener">New York Mets vs Philadelphia Phillies</a></td>
+<td>Polymarket</td>
+<td><b>Philadelphia Phillies</b></td>
+<td class="num">0.45</td>
+<td class="num pos">+8.0%</td></tr>
+<tr><td class="mut">2026-09-18</td>
+<td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-det-cws-2026-09-18" target="_blank" rel="noopener">Detroit Tigers vs Chicago White Sox</a></td>
 <td>ESPN FPI / Matchup Predictor</td>
 <td><b>Chicago White Sox</b></td>
@@ -1735,6 +1626,34 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td><b>Miami Marlins</b></td>
 <td class="num">0.35</td>
 <td class="num pos">+5.2%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-sf-lad-2026-09-18" target="_blank" rel="noopener">Los Angeles Dodgers vs San Francisco Giants</a></td>
+<td>Polymarket</td>
+<td><b>Los Angeles Dodgers</b></td>
+<td class="num">0.28</td>
+<td class="num pos">+44.0%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-sf-lad-2026-09-18" target="_blank" rel="noopener">Los Angeles Dodgers vs San Francisco Giants</a></td>
+<td>Kalshi</td>
+<td><b>Los Angeles Dodgers</b></td>
+<td class="num">0.28</td>
+<td class="num pos">+46.9%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-sf-lad-2026-09-18" target="_blank" rel="noopener">Los Angeles Dodgers vs San Francisco Giants</a></td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td><b>Los Angeles Dodgers</b></td>
+<td class="num">0.28</td>
+<td class="num pos">+42.5%</td></tr>
+<tr><td class="mut">2026-09-19</td>
+<td>MLB</td>
+<td><a href="https://polymarket.us/event/mlb-phi-nym-2026-09-19" target="_blank" rel="noopener">Philadelphia Phillies vs New York Mets</a></td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td><b>New York Mets</b></td>
+<td class="num">0.42</td>
+<td class="num pos">+19.9%</td></tr>
 <tr class="grp"><td colspan="7">Climate · 20 running</td></tr>
 <tr><td class="mut">2026-09-16</td>
 <td>Climate</td>
@@ -1885,8 +1804,302 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td class="num">0.57</td>
 <td class="num pos"><span class="mut">pick</span></td></tr></table></div></details></div>
 
-<h2>Settled (475 · 57 void)</h2>
-<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…"><div id="hist"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr class="grp"><td colspan="8">2026-09-16 · 13/25 won · −$534</td></tr>
+<h2>Settled (524 · 57 void)</h2>
+<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…"><div id="hist"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr class="grp"><td colspan="8">2026-09-16 · 38/74 won · −$1,355</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Chase Ferguson vs Minghui Zhang</td>
+<td>Polymarket</td>
+<td>Chase Ferguson</td><td class="num">0.14</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Kitahara - Nagata vs Abe - Rajecki</td>
+<td>Tennis favourite-band rule</td>
+<td>Abe - Rajecki</td><td class="num">0.77</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$30</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Remika Ohashi vs Kamonwan Yodpetch</td>
+<td>Tennis favourite-band rule</td>
+<td>Kamonwan Yodpetch</td><td class="num">0.80</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$25</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Seonyong Han vs Ivan Dorokhov</td>
+<td>Tennis favourite-band rule</td>
+<td>Seonyong Han</td><td class="num">0.78</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$28</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Remika Ohashi vs Kamonwan Yodpetch</td>
+<td>Polymarket</td>
+<td>Kamonwan Yodpetch</td><td class="num">0.70</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$43</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Chase Ferguson vs Minghui Zhang</td>
+<td>Tennis favourite-band rule</td>
+<td>Minghui Zhang</td><td class="num">0.89</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$12</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Stefan Vujic vs Yue Xia</td>
+<td>Tennis favourite-band rule</td>
+<td>Stefan Vujic</td><td class="num">0.82</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Hiroko Kuwata vs Tiana Tian Deng</td>
+<td>Tennis favourite-band rule</td>
+<td>Tiana Tian Deng</td><td class="num">0.80</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$25</td></tr>
+</table></div><details class="more"><summary>Show 573 more settled bets</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Han Shi vs Chenting Zhu</td>
+<td>Tennis favourite-band rule</td>
+<td>Han Shi</td><td class="num">0.80</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$25</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Chengyiyi Yuan vs Daria KHOMUTSIANSKAYA</td>
+<td>Tennis favourite-band rule</td>
+<td>Daria KHOMUTSIANSKAYA</td><td class="num">0.77</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$30</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Eri Shimizu vs Michika Ozeki</td>
+<td>Tennis favourite-band rule</td>
+<td>Eri Shimizu</td><td class="num">0.89</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$12</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Lin Hao-Yu vs Maxim Shin</td>
+<td>Tennis favourite-band rule</td>
+<td>Maxim Shin</td><td class="num">0.79</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$27</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Kai-i Wang vs jintao Lan</td>
+<td>Tennis favourite-band rule</td>
+<td>Kai-i Wang</td><td class="num">0.86</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$16</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Tennis</td><td>Sloane Stephens vs Janice Tjen</td>
+<td>Scores24</td>
+<td>Janice Tjen</td><td class="num">0.62</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>Table Tennis</td><td>Panasenko Volodymyr vs Rubtsov Eduard</td>
+<td>Table tennis 0.55-0.60 band</td>
+<td>Panasenko Volodymyr</td><td class="num">0.59</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Table Tennis</td><td>Plakushchyi Pavel vs Mishchenko Oleksandr</td>
+<td>Table tennis 0.55-0.60 band</td>
+<td>Plakushchyi Pavel</td><td class="num">0.55</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Table Tennis</td><td>Kuzmenko Gregory vs Chaikovskyi Bohdan</td>
+<td>Table tennis 0.55-0.60 band</td>
+<td>Chaikovskyi Bohdan</td><td class="num">0.58</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Table Tennis</td><td>Cosogolov Alexandr vs Gribcov Dmitri</td>
+<td>Table tennis 0.55-0.60 band</td>
+<td>Gribcov Dmitri</td><td class="num">0.55</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Table Tennis</td><td>Konkulovskyi Roman vs Sukovatyi Ihor</td>
+<td>Table tennis 0.55-0.60 band</td>
+<td>Sukovatyi Ihor</td><td class="num">0.56</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$79</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>Table Tennis</td><td>Skachenko Serhii vs Khamurda Vitalii</td>
+<td>Table tennis 0.55-0.60 band</td>
+<td>Khamurda Vitalii</td><td class="num">0.55</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Boston Red Sox vs Texas Rangers</td>
+<td>Covers / OddsShark computer picks</td>
+<td>Texas Rangers</td><td class="num">0.56</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$77</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Miami Marlins vs Arizona Diamondbacks</td>
+<td>Scores24</td>
+<td>Miami Marlins</td><td class="num">0.42</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$135</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Baltimore Orioles vs New York Mets</td>
+<td>Scores24</td>
+<td>Baltimore Orioles</td><td class="num">0.46</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$120</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>San Francisco Giants vs St. Louis Cardinals</td>
+<td>Scores24</td>
+<td>St. Louis Cardinals</td><td class="num">0.60</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Boston Red Sox vs Texas Rangers</td>
+<td>Scores24</td>
+<td>Boston Red Sox</td><td class="num">0.52</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Kansas City Royals vs Houston Astros</td>
+<td>Scores24</td>
+<td>Houston Astros</td><td class="num">0.60</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$65</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>San Diego Padres vs Colorado Rockies</td>
+<td>Scores24</td>
+<td>San Diego Padres</td><td class="num">0.64</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Seattle Mariners vs Los Angeles Angels</td>
+<td>Scores24</td>
+<td>Seattle Mariners</td><td class="num">0.61</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>Tennis</td><td>Sloane Stephens vs Janice Tjen</td>
+<td>Scores24</td>
+<td>Janice Tjen</td><td class="num">0.62</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Minnesota Twins vs New York Yankees</td>
+<td>DraftKings</td>
+<td>New York Yankees</td><td class="num">0.39</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Chicago White Sox vs Cleveland Guardians</td>
+<td>Covers / OddsShark computer picks</td>
+<td>Cleveland Guardians</td><td class="num">0.54</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$85</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Detroit Tigers vs Toronto Blue Jays</td>
+<td>Covers / OddsShark computer picks</td>
+<td>Toronto Blue Jays</td><td class="num">0.56</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Baltimore Orioles vs New York Mets</td>
+<td>Covers / OddsShark computer picks</td>
+<td>New York Mets</td><td class="num">0.53</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Atlanta Braves vs Chicago Cubs</td>
+<td>Covers / OddsShark computer picks</td>
+<td>Chicago Cubs</td><td class="num">0.56</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>San Francisco Giants vs St. Louis Cardinals</td>
+<td>Covers / OddsShark computer picks</td>
+<td>St. Louis Cardinals</td><td class="num">0.58</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Kansas City Royals vs Houston Astros</td>
+<td>Covers / OddsShark computer picks</td>
+<td>Houston Astros</td><td class="num">0.60</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$65</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Miami Marlins vs Arizona Diamondbacks</td>
+<td>Covers / OddsShark computer picks</td>
+<td>Arizona Diamondbacks</td><td class="num">0.56</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>San Diego Padres vs Colorado Rockies</td>
+<td>Kalshi</td>
+<td>San Diego Padres</td><td class="num">0.57</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>Soccer</td><td>Puebla vs Toluca</td>
+<td>SportsGambler</td>
+<td>Toluca</td><td class="num">0.60</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$67</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Baltimore Orioles vs New York Mets</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>New York Mets</td><td class="num">0.49</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Atlanta Braves vs Chicago Cubs</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Chicago Cubs</td><td class="num">0.51</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>New York Yankees vs Minnesota Twins</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>New York Yankees</td><td class="num">0.52</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$94</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>San Francisco Giants vs St. Louis Cardinals</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>St. Louis Cardinals</td><td class="num">0.51</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Kansas City Royals vs Houston Astros</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Houston Astros</td><td class="num">0.58</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$72</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>San Diego Padres vs Colorado Rockies</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Colorado Rockies</td><td class="num">0.44</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$127</td></tr>
+<tr><td class="mut">2026-09-16</td>
+<td>MLB</td><td>Miami Marlins vs Arizona Diamondbacks</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Miami Marlins</td><td class="num">0.46</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$117</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Los Angeles Dodgers vs Cincinnati Reds</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Los Angeles Dodgers</td><td class="num">0.49</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$104</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Chicago White Sox vs Cleveland Guardians</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Cleveland Guardians</td><td class="num">0.51</td>
+<td><span class="st won">WON</span></td>
+<td class="num pos">+$98</td></tr>
+<tr><td class="mut">2026-09-15</td>
+<td>MLB</td><td>Milwaukee Brewers vs Pittsburgh Pirates</td>
+<td>ESPN FPI / Matchup Predictor</td>
+<td>Pittsburgh Pirates</td><td class="num">0.28</td>
+<td><span class="st lost">LOST</span></td>
+<td class="num neg">−$100</td></tr>
 <tr><td class="mut">2026-09-15</td>
 <td>Table Tennis</td><td>Paniivan Hennadii vs Ciubinidze Miroslav</td>
 <td>Table tennis 0.55-0.60 band</td>
@@ -1935,7 +2148,7 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 <td>Khamurda Vitalii</td><td class="num">0.57</td>
 <td><span class="st lost">LOST</span></td>
 <td class="num neg">−$100</td></tr>
-</table></div><details class="more"><summary>Show 524 more settled bets</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr><td class="mut">2026-09-15</td>
+<tr><td class="mut">2026-09-15</td>
 <td>Tennis</td><td>Diane Parry vs Peyton Stearns</td>
 <td>Scores24</td>
 <td>Diane Parry</td><td class="num">0.50</td>
@@ -5093,32 +5306,32 @@ wins beating the price by z ≥ 2, ROI beating every blind rule on the same cont
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
 <div class="tbl"><table>
 <tr><th>Source</th><th>Stamp</th><th>50+ settled bets spanning 28+ days</th><th>wins beat the price by z ≥ 2</th><th>beats every blind rule on the same contests</th><th>still profitable without its biggest win</th><th>profitable in both halves of its record</th></tr>
-<tr><td><b>SoccerPredictions.ai</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">68 bets over 4 days</div></td><td><span class="neg">✗</span><div class="sm mut">27 won v 24.7 priced, z +0.58</div></td><td><span class="pos">✓</span><div class="sm mut">+13.1% v +3.0% back the draw</div></td><td><span class="pos">✓</span><div class="sm mut">+9.3% without it</div></td><td><span class="neg">✗</span><div class="sm mut">+28.2% then -2.0%</div></td></tr><tr><td><b>Covers / OddsShark computer picks</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">53 bets over 5 days</div></td><td><span class="neg">✗</span><div class="sm mut">37 won v 30.9 priced, z +1.72</div></td><td><span class="neg">✗</span><div class="sm mut">+19.8% v +25.7% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+18.1% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+28.2% then +11.8%</div></td></tr><tr><td><b>Tennis favourite-band rule (priced 0.75-0.90)</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">51 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">44 won v 41.6 priced, z +0.88</div></td><td><span class="pos">✓</span><div class="sm mut">+6.2% v +4.2% back the favourite on every match</div></td><td><span class="pos">✓</span><div class="sm mut">+5.6% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+3.9% then +8.4%</div></td></tr><tr><td><b>ESPN FPI / Matchup Predictor</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">43 bets over 5 days</div></td><td><span class="neg">✗</span><div class="sm mut">26 won v 21.3 priced, z +1.44</div></td><td><span class="pos">✓</span><div class="sm mut">+22.9% v +16.4% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+18.9% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+29.7% then +16.5%</div></td></tr><tr><td><b>Scores24 (editorial tips)</b></td><td><span class="st miss">FAILING</span></td><td><span class="neg">✗</span><div class="sm mut">54 bets over 5 days</div></td><td><span class="neg">✗</span><div class="sm mut">26 won v 30.2 priced, z -1.16</div></td><td><span class="neg">✗</span><div class="sm mut">-18.4% v +21.6% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-20.7% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-0.0% then -36.8%</div></td></tr><tr><td><b>Spot price (no-change baseline)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">13 bets (4 independent) over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">8 won v 8.2 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">-5.7% v -5.7% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-13.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-6.5% then -5.1%</div></td></tr><tr><td><b>Kalshi</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">9 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 4.3 priced, z -0.21</div></td><td><span class="neg">✗</span><div class="sm mut">-10.2% v +20.7% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-28.8% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-2.6% then -16.3%</div></td></tr><tr><td><b>DraftKings (via ESPN)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">6 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 3.0 priced, z +0.82</div></td><td><span class="neg">✗</span><div class="sm mut">+44.2% v +122.8% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+28.1% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+42.6% then +45.8%</div></td></tr><tr><td><b>OLBG community tips</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">6 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 4.5 priced, z -0.45</div></td><td><span class="neg">✗</span><div class="sm mut">-18.4% v -18.4% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-29.5% without it</div></td><td><span class="neg">✗</span><div class="sm mut">+19.3% then -56.1%</div></td></tr><tr><td><b>Oddspedia community tips</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">4 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">3 won v 2.2 priced, z +0.78</div></td><td><span class="neg">✗</span><div class="sm mut">+25.7% v +69.6% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+11.1% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-16.7% then +68.1%</div></td></tr><tr><td><b>MLB fade-the-streak rule (cold team v hot team, last 10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">4 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 1.7 priced, z -1.77</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% v +21.2% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-133.3% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then -100.0%</div></td></tr><tr><td><b>Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">4 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 3.3 priced, z +0.96</div></td><td><span class="neg">✗</span><div class="sm mut">+23.4% v +23.6% back Yes on every match</div></td><td><span class="pos">✓</span><div class="sm mut">+16.9% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+8.7% then +38.1%</div></td></tr><tr><td><b>Polymarket (international)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">3 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.3 priced, z -0.37</div></td><td><span class="neg">✗</span><div class="sm mut">-47.9% v +53.3% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then -21.9%</div></td></tr><tr><td><b>Over 1.5 form rule (both teams 9+ of last 10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.5 priced, z +0.79</div></td><td><span class="pos">✓</span><div class="sm mut">+30.9% v -2.9% back Yes on every match</div></td><td><span class="pos">✓</span><div class="sm mut">+26.6% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+26.6% then +35.1%</div></td></tr><tr><td><b>Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.7 priced, z -1.42</div></td><td><span class="neg">✗</span><div class="sm mut">-46.2% v -12.7% back the same side on every match</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then +7.5%</div></td></tr><tr><td><b>Pinnacle (via The Odds API)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.4 priced, z -0.74</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% v +25.8% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-200.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then -100.0%</div></td></tr><tr><td><b>MMA favourite-band rule (priced 0.75-0.90)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 0.8 priced, z +0.56</div></td><td><span class="pos">✓</span><div class="sm mut">+31.6% v -4.6% back the favourite on every match</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 0.8 priced, z +0.52</div></td><td><span class="pos">✓</span><div class="sm mut">+26.6% v -17.5% back the same side on every match</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>BTTS form rule (both teams 7+ of last 10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">0 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.0 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">no comparable contests</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr></table></div></details>
+<tr><td><b>SoccerPredictions.ai</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">68 bets over 4 days</div></td><td><span class="neg">✗</span><div class="sm mut">27 won v 24.7 priced, z +0.58</div></td><td><span class="pos">✓</span><div class="sm mut">+13.1% v +3.0% back the draw</div></td><td><span class="pos">✓</span><div class="sm mut">+9.3% without it</div></td><td><span class="neg">✗</span><div class="sm mut">+28.2% then -2.0%</div></td></tr><tr><td><b>Tennis favourite-band rule (priced 0.75-0.90)</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">62 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">54 won v 50.6 priced, z +1.13</div></td><td><span class="pos">✓</span><div class="sm mut">+7.2% v +4.5% back the favourite on every match</div></td><td><span class="pos">✓</span><div class="sm mut">+6.7% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+2.7% then +11.7%</div></td></tr><tr><td><b>Covers / OddsShark computer picks</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">61 bets over 5 days</div></td><td><span class="neg">✗</span><div class="sm mut">40 won v 35.4 priced, z +1.21</div></td><td><span class="neg">✗</span><div class="sm mut">+12.8% v +17.9% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+11.1% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+21.2% then +4.6%</div></td></tr><tr><td><b>ESPN FPI / Matchup Predictor</b></td><td><span class="sig w">WATCH</span></td><td><span class="neg">✗</span><div class="sm mut">53 bets over 5 days</div></td><td><span class="neg">✗</span><div class="sm mut">32 won v 26.1 priced, z +1.64</div></td><td><span class="pos">✓</span><div class="sm mut">+22.6% v +14.3% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+19.3% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+11.1% then +33.7%</div></td></tr><tr><td><b>Scores24 (editorial tips)</b></td><td><span class="st miss">FAILING</span></td><td><span class="neg">✗</span><div class="sm mut">63 bets over 5 days</div></td><td><span class="neg">✗</span><div class="sm mut">29 won v 35.3 priced, z -1.61</div></td><td><span class="neg">✗</span><div class="sm mut">-20.2% v +6.9% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-22.7% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-1.8% then -38.1%</div></td></tr><tr><td><b>Spot price (no-change baseline)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">13 bets (4 independent) over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">8 won v 8.2 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">-5.7% v -5.7% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-13.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-6.5% then -5.1%</div></td></tr><tr><td><b>Kalshi</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">10 bets over 4 days</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 4.9 priced, z -0.56</div></td><td><span class="neg">✗</span><div class="sm mut">-19.2% v +8.7% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-36.7% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-22.1% then -16.3%</div></td></tr><tr><td><b>DraftKings (via ESPN)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">7 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 3.4 priced, z +0.46</div></td><td><span class="neg">✗</span><div class="sm mut">+23.6% v +91.0% back the underdog</div></td><td><span class="pos">✓</span><div class="sm mut">+6.8% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+42.6% then +9.4%</div></td></tr><tr><td><b>OLBG community tips</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">6 bets over 3 days</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 4.5 priced, z -0.45</div></td><td><span class="neg">✗</span><div class="sm mut">-18.4% v -18.4% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-29.5% without it</div></td><td><span class="neg">✗</span><div class="sm mut">+19.3% then -56.1%</div></td></tr><tr><td><b>Polymarket (international)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">5 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 2.1 priced, z -0.14</div></td><td><span class="neg">✗</span><div class="sm mut">-40.2% v +43.5% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-64.3% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then -0.3%</div></td></tr><tr><td><b>Oddspedia community tips</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">4 bets over 2 days</div></td><td><span class="neg">✗</span><div class="sm mut">3 won v 2.2 priced, z +0.78</div></td><td><span class="neg">✗</span><div class="sm mut">+25.7% v +69.6% back the favourite</div></td><td><span class="pos">✓</span><div class="sm mut">+11.1% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-16.7% then +68.1%</div></td></tr><tr><td><b>MLB fade-the-streak rule (cold team v hot team, last 10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">4 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 1.7 priced, z -1.77</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% v +21.2% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-133.3% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then -100.0%</div></td></tr><tr><td><b>Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">4 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">4 won v 3.3 priced, z +0.96</div></td><td><span class="neg">✗</span><div class="sm mut">+23.4% v +23.6% back Yes on every match</div></td><td><span class="pos">✓</span><div class="sm mut">+16.9% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+8.7% then +38.1%</div></td></tr><tr><td><b>Over 1.5 form rule (both teams 9+ of last 10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">2 won v 1.5 priced, z +0.79</div></td><td><span class="pos">✓</span><div class="sm mut">+30.9% v -2.9% back Yes on every match</div></td><td><span class="pos">✓</span><div class="sm mut">+26.6% without it</div></td><td><span class="pos">✓</span><div class="sm mut">+26.6% then +35.1%</div></td></tr><tr><td><b>Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 1.7 priced, z -1.42</div></td><td><span class="neg">✗</span><div class="sm mut">-46.2% v -12.7% back the same side on every match</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then +7.5%</div></td></tr><tr><td><b>Pinnacle (via The Odds API)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">2 bets over 1 day</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.4 priced, z -0.74</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% v +25.8% back the favourite</div></td><td><span class="neg">✗</span><div class="sm mut">-200.0% without it</div></td><td><span class="neg">✗</span><div class="sm mut">-100.0% then -100.0%</div></td></tr><tr><td><b>MMA favourite-band rule (priced 0.75-0.90)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 0.8 priced, z +0.56</div></td><td><span class="pos">✓</span><div class="sm mut">+31.6% v -4.6% back the favourite on every match</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">1 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">1 won v 0.8 priced, z +0.52</div></td><td><span class="pos">✓</span><div class="sm mut">+26.6% v -17.5% back the same side on every match</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr><tr><td><b>BTTS form rule (both teams 7+ of last 10)</b></td><td><span class="sig n">NO READ</span></td><td><span class="neg">✗</span><div class="sm mut">0 bets over 0 days</div></td><td><span class="neg">✗</span><div class="sm mut">0 won v 0.0 priced, z +0.00</div></td><td><span class="neg">✗</span><div class="sm mut">no comparable contests</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td><td><span class="neg">✗</span><div class="sm mut">—</div></td></tr></table></div></details>
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary><div class="tbl"><table>
 <tr><th>Sport</th><th>Blind strategy</th><th class="num">Contests</th>
 <th class="num">Won v priced</th><th class="num">ROI</th><th class="num">P/L</th></tr>
 <tr><td>Soccer</td><td><b>Back the favourite</b></td>
-<td class="num">138</td><td class="num">65 v 65.1</td>
-<td class="num"><span class="neg">-0.6%</span></td>
-<td class="num neg">−$79</td></tr><tr><td>Soccer</td><td><b>Back the underdog</b></td>
-<td class="num">138</td><td class="num">39 v 39.1</td>
-<td class="num"><span class="neg">-3.2%</span></td>
-<td class="num neg">−$441</td></tr><tr><td>Soccer</td><td><b>Back every draw</b></td>
-<td class="num">138</td><td class="num">34 v 36.6</td>
-<td class="num"><span class="neg">-8.7%</span></td>
-<td class="num neg">−$1,204</td></tr><tr><td>Tennis</td><td><b>Back the favourite</b></td>
-<td class="num">634</td><td class="num">455 v 437.8</td>
-<td class="num"><span class="pos">+4.2%</span></td>
-<td class="num pos">+$2,642</td></tr><tr><td>Tennis</td><td><b>Back the underdog</b></td>
-<td class="num">640</td><td class="num">179 v 203.8</td>
-<td class="num"><span class="neg">-16.8%</span></td>
-<td class="num neg">−$10,721</td></tr><tr><td>Table Tennis</td><td><b>Back the favourite</b></td>
-<td class="num">373</td><td class="num">234 v 229.9</td>
-<td class="num"><span class="pos">+1.9%</span></td>
-<td class="num pos">+$726</td></tr><tr><td>Table Tennis</td><td><b>Back the underdog</b></td>
-<td class="num">373</td><td class="num">139 v 148.6</td>
-<td class="num"><span class="neg">-6.3%</span></td>
-<td class="num neg">−$2,367</td></tr><tr><td>Boxing</td><td><b>Back the favourite</b></td>
+<td class="num">139</td><td class="num">66 v 65.7</td>
+<td class="num"><span class="neg">-0.1%</span></td>
+<td class="num neg">−$13</td></tr><tr><td>Soccer</td><td><b>Back the underdog</b></td>
+<td class="num">139</td><td class="num">39 v 39.3</td>
+<td class="num"><span class="neg">-3.9%</span></td>
+<td class="num neg">−$541</td></tr><tr><td>Soccer</td><td><b>Back every draw</b></td>
+<td class="num">139</td><td class="num">34 v 36.8</td>
+<td class="num"><span class="neg">-9.4%</span></td>
+<td class="num neg">−$1,304</td></tr><tr><td>Tennis</td><td><b>Back the favourite</b></td>
+<td class="num">668</td><td class="num">483 v 463.2</td>
+<td class="num"><span class="pos">+4.5%</span></td>
+<td class="num pos">+$3,005</td></tr><tr><td>Tennis</td><td><b>Back the underdog</b></td>
+<td class="num">674</td><td class="num">185 v 213.1</td>
+<td class="num"><span class="neg">-18.2%</span></td>
+<td class="num neg">−$12,254</td></tr><tr><td>Table Tennis</td><td><b>Back the favourite</b></td>
+<td class="num">431</td><td class="num">265 v 266.1</td>
+<td class="num"><span class="neg">-0.3%</span></td>
+<td class="num neg">−$132</td></tr><tr><td>Table Tennis</td><td><b>Back the underdog</b></td>
+<td class="num">431</td><td class="num">166 v 171.1</td>
+<td class="num"><span class="neg">-3.1%</span></td>
+<td class="num neg">−$1,327</td></tr><tr><td>Boxing</td><td><b>Back the favourite</b></td>
 <td class="num">5</td><td class="num">4 v 3.7</td>
 <td class="num"><span class="mut">+1.6%</span></td>
 <td class="num pos">+$8</td></tr><tr><td>Boxing</td><td><b>Back the underdog</b></td>
@@ -5137,31 +5350,31 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 <td class="num">17</td><td class="num">5 v 6.3</td>
 <td class="num"><span class="mut">-11.4%</span></td>
 <td class="num neg">−$193</td></tr><tr><td>Cricket</td><td><b>Back the favourite</b></td>
-<td class="num">26</td><td class="num">19 v 18.8</td>
-<td class="num"><span class="mut">-2.2%</span></td>
-<td class="num neg">−$56</td></tr><tr><td>Cricket</td><td><b>Back the underdog</b></td>
-<td class="num">29</td><td class="num">7 v 8.3</td>
-<td class="num"><span class="mut">-46.0%</span></td>
-<td class="num neg">−$1,333</td></tr><tr><td>MLB</td><td><b>Back the favourite</b></td>
-<td class="num">75</td><td class="num">44 v 42.8</td>
-<td class="num"><span class="pos">+1.2%</span></td>
-<td class="num pos">+$88</td></tr><tr><td>MLB</td><td><b>Back the underdog</b></td>
-<td class="num">75</td><td class="num">31 v 32.4</td>
-<td class="num"><span class="neg">-7.4%</span></td>
-<td class="num neg">−$559</td></tr></table></div></details>
+<td class="num">27</td><td class="num">19 v 19.4</td>
+<td class="num"><span class="mut">-5.8%</span></td>
+<td class="num neg">−$156</td></tr><tr><td>Cricket</td><td><b>Back the underdog</b></td>
+<td class="num">30</td><td class="num">8 v 8.7</td>
+<td class="num"><span class="neg">-39.8%</span></td>
+<td class="num neg">−$1,195</td></tr><tr><td>MLB</td><td><b>Back the favourite</b></td>
+<td class="num">101</td><td class="num">54 v 57.0</td>
+<td class="num"><span class="neg">-7.1%</span></td>
+<td class="num neg">−$718</td></tr><tr><td>MLB</td><td><b>Back the underdog</b></td>
+<td class="num">101</td><td class="num">47 v 44.3</td>
+<td class="num"><span class="pos">+2.6%</span></td>
+<td class="num pos">+$266</td></tr></table></div></details>
 <details class="ref"><summary>Pinnacle v venue</summary><div class="tbl"><table>
 <tr><th>Pinnacle v venue</th><th class="num">Quotes</th><th class="num">Bets</th>
 <th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th>
 <th class="num">Largest gap</th></tr>
-<tr><td><b>Contests nothing else covers</b></td><td class="num">71</td>
+<tr><td><b>Contests nothing else covers</b></td><td class="num">74</td>
 <td class="num">3</td><td class="num">2</td>
 <td class="num">0 v 0.4</td>
 <td class="num"><span class="mut">-100.0%</span></td>
-<td class="num mut">+79.4pp</td></tr><tr><td><b>Contests others also cover</b></td><td class="num">11</td>
-<td class="num">0</td><td class="num">0</td>
+<td class="num mut">+79.4pp</td></tr><tr><td><b>Contests others also cover</b></td><td class="num">20</td>
+<td class="num">7</td><td class="num">0</td>
 <td class="num">—</td>
 <td class="num"><span class="mut">—</span></td>
-<td class="num mut">+1.1pp</td></tr></table></div>
+<td class="num mut">+82.1pp</td></tr></table></div>
 <div class="note">Pinnacle's de-vigged probability against the venue's ask, backed only where it
 beats the ask by 3pp or more. Credits are spent where nothing else looks: every run
 ranks the sports by how many listed contests have no tipster, model or book, and spends its
@@ -5170,19 +5383,19 @@ uncovered contest. A sport stops getting paid calls once Pinnacle has 30 quotes
 there without one reaching the 3pp edge — its venue already prices like Pinnacle
 (retired now: soccer). Unspent credits stay in the
 balance for later runs. Lines more than 60 minutes old
-are skipped (0 last run). Last run's paid calls: cricket_international_t20 (3 uncovered), cricket_caribbean_premier_league (1 uncovered).</div></details>
+are skipped (0 last run). Last run's paid calls: mma_mixed_martial_arts (3 uncovered), cricket_international_t20 (3 uncovered).</div></details>
 <details class="ref"><summary>Feed coverage on the last run</summary><div class="tbl"><table>
 <tr><th>Sport</th><th class="num">Polymarket US</th><th class="num">Polymarket</th><th class="num">Kalshi</th><th class="num">ESPN FPI / Matchup Predictor</th><th class="num">DraftKings</th><th class="num">Covers / OddsShark computer picks</th><th class="num">Oddspedia community tips</th><th class="num">Kalshi BTTS price</th><th class="num">BTTS form rule</th><th class="num">Tennis favourite-band rule</th><th class="num">MMA favourite-band rule</th><th class="num">MLB fade-the-streak rule</th><th class="num">Kalshi goals price</th><th class="num">Over 1.5 form rule</th><th class="num">Team scores 1+ form rule</th><th class="num">Team +0.5 unbeaten rule</th><th class="num">Under 3.5 low-scoring rule</th><th class="num">Team scores 2+ form rule</th><th class="num">Spot price</th><th class="num">OLBG community tips</th><th class="num">SoccerPredictions.ai</th><th class="num">Scores24</th><th class="num">Pinnacle</th></tr>
-<tr><td><b>Soccer</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">4</td><td class="num neg">0</td><td class="num neg">—</td></tr><tr><td><b>Soccer · BTTS</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">62</td><td class="num pos">8</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Over 1.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">62</td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team 1+</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">46</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team 2+</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">46</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Under 3.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">62</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team +0.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">148</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">8</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Tennis</b></td><td class="num pos">40</td><td class="num pos">17</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">22</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num neg">0</td></tr><tr><td><b>Table Tennis</b></td><td class="num pos">40</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Boxing</b></td><td class="num pos">7</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">2</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td></tr><tr><td><b>MMA</b></td><td class="num pos">8</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">3</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">9</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td></tr><tr><td><b>NFL</b></td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td></tr><tr><td><b>Cricket</b></td><td class="num pos">12</td><td class="num pos">8</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">2</td></tr><tr><td><b>MLB</b></td><td class="num pos">40</td><td class="num pos">26</td><td class="num pos">34</td><td class="num pos">38</td><td class="num pos">13</td><td class="num pos">5</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">3</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td></tr><tr><td><b>Climate</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Crypto</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Economics</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Commodities</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Finance</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Politics</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Elections</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr></table></div></details>
+<tr><td><b>Soccer</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">4</td><td class="num neg">0</td><td class="num neg">—</td></tr><tr><td><b>Soccer · BTTS</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">66</td><td class="num pos">9</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Over 1.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">66</td><td class="num pos">13</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team 1+</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">46</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team 2+</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">46</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Under 3.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">66</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team +0.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">156</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">9</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Tennis</b></td><td class="num pos">40</td><td class="num pos">17</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">17</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">2</td><td class="num neg">0</td></tr><tr><td><b>Table Tennis</b></td><td class="num pos">40</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Boxing</b></td><td class="num pos">7</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">2</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td></tr><tr><td><b>MMA</b></td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">3</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">9</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">12</td></tr><tr><td><b>NFL</b></td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">1</td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td></tr><tr><td><b>Cricket</b></td><td class="num pos">12</td><td class="num pos">10</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td></tr><tr><td><b>MLB</b></td><td class="num pos">40</td><td class="num pos">36</td><td class="num pos">37</td><td class="num pos">40</td><td class="num pos">15</td><td class="num pos">6</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">3</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">7</td><td class="num mut">n/a</td></tr><tr><td><b>Climate</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Crypto</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Economics</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Commodities</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Finance</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Politics</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Elections</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr></table></div></details>
 <details class="ref"><summary>Retired, or declared but not connected (6)</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr><tr><td><b>National Weather Service</b>
 <div class="mut sm">Forecaster · weather.gov</div><div class="sm">31 settled bets kept on record</div></td>
 <td class="mut"><b class="neg">Retired</b> 2026-09-15: 12 won v 13.6 priced on 31 settled (z -0.85, -18.8%). The forecast is already in Kalshi&#x27;s temperature prices.</td></tr>
 <tr><td><b>Table tennis 0.55-0.60 band (confirmation test)</b>
-<div class="mut sm">Rule · edge-machine</div><div class="sm">72 settled bets kept on record</div></td>
+<div class="mut sm">Rule · edge-machine</div><div class="sm">78 settled bets kept on record</div></td>
 <td class="mut"><b class="neg">Retired</b> 2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.</td></tr>
 <tr><td><b>SportsGambler</b>
-<div class="mut sm">Tipster site · sportsgambler.com</div><div class="sm">46 settled bets kept on record</div></td>
+<div class="mut sm">Tipster site · sportsgambler.com</div><div class="sm">47 settled bets kept on record</div></td>
 <td class="mut"><b class="neg">Retired</b> 2026-09-15: 20 won v 21.2 priced on 43 settled (z -0.36, -7.0%). Its match tips add nothing over the price.</td></tr>
 <tr><td><b>Tennis Explorer</b>
 <div class="mut sm">Tipster site · tennisexplorer.com</div></td>
@@ -5199,7 +5412,7 @@ and are backed only on a 3pp disagreement with the price. <b>Polymarket US</b> i
 wherever it lists a contest; <b>Kalshi</b> is the venue for soccer and anything Polymarket US is missing, with
 soccer kickoffs taken from ESPN. A contest is logged only with a real book (spread ≤ 5¢), at the
 ask. Until 2026-09-13 the venue was polymarket.com; those bets still settle there but never count toward QA.
-Quotes logged before the book rule on boxing, cricket and table tennis were voided (pre-gate: logged at an unverified Polymarket placeholder price). Pinnacle prices come through The Odds API: 2 of 2 allowed paid calls last run, 421 credits left until they reset on the 1st. A closing price counts only when taken within 60 minutes of the start (252 of 584 so far).
+Quotes logged before the book rule on boxing, cricket and table tennis were voided (pre-gate: logged at an unverified Polymarket placeholder price). Pinnacle prices come through The Odds API: 2 of 2 allowed paid calls last run, 419 credits left until they reset on the 1st. A closing price counts only when taken within 60 minutes of the start (274 of 620 so far).
 A positive ROI under 30 settled bets is not a finding.</div></details>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
