@@ -2539,6 +2539,25 @@ eq(sorted(x["id"] for x in _d7["_archive"]), ["goals_market:1", "pinnacle:5"],
 _ap7 = T.assess(_d7, "u35_low_scoring", "soccer_u35")
 ok(any("every match" in det for _k, _l, _p, det in _ap7["criteria"]), "the rule's population still reads the folded baseline rows")
 
+
+print("\nper-sport thresholds: high-volume sports trade calendar for sample")
+def _hv(i, won, sport="tennis"):
+    return dict(id=f"x:{sport}:{i}", source="tennis_fav_band", sport=sport, market_id=f"{sport}{i}", venue="polymarket_us",
+                bet=True, pick="a", price=0.8, price_a=0.8, price_b=0.22, result="a" if won else "b",
+                status="won" if won else "lost", pnl=25.0 if won else -100.0, stake=100.0,
+                start=(datetime(2026, 9, 10, tzinfo=timezone.utc) + timedelta(hours=i * 1.4)).isoformat(),
+                logged="2026-09-10T00:00:00+00:00")
+_dh = {"quotes": [_hv(i, i % 10 != 0) for i in range(110)]}     # 99/110 at 0.80 over ~6.4 days
+_eh = dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_dh, "tennis_fav_band", "tennis", venues=T.TRADEABLE_VENUES)))
+eq((_eh["sample"], _eh["price"]), (True, True), "tennis: 110 bets over 6 days at z >= 1.5 clears the entry sample and price gates")
+_ds = {"quotes": [dict(q, sport="soccer") for q in _dh["quotes"]]}
+_es = dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_ds, "tennis_fav_band", "soccer", venues=T.TRADEABLE_VENUES)))
+eq(_es["sample"], False, "the same record in soccer still needs 14 days")
+_dt = {"quotes": [_hv(i, i % 10 != 0) for i in range(60)]}
+eq(dict((k, p) for k, _l, p, _d in T.qa_entry(T.assess(_dt, "tennis_fav_band", "tennis")))["sample"], False,
+   "tennis needs 100 bets, not 30")
+eq(T.sport_rules("mlb")["entry"], T.QA_ENTRY, "every other sport keeps the original gate")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

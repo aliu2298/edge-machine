@@ -74,7 +74,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated 2026-09-16 18:14 UTC</div>
+<div class="sub">Every source and rule under test, per sport · updated 2026-09-16 21:57 UTC</div>
 <div class="nav"><a href="./">Leads</a>
 <a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
 <a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
@@ -115,7 +115,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="pos">+7.9%</span></td>
 <td class="num"><span class="pos">+2.1pp</span></td>
 <td class="num"><span class="neg">-0.4¢</span><div class="sm mut">82 closes</div></td>
-<td><span class="bar"><i style="width:100%"></i></span> <span class="sm">91/30</span><div class="sm mut">3/4 QA gates</div></td>
+<td><span class="bar"><i style="width:91%"></i></span> <span class="sm">91/100</span><div class="sm mut">3/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
 <div class="sm mut">MLB · Tipster site</div></summary>
@@ -245,7 +245,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-0.1%</span></td>
 <td class="num"><span class="mut">-24.0pp</span></td>
 <td class="num"><span class="mut">+2.0¢</span><div class="sm mut">6 closes</div></td>
-<td><span class="bar"><i style="width:23%"></i></span> <span class="sm">7/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:7%"></i></span> <span class="sm">7/100</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
 <div class="sm mut">NFL · Tipster site</div></summary>
@@ -265,7 +265,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-100.0%</span></td>
 <td class="num"><span class="mut">-125.0pp</span></td>
 <td class="num"><span class="mut">+1.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:1%"></i></span> <span class="sm">1/100</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-14</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">Cricket · Sportsbook</div></summary>
@@ -325,7 +325,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-22.1%</span></td>
 <td class="num"><span class="mut">-51.6pp</span></td>
 <td class="num"><span class="mut">+0.8¢</span><div class="sm mut">11 closes</div></td>
-<td><span class="bar"><i style="width:33%"></i></span> <span class="sm">10/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">10/100</span><div class="sm mut">0/4 QA gates</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Team +0.5 unbeaten rule</b>
 <div class="sm mut">Soccer · Team +0.5 · Rule</div></summary>
@@ -400,8 +400,10 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
 samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
 the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
-<b>Road to QA</b>: settled bets on the US exchanges against the 30 QA needs, and how many of its
-four entry gates hold. Click a source for what it is. Grey figures are under 30 bets.</div>
+<b>Road to QA</b>: settled bets on the US exchanges against what QA needs for that sport, and how many of its
+four entry gates hold. <b>Thresholds are per sport</b>: most need 30+ bets over 14+ days
+at z ≥ 1; high-volume sports (Tennis, Table Tennis) need
+100+ bets over 5+ days at z ≥ 1.5 — more bets and a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under 30 bets.</div>
 
 <h2>Running now (220)</h2>
 <input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…"><div id="live"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr class="grp"><td colspan="7">Soccer · 9 running</td></tr>
@@ -5670,7 +5672,8 @@ four entry gates hold. Click a source for what it is. Grey figures are under 30 
 
 <h2>Reference</h2>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
-<div class="note">The stamp needs <b>50+ settled bets spanning 28+ days</b>,
+<div class="note">The stamp needs <b>50+ settled bets spanning 28+ days</b>
+(200+ over 10+ days at z ≥ 2.5 in high-volume sports),
 wins beating the price by z ≥ 2, ROI beating every blind rule on the same contests,
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
 <div class="tbl"><table>

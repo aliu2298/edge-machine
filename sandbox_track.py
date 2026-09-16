@@ -88,6 +88,27 @@ READY_CLV = dict(min_n=30, min_share=0.5)
 READY_HOLD_DAYS = 7
 STALE_DAYS = 21
 NEVER_PROMOTED_KINDS = ("Baseline",)
+
+# ---- Per-sport thresholds (2026-09-16) ------------------------------------------------------
+# One set of numbers did not fit every sport. The 14-day span exists because one weekend of
+# football is one draw of the weather; a tennis rule logs ~50 bets a day across dozens of
+# tournaments, so it met every other entry gate in two days and then waited two weeks on the
+# calendar alone. High-volume sports therefore trade calendar for SAMPLE and a HIGHER bar on
+# the price: more bets, a shorter span that still covers several days of different events,
+# and a stricter z (a sample that big shows a real edge quickly, and it gets four looks a day).
+# Every other sport keeps the original numbers. Set before any pair used them.
+HIGH_VOLUME_SPORTS = ("tennis", "table_tennis")
+SPORT_RULES = {
+    "high": dict(entry=dict(min_bets=100, min_days=5, z_min=1.5),
+                 approval=dict(min_bets=200, min_days=10, z_min=2.5),
+                 demote_bets=100),
+    "standard": dict(entry=QA_ENTRY, approval=APPROVAL, demote_bets=QA_DEMOTE["min_bets"]),
+}
+
+
+def sport_rules(sport):
+    """The threshold set for `sport` (SPORT_RULES)."""
+    return SPORT_RULES["high" if sport in HIGH_VOLUME_SPORTS else "standard"]
 STAGES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stages.json")
 # Taker fee per $1 contract at price p, per venue: fee = rate * p * (1 - p). Polymarket US
 # charges 0.06, Kalshi 0.07. QA scores what following a source would actually cost.
@@ -1102,7 +1123,7 @@ def assess(d, name, sport=None, since=None, venues=None):
     roi_h1 = (sum(q["pnl"] for q in bets[:half]) / (half * STAKE)) if half else None
     roi_h2 = (sum(q["pnl"] for q in bets[half:]) / ((n - half) * STAKE)) if n - half else None
 
-    A = APPROVAL
+    A = sport_rules(sport)["approval"]
     criteria = [
         ("sample", f"{A['min_bets']}+ settled bets spanning {A['min_days']}+ days",
          n_eff >= A["min_bets"] and span_days >= A["min_days"],
@@ -1133,7 +1154,7 @@ def assess(d, name, sport=None, since=None, venues=None):
         status = "watch"
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
-    return dict(status=status, criteria=criteria, n=n, won=won, roi=roi, pnl=pnl,
+    return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
@@ -1144,7 +1165,7 @@ def assess(d, name, sport=None, since=None, venues=None):
 def qa_entry(a):
     """[(key, label, passed, detail)] for the QA entry gate, from an assess() result."""
     c = {k: (p, det) for k, _l, p, det in a["criteria"]}
-    E = QA_ENTRY
+    E = sport_rules(a.get("sport"))["entry"]
     return [
         ("sample", f"{E['min_bets']}+ settled bets spanning {E['min_days']}+ days",
          a.get("n_eff", a["n"]) >= E["min_bets"] and a["span_days"] >= E["min_days"],
@@ -1216,7 +1237,7 @@ def demote_reason(d, name, sport, pair, a, now):
     last = _last_logged(d, name, sport, since) or since
     if now - datetime.fromisoformat(last) >= timedelta(days=STALE_DAYS):
         return f"no new bet in {STALE_DAYS} days"
-    if a["n"] < QA_DEMOTE["min_bets"]:
+    if a["n"] < sport_rules(sport)["demote_bets"]:
         return None
     if a["z"] < QA_DEMOTE["z_below"]:
         return f"fresh QA record behind the price, z {a['z']:+.2f}"

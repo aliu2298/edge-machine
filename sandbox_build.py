@@ -471,7 +471,7 @@ def pair_rows(d, st):
             elif (pair.get("fast_track") or {}).get("state") in ("probation", "cleared"):
                 stage = f'<span class="sig w">FAST TRACK</span><div class="sm mut">{esc(pair["fast_track"]["state"])}</div>'
             else:
-                need = T.QA_ENTRY["min_bets"]
+                need = T.sport_rules(sport)["entry"]["min_bets"]
                 fill = min(100, int(100 * qa["n"] / need)) if need else 0
                 stage = (f'<span class="bar"><i style="width:{fill}%"></i></span> '
                          f'<span class="sm">{qa["n"]}/{need}</span>'
@@ -646,8 +646,10 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
 samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
 the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
-<b>Road to QA</b>: settled bets on the US exchanges against the {T.QA_ENTRY['min_bets']} QA needs, and how many of its
-four entry gates hold. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
+<b>Road to QA</b>: settled bets on the US exchanges against what QA needs for that sport, and how many of its
+four entry gates hold. <b>Thresholds are per sport</b>: most need {T.QA_ENTRY['min_bets']}+ bets over {T.QA_ENTRY['min_days']}+ days
+at z ≥ {T.QA_ENTRY['z_min']:g}; high-volume sports ({', '.join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS)}) need
+{T.SPORT_RULES['high']['entry']['min_bets']}+ bets over {T.SPORT_RULES['high']['entry']['min_days']}+ days at z ≥ {T.SPORT_RULES['high']['entry']['z_min']:g} — more bets and a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
 
 <h2>Running now ({n_live:,})</h2>
 {('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets.</div>'}
@@ -657,7 +659,8 @@ four entry gates hold. Click a source for what it is. Grey figures are under {MI
 
 <h2>Reference</h2>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
-<div class="note">The stamp needs <b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>,
+<div class="note">The stamp needs <b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>
+({T.SPORT_RULES['high']['approval']['min_bets']}+ over {T.SPORT_RULES['high']['approval']['min_days']}+ days at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g} in high-volume sports),
 wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind rule on the same contests,
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
 {approval_table(d, scores)}</details>
@@ -767,6 +770,7 @@ def qa_page(d, st, style):
                   '<div class="note">No promotions or demotions yet.</div>')
 
     E, A = T.QA_ENTRY, T.APPROVAL
+    H, HV = T.SPORT_RULES["high"]["entry"], " and ".join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS).lower()
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · QA</title>
@@ -782,8 +786,8 @@ def qa_page(d, st, style):
 <a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
 <div class="note warn">QA lists only what has <b>succeeded in the Sandbox</b>: a (source, sport) pair
-arrives here once it clears the entry gate — {E['min_bets']}+ settled bets spanning {E['min_days']}+ days, wins beating
-the price by z ≥ {E['z_min']:g}, beating every blind rule, still profitable without its biggest win.
+arrives here once it clears the entry gate for its sport — {E['min_bets']}+ settled bets spanning {E['min_days']}+ days and wins beating
+the price by z ≥ {E['z_min']:g} ({H['min_bets']}+ over {H['min_days']}+ days at z ≥ {H['z_min']:g} in {HV}), beating every blind rule, still profitable without its biggest win.
 Pairs still working towards that are on the <a href="./sandbox.html">Sandbox</a> page. From promotion on, a pair
 is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
 never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
@@ -800,7 +804,8 @@ here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
 <h2>In QA</h2>
 {qa_table}
 <div class="note"><b>Production-ready</b> is the full stamp applied to the fresh QA record —
-{A['min_bets']}+ bets spanning {A['min_days']}+ days, z ≥ {A['z_min']:g}, beats every blind rule, still
+{A['min_bets']}+ bets spanning {A['min_days']}+ days, z ≥ {A['z_min']:g} (for {HV}: {T.SPORT_RULES['high']['approval']['min_bets']}+ over
+{T.SPORT_RULES['high']['approval']['min_days']}+ days, z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}), beats every blind rule, still
 profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
 price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
 {T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US
