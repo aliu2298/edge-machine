@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-16T18:14:14+00:00",
+ "board_built_at": "2026-09-16T22:29:06+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -96,6 +96,58 @@
    "source": "team1_form_l5",
    "sport": "soccer_team1",
    "status": "hit"
+  },
+  "2026-09-18|Brentford|Chelsea|Brentford to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Chelsea",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Brentford"
+   },
+   "date": "2026-09-18",
+   "edge_at_log": null,
+   "first_seen": "2026-09-16",
+   "headline": "Brentford to score 1+",
+   "home": "Brentford",
+   "id": "2026-09-18|Brentford|Chelsea|Brentford to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-18T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-16",
+   "last_seen_at": "2026-09-16T22:29:06+00:00",
+   "league": "Premier League",
+   "match": "Brentford v Chelsea",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.83,
+   "sandbox_quote": "team1_form_l5:KXEPLTEAMTOTAL-26SEP18BRECFC-BRE1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-18|Espanyol|Elche|Espanyol to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Elche",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Espanyol"
+   },
+   "date": "2026-09-18",
+   "edge_at_log": null,
+   "first_seen": "2026-09-16",
+   "headline": "Espanyol to score 1+",
+   "home": "Espanyol",
+   "id": "2026-09-18|Espanyol|Elche|Espanyol to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-18T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-16",
+   "last_seen_at": "2026-09-16T22:29:06+00:00",
+   "league": "La Liga",
+   "match": "Espanyol v Elche",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.86,
+   "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP18ESPELC-ESP1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -118,5 +170,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-16T18:14:14+00:00"
+ "updated_at": "2026-09-16T22:29:06+00:00"
 }

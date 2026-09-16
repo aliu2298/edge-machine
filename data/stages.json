@@ -17,6 +17,23 @@
    "pair": "team1_form_l5|soccer_team1",
    "reason": "0 of 30 settled bets",
    "to": "fast_track_probation"
+  },
+  {
+   "at": "2026-09-16T22:29:06+00:00",
+   "evidence": {
+    "base_roi": 0.045,
+    "clv": -0.0037,
+    "clv_n": 84,
+    "n": 93,
+    "own_roi": 0.0841,
+    "roi": 0.0841,
+    "roi_fee": 0.0716,
+    "span_days": 2.0,
+    "weeks": 0,
+    "z": 1.6875
+   },
+   "pair": "tennis_fav_band|tennis",
+   "to": "qa"
   }
  ],
  "pairs": {
@@ -28,7 +45,24 @@
    },
    "since": null,
    "stage": "sandbox"
+  },
+  "tennis_fav_band|tennis": {
+   "entry": {
+    "base_roi": 0.045,
+    "clv": -0.0037,
+    "clv_n": 84,
+    "n": 93,
+    "own_roi": 0.0841,
+    "roi": 0.0841,
+    "roi_fee": 0.0716,
+    "span_days": 2.0,
+    "weeks": 0,
+    "z": 1.6875
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-16T22:29:06+00:00",
+   "stage": "qa"
   }
  },
- "updated": "2026-09-16T18:14:14+00:00"
+ "updated": "2026-09-16T22:29:06+00:00"
 }
