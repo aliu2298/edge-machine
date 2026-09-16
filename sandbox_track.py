@@ -1125,7 +1125,7 @@ def assess(d, name, sport=None, since=None, venues=None):
 
     A = sport_rules(sport)["approval"]
     criteria = [
-        ("sample", f"{A['min_bets']}+ settled bets spanning {A['min_days']}+ days",
+        ("sample", f"{A['min_bets']}+ settled bets" + (f" spanning {A['min_days']}+ days" if A['min_days'] else ""),
          n_eff >= A["min_bets"] and span_days >= A["min_days"],
          f"{n} bets" + (f" ({n_eff} independent)" if n_eff != n else "")
          + f" over {span_days:.0f} day{'' if round(span_days) == 1 else 's'}"),
@@ -1167,7 +1167,7 @@ def qa_entry(a):
     c = {k: (p, det) for k, _l, p, det in a["criteria"]}
     E = sport_rules(a.get("sport"))["entry"]
     return [
-        ("sample", f"{E['min_bets']}+ settled bets spanning {E['min_days']}+ days",
+        ("sample", f"{E['min_bets']}+ settled bets" + (f" spanning {E['min_days']}+ days" if E['min_days'] else ""),
          a.get("n_eff", a["n"]) >= E["min_bets"] and a["span_days"] >= E["min_days"],
          f"{a['n']} bets over {a['span_days']:.0f} day{'' if round(a['span_days']) == 1 else 's'}"),
         ("price", f"wins beat the price by z ≥ {E['z_min']:g}", a["n"] > 0 and a["z"] >= E["z_min"],
