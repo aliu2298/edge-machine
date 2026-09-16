@@ -810,8 +810,8 @@ profitable without its biggest win and in both halves — <b>plus</b> buying bel
 price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
 {T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US
 0.06·p·(1−p), Kalshi 0.07), and <b>every bet must be a standard exchange market the Production
-feed can publish</b> — today a soccer side (home or away) on a Kalshi game market, or Yes on a
-Kalshi over-1.5 or team-goals market; no draws and no other sport yet. The gate is checked every run, so a pair is marked ready only once
+feed can publish</b> — today a soccer result (home, away or draw) on a Kalshi game market, or Yes on a
+Kalshi goals market; no other sport yet. The gate is checked every run, so a pair is marked ready only once
 it has <b>held for {T.READY_HOLD_DAYS} days</b>, and the mark is withdrawn the first run it fails.
 A pair goes <b>back to the Sandbox</b> after {T.QA_DEMOTE['min_bets']} fresh bets if it is behind the price,
 not beating every blind rule, or behind the closing price — or, at any count, after

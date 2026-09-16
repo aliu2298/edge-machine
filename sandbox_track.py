@@ -1033,13 +1033,14 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
 
 def placeable(q):
     """Is this bet one the Production feed can publish as a standard claim? Today: a soccer
-    side to win (home or away) on a Kalshi GAME market in a mapped league
-    (S.KALSHI_GAME_LEAGUES; no draw contract), or Yes on a soccer goals market (FEED_BETS) in
+    result (home, away or draw) on a Kalshi GAME market in a mapped league
+    (S.KALSHI_GAME_LEAGUES), or Yes on a soccer goals market (FEED_BETS) in
     one of those leagues. Nothing else — no tennis, MLB, NFL, cricket, table tennis, fights,
     BTTS, weather or crypto yet. A "production-ready" pair whose bets the feed cannot express
     is a label, not a result anyone can follow."""
     if q.get("sport") == "soccer":
-        return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi"
+        # Draws since 2026-09-16: the bot buys Kalshi's Tie contract on the same GAME event.
+        return (q.get("pick") in ("a", "b", "draw") and q.get("venue") == "kalshi"
                 and S.quote_league(q) is not None)
     if q.get("sport") in FEED_BETS:
         return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"

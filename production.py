@@ -17,12 +17,12 @@ data/production_leads.json is the machine-readable feed. It has the Leads ledger
 {"leads": {id: lead}, "updated_at", "board_built_at"} — so anything that reads one reads both:
 
   * every bet a Production pair logs AFTER it entered Production, and only bets the feed can
-    express as a standard claim (sandbox_track.placeable): a soccer side to win on a Kalshi
-    GAME market, or Yes on a soccer goals market, in a mapped league
+    express as a standard claim (sandbox_track.placeable): a soccer result (home, away or draw)
+    on a Kalshi GAME market, or Yes on a soccer goals market, in a mapped league
   * and only with a VERIFIED kickoff (start_source "espn"). Kalshi publishes no kickoff and
     its estimate has been a day off both ways; a kickoff listed too late would publish a
     match already in play as upcoming. Held back and counted.
-  * bet {"kind": "match_result", "side": "home" | "away"} (home = the Kalshi event's first
+  * bet {"kind": "match_result", "side": "home" | "away" | "draw"} (home = the Kalshi event's first
     side, sandbox_sources.kalshi_sides), or {"kind": "total_gte", "n": 2} /
     {"kind": "team_gte", "n": 1 | 2, "team": ...} — the Leads board's own bet vocabulary
   * status pending / hit / miss / void from the Sandbox settlement
@@ -88,8 +88,9 @@ def lead_from_quote(q, pair_key, built):
             headline = "Over 1.5 goals"
     else:
         home, away = q["side_a"], q["side_b"]
-        bet = {"kind": "match_result", "side": "home" if q["pick"] == "a" else "away"}
-        headline = f"{home if q['pick'] == 'a' else away} to win"
+        side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]
+        bet = {"kind": "match_result", "side": side}
+        headline = "Draw" if side == "draw" else f"{home if side == 'home' else away} to win"
     lead = {
         "id": f"{date}|{home}|{away}|{headline} · {label}",
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),

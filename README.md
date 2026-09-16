@@ -541,6 +541,10 @@ says, judged on their whole record, and marked production-ready the run that rec
 `production_at` settled bets while profitable after fees (no hold period, no other ready check;
 demotion still applies). SoccerPredictions · Soccer is the first: moved at 69 bets, production at 70.
 
+**Draw bets (2026-09-16).** `placeable` accepts a soccer draw on a Kalshi GAME market in a mapped league,
+and the Production feed publishes it as `{"kind": "match_result", "side": "draw"}` with the headline
+"Draw"; the trading side buys the event's Tie contract.
+
 **Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
 `over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
 unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into

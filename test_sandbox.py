@@ -1729,7 +1729,7 @@ try:
     eq(_gate["route"][0], False, "because the route criterion fails")
     ok("0 of 60" in _gate["route"][1], "and says how many bets had a route")
     _draws = [dict(q, pick="draw") if i % 10 == 0 else q for i, q in enumerate(fresh)]
-    eq(T.placeable(_draws[0]), False, "a soccer draw is not publishable: no draw claim")
+    eq(T.placeable(_draws[0]), True, "a soccer draw on Kalshi is publishable (Tie contract) since 2026-09-16")
     eq(T.placeable(_draws[1]), True, "a soccer side on Kalshi does")
     eq(T.placeable(dict(_draws[1], market_id="KXALLSVENSKANGAME-26SEP01X")), False,
        "but not in an unmapped league")
@@ -2174,7 +2174,7 @@ def _pq(i, **kw):
 _pd = {"quotes": [
     _pq(1),                                                            # open, routable -> published
     _pq(2, pick="b"),                                                  # away side
-    _pq(3, pick="draw"),                                               # draw: not publishable
+    _pq(3, pick="draw"),                                               # draw: published (Tie)
     _pq(4, logged="2026-09-29T06:00:00+00:00"),                        # logged before Production
     _pq(5, market_id="KXALLSVENSKANGAME-26OCT02AIKHAM", id="sp:5"),    # unmapped league
     _pq(6, start=(_pnow - timedelta(hours=1)).isoformat()),            # already started
@@ -2187,9 +2187,11 @@ _pd = {"quotes": [
 _feed = PR.build_feed(_pd, _pst, now=_pnow)
 eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in QA with ready_at is in Production")
 _fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
-eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "7"],
+eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "3", "7"],
    "published: open routable bets logged since ready, and recent settled ones; nothing else")
-eq(_feed["unlisted_skipped"], 2, "the draw and the unmapped league are held back and counted")
+eq(_feed["unlisted_skipped"], 1, "the unmapped league is held back and counted")
+_l3 = next(l for l in _fl if l["sandbox_quote"].endswith("3"))
+eq((_l3["bet"], _l3["headline"]), ({"kind": "match_result", "side": "draw"}, "Draw"), "a draw tip is published as a draw")
 eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
 eq(sorted(_feed["pairs"]["soccerpredictions|soccer"]),
    ["entered_at", "fast_track", "promoted_at", "ready_at", "route", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
