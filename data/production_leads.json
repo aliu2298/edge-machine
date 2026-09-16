@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-16T22:34:42+00:00",
+ "board_built_at": "2026-09-16T22:40:32+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -113,7 +113,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-16",
-   "last_seen_at": "2026-09-16T22:34:42+00:00",
+   "last_seen_at": "2026-09-16T22:40:32+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "team1_form_l5|soccer_team1",
@@ -139,7 +139,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-16",
-   "last_seen_at": "2026-09-16T22:34:42+00:00",
+   "last_seen_at": "2026-09-16T22:40:32+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "pair": "team1_form_l5|soccer_team1",
@@ -151,6 +151,17 @@
   }
  },
  "pairs": {
+  "soccerpredictions|soccer": {
+   "entered_at": "2026-09-16T22:40:32+00:00",
+   "fast_track": null,
+   "promoted_at": "2026-09-16T22:34:42+00:00",
+   "ready_at": "2026-09-16T22:40:32+00:00",
+   "route": "moved by hand",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
   "team1_form_l5|soccer_team1": {
    "entered_at": "2026-09-14T00:00:00+00:00",
    "fast_track": {
@@ -170,5 +181,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-16T22:34:42+00:00"
+ "updated_at": "2026-09-16T22:40:32+00:00"
 }

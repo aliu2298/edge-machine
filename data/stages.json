@@ -70,6 +70,24 @@
    "pair": "soccerpredictions|soccer",
    "reason": "moved to QA by hand on 2026-09-16",
    "to": "qa"
+  },
+  {
+   "at": "2026-09-16T22:40:32+00:00",
+   "evidence": {
+    "base_roi": -0.0139,
+    "clv": -0.0006,
+    "clv_n": 16,
+    "n": 71,
+    "own_roi": 0.138,
+    "roi": 0.138,
+    "roi_fee": 0.0892,
+    "span_days": 5.0208,
+    "weeks": 0,
+    "z": 0.672
+   },
+   "pair": "soccerpredictions|soccer",
+   "reason": "reached 70 settled bets, profitable after fees (set by hand)",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -89,6 +107,8 @@
    },
    "entry_since": null,
    "promoted_at": "2026-09-16T22:34:42+00:00",
+   "ready_at": "2026-09-16T22:40:32+00:00",
+   "ready_since": "2026-09-16T22:40:32+00:00",
    "stage": "qa"
   },
   "team1_form_l5|soccer_team1": {
@@ -106,5 +126,5 @@
    "stage": "sandbox"
   }
  },
- "updated": "2026-09-16T22:34:42+00:00"
+ "updated": "2026-09-16T22:40:32+00:00"
 }
