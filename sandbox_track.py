@@ -116,6 +116,12 @@ SPORT_RULES = {
 # no other ready check. Demotion still applies. Asked for on 2026-09-16 for SoccerPredictions.
 PAIR_OVERRIDES = {
     "soccerpredictions|soccer": dict(moved_on="2026-09-16", production_at=70),
+    # 2026-09-17, as asked. Demoted from QA the day before for the reason that still stands:
+    # its closing-line value is -0.07% and it beats the close on 28% of bets, so it wins at
+    # prices that were already right (z +1.64 against the 2.5 the gate asks for). It does
+    # clear every other criterion — 149 settled, +6.4% against +3.8% for backing the
+    # favourite on every match, profitable in both halves and without its biggest win.
+    "tennis_fav_band|tennis": dict(moved_on="2026-09-17", production_at=149),
 }
 
 
@@ -1282,7 +1288,12 @@ def demote_reason(d, name, sport, pair, a, now):
     if not base[0]:
         return f"not beating every blind rule ({base[1]})"
     if clv_sample(a) and a["clv"] < 0:
-        return f"behind the closing price, {a['clv']*100:+.1f}¢ on {a['clv_n']} bets"
+        # A pair moved by hand was moved with this known — tennis was demoted for exactly this
+        # the day before it was moved — so the closing price no longer sends it back. Every
+        # other demotion still applies: going quiet, losing to the prices paid, or failing to
+        # beat the blind rules all return it to the Sandbox whoever moved it.
+        if not PAIR_OVERRIDES.get(f"{name}|{sport}"):
+            return f"behind the closing price, {a['clv']*100:+.1f}¢ on {a['clv_n']} bets"
     return None
 
 
@@ -1336,6 +1347,14 @@ def evaluate_stages(d, st, now=None, verbose=True):
                 st["pairs"][key] = pair
                 continue
             ov = PAIR_OVERRIDES.get(key)
+            # A demoted pair does not bounce back on its own. A move made by hand AFTER the
+            # demotion does override it — that is a decision taken with the demotion known —
+            # while an older override cannot resurrect a pair demoted since.
+            if ov and pair.get("demoted_at") and ov["moved_on"] >= str(pair["demoted_at"])[:10]:
+                # The demotion also reset the pair's clock, which would leave it judged on the
+                # handful of bets since. Cancelling the demotion restores the whole record, as
+                # asked on 2026-09-16: what a pair did in the Sandbox counts towards Production.
+                pair = {k: v for k, v in pair.items() if k not in ("demoted_at", "since")}
             if pair["stage"] == "sandbox" and ov and not pair.get("demoted_at"):
                 a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
                 pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a),

@@ -2605,6 +2605,50 @@ T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 18, 6, tzinfo=timezone.utc),
 ok(not _sps["pairs"]["soccerpredictions|soccer"].get("ready_at"), "and leaves it the run it stops being profitable")
 
 # ---------------------------------------------------------------------------
+print("\na pair moved by hand after a demotion")
+# ---------------------------------------------------------------------------
+# Tennis was demoted for being level with the closing price and moved by hand the next day.
+# The move has to beat the demotion, restore the record the demotion reset, and stop the
+# closing price sending it straight back — while every other demotion still bites.
+def _tq(i, won=True, source="tennis_fav_band", bet=True, market=None):
+    when = (datetime(2026, 9, 10, tzinfo=timezone.utc) + timedelta(hours=i)).isoformat()
+    return dict(id=f"{source}:{i}", source=source, sport="tennis", bet=bet, venue="kalshi",
+                market_id=market or f"t{i}", price=0.8, pick="a", result="a" if won else "b",
+                status="won" if won else "lost", pnl=(25.0 if won else -100.0) if bet else 0.0,
+                close=0.8, price_a=0.8, price_b=0.25, start=when, logged=when)
+
+# The rule's own bets, plus the population it is judged against: backing the favourite on
+# every match of the sport, which here wins less often than the rule does.
+_td = {"quotes": [_tq(i, i % 7 != 0) for i in range(160)]
+                 + [_tq(1000 + i, i % 3 != 0, source="kalshi", bet=False, market=f"p{i}") for i in range(120)]}
+_ts = {"pairs": {"tennis_fav_band|tennis": dict(stage="sandbox", since="2026-09-16T22:34:42+00:00",
+                                                demoted_at="2026-09-16T22:34:42+00:00")}, "events": []}
+_tov = dict(T.PAIR_OVERRIDES)
+T.PAIR_OVERRIDES["tennis_fav_band|tennis"] = dict(moved_on="2026-09-17", production_at=149)
+T.evaluate_stages(_td, _ts, now=datetime(2026, 9, 17, 22, tzinfo=timezone.utc), verbose=False)
+_tp = _ts["pairs"]["tennis_fav_band|tennis"]
+eq((_tp["stage"], _tp.get("by_hand"), _tp.get("demoted_at")), ("qa", "2026-09-17", None),
+   "a move dated after the demotion cancels it")
+T.evaluate_stages(_td, _ts, now=datetime(2026, 9, 17, 22, 5, tzinfo=timezone.utc), verbose=False)
+ok(_ts["pairs"]["tennis_fav_band|tennis"].get("ready_at"),
+   "and it is judged on its whole record, not the bets since the demotion")
+# An override dated BEFORE a later demotion must not resurrect the pair.
+_ts2 = {"pairs": {"tennis_fav_band|tennis": dict(stage="sandbox", since="2026-09-20T00:00:00+00:00",
+                                                 demoted_at="2026-09-20T00:00:00+00:00")}, "events": []}
+T.evaluate_stages(_td, _ts2, now=datetime(2026, 9, 21, tzinfo=timezone.utc), verbose=False)
+eq(_ts2["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
+   "an older by-hand move does not undo a demotion that came after it")
+# Losing to the prices paid still demotes a pair that was moved by hand.
+_tl = {"quotes": [_tq(i, i % 3 != 0) for i in range(160)]
+                 + [_tq(1000 + i, True, source="kalshi", bet=False, market=f"p{i}") for i in range(120)]}
+_ts3 = {"pairs": {"tennis_fav_band|tennis": dict(stage="qa", promoted_at="2026-09-17T22:00:00+00:00",
+                                                 by_hand="2026-09-17")}, "events": []}
+T.evaluate_stages(_tl, _ts3, now=datetime(2026, 9, 17, 23, tzinfo=timezone.utc), verbose=False)
+eq(_ts3["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
+   "…but losing to the price still sends it back, moved by hand or not")
+T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_tov)
+
+# ---------------------------------------------------------------------------
 print("\nNHL rules")
 # ---------------------------------------------------------------------------
 _nsched = [
