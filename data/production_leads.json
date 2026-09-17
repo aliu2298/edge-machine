@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-17T21:49:18+00:00",
+ "board_built_at": "2026-09-17T22:05:56+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -182,7 +182,7 @@
    "kickoff": "2026-09-18T18:45Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T21:49:18+00:00",
+   "last_seen_at": "2026-09-17T22:05:56+00:00",
    "league": "Ligue 1",
    "match": "AS Monaco v Lens",
    "pair": "team1_form_l5|soccer_team1",
@@ -208,7 +208,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T21:49:18+00:00",
+   "last_seen_at": "2026-09-17T22:05:56+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "team1_form_l5|soccer_team1",
@@ -234,7 +234,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T21:49:18+00:00",
+   "last_seen_at": "2026-09-17T22:05:56+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "pair": "team1_form_l5|soccer_team1",
@@ -242,6 +242,37 @@
    "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP18ESPELC-ESP1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-18|Zhang - Zheng|Wei - Yuan|Zhang - Zheng to win \u00b7 Tennis favourite-band rule": {
+   "away": "Wei - Yuan",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-18",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Zhang - Zheng to win",
+   "home": "Zhang - Zheng",
+   "id": "2026-09-18|Zhang - Zheng|Wei - Yuan|Zhang - Zheng to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-18T05:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T22:05:56+00:00",
+   "league": "Tennis",
+   "match": "Zhang - Zheng v Wei - Yuan",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.85,
+   "route": {
+    "market": "aec-itfwo-yinzhawuszhe-sijweicheyua-2026-09-18",
+    "outcome": "Zhang - Zheng",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-yinzhawuszhe-sijweicheyua-2026-09-18",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "pending"
   },
   "2026-09-19|Hamburg SV|FC Cologne|FC Cologne to score 1+ \u00b7 Team scores 1+ form rule": {
@@ -260,7 +291,7 @@
    "kickoff": "2026-09-19T13:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T21:49:18+00:00",
+   "last_seen_at": "2026-09-17T22:05:56+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "pair": "team1_form_l5|soccer_team1",
@@ -286,7 +317,7 @@
    "kickoff": "2026-09-19T16:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T21:49:18+00:00",
+   "last_seen_at": "2026-09-17T22:05:56+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "pair": "team1_form_l5|soccer_team1",
@@ -339,5 +370,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-17T21:49:18+00:00"
+ "updated_at": "2026-09-17T22:05:56+00:00"
 }
