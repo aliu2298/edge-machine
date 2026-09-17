@@ -88,6 +88,24 @@
    "pair": "soccerpredictions|soccer",
    "reason": "reached 70 settled bets, profitable after fees (set by hand)",
    "to": "ready"
+  },
+  {
+   "at": "2026-09-17T21:42:13+00:00",
+   "evidence": {
+    "base_roi": 0.0153,
+    "clv": -0.0008,
+    "clv_n": 141,
+    "n": 150,
+    "own_roi": 0.0647,
+    "roi": 0.0647,
+    "roi_fee": 0.0526,
+    "span_days": 3.0595,
+    "weeks": 0,
+    "z": 1.6723
+   },
+   "pair": "tennis_fav_band|tennis",
+   "reason": "moved to QA by hand on 2026-09-17",
+   "to": "qa"
   }
  ],
  "pairs": {
@@ -121,10 +139,23 @@
    "stage": "sandbox"
   },
   "tennis_fav_band|tennis": {
-   "demoted_at": "2026-09-16T22:34:42+00:00",
-   "since": "2026-09-16T22:34:42+00:00",
-   "stage": "sandbox"
+   "by_hand": "2026-09-17",
+   "entry": {
+    "base_roi": 0.0153,
+    "clv": -0.0008,
+    "clv_n": 141,
+    "n": 150,
+    "own_roi": 0.0647,
+    "roi": 0.0647,
+    "roi_fee": 0.0526,
+    "span_days": 3.0595,
+    "weeks": 0,
+    "z": 1.6723
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-17T21:42:13+00:00",
+   "stage": "qa"
   }
  },
- "updated": "2026-09-17T21:21:06+00:00"
+ "updated": "2026-09-17T21:42:13+00:00"
 }
