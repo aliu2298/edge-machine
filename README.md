@@ -422,6 +422,8 @@ Rules are pre-registered from research fixed before it ran; research that failed
 | `tennis_fav_band` | Polymarket US / Kalshi | the player priced 0.75–0.90 | 86.4% v 81.1% priced on 88, z +1.26 | Sandbox (demoted from QA: no better than the close) |
 | `mma_fav_band` | Kalshi | the fighter priced 0.75–0.90 (tennis rule, unchanged) | none (out-of-sample test) | Sandbox |
 | `mlb_fade_streak` | Kalshi MLB game | a team 3-or-fewer of its last 10 v one 7-or-more (next game only) | +3.0% on 239 (2025), +4.6% on 149 (2026) | Sandbox |
+| `nhl_rest_edge` | Kalshi NHL game | the **home** side rested a day or more v a visitor on the second night of a back-to-back | 64.9% v 58.3% priced on 74, +7.5%, steady across the season | Sandbox (registered before the 2026-27 season) |
+| `nhl_dog_pl` | Kalshi NHL spread, **No** | the underdog +1.5, every listed game | +15.7% while the market was new, then −3.7% and −6.8% as it converged | Sandbox — an **observation**, testing whether October softness returns |
 | `tt_band_55_60` | Polymarket US | the player priced 0.55–0.60 | one spiky band in 129 matches | **Retired** — on new matches it won exactly at the price |
 
 Each market has a never-betting **Baseline** source (`btts_market`, `goals_market`) that logs the
@@ -432,7 +434,9 @@ and under 4.5; unders built on past game totals or defences; the +1.5 spread rul
 the MLB last-5 / last-20 windows and every MLB run-total rule; WNBA totals (the market moves its
 line for high-scoring teams); WNBA and NBA fade-the-streak (−64% and −37%), favourite band and spread
 rules; NBA first-half, first-quarter and both-teams-100 overs (thin books, ~19¢ spreads, both sides
-overpriced).
+overpriced); the NHL moneyline in every slice tried (favourites −5.2%, underdogs −3.3%, home −4.6%,
+the 0.60–0.75 band −10.1%), NHL form rules from 10-game win rates (+0.4%), and "tired teams mean
+overs" (back-to-back games go slightly *under*).
 
 ### Sources
 
