@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-17T22:55:42+00:00",
+ "board_built_at": "2026-09-17T23:02:01+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -166,11 +166,11 @@
    "kickoff": "2026-09-17T23:15Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Tennis",
    "match": "Paulo Andre Saraiva Dos Santos v Henrique Ortenblad Nogueira",
    "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.85,
+   "price_at_log": 0.87,
    "route": {
     "market": "aec-itfme-pausan-hennog-2026-09-17",
     "outcome": "Paulo Andre Saraiva Dos Santos",
@@ -244,7 +244,7 @@
    "kickoff": "2026-09-18T18:45Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Ligue 1",
    "match": "AS Monaco v Lens",
    "pair": "team1_form_l5|soccer_team1",
@@ -252,6 +252,37 @@
    "sandbox_quote": "team1_form_l5:KXLIGUE1TEAMTOTAL-26SEP18ASMRCL-ASM1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-18|Bernard Tomic|Alexander Binda|Bernard Tomic to win \u00b7 Tennis favourite-band rule": {
+   "away": "Alexander Binda",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-18",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Bernard Tomic to win",
+   "home": "Bernard Tomic",
+   "id": "2026-09-18|Bernard Tomic|Alexander Binda|Bernard Tomic to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-18T11:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
+   "league": "Tennis",
+   "match": "Bernard Tomic v Alexander Binda",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.85,
+   "route": {
+    "market": "KXATPCHALLENGERMATCH-26SEP18TOMBIN",
+    "outcome": "Bernard Tomic",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP18TOMBIN",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "pending"
   },
   "2026-09-18|Brentford|Chelsea|Brentford to score 1+ \u00b7 Team scores 1+ form rule": {
@@ -270,7 +301,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "team1_form_l5|soccer_team1",
@@ -296,7 +327,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "pair": "team1_form_l5|soccer_team1",
@@ -321,7 +352,7 @@
    "kickoff": "2026-09-18T01:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Tennis",
    "match": "Garcia, Mario v Djakouris, Antreas",
    "pair": "tennis_fav_band|tennis",
@@ -352,7 +383,7 @@
    "kickoff": "2026-09-18T05:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Tennis",
    "match": "Zhang - Zheng v Wei - Yuan",
    "pair": "tennis_fav_band|tennis",
@@ -384,7 +415,7 @@
    "kickoff": "2026-09-19T13:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "pair": "team1_form_l5|soccer_team1",
@@ -410,7 +441,7 @@
    "kickoff": "2026-09-19T16:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T22:55:42+00:00",
+   "last_seen_at": "2026-09-17T23:02:01+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "pair": "team1_form_l5|soccer_team1",
@@ -463,5 +494,5 @@
  "stage": "production",
  "unlisted_skipped": 2,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-17T22:55:42+00:00"
+ "updated_at": "2026-09-17T23:02:01+00:00"
 }
