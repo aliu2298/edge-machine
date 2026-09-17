@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-17T15:45:50+00:00",
+ "board_built_at": "2026-09-17T17:24:55+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
    "a": "Internazionale",
@@ -891,7 +891,7 @@
    "id": "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals",
    "kickoff": "2026-09-17T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Europa League",
    "match": "Juventus v NEC Nijmegen",
    "model": {
@@ -1015,7 +1015,7 @@
    "id": "2026-09-18|Brentford|Chelsea|Over 1.5 goals",
    "kickoff": "2026-09-18T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "model": {
@@ -1079,7 +1079,7 @@
    "id": "2026-09-18|Espanyol|Elche|Over 1.5 goals",
    "kickoff": "2026-09-18T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "model": {
@@ -1143,7 +1143,7 @@
    "id": "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals",
    "kickoff": "2026-09-18T18:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Eredivisie",
    "match": "FC Groningen v PEC Zwolle",
    "model": {
@@ -1205,7 +1205,7 @@
    "id": "2026-09-18|Monza|Sassuolo|Over 1.5 goals",
    "kickoff": "2026-09-18T18:45Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Serie A",
    "match": "Monza v Sassuolo",
    "model": {
@@ -1268,7 +1268,7 @@
    "id": "2026-09-19|ADO Den Haag|SC Cambuur|Over 1.5 goals",
    "kickoff": "2026-09-19T14:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Eredivisie",
    "match": "ADO Den Haag v SC Cambuur",
    "model": {
@@ -1310,6 +1310,132 @@
    "status": "pending",
    "strength": 12
   },
+  "2026-09-19|AS Roma|Internazionale|Over 1.5 goals": {
+   "a": "AS Roma",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Internazionale",
+   "b": "Internazionale",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.2175226586102719,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-17",
+   "headline": "Over 1.5 goals",
+   "home": "AS Roma",
+   "id": "2026-09-19|AS Roma|Internazionale|Over 1.5 goals",
+   "kickoff": "2026-09-19T16:00Z",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
+   "league": "Serie A",
+   "match": "AS Roma v Internazionale",
+   "model": {
+    "btts": 0.6001,
+    "over15": 0.8022,
+    "over25": 0.5788
+   },
+   "modelled_at": "2026-09-17T17:24:55+00:00",
+   "priced_at": "2026-09-17T17:24:55+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.65,
+     "bid": 0.64,
+     "fair": 0.645,
+     "fee": 0.016,
+     "market": "KXSERIEABTTS-26SEP19ROMINT-BTTS",
+     "price": 1.502,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.82,
+     "bid": 0.81,
+     "event": "sea-rom-int-2026-09-19",
+     "fair": 0.815,
+     "fee": 0.0089,
+     "market": "tsc-sea-rom-int-2026-09-19-1pt5",
+     "price": 1.206,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "sea-rom-int-2026-09-19",
+     "fair": 0.585,
+     "fee": 0.0145,
+     "market": "tsc-sea-rom-int-2026-09-19-2pt5",
+     "price": 1.654,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-19|Alverca|Rio Ave|Over 1.5 goals": {
+   "a": "Alverca",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Rio Ave",
+   "b": "Rio Ave",
+   "b_key": "over15",
+   "b_run": 5,
+   "base_rate": 0.3716012084592145,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-17",
+   "headline": "Over 1.5 goals",
+   "home": "Alverca",
+   "id": "2026-09-19|Alverca|Rio Ave|Over 1.5 goals",
+   "kickoff": "2026-09-19T17:00Z",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
+   "league": "Primeira Liga",
+   "match": "Alverca v Rio Ave",
+   "model": {
+    "btts": 0.5249,
+    "over15": 0.7378,
+    "over25": 0.4884
+   },
+   "modelled_at": "2026-09-17T17:24:55+00:00",
+   "priced_at": "2026-09-17T17:24:55+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.54,
+     "bid": 0.52,
+     "fair": 0.53,
+     "fee": 0.0174,
+     "market": "KXLIGAPORTUGALBTTS-26SEP19ALVRAV-BTTS",
+     "price": 1.794,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.76,
+     "bid": 0.72,
+     "fair": 0.74,
+     "fee": 0.0128,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-2",
+     "price": 1.294,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.48,
+     "bid": 0.46,
+     "fair": 0.47,
+     "fee": 0.0175,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-3",
+     "price": 2.01,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 11
+  },
   "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals": {
    "a": "Brighton & Hove Albion",
    "a_key": "scoring1",
@@ -1330,7 +1456,7 @@
    "id": "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals",
    "kickoff": "2026-09-19T14:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Premier League",
    "match": "Brighton & Hove Albion v Arsenal",
    "model": {
@@ -1393,7 +1519,7 @@
    "id": "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v SC Freiburg",
    "model": {
@@ -1457,7 +1583,7 @@
    "id": "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "status": "pending",
@@ -1483,7 +1609,7 @@
    "id": "2026-09-19|Osasuna|Rayo Vallecano|Over 1.5 goals",
    "kickoff": "2026-09-19T12:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "La Liga",
    "match": "Osasuna v Rayo Vallecano",
    "model": {
@@ -1527,6 +1653,70 @@
    "status": "pending",
    "strength": 9
   },
+  "2026-09-19|VfB Stuttgart|Borussia Dortmund|Over 1.5 goals": {
+   "a": "VfB Stuttgart",
+   "a_key": "scoring1",
+   "a_run": 4,
+   "away": "Borussia Dortmund",
+   "b": "Borussia Dortmund",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.3293051359516616,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "first_seen": "2026-09-17",
+   "headline": "Over 1.5 goals",
+   "home": "VfB Stuttgart",
+   "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Over 1.5 goals",
+   "kickoff": "2026-09-19T16:30Z",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
+   "league": "Bundesliga",
+   "match": "VfB Stuttgart v Borussia Dortmund",
+   "model": {
+    "btts": 0.7476,
+    "over15": 0.9087,
+    "over25": 0.7624
+   },
+   "modelled_at": "2026-09-17T17:24:55+00:00",
+   "priced_at": "2026-09-17T17:24:55+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.72,
+     "bid": 0.7,
+     "fair": 0.71,
+     "fee": 0.0142,
+     "market": "KXBUNDESLIGABTTS-26SEP19VFBBVB-BTTS",
+     "price": 1.362,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.88,
+     "bid": 0.87,
+     "event": "bun-stu-bvb-2026-09-19",
+     "fair": 0.875,
+     "fee": 0.0063,
+     "market": "tsc-bun-stu-bvb-2026-09-19-1pt5",
+     "price": 1.128,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.7,
+     "bid": 0.68,
+     "event": "bun-stu-bvb-2026-09-19",
+     "fair": 0.69,
+     "fee": 0.0126,
+     "market": "tsc-bun-stu-bvb-2026-09-19-2pt5",
+     "price": 1.403,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending",
+   "strength": 10
+  },
   "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals": {
    "a": "Werder Bremen",
    "a_key": "scoring1",
@@ -1547,7 +1737,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T15:45:50+00:00",
+   "last_seen_at": "2026-09-17T17:24:55+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -1592,5 +1782,5 @@
    "strength": 6
   }
  },
- "updated_at": "2026-09-17T15:45:52+00:00"
+ "updated_at": "2026-09-17T17:25:02+00:00"
 }

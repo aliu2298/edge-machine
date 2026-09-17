@@ -8008,6 +8008,21 @@
    "team": "RB Salzburg",
    "test_date": "2026-09-17"
   },
+  "RB Salzburg|scoring1|2026-09-20|RB Salzburg|SK Sturm Graz": {
+   "home": true,
+   "id": "RB Salzburg|scoring1|2026-09-20|RB Salzburg|SK Sturm Graz",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T15:00Z",
+   "label": "scored in",
+   "league": "Austrian Bundesliga",
+   "length": 10,
+   "logged_at": "2026-09-17T17:25:02+00:00",
+   "opp": "SK Sturm Graz",
+   "rate": 0.10416666666666667,
+   "status": "pending",
+   "team": "RB Salzburg",
+   "test_date": "2026-09-20"
+  },
   "Rangers|scoring1|2026-09-02|Rangers|Falkirk": {
    "graded_at": "2026-09-02T21:07:36+00:00",
    "home": false,
@@ -10332,5 +10347,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-17T15:45:52+00:00"
+ "updated_at": "2026-09-17T17:25:02+00:00"
 }
