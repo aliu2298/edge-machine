@@ -70,6 +70,11 @@
    "lead_min": 12.8,
    "price": 0.605
   },
+  "covers:aec-mlb-kc-hou-2026-09-17": {
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 57.2,
+   "price": 0.585
+  },
   "covers:aec-mlb-mia-az-2026-09-15": {
    "at": "2026-09-16T01:36:21+00:00",
    "lead_min": 3.6,
@@ -79,6 +84,11 @@
    "at": "2026-09-17T01:30:08+00:00",
    "lead_min": 9.9,
    "price": 0.565
+  },
+  "covers:aec-mlb-phi-nym-2026-09-17": {
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 57.2,
+   "price": 0.54
   },
   "covers:aec-mlb-sf-stl-2026-09-16": {
    "at": "2026-09-16T16:43:01+00:00",
@@ -190,6 +200,11 @@
    "lead_min": 12.8,
    "price": 0.4
   },
+  "espn_fpi:aec-mlb-kc-hou-2026-09-17": {
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 57.2,
+   "price": 0.585
+  },
   "espn_fpi:aec-mlb-lad-cin-2026-09-16": {
    "at": "2026-09-16T22:26:46+00:00",
    "lead_min": 13.2,
@@ -214,6 +229,11 @@
    "at": "2026-09-16T16:43:01+00:00",
    "lead_min": 57.0,
    "price": 0.595
+  },
+  "espn_fpi:aec-mlb-phi-nym-2026-09-17": {
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 57.2,
+   "price": 0.54
   },
   "espn_fpi:aec-mlb-phi-wsh-2026-09-16": {
    "at": "2026-09-16T22:41:52+00:00",
@@ -475,6 +495,11 @@
    "lead_min": 12.8,
    "price": 0.605
   },
+  "scores24:aec-mlb-kc-hou-2026-09-17": {
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 57.2,
+   "price": 0.585
+  },
   "scores24:aec-mlb-lad-cin-2026-09-16": {
    "at": "2026-09-16T22:26:46+00:00",
    "lead_min": 13.2,
@@ -509,6 +534,11 @@
    "at": "2026-09-16T16:43:01+00:00",
    "lead_min": 57.0,
    "price": 0.595
+  },
+  "scores24:aec-mlb-phi-nym-2026-09-17": {
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 57.2,
+   "price": 0.54
   },
   "scores24:aec-mlb-sd-col-2026-09-14": {
    "at": "2026-09-15T00:29:15+00:00",
@@ -751,8 +781,8 @@
    "price": 0.79
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP17ZHESVA": {
-   "at": "2026-09-17T22:02:47+00:00",
-   "lead_min": 57.2,
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 42.2,
    "price": 0.76
   },
   "tennis_fav_band:KXWTAMATCH-26SEP17FREJOV": {
@@ -761,8 +791,8 @@
    "price": 0.74
   },
   "tennis_fav_band:KXWTAMATCH-26SEP17KOSSAM": {
-   "at": "2026-09-17T22:02:47+00:00",
-   "lead_min": 57.2,
+   "at": "2026-09-17T22:17:47+00:00",
+   "lead_min": 42.2,
    "price": 0.78
   },
   "tennis_fav_band:KXWTAMATCH-26SEP17LEMQUE": {
@@ -1451,5 +1481,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-09-17T22:02:47+00:00"
+ "updated": "2026-09-17T22:17:47+00:00"
 }
