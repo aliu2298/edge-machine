@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-17T12:10:08+00:00",
+ "built_at": "2026-09-17T15:45:52+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -1047,6 +1047,725 @@
    "price": 1.19,
    "fair": 0.8013,
    "model": 0.7829
+  },
+  {
+   "date": "2026-09-19",
+   "kickoff": "2026-09-19T13:30Z",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v FC Augsburg",
+   "home": "Werder Bremen",
+   "away": "FC Augsburg",
+   "headline": "FC Augsburg to score 2+",
+   "why": "FC Augsburg have scored 2+ in 3 straight; Werder Bremen have conceded in 6 straight.",
+   "a": "FC Augsburg",
+   "b": "Werder Bremen",
+   "a_run": 3,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 9,
+   "base_rate": 0.23564954682779457,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "FC Augsburg"
+   },
+   "a_recent": [
+    {
+     "s": "2-2",
+     "opp": "Bayer Leverkusen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Schalke 04",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-4",
+     "opp": "Leeds United",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-2",
+     "opp": "Sassuolo",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-4",
+     "opp": "1. FC Union Berlin",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-1",
+     "opp": "FC Cologne",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "SC Freiburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-1",
+     "opp": "AJ Auxerre",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-2",
+     "opp": "SC Paderborn 07",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-2",
+     "opp": "Borussia Dortmund",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "market": "{\"away\": \"FC Augsburg\", \"day\": \"2026-09-19\", \"home\": \"Werder Bremen\", \"league\": \"Bundesliga\"}",
+   "price": 2.08,
+   "fair": 0.4613,
+   "model": 0.5331
+  },
+  {
+   "date": "2026-09-19",
+   "kickoff": "2026-09-19T13:30Z",
+   "league": "Bundesliga",
+   "match": "Hamburg SV v FC Cologne",
+   "home": "Hamburg SV",
+   "away": "FC Cologne",
+   "headline": "Over 1.5 goals",
+   "why": "Hamburg SV's games went over 1.5 in 10 of their last 10; FC Cologne's in 10.",
+   "a": "Hamburg SV",
+   "b": "FC Cologne",
+   "a_run": 10,
+   "b_run": 10,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 10 of last 10",
+   "b_text": "over 1.5 \u00b7 10 of last 10",
+   "strength": 20,
+   "base_rate": 0.4247104247104247,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "0-5",
+     "opp": "RB Leipzig",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-5",
+     "opp": "Mainz",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-2",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-2",
+     "opp": "SC Freiburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "TSG Hoffenheim",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "Werder Bremen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-4",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-1",
+     "opp": "Werder Bremen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-2",
+     "opp": "TSG Hoffenheim",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-5",
+     "opp": "Bayern Munich",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "1. FC Heidenheim 1846",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "1. FC Union Berlin",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Bayer Leverkusen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "St. Pauli",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Werder Bremen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "market": "{\"away\": \"FC Cologne\", \"day\": \"2026-09-19\", \"home\": \"Hamburg SV\", \"league\": \"Bundesliga\"}",
+   "price": 1.241,
+   "fair": 0.7677,
+   "model": 0.9066
+  },
+  {
+   "date": "2026-09-19",
+   "kickoff": "2026-09-19T13:30Z",
+   "league": "Bundesliga",
+   "match": "Eintracht Frankfurt v SC Freiburg",
+   "home": "Eintracht Frankfurt",
+   "away": "SC Freiburg",
+   "headline": "Over 1.5 goals",
+   "why": "Eintracht Frankfurt's games went over 1.5 in 10 of their last 10; SC Freiburg's in 9.",
+   "a": "Eintracht Frankfurt",
+   "b": "SC Freiburg",
+   "a_run": 10,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 10 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 19,
+   "base_rate": 0.4247104247104247,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "Mainz",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-3",
+     "opp": "1. FC Union Berlin",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "VfB Stuttgart",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Hamburg SV",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Augsburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "VfL Wolfsburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Cologne",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "5-0",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-0",
+     "opp": "SC Paderborn 07",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Werder Bremen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-3",
+     "opp": "Aston Villa",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "4-1",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "Hamburg SV",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Braga",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "1-1",
+     "opp": "VfL Wolfsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Braga",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "0-4",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "market": "{\"away\": \"SC Freiburg\", \"day\": \"2026-09-19\", \"home\": \"Eintracht Frankfurt\", \"league\": \"Bundesliga\"}",
+   "price": 1.153,
+   "fair": 0.855,
+   "market_url": "https://polymarket.us/event/bun-fra-scf-2026-09-19",
+   "venue_name": "Polymarket",
+   "model": 0.9071
+  },
+  {
+   "date": "2026-09-19",
+   "kickoff": "2026-09-19T13:30Z",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v FC Augsburg",
+   "home": "Werder Bremen",
+   "away": "FC Augsburg",
+   "headline": "Over 1.5 goals",
+   "why": "Werder Bremen's games went over 1.5 in 9 of their last 10; FC Augsburg's in 10.",
+   "a": "Werder Bremen",
+   "b": "FC Augsburg",
+   "a_run": 9,
+   "b_run": 10,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 9 of last 10",
+   "b_text": "over 1.5 \u00b7 10 of last 10",
+   "strength": 19,
+   "base_rate": 0.4247104247104247,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "1-1",
+     "opp": "FC Cologne",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "SC Freiburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-2",
+     "opp": "Borussia Dortmund",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-1",
+     "opp": "TSG Hoffenheim",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Hamburg SV",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "FC Cologne",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-2",
+     "opp": "Bayer Leverkusen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Schalke 04",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-4",
+     "opp": "1. FC Union Berlin",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Werder Bremen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Eintracht Frankfurt",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "TSG Hoffenheim",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Hamburg SV",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "market": "{\"away\": \"FC Augsburg\", \"day\": \"2026-09-19\", \"home\": \"Werder Bremen\", \"league\": \"Bundesliga\"}",
+   "price": 1.128,
+   "fair": 0.87,
+   "market_url": "https://polymarket.us/event/bun-bre-aug-2026-09-19",
+   "venue_name": "Polymarket",
+   "model": 0.8815
   }
  ],
  "teams": [
