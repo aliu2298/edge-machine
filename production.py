@@ -73,6 +73,19 @@ def _kickoff(q):
     return dt.astimezone(datetime.timezone.utc)
 
 
+def start_verified(q):
+    """Is this bet's start time a real start rather than an estimate?
+
+    Kalshi publishes a DATE for a soccer fixture, not a kickoff, so soccer leads are held
+    back until an ESPN fixture has confirmed the time — otherwise a bet could be published
+    on a match already under way. Polymarket US publishes the match start itself, which is
+    where the tennis lane's times come from.
+    """
+    if q.get("sport") == "tennis":
+        return q.get("venue") == "polymarket_us"
+    return q.get("start_source") == "espn"
+
+
 def lead_from_quote(q, pair_key, built):
     """One Sandbox bet as a feed lead."""
     ko = _kickoff(q)
@@ -91,10 +104,19 @@ def lead_from_quote(q, pair_key, built):
         side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]
         bet = {"kind": "match_result", "side": side}
         headline = "Draw" if side == "draw" else f"{home if side == 'home' else away} to win"
+    # A sport with no league table to look the fixture up in carries the venue's own market
+    # instead, so a follower buys the contract this bet was priced on rather than one found
+    # by matching two player names across two sites.
+    route = None
+    if q["sport"] == "tennis":
+        route = {"venue": q["venue"], "market": q["market_id"],
+                 "outcome": home if q["pick"] == "a" else away,
+                 "outcome_side": "yes" if q["pick"] == "a" else "no"}
     lead = {
         "id": f"{date}|{home}|{away}|{headline} · {label}",
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
-        "league": S.quote_league(q), "match": f"{home} v {away}",
+        "league": S.quote_league(q) or ("Tennis" if q["sport"] == "tennis" else None),
+        "match": f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,
         "status": STATUS.get(q["status"], "void"),
@@ -102,6 +124,8 @@ def lead_from_quote(q, pair_key, built):
         "source": q["source"], "sport": q["sport"], "pair": pair_key, "lane": "production",
         "sandbox_quote": q["id"], "price_at_log": q.get("price"), "edge_at_log": q.get("edge"),
     }
+    if route:
+        lead["route"] = route
     if lead["status"] == "pending":
         lead["last_seen"] = built[:10]
         lead["last_seen_at"] = built
@@ -139,7 +163,7 @@ def build_feed(d, st, now=None):
             if not T.placeable(q):
                 skipped += 1
                 continue
-            if q.get("start_source") != "espn":
+            if not start_verified(q):
                 unverified += 1
                 continue
             lead = lead_from_quote(q, key, built)

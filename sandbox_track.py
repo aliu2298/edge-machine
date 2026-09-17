@@ -1067,6 +1067,13 @@ def placeable(q):
         return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
                 and (FEED_BETS[q["sport"]]["kind"] != "team_gte" or bool(q.get("team"))))
+    if q.get("sport") == "tennis":
+        # Polymarket US lists a match as ONE market with two outcomes, so the feed carries the
+        # market slug and which outcome to back: the first player is the Yes side, the second
+        # the No side of the same market. Kalshi's tennis markets are not published: their only
+        # timestamp is an expiry, so a lead built from one could be a match already in play.
+        return (q.get("pick") in ("a", "b") and q.get("venue") == "polymarket_us"
+                and bool(q.get("market_id")) and bool(q.get("side_a")) and bool(q.get("side_b")))
     return False
 
 

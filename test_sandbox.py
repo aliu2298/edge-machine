@@ -2649,6 +2649,34 @@ eq(_ts3["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
 T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_tov)
 
 # ---------------------------------------------------------------------------
+print("\ntennis leads carry the venue's own market")
+# ---------------------------------------------------------------------------
+import production as PR
+_tnq = dict(id="tennis_fav_band:x", source="tennis_fav_band", sport="tennis", bet=True,
+            venue="polymarket_us", market_id="aec-utr-a-b-2026-09-18", side_a="Player A",
+            side_b="Player B", pick="b", price=0.82, status="open",
+            start="2026-09-18T12:00:00+00:00", logged="2026-09-18T06:00:00+00:00")
+ok(T.placeable(_tnq), "a Polymarket US tennis bet can be published")
+ok(not T.placeable(dict(_tnq, venue="kalshi", market_id="KXATPMATCH-26SEP18AB")),
+   "a Kalshi tennis bet cannot — its only timestamp is an expiry, not a start")
+ok(PR.start_verified(_tnq), "the venue publishes the match start, so the time is verified")
+ok(not PR.start_verified(dict(_tnq, venue="kalshi")), "…and a Kalshi tennis row is not")
+ok(not PR.start_verified(dict(_tnq, sport="soccer", start_source=None)),
+   "soccer still needs an ESPN kickoff")
+_tnl = PR.lead_from_quote(_tnq, "tennis_fav_band|tennis", "2026-09-18T06:00:00+00:00")
+eq(_tnl["bet"], {"kind": "match_result", "side": "away"}, "backing side B is the away side")
+eq(_tnl["route"], {"venue": "polymarket_us", "market": "aec-utr-a-b-2026-09-18",
+                   "outcome": "Player B", "outcome_side": "no"},
+   "the lead names the market and which outcome to buy — no name matching downstream")
+eq(PR.lead_from_quote(dict(_tnq, pick="a"), "tennis_fav_band|tennis", "x")["route"]["outcome_side"],
+   "yes", "the first player is the Yes side of that same market")
+eq(_tnl["league"], "Tennis", "tennis leads carry a league name rather than an empty one")
+ok("route" not in PR.lead_from_quote(dict(_tnq, sport="soccer", venue="kalshi",
+                                          market_id="KXEPLGAME-26SEP18ARSCFC", pick="a",
+                                          start_source="espn"), "x|soccer", "y"),
+   "a soccer lead carries no route: the bot finds those by league and club name")
+
+# ---------------------------------------------------------------------------
 print("\nNHL rules")
 # ---------------------------------------------------------------------------
 _nsched = [
