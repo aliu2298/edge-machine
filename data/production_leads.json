@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-17T18:15:03+00:00",
+ "board_built_at": "2026-09-17T21:21:06+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -97,6 +97,29 @@
    "sport": "soccer_team1",
    "status": "hit"
   },
+  "2026-09-17|Levski Sofia|Salzburg|Salzburg to win \u00b7 SoccerPredictions.ai": {
+   "away": "Salzburg",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-17",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Salzburg to win",
+   "home": "Levski Sofia",
+   "id": "2026-09-17|Levski Sofia|Salzburg|Salzburg to win \u00b7 SoccerPredictions.ai",
+   "kickoff": "2026-09-17T16:45Z",
+   "lane": "production",
+   "league": "Europa League",
+   "match": "Levski Sofia v Salzburg",
+   "pair": "soccerpredictions|soccer",
+   "price_at_log": 0.43,
+   "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17LEVRBS",
+   "source": "soccerpredictions",
+   "sport": "soccer",
+   "status": "hit"
+  },
   "2026-09-17|Plzen|Union Gilloise|Draw \u00b7 SoccerPredictions.ai": {
    "away": "Union Gilloise",
    "bet": {
@@ -111,8 +134,6 @@
    "id": "2026-09-17|Plzen|Union Gilloise|Draw \u00b7 SoccerPredictions.ai",
    "kickoff": "2026-09-17T19:00Z",
    "lane": "production",
-   "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
    "league": "Europa League",
    "match": "Plzen v Union Gilloise",
    "pair": "soccerpredictions|soccer",
@@ -120,7 +141,7 @@
    "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17VIKUSG",
    "source": "soccerpredictions",
    "sport": "soccer",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-09-17|Real Sociedad|Bournemouth|Bournemouth to win \u00b7 SoccerPredictions.ai": {
    "away": "Bournemouth",
@@ -136,8 +157,6 @@
    "id": "2026-09-17|Real Sociedad|Bournemouth|Bournemouth to win \u00b7 SoccerPredictions.ai",
    "kickoff": "2026-09-17T19:00Z",
    "lane": "production",
-   "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
    "league": "Europa League",
    "match": "Real Sociedad v Bournemouth",
    "pair": "soccerpredictions|soccer",
@@ -145,7 +164,7 @@
    "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17RSOBOU",
    "source": "soccerpredictions",
    "sport": "soccer",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-09-18|AS Monaco|Lens|AS Monaco to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Lens",
@@ -163,7 +182,7 @@
    "kickoff": "2026-09-18T18:45Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
+   "last_seen_at": "2026-09-17T21:21:06+00:00",
    "league": "Ligue 1",
    "match": "AS Monaco v Lens",
    "pair": "team1_form_l5|soccer_team1",
@@ -189,7 +208,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
+   "last_seen_at": "2026-09-17T21:21:06+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "team1_form_l5|soccer_team1",
@@ -215,7 +234,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
+   "last_seen_at": "2026-09-17T21:21:06+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "pair": "team1_form_l5|soccer_team1",
@@ -241,7 +260,7 @@
    "kickoff": "2026-09-19T13:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
+   "last_seen_at": "2026-09-17T21:21:06+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "pair": "team1_form_l5|soccer_team1",
@@ -267,7 +286,7 @@
    "kickoff": "2026-09-19T16:30Z",
    "lane": "production",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T18:15:03+00:00",
+   "last_seen_at": "2026-09-17T21:21:06+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "pair": "team1_form_l5|soccer_team1",
@@ -285,10 +304,10 @@
    "promoted_at": "2026-09-16T22:34:42+00:00",
    "ready_at": "2026-09-16T22:40:32+00:00",
    "route": "moved by hand",
-   "sandbox_clv": -0.01,
-   "sandbox_n": 1,
-   "sandbox_roi": -1.0,
-   "sandbox_roi_fee": -1.0
+   "sandbox_clv": 0.015,
+   "sandbox_n": 4,
+   "sandbox_roi": 0.1628,
+   "sandbox_roi_fee": 0.1182
   },
   "team1_form_l5|soccer_team1": {
    "entered_at": "2026-09-14T00:00:00+00:00",
@@ -309,5 +328,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-17T18:15:03+00:00"
+ "updated_at": "2026-09-17T21:21:06+00:00"
 }
