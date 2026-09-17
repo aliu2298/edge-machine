@@ -432,6 +432,14 @@ def collect(verbose=True):
             print(f"  ! kalshi/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
             ks = []
         extra = [k for k in ks if not any(_same_contest(k, p) for p in pm)]
+        if sport == "tennis" and extra:
+            # Kalshi publishes no start for a tennis match, only an estimate; the schedule
+            # confirms it. Unverified rows stay in the universe and are still judged — they
+            # simply never reach the Production feed. See S.apply_tennis_starts.
+            extra, tstats = S.apply_tennis_starts(extra)
+            if verbose and tstats.get("feed"):
+                print(f"  Tennis        schedule: {tstats['matched']} of {len(extra) + tstats['dropped']} "
+                      f"Kalshi starts verified, {tstats['dropped']} already under way")
         universe[sport] = pm + extra
         if sport == "soccer":
             # Kalshi has no kickoff time; ESPN does. See S.apply_espn_starts.
@@ -1070,10 +1078,14 @@ def placeable(q):
     if q.get("sport") == "tennis":
         # Polymarket US lists a match as ONE market with two outcomes, so the feed carries the
         # market slug and which outcome to back: the first player is the Yes side, the second
-        # the No side of the same market. Kalshi's tennis markets are not published: their only
-        # timestamp is an expiry, so a lead built from one could be a match already in play.
-        return (q.get("pick") in ("a", "b") and q.get("venue") == "polymarket_us"
-                and bool(q.get("market_id")) and bool(q.get("side_a")) and bool(q.get("side_b")))
+        # the No side of the same market. Kalshi lists a market per player, so either side is a
+        # plain Yes — but only once the schedule has confirmed when the match starts, since
+        # Kalshi itself publishes no start (S.apply_tennis_starts).
+        if not (q.get("pick") in ("a", "b") and bool(q.get("market_id"))
+                and bool(q.get("side_a")) and bool(q.get("side_b"))):
+            return False
+        return (q.get("venue") == "polymarket_us"
+                or (q.get("venue") == "kalshi" and q.get("start_source") == "tennisexplorer"))
     return False
 
 

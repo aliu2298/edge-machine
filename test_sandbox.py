@@ -2677,6 +2677,50 @@ ok("route" not in PR.lead_from_quote(dict(_tnq, sport="soccer", venue="kalshi",
    "a soccer lead carries no route: the bot finds those by league and club name")
 
 # ---------------------------------------------------------------------------
+print("\nverified start times for Kalshi tennis")
+# ---------------------------------------------------------------------------
+_tsn = datetime(2026, 9, 18, 6, tzinfo=timezone.utc)
+_tsched = [("Kouame M.", "Bax F.", datetime(2026, 9, 18, 12, 30, tzinfo=timezone.utc)),
+           ("Zheng M.", "Svajda T.", datetime(2026, 9, 18, 5, 0, tzinfo=timezone.utc))]
+def _krow(a, b, start, venue="kalshi"):
+    return dict(sport="tennis", venue=venue, market_id="KXATPMATCH-26SEP18X", side_a=a, side_b=b,
+                price_a=0.8, price_b=0.25, start=start, date=start[:10])
+# Kalshi's own start is expected-end minus three hours: close, but an estimate.
+_tin = [_krow("Moise Kouame", "Florent Bax", "2026-09-18T12:10:00+00:00"),
+        _krow("Unknown Player", "Nobody At All", "2026-09-18T14:00:00+00:00"),
+        _krow("Michael Zheng", "Trevor Svajda", "2026-09-18T05:10:00+00:00"),
+        _krow("A Player", "B Player", "2026-09-18T12:00:00+00:00", venue="polymarket_us")]
+_tout, _tst = S.apply_tennis_starts(_tin, schedule=_tsched, now=_tsn)
+eq(_tst["matched"], 1, "the schedule confirms the start of the match it lists and is still to come")
+eq(_tst["dropped"], 1, "a match that has already started is dropped, not published")
+_by = {r["side_a"]: r for r in _tout}
+eq(_by["Moise Kouame"]["start"], "2026-09-18T12:30:00+00:00", "…and the real start replaces the estimate")
+eq(_by["Moise Kouame"]["start_source"], "tennisexplorer", "with the source recorded")
+eq(_by["Moise Kouame"]["venue_start"], "2026-09-18T12:10:00+00:00", "and the estimate kept alongside it")
+eq(_by["Unknown Player"].get("start_source"), None, "a match the schedule does not list keeps its estimate")
+ok("Michael Zheng" not in _by, "the one already under way is gone")
+eq(_by["A Player"].get("start_source"), None, "a Polymarket row is left alone: it has a real start already")
+eq(S.apply_tennis_starts(_tin, schedule=[], now=_tsn)[0], _tin, "no schedule, no change — never a guess")
+# A different match between the same two players days later must not lend its time.
+_far = S.apply_tennis_starts([_krow("Moise Kouame", "Florent Bax", "2026-09-18T20:00:00+00:00")],
+                             schedule=_tsched, now=_tsn)
+eq(_far[1]["matched"], 0, "a start hours from the estimate belongs to a different match")
+
+ok(T.placeable(dict(sport="tennis", venue="kalshi", market_id="KX-1", side_a="A", side_b="B",
+                    pick="b", start_source="tennisexplorer")),
+   "a Kalshi tennis bet publishes once its start is verified")
+ok(not T.placeable(dict(sport="tennis", venue="kalshi", market_id="KX-1", side_a="A", side_b="B",
+                        pick="b")), "…and not before")
+_kl = PR.lead_from_quote(dict(source="tennis_fav_band", id="q", sport="tennis", venue="kalshi",
+                              market_id="KXATPMATCH-26SEP18AB", side_a="A Player", side_b="B Player",
+                              pick="b", price=0.8, status="open", start_source="tennisexplorer",
+                              start="2026-09-18T12:00:00+00:00", logged="2026-09-18T06:00:00+00:00"),
+                         "tennis_fav_band|tennis", "2026-09-18T06:00:00+00:00")
+eq(_kl["route"], {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome": "B Player",
+                  "outcome_side": "yes"},
+   "Kalshi lists a market per player, so either side is a plain Yes")
+
+# ---------------------------------------------------------------------------
 print("\nNHL rules")
 # ---------------------------------------------------------------------------
 _nsched = [

@@ -2612,6 +2612,108 @@ def band_picks(sport, band, universe=None):
     return out
 
 
+# ---------------------------------------------------------------------------
+# Verified start times for tennis (2026-09-17)
+# ---------------------------------------------------------------------------
+# Kalshi's tennis markets carry no start. What they carry is an expected END
+# (`occurrence_datetime` / expected_expiration_time), measured at +160 to +180 minutes after
+# Polymarket's start on 7 matches listed by both venues. fetch_kalshi_venue turns that into a
+# start by subtracting three hours — a deliberately early ESTIMATE, good to within minutes in
+# practice, but an estimate, and a lead published on one could be a match already under way.
+#
+# Polymarket cannot supply the missing time either: a Kalshi row only survives the venue
+# dedupe when Polymarket does NOT list that contest, so the rows that need a start are
+# exactly the ones Polymarket has never heard of.
+#
+# Tennis Explorer publishes the schedule itself, in Prague time. Measured the same way — 15
+# matches it shares with Polymarket — 13 landed within a minute of Polymarket's start once
+# converted, and the two that did not were matches Polymarket had moved. That is the same
+# job ESPN does for soccer kickoffs, so it is used the same way: a Kalshi tennis row is
+# publishable only once this has confirmed when the match actually starts.
+TENNIS_TZ = "Europe/Prague"
+TENNIS_START_MAX_H = 4          # a start this far from Kalshi's estimate is a different match
+_tennis_starts = None
+
+
+def tennis_starts(refresh=False):
+    """[(player a, player b, start UTC)] from Tennis Explorer's schedule. Cached per run."""
+    global _tennis_starts
+    if _tennis_starts is not None and not refresh:
+        return _tennis_starts
+    from zoneinfo import ZoneInfo
+    try:
+        h = _get_html(TENNIS_EXPLORER)
+    except RuntimeError as e:
+        print(f"  ! tennisexplorer schedule: {str(e)[:70]}")
+        return []
+    day = datetime.now(ZoneInfo(TENNIS_TZ)).date()
+    out, pending = [], None
+    for r in re.findall(r"(?is)<tr[^>]*>(.*?)</tr>", h):
+        if "t-name" not in r:
+            continue
+        nm = re.search(r'(?is)<td class="t-name"[^>]*>\s*(?:<a[^>]*>)?([^<]{3,40})', r)
+        tm = re.search(r'(?is)<td[^>]*class="[^"]*time[^"]*"[^>]*>\s*([0-9]{1,2}:[0-9]{2})', r)
+        if not nm:
+            continue
+        if tm:                                   # first row of the pair carries the time
+            pending = (nm.group(1).strip(), tm.group(1))
+        elif pending:
+            a, t = pending
+            pending = None
+            hh, mm = (int(x) for x in t.split(":"))
+            local = datetime(day.year, day.month, day.day, hh, mm, tzinfo=ZoneInfo(TENNIS_TZ))
+            out.append((a, nm.group(1).strip(), local.astimezone(timezone.utc)))
+    _tennis_starts = out
+    return out
+
+
+def apply_tennis_starts(rows, schedule=None, now=None):
+    """Give Kalshi tennis rows a real start time. -> (rows, stats).
+
+    A row keeps Kalshi's estimate and stays unpublishable unless the schedule names the same
+    two players and the start it gives sits BEFORE Kalshi's expected end and within
+    TENNIS_START_MAX_H of it. A match that has already started is dropped, which is the whole
+    point of doing this. Fail-soft: no schedule, no change.
+    """
+    now = now or datetime.now(timezone.utc)
+    sched = tennis_starts() if schedule is None else schedule
+    if not sched:
+        return rows, dict(matched=0, dropped=0, feed=False)
+    kept, matched, dropped = [], 0, 0
+    for r in rows:
+        if r.get("venue") != "kalshi":
+            kept.append(r)
+            continue
+        try:
+            est = datetime.fromisoformat(str(r["start"]))
+        except (KeyError, TypeError, ValueError):
+            kept.append(r)
+            continue
+        if est.tzinfo is None:
+            est = est.replace(tzinfo=timezone.utc)
+        best = None
+        for a, b, ko in sched:
+            score, flip = pair_match(r["side_a"], r["side_b"], a, b, sport="tennis")
+            # Either side of the estimate: three-hours-before-the-expected-end lands a little
+            # early as often as a little late, and a one-sided window threw away every match
+            # whose real start was the later of the two.
+            if score <= 0 or abs(est - ko) > timedelta(hours=TENNIS_START_MAX_H):
+                continue
+            if best is None or score > best[0]:
+                best = (score, ko)
+        if not best:
+            kept.append(r)                        # unverified: logged, never published
+            continue
+        ko = best[1]
+        if ko <= now:
+            dropped += 1                          # under way already
+            continue
+        matched += 1
+        kept.append(dict(r, start=ko.isoformat(), date=ko.strftime("%Y-%m-%d"),
+                         start_source="tennisexplorer", venue_start=est.isoformat()))
+    return kept, dict(matched=matched, dropped=dropped, feed=True)
+
+
 def fetch_tennis_fav_band(sport, universe=None):
     """FAV_BAND. Used for tennis and, unchanged, for MMA (mma_fav_band)."""
     return band_picks(sport, FAV_BAND, universe)

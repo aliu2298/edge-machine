@@ -82,7 +82,10 @@ def start_verified(q):
     where the tennis lane's times come from.
     """
     if q.get("sport") == "tennis":
-        return q.get("venue") == "polymarket_us"
+        # Polymarket publishes the match start itself; a Kalshi tennis row only has one once
+        # the schedule has confirmed it.
+        return (q.get("venue") == "polymarket_us"
+                or q.get("start_source") == "tennisexplorer")
     return q.get("start_source") == "espn"
 
 
@@ -109,9 +112,12 @@ def lead_from_quote(q, pair_key, built):
     # by matching two player names across two sites.
     route = None
     if q["sport"] == "tennis":
+        # Kalshi lists a market per player inside one event, so backing either player is a
+        # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,
+        # so the second player is the No side of it.
         route = {"venue": q["venue"], "market": q["market_id"],
                  "outcome": home if q["pick"] == "a" else away,
-                 "outcome_side": "yes" if q["pick"] == "a" else "no"}
+                 "outcome_side": "yes" if (q["pick"] == "a" or q["venue"] == "kalshi") else "no"}
     lead = {
         "id": f"{date}|{home}|{away}|{headline} · {label}",
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
