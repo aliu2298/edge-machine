@@ -7852,6 +7852,8 @@
   "2026-09-17|Besiktas|Marseille": {
    "away": "Marseille",
    "date": "2026-09-17",
+   "final": "4-1",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Besiktas",
    "id": "2026-09-17|Besiktas|Marseille",
    "kickoff": "2026-09-17T19:00Z",
@@ -7863,6 +7865,13 @@
     "home2plus": 0.5078,
     "over15": 0.7733,
     "over25": 0.5367
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.596,
+    "home2plus": 0.675,
+    "over15": 0.193,
+    "over25": 0.571
    },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
@@ -7913,16 +7922,32 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|Celtic|Ferencvaros": {
    "away": "Ferencvaros",
    "date": "2026-09-17",
+   "final": "1-3",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Celtic",
    "id": "2026-09-17|Celtic|Ferencvaros",
    "kickoff": "2026-09-17T19:00Z",
    "lead_source": true,
    "league": "Europa League",
+   "pnl": {
+    "away2plus": 1.732,
+    "btts": 0.547,
+    "home2plus": -1.0,
+    "over15": 0.179,
+    "over25": 0.553
+   },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
     "away2plus": {
@@ -7973,16 +7998,32 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|Crystal Palace|Lech Poznan": {
    "away": "Lech Poznan",
    "date": "2026-09-17",
+   "final": "4-0",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Crystal Palace",
    "id": "2026-09-17|Crystal Palace|Lech Poznan",
    "kickoff": "2026-09-17T19:00Z",
    "lead_source": true,
    "league": "Europa League",
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.438,
+    "over15": 0.204,
+    "over25": 0.596
+   },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
     "away2plus": {
@@ -8031,11 +8072,20 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|Juventus|NEC Nijmegen": {
    "away": "NEC Nijmegen",
    "date": "2026-09-17",
+   "final": "5-0",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Juventus",
    "id": "2026-09-17|Juventus|NEC Nijmegen",
    "kickoff": "2026-09-17T19:00Z",
@@ -8047,6 +8097,13 @@
     "home2plus": 0.4418,
     "over15": 0.7312,
     "over25": 0.4798
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.262,
+    "over15": 0.141,
+    "over25": 0.438
    },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
@@ -8097,7 +8154,14 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|Levski Sofia|RB Salzburg": {
    "away": "RB Salzburg",
@@ -8177,11 +8241,20 @@
   "2026-09-17|Lillestrom|Torreense": {
    "away": "Torreense",
    "date": "2026-09-17",
+   "final": "1-2",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Lillestrom",
    "id": "2026-09-17|Lillestrom|Torreense",
    "kickoff": "2026-09-17T19:00Z",
    "lead_source": true,
    "league": "Europa League",
+   "pnl": {
+    "away2plus": 2.524,
+    "btts": 0.732,
+    "home2plus": -1.0,
+    "over15": 0.204,
+    "over25": 0.621
+   },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
     "away2plus": {
@@ -8230,11 +8303,20 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|M\u00e1laga|Villarreal": {
    "away": "Villarreal",
    "date": "2026-09-17",
+   "final": "1-3",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "M\u00e1laga",
    "id": "2026-09-17|M\u00e1laga|Villarreal",
    "kickoff": "2026-09-17T19:30Z",
@@ -8246,6 +8328,13 @@
     "home2plus": 0.441,
     "over15": 0.7814,
     "over25": 0.5482
+   },
+   "pnl": {
+    "away2plus": 0.762,
+    "btts": 0.596,
+    "home2plus": -1.0,
+    "over15": 0.206,
+    "over25": 0.628
    },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
@@ -8297,7 +8386,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|OFI Crete|TSG Hoffenheim": {
    "away": "TSG Hoffenheim",
@@ -8464,6 +8560,8 @@
   "2026-09-17|Real Sociedad|AFC Bournemouth": {
    "away": "AFC Bournemouth",
    "date": "2026-09-17",
+   "final": "1-2",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Real Sociedad",
    "id": "2026-09-17|Real Sociedad|AFC Bournemouth",
    "kickoff": "2026-09-17T19:00Z",
@@ -8475,6 +8573,13 @@
     "home2plus": 0.4245,
     "over15": 0.7877,
     "over25": 0.5574
+   },
+   "pnl": {
+    "away2plus": 1.095,
+    "btts": 0.571,
+    "home2plus": -1.0,
+    "over15": 0.247,
+    "over25": 0.71
    },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
@@ -8525,16 +8630,32 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-17|Viktoria Plzen|Union St.-Gilloise": {
    "away": "Union St.-Gilloise",
    "date": "2026-09-17",
+   "final": "0-3",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": "Viktoria Plzen",
    "id": "2026-09-17|Viktoria Plzen|Union St.-Gilloise",
    "kickoff": "2026-09-17T19:00Z",
    "lead_source": true,
    "league": "Europa League",
+   "pnl": {
+    "away2plus": 1.236,
+    "btts": -1.0,
+    "home2plus": -1.0,
+    "over15": 0.262,
+    "over25": 0.77
+   },
    "priced_at": "2026-09-16T21:44:50+00:00",
    "prices": {
     "away2plus": {
@@ -8584,7 +8705,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": false,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|AS Monaco|Lens": {
    "away": "Lens",
@@ -8967,5 +9095,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-17T20:49:56+00:00"
+ "updated_at": "2026-09-17T21:53:54+00:00"
 }

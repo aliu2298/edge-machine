@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-17T20:49:46+00:00",
+ "board_built_at": "2026-09-17T21:53:52+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -7959,7 +7959,9 @@
     "team": "Besiktas"
    },
    "date": "2026-09-17",
+   "final": "4-1",
    "first_seen": "2026-09-12",
+   "graded_at": "2026-09-17T21:53:52+00:00",
    "headline": "Besiktas to score 2+",
    "home": "Besiktas",
    "id": "2026-09-17|Besiktas|Marseille|Besiktas to score 2+",
@@ -7975,6 +7977,24 @@
     "team2plus": 0.5867
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": true,
+     "pnl": 0.556
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.182
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.606
+    },
+    "team2plus": {
+     "hit": true,
+     "pnl": 0.741
+    }
+   },
    "priced_at": "2026-09-12T06:42:22+00:00",
    "prices": {
     "btts": {
@@ -7994,7 +8014,7 @@
      "price": 1.741
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 6
   },
   "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals": {
@@ -8011,7 +8031,9 @@
     "n": 2
    },
    "date": "2026-09-17",
+   "final": "5-0",
    "first_seen": "2026-09-06",
+   "graded_at": "2026-09-17T21:53:52+00:00",
    "headline": "Over 1.5 goals",
    "home": "Juventus",
    "id": "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals",
@@ -8025,6 +8047,20 @@
     "over25": 0.5069
    },
    "modelled_at": "2026-09-12T06:52:06+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.133
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.476
+    }
+   },
    "priced_at": "2026-09-12T06:24:32+00:00",
    "prices": {
     "btts": {
@@ -8040,7 +8076,7 @@
      "price": 1.476
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -8258,7 +8294,7 @@
    "id": "2026-09-18|Brentford|Chelsea|Over 1.5 goals",
    "kickoff": "2026-09-18T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "model": {
@@ -8331,7 +8367,7 @@
    "id": "2026-09-18|Espanyol|Elche|Over 1.5 goals",
    "kickoff": "2026-09-18T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "model": {
@@ -8396,7 +8432,7 @@
    "id": "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals",
    "kickoff": "2026-09-18T18:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Eredivisie",
    "match": "FC Groningen v PEC Zwolle",
    "model": {
@@ -8508,7 +8544,7 @@
    "id": "2026-09-18|Monza|Sassuolo|Sassuolo to score 2+",
    "kickoff": "2026-09-18T18:45Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Serie A",
    "match": "Monza v Sassuolo",
    "model": {
@@ -8632,7 +8668,7 @@
    "id": "2026-09-19|AS Roma|Internazionale|Over 1.5 goals",
    "kickoff": "2026-09-19T16:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Serie A",
    "match": "AS Roma v Internazionale",
    "model": {
@@ -8705,7 +8741,7 @@
    "id": "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals",
    "kickoff": "2026-09-19T18:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Excelsior",
    "model": {
@@ -8969,7 +9005,7 @@
    "id": "2026-09-19|Celta Vigo|Racing Santander|Racing Santander to score 2+",
    "kickoff": "2026-09-19T16:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "La Liga",
    "match": "Celta Vigo v Racing Santander",
    "model": {
@@ -9041,7 +9077,7 @@
    "id": "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v SC Freiburg",
    "model": {
@@ -9153,7 +9189,7 @@
    "id": "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "model": {
@@ -9581,7 +9617,7 @@
    "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Borussia Dortmund to score 2+",
    "kickoff": "2026-09-19T16:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "model": {
@@ -9656,7 +9692,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|FC Augsburg to score 2+",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -9703,7 +9739,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:46+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -11487,5 +11523,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-17T20:49:47+00:00"
+ "updated_at": "2026-09-17T21:53:52+00:00"
 }

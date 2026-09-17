@@ -259,6 +259,7 @@
    "test_date": "2026-09-20"
   },
   "AFC Bournemouth|btts|2026-09-17|AFC Bournemouth|Real Sociedad": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "AFC Bournemouth|btts|2026-09-17|AFC Bournemouth|Real Sociedad",
    "key": "btts",
@@ -269,7 +270,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Real Sociedad",
    "rate": 0.023972602739726026,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
   },
@@ -289,6 +291,7 @@
    "test_date": "2026-09-20"
   },
   "AFC Bournemouth|over15|2026-09-17|AFC Bournemouth|Real Sociedad": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "AFC Bournemouth|over15|2026-09-17|AFC Bournemouth|Real Sociedad",
    "key": "over15",
@@ -299,7 +302,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Real Sociedad",
    "rate": 0.22602739726027396,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
   },
@@ -319,6 +323,7 @@
    "test_date": "2026-09-20"
   },
   "AFC Bournemouth|porous|2026-09-17|AFC Bournemouth|Real Sociedad": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "AFC Bournemouth|porous|2026-09-17|AFC Bournemouth|Real Sociedad",
    "key": "porous",
@@ -329,7 +334,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Real Sociedad",
    "rate": 0.15753424657534246,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
   },
@@ -383,6 +389,7 @@
    "test_date": "2026-09-12"
   },
   "AFC Bournemouth|scoring1|2026-09-17|AFC Bournemouth|Real Sociedad": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "AFC Bournemouth|scoring1|2026-09-17|AFC Bournemouth|Real Sociedad",
    "key": "scoring1",
@@ -393,7 +400,8 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Real Sociedad",
    "rate": 0.06164383561643835,
-   "status": "pending",
+   "result": "2-1",
+   "status": "extended",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
   },
@@ -2730,6 +2738,7 @@
    "test_date": "2026-09-09"
   },
   "Celtic|scoring1|2026-09-17|Celtic|Ferencvaros": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": true,
    "id": "Celtic|scoring1|2026-09-17|Celtic|Ferencvaros",
    "key": "scoring1",
@@ -2740,7 +2749,8 @@
    "logged_at": "2026-09-09T20:59:41+00:00",
    "opp": "Ferencvaros",
    "rate": 0.03741496598639456,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "Celtic",
    "test_date": "2026-09-17"
   },
@@ -3294,6 +3304,7 @@
    "test_date": "2026-09-12"
   },
   "Crystal Palace|over15|2026-09-17|Crystal Palace|Lech Poznan": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": true,
    "id": "Crystal Palace|over15|2026-09-17|Crystal Palace|Lech Poznan",
    "key": "over15",
@@ -3304,7 +3315,8 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Lech Poznan",
    "rate": 0.06506849315068493,
-   "status": "pending",
+   "result": "4-0",
+   "status": "extended",
    "team": "Crystal Palace",
    "test_date": "2026-09-17"
   },
@@ -3358,6 +3370,7 @@
    "test_date": "2026-09-12"
   },
   "Crystal Palace|porous|2026-09-17|Crystal Palace|Lech Poznan": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": true,
    "id": "Crystal Palace|porous|2026-09-17|Crystal Palace|Lech Poznan",
    "key": "porous",
@@ -3368,7 +3381,8 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Lech Poznan",
    "rate": 0.03424657534246575,
-   "status": "pending",
+   "result": "4-0",
+   "status": "broke",
    "team": "Crystal Palace",
    "test_date": "2026-09-17"
   },
@@ -5701,6 +5715,7 @@
    "test_date": "2026-09-13"
   },
   "Juventus|scoring1|2026-09-17|Juventus|NEC Nijmegen": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": true,
    "id": "Juventus|scoring1|2026-09-17|Juventus|NEC Nijmegen",
    "key": "scoring1",
@@ -5711,7 +5726,8 @@
    "logged_at": "2026-09-13T20:19:51+00:00",
    "opp": "NEC Nijmegen",
    "rate": 0.17465753424657535,
-   "status": "pending",
+   "result": "5-0",
+   "status": "extended",
    "team": "Juventus",
    "test_date": "2026-09-17"
   },
@@ -5944,6 +5960,7 @@
    "test_date": "2026-09-12"
   },
   "Lillestrom|over15|2026-09-17|Lillestrom|Torreense": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": true,
    "id": "Lillestrom|over15|2026-09-17|Lillestrom|Torreense",
    "key": "over15",
@@ -5954,7 +5971,8 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Torreense",
    "rate": 0.0410958904109589,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Lillestrom",
    "test_date": "2026-09-17"
   },
@@ -6483,6 +6501,7 @@
    "test_date": "2026-09-12"
   },
   "NEC Nijmegen|btts|2026-09-17|NEC Nijmegen|Juventus": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "NEC Nijmegen|btts|2026-09-17|NEC Nijmegen|Juventus",
    "key": "btts",
@@ -6493,7 +6512,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Juventus",
    "rate": 0.0136986301369863,
-   "status": "pending",
+   "result": "0-5",
+   "status": "broke",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
   },
@@ -6549,6 +6569,7 @@
    "test_date": "2026-09-12"
   },
   "NEC Nijmegen|over15|2026-09-17|NEC Nijmegen|Juventus": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "NEC Nijmegen|over15|2026-09-17|NEC Nijmegen|Juventus",
    "key": "over15",
@@ -6559,7 +6580,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Juventus",
    "rate": 0.09931506849315068,
-   "status": "pending",
+   "result": "0-5",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
   },
@@ -6579,6 +6601,7 @@
    "test_date": "2026-09-20"
   },
   "NEC Nijmegen|over25|2026-09-17|NEC Nijmegen|Juventus": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "NEC Nijmegen|over25|2026-09-17|NEC Nijmegen|Juventus",
    "key": "over25",
@@ -6589,7 +6612,8 @@
    "logged_at": "2026-09-13T01:45:49+00:00",
    "opp": "Juventus",
    "rate": 0.01730103806228374,
-   "status": "pending",
+   "result": "0-5",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
   },
@@ -6660,6 +6684,7 @@
    "test_date": "2026-09-12"
   },
   "NEC Nijmegen|porous|2026-09-17|NEC Nijmegen|Juventus": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "NEC Nijmegen|porous|2026-09-17|NEC Nijmegen|Juventus",
    "key": "porous",
@@ -6670,7 +6695,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Juventus",
    "rate": 0.09931506849315068,
-   "status": "pending",
+   "result": "0-5",
+   "status": "extended",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
   },
@@ -6741,6 +6767,7 @@
    "test_date": "2026-09-12"
   },
   "NEC Nijmegen|scoring1|2026-09-17|NEC Nijmegen|Juventus": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "NEC Nijmegen|scoring1|2026-09-17|NEC Nijmegen|Juventus",
    "key": "scoring1",
@@ -6751,7 +6778,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Juventus",
    "rate": 0.07876712328767123,
-   "status": "pending",
+   "result": "0-5",
+   "status": "broke",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
   },
@@ -10303,6 +10331,7 @@
    "test_date": "2026-09-14"
   },
   "Villarreal|porous|2026-09-17|Villarreal|M\u00e1laga": {
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "home": false,
    "id": "Villarreal|porous|2026-09-17|Villarreal|M\u00e1laga",
    "key": "porous",
@@ -10313,7 +10342,8 @@
    "logged_at": "2026-09-14T19:58:19+00:00",
    "opp": "M\u00e1laga",
    "rate": 0.00684931506849315,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Villarreal",
    "test_date": "2026-09-17"
   },
@@ -10559,5 +10589,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-17T20:49:56+00:00"
+ "updated_at": "2026-09-17T21:53:54+00:00"
 }

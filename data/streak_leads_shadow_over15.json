@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-17T20:49:47+00:00",
+ "board_built_at": "2026-09-17T21:53:52+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
    "a": "Internazionale",
@@ -885,7 +885,9 @@
     "n": 2
    },
    "date": "2026-09-17",
+   "final": "5-0",
    "first_seen": "2026-09-15",
+   "graded_at": "2026-09-17T21:53:54+00:00",
    "headline": "Over 1.5 goals",
    "home": "Juventus",
    "id": "2026-09-17|Juventus|NEC Nijmegen|Over 1.5 goals",
@@ -900,6 +902,20 @@
     "over25": 0.5222
    },
    "modelled_at": "2026-09-15T22:12:22+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.151
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.48
+    }
+   },
    "priced_at": "2026-09-15T22:12:22+00:00",
    "prices": {
     "btts": {
@@ -930,7 +946,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 9
   },
   "2026-09-17|OFI Crete|TSG Hoffenheim|Over 1.5 goals": {
@@ -1031,7 +1047,7 @@
    "id": "2026-09-18|Brentford|Chelsea|Over 1.5 goals",
    "kickoff": "2026-09-18T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "model": {
@@ -1095,7 +1111,7 @@
    "id": "2026-09-18|Espanyol|Elche|Over 1.5 goals",
    "kickoff": "2026-09-18T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "model": {
@@ -1159,7 +1175,7 @@
    "id": "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals",
    "kickoff": "2026-09-18T18:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Eredivisie",
    "match": "FC Groningen v PEC Zwolle",
    "model": {
@@ -1221,7 +1237,7 @@
    "id": "2026-09-18|Monza|Sassuolo|Over 1.5 goals",
    "kickoff": "2026-09-18T18:45Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Serie A",
    "match": "Monza v Sassuolo",
    "model": {
@@ -1284,7 +1300,7 @@
    "id": "2026-09-19|ADO Den Haag|SC Cambuur|Over 1.5 goals",
    "kickoff": "2026-09-19T14:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Eredivisie",
    "match": "ADO Den Haag v SC Cambuur",
    "model": {
@@ -1346,7 +1362,7 @@
    "id": "2026-09-19|AS Roma|Internazionale|Over 1.5 goals",
    "kickoff": "2026-09-19T16:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Serie A",
    "match": "AS Roma v Internazionale",
    "model": {
@@ -1410,7 +1426,7 @@
    "id": "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals",
    "kickoff": "2026-09-19T18:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Excelsior",
    "model": {
@@ -1472,7 +1488,7 @@
    "id": "2026-09-19|Alverca|Rio Ave|Over 1.5 goals",
    "kickoff": "2026-09-19T17:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Primeira Liga",
    "match": "Alverca v Rio Ave",
    "model": {
@@ -1534,7 +1550,7 @@
    "id": "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals",
    "kickoff": "2026-09-19T14:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Premier League",
    "match": "Brighton & Hove Albion v Arsenal",
    "model": {
@@ -1597,7 +1613,7 @@
    "id": "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v SC Freiburg",
    "model": {
@@ -1661,7 +1677,7 @@
    "id": "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "status": "pending",
@@ -1687,7 +1703,7 @@
    "id": "2026-09-19|Le Mans|Lorient|Over 1.5 goals",
    "kickoff": "2026-09-19T18:45Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Ligue 1",
    "match": "Le Mans v Lorient",
    "model": {
@@ -1751,7 +1767,7 @@
    "id": "2026-09-19|Osasuna|Rayo Vallecano|Over 1.5 goals",
    "kickoff": "2026-09-19T12:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "La Liga",
    "match": "Osasuna v Rayo Vallecano",
    "model": {
@@ -1815,7 +1831,7 @@
    "id": "2026-09-19|Sevilla|Barcelona|Over 1.5 goals",
    "kickoff": "2026-09-19T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "La Liga",
    "match": "Sevilla v Barcelona",
    "model": {
@@ -1879,7 +1895,7 @@
    "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Over 1.5 goals",
    "kickoff": "2026-09-19T16:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "model": {
@@ -1943,7 +1959,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -2007,7 +2023,7 @@
    "id": "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals",
    "kickoff": "2026-09-19T19:00Z",
    "last_seen": "2026-09-17",
-   "last_seen_at": "2026-09-17T20:49:47+00:00",
+   "last_seen_at": "2026-09-17T21:53:52+00:00",
    "league": "Eredivisie",
    "match": "Willem II v Fortuna Sittard",
    "model": {
@@ -2050,5 +2066,5 @@
    "strength": 12
   }
  },
- "updated_at": "2026-09-17T20:49:50+00:00"
+ "updated_at": "2026-09-17T21:53:54+00:00"
 }
