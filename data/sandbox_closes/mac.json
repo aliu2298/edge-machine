@@ -90,6 +90,11 @@
    "lead_min": 11.2,
    "price": 0.39
   },
+  "draftkings:aec-mlb-lad-cin-2026-09-17": {
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 58.2,
+   "price": 0.605
+  },
   "espn_fpi:4333264": {
    "at": "2026-09-13T23:18:45+00:00",
    "lead_min": 1.2,
@@ -180,6 +185,11 @@
    "lead_min": 13.2,
    "price": 0.33
   },
+  "espn_fpi:aec-mlb-lad-cin-2026-09-17": {
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 58.2,
+   "price": 0.605
+  },
   "espn_fpi:aec-mlb-mia-az-2026-09-16": {
    "at": "2026-09-17T01:30:08+00:00",
    "lead_min": 9.9,
@@ -254,6 +264,11 @@
    "at": "2026-09-16T22:26:46+00:00",
    "lead_min": 13.2,
    "price": 0.33
+  },
+  "mlb_fade_streak:aec-mlb-lad-cin-2026-09-17": {
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 58.2,
+   "price": 0.4
   },
   "mlb_fade_streak:aec-mlb-nyy-min-2026-09-14": {
    "at": "2026-09-14T23:29:02+00:00",
@@ -406,9 +421,9 @@
    "price": 0.55
   },
   "scores24:KXWTAMATCH-26SEP17AVACHA": {
-   "at": "2026-09-17T15:26:47+00:00",
-   "lead_min": 53.2,
-   "price": 0.65
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 38.2,
+   "price": 0.72
   },
   "scores24:aec-mlb-ath-tb-2026-09-16": {
    "at": "2026-09-16T22:26:46+00:00",
@@ -430,6 +445,11 @@
    "lead_min": 13.2,
    "price": 0.675
   },
+  "scores24:aec-mlb-lad-cin-2026-09-17": {
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 58.2,
+   "price": 0.605
+  },
   "scores24:aec-mlb-mia-az-2026-09-14": {
    "at": "2026-09-15T01:29:29+00:00",
    "lead_min": 10.5,
@@ -444,6 +464,11 @@
    "at": "2026-09-16T22:26:46+00:00",
    "lead_min": 13.2,
    "price": 0.56
+  },
+  "scores24:aec-mlb-mil-pit-2026-09-17": {
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 53.2,
+   "price": 0.565
   },
   "scores24:aec-mlb-nyy-min-2026-09-16": {
    "at": "2026-09-16T16:43:01+00:00",
@@ -506,8 +531,8 @@
    "price": 0.41
   },
   "soccerpredictions:KXISRNLGAME-26SEP17KQAHKS": {
-   "at": "2026-09-17T15:26:47+00:00",
-   "lead_min": 33.2,
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 18.2,
    "price": 0.4
   },
   "soccerpredictions:KXLALIGAGAME-26SEP16DEPSEV": {
@@ -1081,8 +1106,8 @@
    "price": 0.79
   },
   "tennis_fav_band:aec-wta-markos-liusam-2026-09-18": {
-   "at": "2026-09-17T15:26:47+00:00",
-   "lead_min": 33.2,
+   "at": "2026-09-17T15:41:49+00:00",
+   "lead_min": 18.2,
    "price": 0.78
   },
   "tennis_fav_band:aec-wta-suzlam-caralv-2026-09-14": {
@@ -1296,5 +1321,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-09-17T15:26:47+00:00"
+ "updated": "2026-09-17T15:41:49+00:00"
 }
