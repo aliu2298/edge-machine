@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-16T23:03:11+00:00",
+ "board_built_at": "2026-09-17T01:24:30+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Internazionale to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Udinese",
@@ -97,6 +97,81 @@
    "sport": "soccer_team1",
    "status": "hit"
   },
+  "2026-09-17|Levski Sofia|Salzburg|Salzburg to win \u00b7 SoccerPredictions.ai": {
+   "away": "Salzburg",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-17",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Salzburg to win",
+   "home": "Levski Sofia",
+   "id": "2026-09-17|Levski Sofia|Salzburg|Salzburg to win \u00b7 SoccerPredictions.ai",
+   "kickoff": "2026-09-17T16:45Z",
+   "lane": "production",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T01:24:30+00:00",
+   "league": "Europa League",
+   "match": "Levski Sofia v Salzburg",
+   "pair": "soccerpredictions|soccer",
+   "price_at_log": 0.43,
+   "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17LEVRBS",
+   "source": "soccerpredictions",
+   "sport": "soccer",
+   "status": "pending"
+  },
+  "2026-09-17|Plzen|Union Gilloise|Draw \u00b7 SoccerPredictions.ai": {
+   "away": "Union Gilloise",
+   "bet": {
+    "kind": "match_result",
+    "side": "draw"
+   },
+   "date": "2026-09-17",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Draw",
+   "home": "Plzen",
+   "id": "2026-09-17|Plzen|Union Gilloise|Draw \u00b7 SoccerPredictions.ai",
+   "kickoff": "2026-09-17T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T01:24:30+00:00",
+   "league": "Europa League",
+   "match": "Plzen v Union Gilloise",
+   "pair": "soccerpredictions|soccer",
+   "price_at_log": 0.28,
+   "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17VIKUSG",
+   "source": "soccerpredictions",
+   "sport": "soccer",
+   "status": "pending"
+  },
+  "2026-09-17|Real Sociedad|Bournemouth|Bournemouth to win \u00b7 SoccerPredictions.ai": {
+   "away": "Bournemouth",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-17",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Bournemouth to win",
+   "home": "Real Sociedad",
+   "id": "2026-09-17|Real Sociedad|Bournemouth|Bournemouth to win \u00b7 SoccerPredictions.ai",
+   "kickoff": "2026-09-17T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T01:24:30+00:00",
+   "league": "Europa League",
+   "match": "Real Sociedad v Bournemouth",
+   "pair": "soccerpredictions|soccer",
+   "price_at_log": 0.43,
+   "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17RSOBOU",
+   "source": "soccerpredictions",
+   "sport": "soccer",
+   "status": "pending"
+  },
   "2026-09-18|Brentford|Chelsea|Brentford to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Chelsea",
    "bet": {
@@ -112,8 +187,8 @@
    "id": "2026-09-18|Brentford|Chelsea|Brentford to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
-   "last_seen": "2026-09-16",
-   "last_seen_at": "2026-09-16T23:03:11+00:00",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T01:24:30+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "team1_form_l5|soccer_team1",
@@ -138,8 +213,8 @@
    "id": "2026-09-18|Espanyol|Elche|Espanyol to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
-   "last_seen": "2026-09-16",
-   "last_seen_at": "2026-09-16T23:03:11+00:00",
+   "last_seen": "2026-09-17",
+   "last_seen_at": "2026-09-17T01:24:30+00:00",
    "league": "La Liga",
    "match": "Espanyol v Elche",
    "pair": "team1_form_l5|soccer_team1",
@@ -179,7 +254,7 @@
   }
  },
  "stage": "production",
- "unlisted_skipped": 0,
+ "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-16T23:03:11+00:00"
+ "updated_at": "2026-09-17T01:24:30+00:00"
 }
