@@ -273,6 +273,21 @@
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
   },
+  "AFC Bournemouth|btts|2026-09-20|AFC Bournemouth|Liverpool": {
+   "home": true,
+   "id": "AFC Bournemouth|btts|2026-09-20|AFC Bournemouth|Liverpool",
+   "key": "btts",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "both teams scored",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Liverpool",
+   "rate": 0.03125,
+   "status": "pending",
+   "team": "AFC Bournemouth",
+   "test_date": "2026-09-20"
+  },
   "AFC Bournemouth|over15|2026-09-17|AFC Bournemouth|Real Sociedad": {
    "home": false,
    "id": "AFC Bournemouth|over15|2026-09-17|AFC Bournemouth|Real Sociedad",
@@ -288,6 +303,21 @@
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
   },
+  "AFC Bournemouth|over15|2026-09-20|AFC Bournemouth|Liverpool": {
+   "home": true,
+   "id": "AFC Bournemouth|over15|2026-09-20|AFC Bournemouth|Liverpool",
+   "key": "over15",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Liverpool",
+   "rate": 0.22916666666666666,
+   "status": "pending",
+   "team": "AFC Bournemouth",
+   "test_date": "2026-09-20"
+  },
   "AFC Bournemouth|porous|2026-09-17|AFC Bournemouth|Real Sociedad": {
    "home": false,
    "id": "AFC Bournemouth|porous|2026-09-17|AFC Bournemouth|Real Sociedad",
@@ -302,6 +332,21 @@
    "status": "pending",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
+  },
+  "AFC Bournemouth|porous|2026-09-20|AFC Bournemouth|Liverpool": {
+   "home": true,
+   "id": "AFC Bournemouth|porous|2026-09-20|AFC Bournemouth|Liverpool",
+   "key": "porous",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "conceded in",
+   "league": "Premier League",
+   "length": 8,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Liverpool",
+   "rate": 0.16319444444444445,
+   "status": "pending",
+   "team": "AFC Bournemouth",
+   "test_date": "2026-09-20"
   },
   "AFC Bournemouth|scoring1|2026-09-05|AFC Bournemouth|Newcastle United": {
    "graded_at": "2026-09-05T15:19:06+00:00",
@@ -351,6 +396,21 @@
    "status": "pending",
    "team": "AFC Bournemouth",
    "test_date": "2026-09-17"
+  },
+  "AFC Bournemouth|scoring1|2026-09-20|AFC Bournemouth|Liverpool": {
+   "home": true,
+   "id": "AFC Bournemouth|scoring1|2026-09-20|AFC Bournemouth|Liverpool",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "scored in",
+   "league": "Premier League",
+   "length": 13,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Liverpool",
+   "rate": 0.0625,
+   "status": "pending",
+   "team": "AFC Bournemouth",
+   "test_date": "2026-09-20"
   },
   "AGF|over15|2026-09-13|AGF|FC Nordsj\u00e6lland": {
    "graded_at": "2026-09-13T20:19:51+00:00",
@@ -2684,6 +2744,21 @@
    "team": "Celtic",
    "test_date": "2026-09-17"
   },
+  "Celtic|scoring1|2026-09-20|Celtic|Rangers": {
+   "home": true,
+   "id": "Celtic|scoring1|2026-09-20|Celtic|Rangers",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T11:00Z",
+   "label": "scored in",
+   "league": "Scottish Premiership",
+   "length": 14,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Rangers",
+   "rate": 0.052083333333333336,
+   "status": "pending",
+   "team": "Celtic",
+   "test_date": "2026-09-20"
+  },
   "Cercle Brugge KSV|porous|2026-09-12|Cercle Brugge KSV|OH Leuven": {
    "graded_at": "2026-09-13T01:45:49+00:00",
    "home": false,
@@ -3233,6 +3308,21 @@
    "team": "Crystal Palace",
    "test_date": "2026-09-17"
   },
+  "Crystal Palace|over15|2026-09-20|Crystal Palace|Leeds United": {
+   "home": false,
+   "id": "Crystal Palace|over15|2026-09-20|Crystal Palace|Leeds United",
+   "key": "over15",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "over 1.5 goals",
+   "league": "Premier League",
+   "length": 14,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Leeds United",
+   "rate": 0.052083333333333336,
+   "status": "pending",
+   "team": "Crystal Palace",
+   "test_date": "2026-09-20"
+  },
   "Crystal Palace|porous|2026-09-05|Crystal Palace|Fulham": {
    "graded_at": "2026-09-05T20:27:59+00:00",
    "home": false,
@@ -3281,6 +3371,21 @@
    "status": "pending",
    "team": "Crystal Palace",
    "test_date": "2026-09-17"
+  },
+  "Crystal Palace|porous|2026-09-20|Crystal Palace|Leeds United": {
+   "home": false,
+   "id": "Crystal Palace|porous|2026-09-20|Crystal Palace|Leeds United",
+   "key": "porous",
+   "kickoff": "2026-09-20T13:00Z",
+   "label": "conceded in",
+   "league": "Premier League",
+   "length": 14,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Leeds United",
+   "rate": 0.03125,
+   "status": "pending",
+   "team": "Crystal Palace",
+   "test_date": "2026-09-20"
   },
   "D.C. United|porous|2026-08-29|D.C. United|LAFC": {
    "graded_at": "2026-08-30T14:51:28+00:00",
@@ -5610,6 +5715,21 @@
    "team": "Juventus",
    "test_date": "2026-09-17"
   },
+  "Juventus|scoring1|2026-09-20|Juventus|Atalanta": {
+   "home": true,
+   "id": "Juventus|scoring1|2026-09-20|Juventus|Atalanta",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T16:00Z",
+   "label": "scored in",
+   "league": "Serie A",
+   "length": 9,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Atalanta",
+   "rate": 0.1284722222222222,
+   "status": "pending",
+   "team": "Juventus",
+   "test_date": "2026-09-20"
+  },
   "KV Mechelen|leaky|2026-09-11|KV Mechelen|Anderlecht": {
    "graded_at": "2026-09-11T21:02:34+00:00",
    "home": true,
@@ -5837,6 +5957,21 @@
    "status": "pending",
    "team": "Lillestrom",
    "test_date": "2026-09-17"
+  },
+  "Lillestrom|over15|2026-09-20|Lillestrom|Viking FK": {
+   "home": false,
+   "id": "Lillestrom|over15|2026-09-20|Lillestrom|Viking FK",
+   "key": "over15",
+   "kickoff": "2026-09-20T15:00Z",
+   "label": "over 1.5 goals",
+   "league": "Eliteserien",
+   "length": 16,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Viking FK",
+   "rate": 0.034722222222222224,
+   "status": "pending",
+   "team": "Lillestrom",
+   "test_date": "2026-09-20"
   },
   "Lyngby Boldklub|over15|2026-09-18|Lyngby Boldklub|Silkeborg IF": {
    "home": true,
@@ -6428,6 +6563,21 @@
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
   },
+  "NEC Nijmegen|over15|2026-09-20|NEC Nijmegen|Go Ahead Eagles": {
+   "home": true,
+   "id": "NEC Nijmegen|over15|2026-09-20|NEC Nijmegen|Go Ahead Eagles",
+   "key": "over15",
+   "kickoff": "2026-09-20T14:45Z",
+   "label": "over 1.5 goals",
+   "league": "Eredivisie",
+   "length": 13,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Go Ahead Eagles",
+   "rate": 0.08680555555555555,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-20"
+  },
   "NEC Nijmegen|over25|2026-09-17|NEC Nijmegen|Juventus": {
    "home": false,
    "id": "NEC Nijmegen|over25|2026-09-17|NEC Nijmegen|Juventus",
@@ -6442,6 +6592,21 @@
    "status": "pending",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
+  },
+  "NEC Nijmegen|over25|2026-09-20|NEC Nijmegen|Go Ahead Eagles": {
+   "home": true,
+   "id": "NEC Nijmegen|over25|2026-09-20|NEC Nijmegen|Go Ahead Eagles",
+   "key": "over25",
+   "kickoff": "2026-09-20T14:45Z",
+   "label": "over 2.5 goals",
+   "league": "Eredivisie",
+   "length": 8,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Go Ahead Eagles",
+   "rate": 0.020833333333333332,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-20"
   },
   "NEC Nijmegen|porous|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -6508,6 +6673,21 @@
    "status": "pending",
    "team": "NEC Nijmegen",
    "test_date": "2026-09-17"
+  },
+  "NEC Nijmegen|porous|2026-09-20|NEC Nijmegen|Go Ahead Eagles": {
+   "home": true,
+   "id": "NEC Nijmegen|porous|2026-09-20|NEC Nijmegen|Go Ahead Eagles",
+   "key": "porous",
+   "kickoff": "2026-09-20T14:45Z",
+   "label": "conceded in",
+   "league": "Eredivisie",
+   "length": 11,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Go Ahead Eagles",
+   "rate": 0.0798611111111111,
+   "status": "pending",
+   "team": "NEC Nijmegen",
+   "test_date": "2026-09-20"
   },
   "NEC Nijmegen|scoring1|2026-09-05|NEC Nijmegen|Feyenoord Rotterdam": {
    "graded_at": "2026-09-05T20:27:59+00:00",
@@ -6891,6 +7071,21 @@
    "status": "broke",
    "team": "OFI Crete",
    "test_date": "2026-09-12"
+  },
+  "OFI Crete|scoring1|2026-09-20|OFI Crete|Asteras Tripoli": {
+   "home": true,
+   "id": "OFI Crete|scoring1|2026-09-20|OFI Crete|Asteras Tripoli",
+   "key": "scoring1",
+   "kickoff": "2026-09-20T16:00Z",
+   "label": "scored in",
+   "league": "Europa League",
+   "length": 8,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Asteras Tripoli",
+   "rate": 0.16319444444444445,
+   "status": "pending",
+   "team": "OFI Crete",
+   "test_date": "2026-09-20"
   },
   "OH Leuven|porous|2026-09-19|OH Leuven|RAAL La Louvi\u00e8re": {
    "home": true,
@@ -7994,6 +8189,7 @@
    "test_date": "2026-09-11"
   },
   "RB Salzburg|scoring1|2026-09-17|RB Salzburg|Levski Sofia": {
+   "graded_at": "2026-09-17T20:49:56+00:00",
    "home": false,
    "id": "RB Salzburg|scoring1|2026-09-17|RB Salzburg|Levski Sofia",
    "key": "scoring1",
@@ -8004,7 +8200,8 @@
    "logged_at": "2026-09-11T21:02:34+00:00",
    "opp": "Levski Sofia",
    "rate": 0.11224489795918367,
-   "status": "pending",
+   "result": "1-0",
+   "status": "extended",
    "team": "RB Salzburg",
    "test_date": "2026-09-17"
   },
@@ -10120,6 +10317,21 @@
    "team": "Villarreal",
    "test_date": "2026-09-17"
   },
+  "Villarreal|porous|2026-09-20|Villarreal|Levante": {
+   "home": true,
+   "id": "Villarreal|porous|2026-09-20|Villarreal|Levante",
+   "key": "porous",
+   "kickoff": "2026-09-20T16:30Z",
+   "label": "conceded in",
+   "league": "La Liga",
+   "length": 17,
+   "logged_at": "2026-09-17T20:49:56+00:00",
+   "opp": "Levante",
+   "rate": 0.006944444444444444,
+   "status": "pending",
+   "team": "Villarreal",
+   "test_date": "2026-09-20"
+  },
   "Volos NFC|over15|2026-09-13|Volos NFC|Kalamata": {
    "graded_at": "2026-09-13T20:19:51+00:00",
    "home": false,
@@ -10347,5 +10559,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-17T17:25:02+00:00"
+ "updated_at": "2026-09-17T20:49:56+00:00"
 }
