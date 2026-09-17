@@ -52,6 +52,8 @@ SPORTS = {
     "nfl":          "NFL",
     "cricket":      "Cricket",
     "mlb":          "MLB",
+    "nhl_rest":     "NHL · Rest",
+    "nhl_pl":       "NHL · Puck line",
     "climate":      "Climate",
     "crypto":       "Crypto",
     "economics":    "Economics",
@@ -229,6 +231,29 @@ SOURCES = {
              "rule this strong across the six tried; at Kalshi's price just before kickoff 54 of "
              "64 won at ~77% (+11.2% after fees). 37 of those 64 were MLS. Judged against backing "
              "No on every Kalshi win market over the same period."),
+    "nhl_rest_edge": dict(
+        label="NHL rest rule (rested home team v a visitor on a back-to-back)", kind="Rule",
+        connected=True, site="edge-machine", sports=["nhl_rest"], baseline="favourite_population",
+        note="Pre-registered 2026-09-17, before a game of the 2026-27 season was played, so the "
+             "season is a clean out-of-sample test. Back the home team where it has had a day off "
+             "or more and the visitor played the night before (the NHL's own schedule; no form is "
+             "read). Research over 560 games of 2025-26, priced at Kalshi's last hourly candle "
+             "before puck drop: 64.9% on 74 against a 58.3% price, +7.5% after fees, and steady "
+             "across the season (+11.1%, -8.5%, +18.7% by period). 74 bets is a hint, not a "
+             "result. The moneyline was efficiently priced every other way tried — favourites "
+             "-5.2%, underdogs -3.3%, home -4.6%, the 0.60-0.75 band -10.1% — and backing teams "
+             "on a 7+/10 win rate returned +0.4%, so this is the one angle that survived. Judged "
+             "against backing the favourite on every listed game."),
+    "nhl_dog_pl": dict(
+        label="NHL underdog +1.5 (observation, not a candidate)", kind="Rule",
+        connected=True, site="edge-machine", sports=["nhl_pl"], baseline="population",
+        note="Logged 2026-09-17 to settle one question, not because it is expected to pay. Backing "
+             "the underdog +1.5 (No on the favourite winning by over 1.5) returned +15.7% across "
+             "October and November 2025, when Kalshi's NHL spread market was weeks old, and then "
+             "-3.7% in December and January and -6.8% from February as it converged: priced 37.6%, "
+             "happened 38.9%. Either that softness comes back when the market relists each "
+             "October, in which case it is a seasonal edge worth having, or it does not and the "
+             "question is closed. Every listed game is backed, so nothing here is selected."),
     "u35_low_scoring": dict(
         label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_u35"], baseline="population",
@@ -2390,6 +2415,7 @@ def fetch_btts_form_l10(sport, universe=None, fixtures=None):
 #   soccer_team2  KX{LEAGUE}TEAMTOTAL  "{Team} over 1.5 goals"
 # Kalshi lists no team totals for the Eredivisie or Primeira Liga (checked 2026-09-14); those
 # fixtures simply produce no team rows.
+NHL_SPORTS = ("nhl_rest", "nhl_pl")
 GOALS_SPORTS = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
 
 # The three rules found in the ESPN research of 2026-09-13 (530 matches, cutoffs fixed before
@@ -2664,6 +2690,199 @@ def fetch_mlb_fade_streak(sport, universe=None, games=None):
         elif wb <= MLB_COLD and wa >= MLB_HOT:
             out.append(dict(market_id=r["market_id"], pick="b"))
     return out
+
+
+# ---------------------------------------------------------------------------
+# NHL (registered 2026-09-17, before the 2026-27 season starts)
+# ---------------------------------------------------------------------------
+# Research: 560 games of the 2025-26 season, priced off Kalshi's last hourly candle before
+# puck drop, scored after fees against blind baselines.
+#   - The moneyline is efficiently priced in every slice (favourite -5.2%, underdog -3.3%,
+#     home -4.6%, the 0.60-0.75 band -10.1%). Nothing to bet there.
+#   - Form does not travel: backing a team on a 7+/10 win rate returned +0.4% against its
+#     price, the same regression to the mean the soccer streak work found.
+#   - Rest does. A rested home team against a visitor on the second night of a back-to-back
+#     won 64.9% against a 58.3% price (n=74, +7.5%), and it did not decay across the season
+#     (+11.1%, -8.5%, +18.7% by period). 74 bets is a hint, not a result, which is what the
+#     Sandbox is for. Cutoffs below were fixed before this rule logged anything.
+#   - The underdog +1.5 looked strong (+15.7% over October and November) and then died once
+#     Kalshi's NHL spread market had traded for a few weeks: -3.7% in December and January,
+#     -6.8% from February. That is an early-season pricing artifact, not an edge. It is
+#     logged as an OBSERVATION only, to find out whether the softness returns when the
+#     market relists each October.
+NHL_API = "https://api-web.nhle.com/v1"
+NHL_B2B_MAX_DAYS = 1.6           # the second night of a back-to-back
+NHL_RESTED_MIN_DAYS = 1.9        # a day off or more
+# Kalshi writes five clubs with shorter codes than the NHL does.
+NHL_CODES = {"LAK": "LA", "NJD": "NJ", "TBL": "TB", "SJS": "SJ"}
+# Preseason games are listed weeks early and quoted at 0.65 on BOTH sides. A pair of asks
+# that sums to more than this is a placeholder, not a price, and is not logged.
+NHL_MAX_OVERROUND = 1.15
+_nhl_schedule = None
+
+
+def _nhl_tight(m, side):
+    """Is this side of a Kalshi market actually quoted (a real bid under a real ask)?"""
+    ask = _num(m.get("yes_ask_dollars") if side == "a" else m.get("no_ask_dollars"))
+    bid = _num(m.get("yes_bid_dollars") if side == "a" else m.get("no_bid_dollars"))
+    return bool(bid is not None and ask is not None and bid > 0 and ask < 1
+                and ask - bid <= KALSHI_MAX_SPREAD)
+
+
+def nhl_schedule(now=None, refresh=False):
+    """Every NHL game in the fortnight around today, oldest first, from the NHL's own API:
+    [{"start", "home", "away", "state"}] with Kalshi's team codes. Cached for the run.
+
+    Two weeks is the whole requirement: the rule needs yesterday's games (to know who is on
+    a back-to-back) and the next few days (the games being priced)."""
+    global _nhl_schedule
+    if _nhl_schedule is not None and not refresh:
+        return _nhl_schedule
+    now = now or datetime.now(timezone.utc)
+    out, seen = [], set()
+    for back in (7, 0):
+        day = (now - timedelta(days=back)).strftime("%Y-%m-%d")
+        try:
+            d = _get(f"{NHL_API}/schedule/{day}", tries=2, timeout=30) or {}
+        except RuntimeError:
+            continue
+        for week in d.get("gameWeek") or []:
+            for g in week.get("games") or []:
+                if g.get("id") in seen:
+                    continue
+                seen.add(g.get("id"))
+                code = lambda t: NHL_CODES.get(str(t.get("abbrev")), str(t.get("abbrev")))
+                try:
+                    start = datetime.fromisoformat(str(g["startTimeUTC"]).replace("Z", "+00:00"))
+                except (KeyError, TypeError, ValueError):
+                    continue
+                out.append(dict(start=start, home=code(g.get("homeTeam") or {}),
+                                away=code(g.get("awayTeam") or {}),
+                                state=str(g.get("gameState") or "")))
+    _nhl_schedule = sorted(out, key=lambda g: g["start"])
+    return _nhl_schedule
+
+
+def nhl_rest_days(games, team, before):
+    """Days between `team`'s previous game and `before`, or None when the schedule does not
+    reach back far enough to say (the first days of a season, or a missing feed)."""
+    prev = [g["start"] for g in games
+            if g["start"] < before and team in (g["home"], g["away"])]
+    if not prev:
+        return None
+    return (before - max(prev)).total_seconds() / 86400
+
+
+def fetch_nhl(horizon_days=4, now=None, stats=None, schedule=None):
+    """{"nhl_rest": [moneyline rows], "nhl_pl": [puck-line rows]} from Kalshi's open NHL
+    markets, each row tied to the NHL's own scheduled start.
+
+    Side A of a moneyline row is whichever side kalshi_sides calls A — the same mapping
+    settlement uses — so a bet cannot change meaning between being placed and being graded.
+    The puck-line row is the FAVOURITE's "wins by over 1.5" market: Yes is the favourite
+    covering, No is the underdog +1.5.
+    """
+    now = now or datetime.now(timezone.utc)
+    horizon = now + timedelta(days=horizon_days)
+    games = nhl_schedule(now) if schedule is None else schedule
+    stats = stats if stats is not None else {}
+    out = {"nhl_rest": [], "nhl_pl": []}
+
+    def game_for(codes, est):
+        """The NHL game a Kalshi event is about: same two clubs, starting within a day."""
+        best = None
+        for g in games:
+            if {g["home"], g["away"]} != set(codes) or abs((g["start"] - est).days) > 1:
+                continue
+            if best is None or abs(g["start"] - est) < abs(best["start"] - est):
+                best = g
+        return best
+
+    events = {}
+    for m in _kalshi_open("KXNHLGAME") + _kalshi_open("KXNHLSPREAD"):
+        events.setdefault(str(m.get("event_ticker") or ""), []).append(m)
+    for et, ms in events.items():
+        series = et.split("-")[0]
+        est = kalshi_date(et)
+        try:
+            est = datetime.fromisoformat(f"{est}T00:00:00+00:00")
+        except (TypeError, ValueError):
+            continue
+        stats["listed"] = stats.get("listed", 0) + 1
+        if series == "KXNHLGAME":
+            sides = kalshi_sides(et, ms)
+            by_side = {sides.get(_kalshi_code(m)): m for m in ms if sides.get(_kalshi_code(m)) in ("a", "b")}
+            if len(by_side) != 2:
+                continue
+            g = game_for([_kalshi_code(m) for m in by_side.values()], est)
+            if not g or not (now < g["start"] <= horizon):
+                continue
+            pa, pb = _num(by_side["a"].get("yes_ask_dollars")), _num(by_side["b"].get("yes_ask_dollars"))
+            if pa is None or pb is None or pa + pb > NHL_MAX_OVERROUND:
+                continue          # preseason books quote both sides at 0.65: not a price
+            code_of = {_kalshi_code(m): k for k, m in by_side.items()}
+            home_side = code_of.get(g["home"])
+            label = (f"{_kalshi_name(by_side['b' if home_side == 'a' else 'a'])} at "
+                     f"{_kalshi_name(by_side[home_side])}") if home_side else \
+                    f"{_kalshi_name(by_side['a'])} v {_kalshi_name(by_side['b'])}"
+            out["nhl_rest"].append(dict(
+                sport="nhl_rest", venue="kalshi", market_id=et, label=label,
+                side_a=_kalshi_name(by_side["a"]), side_b=_kalshi_name(by_side["b"]),
+                code_a=_kalshi_code(by_side["a"]), code_b=_kalshi_code(by_side["b"]),
+                price_a=pa, price_b=pb, price_draw=None,
+                tradeable={s: _nhl_tight(by_side[s], s) for s in ("a", "b")},
+                untraded=not any(_nhl_tight(by_side[s], s) for s in ("a", "b")),
+                start=g["start"].isoformat(), date=g["start"].strftime("%Y-%m-%d"),
+                volume=0.0, nhl_home=g["home"], nhl_away=g["away"], start_source="nhl",
+                url=f"https://kalshi.com/markets/{series.lower()}"))
+        else:
+            cover = [m for m in ms if "over 1.5" in str(m.get("yes_sub_title") or "")]
+            if len(cover) != 2:
+                continue
+            g = game_for([re.sub(r"\d+$", "", _kalshi_code(m)) for m in cover], est)
+            if not g or not (now < g["start"] <= horizon):
+                continue
+            priced = [(m, _num(m.get("yes_ask_dollars")), _num(m.get("no_ask_dollars"))) for m in cover]
+            if any(p is None or n is None for _m, p, n in priced):
+                continue
+            m, ya, na = max(priced, key=lambda x: x[1])                   # the favourite's market
+            if ya + na > NHL_MAX_OVERROUND:
+                continue
+            out["nhl_pl"].append(dict(
+                sport="nhl_pl", venue="kalshi_binary", market_id=m["ticker"],
+                label=str(m.get("yes_sub_title") or m["ticker"])[:90],
+                side_a="Yes", side_b="No", price_a=ya, price_b=na, price_draw=None,
+                tradeable={"a": _nhl_tight(m, "a"), "b": _nhl_tight(m, "b")},
+                untraded=not (_nhl_tight(m, "a") or _nhl_tight(m, "b")),
+                start=g["start"].isoformat(), date=g["start"].strftime("%Y-%m-%d"),
+                volume=0.0, nhl_home=g["home"], nhl_away=g["away"], start_source="nhl",
+                url=f"https://kalshi.com/markets/{series.lower()}"))
+    return out
+
+
+def fetch_nhl_rest_edge(sport, universe=None, schedule=None):
+    """Back the HOME team where it has had a day off or more and the visitor played last
+    night. Rest is known from the schedule days ahead; nothing here reads form."""
+    games = nhl_schedule() if schedule is None else schedule
+    out = []
+    for r, ko in _rule_rows(sport, universe):
+        if ko.tzinfo is None:
+            ko = ko.replace(tzinfo=timezone.utc)
+        home, away = r.get("nhl_home"), r.get("nhl_away")
+        rest_h, rest_a = nhl_rest_days(games, home, ko), nhl_rest_days(games, away, ko)
+        if rest_h is None or rest_a is None:
+            continue
+        if rest_h >= NHL_RESTED_MIN_DAYS and rest_a <= NHL_B2B_MAX_DAYS:
+            pick = "a" if r.get("code_a") == home else "b" if r.get("code_b") == home else None
+            if pick:
+                out.append(dict(market_id=r["market_id"], pick=pick))
+    return out
+
+
+def fetch_nhl_dog_pl(sport, universe=None):
+    """Back the underdog +1.5 (No on the favourite winning by over 1.5) on every listed game.
+    An observation, not a candidate rule — see the note above."""
+    return [dict(market_id=r["market_id"], pick="b") for r, _ko in _rule_rows(sport, universe)]
 
 
 def fetch_goals_market(sport, universe=None):
@@ -3394,6 +3613,8 @@ CHALLENGERS = {
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,
     "p05_unbeaten": fetch_p05_unbeaten,
+    "nhl_rest_edge": fetch_nhl_rest_edge,
+    "nhl_dog_pl": fetch_nhl_dog_pl,
     "olbg": fetch_olbg,
     "kalshi": fetch_kalshi,
     "espn_fpi": fetch_espn_fpi,

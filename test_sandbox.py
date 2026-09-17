@@ -2604,6 +2604,47 @@ _spd["quotes"] = [dict(q, status="lost", result="draw", pnl=-100.0) if int(q["id
 T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 18, 6, tzinfo=timezone.utc), verbose=False)
 ok(not _sps["pairs"]["soccerpredictions|soccer"].get("ready_at"), "and leaves it the run it stops being profitable")
 
+# ---------------------------------------------------------------------------
+print("\nNHL rules")
+# ---------------------------------------------------------------------------
+_nsched = [
+    dict(start=datetime(2026, 10, 12, 23, tzinfo=timezone.utc), home="BOS", away="TOR", state="OFF"),
+    dict(start=datetime(2026, 10, 13, 23, tzinfo=timezone.utc), home="NJ", away="TOR", state="OFF"),
+    dict(start=datetime(2026, 10, 14, 23, tzinfo=timezone.utc), home="NJ", away="BOS", state="FUT"),
+]
+_nko = datetime(2026, 10, 14, 23, tzinfo=timezone.utc)
+close(S.nhl_rest_days(_nsched, "TOR", _nko), 1.0, "a team that played last night is on one day of rest")
+close(S.nhl_rest_days(_nsched, "BOS", _nko), 2.0, "a team that played the night before that has two")
+eq(S.nhl_rest_days(_nsched, "SEA", _nko), None, "a team the schedule has never seen gives no answer, not a guess")
+
+def _nrow(code_a, code_b, home, away, start=_nko):
+    return dict(market_id="KXNHLGAME-26OCT14BOSNJ", sport="nhl_rest", venue="kalshi",
+                side_a="A", side_b="B", code_a=code_a, code_b=code_b, price_a=0.55, price_b=0.5,
+                nhl_home=home, nhl_away=away, start=start.isoformat())
+
+# Kalshi's NHL ticker runs AWAY then HOME, so side A is regularly the visitor: the rule must
+# pick by team code, never by side letter, or it backs the wrong club every other game.
+_nu = {"nhl_rest": [_nrow("BOS", "NJ", "NJ", "BOS")]}
+eq(S.fetch_nhl_rest_edge("nhl_rest", universe=_nu, schedule=_nsched), [],
+   "no bet when the home team is the one on the back-to-back")
+_nu2 = {"nhl_rest": [_nrow("TOR", "BOS", "BOS", "TOR")]}
+eq(S.fetch_nhl_rest_edge("nhl_rest", universe=_nu2, schedule=[
+    dict(start=datetime(2026, 10, 11, 23, tzinfo=timezone.utc), home="BOS", away="MTL", state="OFF"),
+    dict(start=datetime(2026, 10, 13, 23, tzinfo=timezone.utc), home="NJ", away="TOR", state="OFF")]),
+   [dict(market_id="KXNHLGAME-26OCT14BOSNJ", pick="b")],
+   "backs the rested HOME side by code, which here is side B")
+eq(S.fetch_nhl_rest_edge("nhl_rest", universe=_nu2, schedule=[
+    dict(start=datetime(2026, 10, 13, 23, tzinfo=timezone.utc), home="BOS", away="MTL", state="OFF"),
+    dict(start=datetime(2026, 10, 13, 23, tzinfo=timezone.utc), home="NJ", away="TOR", state="OFF")]),
+   [], "no bet when both teams played last night")
+eq(S.fetch_nhl_dog_pl("nhl_pl", universe={"nhl_pl": [dict(market_id="k1", start=_nko.isoformat())]}),
+   [dict(market_id="k1", pick="b")], "the puck-line observation backs No on every listed game")
+ok(not T.placeable(dict(sport="nhl_rest", pick="a", venue="kalshi")),
+   "an NHL bet is paper only — the Production feed cannot publish it")
+ok(not T.placeable(dict(sport="nhl_pl", pick="b", venue="kalshi_binary")), "…and neither can the puck line")
+eq(S.outcome_cluster(dict(venue="kalshi_binary", sport="nhl_pl", market_id="KXNHLSPREAD-26OCT14BOSNJ-NJ2")),
+   "KXNHLSPREAD-26OCT14BOSNJ", "two puck-line bets on one game are one outcome")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

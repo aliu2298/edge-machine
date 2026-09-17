@@ -343,7 +343,7 @@ def collect(verbose=True):
     twice and no bet can be booked against two different prices for one game.
     """
     universe, coverage = {}, {}
-    goals = None
+    goals = nhl = None
     for sport in S.SPORTS:
         t0 = time.time()
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
@@ -375,6 +375,21 @@ def collect(verbose=True):
                           + ", ".join(f"{len(goals.get(g) or [])} {S.SPORTS[g]}" for g in S.GOALS_SPORTS)
                           + f" matched to an ESPN fixture ({time.time() - t0:.0f}s)")
             universe[sport] = goals.get(sport) or []
+            coverage.setdefault(sport, {})["kalshi_venue"] = len(universe[sport])
+            continue
+        if sport in S.NHL_SPORTS:
+            if nhl is None:                           # one fetch serves both NHL domains
+                nstats = {}
+                try:
+                    nhl = S.fetch_nhl(stats=nstats)
+                except Exception as e:
+                    print(f"  ! kalshi/nhl failed: {type(e).__name__}: {str(e)[:70]}")
+                    nhl, nstats = {}, {}
+                if verbose:
+                    print(f"  NHL           kalshi: {nstats.get('listed', 0)} events listed, "
+                          + ", ".join(f"{len(nhl.get(n) or [])} {S.SPORTS[n]}" for n in S.NHL_SPORTS)
+                          + f" matched to the NHL schedule ({time.time() - t0:.0f}s)")
+            universe[sport] = nhl.get(sport) or []
             coverage.setdefault(sport, {})["kalshi_venue"] = len(universe[sport])
             continue
         if sport in S.KALSHI_BINARY:
