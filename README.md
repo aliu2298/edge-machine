@@ -1,158 +1,114 @@
 # Edge Machine
 
-Paper-tracked betting research: a local tracker plus a self-updating board.
-Nothing here places bets — every surface is read-only, and results are recorded to test
-whether an idea actually holds up.
+Paper-tracked prediction research: every idea is logged at the price that existed, settled on
+the real result, and moved up a ladder only when the numbers hold. Nothing in this repo places
+bets or holds exchange credentials.
 
 **Board → https://aliu2298.github.io/edge-machine/**
 
-| Board | What it is |
+| Page | What it is |
 |---|---|
-| [Leads](https://aliu2298.github.io/edge-machine/) | Upcoming fixtures where both sides' runs point at the same total |
+| [Leads](https://aliu2298.github.io/edge-machine/) | Upcoming fixtures (next 48h) on the two lanes: over 1.5, and a side to score 2+ |
 | [Streaks](https://aliu2298.github.io/edge-machine/streaks.html) | Every tracked team's current runs, and the sides on the longest ones |
-| [Record](https://aliu2298.github.io/edge-machine/record.html) | Every graded result — leads and on-fire runs — against what those teams do anyway |
-| [Today](https://aliu2298.github.io/edge-machine/today.html) | Today's and tomorrow's fixtures as the leads' control group: every lead (kept after kickoff), games in play, hit/miss and P/L on every lead and book market, and a day scoreboard |
-| [Sandbox](https://aliu2298.github.io/edge-machine/sandbox.html) | Which forecasters actually make money, tracked per sport at real prices |
-| [QA](https://aliu2298.github.io/edge-machine/qa.html) | Sandbox pairs promoted to QA, judged only on fresh bets, closing-line value and fees |
+| [Record](https://aliu2298.github.io/edge-machine/record.html) | Every measured result on one ranked table — working / not working / too early — with the detail tables folded below |
+| [Today](https://aliu2298.github.io/edge-machine/today.html) | Today's and tomorrow's fixtures as the leads' control group, with hit/miss and P/L on every lead and market |
+| [Sandbox](https://aliu2298.github.io/edge-machine/sandbox.html) | Every forecaster and rule under test, one row per (source, sport), sorted into working / not working / too early |
+| [QA](https://aliu2298.github.io/edge-machine/qa.html) | Only the pairs that succeeded in the Sandbox, re-tested before Production |
+| [Production](https://aliu2298.github.io/edge-machine/production.html) | The pairs that earned their place, and their open leads — also published as `data/production_leads.json` |
+
+## Current state (2026-09-17)
+
+* **Sandbox:** 3 pairs working (ESPN FPI · MLB +22.8% on 52, Covers · MLB +17.3% on 51,
+  SoccerPredictions · Soccer +13.8% on 71), 1 not working (Scores24 · MLB −25.1% on 35), the
+  rest too early. Retired: SportsGambler, the National Weather Service, the table tennis
+  0.55–0.60 band.
+* **Production:** SoccerPredictions · Soccer (moved by hand, production at 70 bets) and the
+  team-scores-1+ rule (fast track, probation).
+* **Rules under test:** ten pre-registered rules, listed under
+  [Markets and rules](#markets-and-rules). The tennis favourite band reached QA on its whole
+  record and was demoted the next run for buying no better than the closing price.
+* **Leads:** 224 graded (73% hit), 111 pending. Neither lane has beaten the teams' own rate
+  or the price yet.
+* **Pipeline:** GitHub builds and publishes everything; an always-on server runs the
+  15-minute closing-price job and restarts any workflow GitHub's scheduler skipped.
 
 ## Architecture
 
 ```mermaid
 flowchart TB
-    subgraph CI["refresh-boards.yml — every 6h (17 */6)"]
+    subgraph GH["GitHub Actions (public repo)"]
         direction TB
-        TS["tests · health · coverage<br/>warn-only gates"]
-        SF["streaks_fetch.py<br/>12 lead leagues + 7 form feeds"]
-        SB["streaks_build.py<br/>runs → leads · log · grade"]
-        BT["book_track.py<br/>price every fixture inside 24h"]
-        FT["fire_track.py<br/>long runs vs a shuffled null"]
-        RB["record_build.py<br/>vs the teams' own rates AND the price"]
-        TD["today_build.py<br/>today's fixtures (control group)"]
-        TS --> SF --> SB --> BT --> FT --> RB --> TD
+        RB["refresh-boards.yml · every 3h<br/>tests → health → coverage → streaks_build<br/>→ book_track → fire_track → record_build → today_build"]
+        SX["sandbox-tracker.yml · every 3h<br/>test_sandbox → sandbox_track → sandbox_build<br/>(Sandbox · QA · Production pages + feed)"]
+        SC["sandbox-close.yml · every 30 min<br/>closing prices"]
+        WD["backup-refresh.yml · hourly<br/>closing prices + board takeover if stale"]
     end
 
-    subgraph SX["sandbox-tracker.yml — every 6h (37 */6)"]
-        direction TB
-        SS["sandbox_sources.py<br/>11 forecasters + venues"]
-        ST["sandbox_track.py<br/>log at price · settle · ROI"]
-        SBD["sandbox_build.py<br/>per-source, per-sport board"]
-        SS --> ST --> SBD
+    subgraph SRV["Always-on server"]
+        LC["closing prices every 15 min<br/>scripts/local_closes.sh → mac.json"]
+        KICK["every 20 min: start any workflow<br/>GitHub skipped for 3½ h"]
     end
 
-    subgraph EXT["External sources (public, no auth)"]
-        BOV["Kalshi + Polymarket US<br/>public prices (venue_book.py)"]
-        ESPN["ESPN scoreboard<br/>results + fixtures"]
+    subgraph EXT["Public sources (no auth)"]
+        ESPN["ESPN scoreboard · MLB Stats API"]
+        EXCH["Kalshi · Polymarket US<br/>prices and settlement"]
+        TIPS["tipsters · models · Pinnacle (Odds API)"]
     end
 
-    subgraph REPO["Repo (committed)"]
-        SJ["data/streaks.json<br/>computed leads"]
-        SLJ["data/streak_leads.json<br/>lead ledger"]
-        BLJ["data/book_ledger.json<br/>every fixture, priced"]
-        FRJ["data/fire_runs.json<br/>long-run ledger"]
-        SXJ["data/sandbox_ledger.json<br/>forecaster ledger"]
-        OUT["public_site/<br/>index (leads) · streaks · record<br/>today · sandbox"]
+    subgraph DATA["Committed data"]
+        LEDG["streak_leads · book_ledger · fire_runs<br/>sandbox_ledger + archive · stages<br/>sandbox_closes/*.json · production_leads"]
     end
 
-    subgraph LOCAL["Local Mac (optional)"]
-        APP["app.py :8787<br/>+ web/ React UI"]
-        DB[("predictions.db<br/>GITIGNORED")]
-        APP <--> DB
-    end
-
-    BOV -.link + price.-> SB
-    BOV -.price every fixture.-> BT
-    ESPN --> SF
-    ESPN -.final scores.-> SB
-    MKT["Polymarket · Kalshi · DraftKings<br/>tipsters and models"] --> SS
-
-    SB --> SJ
-    SB --> SLJ --> RB
-    BT --> BLJ --> RB
-    FT --> FRJ --> RB
-    ST --> SXJ --> SBD
-    SB --> OUT
-    RB --> OUT
-    TD --> OUT
-    SBD --> OUT
-
-    OUT --> PAGES["GitHub Pages<br/>aliu2298.github.io/edge-machine"]
-
-    style DB fill:#3a1f1f,stroke:#e06c75,color:#eee
-    style PAGES fill:#1f3a2a,stroke:#3fb970,color:#eee
-    style CI fill:#161b26,stroke:#2b3245,color:#eee
-    style SX fill:#161b26,stroke:#2b3245,color:#eee
+    ESPN --> RB & SX
+    EXCH --> RB & SX & SC & LC
+    TIPS --> SX
+    RB & SX & SC & WD & LC --> DATA
+    KICK -.dispatch.-> RB & SX
+    DATA --> PAGES["GitHub Pages<br/>aliu2298.github.io/edge-machine"]
 ```
 
-The pipeline runs entirely on GitHub's servers, so the board stays current whether or not
-the Mac is on. Nothing is entered by hand: every published lead is logged at publish time
-and graded against ESPN final scores once its fixture is played.
+**Why the server exists.** GitHub silently drops scheduled runs when it is busy: in the week of
+2026-09-13 it ran about half of the 3-hour runs and about one in eight of the 30-minute ones.
+Every run that starts succeeds, so the boards are only delayed — but closing prices must be taken
+in the hour before a start, and those were being missed. The server runs the same
+`scripts/local_closes.sh` every 15 minutes (it writes only `data/sandbox_closes/mac.json`), and
+dispatches `sandbox-tracker.yml` / `refresh-boards.yml` through the GitHub API when either has not
+run for 3½ hours. GitHub still does all the building and publishing, and its own schedules stay
+on as a backup. Nothing is entered by hand.
 
 ## Components
 
 | File | Role |
 |---|---|
-| `app.py` | Local tracker: stdlib HTTP server + SQLite. Picks, base rates, auto-settlement. Read-only; it places nothing. |
-| `web/` | React + Vite + Tailwind UI for the tracker (`npm --prefix web run build`). |
-| `venue_book.py` | Prices every lead and fixture on Kalshi and Polymarket US (ask + taker fee, midpoint as fair). Replaced Bovada 2026-09-13. |
-| `record_build.py` | Renders the consolidated record to `public_site/record.html`. |
-| `today_build.py` | Renders today's and tomorrow's fixtures to `public_site/today.html`: leads from the ledger, in-play games filled from the book/lead ledgers, results, scoreboard, why-not on form at kickoff. Tested by `test_today.py`. |
-| `streaks_fetch.py` | Pulls recent + upcoming fixtures for 12 leagues from ESPN. |
-| `streaks_build.py` | Finds streak confluences; renders `index.html` (Leads) and `streaks.html`. |
-| `streaks_track.py` | Logs each published lead and grades it once the fixture is played. |
-| `streaks_backtest.py` | Walk-forward replay of the same rules over past fixtures. |
-| `model.py` | Shrunk-Poisson probability per priced market, scored against the book on Record. |
-| `book_track.py` | Prices every fixture inside 24h and grades it: the book's calibration ledger, `data/book_ledger.json`. |
-| `test_book.py` | Logic tests for the book ledger. |
-| `test_streaks.py` | Logic tests for run detection, lead pairing, grading and the ledger. |
-| `health.py` | Warn-only guardrails: lead freshness, stuck or vanished leads, dead venue feed. |
-| `verify_coverage.py` | Proves every league's squad reaches the board. |
-| `fire_track.py` | Logs long runs; tests them against a shuffled-schedule null. |
-| `sandbox_sources.py` | One adapter per forecaster and venue: what each publishes, and how to read it. |
-| `sandbox_track.py` | Logs every forecast at the price that existed, settles it, scores ROI and Brier. |
-| `sandbox_build.py` | Renders the Sandbox board to `public_site/sandbox.html`: headline counts readable and stamped sources (no blended P/L); the overall record adds v blind and beat-the-close. |
-| `sandbox_close.py` | Every 30 minutes: closing prices for bets about to start → `data/sandbox_closes.json`. |
-| `sandbox_browser.py` | Headless fetch for the sources that need a real browser. |
-| `test_sandbox.py` | Logic tests for the Sandbox adapters, staking rules and scoring. |
-| `.github/workflows/refresh-boards.yml` | Three-hourly (`41 */3`; six-hourly slots started up to 7h apart): tests → health → coverage → streaks_build → book_track → fire_track → record_build → today_build → publish to Pages. |
-| `.github/workflows/backup-refresh.yml` | Hourly watchdog (`53 * * * *`): snapshots Sandbox closing prices, and takes over (in the boards concurrency group, as a separate job) only when the primary has not succeeded or the live board is over 5h old. |
-| `.github/workflows/sandbox-close.yml` | Every 30 minutes (`11,41 * * * *`): closing-price snapshots only; own concurrency group, no deploy. |
-| `.github/workflows/sandbox-tracker.yml` | Three-hourly (`11 2-23/3`), 90 minutes clear of the boards: collect forecasts, settle, rebuild the Sandbox board. |
+| `streaks_fetch.py` | ESPN fixtures and results for 12 lead leagues + 7 form feeds, a month at a time. |
+| `streaks_build.py` | Leads (both lanes and the shadow rule) → `index.html` and `streaks.html`. |
+| `streaks_track.py` | Logs each published lead, prices it, grades it; `rule_compare` for the over-1.5 change. |
+| `venue_book.py` | Prices leads and fixtures on Kalshi and Polymarket US (ask + taker fee; midpoint as fair). |
+| `book_track.py` | Prices every fixture inside 24h and grades it: the book's calibration ledger. |
+| `model.py` | Shrunk-Poisson probability per priced market, scored against the book. |
+| `fire_track.py` | Long runs, tested against a shuffled-schedule null. |
+| `record_build.py` | The Record page: every result ranked into working / not working / too early. |
+| `today_build.py` | The Today page (control group). |
+| `sandbox_sources.py` | One adapter per forecaster, venue, market and rule (`SOURCES`, `CHALLENGERS`). |
+| `sandbox_track.py` | Logs every forecast at the price, settles, judges (`assess`), moves pairs between stages. |
+| `sandbox_build.py` | Sandbox and QA pages. |
+| `sandbox_close.py` | Closing prices for bets about to start, one shard per writer. |
+| `production.py` | Production pairs, `data/production_leads.json` and the Production page. |
+| `health.py`, `verify_coverage.py` | Warn-only guardrails: freshness, stuck leads, feed and league coverage. |
+| `test_streaks.py`, `test_book.py`, `test_today.py`, `test_sandbox.py` | Logic tests; the workflows refuse to publish when they fail. |
+| `scripts/local_closes.sh` | The server's 15-minute closing-price job (from a dedicated clone). |
+| `app.py`, `web/` | Optional local tracker UI (read-only). |
 
 ## Run locally
 
 ```bash
-python3 app.py            # tracker UI + API on :8787
-npm --prefix web run dev  # frontend dev server on :5173
-```
-
-Rebuild the public boards by hand, in the order the workflow uses (later steps read what
-earlier ones write):
-
-```bash
 python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
-  && python3 record_build.py && python3 today_build.py
+  && python3 record_build.py && python3 today_build.py      # the boards, in workflow order
+python3 sandbox_track.py && python3 sandbox_build.py         # the Sandbox, QA and Production
 ```
 
-The Sandbox board is a separate pipeline on its own schedule:
-
-```bash
-python3 sandbox_track.py && python3 sandbox_build.py
-```
-
-## The Picks board (retired 2026-09-12)
-
-For two weeks the site root was a 3-card slate: three leads re-drawn automatically
-(rarest first, one per fixture, one per team), locked at draw and graded on the final
-score. It was retired because it only ever re-drew three of the leads the Leads board
-already publishes and the Record page already grades — its 28 settled picks were a strict
-subset of the leads ledger, so the section was a second, smaller read of the same
-evidence. The Leads page now sits at the root; `leads.html` redirects there. The code is
-in git history (`slate.py`, `slate_build.py`, `slate_backtest.py`, `test_slate.py`).
-
-One lesson from it survives in `health.py`: a fixture that is **abandoned or postponed
-vanishes from the ESPN feed** and can never grade. FC Utrecht v Go Ahead Eagles
-(2026-09-05) sat pending for a week that way, so the guardrail now flags a lead that is a
-day overdue *and* absent from the feed rather than waiting out the ledger's 7-day void.
+Generated pages under `public_site/` are rebuilt by the workflows; commit code, not pages, or a
+running workflow can collide with you on the rebase (the tracker now keeps its own copy if it does).
 
 ## The Streaks board
 
@@ -173,36 +129,27 @@ They are real football, so they count as form and enter the baselines, but they 
 `lead_source: False`: the tracked league list is deliberate, and quietly turning seven more
 leagues into lead sources would change the product rather than fix the gap.
 
-Fourteen sides still have no form, from leagues ESPN does not serve (Czech, Polish,
-Croatian, Ukrainian, Israeli, Bulgarian, Slovenian, Slovak, Azerbaijani, Armenian). That is
-a data limit, and `verify_coverage.py` now names them rather than letting the gap pass as
-silence.
+**ESPN is read a month at a time (since 2026-09-15).** ESPN began answering almost every
+`dates=START-END` scoreboard query with HTTP 400, which emptied the board (0 leads) for one refresh.
+`streaks_fetch.fetch_range` now asks for one month (`dates=YYYYMM`) at a time and re-reads a month
+day by day if it hits ESPN's 100-event cap, so a busy month is never silently truncated.
 
-**Leads run in two lanes, one market each: over 1.5, and (since 2026-09-12) a side to
-score 2+.** Eight bet types meant every market carried a thin, separately underpowered
-sample; narrowing to one pooled it completely. The team-2+ lane was added back on top as a
-*priced* second lane — the board's original question ("Barcelona have scored 2-3 in six
-straight and the next opponent concedes 2"), and the one market here that trades near evens
-rather than at 1.20, so an edge, if one exists, would actually pay. Two pairings feed it:
-the team scoring 2+ in every recent game against an opponent that has conceded 2+ in every
-recent game (sharper, rare — 11 fixtures in 763 on the walk-forward) or merely conceded in
-every recent game. Each lane is judged on its own claim and never pooled with the other.
-Go in expecting what the walk-forward says: neither pairing beats the side's own 2+ rate
-(−3 to −5pp, not significant); the test is whether the *book* misprices them.
+**Leads run in two lanes, one market each.**
 
-Over 1.5 rather than over 2.5 for two reasons, one measured and one structural:
+| Lane | Rule (since) | Published? |
+|---|---|---|
+| **Over 1.5** | Both sides' competitive games went over 1.5 in **9+ of their last 10**, 10+ games each (`over15_form_leads`, since 2026-09-14) | Yes |
+| **A side to score 2+** | A side scoring 2+ in every recent game against an opponent that concedes (2+ or at all) in every recent game (`LEAD_PAIRINGS`, since 2026-09-12) | Yes |
+| Over 1.5, run pairings | Both sides over 1.5, or both scoring, in every recent game — the lane's rule until 2026-09-14 (`SHADOW_PAIRINGS`) | No: logged, priced and graded in `data/streak_leads_shadow_over15.json` so the Record compares the two rules on the same weeks |
 
-* on the ledger to date it is the only market with a **positive lift** — +4.7pp at n=19,
-  **not significant** — while over 2.5 ran −12.5pp at n=14. That is thin evidence, and
-  picking the leader of five markets after seeing the table is a multiple-comparisons
-  trap. This was a decision taken *on top of* the numbers, not one they established.
-* a lopsided line is **cheaper to test**. Binomial variance is p(1−p), so at an 85% base
-  rate each graded lead carries ~1.9× the information about a fixed percentage-point lift
-  than one at over 2.5's 62%. Detecting +5pp needs ~760 graded leads here versus ~1470.
+The over-1.5 rule changed because research on 530 matches (cutoffs fixed before it ran) found the
+9-of-10 rule hit 92.9% against the teams' own earlier 81.4%, where the run pairings had never beaten
+the teams' own rate. Its first real-price week earned about what the run lane did (+2.0% v +2.2%), so
+the change is measured rather than assumed: `rule_compare` sets both side by side from `RULE_CHANGE`.
+Each lane is judged on its own claim and never pooled with the other.
 
-The cost is that **over 1.5 lands in ~85% of matches with no flag at all**, so the board
-now publishes claims that are usually right for reasons having nothing to do with streaks.
-Lift against the teams' own rate is the only reading that means anything — see Record.
+Over 1.5 lands in ~85% of matches with no flag at all, so a hit proves nothing on its own: the
+price is the test.
 
 A **lead** is not a streak on its own — plenty of good sides score freely. Both legs must
 run at least 3 games, and **the pair must imply the bet arithmetically**:
@@ -393,288 +340,106 @@ The tab remains a browse surface for what is happening, not a signal.
 
 Leads are research to look at. Nothing here places or stages a bet.
 
-## The Sandbox board
+## The Sandbox ladder
 
-A different question from the rest of the repo. The Streaks lanes ask "does *this* signal
-pay". Sandbox asks **"does anyone's signal pay"** — it logs what published forecasters say
-across 14 sports, stamps each one with the price that existed at that moment, and settles
-it on the real result.
+Sandbox asks **"does anyone's signal pay?"** It logs what published forecasters and pre-registered
+rules say, stamps each call with the price that existed at that moment, and settles it on the real
+result. Each **(source, sport) pair** is judged on its own and climbs a ladder:
 
-Thirteen sources, staked two different ways because they are followed two different ways:
+**Sandbox → QA → Production**
 
-* **Tipsters name a side** (Covers, OLBG, Oddspedia, Scores24, SoccerPredictions.ai,
-  SportsGambler). That side is backed at the going price, every time — high turnover, no
-  Brier score, and a real ROI, because that is how a tipster is actually followed.
-* **Models, books and exchanges state a probability** (ESPN FPI, DraftKings, Pinnacle,
-  Kalshi, Polymarket, NWS, spot price). They are backed only when they disagree with the price by
-  3pp or more, and they also get an accuracy score.
+### How a call is logged
 
-Everything is a flat $100, so nothing on the board is bet-sizing skill. Polymarket is the
-spine and the settlement oracle: it supplies the price and the resolution, so most of its
-rows are **price observations with zero stake**, not bets. That distinction matters when
-reading the ledger — 788 quotes have produced 187 bets and 57 settled positions, and
-aggregating the quotes instead of the bets would show 294 phantom zero-P/L "bets".
+* **Tipsters and rules name a side** and are backed every time at the going price. **Models, books
+  and exchanges state a probability** and are backed only on a 3pp disagreement with the price, and
+  also get a Brier score. Everything is a flat $100.
+* **Venues.** Polymarket US prices and settles everything it lists; Kalshi is the venue for soccer
+  (and its goals, BTTS and team-total markets) and fills the gaps. polymarket.com is a comparison
+  source only; its bets never count toward QA (`TRADEABLE_VENUES`).
+* **A price needs a real book** (spread ≤ 10¢) and is booked at the ask. **Nothing is logged once a
+  contest has started**; anything logged at or after its start is voided.
+* **Kickoffs:** soccer takes ESPN's kickoff (Kalshi publishes none); fight nights are re-timed from
+  Pinnacle's per-bout times.
+* **Closing prices** are taken in the hour before each start by four writers (the tracker, the
+  30-minute job, the watchdog, the server) into `data/sandbox_closes/<writer>.json`, merged on the
+  next tracker run. Only a snapshot within 60 minutes of the deadline counts toward CLV.
+* **Ledger size:** bets stay in the ledger 45 days, price-only rows 7; everything leaving is copied
+  to `data/sandbox_archive/YYYY-MM.json` (price-only rows in compact form), so no judgement changes.
 
-**The floor is judged per source, not on the total.** Every ROI cell greys itself below 30
-settled bets, and the banner above the table names the best single-source count while
-nothing has reached it. At 57 settled across seven sources the best is 15, so *nothing on
-that board is readable yet* — an earlier version compared the lifetime total against the
-floor and announced the column was readable while greying out every figure in it. A total
-is not a sample; nobody bets "all sources".
+### How a pair is judged
 
-**A Polymarket price needs a book behind it.** gamma's `outcomePrices` is a midpoint, and a
-just-listed market shows a midpoint near 0.50 with nothing on either side. Until
-2026-09-12 only an exact 0.50/0.50 was screened out, so boxing bouts were logged at 0.51
-that traded at 0.88 once money arrived — against Pinnacle, logged prices were off by a mean
-of 20pp in boxing and 12pp in cricket, and under 2pp in tennis. A contest is now logged
-only when its spread is 5¢ or less with at least $100 on the book, and it is booked at the
-**ask**, the price a follower pays (the midpoint is kept for Polymarket's own Brier score).
-Nothing is logged against an unpriced book, for any source, so the contest is quoted on a
-later run once it is real. Boxing, cricket and table-tennis quotes logged before the rule
-were voided or, if not yet started, removed for re-quoting.
+Every judgement compares the pair with a reference, never a bare hit rate:
 
-**Nothing is logged once a contest has started** — checked for every source and venue at
-the moment of logging. The venue feeds keep a contest for five minutes past its start to
-absorb clock skew, and that window let a SoccerPredictions.ai tip on Al Wahda v Sharjah be
-logged 74 seconds after kickoff (it won, +$178). Anything logged at or after its start is
-voided.
+* **Won v priced (z):** wins against the wins the prices implied.
+* **v blind:** ROI against backing the favourite / underdog / draw on the same contests — or, for a
+  rule that always backs one side, against its **population** (`baseline="population"`: that side on
+  every listed match; `"favourite_population"`: the favourite on every match).
+* **Beat the close:** closing price minus price paid.
+* **Readable** only at 30+ settled bets; below that a pair is sorted by which way it leans.
 
-**Blind baselines.** Every sport shows what a fixed rule that ignores every source made on
-the same contests — back the favourite, back the underdog, back every draw — priced at the
-first moment any source looked. They are the weather a source's record is read against: on
-2026-09-12 the tracked leagues drew 34% of the time, and back-the-underdog made +31% across
-the weekend's soccer.
+### The gates (per sport)
 
-**Stages: Sandbox → QA.** Promotion is per (source, sport) and recorded in `data/stages.json`
-with the evidence it was made on. The **QA entry gate** is lighter than the stamp because QA
-re-tests on fresh data only — bets logged after the promotion: 30+ settled bets spanning 14+ days,
-wins beat the price by z ≥ 1, beats every blind rule on the same contests, still profitable
-without its biggest win. In QA the stamp is applied to the fresh record, plus positive
-closing-line value and positive ROI after the taker fee (Polymarket US 0.06·p·(1−p), Kalshi
-0.07): that is **production-ready**. A QA pair whose fresh record is behind the price after 30
-bets is demoted and must re-qualify on bets logged after the demotion.
+| Gate | Standard sports | Tennis, table tennis (`HIGH_VOLUME_SPORTS`) |
+|---|---|---|
+| **Sandbox → QA** | 30+ settled bets over 14+ days, z ≥ 1, beats every blind rule, profitable without its biggest win | **50+** settled bets, **no day span**, **z ≥ 1.5**, same other checks |
+| **Judged in QA on** | bets logged after promotion only | its **whole record** (Sandbox bets count) |
+| **QA → Production (ready)** | the stamp on that record (50+ bets over 28+ days, z ≥ 2, beats every blind rule, no one hit, both halves) **plus** beats the close (30+ closes covering half the bets), profitable after fees, every bet publishable, held 7 days | **50+** bets, no day span, **z ≥ 2.5**, same other checks |
+| **Demoted when** | after 30 bets: behind the price, not beating every blind rule, or behind the close; or 21 days without a bet | after **50** bets, same reasons |
 
-**QA rules, tightened 2026-09-13 before any promotion.** Production-ready needs CLV on 30+
-closing prices covering at least half the fresh bets, and the ready gate must hold for 7 days
-(checked every run; the mark is withdrawn, and logged, the first run it fails). A QA pair is
-demoted after 30 fresh bets if it is behind the price, not beating every blind rule, or behind
-the closing price — and at any count after 21 days with no new bet. Baseline sources are never
-promoted. Settled bets are never lost to pruning: `prune()` copies each settled bet whole into
-`data/sandbox_archive/YYYY-MM.json` (by settle month) before rolling the row up, and every
-judgement reads the ledger and the archive together.
+Two ways around the ladder, both recorded in `data/stages.json`:
 
-**Soccer BTTS and the form rule (2026-09-13).** The Sandbox lists Kalshi both-teams-to-score
-markets as the domain `soccer_btts` (`fetch_kalshi_btts`): yes/no rows tied to an ESPN fixture
-(home first, kickoff from ESPN), Yes and No at their own asks, settled as yes/no markets. Two
-sources: `btts_market` (Baseline, never bets) logs the midpoint on every match; `btts_form_l10`
-(kind Rule) is the pre-registered rule — back Yes where BOTH teams saw both teams score in 7+ of
-their last 10 competitive games (ESPN results strictly before kickoff). No fitted threshold. Because
-a rule that always backs Yes would equal "back the favourite" on its own contests, its blind rule is
-the population (`baseline="population"`): backing Yes on every BTTS match over the same period.
+* **Fast track** (`SOURCES[...]["fast_track"]`): in Production on probation from the first bet; at 30
+  bets it stays only while profitable after fees with z ≥ 1, otherwise back to the ladder for good.
+  Today: `team1_form_l5`.
+* **Moved by hand** (`PAIR_OVERRIDES`): moved to QA immediately, judged on its whole record, ready
+  the run that record reaches `production_at` bets while profitable after fees. Today:
+  SoccerPredictions · Soccer (production at 70).
 
-**Soccer goals markets and three rules (2026-09-14).** `fetch_kalshi_goals` lists Kalshi over 1.5
-(`KX{LEAGUE}TOTAL`) and team totals (`KX{LEAGUE}TEAMTOTAL`, one row per side) as three domains —
-`soccer_o15`, `soccer_team1` (over 0.5) and `soccer_team2` (over 1.5) — each row tied to its ESPN
-fixture and side. `goals_market` (Baseline) logs every midpoint; the rules are pre-registered from
-research fixed before it ran (competitive games only, 10+ each, results strictly before kickoff):
-`o15_form_l10` both sides' games over 1.5 in 9+ of 10; `team1_form_l5` side scored in 5/5 and the
-opponent conceded in 5/5 (fast-tracked, see below); `team2_form_l10` side scored 2+ in 7+/10 and the
-opponent conceded 2+ in 7+/10. Each is judged against its own market's population. Both sides of a
-team total are separate outcomes (`outcome_cluster`). Kalshi lists no team totals for the Eredivisie
-or Primeira Liga.
+A retired source (`connected=False` with a `retired` reason) logs nothing new; its open bets still
+settle and its record stays under the Sandbox page's Reference section.
 
-**Tennis favourite-band rule (2026-09-14).** `tennis_fav_band` (kind Rule) backs the player the
-exchange prices 0.75 up to 0.90, on every tennis match listed. Found on 427 settled matches over four
-days (86.4% won v 81.1% priced, +5.2% after fees, z +1.26 on 88) — the favourite-longshot bias. Its
-blind rule is `baseline="favourite_population"`: backing the favourite on every tennis match over the
-same period, one quote per contest, so the band must beat favourites in general. A surface-blended
-Elo rule on ESPN tour-level results was researched the same day and not added: it rated only 65 of
-the 427 matches (ESPN has no Challenger or ITF results), its probabilities scored worse than the
-market's (Brier 0.241 v 0.212), and its 50 bets won 42% against 44% priced (−12.4%).
+### Production
 
-`mma_fav_band` runs the same band, unchanged, on MMA — not fitted there (the Sandbox had no settled,
-priced MMA fight when it was added), so it tests whether the bias carries across sports.
+`production.py` publishes every bet a Production pair logs after entering Production, in the Leads
+ledger's shape (`leads`, `updated_at`, `board_built_at`, `last_seen_at` on open leads), to
+`data/production_leads.json`. Only bets the feed can express are published (`placeable`): a soccer
+result — home, away or **draw** — on a Kalshi game market, or Yes on a Kalshi soccer goals market,
+in a mapped league; and only with an ESPN-verified kickoff. Bet shapes: `match_result`
+(`side` home / away / draw), `total_gte`, `team_gte` (with `team`).
 
-`tt_band_55_60` is a confirmation test on table tennis: the one band that spiked in the first 129
-settled matches (0.55-0.60 won 78.8% v 57.2% priced, z +2.51 on 33, with losing bands either side),
-backed on every new match to see whether it is noise.
+### Markets and rules
 
-**MLB fade-the-streak rule (2026-09-14).** `mlb_fade_streak` backs the team that won 3 or fewer of its
-last 10 when it plays a team that won 7 or more of its last 10 (regular season, 20+ games each, MLB
-Stats API results before first pitch, `mlb_games`). Researched on every 2025 and 2026 game at Kalshi's
-last price before first pitch: +3.0% on 239 games in 2025 and +4.6% on 149 in 2026 — found in one
-season, repeated in the next, but small. Last-5 and last-20 windows and every run-total rule (team
-5+, game 9+ over/under) were tested in the same run and did not repeat or contradicted themselves.
+Rules are pre-registered from research fixed before it ran; research that failed is recorded too.
 
-**Under 3.5 low-scoring rule (2026-09-14).** `soccer_u35` lists Kalshi's Over 3.5 market (side b = No,
-the under). `u35_low_scoring` backs the under where both teams scored 1 or fewer in 7+ of their last 10
-games in the same competition (`team_form(..., league=)`, HOF's way of counting; ESPN's counts matched
-HOF's on the fixtures checked). Research: 80.5% on 41 v the teams' own 61.7%; 23 of 27 at Kalshi's
-under price (~71%), +20.2% after fees. Under 4.5 on the same selection was priced at ~86% and made
-+3%, so it was left out. Judged against backing the under on every Kalshi match.
+| Rule | Market | Backs | Research | Status |
+|---|---|---|---|---|
+| `team1_form_l5` | Kalshi team total over 0.5 | a side that scored in 5/5 v an opponent that conceded in 5/5 | 91.9% on 99 v 77.9% own; 10/10 at real prices | Production (fast track) |
+| `p05_unbeaten` | Kalshi win market, **No** (the other side +0.5) | a side unbeaten in 8+/10 v an opponent that won ≤3/10 (same competition) | 82.5% on 97 v 70.6% own, 0/1,000 shuffles; +11.2% on 64 priced | Sandbox |
+| `u35_low_scoring` | Kalshi Over 3.5, **No** | both sides scored ≤1 in 7+/10 (same competition) | 80.5% on 41 v 61.7% own; +20.2% on 27 priced | Sandbox |
+| `o15_form_l10` | Kalshi over 1.5 | both sides' games over 1.5 in 9+/10 | 92.9% on 84 v 81.4% own; +2.0% on 20 priced | Sandbox (also the Leads rule) |
+| `team2_form_l10` | Kalshi team total over 1.5 | a side scoring 2+ in 7+/10 v an opponent conceding 2+ in 7+/10 | 76.2% on 21 v 45.3% own | Sandbox |
+| `btts_form_l10` | Kalshi BTTS | both sides' games BTTS in 7+/10 | +10pp v own on 77, not significant | Sandbox |
+| `tennis_fav_band` | Polymarket US / Kalshi | the player priced 0.75–0.90 | 86.4% v 81.1% priced on 88, z +1.26 | Sandbox (demoted from QA: no better than the close) |
+| `mma_fav_band` | Kalshi | the fighter priced 0.75–0.90 (tennis rule, unchanged) | none (out-of-sample test) | Sandbox |
+| `mlb_fade_streak` | Kalshi MLB game | a team 3-or-fewer of its last 10 v one 7-or-more (next game only) | +3.0% on 239 (2025), +4.6% on 149 (2026) | Sandbox |
+| `tt_band_55_60` | Polymarket US | the player priced 0.55–0.60 | one spiky band in 129 matches | **Retired** — on new matches it won exactly at the price |
 
-**Team +0.5 unbeaten rule (2026-09-14).** `soccer_p05` lists each side's win market on Kalshi's soccer
-GAME events as a yes/no row whose No is the OTHER team +0.5 (does not lose); `team` is that side.
-`p05_unbeaten` backs it where the team is unbeaten in 8+ of its last 10 in the competition and the
-opponent won 3 or fewer of its last 10 there. Research: 82.5% on 97 v the teams' own 70.6% (z +2.56,
-0 of 1,000 shuffled worlds across six spread rules); 54 of 64 at Kalshi's price (~77%), +11.2% after
-fees, 37 of them MLS. The +1.5 rules beat the teams' own rate but Kalshi priced them at ~88% and they
-made +2-6%, so they were left out.
+Each market has a never-betting **Baseline** source (`btts_market`, `goals_market`) that logs the
+price on every listed match, which is the population its rules are judged against.
 
-**Ledger size (2026-09-15).** `prune` folds price-only rows (bet=False — about three quarters of the
-ledger) after `PRICE_RETAIN_DAYS` (7) instead of 45; bets keep 45 days. Brier totals survive in
-`retired`, and a compact copy (`COMPACT_FIELDS`: prices, result, venue, times) goes to the monthly
-archive for every Baseline row and one row per contest, so population baselines still cover a rule's
-whole record. The favourite population reads the first price logged per contest, so pruning never
-changes a judgement. Expected steady state: ledger ~5 MB instead of ~20 MB.
+**Researched and not added:** tennis surface Elo (scored worse than the market); soccer over 2.5
+and under 4.5; unders built on past game totals or defences; the +1.5 spread rules (priced ~88%, +2–6%);
+the MLB last-5 / last-20 windows and every MLB run-total rule; WNBA totals (the market moves its
+line for high-scoring teams); WNBA and NBA fade-the-streak (−64% and −37%), favourite band and spread
+rules; NBA first-half, first-quarter and both-teams-100 overs (thin books, ~19¢ spreads, both sides
+overpriced).
 
-**Per-sport thresholds (2026-09-16).** `sport_rules(sport)` picks the gate: high-volume sports
-(`HIGH_VOLUME_SPORTS`: tennis, table tennis) need 50+ settled bets at z ≥ 1.5 to enter QA and 50+ fresh
-bets at z ≥ 2.5 in QA for the stamp, with no day span, and 50 fresh bets before a demotion is judged.
-Their Sandbox record also counts in QA (`qa_counts_sandbox`, `qa_since`): a promoted pair is judged on its
-whole record since it last entered the Sandbox, not only on bets after the promotion; every other
-sport keeps 30 / 14 days / z ≥ 1, 50 / 28 days / z ≥ 2 and 30. A tennis rule logs ~50 bets a day, so it
-met every other gate in two days and then waited two weeks on the calendar alone.
+### Sources
 
-**Pairs moved by hand (2026-09-16).** `PAIR_OVERRIDES` lists pairs moved to QA whatever the entry gate
-says, judged on their whole record, and marked production-ready the run that record reaches
-`production_at` settled bets while profitable after fees (no hold period, no other ready check;
-demotion still applies). SoccerPredictions · Soccer is the first: moved at 69 bets, production at 70.
-
-**Draw bets (2026-09-16).** `placeable` accepts a soccer draw on a Kalshi GAME market in a mapped league,
-and the Production feed publishes it as `{"kind": "match_result", "side": "draw"}` with the headline
-"Draw"; the trading side buys the event's Tie contract.
-
-**Leads v2: the over-1.5 rule change (2026-09-14).** The Leads board's over-1.5 cards now come from
-`over15_form_leads` (both sides 9+ of last 10) instead of the run pairings; the team 2+ lane is
-unchanged (`LEAD_PAIRINGS`). The retired pairings (`SHADOW_PAIRINGS`) still log, price and grade into
-`data/streak_leads_shadow_over15.json`, never published, and the Record's rule-change table
-(`rule_compare`) sets the two side by side from `RULE_CHANGE`.
-
-**Production (2026-09-13).** `production.py`. A (source, sport) pair is in Production while it
-sits in QA with `ready_at` set (held the ready gate 7 days) and leaves on the first run the gate
-fails — no manual promotion. Each tracker run writes `data/production_leads.json` in the lead
-ledger's shape (`leads`, `updated_at`, `board_built_at`): every bet a Production pair logged since
-it entered Production that the feed can express (`placeable`: a soccer side to win on a mapped
-Kalshi GAME market as `match_result` with `side` home/away, or Yes on a Kalshi over-1.5 / team-goals
-market as `total_gte` / `team_gte`), `last_seen_at` = the build stamp while open, status
-pending/hit/miss/void. Empty until a pair arrives. `public_site/production.html` lists the pairs
-and open leads.
-
-**Fast track (2026-09-14).** A source with `fast_track` in its registry entry (today
-`team1_form_l5`, team scores 1+) is in Production on probation from its first bet, without the QA
-gate, and judged by `fast_track_status` on every settled bet since `since`: under 30 bets it is on
-probation; at 30+ it stays only while profitable after fees with z ≥ 1 against the prices paid.
-Failing sends it back to the normal ladder on fresh evidence, and a failed fast track never
-re-opens.
-
-**QA counts only the US exchanges (2026-09-13).** QA entry, readiness and demotion read
-only bets on Polymarket US, Kalshi and Kalshi yes/no (`TRADEABLE_VENUES`); polymarket.com bets
-stay on the Sandbox page and in its own stamp. Production-ready also requires every fresh bet to
-be a market the Production feed can publish (`placeable`: a soccer side on a Kalshi game
-market, or Yes on a Kalshi soccer goals market — no draws, no other sport yet).
-
-**Closing prices from the Mac.** GitHub throttles the frequent schedules, so
-`scripts/local_closes.sh` runs `sandbox_close.py --writer mac` every 15 minutes under launchd
-(`scripts/com.aliu.edge-machine-closes.plist`) from a dedicated clone at `~/edge-machine-closes`,
-committing only `data/sandbox_closes/mac.json`. Log: `/tmp/edge-machine-closes.log`.
-
-**Closing prices.** Every run refreshes, on each open bet, the same venue's current price for
-the side it backed, while that book is tradeable and the contest has not started — so the
-value left behind is the last snapshot before the start. Closing-line value (close minus the
-price paid) says whether a source buys below where the market ends up, and it is readable
-long before enough results settle to judge ROI. Because the Sandbox runs every six hours,
-`sandbox_close.py` reads the venue's price for just the open bets whose deadline is in the
-next 60 minutes. GitHub honours none of the schedules reliably, so it runs from three places —
-`sandbox-close.yml` (`11,41 * * * *`), the hourly watchdog and every board refresh — each writing
-only its own `data/sandbox_closes/<writer>.json`; the tracker merges every writer's file on its next run, the latest
-snapshot before the deadline winning. The deadline is the start, or for a yes/no market its expiry
-minus the domain's quoting lead (a price after that has the answer in it). Pre-registered:
-a snapshot counts toward CLV only when taken within 60 minutes of the deadline; older ones
-are kept and shown, never scored. The close job writes no other file and has its own
-concurrency group, so it can neither conflict with nor cancel a queued board or tracker run.
-
-**The stamp of approval** is pre-registered (2026-09-12) and identical for tipsters, models,
-books and exchanges. Every criterion must hold, and it is re-judged every run:
-50+ settled bets spanning 28+ days (first start to last — calendar weeks touched let a Sunday and a Monday count as two); wins beat the prices paid by z ≥ 2; ROI beats every
-blind rule on the same contests; still profitable without its single biggest win; profitable
-in both halves of its record. Below 30 settled bets a source is **no read**; readable and
-ahead of the price but short of a gate is **watch**; readable and not ahead is **failing**.
-SoccerPredictions.ai's first weekend (+24.5%) sits exactly at back-every-draw on the same
-contests (+24.9%), which is why a hot ROI alone earns nothing.
-
-**Fight nights are re-timed from Pinnacle.** Neither venue says when a *bout* starts:
-Polymarket stamps every bout with the card's start, and Kalshi's estimate is three hours
-before expected expiration — both safely early, but they closed Vanhouter v Akpejiori and
-Opetaia v Mikaelian to logging hours before either fought. Boxing and MMA rows are kept for
-up to 12 hours past their venue start while the market is open, then re-timed from
-Pinnacle's per-bout commence time **minus 30 minutes** (a card runs ahead when earlier fights
-end early). The event list is a free Odds API call. A row Pinnacle cannot re-time keeps its
-venue start and is dropped once that passes, exactly as before; a Pinnacle match more than a
-day off the venue is not trusted. Every fight quote records `start_source` and the venue's own
-start for audit.
-
-**MMA** is its own sport: UFC on Polymarket (`ufc` tag) and Kalshi (`KXUFCFIGHT`, `KXMMAFIGHT`),
-Pinnacle via the Odds API's Mixed Martial Arts group, and OLBG's tips — boxing and UFC share
-OLBG's one listing page, read with a single request.
-
-**OLBG** is the boxing and MMA tipster: a community whose members post a Win Fight tip per bout, one
-listing page per run. A fight is a call only when a fighter is the most popular selection with
-at least three tips and a strict majority of them. Its tipsters compete on profit and often
-pile onto the draw at 15/1 (10 of 14 tips on Magsayo v Cortes); the venue boxing markets are
-two-way, so a draw-led fight is no call. The page also lists UFC bouts, which cannot match a
-boxing contest and fall away. Boxing names are transliterated differently by every feed
-("Mikaelian" / "Mikaeljan"), so boxing alone accepts a long word spelled almost identically as
-the same name — both fighters must still match.
-
-**Leads horizon and withdrawn leads (2026-09-13).** `find_leads` publishes only fixtures
-kicking off inside `LEAD_HORIZON_H` = 48 hours. Every build stamps `board_built_at` on
-`data/streak_leads.json` and `last_seen_at` (the same stamp) on every lead it publishes; a
-pending lead the build no longer publishes, with its fixture still ahead, gets `withdrawn_at`
-(cleared if it returns). The Record's hit-rate, priced and model-v-book tables count only leads
-not withdrawn at kickoff, and show the withdrawn count apart. A lead is on the board now only
-when its `last_seen_at` equals `board_built_at`.
-
-**Sandbox venue (2026-09-13).** Non-soccer contests are priced and settled on **Polymarket
-US** (`fetch_polymarket_us`, `resolve_polymarket_us`) — the regulated US exchange —
-instead of polymarket.com, which is closed to US accounts. Each event's single two-outcome winner
-market is the contest; its bid/ask quote the first outcome (side B's ask is 1 − bid); an event
-not at period "NS" is in play and never quoted; settlement 1/0 = first outcome won/lost.
-polymarket.com stays as the comparison source `polymarket`, backed at a 3pp disagreement with
-the US ask; bets logged on it before the switch still settle there. Kalshi remains the soccer
-venue and the gap-filler, with soccer starts taken from ESPN's kickoff where a fixture matches
-(`apply_espn_starts`). The tracker runs every 3h (`11 2-23/3`), and Odds API pacing counts 8
-runs a day. Weather quotes show their city, and a weather ladder (one series, one day) counts
-as one independent outcome in z and in the sample size (`outcome_cluster`). The running and
-settled lists carry every bet with a filter box.
-
-**Pinnacle v venue on uncovered contests.** Pinnacle is planned *after* every other source
-and across all sports at once: free event lists show how many listed, priced contests each
-Odds API key carries that no tipster, model or book has covered, and the run's paced share of
-credits is spent on the keys with the most uncovered contests first. Soccer is priced
-three-way, with the draw kept in the de-vig. Lines more than 60 minutes old are skipped, and
-every Pinnacle quote records whether its contest was uncovered, so the rule's own lane is
-reported separately on the page. A key with no uncovered contest is never paid for, and a
-sport stops getting paid calls once it has 30 Pinnacle quotes without one reaching the 3pp
-edge (soccer on Kalshi retired this way: 35 quotes, largest gap 1.3pp); unspent credits stay in
-the balance and the pacing passes them to later runs.
-
-**Pinnacle** is read through The Odds API (`ODDS_API_KEY`, a repository secret) for boxing,
-cricket and tennis — the three sports with no dependable tipster — de-vigged to a fair
-probability. Pinnacle closed its own public API in July 2025; the pinnacle.com site's guest
-endpoint also answers, but it is undocumented and Pinnacle does not serve US customers, so
-it is not used. The Odds API lists Pinnacle only for major cricket and the big tennis
-tournaments, not ITF or Challenger. Credits are paced to last the month: event lists are free, a
-paid odds call is made only for a sport with a listed, priced contest waiting, and each run
-may spend only its share of what remains — (remaining − 25 reserve) ÷ the runs left before
-the credits reset on the 1st, counting eight scheduled runs a day (the tracker runs every 3h) plus 25% for manual ones,
-never more than four. A simulated month of six runs a day never runs dry and still makes a
-paid call every day.
-
-Beyond sport the same machinery runs on yes/no markets where the opponent is the market
-price itself — climate (National Weather Service against Kalshi's temperature buckets for
-the same city and day) is the one with a genuinely independent forecaster, and it settles
-overnight, so it reaches a readable sample fastest.
+Tipsters: Covers, OLBG (boxing, MMA), Oddspedia (cricket), Scores24, SoccerPredictions.ai.
+Models and books: ESPN FPI, DraftKings, Pinnacle (The Odds API, `ODDS_API_KEY` secret, credits paced
+to last the month and spent where nothing else covers). Exchanges as comparison sources: Kalshi,
+polymarket.com. Retired: SportsGambler (−7% on 43), the National Weather Service (−19% on 31).
 
 ## Data handling
 
@@ -686,7 +451,9 @@ from it because the repo is public.
 Secrets (`.apifootball_key`, `*.pem`) are git-ignored. A fresh checkout creates empty
 tables on first run.
 
-**This repo places no bets and holds no exchange credentials.** An earlier lane traded
+**This repo places no bets and holds no exchange credentials.** The server holds only a GitHub
+token limited to starting this repo's workflows, and a deploy key with write access to this repo
+that is used only to push the closing-price file. An earlier lane traded
 event contracts through an authenticated, request-signing client; that client, its staged
 -order endpoints, its React approval panel and the unused venue matcher were all removed
 in Sep 2026. There is no order-placing code path left — every surface is read-only.
