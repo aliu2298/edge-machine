@@ -196,9 +196,121 @@
    "pair": "team1_form_l5|soccer_team1",
    "reason": "moved by hand \u2014 trading from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-09-18T04:54:35+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "espn_fpi|nfl",
+   "reason": "moved to Production by hand on 2026-09-18",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-18T04:54:35+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "espn_fpi|nfl",
+   "reason": "moved by hand \u2014 trading from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-09-18T04:54:35+00:00",
+   "evidence": {
+    "base_roi": 0.0131,
+    "clv": 0.0687,
+    "clv_n": 19,
+    "n": 19,
+    "own_roi": 0.1513,
+    "roi": 0.1513,
+    "roi_fee": 0.115,
+    "span_days": 1.2882,
+    "weeks": 0,
+    "z": 0.8165
+   },
+   "pair": "espn_fpi|mlb",
+   "reason": "moved to Production by hand on 2026-09-18",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-18T04:54:35+00:00",
+   "evidence": {
+    "base_roi": 0.0131,
+    "clv": 0.0687,
+    "clv_n": 19,
+    "n": 19,
+    "own_roi": 0.1513,
+    "roi": 0.1513,
+    "roi_fee": 0.115,
+    "span_days": 1.2882,
+    "weeks": 0,
+    "z": 0.8165
+   },
+   "pair": "espn_fpi|mlb",
+   "reason": "moved by hand \u2014 trading from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
+  "espn_fpi|mlb": {
+   "by_hand": "2026-09-18",
+   "entry": {
+    "base_roi": 0.0131,
+    "clv": 0.0687,
+    "clv_n": 19,
+    "n": 19,
+    "own_roi": 0.1513,
+    "roi": 0.1513,
+    "roi_fee": 0.115,
+    "span_days": 1.2882,
+    "weeks": 0,
+    "z": 0.8165
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-18T04:54:35+00:00",
+   "ready_at": "2026-09-18T04:54:35+00:00",
+   "ready_since": "2026-09-18T04:54:35+00:00",
+   "stage": "production"
+  },
+  "espn_fpi|nfl": {
+   "by_hand": "2026-09-18",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-18T04:54:35+00:00",
+   "ready_at": "2026-09-18T04:54:35+00:00",
+   "ready_since": "2026-09-18T04:54:35+00:00",
+   "stage": "production"
+  },
   "o15_form_l10|soccer_o15": {
    "by_hand": "2026-09-18",
    "entry": {
@@ -280,5 +392,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-09-18T04:37:21+00:00"
+ "updated": "2026-09-18T04:54:35+00:00"
 }
