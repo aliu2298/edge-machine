@@ -1816,8 +1816,10 @@ _st = {"pairs": {"espn_fpi|mlb": dict(stage="production", promoted_at="2026-09-1
                        evidence=dict(n=31, z=1.3, roi=0.2))]}
 import production as PR
 _html = PR.page(_qd, _st, {"leads": {}, "pairs": {}}, "<style></style>")
-ok("ESPN FPI / Matchup Predictor · MLB" in _html, "a pair in Production is listed, labelled source · sport")
-ok("moved by hand 2026-09-11" in _html, "and says how it got there")
+ok("ESPN FPI / Matchup Predictor" in _html and "MLB · moved 2026-09-11" in _html,
+   "a pair in Production is listed with its sport and the day it was moved")
+ok("How a pair gets here" in _html and "moved into Production by hand" in _html,
+   "and the page says how pairs get there")
 ok('href="./sandbox.html"' in _html and 'href="./record.html"' in _html, "the nav is Record, Sandbox, Production")
 ok('href="./qa.html"' not in _html and 'href="./today.html"' not in _html,
    "and carries no QA or Today link")
@@ -2199,7 +2201,10 @@ ok(_l1["id"].startswith(_l1["date"] + "|Leeds United|Newcastle|"),
 _empty = PR.build_feed({"quotes": []}, {"pairs": {}}, now=_pnow)
 eq((_empty["leads"], _empty["pairs"]), ({}, {}), "with nothing in Production the feed is empty, not missing")
 _html = PR.page(_pd, _pst, _feed, "<style></style>", now=_pnow)
-ok("Leeds United to win" in _html and "SoccerPredictions.ai · Soccer" in _html, "the page lists the open leads by source label")
+ok("Leeds United to win" in _html and "SoccerPredictions.ai" in _html,
+   "the page lists the leads still to come, with the source each came from")
+ok("Coming up" in _html and ("Today" in _html or "Tomorrow" in _html),
+   "grouped by the day they start")
 ok('href="./production.html">Production</a>' in open("streaks_build.py").read(), "every board links Production")
 
 # ---------------------------------------------------------------------------
@@ -2403,8 +2408,8 @@ eq(_fd["pairs"]["team1_form_l5|soccer_team1"]["route"], "moved by hand on 2026-0
 _o15 = dict(_open, sport="soccer_o15", source="o15_form_l10", id="o15_form_l10:Z", team=None)
 eq(PR.lead_from_quote(_o15, "o15_form_l10|soccer_o15", "2026-09-15T12:00:00+00:00")["bet"],
    {"kind": "total_gte", "n": 2}, "an over-1.5 bet is total_gte 2")
-ok("moved by hand" in PR.page({"quotes": [_open]}, _st_p, _fd, ""),
-   "the Production page shows how a pair got there")
+ok("moved 2026-09-14" in PR.page({"quotes": [_open]}, _st_p, _fd, ""),
+   "the Production page shows when a pair was moved")
 
 
 print("\ntennis favourite-band rule")
@@ -2866,6 +2871,24 @@ ok(not T.placeable(dict(sport="nhl_rest", pick="a", venue="kalshi")),
 ok(not T.placeable(dict(sport="nhl_pl", pick="b", venue="kalshi_binary")), "…and neither can the puck line")
 eq(S.outcome_cluster(dict(venue="kalshi_binary", sport="nhl_pl", market_id="KXNHLSPREAD-26OCT14BOSNJ-NJ2")),
    "KXNHLSPREAD-26OCT14BOSNJ", "two puck-line bets on one game are one outcome")
+
+# ---------------------------------------------------------------------------
+print("\nthe public pages never say what acts on them")
+# ---------------------------------------------------------------------------
+# The site is public, and it must not tell a visitor that anything trades from it. Copy
+# written in a hurry leaked twice on 2026-09-18 ("the only page anything trades from", "the
+# bot follows Production only"), so every rendered page is checked, including every source
+# and rule note the Sandbox page shows.
+import re as _re
+_leaks = _re.compile(r"\bbots?\b|trades? from|money follows|nothing trades|not traded|placeable|"
+                     r"\barmed\b|real money|the bot", _re.I)
+_pages = {"production": PR.page(T.load(), T.load_stages(), PR.load_feed(), "<style></style>"),
+          "sandbox notes": " ".join(str(m.get("note", "")) + " " + str(m.get("label", "")) + " "
+                                    + str(m.get("retired", "")) for m in S.SOURCES.values())}
+for _name, _html in _pages.items():
+    _text = _re.sub(r"<[^>]+>", " ", _html)
+    _found = sorted({m.group(0).lower() for m in _leaks.finditer(_text)})
+    eq(_found, [], f"the {_name} copy gives nothing away")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

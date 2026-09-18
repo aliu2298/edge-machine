@@ -244,7 +244,7 @@ SOURCES = {
              "every band from 0.95 up. The 0.90-0.97 band returned -1.3%, so this is the tail "
              "specifically, not 'back favourites'. It is SELLING TAIL RISK for a penny: five "
              "of 778 bets lost and each cost about sixty wins, in two months that held no "
-             "commodity shock. Logged and measured; nothing trades it."),
+             "commodity shock. Logged and measured in the Sandbox only."),
     "nhl_rest_edge": dict(
         label="NHL rest rule (rested home team v a visitor on a back-to-back)", kind="Rule",
         connected=True, site="edge-machine", sports=["nhl_rest"], baseline="favourite_population",
@@ -286,7 +286,7 @@ SOURCES = {
         note="Pre-registered 2026-09-14. Back a side to score 2+ at the Kalshi ask where it "
              "scored 2+ in at least 7 of its last 10 competitive games and its opponent "
              "conceded 2+ in at least 7 of theirs. Research: 76.2% on only 21 team-games "
-             "against a 45.3% own earlier rate. Measured here and not traded: the bot follows Production only."),
+             "against a 45.3% own earlier rate. Measured in the Sandbox; not in Production."),
     "spot": dict(
         label="Spot price (no-change baseline)", kind="Baseline", connected=True,
         site="coingecko.com", sports=["crypto"],

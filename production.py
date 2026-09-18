@@ -199,75 +199,146 @@ def load_feed(path=None):
         return {"leads": {}, "pairs": {}}
 
 
+def _day_label(day, today):
+    """'Today', 'Tomorrow', or 'Sat 20 Sep' for a kickoff date."""
+    delta = (day - today).days
+    if delta == 0:
+        return "Today"
+    if delta == 1:
+        return "Tomorrow"
+    return day.strftime("%a %d %b")
+
+
 def page(d, st, blob, style, now=None):
-    """public_site/production.html — shares the Sandbox stylesheet."""
-    now_s = (now or datetime.datetime.now(datetime.timezone.utc)).strftime("%Y-%m-%d %H:%M UTC")
+    """public_site/production.html — shares the Sandbox stylesheet.
+
+    Organised as the questions a visitor actually asks, in order: what is in Production and on
+    what evidence, what is coming up and when, how the recent leads have landed, what was held
+    back, and — folded away — how a pair gets here. Written for a public page: it describes
+    published leads and the record behind them, never anything that acts on them.
+    """
+    now_dt = now or datetime.datetime.now(datetime.timezone.utc)
+    now_s = now_dt.strftime("%Y-%m-%d %H:%M UTC")
+    today = now_dt.date()
     pairs = production_pairs(st)
-    label = lambda key: (f'{S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]} · '
-                         f'{S.SPORTS.get(key.split("|")[1], key.split("|")[1])}')
-    rows = []
-    for key, pair in sorted(pairs.items(), key=lambda kv: entered_at(kv[1]) or ""):
+    name = lambda key: S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]
+    sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
+    label = lambda key: f"{name(key)} · {sport_of(key)}"
+    pct = lambda x: "—" if x is None else f"{x*100:+.1f}%"
+    tone = lambda x, n: "mut" if not n or x is None else ("pos" if x > 0 else "neg")
+    leads = list(blob.get("leads", {}).values())
+    upcoming = sorted((l for l in leads if l["status"] == "pending"
+                       and l["kickoff"] >= now_dt.strftime("%Y-%m-%dT%H:%MZ")),
+                      key=lambda l: l["kickoff"])
+    settled = sorted((l for l in leads if l["status"] in ("hit", "miss")),
+                     key=lambda l: l["kickoff"], reverse=True)
+
+    # ---- the pairs, each with the evidence it was moved on and what it has done since ----
+    cards = []
+    for key, pair in sorted(pairs.items(), key=lambda kv: (sport_of(kv[0]), name(kv[0]))):
         source, sport = key.split("|", 1)
         since = entered_at(pair)
-        a = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
-        mine = [l for l in blob.get("leads", {}).values() if l.get("pair") == key]
-        how = (f"moved by hand {esc(str(pair.get('by_hand') or '')[:10])} · trading since "
-               f"{esc(str(since)[:10])}")
-        rows.append(f"""<tr><td><b>{esc(label(key))}</b>
-<div class="sm mut">{how}</div></td>
-<td class="num">{sum(1 for l in mine if l['status'] == 'pending')}</td>
-<td class="num">{a['n']}</td>
-<td class="num"><span class="{'pos' if (a['roi'] or 0) > 0 else 'neg' if a['n'] else 'mut'}">{f"{a['roi']*100:+.1f}%" if a['roi'] is not None else '—'}</span>
-<div class="sm mut">{f"{a['roi_fee']*100:+.1f}% after fees" if a['roi_fee'] is not None else ''}</div></td>
-<td class="num">{f"{a['z']:+.2f}" if a['n'] else '—'}</td>
-<td class="num">{f"{a['clv']*100:+.1f}¢" if a['clv'] is not None else '—'}</td></tr>""")
-    table = (f"""<div class="tbl"><table><tr><th>Pair</th><th class="num">Leads open</th>
-<th class="num">Settled in Production</th><th class="num">ROI</th><th class="num">z v price</th><th class="num">CLV</th></tr>
-{''.join(rows)}</table></div>""" if rows else
-             '<div class="note">Nothing is in Production. A pair arrives here by hand, on the '
-             'record the Sandbox measured, and leaves the same way — or on its own when it '
-             'stops working.</div>')
-    open_leads = sorted((l for l in blob.get("leads", {}).values() if l["status"] == "pending"),
-                        key=lambda l: l["kickoff"])
-    lead_rows = "".join(
-        f"""<tr><td class="mut">{esc(l['kickoff'].replace('T', ' ').rstrip('Z'))}</td><td>{esc(l['league'])}</td>
-<td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td>{esc(label(l['pair']))}</td>
+        whole = T.assess(d, source, sport, venues=T.TRADEABLE_VENUES)
+        live = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+        mine = [l for l in leads if l.get("pair") == key]
+        to_come = sum(1 for l in mine if l in upcoming)
+        clv = ("—" if whole["clv"] is None else f"{whole['clv']*100:+.1f}¢")
+        cards.append(f"""<tr>
+<td><b>{esc(name(key))}</b><div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
+<td class="num">{whole['n']}<div class="sm mut">settled</div></td>
+<td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
+<td class="num">{clv}<div class="sm mut">v the close</div></td>
+<td class="num">{live['n']}<div class="sm mut">{f"{live['won']} landed" if live['n'] else 'none yet'}</div></td>
+<td class="num"><span class="{tone(live['roi_fee'], live['n'])}">{pct(live['roi_fee'])}</span></td>
+<td class="num"><b>{to_come}</b></td></tr>""")
+    pairs_html = (f"""<div class="tbl"><table>
+<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Record it was moved on (US exchanges)</th>
+<th colspan="2" class="grp">Since moving</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Bets</th><th class="num">ROI</th></tr>
+{''.join(cards)}</table></div>""" if cards else
+        '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
+        'the Sandbox measured.</div>')
+
+    # ---- what is coming up, a table per day ----
+    by_day = {}
+    for l in upcoming:
+        try:
+            day = datetime.datetime.fromisoformat(l["kickoff"].replace("Z", "+00:00")).date()
+        except ValueError:
+            continue
+        by_day.setdefault(day, []).append(l)
+    days_html = ""
+    for day, ls in sorted(by_day.items()):
+        rows = "".join(
+            f"""<tr><td class="mut">{esc(l['kickoff'][11:16])}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+<td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{f"{l['price_at_log']:.2f}" if l.get('price_at_log') else '—'}</td></tr>"""
-        for l in open_leads)
-    leads_table = (f"""<div class="tbl"><table><tr><th>Kickoff (UTC)</th><th>League</th><th>Match</th>
-<th>Lead</th><th>From</th><th class="num">Logged at</th></tr>{lead_rows}</table></div>"""
-                   if lead_rows else '<div class="note">No open Production leads.</div>')
+            for l in ls)
+        days_html += (f"""<h3>{esc(_day_label(day, today))} <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></h3>
+<div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Logged at</th></tr>{rows}</table></div>""")
+    upcoming_html = days_html or '<div class="note">No leads still to come.</div>'
+
+    # ---- how the recent ones landed ----
+    recent = settled[:25]
+    rec_rows = "".join(
+        f"""<tr><td class="mut">{esc(l['kickoff'][:10])}</td><td>{esc(l['match'])}</td>
+<td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
+<td class="num"><span class="{'pos' if l['status'] == 'hit' else 'neg'}">{'landed' if l['status'] == 'hit' else 'missed'}</span></td></tr>"""
+        for l in recent)
+    hits = sum(1 for l in settled if l["status"] == "hit")
+    recent_html = (f"""<div class="tbl"><table><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Result</th></tr>{rec_rows}</table></div>""" if rec_rows else
+                   '<div class="note">Nothing has settled since these pairs were moved.</div>')
+
+    nxt = upcoming[0]["kickoff"].replace("T", " ").rstrip("Z") if upcoming else "—"
+    held = blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Production</title>
-<meta name="description" content="Sandbox sources that earned a place in Production, and their published leads.">
+<meta name="description" content="The pairs moved into Production by hand, and their published leads.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-{style}</head><body><div class="wrap">
+{style}
+<style>th.grp{{text-align:center;border-bottom:1px solid var(--bd)}} h3{{margin:22px 0 8px;font-size:15px}}</style>
+</head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">The only page anything trades from · updated {esc(now_s)}</div>
+<div class="sub">The pairs moved here by hand, and the leads they publish · updated {esc(now_s)}</div>
 <div class="nav"><a class="" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
-
-<div class="note warn"><b>Sandbox, then Production — by hand.</b> Nothing promotes itself. A (source,
-sport) pair is here because it was listed by hand, on the record the <a href="./sandbox.html">Sandbox</a>
-measured. It leaves the same way, or on its own when it stops working: no new bet for {T.STALE_DAYS} days,
-behind the prices it paid, or beaten by a blind rule on the same contests. Every bet a Production pair logs
-is published to <code>data/production_leads.json</code>, and this file is the single thing the money
-follows.</div>
 
 <div class="tiles">
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
-<div class="tile"><b>{len(open_leads)}</b><span>open leads</span></div>
-<div class="tile"><b>{blob.get('unlisted_skipped', 0)}</b><span>bets not expressible as a standard market (not published)</span></div>
-<div class="tile"><b>{blob.get('unverified_kickoff_skipped', 0)}</b><span>held back: start time not verified</span></div>
+<div class="tile"><b>{len(upcoming)}</b><span>leads still to come</span></div>
+<div class="tile"><b>{hits}/{len(settled)}</b><span>recent leads landed</span></div>
+<div class="tile"><b style="font-size:17px">{esc(nxt)}</b><span>next lead (UTC)</span></div>
 </div>
 
 <h2>Pairs</h2>
-{table}
+<p class="sm mut">Each pair's record on the US exchanges when it was moved, and what it has done since.
+CLV is the closing price minus the price at logging: positive means its leads got dearer after they were
+published.</p>
+{pairs_html}
 
-<h2>Open leads</h2>
-{leads_table}
+<h2>Coming up</h2>
+{upcoming_html}
+
+<h2>Recently settled</h2>
+{recent_html}
+
+<h2>Held back</h2>
+<div class="note">{held} bet{'s' if held != 1 else ''} from these pairs {'were' if held != 1 else 'was'} not published:
+{blob.get('unlisted_skipped', 0)} cannot be expressed as a standard market, and
+{blob.get('unverified_kickoff_skipped', 0)} {'are' if blob.get('unverified_kickoff_skipped', 0) != 1 else 'is'} waiting for a verified start
+time. A lead is only published once its start has been confirmed.</div>
+
+<details class="how" style="margin-top:22px"><summary><b>How a pair gets here</b></summary>
+<div class="note">Nothing promotes itself. Every source and rule starts in the <a href="./sandbox.html">Sandbox</a>,
+logged before the start at the price available then and graded on the real result. A pair — one source in
+one sport — is moved into Production by hand, on that record. It leaves the same way, or on its own when it
+stops working: no new bet for {T.STALE_DAYS} days, behind the prices it logged at, or beaten by a blind rule
+on the same contests. Every lead a Production pair logs is published to
+<code>data/production_leads.json</code>.</div></details>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 </div></body></html>"""
