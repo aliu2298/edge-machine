@@ -1,5 +1,25 @@
 {
  "closes": {
+  "cmd_tail:KXWTI-26SEP1814-T98.49": {
+   "at": "2026-09-18T11:49:09+00:00",
+   "lead_min": 40.8,
+   "price": 0.92
+  },
+  "cmd_tail:KXWTI-26SEP1814-T98.99": {
+   "at": "2026-09-18T11:49:09+00:00",
+   "lead_min": 40.8,
+   "price": 0.96
+  },
+  "cmd_tail:KXWTI-26SEP1814-T99.49": {
+   "at": "2026-09-18T11:49:09+00:00",
+   "lead_min": 40.8,
+   "price": 0.97
+  },
+  "cmd_tail:KXWTI-26SEP1814-T99.99": {
+   "at": "2026-09-18T11:49:09+00:00",
+   "lead_min": 40.8,
+   "price": 0.98
+  },
   "covers:4363821": {
    "at": "2026-09-14T22:44:07+00:00",
    "lead_min": 22.9,
@@ -350,6 +370,11 @@
    "lead_min": 14.8,
    "price": 0.37
   },
+  "soccerpredictions:KXTHAIL1GAME-26SEP18AYUUTH": {
+   "at": "2026-09-18T11:49:09+00:00",
+   "lead_min": 10.8,
+   "price": 0.38
+  },
   "sportsgambler:KXAFCCLGAME-26SEP15BJGPOH": {
    "at": "2026-09-15T12:09:46+00:00",
    "lead_min": 5.2,
@@ -596,5 +621,5 @@
    "price": 0.58
   }
  },
- "updated": "2026-09-18T06:38:03+00:00"
+ "updated": "2026-09-18T11:49:09+00:00"
 }
