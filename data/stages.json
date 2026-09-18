@@ -124,9 +124,63 @@
    "pair": "tennis_fav_band|tennis",
    "reason": "reached 149 settled bets, profitable after fees (set by hand)",
    "to": "ready"
+  },
+  {
+   "at": "2026-09-18T00:43:21+00:00",
+   "evidence": {
+    "base_roi": -0.0851,
+    "clv": 0.0367,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": -0.0408,
+    "roi": -0.0408,
+    "roi_fee": -0.0553,
+    "span_days": 3.0104,
+    "weeks": 0,
+    "z": -0.1838
+   },
+   "pair": "o15_form_l10|soccer_o15",
+   "reason": "moved to Production by hand on 2026-09-18",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-18T00:43:21+00:00",
+   "evidence": {
+    "base_roi": -0.0375,
+    "clv": 0.0133,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2342,
+    "roi": 0.2342,
+    "roi_fee": 0.2181,
+    "span_days": 1.0208,
+    "weeks": 0,
+    "z": 0.9627
+   },
+   "pair": "team1_form_l5|soccer_team1",
+   "reason": "moved to Production by hand on 2026-09-18",
+   "to": "production"
   }
  ],
  "pairs": {
+  "o15_form_l10|soccer_o15": {
+   "by_hand": "2026-09-18",
+   "entry": {
+    "base_roi": -0.0851,
+    "clv": 0.0367,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": -0.0408,
+    "roi": -0.0408,
+    "roi_fee": -0.0553,
+    "span_days": 3.0104,
+    "weeks": 0,
+    "z": -0.1838
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-18T00:43:21+00:00",
+   "stage": "production"
+  },
   "soccerpredictions|soccer": {
    "by_hand": "2026-09-16",
    "entry": {
@@ -145,16 +199,25 @@
    "promoted_at": "2026-09-16T22:34:42+00:00",
    "ready_at": "2026-09-16T22:40:32+00:00",
    "ready_since": "2026-09-16T22:40:32+00:00",
-   "stage": "qa"
+   "stage": "production"
   },
   "team1_form_l5|soccer_team1": {
-   "fast_track": {
-    "checked": "4 of 30 settled bets",
-    "since": "2026-09-14T00:00:00+00:00",
-    "state": "probation"
+   "by_hand": "2026-09-18",
+   "entry": {
+    "base_roi": -0.0375,
+    "clv": 0.0133,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2342,
+    "roi": 0.2342,
+    "roi_fee": 0.2181,
+    "span_days": 1.0208,
+    "weeks": 0,
+    "z": 0.9627
    },
-   "since": null,
-   "stage": "sandbox"
+   "entry_since": null,
+   "promoted_at": "2026-09-18T00:43:21+00:00",
+   "stage": "production"
   },
   "tennis_fav_band|tennis": {
    "by_hand": "2026-09-17",
@@ -174,8 +237,8 @@
    "promoted_at": "2026-09-17T21:42:13+00:00",
    "ready_at": "2026-09-17T21:49:17+00:00",
    "ready_since": "2026-09-17T21:49:17+00:00",
-   "stage": "qa"
+   "stage": "production"
   }
  },
- "updated": "2026-09-17T23:02:01+00:00"
+ "updated": "2026-09-18T00:43:21+00:00"
 }
