@@ -2726,6 +2726,64 @@ eq(_kl["route"], {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome"
    "Kalshi lists a market per player, so either side is a plain Yes")
 
 # ---------------------------------------------------------------------------
+print("\ndaily commodities: the far-tail rule")
+# ---------------------------------------------------------------------------
+def _cq(mid, a, b, tradeable=None):
+    return dict(sport="commodities", venue="kalshi_binary", market_id=mid, side_a="Yes",
+                side_b="No", price_a=a, price_b=b, mid_a=a,
+                tradeable=tradeable or {"a": True, "b": True},
+                start="2026-09-18T21:00:00+00:00", date="2026-09-18")
+_cu = {"commodities": [
+    _cq("KXWTI-26SEP18-T93", 0.98, 0.03),          # the Yes side is the near-certain one
+    _cq("KXWTI-26SEP18-T101", 0.02, 0.99),         # …and here it is the No side
+    _cq("KXGOLDD-26SEP18-T4300", 0.93, 0.08),      # 0.90-0.97: measured at -1.3%, not backed
+    _cq("KXGOLDD-26SEP18-T4400", 0.999, 0.01),     # above the band: a cent is not worth the risk
+    _cq("KXSILVERD-26SEP18-T60", 0.98, 0.03, tradeable={"a": False, "b": True}),  # no real book
+]}
+_cp = S.fetch_cmd_tail("commodities", universe=_cu)
+eq(sorted((p["market_id"], p["pick"]) for p in _cp),
+   [("KXWTI-26SEP18-T101", "b"), ("KXWTI-26SEP18-T93", "a")],
+   "backs the near-certain side, whichever side of the strike it is on")
+ok(all(p["market_id"] != "KXGOLDD-26SEP18-T4300" for p in _cp),
+   "the 0.90-0.97 band is left alone — it returned -1.3% in research")
+ok(all(p["market_id"] != "KXGOLDD-26SEP18-T4400" for p in _cp), "and so is anything above the band")
+ok(all(p["market_id"] != "KXSILVERD-26SEP18-T60" for p in _cp),
+   "a side with no two-sided book is never backed: an untraded strike quotes 0.99 against a 1c bid")
+eq(len(S.fetch_cmd_market("commodities", universe=_cu)), 5,
+   "the baseline prices every listed strike, bet or not")
+eq(S.SOURCES["cmd_tail"]["baseline"], "population",
+   "the rule is judged against the market's own prices on the same strikes")
+ok(not T.placeable(dict(sport="commodities", venue="kalshi_binary", pick="a",
+                        market_id="KXWTI-26SEP18-T93")),
+   "a commodity bet is paper only — the Production feed cannot publish it")
+eq(S.outcome_cluster(dict(venue="kalshi_binary", sport="commodities",
+                          market_id="KXWTI-26SEP1814-T93.49")),
+   "KXWTI-26SEP1814", "one day's ladder is one draw: its strikes share an outcome cluster")
+
+# The gate itself, not just the band: a 0.98 commodity bet is LOGGED AS A BET, while the same
+# price in any other domain is a quote only. Without this the rule logs opinions it never
+# scores, which is how it behaved when first registered.
+_cd = {"quotes": [], "meta": {}}
+_crow = dict(sport="commodities", venue="kalshi_binary", market_id="KXWTI-26SEP30-T90",
+             label="Above $90", side_a="Yes", side_b="No", price_a=0.98, price_b=0.03,
+             mid_a=0.98, tradeable={"a": True, "b": True}, untraded=False,
+             start="2026-09-30T21:00:00+00:00", date="2026-09-30", volume=0.0,
+             url="https://kalshi.com/markets/kxwti")
+T.publish(_cd, {"commodities": [_crow]}, {}, verbose=False)
+_cb = [q for q in _cd["quotes"] if q["source"] == "cmd_tail"]
+eq([(q["pick"], q["bet"], q["price"]) for q in _cb], [("a", True, 0.98)],
+   "a 0.98 commodity pick is logged as a real bet")
+_sd = {"quotes": [], "meta": {}}
+T.publish(_sd, {"table_tennis": [dict(_crow, sport="table_tennis", market_id="tt-1")]}, {}, verbose=False)
+ok(all(q["bet"] is False for q in _sd["quotes"] if q.get("price") == 0.98),
+   "…and the same price in another domain is still quoted, never bet")
+
+eq(T.price_band("commodities"), (T.PRICE_FLOOR, 0.995),
+   "the commodities ladder may be logged into the tail — that is the question it asks")
+eq(T.price_band("soccer"), (T.PRICE_FLOOR, T.PRICE_CEIL), "every other domain keeps the 0.95 ceiling")
+eq(T.price_band("nhl_rest"), (T.PRICE_FLOOR, T.PRICE_CEIL), "…including the new ones")
+
+# ---------------------------------------------------------------------------
 print("\nNHL rules")
 # ---------------------------------------------------------------------------
 _nsched = [

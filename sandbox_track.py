@@ -32,6 +32,20 @@ EDGE_MIN = 0.03      # 3pp. Below this a "disagreement" is just the tick size.
 PRICE_FLOOR = 0.05   # Longshots are excluded from BETTING, not from scoring: at 0.02 a
 PRICE_CEIL = 0.95    # single fluke pays 50x and one lucky pick would own the board.
 
+# The mirror of that reasoning is why the ceiling exists: at 0.99 a loss costs a hundred
+# wins, so anything selling the tail flatters its record for months before the bill arrives.
+# One domain is exempt, deliberately. The daily commodity ladders ARE a tail question — the
+# research that produced the rule found the ordinary bands efficient and the edge only at
+# 0.97+ — so capping them at 0.95 would not make the rule safer, it would leave it unmeasured.
+# The risk is handled where it belongs instead: the ROI is after fees, a day's whole ladder
+# shares one outcome cluster (one draw, not twenty), and nothing in this domain is placeable.
+PRICE_CEIL_BY_SPORT = {"commodities": 0.995}
+
+
+def price_band(sport):
+    """(floor, ceiling) a bet in this domain may be logged at."""
+    return PRICE_FLOOR, PRICE_CEIL_BY_SPORT.get(sport, PRICE_CEIL)
+
 # Below this many settled bets a record is not read at all (the page greys it).
 READ_FLOOR = 30
 
@@ -704,8 +718,9 @@ def publish(d, universe, coverage, verbose=True):
                 # Liquidity is per OUTCOME: on Kalshi one side of an event can be a tight
                 # book while another is an untraded 0.02/0.81 placeholder.
                 tradeable = (r.get("tradeable") or {}).get(pick, True) if pick else False
+                lo, hi = price_band(sport)
                 bet = bool(pick and has_edge and not r["untraded"] and tradeable
-                           and price is not None and PRICE_FLOOR <= price <= PRICE_CEIL)
+                           and price is not None and lo <= price <= hi)
                 d["quotes"].append(dict(
                     id=qid, source=name, sport=sport, market_id=mid,
                     label=r["label"], side_a=r["side_a"], side_b=r["side_b"],
@@ -1013,7 +1028,8 @@ def blind_pnl(q, kind):
         fav = ("a", pa) if pa >= pb else ("b", pb)
         dog = ("b", pb) if pa >= pb else ("a", pa)
         side, price = fav if kind == "favourite" else dog
-    if price is None or not (PRICE_FLOOR <= price <= PRICE_CEIL):
+    lo, hi = price_band(q.get("sport"))
+    if price is None or not (lo <= price <= hi):
         return None
     return round(STAKE * (1.0 / price - 1.0), 2) if q["result"] == side else -STAKE
 
@@ -1161,7 +1177,8 @@ def assess(d, name, sport=None, since=None, venues=None):
         for q in pop:
             for side in sides:
                 price = q.get("price_a") if side == "a" else q.get("price_b")
-                if price is not None and PRICE_FLOOR <= price <= PRICE_CEIL:
+                lo, hi = price_band(q.get("sport"))
+                if price is not None and lo <= price <= hi:
                     pnls.append(STAKE * (1.0 / price - 1.0) if q["result"] == side else -STAKE)
         own = sum(q["pnl"] for q in bets) / (len(bets) * STAKE)
         blind = ([(f"{'Yes' if sides == {'a'} else 'the same side'} on every match", own,

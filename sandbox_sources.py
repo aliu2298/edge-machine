@@ -225,6 +225,26 @@ SOURCES = {
              "rule this strong across the six tried; at Kalshi's price just before kickoff 54 of "
              "64 won at ~77% (+11.2% after fees). 37 of those 64 were MLS. Judged against backing "
              "No on every Kalshi win market over the same period."),
+    "cmd_market": dict(
+        label="Kalshi commodity price (every listed strike)", kind="Baseline", connected=True,
+        site="kalshi.com", sports=["commodities"],
+        note="The midpoint on every daily oil, metal, gas and gasoline strike this board "
+             "lists, logged 6+ hours before it closes. Never a bet — it is the population "
+             "the tail rule is measured against, and the answer to 'is this market simply "
+             "efficient?' It was: backing whichever side the market favoured won 87.7% "
+             "against an 87.5% price over 61 days."),
+    "cmd_tail": dict(
+        label="Commodity far-tail rule (priced 0.97-0.995)", kind="Rule", connected=True,
+        site="edge-machine", sports=["commodities"], baseline="population",
+        note="Pre-registered 2026-09-18. Back the near-certain side of a daily commodity "
+             "strike — WTI, Brent, gold, silver, copper, natural gas or AAA retail gasoline — "
+             "where it is priced 0.97-0.995 with a two-sided book. Research over 61 days: "
+             "99.3% on 778 bets against a 98.3% price, +1.0% after fees; clustered by day and "
+             "resampled, +0.3% to +1.5% with no losing world; steady in both halves and at "
+             "every band from 0.95 up. The 0.90-0.97 band returned -1.3%, so this is the tail "
+             "specifically, not 'back favourites'. It is SELLING TAIL RISK for a penny: five "
+             "of 778 bets lost and each cost about sixty wins, in two months that held no "
+             "commodity shock. Logged and measured; nothing trades it."),
     "nhl_rest_edge": dict(
         label="NHL rest rule (rested home team v a visitor on a back-to-back)", kind="Rule",
         connected=True, site="edge-machine", sports=["nhl_rest"], baseline="favourite_population",
@@ -2138,7 +2158,7 @@ KALSHI_BINARY = {
     "climate":     dict(series=list(NWS_CITIES), lead_h=12, cap=80),
     "crypto":      dict(series=list(COINS), lead_h=2, cap=60),
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
-    "commodities": dict(category="Commodities", freq=("daily",), lead_h=6, cap=30),
+    "commodities": dict(category="Commodities", freq=("daily",), lead_h=6, cap=80),
     "finance":     dict(category="Financials",  freq=("daily",), lead_h=6, cap=30),
 }
 
@@ -2981,6 +3001,52 @@ def fetch_nhl_dog_pl(sport, universe=None):
     return [dict(market_id=r["market_id"], pick="b") for r, _ko in _rule_rows(sport, universe)]
 
 
+# ---------------------------------------------------------------------------
+# Daily commodities (registered 2026-09-18)
+# ---------------------------------------------------------------------------
+# Kalshi lists a daily ladder of "Above $X" strikes on WTI, Brent, gold, silver, copper,
+# natural gas and AAA retail gasoline. Research over 61 days (2026-07-13 to 09-17), pricing
+# every sampled strike 6h before close — the lead this domain already logs at:
+#   - The market is EFFICIENT where it is normally traded. Backing whichever side the market
+#     favours won 87.7% against an 87.5% price: the spread and the fee, nothing else.
+#   - The favourite-longshot bias is real in mid-price — 5c longshots landed 2-4% — but the
+#     spread swallows it: the 0.90-0.97 band returned -1.3%.
+#   - The FAR TAIL is the exception. Sides priced 0.97-0.995 won 99.3% against 98.3% priced
+#     (+1.0% after fees), on 778 bets over 224 day-commodity clusters. Clustered by day and
+#     resampled 4,000 times, the ROI interval was +0.3% to +1.5% and no resampled world lost
+#     money. It held in both halves (+1.4%, +0.8%) and at every band from 0.95 up.
+# Only 46% of sampled strikes had a two-sided book; an untraded strike quotes 0.99 against a
+# 1c bid, and reading that as a price is what made natural gas look like a 30-point edge. The
+# spread gate in fetch_kalshi_binary is therefore load-bearing here, not hygiene.
+#
+# WHAT THIS RULE IS: selling the far tail for a penny. Five of 778 bets lost, each costing
+# ~60 wins, and two months contained no commodity shock. That is exactly the shape that looks
+# good until it does not, which is why it is logged and measured rather than traded.
+CMD_BAND = (0.97, 0.995)
+
+
+def fetch_cmd_tail(sport, universe=None):
+    """Back the near-certain side of a daily commodity strike, priced in CMD_BAND."""
+    lo, hi = CMD_BAND
+    out = []
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        for side in ("a", "b"):
+            p = r.get(f"price_{side}")
+            if p is None or not (r.get("tradeable") or {}).get(side):
+                continue
+            if lo <= p <= hi:
+                out.append(dict(market_id=r["market_id"], pick=side))
+                break                      # one bet per strike: the two sides cannot both win
+    return out
+
+
+def fetch_cmd_market(sport, universe=None):
+    """The Kalshi price on every listed daily commodity strike — never a bet, the population
+    the tail rule is judged against."""
+    rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
+    return [dict(market_id=r["market_id"], prob_a=r.get("mid_a", r["price_a"])) for r in rows]
+
+
 def fetch_goals_market(sport, universe=None):
     """The Kalshi midpoint on every listed goals market — never a bet (edge 0 by construction)."""
     rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
@@ -3709,6 +3775,8 @@ CHALLENGERS = {
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,
     "p05_unbeaten": fetch_p05_unbeaten,
+    "cmd_tail": fetch_cmd_tail,
+    "cmd_market": fetch_cmd_market,
     "nhl_rest_edge": fetch_nhl_rest_edge,
     "nhl_dog_pl": fetch_nhl_dog_pl,
     "olbg": fetch_olbg,
