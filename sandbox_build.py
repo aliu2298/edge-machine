@@ -438,8 +438,14 @@ def pair_status(d, st, name, sport):
     """(group, sandbox record, QA-entry record, open bets, last logged) for one (source, sport)."""
     pair = (st.get("pairs") or {}).get(f"{name}|{sport}") or {}
     since = pair.get("since")
-    a = T.assess(d, name, sport, since=since)
-    qa = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
+    # JUDGED ON THE US EXCHANGES ONLY — the bets that could ever reach Production. The whole
+    # record includes the retired polymarket.com venue, and ranking on it showed Covers MLB as
+    # working at +8.3% after fees when its exchange record was -22.1%: a pair can look ready on
+    # bets that were never tradeable. The whole record is kept alongside, as context.
+    a = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
+    whole = T.assess(d, name, sport, since=since)
+    a = dict(a, whole_n=whole["n"], whole_roi=whole["roi"])
+    qa = a
     mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")]
     open_n = sum(1 for q in mine if q["status"] == "open")
     last = max((str(q.get("logged") or "") for q in mine), default="")
@@ -487,7 +493,8 @@ def pair_rows(d, st):
 <td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>
 <div class="sm mut">{esc(S.SPORTS.get(sport, sport))} · {esc(meta['kind'])}</div></summary>
 <div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
-<td class="num">{a['n']}<div class="sm mut">{open_n} open</div></td>
+<td class="num">{a['n']}<div class="sm mut">{open_n} open{
+    f" · +{a['whole_n'] - a['n']} on retired venues" if a.get('whole_n', a['n']) > a['n'] else ''}</div></td>
 <td class="num">{won_exp}<div class="sm mut">{f"z {a['z']:+.2f}" if a['n'] else ''}</div></td>
 <td class="num"><span class="{'mut' if thin else cls(a['roi'])}">{pct(a['roi'], sign=True)}</span></td>
 <td class="num">{vb}</td>

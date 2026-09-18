@@ -2726,6 +2726,25 @@ eq(_kl["route"], {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome"
    "Kalshi lists a market per player, so either side is a plain Yes")
 
 # ---------------------------------------------------------------------------
+print("\nthe Sandbox judges a pair on the bets that could reach Production")
+import sandbox_build as SB
+# ---------------------------------------------------------------------------
+# Covers MLB ranked as WORKING at +8.3% on its whole record while its exchange record was
+# -22.1%: most of the good bets were on polymarket.com, which US accounts cannot use.
+def _vq(i, venue, won):
+    return dict(id=f"covers:{venue}{i}", source="covers", sport="mlb", bet=True, venue=venue,
+                market_id=f"{venue}-{i}", pick="a", price=0.5, status="won" if won else "lost",
+                result="a" if won else "b", pnl=90.0 if won else -100.0,
+                price_a=0.5, price_b=0.52, logged=f"2026-09-{1 + i % 20:02d}T00:00:00+00:00",
+                start=f"2026-09-{1 + i % 20:02d}T18:00:00+00:00")
+_vd = {"quotes": [_vq(i, "polymarket", True) for i in range(40)]
+                 + [_vq(i, "polymarket_us", i % 3 == 0) for i in range(20)]}
+_vg, _va, *_rest = SB.pair_status(_vd, {"pairs": {}}, "covers", "mlb")
+eq((_va["n"], _va["whole_n"]), (20, 60), "the headline count is exchange bets, with the whole record alongside")
+ok(_va["roi"] < 0, "and so is the ROI — this pair loses where it can actually trade")
+ok(_vg != "working", "so it is not shown as working, however good its retired-venue record")
+
+# ---------------------------------------------------------------------------
 print("\nMLB and NFL leads route like tennis")
 # ---------------------------------------------------------------------------
 _mq = dict(source="espn_fpi", id="espn_fpi:x", sport="mlb", bet=True, venue="polymarket_us",
