@@ -1357,6 +1357,12 @@ def evaluate_stages(d, st, now=None, verbose=True):
                             entry_since=pair.get("since"), by_hand=ov["moved_on"])
                 changes.append(dict(pair=key, to="production", at=now_s, evidence=_snapshot(a),
                                     reason=f"moved to Production by hand on {ov['moved_on']}"))
+                # With no threshold, it trades from THIS run. Waiting for the next one would
+                # mean a pair listed by hand sits idle for three hours for no reason.
+                if ov.get("production_at") is None:
+                    pair = dict(pair, ready_since=now_s, ready_at=now_s)
+                    changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a),
+                                        reason="moved by hand — trading from this run"))
             elif pair["stage"] in ("production", "qa"):       # "qa": a stage saved before the change
                 pair = dict(pair, stage="production")
                 if not ov:

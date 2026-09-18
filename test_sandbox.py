@@ -1664,11 +1664,10 @@ try:
 
     T.PAIR_OVERRIDES["covers|mlb"] = dict(moved_on="2026-09-25", production_at=None)
     ch = T.evaluate_stages(d, st, now=_t, verbose=False)
-    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "production")], "listing it moves it, and only it")
+    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "production"), ("covers|mlb", "ready")],
+       "listing it moves it, and only it — trading from that same run, with no threshold set")
     eq(st["pairs"]["covers|mlb"]["entry"]["n"], 32, "with the record it was moved on")
     ok("covers|nfl" not in st["pairs"], "an untouched sandbox pair is not written to the registry")
-    ch = T.evaluate_stages(d, st, now=_t + timedelta(minutes=5), verbose=False)
-    eq([c["to"] for c in ch], ["ready"], "and it trades from the next run, with no threshold set")
     eq(T.evaluate_stages(d, st, now=_t + timedelta(minutes=10), verbose=False), [], "re-running changes nothing")
 
     # A threshold makes it wait for the record, and for that record to be profitable.
