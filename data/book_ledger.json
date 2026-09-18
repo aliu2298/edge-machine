@@ -9745,6 +9745,71 @@
    },
    "status": "pending"
   },
+  "2026-09-19|CF Montr\u00e9al|Columbus Crew": {
+   "away": "Columbus Crew",
+   "date": "2026-09-19",
+   "home": "CF Montr\u00e9al",
+   "id": "2026-09-19|CF Montr\u00e9al|Columbus Crew",
+   "kickoff": "2026-09-19T23:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.4924,
+    "btts": 0.6712,
+    "home2plus": 0.5286,
+    "over15": 0.8561,
+    "over25": 0.6652
+   },
+   "priced_at": "2026-09-18T23:38:06+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.46,
+     "bid": 0.43,
+     "fair": 0.445,
+     "fee": 0.0174,
+     "market": "KXMLSTEAMTOTAL-26SEP19MTLCLB-CLB2",
+     "price": 2.095,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.65,
+     "bid": 0.63,
+     "fair": 0.64,
+     "fee": 0.016,
+     "market": "KXMLSBTTS-26SEP19MTLCLB-BTTS",
+     "price": 1.502,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.49,
+     "bid": 0.46,
+     "fair": 0.475,
+     "fee": 0.0175,
+     "market": "KXMLSTEAMTOTAL-26SEP19MTLCLB-MTL2",
+     "price": 1.97,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.83,
+     "bid": 0.82,
+     "fair": 0.825,
+     "fee": 0.0099,
+     "market": "KXMLSTOTAL-26SEP19MTLCLB-2",
+     "price": 1.191,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.61,
+     "bid": 0.59,
+     "fair": 0.6,
+     "fee": 0.0167,
+     "market": "KXMLSTOTAL-26SEP19MTLCLB-3",
+     "price": 1.596,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-19|Celta Vigo|Racing Santander": {
    "away": "Racing Santander",
    "date": "2026-09-19",
@@ -9805,6 +9870,71 @@
      "fee": 0.0169,
      "market": "KXLALIGATOTAL-26SEP19RCCSAN-3",
      "price": 1.621,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|D.C. United|Charlotte FC": {
+   "away": "Charlotte FC",
+   "date": "2026-09-19",
+   "home": "D.C. United",
+   "id": "2026-09-19|D.C. United|Charlotte FC",
+   "kickoff": "2026-09-19T23:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.497,
+    "btts": 0.6662,
+    "home2plus": 0.5129,
+    "over15": 0.8519,
+    "over25": 0.6581
+   },
+   "priced_at": "2026-09-18T23:38:06+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.52,
+     "bid": 0.49,
+     "fair": 0.505,
+     "fee": 0.0175,
+     "market": "KXMLSTEAMTOTAL-26SEP19DCUCLT-CLT2",
+     "price": 1.86,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.65,
+     "bid": 0.64,
+     "fair": 0.645,
+     "fee": 0.016,
+     "market": "KXMLSBTTS-26SEP19DCUCLT-BTTS",
+     "price": 1.502,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.46,
+     "bid": 0.43,
+     "fair": 0.445,
+     "fee": 0.0174,
+     "market": "KXMLSTEAMTOTAL-26SEP19DCUCLT-DCU2",
+     "price": 2.095,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.84,
+     "bid": 0.82,
+     "fair": 0.83,
+     "fee": 0.0095,
+     "market": "KXMLSTOTAL-26SEP19DCUCLT-2",
+     "price": 1.177,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.61,
+     "bid": 0.6,
+     "fair": 0.605,
+     "fee": 0.0167,
+     "market": "KXMLSTOTAL-26SEP19DCUCLT-3",
+     "price": 1.596,
      "venue": "kalshi"
     }
    },
@@ -10213,6 +10343,71 @@
    },
    "status": "pending"
   },
+  "2026-09-19|New England Revolution|Orlando City SC": {
+   "away": "Orlando City SC",
+   "date": "2026-09-19",
+   "home": "New England Revolution",
+   "id": "2026-09-19|New England Revolution|Orlando City SC",
+   "kickoff": "2026-09-19T23:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.4275,
+    "btts": 0.6696,
+    "home2plus": 0.6109,
+    "over15": 0.8662,
+    "over25": 0.6829
+   },
+   "priced_at": "2026-09-18T23:38:06+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.44,
+     "bid": 0.41,
+     "fair": 0.425,
+     "fee": 0.0173,
+     "market": "KXMLSTEAMTOTAL-26SEP19NEORL-ORL2",
+     "price": 2.187,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.69,
+     "bid": 0.66,
+     "fair": 0.675,
+     "fee": 0.015,
+     "market": "KXMLSBTTS-26SEP19NEORL-BTTS",
+     "price": 1.418,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.63,
+     "bid": 0.59,
+     "fair": 0.61,
+     "fee": 0.0164,
+     "market": "KXMLSTEAMTOTAL-26SEP19NEORL-NE2",
+     "price": 1.547,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.87,
+     "bid": 0.86,
+     "fair": 0.865,
+     "fee": 0.008,
+     "market": "KXMLSTOTAL-26SEP19NEORL-2",
+     "price": 1.139,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.69,
+     "bid": 0.68,
+     "fair": 0.685,
+     "fee": 0.015,
+     "market": "KXMLSTOTAL-26SEP19NEORL-3",
+     "price": 1.418,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-19|Newcastle United|Hull City": {
    "away": "Hull City",
    "date": "2026-09-19",
@@ -10477,6 +10672,71 @@
      "market": "tsc-lg1-pfc-str-2026-09-19-2pt5",
      "price": 1.654,
      "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|San Jose Earthquakes|LAFC": {
+   "away": "LAFC",
+   "date": "2026-09-19",
+   "home": "San Jose Earthquakes",
+   "id": "2026-09-19|San Jose Earthquakes|LAFC",
+   "kickoff": "2026-09-19T23:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "away2plus": 0.4506,
+    "btts": 0.652,
+    "home2plus": 0.5346,
+    "over15": 0.8434,
+    "over25": 0.6439
+   },
+   "priced_at": "2026-09-18T23:38:06+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.55,
+     "bid": 0.52,
+     "fair": 0.535,
+     "fee": 0.0174,
+     "market": "KXMLSTEAMTOTAL-26SEP19SJLAFC-LAFC2",
+     "price": 1.762,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.67,
+     "bid": 0.66,
+     "fair": 0.665,
+     "fee": 0.0155,
+     "market": "KXMLSBTTS-26SEP19SJLAFC-BTTS",
+     "price": 1.459,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.46,
+     "bid": 0.43,
+     "fair": 0.445,
+     "fee": 0.0174,
+     "market": "KXMLSTEAMTOTAL-26SEP19SJLAFC-SJ2",
+     "price": 2.095,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.85,
+     "bid": 0.84,
+     "fair": 0.845,
+     "fee": 0.009,
+     "market": "KXMLSTOTAL-26SEP19SJLAFC-2",
+     "price": 1.164,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.65,
+     "bid": 0.63,
+     "fair": 0.64,
+     "fee": 0.016,
+     "market": "KXMLSTOTAL-26SEP19SJLAFC-3",
+     "price": 1.502,
+     "venue": "kalshi"
     }
    },
    "status": "pending"
@@ -11175,5 +11435,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-18T21:18:00+00:00"
+ "updated_at": "2026-09-18T23:38:09+00:00"
 }
