@@ -72,21 +72,29 @@ details.ref[open]>summary{margin-bottom:10px}
 footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style>
-<style>th.grp{text-align:center;border-bottom:1px solid var(--bd)} h3{margin:22px 0 8px;font-size:15px}</style>
+<style>th.grp{text-align:center;border-bottom:1px solid var(--bd)}
+details.fold>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px;
+  margin:18px 0 8px;font-weight:600;font-size:15px;user-select:none}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:"▸";color:var(--mut);font-size:12px;width:12px;transition:transform .15s}
+details.fold[open]>summary::before{transform:rotate(90deg)}
+details.fold.sec>summary{margin-top:26px}
+details.fold.sec>summary h2{margin:0;display:inline}
+details.fold details.fold>summary{margin:12px 0 6px;font-size:14px}</style>
 </head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-18 16:55 UTC</div>
+<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-18 17:02 UTC</div>
 <div class="nav"><a class="" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
 
 <div class="tiles">
 <div class="tile"><b>6</b><span>pairs in Production</span></div>
-<div class="tile"><b>71</b><span>leads still to come</span></div>
+<div class="tile"><b>72</b><span>leads still to come</span></div>
 <div class="tile"><b>23/26</b><span>recent leads landed</span></div>
 <div class="tile"><b style="font-size:17px">2026-09-18 18:00</b><span>next lead (UTC)</span></div>
 </div>
 
-<h2>Pairs</h2>
+<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· 6</span></summary>
 <p class="sm mut">Each pair's record on the US exchanges when it was moved, and what it has done since.
 CLV is the closing price minus the price at logging: positive means its leads got dearer after they were
 published.</p>
@@ -136,10 +144,11 @@ published.</p>
 <td class="num">-0.5¢<div class="sm mut">v the close</div></td>
 <td class="num">15<div class="sm mut">14 landed</div></td>
 <td class="num"><span class="pos">+12.1%</span></td>
-<td class="num"><b>7</b></td></tr></table></div>
+<td class="num"><b>8</b></td></tr></table></div></details>
 
-<h2>Coming up</h2>
-<h3>Today <span class="mut sm">· 17 leads</span></h3>
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 72 leads over 4 days</span></summary>
+<details class="fold" open><summary>Today
+<span class="mut sm">· 17 leads</span></summary>
 <div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr><tr><td class="mut">18:00</td><td>Eredivisie</td>
 <td>FC Groningen v PEC Zwolle</td><td><b>Over 1.5 goals</b></td><td class="mut">Over 1.5 form rule</td>
@@ -175,7 +184,8 @@ published.</p>
 <td>Athletics v Cleveland Guardians</td><td><b>Cleveland Guardians to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
 <td class="num">0.59</td></tr><tr><td class="mut">23:40</td><td>MLB</td>
 <td>Detroit Tigers v Chicago White Sox</td><td><b>Chicago White Sox to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
-<td class="num">0.56</td></tr></table></div><h3>Tomorrow <span class="mut sm">· 25 leads</span></h3>
+<td class="num">0.56</td></tr></table></div></details><details class="fold"><summary>Tomorrow
+<span class="mut sm">· 26 leads</span></summary>
 <div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr><tr><td class="mut">00:05</td><td>MLB</td>
 <td>Toronto Blue Jays v Texas Rangers</td><td><b>Texas Rangers to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
@@ -193,7 +203,9 @@ published.</p>
 <td>Los Angeles Dodgers v San Francisco Giants</td><td><b>Los Angeles Dodgers to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
 <td class="num">0.28</td></tr><tr><td class="mut">03:00</td><td>Tennis</td>
 <td>Ilia Simakin v Hunter Heck</td><td><b>Ilia Simakin to win</b></td><td class="mut">Tennis favourite-band rule</td>
-<td class="num">0.80</td></tr><tr><td class="mut">07:00</td><td>Tennis</td>
+<td class="num">0.80</td></tr><tr><td class="mut">06:00</td><td>Tennis</td>
+<td>Charles Bertimon v Millen Hurrion</td><td><b>Millen Hurrion to win</b></td><td class="mut">Tennis favourite-band rule</td>
+<td class="num">0.86</td></tr><tr><td class="mut">07:00</td><td>Tennis</td>
 <td>Arthur Laborde v Dmitry Popko</td><td><b>Dmitry Popko to win</b></td><td class="mut">Tennis favourite-band rule</td>
 <td class="num">0.75</td></tr><tr><td class="mut">13:30</td><td>Bundesliga</td>
 <td>Eintracht Frankfurt v SC Freiburg</td><td><b>Over 1.5 goals</b></td><td class="mut">Over 1.5 form rule</td>
@@ -227,7 +239,8 @@ published.</p>
 <td>Washington Nationals v St. Louis Cardinals</td><td><b>Washington Nationals to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
 <td class="num">0.34</td></tr><tr><td class="mut">23:30</td><td>MLS</td>
 <td>New England Revolution v Orlando City SC</td><td><b>Orlando City SC to score 1+</b></td><td class="mut">Team scores 1+ form rule</td>
-<td class="num">0.80</td></tr></table></div><h3>Sun 20 Sep <span class="mut sm">· 28 leads</span></h3>
+<td class="num">0.80</td></tr></table></div></details><details class="fold"><summary>Sun 20 Sep
+<span class="mut sm">· 28 leads</span></summary>
 <div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr><tr><td class="mut">00:30</td><td>MLS</td>
 <td>FC Dallas v Austin FC</td><td><b>Austin FC to score 1+</b></td><td class="mut">Team scores 1+ form rule</td>
@@ -285,13 +298,14 @@ published.</p>
 <td>Cowboys v Commanders</td><td><b>Cowboys to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
 <td class="num">0.35</td></tr><tr><td class="mut">20:25</td><td>NFL</td>
 <td>Seahawks v Cardinals</td><td><b>Cardinals to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
-<td class="num">0.35</td></tr></table></div><h3>Tue 22 Sep <span class="mut sm">· 1 lead</span></h3>
+<td class="num">0.35</td></tr></table></div></details><details class="fold"><summary>Tue 22 Sep
+<span class="mut sm">· 1 lead</span></summary>
 <div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr><tr><td class="mut">00:15</td><td>NFL</td>
 <td>Rams v Giants</td><td><b>Rams to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
-<td class="num">0.26</td></tr></table></div>
+<td class="num">0.26</td></tr></table></div></details></details>
 
-<h2>Recently settled</h2>
+<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· 23 of 26 landed</span></summary>
 <div class="tbl"><table><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Result</th></tr><tr><td class="mut">2026-09-18</td><td>Matisse Bobichon v Tristan Schoolkate</td>
 <td>Tristan Schoolkate to win</td><td class="mut">Tennis favourite-band rule</td>
@@ -343,15 +357,15 @@ published.</p>
 <td>Draw</td><td class="mut">SoccerPredictions.ai</td>
 <td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-17</td><td>Real Sociedad v Bournemouth</td>
 <td>Bournemouth to win</td><td class="mut">SoccerPredictions.ai</td>
-<td class="num"><span class="pos">landed</span></td></tr></table></div>
+<td class="num"><span class="pos">landed</span></td></tr></table></div></details>
 
-<h2>Held back</h2>
-<div class="note">20 bets from these pairs were not published:
-20 cannot be expressed as a standard market, and
+<details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· 19</span></summary>
+<div class="note">19 bets from these pairs were not published:
+19 cannot be expressed as a standard market, and
 0 are waiting for a verified start
-time. A lead is only published once its start has been confirmed.</div>
+time. A lead is only published once its start has been confirmed.</div></details>
 
-<details class="how" style="margin-top:22px"><summary><b>How a pair gets here</b></summary>
+<details class="fold sec"><summary><h2>How a pair gets here</h2></summary>
 <div class="note">Nothing promotes itself. Every source and rule starts in the <a href="./sandbox.html">Sandbox</a>,
 logged before the start at the price available then and graded on the real result. A pair — one source in
 one sport — is moved into Production by hand, on that record. It leaves the same way, or on its own when it
