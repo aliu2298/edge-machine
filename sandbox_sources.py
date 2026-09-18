@@ -209,17 +209,11 @@ SOURCES = {
     "team1_form_l5": dict(
         label="Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_team1"], baseline="population",
-        # Fast track (2026-09-14): published to Production on probation from its first bet,
-        # without the QA gate. It keeps its place only by clearing FAST_TRACK_GATE by the
-        # sample below; failing it sends the pair back to the normal ladder. See
-        # sandbox_track.fast_track_status.
-        fast_track=dict(since="2026-09-14T00:00:00+00:00", min_n=30, min_z=1.0),
         note="Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it "
              "scored in each of its last 5 competitive games and its opponent conceded in each "
              "of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own "
              "earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. "
-             "Fast-tracked to Production on probation: 30 settled bets, profitable after fees, "
-             "z of at least 1 against the prices paid — or back to the normal ladder."),
+             "In Production since 2026-09-18, moved by hand."),
     "p05_unbeaten": dict(
         label="Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_p05"], baseline="population",

@@ -148,7 +148,6 @@ jobs:
         run: |
           python3 test_streaks.py
           python3 test_book.py
-          python3 test_today.py
 
       - name: Health check
         run: python3 health.py
@@ -169,16 +168,14 @@ jobs:
       - name: Build the record page
         run: python3 record_build.py || echo "record build failed — keeping previous page"
 
-      - name: Build today's fixtures page
-        run: python3 today_build.py || echo "today build failed — keeping previous page"
 
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
-                     public_site/record.html public_site/today.html \
+          PUBLISHED="public_site/index.html public_site/record.html \
+                     public_site/leads.html public_site/streaks.html \
                      data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
                      data/fire_runs.json \
                      data/book_ledger.json"
@@ -210,7 +207,7 @@ jobs:
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
             python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
-              && python3 record_build.py && python3 today_build.py
+              && python3 record_build.py 
           done
 
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"

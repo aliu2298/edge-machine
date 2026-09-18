@@ -466,16 +466,15 @@ def pair_rows(d, st):
                 continue
             gates = T.qa_entry(qa) if qa["n"] else []
             passed = sum(1 for _k, _l, p, _d in gates if p)
-            if pair.get("stage") == "qa":
-                stage = f'<span class="sig y">IN QA</span><div class="sm mut">since {esc(pair["promoted_at"][:10])}</div>'
-            elif (pair.get("fast_track") or {}).get("state") in ("probation", "cleared"):
-                stage = f'<span class="sig w">FAST TRACK</span><div class="sm mut">{esc(pair["fast_track"]["state"])}</div>'
+            if pair.get("stage") == "production":
+                stage = (f'<span class="sig g">IN PRODUCTION</span>'
+                         f'<div class="sm mut">moved by hand {esc(str(pair.get("by_hand") or pair.get("promoted_at"))[:10])}</div>')
             else:
                 need = T.sport_rules(sport)["entry"]["min_bets"]
                 fill = min(100, int(100 * qa["n"] / need)) if need else 0
                 stage = (f'<span class="bar"><i style="width:{fill}%"></i></span> '
                          f'<span class="sm">{qa["n"]}/{need}</span>'
-                         f'<div class="sm mut">{passed}/{len(gates) or 4} QA gates</div>')
+                         f'<div class="sm mut">{passed}/{len(gates) or 4} marks hold</div>')
             won_exp = f'{a["won"]} v {a["expected"]:.1f}' if a["n"] else "—"
             thin = a["n"] < MIN_N
             vb = "—"
@@ -501,7 +500,7 @@ def pair_rows(d, st):
 
 PAIR_HEAD = ('<tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th>'
              '<th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th>'
-             '<th>Road to QA</th><th class="num">Last bet</th></tr>')
+             '<th>Record so far</th><th class="num">Last bet</th></tr>')
 
 
 def build():
@@ -522,7 +521,7 @@ def build():
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     settled_today = [q for q in d["quotes"] if q["bet"] and q["status"] in ("won", "lost")
                      and str(q.get("settled") or "")[:10] == today]
-    in_qa = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "qa")
+    in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"] if q.get("bet"))
                    if x is not None and x >= 0)
     close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
@@ -621,20 +620,18 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 
 <h1>Sandbox</h1>
 <div class="sub">Every source and rule under test, per sport · updated {esc(now)}</div>
-<div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
+<div class="nav"><a class="" href="./record.html">Record</a><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="note warn">Each <b>source in a sport</b> is tracked on its own: logged before the start at the price
 available then, flat ${int(T.STAKE)} a bet, settled on the real result. A pair is only <b>readable at
 {MIN_N}+ settled bets</b>; below that it is sorted by which way it leans, nothing more. Pairs that
-clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
+have been moved to <a href="./production.html">Production</a> by hand are marked below.</div>
 
 <div class="tiles">
 <div class="tile"><b class="{'pos' if counts['working'] else ''}">{counts['working']}</b><span>working</span></div>
 <div class="tile"><b class="{'neg' if counts['failing'] else ''}">{counts['failing']}</b><span>not working</span></div>
 <div class="tile"><b>{counts['leaning'] + counts['behind'] + counts['waiting']}</b><span>too early to tell</span></div>
-<div class="tile"><b>{in_qa}</b><span>in QA</span></div>
+<div class="tile"><b>{in_prod}</b><span>in production</span></div>
 <div class="tile"><b>{n_live:,}</b><span>bets running</span></div>
 <div class="tile"><b>{sum(1 for q in settled_today if q['status'] == 'won')}/{len(settled_today)}</b><span>won today</span></div>
 </div>
@@ -646,10 +643,14 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
 samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
 the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
-<b>Road to QA</b>: settled bets on the US exchanges against what QA needs for that sport, and how many of its
-four entry gates hold. <b>Thresholds are per sport</b>: most need {T.QA_ENTRY['min_bets']}+ bets over {T.QA_ENTRY['min_days']}+ days
-at z ≥ {T.QA_ENTRY['z_min']:g}; high-volume sports ({', '.join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS)}) need
-{T.SPORT_RULES['high']['entry']['min_bets']}+ bets at z ≥ {T.SPORT_RULES['high']['entry']['z_min']:g}, with no day span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
+<b>Record so far</b>: settled bets on the US exchanges, and how many of the four marks a pair would want to
+show before anyone moved it: enough bets, ahead of the prices paid, beating every blind rule, and steady across
+its record. Nothing here promotes anything — <b>Production is entered by hand</b>, and these are the numbers that
+decision is made on. <b>Thresholds are per sport</b>: most read against {T.QA_ENTRY['min_bets']}+ bets over
+{T.QA_ENTRY['min_days']}+ days at z ≥ {T.QA_ENTRY['z_min']:g}; high-volume sports
+({', '.join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS)}) against
+{T.SPORT_RULES['high']['entry']['min_bets']}+ bets at z ≥ {T.SPORT_RULES['high']['entry']['z_min']:g}, with no day
+span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
 
 <h2>Running now ({n_live:,})</h2>
 {('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets.</div>'}
@@ -704,9 +705,7 @@ document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('inpu
 </div></body></html>"""
 
 
-QA_OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "qa.html")
-
-
+# The QA page is gone (2026-09-18): the ladder is Sandbox, then Production by hand.
 def _ticks(gate):
     passed = sum(1 for _k, _l, p, _d in gate if p)
     cells = "".join(
@@ -715,129 +714,16 @@ def _ticks(gate):
     return passed, cells
 
 
-def qa_page(d, st, style):
-    """QA: promoted (source, sport) pairs, judged only on bets logged after promotion."""
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    pairs = st.get("pairs") or {}
-    in_qa = {k: v for k, v in pairs.items() if v.get("stage") == "qa"}
-    label = lambda key: (f'{S.SOURCES[key.split("|")[0]]["label"].split(" (")[0].split(" /")[0]} · '
-                         f'{S.SPORTS.get(key.split("|")[1], key.split("|")[1])}')
-
-    # In QA
-    ready_head = "".join(f"<th>{esc(l)}</th>" for _k, l, _p, _d in T.ready_gate(T.assess(d, "__none__")))
-    qa_rows, n_ready = [], 0
-    for key, pair in sorted(in_qa.items(), key=lambda kv: kv[1]["promoted_at"]):
-        name, sport = key.split("|")
-        a = T.assess(d, name, sport, since=T.qa_since(pair, sport, key), venues=T.TRADEABLE_VENUES)
-        gate = T.ready_gate(a)
-        passed, cells = _ticks(gate)
-        ready = passed == len(gate)
-        n_ready += ready
-        if pair.get("ready_at"):
-            status = '<span class="sig y">✓ PRODUCTION-READY</span>'
-        elif ready and pair.get("ready_since"):
-            held = (datetime.now(timezone.utc) - datetime.fromisoformat(pair["ready_since"])).days
-            status = (f'<span class="sig w">HOLDING · day {held} of {T.READY_HOLD_DAYS}</span>'
-                      f'<div class="sm mut">gate passing since {esc(pair["ready_since"][:10])}</div>')
-        else:
-            status = f'<span class="sig w">IN QA · {passed}/{len(gate)}</span>'
-        ready = bool(pair.get("ready_at"))
-        qa_rows.append(f"""<tr><td><b>{esc(label(key))}</b>
-<div class="sm mut">promoted {esc(pair['promoted_at'][:10])} on {pair.get('entry', {}).get('n', '?')} sandbox bets{(' · moved by hand · production at ' + str(T.PAIR_OVERRIDES[key]['production_at']) + ' bets') if key in T.PAIR_OVERRIDES else (' · judged on its whole record' if T.sport_rules(sport).get('qa_counts_sandbox') else '')}</div></td>
-<td>{status}</td>
-<td class="num">{a['n']}<div class="sm mut">{a['span_days']:.0f} days</div></td>
-<td class="num"><span class="{cls(a['roi']) if a['n'] >= MIN_N else 'mut'}">{pct(a['roi'], sign=True)}</span>
-<div class="sm mut">{pct(a['roi_fee'], sign=True)} after fees</div></td>
-<td class="num">{f"{a['clv']*100:+.1f}¢" if a['clv'] is not None else '—'}
-<div class="sm mut">{f"{a['clv_beat']:.0%} beat close" if a['clv'] is not None else ''}</div></td>
-{cells}</tr>""")
-    qa_table = (f"""<div class="tbl"><table>
-<tr><th>Pair</th><th>Status</th><th class="num">Fresh bets</th><th class="num">ROI</th>
-<th class="num">CLV</th>{ready_head}</tr>
-{''.join(qa_rows)}</table></div>""" if qa_rows else
-        '<div class="note">Nothing has been promoted yet — no Sandbox pair has cleared the entry gate. '
-        'The first to do so will appear here, judged only on bets they make from that moment on.</div>')
-
-    # History
-    events = list(reversed(st.get("events") or []))
-    hist = "".join(
-        f"""<tr><td class="mut">{esc(e['at'][:16].replace('T', ' '))}</td><td><b>{esc(label(e['pair']))}</b></td>
-<td>{('<span class="sig w">FAST TRACK · ' + esc(e['to'].split('_')[-1].upper()) + '</span>') if e['to'].startswith('fast_track') else '<span class="sig y">→ QA</span>' if e['to'] == 'qa' else '<span class="sig y">✓ READY</span>' if e['to'] == 'ready' else '<span class="st miss">READY WITHDRAWN</span>' if e['to'] == 'unready' else '<span class="st miss">→ SANDBOX</span>'}</td>
-<td class="sm mut">{esc(e.get('reason') or '')} n={e['evidence'].get('n')} · z {e['evidence'].get('z', 0):+.2f} · ROI {pct(e['evidence'].get('roi'), sign=True)}</td></tr>"""
-        for e in events)
-    hist_table = (collapse(hist, "<tr><th>When</th><th>Pair</th><th>Change</th><th>Evidence</th></tr>",
-                           len(events), "changes") if hist else
-                  '<div class="note">No promotions or demotions yet.</div>')
-
-    E, A = T.QA_ENTRY, T.APPROVAL
-    H, HV = T.SPORT_RULES["high"]["entry"], " and ".join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS).lower()
-    return f"""<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine · QA</title>
-<meta name="description" content="Only the Sandbox pairs that succeeded, re-tested on fresh bets before Production.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-{style}</head><body><div class="wrap">
-
-<h1>QA</h1>
-<div class="sub">Where the real deal is separated from the noise · updated {esc(now)}</div>
-<div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a class="on" href="./qa.html">QA</a><a href="./production.html">Production</a></div>
-
-<div class="note warn">QA lists only what has <b>succeeded in the Sandbox</b>: a (source, sport) pair
-arrives here once it clears the entry gate for its sport — {E['min_bets']}+ settled bets spanning {E['min_days']}+ days and wins beating
-the price by z ≥ {E['z_min']:g} ({H['min_bets']}+ bets at z ≥ {H['z_min']:g}, no day span, in {HV}), beating every blind rule, still profitable without its biggest win.
-Pairs still working towards that are on the <a href="./sandbox.html">Sandbox</a> page. From promotion on, a pair
-is judged <b>only on bets it logs after the promotion</b> — the history that earned the move
-never counts twice. QA asks what the Sandbox cannot: did it <b>beat the closing price</b>, and
-does it survive the <b>taker fee</b> a follower would pay. Only bets on the US exchanges count
-here — <b>Polymarket US and Kalshi</b>; a record logged on polymarket.com
-(the Sandbox venue until 2026-09-13) stays on the Sandbox page and never moves a pair.</div>
-
-<div class="tiles">
-<div class="tile"><b>{len(in_qa)}</b><span>pairs in QA</span></div>
-<div class="tile"><b class="{'pos' if n_ready else ''}">{n_ready}</b><span>production-ready</span></div>
-<div class="tile"><b>{sum(1 for e in st.get('events') or [] if e['to'] == 'sandbox')}</b><span>demotions</span></div>
-</div>
-
-<h2>In QA</h2>
-{qa_table}
-<div class="note"><b>Production-ready</b> is the full stamp applied to the fresh QA record —
-{A['min_bets']}+ bets spanning {A['min_days']}+ days, z ≥ {A['z_min']:g} (for {HV}: {T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets, no day span,
-z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}), beats every blind rule, still
-profitable without its biggest win and in both halves — <b>plus</b> buying below the closing
-price on average, measured on {T.READY_CLV['min_n']}+ closing prices covering at least
-{T.READY_CLV['min_share']:.0%} of the bets, and staying profitable after the taker fee (Polymarket US
-0.06·p·(1−p), Kalshi 0.07), and <b>every bet must be a standard exchange market the Production
-feed can publish</b> — today a soccer result (home, away or draw) on a Kalshi game market, or Yes on a
-Kalshi goals market; no other sport yet. The gate is checked every run, so a pair is marked ready only once
-it has <b>held for {T.READY_HOLD_DAYS} days</b>, and the mark is withdrawn the first run it fails.
-A pair goes <b>back to the Sandbox</b> after {T.QA_DEMOTE['min_bets']} fresh bets if it is behind the price,
-not beating every blind rule, or behind the closing price — or, at any count, after
-{T.STALE_DAYS} days without a new bet — and must re-qualify on bets logged after the demotion.
-Baselines are benchmarks and are never promoted.</div>
-
-<h2>History</h2>
-{hist_table}
-
-<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-</div></body></html>"""
-
-
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     page = build()
     with open(OUT, "w") as f:
         f.write(page)
     print(f"wrote {OUT}")
-    # QA shares the Sandbox page's stylesheet rather than keeping a second copy of it.
+    # Production shares the Sandbox page's stylesheet rather than keeping a second copy of it.
     style = re.search(r"<style>.*?</style>", page, re.S).group(0)
-    with open(QA_OUT, "w") as f:
-        f.write(qa_page(T.load(), T.load_stages(), style))
-    print(f"wrote {QA_OUT}")
     import production
-    prod_out = os.path.join(os.path.dirname(QA_OUT), "production.html")
+    prod_out = os.path.join(os.path.dirname(OUT), "production.html")
     with open(prod_out, "w") as f:
         f.write(production.page(T.load(), T.load_stages(), production.load_feed(), style))
     print(f"wrote {prod_out}")

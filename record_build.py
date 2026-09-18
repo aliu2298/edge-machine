@@ -506,9 +506,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Record</h1>
 <div class="sub">Everything that has been graded · all times CT · updated {esc(now)}</div>
-<div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a class="on" href="./record.html">Record</a>
-<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
+<div class="nav"><a class="on" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="note warn">Every graded result on one table, sorted like the Sandbox: <b>working</b> and <b>not
 working</b> need 30+ graded; under that a result is only leaning. Each row is measured against a
@@ -573,9 +571,12 @@ def build():
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "record.html")
-    with open(out, "w") as f:
-        f.write(page_html(ld, fr, bk, now, rc))
-    print(f"wrote {out}  ({os.path.getsize(out)/1024:.0f} KB) — "
+    root = os.path.join(OUT_DIR, "index.html")     # the Record page is the site root
+    page = page_html(ld, fr, bk, now, rc)
+    for path in (out, root):
+        with open(path, "w") as f:
+            f.write(page)
+    print(f"wrote {out} and {root}  ({os.path.getsize(out)/1024:.0f} KB) — "
           f"leads {ld['graded']}, fire {fr['graded']}, book {bk['graded']} graded")
 
 

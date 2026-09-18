@@ -1650,111 +1650,94 @@ S.SOURCES = {"covers": dict(_old_sources["covers"], sports=["mlb", "nfl", "socce
              "polymarket": _old_sources["polymarket"]}
 try:
     eq(T.QA_ENTRY["min_bets"] < T.APPROVAL["min_bets"] and T.QA_ENTRY["z_min"] < T.APPROVAL["z_min"], True,
-       "the QA entry gate is lighter than the stamp")
+       "the entry marks reported on the page are lighter than the full stamp")
+
+    # NOTHING PROMOTES ITSELF (2026-09-18). A record that would once have earned promotion
+    # stays in the Sandbox until someone lists the pair by hand.
     d = {"quotes": _chooser(32, 3)}
     st = {"pairs": {}, "events": []}
     _t = datetime(2026, 9, 25, tzinfo=timezone.utc)
+    _saved_ov = dict(T.PAIR_OVERRIDES)
+    T.PAIR_OVERRIDES.clear()
+    eq(T.evaluate_stages(d, st, now=_t, verbose=False), [],
+       "a promotable record alone moves nothing: Production is entered by hand")
+
+    T.PAIR_OVERRIDES["covers|mlb"] = dict(moved_on="2026-09-25", production_at=None)
     ch = T.evaluate_stages(d, st, now=_t, verbose=False)
-    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "qa")], "32 good bets over 3 weeks promote MLB, not NFL")
-    eq(st["pairs"]["covers|mlb"]["stage"], "qa", "the registry records the stage")
-    eq(st["pairs"]["covers|mlb"]["entry"]["n"], 32, "with the evidence it was promoted on")
+    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "production")], "listing it moves it, and only it")
+    eq(st["pairs"]["covers|mlb"]["entry"]["n"], 32, "with the record it was moved on")
     ok("covers|nfl" not in st["pairs"], "an untouched sandbox pair is not written to the registry")
-    eq(T.evaluate_stages(d, st, now=_t, verbose=False), [], "re-running changes nothing")
+    ch = T.evaluate_stages(d, st, now=_t + timedelta(minutes=5), verbose=False)
+    eq([c["to"] for c in ch], ["ready"], "and it trades from the next run, with no threshold set")
+    eq(T.evaluate_stages(d, st, now=_t + timedelta(minutes=10), verbose=False), [], "re-running changes nothing")
 
-    one_week = {"quotes": _chooser(32, 1)}
-    eq(T.evaluate_stages(one_week, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
-       "the same record inside one week is not promoted")
-    fav_only = {"quotes": [_sb(i, i % 10 < 9, "b", 0.62, i // 11) for i in range(33)]}
-    eq(T.evaluate_stages(fav_only, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
-       "a source that only backs the favourite is not promoted however well it did")
+    # A threshold makes it wait for the record, and for that record to be profitable.
+    T.PAIR_OVERRIDES["covers|nfl"] = dict(moved_on="2026-09-25", production_at=200)
+    _n = {"quotes": [dict(q, sport="nfl") for q in _chooser(32, 3)]}
+    T.evaluate_stages(_n, st, now=_t, verbose=False)
+    T.evaluate_stages(_n, st, now=_t + timedelta(minutes=5), verbose=False)
+    ok(not st["pairs"]["covers|nfl"].get("ready_at"), "32 settled bets do not reach a threshold of 200")
 
-    # QA judges fresh data only: the promoting history does not count.
-    _promo = st["pairs"]["covers|mlb"]["promoted_at"]
-    a = T.assess(d, "covers", "mlb", since=_promo)
-    eq(a["n"], 0, "QA starts from zero bets at promotion")
-    _fresh_bad = [_sb(100 + i, i % 5 == 0, "a", 0.40, 4 + i // 10, logged=_t + timedelta(hours=1 + i))
-                  for i in range(30)]
-    d2 = {"quotes": d["quotes"] + _fresh_bad}
-    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=2), verbose=False)
-    eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "sandbox")],
-       "30 fresh QA bets behind the price demote the pair")
-    ok("behind the price" in ch[0]["reason"], "with the reason recorded")
-    ch = T.evaluate_stages(d2, st, now=_t + timedelta(days=3), verbose=False)
-    eq(ch, [], "after demotion the old promoting record cannot re-promote it: it must re-qualify on new bets")
-    eq(len(st["events"]), 2, "every change is in the event log")
+    # Taken off the list by hand: back to the Sandbox, still measured.
+    del T.PAIR_OVERRIDES["covers|mlb"]
+    ch = T.evaluate_stages(d, st, now=_t + timedelta(minutes=15), verbose=False)
+    eq([(c["pair"], c["to"], c["reason"]) for c in ch if c["pair"] == "covers|mlb"],
+       [("covers|mlb", "sandbox", "taken off the Production list by hand")],
+       "removing a pair from the list takes it out of Production")
+    T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_saved_ov)
 
-    # Production-ready: the stamp on fresh data + positive CLV + positive after fees.
-    st3 = {"pairs": {"covers|soccer": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    # Soccer on Kalshi, home or away: a record the feed can publish.
+    # Demotion still protects: behind the prices paid, not beating the blind rules, or quiet.
+    _t2 = datetime(2026, 9, 25, tzinfo=timezone.utc)
+    T.PAIR_OVERRIDES["covers|mlb"] = dict(moved_on="2026-09-01", production_at=None)
+    try:
+        _fresh_bad = [_sb(100 + i, i % 5 == 0, "a", 0.40, 4 + i // 10, logged=_t2 + timedelta(hours=1 + i))
+                      for i in range(30)]
+        st2 = {"pairs": {"covers|mlb": dict(stage="production", promoted_at="2026-09-01T00:00:00+00:00",
+                                            ready_at="2026-09-01T00:00:00+00:00", by_hand="2026-09-01")},
+               "events": []}
+        ch = T.evaluate_stages({"quotes": _fresh_bad}, st2, now=_t2 + timedelta(days=2), verbose=False)
+        eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "sandbox")],
+           "30 bets behind the prices paid demote it, hand-moved or not")
+        ok("behind the price" in ch[0]["reason"], "with the reason recorded")
+
+        fav_only = {"quotes": [_sb(i, i % 10 < 9, "b", 0.62, i // 11) for i in range(33)]}
+        st5 = {"pairs": {"covers|mlb": dict(stage="production", promoted_at="2026-09-01T00:00:00+00:00",
+                                            ready_at="2026-09-01T00:00:00+00:00", by_hand="2026-09-01")},
+               "events": []}
+        ch = T.evaluate_stages(fav_only, st5, now=_t2, verbose=False)
+        eq([c["to"] for c in ch], ["sandbox"], "a record that is just 'back the favourite' is demoted")
+        ok("blind rule" in ch[0]["reason"], "for not beating every blind rule")
+
+        st6 = {"pairs": {"covers|mlb": dict(stage="production", promoted_at="2026-09-01T00:00:00+00:00",
+                                            ready_at="2026-09-01T00:00:00+00:00", by_hand="2026-09-01")},
+               "events": []}
+        _few = {"quotes": _chooser(5, 1)}
+        eq(T.evaluate_stages(_few, st6, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False), [],
+           "a young pair with few bets is left alone")
+        ch = T.evaluate_stages(_few, st6, now=datetime(2026, 9, 30, tzinfo=timezone.utc), verbose=False)
+        eq([(c["to"], c["reason"]) for c in ch], [("sandbox", "no new bet in 21 days")],
+           "21 days without a new bet sends it back, whatever the count")
+
+        # The closing price is reported on the page, never a demotion (2026-09-18).
+        _clv = [dict(q, close_price=q["price"] - 0.05,
+                     close_at=(datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat())
+                for q in _chooser(60, 6)]
+        st7 = {"pairs": {"covers|mlb": dict(stage="production", promoted_at="2026-09-01T00:00:00+00:00",
+                                            ready_at="2026-09-01T00:00:00+00:00", by_hand="2026-09-01")},
+               "events": []}
+        ch = T.evaluate_stages({"quotes": _clv}, st7, now=_t2, verbose=False)
+        eq([c["to"] for c in ch], [], "a pair behind the closing price keeps its place — that call is the owner's")
+    finally:
+        T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_saved_ov)
+
+    # What the feed can publish is unchanged.
     fresh = [dict(q, sport="soccer", venue="kalshi", market_id=f"KXEPLGAME-26SEP01X{i:02d}")
              for i, q in enumerate(_chooser(60, 6))]
-    for q in fresh:
-        q["close_price"] = q["price"] + 0.02
-        q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
-    ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t, verbose=False)
-    eq(ch, [], "passing the ready gate once is not ready: it must hold")
-    eq(st3["pairs"]["covers|soccer"].get("ready_since"), _t.isoformat(), "the hold starts the first run it passes")
-    eq(T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=6), verbose=False), [],
-       "six days of holding is not yet seven")
-    ch = T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=7), verbose=False)
-    eq([c["to"] for c in ch], ["ready"], "held for seven days, with CLV and fees positive, it is ready")
-    eq(T.evaluate_stages({"quotes": fresh}, st3, now=_t + timedelta(days=8), verbose=False), [],
-       "ready is marked once")
-    _thin = [dict(q) for q in fresh]
-    for q in _thin[29:]:
-        q.pop("close_price"); q.pop("close_at")
-    ch = T.evaluate_stages({"quotes": _thin}, st3, now=_t + timedelta(days=9), verbose=False)
-    eq([c["to"] for c in ch], ["unready"], "with only 29 closing prices the gate fails, and ready is withdrawn")
-    ok("closing price" in ch[0]["reason"], "naming the criterion it lost")
-    ok("ready_at" not in st3["pairs"]["covers|soccer"] and "ready_since" not in st3["pairs"]["covers|soccer"],
-       "the hold starts again from nothing")
-    for q in fresh:
-        q["close_price"] = q["price"] - 0.02
-    st4 = {"pairs": {"covers|soccer": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    ch = T.evaluate_stages({"quotes": fresh}, st4, now=_t, verbose=False)
-    eq([c["to"] for c in ch], ["sandbox"], "the same record buying above the closing price is demoted, not ready")
-    ok("closing price" in ch[0]["reason"], "because it is behind the close")
-
-    # The feed cannot publish it: the same fresh MLB record clears everything else and is not ready.
-    _mlb = [dict(q, sport="mlb", venue="polymarket_us") for q in _chooser(60, 6)]
-    for q in _mlb:
-        q["close_price"] = q["price"] + 0.02
-        q["close_at"] = (datetime.fromisoformat(q["start"]) - timedelta(minutes=10)).isoformat()
-    _stm = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    T.evaluate_stages({"quotes": _mlb}, _stm, now=_t, verbose=False)
-    ch = T.evaluate_stages({"quotes": _mlb}, _stm, now=_t + timedelta(days=8), verbose=False)
-    eq(ch, [], "an MLB record the feed cannot publish never becomes ready")
-    _gate = dict((k, (p, det)) for k, _l, p, det in T.ready_gate(T.assess({"quotes": _mlb}, "covers", "mlb",
-                                                                           venues=T.TRADEABLE_VENUES)))
-    eq(_gate["route"][0], False, "because the route criterion fails")
-    ok("0 of 60" in _gate["route"][1], "and says how many bets had a route")
     _draws = [dict(q, pick="draw") if i % 10 == 0 else q for i, q in enumerate(fresh)]
     eq(T.placeable(_draws[0]), True, "a soccer draw on Kalshi is publishable (Tie contract) since 2026-09-16")
     eq(T.placeable(_draws[1]), True, "a soccer side on Kalshi does")
     eq(T.placeable(dict(_draws[1], market_id="KXALLSVENSKANGAME-26SEP01X")), False,
        "but not in an unmapped league")
-
-    # polymarket.com bets never count toward QA.
-    _com = [dict(q, venue="polymarket") for q in _chooser(32, 3)]
-    eq(T.evaluate_stages({"quotes": _com}, {"pairs": {}, "events": []}, now=_t, verbose=False), [],
-       "a record logged on polymarket.com, closed to US accounts, is not promoted")
-    eq(T.assess({"quotes": _com}, "covers", "mlb")["n"], 32,
-       "though the Sandbox's own view still counts it")
-
-
-
-    # Demotion also covers the blind rules and a pair that stops betting.
-    st5 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    ch = T.evaluate_stages(fav_only, st5, now=_t, verbose=False)
-    eq([c["to"] for c in ch], ["sandbox"], "30+ fresh bets that are just 'back the favourite' are demoted")
-    ok("blind rule" in ch[0]["reason"], "for not beating every blind rule")
-    st6 = {"pairs": {"covers|mlb": dict(stage="qa", promoted_at="2026-09-01T00:00:00+00:00")}, "events": []}
-    _few = _chooser(5, 1)
-    eq(T.evaluate_stages({"quotes": _few}, st6, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False), [],
-       "a young QA pair with few bets is left alone")
-    ch = T.evaluate_stages({"quotes": _few}, st6, now=datetime(2026, 9, 30, tzinfo=timezone.utc), verbose=False)
-    eq([(c["to"], c["reason"]) for c in ch], [("sandbox", "no new bet in 21 days")],
-       "21 days without a new bet sends it back, whatever the count")
 
     # The sample is a span of days, not calendar weeks touched.
     _sun_mon = [dict(q, start=(datetime(2026, 9, 13, 12, tzinfo=timezone.utc) + timedelta(hours=i)).isoformat())
@@ -1762,13 +1745,17 @@ try:
     _am = T.assess({"quotes": _sun_mon}, "covers", "mlb")
     eq(_am["span_days"] < 2, True, "32 bets from a Sunday into a Monday span under two days")
     eq(dict((k, p) for k, _l, p, _d in T.qa_entry(_am))["sample"], False,
-       "and do not pass QA's 14-day sample, though they touch two calendar weeks")
+       "and do not pass the 14-day sample mark, though they touch two calendar weeks")
 
-    # Baselines are never promoted.
+    # Baselines are never promoted, listed or not.
     S.SOURCES = {"spot": dict(_old_sources["spot"], sports=["mlb"])}
-    eq(T.evaluate_stages({"quotes": [dict(q, source="spot") for q in _chooser(32, 3)]},
-                         {"pairs": {}, "events": []}, now=_t, verbose=False), [],
-       "a baseline with a promotable record is not promoted")
+    T.PAIR_OVERRIDES["spot|mlb"] = dict(moved_on="2026-09-25", production_at=None)
+    try:
+        eq(T.evaluate_stages({"quotes": [dict(q, source="spot") for q in _chooser(32, 3)]},
+                             {"pairs": {}, "events": []}, now=_t, verbose=False), [],
+           "a baseline is never moved, even if it is listed")
+    finally:
+        T.PAIR_OVERRIDES.pop("spot|mlb", None)
 finally:
     S.SOURCES = _old_sources
 
@@ -1823,20 +1810,19 @@ _qd = {"quotes": [dict(source="espn_fpi", sport="mlb", bet=True, status="won", p
                   dict(source="espn_fpi", sport="mlb", bet=True, status="won", pick="a", price=0.40,
                        result="a", pnl=150.0, venue="kalshi", price_a=0.40, price_b=0.62, price_draw=None,
                        logged="2026-09-09T01:00:00+00:00", start="2026-09-09T20:00:00+00:00")]}
-_st = {"pairs": {"espn_fpi|mlb": dict(stage="qa", promoted_at="2026-09-11T00:00:00+00:00", entry=dict(n=31))},
-       "events": [dict(pair="espn_fpi|mlb", to="qa", at="2026-09-11T00:00:00+00:00",
+_st = {"pairs": {"espn_fpi|mlb": dict(stage="production", promoted_at="2026-09-11T00:00:00+00:00",
+                                      ready_at="2026-09-11T00:00:00+00:00", by_hand="2026-09-11",
+                                      entry=dict(n=31))},
+       "events": [dict(pair="espn_fpi|mlb", to="production", at="2026-09-11T00:00:00+00:00",
                        evidence=dict(n=31, z=1.3, roi=0.2))]}
-_html = SB.qa_page(_qd, _st, "<style></style>")
-ok("IN QA · " in _html, "a promoted pair is listed in QA with its progress")
-ok(">1<div" in _html.replace(" ", "") or "<td class=\"num\">1<div" in _html,
-   "and judged on 1 fresh bet — the pre-promotion bet does not count")
-ok("+4.0¢" in _html, "its closing-line value is shown")
-ok("→ QA" in _html, "the promotion is in the history")
-ok("ESPN FPI · MLB" in _html, "pairs are labelled source · sport")
-_empty = SB.qa_page({"quotes": []}, {"pairs": {}, "events": []}, "<style></style>")
-ok("Nothing has been promoted yet" in _empty and "No promotions or demotions yet" in _empty,
-   "an empty registry says so rather than showing empty tables")
-ok('href="./qa.html">QA</a>' in open("sandbox_build.py").read(), "the Sandbox nav links to QA")
+import production as PR
+_html = PR.page(_qd, _st, {"leads": {}, "pairs": {}}, "<style></style>")
+ok("ESPN FPI / Matchup Predictor · MLB" in _html, "a pair in Production is listed, labelled source · sport")
+ok("moved by hand 2026-09-11" in _html, "and says how it got there")
+ok('href="./sandbox.html"' in _html and 'href="./record.html"' in _html, "the nav is Record, Sandbox, Production")
+ok('href="./qa.html"' not in _html and 'href="./today.html"' not in _html,
+   "and carries no QA or Today link")
+ok('href="./qa.html"' not in open("sandbox_build.py").read(), "nor does the Sandbox page")
 eq(T.assess(_qd, "espn_fpi", "mlb", since="2026-09-11T00:00:00+00:00")["n"], 1,
    "QA's record counts only the bet logged after promotion")
 
@@ -2161,8 +2147,9 @@ print("\nProduction: pairs that hold the ready gate, published as a feed")
 import production as PR
 _pnow = datetime(2026, 10, 1, 12, tzinfo=timezone.utc)
 _ready = "2026-09-30T00:00:00+00:00"
-_pst = {"pairs": {"soccerpredictions|soccer": dict(stage="qa", promoted_at="2026-09-20T00:00:00+00:00", ready_at=_ready),
-                  "espn_fpi|mlb": dict(stage="qa", promoted_at="2026-09-20T00:00:00+00:00"),
+_pst = {"pairs": {"soccerpredictions|soccer": dict(stage="production", by_hand="2026-09-20",
+                                                  promoted_at="2026-09-20T00:00:00+00:00", ready_at=_ready),
+                  "espn_fpi|mlb": dict(stage="production", promoted_at="2026-09-20T00:00:00+00:00"),
                   "covers|soccer": dict(stage="sandbox", since="2026-09-01T00:00:00+00:00")}, "events": []}
 def _pq(i, **kw):
     base = dict(id=f"soccerpredictions:KXEPLGAME-26OCT02LEENEW{i}", source="soccerpredictions", sport="soccer",
@@ -2185,7 +2172,7 @@ _pd = {"quotes": [
     _pq(10, start_source=None),                                        # Kalshi-estimated kickoff
 ]}
 _feed = PR.build_feed(_pd, _pst, now=_pnow)
-eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in QA with ready_at is in Production")
+eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in Production and trading is in the feed")
 _fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
 eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "3", "7"],
    "published: open routable bets logged since ready, and recent settled ones; nothing else")
@@ -2194,7 +2181,7 @@ _l3 = next(l for l in _fl if l["sandbox_quote"].endswith("3"))
 eq((_l3["bet"], _l3["headline"]), ({"kind": "match_result", "side": "draw"}, "Draw"), "a draw tip is published as a draw")
 eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
 eq(sorted(_feed["pairs"]["soccerpredictions|soccer"]),
-   ["entered_at", "fast_track", "promoted_at", "ready_at", "route", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
+   ["by_hand", "entered_at", "promoted_at", "ready_at", "route", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
    "each pair carries the Sandbox's own record since ready, to compare real fills with")
 _l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
 eq((_l1["bet"], _l1["home"], _l1["away"], _l1["league"], _l1["status"]),
@@ -2391,39 +2378,31 @@ def _ftq(i, won, price=0.8, logged="2026-09-14T06:00:00+00:00"):
                 start=(datetime(2026, 9, 15, 18, tzinfo=timezone.utc) + timedelta(hours=i)).isoformat(), logged=logged,
                 label="x", side_a="Yes", side_b="No", league="Premier League", espn_home="Goal FC", espn_away="Leak FC",
                 team="Goal FC", start_source="espn")
-_meta = S.SOURCES["team1_form_l5"]
 _st_ft = {"pairs": {}, "events": []}
 _d_ft = {"quotes": [_ftq(i, True) for i in range(5)]}
+# team1 is in Production by hand since 2026-09-18 (PAIR_OVERRIDES), not by any fast track.
 T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False)
-eq((_st_ft["pairs"]["team1_form_l5|soccer_team1"]["stage"], _st_ft["pairs"]["team1_form_l5|soccer_team1"]["fast_track"]["state"]),
-   ("sandbox", "probation"), "a fast-tracked pair is on probation below its sample")
-ok("team1_form_l5|soccer_team1" in PR.production_pairs(_st_ft), "and in Production from the first bet")
-_d_ft = {"quotes": [_ftq(i, i % 10 != 0, price=0.8) for i in range(30)]}            # 27/30 at 0.80
-eq(T.fast_track_status(_d_ft, "team1_form_l5", "soccer_team1", _meta)[0], "cleared",
-   "30 bets, profitable after fees and z >= 1: cleared")
-_d_fail = {"quotes": [_ftq(i, i % 5 != 0, price=0.8) for i in range(30)]}         # 24/30 at 0.80
-T.evaluate_stages(_d_fail, _st_ft, now=datetime(2026, 10, 10, tzinfo=timezone.utc), verbose=False)
-_pf = _st_ft["pairs"]["team1_form_l5|soccer_team1"]
-eq((_pf["fast_track"]["state"], _pf["since"][:10]), ("failed", "2026-10-10"),
-   "at the price paid and no better: failed, back to the ladder on fresh evidence")
-ok("team1_form_l5|soccer_team1" not in PR.production_pairs(_st_ft), "and out of Production")
-T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 10, 11, tzinfo=timezone.utc), verbose=False)
-eq(_st_ft["pairs"]["team1_form_l5|soccer_team1"]["fast_track"]["state"], "failed", "a failed fast track is never re-opened")
+T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 9, 20, 0, 5, tzinfo=timezone.utc), verbose=False)
+eq(_st_ft["pairs"]["team1_form_l5|soccer_team1"]["stage"], "production", "the listed pair is in Production")
+ok("team1_form_l5|soccer_team1" in PR.production_pairs(_st_ft), "and trading")
 
 _open = dict(_ftq(99, True), status="open", pnl=0.0, result=None,
              start=datetime(2026, 9, 16, 18, tzinfo=timezone.utc).isoformat(), logged="2026-09-15T00:00:00+00:00")
-_st_p = {"pairs": {"team1_form_l5|soccer_team1": dict(stage="sandbox", since=None,
-                                                     fast_track=dict(since="2026-09-14T00:00:00+00:00", state="probation"))}}
+_st_p = {"pairs": {"team1_form_l5|soccer_team1": dict(stage="production", by_hand="2026-09-14",
+                                                      promoted_at="2026-09-14T00:00:00+00:00",
+                                                      ready_at="2026-09-14T00:00:00+00:00")}}
 _fd = PR.build_feed({"quotes": [_open]}, _st_p, now=datetime(2026, 9, 15, 12, tzinfo=timezone.utc))
 _gl = list(_fd["leads"].values())
 eq([(l["bet"], l["home"], l["away"], l["headline"], l["league"], l["status"]) for l in _gl],
    [({"kind": "team_gte", "n": 1, "team": "Goal FC"}, "Goal FC", "Leak FC", "Goal FC to score 1+", "Premier League", "pending")],
-   "a fast-tracked team-goals bet is published in the Leads board's bet vocabulary")
-eq(_fd["pairs"]["team1_form_l5|soccer_team1"]["route"], "fast track · probation", "and the pair says how it got there")
+   "a team-goals bet is published in the Leads board's bet vocabulary")
+eq(_fd["pairs"]["team1_form_l5|soccer_team1"]["route"], "moved by hand on 2026-09-14",
+   "and the pair says how it got there")
 _o15 = dict(_open, sport="soccer_o15", source="o15_form_l10", id="o15_form_l10:Z", team=None)
 eq(PR.lead_from_quote(_o15, "o15_form_l10|soccer_o15", "2026-09-15T12:00:00+00:00")["bet"],
    {"kind": "total_gte", "n": 2}, "an over-1.5 bet is total_gte 2")
-ok("fast track" in PR.page({"quotes": [_open]}, _st_p, _fd, ""), "the Production page shows how a pair got there")
+ok("moved by hand" in PR.page({"quotes": [_open]}, _st_p, _fd, ""),
+   "the Production page shows how a pair got there")
 
 
 print("\ntennis favourite-band rule")
@@ -2489,8 +2468,8 @@ _g, _c = SB.pair_rows(_pd, {"pairs": {}})
 eq((_c["working"], _c["failing"]), (1, 1), "a readable pair ahead of the price is working; one behind it is not")
 ok(_c["leaning"] + _c["behind"] == 1, "a pair under the floor is too early, sorted by its lean")
 ok("Covers" in "".join(_g["working"]) and "MLB" in "".join(_g["working"]), "rows name the source and the sport")
-ok("On deck" not in SB.qa_page(_pd, {"pairs": {}, "events": []}, "<style></style>"),
-   "QA no longer lists sandbox pairs that have not succeeded")
+ok("in production" in SB.page_html(_pd, {"pairs": {}, "events": []}) if hasattr(SB, "page_html") else True,
+   "the Sandbox page counts what is in Production")
 
 
 print("\nunder 3.5 low-scoring rule")
@@ -2572,7 +2551,7 @@ _dh["quotes"] += [dict(_hv(200 + i, False), id=f"pm:{i}", source="polymarket_us"
 _stq = {"pairs": {}, "events": []}
 T.evaluate_stages(_dh, _stq, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False)
 _pq = _stq["pairs"].get("tennis_fav_band|tennis") or {}
-eq(_pq.get("stage"), "qa", "a tennis pair with 110 bets at z >= 1.5 is promoted")
+eq(_pq.get("stage"), "production", "the listed tennis pair is in Production")
 eq(T.assess(_dh, "tennis_fav_band", "tennis", since=T.qa_since(_pq, "tennis"), venues=T.TRADEABLE_VENUES)["n"], 110,
    "and QA judges all 110, not only bets logged after the promotion")
 eq(T.qa_since(dict(promoted_at="2026-09-20T00:00:00+00:00"), "mlb"), "2026-09-20T00:00:00+00:00",
@@ -2594,8 +2573,8 @@ _spd = {"quotes": [_spq(i, i % 3 != 0) for i in range(20)]}
 _sps = {"pairs": {}, "events": []}
 T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 17, tzinfo=timezone.utc), verbose=False)
 _spp = _sps["pairs"]["soccerpredictions|soccer"]
-eq((_spp["stage"], _spp.get("by_hand"), _spp.get("ready_at")), ("qa", "2026-09-16", None),
-   "moved to QA on the next run with only 20 bets, not ready yet")
+eq((_spp["stage"], _spp.get("by_hand"), _spp.get("ready_at")), ("production", "2026-09-16", None),
+   "moved to Production on the next run with only 20 bets, not trading yet")
 _spd["quotes"] += [_spq(i, i % 3 != 0) for i in range(20, 70)]
 T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 18, tzinfo=timezone.utc), verbose=False)
 ok(_sps["pairs"]["soccerpredictions|soccer"].get("ready_at"), "at 70 settled bets, profitable after fees, it is in Production")
@@ -2627,7 +2606,7 @@ _tov = dict(T.PAIR_OVERRIDES)
 T.PAIR_OVERRIDES["tennis_fav_band|tennis"] = dict(moved_on="2026-09-17", production_at=149)
 T.evaluate_stages(_td, _ts, now=datetime(2026, 9, 17, 22, tzinfo=timezone.utc), verbose=False)
 _tp = _ts["pairs"]["tennis_fav_band|tennis"]
-eq((_tp["stage"], _tp.get("by_hand"), _tp.get("demoted_at")), ("qa", "2026-09-17", None),
+eq((_tp["stage"], _tp.get("by_hand"), _tp.get("demoted_at")), ("production", "2026-09-17", None),
    "a move dated after the demotion cancels it")
 T.evaluate_stages(_td, _ts, now=datetime(2026, 9, 17, 22, 5, tzinfo=timezone.utc), verbose=False)
 ok(_ts["pairs"]["tennis_fav_band|tennis"].get("ready_at"),
@@ -2641,7 +2620,8 @@ eq(_ts2["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
 # Losing to the prices paid still demotes a pair that was moved by hand.
 _tl = {"quotes": [_tq(i, i % 3 != 0) for i in range(160)]
                  + [_tq(1000 + i, True, source="kalshi", bet=False, market=f"p{i}") for i in range(120)]}
-_ts3 = {"pairs": {"tennis_fav_band|tennis": dict(stage="qa", promoted_at="2026-09-17T22:00:00+00:00",
+_ts3 = {"pairs": {"tennis_fav_band|tennis": dict(stage="production", ready_at="2026-09-17T22:00:00+00:00",
+                                                 promoted_at="2026-09-17T22:00:00+00:00",
                                                  by_hand="2026-09-17")}, "events": []}
 T.evaluate_stages(_tl, _ts3, now=datetime(2026, 9, 17, 23, tzinfo=timezone.utc), verbose=False)
 eq(_ts3["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",

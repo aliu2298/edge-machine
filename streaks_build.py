@@ -661,10 +661,12 @@ def team_rows(streaks, by_team, fixtures, rates, book=None):
 # ---------------------------------------------------------------- rendering
 PAGES = {
     # id -> (file, nav label, h1, <title>, meta description, sub-heading)
-    # index.html: the Leads page IS the site root now that the 3-card slate is retired
+    # leads.html: the Leads board is no longer the site root or in the nav (2026-09-18) —
+    # everything that trades goes through Production. It is still built and still graded,
+    # because the over-1.5 rule's history and the rule-change comparison live on it.
     # (it only ever re-drew three of these). leads.html is kept as a redirect stub so
     # links published before the switch still land.
-    "leads": ("index.html", "Leads", "Edge Machine · Leads",
+    "leads": ("leads.html", "Leads", "Edge Machine · Leads",
               "Edge Machine · Leads",
               "Upcoming fixtures where both sides' runs point at the same total. "
               "Research, not betting advice.",
@@ -676,7 +678,7 @@ PAGES = {
                 "Every tracked team's current runs"),
 }
 TAB_LABEL = {"leads": "Leads", "fire": "🔥 On fire", "teams": "All teams"}
-LEADS_ALIAS = "leads.html"     # redirect stub for links that predate index.html
+
 
 
 def _href(filename):
@@ -946,7 +948,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>{esc(h1)}</h1>
 <div class="sub">{esc(sub)} · all times CT · updated {esc(now)}</div>
 <div class="nav">{nav}
-<a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
+<a href="./record.html">Record</a><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a></div>
 
 <details class="how">
 <summary>{explain_summary}</summary>
@@ -1415,13 +1417,7 @@ def build(force=False):
                               page=page, tabs=tabs))
         written.append((out, os.path.getsize(out) / 1024))
 
-    # leads.html was the Leads page's address until the slate was retired and Leads
-    # took over the root. Old links (README, shared URLs) still point there.
-    with open(os.path.join(OUT_DIR, LEADS_ALIAS), "w") as f:
-        f.write('<!doctype html><meta charset="utf-8">'
-                '<meta http-equiv="refresh" content="0; url=./">'
-                '<title>Edge Machine · Leads</title>'
-                '<a href="./">Leads moved to the front page.</a>\n')
+    # The site root is the Record page, written by record_build.
 
     # machine-readable companion, same shape the page consumes
     with open(DATA_OUT, "w") as f:

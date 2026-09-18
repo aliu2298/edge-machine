@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine · Leads</title>
-<meta name="description" content="Upcoming fixtures where both sides&#x27; runs point at the same total. Research, not betting advice.">
+<title>Edge Machine · Record</title>
+<meta name="description" content="Every measured result, judged against what the teams involved do anyway.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -12,144 +12,21 @@ body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-se
 letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
 .wrap{max-width:920px;margin:0 auto}
 h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
-h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:30px 0 12px}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+color:var(--mut);margin:34px 0 12px}
 .sub{color:var(--mut);font-size:13px;margin-top:4px}
-.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}.warn{color:var(--warn)}
+.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}
 .nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
 border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
 .nav a:hover{color:var(--fg);border-color:var(--mut)}
 .nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
-details.how{margin-top:15px;border:1px solid var(--bd);border-radius:10px;
-background:var(--card)}
-details.how summary{cursor:pointer;list-style:none;user-select:none;
-font-size:12.5px;font-weight:600;color:var(--mut);padding:10px 14px}
-details.how summary::-webkit-details-marker{display:none}
-details.how summary::before{content:"▸";display:inline-block;margin-right:8px;
-transition:transform .15s;color:var(--mut)}
-details.how[open] summary::before{transform:rotate(90deg)}
-details.how summary:hover{color:var(--fg)}
-.howbody{padding:0 14px 13px 32px;font-size:12.5px;color:var(--mut);line-height:1.6}
-.howbody p{margin:0 0 8px}
-.howbody p:last-child{margin-bottom:0}
-.howbody b{color:var(--fg);font-weight:600}
-.controls{position:sticky;top:0;z-index:20;background:var(--bg);
-padding:14px 0 10px;margin-top:18px;border-bottom:1px solid var(--bd)}
-.tabs{display:flex;gap:6px;margin-bottom:10px}
-.tb{font:inherit;font-size:12.5px;font-weight:800;color:var(--mut);cursor:pointer;
-background:none;border:1px solid var(--bd);border-radius:9px;padding:7px 15px;transition:all .12s}
-.tb:hover{color:var(--fg);border-color:var(--mut)}
-.tb.on{color:var(--fg);background:#161b26;border-color:var(--mut)}
-.trow{background:var(--card);border:1px solid var(--bd);border-radius:11px;
-margin-bottom:9px;overflow:hidden}
-.th{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
-padding:12px 15px 10px;border-bottom:1px solid var(--bd)}
-.tn{font-weight:700;font-size:15px;letter-spacing:-.012em}
-.tl{font-size:11.5px;color:var(--mut);margin-left:auto;white-space:nowrap}
-.tbody{padding:11px 15px 12px}
-.tnx{font-size:12px;color:var(--mut);margin-top:10px;
-padding-top:9px;border-top:1px solid var(--bd)}
-.tnx b{color:var(--fg);font-weight:600}
-.truns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
-.tdgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tdside{min-width:0}
-.tdname{font-size:13px;font-weight:700;margin-bottom:6px}
-@media (max-width:600px){.tdgrid{grid-template-columns:1fr;gap:10px}}
-.flame{font-size:11px;font-weight:800;color:#0a0d14;background:var(--warn);
-border-radius:999px;padding:2px 9px;font-variant-numeric:tabular-nums}
-.trow.fire{border-color:#f0b42944}
-.norun{font-size:11px;color:var(--mut);font-style:italic}
-.legend{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--mut);
-margin:10px 0 2px}
-.legend .sc{margin:0}
-.lgs{display:flex;gap:6px;flex-wrap:wrap}
-.lg{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);cursor:pointer;
-background:none;border:1px solid var(--bd);border-radius:999px;padding:5px 12px;
-transition:all .12s}
-.lg:hover{color:var(--fg);border-color:var(--mut)}
-.lg.on{color:#0a0d14;background:var(--acc);border-color:var(--acc)}
-.srch{margin-top:9px;display:flex;gap:8px;align-items:center}
-.srch input{flex:1;font:inherit;font-size:13px;color:var(--fg);background:var(--card);
-border:1px solid var(--bd);border-radius:9px;padding:8px 12px;outline:none}
-.srch input:focus{border-color:var(--acc)}
-.srch input::placeholder{color:var(--mut)}
-.sorts{display:flex;align-items:center;gap:6px;margin-top:9px}
-.slbl{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-color:var(--mut);margin-right:2px}
-.sb{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);cursor:pointer;
-background:none;border:1px solid var(--bd);border-radius:999px;padding:4px 11px}
-.sb:hover{color:var(--fg);border-color:var(--mut)}
-.sb.on{color:#0a0d14;background:var(--warn);border-color:var(--warn)}
-.more{width:100%;font:inherit;font-size:12px;font-weight:700;color:var(--mut);
-background:none;border:1px dashed var(--bd);border-radius:9px;padding:9px 13px;
-cursor:pointer;margin-top:4px}
-.more:hover{color:var(--fg);border-color:var(--mut)}
-.cnt{font-size:11.5px;color:var(--mut);white-space:nowrap;font-variant-numeric:tabular-nums}
-/* --- card: fixture header → evidence → the lead, in that order --- */
-.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;
-margin-bottom:11px;overflow:hidden}
-.chd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
-padding:13px 15px 11px;border-bottom:1px solid var(--bd)}
-.fx{font-weight:700;font-size:15px;letter-spacing:-.012em}
-.fxm{font-size:11.5px;color:var(--mut);margin-left:auto;white-space:nowrap}
-.ev{padding:11px 15px 3px}
-.leg{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:7px}
-.lgn{font-size:13px;font-weight:700;min-width:0}
-.lgr{font-size:11px;font-weight:700;letter-spacing:.02em;border-radius:999px;
-padding:2px 8px;border:1px solid;white-space:nowrap}
-.lgr.a{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
-.lgr.b{color:var(--acc);border-color:#7aa2f755;background:#7aa2f714}
-.seq{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 11px}
-.sc{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;
-border-radius:5px;padding:2px 6px;background:#0c1017;border:1px solid var(--bd);
-color:var(--mut);cursor:default}
-.sc.hit{color:var(--fg);border-color:#3fb97044;background:#3fb9700f}
-/* Preseason/friendly result. Marked by a DASHED border only — an opacity knock-back on
-   top of `.hit` made a friendly that is part of the run read as though it were outside
-   it, which contradicted both the run length and the note underneath. */
-.sc.fr{border-style:dashed;border-color:#f0b42966;color:var(--warn)}
-.kbtn{font-size:11px;font-weight:700;color:var(--acc);text-decoration:none;
-border:1px solid #7aa2f755;background:#7aa2f714;border-radius:999px;
-padding:3px 10px;white-space:nowrap}
-.kbtn:hover{background:#7aa2f72a}
-.px{font-size:11px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;
-white-space:nowrap}
-.bk{font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums;margin-top:6px}
-.bk b{color:var(--fg);font-weight:600}
-.bk .pay{color:var(--pos);font-weight:800;letter-spacing:.05em;font-size:9.5px;
-border:1px solid #3fb97055;background:#3fb97014;border-radius:999px;padding:1px 7px;
-margin-left:6px}
-.frn{font-size:11px;color:var(--warn);margin:-4px 0 9px}
-/* date grouping + countdown */
-.dhd{display:flex;align-items:baseline;gap:9px;margin:22px 0 9px;
-padding-bottom:6px;border-bottom:1px solid var(--bd)}
-.dhd:first-child{margin-top:4px}
-.dday{font-size:12.5px;font-weight:800;letter-spacing:.03em;color:var(--fg)}
-.drel{font-size:11px;color:var(--mut)}
-.dcnt{font-size:11px;color:var(--mut);margin-left:auto;font-variant-numeric:tabular-nums}
-.cd{font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;
-border-radius:999px;padding:3px 9px;border:1px solid;white-space:nowrap}
-.cd.soon{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
-.cd.later{color:var(--mut);border-color:var(--bd)}
-.cd.live{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
-/* the lead — its own section, after the evidence that supports it */
-.lead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-padding:11px 15px;background:#0c1017;border-top:1px solid var(--bd)}
-.lbl{font-size:9.5px;font-weight:800;letter-spacing:.09em;color:var(--mut);
-text-transform:uppercase;white-space:nowrap}
-.hl{font-weight:800;font-size:14.5px;color:var(--warn);letter-spacing:-.01em}
-.rare{font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;
-border:1px solid;margin-left:auto;white-space:nowrap}
-.rare.hot{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
-.rare.mid{color:var(--mut);border-color:var(--bd)}
-.rare.common{color:var(--neg);border-color:#e06c7544;background:#e06c750f}
-/* --- track record --- */
-.tr-note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
+.note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
 border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
-.tr-note b{color:var(--fg);font-weight:600}
-.tr-note.warn{border-color:#f0b42944;background:#f0b4290a}
+.note b{color:var(--fg);font-weight:600}
+.note.warn{border-color:#f0b42944;background:#f0b4290a}
 .tiles{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}
-.tile{flex:1;min-width:104px;background:var(--card);border:1px solid var(--bd);
+.tile{flex:1;min-width:100px;background:var(--card);border:1px solid var(--bd);
 border-radius:10px;padding:11px 13px}
 .tile b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
 .tile span{font-size:11px;color:var(--mut)}
@@ -161,402 +38,587 @@ color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:
 td{padding:9px 11px;border-bottom:1px solid #1a1f2b;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 .num{font-variant-numeric:tabular-nums;text-align:right}
-.sig{font-size:9.5px;font-weight:800;letter-spacing:.05em;border-radius:999px;
+.st,.sig{font-size:9.5px;font-weight:800;letter-spacing:.05em;border-radius:999px;
 padding:2px 7px;border:1px solid}
-.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
-.sig.n{color:var(--mut);border-color:var(--bd)}
-.empty{color:var(--mut);padding:26px 0;text-align:center;line-height:1.6}
+.st.hit,.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
+.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
+.st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
+.sm{font-size:11px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.tabs button{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:6px 13px;cursor:pointer}
+.tabs button.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+.tabs button b{margin-left:5px}
+.grp td{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}
+.grp.ok td{color:var(--pos)}.grp.bad td{color:var(--neg)}
+details.ref{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;margin-bottom:10px}
+details.ref>summary{cursor:pointer;font-size:12.5px;font-weight:700}
+details.ref[open]>summary{margin-bottom:10px}
 footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
-@media (max-width:560px){
-  body{padding:18px 10px 44px;font-size:14px}
-  h1{font-size:19px} .hl{font-size:14px}
-  .fxm{margin-left:0;width:100%}
-  .rare{margin-left:0}
-}
+@media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
 </style></head><body><div class="wrap">
-<h1>Edge Machine · Leads</h1>
-<div class="sub">Both sides&#x27; runs pointing at the same total · all times CT · updated Sep 17 2026 · 21:53 UTC</div>
-<div class="nav"><a class="on" href="./">Leads</a><a href="./streaks.html">Streaks</a>
-<a href="./record.html">Record</a><a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
+<h1>Edge Machine · Record</h1>
+<div class="sub">Everything that has been graded · all times CT · updated Sep 18 2026 · 00:14 UTC</div>
+<div class="nav"><a class="on" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
-<details class="how">
-<summary>How a lead is chosen — and why only two lanes</summary>
-<div class="howbody">
-<p>A streak on its own is not an edge; plenty of good sides score freely. There are two
-lanes, each one market.</p>
-<p><b>Over 1.5</b> (rule changed 2026-09-14): both sides' competitive games went over 1.5
-in at least <b>9 of their last 10</b>, each with 10+ games. The
-rule was fixed before it was tested on 530 past matches, where it hit 92.9% against the
-same teams' own earlier 81.4%. It replaced the run pairings (both sides over 1.5, or both
-scoring, in every recent game), which still run unpublished so the <b>Record</b> can compare
-the two from the change date. Over 1.5 lands in roughly 85% of matches without any flag, so
-a hit proves nothing on its own: the price is the test.</p>
-<p><b>A side to score 2+</b> is the board's original question — a team scoring 2+ in
-every recent game meeting an opponent that concedes in every recent game. It trades near
-evens, so it is the one market here where an edge, if one exists, would actually pay;
-each card shows the price captured when it was first listed.</p>
-<p>A pair has to <b>imply the line arithmetically</b>. That rules out the pairing that looks
-most natural: "A have scored in 6 straight" plus "B have conceded in 6 straight" reads like
-two pieces of evidence, but in a match between them <b>A scoring and B conceding are the same
-event</b>, counted twice.</p>
-<p>Team 2+ legs must run at least <b>3 games</b>, on a side with at least
-<b>5</b> played. Form spans <b>all</b> tracked competitions (last
-6 games), because form does not reset when a side walks into a European tie.
-A run made up entirely of preseason friendlies is discarded.</p>
-<p>Leads are published only for fixtures kicking off within the next <b>48
-hours</b>. A lead published a week out is re-judged by every midweek game in between, and a
-lead the board later drops is recorded as <b>withdrawn</b>: graded, but kept out of the
-Record's verdict on the rules.</p>
-<p>Every lead carries a <b>rarity</b> chip — the share of tracked teams currently on a run
-that long (for over 1.5, at 9+ of 10), taken from the <b>weaker</b> leg, since a
-pair is only as unusual as its most ordinary half. When that share is high the pattern is
-ordinary and the chip says so.</p>
-<p>Leads to look at — not picks, and not betting advice.</p></div>
-</details>
+<div class="note warn">Every graded result on one table, sorted like the Sandbox: <b>working</b> and <b>not
+working</b> need 30+ graded; under that a result is only leaning. Each row is measured against a
+<b>reference</b> — the market's price, the teams' own rate, the book, or a shuffled schedule — never a
+bare hit rate. Ranked by <b>z</b> (how many standard deviations from the reference), then ROI. <b>SIG</b>
+marks |z| ≥ 2, and with this many rows a few of those appear by chance.</div>
 
-<div class="controls">
-  <div class="tabs"></div>
-  <div class="lgs">
-    <button class="lg on" data-lg="">All leagues</button><button class="lg" data-lg="Bundesliga">Bundesliga</button><button class="lg" data-lg="Eredivisie">Eredivisie</button><button class="lg" data-lg="La Liga">La Liga</button><button class="lg" data-lg="Premier League">Premier League</button><button class="lg" data-lg="Serie A">Serie A</button>
-  </div>
-  <div class="srch">
-    <input id="q" type="search" placeholder="Filter by team… (e.g. Barcelona)" autocomplete="off">
-    <span class="cnt" id="cnt"></span>
-  </div>
-  <div class="sorts" id="sorts" style="display:none">
-    <span class="slbl">Sort</span>
-    <button class="sb on" data-sort="hot">Hottest</button>
-    <button class="sb" data-sort="soon">Playing soonest</button>
-  </div>
+<div class="tiles">
+<div class="tile"><b class="pos">11</b><span>working</span></div>
+<div class="tile"><b class="neg">34</b><span>not working</span></div>
+<div class="tile"><b>15</b><span>too early to tell</span></div>
+<div class="tile"><b>186</b><span>leads graded</span></div>
+<div class="tile"><b>145</b><span>fixtures graded at the price</span></div>
+<div class="tile"><b>108</b><span>leads pending</span></div>
 </div>
 
-<div class="legend"><span class="sc hit">2-1</span> in the run
-  <span class="sc">1-1</span> outside it
-  <span class="sc hit fr">3-0</span> preseason friendly</div>
-<div id="list"></div>
-<div class="empty" id="empty" style="display:none"></div>
+<h2>Results, ranked</h2>
+<div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>11</b></button><button type="button" data-tab="failing">Not working<b>34</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>6</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>9</b></button><button type="button" data-tab="all">All</button></div>
+<div class="tbl"><table id="pairs"><tr><th class="num">#</th><th>Test</th><th class="num">n</th><th class="num">Result</th>
+<th class="num">Reference</th><th class="num">Diff</th><th class="num">z</th><th class="num">ROI</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 11</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ graded and ahead of its reference.</td></tr><tr data-g="working"><td class="num mut">1</td>
+<td><b>Serie A</b> <span class="sig y">SIG</span><div class="sm mut">Book · by league</div></td>
+<td class="num">45</td><td class="num">71%</td><td class="num mut">50% market</td>
+<td class="num">+9.4 hits</td><td class="num"><span class="pos">+3.01</span></td><td class="num"><span class="pos">+48.6%</span></td></tr><tr data-g="working"><td class="num mut">2</td>
+<td><b>Primeira Liga</b> <span class="sig y">SIG</span><div class="sm mut">Book · by league</div></td>
+<td class="num">35</td><td class="num">71%</td><td class="num mut">51% market</td>
+<td class="num">+7.1 hits</td><td class="num"><span class="pos">+2.55</span></td><td class="num"><span class="pos">+37.6%</span></td></tr><tr data-g="working"><td class="num mut">3</td>
+<td><b>priced 0–40%</b> <span class="sig y">SIG</span><div class="sm mut">Book · by price</div></td>
+<td class="num">126</td><td class="num">38%</td><td class="num mut">29% market</td>
+<td class="num">+11.2 hits</td><td class="num"><span class="pos">+2.22</span></td><td class="num"><span class="pos">+17.9%</span></td></tr><tr data-g="working"><td class="num mut">4</td>
+<td><b>La Liga</b><div class="sm mut">Book · by league</div></td>
+<td class="num">81</td><td class="num">56%</td><td class="num mut">52% market</td>
+<td class="num">+3.2 hits</td><td class="num"><span class="pos">+0.78</span></td><td class="num"><span class="pos">+1.1%</span></td></tr><tr data-g="working"><td class="num mut">5</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Leads at the price</div></td>
+<td class="num">33</td><td class="num">85%</td><td class="num mut">80% market</td>
+<td class="num">+4.4pp</td><td class="num"><span class="pos">+0.64</span></td><td class="num"><span class="pos">+1.8%</span></td></tr><tr data-g="working"><td class="num mut">6</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Leads at the price</div></td>
+<td class="num">34</td><td class="num">65%</td><td class="num mut">60% market</td>
+<td class="num">+5.2pp</td><td class="num"><span class="pos">+0.61</span></td><td class="num"><span class="pos">+4.3%</span></td></tr><tr data-g="working"><td class="num mut">7</td>
+<td><b>Eliteserien</b><div class="sm mut">Book · by league</div></td>
+<td class="num">30</td><td class="num">63%</td><td class="num mut">60% market</td>
+<td class="num">+1.1 hits</td><td class="num"><span class="pos">+0.42</span></td><td class="num"><span class="pos">+0.7%</span></td></tr><tr data-g="working"><td class="num mut">8</td>
+<td><b>Both teams to score</b><div class="sm mut">Leads at the price</div></td>
+<td class="num">34</td><td class="num">62%</td><td class="num mut">59% market</td>
+<td class="num">+3.2pp</td><td class="num"><span class="pos">+0.37</span></td><td class="num"><span class="pos">+0.0%</span></td></tr><tr data-g="working"><td class="num mut">9</td>
+<td><b>Premier League</b><div class="sm mut">Book · by league</div></td>
+<td class="num">50</td><td class="num">56%</td><td class="num mut">55% market</td>
+<td class="num">+0.3 hits</td><td class="num"><span class="pos">+0.10</span></td><td class="num"><span class="pos">+2.9%</span></td></tr><tr data-g="working"><td class="num mut">10</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Model v book (leads)</div></td>
+<td class="num">34</td><td class="num">Brier 0.219</td><td class="num mut">book 0.225</td>
+<td class="num">+0.006</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="working"><td class="num mut">11</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Model v book (leads)</div></td>
+<td class="num">33</td><td class="num">Brier 0.135</td><td class="num mut">book 0.142</td>
+<td class="num">+0.008</td><td class="num">—</td><td class="num">—</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · 34</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ graded and not ahead of its reference — the market, the teams&#x27; own rate, or a shuffled schedule already explains it.</td></tr><tr data-g="failing"><td class="num mut">1</td>
+<td><b>Ligue 1</b> <span class="sig y">SIG</span><div class="sm mut">Book · by league</div></td>
+<td class="num">40</td><td class="num">35%</td><td class="num mut">55% market</td>
+<td class="num">-7.9 hits</td><td class="num"><span class="neg">-2.65</span></td><td class="num"><span class="neg">-37.4%</span></td></tr><tr data-g="failing"><td class="num mut">2</td>
+<td><b>Europa League</b><div class="sm mut">Book · by league</div></td>
+<td class="num">87</td><td class="num">49%</td><td class="num mut">57% market</td>
+<td class="num">-6.7 hits</td><td class="num"><span class="neg">-1.56</span></td><td class="num"><span class="neg">-18.0%</span></td></tr><tr data-g="failing"><td class="num mut">3</td>
+<td><b>Greek Super League</b><div class="sm mut">Book · by league</div></td>
+<td class="num">35</td><td class="num">37%</td><td class="num mut">49% market</td>
+<td class="num">-4.1 hits</td><td class="num"><span class="neg">-1.47</span></td><td class="num"><span class="neg">-35.6%</span></td></tr><tr data-g="failing"><td class="num mut">4</td>
+<td><b>priced 40–50%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">114</td><td class="num">39%</td><td class="num mut">45% market</td>
+<td class="num">-6.7 hits</td><td class="num"><span class="neg">-1.26</span></td><td class="num"><span class="neg">-17.5%</span></td></tr><tr data-g="failing"><td class="num mut">5</td>
+<td><b>Home side scores 2+</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">138</td><td class="num">43%</td><td class="num mut">48% market</td>
+<td class="num">-6.6 hits</td><td class="num"><span class="neg">-1.20</span></td><td class="num"><span class="neg">-11.9%</span></td></tr><tr data-g="failing"><td class="num mut">6</td>
+<td><b>MLS</b><div class="sm mut">Book · by league</div></td>
+<td class="num">75</td><td class="num">55%</td><td class="num mut">61% market</td>
+<td class="num">-4.7 hits</td><td class="num"><span class="neg">-1.17</span></td><td class="num"><span class="neg">-11.7%</span></td></tr><tr data-g="failing"><td class="num mut">7</td>
+<td><b>priced 50–60%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">179</td><td class="num">51%</td><td class="num mut">55% market</td>
+<td class="num">-7.6 hits</td><td class="num"><span class="neg">-1.14</span></td><td class="num"><span class="neg">-12.1%</span></td></tr><tr data-g="failing"><td class="num mut">8</td>
+<td><b>Eredivisie</b><div class="sm mut">Book · by league</div></td>
+<td class="num">41</td><td class="num">56%</td><td class="num mut">63% market</td>
+<td class="num">-2.9 hits</td><td class="num"><span class="neg">-1.00</span></td><td class="num"><span class="neg">-19.5%</span></td></tr><tr data-g="failing"><td class="num mut">9</td>
+<td><b>Team to score</b><div class="sm mut">Leads</div></td>
+<td class="num">36</td><td class="num">81%</td><td class="num mut">86% teams&#x27; own</td>
+<td class="num">-5.5pp</td><td class="num"><span class="neg">-0.94</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">10</td>
+<td><b>the rest</b><div class="sm mut">Book · model value split</div></td>
+<td class="num">450</td><td class="num">57%</td><td class="num mut">59% market</td>
+<td class="num">-9.0 hits</td><td class="num"><span class="neg">-0.90</span></td><td class="num"><span class="neg">-6.0%</span></td></tr><tr data-g="failing"><td class="num mut">11</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Leads</div></td>
+<td class="num">31</td><td class="num">58%</td><td class="num mut">66% teams&#x27; own</td>
+<td class="num">-7.6pp</td><td class="num"><span class="neg">-0.89</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">12</td>
+<td><b>priced 60–70%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">125</td><td class="num">61%</td><td class="num mut">64% market</td>
+<td class="num">-4.3 hits</td><td class="num"><span class="neg">-0.81</span></td><td class="num"><span class="neg">-9.9%</span></td></tr><tr data-g="failing"><td class="num mut">13</td>
+<td><b>Belgian Pro League</b><div class="sm mut">Book · by league</div></td>
+<td class="num">40</td><td class="num">52%</td><td class="num mut">57% market</td>
+<td class="num">-1.6 hits</td><td class="num"><span class="neg">-0.56</span></td><td class="num"><span class="neg">-18.5%</span></td></tr><tr data-g="failing"><td class="num mut">14</td>
+<td><b>priced 80–90%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">64</td><td class="num">81%</td><td class="num mut">83% market</td>
+<td class="num">-1.0 hits</td><td class="num"><span class="neg">-0.32</span></td><td class="num"><span class="neg">-5.8%</span></td></tr><tr data-g="failing"><td class="num mut">15</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Leads</div></td>
+<td class="num">74</td><td class="num">84%</td><td class="num mut">84% teams&#x27; own</td>
+<td class="num">-0.6pp</td><td class="num"><span class="neg">-0.14</span></td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">16</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">126</td><td class="num">78%</td><td class="num mut">78% market</td>
+<td class="num">-0.6 hits</td><td class="num"><span class="neg">-0.13</span></td><td class="num"><span class="neg">-3.9%</span></td></tr><tr data-g="failing"><td class="num mut">17</td>
+<td><b>Turkish Super Lig</b><div class="sm mut">Book · by league</div></td>
+<td class="num">35</td><td class="num">51%</td><td class="num mut">52% market</td>
+<td class="num">-0.1 hits</td><td class="num"><span class="neg">-0.04</span></td><td class="num"><span class="pos">+0.8%</span></td></tr><tr data-g="failing"><td class="num mut">18</td>
+<td><b>Both teams to score</b><div class="sm mut">Model v book (leads)</div></td>
+<td class="num">34</td><td class="num">Brier 0.239</td><td class="num mut">book 0.234</td>
+<td class="num">-0.004</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">19</td>
+<td><b>both teams scored runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">40</td><td class="num">-24.2pp on v off</td><td class="num mut">shuffled -57 to -14pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">20</td>
+<td><b>over 2.5 goals runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">40</td><td class="num">-30.7pp on v off</td><td class="num mut">shuffled -57 to -16pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">21</td>
+<td><b>Over 1.5 goals</b><div class="sm mut">Model v book (every fixture)</div></td>
+<td class="num">117</td><td class="num">Brier 0.176</td><td class="num mut">book 0.176</td>
+<td class="num">-0.000</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">22</td>
+<td><b>Away side scores 2+</b><div class="sm mut">Model v book (every fixture)</div></td>
+<td class="num">127</td><td class="num">Brier 0.239</td><td class="num mut">book 0.232</td>
+<td class="num">-0.007</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">23</td>
+<td><b>Home side scores 2+</b><div class="sm mut">Model v book (every fixture)</div></td>
+<td class="num">128</td><td class="num">Brier 0.241</td><td class="num mut">book 0.232</td>
+<td class="num">-0.010</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">24</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Model v book (every fixture)</div></td>
+<td class="num">133</td><td class="num">Brier 0.246</td><td class="num mut">book 0.238</td>
+<td class="num">-0.008</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">25</td>
+<td><b>Both teams to score</b><div class="sm mut">Model v book (every fixture)</div></td>
+<td class="num">134</td><td class="num">Brier 0.252</td><td class="num mut">book 0.247</td>
+<td class="num">-0.005</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">26</td>
+<td><b>conceded in runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">193</td><td class="num">-24.2pp on v off</td><td class="num mut">shuffled -40 to -20pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">27</td>
+<td><b>scored in runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">213</td><td class="num">-26.0pp on v off</td><td class="num mut">shuffled -38 to -19pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">28</td>
+<td><b>over 1.5 goals runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">261</td><td class="num">-17.6pp on v off</td><td class="num mut">shuffled -36 to -20pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="failing"><td class="num mut">29</td>
+<td><b>Over 2.5 goals</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">143</td><td class="num">57%</td><td class="num mut">57% market</td>
+<td class="num">+0.0 hits</td><td class="num"><span class="pos">+0.00</span></td><td class="num"><span class="neg">-3.9%</span></td></tr><tr data-g="failing"><td class="num mut">30</td>
+<td><b>Both teams to score</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">144</td><td class="num">56%</td><td class="num mut">56% market</td>
+<td class="num">+0.1 hits</td><td class="num"><span class="pos">+0.01</span></td><td class="num"><span class="neg">-4.5%</span></td></tr><tr data-g="failing"><td class="num mut">31</td>
+<td><b>Away side scores 2+</b><div class="sm mut">Book · every fixture</div></td>
+<td class="num">137</td><td class="num">40%</td><td class="num mut">40% market</td>
+<td class="num">+0.6 hits</td><td class="num"><span class="pos">+0.12</span></td><td class="num"><span class="neg">-1.8%</span></td></tr><tr data-g="failing"><td class="num mut">32</td>
+<td><b>priced 70–80%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">76</td><td class="num">78%</td><td class="num mut">76% market</td>
+<td class="num">+1.6 hits</td><td class="num"><span class="pos">+0.43</span></td><td class="num"><span class="neg">-1.3%</span></td></tr><tr data-g="failing"><td class="num mut">33</td>
+<td><b>model ≥ book + 5pp</b><div class="sm mut">Book · model value split</div></td>
+<td class="num">189</td><td class="num">47%</td><td class="num mut">46% market</td>
+<td class="num">+2.8 hits</td><td class="num"><span class="pos">+0.43</span></td><td class="num"><span class="neg">-2.2%</span></td></tr><tr data-g="failing"><td class="num mut">34</td>
+<td><b>Bundesliga</b><div class="sm mut">Book · by league</div></td>
+<td class="num">31</td><td class="num">61%</td><td class="num mut">57% market</td>
+<td class="num">+1.4 hits</td><td class="num"><span class="pos">+0.51</span></td><td class="num"><span class="neg">-6.1%</span></td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 6</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 graded, ahead so far. Unreadable yet.</td></tr><tr data-g="leaning"><td class="num mut">1</td>
+<td><b>Austrian Bundesliga</b><div class="sm mut">Book · by league</div></td>
+<td class="num">15</td><td class="num">87%</td><td class="num mut">56% market</td>
+<td class="num">+4.6 hits</td><td class="num"><span class="mut">+2.50</span></td><td class="num"><span class="mut">+52.4%</span></td></tr><tr data-g="leaning"><td class="num mut">2</td>
+<td><b>Team to score 2+</b><div class="sm mut">Leads</div></td>
+<td class="num">20</td><td class="num">65%</td><td class="num mut">58% teams&#x27; own</td>
+<td class="num">+6.8pp</td><td class="num"><span class="mut">+0.62</span></td><td class="num">—</td></tr><tr data-g="leaning"><td class="num mut">3</td>
+<td><b>priced 90–100%</b><div class="sm mut">Book · by price</div></td>
+<td class="num">4</td><td class="num">100%</td><td class="num mut">93% market</td>
+<td class="num">+0.3 hits</td><td class="num"><span class="mut">+0.56</span></td><td class="num"><span class="mut">+6.5%</span></td></tr><tr data-g="leaning"><td class="num mut">4</td>
+<td><b>Team to score 2+</b><div class="sm mut">Leads at the price</div></td>
+<td class="num">11</td><td class="num">64%</td><td class="num mut">58% market</td>
+<td class="num">+6.0pp</td><td class="num"><span class="mut">+0.41</span></td><td class="num"><span class="mut">+0.3%</span></td></tr><tr data-g="leaning"><td class="num mut">5</td>
+<td><b>Over 1.5 · run pairings (retired, shadow)</b><div class="sm mut">Rule change</div></td>
+<td class="num">13</td><td class="num">85%</td><td class="num mut">same weeks, same prices</td>
+<td class="num">—</td><td class="num">—</td><td class="num"><span class="mut">+2.4%</span></td></tr><tr data-g="leaning"><td class="num mut">6</td>
+<td><b>Both teams to score</b><div class="sm mut">Leads</div></td>
+<td class="num">24</td><td class="num">75%</td><td class="num mut">74% teams&#x27; own</td>
+<td class="num">+1.3pp</td><td class="num"><span class="mut">+0.15</span></td><td class="num">—</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 9</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 graded, behind so far.</td></tr><tr data-g="behind"><td class="num mut">1</td>
+<td><b>Saudi Pro League</b><div class="sm mut">Book · by league</div></td>
+<td class="num">24</td><td class="num">33%</td><td class="num mut">50% market</td>
+<td class="num">-4.1 hits</td><td class="num"><span class="mut">-1.74</span></td><td class="num"><span class="mut">-36.1%</span></td></tr><tr data-g="behind"><td class="num mut">2</td>
+<td><b>Team to fail to score</b><div class="sm mut">Leads</div></td>
+<td class="num">1</td><td class="num">0%</td><td class="num mut">57% teams&#x27; own</td>
+<td class="num">-57.1pp</td><td class="num"><span class="mut">-1.15</span></td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">3</td>
+<td><b>Scottish Premiership</b><div class="sm mut">Book · by league</div></td>
+<td class="num">9</td><td class="num">56%</td><td class="num mut">65% market</td>
+<td class="num">-0.9 hits</td><td class="num"><span class="mut">-0.62</span></td><td class="num"><span class="mut">-14.5%</span></td></tr><tr data-g="behind"><td class="num mut">4</td>
+<td><b>Over 1.5 · 9+ of last 10 (published)</b><div class="sm mut">Rule change</div></td>
+<td class="num">4</td><td class="num">75%</td><td class="num mut">same weeks, same prices</td>
+<td class="num">—</td><td class="num">—</td><td class="num"><span class="mut">-3.8%</span></td></tr><tr data-g="behind"><td class="num mut">5</td>
+<td><b>Danish Superliga</b><div class="sm mut">Book · by league</div></td>
+<td class="num">15</td><td class="num">53%</td><td class="num mut">58% market</td>
+<td class="num">-0.6 hits</td><td class="num"><span class="mut">-0.35</span></td><td class="num"><span class="mut">-16.1%</span></td></tr><tr data-g="behind"><td class="num mut">6</td>
+<td><b>under 2.5 goals runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">4</td><td class="num">-36.7pp on v off</td><td class="num mut">shuffled -100 to +10pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">7</td>
+<td><b>conceded 2+ runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">6</td><td class="num">-55.1pp on v off</td><td class="num mut">shuffled -94 to +17pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">8</td>
+<td><b>Team to score 2+</b><div class="sm mut">Model v book (leads)</div></td>
+<td class="num">11</td><td class="num">Brier 0.230</td><td class="num mut">book 0.194</td>
+<td class="num">-0.036</td><td class="num">—</td><td class="num">—</td></tr><tr data-g="behind"><td class="num mut">9</td>
+<td><b>scored 2+ runs continue</b><div class="sm mut">On fire</div></td>
+<td class="num">27</td><td class="num">-25.7pp on v off</td><td class="num mut">shuffled -65 to -1pp</td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td></tr></table></div>
 
-<footer>231 teams on a run (1 on a thin sample) · 148 upcoming fixtures scanned · form includes preseason friendlies · read-only static export · research, not betting advice.</footer>
-</div>
+<h2>Recently settled leads (25)</h2>
+<div class="tbl"><table>
+<tr><th>Date</th><th>Match</th><th>Pick</th><th class="num">Final</th><th></th></tr>
+<tr><td class="mut">2026-09-17</td>
+        <td>Besiktas v Marseille</td><td>Besiktas to score 2+</td>
+        <td class="num">4-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-17</td>
+        <td>OFI Crete v TSG Hoffenheim</td><td>Over 1.5 goals</td>
+        <td class="num">2-0</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-16</td>
+        <td>Barcelona v Racing Santander</td><td>Barcelona to score 2+</td>
+        <td class="num">7-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-16</td>
+        <td>SK Sturm Graz v Stade Rennais</td><td>Over 1.5 goals</td>
+        <td class="num">0-0</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-15</td>
+        <td>Falkirk v Heart of Midlothian</td><td>Heart of Midlothian to score 2+</td>
+        <td class="num">2-1</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-15</td>
+        <td>Rayo Vallecano v Espanyol</td><td>Over 1.5 goals</td>
+        <td class="num">2-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-14</td>
+        <td>Como v Parma</td><td>Como to score 2+</td>
+        <td class="num">2-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-14</td>
+        <td>San Diego FC v Philadelphia Union</td><td>Philadelphia Union to score 2+</td>
+        <td class="num">0-5</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-14</td>
+        <td>Torino v AS Roma</td><td>Over 1.5 goals</td>
+        <td class="num">0-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Brest v Paris Saint-Germain</td><td>Brest to score 2+</td>
+        <td class="num">0-1</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Brest v Paris Saint-Germain</td><td>Over 1.5 goals</td>
+        <td class="num">0-1</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Chicago Fire FC v New England Revolution</td><td>Over 1.5 goals</td>
+        <td class="num">1-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Excelsior v FC Utrecht</td><td>Excelsior to score 2+</td>
+        <td class="num">1-2</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Excelsior v FC Utrecht</td><td>Over 1.5 goals</td>
+        <td class="num">1-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>FC Dallas v Portland Timbers</td><td>FC Dallas to score 2+</td>
+        <td class="num">2-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>FC Dallas v Portland Timbers</td><td>Over 1.5 goals</td>
+        <td class="num">2-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Manchester United v Manchester City</td><td>Over 1.5 goals</td>
+        <td class="num">0-1</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>PEC Zwolle v Feyenoord Rotterdam</td><td>Over 1.5 goals</td>
+        <td class="num">0-7</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>PSV Eindhoven v Sparta Rotterdam</td><td>Over 1.5 goals</td>
+        <td class="num">4-1</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>RB Leipzig v Hamburg SV</td><td>Over 1.5 goals</td>
+        <td class="num">5-0</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Real Salt Lake v New York City FC</td><td>Both teams to score</td>
+        <td class="num">0-2</td>
+        <td><span class="st miss">MISS</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>Sassuolo v Juventus</td><td>Over 1.5 goals</td>
+        <td class="num">3-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>St. Louis CITY SC v Minnesota United FC</td><td>Both teams to score</td>
+        <td class="num">4-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>St. Louis CITY SC v Minnesota United FC</td><td>Minnesota United FC to score</td>
+        <td class="num">4-2</td>
+        <td><span class="st hit">HIT</span></td></tr><tr><td class="mut">2026-09-13</td>
+        <td>St. Louis CITY SC v Minnesota United FC</td><td>Over 1.5 goals</td>
+        <td class="num">4-2</td>
+        <td><span class="st hit">HIT</span></td></tr></table></div>
+
+<h2>Reference</h2>
+<details class="ref"><summary>Leads — every lead published, against the teams' own rate</summary><div class="tiles"><div class="tile"><b>186</b><span>Graded</span></div><div class="tile"><b>75%</b><span>Hit rate</span></div><div class="tile"><b>108</b><span>Pending</span></div><div class="tile"><b>8</b><span>Void</span></div><div class="tile"><b>42 · 64% hit</b><span>Withdrawn before kickoff</span></div></div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+    <th class="num">team base</th><th class="num">lift</th><th></th></tr>
+<tr><td>Over 1.5 goals</td>
+        <td class="num">74</td>
+        <td class="num">62</td>
+        <td class="num">84%</td>
+        <td class="num mut" title="league avg 82%">84%</td>
+        <td class="num neg">-0.6pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Team to score</td>
+        <td class="num">36</td>
+        <td class="num">29</td>
+        <td class="num">81%</td>
+        <td class="num mut" title="league avg 78%">86%</td>
+        <td class="num neg">-5.5pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Over 2.5 goals</td>
+        <td class="num">31</td>
+        <td class="num">18</td>
+        <td class="num">58%</td>
+        <td class="num mut" title="league avg 62%">66%</td>
+        <td class="num neg">-7.6pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Both teams to score</td>
+        <td class="num">24</td>
+        <td class="num">18</td>
+        <td class="num">75%</td>
+        <td class="num mut" title="league avg 65%">74%</td>
+        <td class="num pos">+1.3pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Team to score 2+</td>
+        <td class="num">20</td>
+        <td class="num">13</td>
+        <td class="num">65%</td>
+        <td class="num mut" title="league avg 46%">58%</td>
+        <td class="num pos">+6.8pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Team to fail to score</td>
+        <td class="num">1</td>
+        <td class="num">0</td>
+        <td class="num">0%</td>
+        <td class="num mut" title="league avg 28%">57%</td>
+        <td class="num neg">-57.1pp</td>
+        <td><span class="sig n">
+          not sig</span></td></tr></table></div></details>
+<details class="ref"><summary>Leads at the price — does it pay?</summary>
+<div class="note">Flat 1 unit at the price captured the first build a lead was listed (the exchange ask plus fee since
+2026-09-13, Bovada before), never revised, never after kickoff. <b>Break-even</b> is the hit rate the average price demands;
+<b>book fair</b> is the market's own probability.</div><div class="tiles"><div class="tile"><b>34</b><span>Settled at a price</span></div><div class="tile"><b>+6.2%</b><span>Over 1.5 lane ROI</span></div><div class="tile"><b>+0.3%</b><span>Team 2+ lane ROI</span></div><div class="tile"><b>26</b><span>Priced, pending</span></div><div class="tile"><b>Bovada 33 · Kalshi 1</b><span>Claims priced on</span></div></div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">hits</th><th class="num">rate</th>
+    <th class="num">avg price</th><th class="num">break-even</th><th class="num">book fair</th>
+    <th class="num">lift v book</th><th class="num">ROI</th><th></th></tr>
+<tr><td>Over 1.5 goals <span class="mut">· a lane's own claim</span></td>
+        <td class="num">33</td>
+        <td class="num">28</td>
+        <td class="num">85%</td>
+        <td class="num mut">1.19</td>
+        <td class="num mut" title="hit rate needed to break even at the average price">84%</td>
+        <td class="num mut" title="the book's own probability, vig removed">80%</td>
+        <td class="num pos">+4.4pp</td>
+        <td class="num pos">+1.8%</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Over 2.5 goals</td>
+        <td class="num">34</td>
+        <td class="num">22</td>
+        <td class="num">65%</td>
+        <td class="num mut">1.65</td>
+        <td class="num mut" title="hit rate needed to break even at the average price">61%</td>
+        <td class="num mut" title="the book's own probability, vig removed">60%</td>
+        <td class="num pos">+5.2pp</td>
+        <td class="num pos">+4.3%</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Both teams to score</td>
+        <td class="num">34</td>
+        <td class="num">21</td>
+        <td class="num">62%</td>
+        <td class="num mut">1.64</td>
+        <td class="num mut" title="hit rate needed to break even at the average price">61%</td>
+        <td class="num mut" title="the book's own probability, vig removed">59%</td>
+        <td class="num pos">+3.2pp</td>
+        <td class="num pos">+0.0%</td>
+        <td><span class="sig n">
+          not sig</span></td></tr><tr><td>Team to score 2+ <span class="mut">· a lane's own claim</span></td>
+        <td class="num">11</td>
+        <td class="num">7</td>
+        <td class="num">64%</td>
+        <td class="num mut">1.89</td>
+        <td class="num mut" title="hit rate needed to break even at the average price">53%</td>
+        <td class="num mut" title="the book's own probability, vig removed">58%</td>
+        <td class="num pos">+6.0pp</td>
+        <td class="num pos">+0.3%</td>
+        <td><span class="sig n">
+          not sig</span></td></tr></table></div></details>
+<details class="ref"><summary>Over 1.5 — the rule change of 2026-09-14</summary><div class="note">On 2026-09-14 the over-1.5 lane changed rule: both sides' games over 1.5
+in <b>9+ of their last 10</b>, replacing the run pairings (both sides over 1.5, or both scoring, in
+every recent game). The old rule still runs, unpublished, on the same fixtures, so the two are
+compared on the same weeks at the same exchange prices. Only leads still on the board at
+kickoff count. 12 fixture(s) were picked by both.</div>
+<div class="tbl"><table><tr><th>Rule</th><th class="num">Graded</th><th class="num">Hit</th>
+<th class="num">Priced</th><th class="num">Avg price</th><th class="num">ROI</th><th class="num">Pending</th></tr>
+<tr><td><b>9+ of last 10 (published)</b></td><td class="num">4</td><td class="num">75%</td><td class="num">4</td><td class="num">1.26</td><td class="num">-3.8%</td><td class="num">8</td></tr><tr><td><b>Run pairings (retired, shadow)</b></td><td class="num">13</td><td class="num">85%</td><td class="num">13</td><td class="num">1.23</td><td class="num">+2.4%</td><td class="num">17</td></tr></table></div></details>
+<details class="ref"><summary>Model v book on the leads</summary><div class="tiles"><div class="tile"><b>34</b><span>Scored, model v book</span></div><div class="tile"><b>2 of 4 markets</b><span>Model ahead on</span></div><div class="tile"><b>26</b><span>Pending, modelled</span></div></div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">n</th><th class="num">actual</th><th class="num">model avg</th>
+    <th class="num">book fair</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr>
+<tr><td>Over 1.5 goals</td><td class="num">33</td>
+        <td class="num">85%</td>
+        <td class="num mut">82%</td><td class="num mut">80%</td>
+        <td class="num">0.1346</td><td class="num">0.1425</td>
+        <td><span class="sig y">
+          MODEL AHEAD</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">34</td>
+        <td class="num">65%</td>
+        <td class="num mut">62%</td><td class="num mut">60%</td>
+        <td class="num">0.2190</td><td class="num">0.2251</td>
+        <td><span class="sig y">
+          MODEL AHEAD</span></td></tr><tr><td>Both teams to score</td><td class="num">34</td>
+        <td class="num">62%</td>
+        <td class="num mut">62%</td><td class="num mut">59%</td>
+        <td class="num">0.2386</td><td class="num">0.2344</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr><tr><td>Team to score 2+</td><td class="num">11</td>
+        <td class="num">64%</td>
+        <td class="num mut">57%</td><td class="num mut">58%</td>
+        <td class="num">0.2301</td><td class="num">0.1941</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr></table></div><div class="note">Pre-registered value split: a lead is <b>value</b> when the model's probability beats the book's fair probability by <b>5pp</b> or more. If the model carries anything the book does not, the value group should out-hit and out-earn the rest. The margin was fixed before any of this settled.</div><div class="tbl"><table>
+<tr><th>Market</th><th class="num">value n</th><th class="num">hit</th><th class="num">ROI</th>
+    <th class="num">rest n</th><th class="num">hit</th><th class="num">ROI</th></tr>
+<tr><td>Over 1.5 goals</td><td class="num">7</td><td class="num">100%</td><td class="num pos">+20.5%</td><td class="num">26</td><td class="num">81%</td><td class="num neg">-3.2%</td></tr><tr><td>Over 2.5 goals</td><td class="num">14</td><td class="num">71%</td><td class="num pos">+13.0%</td><td class="num">20</td><td class="num">60%</td><td class="num neg">-1.7%</td></tr><tr><td>Both teams to score</td><td class="num">14</td><td class="num">57%</td><td class="num neg">-3.0%</td><td class="num">20</td><td class="num">65%</td><td class="num pos">+2.2%</td></tr><tr><td>Team to score 2+</td><td class="num">2</td><td class="num">0%</td><td class="num neg">-100.0%</td><td class="num">9</td><td class="num">78%</td><td class="num pos">+22.6%</td></tr></table></div></details>
+<details class="ref"><summary>The book on every fixture — markets, leagues, price bands, teams</summary><div class="tiles"><div class="tile"><b>152</b><span>Fixtures priced</span></div><div class="tile"><b>145</b><span>Settled</span></div><div class="tile"><b>688</b><span>Observations</span></div><div class="tile"><b>55% v 55%</b><span>Hit v book</span></div><div class="tile"><b>-0.53</b><span>z</span></div><div class="tile"><b>-5.2%</b><span>ROI</span></div></div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Over 1.5 goals</td><td class="num">126</td>
+            <td class="num">78%</td><td class="num mut">78%</td>
+            <td class="num">-0.6</td><td class="num neg">-0.13</td><td class="num neg">-3.9%</td></tr><tr><td>Over 2.5 goals</td><td class="num">143</td>
+            <td class="num">57%</td><td class="num mut">57%</td>
+            <td class="num">+0.0</td><td class="num pos">+0.00</td><td class="num neg">-3.9%</td></tr><tr><td>Both teams to score</td><td class="num">144</td>
+            <td class="num">56%</td><td class="num mut">56%</td>
+            <td class="num">+0.1</td><td class="num pos">+0.01</td><td class="num neg">-4.5%</td></tr><tr><td>Home side scores 2+</td><td class="num">138</td>
+            <td class="num">43%</td><td class="num mut">48%</td>
+            <td class="num">-6.6</td><td class="num neg">-1.20</td><td class="num neg">-11.9%</td></tr><tr><td>Away side scores 2+</td><td class="num">137</td>
+            <td class="num">40%</td><td class="num mut">40%</td>
+            <td class="num">+0.6</td><td class="num pos">+0.12</td><td class="num neg">-1.8%</td></tr></table></div><div class="note"><b>By league.</b> A mispricing is far more likely to be structural — a thin market, a shaded favourite — than a property of one club, and a league pools dozens of teams, so this reads weeks before any team row can.</div><div class="tbl"><table><tr><th>League</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Europa League</td><td class="num">87</td>
+            <td class="num">49%</td><td class="num mut">57%</td>
+            <td class="num">-6.7</td><td class="num neg">-1.56</td><td class="num neg">-18.0%</td></tr><tr><td>La Liga</td><td class="num">81</td>
+            <td class="num">56%</td><td class="num mut">52%</td>
+            <td class="num">+3.2</td><td class="num pos">+0.78</td><td class="num pos">+1.1%</td></tr><tr><td>MLS</td><td class="num">75</td>
+            <td class="num">55%</td><td class="num mut">61%</td>
+            <td class="num">-4.7</td><td class="num neg">-1.17</td><td class="num neg">-11.7%</td></tr><tr><td>Premier League</td><td class="num">50</td>
+            <td class="num">56%</td><td class="num mut">55%</td>
+            <td class="num">+0.3</td><td class="num pos">+0.10</td><td class="num pos">+2.9%</td></tr><tr><td>Serie A</td><td class="num">45</td>
+            <td class="num">71%</td><td class="num mut">50%</td>
+            <td class="num">+9.4</td><td class="num pos">+3.01</td><td class="num pos">+48.6%</td></tr><tr><td>Eredivisie</td><td class="num">41</td>
+            <td class="num">56%</td><td class="num mut">63%</td>
+            <td class="num">-2.9</td><td class="num neg">-1.00</td><td class="num neg">-19.5%</td></tr><tr><td>Belgian Pro League</td><td class="num">40</td>
+            <td class="num">52%</td><td class="num mut">57%</td>
+            <td class="num">-1.6</td><td class="num neg">-0.56</td><td class="num neg">-18.5%</td></tr><tr><td>Ligue 1</td><td class="num">40</td>
+            <td class="num">35%</td><td class="num mut">55%</td>
+            <td class="num">-7.9</td><td class="num neg">-2.65</td><td class="num neg">-37.4%</td></tr><tr><td>Greek Super League</td><td class="num">35</td>
+            <td class="num">37%</td><td class="num mut">49%</td>
+            <td class="num">-4.1</td><td class="num neg">-1.47</td><td class="num neg">-35.6%</td></tr><tr><td>Primeira Liga</td><td class="num">35</td>
+            <td class="num">71%</td><td class="num mut">51%</td>
+            <td class="num">+7.1</td><td class="num pos">+2.55</td><td class="num pos">+37.6%</td></tr><tr><td>Turkish Super Lig</td><td class="num">35</td>
+            <td class="num">51%</td><td class="num mut">52%</td>
+            <td class="num">-0.1</td><td class="num neg">-0.04</td><td class="num pos">+0.8%</td></tr><tr><td>Bundesliga</td><td class="num">31</td>
+            <td class="num">61%</td><td class="num mut">57%</td>
+            <td class="num">+1.4</td><td class="num pos">+0.51</td><td class="num neg">-6.1%</td></tr><tr><td>Eliteserien</td><td class="num">30</td>
+            <td class="num">63%</td><td class="num mut">60%</td>
+            <td class="num">+1.1</td><td class="num pos">+0.42</td><td class="num pos">+0.7%</td></tr><tr><td>Saudi Pro League</td><td class="num">24</td>
+            <td class="num">33%</td><td class="num mut">50%</td>
+            <td class="num">-4.1</td><td class="num neg">-1.74</td><td class="num neg">-36.1%</td></tr><tr><td>Austrian Bundesliga</td><td class="num">15</td>
+            <td class="num">87%</td><td class="num mut">56%</td>
+            <td class="num">+4.6</td><td class="num pos">+2.50</td><td class="num pos">+52.4%</td></tr><tr><td>Danish Superliga</td><td class="num">15</td>
+            <td class="num">53%</td><td class="num mut">58%</td>
+            <td class="num">-0.6</td><td class="num neg">-0.35</td><td class="num neg">-16.1%</td></tr><tr><td>Scottish Premiership</td><td class="num">9</td>
+            <td class="num">56%</td><td class="num mut">65%</td>
+            <td class="num">-0.9</td><td class="num neg">-0.62</td><td class="num neg">-14.5%</td></tr></table></div><div class="note"><b>Calibration of the book.</b> Each band groups observations by the probability the book implied; a well-priced book hits at that rate in every band. Excess in a band is where the price is wrong for everyone, not for one team.</div><div class="tbl"><table><tr><th>Book fair prob</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>0–40%</td><td class="num">126</td>
+            <td class="num">38%</td><td class="num mut">29%</td>
+            <td class="num">+11.2</td><td class="num pos">+2.22</td><td class="num pos">+17.9%</td></tr><tr><td>40–50%</td><td class="num">114</td>
+            <td class="num">39%</td><td class="num mut">45%</td>
+            <td class="num">-6.7</td><td class="num neg">-1.26</td><td class="num neg">-17.5%</td></tr><tr><td>50–60%</td><td class="num">179</td>
+            <td class="num">51%</td><td class="num mut">55%</td>
+            <td class="num">-7.6</td><td class="num neg">-1.14</td><td class="num neg">-12.1%</td></tr><tr><td>60–70%</td><td class="num">125</td>
+            <td class="num">61%</td><td class="num mut">64%</td>
+            <td class="num">-4.3</td><td class="num neg">-0.81</td><td class="num neg">-9.9%</td></tr><tr><td>70–80%</td><td class="num">76</td>
+            <td class="num">78%</td><td class="num mut">76%</td>
+            <td class="num">+1.6</td><td class="num pos">+0.43</td><td class="num neg">-1.3%</td></tr><tr><td>80–90%</td><td class="num">64</td>
+            <td class="num">81%</td><td class="num mut">83%</td>
+            <td class="num">-1.0</td><td class="num neg">-0.32</td><td class="num neg">-5.8%</td></tr><tr><td>90–100%</td><td class="num">4</td>
+            <td class="num">100%</td><td class="num mut">93%</td>
+            <td class="num">+0.3</td><td class="num pos">+0.56</td><td class="num pos">+6.5%</td></tr></table></div><div class="note"><b>Model v book, on every fixture</b> — the same test as the section above, on a sample nobody hand-picked.</div><div class="tbl"><table><tr><th>Market</th><th class="num">n</th><th class="num">Brier model</th><th class="num">Brier book</th><th></th></tr><tr><td>Over 1.5 goals</td><td class="num">117</td>
+        <td class="num">0.1763</td><td class="num">0.1759</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr><tr><td>Over 2.5 goals</td><td class="num">133</td>
+        <td class="num">0.2457</td><td class="num">0.2381</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr><tr><td>Both teams to score</td><td class="num">134</td>
+        <td class="num">0.2521</td><td class="num">0.2475</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr><tr><td>Home side scores 2+</td><td class="num">128</td>
+        <td class="num">0.2410</td><td class="num">0.2315</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr><tr><td>Away side scores 2+</td><td class="num">127</td>
+        <td class="num">0.2391</td><td class="num">0.2321</td>
+        <td><span class="sig n">
+          book ahead</span></td></tr></table></div><div class="tbl"><table><tr><th>Model v book</th><th class="num">n</th><th class="num">hit</th><th class="num">book fair</th><th class="num">excess</th><th class="num">z</th><th class="num">ROI</th></tr><tr><td>Value (model ≥ book + 5pp)</td><td class="num">189</td>
+            <td class="num">47%</td><td class="num mut">46%</td>
+            <td class="num">+2.8</td><td class="num pos">+0.43</td><td class="num neg">-2.2%</td></tr><tr><td>Rest</td><td class="num">450</td>
+            <td class="num">57%</td><td class="num mut">59%</td>
+            <td class="num">-9.0</td><td class="num neg">-0.90</td><td class="num neg">-6.0%</td></tr></table></div><div class="note"><b>Teams.</b> Pooled across every priced market in a team's games (its own 2+ counts for it alone). A team is tagged <b>PAYING</b> only past <b>20</b> observations with <b>z ≥ 2</b> — and with <b>258</b> teams tested, about 6 would reach that by chance, so read the tag as a shortlist, not a verdict.</div><div class="note">No team has reached the floor of 20 priced observations yet (258 teams tested so far).</div></details>
+<details class="ref"><summary>On fire — do long runs continue?</summary><div class="tiles"><div class="tile"><b>461</b><span>Graded</span></div><div class="tile"><b>80%</b><span>Extended</span></div><div class="tile"><b>177</b><span>Pending</span></div></div><div class="tbl"><table>
+<tr><th>Streak</th><th class="num">n</th><th class="num">extended</th>
+    <th class="num">rate</th></tr><tr><td>scored in</td><td class="num">153</td>
+        <td class="num">127</td><td class="num">83%</td></tr><tr><td>over 1.5 goals</td><td class="num">140</td>
+        <td class="num">119</td><td class="num">85%</td></tr><tr><td>conceded in</td><td class="num">105</td>
+        <td class="num">84</td><td class="num">80%</td></tr><tr><td>both teams scored</td><td class="num">28</td>
+        <td class="num">18</td><td class="num">64%</td></tr><tr><td>over 2.5 goals</td><td class="num">25</td>
+        <td class="num">13</td><td class="num">52%</td></tr><tr><td>scored 2+</td><td class="num">8</td>
+        <td class="num">7</td><td class="num">88%</td></tr><tr><td>conceded 2+</td><td class="num">1</td>
+        <td class="num">0</td><td class="num">0%</td></tr><tr><td>under 2.5 goals</td><td class="num">1</td>
+        <td class="num">0</td><td class="num">0%</td></tr></table></div><div class="note">Above is only a tally — it carries no verdict, because a ledger of streaks contains no clean control. Below is the actual test: for each team, its hit rate <b>while on a run</b> against its own rate <b>while not</b>, compared to the same statistic computed on <b>2000 shuffles of that team's own games</b>. Shuffling destroys the runs and nothing else, so the shuffled band is what "no signal" looks like — and it sits far below zero, because a run ends the moment it fails and the games after one are pre-selected against. <b>Only a diff outside that band means anything.</b></div><div class="tbl"><table>
+<tr><th>Streak</th><th class="num">teams</th><th class="num">on/off</th>
+    <th class="num">diff</th><th class="num">shuffled 95%</th>
+    <th class="num">p adj</th><th></th></tr><tr><td>scored in</td><td class="num">67</td>
+        <td class="num">213/383</td>
+        <td class="num neg">-26.0pp</td>
+        <td class="num mut">-38 to -19pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>over 1.5 goals</td><td class="num">80</td>
+        <td class="num">261/387</td>
+        <td class="num neg">-17.6pp</td>
+        <td class="num mut">-36 to -20pp</td>
+        <td class="num mut">0.08</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>conceded in</td><td class="num">65</td>
+        <td class="num">193/358</td>
+        <td class="num neg">-24.2pp</td>
+        <td class="num mut">-40 to -20pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>both teams scored</td><td class="num">18</td>
+        <td class="num">40/138</td>
+        <td class="num neg">-24.2pp</td>
+        <td class="num mut">-57 to -14pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>over 2.5 goals</td><td class="num">20</td>
+        <td class="num">40/108</td>
+        <td class="num neg">-30.7pp</td>
+        <td class="num mut">-57 to -16pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>scored 2+</td><td class="num">10</td>
+        <td class="num">27/60</td>
+        <td class="num neg">-25.7pp</td>
+        <td class="num mut">-65 to -1pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>conceded 2+</td><td class="num">3</td>
+        <td class="num">6/20</td>
+        <td class="num neg">-55.1pp</td>
+        <td class="num mut">-94 to +17pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr><tr><td>under 2.5 goals</td><td class="num">3</td>
+        <td class="num">4/8</td>
+        <td class="num neg">-36.7pp</td>
+        <td class="num mut">-100 to +10pp</td>
+        <td class="num mut">1.00</td>
+        <td><span class="sig n">
+          no result</span></td></tr></table></div></details>
+
+<footer>Read-only static export · research, not betting advice.</footer>
 <script>
-const LEADS = [{"date": "2026-09-18", "kickoff": "2026-09-18T18:00Z", "league": "Eredivisie", "match": "FC Groningen v PEC Zwolle", "home": "FC Groningen", "away": "PEC Zwolle", "headline": "Over 1.5 goals", "why": "FC Groningen's games went over 1.5 in 10 of their last 10; PEC Zwolle's in 9.", "a": "FC Groningen", "b": "PEC Zwolle", "a_run": 10, "b_run": 9, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 10 of last 10", "b_text": "over 1.5 \u00b7 9 of last 10", "strength": 19, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "1-1", "opp": "Go Ahead Eagles", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-2", "opp": "FC Twente", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-3", "opp": "Fortuna Sittard", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-5", "opp": "PSV Eindhoven", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "4-1", "opp": "ADO Den Haag", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-1", "opp": "FC Utrecht", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "0-2", "opp": "Ajax Amsterdam", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-1", "opp": "Heracles Almelo", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-1", "opp": "NEC Nijmegen", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-3", "opp": "Excelsior", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}], "b_recent": [{"s": "0-7", "opp": "Feyenoord Rotterdam", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-2", "opp": "Sparta Rotterdam", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-3", "opp": "NEC Nijmegen", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-0", "opp": "Heerenveen", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-3", "opp": "FC Twente", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "0-2", "opp": "Ajax Amsterdam", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "0-2", "opp": "Feyenoord Rotterdam", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-3", "opp": "Fortuna Sittard", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-0", "opp": "Heracles Almelo", "h": true, "hit": false, "comp": true, "lg": "Eredivisie"}, {"s": "1-6", "opp": "PSV Eindhoven", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}], "market": "{\"away\": \"PEC Zwolle\", \"day\": \"2026-09-18\", \"home\": \"FC Groningen\", \"league\": \"Eredivisie\"}", "price": 1.139, "fair": 0.86, "market_url": "https://kalshi.com/markets/kxeredivisietotal", "venue_name": "Kalshi", "model": 0.899}, {"date": "2026-09-18", "kickoff": "2026-09-18T18:45Z", "league": "Serie A", "match": "Monza v Sassuolo", "home": "Monza", "away": "Sassuolo", "headline": "Sassuolo to score 2+", "why": "Sassuolo have scored 2+ in 3 straight; Monza have conceded in 5 straight.", "a": "Sassuolo", "b": "Monza", "a_run": 3, "b_run": 5, "a_key": "scoring", "b_key": "porous", "a_label": "scored 2+", "b_label": "conceded in", "strength": 8, "base_rate": 0.3021148036253776, "bet": {"kind": "team_gte", "n": 2, "subject": "a", "team": "Sassuolo"}, "a_recent": [{"s": "3-2", "opp": "Juventus", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-2", "opp": "Bologna", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-1", "opp": "Torino", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-2", "opp": "Atalanta", "h": false, "hit": false, "comp": true, "lg": "Serie A"}, {"s": "2-3", "opp": "FC Augsburg", "h": false, "hit": false, "comp": false, "lg": "Club Friendly"}, {"s": "0-1", "opp": "Parma", "h": false, "hit": false, "comp": true, "lg": "Serie A"}], "b_recent": [{"s": "2-3", "opp": "Lecce", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-1", "opp": "Parma", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-3", "opp": "Udinese", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-4", "opp": "Internazionale", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "3-3", "opp": "Padova", "h": true, "hit": true, "comp": false, "lg": "Club Friendly"}, {"s": "2-0", "opp": "Galatasaray", "h": false, "hit": false, "comp": false, "lg": "Club Friendly"}], "market": "{\"away\": \"Sassuolo\", \"day\": \"2026-09-18\", \"home\": \"Monza\", \"league\": \"Serie A\"}", "price": 2.01, "fair": 0.445, "market_url": "https://kalshi.com/markets/kxserieateamtotal", "venue_name": "Kalshi", "model": 0.4201}, {"date": "2026-09-18", "kickoff": "2026-09-18T19:00Z", "league": "La Liga", "match": "Espanyol v Elche", "home": "Espanyol", "away": "Elche", "headline": "Over 1.5 goals", "why": "Espanyol's games went over 1.5 in 10 of their last 10; Elche's in 9.", "a": "Espanyol", "b": "Elche", "a_run": 10, "b_run": 9, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 10 of last 10", "b_text": "over 1.5 \u00b7 9 of last 10", "strength": 19, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "1-2", "opp": "Rayo Vallecano", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-0", "opp": "Osasuna", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Sevilla", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-2", "opp": "Real Sociedad", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-2", "opp": "Real Madrid", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "3-0", "opp": "Levante", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Real Sociedad", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-1", "opp": "Osasuna", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-0", "opp": "Athletic Club", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-2", "opp": "Sevilla", "h": false, "hit": true, "comp": true, "lg": "La Liga"}], "b_recent": [{"s": "2-3", "opp": "Real Madrid", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Athletic Club", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-3", "opp": "Real Sociedad", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-3", "opp": "Racing Santander", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "0-5", "opp": "Barcelona", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Deportivo", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Girona", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-0", "opp": "Getafe", "h": true, "hit": false, "comp": true, "lg": "La Liga"}, {"s": "1-2", "opp": "Real Betis", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Alav\u00e9s", "h": true, "hit": true, "comp": true, "lg": "La Liga"}], "market": "{\"away\": \"Elche\", \"day\": \"2026-09-18\", \"home\": \"Espanyol\", \"league\": \"La Liga\"}", "price": 1.281, "fair": 0.765, "market_url": "https://polymarket.us/event/lal-esp-elc-2026-09-18", "venue_name": "Polymarket", "model": 0.7445}, {"date": "2026-09-18", "kickoff": "2026-09-18T19:00Z", "league": "Premier League", "match": "Brentford v Chelsea", "home": "Brentford", "away": "Chelsea", "headline": "Over 1.5 goals", "why": "Brentford's games went over 1.5 in 9 of their last 10; Chelsea's in 9.", "a": "Brentford", "b": "Chelsea", "a_run": 9, "b_run": 9, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 9 of last 10", "b_text": "over 1.5 \u00b7 9 of last 10", "strength": 18, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "2-2", "opp": "AFC Bournemouth", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-1", "opp": "Sunderland", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-1", "opp": "Leeds United", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "3-0", "opp": "Tottenham Hotspur", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-1", "opp": "Liverpool", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "2-2", "opp": "Crystal Palace", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "0-3", "opp": "Manchester City", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "3-0", "opp": "West Ham United", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-2", "opp": "Manchester United", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "0-0", "opp": "Fulham", "h": true, "hit": false, "comp": true, "lg": "Premier League"}], "b_recent": [{"s": "2-2", "opp": "Hull City", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-2", "opp": "Arsenal", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "4-3", "opp": "Brighton & Hove Albion", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "3-2", "opp": "Fulham", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-2", "opp": "Sunderland", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "2-1", "opp": "Tottenham Hotspur", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-1", "opp": "Liverpool", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "1-3", "opp": "Nottingham Forest", "h": true, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "0-3", "opp": "Brighton & Hove Albion", "h": false, "hit": true, "comp": true, "lg": "Premier League"}, {"s": "0-1", "opp": "Manchester United", "h": true, "hit": false, "comp": true, "lg": "Premier League"}], "market": "{\"away\": \"Chelsea\", \"day\": \"2026-09-18\", \"home\": \"Brentford\", \"league\": \"Premier League\"}", "price": 1.19, "fair": 0.8013, "model": 0.7829}, {"date": "2026-09-19", "kickoff": "2026-09-19T13:30Z", "league": "Bundesliga", "match": "Werder Bremen v FC Augsburg", "home": "Werder Bremen", "away": "FC Augsburg", "headline": "FC Augsburg to score 2+", "why": "FC Augsburg have scored 2+ in 3 straight; Werder Bremen have conceded in 6 straight.", "a": "FC Augsburg", "b": "Werder Bremen", "a_run": 3, "b_run": 6, "a_key": "scoring", "b_key": "porous", "a_label": "scored 2+", "b_label": "conceded in", "strength": 9, "base_rate": 0.2326283987915408, "bet": {"kind": "team_gte", "n": 2, "subject": "a", "team": "FC Augsburg"}, "a_recent": [{"s": "2-2", "opp": "Bayer Leverkusen", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "4-1", "opp": "Eintracht Frankfurt", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-0", "opp": "Schalke 04", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-4", "opp": "Leeds United", "h": false, "hit": false, "comp": false, "lg": "Club Friendly"}, {"s": "3-2", "opp": "Sassuolo", "h": true, "hit": false, "comp": false, "lg": "Club Friendly"}, {"s": "0-4", "opp": "1. FC Union Berlin", "h": false, "hit": false, "comp": true, "lg": "Bundesliga"}], "b_recent": [{"s": "1-1", "opp": "FC Cologne", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "RB Leipzig", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-4", "opp": "SC Freiburg", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-1", "opp": "AJ Auxerre", "h": true, "hit": true, "comp": false, "lg": "Club Friendly"}, {"s": "2-2", "opp": "SC Paderborn 07", "h": true, "hit": true, "comp": false, "lg": "Club Friendly"}, {"s": "0-2", "opp": "Borussia Dortmund", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}], "market": "{\"away\": \"FC Augsburg\", \"day\": \"2026-09-19\", \"home\": \"Werder Bremen\", \"league\": \"Bundesliga\"}", "price": 2.08, "fair": 0.4613, "model": 0.5331}, {"date": "2026-09-19", "kickoff": "2026-09-19T13:30Z", "league": "Bundesliga", "match": "Hamburg SV v FC Cologne", "home": "Hamburg SV", "away": "FC Cologne", "headline": "Over 1.5 goals", "why": "Hamburg SV's games went over 1.5 in 10 of their last 10; FC Cologne's in 10.", "a": "Hamburg SV", "b": "FC Cologne", "a_run": 10, "b_run": 10, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 10 of last 10", "b_text": "over 1.5 \u00b7 10 of last 10", "strength": 20, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "0-5", "opp": "RB Leipzig", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-5", "opp": "Mainz", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-2", "opp": "Borussia Dortmund", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "Bayer Leverkusen", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-2", "opp": "SC Freiburg", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-1", "opp": "Eintracht Frankfurt", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-2", "opp": "TSG Hoffenheim", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-3", "opp": "Werder Bremen", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-4", "opp": "VfB Stuttgart", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "FC Augsburg", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}], "b_recent": [{"s": "1-1", "opp": "Werder Bremen", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-4", "opp": "VfB Stuttgart", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-2", "opp": "TSG Hoffenheim", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-5", "opp": "Bayern Munich", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-3", "opp": "1. FC Heidenheim 1846", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-2", "opp": "1. FC Union Berlin", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-2", "opp": "Bayer Leverkusen", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "St. Pauli", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "Werder Bremen", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-2", "opp": "Eintracht Frankfurt", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}], "market": "{\"away\": \"FC Cologne\", \"day\": \"2026-09-19\", \"home\": \"Hamburg SV\", \"league\": \"Bundesliga\"}", "price": 1.241, "fair": 0.7677, "model": 0.9066}, {"date": "2026-09-19", "kickoff": "2026-09-19T13:30Z", "league": "Bundesliga", "match": "Eintracht Frankfurt v SC Freiburg", "home": "Eintracht Frankfurt", "away": "SC Freiburg", "headline": "Over 1.5 goals", "why": "Eintracht Frankfurt's games went over 1.5 in 10 of their last 10; SC Freiburg's in 9.", "a": "Eintracht Frankfurt", "b": "SC Freiburg", "a_run": 10, "b_run": 9, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 10 of last 10", "b_text": "over 1.5 \u00b7 9 of last 10", "strength": 19, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "3-1", "opp": "Mainz", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-4", "opp": "FC Augsburg", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-3", "opp": "1. FC Union Berlin", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-2", "opp": "VfB Stuttgart", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-3", "opp": "Borussia Dortmund", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-2", "opp": "Hamburg SV", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "FC Augsburg", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-3", "opp": "RB Leipzig", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-1", "opp": "VfL Wolfsburg", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-2", "opp": "FC Cologne", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}], "b_recent": [{"s": "5-0", "opp": "Borussia M\u00f6nchengladbach", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-0", "opp": "SC Paderborn 07", "h": false, "hit": false, "comp": true, "lg": "Bundesliga"}, {"s": "4-1", "opp": "Werder Bremen", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-3", "opp": "Aston Villa", "h": true, "hit": true, "comp": true, "lg": "Europa League"}, {"s": "4-1", "opp": "RB Leipzig", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-3", "opp": "Hamburg SV", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "Braga", "h": true, "hit": true, "comp": true, "lg": "Europa League"}, {"s": "1-1", "opp": "VfL Wolfsburg", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-2", "opp": "Braga", "h": false, "hit": true, "comp": true, "lg": "Europa League"}, {"s": "0-4", "opp": "Borussia Dortmund", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}], "market": "{\"away\": \"SC Freiburg\", \"day\": \"2026-09-19\", \"home\": \"Eintracht Frankfurt\", \"league\": \"Bundesliga\"}", "price": 1.153, "fair": 0.855, "market_url": "https://polymarket.us/event/bun-fra-scf-2026-09-19", "venue_name": "Polymarket", "model": 0.9071}, {"date": "2026-09-19", "kickoff": "2026-09-19T13:30Z", "league": "Bundesliga", "match": "Werder Bremen v FC Augsburg", "home": "Werder Bremen", "away": "FC Augsburg", "headline": "Over 1.5 goals", "why": "Werder Bremen's games went over 1.5 in 9 of their last 10; FC Augsburg's in 10.", "a": "Werder Bremen", "b": "FC Augsburg", "a_run": 9, "b_run": 10, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 9 of last 10", "b_text": "over 1.5 \u00b7 10 of last 10", "strength": 19, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "1-1", "opp": "FC Cologne", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "RB Leipzig", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-4", "opp": "SC Freiburg", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-2", "opp": "Borussia Dortmund", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-1", "opp": "TSG Hoffenheim", "h": false, "hit": false, "comp": true, "lg": "Bundesliga"}, {"s": "1-3", "opp": "FC Augsburg", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "VfB Stuttgart", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "Hamburg SV", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-3", "opp": "FC Cologne", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-2", "opp": "RB Leipzig", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}], "b_recent": [{"s": "2-2", "opp": "Bayer Leverkusen", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "4-1", "opp": "Eintracht Frankfurt", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-0", "opp": "Schalke 04", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-4", "opp": "1. FC Union Berlin", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "Borussia M\u00f6nchengladbach", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "Werder Bremen", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "Eintracht Frankfurt", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-1", "opp": "Bayer Leverkusen", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-2", "opp": "TSG Hoffenheim", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-1", "opp": "Hamburg SV", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}], "market": "{\"away\": \"FC Augsburg\", \"day\": \"2026-09-19\", \"home\": \"Werder Bremen\", \"league\": \"Bundesliga\"}", "price": 1.128, "fair": 0.87, "market_url": "https://polymarket.us/event/bun-bre-aug-2026-09-19", "venue_name": "Polymarket", "model": 0.8815}, {"date": "2026-09-19", "kickoff": "2026-09-19T16:00Z", "league": "Serie A", "match": "AS Roma v Internazionale", "home": "AS Roma", "away": "Internazionale", "headline": "Over 1.5 goals", "why": "AS Roma's games went over 1.5 in 10 of their last 10; Internazionale's in 9.", "a": "AS Roma", "b": "Internazionale", "a_run": 10, "b_run": 9, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 10 of last 10", "b_text": "over 1.5 \u00b7 9 of last 10", "strength": 19, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "2-0", "opp": "Torino", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-1", "opp": "Fenerbahce", "h": false, "hit": true, "comp": true, "lg": "Champions League"}, {"s": "2-1", "opp": "Atalanta", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "4-0", "opp": "Lecce", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "4-0", "opp": "Fiorentina", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-0", "opp": "Hellas Verona", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-0", "opp": "Lazio", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "3-2", "opp": "Parma", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "4-0", "opp": "Fiorentina", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-0", "opp": "Bologna", "h": false, "hit": true, "comp": true, "lg": "Serie A"}], "b_recent": [{"s": "5-3", "opp": "Udinese", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-2", "opp": "Real Madrid", "h": false, "hit": true, "comp": true, "lg": "Champions League"}, {"s": "3-2", "opp": "Napoli", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-0", "opp": "Cagliari", "h": false, "hit": false, "comp": true, "lg": "Serie A"}, {"s": "4-1", "opp": "Monza", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "3-3", "opp": "Bologna", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "1-1", "opp": "Hellas Verona", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "3-0", "opp": "Lazio", "h": false, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-0", "opp": "Parma", "h": true, "hit": true, "comp": true, "lg": "Serie A"}, {"s": "2-2", "opp": "Torino", "h": false, "hit": true, "comp": true, "lg": "Serie A"}], "market": "{\"away\": \"Internazionale\", \"day\": \"2026-09-19\", \"home\": \"AS Roma\", \"league\": \"Serie A\"}", "price": 1.233, "fair": 0.7731, "model": 0.7809}, {"date": "2026-09-19", "kickoff": "2026-09-19T16:30Z", "league": "Bundesliga", "match": "VfB Stuttgart v Borussia Dortmund", "home": "VfB Stuttgart", "away": "Borussia Dortmund", "headline": "Borussia Dortmund to score 2+", "why": "Borussia Dortmund have scored 2+ in 4 straight; VfB Stuttgart have conceded in 6 straight.", "a": "Borussia Dortmund", "b": "VfB Stuttgart", "a_run": 4, "b_run": 6, "a_key": "scoring", "b_key": "porous", "a_label": "scored 2+", "b_label": "conceded in", "strength": 10, "base_rate": 0.2326283987915408, "bet": {"kind": "team_gte", "n": 2, "subject": "a", "team": "Borussia Dortmund"}, "a_recent": [{"s": "3-0", "opp": "SC Paderborn 07", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-2", "opp": "Villarreal", "h": true, "hit": true, "comp": true, "lg": "Champions League"}, {"s": "3-2", "opp": "TSG Hoffenheim", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "2-0", "opp": "Hamburg SV", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-2", "opp": "Bayern Munich", "h": true, "hit": false, "comp": false, "lg": "German Supercup"}, {"s": "2-2", "opp": "AS Roma", "h": true, "hit": false, "comp": false, "lg": "Club Friendly"}], "b_recent": [{"s": "1-2", "opp": "TSG Hoffenheim", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "3-1", "opp": "Viking FK", "h": true, "hit": true, "comp": true, "lg": "Champions League"}, {"s": "4-1", "opp": "FC Cologne", "h": true, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "1-5", "opp": "Bayern Munich", "h": false, "hit": true, "comp": true, "lg": "Bundesliga"}, {"s": "0-1", "opp": "Fulham", "h": false, "hit": true, "comp": false, "lg": "Club Friendly"}, {"s": "3-1", "opp": "Everton", "h": true, "hit": true, "comp": false, "lg": "Club Friendly"}], "market": "{\"away\": \"Borussia Dortmund\", \"day\": \"2026-09-19\", \"home\": \"VfB Stuttgart\", \"league\": \"Bundesliga\"}", "price": 1.82, "fair": 0.5261, "model": 0.5701}, {"date": "2026-09-19", "kickoff": "2026-09-19T16:30Z", "league": "La Liga", "match": "Celta Vigo v Racing Santander", "home": "Celta Vigo", "away": "Racing Santander", "headline": "Racing Santander to score 2+", "why": "Racing Santander have scored 2+ in 4 straight; Celta Vigo have conceded in 3 straight.", "a": "Racing Santander", "b": "Celta Vigo", "a_run": 4, "b_run": 3, "a_key": "scoring", "b_key": "porous", "a_label": "scored 2+", "b_label": "conceded in", "strength": 7, "base_rate": 0.4501510574018127, "bet": {"kind": "team_gte", "n": 2, "subject": "a", "team": "Racing Santander"}, "a_recent": [{"s": "2-7", "opp": "Barcelona", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-1", "opp": "Alav\u00e9s", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "2-3", "opp": "Rayo Vallecano", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "3-2", "opp": "Elche", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "0-1", "opp": "Getafe", "h": false, "hit": false, "comp": true, "lg": "La Liga"}, {"s": "2-2", "opp": "Villarreal", "h": true, "hit": false, "comp": true, "lg": "La Liga"}], "b_recent": [{"s": "0-1", "opp": "Omonia Nicosia", "h": false, "hit": true, "comp": true, "lg": "Europa League"}, {"s": "1-1", "opp": "M\u00e1laga", "h": true, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "1-1", "opp": "Getafe", "h": false, "hit": true, "comp": true, "lg": "La Liga"}, {"s": "0-0", "opp": "Real Sociedad", "h": false, "hit": false, "comp": true, "lg": "La Liga"}, {"s": "0-2", "opp": "Athletic Club", "h": true, "hit": false, "comp": true, "lg": "La Liga"}, {"s": "1-2", "opp": "Osasuna", "h": true, "hit": false, "comp": true, "lg": "La Liga"}], "market": "{\"away\": \"Racing Santander\", \"day\": \"2026-09-19\", \"home\": \"Celta Vigo\", \"league\": \"La Liga\"}", "price": 2.522, "fair": 0.335, "market_url": "https://kalshi.com/markets/kxlaligateamtotal", "venue_name": "Kalshi", "model": 0.3824}, {"date": "2026-09-19", "kickoff": "2026-09-19T18:00Z", "league": "Eredivisie", "match": "Ajax Amsterdam v Excelsior", "home": "Ajax Amsterdam", "away": "Excelsior", "headline": "Over 1.5 goals", "why": "Ajax Amsterdam's games went over 1.5 in 9 of their last 10; Excelsior's in 10.", "a": "Ajax Amsterdam", "b": "Excelsior", "a_run": 9, "b_run": 10, "a_key": "over15_l10", "b_key": "over15_l10", "a_label": "over 1.5", "b_label": "over 1.5", "a_text": "over 1.5 \u00b7 9 of last 10", "b_text": "over 1.5 \u00b7 10 of last 10", "strength": 19, "base_rate": 0.4247104247104247, "rule": "v2", "bet": {"kind": "total_gte", "n": 2}, "a_recent": [{"s": "5-1", "opp": "Willem II", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "5-1", "opp": "Fortuna Sittard", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-3", "opp": "PSV Eindhoven", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "4-0", "opp": "Telstar", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-2", "opp": "Heerenveen", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-0", "opp": "PEC Zwolle", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-0", "opp": "FC Groningen", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "0-0", "opp": "Heerenveen", "h": false, "hit": false, "comp": true, "lg": "Eredivisie"}, {"s": "1-2", "opp": "FC Utrecht", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-2", "opp": "PSV Eindhoven", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}], "b_recent": [{"s": "1-2", "opp": "FC Utrecht", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-2", "opp": "NEC Nijmegen", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "3-0", "opp": "Willem II", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "2-1", "opp": "Sparta Rotterdam", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-2", "opp": "PSV Eindhoven", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "4-0", "opp": "SC Cambuur", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "3-2", "opp": "Sparta Rotterdam", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "1-1", "opp": "FC Volendam", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "3-2", "opp": "FC Groningen", "h": false, "hit": true, "comp": true, "lg": "Eredivisie"}, {"s": "5-0", "opp": "FC Utrecht", "h": true, "hit": true, "comp": true, "lg": "Eredivisie"}], "market": "{\"away\": \"Excelsior\", \"day\": \"2026-09-19\", \"home\": \"Ajax Amsterdam\", \"league\": \"Eredivisie\"}", "price": 1.081, "fair": 0.91, "market_url": "https://kalshi.com/markets/kxeredivisietotal", "venue_name": "Kalshi", "model": 0.8767}];
-const TEAMS = [];
-const FIRE = [];
-const FIRE_MIN = 8;
-const list = document.getElementById('list');
-const cnt  = document.getElementById('cnt');
-const empty= document.getElementById('empty');
-const q    = document.getElementById('q');
-let league = '';
-let tab    = 'leads';
-let sort   = 'hot';          // On Fire ordering: 'hot' (longest run) | 'soon' (next kickoff)
-let expand = false;          // show the full list past TOP_SHOWN
-const TOP_SHOWN = 10;        // keep the tab exclusive; the rest sit behind one click
-
-function rarity(r) {
-  if (r <= 0.10) return ['hot',    'rare · ' + Math.round(r*100) + '% of teams'];
-  if (r <= 0.25) return ['mid',    'uncommon · ' + Math.round(r*100) + '% of teams'];
-  return           ['common', 'common · ' + Math.round(r*100) + '% of teams'];
-}
-function esc(s) {
-  return String(s).replace(/[&<>"']/g, c => (
-    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-// All wall-clock times render in CENTRAL, pinned explicitly rather than taken from the
-// viewer's device. Relying on the browser's zone meant the same page showed different
-// kickoff times depending on what machine it was opened from; naming the zone makes the
-// board say one thing. "America/Chicago" (not a fixed -5/-6 offset) so CDT/CST switches
-// are handled for us.
-const TZ = 'America/Chicago';
-function when(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return '';
-  return d.toLocaleString('en-US', {timeZone: TZ, weekday:'short', month:'short',
-                                    day:'numeric', hour:'numeric', minute:'2-digit'});
-}
-// Everything below works off the kickoff INSTANT and renders in the viewer's timezone.
-// The stored `date` field is the UTC date, which is a different day from local for any
-// late-UTC kickoff (a 01:30Z match is the previous evening in the Americas) — grouping on
-// it would print a header that disagreed with the card underneath it.
-/** YYYY-MM-DD for an instant, as it falls in Central. 'en-CA' yields exactly that shape. */
-function localDayKey(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return 'unknown';
-  return d.toLocaleDateString('en-CA', {timeZone: TZ});
-}
-function dayLabel(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return ['Date unknown', ''];
-  // "Today"/"Tomorrow" are relative to the CENTRAL calendar day, so they agree with the
-  // date printed on the cards under the header.
-  const key = localDayKey(iso), todayKey = localDayKey(new Date().toISOString());
-  const days = Math.round((Date.parse(key + 'T00:00:00Z')
-                         - Date.parse(todayKey + 'T00:00:00Z')) / 86400000);
-  const nice = d.toLocaleDateString('en-US', {timeZone: TZ, weekday:'long',
-                                              month:'short', day:'numeric'});
-  if (days === 0) return ['Today', nice];
-  if (days === 1) return ['Tomorrow', nice];
-  return [nice, days > 0 ? `in ${days} days` : `${-days} days ago`];
-}
-/** Countdown to kickoff, or the state once it has started. */
-function countdown(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return ['later', ''];
-  let ms = d - new Date();
-  if (ms <= 0) {
-    // Roughly two hours covers a match plus stoppages; after that it is simply done.
-    return ms > -2.5*3600*1000 ? ['live', 'kicked off'] : ['live', 'played'];
-  }
-  const mins = Math.floor(ms / 60000);
-  const days = Math.floor(mins / 1440);
-  const hrs  = Math.floor((mins % 1440) / 60);
-  const m    = mins % 60;
-  let txt;
-  if (days > 0)      txt = `in ${days}d ${hrs}h`;
-  else if (hrs > 0)  txt = `in ${hrs}h ${String(m).padStart(2,'0')}m`;
-  else               txt = `in ${m}m`;
-  return [mins <= 720 ? 'soon' : 'later', txt];   // highlight inside 12 hours
-}
-// Recent results as compact pills, newest LEFT. Games inside the run are lit; the rest
-// are dimmed, so the streak is visible at a glance instead of spelled out in prose.
-function seq(games) {
-  const pills = games.map(g =>
-    `<span class="sc${g.hit ? ' hit' : ''}${g.comp === false ? ' fr' : ''}"`
-    + ` title="${esc(g.s)} ${g.h ? 'home' : 'away'} v ${esc(g.opp)}`
-    + `${g.lg ? ' · ' + esc(g.lg) : ''}">${esc(g.s)}</span>`).join('');
-  // Preseason is carried by colour alone (dashed amber pill) — the legend explains it
-  // once, so every card does not repeat the same sentence.
-  return `<div class="seq">${pills}</div>`;
-}
-function leg(name, label, n, side, games, text) {
-  return `<div class="leg"><span class="lgn">${esc(name)}</span>`
-       + `<span class="lgr ${side}">${esc(text || (label + ' · ' + n + ' straight'))}</span></div>`
-       + seq(games);
-}
-function card(l) {
-  const [cls, txt] = rarity(l.base_rate);
-  const [cdCls, cdTxt] = countdown(l.kickoff);
-  return `<div class="card">
-    <div class="chd">
-      <span class="fx">${esc(l.match)}</span>
-      <span class="cd ${cdCls}" data-ko="${esc(l.kickoff || '')}">${esc(cdTxt)}</span>
-      <span class="fxm">${esc(l.league)} · ${esc(when(l.kickoff) || l.date)}</span>
-      ${l.market_url ? `<a class="kbtn" href="${esc(l.market_url)}" target="_blank"
-         rel="noopener">${esc(l.venue_name || 'Market')} ↗</a>` : ''}
-      ${l.price ? `<span class="px" title="Price of this claim when the lead was first listed, at the venue ask plus its taker fee · market = the book's midpoint · model = shrunk Poisson estimate">@ ${l.price.toFixed(2)}${
-          l.fair ? ` · market ${Math.round(l.fair*100)}%` : ''}${
-          l.model != null ? ` · model ${Math.round(l.model*100)}%` : ''}</span>` : ''}
-    </div>
-    <div class="ev">
-      ${leg(l.a, l.a_label, l.a_run, 'a', l.a_recent, l.a_text)}
-      ${leg(l.b, l.b_label, l.b_run, 'b', l.b_recent, l.b_text)}
-    </div>
-    <div class="lead">
-      <span class="lbl">Lead</span>
-      <span class="hl">${esc(l.headline)}</span>
-      <span class="rare ${cls}">${esc(txt)}</span>
-    </div>
-  </div>`;
-}
-function teamRow(t) {
-  const chips = t.runs.map(r => {
-    const [cls] = rarity(r.rate);
-    return `<span class="rare ${cls}" style="margin-left:0">${esc(r.label)} · ${r.n}`
-         + ` straight · ${Math.round(r.rate*100)}%</span>`;
-  }).join('');
-  const n = t.next
-    ? `<div class="tnx">Next: <b>${esc(t.next.home ? 'vs ' + t.next.opp
-                                                   : 'away to ' + t.next.opp)}</b>`
-      + ` · ${esc(when(t.next.kickoff) || t.next.date)}`
-      + ` · <span class="nx" data-ko="${esc(t.next.kickoff || '')}">${
-          esc(countdown(t.next.kickoff)[1])}</span>`
-      + ` · ${esc(t.next.league)}</div>`
-    : `<div class="tnx">No fixture scheduled in the next 14 days</div>`;
-  const bk = t.book
-    ? `<div class="bk" title="Every priced market in this team's games, graded against the book's vig-free probability. z = excess hits in standard deviations; PAYING needs the floor and z ≥ 2.">At the price: <b>${t.book.n}</b> obs · hit <b>${Math.round(t.book.rate*100)}%</b> v book ${Math.round(t.book.fair*100)}% · z <b>${(t.book.z>=0?'+':'')+t.book.z.toFixed(2)}</b> · ROI <b>${(t.book.roi>=0?'+':'')+(t.book.roi*100).toFixed(1)}%</b>${
-        t.book.paying ? '<span class="pay">PAYING</span>' : ''}</div>`
-    : '';
-  return `<div class="trow">
-    <div class="th"><span class="tn">${esc(t.team)}</span>
-      ${t.no_run ? '<span class="norun">no current run</span>' : ''}
-      ${t.thin ? `<span class="rare common" style="margin-left:0">thin · ${
-        t.played} games</span>` : ''}
-      <span class="tl">${esc(t.league)} · ${t.played} games</span></div>
-    <div class="tbody">
-      <div class="truns">${chips}</div>
-      ${seq(t.recent)}
-      ${n}
-      ${bk}
-    </div>
-  </div>`;
-}
-const BETNAME = {
-  'btts': 'Both teams to score', 'total_gte:3': 'Over 2.5 goals',
-  'total_lte:2': 'Under 2.5 goals', 'team_gte:2': 'Team to score 2+',
-  'team_gte:1': 'Team to score', 'team_eq:0': 'Team to fail to score'
-};
-function fireRow(t) {
-  const chips = t.runs.map(r => {
-    const [cls] = rarity(r.rate);
-    return `<span class="rare ${cls}" style="margin-left:0">${esc(r.label)}`
-         + ` · <b>${r.n} straight</b> · ${Math.round(r.rate*100)}%</span>`;
-  }).join('');
-  const n = t.next
-    ? `<div class="tnx">Next: <b>${esc(t.next.home ? 'vs ' + t.next.opp
-                                                   : 'away to ' + t.next.opp)}</b>`
-      + ` · ${esc(when(t.next.kickoff) || t.next.date)}`
-      + ` · <span class="nx" data-ko="${esc(t.next.kickoff || '')}">${
-          esc(countdown(t.next.kickoff)[1])}</span></div>`
-    : `<div class="tnx">No fixture scheduled</div>`;
-  return `<div class="trow fire">
-    <div class="th"><span class="tn">${esc(t.team)}</span>
-      <span class="flame">${t.longest}</span>
-      <span class="tl">${esc(t.league)} · ${t.played} games</span></div>
-    <div class="tbody">
-      <div class="truns">${chips}</div>
-      ${seq(t.recent)}
-      ${n}
-    </div>
-  </div>`;
-}
-function render() {
-  const term = q.value.trim().toLowerCase();
-  let rows, total, html_;
-
-  if (tab === 'leads') {
-    total = LEADS.length;
-    rows = LEADS.filter(l => (!league || l.league === league) &&
-                             (!term || l.match.toLowerCase().includes(term)));
-    // Group under local-day headers. LEADS already arrives in kickoff order, so walking
-    // it and emitting a header whenever the local day changes preserves that order.
-    let out = '', lastDay = null;
-    for (const l of rows) {
-      const k = localDayKey(l.kickoff);
-      if (k !== lastDay) {
-        lastDay = k;
-        const [main, sub] = dayLabel(l.kickoff);
-        const sameDay = rows.filter(x => localDayKey(x.kickoff) === k).length;
-        out += `<div class="dhd"><span class="dday">${esc(main)}</span>`
-             + `<span class="drel">${esc(sub)}</span>`
-             + `<span class="dcnt">${sameDay} lead${sameDay === 1 ? '' : 's'}</span></div>`;
-      }
-      out += card(l);
-    }
-    html_ = out;
-    empty.textContent = league
-      ? 'No confluences in ' + league + ' right now — both sides of a fixture have to be '
-        + 'on matching runs, which is genuinely rare. Try "All teams on a run".'
-      : 'No leads match that filter.';
-  } else if (tab === 'fire') {
-    total = FIRE.length;
-    rows = FIRE.filter(t => (!league || t.league === league) &&
-                            (!term || t.team.toLowerCase().includes(term)));
-    // FIRE arrives hottest-first; re-sort only when the other order is asked for.
-    // Teams with no scheduled fixture sink to the bottom of "playing soonest" rather
-    // than sorting as if they kicked off at the epoch.
-    if (sort === 'soon') {
-      rows = rows.slice().sort((a, b) =>
-        (a.next_ko || '9999').localeCompare(b.next_ko || '9999') ||
-        b.longest - a.longest);
-    }
-    // The warning goes ABOVE the list, not in a footnote: this tab shows the most
-    // seductive patterns on the board and they are the ones that measured worst.
-    const shownRows = expand ? rows : rows.slice(0, TOP_SHOWN);
-    const hidden = rows.length - shownRows.length;
-    html_ = `<div class="tr-note warn"><b>These runs do not predict their own
-      continuation.</b> Three different baselines were tried here and all three were
-      wrong — the population rate said +12.8pp and "significant" (the hot-hand fallacy:
-      streaky teams are good teams), the team's own rate said −8.7pp and "significant"
-      (circular, since the run's own games sit inside that average), and removing the run
-      said +10.3pp (it deletes only successes). No average can settle it.
-      <b>Shuffle a team's own games into a random order</b> and runs carry zero
-      information by construction — yet being "on a run" still predicts a next-game rate
-      17–39pp <i>lower</i>, because a run ends the moment it fails. Against that shuffled
-      yardstick, every streak type measured here lands <b>inside</b> the band, and nothing
-      survives correcting for testing six of them at once. A long streak is a striking
-      fact about the past and survivorship in the present: the side still on a 12-game run
-      is simply the one whose run has not broken yet.
-      <a href="./record.html">See the Record page.</a></div>`
-      + shownRows.map(fireRow).join('')
-      + (hidden > 0
-          ? `<button class="more" id="more">Show ${hidden} more team${
-              hidden === 1 ? '' : 's'} on a run</button>`
-          : (expand && rows.length > TOP_SHOWN
-              ? `<button class="more" id="more">Show only the top ${TOP_SHOWN}</button>`
-              : ''));
-    empty.textContent = 'No team is on a run of ' + FIRE_MIN + '+ right now.';
-  } else {
-    total = TEAMS.length;
-    rows = TEAMS.filter(t => (!league || t.league === league) &&
-                             (!term || t.team.toLowerCase().includes(term)));
-    // Same collapse as On Fire: the tab is COMPLETE by design (every squad is listed),
-    // but 200 rows unfiltered is a wall. Filter or expand to reach the rest.
-    const shownT = expand ? rows : rows.slice(0, TOP_SHOWN);
-    const hiddenT = rows.length - shownT.length;
-    html_ = shownT.map(teamRow).join('')
-      + (hiddenT > 0
-          ? `<button class="more" id="more">Show ${hiddenT} more team${
-              hiddenT === 1 ? '' : 's'}</button>`
-          : (expand && rows.length > TOP_SHOWN
-              ? `<button class="more" id="more">Show only the top ${TOP_SHOWN}</button>`
-              : ''));
-    empty.textContent = 'No teams match that filter.';
-  }
-  list.innerHTML = html_;
-  const onScreen = ((tab === 'fire' || tab === 'teams') && !expand)
-    ? Math.min(rows.length, TOP_SHOWN) : rows.length;
-  cnt.textContent = (onScreen < rows.length ? onScreen + ' of ' + rows.length
-                                            : rows.length + ' of ' + total);
-  const mb = document.getElementById('more');
-  if (mb) mb.addEventListener('click', () => { expand = !expand; render(); });
-  document.getElementById('sorts').style.display = tab === 'fire' ? 'flex' : 'none';
-  empty.style.display = rows.length ? 'none' : '';
-}
-for (const b of document.querySelectorAll('.lg')) {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.lg').forEach(x => x.classList.remove('on'));
-    b.classList.add('on');
-    league = b.dataset.lg;
-    render();
-  });
-}
-for (const b of document.querySelectorAll('.tb')) {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.tb').forEach(x => x.classList.remove('on'));
-    b.classList.add('on');
-    tab = b.dataset.tab;
-    expand = false;
-    // the league/team filters describe fixtures, which the track view does not list
-    const hide = '';
-    document.querySelector('.lgs').style.display = hide;
-    document.querySelector('.srch').style.display = hide ? 'none' : 'flex';
-    render();
-  });
-}
-for (const b of document.querySelectorAll('.sb')) {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.sb').forEach(x => x.classList.remove('on'));
-    b.classList.add('on');
-    sort = b.dataset.sort;
-    render();
-  });
-}
-q.addEventListener('input', render);
-render();
-
-// Keep countdowns honest without re-rendering the whole list: retarget the chips in place
-// every 30s. A page left open overnight would otherwise still claim a match is hours away.
-setInterval(() => {
-  for (const el of document.querySelectorAll('.cd[data-ko]')) {
-    const [cls, txt] = countdown(el.dataset.ko);
-    if (el.textContent !== txt) {
-      el.textContent = txt;
-      el.className = 'cd ' + cls;
-    }
-  }
-  for (const el of document.querySelectorAll('.nx[data-ko]')) {
-    const [, txt] = countdown(el.dataset.ko);
-    el.textContent = txt;
-  }
-}, 30000);
-</script></body></html>
+document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  const t = b.dataset.tab;
+  document.querySelectorAll('#pairs tr[data-g]').forEach(tr => tr.hidden = t !== 'all' && tr.dataset.g !== t);
+}));
+document.querySelector('#tabs button.on')?.click();
+</script>
+</div></body></html>

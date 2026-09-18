@@ -3,15 +3,10 @@
 
     Sandbox -> QA -> Production
 
-A (source, sport) pair is IN PRODUCTION while either
-  * it sits in QA with `ready_at` set — it has held the full ready gate (the stamp on fresh
-    data, beating the close, profitable after fees, every bet a publishable exchange market)
-    for READY_HOLD_DAYS. The moment that gate fails, evaluate_stages withdraws `ready_at` and
-    the pair leaves Production on the same run; or
-  * it is FAST-TRACKED (SOURCES[...]["fast_track"], 2026-09-14) and on probation or cleared:
-    published from its first bet and judged on a pre-registered gate at a fixed sample
-    (sandbox_track.fast_track_status). Failing it returns the pair to the normal ladder.
-Nothing is promoted by hand.
+A (source, sport) pair is IN PRODUCTION because it was put there BY HAND: listed in
+sandbox_track.PAIR_OVERRIDES, on the record the Sandbox measured. Nothing promotes itself
+(2026-09-18). A pair leaves the same way, or on its own when it stops working — no new bet in
+STALE_DAYS, behind the prices it paid, or beaten by a blind rule on the same contests.
 
 data/production_leads.json is the machine-readable feed. It has the Leads ledger's shape —
 {"leads": {id: lead}, "updated_at", "board_built_at"} — so anything that reads one reads both:
@@ -48,22 +43,18 @@ def esc(x):
 
 
 def production_pairs(st):
-    """{"source|sport": pair} for every pair currently in Production (ready, or fast-tracked)."""
+    """{"source|sport": pair} for every pair in Production and trading."""
     return {k: p for k, p in (st.get("pairs") or {}).items()
-            if (p.get("stage") == "qa" and p.get("ready_at"))
-            or (p.get("fast_track") or {}).get("state") in ("probation", "cleared")}
+            if p.get("stage") == "production" and p.get("ready_at")}
 
 
 def entered_at(pair):
-    """When the pair's Production record starts: ready_at, or the fast track's start."""
-    return pair.get("ready_at") or (pair.get("fast_track") or {}).get("since")
+    """When the pair's Production record starts."""
+    return pair.get("ready_at") or pair.get("promoted_at")
 
 
 def route_label(pair):
-    ft = pair.get("fast_track") or {}
-    if pair.get("ready_at"):
-        return "moved by hand" if pair.get("by_hand") else "passed QA"
-    return f"fast track · {ft.get('state')}"
+    return f"moved by hand on {pair['by_hand']}" if pair.get("by_hand") else "moved by hand"
 
 
 def _kickoff(q):
@@ -180,7 +171,7 @@ def build_feed(d, st, now=None):
         # price, so a follower's real fills can be compared with it.
         "pairs": {k: dict({"ready_at": p.get("ready_at"), "promoted_at": p.get("promoted_at"),
                            "entered_at": entered_at(p), "route": route_label(p),
-                           "fast_track": p.get("fast_track")},
+                           "by_hand": p.get("by_hand")},
                           **_sandbox_record(d, k, entered_at(p)))
                   for k, p in pairs.items()},
         "leads": leads, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
@@ -214,10 +205,8 @@ def page(d, st, blob, style, now=None):
         since = entered_at(pair)
         a = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
         mine = [l for l in blob.get("leads", {}).values() if l.get("pair") == key]
-        ft = pair.get("fast_track") or {}
-        how = (f"passed QA · ready {esc(pair['ready_at'][:10])} · in QA since {esc(str(pair.get('promoted_at'))[:10])}"
-               if pair.get("ready_at") else
-               f"<span class=\"warn\">fast track · {esc(ft.get('state'))}</span> since {esc(str(since)[:10])} · {esc(ft.get('checked') or '')}")
+        how = (f"moved by hand {esc(str(pair.get('by_hand') or '')[:10])} · trading since "
+               f"{esc(str(since)[:10])}")
         rows.append(f"""<tr><td><b>{esc(label(key))}</b>
 <div class="sm mut">{how}</div></td>
 <td class="num">{sum(1 for l in mine if l['status'] == 'pending')}</td>
@@ -242,12 +231,6 @@ def page(d, st, blob, style, now=None):
     leads_table = (f"""<div class="tbl"><table><tr><th>Kickoff (UTC)</th><th>League</th><th>Match</th>
 <th>Lead</th><th>From</th><th class="num">Logged at</th></tr>{lead_rows}</table></div>"""
                    if lead_rows else '<div class="note">No open Production leads.</div>')
-    fast = [(k, m) for k, m in ((f"{n}|{sp}", m) for n, m in S.SOURCES.items() if m.get("fast_track")
-                                for sp in m["sports"])]
-    fast_note = "".join(
-        f"<li><b>{esc(label(k))}</b>: on probation from {esc(m['fast_track']['since'][:10])}; stays only with "
-        f"{m['fast_track']['min_n']} settled bets, profitable after fees and z ≥ {m['fast_track']['min_z']:g} "
-        f"against the prices paid — otherwise back to the normal ladder.</li>" for k, m in fast)
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Production</title>
@@ -257,25 +240,21 @@ def page(d, st, blob, style, now=None):
 {style}</head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">Sources that earned their place on the Sandbox ladder · updated {esc(now_s)}</div>
-<div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a class="on" href="./production.html">Production</a></div>
+<div class="sub">The only page anything trades from · updated {esc(now_s)}</div>
+<div class="nav"><a class="" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
 
-<div class="note warn"><b>Sandbox → QA → Production.</b> A (source, sport) pair is in Production
-while it holds the QA ready gate — the full stamp on bets made after its promotion, beating the
-closing price, profitable after fees, and every bet a standard exchange market — and it has held
-it for {T.READY_HOLD_DAYS} days. It leaves on the first run the gate fails. A rule with strong
-pre-registered research can instead be <b>fast-tracked</b>: listed here on probation from its first
-bet and judged on a fixed gate at a fixed sample. Every bet a Production pair logs is published to
-<code>data/production_leads.json</code>, in the same shape as the Leads ledger.
-{f'<ul class="sm" style="margin-top:8px">{fast_note}</ul>' if fast_note else ''}</div>
+<div class="note warn"><b>Sandbox, then Production — by hand.</b> Nothing promotes itself. A (source,
+sport) pair is here because it was listed by hand, on the record the <a href="./sandbox.html">Sandbox</a>
+measured. It leaves the same way, or on its own when it stops working: no new bet for {T.STALE_DAYS} days,
+behind the prices it paid, or beaten by a blind rule on the same contests. Every bet a Production pair logs
+is published to <code>data/production_leads.json</code>, and this file is the single thing the money
+follows.</div>
 
 <div class="tiles">
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
 <div class="tile"><b>{len(open_leads)}</b><span>open leads</span></div>
 <div class="tile"><b>{blob.get('unlisted_skipped', 0)}</b><span>bets not expressible as a standard market (not published)</span></div>
-<div class="tile"><b>{blob.get('unverified_kickoff_skipped', 0)}</b><span>held back: kickoff not verified by ESPN</span></div>
+<div class="tile"><b>{blob.get('unverified_kickoff_skipped', 0)}</b><span>held back: start time not verified</span></div>
 </div>
 
 <h2>Pairs</h2>

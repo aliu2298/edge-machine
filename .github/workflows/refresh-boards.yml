@@ -56,7 +56,6 @@ jobs:
         run: |
           python3 test_streaks.py
           python3 test_book.py
-          python3 test_today.py
 
       # Guardrails. The failure mode here is SILENT — a live pick that never matches a
       # final score just sits on the board looking normal. Warn-only: a stale board beats
@@ -95,8 +94,6 @@ jobs:
       - name: Build the record page
         run: python3 record_build.py || echo "record build failed — keeping previous page"
 
-      - name: Build today's fixtures page
-        run: python3 today_build.py || echo "today build failed — keeping previous page"
 
       # Sandbox closing prices, taken on every refresh as well as by the close job and the
       # hourly watchdog. Writes only data/sandbox_closes/boards.json.
@@ -108,8 +105,8 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html public_site/leads.html public_site/streaks.html \
-                     public_site/record.html public_site/today.html \
+          PUBLISHED="public_site/index.html public_site/record.html \
+                     public_site/leads.html public_site/streaks.html \
                      data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
                      data/fire_runs.json \
                      data/book_ledger.json data/sandbox_closes/boards.json"
@@ -141,7 +138,7 @@ jobs:
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
             python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
-              && python3 record_build.py && python3 today_build.py \
+              && python3 record_build.py \
               && { python3 sandbox_close.py --writer boards || true; }
           done
 

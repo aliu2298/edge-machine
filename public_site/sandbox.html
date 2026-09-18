@@ -74,29 +74,27 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated 2026-09-17 23:02 UTC</div>
-<div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
-<a href="./today.html">Today</a><a class="on" href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
+<div class="sub">Every source and rule under test, per sport · updated 2026-09-18 00:14 UTC</div>
+<div class="nav"><a class="" href="./record.html">Record</a><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="note warn">Each <b>source in a sport</b> is tracked on its own: logged before the start at the price
 available then, flat $100 a bet, settled on the real result. A pair is only <b>readable at
 30+ settled bets</b>; below that it is sorted by which way it leans, nothing more. Pairs that
-clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
+have been moved to <a href="./production.html">Production</a> by hand are marked below.</div>
 
 <div class="tiles">
 <div class="tile"><b class="pos">4</b><span>working</span></div>
 <div class="tile"><b class="neg">1</b><span>not working</span></div>
 <div class="tile"><b>28</b><span>too early to tell</span></div>
-<div class="tile"><b>2</b><span>in QA</span></div>
+<div class="tile"><b>0</b><span>in production</span></div>
 <div class="tile"><b>229</b><span>bets running</span></div>
-<div class="tile"><b>83/128</b><span>won today</span></div>
+<div class="tile"><b>0/0</b><span>won today</span></div>
 </div>
 
 
 <h2>Sources and rules</h2>
 <div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>4</b></button><button type="button" data-tab="failing">Not working<b>1</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>9</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>13</b></button><button type="button" data-tab="waiting">Waiting for results<b>6</b></button><button type="button" data-tab="all">All</button></div>
-<div class="tbl"><table id="pairs"><tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th><th>Road to QA</th><th class="num">Last bet</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 4</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ settled bets and ahead of the price: wins beat what the prices implied and ROI is positive.</td></tr><tr data-g="working">
+<div class="tbl"><table id="pairs"><tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th><th>Record so far</th><th class="num">Last bet</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 4</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ settled bets and ahead of the price: wins beat what the prices implied and ROI is positive.</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
 <div class="sm mut">MLB · Statistical model</div></summary>
 <div class="sm mut">ESPN&#x27;s own win probability (gameProjection). A pure model with no money behind it, which makes it the most likely of the four to be beatable.</div></details></td>
@@ -105,7 +103,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="pos">+25.4%</span></td>
 <td class="num"><span class="pos">+11.7pp</span></td>
 <td class="num"><span class="pos">+6.2¢</span><div class="sm mut">36 closes</div></td>
-<td><span class="bar"><i style="width:50%"></i></span> <span class="sm">15/30</span><div class="sm mut">2/4 QA gates</div></td>
+<td><span class="bar"><i style="width:50%"></i></span> <span class="sm">15/30</span><div class="sm mut">2/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>Tennis favourite-band rule</b>
 <div class="sm mut">Tennis · Rule</div></summary>
@@ -115,7 +113,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="pos">+6.1%</span></td>
 <td class="num"><span class="pos">+3.0pp</span></td>
 <td class="num"><span class="neg">-0.1¢</span><div class="sm mut">144 closes</div></td>
-<td><span class="sig y">IN QA</span><div class="sm mut">since 2026-09-17</div></td>
+<td><span class="bar"><i style="width:100%"></i></span> <span class="sm">153/50</span><div class="sm mut">4/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
 <div class="sm mut">MLB · Tipster site</div></summary>
@@ -125,7 +123,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="pos">+11.8%</span></td>
 <td class="num"><span class="pos">+0.4pp</span></td>
 <td class="num"><span class="mut">+0.9¢</span><div class="sm mut">27 closes</div></td>
-<td><span class="bar"><i style="width:56%"></i></span> <span class="sm">17/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:56%"></i></span> <span class="sm">17/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="working">
 <td><details class="src"><summary><b>SoccerPredictions.ai</b>
 <div class="sm mut">Soccer · Tipster site</div></summary>
@@ -135,7 +133,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="pos">+12.4%</span></td>
 <td class="num"><span class="pos">+7.8pp</span></td>
 <td class="num"><span class="mut">+0.2¢</span><div class="sm mut">21 closes</div></td>
-<td><span class="sig y">IN QA</span><div class="sm mut">since 2026-09-16</div></td>
+<td><span class="bar"><i style="width:100%"></i></span> <span class="sm">76/30</span><div class="sm mut">2/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · 1</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ settled bets and not ahead of the price. Kept running — a record can turn — but nothing here is an edge today.</td></tr><tr data-g="failing">
 <td><details class="src"><summary><b>Scores24</b>
 <div class="sm mut">MLB · Tipster site</div></summary>
@@ -145,7 +143,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="neg">-18.2%</span></td>
 <td class="num"><span class="neg">-23.5pp</span></td>
 <td class="num"><span class="mut">+0.1¢</span><div class="sm mut">26 closes</div></td>
-<td><span class="bar"><i style="width:76%"></i></span> <span class="sm">23/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:76%"></i></span> <span class="sm">23/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 9</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 settled bets, ahead of the price so far. Unreadable yet: watch, don&#x27;t trust.</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Polymarket</b>
 <div class="sm mut">Cricket · Prediction market</div></summary>
@@ -155,7 +153,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+471.4%</span></td>
 <td class="num"><span class="mut">+0.0pp</span></td>
 <td class="num"><span class="mut">+20.7¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">2/4 QA gates</div></td>
+<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">2/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Polymarket</b>
 <div class="sm mut">MLB · Prediction market</div></summary>
@@ -165,7 +163,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+52.4%</span></td>
 <td class="num"><span class="mut">+8.9pp</span></td>
 <td class="num"><span class="mut">-5.0¢</span><div class="sm mut">7 closes</div></td>
-<td><span class="bar"><i style="width:23%"></i></span> <span class="sm">7/30</span><div class="sm mut">3/4 QA gates</div></td>
+<td><span class="bar"><i style="width:23%"></i></span> <span class="sm">7/30</span><div class="sm mut">3/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Oddspedia community tips</b>
 <div class="sm mut">Cricket · Tipster site</div></summary>
@@ -175,17 +173,17 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+221.9%</span></td>
 <td class="num"><span class="mut">+45.9pp</span></td>
 <td class="num"><span class="mut">+15.0¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">3/4 QA gates</div></td>
+<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">3/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Team scores 1+ form rule</b>
 <div class="sm mut">Soccer · Team 1+ · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it scored in each of its last 5 competitive games and its opponent conceded in each of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. Fast-tracked to Production on probation: 30 settled bets, profitable after fees, z of at least 1 against the prices paid — or back to the normal ladder.</div></details></td>
+<div class="sm mut">Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it scored in each of its last 5 competitive games and its opponent conceded in each of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. In Production since 2026-09-18, moved by hand.</div></details></td>
 <td class="num">4<div class="sm mut">5 open</div></td>
 <td class="num">4 v 3.3<div class="sm mut">z +0.96</div></td>
 <td class="num"><span class="mut">+23.4%</span></td>
 <td class="num"><span class="mut">+27.2pp</span></td>
 <td class="num"><span class="mut">+1.3¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="sig w">FAST TRACK</span><div class="sm mut">probation</div></td>
+<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">2/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>MMA favourite-band rule</b>
 <div class="sm mut">MMA · Rule</div></summary>
@@ -195,7 +193,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+31.6%</span></td>
 <td class="num"><span class="mut">+36.2pp</span></td>
 <td class="num"><span class="mut">-15.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 QA gates</div></td>
+<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 marks hold</div></td>
 <td class="num mut sm">2026-09-15</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Under 3.5 low-scoring rule</b>
 <div class="sm mut">Soccer · Under 3.5 · Rule</div></summary>
@@ -205,7 +203,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+26.6%</span></td>
 <td class="num"><span class="mut">+33.8pp</span></td>
 <td class="num"><span class="mut">-3.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 QA gates</div></td>
+<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>Scores24</b>
 <div class="sm mut">Soccer · Tipster site</div></summary>
@@ -215,7 +213,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+20.1%</span></td>
 <td class="num"><span class="mut">-18.8pp</span></td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">1/4 QA gates</div></td>
+<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">1/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>DraftKings</b>
 <div class="sm mut">MLB · Sportsbook</div></summary>
@@ -225,7 +223,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+13.8%</span></td>
 <td class="num"><span class="mut">-34.7pp</span></td>
 <td class="num"><span class="mut">-3.1¢</span><div class="sm mut">5 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">1/4 QA gates</div></td>
+<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">1/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
 <td><details class="src"><summary><b>OLBG community tips</b>
 <div class="sm mut">Boxing · Tipster site</div></summary>
@@ -235,7 +233,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">+12.4%</span></td>
 <td class="num"><span class="mut">+0.0pp</span></td>
 <td class="num"><span class="mut">+0.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 13</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 settled bets, behind the price so far.</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Polymarket</b>
 <div class="sm mut">Tennis · Prediction market</div></summary>
@@ -245,7 +243,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-12.6%</span></td>
 <td class="num"><span class="mut">-37.2pp</span></td>
 <td class="num"><span class="mut">+2.3¢</span><div class="sm mut">7 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">8/50</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">8/50</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Over 1.5 form rule</b>
 <div class="sm mut">Soccer · Over 1.5 · Rule</div></summary>
@@ -255,7 +253,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-4.1%</span></td>
 <td class="num"><span class="mut">+4.4pp</span></td>
 <td class="num"><span class="mut">+3.7¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">1/4 QA gates</div></td>
+<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">1/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
 <div class="sm mut">NFL · Tipster site</div></summary>
@@ -265,7 +263,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-10.6%</span></td>
 <td class="num"><span class="mut">-43.5pp</span></td>
 <td class="num"><span class="mut">+2.0¢</span><div class="sm mut">11 closes</div></td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>BTTS form rule</b>
 <div class="sm mut">Soccer · BTTS · Rule</div></summary>
@@ -275,7 +273,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-18.0%</span></td>
 <td class="num"><span class="mut">-8.0pp</span></td>
 <td class="num"><span class="mut">+3.0¢</span><div class="sm mut">2 closes</div></td>
-<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Scores24</b>
 <div class="sm mut">Tennis · Tipster site</div></summary>
@@ -285,7 +283,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-9.0%</span></td>
 <td class="num"><span class="mut">-30.6pp</span></td>
 <td class="num"><span class="mut">+5.8¢</span><div class="sm mut">14 closes</div></td>
-<td><span class="bar"><i style="width:26%"></i></span> <span class="sm">13/50</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:26%"></i></span> <span class="sm">13/50</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">Tennis · Sportsbook</div></summary>
@@ -295,7 +293,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-100.0%</span></td>
 <td class="num"><span class="mut">-125.0pp</span></td>
 <td class="num"><span class="mut">+1.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:2%"></i></span> <span class="sm">1/50</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:2%"></i></span> <span class="sm">1/50</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-14</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>OLBG community tips</b>
 <div class="sm mut">MMA · Tipster site</div></summary>
@@ -305,7 +303,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-24.5%</span></td>
 <td class="num"><span class="mut">-18.0pp</span></td>
 <td class="num"><span class="mut">-3.8¢</span><div class="sm mut">5 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-15</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">Cricket · Sportsbook</div></summary>
@@ -315,7 +313,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-100.0%</span></td>
 <td class="num"><span class="mut">-117.6pp</span></td>
 <td class="num"><span class="mut">+0.0¢</span><div class="sm mut">2 closes</div></td>
-<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-15</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
 <div class="sm mut">NFL · Statistical model</div></summary>
@@ -325,7 +323,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-29.6%</span></td>
 <td class="num"><span class="mut">-51.5pp</span></td>
 <td class="num"><span class="mut">-3.2¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Scores24</b>
 <div class="sm mut">NFL · Tipster site</div></summary>
@@ -335,7 +333,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-44.9%</span></td>
 <td class="num"><span class="mut">-63.5pp</span></td>
 <td class="num"><span class="mut">+1.5¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-13</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Team +0.5 unbeaten rule</b>
 <div class="sm mut">Soccer · Team +0.5 · Rule</div></summary>
@@ -345,7 +343,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-24.0%</span></td>
 <td class="num"><span class="mut">-5.0pp</span></td>
 <td class="num"><span class="mut">+3.5¢</span><div class="sm mut">2 closes</div></td>
-<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:10%"></i></span> <span class="sm">3/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>Kalshi</b>
 <div class="sm mut">MLB · Prediction market</div></summary>
@@ -355,7 +353,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-33.9%</span></td>
 <td class="num"><span class="mut">-58.6pp</span></td>
 <td class="num"><span class="mut">+4.2¢</span><div class="sm mut">11 closes</div></td>
-<td><span class="bar"><i style="width:20%"></i></span> <span class="sm">6/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:20%"></i></span> <span class="sm">6/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
 <td><details class="src"><summary><b>MLB fade-the-streak rule</b>
 <div class="sm mut">MLB · Rule</div></summary>
@@ -365,7 +363,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">-59.2%</span></td>
 <td class="num"><span class="mut">-74.7pp</span></td>
 <td class="num"><span class="mut">-0.9¢</span><div class="sm mut">7 closes</div></td>
-<td><span class="bar"><i style="width:23%"></i></span> <span class="sm">7/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:23%"></i></span> <span class="sm">7/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr class="grp " data-g="waiting"><td colspan="8">Waiting for results · 6</td></tr><tr data-g="waiting"><td colspan="8" class="mut sm">Bets logged, nothing settled yet.</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>Polymarket</b>
 <div class="sm mut">NFL · Prediction market</div></summary>
@@ -375,7 +373,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>Kalshi</b>
 <div class="sm mut">NFL · Prediction market</div></summary>
@@ -385,7 +383,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>DraftKings</b>
 <div class="sm mut">NFL · Sportsbook</div></summary>
@@ -395,7 +393,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>Team scores 2+ form rule</b>
 <div class="sm mut">Soccer · Team 2+ · Rule</div></summary>
@@ -405,7 +403,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">Boxing · Sportsbook</div></summary>
@@ -415,7 +413,7 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-17</td></tr><tr data-g="waiting">
 <td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">MMA · Sportsbook</div></summary>
@@ -425,15 +423,19 @@ clear the QA entry gate move to <a href="./qa.html">QA</a>.</div>
 <td class="num"><span class="mut">—</span></td>
 <td class="num">—</td>
 <td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 QA gates</div></td>
+<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
 <td class="num mut sm">2026-09-16</td></tr></table></div>
 <div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
 samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
 the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
-<b>Road to QA</b>: settled bets on the US exchanges against what QA needs for that sport, and how many of its
-four entry gates hold. <b>Thresholds are per sport</b>: most need 30+ bets over 14+ days
-at z ≥ 1; high-volume sports (Tennis, Table Tennis) need
-50+ bets at z ≥ 1.5, with no day span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under 30 bets.</div>
+<b>Record so far</b>: settled bets on the US exchanges, and how many of the four marks a pair would want to
+show before anyone moved it: enough bets, ahead of the prices paid, beating every blind rule, and steady across
+its record. Nothing here promotes anything — <b>Production is entered by hand</b>, and these are the numbers that
+decision is made on. <b>Thresholds are per sport</b>: most read against 30+ bets over
+14+ days at z ≥ 1; high-volume sports
+(Tennis, Table Tennis) against
+50+ bets at z ≥ 1.5, with no day
+span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under 30 bets.</div>
 
 <h2>Running now (229)</h2>
 <input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…"><div id="live"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr class="grp"><td colspan="7">Soccer · 1 running</td></tr>

@@ -1,0 +1,67 @@
+variables:
+  PACKAGE_NAME: testmvc.tar.gz
+  PACKAGE_VERSION: "0.2.0"
+  PACKAGE_FILE: testmvc.tar.gz
+
+stages:
+  - build
+  - publish
+  - deploy
+
+# ---------------------------------------------------------------------------
+# 1) Build, test and publish the ASP.NET Core 8 app.
+#    Job MUST be named generic-bundle-job for the Package Pipeline to pick up
+#    the artifact.
+# ---------------------------------------------------------------------------
+generic-bundle-job:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+  script:
+    - find . -type d -name obj -exec rm -rf {} + 2>/dev/null || true   # drop stale/committed build output
+    - find . -type d -name bin -exec rm -rf {} + 2>/dev/null || true
+    - dotnet restore --force
+    - dotnet test -c Release
+    - dotnet publish TestMVC.UI/TestMVC.UI.csproj -c Release -o publish   # framework-dependent (VM needs ASP.NET Core 8 runtime)
+    - tar -czf ${PACKAGE_FILE} -C publish .
+  artifacts:
+    paths:
+      - ${PACKAGE_FILE}
+
+# ---------------------------------------------------------------------------
+# 2) Arcturus Package Pipeline: security scans then publish to the Package
+#    Registry.
+# ---------------------------------------------------------------------------
+package-pipeline-trigger:
+  stage: publish
+  needs:
+    - generic-bundle-job
+  variables:
+    SYSTEM_NAME: "B-2-ELMA"
+    PACKAGE_LANGUAGE: "generic"
+    UPSTREAM_PROJECT_NAME: "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}"
+    UPSTREAM_BRANCH_NAME: "${CI_COMMIT_REF_NAME}"
+  trigger:
+    include:
+      - project: "cloudone/arcturus/pipelines/package-pipeline"
+        ref: main
+        file: "package-pipeline.yml"
+    strategy: depend
+    forward:
+      pipeline_variables: true
+
+# ---------------------------------------------------------------------------
+# 3) Deploy to the Windows VM (manual). az vm run-command sends a SMALL script;
+#    the VM itself pulls the artifact from the Package Registry and hosts it, so
+#    no LZ runner / storage needed (works from the shared runner).
+# ---------------------------------------------------------------------------
+deploy-to-azure-windows-vm:
+  stage: deploy
+  when: manual
+  needs:
+    - package-pipeline-trigger
+  image: mcr.microsoft.com/azure-cli
+  variables:
+    VM_DEPLOY_DIR: 'C:\apps\testmvc'
+    APP_PORT: "5000"
+  script:
+    - sh deploy.sh

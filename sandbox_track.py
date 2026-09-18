@@ -67,22 +67,25 @@ APPROVAL = dict(min_bets=50, min_days=28, z_min=2.0)
 #   30+ settled bets spanning 14+ days · wins beat the price by z >= 1 · beats every blind rule on
 #   the same contests · still profitable without its single biggest win.
 # In QA, the stamp (APPROVAL) is applied to the fresh data, plus positive closing-line value
-# and positive ROI after fees: that is "production-ready".
+# and positive ROI after fees.
 #
-# Tightened 2026-09-13, before any pair had been promoted:
-#   * CLV must rest on READY_CLV["min_n"]+ bets with a closing price, covering at least
-#     READY_CLV["min_share"] of the fresh bets — one lucky close is not evidence.
-#   * READY must HOLD: the gate is checked every run, and taking the first run it passes
-#     would turn four looks a day into a lucky crossing. A pair is marked ready only after
-#     passing continuously for READY_HOLD_DAYS, and the mark is withdrawn (logged) the
-#     first run it fails.
-#   * DEMOTION after QA_DEMOTE["min_bets"] fresh bets when ANY of: behind the price (z < 0),
-#     not beating every blind rule, or behind the closing price (on the READY_CLV sample).
-#     And whatever the count, when the pair has logged no new bet for STALE_DAYS — its
-#     source went dark or its season ended — so nothing can sit in QA untested.
+# TWO STAGES since 2026-09-18, as asked: Sandbox, and Production. There is no QA stage and no
+# automatic promotion — a pair reaches Production because it is listed in PAIR_OVERRIDES by
+# hand, and that decision is the owner's. What the Sandbox does is measure, so that the
+# decision is made on a record rather than on a hunch.
+#
+# The gates below are no longer a route to anywhere. They stay because they are the honest
+# summary of a pair's record — the Sandbox page reports them as "what this pair would have to
+# show", and demotion still uses them:
+#   * DEMOTION after demote_bets settled bets when EITHER the pair is behind the prices it
+#     paid (z < 0) or it does not beat every blind rule on the same contests. And whatever the
+#     count, when it has logged no new bet for STALE_DAYS — its source went dark or its season
+#     ended — so nothing sits in Production untested.
+#   * The closing price no longer demotes: every pair in Production was put there by hand,
+#     with its CLV visible on the page. It is reported, not enforced.
 #   * Baselines are benchmarks, not forecasters, and are never promoted.
-# A demoted pair must re-qualify on bets logged after the demotion.
-QA_ENTRY = dict(min_bets=30, min_days=14, z_min=1.0)
+# A demoted pair stays out until it is listed again with a later date.
+QA_ENTRY = dict(min_bets=30, min_days=14, z_min=1.0)     # reported on the Sandbox page
 QA_DEMOTE = dict(min_bets=30, z_below=0.0)
 READY_CLV = dict(min_n=30, min_share=0.5)
 READY_HOLD_DAYS = 7
@@ -109,19 +112,26 @@ SPORT_RULES = {
 }
 
 
-# ---- Pairs moved by hand (2026-09-16) -----------------------------------------------------
-# A pair listed here is moved to QA on the next run whatever the entry gate says, is judged on
-# its whole record (Sandbox bets included), and is marked production-ready the run its record
-# reaches `production_at` settled bets while still profitable after fees — no hold period and
-# no other ready check. Demotion still applies. Asked for on 2026-09-16 for SoccerPredictions.
+# ---- Pairs in Production, each put there by hand ------------------------------------------
+# The only way into Production. A pair listed here moves on the next run whatever its record
+# says, is judged on that whole record (Sandbox bets included), and starts trading when it
+# reaches `production_at` settled bets while profitable after fees — `None` for straight away.
+# Demotion still applies: see the note at the top of this file.
 PAIR_OVERRIDES = {
     "soccerpredictions|soccer": dict(moved_on="2026-09-16", production_at=70),
     # 2026-09-17, as asked. Demoted from QA the day before for the reason that still stands:
     # its closing-line value is -0.07% and it beats the close on 28% of bets, so it wins at
-    # prices that were already right (z +1.64 against the 2.5 the gate asks for). It does
+    # prices that were already right (z +1.64 against the 2.5 the old gate asked for). It does
     # clear every other criterion — 149 settled, +6.4% against +3.8% for backing the
     # favourite on every match, profitable in both halves and without its biggest win.
     "tennis_fav_band|tennis": dict(moved_on="2026-09-17", production_at=149),
+    # 2026-09-18, as asked: the two rules that were trading from the Leads board move here, so
+    # that Production is the single source of everything the money follows.
+    #   over 1.5 — both teams' games went over 1.5 in 9+ of their last 10. It has been traded
+    #   from the Leads lane since 2026-09-12; this is the same rule, judged in one place.
+    "o15_form_l10|soccer_o15": dict(moved_on="2026-09-18", production_at=None),
+    #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
+    "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
 }
 
 
@@ -1306,38 +1316,16 @@ def demote_reason(d, name, sport, pair, a, now):
     base = dict((k, (p, det)) for k, _l, p, det in a["criteria"])["baseline"]
     if not base[0]:
         return f"not beating every blind rule ({base[1]})"
-    if clv_sample(a) and a["clv"] < 0:
-        # A pair moved by hand was moved with this known — tennis was demoted for exactly this
-        # the day before it was moved — so the closing price no longer sends it back. Every
-        # other demotion still applies: going quiet, losing to the prices paid, or failing to
-        # beat the blind rules all return it to the Sandbox whoever moved it.
-        if not PAIR_OVERRIDES.get(f"{name}|{sport}"):
-            return f"behind the closing price, {a['clv']*100:+.1f}¢ on {a['clv_n']} bets"
+    # The closing price is REPORTED on the page, not enforced. Every pair in Production was
+    # put there by hand with its CLV visible, so the number is an argument for taking it off
+    # the list, not a reason for the tracker to do it. Losing to the prices actually paid, not
+    # beating the blind rules, and going quiet all still demote.
     return None
 
 
-def fast_track_status(d, name, sport, meta, now=None):
-    """(state, assess result, reason) for a fast-tracked pair — see SOURCES[...]["fast_track"].
-
-    A fast-tracked pair is published to Production ON PROBATION from its first bet, without the
-    QA gate, and judged on every settled bet since `since` (exchange venues only):
-      probation  fewer than min_n settled bets — nothing is decided yet
-      cleared    min_n+ bets, profitable after fees AND z >= min_z against the prices paid
-      failed     min_n+ bets and either of those fails; the pair returns to the normal ladder
-    Cleared is not a lifetime pass: the running record is re-checked on every run."""
-    ft = meta["fast_track"]
-    a = assess(d, name, sport, since=ft["since"], venues=TRADEABLE_VENUES)
-    if a["n"] < ft["min_n"]:
-        return "probation", a, f"{a['n']} of {ft['min_n']} settled bets"
-    ok = a["roi_fee"] is not None and a["roi_fee"] > 0 and a["z"] >= ft["min_z"]
-    reason = (f"{a['n']} bets, {a['roi_fee']*100:+.1f}% after fees, z {a['z']:+.2f} "
-              f"(needs > 0% and z ≥ {ft['min_z']:g})")
-    return ("cleared" if ok else "failed"), a, reason
-
-
 def evaluate_stages(d, st, now=None, verbose=True):
-    """Promote Sandbox pairs that pass QA_ENTRY; demote QA pairs that fail; mark (and unmark)
-    production-ready once the ready gate has held for READY_HOLD_DAYS.
+    """Move the pairs listed in PAIR_OVERRIDES into Production; demote the ones that stop
+    working. There is no automatic promotion: listing a pair is the decision.
 
     Every change is appended to st["events"] with the evidence it was made on. Returns the
     list of changes made this run.
@@ -1351,77 +1339,57 @@ def evaluate_stages(d, st, now=None, verbose=True):
         for sport in meta["sports"]:
             key = f"{name}|{sport}"
             pair = st["pairs"].get(key) or dict(stage="sandbox", since=None)
-            ft = pair.get("fast_track") or {}
-            if meta.get("fast_track") and ft.get("state") != "failed" and pair["stage"] == "sandbox":
-                state, a, reason = fast_track_status(d, name, sport, meta, now)
-                if state != ft.get("state"):
-                    changes.append(dict(pair=key, to=f"fast_track_{state}", at=now_s,
-                                        evidence=_snapshot(a), reason=reason))
-                ft = dict(since=meta["fast_track"]["since"], state=state, checked=reason)
-                if state == "failed":
-                    # Back to the ladder on evidence gathered from here on.
-                    pair = dict(stage="sandbox", since=now_s, fast_track=dict(ft, ended_at=now_s))
-                else:
-                    pair = dict(pair, fast_track=ft)
-                st["pairs"][key] = pair
-                continue
             ov = PAIR_OVERRIDES.get(key)
-            # A demoted pair does not bounce back on its own. A move made by hand AFTER the
-            # demotion does override it — that is a decision taken with the demotion known —
-            # while an older override cannot resurrect a pair demoted since.
+            # A move made AFTER a demotion cancels it — that is a decision taken with the
+            # demotion known — while an older listing cannot resurrect a pair demoted since.
+            # The demotion also reset the pair's clock, so cancelling it restores the whole
+            # record: what a pair did in the Sandbox counts towards Production.
             if ov and pair.get("demoted_at") and ov["moved_on"] >= str(pair["demoted_at"])[:10]:
-                # The demotion also reset the pair's clock, which would leave it judged on the
-                # handful of bets since. Cancelling the demotion restores the whole record, as
-                # asked on 2026-09-16: what a pair did in the Sandbox counts towards Production.
                 pair = {k: v for k, v in pair.items() if k not in ("demoted_at", "since")}
-            if pair["stage"] == "sandbox" and ov and not pair.get("demoted_at"):
-                a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
-                pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a),
-                            entry_since=pair.get("since"), by_hand=ov["moved_on"])
-                changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a),
-                                    reason=f"moved to QA by hand on {ov['moved_on']}"))
-            elif pair["stage"] == "sandbox":
-                a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
-                if a["n"] and all(p for _k, _l, p, _d in qa_entry(a)):
-                    pair = dict(stage="qa", promoted_at=now_s, entry=_snapshot(a),
-                                entry_since=pair.get("since"))
-                    changes.append(dict(pair=key, to="qa", at=now_s, evidence=_snapshot(a)))
-            elif pair["stage"] == "qa":
-                a = assess(d, name, sport, since=qa_since(pair, sport, key), venues=TRADEABLE_VENUES)
-                why = demote_reason(d, name, sport, pair, a, now)
-                if why:
-                    pass
-                elif ov and ov.get("production_at"):
-                    ok = a["n"] >= ov["production_at"] and (a["roi_fee"] or 0) > 0
-                    if ok and not pair.get("ready_at"):
-                        pair = dict(pair, ready_since=now_s, ready_at=now_s)
-                        changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a),
-                                            reason=f"reached {ov['production_at']} settled bets, profitable after fees (set by hand)"))
-                    elif not ok and pair.get("ready_at"):
-                        changes.append(dict(pair=key, to="unready", at=now_s, evidence=_snapshot(a),
-                                            reason="no longer profitable after fees"))
-                        pair = {k: v for k, v in pair.items() if k not in ("ready_since", "ready_at")}
-                    if pair.get("stage") != "sandbox" or key in st["pairs"]:
+
+            if pair["stage"] == "sandbox":
+                if not ov or pair.get("demoted_at"):
+                    if pair.get("since") or key in st["pairs"]:
                         st["pairs"][key] = pair
                     continue
+                a = assess(d, name, sport, since=pair.get("since"), venues=TRADEABLE_VENUES)
+                pair = dict(stage="production", promoted_at=now_s, entry=_snapshot(a),
+                            entry_since=pair.get("since"), by_hand=ov["moved_on"])
+                changes.append(dict(pair=key, to="production", at=now_s, evidence=_snapshot(a),
+                                    reason=f"moved to Production by hand on {ov['moved_on']}"))
+            elif pair["stage"] in ("production", "qa"):       # "qa": a stage saved before the change
+                pair = dict(pair, stage="production")
+                if not ov:
+                    # Taken off the list by hand: back to the Sandbox, still measured.
+                    pair = dict(stage="sandbox", since=now_s)
+                    changes.append(dict(pair=key, to="sandbox", at=now_s,
+                                        reason="taken off the Production list by hand"))
+                    st["pairs"][key] = pair
+                    continue
+                a = assess(d, name, sport, since=qa_since(pair, sport, key), venues=TRADEABLE_VENUES)
+                why = demote_reason(d, name, sport, pair, a, now)
                 if why:
                     pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
                     changes.append(dict(pair=key, to="sandbox", at=now_s, evidence=_snapshot(a),
                                         reason=why))
-                elif all(p for _k, _l, p, _d in ready_gate(a)):
-                    if not pair.get("ready_since"):
-                        pair = dict(pair, ready_since=now_s)
-                    elif (not pair.get("ready_at") and now - datetime.fromisoformat(pair["ready_since"])
-                          >= timedelta(days=READY_HOLD_DAYS)):
-                        pair = dict(pair, ready_at=now_s)
-                        changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a),
-                                            reason=f"held the ready gate {READY_HOLD_DAYS}+ days"))
                 else:
-                    failed = next(l for _k, l, p, _d in ready_gate(a) if not p)
-                    if pair.get("ready_at"):
+                    # With no threshold set, listing the pair IS the decision: it trades from
+                    # this run. Judging it on a handful of Sandbox bets first would be the
+                    # tracker second-guessing a call that is not its to make — demotion is the
+                    # safety net, and it reads the whole record. With a threshold, the pair
+                    # waits for that many settled bets AND for the record to be profitable.
+                    need = ov.get("production_at")
+                    ok = True if need is None else (a["n"] >= need and (a["roi_fee"] or 0) > 0)
+                    if ok and not pair.get("ready_at"):
+                        pair = dict(pair, ready_since=now_s, ready_at=now_s)
+                        changes.append(dict(
+                            pair=key, to="ready", at=now_s, evidence=_snapshot(a),
+                            reason=(f"reached {need} settled bets, profitable after fees" if need
+                                    else "moved by hand — trading from this run")))
+                    elif not ok and pair.get("ready_at"):
                         changes.append(dict(pair=key, to="unready", at=now_s, evidence=_snapshot(a),
-                                            reason=f"lost the ready gate: {failed}"))
-                    pair = {k: v for k, v in pair.items() if k not in ("ready_since", "ready_at")}
+                                            reason="no longer profitable after fees"))
+                        pair = {k: v for k, v in pair.items() if k not in ("ready_since", "ready_at")}
             if pair.get("stage") != "sandbox" or pair.get("since") or key in st["pairs"]:
                 st["pairs"][key] = pair
     st["events"].extend(changes)
