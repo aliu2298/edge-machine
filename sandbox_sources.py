@@ -1025,6 +1025,26 @@ def pmus_book(m):
             round((bid + ask) / 2, 4))
 
 
+def pmus_sides(m):
+    """(long outcome, short outcome) for one Polymarket US two-way market.
+
+    The book (bestBid/bestAsk) and the settlement are both the LONG side's, and the long
+    side is the one marketSides flags — NOT outcomes[0]. The two agree for tennis but not
+    for NFL/MLB: "MIA Dolphins vs SF 49ers" lists outcomes ["49ers", "Dolphins"] while its
+    0.10 book is the Dolphins'. Reading outcomes[0] logged the 49ers at the Dolphins' price
+    and graded them on the Dolphins' result. outcomes order is the fallback only."""
+    outs = [str(o) for o in _pm_json(m.get("outcomes"), [])]
+    sides = m.get("marketSides") or []
+    longs = [s for s in sides if s.get("long") is True]
+    shorts = [s for s in sides if s.get("long") is False]
+    if len(sides) == 2 and len(longs) == 1 and len(shorts) == 1:
+        name = lambda s: str(s.get("description") or (s.get("team") or {}).get("alias") or "")
+        ln, sn = name(longs[0]), name(shorts[0])
+        if ln and sn and ln != sn:
+            return ln, sn
+    return (outs[0], outs[1]) if len(outs) == 2 else (None, None)
+
+
 def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
     """Every pre-match head-to-head contest Polymarket US lists for one sport, as universe rows."""
     now = datetime.now(timezone.utc)
@@ -1048,7 +1068,7 @@ def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
             if len(winners) != 1:
                 continue                              # none, or ambiguous: no guess
             m = winners[0]
-            outs = _pm_json(m.get("outcomes"), [])
+            outs = pmus_sides(m)
             when = m.get("gameStartTime") or ev.get("startTime") or ev.get("startDate")
             try:
                 wdt = datetime.fromisoformat(str(when).replace("Z", "+00:00"))

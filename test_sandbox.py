@@ -2021,6 +2021,15 @@ try:
        "the closing price for side B is 1 - bid on the US book")
 finally:
     S._get, S._pmus_leagues = _saved_get_us, _saved_leagues
+# The long side is whatever marketSides flags, not outcomes[0] — the live Dolphins/49ers
+# market lists outcomes ["49ers", "Dolphins"] with the Dolphins' 0.10 book.
+_swapped = {"outcomes": '["49ers","Dolphins"]', "marketSides": [
+    {"description": "Dolphins", "long": True}, {"description": "49ers", "long": False}]}
+eq(S.pmus_sides(_swapped), ("Dolphins", "49ers"), "side A is the long team marketSides names")
+eq(S.pmus_sides({"outcomes": '["A","B"]'}), ("A", "B"), "no marketSides: outcomes order is the fallback")
+eq(S.pmus_sides({"outcomes": '["A","B"]', "marketSides": [{"description": "A", "long": True},
+                                                          {"description": "B", "long": True}]}),
+   ("A", "B"), "an ambiguous marketSides (two longs) falls back, never guesses")
 eq(S.SOURCES["polymarket_us"]["kind"], "Prediction market", "Polymarket US is listed as a source")
 ok("polymarket" in S.CHALLENGERS, "polymarket.com is now a comparison source")
 _uni = {"tennis": [dict(market_id="u1", venue="polymarket_us", sport="tennis", label="Iga Swiatek vs Coco Gauff",
