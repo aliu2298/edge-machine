@@ -675,7 +675,7 @@ Tipsters and rules name a side and are backed every time; models, books and exch
 and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue
 wherever it lists a contest; <b>Kalshi</b> is the venue for soccer and anything Polymarket US is missing, with
 soccer kickoffs taken from ESPN. A contest is logged only with a real book (spread ≤ {int(S.MAX_SPREAD*100)}¢), at the
-ask. Until 2026-09-13 the venue was polymarket.com; those bets still settle there but never count toward QA.
+ask. Until 2026-09-13 the venue was polymarket.com; those bets still settle there but are not counted when a pair is judged.
 Quotes logged before the book rule on boxing, cricket and table tennis were voided ({esc(T.PRE_GATE_NOTE)}).{odds_line}{close_line}
 A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 

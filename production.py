@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""production.py — the Production stage: the Sandbox sources that earned a place, and their bets.
+"""production.py — the Production stage: the pairs put here by hand, and their bets.
 
-    Sandbox -> QA -> Production
+    Sandbox -> Production (by hand)
 
 A (source, sport) pair is IN PRODUCTION because it was put there BY HAND: listed in
 sandbox_track.PAIR_OVERRIDES, on the record the Sandbox measured. Nothing promotes itself
@@ -218,9 +218,9 @@ def page(d, st, blob, style, now=None):
     table = (f"""<div class="tbl"><table><tr><th>Pair</th><th class="num">Leads open</th>
 <th class="num">Settled in Production</th><th class="num">ROI</th><th class="num">z v price</th><th class="num">CLV</th></tr>
 {''.join(rows)}</table></div>""" if rows else
-             '<div class="note">Nothing is in Production yet. A pair arrives here automatically '
-             'once it has held the QA ready gate for ' + str(T.READY_HOLD_DAYS) + ' days, and leaves '
-             'on the first run it fails it.</div>')
+             '<div class="note">Nothing is in Production. A pair arrives here by hand, on the '
+             'record the Sandbox measured, and leaves the same way — or on its own when it '
+             'stops working.</div>')
     open_leads = sorted((l for l in blob.get("leads", {}).values() if l["status"] == "pending"),
                         key=lambda l: l["kickoff"])
     lead_rows = "".join(

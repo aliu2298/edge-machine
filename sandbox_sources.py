@@ -266,7 +266,7 @@ SOURCES = {
         note="Pre-registered 2026-09-14. Back a side to score 2+ at the Kalshi ask where it "
              "scored 2+ in at least 7 of its last 10 competitive games and its opponent "
              "conceded 2+ in at least 7 of theirs. Research: 76.2% on only 21 team-games "
-             "against a 45.3% own earlier rate. Full ladder: Sandbox, QA, Production."),
+             "against a 45.3% own earlier rate. Measured here and not traded: the bot follows Production only."),
     "spot": dict(
         label="Spot price (no-change baseline)", kind="Baseline", connected=True,
         site="coingecko.com", sports=["crypto"],
