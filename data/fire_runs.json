@@ -50,6 +50,7 @@
    "test_date": "2026-09-11"
   },
   "1. FC Union Berlin|over15|2026-09-18|1. FC Union Berlin|Bayern Munich": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": false,
    "id": "1. FC Union Berlin|over15|2026-09-18|1. FC Union Berlin|Bayern Munich",
    "key": "over15",
@@ -60,7 +61,8 @@
    "logged_at": "2026-09-11T21:02:34+00:00",
    "opp": "Bayern Munich",
    "rate": 0.06802721088435375,
-   "status": "pending",
+   "result": "0-7",
+   "status": "extended",
    "team": "1. FC Union Berlin",
    "test_date": "2026-09-18"
   },
@@ -99,6 +101,7 @@
    "test_date": "2026-09-11"
   },
   "1. FC Union Berlin|over25|2026-09-18|1. FC Union Berlin|Bayern Munich": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": false,
    "id": "1. FC Union Berlin|over25|2026-09-18|1. FC Union Berlin|Bayern Munich",
    "key": "over25",
@@ -109,7 +112,8 @@
    "logged_at": "2026-09-11T21:02:34+00:00",
    "opp": "Bayern Munich",
    "rate": 0.003401360544217687,
-   "status": "pending",
+   "result": "0-7",
+   "status": "extended",
    "team": "1. FC Union Berlin",
    "test_date": "2026-09-18"
   },
@@ -4395,6 +4399,7 @@
    "test_date": "2026-09-12"
   },
   "FC Groningen|over15|2026-09-18|FC Groningen|PEC Zwolle": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": true,
    "id": "FC Groningen|over15|2026-09-18|FC Groningen|PEC Zwolle",
    "key": "over15",
@@ -4405,7 +4410,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "PEC Zwolle",
    "rate": 0.1232876712328767,
-   "status": "pending",
+   "result": "3-0",
+   "status": "extended",
    "team": "FC Groningen",
    "test_date": "2026-09-18"
   },
@@ -4444,6 +4450,7 @@
    "test_date": "2026-09-12"
   },
   "FC Groningen|porous|2026-09-18|FC Groningen|PEC Zwolle": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": true,
    "id": "FC Groningen|porous|2026-09-18|FC Groningen|PEC Zwolle",
    "key": "porous",
@@ -4454,7 +4461,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "PEC Zwolle",
    "rate": 0.07876712328767123,
-   "status": "pending",
+   "result": "3-0",
+   "status": "broke",
    "team": "FC Groningen",
    "test_date": "2026-09-18"
   },
@@ -5845,6 +5853,7 @@
    "test_date": "2026-09-13"
   },
   "Kasimpasa|scoring1|2026-09-18|Kasimpasa|Konyaspor": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": true,
    "id": "Kasimpasa|scoring1|2026-09-18|Kasimpasa|Konyaspor",
    "key": "scoring1",
@@ -5855,7 +5864,8 @@
    "logged_at": "2026-09-13T16:25:35+00:00",
    "opp": "Konyaspor",
    "rate": 0.13058419243986255,
-   "status": "pending",
+   "result": "0-0",
+   "status": "broke",
    "team": "Kasimpasa",
    "test_date": "2026-09-18"
   },
@@ -5992,6 +6002,7 @@
    "test_date": "2026-09-20"
   },
   "Lyngby Boldklub|over15|2026-09-18|Lyngby Boldklub|Silkeborg IF": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": true,
    "id": "Lyngby Boldklub|over15|2026-09-18|Lyngby Boldklub|Silkeborg IF",
    "key": "over15",
@@ -6002,7 +6013,8 @@
    "logged_at": "2026-09-13T16:25:35+00:00",
    "opp": "Silkeborg IF",
    "rate": 0.2268041237113402,
-   "status": "pending",
+   "result": "0-4",
+   "status": "extended",
    "team": "Lyngby Boldklub",
    "test_date": "2026-09-18"
   },
@@ -7327,6 +7339,7 @@
    "test_date": "2026-09-20"
   },
   "PEC Zwolle|over15|2026-09-18|PEC Zwolle|FC Groningen": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": false,
    "id": "PEC Zwolle|over15|2026-09-18|PEC Zwolle|FC Groningen",
    "key": "over15",
@@ -7337,7 +7350,8 @@
    "logged_at": "2026-09-13T20:19:51+00:00",
    "opp": "FC Groningen",
    "rate": 0.2226027397260274,
-   "status": "pending",
+   "result": "0-3",
+   "status": "extended",
    "team": "PEC Zwolle",
    "test_date": "2026-09-18"
   },
@@ -8330,6 +8344,7 @@
    "test_date": "2026-09-20"
   },
   "Rapid Vienna|scoring1|2026-09-18|Rapid Vienna|WSG Swarovski Tirol": {
+   "graded_at": "2026-09-18T20:30:21+00:00",
    "home": true,
    "id": "Rapid Vienna|scoring1|2026-09-18|Rapid Vienna|WSG Swarovski Tirol",
    "key": "scoring1",
@@ -8340,7 +8355,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "WSG Swarovski Tirol",
    "rate": 0.17123287671232876,
-   "status": "pending",
+   "result": "3-0",
+   "status": "extended",
    "team": "Rapid Vienna",
    "test_date": "2026-09-18"
   },
@@ -10604,5 +10620,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-18T16:47:34+00:00"
+ "updated_at": "2026-09-18T20:30:21+00:00"
 }

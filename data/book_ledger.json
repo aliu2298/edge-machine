@@ -8784,6 +8784,8 @@
   "2026-09-18|Bayern Munich|1. FC Union Berlin": {
    "away": "1. FC Union Berlin",
    "date": "2026-09-18",
+   "final": "7-0",
+   "graded_at": "2026-09-18T20:30:15+00:00",
    "home": "Bayern Munich",
    "id": "2026-09-18|Bayern Munich|1. FC Union Berlin",
    "kickoff": "2026-09-18T18:30Z",
@@ -8795,6 +8797,13 @@
     "home2plus": 0.8463,
     "over15": 0.9543,
     "over25": 0.8624
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.049,
+    "over15": 0.029,
+    "over25": 0.128
    },
    "priced_at": "2026-09-17T20:49:50+00:00",
    "prices": {
@@ -8846,7 +8855,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|Brentford|Chelsea": {
    "away": "Chelsea",
@@ -8985,6 +9001,8 @@
   "2026-09-18|FC Groningen|PEC Zwolle": {
    "away": "PEC Zwolle",
    "date": "2026-09-18",
+   "final": "3-0",
+   "graded_at": "2026-09-18T20:30:15+00:00",
    "home": "FC Groningen",
    "id": "2026-09-18|FC Groningen|PEC Zwolle",
    "kickoff": "2026-09-18T18:00Z",
@@ -8994,6 +9012,11 @@
     "btts": 0.705,
     "over15": 0.9,
     "over25": 0.7453
+   },
+   "pnl": {
+    "btts": -1.0,
+    "over15": 0.127,
+    "over25": 0.438
    },
    "priced_at": "2026-09-17T20:49:50+00:00",
    "prices": {
@@ -9025,7 +9048,12 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending"
+   "result": {
+    "btts": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|Monza|Sassuolo": {
    "away": "Sassuolo",
@@ -9238,6 +9266,163 @@
      "fee": 0.0144,
      "market": "tsc-sea-rom-int-2026-09-19-2pt5",
      "price": 1.628,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|Ajax Amsterdam|Excelsior": {
+   "away": "Excelsior",
+   "date": "2026-09-19",
+   "home": "Ajax Amsterdam",
+   "id": "2026-09-19|Ajax Amsterdam|Excelsior",
+   "kickoff": "2026-09-19T18:00Z",
+   "lead_source": true,
+   "league": "Eredivisie",
+   "model": {
+    "btts": 0.6963,
+    "over15": 0.8776,
+    "over25": 0.7032
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.61,
+     "bid": 0.6,
+     "fair": 0.605,
+     "fee": 0.0167,
+     "market": "KXEREDIVISIEBTTS-26SEP19AJAEXC-BTTS",
+     "price": 1.596,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.94,
+     "bid": 0.9,
+     "fair": 0.92,
+     "fee": 0.004,
+     "market": "KXEREDIVISIETOTAL-26SEP19AJAEXC-2",
+     "price": 1.059,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.79,
+     "bid": 0.77,
+     "fair": 0.78,
+     "fee": 0.0117,
+     "market": "KXEREDIVISIETOTAL-26SEP19AJAEXC-3",
+     "price": 1.247,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|Alverca|Rio Ave": {
+   "away": "Rio Ave",
+   "date": "2026-09-19",
+   "home": "Alverca",
+   "id": "2026-09-19|Alverca|Rio Ave",
+   "kickoff": "2026-09-19T17:00Z",
+   "lead_source": true,
+   "league": "Primeira Liga",
+   "model": {
+    "btts": 0.5344,
+    "over15": 0.746,
+    "over25": 0.4992
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.54,
+     "bid": 0.53,
+     "fair": 0.535,
+     "fee": 0.0174,
+     "market": "KXLIGAPORTUGALBTTS-26SEP19ALVRAV-BTTS",
+     "price": 1.794,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.75,
+     "bid": 0.73,
+     "fair": 0.74,
+     "fee": 0.0132,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-2",
+     "price": 1.31,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.49,
+     "bid": 0.47,
+     "fair": 0.48,
+     "fee": 0.0175,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-3",
+     "price": 1.97,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|Angers|Troyes": {
+   "away": "Troyes",
+   "date": "2026-09-19",
+   "home": "Angers",
+   "id": "2026-09-19|Angers|Troyes",
+   "kickoff": "2026-09-19T18:45Z",
+   "lead_source": true,
+   "league": "Ligue 1",
+   "model": {
+    "away2plus": 0.3836,
+    "btts": 0.5583,
+    "home2plus": 0.4162,
+    "over15": 0.7608,
+    "over25": 0.5193
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.33,
+     "bid": 0.3,
+     "fair": 0.315,
+     "fee": 0.0155,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19ANGEST-EST2",
+     "price": 2.894,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.55,
+     "bid": 0.54,
+     "fair": 0.545,
+     "fee": 0.0174,
+     "market": "KXLIGUE1BTTS-26SEP19ANGEST-BTTS",
+     "price": 1.762,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.45,
+     "bid": 0.42,
+     "fair": 0.435,
+     "fee": 0.0174,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19ANGEST-ANG2",
+     "price": 2.139,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.75,
+     "bid": 0.74,
+     "event": "lg1-ang-tro-2026-09-19",
+     "fair": 0.745,
+     "fee": 0.0112,
+     "market": "tsc-lg1-ang-tro-2026-09-19-1pt5",
+     "price": 1.314,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.5,
+     "bid": 0.49,
+     "event": "lg1-ang-tro-2026-09-19",
+     "fair": 0.495,
+     "fee": 0.015,
+     "market": "tsc-lg1-ang-tro-2026-09-19-2pt5",
+     "price": 1.942,
      "venue": "polymarket_us"
     }
    },
@@ -9830,6 +10015,140 @@
    },
    "status": "pending"
   },
+  "2026-09-19|Le Mans|Lorient": {
+   "away": "Lorient",
+   "date": "2026-09-19",
+   "home": "Le Mans",
+   "id": "2026-09-19|Le Mans|Lorient",
+   "kickoff": "2026-09-19T18:45Z",
+   "lead_source": true,
+   "league": "Ligue 1",
+   "model": {
+    "away2plus": 0.4201,
+    "btts": 0.5938,
+    "home2plus": 0.446,
+    "over15": 0.7927,
+    "over25": 0.5646
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.44,
+     "bid": 0.41,
+     "fair": 0.425,
+     "fee": 0.0173,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19MANFCL-FCL2",
+     "price": 2.187,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.6,
+     "bid": 0.58,
+     "fair": 0.59,
+     "fee": 0.0169,
+     "market": "KXLIGUE1BTTS-26SEP19MANFCL-BTTS",
+     "price": 1.621,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.43,
+     "bid": 0.39,
+     "fair": 0.41,
+     "fee": 0.0172,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19MANFCL-MAN2",
+     "price": 2.236,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.78,
+     "bid": 0.77,
+     "event": "lg1-lmf-lor-2026-09-19",
+     "fair": 0.775,
+     "fee": 0.0103,
+     "market": "tsc-lg1-lmf-lor-2026-09-19-1pt5",
+     "price": 1.265,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.54,
+     "bid": 0.53,
+     "event": "lg1-lmf-lor-2026-09-19",
+     "fair": 0.535,
+     "fee": 0.0149,
+     "market": "tsc-lg1-lmf-lor-2026-09-19-2pt5",
+     "price": 1.802,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|Lyon|Stade Rennais": {
+   "away": "Stade Rennais",
+   "date": "2026-09-19",
+   "home": "Lyon",
+   "id": "2026-09-19|Lyon|Stade Rennais",
+   "kickoff": "2026-09-19T18:45Z",
+   "lead_source": true,
+   "league": "Ligue 1",
+   "model": {
+    "away2plus": 0.4181,
+    "btts": 0.5991,
+    "home2plus": 0.4588,
+    "over15": 0.7977,
+    "over25": 0.5721
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.42,
+     "bid": 0.4,
+     "fair": 0.41,
+     "fee": 0.0171,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19OLREN-REN2",
+     "price": 2.288,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.66,
+     "bid": 0.63,
+     "fair": 0.645,
+     "fee": 0.0158,
+     "market": "KXLIGUE1BTTS-26SEP19OLREN-BTTS",
+     "price": 1.48,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.55,
+     "bid": 0.52,
+     "fair": 0.535,
+     "fee": 0.0174,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19OLREN-OL2",
+     "price": 1.762,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.84,
+     "bid": 0.83,
+     "event": "lg1-lyo-ren-2026-09-19",
+     "fair": 0.835,
+     "fee": 0.0081,
+     "market": "tsc-lg1-lyo-ren-2026-09-19-1pt5",
+     "price": 1.179,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "lg1-lyo-ren-2026-09-19",
+     "fair": 0.625,
+     "fee": 0.014,
+     "market": "tsc-lg1-lyo-ren-2026-09-19-2pt5",
+     "price": 1.553,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-19|Newcastle United|Hull City": {
    "away": "Hull City",
    "date": "2026-09-19",
@@ -10098,6 +10417,73 @@
    },
    "status": "pending"
   },
+  "2026-09-19|Sevilla|Barcelona": {
+   "away": "Barcelona",
+   "date": "2026-09-19",
+   "home": "Sevilla",
+   "id": "2026-09-19|Sevilla|Barcelona",
+   "kickoff": "2026-09-19T19:00Z",
+   "lead_source": true,
+   "league": "La Liga",
+   "model": {
+    "away2plus": 0.4589,
+    "btts": 0.5669,
+    "home2plus": 0.3631,
+    "over15": 0.7726,
+    "over25": 0.5358
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.84,
+     "bid": 0.82,
+     "fair": 0.83,
+     "fee": 0.0095,
+     "market": "KXLALIGATEAMTOTAL-26SEP19SEVBAR-BAR2",
+     "price": 1.177,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.59,
+     "bid": 0.58,
+     "fair": 0.585,
+     "fee": 0.017,
+     "market": "KXLALIGABTTS-26SEP19SEVBAR-BTTS",
+     "price": 1.647,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.25,
+     "bid": 0.23,
+     "fair": 0.24,
+     "fee": 0.0132,
+     "market": "KXLALIGATEAMTOTAL-26SEP19SEVBAR-SEV2",
+     "price": 3.799,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.92,
+     "bid": 0.91,
+     "event": "lal-sev-fcb-2026-09-19",
+     "fair": 0.915,
+     "fee": 0.0044,
+     "market": "tsc-lal-sev-fcb-2026-09-19-1pt5",
+     "price": 1.082,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.78,
+     "bid": 0.77,
+     "event": "lal-sev-fcb-2026-09-19",
+     "fair": 0.775,
+     "fee": 0.0103,
+     "market": "tsc-lal-sev-fcb-2026-09-19-2pt5",
+     "price": 1.265,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-19|Sparta Rotterdam|Heerenveen": {
    "away": "Heerenveen",
    "date": "2026-09-19",
@@ -10138,6 +10524,51 @@
      "fee": 0.016,
      "market": "KXEREDIVISIETOTAL-26SEP19SPAHEE-3",
      "price": 1.502,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|Sporting CP|Arouca": {
+   "away": "Arouca",
+   "date": "2026-09-19",
+   "home": "Sporting CP",
+   "id": "2026-09-19|Sporting CP|Arouca",
+   "kickoff": "2026-09-19T19:30Z",
+   "lead_source": true,
+   "league": "Primeira Liga",
+   "model": {
+    "btts": 0.5548,
+    "over15": 0.7744,
+    "over25": 0.5383
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.49,
+     "bid": 0.48,
+     "fair": 0.485,
+     "fee": 0.0175,
+     "market": "KXLIGAPORTUGALBTTS-26SEP19SPOARO-BTTS",
+     "price": 1.97,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.88,
+     "bid": 0.86,
+     "fair": 0.87,
+     "fee": 0.0074,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP19SPOARO-2",
+     "price": 1.127,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.7,
+     "bid": 0.68,
+     "fair": 0.69,
+     "fee": 0.0148,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP19SPOARO-3",
+     "price": 1.399,
      "venue": "kalshi"
     }
    },
@@ -10299,6 +10730,73 @@
    },
    "status": "pending"
   },
+  "2026-09-19|Toulouse|Le Havre AC": {
+   "away": "Le Havre AC",
+   "date": "2026-09-19",
+   "home": "Toulouse",
+   "id": "2026-09-19|Toulouse|Le Havre AC",
+   "kickoff": "2026-09-19T18:45Z",
+   "lead_source": true,
+   "league": "Ligue 1",
+   "model": {
+    "away2plus": 0.4286,
+    "btts": 0.5848,
+    "home2plus": 0.4201,
+    "over15": 0.7845,
+    "over25": 0.5527
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.29,
+     "bid": 0.27,
+     "fair": 0.28,
+     "fee": 0.0145,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19TFCHAC-HAC2",
+     "price": 3.284,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.57,
+     "bid": 0.55,
+     "fair": 0.56,
+     "fee": 0.0172,
+     "market": "KXLIGUE1BTTS-26SEP19TFCHAC-BTTS",
+     "price": 1.703,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.58,
+     "bid": 0.55,
+     "fair": 0.565,
+     "fee": 0.0171,
+     "market": "KXLIGUE1TEAMTOTAL-26SEP19TFCHAC-TFC2",
+     "price": 1.675,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.8,
+     "bid": 0.78,
+     "event": "lg1-tou-hac-2026-09-19",
+     "fair": 0.79,
+     "fee": 0.0096,
+     "market": "tsc-lg1-tou-hac-2026-09-19-1pt5",
+     "price": 1.235,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.57,
+     "bid": 0.56,
+     "event": "lg1-tou-hac-2026-09-19",
+     "fair": 0.565,
+     "fee": 0.0147,
+     "market": "tsc-lg1-tou-hac-2026-09-19-2pt5",
+     "price": 1.71,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
   "2026-09-19|Udinese|Cagliari": {
    "away": "Cagliari",
    "date": "2026-09-19",
@@ -10361,6 +10859,73 @@
      "fee": 0.0149,
      "market": "tsc-sea-udi-cag-2026-09-19-2pt5",
      "price": 2.151,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-19|Venezia|Lazio": {
+   "away": "Lazio",
+   "date": "2026-09-19",
+   "home": "Venezia",
+   "id": "2026-09-19|Venezia|Lazio",
+   "kickoff": "2026-09-19T18:45Z",
+   "lead_source": true,
+   "league": "Serie A",
+   "model": {
+    "away2plus": 0.408,
+    "btts": 0.5299,
+    "home2plus": 0.343,
+    "over15": 0.7355,
+    "over25": 0.4854
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.53,
+     "bid": 0.5,
+     "fair": 0.515,
+     "fee": 0.0175,
+     "market": "KXSERIEATEAMTOTAL-26SEP19VENLAZ-LAZ2",
+     "price": 1.826,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.59,
+     "bid": 0.57,
+     "fair": 0.58,
+     "fee": 0.017,
+     "market": "KXSERIEABTTS-26SEP19VENLAZ-BTTS",
+     "price": 1.647,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.33,
+     "bid": 0.3,
+     "fair": 0.315,
+     "fee": 0.0155,
+     "market": "KXSERIEATEAMTOTAL-26SEP19VENLAZ-VEN2",
+     "price": 2.894,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.8,
+     "bid": 0.79,
+     "event": "sea-ven-laz-2026-09-19",
+     "fair": 0.795,
+     "fee": 0.0096,
+     "market": "tsc-sea-ven-laz-2026-09-19-1pt5",
+     "price": 1.235,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.57,
+     "bid": 0.55,
+     "event": "sea-ven-laz-2026-09-19",
+     "fair": 0.56,
+     "fee": 0.0147,
+     "market": "tsc-sea-ven-laz-2026-09-19-2pt5",
+     "price": 1.71,
      "venue": "polymarket_us"
     }
    },
@@ -10499,7 +11064,52 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-19|Willem II|Fortuna Sittard": {
+   "away": "Fortuna Sittard",
+   "date": "2026-09-19",
+   "home": "Willem II",
+   "id": "2026-09-19|Willem II|Fortuna Sittard",
+   "kickoff": "2026-09-19T19:00Z",
+   "lead_source": true,
+   "league": "Eredivisie",
+   "model": {
+    "btts": 0.7247,
+    "over15": 0.8939,
+    "over25": 0.7335
+   },
+   "priced_at": "2026-09-18T20:30:15+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.66,
+     "bid": 0.64,
+     "fair": 0.65,
+     "fee": 0.0158,
+     "market": "KXEREDIVISIEBTTS-26SEP19WILFOR-BTTS",
+     "price": 1.48,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.84,
+     "bid": 0.82,
+     "fair": 0.83,
+     "fee": 0.0095,
+     "market": "KXEREDIVISIETOTAL-26SEP19WILFOR-2",
+     "price": 1.177,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.63,
+     "bid": 0.61,
+     "fair": 0.62,
+     "fee": 0.0164,
+     "market": "KXEREDIVISIETOTAL-26SEP19WILFOR-3",
+     "price": 1.547,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-18T16:47:33+00:00"
+ "updated_at": "2026-09-18T20:30:21+00:00"
 }

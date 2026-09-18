@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-18T16:47:25+00:00",
+ "board_built_at": "2026-09-18T20:30:13+00:00",
  "leads": {
   "2026-09-14|Internazionale|Udinese|Over 1.5 goals": {
    "a": "Internazionale",
@@ -1169,7 +1169,9 @@
     "n": 2
    },
    "date": "2026-09-18",
+   "final": "3-0",
    "first_seen": "2026-09-16",
+   "graded_at": "2026-09-18T20:30:14+00:00",
    "headline": "Over 1.5 goals",
    "home": "FC Groningen",
    "id": "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals",
@@ -1184,6 +1186,20 @@
     "over25": 0.7434
    },
    "modelled_at": "2026-09-16T21:44:49+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.139
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.459
+    }
+   },
    "priced_at": "2026-09-16T21:44:49+00:00",
    "prices": {
     "btts": {
@@ -1214,7 +1230,7 @@
      "venue": "kalshi"
     }
    },
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-18|Monza|Sassuolo|Over 1.5 goals": {
@@ -1300,7 +1316,7 @@
    "id": "2026-09-19|ADO Den Haag|SC Cambuur|Over 1.5 goals",
    "kickoff": "2026-09-19T14:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Eredivisie",
    "match": "ADO Den Haag v SC Cambuur",
    "model": {
@@ -1362,7 +1378,7 @@
    "id": "2026-09-19|AS Roma|Internazionale|Over 1.5 goals",
    "kickoff": "2026-09-19T16:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Serie A",
    "match": "AS Roma v Internazionale",
    "model": {
@@ -1426,7 +1442,7 @@
    "id": "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals",
    "kickoff": "2026-09-19T18:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Excelsior",
    "model": {
@@ -1488,7 +1504,7 @@
    "id": "2026-09-19|Alverca|Rio Ave|Over 1.5 goals",
    "kickoff": "2026-09-19T17:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Primeira Liga",
    "match": "Alverca v Rio Ave",
    "model": {
@@ -1550,7 +1566,7 @@
    "id": "2026-09-19|Brighton & Hove Albion|Arsenal|Over 1.5 goals",
    "kickoff": "2026-09-19T14:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Premier League",
    "match": "Brighton & Hove Albion v Arsenal",
    "model": {
@@ -1613,7 +1629,7 @@
    "id": "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v SC Freiburg",
    "model": {
@@ -1677,7 +1693,7 @@
    "id": "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "status": "pending",
@@ -1703,7 +1719,7 @@
    "id": "2026-09-19|Le Mans|Lorient|Over 1.5 goals",
    "kickoff": "2026-09-19T18:45Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Ligue 1",
    "match": "Le Mans v Lorient",
    "model": {
@@ -1767,7 +1783,7 @@
    "id": "2026-09-19|New England Revolution|Orlando City SC|Over 1.5 goals",
    "kickoff": "2026-09-19T23:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "New England Revolution v Orlando City SC",
    "model": {
@@ -1829,7 +1845,7 @@
    "id": "2026-09-19|Osasuna|Rayo Vallecano|Over 1.5 goals",
    "kickoff": "2026-09-19T12:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "La Liga",
    "match": "Osasuna v Rayo Vallecano",
    "model": {
@@ -1893,7 +1909,7 @@
    "id": "2026-09-19|San Jose Earthquakes|LAFC|Over 1.5 goals",
    "kickoff": "2026-09-19T23:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v LAFC",
    "model": {
@@ -1955,7 +1971,7 @@
    "id": "2026-09-19|Sevilla|Barcelona|Over 1.5 goals",
    "kickoff": "2026-09-19T19:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "La Liga",
    "match": "Sevilla v Barcelona",
    "model": {
@@ -2019,7 +2035,7 @@
    "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Over 1.5 goals",
    "kickoff": "2026-09-19T16:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "model": {
@@ -2083,7 +2099,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -2147,7 +2163,7 @@
    "id": "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals",
    "kickoff": "2026-09-19T19:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Eredivisie",
    "match": "Willem II v Fortuna Sittard",
    "model": {
@@ -2209,7 +2225,7 @@
    "id": "2026-09-20|Atl\u00e9tico Madrid|Real Madrid|Over 1.5 goals",
    "kickoff": "2026-09-20T14:15Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "La Liga",
    "match": "Atl\u00e9tico Madrid v Real Madrid",
    "model": {
@@ -2273,7 +2289,7 @@
    "id": "2026-09-20|Bayer Leverkusen|RB Leipzig|Over 1.5 goals",
    "kickoff": "2026-09-20T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Bundesliga",
    "match": "Bayer Leverkusen v RB Leipzig",
    "model": {
@@ -2337,7 +2353,7 @@
    "id": "2026-09-20|Celtic|Rangers|Over 1.5 goals",
    "kickoff": "2026-09-20T11:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Scottish Premiership",
    "match": "Celtic v Rangers",
    "model": {
@@ -2399,9 +2415,71 @@
    "id": "2026-09-20|FC Dallas|Austin FC|Over 1.5 goals",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "FC Dallas v Austin FC",
+   "status": "pending",
+   "strength": 12
+  },
+  "2026-09-20|FC Porto|Benfica|Over 1.5 goals": {
+   "a": "FC Porto",
+   "a_key": "over15",
+   "a_run": 6,
+   "away": "Benfica",
+   "b": "Benfica",
+   "b_key": "over15",
+   "b_run": 6,
+   "base_rate": 0.2930513595166163,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-18",
+   "headline": "Over 1.5 goals",
+   "home": "FC Porto",
+   "id": "2026-09-20|FC Porto|Benfica|Over 1.5 goals",
+   "kickoff": "2026-09-20T19:30Z",
+   "last_seen": "2026-09-18",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
+   "league": "Primeira Liga",
+   "match": "FC Porto v Benfica",
+   "model": {
+    "btts": 0.556,
+    "over15": 0.7583,
+    "over25": 0.5158
+   },
+   "modelled_at": "2026-09-18T20:30:13+00:00",
+   "priced_at": "2026-09-18T20:30:13+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.59,
+     "bid": 0.57,
+     "fair": 0.58,
+     "fee": 0.017,
+     "market": "KXLIGAPORTUGALBTTS-26SEP20FCPBEN-BTTS",
+     "price": 1.647,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.79,
+     "bid": 0.75,
+     "fair": 0.77,
+     "fee": 0.0117,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP20FCPBEN-2",
+     "price": 1.247,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.54,
+     "bid": 0.51,
+     "fair": 0.525,
+     "fee": 0.0174,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP20FCPBEN-3",
+     "price": 1.794,
+     "venue": "kalshi"
+    }
+   },
    "status": "pending",
    "strength": 12
   },
@@ -2425,7 +2503,7 @@
    "id": "2026-09-20|FC Twente|PSV Eindhoven|Over 1.5 goals",
    "kickoff": "2026-09-20T12:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Eredivisie",
    "match": "FC Twente v PSV Eindhoven",
    "status": "pending",
@@ -2451,7 +2529,7 @@
    "id": "2026-09-20|Feyenoord Rotterdam|FC Utrecht|Over 1.5 goals",
    "kickoff": "2026-09-20T10:15Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Eredivisie",
    "match": "Feyenoord Rotterdam v FC Utrecht",
    "model": {
@@ -2513,7 +2591,7 @@
    "id": "2026-09-20|Frosinone|Como|Over 1.5 goals",
    "kickoff": "2026-09-20T13:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Serie A",
    "match": "Frosinone v Como",
    "model": {
@@ -2576,7 +2654,7 @@
    "id": "2026-09-20|Juventus|Atalanta|Over 1.5 goals",
    "kickoff": "2026-09-20T16:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Serie A",
    "match": "Juventus v Atalanta",
    "model": {
@@ -2640,7 +2718,7 @@
    "id": "2026-09-20|Leeds United|Crystal Palace|Over 1.5 goals",
    "kickoff": "2026-09-20T13:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Premier League",
    "match": "Leeds United v Crystal Palace",
    "model": {
@@ -2704,7 +2782,7 @@
    "id": "2026-09-20|Minnesota United FC|LA Galaxy|Over 1.5 goals",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "Minnesota United FC v LA Galaxy",
    "status": "pending",
@@ -2730,7 +2808,7 @@
    "id": "2026-09-20|NEC Nijmegen|Go Ahead Eagles|Over 1.5 goals",
    "kickoff": "2026-09-20T14:45Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "Eredivisie",
    "match": "NEC Nijmegen v Go Ahead Eagles",
    "status": "pending",
@@ -2756,11 +2834,73 @@
    "id": "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Over 1.5 goals",
    "kickoff": "2026-09-20T01:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v Vancouver Whitecaps",
    "status": "pending",
    "strength": 8
+  },
+  "2026-09-20|Santa Clara|Braga|Over 1.5 goals": {
+   "a": "Santa Clara",
+   "a_key": "scoring1",
+   "a_run": 6,
+   "away": "Braga",
+   "b": "Braga",
+   "b_key": "scoring1",
+   "b_run": 6,
+   "base_rate": 0.21450151057401812,
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-20",
+   "first_seen": "2026-09-18",
+   "headline": "Over 1.5 goals",
+   "home": "Santa Clara",
+   "id": "2026-09-20|Santa Clara|Braga|Over 1.5 goals",
+   "kickoff": "2026-09-20T17:00Z",
+   "last_seen": "2026-09-18",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
+   "league": "Primeira Liga",
+   "match": "Santa Clara v Braga",
+   "model": {
+    "btts": 0.517,
+    "over15": 0.7241,
+    "over25": 0.4706
+   },
+   "modelled_at": "2026-09-18T20:30:13+00:00",
+   "priced_at": "2026-09-18T20:30:13+00:00",
+   "prices": {
+    "btts": {
+     "ask": 0.46,
+     "bid": 0.45,
+     "fair": 0.455,
+     "fee": 0.0174,
+     "market": "KXLIGAPORTUGALBTTS-26SEP20SCLBRA-BTTS",
+     "price": 2.095,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.65,
+     "bid": 0.64,
+     "fair": 0.645,
+     "fee": 0.016,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP20SCLBRA-2",
+     "price": 1.502,
+     "venue": "kalshi"
+    },
+    "over25": {
+     "ask": 0.39,
+     "bid": 0.37,
+     "fair": 0.38,
+     "fee": 0.0167,
+     "market": "KXLIGAPORTUGALTOTAL-26SEP20SCLBRA-3",
+     "price": 2.459,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending",
+   "strength": 12
   },
   "2026-09-20|Sporting Kansas City|Philadelphia Union|Over 1.5 goals": {
    "a": "Sporting Kansas City",
@@ -2782,7 +2922,7 @@
    "id": "2026-09-20|Sporting Kansas City|Philadelphia Union|Over 1.5 goals",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Philadelphia Union",
    "status": "pending",
@@ -2808,12 +2948,12 @@
    "id": "2026-09-20|St. Louis CITY SC|Toronto FC|Over 1.5 goals",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:25+00:00",
+   "last_seen_at": "2026-09-18T20:30:13+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v Toronto FC",
    "status": "pending",
    "strength": 12
   }
  },
- "updated_at": "2026-09-18T16:47:27+00:00"
+ "updated_at": "2026-09-18T20:30:14+00:00"
 }

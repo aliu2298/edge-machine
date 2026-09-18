@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-18T16:47:23+00:00",
+ "board_built_at": "2026-09-18T20:30:10+00:00",
  "leads": {
   "2026-08-29|Atlanta United FC|Charlotte FC|Atlanta United FC to score": {
    "a": "Atlanta United FC",
@@ -8187,14 +8187,16 @@
     "team": "1. FC Union Berlin"
    },
    "date": "2026-09-18",
+   "final": "7-0",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-18T20:30:13+00:00",
    "headline": "1. FC Union Berlin to score",
    "home": "Bayern Munich",
    "id": "2026-09-18|Bayern Munich|1. FC Union Berlin|1. FC Union Berlin to score",
    "kickoff": "2026-09-18T18:30Z",
    "league": "Bundesliga",
    "match": "Bayern Munich v 1. FC Union Berlin",
-   "status": "pending",
+   "status": "miss",
    "strength": 12,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -8214,14 +8216,16 @@
     "team": "Bayern Munich"
    },
    "date": "2026-09-18",
+   "final": "7-0",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-18T20:30:13+00:00",
    "headline": "Bayern Munich to score 2+",
    "home": "Bayern Munich",
    "id": "2026-09-18|Bayern Munich|1. FC Union Berlin|Bayern Munich to score 2+",
    "kickoff": "2026-09-18T18:30Z",
    "league": "Bundesliga",
    "match": "Bayern Munich v 1. FC Union Berlin",
-   "status": "pending",
+   "status": "hit",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -8238,14 +8242,16 @@
     "kind": "btts"
    },
    "date": "2026-09-18",
+   "final": "7-0",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-18T20:30:13+00:00",
    "headline": "Both teams to score",
    "home": "Bayern Munich",
    "id": "2026-09-18|Bayern Munich|1. FC Union Berlin|Both teams to score",
    "kickoff": "2026-09-18T18:30Z",
    "league": "Bundesliga",
    "match": "Bayern Munich v 1. FC Union Berlin",
-   "status": "pending",
+   "status": "miss",
    "strength": 9,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -8263,14 +8269,16 @@
     "n": 3
    },
    "date": "2026-09-18",
+   "final": "7-0",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-18T20:30:13+00:00",
    "headline": "Over 2.5 goals",
    "home": "Bayern Munich",
    "id": "2026-09-18|Bayern Munich|1. FC Union Berlin|Over 2.5 goals",
    "kickoff": "2026-09-18T18:30Z",
    "league": "Bundesliga",
    "match": "Bayern Munich v 1. FC Union Berlin",
-   "status": "pending",
+   "status": "hit",
    "strength": 12,
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   },
@@ -8426,7 +8434,9 @@
     "n": 2
    },
    "date": "2026-09-18",
+   "final": "3-0",
    "first_seen": "2026-09-04",
+   "graded_at": "2026-09-18T20:30:13+00:00",
    "headline": "Over 1.5 goals",
    "home": "FC Groningen",
    "id": "2026-09-18|FC Groningen|PEC Zwolle|Over 1.5 goals",
@@ -8441,6 +8451,20 @@
     "over25": 0.7434
    },
    "modelled_at": "2026-09-16T21:44:47+00:00",
+   "pnl": {
+    "btts": {
+     "hit": false,
+     "pnl": -1.0
+    },
+    "over15": {
+     "hit": true,
+     "pnl": 0.139
+    },
+    "over25": {
+     "hit": true,
+     "pnl": 0.459
+    }
+   },
    "priced_at": "2026-09-16T21:44:47+00:00",
    "prices": {
     "btts": {
@@ -8472,7 +8496,7 @@
     }
    },
    "rule": "v2",
-   "status": "pending",
+   "status": "hit",
    "strength": 12
   },
   "2026-09-18|Monza|Sassuolo|Over 1.5 goals": {
@@ -8668,7 +8692,7 @@
    "id": "2026-09-19|AS Roma|Internazionale|Over 1.5 goals",
    "kickoff": "2026-09-19T16:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Serie A",
    "match": "AS Roma v Internazionale",
    "model": {
@@ -8741,7 +8765,7 @@
    "id": "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals",
    "kickoff": "2026-09-19T18:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Excelsior",
    "model": {
@@ -9005,7 +9029,7 @@
    "id": "2026-09-19|Celta Vigo|Racing Santander|Racing Santander to score 2+",
    "kickoff": "2026-09-19T16:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "La Liga",
    "match": "Celta Vigo v Racing Santander",
    "model": {
@@ -9077,7 +9101,7 @@
    "id": "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v SC Freiburg",
    "model": {
@@ -9189,7 +9213,7 @@
    "id": "2026-09-19|Hamburg SV|FC Cologne|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v FC Cologne",
    "model": {
@@ -9617,7 +9641,7 @@
    "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Borussia Dortmund to score 2+",
    "kickoff": "2026-09-19T16:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia Dortmund",
    "model": {
@@ -9692,7 +9716,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|FC Augsburg to score 2+",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -9739,7 +9763,7 @@
    "id": "2026-09-19|Werder Bremen|FC Augsburg|Over 1.5 goals",
    "kickoff": "2026-09-19T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v FC Augsburg",
    "model": {
@@ -9911,7 +9935,7 @@
    "id": "2026-09-20|AFC Bournemouth|Liverpool|Over 1.5 goals",
    "kickoff": "2026-09-20T13:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Premier League",
    "match": "AFC Bournemouth v Liverpool",
    "model": {
@@ -10186,7 +10210,7 @@
    "id": "2026-09-20|Bayer Leverkusen|RB Leipzig|Over 1.5 goals",
    "kickoff": "2026-09-20T13:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Bundesliga",
    "match": "Bayer Leverkusen v RB Leipzig",
    "model": {
@@ -10355,7 +10379,7 @@
    "id": "2026-09-20|FC Dallas|Austin FC|FC Dallas to score 2+",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "MLS",
    "match": "FC Dallas v Austin FC",
    "status": "pending",
@@ -10408,12 +10432,12 @@
    "home": "FC Porto",
    "id": "2026-09-20|FC Porto|Benfica|Benfica to score 2+",
    "kickoff": "2026-09-20T19:30Z",
-   "last_seen": "2026-09-13",
+   "last_seen": "2026-09-18",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Primeira Liga",
    "match": "FC Porto v Benfica",
    "status": "pending",
-   "strength": 9,
-   "withdrawn_at": "2026-09-13T06:20:21+00:00"
+   "strength": 9
   },
   "2026-09-20|FC Porto|Benfica|Over 1.5 goals": {
    "a": "FC Porto",
@@ -10615,7 +10639,7 @@
    "id": "2026-09-20|Feyenoord Rotterdam|FC Utrecht|Over 1.5 goals",
    "kickoff": "2026-09-20T10:15Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Eredivisie",
    "match": "Feyenoord Rotterdam v FC Utrecht",
    "model": {
@@ -10878,7 +10902,7 @@
    "id": "2026-09-20|Leeds United|Crystal Palace|Crystal Palace to score 2+",
    "kickoff": "2026-09-20T13:00Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Premier League",
    "match": "Leeds United v Crystal Palace",
    "model": {
@@ -11252,7 +11276,7 @@
    "id": "2026-09-20|NEC Nijmegen|Go Ahead Eagles|Over 1.5 goals",
    "kickoff": "2026-09-20T14:45Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "Eredivisie",
    "match": "NEC Nijmegen v Go Ahead Eagles",
    "rule": "v2",
@@ -11304,7 +11328,7 @@
    "id": "2026-09-20|Portland Timbers|Atlanta United FC|Over 1.5 goals",
    "kickoff": "2026-09-20T02:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "MLS",
    "match": "Portland Timbers v Atlanta United FC",
    "rule": "v2",
@@ -11383,7 +11407,7 @@
    "id": "2026-09-20|Sporting Kansas City|Philadelphia Union|Over 1.5 goals",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Philadelphia Union",
    "rule": "v2",
@@ -11412,7 +11436,7 @@
    "id": "2026-09-20|Sporting Kansas City|Philadelphia Union|Philadelphia Union to score 2+",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Philadelphia Union",
    "status": "pending",
@@ -11462,7 +11486,7 @@
    "id": "2026-09-20|St. Louis CITY SC|Toronto FC|Over 1.5 goals",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v Toronto FC",
    "rule": "v2",
@@ -11543,7 +11567,7 @@
    "id": "2026-09-20|St. Louis CITY SC|Toronto FC|St. Louis CITY SC to score 2+",
    "kickoff": "2026-09-20T00:30Z",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T16:47:23+00:00",
+   "last_seen_at": "2026-09-18T20:30:10+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v Toronto FC",
    "status": "pending",
@@ -11680,5 +11704,5 @@
    "withdrawn_at": "2026-09-13T06:20:21+00:00"
   }
  },
- "updated_at": "2026-09-18T16:47:25+00:00"
+ "updated_at": "2026-09-18T20:30:13+00:00"
 }
