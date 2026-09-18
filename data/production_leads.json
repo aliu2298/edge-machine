@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-18T00:51:24+00:00",
+ "board_built_at": "2026-09-18T01:18:29+00:00",
  "leads": {
   "2026-09-17|Levski Sofia|Salzburg|Salzburg to win \u00b7 SoccerPredictions.ai": {
    "away": "Salzburg",
@@ -22,6 +22,35 @@
    "sandbox_quote": "soccerpredictions:KXUELGAME-26SEP17LEVRBS",
    "source": "soccerpredictions",
    "sport": "soccer",
+   "status": "hit"
+  },
+  "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
+   "away": "Henrique Ortenblad Nogueira",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-17",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Paulo Andre Saraiva Dos Santos to win",
+   "home": "Paulo Andre Saraiva Dos Santos",
+   "id": "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-17T23:15Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Paulo Andre Saraiva Dos Santos v Henrique Ortenblad Nogueira",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.87,
+   "route": {
+    "market": "aec-itfme-pausan-hennog-2026-09-17",
+    "outcome": "Paulo Andre Saraiva Dos Santos",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-pausan-hennog-2026-09-17",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "hit"
   },
   "2026-09-17|Plzen|Union Gilloise|Draw \u00b7 SoccerPredictions.ai": {
@@ -85,7 +114,7 @@
    "kickoff": "2026-09-18T11:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Tennis",
    "match": "Bernard Tomic v Alexander Binda",
    "pair": "tennis_fav_band|tennis",
@@ -116,7 +145,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "soccerpredictions|soccer",
@@ -141,7 +170,7 @@
    "kickoff": "2026-09-18T06:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Tennis",
    "match": "Chirag Duhan v Millen Hurrion",
    "pair": "tennis_fav_band|tennis",
@@ -172,7 +201,7 @@
    "kickoff": "2026-09-18T07:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Tennis",
    "match": "Dmitry Popko v Ruslan Tiukaev",
    "pair": "tennis_fav_band|tennis",
@@ -203,7 +232,7 @@
    "kickoff": "2026-09-18T01:30Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Tennis",
    "match": "Garcia, Mario v Djakouris, Antreas",
    "pair": "tennis_fav_band|tennis",
@@ -234,7 +263,7 @@
    "kickoff": "2026-09-18T18:45Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Serie A",
    "match": "Monza v Sassuolo",
    "pair": "soccerpredictions|soccer",
@@ -259,7 +288,7 @@
    "kickoff": "2026-09-18T07:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Tennis",
    "match": "Ryo Tabata v Adrian Andreev",
    "pair": "tennis_fav_band|tennis",
@@ -290,7 +319,7 @@
    "kickoff": "2026-09-18T05:30Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:51:24+00:00",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
    "league": "Tennis",
    "match": "Zhang - Zheng v Wei - Yuan",
    "pair": "tennis_fav_band|tennis",
@@ -304,6 +333,32 @@
    "sandbox_quote": "tennis_fav_band:aec-itfwo-yinzhawuszhe-sijweicheyua-2026-09-18",
    "source": "tennis_fav_band",
    "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-20|FC Dallas|Austin FC|Austin FC to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Austin FC",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Austin FC"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-18",
+   "headline": "Austin FC to score 1+",
+   "home": "FC Dallas",
+   "id": "2026-09-20|FC Dallas|Austin FC|Austin FC to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-20T00:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-18",
+   "last_seen_at": "2026-09-18T01:18:29+00:00",
+   "league": "MLS",
+   "match": "FC Dallas v Austin FC",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.72,
+   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19DALATX-ATX1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
    "status": "pending"
   }
  },
@@ -347,14 +402,14 @@
    "promoted_at": "2026-09-17T21:42:13+00:00",
    "ready_at": "2026-09-17T21:49:17+00:00",
    "route": "moved by hand on 2026-09-17",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": 0.01,
+   "sandbox_n": 1,
+   "sandbox_roi": 0.1494,
+   "sandbox_roi_fee": 0.1405
   }
  },
  "stage": "production",
  "unlisted_skipped": 6,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-18T00:51:24+00:00"
+ "updated_at": "2026-09-18T01:18:29+00:00"
 }
