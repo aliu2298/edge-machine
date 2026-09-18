@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-18T09:06:41+00:00",
+ "built_at": "2026-09-18T11:52:12+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -3052,6 +3052,203 @@
     }
    ],
    "market": "{\"away\": \"Atlanta United FC\", \"day\": \"2026-09-20\", \"home\": \"Portland Timbers\", \"league\": \"MLS\"}"
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T10:15Z",
+   "league": "Eredivisie",
+   "match": "Feyenoord Rotterdam v FC Utrecht",
+   "home": "Feyenoord Rotterdam",
+   "away": "FC Utrecht",
+   "headline": "Over 1.5 goals",
+   "why": "Feyenoord Rotterdam's games went over 1.5 in 9 of their last 10; FC Utrecht's in 10.",
+   "a": "Feyenoord Rotterdam",
+   "b": "FC Utrecht",
+   "a_run": 9,
+   "b_run": 10,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 9 of last 10",
+   "b_text": "over 1.5 \u00b7 10 of last 10",
+   "strength": 19,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "7-0",
+     "opp": "PEC Zwolle",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-5",
+     "opp": "Barcelona",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Champions League"
+    },
+    {
+     "s": "3-1",
+     "opp": "NEC Nijmegen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "ADO Den Haag",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "5-2",
+     "opp": "SC Cambuur",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Go Ahead Eagles",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-0",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-0",
+     "opp": "PEC Zwolle",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-1",
+     "opp": "AZ Alkmaar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Fortuna Sittard",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-1",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "Go Ahead Eagles",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-6",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-4",
+     "opp": "AZ Alkmaar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "FC Groningen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "Heerenveen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-0",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Ajax Amsterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-0",
+     "opp": "NAC Breda",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "market": "{\"away\": \"FC Utrecht\", \"day\": \"2026-09-20\", \"home\": \"Feyenoord Rotterdam\", \"league\": \"Eredivisie\"}",
+   "price": 1.081,
+   "fair": 0.905,
+   "market_url": "https://kalshi.com/markets/kxeredivisietotal",
+   "venue_name": "Kalshi",
+   "model": 0.9202
   }
  ],
  "teams": [

@@ -9130,7 +9130,73 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-19|Tottenham Hotspur|Aston Villa": {
+   "away": "Aston Villa",
+   "date": "2026-09-19",
+   "home": "Tottenham Hotspur",
+   "id": "2026-09-19|Tottenham Hotspur|Aston Villa",
+   "kickoff": "2026-09-19T11:30Z",
+   "lead_source": true,
+   "league": "Premier League",
+   "model": {
+    "away2plus": 0.3888,
+    "btts": 0.5201,
+    "home2plus": 0.343,
+    "over15": 0.7248,
+    "over25": 0.4714
+   },
+   "priced_at": "2026-09-18T11:52:12+00:00",
+   "prices": {
+    "away2plus": {
+     "ask": 0.33,
+     "bid": 0.31,
+     "fair": 0.32,
+     "fee": 0.0155,
+     "market": "KXEPLTEAMTOTAL-26SEP19TOTAVL-AVL2",
+     "price": 2.894,
+     "venue": "kalshi"
+    },
+    "btts": {
+     "ask": 0.57,
+     "bid": 0.56,
+     "fair": 0.565,
+     "fee": 0.0172,
+     "market": "KXEPLBTTS-26SEP19TOTAVL-BTTS",
+     "price": 1.703,
+     "venue": "kalshi"
+    },
+    "home2plus": {
+     "ask": 0.49,
+     "bid": 0.47,
+     "fair": 0.48,
+     "fee": 0.0175,
+     "market": "KXEPLTEAMTOTAL-26SEP19TOTAVL-TOT2",
+     "price": 1.97,
+     "venue": "kalshi"
+    },
+    "over15": {
+     "ask": 0.77,
+     "bid": 0.76,
+     "event": "epl-tot-ast-2026-09-19",
+     "fair": 0.765,
+     "fee": 0.0106,
+     "market": "tsc-epl-tot-ast-2026-09-19-1pt5",
+     "price": 1.281,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.52,
+     "bid": 0.51,
+     "fair": 0.515,
+     "fee": 0.0175,
+     "market": "KXEPLTOTAL-26SEP19TOTAVL-3",
+     "price": 1.86,
+     "venue": "kalshi"
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-18T09:06:42+00:00"
+ "updated_at": "2026-09-18T11:52:14+00:00"
 }
