@@ -146,12 +146,18 @@ def build_feed(d, st, now=None):
     for key, pair in pairs.items():
         source, sport = key.split("|", 1)
         for q in T.all_bets(d):
-            if (q["source"] != source or q["sport"] != sport or not q.get("bet")
-                    or str(q.get("logged") or "") < entered_at(pair)):
+            if q["source"] != source or q["sport"] != sport or not q.get("bet"):
                 continue
             try:
                 ko = _kickoff(q)
             except (KeyError, TypeError, ValueError):
+                continue
+            # Published on the CONTEST, not on when the bet was written down. A pair moved
+            # into Production has usually logged the next few days' fixtures already — under
+            # a "logged since entry" rule those matches were never published at all, and the
+            # lane sat silent for a day for no reason. What matters is that the pair was in
+            # Production when the match was played.
+            if ko.isoformat() < entered_at(pair):
                 continue
             if q["status"] == "open" and ko <= now:
                 continue                              # started: nothing left to act on

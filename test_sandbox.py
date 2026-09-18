@@ -2161,7 +2161,10 @@ _pd = {"quotes": [
     _pq(1),                                                            # open, routable -> published
     _pq(2, pick="b"),                                                  # away side
     _pq(3, pick="draw"),                                               # draw: published (Tie)
-    _pq(4, logged="2026-09-29T06:00:00+00:00"),                        # logged before Production
+    # PLAYED before the pair entered Production: not its record, not published. (Logged
+    # before entry is fine — see the contest-not-log-time test above.)
+    _pq(4, status="won", pnl=127.27, result="a", logged="2026-09-29T06:00:00+00:00",
+        start="2026-09-29T12:00:00+00:00"),
     _pq(5, market_id="KXALLSVENSKANGAME-26OCT02AIKHAM", id="sp:5"),    # unmapped league
     _pq(6, start=(_pnow - timedelta(hours=1)).isoformat()),            # already started
     _pq(7, status="won", pnl=127.27, result="a", price_a=0.44, price_b=0.3, price_draw=0.3,
@@ -2174,7 +2177,7 @@ _feed = PR.build_feed(_pd, _pst, now=_pnow)
 eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in Production and trading is in the feed")
 _fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
 eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "3", "7"],
-   "published: open routable bets logged since ready, and recent settled ones; nothing else")
+   "published: open routable bets on contests since entry, and recent settled ones; nothing else")
 eq(_feed["unlisted_skipped"], 1, "the unmapped league is held back and counted")
 _l3 = next(l for l in _fl if l["sandbox_quote"].endswith("3"))
 eq((_l3["bet"], _l3["headline"]), ({"kind": "match_result", "side": "draw"}, "Draw"), "a draw tip is published as a draw")
@@ -2626,6 +2629,29 @@ T.evaluate_stages(_tl, _ts3, now=datetime(2026, 9, 17, 23, tzinfo=timezone.utc),
 eq(_ts3["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
    "…but losing to the price still sends it back, moved by hand or not")
 T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_tov)
+
+# ---------------------------------------------------------------------------
+print("\nthe feed publishes on the contest, not on when the bet was written down")
+# ---------------------------------------------------------------------------
+_fnow = datetime(2026, 9, 18, 12, tzinfo=timezone.utc)
+_fst = {"pairs": {"o15_form_l10|soccer_o15": dict(stage="production", by_hand="2026-09-18",
+                                                  promoted_at="2026-09-18T00:51:00+00:00",
+                                                  ready_at="2026-09-18T00:51:00+00:00")}, "events": []}
+def _fq(i, logged, start):
+    return dict(id=f"o15_form_l10:{i}", source="o15_form_l10", sport="soccer_o15", bet=True,
+                venue="kalshi_binary", market_id=f"KXEPLTOTAL-26SEP19X{i}-1", pick="a", price=0.83,
+                side_a="Yes", side_b="No", status="open", league="Premier League", start_source="espn",
+                espn_home="Goal FC", espn_away="Leak FC", logged=logged, start=start)
+_fd = {"quotes": [
+    # logged BEFORE the pair was moved, but the match is tomorrow: the pair is in Production
+    # when it is played, so it is published.
+    _fq(1, "2026-09-17T21:41:00+00:00", "2026-09-19T18:00:00+00:00"),
+    # logged before the move AND played before it: not this pair's Production record.
+    _fq(2, "2026-09-17T21:41:00+00:00", "2026-09-17T23:00:00+00:00"),
+]}
+_ff = PR.build_feed(_fd, _fst, now=_fnow)
+eq(sorted(l["sandbox_quote"] for l in _ff["leads"].values()), ["o15_form_l10:1"],
+   "a match still to come is published though the bet was logged before the pair was moved")
 
 # ---------------------------------------------------------------------------
 print("\ntennis leads carry the venue's own market")
