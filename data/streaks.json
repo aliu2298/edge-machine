@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-18T11:52:12+00:00",
+ "built_at": "2026-09-18T15:26:47+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -3249,6 +3249,722 @@
    "market_url": "https://kalshi.com/markets/kxeredivisietotal",
    "venue_name": "Kalshi",
    "model": 0.9202
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T13:00Z",
+   "league": "Premier League",
+   "match": "AFC Bournemouth v Liverpool",
+   "home": "AFC Bournemouth",
+   "away": "Liverpool",
+   "headline": "Over 1.5 goals",
+   "why": "AFC Bournemouth's games went over 1.5 in 9 of their last 10; Liverpool's in 9.",
+   "a": "AFC Bournemouth",
+   "b": "Liverpool",
+   "a_run": 9,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 9 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 18,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "2-1",
+     "opp": "Real Sociedad",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Brentford",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Newcastle United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Everton",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-2",
+     "opp": "Manchester City",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Nottingham Forest",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Manchester City",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Fulham",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "3-0",
+     "opp": "Crystal Palace",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Leeds United",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-0",
+     "opp": "Fulham",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Atl\u00e9tico Madrid",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Champions League"
+    },
+    {
+     "s": "2-0",
+     "opp": "Ipswich Town",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Nottingham Forest",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Newcastle United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Brentford",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-4",
+     "opp": "Aston Villa",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Chelsea",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-3",
+     "opp": "Manchester United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "3-1",
+     "opp": "Crystal Palace",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    }
+   ],
+   "market": "{\"away\": \"Liverpool\", \"day\": \"2026-09-20\", \"home\": \"AFC Bournemouth\", \"league\": \"Premier League\"}",
+   "price": 1.148,
+   "fair": 0.8273,
+   "model": 0.785
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T13:00Z",
+   "league": "Premier League",
+   "match": "Leeds United v Crystal Palace",
+   "home": "Leeds United",
+   "away": "Crystal Palace",
+   "headline": "Crystal Palace to score 2+",
+   "why": "Crystal Palace have scored 2+ in 3 straight; Leeds United have conceded in 3 straight.",
+   "a": "Crystal Palace",
+   "b": "Leeds United",
+   "a_run": 3,
+   "b_run": 3,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 6,
+   "base_rate": 0.4501510574018127,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "Crystal Palace"
+   },
+   "a_recent": [
+    {
+     "s": "4-0",
+     "opp": "Lech Poznan",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "2-3",
+     "opp": "Ipswich Town",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "3-2",
+     "opp": "Fulham",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-4",
+     "opp": "Manchester City",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Everton",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-1",
+     "opp": "Fulham",
+     "h": false,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "4-1",
+     "opp": "Newcastle United",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Brighton & Hove Albion",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Brentford",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Nottingham Forest",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "4-0",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-0",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": false,
+     "comp": false,
+     "lg": "Club Friendly"
+    }
+   ],
+   "market": "{\"away\": \"Crystal Palace\", \"day\": \"2026-09-20\", \"home\": \"Leeds United\", \"league\": \"Premier League\"}",
+   "price": 3.284,
+   "fair": 0.275,
+   "market_url": "https://kalshi.com/markets/kxeplteamtotal",
+   "venue_name": "Kalshi",
+   "model": 0.3064
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T13:30Z",
+   "league": "Bundesliga",
+   "match": "Bayer Leverkusen v RB Leipzig",
+   "home": "Bayer Leverkusen",
+   "away": "RB Leipzig",
+   "headline": "Over 1.5 goals",
+   "why": "Bayer Leverkusen's games went over 1.5 in 9 of their last 10; RB Leipzig's in 9.",
+   "a": "Bayer Leverkusen",
+   "b": "RB Leipzig",
+   "a_run": 9,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 9 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 18,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "2-0",
+     "opp": "NK Celje",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Augsburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "4-0",
+     "opp": "1. FC Union Berlin",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "SV Elversberg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Hamburg SV",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "4-1",
+     "opp": "RB Leipzig",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "FC Cologne",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "5-0",
+     "opp": "Hamburg SV",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "Como",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Champions League"
+    },
+    {
+     "s": "1-3",
+     "opp": "Werder Bremen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "SC Freiburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "St. Pauli",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "1. FC Union Berlin",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "market": "{\"away\": \"RB Leipzig\", \"day\": \"2026-09-20\", \"home\": \"Bayer Leverkusen\", \"league\": \"Bundesliga\"}",
+   "price": 1.104,
+   "fair": 0.89,
+   "market_url": "https://polymarket.us/event/bun-lev-rbl-2026-09-20",
+   "venue_name": "Polymarket",
+   "model": 0.9108
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T14:45Z",
+   "league": "Eredivisie",
+   "match": "NEC Nijmegen v Go Ahead Eagles",
+   "home": "NEC Nijmegen",
+   "away": "Go Ahead Eagles",
+   "headline": "Over 1.5 goals",
+   "why": "NEC Nijmegen's games went over 1.5 in 10 of their last 10; Go Ahead Eagles's in 9.",
+   "a": "NEC Nijmegen",
+   "b": "Go Ahead Eagles",
+   "a_run": 10,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 10 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 19,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "0-5",
+     "opp": "Juventus",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "0-3",
+     "opp": "SC Cambuur",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Excelsior",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-3",
+     "opp": "Feyenoord Rotterdam",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "PEC Zwolle",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "4-1",
+     "opp": "Willem II",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "Telstar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Go Ahead Eagles",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "FC Groningen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-1",
+     "opp": "Telstar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "1-1",
+     "opp": "FC Groningen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Utrecht",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-5",
+     "opp": "AZ Alkmaar",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "ADO Den Haag",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Feyenoord Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "4-1",
+     "opp": "Willem II",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "NEC Nijmegen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-4",
+     "opp": "PSV Eindhoven",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "Sparta Rotterdam",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-0",
+     "opp": "AZ Alkmaar",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "market": "{\"away\": \"Go Ahead Eagles\", \"day\": \"2026-09-20\", \"home\": \"NEC Nijmegen\", \"league\": \"Eredivisie\"}"
   }
  ],
  "teams": [
