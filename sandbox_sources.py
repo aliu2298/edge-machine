@@ -2158,7 +2158,10 @@ KALSHI_BINARY = {
     "climate":     dict(series=list(NWS_CITIES), lead_h=12, cap=80),
     "crypto":      dict(series=list(COINS), lead_h=2, cap=60),
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
-    "commodities": dict(category="Commodities", freq=("daily",), lead_h=6, cap=80),
+    # Seven commodity ladders a day (WTI, Brent, gold, silver, copper, natural gas, retail
+    # gasoline), each 20-65 strikes: take the soonest ladder of each, not 80 of the first.
+    "commodities": dict(category="Commodities", freq=("daily",), lead_h=6, cap=400,
+                        ladders_per_series=1),
     "finance":     dict(category="Financials",  freq=("daily",), lead_h=6, cap=30),
 }
 
@@ -2273,11 +2276,22 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
             groups[key] = []
             order.append(key)
         groups[key].append(r)
-    kept = []
+    # A flat cap taken in expiry order hands the whole allowance to whichever series closes
+    # first: commodities has seven ladders a day, WTI closes at 18:30 and the rest at 21:00,
+    # so an 80-market cap logged WTI and nothing else. `ladders_per_series` keeps the soonest
+    # ladders of EACH series instead, so every commodity is actually measured.
+    per_series = cfg.get("ladders_per_series")
+    kept, taken = [], {}
     for key in order:
-        if len(kept) >= cfg["cap"]:
+        if per_series is not None:
+            if taken.get(key[0], 0) >= per_series:
+                continue
+            taken[key[0]] = taken.get(key[0], 0) + 1
+        elif len(kept) >= cfg["cap"]:
             break
         kept += groups[key]
+    if per_series is not None and cfg.get("cap"):
+        kept = kept[:cfg["cap"]] if len(kept) > cfg["cap"] else kept
 
     if stats is not None:
         stats["listed"] = listed
