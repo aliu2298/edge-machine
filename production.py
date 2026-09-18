@@ -268,15 +268,17 @@ def page(d, st, blob, style, now=None):
             continue
         by_day.setdefault(day, []).append(l)
     days_html = ""
-    for day, ls in sorted(by_day.items()):
+    for i, (day, ls) in enumerate(sorted(by_day.items())):
         rows = "".join(
             f"""<tr><td class="mut">{esc(l['kickoff'][11:16])}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
 <td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{f"{l['price_at_log']:.2f}" if l.get('price_at_log') else '—'}</td></tr>"""
             for l in ls)
-        days_html += (f"""<h3>{esc(_day_label(day, today))} <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></h3>
+        # Each day folds; the soonest one starts open, since that is what a visitor came for.
+        days_html += (f"""<details class="fold"{' open' if i == 0 else ''}><summary>{esc(_day_label(day, today))}
+<span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
 <div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr>{rows}</table></div>""")
+<th class="num">Logged at</th></tr>{rows}</table></div></details>""")
     upcoming_html = days_html or '<div class="note">No leads still to come.</div>'
 
     # ---- how the recent ones landed ----
@@ -300,7 +302,15 @@ def page(d, st, blob, style, now=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 {style}
-<style>th.grp{{text-align:center;border-bottom:1px solid var(--bd)}} h3{{margin:22px 0 8px;font-size:15px}}</style>
+<style>th.grp{{text-align:center;border-bottom:1px solid var(--bd)}}
+details.fold>summary{{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px;
+  margin:18px 0 8px;font-weight:600;font-size:15px;user-select:none}}
+details.fold>summary::-webkit-details-marker{{display:none}}
+details.fold>summary::before{{content:"▸";color:var(--mut);font-size:12px;width:12px;transition:transform .15s}}
+details.fold[open]>summary::before{{transform:rotate(90deg)}}
+details.fold.sec>summary{{margin-top:26px}}
+details.fold.sec>summary h2{{margin:0;display:inline}}
+details.fold details.fold>summary{{margin:12px 0 6px;font-size:14px}}</style>
 </head><body><div class="wrap">
 
 <h1>Production</h1>
@@ -314,25 +324,25 @@ def page(d, st, blob, style, now=None):
 <div class="tile"><b style="font-size:17px">{esc(nxt)}</b><span>next lead (UTC)</span></div>
 </div>
 
-<h2>Pairs</h2>
+<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}</span></summary>
 <p class="sm mut">Each pair's record on the US exchanges when it was moved, and what it has done since.
 CLV is the closing price minus the price at logging: positive means its leads got dearer after they were
 published.</p>
-{pairs_html}
+{pairs_html}</details>
 
-<h2>Coming up</h2>
-{upcoming_html}
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {len(upcoming)} leads over {len(by_day)} day{'s' if len(by_day) != 1 else ''}</span></summary>
+{upcoming_html}</details>
 
-<h2>Recently settled</h2>
-{recent_html}
+<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· {hits} of {len(settled)} landed</span></summary>
+{recent_html}</details>
 
-<h2>Held back</h2>
+<details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· {held}</span></summary>
 <div class="note">{held} bet{'s' if held != 1 else ''} from these pairs {'were' if held != 1 else 'was'} not published:
 {blob.get('unlisted_skipped', 0)} cannot be expressed as a standard market, and
 {blob.get('unverified_kickoff_skipped', 0)} {'are' if blob.get('unverified_kickoff_skipped', 0) != 1 else 'is'} waiting for a verified start
-time. A lead is only published once its start has been confirmed.</div>
+time. A lead is only published once its start has been confirmed.</div></details>
 
-<details class="how" style="margin-top:22px"><summary><b>How a pair gets here</b></summary>
+<details class="fold sec"><summary><h2>How a pair gets here</h2></summary>
 <div class="note">Nothing promotes itself. Every source and rule starts in the <a href="./sandbox.html">Sandbox</a>,
 logged before the start at the price available then and graded on the real result. A pair — one source in
 one sport — is moved into Production by hand, on that record. It leaves the same way, or on its own when it
