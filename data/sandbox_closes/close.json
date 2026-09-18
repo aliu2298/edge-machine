@@ -75,6 +75,11 @@
    "lead_min": 10.1,
    "price": 0.585
   },
+  "covers:aec-mlb-kc-pit-2026-09-18": {
+   "at": "2026-09-18T21:42:15+00:00",
+   "lead_min": 57.7,
+   "price": 0.64
+  },
   "covers:aec-mlb-mia-az-2026-09-15": {
    "at": "2026-09-16T01:25:33+00:00",
    "lead_min": 14.4,
@@ -160,6 +165,11 @@
    "lead_min": 50.7,
    "price": 0.505
   },
+  "espn_fpi:aec-mlb-chc-cin-2026-09-18": {
+   "at": "2026-09-18T21:42:15+00:00",
+   "lead_min": 57.7,
+   "price": 0.43
+  },
   "espn_fpi:aec-mlb-det-cws-2026-09-17": {
    "at": "2026-09-17T23:04:51+00:00",
    "lead_min": 35.1,
@@ -175,6 +185,11 @@
    "lead_min": 10.1,
    "price": 0.585
   },
+  "espn_fpi:aec-mlb-kc-pit-2026-09-18": {
+   "at": "2026-09-18T21:42:15+00:00",
+   "lead_min": 57.7,
+   "price": 0.64
+  },
   "espn_fpi:aec-mlb-nyy-min-2026-09-16": {
    "at": "2026-09-16T17:16:20+00:00",
    "lead_min": 23.7,
@@ -189,6 +204,16 @@
    "at": "2026-09-16T23:14:16+00:00",
    "lead_min": 50.7,
    "price": 0.5
+  },
+  "kalshi:aec-mlb-chc-cin-2026-09-18": {
+   "at": "2026-09-18T21:42:15+00:00",
+   "lead_min": 57.7,
+   "price": 0.43
+  },
+  "kalshi:aec-mlb-kc-pit-2026-09-18": {
+   "at": "2026-09-18T21:42:15+00:00",
+   "lead_min": 57.7,
+   "price": 0.365
   },
   "mlb_fade_streak:aec-mlb-bal-nym-2026-09-14": {
    "at": "2026-09-14T22:44:07+00:00",
@@ -500,6 +525,11 @@
    "lead_min": 34.4,
    "price": 0.87
   },
+  "tennis_fav_band:aec-itfme-niczan-lorcor-2026-09-18": {
+   "at": "2026-09-18T21:42:15+00:00",
+   "lead_min": 17.7,
+   "price": 0.84
+  },
   "tennis_fav_band:aec-itfme-pausan-gabsch-2026-09-18": {
    "at": "2026-09-18T19:11:12+00:00",
    "lead_min": 48.8,
@@ -631,5 +661,5 @@
    "price": 0.58
   }
  },
- "updated": "2026-09-18T19:11:12+00:00"
+ "updated": "2026-09-18T21:42:15+00:00"
 }
