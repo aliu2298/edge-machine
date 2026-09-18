@@ -268,6 +268,24 @@
    "pair": "espn_fpi|mlb",
    "reason": "moved by hand \u2014 trading from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-09-18T21:30:42+00:00",
+   "evidence": {
+    "base_roi": 0.0299,
+    "clv": 0.0007,
+    "clv_n": 27,
+    "n": 82,
+    "own_roi": 0.0421,
+    "roi": 0.0421,
+    "roi_fee": -0.0024,
+    "span_days": 7.1042,
+    "weeks": 1,
+    "z": -0.0117
+   },
+   "pair": "soccerpredictions|soccer",
+   "reason": "fresh QA record behind the price, z -0.01",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -332,24 +350,9 @@
    "stage": "production"
   },
   "soccerpredictions|soccer": {
-   "by_hand": "2026-09-16",
-   "entry": {
-    "base_roi": -0.0139,
-    "clv": -0.0006,
-    "clv_n": 16,
-    "n": 71,
-    "own_roi": 0.138,
-    "roi": 0.138,
-    "roi_fee": 0.0892,
-    "span_days": 5.0208,
-    "weeks": 0,
-    "z": 0.672
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-16T22:34:42+00:00",
-   "ready_at": "2026-09-16T22:40:32+00:00",
-   "ready_since": "2026-09-16T22:40:32+00:00",
-   "stage": "production"
+   "demoted_at": "2026-09-18T21:30:42+00:00",
+   "since": "2026-09-18T21:30:42+00:00",
+   "stage": "sandbox"
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -392,5 +395,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-09-18T17:43:20+00:00"
+ "updated": "2026-09-18T21:30:42+00:00"
 }
