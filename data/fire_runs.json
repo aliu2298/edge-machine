@@ -2563,6 +2563,7 @@
    "test_date": "2026-09-12"
   },
   "Brentford|over15|2026-09-18|Brentford|Chelsea": {
+   "graded_at": "2026-09-18T21:18:00+00:00",
    "home": true,
    "id": "Brentford|over15|2026-09-18|Brentford|Chelsea",
    "key": "over15",
@@ -2573,11 +2574,13 @@
    "logged_at": "2026-09-12T15:36:24+00:00",
    "opp": "Chelsea",
    "rate": 0.15753424657534246,
-   "status": "pending",
+   "result": "3-0",
+   "status": "extended",
    "team": "Brentford",
    "test_date": "2026-09-18"
   },
   "Brentford|scoring1|2026-09-18|Brentford|Chelsea": {
+   "graded_at": "2026-09-18T21:18:00+00:00",
    "home": true,
    "id": "Brentford|scoring1|2026-09-18|Brentford|Chelsea",
    "key": "scoring1",
@@ -2588,7 +2591,8 @@
    "logged_at": "2026-09-12T20:39:58+00:00",
    "opp": "Chelsea",
    "rate": 0.17123287671232876,
-   "status": "pending",
+   "result": "3-0",
+   "status": "extended",
    "team": "Brentford",
    "test_date": "2026-09-18"
   },
@@ -3472,6 +3476,7 @@
    "test_date": "2026-09-19"
   },
   "Elche|over15|2026-09-18|Elche|Espanyol": {
+   "graded_at": "2026-09-18T21:18:00+00:00",
    "home": false,
    "id": "Elche|over15|2026-09-18|Elche|Espanyol",
    "key": "over15",
@@ -3482,7 +3487,8 @@
    "logged_at": "2026-09-15T22:12:26+00:00",
    "opp": "Espanyol",
    "rate": 0.23367697594501718,
-   "status": "pending",
+   "result": "3-1",
+   "status": "extended",
    "team": "Elche",
    "test_date": "2026-09-18"
   },
@@ -3538,6 +3544,7 @@
    "test_date": "2026-09-15"
   },
   "Espanyol|over15|2026-09-18|Espanyol|Elche": {
+   "graded_at": "2026-09-18T21:18:00+00:00",
    "home": true,
    "id": "Espanyol|over15|2026-09-18|Espanyol|Elche",
    "key": "over15",
@@ -3548,7 +3555,8 @@
    "logged_at": "2026-09-15T17:17:09+00:00",
    "opp": "Elche",
    "rate": 0.13402061855670103,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "Espanyol",
    "test_date": "2026-09-18"
   },
@@ -3604,6 +3612,7 @@
    "test_date": "2026-09-15"
   },
   "Espanyol|scoring1|2026-09-18|Espanyol|Elche": {
+   "graded_at": "2026-09-18T21:18:00+00:00",
    "home": true,
    "id": "Espanyol|scoring1|2026-09-18|Espanyol|Elche",
    "key": "scoring1",
@@ -3614,7 +3623,8 @@
    "logged_at": "2026-09-15T17:17:09+00:00",
    "opp": "Elche",
    "rate": 0.10996563573883161,
-   "status": "pending",
+   "result": "1-3",
+   "status": "extended",
    "team": "Espanyol",
    "test_date": "2026-09-18"
   },
@@ -8844,6 +8854,7 @@
    "test_date": "2026-08-30"
   },
   "Sassuolo|porous|2026-09-18|Sassuolo|Monza": {
+   "graded_at": "2026-09-18T21:18:00+00:00",
    "home": false,
    "id": "Sassuolo|porous|2026-09-18|Sassuolo|Monza",
    "key": "porous",
@@ -8854,7 +8865,8 @@
    "logged_at": "2026-09-13T23:31:37+00:00",
    "opp": "Monza",
    "rate": 0.1541095890410959,
-   "status": "pending",
+   "result": "1-2",
+   "status": "extended",
    "team": "Sassuolo",
    "test_date": "2026-09-18"
   },
@@ -10620,5 +10632,5 @@
    "test_date": "2026-09-19"
   }
  },
- "updated_at": "2026-09-18T20:30:21+00:00"
+ "updated_at": "2026-09-18T21:18:00+00:00"
 }

@@ -8717,6 +8717,8 @@
   "2026-09-18|AS Monaco|Lens": {
    "away": "Lens",
    "date": "2026-09-18",
+   "final": "2-1",
+   "graded_at": "2026-09-18T21:17:58+00:00",
    "home": "AS Monaco",
    "id": "2026-09-18|AS Monaco|Lens",
    "kickoff": "2026-09-18T18:45Z",
@@ -8728,6 +8730,13 @@
     "home2plus": 0.5054,
     "over15": 0.837,
     "over25": 0.6333
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.48,
+    "home2plus": 0.732,
+    "over15": 0.179,
+    "over25": 0.553
    },
    "priced_at": "2026-09-17T20:49:50+00:00",
    "prices": {
@@ -8779,7 +8788,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|Bayern Munich|1. FC Union Berlin": {
    "away": "1. FC Union Berlin",
@@ -8867,6 +8883,8 @@
   "2026-09-18|Brentford|Chelsea": {
    "away": "Chelsea",
    "date": "2026-09-18",
+   "final": "3-0",
+   "graded_at": "2026-09-18T21:17:58+00:00",
    "home": "Brentford",
    "id": "2026-09-18|Brentford|Chelsea",
    "kickoff": "2026-09-18T19:00Z",
@@ -8878,6 +8896,13 @@
     "home2plus": 0.53,
     "over15": 0.7818,
     "over25": 0.5488
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": -1.0,
+    "home2plus": 0.97,
+    "over15": 0.153,
+    "over25": 0.485
    },
    "priced_at": "2026-09-17T20:49:50+00:00",
    "prices": {
@@ -8929,11 +8954,20 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": false,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|Espanyol|Elche": {
    "away": "Elche",
    "date": "2026-09-18",
+   "final": "1-3",
+   "graded_at": "2026-09-18T21:17:58+00:00",
    "home": "Espanyol",
    "id": "2026-09-18|Espanyol|Elche",
    "kickoff": "2026-09-18T19:00Z",
@@ -8945,6 +8979,13 @@
     "home2plus": 0.4604,
     "over15": 0.7421,
     "over25": 0.494
+   },
+   "pnl": {
+    "away2plus": 2.399,
+    "btts": 0.732,
+    "home2plus": -1.0,
+    "over15": 0.281,
+    "over25": 0.835
    },
    "priced_at": "2026-09-17T20:49:50+00:00",
    "prices": {
@@ -8996,7 +9037,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": true,
+    "btts": true,
+    "home2plus": false,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|FC Groningen|PEC Zwolle": {
    "away": "PEC Zwolle",
@@ -9058,6 +9106,8 @@
   "2026-09-18|Monza|Sassuolo": {
    "away": "Sassuolo",
    "date": "2026-09-18",
+   "final": "2-1",
+   "graded_at": "2026-09-18T21:17:58+00:00",
    "home": "Monza",
    "id": "2026-09-18|Monza|Sassuolo",
    "kickoff": "2026-09-18T18:45Z",
@@ -9069,6 +9119,13 @@
     "home2plus": 0.3915,
     "over15": 0.7664,
     "over25": 0.527
+   },
+   "pnl": {
+    "away2plus": -1.0,
+    "btts": 0.621,
+    "home2plus": 1.459,
+    "over15": 0.265,
+    "over25": 0.802
    },
    "priced_at": "2026-09-17T20:49:50+00:00",
    "prices": {
@@ -9120,7 +9177,14 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "away2plus": false,
+    "btts": true,
+    "home2plus": true,
+    "over15": true,
+    "over25": true
+   },
+   "status": "graded"
   },
   "2026-09-18|New York City FC|Red Bull New York": {
    "away": "Red Bull New York",
@@ -11111,5 +11175,5 @@
    "status": "pending"
   }
  },
- "updated_at": "2026-09-18T20:30:21+00:00"
+ "updated_at": "2026-09-18T21:18:00+00:00"
 }
