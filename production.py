@@ -121,6 +121,12 @@ def lead_from_quote(q, pair_key, built):
         "source": q["source"], "sport": q["sport"], "pair": pair_key, "lane": "production",
         "sandbox_quote": q["id"], "price_at_log": q.get("price"), "edge_at_log": q.get("edge"),
     }
+    # A model pair's claim is a PROBABILITY, and that is what a follower should judge today's
+    # price against — not how far the price has drifted since the Sandbox wrote it down days
+    # earlier. Two-way markets only: in a three-way one 1 - P(home) also holds the draw.
+    if q.get("prob_a") is not None and q.get("edge") is not None and q.get("price_draw") is None:
+        pa = float(q["prob_a"])
+        lead["model_prob"] = round(pa if q["pick"] == "a" else 1.0 - pa, 4)
     if route:
         lead["route"] = route
     if lead["status"] == "pending":

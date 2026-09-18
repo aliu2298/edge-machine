@@ -712,7 +712,7 @@ healthy = {"coverage": {"cricket": {"oddspedia": 4}, "nfl": {"covers": 12},
 eq(BUILD.feed_health(healthy), "", "no warning when every source reported something")
 
 # One quiet sport is an empty fixture list, not a broken feed.
-quiet = {"coverage": {"nfl": {"covers": 0}, "mlb": {"covers": 3}}, "quotes": []}
+quiet = {"coverage": {"nfl": {"scores24": 0}, "soccer": {"scores24": 3}}, "quotes": []}
 eq(BUILD.feed_health(quiet), "",
    "a source quiet in ONE sport is not flagged — NFL has no games on a Tuesday")
 
@@ -2477,13 +2477,13 @@ def _pq2(src, sport, i, won, price=0.5):
                 pick="a", price=price, price_a=price, price_b=1 - price, result="a" if won else "b",
                 status="won" if won else "lost", pnl=100.0 if won else -100.0, stake=100.0,
                 start=f"2026-08-{1 + i % 28:02d}T18:00:00+00:00", logged=f"2026-08-{1 + i % 28:02d}T10:00:00+00:00")
-_pd = {"quotes": [_pq2("covers", "mlb", i, i % 3 != 0) for i in range(36)]          # 24/36 at 0.5: working
+_pd = {"quotes": [_pq2("scores24", "soccer", i, i % 3 != 0) for i in range(36)]     # 24/36 at 0.5: working
                 + [_pq2("covers", "nfl", i, i % 3 == 0) for i in range(33)]         # 11/33: not working
                 + [_pq2("espn_fpi", "mlb", i, i % 2 == 0) for i in range(5)]}      # too early
 _g, _c = SB.pair_rows(_pd, {"pairs": {}})
 eq((_c["working"], _c["failing"]), (1, 1), "a readable pair ahead of the price is working; one behind it is not")
 ok(_c["leaning"] + _c["behind"] == 1, "a pair under the floor is too early, sorted by its lean")
-ok("Covers" in "".join(_g["working"]) and "MLB" in "".join(_g["working"]), "rows name the source and the sport")
+ok("Scores24" in "".join(_g["working"]) and S.SPORTS["soccer"] in "".join(_g["working"]), "rows name the source and the sport")
 ok("in production" in SB.page_html(_pd, {"pairs": {}, "events": []}) if hasattr(SB, "page_html") else True,
    "the Sandbox page counts what is in Production")
 
@@ -2690,6 +2690,13 @@ eq(_tnl["route"], {"venue": "polymarket_us", "market": "aec-utr-a-b-2026-09-18",
 eq(PR.lead_from_quote(dict(_tnq, pick="a"), "tennis_fav_band|tennis", "x")["route"]["outcome_side"],
    "yes", "the first player is the Yes side of that same market")
 eq(_tnl["league"], "Tennis", "tennis leads carry a league name rather than an empty one")
+ok("model_prob" not in _tnl, "a rule's lead carries no model probability")
+eq(PR.lead_from_quote(dict(_tnq, prob_a=0.3, edge=0.05, price_draw=None), "espn_fpi|mlb", "x")["model_prob"],
+   0.7, "a model's lead carries its probability for the side it backs (side B: 1 - P(A))")
+ok("model_prob" not in PR.lead_from_quote(dict(_tnq, prob_a=0.5, edge=0.05, price_draw=0.25, pick="a"),
+                                          "espn_fpi|mlb", "x"),
+   "…but not on a three-way market, where 1 - P(home) also holds the draw")
+
 ok("route" not in PR.lead_from_quote(dict(_tnq, sport="soccer", venue="kalshi",
                                           market_id="KXEPLGAME-26SEP18ARSCFC", pick="a",
                                           start_source="espn"), "x|soccer", "y"),
@@ -2898,6 +2905,16 @@ for _name, _html in _pages.items():
     _text = _re.sub(r"<[^>]+>", " ", _html)
     _found = sorted({m.group(0).lower() for m in _leaks.finditer(_text)})
     eq(_found, [], f"the {_name} copy gives nothing away")
+
+# Retired 2026-09-18: four MLB pairs losing on the exchanges. A source can lose one sport
+# and keep its others; the retired pair logs nothing new and stays on the record.
+for _src in ("kalshi", "covers", "scores24"):
+    ok("mlb" not in S.SOURCES[_src]["sports"] and "mlb" in S.SOURCES[_src]["retired_sports"],
+       f"{_src} MLB is retired, its other sports kept")
+ok("mlb_fade_streak" not in S.CHALLENGERS and S.SOURCES["mlb_fade_streak"].get("retired"),
+   "the MLB fade-the-streak rule is retired")
+_ur = SB.unconnected_rows(None) if "SB" in dir() else __import__("sandbox_build").unconnected_rows(None)
+ok("Covers / OddsShark computer picks · MLB" in _ur, "a retired pair is listed with its reason")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

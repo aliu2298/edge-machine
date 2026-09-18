@@ -422,6 +422,17 @@ def unconnected_rows(d=None):
         out.append(f"""<tr><td><b>{esc(m['label'])}</b>
 <div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div>{rec}</td>
 <td class="mut">{why}</td></tr>""")
+    # A source can lose one sport and keep the others: that pair is retired on its own.
+    for name, m in S.SOURCES.items():
+        for sport, reason in (m.get("retired_sports") or {}).items():
+            rec = ""
+            if d is not None:
+                n = sum(1 for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
+                        and q.get("bet") and q["status"] in ("won", "lost"))
+                rec = f'<div class="sm">{n} settled bets kept on record</div>'
+            out.append(f"""<tr><td><b>{esc(m['label'].split(' (')[0])} · {esc(S.SPORTS.get(sport, sport))}</b>
+<div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div>{rec}</td>
+<td class="mut"><b class="neg">Retired</b> {esc(reason)}</td></tr>""")
     return "\n".join(out)
 
 

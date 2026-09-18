@@ -102,7 +102,8 @@ SOURCES = {
              "Before the switch it was the benchmark and could not bet."),
     "kalshi": dict(
         label="Kalshi", kind="Prediction market", connected=True,
-        site="kalshi.com", sports=["nfl", "mlb", "tennis"],
+        site="kalshi.com", sports=["nfl", "tennis"],
+        retired_sports={"mlb": "2026-09-18: 1 won v 2.4 priced on 6 settled (z -1.23, -70.2% after fees)."},
         note="A second regulated exchange. Where the two exchanges disagree, one of them "
              "is mispriced, and this is the lane that finds out which."),
     "espn_fpi": dict(
@@ -117,7 +118,8 @@ SOURCES = {
              "is the hardest public number to beat, so this is the ceiling."),
     "covers": dict(
         label="Covers / OddsShark computer picks", kind="Tipster site", connected=True,
-        site="covers.com", sports=["nfl", "mlb"],
+        site="covers.com", sports=["nfl"],
+        retired_sports={"mlb": "2026-09-18: 8 won v 9.4 priced on 16 settled (z -0.73, -20.2% after fees)."},
         note="A published computer pick per game, free and dated. It states a projected "
              "SCORE rather than a probability, so it is backed at the market price with "
              "no edge filter and gets no Brier column — a pick cannot be calibrated."),
@@ -182,7 +184,9 @@ SOURCES = {
              "lists only a handful of fights a week, so it will take months to read."),
     "mlb_fade_streak": dict(
         label="MLB fade-the-streak rule (cold team v hot team, last 10)", kind="Rule",
-        connected=True, site="edge-machine", sports=["mlb"],
+        connected=False, site="edge-machine", sports=["mlb"],
+        retired="2026-09-18: 2 won v 2.8 priced on 7 settled (z -0.64, -35.6% after fees). "
+                "The research edge did not show up on live prices.",
         note="Pre-registered 2026-09-14. Back the team that won 3 or fewer of its last 10 games "
              "when it plays a team that won 7 or more of its last 10 (regular season, each with "
              "20+ games played, MLB Stats API results strictly before first pitch). Research on "
@@ -337,7 +341,8 @@ SOURCES = {
              "deliberately does not run."),
     "scores24": dict(
         label="Scores24 (editorial tips)", kind="Tipster site", connected=True,
-        site="scores24.live", sports=["soccer", "tennis", "nfl", "mlb"],
+        site="scores24.live", sports=["soccer", "tennis", "nfl"],
+        retired_sports={"mlb": "2026-09-18: 12 won v 13.6 priced on 24 settled (z -0.68, -14.9% after fees)."},
         note="Named human tipsters publishing a written call per match. Cloudflare 403s "
              "every plain request, so this is the one source fetched through a real "
              "headless browser. Only its MATCH-WINNER tips are scored — its totals and "
