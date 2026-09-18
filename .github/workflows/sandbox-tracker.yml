@@ -88,7 +88,7 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/sandbox.html public_site/qa.html public_site/production.html data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json"
+          PUBLISHED="public_site/sandbox.html public_site/production.html data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json"
 
           git add $PUBLISHED
           if git diff --cached --quiet; then
@@ -111,7 +111,7 @@ jobs:
             # anything — it is the only record of what each source said and when, and a
             # reset would silently throw away calls that have already been graded. The
             # rebase is safe because the two workflows write disjoint files: nothing else
-            # in the repo touches sandbox.html, qa.html, sandbox_ledger.json, stages.json or sandbox_archive/.
+            # in the repo touches sandbox.html, production.html, sandbox_ledger.json, stages.json or sandbox_archive/.
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
             # -X theirs: on a conflict, keep THIS run's copy (during a rebase "theirs" is the
             # commit being replayed). The pages are regenerated from this run's ledger, and a
