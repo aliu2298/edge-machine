@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-18T00:43:21+00:00",
+ "board_built_at": "2026-09-18T00:51:24+00:00",
  "leads": {
   "2026-09-17|Levski Sofia|Salzburg|Salzburg to win \u00b7 SoccerPredictions.ai": {
    "away": "Salzburg",
@@ -85,7 +85,7 @@
    "kickoff": "2026-09-18T11:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Tennis",
    "match": "Bernard Tomic v Alexander Binda",
    "pair": "tennis_fav_band|tennis",
@@ -116,7 +116,7 @@
    "kickoff": "2026-09-18T19:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Premier League",
    "match": "Brentford v Chelsea",
    "pair": "soccerpredictions|soccer",
@@ -141,7 +141,7 @@
    "kickoff": "2026-09-18T06:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Tennis",
    "match": "Chirag Duhan v Millen Hurrion",
    "pair": "tennis_fav_band|tennis",
@@ -172,7 +172,7 @@
    "kickoff": "2026-09-18T07:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Tennis",
    "match": "Dmitry Popko v Ruslan Tiukaev",
    "pair": "tennis_fav_band|tennis",
@@ -203,7 +203,7 @@
    "kickoff": "2026-09-18T01:30Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Tennis",
    "match": "Garcia, Mario v Djakouris, Antreas",
    "pair": "tennis_fav_band|tennis",
@@ -234,7 +234,7 @@
    "kickoff": "2026-09-18T18:45Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Serie A",
    "match": "Monza v Sassuolo",
    "pair": "soccerpredictions|soccer",
@@ -259,7 +259,7 @@
    "kickoff": "2026-09-18T07:00Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Tennis",
    "match": "Ryo Tabata v Adrian Andreev",
    "pair": "tennis_fav_band|tennis",
@@ -290,7 +290,7 @@
    "kickoff": "2026-09-18T05:30Z",
    "lane": "production",
    "last_seen": "2026-09-18",
-   "last_seen_at": "2026-09-18T00:43:21+00:00",
+   "last_seen_at": "2026-09-18T00:51:24+00:00",
    "league": "Tennis",
    "match": "Zhang - Zheng v Wei - Yuan",
    "pair": "tennis_fav_band|tennis",
@@ -308,6 +308,17 @@
   }
  },
  "pairs": {
+  "o15_form_l10|soccer_o15": {
+   "by_hand": "2026-09-18",
+   "entered_at": "2026-09-18T00:51:24+00:00",
+   "promoted_at": "2026-09-18T00:43:21+00:00",
+   "ready_at": "2026-09-18T00:51:24+00:00",
+   "route": "moved by hand on 2026-09-18",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
   "soccerpredictions|soccer": {
    "by_hand": "2026-09-16",
    "entered_at": "2026-09-16T22:40:32+00:00",
@@ -318,6 +329,17 @@
    "sandbox_n": 4,
    "sandbox_roi": 0.1628,
    "sandbox_roi_fee": 0.1182
+  },
+  "team1_form_l5|soccer_team1": {
+   "by_hand": "2026-09-18",
+   "entered_at": "2026-09-18T00:51:24+00:00",
+   "promoted_at": "2026-09-18T00:43:21+00:00",
+   "ready_at": "2026-09-18T00:51:24+00:00",
+   "route": "moved by hand on 2026-09-18",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
   },
   "tennis_fav_band|tennis": {
    "by_hand": "2026-09-17",
@@ -334,5 +356,5 @@
  "stage": "production",
  "unlisted_skipped": 6,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-18T00:43:21+00:00"
+ "updated_at": "2026-09-18T00:51:24+00:00"
 }

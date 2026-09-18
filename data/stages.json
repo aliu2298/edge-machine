@@ -160,6 +160,42 @@
    "pair": "team1_form_l5|soccer_team1",
    "reason": "moved to Production by hand on 2026-09-18",
    "to": "production"
+  },
+  {
+   "at": "2026-09-18T00:51:24+00:00",
+   "evidence": {
+    "base_roi": -0.0851,
+    "clv": 0.0367,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": -0.0408,
+    "roi": -0.0408,
+    "roi_fee": -0.0553,
+    "span_days": 3.0104,
+    "weeks": 0,
+    "z": -0.1838
+   },
+   "pair": "o15_form_l10|soccer_o15",
+   "reason": "moved by hand \u2014 trading from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-09-18T00:51:24+00:00",
+   "evidence": {
+    "base_roi": -0.0375,
+    "clv": 0.0133,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2342,
+    "roi": 0.2342,
+    "roi_fee": 0.2181,
+    "span_days": 1.0208,
+    "weeks": 0,
+    "z": 0.9627
+   },
+   "pair": "team1_form_l5|soccer_team1",
+   "reason": "moved by hand \u2014 trading from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -179,6 +215,8 @@
    },
    "entry_since": null,
    "promoted_at": "2026-09-18T00:43:21+00:00",
+   "ready_at": "2026-09-18T00:51:24+00:00",
+   "ready_since": "2026-09-18T00:51:24+00:00",
    "stage": "production"
   },
   "soccerpredictions|soccer": {
@@ -217,6 +255,8 @@
    },
    "entry_since": null,
    "promoted_at": "2026-09-18T00:43:21+00:00",
+   "ready_at": "2026-09-18T00:51:24+00:00",
+   "ready_since": "2026-09-18T00:51:24+00:00",
    "stage": "production"
   },
   "tennis_fav_band|tennis": {
@@ -240,5 +280,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-09-18T00:43:21+00:00"
+ "updated": "2026-09-18T00:51:24+00:00"
 }
