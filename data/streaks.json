@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-18T01:04:36+00:00",
+ "built_at": "2026-09-18T04:41:16+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -2860,6 +2860,198 @@
     }
    ],
    "market": "{\"away\": \"Toronto FC\", \"day\": \"2026-09-20\", \"home\": \"St. Louis CITY SC\", \"league\": \"MLS\"}"
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T02:30Z",
+   "league": "MLS",
+   "match": "Portland Timbers v Atlanta United FC",
+   "home": "Portland Timbers",
+   "away": "Atlanta United FC",
+   "headline": "Over 1.5 goals",
+   "why": "Portland Timbers's games went over 1.5 in 10 of their last 10; Atlanta United FC's in 9.",
+   "a": "Portland Timbers",
+   "b": "Atlanta United FC",
+   "a_run": 10,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 10 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 19,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "1-2",
+     "opp": "FC Dallas",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "St. Louis CITY SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "5-4",
+     "opp": "Minnesota United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-2",
+     "opp": "Austin FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "LAFC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "San Diego FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-2",
+     "opp": "Chicago Fire FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Seattle Sounders FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Real Salt Lake",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Dallas",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-0",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-3",
+     "opp": "Orlando City SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Inter Miami CF",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-2",
+     "opp": "Charlotte FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Sporting Kansas City",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Minnesota United FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Red Bull New York",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-3",
+     "opp": "Philadelphia Union",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-4",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Charlotte FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "market": "{\"away\": \"Atlanta United FC\", \"day\": \"2026-09-20\", \"home\": \"Portland Timbers\", \"league\": \"MLS\"}"
   }
  ],
  "teams": [
