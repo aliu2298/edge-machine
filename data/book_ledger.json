@@ -9093,7 +9093,44 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-18|New York City FC|Red Bull New York": {
+   "away": "Red Bull New York",
+   "date": "2026-09-18",
+   "home": "New York City FC",
+   "id": "2026-09-18|New York City FC|Red Bull New York",
+   "kickoff": "2026-09-18T23:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "over15": 0.8356,
+    "over25": 0.6311
+   },
+   "priced_at": "2026-09-18T01:04:36+00:00",
+   "prices": {
+    "over15": {
+     "ask": 0.87,
+     "bid": 0.83,
+     "event": "mls-nyc-nyr-2026-09-18",
+     "fair": 0.85,
+     "fee": 0.0068,
+     "market": "tsc-mls-nyc-nyr-2026-09-18-1pt5",
+     "price": 1.141,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.67,
+     "bid": 0.63,
+     "event": "mls-nyc-nyr-2026-09-18",
+     "fair": 0.65,
+     "fee": 0.0133,
+     "market": "tsc-mls-nyc-nyr-2026-09-18-2pt5",
+     "price": 1.464,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-17T21:53:54+00:00"
+ "updated_at": "2026-09-18T01:04:37+00:00"
 }

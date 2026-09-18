@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-17T21:53:54+00:00",
+ "built_at": "2026-09-18T01:04:36+00:00",
  "teams_tracked": 331,
  "leads": [
   {
@@ -22,7 +22,7 @@
    "a_text": "over 1.5 \u00b7 10 of last 10",
    "b_text": "over 1.5 \u00b7 9 of last 10",
    "strength": 19,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -351,7 +351,7 @@
    "a_text": "over 1.5 \u00b7 10 of last 10",
    "b_text": "over 1.5 \u00b7 9 of last 10",
    "strength": 19,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -548,7 +548,7 @@
    "a_text": "over 1.5 \u00b7 9 of last 10",
    "b_text": "over 1.5 \u00b7 9 of last 10",
    "strength": 18,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -873,7 +873,7 @@
    "a_text": "over 1.5 \u00b7 10 of last 10",
    "b_text": "over 1.5 \u00b7 10 of last 10",
    "strength": 20,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -1068,7 +1068,7 @@
    "a_text": "over 1.5 \u00b7 10 of last 10",
    "b_text": "over 1.5 \u00b7 9 of last 10",
    "strength": 19,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -1265,7 +1265,7 @@
    "a_text": "over 1.5 \u00b7 9 of last 10",
    "b_text": "over 1.5 \u00b7 10 of last 10",
    "strength": 19,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -1462,7 +1462,7 @@
    "a_text": "over 1.5 \u00b7 10 of last 10",
    "b_text": "over 1.5 \u00b7 9 of last 10",
    "strength": 19,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -1919,7 +1919,7 @@
    "a_text": "over 1.5 \u00b7 9 of last 10",
    "b_text": "over 1.5 \u00b7 10 of last 10",
    "strength": 19,
-   "base_rate": 0.4247104247104247,
+   "base_rate": 0.4235294117647059,
    "rule": "v2",
    "bet": {
     "kind": "total_gte",
@@ -2095,6 +2095,771 @@
    "market_url": "https://kalshi.com/markets/kxeredivisietotal",
    "venue_name": "Kalshi",
    "model": 0.8767
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T00:30Z",
+   "league": "MLS",
+   "match": "St. Louis CITY SC v Toronto FC",
+   "home": "St. Louis CITY SC",
+   "away": "Toronto FC",
+   "headline": "St. Louis CITY SC to score 2+",
+   "why": "St. Louis CITY SC have scored 2+ in 5 straight; Toronto FC have conceded in 6 straight.",
+   "a": "St. Louis CITY SC",
+   "b": "Toronto FC",
+   "a_run": 5,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 11,
+   "base_rate": 0.2326283987915408,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "St. Louis CITY SC"
+   },
+   "a_recent": [
+    {
+     "s": "4-2",
+     "opp": "Minnesota United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Portland Timbers",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "Vancouver Whitecaps",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Dallas",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Houston Dynamo FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Sporting Kansas City",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-3",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Nashville SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "4-4",
+     "opp": "Chicago Fire FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "New York City FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Inter Miami CF",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "Charlotte FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "market": "{\"away\": \"Toronto FC\", \"day\": \"2026-09-20\", \"home\": \"St. Louis CITY SC\", \"league\": \"MLS\"}"
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T00:30Z",
+   "league": "MLS",
+   "match": "FC Dallas v Austin FC",
+   "home": "FC Dallas",
+   "away": "Austin FC",
+   "headline": "FC Dallas to score 2+",
+   "why": "FC Dallas have scored 2+ in 4 straight; Austin FC have conceded in 6 straight.",
+   "a": "FC Dallas",
+   "b": "Austin FC",
+   "a_run": 4,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 10,
+   "base_rate": 0.2326283987915408,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "FC Dallas"
+   },
+   "a_recent": [
+    {
+     "s": "2-1",
+     "opp": "Portland Timbers",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Minnesota United FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "4-3",
+     "opp": "Sporting Kansas City",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "St. Louis CITY SC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-5",
+     "opp": "Vancouver Whitecaps",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "4-3",
+     "opp": "Real Salt Lake",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "2-1",
+     "opp": "Vancouver Whitecaps",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Colorado Rapids",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "San Jose Earthquakes",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Portland Timbers",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Philadelphia Union",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Seattle Sounders FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "market": "{\"away\": \"Austin FC\", \"day\": \"2026-09-20\", \"home\": \"FC Dallas\", \"league\": \"MLS\"}"
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T00:30Z",
+   "league": "MLS",
+   "match": "Sporting Kansas City v Philadelphia Union",
+   "home": "Sporting Kansas City",
+   "away": "Philadelphia Union",
+   "headline": "Philadelphia Union to score 2+",
+   "why": "Philadelphia Union have scored 2+ in 4 straight; Sporting Kansas City have conceded in 6 straight.",
+   "a": "Philadelphia Union",
+   "b": "Sporting Kansas City",
+   "a_run": 4,
+   "b_run": 6,
+   "a_key": "scoring",
+   "b_key": "porous",
+   "a_label": "scored 2+",
+   "b_label": "conceded in",
+   "strength": 10,
+   "base_rate": 0.2326283987915408,
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "subject": "a",
+    "team": "Philadelphia Union"
+   },
+   "a_recent": [
+    {
+     "s": "5-0",
+     "opp": "San Diego FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "5-0",
+     "opp": "FC Cincinnati",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-0",
+     "opp": "CF Montr\u00e9al",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Austin FC",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Inter Miami CF",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "3-1",
+     "opp": "LAFC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-4",
+     "opp": "FC Dallas",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-3",
+     "opp": "Vancouver Whitecaps",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-2",
+     "opp": "Atlanta United FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "St. Louis CITY SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-2",
+     "opp": "Colorado Rapids",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "market": "{\"away\": \"Philadelphia Union\", \"day\": \"2026-09-20\", \"home\": \"Sporting Kansas City\", \"league\": \"MLS\"}"
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T00:30Z",
+   "league": "MLS",
+   "match": "Sporting Kansas City v Philadelphia Union",
+   "home": "Sporting Kansas City",
+   "away": "Philadelphia Union",
+   "headline": "Over 1.5 goals",
+   "why": "Sporting Kansas City's games went over 1.5 in 10 of their last 10; Philadelphia Union's in 9.",
+   "a": "Sporting Kansas City",
+   "b": "Philadelphia Union",
+   "a_run": 10,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 10 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 19,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "3-1",
+     "opp": "LAFC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-4",
+     "opp": "FC Dallas",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-3",
+     "opp": "Vancouver Whitecaps",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-2",
+     "opp": "Atlanta United FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "St. Louis CITY SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-2",
+     "opp": "Colorado Rapids",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-2",
+     "opp": "Houston Dynamo FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-4",
+     "opp": "LAFC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Minnesota United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-3",
+     "opp": "St. Louis CITY SC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "5-0",
+     "opp": "San Diego FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "5-0",
+     "opp": "FC Cincinnati",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-0",
+     "opp": "CF Montr\u00e9al",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Austin FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Inter Miami CF",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-2",
+     "opp": "New York City FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-2",
+     "opp": "Atlanta United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Seattle Sounders FC",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "Red Bull New York",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "market": "{\"away\": \"Philadelphia Union\", \"day\": \"2026-09-20\", \"home\": \"Sporting Kansas City\", \"league\": \"MLS\"}"
+  },
+  {
+   "date": "2026-09-20",
+   "kickoff": "2026-09-20T00:30Z",
+   "league": "MLS",
+   "match": "St. Louis CITY SC v Toronto FC",
+   "home": "St. Louis CITY SC",
+   "away": "Toronto FC",
+   "headline": "Over 1.5 goals",
+   "why": "St. Louis CITY SC's games went over 1.5 in 9 of their last 10; Toronto FC's in 9.",
+   "a": "St. Louis CITY SC",
+   "b": "Toronto FC",
+   "a_run": 9,
+   "b_run": 9,
+   "a_key": "over15_l10",
+   "b_key": "over15_l10",
+   "a_label": "over 1.5",
+   "b_label": "over 1.5",
+   "a_text": "over 1.5 \u00b7 9 of last 10",
+   "b_text": "over 1.5 \u00b7 9 of last 10",
+   "strength": 18,
+   "base_rate": 0.4235294117647059,
+   "rule": "v2",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "a_recent": [
+    {
+     "s": "4-2",
+     "opp": "Minnesota United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Portland Timbers",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "Vancouver Whitecaps",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Dallas",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Houston Dynamo FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Sporting Kansas City",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "San Jose Earthquakes",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Real Salt Lake",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Colorado Rapids",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "LA Galaxy",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "b_recent": [
+    {
+     "s": "0-3",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Nashville SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "4-4",
+     "opp": "Chicago Fire FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "New York City FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Inter Miami CF",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "Charlotte FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "New England Revolution",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "New York City FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-2",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-0",
+     "opp": "New England Revolution",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "market": "{\"away\": \"Toronto FC\", \"day\": \"2026-09-20\", \"home\": \"St. Louis CITY SC\", \"league\": \"MLS\"}"
   }
  ],
  "teams": [
@@ -2362,7 +3127,7 @@
    "team": "Getafe",
    "no_run": false,
    "league": "La Liga",
-   "played": 19,
+   "played": 18,
    "runs": [
     {
      "key": "under25",
@@ -2742,7 +3507,7 @@
    "team": "Benfica",
    "no_run": false,
    "league": "Primeira Liga",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring",
@@ -3140,7 +3905,7 @@
    "team": "Philadelphia Union",
    "no_run": false,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "solid",
@@ -3241,7 +4006,7 @@
    "team": "1. FC Union Berlin",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "leaky",
@@ -3506,7 +4271,7 @@
    "team": "Hamburg SV",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "blanked",
@@ -3684,7 +4449,7 @@
    "team": "Bayer Leverkusen",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring",
@@ -4063,11 +4828,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
+    "n": 8,
     "rate": 0.75,
-    "fair": 0.67385,
-    "z": 0.33847766703110094,
-    "roi": -0.025500000000000002,
+    "fair": 0.6288,
+    "z": 0.7400090908901745,
+    "roi": 0.14575,
     "paying": false
    }
   },
@@ -4075,7 +4840,7 @@
    "team": "Chelsea",
    "no_run": false,
    "league": "Premier League",
-   "played": 16,
+   "played": 15,
    "runs": [
     {
      "key": "leaky",
@@ -4282,7 +5047,7 @@
    "team": "Fortuna Sittard",
    "no_run": false,
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "leaky",
@@ -4597,11 +5362,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
+    "n": 8,
     "rate": 0.5,
-    "fair": 0.68595,
-    "z": -0.8146561217824377,
-    "roi": -0.33275,
+    "fair": 0.615475,
+    "z": -0.739641069463156,
+    "roi": -0.344,
     "paying": false
    }
   },
@@ -4722,7 +5487,7 @@
    "team": "Sevilla",
    "no_run": false,
    "league": "La Liga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "under25",
@@ -4811,7 +5576,7 @@
    "team": "Sparta Rotterdam",
    "no_run": false,
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "leaky",
@@ -5118,7 +5883,7 @@
    "team": "Kilmarnock",
    "no_run": false,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "under25",
@@ -5201,7 +5966,7 @@
    "team": "Red Bull New York",
    "no_run": false,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "under25",
@@ -5385,11 +6150,11 @@
    "thin": false,
    "friendlies": 1,
    "book": {
-    "n": 4,
+    "n": 8,
     "rate": 1.0,
-    "fair": 0.6206,
-    "z": 1.6087897525727946,
-    "roi": 0.58425,
+    "fair": 0.6128,
+    "z": 2.315805847190342,
+    "roi": 0.62,
     "paying": false
    }
   },
@@ -5498,7 +6263,7 @@
    "team": "Chicago Fire FC",
    "no_run": false,
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -5599,7 +6364,7 @@
    "team": "FC Cologne",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "btts",
@@ -6318,7 +7083,7 @@
    "team": "Viking FK",
    "no_run": false,
    "league": "Champions League",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "btts",
@@ -6690,7 +7455,7 @@
    "team": "Borussia M\u00f6nchengladbach",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "over25",
@@ -7195,7 +7960,7 @@
    "team": "Heart of Midlothian",
    "no_run": false,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "over25",
@@ -7397,7 +8162,7 @@
    "team": "Borussia Dortmund",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "scoring",
@@ -7812,7 +8577,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 4,
+    "rate": 1.0,
+    "fair": 0.6537499999999999,
+    "z": 1.4886235252742719,
+    "roi": 0.50875,
+    "paying": false
+   }
   },
   {
    "team": "Al Nassr",
@@ -8222,7 +8994,7 @@
    "team": "Sassuolo",
    "no_run": false,
    "league": "Serie A",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "btts",
@@ -8933,11 +9705,11 @@
    "thin": false,
    "friendlies": 1,
    "book": {
-    "n": 4,
-    "rate": 1.0,
-    "fair": 0.59205,
-    "z": 1.6928719225903712,
-    "roi": 0.64525,
+    "n": 8,
+    "rate": 0.875,
+    "fair": 0.6204,
+    "z": 1.522386589740777,
+    "roi": 0.352375,
     "paying": false
    }
   },
@@ -9254,7 +10026,7 @@
    "team": "PEC Zwolle",
    "no_run": false,
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "leaky",
@@ -9664,7 +10436,7 @@
    "team": "C.D. Nacional",
    "no_run": false,
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "leaky",
@@ -10061,7 +10833,7 @@
    "team": "Osasuna",
    "no_run": false,
    "league": "La Liga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "leaky",
@@ -10245,11 +11017,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 3,
-    "rate": 0.3333333333333333,
-    "fair": 0.5225666666666666,
-    "z": -0.6649347673038465,
-    "roi": -0.39999999999999997,
+    "n": 7,
+    "rate": 0.5714285714285714,
+    "fair": 0.5618142857142857,
+    "z": 0.05287188027754903,
+    "roi": -0.096,
     "paying": false
    }
   },
@@ -10257,7 +11029,7 @@
    "team": "Elche",
    "no_run": false,
    "league": "La Liga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "btts",
@@ -10358,7 +11130,7 @@
    "team": "Girona",
    "no_run": false,
    "league": "La Liga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "btts",
@@ -10648,11 +11420,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
-    "rate": 0.75,
-    "fair": 0.65875,
-    "z": 0.3937441742211249,
-    "roi": 0.0735,
+    "n": 8,
+    "rate": 0.875,
+    "fair": 0.648125,
+    "z": 1.376412764648502,
+    "roi": 0.31074999999999997,
     "paying": false
    }
   },
@@ -10761,7 +11533,7 @@
    "team": "Falkirk",
    "no_run": false,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "btts",
@@ -10957,7 +11729,7 @@
    "team": "Brentford",
    "no_run": false,
    "league": "Premier League",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "btts",
@@ -11058,7 +11830,7 @@
    "team": "FC Volendam",
    "no_run": false,
    "league": "Eredivisie",
-   "played": 9,
+   "played": 8,
    "runs": [
     {
      "key": "btts",
@@ -11146,7 +11918,7 @@
    "team": "Leeds United",
    "no_run": false,
    "league": "Premier League",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "btts",
@@ -11348,7 +12120,7 @@
    "team": "Werder Bremen",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "btts",
@@ -11449,7 +12221,7 @@
    "team": "Dundee",
    "no_run": false,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "btts",
@@ -11543,7 +12315,7 @@
    "team": "Toronto FC",
    "no_run": false,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "over25",
@@ -11720,7 +12492,7 @@
    "team": "Moreirense",
    "no_run": false,
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "over25",
@@ -11891,7 +12663,7 @@
    "team": "AJ Auxerre",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
@@ -12312,7 +13084,7 @@
    "team": "Brighton & Hove Albion",
    "no_run": false,
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [
     {
      "key": "scoring1",
@@ -12471,7 +13243,14 @@
    ],
    "thin": false,
    "friendlies": 0,
-   "book": null
+   "book": {
+    "n": 4,
+    "rate": 0.75,
+    "fair": 0.6675,
+    "z": 0.35745197061820555,
+    "roi": 0.06975000000000002,
+    "paying": false
+   }
   },
   {
    "team": "Club Brugge",
@@ -12560,7 +13339,7 @@
    "team": "Espanyol",
    "no_run": false,
    "league": "La Liga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "scoring1",
@@ -12732,7 +13511,7 @@
    "team": "Juventus",
    "no_run": false,
    "league": "Serie A",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "scoring1",
@@ -12809,11 +13588,11 @@
    "thin": false,
    "friendlies": 1,
    "book": {
-    "n": 4,
-    "rate": 1.0,
-    "fair": 0.58475,
-    "z": 1.7194098668705284,
-    "roi": 0.6645,
+    "n": 8,
+    "rate": 0.875,
+    "fair": 0.6405000000000001,
+    "z": 1.4418670898717507,
+    "roi": 0.312375,
     "paying": false
    }
   },
@@ -13076,7 +13855,7 @@
    "team": "Omonia Nicosia",
    "no_run": false,
    "league": "Europa League",
-   "played": 11,
+   "played": 10,
    "runs": [
     {
      "key": "scoring1",
@@ -13153,7 +13932,7 @@
    "team": "Orlando City SC",
    "no_run": false,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "scoring1",
@@ -13236,7 +14015,7 @@
    "team": "Paris Saint-Germain",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "scoring1",
@@ -13402,7 +14181,7 @@
    "team": "Rangers",
    "no_run": false,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
@@ -13561,7 +14340,7 @@
    "team": "Santa Clara",
    "no_run": false,
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
@@ -13905,7 +14684,7 @@
    "team": "Brest",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -13988,7 +14767,7 @@
    "team": "Burnley",
    "no_run": false,
    "league": "Premier League",
-   "played": 9,
+   "played": 8,
    "runs": [
     {
      "key": "porous",
@@ -14377,7 +15156,7 @@
    "team": "Hibernian",
    "no_run": false,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -14784,7 +15563,7 @@
    "team": "Torino",
    "no_run": false,
    "league": "Serie A",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
@@ -14873,7 +15652,7 @@
    "team": "Toulouse",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
@@ -15198,11 +15977,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
-    "rate": 0.5,
-    "fair": 0.6935,
-    "z": -0.8568771999670536,
-    "roi": -0.3125,
+    "n": 8,
+    "rate": 0.625,
+    "fair": 0.67175,
+    "z": -0.2880705693978763,
+    "roi": -0.08662500000000001,
     "paying": false
    }
   },
@@ -15210,7 +15989,7 @@
    "team": "Cremonese",
    "no_run": false,
    "league": "Serie A",
-   "played": 10,
+   "played": 9,
    "runs": [
     {
      "key": "scoring1",
@@ -15280,7 +16059,7 @@
    "team": "FC Twente",
    "no_run": false,
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "scoring1",
@@ -15363,7 +16142,7 @@
    "team": "1. FC Heidenheim 1846",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 9,
+   "played": 8,
    "runs": [
     {
      "key": "over15",
@@ -15445,7 +16224,7 @@
    "team": "AC Milan",
    "no_run": false,
    "league": "Serie A",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "over15",
@@ -15776,7 +16555,7 @@
    "team": "Mallorca",
    "no_run": false,
    "league": "La Liga",
-   "played": 12,
+   "played": 11,
    "runs": [
     {
      "key": "over15",
@@ -15941,7 +16720,7 @@
    "team": "Parma",
    "no_run": false,
    "league": "Serie A",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -16202,7 +16981,7 @@
    "team": "Tondela",
    "no_run": false,
    "league": "Primeira Liga",
-   "played": 9,
+   "played": 8,
    "runs": [
     {
      "key": "scoring1",
@@ -16425,13 +17204,20 @@
    ],
    "thin": false,
    "friendlies": 1,
-   "book": null
+   "book": {
+    "n": 4,
+    "rate": 0.75,
+    "fair": 0.595,
+    "z": 0.6742118212029657,
+    "roi": 0.08999999999999998,
+    "paying": false
+   }
   },
   {
    "team": "Real Oviedo",
    "no_run": false,
    "league": "La Liga",
-   "played": 11,
+   "played": 10,
    "runs": [
     {
      "key": "porous",
@@ -16673,7 +17459,7 @@
    "team": "NAC Breda",
    "no_run": false,
    "league": "Eredivisie",
-   "played": 7,
+   "played": 6,
    "runs": [
     {
      "key": "over15",
@@ -16913,7 +17699,7 @@
    "team": "Lorient",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
@@ -17328,7 +18114,7 @@
    "team": "Nice",
    "no_run": false,
    "league": "Ligue 1",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
@@ -17583,7 +18369,7 @@
    "team": "VfL Wolfsburg",
    "no_run": false,
    "league": "Bundesliga",
-   "played": 8,
+   "played": 7,
    "runs": [
     {
      "key": "porous",
@@ -17720,7 +18506,7 @@
    "team": "AVS",
    "no_run": true,
    "league": "Primeira Liga",
-   "played": 8,
+   "played": 7,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -17783,7 +18569,7 @@
    "team": "Aberdeen",
    "no_run": true,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -18892,7 +19678,7 @@
    "team": "Arouca",
    "no_run": true,
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19044,7 +19830,7 @@
    "team": "Atlanta United FC",
    "no_run": true,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19120,7 +19906,7 @@
    "team": "Bayern Munich",
    "no_run": true,
    "league": "Bundesliga",
-   "played": 22,
+   "played": 21,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19348,7 +20134,7 @@
    "team": "Charlotte FC",
    "no_run": true,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19500,7 +20286,7 @@
    "team": "Columbus Crew",
    "no_run": true,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19576,7 +20362,7 @@
    "team": "D.C. United",
    "no_run": true,
    "league": "MLS",
-   "played": 20,
+   "played": 19,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19728,7 +20514,7 @@
    "team": "Everton",
    "no_run": true,
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19804,7 +20590,7 @@
    "team": "FC Famalicao",
    "no_run": true,
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -19949,7 +20735,7 @@
    "team": "Fulham",
    "no_run": true,
    "league": "Premier League",
-   "played": 15,
+   "played": 14,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -20025,7 +20811,7 @@
    "team": "Gil Vicente",
    "no_run": true,
    "league": "Primeira Liga",
-   "played": 13,
+   "played": 12,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -20405,7 +21191,7 @@
    "team": "Levante",
    "no_run": true,
    "league": "La Liga",
-   "played": 16,
+   "played": 15,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -20481,7 +21267,7 @@
    "team": "Liverpool",
    "no_run": true,
    "league": "Premier League",
-   "played": 20,
+   "played": 19,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -20557,7 +21343,7 @@
    "team": "Livingston",
    "no_run": true,
    "league": "Scottish Premiership",
-   "played": 8,
+   "played": 7,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -20911,7 +21697,7 @@
    "team": "Motherwell",
    "no_run": true,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -21051,11 +21837,11 @@
    "thin": false,
    "friendlies": 0,
    "book": {
-    "n": 4,
-    "rate": 0.5,
-    "fair": 0.43972500000000003,
-    "z": 0.2561644554539124,
-    "roi": -0.15100000000000002,
+    "n": 8,
+    "rate": 0.625,
+    "fair": 0.5167375,
+    "z": 0.6552779923081319,
+    "roi": -0.02175000000000001,
     "paying": false
    }
   },
@@ -21202,7 +21988,7 @@
    "team": "Nashville SC",
    "no_run": true,
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -21719,7 +22505,7 @@
    "team": "St Mirren",
    "no_run": true,
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -21940,7 +22726,7 @@
    "team": "Valencia",
    "no_run": true,
    "league": "La Liga",
-   "played": 16,
+   "played": 15,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -22016,7 +22802,7 @@
    "team": "Vit\u00f3ria de Guimaraes",
    "no_run": true,
    "league": "Primeira Liga",
-   "played": 14,
+   "played": 13,
    "runs": [],
    "best_rate": 1.0,
    "longest": 0,
@@ -22162,28 +22948,28 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 21,
-     "rate": 0.003472222222222222
+     "rate": 0.0035087719298245615
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.03125
+     "rate": 0.031578947368421054
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.1597222222222222
+     "rate": 0.16140350877192983
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.003472222222222222,
+   "best_rate": 0.0035087719298245615,
    "longest": 21,
    "next": {
     "opp": "San Diego FC",
@@ -22373,28 +23159,28 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 21,
-     "rate": 0.003472222222222222
+     "rate": 0.0035087719298245615
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.027777777777777776
+     "rate": 0.02456140350877193
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 12,
-     "rate": 0.006944444444444444
+     "rate": 0.0035087719298245615
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 12,
-     "rate": 0.0763888888888889
+     "rate": 0.07368421052631578
     }
    ],
-   "best_rate": 0.003472222222222222,
+   "best_rate": 0.0035087719298245615,
    "longest": 21,
    "next": {
     "opp": "Atlanta United FC",
@@ -22584,16 +23370,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 20,
-     "rate": 0.003472222222222222
+     "rate": 0.0035087719298245615
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 20,
-     "rate": 0.010416666666666666
+     "rate": 0.010526315789473684
     }
    ],
-   "best_rate": 0.003472222222222222,
+   "best_rate": 0.0035087719298245615,
    "longest": 20,
    "next": {
     "opp": "Philadelphia Union",
@@ -22767,209 +23553,6 @@
    "next_ko": "2026-09-20T00:30Z"
   },
   {
-   "team": "Chicago Fire FC",
-   "league": "MLS",
-   "played": 20,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 20,
-     "rate": 0.006944444444444444
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 17,
-     "rate": 0.027777777777777776
-    },
-    {
-     "key": "btts",
-     "label": "both teams scored",
-     "n": 11,
-     "rate": 0.010416666666666666
-    },
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 11,
-     "rate": 0.0763888888888889
-    }
-   ],
-   "best_rate": 0.006944444444444444,
-   "longest": 20,
-   "next": {
-    "opp": "Nashville SC",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T01:30Z",
-    "league": "MLS",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "New England Revolution",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-1",
-     "opp": "Inter Miami CF",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "4-4",
-     "opp": "Toronto FC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-2",
-     "opp": "Seattle Sounders FC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-1",
-     "opp": "Red Bull New York",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "Orlando City SC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "Portland Timbers",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "Charlotte FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-3",
-     "opp": "New York City FC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-3",
-     "opp": "Inter Miami CF",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "Toronto FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-0",
-     "opp": "CF Montr\u00e9al",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-1",
-     "opp": "D.C. United",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-3",
-     "opp": "Red Bull New York",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-3",
-     "opp": "FC Cincinnati",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "5-0",
-     "opp": "Sporting Kansas City",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-3",
-     "opp": "FC Cincinnati",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "Atlanta United FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "Nashville SC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "Philadelphia Union",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    }
-   ],
-   "next_ko": "2026-09-20T01:30Z"
-  },
-  {
    "team": "FC Cincinnati",
    "league": "MLS",
    "played": 20,
@@ -22978,16 +23561,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 20,
-     "rate": 0.010416666666666666
+     "rate": 0.010526315789473684
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.027777777777777776
+     "rate": 0.02456140350877193
     }
    ],
-   "best_rate": 0.010416666666666666,
+   "best_rate": 0.010526315789473684,
    "longest": 20,
    "next": {
     "opp": "Houston Dynamo FC",
@@ -23161,6 +23744,201 @@
    "next_ko": "2026-09-20T00:30Z"
   },
   {
+   "team": "Chicago Fire FC",
+   "league": "MLS",
+   "played": 19,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 19,
+     "rate": 0.007017543859649123
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 17,
+     "rate": 0.028070175438596492
+    },
+    {
+     "key": "btts",
+     "label": "both teams scored",
+     "n": 11,
+     "rate": 0.010526315789473684
+    },
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 11,
+     "rate": 0.07719298245614035
+    }
+   ],
+   "best_rate": 0.007017543859649123,
+   "longest": 19,
+   "next": {
+    "opp": "Nashville SC",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T01:30Z",
+    "league": "MLS",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "New England Revolution",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Inter Miami CF",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "4-4",
+     "opp": "Toronto FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Seattle Sounders FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Red Bull New York",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Orlando City SC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Portland Timbers",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Charlotte FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-3",
+     "opp": "New York City FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-3",
+     "opp": "Inter Miami CF",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Toronto FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-0",
+     "opp": "CF Montr\u00e9al",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-3",
+     "opp": "Red Bull New York",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-3",
+     "opp": "FC Cincinnati",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "5-0",
+     "opp": "Sporting Kansas City",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Cincinnati",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Atlanta United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Nashville SC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "next_ko": "2026-09-20T01:30Z"
+  },
+  {
    "team": "Villarreal",
    "league": "La Liga",
    "played": 18,
@@ -23169,10 +23947,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 18,
-     "rate": 0.006944444444444444
+     "rate": 0.007017543859649123
     }
    ],
-   "best_rate": 0.006944444444444444,
+   "best_rate": 0.007017543859649123,
    "longest": 18,
    "next": {
     "opp": "Levante",
@@ -23338,10 +24116,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 18,
-     "rate": 0.017361111111111112
+     "rate": 0.017543859649122806
     }
    ],
-   "best_rate": 0.017361111111111112,
+   "best_rate": 0.017543859649122806,
    "longest": 18,
    "next": {
     "opp": "Internazionale",
@@ -23515,10 +24293,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 18,
-     "rate": 0.017361111111111112
+     "rate": 0.017543859649122806
     }
    ],
-   "best_rate": 0.017361111111111112,
+   "best_rate": 0.017543859649122806,
    "longest": 18,
    "next": {
     "opp": "Santa Clara",
@@ -23684,10 +24462,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 18,
-     "rate": 0.017361111111111112
+     "rate": 0.017543859649122806
     }
    ],
-   "best_rate": 0.017361111111111112,
+   "best_rate": 0.017543859649122806,
    "longest": 18,
    "next": {
     "opp": "AS Roma",
@@ -23853,16 +24631,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 18,
-     "rate": 0.017361111111111112
+     "rate": 0.017543859649122806
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 18,
-     "rate": 0.017361111111111112
+     "rate": 0.017543859649122806
     }
    ],
-   "best_rate": 0.017361111111111112,
+   "best_rate": 0.017543859649122806,
    "longest": 18,
    "next": {
     "opp": "FC Twente",
@@ -24028,10 +24806,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 17,
-     "rate": 0.027777777777777776
+     "rate": 0.028070175438596492
     }
    ],
-   "best_rate": 0.027777777777777776,
+   "best_rate": 0.028070175438596492,
    "longest": 17,
    "next": {
     "opp": "Viking FK",
@@ -24205,10 +24983,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 16,
-     "rate": 0.034722222222222224
+     "rate": 0.03508771929824561
     }
    ],
-   "best_rate": 0.034722222222222224,
+   "best_rate": 0.03508771929824561,
    "longest": 16,
    "next": null,
    "recent": [
@@ -24360,163 +25138,6 @@
    "next_ko": ""
   },
   {
-   "team": "Benfica",
-   "league": "Primeira Liga",
-   "played": 15,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 15,
-     "rate": 0.03819444444444445
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 15,
-     "rate": 0.04861111111111111
-    },
-    {
-     "key": "scoring",
-     "label": "scored 2+",
-     "n": 13,
-     "rate": 0.003472222222222222
-    }
-   ],
-   "best_rate": 0.003472222222222222,
-   "longest": 15,
-   "next": {
-    "opp": "FC Porto",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T19:30Z",
-    "league": "Primeira Liga",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-0",
-     "opp": "AC Milan",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Europa League"
-    },
-    {
-     "s": "3-1",
-     "opp": "Gil Vicente",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "4-0",
-     "opp": "Moreirense",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Maritimo",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Estoril",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "7-0",
-     "opp": "Casa Pia",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Acad\u00e9mico de Viseu",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "3-1",
-     "opp": "Estoril",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Braga",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-2",
-     "opp": "FC Famalicao",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "4-1",
-     "opp": "Moreirense",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Sporting CP",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "2-0",
-     "opp": "C.D. Nacional",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "1-1",
-     "opp": "Casa Pia",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    },
-    {
-     "s": "3-0",
-     "opp": "Vit\u00f3ria de Guimaraes",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Primeira Liga"
-    }
-   ],
-   "next_ko": "2026-09-20T19:30Z"
-  },
-  {
    "team": "Strasbourg",
    "league": "Ligue 1",
    "played": 15,
@@ -24525,16 +25146,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 15,
-     "rate": 0.010416666666666666
+     "rate": 0.010526315789473684
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 15,
-     "rate": 0.04861111111111111
+     "rate": 0.0456140350877193
     }
    ],
-   "best_rate": 0.010416666666666666,
+   "best_rate": 0.010526315789473684,
    "longest": 15,
    "next": {
     "opp": "Paris FC",
@@ -24668,185 +25289,6 @@
    "next_ko": "2026-09-19T15:15Z"
   },
   {
-   "team": "St. Louis CITY SC",
-   "league": "MLS",
-   "played": 21,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 15,
-     "rate": 0.03819444444444445
-    },
-    {
-     "key": "btts",
-     "label": "both teams scored",
-     "n": 8,
-     "rate": 0.03125
-    },
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 8,
-     "rate": 0.1597222222222222
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 8,
-     "rate": 0.22916666666666666
-    }
-   ],
-   "best_rate": 0.03125,
-   "longest": 15,
-   "next": {
-    "opp": "Toronto FC",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T00:30Z",
-    "league": "MLS",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "4-2",
-     "opp": "Minnesota United FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-2",
-     "opp": "Portland Timbers",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-1",
-     "opp": "Vancouver Whitecaps",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-3",
-     "opp": "FC Dallas",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "Houston Dynamo FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-1",
-     "opp": "Sporting Kansas City",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-1",
-     "opp": "San Jose Earthquakes",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-1",
-     "opp": "Real Salt Lake",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "Colorado Rapids",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-1",
-     "opp": "LA Galaxy",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-2",
-     "opp": "Sporting Kansas City",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "3-0",
-     "opp": "Austin FC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-1",
-     "opp": "D.C. United",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-1",
-     "opp": "LAFC",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "1-0",
-     "opp": "Colorado Rapids",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "0-2",
-     "opp": "Austin FC",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "MLS"
-    },
-    {
-     "s": "2-3",
-     "opp": "San Jose Earthquakes",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "MLS"
-    }
-   ],
-   "next_ko": "2026-09-20T00:30Z"
-  },
-  {
    "team": "Arsenal",
    "league": "Premier League",
    "played": 18,
@@ -24855,10 +25297,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 15,
-     "rate": 0.03819444444444445
+     "rate": 0.031578947368421054
     }
    ],
-   "best_rate": 0.03819444444444445,
+   "best_rate": 0.031578947368421054,
    "longest": 15,
    "next": {
     "opp": "Brighton & Hove Albion",
@@ -25008,157 +25450,6 @@
    "next_ko": "2026-09-19T14:00Z"
   },
   {
-   "team": "Bayer Leverkusen",
-   "league": "Bundesliga",
-   "played": 15,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 15,
-     "rate": 0.03819444444444445
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 12,
-     "rate": 0.1111111111111111
-    }
-   ],
-   "best_rate": 0.03819444444444445,
-   "longest": 15,
-   "next": {
-    "opp": "RB Leipzig",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T13:30Z",
-    "league": "Bundesliga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "2-0",
-     "opp": "NK Celje",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Europa League"
-    },
-    {
-     "s": "2-2",
-     "opp": "FC Augsburg",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "4-0",
-     "opp": "1. FC Union Berlin",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-3",
-     "opp": "SV Elversberg",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Newcastle United",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-2",
-     "opp": "Nottingham Forest",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-1",
-     "opp": "Sevilla",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Hamburg SV",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-3",
-     "opp": "VfB Stuttgart",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "4-1",
-     "opp": "RB Leipzig",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "FC Cologne",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-2",
-     "opp": "FC Augsburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-0",
-     "opp": "Borussia Dortmund",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "6-3",
-     "opp": "VfL Wolfsburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-3",
-     "opp": "1. FC Heidenheim 1846",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    }
-   ],
-   "next_ko": "2026-09-20T13:30Z"
-  },
-  {
    "team": "Celtic",
    "league": "Scottish Premiership",
    "played": 16,
@@ -25167,10 +25458,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 15,
-     "rate": 0.03819444444444445
+     "rate": 0.031578947368421054
     }
    ],
-   "best_rate": 0.03819444444444445,
+   "best_rate": 0.031578947368421054,
    "longest": 15,
    "next": {
     "opp": "Rangers",
@@ -25320,10 +25611,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 15,
-     "rate": 0.03819444444444445
+     "rate": 0.031578947368421054
     }
    ],
-   "best_rate": 0.03819444444444445,
+   "best_rate": 0.031578947368421054,
    "longest": 15,
    "next": {
     "opp": "FC Utrecht",
@@ -25473,6 +25764,185 @@
    "next_ko": "2026-09-20T10:15Z"
   },
   {
+   "team": "St. Louis CITY SC",
+   "league": "MLS",
+   "played": 21,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 15,
+     "rate": 0.031578947368421054
+    },
+    {
+     "key": "btts",
+     "label": "both teams scored",
+     "n": 8,
+     "rate": 0.031578947368421054
+    },
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 8,
+     "rate": 0.16140350877192983
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 8,
+     "rate": 0.23157894736842105
+    }
+   ],
+   "best_rate": 0.031578947368421054,
+   "longest": 15,
+   "next": {
+    "opp": "Toronto FC",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T00:30Z",
+    "league": "MLS",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "4-2",
+     "opp": "Minnesota United FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-2",
+     "opp": "Portland Timbers",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "Vancouver Whitecaps",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-3",
+     "opp": "FC Dallas",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "Houston Dynamo FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Sporting Kansas City",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "San Jose Earthquakes",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "Real Salt Lake",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Colorado Rapids",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-1",
+     "opp": "LA Galaxy",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-2",
+     "opp": "Sporting Kansas City",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "3-0",
+     "opp": "Austin FC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-1",
+     "opp": "D.C. United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-1",
+     "opp": "LAFC",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "1-0",
+     "opp": "Colorado Rapids",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "0-2",
+     "opp": "Austin FC",
+     "h": false,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    },
+    {
+     "s": "2-3",
+     "opp": "San Jose Earthquakes",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "MLS"
+    }
+   ],
+   "next_ko": "2026-09-20T00:30Z"
+  },
+  {
    "team": "Crystal Palace",
    "league": "Premier League",
    "played": 17,
@@ -25481,10 +25951,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 15,
-     "rate": 0.04861111111111111
+     "rate": 0.0456140350877193
     }
    ],
-   "best_rate": 0.04861111111111111,
+   "best_rate": 0.0456140350877193,
    "longest": 15,
    "next": {
     "opp": "Leeds United",
@@ -25642,10 +26112,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 15,
-     "rate": 0.04861111111111111
+     "rate": 0.0456140350877193
     }
    ],
-   "best_rate": 0.04861111111111111,
+   "best_rate": 0.0456140350877193,
    "longest": 15,
    "next": {
     "opp": "SC Freiburg",
@@ -25779,6 +26249,155 @@
    "next_ko": "2026-09-19T13:30Z"
   },
   {
+   "team": "Benfica",
+   "league": "Primeira Liga",
+   "played": 14,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 14,
+     "rate": 0.04912280701754386
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 14,
+     "rate": 0.056140350877192984
+    },
+    {
+     "key": "scoring",
+     "label": "scored 2+",
+     "n": 13,
+     "rate": 0.0035087719298245615
+    }
+   ],
+   "best_rate": 0.0035087719298245615,
+   "longest": 14,
+   "next": {
+    "opp": "FC Porto",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T19:30Z",
+    "league": "Primeira Liga",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "2-0",
+     "opp": "AC Milan",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "3-1",
+     "opp": "Gil Vicente",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "4-0",
+     "opp": "Moreirense",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "3-0",
+     "opp": "Maritimo",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Estoril",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "7-0",
+     "opp": "Casa Pia",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Acad\u00e9mico de Viseu",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Estoril",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Braga",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Famalicao",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "4-1",
+     "opp": "Moreirense",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Sporting CP",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "2-0",
+     "opp": "C.D. Nacional",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    },
+    {
+     "s": "1-1",
+     "opp": "Casa Pia",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Primeira Liga"
+    }
+   ],
+   "next_ko": "2026-09-20T19:30Z"
+  },
+  {
    "team": "NEC Nijmegen",
    "league": "Eredivisie",
    "played": 14,
@@ -25787,22 +26406,22 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 14,
-     "rate": 0.05555555555555555
+     "rate": 0.056140350877192984
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.059027777777777776
+     "rate": 0.056140350877192984
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 9,
-     "rate": 0.006944444444444444
+     "rate": 0.007017543859649123
     }
    ],
-   "best_rate": 0.006944444444444444,
+   "best_rate": 0.007017543859649123,
    "longest": 14,
    "next": {
     "opp": "Go Ahead Eagles",
@@ -25936,28 +26555,28 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.05555555555555555
+     "rate": 0.04912280701754386
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 9,
-     "rate": 0.017361111111111112
+     "rate": 0.017543859649122806
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.1284722222222222
+     "rate": 0.12631578947368421
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18055555555555555
+     "rate": 0.17894736842105263
     }
    ],
-   "best_rate": 0.017361111111111112,
+   "best_rate": 0.017543859649122806,
    "longest": 14,
    "next": {
     "opp": "Liverpool",
@@ -26083,155 +26702,6 @@
    "next_ko": "2026-09-20T13:00Z"
   },
   {
-   "team": "Heart of Midlothian",
-   "league": "Scottish Premiership",
-   "played": 14,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 14,
-     "rate": 0.05555555555555555
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 13,
-     "rate": 0.08680555555555555
-    },
-    {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 8,
-     "rate": 0.020833333333333332
-    }
-   ],
-   "best_rate": 0.020833333333333332,
-   "longest": 14,
-   "next": {
-    "opp": "Kilmarnock",
-    "date": "2026-09-19",
-    "kickoff": "2026-09-19T16:45Z",
-    "league": "Scottish Premiership",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "Falkirk",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-1",
-     "opp": "Dundee",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "3-1",
-     "opp": "Hibernian",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-1",
-     "opp": "St Johnstone",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "4-0",
-     "opp": "Dundee United",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-2",
-     "opp": "Aberdeen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-3",
-     "opp": "Celtic",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "3-0",
-     "opp": "Falkirk",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-1",
-     "opp": "Motherwell",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-1",
-     "opp": "Rangers",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-1",
-     "opp": "Hibernian",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "3-1",
-     "opp": "Motherwell",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-2",
-     "opp": "Livingston",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-0",
-     "opp": "Dundee",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    }
-   ],
-   "next_ko": "2026-09-19T16:45Z"
-  },
-  {
    "team": "Alverca",
    "league": "Primeira Liga",
    "played": 14,
@@ -26240,10 +26710,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.027777777777777776
+     "rate": 0.02456140350877193
     }
    ],
-   "best_rate": 0.027777777777777776,
+   "best_rate": 0.02456140350877193,
    "longest": 14,
    "next": {
     "opp": "Rio Ave",
@@ -26377,10 +26847,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 14,
-     "rate": 0.027777777777777776
+     "rate": 0.02456140350877193
     }
    ],
-   "best_rate": 0.027777777777777776,
+   "best_rate": 0.02456140350877193,
    "longest": 14,
    "next": {
     "opp": "FC Dallas",
@@ -26522,61 +26992,75 @@
    "next_ko": "2026-09-20T00:30Z"
   },
   {
-   "team": "Brest",
-   "league": "Ligue 1",
+   "team": "Bayer Leverkusen",
+   "league": "Bundesliga",
    "played": 14,
    "runs": [
     {
-     "key": "porous",
-     "label": "conceded in",
+     "key": "scoring1",
+     "label": "scored in",
      "n": 14,
-     "rate": 0.027777777777777776
+     "rate": 0.04912280701754386
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 12,
+     "rate": 0.10877192982456141
     }
    ],
-   "best_rate": 0.027777777777777776,
+   "best_rate": 0.04912280701754386,
    "longest": 14,
    "next": {
-    "opp": "AJ Auxerre",
+    "opp": "RB Leipzig",
     "date": "2026-09-20",
-    "kickoff": "2026-09-20T13:00Z",
-    "league": "Ligue 1",
-    "home": false
+    "kickoff": "2026-09-20T13:30Z",
+    "league": "Bundesliga",
+    "home": true
    },
    "recent": [
     {
-     "s": "0-1",
-     "opp": "Paris Saint-Germain",
+     "s": "2-0",
+     "opp": "NK Celje",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Ligue 1"
+     "lg": "Europa League"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Augsburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "4-0",
+     "opp": "1. FC Union Berlin",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-3",
+     "opp": "SV Elversberg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
     },
     {
      "s": "2-1",
-     "opp": "Le Havre AC",
+     "opp": "Newcastle United",
      "h": false,
      "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
+     "comp": false,
+     "lg": "Club Friendly"
     },
     {
-     "s": "2-2",
-     "opp": "Toulouse",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "2-2",
-     "opp": "Le Mans",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "0-2",
+     "s": "1-2",
      "opp": "Nottingham Forest",
      "h": false,
      "hit": true,
@@ -26584,8 +27068,8 @@
      "lg": "Club Friendly"
     },
     {
-     "s": "2-2",
-     "opp": "Venezia",
+     "s": "2-1",
+     "opp": "Sevilla",
      "h": true,
      "hit": true,
      "comp": false,
@@ -26593,213 +27077,62 @@
     },
     {
      "s": "1-1",
-     "opp": "Angers",
+     "opp": "Hamburg SV",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Ligue 1"
+     "lg": "Bundesliga"
     },
     {
-     "s": "1-2",
-     "opp": "Strasbourg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "0-1",
-     "opp": "Paris Saint-Germain",
+     "s": "1-3",
+     "opp": "VfB Stuttgart",
      "h": false,
      "hit": true,
      "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "0-4",
-     "opp": "Paris FC",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "3-3",
-     "opp": "Lens",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "1-1",
-     "opp": "Nantes",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "3-4",
-     "opp": "Stade Rennais",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    },
-    {
-     "s": "0-3",
-     "opp": "AJ Auxerre",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Ligue 1"
-    }
-   ],
-   "next_ko": "2026-09-20T13:00Z"
-  },
-  {
-   "team": "FC Utrecht",
-   "league": "Eredivisie",
-   "played": 14,
-   "runs": [
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 14,
-     "rate": 0.05555555555555555
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 10,
-     "rate": 0.1076388888888889
-    }
-   ],
-   "best_rate": 0.05555555555555555,
-   "longest": 14,
-   "next": {
-    "opp": "Feyenoord Rotterdam",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T10:15Z",
-    "league": "Eredivisie",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "2-1",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "Go Ahead Eagles",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-6",
-     "opp": "PSV Eindhoven",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-3",
-     "opp": "Sparta Rotterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-4",
-     "opp": "AZ Alkmaar",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "FC Groningen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "Heerenveen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-0",
-     "opp": "Fortuna Sittard",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-1",
-     "opp": "Ajax Amsterdam",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-0",
-     "opp": "NAC Breda",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-5",
-     "opp": "Excelsior",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
+     "lg": "Bundesliga"
     },
     {
      "s": "4-1",
-     "opp": "Telstar",
+     "opp": "RB Leipzig",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Eredivisie"
+     "lg": "Bundesliga"
     },
     {
-     "s": "3-4",
-     "opp": "PSV Eindhoven",
+     "s": "2-1",
+     "opp": "FC Cologne",
      "h": false,
      "hit": true,
      "comp": true,
-     "lg": "Eredivisie"
+     "lg": "Bundesliga"
     },
     {
-     "s": "2-0",
-     "opp": "Go Ahead Eagles",
+     "s": "1-2",
+     "opp": "FC Augsburg",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Eredivisie"
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-0",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "6-3",
+     "opp": "VfL Wolfsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
     }
    ],
-   "next_ko": "2026-09-20T10:15Z"
+   "next_ko": "2026-09-20T13:30Z"
   },
   {
    "team": "Manchester City",
@@ -26810,10 +27143,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.05555555555555555
+     "rate": 0.04912280701754386
     }
    ],
-   "best_rate": 0.05555555555555555,
+   "best_rate": 0.04912280701754386,
    "longest": 14,
    "next": {
     "opp": "Sunderland",
@@ -26941,22 +27274,22 @@
   {
    "team": "Philadelphia Union",
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 14,
-     "rate": 0.05555555555555555
+     "rate": 0.04912280701754386
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.05555555555555555,
+   "best_rate": 0.04912280701754386,
    "longest": 14,
    "next": {
     "opp": "Sporting Kansas City",
@@ -27098,276 +27431,147 @@
    "next_ko": "2026-09-20T00:30Z"
   },
   {
-   "team": "Rangers",
-   "league": "Scottish Premiership",
+   "team": "FC Utrecht",
+   "league": "Eredivisie",
    "played": 14,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 14,
-     "rate": 0.05555555555555555
-    }
-   ],
-   "best_rate": 0.05555555555555555,
-   "longest": 14,
-   "next": {
-    "opp": "Celtic",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T11:00Z",
-    "league": "Scottish Premiership",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-0",
-     "opp": "St Mirren",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-0",
-     "opp": "Motherwell",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-1",
-     "opp": "Falkirk",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-0",
-     "opp": "Aberdeen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-2",
-     "opp": "Hibernian",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-1",
-     "opp": "Dundee United",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "5-2",
-     "opp": "Falkirk",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-2",
-     "opp": "Hibernian",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-3",
-     "opp": "Celtic",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "1-2",
-     "opp": "Heart of Midlothian",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "2-3",
-     "opp": "Motherwell",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "6-3",
-     "opp": "Falkirk",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "4-2",
-     "opp": "Dundee United",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    },
-    {
-     "s": "4-1",
-     "opp": "Aberdeen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Scottish Premiership"
-    }
-   ],
-   "next_ko": "2026-09-20T11:00Z"
-  },
-  {
-   "team": "1. FC Union Berlin",
-   "league": "Bundesliga",
-   "played": 13,
    "runs": [
     {
      "key": "over15",
      "label": "over 1.5 goals",
-     "n": 13,
-     "rate": 0.08680555555555555
+     "n": 14,
+     "rate": 0.056140350877192984
     },
     {
-     "key": "over25",
-     "label": "over 2.5 goals",
-     "n": 11,
-     "rate": 0.003472222222222222
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 10,
+     "rate": 0.10877192982456141
     }
    ],
-   "best_rate": 0.003472222222222222,
-   "longest": 13,
+   "best_rate": 0.056140350877192984,
+   "longest": 14,
    "next": {
-    "opp": "Bayern Munich",
-    "date": "2026-09-18",
-    "kickoff": "2026-09-18T18:30Z",
-    "league": "Bundesliga",
+    "opp": "Feyenoord Rotterdam",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T10:15Z",
+    "league": "Eredivisie",
     "home": false
    },
    "recent": [
     {
-     "s": "1-3",
-     "opp": "Schalke 04",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "0-4",
-     "opp": "Bayer Leverkusen",
+     "s": "2-1",
+     "opp": "Excelsior",
      "h": false,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
      "s": "3-3",
-     "opp": "Eintracht Frankfurt",
+     "opp": "Go Ahead Eagles",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
-     "s": "2-4",
-     "opp": "Ipswich Town",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "3-2",
-     "opp": "Aris Limassol",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "4-0",
-     "opp": "FC Augsburg",
+     "s": "1-6",
+     "opp": "PSV Eindhoven",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
-     "s": "3-1",
-     "opp": "Mainz",
+     "s": "3-3",
+     "opp": "Sparta Rotterdam",
      "h": false,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
-     "s": "2-2",
-     "opp": "FC Cologne",
+     "s": "1-4",
+     "opp": "AZ Alkmaar",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-3",
-     "opp": "RB Leipzig",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
      "s": "1-2",
-     "opp": "VfL Wolfsburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-3",
-     "opp": "1. FC Heidenheim 1846",
+     "opp": "FC Groningen",
      "h": false,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
-     "s": "1-1",
-     "opp": "St. Pauli",
+     "s": "3-2",
+     "opp": "Heerenveen",
      "h": true,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
     },
     {
-     "s": "0-4",
-     "opp": "Bayern Munich",
+     "s": "2-0",
+     "opp": "Fortuna Sittard",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-1",
+     "opp": "Ajax Amsterdam",
      "h": false,
      "hit": true,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-0",
+     "opp": "NAC Breda",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-5",
+     "opp": "Excelsior",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "4-1",
+     "opp": "Telstar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-4",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-0",
+     "opp": "Go Ahead Eagles",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
     }
    ],
-   "next_ko": "2026-09-18T18:30Z"
+   "next_ko": "2026-09-20T10:15Z"
   },
   {
    "team": "FC Augsburg",
@@ -27378,16 +27582,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.08680555555555555
+     "rate": 0.08070175438596491
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.020833333333333332
+     "rate": 0.021052631578947368
     }
    ],
-   "best_rate": 0.020833333333333332,
+   "best_rate": 0.021052631578947368,
    "longest": 13,
    "next": {
     "opp": "Werder Bremen",
@@ -27505,282 +27709,288 @@
    "next_ko": "2026-09-19T13:30Z"
   },
   {
-   "team": "Fortuna Sittard",
-   "league": "Eredivisie",
+   "team": "Heart of Midlothian",
+   "league": "Scottish Premiership",
    "played": 13,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 13,
-     "rate": 0.03819444444444445
-    },
-    {
-     "key": "over15",
-     "label": "over 1.5 goals",
-     "n": 13,
-     "rate": 0.08680555555555555
-    }
-   ],
-   "best_rate": 0.03819444444444445,
-   "longest": 13,
-   "next": {
-    "opp": "Willem II",
-    "date": "2026-09-19",
-    "kickoff": "2026-09-19T19:00Z",
-    "league": "Eredivisie",
-    "home": false
-   },
-   "recent": [
-    {
-     "s": "1-5",
-     "opp": "Ajax Amsterdam",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "ADO Den Haag",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "FC Groningen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-2",
-     "opp": "AZ Alkmaar",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-1",
-     "opp": "SC Cambuur",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "2-2",
-     "opp": "PSV Eindhoven",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-2",
-     "opp": "FC Utrecht",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "3-2",
-     "opp": "PEC Zwolle",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "Feyenoord Rotterdam",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "Heerenveen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-1",
-     "opp": "NAC Breda",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "0-2",
-     "opp": "AZ Alkmaar",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    },
-    {
-     "s": "1-2",
-     "opp": "FC Twente",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Eredivisie"
-    }
-   ],
-   "next_ko": "2026-09-19T19:00Z"
-  },
-  {
-   "team": "Hamburg SV",
-   "league": "Bundesliga",
-   "played": 13,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 13,
-     "rate": 0.03819444444444445
-    }
-   ],
-   "best_rate": 0.03819444444444445,
-   "longest": 13,
-   "next": {
-    "opp": "FC Cologne",
-    "date": "2026-09-19",
-    "kickoff": "2026-09-19T13:30Z",
-    "league": "Bundesliga",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "0-5",
-     "opp": "RB Leipzig",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "0-5",
-     "opp": "Mainz",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "0-2",
-     "opp": "Borussia Dortmund",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Toulouse",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-1",
-     "opp": "Lille",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Bayer Leverkusen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-2",
-     "opp": "SC Freiburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Eintracht Frankfurt",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-2",
-     "opp": "TSG Hoffenheim",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-3",
-     "opp": "Werder Bremen",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "0-4",
-     "opp": "VfB Stuttgart",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-1",
-     "opp": "FC Augsburg",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-3",
-     "opp": "Borussia Dortmund",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    }
-   ],
-   "next_ko": "2026-09-19T13:30Z"
-  },
-  {
-   "team": "Orlando City SC",
-   "league": "MLS",
-   "played": 21,
    "runs": [
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 13,
-     "rate": 0.0625
+     "rate": 0.06315789473684211
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 13,
+     "rate": 0.08070175438596491
+    },
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 8,
+     "rate": 0.021052631578947368
     }
    ],
-   "best_rate": 0.0625,
+   "best_rate": 0.021052631578947368,
+   "longest": 13,
+   "next": {
+    "opp": "Kilmarnock",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T16:45Z",
+    "league": "Scottish Premiership",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "Falkirk",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-1",
+     "opp": "Dundee",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "3-1",
+     "opp": "Hibernian",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-1",
+     "opp": "St Johnstone",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "4-0",
+     "opp": "Dundee United",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-2",
+     "opp": "Aberdeen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-3",
+     "opp": "Celtic",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "3-0",
+     "opp": "Falkirk",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-1",
+     "opp": "Motherwell",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-1",
+     "opp": "Rangers",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-1",
+     "opp": "Hibernian",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "3-1",
+     "opp": "Motherwell",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-2",
+     "opp": "Livingston",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    }
+   ],
+   "next_ko": "2026-09-19T16:45Z"
+  },
+  {
+   "team": "Brest",
+   "league": "Ligue 1",
+   "played": 13,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 13,
+     "rate": 0.031578947368421054
+    }
+   ],
+   "best_rate": 0.031578947368421054,
+   "longest": 13,
+   "next": {
+    "opp": "AJ Auxerre",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T13:00Z",
+    "league": "Ligue 1",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "0-1",
+     "opp": "Paris Saint-Germain",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "2-1",
+     "opp": "Le Havre AC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "2-2",
+     "opp": "Toulouse",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "2-2",
+     "opp": "Le Mans",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "0-2",
+     "opp": "Nottingham Forest",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "2-2",
+     "opp": "Venezia",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Angers",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "1-2",
+     "opp": "Strasbourg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "0-1",
+     "opp": "Paris Saint-Germain",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "0-4",
+     "opp": "Paris FC",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "3-3",
+     "opp": "Lens",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "1-1",
+     "opp": "Nantes",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    },
+    {
+     "s": "3-4",
+     "opp": "Stade Rennais",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Ligue 1"
+    }
+   ],
+   "next_ko": "2026-09-20T13:00Z"
+  },
+  {
+   "team": "Orlando City SC",
+   "league": "MLS",
+   "played": 20,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 13,
+     "rate": 0.06315789473684211
+    }
+   ],
+   "best_rate": 0.06315789473684211,
    "longest": 13,
    "next": {
     "opp": "New England Revolution",
@@ -27914,6 +28124,135 @@
    "next_ko": "2026-09-19T23:30Z"
   },
   {
+   "team": "Rangers",
+   "league": "Scottish Premiership",
+   "played": 13,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 13,
+     "rate": 0.06315789473684211
+    }
+   ],
+   "best_rate": 0.06315789473684211,
+   "longest": 13,
+   "next": {
+    "opp": "Celtic",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T11:00Z",
+    "league": "Scottish Premiership",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "1-0",
+     "opp": "St Mirren",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-0",
+     "opp": "Motherwell",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-1",
+     "opp": "Falkirk",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-0",
+     "opp": "Aberdeen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-2",
+     "opp": "Hibernian",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-1",
+     "opp": "Dundee United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "5-2",
+     "opp": "Falkirk",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-2",
+     "opp": "Hibernian",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-3",
+     "opp": "Celtic",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "1-2",
+     "opp": "Heart of Midlothian",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "2-3",
+     "opp": "Motherwell",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "6-3",
+     "opp": "Falkirk",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    },
+    {
+     "s": "4-2",
+     "opp": "Dundee United",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Scottish Premiership"
+    }
+   ],
+   "next_ko": "2026-09-20T11:00Z"
+  },
+  {
    "team": "Sporting CP",
    "league": "Primeira Liga",
    "played": 18,
@@ -27922,16 +28261,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 13,
-     "rate": 0.0625
+     "rate": 0.06315789473684211
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.08680555555555555
+     "rate": 0.08070175438596491
     }
    ],
-   "best_rate": 0.0625,
+   "best_rate": 0.06315789473684211,
    "longest": 13,
    "next": {
     "opp": "Arouca",
@@ -28067,16 +28406,16 @@
   {
    "team": "AC Milan",
    "league": "Serie A",
-   "played": 18,
+   "played": 17,
    "runs": [
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.08680555555555555
+     "rate": 0.08070175438596491
     }
    ],
-   "best_rate": 0.08680555555555555,
+   "best_rate": 0.08070175438596491,
    "longest": 13,
    "next": {
     "opp": "Lecce",
@@ -28218,16 +28557,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 13,
-     "rate": 0.08680555555555555
+     "rate": 0.08070175438596491
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.1597222222222222
+     "rate": 0.16140350877192983
     }
    ],
-   "best_rate": 0.08680555555555555,
+   "best_rate": 0.08070175438596491,
    "longest": 13,
    "next": {
     "opp": "Osasuna",
@@ -28361,128 +28700,44 @@
    "next_ko": "2026-09-19T12:00Z"
   },
   {
-   "team": "FC Cologne",
+   "team": "1. FC Union Berlin",
    "league": "Bundesliga",
    "played": 12,
    "runs": [
     {
-     "key": "btts",
-     "label": "both teams scored",
-     "n": 12,
-     "rate": 0.006944444444444444
-    },
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 12,
-     "rate": 0.059027777777777776
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 12,
-     "rate": 0.0763888888888889
-    },
-    {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.1111111111111111
+     "rate": 0.10877192982456141
+    },
+    {
+     "key": "over25",
+     "label": "over 2.5 goals",
+     "n": 11,
+     "rate": 0.0035087719298245615
     }
    ],
-   "best_rate": 0.006944444444444444,
+   "best_rate": 0.0035087719298245615,
    "longest": 12,
    "next": {
-    "opp": "Hamburg SV",
-    "date": "2026-09-19",
-    "kickoff": "2026-09-19T13:30Z",
+    "opp": "Bayern Munich",
+    "date": "2026-09-18",
+    "kickoff": "2026-09-18T18:30Z",
     "league": "Bundesliga",
     "home": false
    },
    "recent": [
     {
-     "s": "1-1",
-     "opp": "Werder Bremen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-4",
-     "opp": "VfB Stuttgart",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-2",
-     "opp": "TSG Hoffenheim",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-1",
-     "opp": "Real Sociedad",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-5",
-     "opp": "Bayern Munich",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
      "s": "1-3",
-     "opp": "1. FC Heidenheim 1846",
+     "opp": "Schalke 04",
      "h": true,
      "hit": true,
      "comp": true,
      "lg": "Bundesliga"
     },
     {
-     "s": "2-2",
-     "opp": "1. FC Union Berlin",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-2",
+     "s": "0-4",
      "opp": "Bayer Leverkusen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "1-1",
-     "opp": "St. Pauli",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-1",
-     "opp": "Werder Bremen",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Eintracht Frankfurt",
      "h": false,
      "hit": true,
      "comp": true,
@@ -28490,7 +28745,327 @@
     },
     {
      "s": "3-3",
-     "opp": "Borussia M\u00f6nchengladbach",
+     "opp": "Eintracht Frankfurt",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-4",
+     "opp": "Ipswich Town",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "3-2",
+     "opp": "Aris Limassol",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "4-0",
+     "opp": "FC Augsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Mainz",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "FC Cologne",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "RB Leipzig",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "VfL Wolfsburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "1. FC Heidenheim 1846",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "St. Pauli",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "next_ko": "2026-09-18T18:30Z"
+  },
+  {
+   "team": "Fortuna Sittard",
+   "league": "Eredivisie",
+   "played": 12,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 12,
+     "rate": 0.056140350877192984
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 12,
+     "rate": 0.10877192982456141
+    }
+   ],
+   "best_rate": 0.056140350877192984,
+   "longest": 12,
+   "next": {
+    "opp": "Willem II",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T19:00Z",
+    "league": "Eredivisie",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "1-5",
+     "opp": "Ajax Amsterdam",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "ADO Den Haag",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "FC Groningen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-2",
+     "opp": "AZ Alkmaar",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-1",
+     "opp": "SC Cambuur",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "2-2",
+     "opp": "PSV Eindhoven",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-2",
+     "opp": "FC Utrecht",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "3-2",
+     "opp": "PEC Zwolle",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "Feyenoord Rotterdam",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-2",
+     "opp": "Heerenveen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "1-1",
+     "opp": "NAC Breda",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    },
+    {
+     "s": "0-2",
+     "opp": "AZ Alkmaar",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Eredivisie"
+    }
+   ],
+   "next_ko": "2026-09-19T19:00Z"
+  },
+  {
+   "team": "Hamburg SV",
+   "league": "Bundesliga",
+   "played": 12,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 12,
+     "rate": 0.056140350877192984
+    }
+   ],
+   "best_rate": 0.056140350877192984,
+   "longest": 12,
+   "next": {
+    "opp": "FC Cologne",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T13:30Z",
+    "league": "Bundesliga",
+    "home": true
+   },
+   "recent": [
+    {
+     "s": "0-5",
+     "opp": "RB Leipzig",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-5",
+     "opp": "Mainz",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-2",
+     "opp": "Borussia Dortmund",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Toulouse",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-1",
+     "opp": "Lille",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Bayer Leverkusen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-2",
+     "opp": "SC Freiburg",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "TSG Hoffenheim",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "Werder Bremen",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "0-4",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "FC Augsburg",
      "h": true,
      "hit": true,
      "comp": true,
@@ -28502,16 +29077,16 @@
   {
    "team": "Hibernian",
    "league": "Scottish Premiership",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.059027777777777776
+     "rate": 0.056140350877192984
     }
    ],
-   "best_rate": 0.059027777777777776,
+   "best_rate": 0.056140350877192984,
    "longest": 12,
    "next": {
     "opp": "Aberdeen",
@@ -28624,14 +29199,6 @@
      "hit": false,
      "comp": true,
      "lg": "Scottish Premiership"
-    },
-    {
-     "s": "0-0",
-     "opp": "Motherwell",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Scottish Premiership"
     }
    ],
    "next_ko": "2026-09-19T14:00Z"
@@ -28645,10 +29212,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.059027777777777776
+     "rate": 0.056140350877192984
     }
    ],
-   "best_rate": 0.059027777777777776,
+   "best_rate": 0.056140350877192984,
    "longest": 12,
    "next": {
     "opp": "Vancouver Whitecaps",
@@ -28776,16 +29343,16 @@
   {
    "team": "Toulouse",
    "league": "Ligue 1",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.059027777777777776
+     "rate": 0.056140350877192984
     }
    ],
-   "best_rate": 0.059027777777777776,
+   "best_rate": 0.056140350877192984,
    "longest": 12,
    "next": {
     "opp": "Le Havre AC",
@@ -28890,14 +29457,6 @@
      "hit": true,
      "comp": true,
      "lg": "Ligue 1"
-    },
-    {
-     "s": "1-0",
-     "opp": "Lorient",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Ligue 1"
     }
    ],
    "next_ko": "2026-09-19T18:45Z"
@@ -28905,16 +29464,16 @@
   {
    "team": "Werder Bremen",
    "league": "Bundesliga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 12,
-     "rate": 0.059027777777777776
+     "rate": 0.056140350877192984
     }
    ],
-   "best_rate": 0.059027777777777776,
+   "best_rate": 0.056140350877192984,
    "longest": 12,
    "next": {
     "opp": "FC Augsburg",
@@ -29019,14 +29578,6 @@
      "hit": true,
      "comp": true,
      "lg": "Bundesliga"
-    },
-    {
-     "s": "1-0",
-     "opp": "VfL Wolfsburg",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Bundesliga"
     }
    ],
    "next_ko": "2026-09-19T13:30Z"
@@ -29040,16 +29591,16 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 12,
-     "rate": 0.0763888888888889
+     "rate": 0.07368421052631578
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.0763888888888889,
+   "best_rate": 0.07368421052631578,
    "longest": 12,
    "next": {
     "opp": "Excelsior",
@@ -29177,22 +29728,22 @@
   {
    "team": "Espanyol",
    "league": "La Liga",
-   "played": 17,
+   "played": 16,
    "runs": [
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.1111111111111111
+     "rate": 0.10877192982456141
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09375
+     "rate": 0.0912280701754386
     }
    ],
-   "best_rate": 0.09375,
+   "best_rate": 0.0912280701754386,
    "longest": 12,
    "next": {
     "opp": "Elche",
@@ -29326,16 +29877,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.1111111111111111
+     "rate": 0.10877192982456141
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09375
+     "rate": 0.0912280701754386
     }
    ],
-   "best_rate": 0.09375,
+   "best_rate": 0.0912280701754386,
    "longest": 12,
    "next": {
     "opp": "Ajax Amsterdam",
@@ -29453,10 +30004,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.1111111111111111
+     "rate": 0.10877192982456141
     }
    ],
-   "best_rate": 0.1111111111111111,
+   "best_rate": 0.10877192982456141,
    "longest": 12,
    "next": {
     "opp": "Real Madrid",
@@ -29590,16 +30141,16 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 12,
-     "rate": 0.1111111111111111
+     "rate": 0.10877192982456141
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     }
    ],
-   "best_rate": 0.1111111111111111,
+   "best_rate": 0.10877192982456141,
    "longest": 12,
    "next": {
     "opp": "Hull City",
@@ -29725,6 +30276,137 @@
    "next_ko": "2026-09-19T14:00Z"
   },
   {
+   "team": "FC Cologne",
+   "league": "Bundesliga",
+   "played": 11,
+   "runs": [
+    {
+     "key": "btts",
+     "label": "both teams scored",
+     "n": 11,
+     "rate": 0.010526315789473684
+    },
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 11,
+     "rate": 0.07719298245614035
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 11,
+     "rate": 0.0912280701754386
+    },
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 11,
+     "rate": 0.1368421052631579
+    }
+   ],
+   "best_rate": 0.010526315789473684,
+   "longest": 11,
+   "next": {
+    "opp": "Hamburg SV",
+    "date": "2026-09-19",
+    "kickoff": "2026-09-19T13:30Z",
+    "league": "Bundesliga",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "1-1",
+     "opp": "Werder Bremen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-4",
+     "opp": "VfB Stuttgart",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-2",
+     "opp": "TSG Hoffenheim",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-1",
+     "opp": "Real Sociedad",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-5",
+     "opp": "Bayern Munich",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-3",
+     "opp": "1. FC Heidenheim 1846",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "1. FC Union Berlin",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "Bayer Leverkusen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-1",
+     "opp": "St. Pauli",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "Werder Bremen",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Eintracht Frankfurt",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "next_ko": "2026-09-19T13:30Z"
+  },
+  {
    "team": "FC Groningen",
    "league": "Eredivisie",
    "played": 14,
@@ -29733,16 +30415,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.0763888888888889
+     "rate": 0.07719298245614035
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13541666666666666
+     "rate": 0.1368421052631579
     }
    ],
-   "best_rate": 0.0763888888888889,
+   "best_rate": 0.07719298245614035,
    "longest": 11,
    "next": {
     "opp": "PEC Zwolle",
@@ -29862,16 +30544,16 @@
   {
    "team": "Girona",
    "league": "La Liga",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.0763888888888889
+     "rate": 0.07719298245614035
     }
    ],
-   "best_rate": 0.0763888888888889,
+   "best_rate": 0.07719298245614035,
    "longest": 11,
    "next": null,
    "recent": [
@@ -29970,14 +30652,6 @@
      "hit": false,
      "comp": true,
      "lg": "La Liga"
-    },
-    {
-     "s": "0-1",
-     "opp": "Osasuna",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "La Liga"
     }
    ],
    "next_ko": ""
@@ -29985,16 +30659,16 @@
   {
    "team": "Sparta Rotterdam",
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.0763888888888889
+     "rate": 0.07719298245614035
     }
    ],
-   "best_rate": 0.0763888888888889,
+   "best_rate": 0.07719298245614035,
    "longest": 11,
    "next": {
     "opp": "Heerenveen",
@@ -30099,14 +30773,6 @@
      "hit": false,
      "comp": true,
      "lg": "Eredivisie"
-    },
-    {
-     "s": "2-0",
-     "opp": "FC Volendam",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Eredivisie"
     }
    ],
    "next_ko": "2026-09-19T16:45Z"
@@ -30120,10 +30786,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 11,
-     "rate": 0.0763888888888889
+     "rate": 0.07719298245614035
     }
    ],
-   "best_rate": 0.0763888888888889,
+   "best_rate": 0.07719298245614035,
    "longest": 11,
    "next": {
     "opp": "Borussia Dortmund",
@@ -30243,16 +30909,16 @@
   {
    "team": "AJ Auxerre",
    "league": "Ligue 1",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09375
+     "rate": 0.0912280701754386
     }
    ],
-   "best_rate": 0.09375,
+   "best_rate": 0.0912280701754386,
    "longest": 11,
    "next": {
     "opp": "Brest",
@@ -30370,113 +31036,6 @@
    "next_ko": "2026-09-20T13:00Z"
   },
   {
-   "team": "Omonia Nicosia",
-   "league": "Europa League",
-   "played": 11,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 11,
-     "rate": 0.09375
-    }
-   ],
-   "best_rate": 0.09375,
-   "longest": 11,
-   "next": null,
-   "recent": [
-    {
-     "s": "1-0",
-     "opp": "Celta Vigo",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Europa League"
-    },
-    {
-     "s": "5-2",
-     "opp": "Apollon Limassol",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "3-0",
-     "opp": "Apoel Nicosia",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "1-1",
-     "opp": "AEK Larnaca",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "2-0",
-     "opp": "Pafos",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "3-0",
-     "opp": "Aris Limassol",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "3-2",
-     "opp": "Apollon Limassol",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "2-0",
-     "opp": "Apoel Nicosia",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "2-0",
-     "opp": "AEK Larnaca",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "2-0",
-     "opp": "Pafos",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    },
-    {
-     "s": "2-2",
-     "opp": "Aris Limassol",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Cypriot First Division"
-    }
-   ],
-   "next_ko": ""
-  },
-  {
    "team": "RB Salzburg",
    "league": "Europa League",
    "played": 16,
@@ -30485,10 +31044,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 11,
-     "rate": 0.09375
+     "rate": 0.0912280701754386
     }
    ],
-   "best_rate": 0.09375,
+   "best_rate": 0.0912280701754386,
    "longest": 11,
    "next": {
     "opp": "SK Sturm Graz",
@@ -30608,22 +31167,22 @@
   {
    "team": "Brentford",
    "league": "Premier League",
-   "played": 14,
+   "played": 13,
    "runs": [
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13541666666666666
+     "rate": 0.1368421052631579
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     }
    ],
-   "best_rate": 0.13541666666666666,
+   "best_rate": 0.1368421052631579,
    "longest": 11,
    "next": {
     "opp": "Chelsea",
@@ -30749,10 +31308,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 11,
-     "rate": 0.13541666666666666
+     "rate": 0.1368421052631579
     }
    ],
-   "best_rate": 0.13541666666666666,
+   "best_rate": 0.1368421052631579,
    "longest": 11,
    "next": {
     "opp": "Bayer Leverkusen",
@@ -30878,22 +31437,22 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.1076388888888889
+     "rate": 0.10877192982456141
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 10,
-     "rate": 0.14930555555555555
+     "rate": 0.15087719298245614
     },
     {
      "key": "scoring",
      "label": "scored 2+",
      "n": 8,
-     "rate": 0.010416666666666666
+     "rate": 0.010526315789473684
     }
    ],
-   "best_rate": 0.010416666666666666,
+   "best_rate": 0.010526315789473684,
    "longest": 10,
    "next": {
     "opp": "Sevilla",
@@ -31011,10 +31570,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 10,
-     "rate": 0.09722222222222222
+     "rate": 0.09824561403508772
     }
    ],
-   "best_rate": 0.09722222222222222,
+   "best_rate": 0.09824561403508772,
    "longest": 10,
    "next": {
     "opp": "Columbus Crew",
@@ -31132,10 +31691,10 @@
      "key": "porous",
      "label": "conceded in",
      "n": 10,
-     "rate": 0.09722222222222222
+     "rate": 0.09824561403508772
     }
    ],
-   "best_rate": 0.09722222222222222,
+   "best_rate": 0.09824561403508772,
    "longest": 10,
    "next": null,
    "recent": [
@@ -31225,16 +31784,16 @@
   {
    "team": "Juventus",
    "league": "Serie A",
-   "played": 20,
+   "played": 19,
    "runs": [
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.1076388888888889
+     "rate": 0.10877192982456141
     }
    ],
-   "best_rate": 0.1076388888888889,
+   "best_rate": 0.10877192982456141,
    "longest": 10,
    "next": {
     "opp": "Atalanta",
@@ -31344,24 +31903,123 @@
    "next_ko": "2026-09-20T16:00Z"
   },
   {
-   "team": "Viking FK",
-   "league": "Champions League",
-   "played": 20,
+   "team": "Omonia Nicosia",
+   "league": "Europa League",
+   "played": 10,
    "runs": [
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 10,
-     "rate": 0.1076388888888889
+     "rate": 0.10877192982456141
+    }
+   ],
+   "best_rate": 0.10877192982456141,
+   "longest": 10,
+   "next": null,
+   "recent": [
+    {
+     "s": "1-0",
+     "opp": "Celta Vigo",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Europa League"
+    },
+    {
+     "s": "5-2",
+     "opp": "Apollon Limassol",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "3-0",
+     "opp": "Apoel Nicosia",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "1-1",
+     "opp": "AEK Larnaca",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "2-0",
+     "opp": "Pafos",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "3-0",
+     "opp": "Aris Limassol",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "3-2",
+     "opp": "Apollon Limassol",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "2-0",
+     "opp": "Apoel Nicosia",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "2-0",
+     "opp": "AEK Larnaca",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    },
+    {
+     "s": "2-0",
+     "opp": "Pafos",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Cypriot First Division"
+    }
+   ],
+   "next_ko": ""
+  },
+  {
+   "team": "Viking FK",
+   "league": "Champions League",
+   "played": 19,
+   "runs": [
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 10,
+     "rate": 0.10877192982456141
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 10,
-     "rate": 0.14930555555555555
+     "rate": 0.15087719298245614
     }
    ],
-   "best_rate": 0.1076388888888889,
+   "best_rate": 0.10877192982456141,
    "longest": 10,
    "next": {
     "opp": "Lillestrom",
@@ -31479,10 +32137,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 10,
-     "rate": 0.14930555555555555
+     "rate": 0.15087719298245614
     }
    ],
-   "best_rate": 0.14930555555555555,
+   "best_rate": 0.15087719298245614,
    "longest": 10,
    "next": {
     "opp": "Orlando City SC",
@@ -31600,28 +32258,28 @@
      "key": "btts",
      "label": "both teams scored",
      "n": 9,
-     "rate": 0.017361111111111112
-    },
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 9,
-     "rate": 0.1284722222222222
+     "rate": 0.017543859649122806
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.1284722222222222
+     "rate": 0.12631578947368421
+    },
+    {
+     "key": "scoring1",
+     "label": "scored in",
+     "n": 9,
+     "rate": 0.12982456140350876
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18055555555555555
+     "rate": 0.17894736842105263
     }
    ],
-   "best_rate": 0.017361111111111112,
+   "best_rate": 0.017543859649122806,
    "longest": 9,
    "next": {
     "opp": "NEC Nijmegen",
@@ -31723,228 +32381,24 @@
    "next_ko": "2026-09-20T14:45Z"
   },
   {
-   "team": "Burnley",
-   "league": "Premier League",
-   "played": 9,
-   "runs": [
-    {
-     "key": "porous",
-     "label": "conceded in",
-     "n": 9,
-     "rate": 0.1284722222222222
-    }
-   ],
-   "best_rate": 0.1284722222222222,
-   "longest": 9,
-   "next": null,
-   "recent": [
-    {
-     "s": "1-2",
-     "opp": "Ajax Amsterdam",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-1",
-     "opp": "Wolverhampton Wanderers",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Arsenal",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "2-2",
-     "opp": "Aston Villa",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-3",
-     "opp": "Leeds United",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "0-1",
-     "opp": "Manchester City",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-4",
-     "opp": "Nottingham Forest",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "0-2",
-     "opp": "Brighton & Hove Albion",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-3",
-     "opp": "Fulham",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    }
-   ],
-   "next_ko": ""
-  },
-  {
-   "team": "Leeds United",
-   "league": "Premier League",
-   "played": 17,
-   "runs": [
-    {
-     "key": "scoring1",
-     "label": "scored in",
-     "n": 9,
-     "rate": 0.1284722222222222
-    }
-   ],
-   "best_rate": 0.1284722222222222,
-   "longest": 9,
-   "next": {
-    "opp": "Crystal Palace",
-    "date": "2026-09-20",
-    "kickoff": "2026-09-20T13:00Z",
-    "league": "Premier League",
-    "home": true
-   },
-   "recent": [
-    {
-     "s": "4-1",
-     "opp": "Newcastle United",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Brighton & Hove Albion",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-1",
-     "opp": "Brentford",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Nottingham Forest",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "4-0",
-     "opp": "FC Augsburg",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-0",
-     "opp": "RB Leipzig",
-     "h": true,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "4-2",
-     "opp": "Liverpool",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "1-0",
-     "opp": "Sunderland",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "2-3",
-     "opp": "Wrexham",
-     "h": false,
-     "hit": true,
-     "comp": false,
-     "lg": "Club Friendly"
-    },
-    {
-     "s": "0-3",
-     "opp": "West Ham United",
-     "h": false,
-     "hit": false,
-     "comp": true,
-     "lg": "Premier League"
-    },
-    {
-     "s": "1-0",
-     "opp": "Brighton & Hove Albion",
-     "h": true,
-     "hit": false,
-     "comp": true,
-     "lg": "Premier League"
-    }
-   ],
-   "next_ko": "2026-09-20T13:00Z"
-  },
-  {
    "team": "Torino",
    "league": "Serie A",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.1284722222222222
+     "rate": 0.12631578947368421
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18055555555555555
+     "rate": 0.17894736842105263
     }
    ],
-   "best_rate": 0.1284722222222222,
+   "best_rate": 0.12631578947368421,
    "longest": 9,
    "next": {
     "opp": "Bologna",
@@ -32048,22 +32502,22 @@
   {
    "team": "Toronto FC",
    "league": "MLS",
-   "played": 21,
+   "played": 20,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 9,
-     "rate": 0.1284722222222222
+     "rate": 0.12631578947368421
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 9,
-     "rate": 0.18055555555555555
+     "rate": 0.17894736842105263
     }
    ],
-   "best_rate": 0.1284722222222222,
+   "best_rate": 0.12631578947368421,
    "longest": 9,
    "next": {
     "opp": "St. Louis CITY SC",
@@ -32165,101 +32619,117 @@
    "next_ko": "2026-09-20T00:30Z"
   },
   {
-   "team": "1. FC Heidenheim 1846",
-   "league": "Bundesliga",
-   "played": 9,
+   "team": "Leeds United",
+   "league": "Premier League",
+   "played": 16,
    "runs": [
     {
-     "key": "over15",
-     "label": "over 1.5 goals",
+     "key": "scoring1",
+     "label": "scored in",
      "n": 9,
-     "rate": 0.18055555555555555
+     "rate": 0.12982456140350876
     }
    ],
-   "best_rate": 0.18055555555555555,
+   "best_rate": 0.12982456140350876,
    "longest": 9,
    "next": {
-    "opp": "VfB Stuttgart",
-    "date": "2026-09-25",
-    "kickoff": "2026-09-25T14:30Z",
-    "league": "Club Friendly",
-    "home": false
+    "opp": "Crystal Palace",
+    "date": "2026-09-20",
+    "kickoff": "2026-09-20T13:00Z",
+    "league": "Premier League",
+    "home": true
    },
    "recent": [
     {
-     "s": "2-4",
-     "opp": "Bayern Munich",
+     "s": "4-1",
+     "opp": "Newcastle United",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Brighton & Hove Albion",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-1",
+     "opp": "Brentford",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Nottingham Forest",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "4-0",
+     "opp": "FC Augsburg",
      "h": true,
      "hit": true,
      "comp": false,
      "lg": "Club Friendly"
     },
     {
-     "s": "0-2",
-     "opp": "Mainz",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-1",
-     "opp": "FC Cologne",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "3-3",
-     "opp": "Bayern Munich",
-     "h": false,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
      "s": "2-0",
-     "opp": "St. Pauli",
+     "opp": "RB Leipzig",
      "h": true,
      "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
+     "comp": false,
+     "lg": "Club Friendly"
     },
     {
-     "s": "1-2",
-     "opp": "SC Freiburg",
+     "s": "4-2",
+     "opp": "Liverpool",
      "h": false,
      "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
+     "comp": false,
+     "lg": "Club Friendly"
     },
     {
-     "s": "3-1",
-     "opp": "1. FC Union Berlin",
-     "h": true,
-     "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
-    },
-    {
-     "s": "2-2",
-     "opp": "Borussia M\u00f6nchengladbach",
+     "s": "1-0",
+     "opp": "Sunderland",
      "h": false,
      "hit": true,
-     "comp": true,
-     "lg": "Bundesliga"
+     "comp": false,
+     "lg": "Club Friendly"
     },
     {
-     "s": "3-3",
-     "opp": "Bayer Leverkusen",
-     "h": true,
+     "s": "2-3",
+     "opp": "Wrexham",
+     "h": false,
      "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-3",
+     "opp": "West Ham United",
+     "h": false,
+     "hit": false,
      "comp": true,
-     "lg": "Bundesliga"
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-0",
+     "opp": "Brighton & Hove Albion",
+     "h": true,
+     "hit": false,
+     "comp": true,
+     "lg": "Premier League"
     }
    ],
-   "next_ko": "2026-09-25T14:30Z"
+   "next_ko": "2026-09-20T13:00Z"
   },
   {
    "team": "Estrela",
@@ -32270,40 +32740,40 @@
      "key": "scoring",
      "label": "scored 2+",
      "n": 8,
-     "rate": 0.010416666666666666
+     "rate": 0.010526315789473684
     },
     {
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.020833333333333332
+     "rate": 0.021052631578947368
     },
     {
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.03125
+     "rate": 0.031578947368421054
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.1597222222222222
+     "rate": 0.16140350877192983
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.010416666666666666,
+   "best_rate": 0.010526315789473684,
    "longest": 8,
    "next": {
     "opp": "Acad\u00e9mico de Viseu",
@@ -32405,16 +32875,16 @@
      "key": "over25",
      "label": "over 2.5 goals",
      "n": 8,
-     "rate": 0.020833333333333332
+     "rate": 0.021052631578947368
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.020833333333333332,
+   "best_rate": 0.021052631578947368,
    "longest": 8,
    "next": {
     "opp": "SK Brann",
@@ -32516,28 +32986,28 @@
      "key": "btts",
      "label": "both teams scored",
      "n": 8,
-     "rate": 0.03125
+     "rate": 0.031578947368421054
     },
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.1597222222222222
+     "rate": 0.16140350877192983
     },
     {
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.03125,
+   "best_rate": 0.031578947368421054,
    "longest": 8,
    "next": {
     "opp": "LA Galaxy",
@@ -32631,18 +33101,101 @@
    "next_ko": "2026-09-20T00:30Z"
   },
   {
-   "team": "Sassuolo",
-   "league": "Serie A",
-   "played": 14,
+   "team": "Burnley",
+   "league": "Premier League",
+   "played": 8,
    "runs": [
     {
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.1597222222222222
+     "rate": 0.16140350877192983
     }
    ],
-   "best_rate": 0.1597222222222222,
+   "best_rate": 0.16140350877192983,
+   "longest": 8,
+   "next": null,
+   "recent": [
+    {
+     "s": "1-2",
+     "opp": "Ajax Amsterdam",
+     "h": false,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "1-1",
+     "opp": "Wolverhampton Wanderers",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "0-1",
+     "opp": "Arsenal",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "2-2",
+     "opp": "Aston Villa",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-3",
+     "opp": "Leeds United",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "0-1",
+     "opp": "Manchester City",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "1-4",
+     "opp": "Nottingham Forest",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    },
+    {
+     "s": "0-2",
+     "opp": "Brighton & Hove Albion",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Premier League"
+    }
+   ],
+   "next_ko": ""
+  },
+  {
+   "team": "Sassuolo",
+   "league": "Serie A",
+   "played": 13,
+   "runs": [
+    {
+     "key": "porous",
+     "label": "conceded in",
+     "n": 8,
+     "rate": 0.16140350877192983
+    }
+   ],
+   "best_rate": 0.16140350877192983,
    "longest": 8,
    "next": {
     "opp": "Monza",
@@ -32744,16 +33297,16 @@
      "key": "porous",
      "label": "conceded in",
      "n": 8,
-     "rate": 0.1597222222222222
+     "rate": 0.16140350877192983
     },
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.1597222222222222,
+   "best_rate": 0.16140350877192983,
    "longest": 8,
    "next": null,
    "recent": [
@@ -32833,10 +33386,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     }
    ],
-   "best_rate": 0.16319444444444445,
+   "best_rate": 0.1649122807017544,
    "longest": 8,
    "next": {
     "opp": "Volos NFC",
@@ -32938,10 +33491,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     }
    ],
-   "best_rate": 0.16319444444444445,
+   "best_rate": 0.1649122807017544,
    "longest": 8,
    "next": {
     "opp": "Juventus",
@@ -33043,10 +33596,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     }
    ],
-   "best_rate": 0.16319444444444445,
+   "best_rate": 0.1649122807017544,
    "longest": 8,
    "next": {
     "opp": "Trabzonspor",
@@ -33148,10 +33701,10 @@
      "key": "scoring1",
      "label": "scored in",
      "n": 8,
-     "rate": 0.16319444444444445
+     "rate": 0.1649122807017544
     }
    ],
-   "best_rate": 0.16319444444444445,
+   "best_rate": 0.1649122807017544,
    "longest": 8,
    "next": {
     "opp": "Asteras Tripoli",
@@ -33245,18 +33798,107 @@
    "next_ko": "2026-09-20T16:00Z"
   },
   {
-   "team": "Elche",
-   "league": "La Liga",
-   "played": 17,
+   "team": "1. FC Heidenheim 1846",
+   "league": "Bundesliga",
+   "played": 8,
    "runs": [
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.22916666666666666,
+   "best_rate": 0.23157894736842105,
+   "longest": 8,
+   "next": {
+    "opp": "VfB Stuttgart",
+    "date": "2026-09-25",
+    "kickoff": "2026-09-25T14:30Z",
+    "league": "Club Friendly",
+    "home": false
+   },
+   "recent": [
+    {
+     "s": "2-4",
+     "opp": "Bayern Munich",
+     "h": true,
+     "hit": true,
+     "comp": false,
+     "lg": "Club Friendly"
+    },
+    {
+     "s": "0-2",
+     "opp": "Mainz",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "FC Cologne",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-3",
+     "opp": "Bayern Munich",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-0",
+     "opp": "St. Pauli",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "1-2",
+     "opp": "SC Freiburg",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "3-1",
+     "opp": "1. FC Union Berlin",
+     "h": true,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    },
+    {
+     "s": "2-2",
+     "opp": "Borussia M\u00f6nchengladbach",
+     "h": false,
+     "hit": true,
+     "comp": true,
+     "lg": "Bundesliga"
+    }
+   ],
+   "next_ko": "2026-09-25T14:30Z"
+  },
+  {
+   "team": "Elche",
+   "league": "La Liga",
+   "played": 16,
+   "runs": [
+    {
+     "key": "over15",
+     "label": "over 1.5 goals",
+     "n": 8,
+     "rate": 0.23157894736842105
+    }
+   ],
+   "best_rate": 0.23157894736842105,
    "longest": 8,
    "next": {
     "opp": "Espanyol",
@@ -33358,10 +34000,10 @@
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.22916666666666666,
+   "best_rate": 0.23157894736842105,
    "longest": 8,
    "next": {
     "opp": "Napoli",
@@ -33457,16 +34099,16 @@
   {
    "team": "PEC Zwolle",
    "league": "Eredivisie",
-   "played": 13,
+   "played": 12,
    "runs": [
     {
      "key": "over15",
      "label": "over 1.5 goals",
      "n": 8,
-     "rate": 0.22916666666666666
+     "rate": 0.23157894736842105
     }
    ],
-   "best_rate": 0.22916666666666666,
+   "best_rate": 0.23157894736842105,
    "longest": 8,
    "next": {
     "opp": "FC Groningen",
