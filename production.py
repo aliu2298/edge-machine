@@ -72,11 +72,11 @@ def start_verified(q):
     on a match already under way. Polymarket US publishes the match start itself, which is
     where the tennis lane's times come from.
     """
-    if q.get("sport") == "tennis":
-        # Polymarket publishes the match start itself; a Kalshi tennis row only has one once
-        # the schedule has confirmed it.
+    if q.get("sport") in T.ROUTED_SPORTS:
+        # Polymarket US publishes the contest's own start; a Kalshi row has one only once
+        # something else has confirmed it (the tennis schedule, an ESPN fixture).
         return (q.get("venue") == "polymarket_us"
-                or q.get("start_source") == "tennisexplorer")
+                or q.get("start_source") in T.VERIFIED_STARTS)
     return q.get("start_source") == "espn"
 
 
@@ -102,7 +102,7 @@ def lead_from_quote(q, pair_key, built):
     # instead, so a follower buys the contract this bet was priced on rather than one found
     # by matching two player names across two sites.
     route = None
-    if q["sport"] == "tennis":
+    if q["sport"] in T.ROUTED_SPORTS:
         # Kalshi lists a market per player inside one event, so backing either player is a
         # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,
         # so the second player is the No side of it.
@@ -112,7 +112,7 @@ def lead_from_quote(q, pair_key, built):
     lead = {
         "id": f"{date}|{home}|{away}|{headline} · {label}",
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
-        "league": S.quote_league(q) or ("Tennis" if q["sport"] == "tennis" else None),
+        "league": S.quote_league(q) or (S.SPORTS.get(q["sport"]) if q["sport"] in T.ROUTED_SPORTS else None),
         "match": f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,

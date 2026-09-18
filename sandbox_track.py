@@ -144,6 +144,12 @@ PAIR_OVERRIDES = {
     #   over 1.5 — both teams' games went over 1.5 in 9+ of their last 10. It has been traded
     #   from the Leads lane since 2026-09-12; this is the same rule, judged in one place.
     "o15_form_l10|soccer_o15": dict(moved_on="2026-09-18", production_at=None),
+    # 2026-09-18, as asked. 19 settled on the US exchanges at +15.1% (+11.5% after fees) and,
+    # unusually, it BEATS THE CLOSE by 6.9c — its picks get dearer after it makes them, which
+    # is the opposite of the tennis band. Small and young: one day's span, z +0.82. NFL is
+    # listed with it and has yet to settle a bet.
+    "espn_fpi|mlb": dict(moved_on="2026-09-18", production_at=None),
+    "espn_fpi|nfl": dict(moved_on="2026-09-18", production_at=None),
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
     "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
 }
@@ -1081,6 +1087,13 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary")
 
 # The claim each soccer yes/no domain publishes to the Production feed, in the Leads board's
 # bet vocabulary.
+# Sports the feed publishes by ROUTE — the venue's own market id and outcome — because there
+# is no league table to find the contest in. Soccer is not here: its leads are found by league
+# and club name, which is what the Kalshi and Polymarket league maps are for.
+ROUTED_SPORTS = ("tennis", "mlb", "nfl")
+# start_source values that mean a real start time, not the venue's estimate.
+VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb")
+
 FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_team1": {"kind": "team_gte", "n": 1},
              "soccer_team2": {"kind": "team_gte", "n": 2}}
@@ -1101,17 +1114,17 @@ def placeable(q):
         return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
                 and (FEED_BETS[q["sport"]]["kind"] != "team_gte" or bool(q.get("team"))))
-    if q.get("sport") == "tennis":
-        # Polymarket US lists a match as ONE market with two outcomes, so the feed carries the
-        # market slug and which outcome to back: the first player is the Yes side, the second
-        # the No side of the same market. Kalshi lists a market per player, so either side is a
-        # plain Yes — but only once the schedule has confirmed when the match starts, since
-        # Kalshi itself publishes no start (S.apply_tennis_starts).
+    if q.get("sport") in ROUTED_SPORTS:
+        # A contest with no league table to look a fixture up in: the lead carries the market
+        # it was priced on and which outcome to back. Polymarket US lists a match as ONE
+        # market with two outcomes, so the second side is the No side of that same market;
+        # Kalshi lists a market per side, so either is a plain Yes — but only once something
+        # has confirmed when the contest starts, since Kalshi publishes no start of its own.
         if not (q.get("pick") in ("a", "b") and bool(q.get("market_id"))
                 and bool(q.get("side_a")) and bool(q.get("side_b"))):
             return False
         return (q.get("venue") == "polymarket_us"
-                or (q.get("venue") == "kalshi" and q.get("start_source") == "tennisexplorer"))
+                or (q.get("venue") == "kalshi" and q.get("start_source") in VERIFIED_STARTS))
     return False
 
 

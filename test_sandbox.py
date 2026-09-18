@@ -2726,6 +2726,30 @@ eq(_kl["route"], {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome"
    "Kalshi lists a market per player, so either side is a plain Yes")
 
 # ---------------------------------------------------------------------------
+print("\nMLB and NFL leads route like tennis")
+# ---------------------------------------------------------------------------
+_mq = dict(source="espn_fpi", id="espn_fpi:x", sport="mlb", bet=True, venue="polymarket_us",
+           market_id="aec-mlb-sea-col-2026-09-20", side_a="Seattle Mariners",
+           side_b="Colorado Rockies", pick="b", price=0.47, status="open",
+           start="2026-09-20T19:10:00+00:00", logged="2026-09-18T06:00:00+00:00")
+ok(T.placeable(_mq), "a Polymarket US baseball bet can be published")
+ok(T.placeable(dict(_mq, sport="nfl")), "…and an NFL one")
+ok(not T.placeable(dict(_mq, venue="kalshi", market_id="KXMLBGAME-26SEP20SEACOL")),
+   "a Kalshi baseball bet cannot: nothing has confirmed its start")
+ok(T.placeable(dict(_mq, venue="kalshi", market_id="KXMLBGAME-26SEP20SEACOL", start_source="espn")),
+   "…until an ESPN fixture does")
+_ml = PR.lead_from_quote(_mq, "espn_fpi|mlb", "2026-09-18T06:00:00+00:00")
+eq((_ml["league"], _ml["bet"]), ("MLB", {"kind": "match_result", "side": "away"}),
+   "it is published as a match result, labelled with its sport")
+eq(_ml["route"], {"venue": "polymarket_us", "market": "aec-mlb-sea-col-2026-09-20",
+                  "outcome": "Colorado Rockies", "outcome_side": "no"},
+   "carrying the market it was priced on, and which outcome to buy")
+ok("route" not in PR.lead_from_quote(dict(_mq, sport="soccer", venue="kalshi",
+                                          market_id="KXEPLGAME-26SEP20ARSCFC", pick="a",
+                                          start_source="espn"), "x|soccer", "y"),
+   "soccer still carries no route: those are found by league and club name")
+
+# ---------------------------------------------------------------------------
 print("\ndaily commodities: the far-tail rule")
 # ---------------------------------------------------------------------------
 def _cq(mid, a, b, tradeable=None):
