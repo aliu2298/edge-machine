@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-19T17:18:53+00:00",
+ "board_built_at": "2026-09-19T20:50:19+00:00",
  "leads": {
   "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
    "away": "Henrique Ortenblad Nogueira",
@@ -1330,6 +1330,29 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
+  "2026-09-19|AS Roma|Internazionale|Over 1.5 goals \u00b7 Over 1.5 form rule": {
+   "away": "Internazionale",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-15",
+   "headline": "Over 1.5 goals",
+   "home": "AS Roma",
+   "id": "2026-09-19|AS Roma|Internazionale|Over 1.5 goals \u00b7 Over 1.5 form rule",
+   "kickoff": "2026-09-19T16:00Z",
+   "lane": "production",
+   "league": "Serie A",
+   "match": "AS Roma v Internazionale",
+   "pair": "o15_form_l10|soccer_o15",
+   "price_at_log": 0.82,
+   "sandbox_quote": "o15_form_l10:KXSERIEATOTAL-26SEP19ROMINT-2",
+   "source": "o15_form_l10",
+   "sport": "soccer_o15",
+   "status": "hit"
+  },
   "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "Excelsior",
    "bet": {
@@ -1344,8 +1367,6 @@
    "id": "2026-09-19|Ajax Amsterdam|Excelsior|Over 1.5 goals \u00b7 Over 1.5 form rule",
    "kickoff": "2026-09-19T18:00Z",
    "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
    "league": "Eredivisie",
    "match": "Ajax Amsterdam v Excelsior",
    "pair": "o15_form_l10|soccer_o15",
@@ -1353,7 +1374,7 @@
    "sandbox_quote": "o15_form_l10:KXEREDIVISIETOTAL-26SEP19AJAEXC-2",
    "source": "o15_form_l10",
    "sport": "soccer_o15",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-09-19|Andreja Petrovic|Samir Banerjee|Samir Banerjee to win \u00b7 Tennis favourite-band rule": {
    "away": "Samir Banerjee",
@@ -1487,7 +1508,7 @@
    "kickoff": "2026-09-19T23:10Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Atlanta Braves v Houston Astros",
    "model_prob": 0.495,
@@ -1532,68 +1553,6 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "void"
-  },
-  "2026-09-19|Bucsa / Melichar-Martinez|Kobori M / Plipuech P|Bucsa / Melichar-Martinez to win \u00b7 Tennis favourite-band rule": {
-   "away": "Kobori M / Plipuech P",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-19",
-   "edge_at_log": null,
-   "first_seen": "2026-09-19",
-   "headline": "Bucsa / Melichar-Martinez to win",
-   "home": "Bucsa / Melichar-Martinez",
-   "id": "2026-09-19|Bucsa / Melichar-Martinez|Kobori M / Plipuech P|Bucsa / Melichar-Martinez to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-19T20:30Z",
-   "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
-   "league": "Tennis",
-   "match": "Bucsa / Melichar-Martinez v Kobori M / Plipuech P",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.81,
-   "route": {
-    "market": "aec-wtadb-bucsamelmar-koboriplipue-2026-09-19",
-    "outcome": "Bucsa / Melichar-Martinez",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-wtadb-bucsamelmar-koboriplipue-2026-09-19",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-19|Buse I / Huertas Del Pino Cordova A|Vallejo D / Vergara Del Puerto M A|Buse I / Huertas Del Pino Cordova A to win \u00b7 Tennis favourite-band rule": {
-   "away": "Vallejo D / Vergara Del Puerto M A",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-19",
-   "edge_at_log": null,
-   "first_seen": "2026-09-19",
-   "headline": "Buse I / Huertas Del Pino Cordova A to win",
-   "home": "Buse I / Huertas Del Pino Cordova A",
-   "id": "2026-09-19|Buse I / Huertas Del Pino Cordova A|Vallejo D / Vergara Del Puerto M A|Buse I / Huertas Del Pino Cordova A to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-19T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
-   "league": "Tennis",
-   "match": "Buse I / Huertas Del Pino Cordova A v Vallejo D / Vergara Del Puerto M A",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.88,
-   "route": {
-    "market": "aec-atpdb-busehuecor-vallejverpue-2026-09-19",
-    "outcome": "Buse I / Huertas Del Pino Cordova A",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-atpdb-busehuecor-vallejverpue-2026-09-19",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-09-19|Cham, Elijah|Ishikawa, Haruto|Cham, Elijah to win \u00b7 Tennis favourite-band rule": {
    "away": "Ishikawa, Haruto",
@@ -1668,7 +1627,7 @@
    "kickoff": "2026-09-19T22:40Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Chicago Cubs v Cincinnati Reds",
    "model_prob": 0.608,
@@ -1714,6 +1673,35 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-09-19|Cristian Garin|Rafael Jodar|Rafael Jodar to win \u00b7 Tennis favourite-band rule": {
+   "away": "Rafael Jodar",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Rafael Jodar to win",
+   "home": "Cristian Garin",
+   "id": "2026-09-19|Cristian Garin|Rafael Jodar|Rafael Jodar to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T17:10Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Cristian Garin v Rafael Jodar",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.77,
+   "route": {
+    "market": "aec-atp-crigar-rafjod-2026-09-19",
+    "outcome": "Rafael Jodar",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atp-crigar-rafjod-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-09-19|Detroit Tigers|Chicago White Sox|Detroit Tigers to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Chicago White Sox",
    "bet": {
@@ -1729,7 +1717,7 @@
    "kickoff": "2026-09-19T23:10Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Detroit Tigers v Chicago White Sox",
    "model_prob": 0.523,
@@ -1745,6 +1733,35 @@
    "source": "espn_fpi",
    "sport": "mlb",
    "status": "pending"
+  },
+  "2026-09-19|Eero Vasa|Lucas Catarina|Eero Vasa to win \u00b7 Tennis favourite-band rule": {
+   "away": "Lucas Catarina",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Eero Vasa to win",
+   "home": "Eero Vasa",
+   "id": "2026-09-19|Eero Vasa|Lucas Catarina|Eero Vasa to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T13:40Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Eero Vasa v Lucas Catarina",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.82,
+   "route": {
+    "market": "aec-atp-eervas-luccat-2026-09-19",
+    "outcome": "Eero Vasa",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atp-eervas-luccat-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "void"
   },
   "2026-09-19|Eintracht Frankfurt|SC Freiburg|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "SC Freiburg",
@@ -1797,37 +1814,6 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-09-19|Felix Auger-Aliassime|Arthur Rinderknech|Felix Auger-Aliassime to win \u00b7 Tennis favourite-band rule": {
-   "away": "Arthur Rinderknech",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-19",
-   "edge_at_log": null,
-   "first_seen": "2026-09-19",
-   "headline": "Felix Auger-Aliassime to win",
-   "home": "Felix Auger-Aliassime",
-   "id": "2026-09-19|Felix Auger-Aliassime|Arthur Rinderknech|Felix Auger-Aliassime to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-19T19:10Z",
-   "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
-   "league": "Tennis",
-   "match": "Felix Auger-Aliassime v Arthur Rinderknech",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.75,
-   "route": {
-    "market": "aec-atp-felaug-artrin-2026-09-19",
-    "outcome": "Felix Auger-Aliassime",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-atp-felaug-artrin-2026-09-19",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-09-19|Francisco Cerundolo|Yanki Erel|Francisco Cerundolo to win \u00b7 Tennis favourite-band rule": {
    "away": "Yanki Erel",
@@ -1977,8 +1963,6 @@
    "id": "2026-09-19|Joao Fonseca|Stan Wawrinka|Joao Fonseca to win \u00b7 Tennis favourite-band rule",
    "kickoff": "2026-09-19T18:10Z",
    "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
    "league": "Tennis",
    "match": "Joao Fonseca v Stan Wawrinka",
    "pair": "tennis_fav_band|tennis",
@@ -1992,7 +1976,7 @@
    "sandbox_quote": "tennis_fav_band:aec-atp-joafon-stawaw-2026-09-19",
    "source": "tennis_fav_band",
    "sport": "tennis",
-   "status": "pending"
+   "status": "void"
   },
   "2026-09-19|Kansas City Royals|Pittsburgh Pirates|Pittsburgh Pirates to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Pittsburgh Pirates",
@@ -2009,7 +1993,7 @@
    "kickoff": "2026-09-19T22:40Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Kansas City Royals v Pittsburgh Pirates",
    "model_prob": 0.618,
@@ -2025,6 +2009,35 @@
    "source": "espn_fpi",
    "sport": "mlb",
    "status": "pending"
+  },
+  "2026-09-19|Kubka - Siskova|Bains - Yamalapalli|Kubka - Siskova to win \u00b7 Tennis favourite-band rule": {
+   "away": "Bains - Yamalapalli",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Kubka - Siskova to win",
+   "home": "Kubka - Siskova",
+   "id": "2026-09-19|Kubka - Siskova|Bains - Yamalapalli|Kubka - Siskova to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T16:00Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Kubka - Siskova v Bains - Yamalapalli",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.76,
+   "route": {
+    "market": "aec-itfwo-markubannsis-naibaisahyam-2026-09-19",
+    "outcome": "Kubka - Siskova",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-markubannsis-naibaisahyam-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "miss"
   },
   "2026-09-19|Lan Mi|Matilde Mariani|Lan Mi to win \u00b7 Tennis favourite-band rule": {
    "away": "Matilde Mariani",
@@ -2113,6 +2126,35 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-09-19|Luz / Matos|Paul J / Stricker D|Luz / Matos to win \u00b7 Tennis favourite-band rule": {
+   "away": "Paul J / Stricker D",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Luz / Matos to win",
+   "home": "Luz / Matos",
+   "id": "2026-09-19|Luz / Matos|Paul J / Stricker D|Luz / Matos to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T17:00Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Luz / Matos v Paul J / Stricker D",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.76,
+   "route": {
+    "market": "aec-atpdb-luzmat-paulstrick-2026-09-19",
+    "outcome": "Luz / Matos",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atpdb-luzmat-paulstrick-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-09-19|Lyon|Stade Rennais|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "Stade Rennais",
    "bet": {
@@ -2127,8 +2169,6 @@
    "id": "2026-09-19|Lyon|Stade Rennais|Over 1.5 goals \u00b7 Over 1.5 form rule",
    "kickoff": "2026-09-19T18:45Z",
    "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
    "league": "Ligue 1",
    "match": "Lyon v Stade Rennais",
    "pair": "o15_form_l10|soccer_o15",
@@ -2136,7 +2176,7 @@
    "sandbox_quote": "o15_form_l10:KXLIGUE1TOTAL-26SEP19OLREN-2",
    "source": "o15_form_l10",
    "sport": "soccer_o15",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-09-19|Mai Hontama|Eun-Hye Lee|Mai Hontama to win \u00b7 Tennis favourite-band rule": {
    "away": "Eun-Hye Lee",
@@ -2330,7 +2370,7 @@
    "kickoff": "2026-09-19T23:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "New England Revolution v Orlando City SC",
    "pair": "team1_form_l5|soccer_team1",
@@ -2355,7 +2395,7 @@
    "kickoff": "2026-09-19T23:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "New England Revolution v Orlando City SC",
    "pair": "o15_form_l10|soccer_o15",
@@ -2364,6 +2404,35 @@
    "source": "o15_form_l10",
    "sport": "soccer_o15",
    "status": "pending"
+  },
+  "2026-09-19|Nicolai Budkov Kjaer|Rigele Te|Nicolai Budkov Kjaer to win \u00b7 Tennis favourite-band rule": {
+   "away": "Rigele Te",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Nicolai Budkov Kjaer to win",
+   "home": "Nicolai Budkov Kjaer",
+   "id": "2026-09-19|Nicolai Budkov Kjaer|Rigele Te|Nicolai Budkov Kjaer to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T15:50Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Nicolai Budkov Kjaer v Rigele Te",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.87,
+   "route": {
+    "market": "aec-atp-nickja-rigte-2026-09-19",
+    "outcome": "Nicolai Budkov Kjaer",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atp-nickja-rigte-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "void"
   },
   "2026-09-19|Nika Radisic|Viktoria Morvayova|Viktoria Morvayova to win \u00b7 Tennis favourite-band rule": {
    "away": "Viktoria Morvayova",
@@ -2452,37 +2521,34 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-09-19|Philadelphia Phillies|New York Mets|New York Mets to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "New York Mets",
+  "2026-09-19|Paulo Andre Saraiva Dos Santos|Livas Eduardo De Carvalho Damazio|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
+   "away": "Livas Eduardo De Carvalho Damazio",
    "bet": {
     "kind": "match_result",
-    "side": "away"
+    "side": "home"
    },
    "date": "2026-09-19",
-   "edge_at_log": 0.199,
-   "first_seen": "2026-09-16",
-   "headline": "New York Mets to win",
-   "home": "Philadelphia Phillies",
-   "id": "2026-09-19|Philadelphia Phillies|New York Mets|New York Mets to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-19T20:10Z",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Paulo Andre Saraiva Dos Santos to win",
+   "home": "Paulo Andre Saraiva Dos Santos",
+   "id": "2026-09-19|Paulo Andre Saraiva Dos Santos|Livas Eduardo De Carvalho Damazio|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T16:30Z",
    "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
-   "league": "MLB",
-   "match": "Philadelphia Phillies v New York Mets",
-   "model_prob": 0.619,
-   "pair": "espn_fpi|mlb",
-   "price_at_log": 0.42,
+   "league": "Tennis",
+   "match": "Paulo Andre Saraiva Dos Santos v Livas Eduardo De Carvalho Damazio",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.89,
    "route": {
-    "market": "aec-mlb-phi-nym-2026-09-19",
-    "outcome": "New York Mets",
-    "outcome_side": "no",
+    "market": "aec-itfme-pausan-livdam-2026-09-19",
+    "outcome": "Paulo Andre Saraiva Dos Santos",
+    "outcome_side": "yes",
     "venue": "polymarket_us"
    },
-   "sandbox_quote": "espn_fpi:aec-mlb-phi-nym-2026-09-19",
-   "source": "espn_fpi",
-   "sport": "mlb",
-   "status": "pending"
+   "sandbox_quote": "tennis_fav_band:aec-itfme-pausan-livdam-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
   },
   "2026-09-19|San Francisco Giants|Los Angeles Dodgers|San Francisco Giants to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Los Angeles Dodgers",
@@ -2573,6 +2639,64 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-09-19|Tallon Griekspoor|Johan Alexander Rodriguez Rodriguez|Tallon Griekspoor to win \u00b7 Tennis favourite-band rule": {
+   "away": "Johan Alexander Rodriguez Rodriguez",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Tallon Griekspoor to win",
+   "home": "Tallon Griekspoor",
+   "id": "2026-09-19|Tallon Griekspoor|Johan Alexander Rodriguez Rodriguez|Tallon Griekspoor to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T16:00Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Tallon Griekspoor v Johan Alexander Rodriguez Rodriguez",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.87,
+   "route": {
+    "market": "aec-atp-talgri-jarr-2026-09-19",
+    "outcome": "Tallon Griekspoor",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atp-talgri-jarr-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "void"
+  },
+  "2026-09-19|Thiago Agustin Tirante|Mert Alkaya|Thiago Agustin Tirante to win \u00b7 Tennis favourite-band rule": {
+   "away": "Mert Alkaya",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Thiago Agustin Tirante to win",
+   "home": "Thiago Agustin Tirante",
+   "id": "2026-09-19|Thiago Agustin Tirante|Mert Alkaya|Thiago Agustin Tirante to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-19T16:10Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Thiago Agustin Tirante v Mert Alkaya",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.84,
+   "route": {
+    "market": "aec-atp-thitir-meralk-2026-09-19",
+    "outcome": "Thiago Agustin Tirante",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atp-thitir-meralk-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-09-19|Toby Samuel|Andres Andrade|Toby Samuel to win \u00b7 Tennis favourite-band rule": {
    "away": "Andres Andrade",
    "bet": {
@@ -2647,7 +2771,7 @@
    "kickoff": "2026-09-19T23:05Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Toronto Blue Jays v Texas Rangers",
    "model_prob": 0.533,
@@ -2664,6 +2788,53 @@
    "sport": "mlb",
    "status": "pending"
   },
+  "2026-09-19|VfB Stuttgart|Borussia Dortmund|Borussia Dortmund to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Borussia Dortmund",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Borussia Dortmund"
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-17",
+   "headline": "Borussia Dortmund to score 1+",
+   "home": "VfB Stuttgart",
+   "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Borussia Dortmund to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-19T16:30Z",
+   "lane": "production",
+   "league": "Bundesliga",
+   "match": "VfB Stuttgart v Borussia Dortmund",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.85,
+   "sandbox_quote": "team1_form_l5:KXBUNDESLIGATEAMTOTAL-26SEP19VFBBVB-BVB1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "hit"
+  },
+  "2026-09-19|VfB Stuttgart|Borussia Dortmund|Over 1.5 goals \u00b7 Over 1.5 form rule": {
+   "away": "Borussia Dortmund",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-09-19",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Over 1.5 goals",
+   "home": "VfB Stuttgart",
+   "id": "2026-09-19|VfB Stuttgart|Borussia Dortmund|Over 1.5 goals \u00b7 Over 1.5 form rule",
+   "kickoff": "2026-09-19T16:30Z",
+   "lane": "production",
+   "league": "Bundesliga",
+   "match": "VfB Stuttgart v Borussia Dortmund",
+   "pair": "o15_form_l10|soccer_o15",
+   "price_at_log": 0.89,
+   "sandbox_quote": "o15_form_l10:KXBUNDESLIGATOTAL-26SEP19VFBBVB-2",
+   "source": "o15_form_l10",
+   "sport": "soccer_o15",
+   "status": "miss"
+  },
   "2026-09-19|Washington Nationals|St. Louis Cardinals|Washington Nationals to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "St. Louis Cardinals",
    "bet": {
@@ -2679,7 +2850,7 @@
    "kickoff": "2026-09-19T23:15Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Washington Nationals v St. Louis Cardinals",
    "model_prob": 0.507,
@@ -2718,31 +2889,6 @@
    "source": "o15_form_l10",
    "sport": "soccer_o15",
    "status": "hit"
-  },
-  "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Fortuna Sittard",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-09-19",
-   "edge_at_log": null,
-   "first_seen": "2026-09-19",
-   "headline": "Over 1.5 goals",
-   "home": "Willem II",
-   "id": "2026-09-19|Willem II|Fortuna Sittard|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-09-19T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
-   "league": "Eredivisie",
-   "match": "Willem II v Fortuna Sittard",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.84,
-   "sandbox_quote": "o15_form_l10:KXEREDIVISIETOTAL-26SEP19WILFOR-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
   },
   "2026-09-19|de Jong J / Pel D|Barrientos N / Tobon M|de Jong J / Pel D to win \u00b7 Tennis favourite-band rule": {
    "away": "Barrientos N / Tobon M",
@@ -2788,7 +2934,7 @@
    "kickoff": "2026-09-20T13:00Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Premier League",
    "match": "AFC Bournemouth v Liverpool",
    "pair": "o15_form_l10|soccer_o15",
@@ -2814,7 +2960,7 @@
    "kickoff": "2026-09-20T13:00Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Ligue 1",
    "match": "AJ Auxerre v Brest",
    "pair": "team1_form_l5|soccer_team1",
@@ -2822,6 +2968,37 @@
    "sandbox_quote": "team1_form_l5:KXLIGUE1TEAMTOTAL-26SEP20AUXSTB-AUX1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-09-20|Alex de Minaur|Kamil Majchrzak|Alex de Minaur to win \u00b7 Tennis favourite-band rule": {
+   "away": "Kamil Majchrzak",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Alex de Minaur to win",
+   "home": "Alex de Minaur",
+   "id": "2026-09-20|Alex de Minaur|Kamil Majchrzak|Alex de Minaur to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T04:10Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "Alex de Minaur v Kamil Majchrzak",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "aec-atp-alemin-kammaj-2026-09-20",
+    "outcome": "Alex de Minaur",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-atp-alemin-kammaj-2026-09-20",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "pending"
   },
   "2026-09-20|Anton Shepp|Sho Shimabukuro|Sho Shimabukuro to win \u00b7 Tennis favourite-band rule": {
@@ -2839,7 +3016,7 @@
    "kickoff": "2026-09-20T01:10Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Tennis",
    "match": "Anton Shepp v Sho Shimabukuro",
    "pair": "tennis_fav_band|tennis",
@@ -2870,7 +3047,7 @@
    "kickoff": "2026-09-20T17:40Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Athletics v Cleveland Guardians",
    "model_prob": 0.677,
@@ -2902,7 +3079,7 @@
    "kickoff": "2026-09-20T13:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Bundesliga",
    "match": "Bayer Leverkusen v RB Leipzig",
    "pair": "o15_form_l10|soccer_o15",
@@ -2928,7 +3105,7 @@
    "kickoff": "2026-09-20T16:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "La Liga",
    "match": "Deportivo v Real Betis",
    "pair": "team1_form_l5|soccer_team1",
@@ -2953,7 +3130,7 @@
    "kickoff": "2026-09-20T17:00Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "NFL",
    "match": "Eagles v Titans",
    "model_prob": 0.297,
@@ -2986,7 +3163,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "FC Dallas v Austin FC",
    "pair": "team1_form_l5|soccer_team1",
@@ -3011,7 +3188,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "FC Dallas v Austin FC",
    "pair": "o15_form_l10|soccer_o15",
@@ -3036,7 +3213,7 @@
    "kickoff": "2026-09-20T10:15Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Eredivisie",
    "match": "Feyenoord Rotterdam v FC Utrecht",
    "pair": "o15_form_l10|soccer_o15",
@@ -3061,7 +3238,7 @@
    "kickoff": "2026-09-20T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Tennis",
    "match": "Ho R / Hsu Y H v Goransson A / Grevelius E",
    "pair": "tennis_fav_band|tennis",
@@ -3092,7 +3269,7 @@
    "kickoff": "2026-09-20T20:05Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "NFL",
    "match": "Jaguars v Broncos",
    "model_prob": 0.619,
@@ -3124,7 +3301,7 @@
    "kickoff": "2026-09-20T02:20Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Tennis",
    "match": "James Watt v Rei Sakamoto",
    "pair": "tennis_fav_band|tennis",
@@ -3136,6 +3313,99 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-atp-jamwat-reisak-2026-09-19",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-20|JiaQi Yang|Zijun Jiang|Zijun Jiang to win \u00b7 Tennis favourite-band rule": {
+   "away": "Zijun Jiang",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Zijun Jiang to win",
+   "home": "JiaQi Yang",
+   "id": "2026-09-20|JiaQi Yang|Zijun Jiang|Zijun Jiang to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "JiaQi Yang v Zijun Jiang",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.84,
+   "route": {
+    "market": "aec-itfwo-jiayan-zijjia-2026-09-20",
+    "outcome": "Zijun Jiang",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-jiayan-zijjia-2026-09-20",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-20|Joanna Garland|Viktoria Morvayova|Joanna Garland to win \u00b7 Tennis favourite-band rule": {
+   "away": "Viktoria Morvayova",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Joanna Garland to win",
+   "home": "Joanna Garland",
+   "id": "2026-09-20|Joanna Garland|Viktoria Morvayova|Joanna Garland to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T05:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "Joanna Garland v Viktoria Morvayova",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-wta-joagar-vikmor-2026-09-20",
+    "outcome": "Joanna Garland",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-wta-joagar-vikmor-2026-09-20",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-20|Lewie Lane|Erwin Troebinger|Lewie Lane to win \u00b7 Tennis favourite-band rule": {
+   "away": "Erwin Troebinger",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Lewie Lane to win",
+   "home": "Lewie Lane",
+   "id": "2026-09-20|Lewie Lane|Erwin Troebinger|Lewie Lane to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "Lewie Lane v Erwin Troebinger",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.84,
+   "route": {
+    "market": "aec-itfme-lewlan-erwtro-2026-09-20",
+    "outcome": "Lewie Lane",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-lewlan-erwtro-2026-09-20",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -3155,7 +3425,7 @@
    "kickoff": "2026-09-20T00:40Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Miami Marlins v San Diego Padres",
    "model_prob": 0.422,
@@ -3187,7 +3457,7 @@
    "kickoff": "2026-09-20T01:00Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Tennis",
    "match": "Mingxi Qu v YiHan Li",
    "pair": "tennis_fav_band|tennis",
@@ -3218,7 +3488,7 @@
    "kickoff": "2026-09-20T01:38Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Minnesota Twins v Los Angeles Angels",
    "model_prob": 0.539,
@@ -3251,7 +3521,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "Minnesota United FC v LA Galaxy",
    "pair": "team1_form_l5|soccer_team1",
@@ -3276,7 +3546,7 @@
    "kickoff": "2026-09-20T14:45Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "Eredivisie",
    "match": "NEC Nijmegen v Go Ahead Eagles",
    "pair": "o15_form_l10|soccer_o15",
@@ -3301,7 +3571,7 @@
    "kickoff": "2026-09-20T17:00Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "NFL",
    "match": "Panthers v Falcons",
    "model_prob": 0.616,
@@ -3316,6 +3586,37 @@
    "sandbox_quote": "espn_fpi:aec-nfl-car-atl-2026-09-20",
    "source": "espn_fpi",
    "sport": "nfl",
+   "status": "pending"
+  },
+  "2026-09-20|Paul Jubb|Charles Bertimon|Paul Jubb to win \u00b7 Tennis favourite-band rule": {
+   "away": "Charles Bertimon",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Paul Jubb to win",
+   "home": "Paul Jubb",
+   "id": "2026-09-20|Paul Jubb|Charles Bertimon|Paul Jubb to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T06:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "Paul Jubb v Charles Bertimon",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.89,
+   "route": {
+    "market": "aec-itfme-paujub-chaber-2026-09-20",
+    "outcome": "Paul Jubb",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-paujub-chaber-2026-09-20",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "pending"
   },
   "2026-09-20|Philadelphia Phillies|New York Mets|New York Mets to win \u00b7 ESPN FPI / Matchup Predictor": {
@@ -3333,7 +3634,7 @@
    "kickoff": "2026-09-20T17:10Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Philadelphia Phillies v New York Mets",
    "model_prob": 0.417,
@@ -3365,7 +3666,7 @@
    "kickoff": "2026-09-20T02:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "Portland Timbers v Atlanta United FC",
    "pair": "o15_form_l10|soccer_o15",
@@ -3373,6 +3674,37 @@
    "sandbox_quote": "o15_form_l10:KXMLSTOTAL-26SEP19PORATL-2",
    "source": "o15_form_l10",
    "sport": "soccer_o15",
+   "status": "pending"
+  },
+  "2026-09-20|Qige Yi|Agata Ulikhina|Qige Yi to win \u00b7 Tennis favourite-band rule": {
+   "away": "Agata Ulikhina",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Qige Yi to win",
+   "home": "Qige Yi",
+   "id": "2026-09-20|Qige Yi|Agata Ulikhina|Qige Yi to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "Qige Yi v Agata Ulikhina",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "aec-itfwo-qigyi-agauli-2026-09-20",
+    "outcome": "Qige Yi",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-qigyi-agauli-2026-09-20",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "pending"
   },
   "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Vancouver Whitecaps to score 1+ \u00b7 Team scores 1+ form rule": {
@@ -3391,7 +3723,7 @@
    "kickoff": "2026-09-20T01:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v Vancouver Whitecaps",
    "pair": "team1_form_l5|soccer_team1",
@@ -3416,7 +3748,7 @@
    "kickoff": "2026-09-20T01:10Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "San Francisco Giants v Los Angeles Dodgers",
    "model_prob": 0.656,
@@ -3448,7 +3780,7 @@
    "kickoff": "2026-09-20T20:25Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "NFL",
    "match": "Seahawks v Cardinals",
    "model_prob": 0.537,
@@ -3480,7 +3812,7 @@
    "kickoff": "2026-09-20T19:10Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Seattle Mariners v Colorado Rockies",
    "model_prob": 0.518,
@@ -3495,6 +3827,37 @@
    "sandbox_quote": "espn_fpi:aec-mlb-sea-col-2026-09-20",
    "source": "espn_fpi",
    "sport": "mlb",
+   "status": "pending"
+  },
+  "2026-09-20|Sitong Chen|Noelani Sara Teso|Sitong Chen to win \u00b7 Tennis favourite-band rule": {
+   "away": "Noelani Sara Teso",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-19",
+   "headline": "Sitong Chen to win",
+   "home": "Sitong Chen",
+   "id": "2026-09-20|Sitong Chen|Noelani Sara Teso|Sitong Chen to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "Tennis",
+   "match": "Sitong Chen v Noelani Sara Teso",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.78,
+   "route": {
+    "market": "aec-itfwo-sitche-noetes-2026-09-20",
+    "outcome": "Sitong Chen",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-sitche-noetes-2026-09-20",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
    "status": "pending"
   },
   "2026-09-20|Sporting Kansas City|Philadelphia Union|Over 1.5 goals \u00b7 Over 1.5 form rule": {
@@ -3512,7 +3875,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Philadelphia Union",
    "pair": "o15_form_l10|soccer_o15",
@@ -3538,7 +3901,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Philadelphia Union",
    "pair": "team1_form_l5|soccer_team1",
@@ -3563,7 +3926,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v Toronto FC",
    "pair": "o15_form_l10|soccer_o15",
@@ -3589,7 +3952,7 @@
    "kickoff": "2026-09-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v Toronto FC",
    "pair": "team1_form_l5|soccer_team1",
@@ -3614,7 +3977,7 @@
    "kickoff": "2026-09-20T18:15Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Washington Nationals v St. Louis Cardinals",
    "model_prob": 0.61,
@@ -3646,7 +4009,7 @@
    "kickoff": "2026-09-21T22:35Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Toronto Blue Jays v Baltimore Orioles",
    "model_prob": 0.587,
@@ -3659,6 +4022,70 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "espn_fpi:aec-mlb-tor-bal-2026-09-21",
+   "source": "espn_fpi",
+   "sport": "mlb",
+   "status": "pending"
+  },
+  "2026-09-22|Chicago White Sox|Kansas City Royals|Kansas City Royals to win \u00b7 ESPN FPI / Matchup Predictor": {
+   "away": "Kansas City Royals",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": 0.079,
+   "first_seen": "2026-09-19",
+   "headline": "Kansas City Royals to win",
+   "home": "Chicago White Sox",
+   "id": "2026-09-22|Chicago White Sox|Kansas City Royals|Kansas City Royals to win \u00b7 ESPN FPI / Matchup Predictor",
+   "kickoff": "2026-09-22T23:40Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "MLB",
+   "match": "Chicago White Sox v Kansas City Royals",
+   "model_prob": 0.529,
+   "pair": "espn_fpi|mlb",
+   "price_at_log": 0.45,
+   "route": {
+    "market": "aec-mlb-cws-kc-2026-09-22",
+    "outcome": "Kansas City Royals",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "espn_fpi:aec-mlb-cws-kc-2026-09-22",
+   "source": "espn_fpi",
+   "sport": "mlb",
+   "status": "pending"
+  },
+  "2026-09-22|Cincinnati Reds|Atlanta Braves|Atlanta Braves to win \u00b7 ESPN FPI / Matchup Predictor": {
+   "away": "Atlanta Braves",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": 0.057,
+   "first_seen": "2026-09-19",
+   "headline": "Atlanta Braves to win",
+   "home": "Cincinnati Reds",
+   "id": "2026-09-22|Cincinnati Reds|Atlanta Braves|Atlanta Braves to win \u00b7 ESPN FPI / Matchup Predictor",
+   "kickoff": "2026-09-22T23:15Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "MLB",
+   "match": "Cincinnati Reds v Atlanta Braves",
+   "model_prob": 0.672,
+   "pair": "espn_fpi|mlb",
+   "price_at_log": 0.615,
+   "route": {
+    "market": "aec-mlb-cin-atl-2026-09-22",
+    "outcome": "Atlanta Braves",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "espn_fpi:aec-mlb-cin-atl-2026-09-22",
    "source": "espn_fpi",
    "sport": "mlb",
    "status": "pending"
@@ -3678,7 +4105,7 @@
    "kickoff": "2026-09-22T22:45Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Cleveland Guardians v Boston Red Sox",
    "model_prob": 0.572,
@@ -3710,7 +4137,7 @@
    "kickoff": "2026-09-22T00:15Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "NFL",
    "match": "Giants v Rams",
    "model_prob": 0.341,
@@ -3725,6 +4152,38 @@
    "sandbox_quote": "espn_fpi:aec-nfl-nyg-lar-2026-09-21",
    "source": "espn_fpi",
    "sport": "nfl",
+   "status": "pending"
+  },
+  "2026-09-22|Miami Marlins|Chicago Cubs|Chicago Cubs to win \u00b7 ESPN FPI / Matchup Predictor": {
+   "away": "Chicago Cubs",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": 0.068,
+   "first_seen": "2026-09-19",
+   "headline": "Chicago Cubs to win",
+   "home": "Miami Marlins",
+   "id": "2026-09-22|Miami Marlins|Chicago Cubs|Chicago Cubs to win \u00b7 ESPN FPI / Matchup Predictor",
+   "kickoff": "2026-09-22T23:40Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "MLB",
+   "match": "Miami Marlins v Chicago Cubs",
+   "model_prob": 0.633,
+   "pair": "espn_fpi|mlb",
+   "price_at_log": 0.565,
+   "route": {
+    "market": "aec-mlb-mia-chc-2026-09-22",
+    "outcome": "Chicago Cubs",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "espn_fpi:aec-mlb-mia-chc-2026-09-22",
+   "source": "espn_fpi",
+   "sport": "mlb",
    "status": "pending"
   },
   "2026-09-22|Minnesota Twins|San Francisco Giants|Minnesota Twins to win \u00b7 ESPN FPI / Matchup Predictor": {
@@ -3742,7 +4201,7 @@
    "kickoff": "2026-09-22T01:45Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Minnesota Twins v San Francisco Giants",
    "model_prob": 0.521,
@@ -3774,7 +4233,7 @@
    "kickoff": "2026-09-22T22:40Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "St. Louis Cardinals v Pittsburgh Pirates",
    "model_prob": 0.565,
@@ -3806,7 +4265,7 @@
    "kickoff": "2026-09-22T23:05Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Tampa Bay Rays v New York Yankees",
    "model_prob": 0.605,
@@ -3838,7 +4297,7 @@
    "kickoff": "2026-09-22T22:35Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Toronto Blue Jays v Baltimore Orioles",
    "model_prob": 0.662,
@@ -3870,7 +4329,7 @@
    "kickoff": "2026-09-22T22:40Z",
    "lane": "production",
    "last_seen": "2026-09-19",
-   "last_seen_at": "2026-09-19T17:18:53+00:00",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
    "league": "MLB",
    "match": "Washington Nationals v Detroit Tigers",
    "model_prob": 0.443,
@@ -3883,6 +4342,38 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "espn_fpi:aec-mlb-wsh-det-2026-09-22",
+   "source": "espn_fpi",
+   "sport": "mlb",
+   "status": "pending"
+  },
+  "2026-09-23|New York Mets|Texas Rangers|New York Mets to win \u00b7 ESPN FPI / Matchup Predictor": {
+   "away": "Texas Rangers",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-23",
+   "edge_at_log": 0.041,
+   "first_seen": "2026-09-19",
+   "headline": "New York Mets to win",
+   "home": "New York Mets",
+   "id": "2026-09-23|New York Mets|Texas Rangers|New York Mets to win \u00b7 ESPN FPI / Matchup Predictor",
+   "kickoff": "2026-09-23T00:05Z",
+   "lane": "production",
+   "last_seen": "2026-09-19",
+   "last_seen_at": "2026-09-19T20:50:19+00:00",
+   "league": "MLB",
+   "match": "New York Mets v Texas Rangers",
+   "model_prob": 0.466,
+   "pair": "espn_fpi|mlb",
+   "price_at_log": 0.425,
+   "route": {
+    "market": "aec-mlb-nym-tex-2026-09-22",
+    "outcome": "New York Mets",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "espn_fpi:aec-mlb-nym-tex-2026-09-22",
    "source": "espn_fpi",
    "sport": "mlb",
    "status": "pending"
@@ -3917,10 +4408,10 @@
    "promoted_at": "2026-09-18T00:43:21+00:00",
    "ready_at": "2026-09-18T00:51:24+00:00",
    "route": "moved by hand on 2026-09-18",
-   "sandbox_clv": 0.0,
-   "sandbox_n": 1,
-   "sandbox_roi": 0.1628,
-   "sandbox_roi_fee": 0.1515
+   "sandbox_clv": 0.005,
+   "sandbox_n": 2,
+   "sandbox_roi": -0.4186,
+   "sandbox_roi_fee": -0.4242
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -3939,14 +4430,14 @@
    "promoted_at": "2026-09-17T21:42:13+00:00",
    "ready_at": "2026-09-17T21:49:17+00:00",
    "route": "moved by hand on 2026-09-17",
-   "sandbox_clv": -0.001,
-   "sandbox_n": 52,
-   "sandbox_roi": 0.036,
-   "sandbox_roi_fee": 0.0244
+   "sandbox_clv": -0.0007,
+   "sandbox_n": 58,
+   "sandbox_roi": 0.0138,
+   "sandbox_roi_fee": 0.0024
   }
  },
  "stage": "production",
- "unlisted_skipped": 22,
+ "unlisted_skipped": 23,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-19T17:18:53+00:00"
+ "updated_at": "2026-09-19T20:50:19+00:00"
 }
