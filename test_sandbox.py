@@ -2944,6 +2944,22 @@ ok(_ca["z"] < 2, "and two market-days can never read as a proven edge")
 eq(T.assess({"quotes": [dict(q, sport="tennis") for q in _cq]}, "cmd_tail", "tennis")["n"], 31,
    "other sports still count every bet")
 
+# A pair taken out of Production keeps the record it was removed on in view.
+_rq = [dict(id=f"sp{i}", source="soccerpredictions", sport="soccer", bet=True, venue="kalshi",
+            market_id=f"K{i}", pick="a", price=0.4, status="won" if i % 5 < 2 else "lost",
+            pnl=150.0 if i % 5 < 2 else -100.0, stake=100.0, result="a",
+            start=f"2026-09-{10 + i % 8:02d}T18:00:00+00:00", logged=f"2026-09-{10 + i % 8:02d}T10:00:00+00:00")
+       for i in range(40)]
+_rq.append(dict(_rq[0], id="sp-open", status="open", logged="2026-09-19T10:00:00+00:00",
+                start="2026-09-19T18:00:00+00:00"))
+_rst = {"pairs": {"soccerpredictions|soccer": {"stage": "sandbox", "since": "2026-09-18T21:30:00+00:00",
+                                                "demoted_at": "2026-09-18T21:30:00+00:00"}}}
+_rr = [r for r in SB.pair_list({"quotes": _rq}, _rst) if r["name"] == "soccerpredictions"][0]
+eq((_rr["v"], _rr["removed"]["a"]["n"], _rr["removed"]["at"]), ("removed", 40, "2026-09-18"),
+   "a removed pair shows as removed, with the 40 bets it was removed on, not as waiting")
+ok("Removed 2026-09-18 on 16 won" in SB._row(_rr), "and its row says what it was removed on")
+ok("Removed from Production:" in SB.insights([_rr]), "and the summary names it")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

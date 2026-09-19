@@ -1145,7 +1145,7 @@ def day_units(bets):
     return sorted(out, key=lambda q: q["start"])
 
 
-def assess(d, name, sport=None, since=None, venues=None):
+def assess(d, name, sport=None, since=None, venues=None, until=None):
     """Judge one source (optionally in one sport) against APPROVAL.
 
     `venues`: count only bets on these venues (QA passes TRADEABLE_VENUES).
@@ -1158,6 +1158,7 @@ def assess(d, name, sport=None, since=None, venues=None):
                    and q["status"] in ("won", "lost")
                    and (sport is None or q["sport"] == sport)
                    and (since is None or q["logged"] >= since)
+                   and (until is None or q["logged"] < until)
                    and (venues is None or (q.get("venue") or "polymarket") in venues)),
                   key=lambda q: q["start"])
     n_bets = len(bets)

@@ -513,6 +513,7 @@ VERDICTS = {                     # key -> (label, chip class, sort order)
     "early":     ("Too early", "n", 4),
     "noedge":    ("No edge", "x", 5),
     "waiting":   ("Waiting for results", "n", 6),
+    "removed":   ("Removed from Production", "x", 5),
 }
 EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
 
@@ -544,10 +545,20 @@ def pair_list(d, st):
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             if group is None:
                 continue
+            # A pair taken out of Production restarts its count, which on its own reads as a
+            # brand-new source ("Waiting for results") and hides the record it was removed on.
+            removed = None
+            if pair.get("demoted_at") and pair.get("stage") != "production":
+                removed = dict(at=str(pair["demoted_at"])[:10],
+                               a=T.assess(d, name, sport, until=pair["demoted_at"],
+                                          venues=T.TRADEABLE_VENUES))
+            v = verdict(a)
+            if removed and v in ("waiting", "early"):
+                v = "removed"
             out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
                             prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
-                            v=verdict(a)))
+                            removed=removed, v=v))
     return out
 
 
@@ -593,6 +604,13 @@ def insights(rows, now=None):
         li.append(f'<b>In <a href="./production.html">Production</a> ({len(prod)}):</b> ' + "; ".join(
             f'{esc(_who(r))} ({r["a"]["n"]} bets, {pct(r["a"]["roi_fee"], sign=True)})' if r["a"]["n"]
             else f'{esc(_who(r))} (no settled bets yet)' for r in prod) + ".")
+    gone = [r for r in rows if r.get("removed") and r["removed"]["a"]["n"]]
+    if gone:
+        li.append("<b>Removed from Production:</b> " + "; ".join(
+            f'{esc(_who(r))} on {esc(r["removed"]["at"])} — {r["removed"]["a"]["won"]} won v '
+            f'{r["removed"]["a"]["expected"]:.1f} priced over {r["removed"]["a"]["n"]} bets, '
+            f'{pct(r["removed"]["a"]["roi_fee"], sign=True)} after fees' for r in gone)
+            + ". Back in the Sandbox, counting again.")
     recent = []
     for m in S.SOURCES.values():
         items = ([(None, m["retired"])] if m.get("retired") else []) + list((m.get("retired_sports") or {}).items())
@@ -616,6 +634,15 @@ SPORT_HEAD = ('<tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Recor
 def _row(r):
     a, meta = r["a"], r["meta"]
     label, chip, _o = VERDICTS[r["v"]]
+    rm = r.get("removed")
+    if rm and rm["a"]["n"]:
+        ra = rm["a"]
+        more_rm = (f'<div class="sm mut">Removed {esc(rm["at"])} on {ra["won"]} won v {ra["expected"]:.1f} '
+                   f'priced over {ra["n"]} bets, {pct(ra["roi_fee"], sign=True)} after fees'
+                   f'{" — no edge" if (ra["roi_fee"] or 0) <= 0 or ra["z"] <= 0 else ""}. '
+                   f'Counting again from then.</div>')
+    else:
+        more_rm = ""
     more = (f'<div class="sm mut">{MIN_N - a["n"]} more {"market-days" if a.get("unit") == "market-day" else "settled"} to read</div>'
             if r["v"] in ("promising", "behind", "early") else "")
     sub = S.SPORTS.get(r["sport"], r["sport"])
@@ -632,7 +659,7 @@ def _row(r):
     return f"""<tr><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>
 <div class="sm mut">{esc(sub)} · {esc(meta['kind'])}</div></summary>
 <div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
-<td><span class="sig {chip}">{esc(label)}</span>{more}</td>
+<td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
 
