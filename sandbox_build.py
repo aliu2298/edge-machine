@@ -514,6 +514,7 @@ VERDICTS = {                     # key -> (label, chip class, sort order)
     "noedge":    ("No edge", "x", 5),
     "waiting":   ("Waiting for results", "n", 6),
     "removed":   ("Removed from Production", "x", 5),
+    "nobets":    ("No qualifying match yet", "n", 7),
 }
 EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
 
@@ -543,7 +544,9 @@ def pair_list(d, st):
             continue
         for sport in meta["sports"]:
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
-            if group is None:
+            # A cup or international twin is listed from the day it is wired, so it can be
+            # reviewed before its first qualifying match; other pairs appear once they bet.
+            if group is None and not _scope(sport):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Waiting for results") and hides the record it was removed on.
@@ -552,7 +555,7 @@ def pair_list(d, st):
                 removed = dict(at=str(pair["demoted_at"])[:10],
                                a=T.assess(d, name, sport, until=pair["demoted_at"],
                                           venues=T.TRADEABLE_VENUES))
-            v = verdict(a)
+            v = verdict(a) if group is not None else "nobets"
             if removed and v in ("waiting", "early"):
                 v = "removed"
             out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
