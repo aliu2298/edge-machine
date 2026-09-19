@@ -9189,6 +9189,8 @@
   "2026-09-18|New York City FC|Red Bull New York": {
    "away": "Red Bull New York",
    "date": "2026-09-18",
+   "final": "0-1",
+   "graded_at": "2026-09-19T01:59:34+00:00",
    "home": "New York City FC",
    "id": "2026-09-18|New York City FC|Red Bull New York",
    "kickoff": "2026-09-18T23:30Z",
@@ -9197,6 +9199,10 @@
    "model": {
     "over15": 0.8356,
     "over25": 0.6311
+   },
+   "pnl": {
+    "over15": -1.0,
+    "over25": -1.0
    },
    "priced_at": "2026-09-18T01:04:36+00:00",
    "prices": {
@@ -9221,7 +9227,11 @@
      "venue": "polymarket_us"
     }
    },
-   "status": "pending"
+   "result": {
+    "over15": false,
+    "over25": false
+   },
+   "status": "graded"
   },
   "2026-09-19|ADO Den Haag|SC Cambuur": {
    "away": "SC Cambuur",
@@ -11433,7 +11443,133 @@
     }
    },
    "status": "pending"
+  },
+  "2026-09-20|FC Dallas|Austin FC": {
+   "away": "Austin FC",
+   "date": "2026-09-20",
+   "home": "FC Dallas",
+   "id": "2026-09-20|FC Dallas|Austin FC",
+   "kickoff": "2026-09-20T00:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "over15": 0.8821,
+    "over25": 0.7115
+   },
+   "priced_at": "2026-09-19T01:59:34+00:00",
+   "prices": {
+    "over15": {
+     "ask": 0.84,
+     "bid": 0.79,
+     "event": "mls-dal-aus-2026-09-19",
+     "fair": 0.815,
+     "fee": 0.0081,
+     "market": "tsc-mls-dal-aus-2026-09-19-1pt5",
+     "price": 1.179,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.63,
+     "bid": 0.6,
+     "event": "mls-dal-aus-2026-09-19",
+     "fair": 0.615,
+     "fee": 0.014,
+     "market": "tsc-mls-dal-aus-2026-09-19-2pt5",
+     "price": 1.553,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-20|Minnesota United FC|LA Galaxy": {
+   "away": "LA Galaxy",
+   "date": "2026-09-20",
+   "home": "Minnesota United FC",
+   "id": "2026-09-20|Minnesota United FC|LA Galaxy",
+   "kickoff": "2026-09-20T00:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "over15": 0.8287,
+    "over25": 0.6199
+   },
+   "priced_at": "2026-09-19T01:59:34+00:00",
+   "prices": {
+    "over15": {
+     "ask": 0.88,
+     "bid": 0.85,
+     "event": "mls-min-lag-2026-09-19",
+     "fair": 0.865,
+     "fee": 0.0063,
+     "market": "tsc-mls-min-lag-2026-09-19-1pt5",
+     "price": 1.128,
+     "venue": "polymarket_us"
+    },
+    "over25": {
+     "ask": 0.69,
+     "bid": 0.67,
+     "event": "mls-min-lag-2026-09-19",
+     "fair": 0.68,
+     "fee": 0.0128,
+     "market": "tsc-mls-min-lag-2026-09-19-2pt5",
+     "price": 1.423,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-20|Sporting Kansas City|Philadelphia Union": {
+   "away": "Philadelphia Union",
+   "date": "2026-09-20",
+   "home": "Sporting Kansas City",
+   "id": "2026-09-20|Sporting Kansas City|Philadelphia Union",
+   "kickoff": "2026-09-20T00:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "over25": 0.7346
+   },
+   "priced_at": "2026-09-19T01:59:34+00:00",
+   "prices": {
+    "over25": {
+     "ask": 0.69,
+     "bid": 0.64,
+     "event": "mls-skc-phi-2026-09-19",
+     "fair": 0.665,
+     "fee": 0.0128,
+     "market": "tsc-mls-skc-phi-2026-09-19-2pt5",
+     "price": 1.423,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
+  },
+  "2026-09-20|St. Louis CITY SC|Toronto FC": {
+   "away": "Toronto FC",
+   "date": "2026-09-20",
+   "home": "St. Louis CITY SC",
+   "id": "2026-09-20|St. Louis CITY SC|Toronto FC",
+   "kickoff": "2026-09-20T00:30Z",
+   "lead_source": true,
+   "league": "MLS",
+   "model": {
+    "over25": 0.7119
+   },
+   "priced_at": "2026-09-19T01:59:34+00:00",
+   "prices": {
+    "over25": {
+     "ask": 0.67,
+     "bid": 0.61,
+     "event": "mls-stl-tor-2026-09-19",
+     "fair": 0.64,
+     "fee": 0.0133,
+     "market": "tsc-mls-stl-tor-2026-09-19-2pt5",
+     "price": 1.464,
+     "venue": "polymarket_us"
+    }
+   },
+   "status": "pending"
   }
  },
- "updated_at": "2026-09-18T23:38:09+00:00"
+ "updated_at": "2026-09-19T01:59:37+00:00"
 }
