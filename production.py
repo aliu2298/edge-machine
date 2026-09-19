@@ -215,6 +215,9 @@ def _day_label(day, today):
     return day.strftime("%a %d %b")
 
 
+EARLY_N = 10      # under this many settled bets an ROI is shown grey and marked too early
+
+
 def page(d, st, blob, style, now=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -244,7 +247,9 @@ def page(d, st, blob, style, now=None):
     for key, pair in sorted(pairs.items(), key=lambda kv: (sport_of(kv[0]), name(kv[0]))):
         source, sport = key.split("|", 1)
         since = entered_at(pair)
-        whole = T.assess(d, source, sport, venues=T.TRADEABLE_VENUES)
+        # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
+        # never show two different records for one rule.
+        whole = T.assess(d, source, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
         live = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)
@@ -254,13 +259,13 @@ def page(d, st, blob, style, now=None):
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{live['n']}<div class="sm mut">{f"{live['won']} landed" if live['n'] else 'none yet'}</div></td>
-<td class="num"><span class="{tone(live['roi_fee'], live['n'])}">{pct(live['roi_fee'])}</span></td>
+<td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{f"{live['n']} settled" if live['n'] else 'none yet'}</div></td>
+<td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>
-<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Record it was moved on (US exchanges)</th>
-<th colspan="2" class="grp">Since moving</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
-<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Bets</th><th class="num">ROI</th></tr>
+<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
+<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
 {''.join(cards)}</table></div>""" if cards else
         '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
         'the Sandbox measured.</div>')
@@ -331,9 +336,10 @@ details.fold details.fold>summary{{margin:12px 0 6px;font-size:14px}}</style>
 </div>
 
 <details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}</span></summary>
-<p class="sm mut">Each pair's record on the US exchanges when it was moved, and what it has done since.
-CLV is the closing price minus the price at logging: positive means its leads got dearer after they were
-published.</p>
+<p class="sm mut">Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
+and its record since it entered Production. Under {EARLY_N} settled bets an ROI is grey: one win at 0.46 reads
++117%, and means nothing yet. CLV is the closing price minus the price at logging: positive means its leads got
+dearer after they were published.</p>
 {pairs_html}</details>
 
 <details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {len(upcoming)} leads over {len(by_day)} day{'s' if len(by_day) != 1 else ''}</span></summary>
