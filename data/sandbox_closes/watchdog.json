@@ -505,6 +505,21 @@
    "lead_min": 9.0,
    "price": 0.66
   },
+  "spot:KXSOLD-26SEP1917-T110.9999": {
+   "at": "2026-09-19T19:04:56+00:00",
+   "lead_min": 0.1,
+   "price": 0.6
+  },
+  "spot:KXSOLD-26SEP1917-T111.9999": {
+   "at": "2026-09-19T19:04:56+00:00",
+   "lead_min": 0.1,
+   "price": 0.16
+  },
+  "spot:KXSOLD-26SEP1917-T112.9999": {
+   "at": "2026-09-19T19:04:56+00:00",
+   "lead_min": 0.1,
+   "price": 0.04
+  },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP15MARBAS": {
    "at": "2026-09-15T19:17:38+00:00",
    "lead_min": 2.4,
@@ -554,6 +569,11 @@
    "at": "2026-09-19T13:30:19+00:00",
    "lead_min": 9.7,
    "price": 0.83
+  },
+  "tennis_fav_band:aec-atp-felaug-artrin-2026-09-19": {
+   "at": "2026-09-19T19:04:56+00:00",
+   "lead_min": 5.1,
+   "price": 0.75
   },
   "tennis_fav_band:aec-atpdb-luzmat-paulstrick-2026-09-19": {
    "at": "2026-09-19T16:50:18+00:00",
@@ -776,5 +796,5 @@
    "price": 0.61
   }
  },
- "updated": "2026-09-19T16:50:18+00:00"
+ "updated": "2026-09-19T19:04:56+00:00"
 }
