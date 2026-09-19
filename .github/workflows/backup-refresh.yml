@@ -142,43 +142,16 @@ jobs:
         with:
           python-version: "3.12"
 
-      # From here the steps mirror the primary. Kept warn-only in the same places: the
-      # backup exists to get a board out, so a failing guardrail must not stop the deploy.
-      - name: Logic tests
-        run: |
-          python3 test_streaks.py
-          python3 test_book.py
-
-      - name: Health check
-        run: python3 health.py
-
-      - name: Verify league coverage
-        run: python3 verify_coverage.py
-
-      - name: Rebuild streaks board and grade leads
-        run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
-
-      - name: Price every fixture inside 24h against the book
-        run: python3 book_track.py || echo "book tracking failed — continuing"
-
-      - name: Track on-fire runs
-        run: python3 fire_track.py || echo "fire tracking failed — continuing"
-
-      # Record page LAST: it reads both ledgers.
-      - name: Build the record page
-        run: python3 record_build.py || echo "record build failed — keeping previous page"
-
+      # From here the steps mirror the primary (stripped 2026-09-19 to the site root).
+      - name: Write the site root
+        run: python3 site_root.py
 
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html \
-                     public_site/leads.html public_site/streaks.html \
-                     data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
-                     data/fire_runs.json \
-                     data/book_ledger.json"
+          PUBLISHED="public_site/index.html"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -206,8 +179,7 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
-              && python3 record_build.py 
+            python3 site_root.py
           done
 
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"

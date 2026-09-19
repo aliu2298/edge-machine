@@ -556,16 +556,7 @@ document.querySelector('#tabs button.on')?.click();
 </div></body></html>"""
 
 
-def root_stub(now):
-    """The site root: forwards to the Sandbox, and carries the watchdog's freshness stamp."""
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine</title>
-<meta http-equiv="refresh" content="0; url=./sandbox.html">
-<style>body{{background:#0a0d14;color:#8b94a7;font:14px system-ui,sans-serif;padding:28px}}a{{color:#7aa2f7}}</style>
-</head><body><p>Edge Machine · updated {now} — <a href="./sandbox.html">Sandbox</a> ·
-<a href="./production.html">Production</a></p>
-<script>location.replace("./sandbox.html")</script></body></html>"""
+import site_root
 
 
 def build():
@@ -589,7 +580,7 @@ def build():
     # the boards pipeline deployed.
     root = os.path.join(OUT_DIR, "index.html")
     with open(root, "w") as f:
-        f.write(root_stub(now))
+        f.write(site_root.root_stub(now))
     print(f"wrote {root} (root -> sandbox.html) — "
           f"leads {ld['graded']}, fire {fr['graded']}, book {bk['graded']} graded")
 

@@ -1,7 +1,7 @@
 name: Refresh boards
 
 # Runs on GitHub's servers, so there is no dependency on the local Mac being awake.
-# Checks -> rebuilds the board -> publishes to GitHub Pages.
+# Since 2026-09-19: Sandbox closing prices + the site root, then publishes to GitHub Pages.
 
 on:
   schedule:
@@ -49,67 +49,28 @@ jobs:
 
       # stdlib only — no pip install step needed
 
-      # Correctness gate. Runs BEFORE any build so a regression in run detection,
-      # selection or grading fails loudly here rather than silently shipping a wrong
-      # board. Strict on purpose — unlike health.py these assert behaviour, not freshness.
-      - name: Logic tests
-        run: |
-          python3 test_streaks.py
-          python3 test_book.py
-
-      # Guardrails. The failure mode here is SILENT — a live pick that never matches a
-      # final score just sits on the board looking normal. Warn-only: a stale board beats
-      # a blocked deploy, so this annotates the run summary instead of failing it.
-      - name: Health check
-        run: python3 health.py
-
-      # Proves every league's squad is actually on the board. Teams went missing silently
-      # once — Liverpool, Lyon, Valencia and LA Galaxy were all dropped because they had
-      # no 3+ run — and nothing anywhere said so. Warn-only.
-      - name: Verify league coverage
-        run: python3 verify_coverage.py
-
-      # Streak leads off ESPN's keyless scoreboard. API-Football is NOT usable here —
-      # its free plan blocks the current season outright ("try from 2022 to 2024"), and a
-      # streak is a claim about current form. --force skips the 6h local cache so CI
-      # always pulls fresh. This step also logs newly published leads to
-      # data/streak_leads.json and grades any whose fixture has now been played, so the
-      # ledger accumulates on its own. Never fails the run: a stale board beats a red
-      # deploy — but note a failure also means no grading happened this cycle.
-      - name: Rebuild streaks board and grade leads
-        run: python3 streaks_build.py --force || echo "streaks build failed — keeping previous board"
-
-      # Prices every competitive fixture inside 24h of kickoff (whatever the form on
-      # either side) and grades it — the calibration ledger for the book. ~40 paced
-      # requests a day. Needs the fixture cache streaks_build just refreshed.
-      - name: Price every fixture inside 24h against the book
-        run: python3 book_track.py || echo "book tracking failed — continuing"
-
-      # Logs teams on a long run and grades whether the run actually continued.
-      - name: Track on-fire runs
-        run: python3 fire_track.py || echo "fire tracking failed — continuing"
-
-      # Record page LAST: it reads both ledgers, so it must follow every step that
-      # writes to one.
-      - name: Build the record page
-        run: python3 record_build.py || echo "record build failed — keeping previous page"
-
+      # Stripped to what the Sandbox and Production still need (2026-09-19). The streaks,
+      # book, on-fire and Record lanes are hidden and no longer rebuilt; their ledgers stay
+      # in the repo as they are. data/streak_leads.json is frozen: the bot reads it only to
+      # grade Leads-lane bets placed before 2026-09-18, and a position resolves on the
+      # exchange's own settlement regardless.
 
       # Sandbox closing prices, taken on every refresh as well as by the close job and the
       # hourly watchdog. Writes only data/sandbox_closes/boards.json.
       - name: Snapshot Sandbox closing prices
         run: python3 sandbox_close.py --writer boards || echo "close snapshot failed — continuing"
 
+      # The site root: forwards to the Sandbox and carries the "updated ... UTC" stamp the
+      # backup watchdog reads to know this job deployed.
+      - name: Write the site root
+        run: python3 site_root.py
+
       - name: Commit and push if changed
         run: |
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html \
-                     public_site/leads.html public_site/streaks.html \
-                     data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
-                     data/fire_runs.json \
-                     data/book_ledger.json data/sandbox_closes/boards.json"
+          PUBLISHED="public_site/index.html data/sandbox_closes/boards.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -137,9 +98,7 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
-              && python3 record_build.py \
-              && { python3 sandbox_close.py --writer boards || true; }
+            python3 site_root.py && { python3 sandbox_close.py --writer boards || true; }
           done
 
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"
