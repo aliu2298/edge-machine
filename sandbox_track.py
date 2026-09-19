@@ -385,6 +385,19 @@ def collect(verbose=True):
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
+        if sport == "soccer_corners":
+            cstats = {}
+            try:
+                rows = S.fetch_kalshi_corners(stats=cstats)
+            except Exception as e:
+                print(f"  ! kalshi/soccer_corners failed: {type(e).__name__}: {str(e)[:70]}")
+                rows = []
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["kalshi_venue"] = len(rows)
+            if verbose:
+                print(f"  {S.SPORTS[sport]:<13} kalshi corners: {cstats.get('listed', 0)} listed, "
+                      f"{len(rows)} matched to an ESPN fixture ({time.time() - t0:.0f}s)")
+            continue
         if sport in S.BTTS_SPORTS:
             bstats = {}
             try:
@@ -1278,7 +1291,8 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
-                n_bets=n_bets, unit=("market-day" if sport in S.DAY_CLUSTERED else "bet"),
+                n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
+                                     "market-day" if sport in S.DAY_CLUSTERED else "bet"),
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),

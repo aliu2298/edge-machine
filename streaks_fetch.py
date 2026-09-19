@@ -142,6 +142,15 @@ def parse_event(ev, league_slug, league_name, competitive=True, lead_source=True
     except (KeyError, IndexError, StopIteration):
         return None
 
+    def corners(c):
+        for st in c.get("statistics") or []:
+            if st.get("name") == "wonCorners":
+                try:
+                    return int(float(st.get("displayValue")))
+                except (TypeError, ValueError):
+                    return None
+        return None
+
     if status == "STATUS_FULL_TIME":
         try:
             hs, as_ = int(home["score"]), int(away["score"])
@@ -165,6 +174,9 @@ def parse_event(ev, league_slug, league_name, competitive=True, lead_source=True
         "away_id": away["team"].get("id"),
         "home_goals": hs,
         "away_goals": as_,
+        # Corners won (ESPN wonCorners), for the Sandbox's corners rule. None when not reported.
+        "home_corners": corners(home) if played else None,
+        "away_corners": corners(away) if played else None,
         "played": played,
         "competitive": competitive,
         # Whether this board may form an opinion ABOUT this fixture. Form feeds are real
@@ -238,19 +250,27 @@ def _trim(ev):
             "competitions": [{"status": {"type": {"name": ((comp.get("status") or {}).get("type") or {}).get("name")}},
                               "competitors": [{"homeAway": c.get("homeAway"), "score": c.get("score"),
                                                "team": {"displayName": (c.get("team") or {}).get("displayName"),
-                                                        "id": (c.get("team") or {}).get("id")}}
+                                                        "id": (c.get("team") or {}).get("id")},
+                                               "statistics": [x for x in c.get("statistics") or []
+                                                              if x.get("name") == "wonCorners"]}
                                               for c in comp.get("competitors") or []]}]}
+
+
+HISTORY_VERSION = 2     # 2: trimmed events keep wonCorners (the corners rule, 2026-09-19)
 
 
 def _load_history(slug):
     try:
         with open(os.path.join(HISTORY_DIR, f"{slug}.json")) as f:
-            return json.load(f)
+            blob = json.load(f)
     except (OSError, ValueError):
         return {}
+    # A cache written by an older trim lacks fields a newer parse needs: re-read it once.
+    return blob if blob.get("_v") == HISTORY_VERSION else {}
 
 
 def _save_history(slug, cache):
+    cache["_v"] = HISTORY_VERSION
     os.makedirs(HISTORY_DIR, exist_ok=True)
     with open(os.path.join(HISTORY_DIR, f"{slug}.json"), "w") as f:
         json.dump(cache, f, separators=(",", ":"), sort_keys=True)

@@ -18,6 +18,7 @@ point of the board is to tell those two apart.
 
 import difflib
 import json
+import math
 import concurrent.futures
 import functools
 import html
@@ -63,6 +64,10 @@ SPORTS = {
     "elections":    "Elections",
 }
 
+# Corners (2026-09-19): one domain for Kalshi's total-corner and team-corner ladders. No cup or
+# international twin — Kalshi lists corners only for league and Champions League matches.
+SPORTS["soccer_corners"] = "Soccer · Corners"
+
 GOALS_SPORTS_ALL = tuple(b + x for b in ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
                          for x in ("", "_cup", "_intl"))
 
@@ -70,8 +75,9 @@ GOALS_SPORTS_ALL = tuple(b + x for b in ("soccer_o15", "soccer_team1", "soccer_t
 # (see SCOPES). Labels read "Soccer · Over 1.5 · Cups" so the page files them under Soccer.
 SPORTS = dict(
     [(k, v) for k, v in SPORTS.items() if not k.startswith("soccer_")] [:1]
-    + [(k2, v2) for k, v in SPORTS.items() if k.startswith("soccer_")
+    + [(k2, v2) for k, v in SPORTS.items() if k.startswith("soccer_") and k != "soccer_corners"
        for k2, v2 in ((k, v), (k + "_cup", v + " · Cups"), (k + "_intl", v + " · Internationals"))]
+    + [("soccer_corners", SPORTS["soccer_corners"])]
     + [(k, v) for k, v in SPORTS.items() if not k.startswith("soccer_")][1:])
 
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
@@ -302,6 +308,25 @@ SOURCES = {
              "scored 2+ in at least 7 of its last 10 competitive games and its opponent "
              "conceded 2+ in at least 7 of theirs. Research: 76.2% on only 21 team-games "
              "against a 45.3% own earlier rate. Measured in the Sandbox; not in Production."),
+    "corners_market": dict(
+        label="Kalshi corners price (every match)", kind="Baseline", connected=True,
+        site="kalshi.com", sports=["soccer_corners"],
+        note="The market's own midpoint on every Kalshi total-corner and team-corner rung the Sandbox "
+             "lists. Never bets. The population the corners rule is judged against: backing No on "
+             "every listed rung over the same period."),
+    "corners_under": dict(
+        label="Corners under form rule (model beats the No ask by 5c)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_corners"], baseline="population",
+        note="Pre-registered 2026-09-19. Buy No on a Kalshi total-corner or team-corner rung (\"N+ "
+             "corners\") when the form model's chance of UNDER beats the No ask by 5c or more after "
+             "fees, within 4 hours of kickoff. Model: each side's corners = the average of its corners "
+             "won over its last 10 and its opponent's corners conceded over their last 10 (5+ games "
+             "each, ESPN results before kickoff), negative binomial (dispersion 1.28 match, 1.74 "
+             "team). Research, 105 Premier League / La Liga / Champions League matches Aug 15 - Sep "
+             "19 2026 at the last price before kickoff: backing Over lost at every line (-12.3% per "
+             "match); this rule +9.7% on 60 matches (t 0.78), +29.6% at a 10c edge (29 matches, "
+             "t 1.62). A lead, not proof. Judged PER MATCH: every rung it buys in one match is one "
+             "result."),
     "spot": dict(
         label="Spot price (no-change baseline)", kind="Baseline", connected=True,
         site="coingecko.com", sports=["crypto"],
@@ -2184,12 +2209,16 @@ def outcome_cluster(q):
 # all land together, and the 22 state gas-price series move with one national price, so a
 # day of gas bets is ONE result, not 222 (2026-09-19: the first gas day would otherwise have
 # read "220-2, proven edge" off a single quiet night).
-DAY_CLUSTERED = ("commodities",)
+DAY_CLUSTERED = ("commodities", "soccer_corners")
 
 
 def market_day(q):
     """'KXAAAGASD|20260919' — every state's gas series on one day share a key."""
     series = str(q.get("market_id") or "").split("-")[0]
+    if q.get("sport") == "soccer_corners":
+        # Every total- and team-corner rung of one match is one result (per MATCH, not per day).
+        code = (str(q.get("market_id") or "").split("-") + ["", ""])[1]
+        return f"CORNERS|{code}"
     fam = "KXAAAGASD" if series.startswith("KXAAAGASD") else series
     return f"{fam}|{str(q.get('date') or '').replace('-', '')}"
 
@@ -3152,6 +3181,139 @@ def fetch_goals_market(sport, universe=None):
     return [dict(market_id=r["market_id"], prob_a=r.get("mid_a", r["price_a"])) for r in rows]
 
 
+CORNER_FRAGS = {"EPL": "Premier League", "LALIGA": "La Liga", "SERIEA": "Serie A",
+                "BUNDESLIGA": "Bundesliga", "LIGUE1": "Ligue 1", "MLS": "MLS",
+                "UCL": "Champions League", "LIGAMX": "Liga MX"}
+CORNERS_LEAD_H = 4              # the research priced the last book before kickoff
+CORNERS_EDGE = 0.05             # pre-registered: model beats the No ask by 5c after fees
+CORNERS_MIN_GAMES = 5
+CORNERS_DISP = {"total": 1.28, "team": 1.74}     # variance / mean, ESPN 7,631 matches
+
+
+def fetch_kalshi_corners(horizon_days=4, fixtures=None, now=None, stats=None, events_by_series=None):
+    """Kalshi total-corner ("N+ corners") and team-corner ("Team: N+") rungs as yes/no rows, each
+    tied to its ESPN league fixture. Side a = Yes (N or more), side b = No."""
+    now = now or datetime.now(timezone.utc)
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    upcoming = [(ko, f) for ko, f in _upcoming_espn(fixtures, now, horizon_days)
+                if f.get("comp", "league") == "league"]
+    rows, listed = [], 0
+    for frag, league in CORNER_FRAGS.items():
+        for kind, series in (("total", f"KX{frag}CORNERS"), ("team", f"KX{frag}TCORNERS")):
+            for ev in _kalshi_open_events(series, events_by_series):
+                hit = _espn_fixture_for(ev, upcoming)
+                for m in ev.get("markets") or []:
+                    sub_ = str(m.get("yes_sub_title") or "")
+                    mm = re.search(r"(\d+)\+", sub_)
+                    if not mm or str(m.get("status", "")).lower() not in ("active", "open"):
+                        continue
+                    listed += 1
+                    if not hit:
+                        continue
+                    ko, f = hit
+                    n = int(mm.group(1))
+                    extra = dict(corner_kind=kind, corner_n=n)
+                    if kind == "team":
+                        who = sub_.split(":")[0]
+                        sh, sa = _score(who, f["home"], "soccer"), _score(who, f["away"], "soccer")
+                        if max(sh, sa) < 0.5 or sh == sa:
+                            continue
+                        team, opp = (f["home"], f["away"]) if sh > sa else (f["away"], f["home"])
+                        extra.update(team=team, opponent=opp)
+                        label = f"{f['home']} v {f['away']}: {team} {n}+ corners"
+                    else:
+                        label = f"{f['home']} v {f['away']}: {n}+ corners"
+                    row = _yes_no_row(m, "soccer_corners", label, ko, f, league, series, **extra)
+                    if row:
+                        rows.append(row)
+    rows.sort(key=lambda r: r["start"])
+    if stats is not None:
+        stats["listed"] = listed
+        stats["priced"] = sum(1 for r in rows if not r["untraded"])
+    return rows
+
+
+def corner_form(fixtures, team, before, window=10):
+    """(avg corners won, avg corners conceded, games) over `team`'s last `window` competitive games
+    with corners reported, strictly before `before`."""
+    games = []
+    for f in fixtures:
+        if (not f.get("played") or f.get("home_corners") is None or f.get("away_corners") is None
+                or not f.get("competitive", True) or team not in (f.get("home"), f.get("away"))
+                or not f.get("kickoff")):
+            continue
+        try:
+            ko = datetime.fromisoformat(str(f["kickoff"]).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if ko < before:
+            won, conc = ((f["home_corners"], f["away_corners"]) if f["home"] == team
+                         else (f["away_corners"], f["home_corners"]))
+            games.append((ko, won, conc))
+    games.sort()
+    last = games[-window:]
+    if not last:
+        return None, None, 0
+    return sum(g[1] for g in last) / len(last), sum(g[2] for g in last) / len(last), len(last)
+
+
+def nb_at_least(n, mean, disp):
+    """P(X >= n), negative binomial with this mean and variance = disp x mean (Poisson at disp 1)."""
+    if mean <= 0:
+        return 0.0 if n > 0 else 1.0
+    if disp <= 1.0001:
+        return 1 - sum(math.exp(-mean) * mean ** k / math.factorial(k) for k in range(n))
+    p = 1 / disp
+    r = mean * p / (1 - p)
+    pmf = lambda k: math.exp(math.lgamma(k + r) - math.lgamma(k + 1) - math.lgamma(r)
+                             + r * math.log(p) + k * math.log(1 - p))
+    return 1 - sum(pmf(k) for k in range(n))
+
+
+def corners_model(fixtures, r, ko):
+    """The form model's P(N+ corners) for one corners row, or None without enough history."""
+    def side(team, opp):
+        w, _c, n1 = corner_form(fixtures, team, ko)
+        _w, c, n2 = corner_form(fixtures, opp, ko)
+        if n1 < CORNERS_MIN_GAMES or n2 < CORNERS_MIN_GAMES:
+            return None
+        return (w + c) / 2
+    if r.get("corner_kind") == "team":
+        lam = side(r.get("team"), r.get("opponent"))
+    else:
+        lh, la = side(r.get("espn_home"), r.get("espn_away")), side(r.get("espn_away"), r.get("espn_home"))
+        lam = None if lh is None or la is None else lh + la
+    if lam is None:
+        return None
+    return nb_at_least(int(r["corner_n"]), lam, CORNERS_DISP[r.get("corner_kind", "total")])
+
+
+def fetch_corners_under(sport, universe=None, fixtures=None, now=None):
+    """Buy No where the model's P(under) beats the No ask by CORNERS_EDGE after the Kalshi fee."""
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    now = now or datetime.now(timezone.utc)
+    out = []
+    for r, ko in _rule_rows(sport, universe):
+        if not (now < ko <= now + timedelta(hours=CORNERS_LEAD_H)):
+            continue
+        if not (r.get("tradeable") or {}).get("b"):
+            continue
+        p = corners_model(fixtures, r, ko)
+        if p is None:
+            continue
+        no_ask = float(r["price_b"])
+        fee = 0.07 * no_ask * (1 - no_ask)
+        if (1 - p) - no_ask - fee >= CORNERS_EDGE:
+            out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
+def fetch_corners_market(sport, universe=None):
+    """The Kalshi midpoint on every listed corners rung — never a bet."""
+    rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
+    return [dict(market_id=r["market_id"], prob_a=r.get("mid_a", r["price_a"])) for r in rows]
+
+
 def fetch_o15_form_l10(sport, universe=None, fixtures=None):
     """Back over 1.5 where BOTH teams' games went over 1.5 in 9+ of their last 10."""
     fixtures = _espn_fixtures() if fixtures is None else fixtures
@@ -3874,6 +4036,8 @@ CHALLENGERS = {
     "btts_market": fetch_btts_market,
     "btts_form_l10": fetch_btts_form_l10,
     "goals_market": fetch_goals_market,
+    "corners_market": fetch_corners_market,
+    "corners_under": fetch_corners_under,
     "tennis_fav_band": fetch_tennis_fav_band,
     "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
     "tt_band_55_60": fetch_tt_band,

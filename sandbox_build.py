@@ -654,12 +654,12 @@ def _row(r):
                    f'Counting again from then.</div>')
     else:
         more_rm = ""
-    more = (f'<div class="sm mut">{MIN_N - a["n"]} more {"market-days" if a.get("unit") == "market-day" else "settled"} to read</div>'
+    more = (f'<div class="sm mut">{MIN_N - a["n"]} more {"market-days" if a.get("unit") == "market-day" else "matches" if a.get("unit") == "match" else "settled"} to read</div>'
             if r["v"] in ("promising", "behind", "early") else "")
     sub = S.SPORTS.get(r["sport"], r["sport"])
     thin = a["n"] < MIN_N
-    unit = (f'{a["n"]} market-day{"" if a["n"] == 1 else "s"} · {a["n_bets"]} bets'
-            if a.get("unit") == "market-day" else f'{a["n"]} settled')
+    unit = (f'{a["n"]} {a["unit"]}{"" if a["n"] == 1 else ("es" if a["unit"] == "match" else "s")} · {a["n_bets"]} bets'
+            if a.get("unit") in ("market-day", "match") else f'{a["n"]} settled')
     rec = (f'{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{unit}</div>' if a["n"] else "—")
     vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins</div>'
           if a["n"] else "—")

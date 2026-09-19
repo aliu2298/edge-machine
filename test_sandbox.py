@@ -2990,6 +2990,50 @@ _twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_fo
 eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")
 ok("CUPS PAIR" in SB._row(_twin) and "EFL Cup" in SB._row(_twin), "its row says what it covers and that it is separate")
 
+# ---- Corners under form rule (2026-09-19) ----
+_c0 = datetime(2026, 9, 20, 12, tzinfo=timezone.utc)
+def _cfx(home, away, hc, ac, day):
+    return dict(home=home, away=away, home_goals=1, away_goals=1, home_corners=hc, away_corners=ac,
+                played=True, competitive=True, kickoff=f"2026-09-{day:02d}T15:00Z", comp="league")
+_chist = []
+for _i in range(10):
+    _chist.append(_cfx("Quiet FC", f"Q{_i}", 2, 3, _i + 1))       # Quiet: wins 2, concedes 3
+    _chist.append(_cfx(f"C{_i}", "Calm FC", 2, 2, _i + 1))        # Calm: wins 2, concedes 2
+_cup = [dict(home="Quiet FC", away="Calm FC", kickoff="2026-09-20T14:00Z", played=False, comp="league",
+             home_goals=None, away_goals=None)]
+_cev = {"KXEPLCORNERS": [{"event_ticker": "KXEPLCORNERS-26SEP20QUICAL", "title": "Quiet FC vs Calm FC: Total Corners",
+                          "markets": [_gm("KXEPLCORNERS-26SEP20QUICAL-9", "9+ corners", 0.55, 0.53),
+                                      _gm("KXEPLCORNERS-26SEP20QUICAL-6", "6+ corners", 0.40, 0.38),
+                                      _gm("KXEPLCORNERS-26SEP20QUICAL-3", "3+ corners", 0.85, 0.84)]}],
+        "KXEPLTCORNERS": [{"event_ticker": "KXEPLTCORNERS-26SEP20QUICAL", "title": "Quiet FC vs Calm FC: Team Corners",
+                           "markets": [_gm("KXEPLTCORNERS-26SEP20QUICAL-QUI5", "Quiet FC: 5+", 0.45, 0.43)]}]}
+_crow = S.fetch_kalshi_corners(fixtures=_chist + _cup, now=_c0, events_by_series=_cev)
+eq(sorted((r["corner_kind"], r["corner_n"], r.get("team")) for r in _crow),
+   [("team", 5, "Quiet FC"), ("total", 3, None), ("total", 6, None), ("total", 9, None)],
+   "total rungs and a team rung are read, each tied to its ESPN fixture")
+_p9 = S.corners_model(_chist, [r for r in _crow if r["corner_n"] == 9][0], datetime(2026, 9, 20, 14, tzinfo=timezone.utc))
+ok(0.02 < _p9 < 0.25, f"a match expected to have ~4.5 corners rarely reaches 9 (model {_p9:.2f})")
+_cpicks = S.fetch_corners_under("soccer_corners", universe={"soccer_corners": _crow}, fixtures=_chist, now=_c0)
+eq(sorted(p["market_id"] for p in _cpicks),
+   ["KXEPLCORNERS-26SEP20QUICAL-6", "KXEPLCORNERS-26SEP20QUICAL-9", "KXEPLTCORNERS-26SEP20QUICAL-QUI5"],
+   "No is bought where the model's under beats the No ask by 5c after fees")
+ok("KXEPLCORNERS-26SEP20QUICAL-3" not in [p["market_id"] for p in _cpicks],
+   "and not on the 3+ rung, where the model's under (~0.2) beats the 0.16 No ask by less than 5c")
+eq(S.fetch_corners_under("soccer_corners", universe={"soccer_corners": _crow}, fixtures=_chist,
+                         now=_c0 - timedelta(hours=6)), [], "nothing is logged more than 4 hours before kickoff")
+ok(all(p["pick"] == "b" for p in _cpicks), "the rule only ever buys No")
+_cq = [dict(id=f"cq{_i}", source="corners_under", sport="soccer_corners", bet=True, venue="kalshi_binary",
+            market_id=_mid, pick="b", price=0.45, status="won", pnl=100 * (1 / 0.45 - 1), stake=100.0,
+            start="2026-09-20T14:00:00+00:00", logged="2026-09-20T11:00:00+00:00")
+       for _i, _mid in enumerate(["KXEPLCORNERS-26SEP20QUICAL-9", "KXEPLCORNERS-26SEP20QUICAL-10",
+                                  "KXEPLTCORNERS-26SEP20QUICAL-QUI5"])]
+_ca2 = T.assess({"quotes": _cq}, "corners_under", "soccer_corners")
+eq((_ca2["n"], _ca2["n_bets"], _ca2["unit"]), (1, 3, "match"), "three rungs of one match are one result")
+ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corners", meta=S.SOURCES["corners_under"],
+                                      a=_ca2, open=0, last="", prod=False, moved="", v="early")),
+   "and the page says so")
+ok("soccer_corners" not in [k.split("|")[1] for k in T.PAIR_OVERRIDES], "the corners rule is not in Production")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
