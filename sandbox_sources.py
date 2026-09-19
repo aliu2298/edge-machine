@@ -2169,6 +2169,20 @@ def outcome_cluster(q):
     return q.get("id") or ("row", id(q))          # no id: every quote is its own outcome
 
 
+# Sports judged per MARKET-DAY rather than per bet. A commodity ladder's "above $X" rungs
+# all land together, and the 22 state gas-price series move with one national price, so a
+# day of gas bets is ONE result, not 222 (2026-09-19: the first gas day would otherwise have
+# read "220-2, proven edge" off a single quiet night).
+DAY_CLUSTERED = ("commodities",)
+
+
+def market_day(q):
+    """'KXAAAGASD|20260919' — every state's gas series on one day share a key."""
+    series = str(q.get("market_id") or "").split("-")[0]
+    fam = "KXAAAGASD" if series.startswith("KXAAAGASD") else series
+    return f"{fam}|{str(q.get('date') or '').replace('-', '')}"
+
+
 # Kalshi daily coin series -> CoinGecko id.
 COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
          "KXLINKD": "chainlink", "KXXRP": "ripple", "KXXLM": "stellar",

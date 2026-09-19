@@ -616,11 +616,13 @@ SPORT_HEAD = ('<tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Recor
 def _row(r):
     a, meta = r["a"], r["meta"]
     label, chip, _o = VERDICTS[r["v"]]
-    more = (f'<div class="sm mut">{MIN_N - a["n"]} more settled to read</div>'
+    more = (f'<div class="sm mut">{MIN_N - a["n"]} more {"market-days" if a.get("unit") == "market-day" else "settled"} to read</div>'
             if r["v"] in ("promising", "behind", "early") else "")
     sub = S.SPORTS.get(r["sport"], r["sport"])
     thin = a["n"] < MIN_N
-    rec = (f'{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{a["n"]} settled</div>' if a["n"] else "—")
+    unit = (f'{a["n"]} market-day{"" if a["n"] == 1 else "s"} · {a["n_bets"]} bets'
+            if a.get("unit") == "market-day" else f'{a["n"]} settled')
+    rec = (f'{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{unit}</div>' if a["n"] else "—")
     vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins</div>'
           if a["n"] else "—")
     roi = (f'<span class="{"mut" if thin else cls(a["roi_fee"])}">{pct(a["roi_fee"], sign=True)}</span>'

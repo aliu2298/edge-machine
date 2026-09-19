@@ -2923,6 +2923,25 @@ ok("mlb_fade_streak" not in S.CHALLENGERS and S.SOURCES["mlb_fade_streak"].get("
 _ur = SB.unconnected_rows(None) if "SB" in dir() else __import__("sandbox_build").unconnected_rows(None)
 ok("Covers / OddsShark computer picks · MLB" in _ur, "a retired pair is listed with its reason")
 
+# Commodities are judged per MARKET-DAY: 22 states' gas rungs on one day are one result.
+_cq = []
+for _i, _st in enumerate(["", "CA", "TX"]):
+    for _r in range(10):
+        _lost = (_i, _r) == (1, 3)
+        _cq.append(dict(id=f"c{_i}{_r}", source="cmd_tail", sport="commodities", bet=True, venue="kalshi_binary",
+                        market_id=f"KXAAAGASD{_st}-26SEP19-4.{_r}", date="2026-09-19", price=0.98, pick="b",
+                        status="lost" if _lost else "won", pnl=-100.0 if _lost else 100 * (1 / 0.98 - 1),
+                        stake=100.0, start="2026-09-19T14:00:00+00:00", logged="2026-09-18T20:00:00+00:00"))
+_cq.append(dict(_cq[0], id="w1", market_id="KXWTI-26SEP1814-T99.99", date="2026-09-18",
+                start="2026-09-18T18:30:00+00:00"))
+_ca = T.assess({"quotes": _cq}, "cmd_tail", "commodities")
+eq((_ca["n"], _ca["n_bets"], _ca["unit"]), (2, 31, "market-day"),
+   "31 commodity bets over one gas day and one WTI day are 2 market-days")
+eq(S.market_day(_cq[0]) == S.market_day(_cq[15]), True, "every state's gas series on one day is one market-day")
+ok(abs(_ca["z"]) < 1, "so one quiet day cannot read as a proven edge")
+eq(T.assess({"quotes": [dict(q, sport="tennis") for q in _cq]}, "cmd_tail", "tennis")["n"], 31,
+   "other sports still count every bet")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

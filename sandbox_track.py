@@ -1128,6 +1128,23 @@ def placeable(q):
     return False
 
 
+def day_units(bets):
+    """Collapse bets into one flat bet per market-day (S.market_day): priced at the day's
+    average price, paying the day's average P/L, won when that is positive. The unit a
+    commodity rule is judged on — see S.DAY_CLUSTERED."""
+    days = {}
+    for q in bets:
+        days.setdefault(S.market_day(q), []).append(q)
+    out = []
+    for key, qs in days.items():
+        pnl = sum(q["pnl"] for q in qs) / len(qs)
+        out.append(dict(qs[0], id=key, market_id=key.replace("|", "_"),
+                        price=sum(q["price"] for q in qs) / len(qs), pnl=pnl, stake=STAKE,
+                        status="won" if pnl > 0 else "lost", rungs=len(qs),
+                        start=min(q["start"] for q in qs), logged=min(q["logged"] for q in qs)))
+    return sorted(out, key=lambda q: q["start"])
+
+
 def assess(d, name, sport=None, since=None, venues=None):
     """Judge one source (optionally in one sport) against APPROVAL.
 
@@ -1143,6 +1160,9 @@ def assess(d, name, sport=None, since=None, venues=None):
                    and (since is None or q["logged"] >= since)
                    and (venues is None or (q.get("venue") or "polymarket") in venues)),
                   key=lambda q: q["start"])
+    n_bets = len(bets)
+    if sport in S.DAY_CLUSTERED and bets:
+        bets = day_units(bets)
     n = len(bets)
     won = sum(1 for q in bets if q["status"] == "won")
     pnl = sum(q["pnl"] for q in bets)
@@ -1257,6 +1277,7 @@ def assess(d, name, sport=None, since=None, venues=None):
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
+                n_bets=n_bets, unit=("market-day" if sport in S.DAY_CLUSTERED else "bet"),
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
