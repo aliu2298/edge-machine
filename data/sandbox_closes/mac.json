@@ -595,6 +595,11 @@
    "lead_min": 10.2,
    "price": 0.35
   },
+  "polymarket:aec-atpdb-pavrik-harriskrajic-2026-09-19": {
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 39.6,
+   "price": 0.3
+  },
   "polymarket:aec-etpl-gcl-afm-2026-09-16": {
    "at": "2026-09-16T12:53:04+00:00",
    "lead_min": 21.9,
@@ -881,13 +886,13 @@
    "price": 0.31
   },
   "soccerpredictions:KXEFLCHAMPIONSHIPGAME-26SEP19STKSHU": {
-   "at": "2026-09-19T11:05:20+00:00",
-   "lead_min": 24.7,
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 9.6,
    "price": 0.42
   },
   "soccerpredictions:KXEFLL1GAME-26SEP19BURAMAT": {
-   "at": "2026-09-19T11:05:20+00:00",
-   "lead_min": 24.7,
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 9.6,
    "price": 0.29
   },
   "soccerpredictions:KXEGYPLGAME-26SEP16GOUPET": {
@@ -926,8 +931,8 @@
    "price": 0.36
   },
   "soccerpredictions:KXLALIGAGAME-26SEP19OSARVC": {
-   "at": "2026-09-19T11:05:20+00:00",
-   "lead_min": 54.7,
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 39.6,
    "price": 0.35
   },
   "soccerpredictions:KXLIGAPORTUGALGAME-26SEP14RAVESA": {
@@ -1300,10 +1305,20 @@
    "lead_min": 8.4,
    "price": 0.79
   },
+  "tennis_fav_band:aec-atp-tobsam-andand-2026-09-19": {
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 39.6,
+   "price": 0.81
+  },
   "tennis_fav_band:aec-atpcq-spejoh-eriaru-2026-09-14": {
    "at": "2026-09-14T18:08:26+00:00",
    "lead_min": 1.6,
    "price": 0.76
+  },
+  "tennis_fav_band:aec-atpdb-dejonpel-barrietobon-2026-09-19": {
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 39.6,
+   "price": 0.85
   },
   "tennis_fav_band:aec-itfme-aarfun-essqab-2026-09-16": {
    "at": "2026-09-16T08:07:29+00:00",
@@ -1941,8 +1956,8 @@
    "price": 0.76
   },
   "tennis_fav_band:aec-wta-lispig-jelvan-2026-09-19": {
-   "at": "2026-09-19T11:05:20+00:00",
-   "lead_min": 24.7,
+   "at": "2026-09-19T11:20:25+00:00",
+   "lead_min": 9.6,
    "price": 0.75
   },
   "tennis_fav_band:aec-wta-magfre-naohib-2026-09-14": {
@@ -2181,5 +2196,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-09-19T11:05:20+00:00"
+ "updated": "2026-09-19T11:20:25+00:00"
 }
