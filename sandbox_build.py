@@ -375,6 +375,48 @@ def settled_rows(d, limit=None):
     return "\n".join(out), len(done)
 
 
+def _folds(groups, head, cls_="grp-fold"):
+    """[(summary html, rows html)] -> one closed fold per group, each a full table."""
+    return "\n".join(f'<details class="{cls_}"><summary>{summ}</summary>'
+                     f'<div class="tbl"><table>{head}{rows}</table></div></details>'
+                     for summ, rows in groups)
+
+
+def open_folds(d):
+    """Running bets, one fold per sport, soonest first inside each."""
+    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]]
+    live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
+    by = {}
+    for q in live:
+        by.setdefault(q["sport"], []).append(q)
+    groups = []
+    for sport, qs in by.items():
+        rows, _n = open_rows(dict(d, quotes=qs))
+        rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
+        groups.append((f'<b>{esc(S.SPORTS[sport])}</b> <span class="mut">· {len(qs)} running · '
+                       f'next {esc(qs[0]["date"])}</span>', rows))
+    return _folds(groups, LIVE_HEAD), len(live)
+
+
+def settled_folds(d):
+    """Settled bets, one fold per day they settled, newest first."""
+    done = [q for q in d["quotes"] if q["status"] in ("won", "lost", "void") and q["bet"]]
+    done.sort(key=lambda q: q.get("settled") or "", reverse=True)
+    by = {}
+    for q in done:
+        by.setdefault((q.get("settled") or "")[:10], []).append(q)
+    groups = []
+    for day, qs in by.items():
+        rows, _n = settled_rows(dict(d, quotes=qs))
+        rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
+        won = sum(1 for q in qs if q["status"] == "won")
+        n = sum(1 for q in qs if q["status"] in ("won", "lost"))
+        pl = sum(q["pnl"] for q in qs)
+        groups.append((f'<b>{esc(day)}</b> <span class="mut">· {won}/{n} won · </span>'
+                       f'<span class="{cls(pl)}">{money(pl)}</span>', rows))
+    return _folds(groups, HIST_HEAD), len(done)
+
+
 LIVE_HEAD = ('<tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th>'
              '<th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>')
 HIST_HEAD = ('<tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th>'
@@ -610,7 +652,7 @@ def sport_sections(rows):
         if best and (best["a"]["roi_fee"] or 0) > 0:
             bits.append(f"best: {best['meta']['label'].split(' (')[0]} {pct(best['a']['roi_fee'], sign=True)}"
                         f" on {best['a']['n']}")
-        out.append(f"""<details class="sport"{' open' if n_prod else ''}><summary><b>{esc(f)}</b>
+        out.append(f"""<details class="sport"><summary><b>{esc(f)}</b>
 <span class="mut"> · {esc(' · '.join(bits))}</span></summary>
 <div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r) for r in rs)}</table></div></details>""")
     return "\n".join(out)
@@ -627,8 +669,8 @@ def build():
                  f"{ou.get('allowance', '?')} allowed paid calls last run, "
                  f"{ou['remaining']} credits left until they reset on the 1st."
                  if ou.get("remaining") is not None else "")
-    live_rows, n_live = open_rows(d)
-    hist_rows, n_hist = settled_rows(d)
+    live_html, n_live = open_folds(d)
+    hist_html, n_hist = settled_folds(d)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
@@ -695,6 +737,22 @@ details.sport>summary{{cursor:pointer;padding:12px 14px;font-size:14px;list-styl
 details.sport>summary::-webkit-details-marker{{display:none}}
 details.sport>summary::before{{content:"▸ ";color:var(--mut)}}
 details.sport[open]>summary::before{{content:"▾ "}}
+details.sec{{margin-top:26px}}
+details.sec>summary{{cursor:pointer;list-style:none}}details.sec>summary::-webkit-details-marker{{display:none}}
+details.sec>summary h2{{display:inline;margin:0}}
+details.sec>summary::before{{content:"▸ ";color:var(--mut);font-size:12px}}
+details.sec[open]>summary::before{{content:"▾ "}}
+details.sec[open]>summary{{margin-bottom:12px}}
+details.grp-fold{{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}}
+details.grp-fold>summary{{cursor:pointer;padding:10px 13px;font-size:13px;list-style:none}}
+details.grp-fold>summary::-webkit-details-marker{{display:none}}
+details.grp-fold>summary::before{{content:"▸ ";color:var(--mut)}}
+details.grp-fold[open]>summary::before{{content:"▾ "}}
+details.grp-fold .tbl{{border:none;border-top:1px solid var(--bd);border-radius:0 0 10px 10px;margin:0}}
+.folds-ctl{{display:flex;gap:6px;margin-bottom:10px}}
+.folds-ctl button{{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:4px 11px;cursor:pointer}}
+.folds-ctl button:hover{{color:var(--fg)}}
 details.sport .tbl{{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}}
 details.more{{margin:-4px 0 14px}}
 input.flt{{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
@@ -736,24 +794,28 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </div>
 {feed_health(d)}
 
-<h2>What the Sandbox says</h2>
-<div class="note">{insights(rows)}</div>
+<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
+<div class="note">{insights(rows)}</div></details>
 
-<h2>Every rule and tipster, by sport</h2>
+<details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
+<div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
 {sport_sections(rows)}
 <div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat ${int(T.STAKE)} a bet at the price
 available before the start. <b>Won v priced</b>: wins against the wins the prices implied — beating that is the
 whole test. <b>Verdict</b>: read only at {MIN_N}+ settled bets — <i>Proven edge</i> is ahead of the prices by
 z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under {MIN_N} a pair is only <i>Promising</i> or
 <i>Behind so far</i>, and under {EARLY_N} it is <i>Too early</i>. Production is entered by hand. Click a name for what it is.</div>
+</details>
 
-<h2>Running now ({n_live:,})</h2>
-{('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets.</div>'}
+<details class="sec"><summary><h2>Running now ({n_live:,})</h2></summary>
+{('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + live_html + '</div>') if n_live else '<div class="note">No open bets.</div>'}
+</details>
 
-<h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""})</h2>
-{('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
+<details class="sec"><summary><h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""})</h2></summary>
+{('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + hist_html + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
+</details>
 
-<h2>Reference</h2>
+<details class="sec"><summary><h2>Reference</h2></summary>
 <details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
@@ -774,8 +836,13 @@ ask. Until 2026-09-13 the venue was polymarket.com; those bets still settle ther
 Quotes logged before the book rule on boxing, cricket and table tennis were voided ({esc(T.PRE_GATE_NOTE)}).{odds_line}{close_line}
 A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 
+</details>
+
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
+document.querySelectorAll('.folds-ctl button').forEach(b => b.addEventListener('click', () => {{
+  document.querySelectorAll('details.' + b.dataset.fold).forEach(dt => dt.open = b.dataset.open === '1');
+}}));
 document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {{
   const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
   box.querySelectorAll('details').forEach(dt => {{ if (q) dt.open = true; }});
@@ -788,6 +855,8 @@ document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('inpu
       tr.hidden = !hit; any = any || hit;
     }});
     if (grp) grp.hidden = !any;
+    const fold = t.closest('details.grp-fold');
+    if (fold) fold.hidden = q && !t.querySelector('tr:not([hidden]) td');
   }});
 }}));
 </script>

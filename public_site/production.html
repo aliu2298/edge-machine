@@ -53,6 +53,22 @@ details.sport>summary{cursor:pointer;padding:12px 14px;font-size:14px;list-style
 details.sport>summary::-webkit-details-marker{display:none}
 details.sport>summary::before{content:"▸ ";color:var(--mut)}
 details.sport[open]>summary::before{content:"▾ "}
+details.sec{margin-top:26px}
+details.sec>summary{cursor:pointer;list-style:none}details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary h2{display:inline;margin:0}
+details.sec>summary::before{content:"▸ ";color:var(--mut);font-size:12px}
+details.sec[open]>summary::before{content:"▾ "}
+details.sec[open]>summary{margin-bottom:12px}
+details.grp-fold{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}
+details.grp-fold>summary{cursor:pointer;padding:10px 13px;font-size:13px;list-style:none}
+details.grp-fold>summary::-webkit-details-marker{display:none}
+details.grp-fold>summary::before{content:"▸ ";color:var(--mut)}
+details.grp-fold[open]>summary::before{content:"▾ "}
+details.grp-fold .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 10px 10px;margin:0}
+.folds-ctl{display:flex;gap:6px;margin-bottom:10px}
+.folds-ctl button{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:4px 11px;cursor:pointer}
+.folds-ctl button:hover{color:var(--fg)}
 details.sport .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}
 details.more{margin:-4px 0 14px}
 input.flt{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
@@ -92,14 +108,14 @@ details.fold details.fold>summary{margin:12px 0 6px;font-size:14px}</style>
 </head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-19 01:56 UTC</div>
+<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-19 02:10 UTC</div>
 <div class="nav"><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
 
 <div class="tiles">
 <div class="tile"><b>5</b><span>pairs in Production</span></div>
-<div class="tile"><b>53</b><span>leads still to come</span></div>
+<div class="tile"><b>52</b><span>leads still to come</span></div>
 <div class="tile"><b>37/40</b><span>recent leads landed</span></div>
-<div class="tile"><b style="font-size:17px">2026-09-19 02:00</b><span>next lead (UTC)</span></div>
+<div class="tile"><b style="font-size:17px">2026-09-19 02:15</b><span>next lead (UTC)</span></div>
 </div>
 
 <details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· 5</span></summary>
@@ -145,15 +161,13 @@ published.</p>
 <td class="num">-0.5¢<div class="sm mut">v the close</div></td>
 <td class="num">24<div class="sm mut">22 landed</div></td>
 <td class="num"><span class="pos">+9.6%</span></td>
-<td class="num"><b>9</b></td></tr></table></div></details>
+<td class="num"><b>8</b></td></tr></table></div></details>
 
-<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 53 leads over 4 days</span></summary>
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 52 leads over 4 days</span></summary>
 <details class="fold" open><summary>Today
-<span class="mut sm">· 26 leads</span></summary>
+<span class="mut sm">· 25 leads</span></summary>
 <div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr><tr><td class="mut">02:00</td><td>Tennis</td>
-<td>Nikolai Barsukov v Alibek Kachmazov</td><td><b>Alibek Kachmazov to win</b></td><td class="mut">Tennis favourite-band rule</td>
-<td class="num">0.78</td></tr><tr><td class="mut">02:15</td><td>MLB</td>
+<th class="num">Logged at</th></tr><tr><td class="mut">02:15</td><td>MLB</td>
 <td>San Francisco Giants v Los Angeles Dodgers</td><td><b>San Francisco Giants to win</b></td><td class="mut">ESPN FPI / Matchup Predictor</td>
 <td class="num">0.27</td></tr><tr><td class="mut">03:00</td><td>Tennis</td>
 <td>Anna-Lena Friedsam v Desirae Krawczyk</td><td><b>Anna-Lena Friedsam to win</b></td><td class="mut">Tennis favourite-band rule</td>

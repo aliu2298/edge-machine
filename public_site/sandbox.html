@@ -53,6 +53,22 @@ details.sport>summary{cursor:pointer;padding:12px 14px;font-size:14px;list-style
 details.sport>summary::-webkit-details-marker{display:none}
 details.sport>summary::before{content:"▸ ";color:var(--mut)}
 details.sport[open]>summary::before{content:"▾ "}
+details.sec{margin-top:26px}
+details.sec>summary{cursor:pointer;list-style:none}details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary h2{display:inline;margin:0}
+details.sec>summary::before{content:"▸ ";color:var(--mut);font-size:12px}
+details.sec[open]>summary::before{content:"▾ "}
+details.sec[open]>summary{margin-bottom:12px}
+details.grp-fold{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}
+details.grp-fold>summary{cursor:pointer;padding:10px 13px;font-size:13px;list-style:none}
+details.grp-fold>summary::-webkit-details-marker{display:none}
+details.grp-fold>summary::before{content:"▸ ";color:var(--mut)}
+details.grp-fold[open]>summary::before{content:"▾ "}
+details.grp-fold .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 10px 10px;margin:0}
+.folds-ctl{display:flex;gap:6px;margin-bottom:10px}
+.folds-ctl button{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);background:var(--card);
+border:1px solid var(--bd);border-radius:999px;padding:4px 11px;cursor:pointer}
+.folds-ctl button:hover{color:var(--fg)}
 details.sport .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}
 details.more{margin:-4px 0 14px}
 input.flt{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
@@ -82,7 +98,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated 2026-09-19 01:56 UTC</div>
+<div class="sub">Every source and rule under test, per sport · updated 2026-09-19 02:10 UTC</div>
 <div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="tiles">
@@ -94,11 +110,12 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </div>
 
 
-<h2>What the Sandbox says</h2>
-<div class="note"><ul class="ins"><li><b>Holding up over 30+ bets:</b> Tennis favourite-band rule — 171 won v 160.1 the prices implied on 197 bets, +5.5% after fees (in Production).</li><li><b>Closest to proven:</b> ESPN FPI / Matchup Predictor · MLB (18 of 30 bets, +6.9%).</li><li><b>Losing early:</b> Scores24 · Tennis (-2.8% on 15).</li><li><b>In <a href="./production.html">Production</a> (5):</b> ESPN FPI / Matchup Predictor · NFL (no settled bets yet); ESPN FPI / Matchup Predictor · MLB (18 bets, +6.9%); Tennis favourite-band rule (197 bets, +5.5%); Over 1.5 form rule (7 bets, +5.4%); Team scores 1+ form rule (7 bets, +19.0%).</li><li><b>Retired this week:</b> Kalshi · MLB, Covers / OddsShark computer picks · MLB, National Weather Service, Table tennis 0.55-0.60 band, MLB fade-the-streak rule, SportsGambler, Scores24 · MLB — listed under Reference with their records.</li></ul></div>
+<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
+<div class="note"><ul class="ins"><li><b>Holding up over 30+ bets:</b> Tennis favourite-band rule — 171 won v 160.1 the prices implied on 197 bets, +5.5% after fees (in Production).</li><li><b>Closest to proven:</b> ESPN FPI / Matchup Predictor · MLB (18 of 30 bets, +6.9%).</li><li><b>Losing early:</b> Scores24 · Tennis (-2.8% on 15).</li><li><b>In <a href="./production.html">Production</a> (5):</b> ESPN FPI / Matchup Predictor · NFL (no settled bets yet); ESPN FPI / Matchup Predictor · MLB (18 bets, +6.9%); Tennis favourite-band rule (197 bets, +5.5%); Over 1.5 form rule (7 bets, +5.4%); Team scores 1+ form rule (7 bets, +19.0%).</li><li><b>Retired this week:</b> Kalshi · MLB, Covers / OddsShark computer picks · MLB, National Weather Service, Table tennis 0.55-0.60 band, MLB fade-the-streak rule, SportsGambler, Scores24 · MLB — listed under Reference with their records.</li></ul></div></details>
 
-<h2>Every rule and tipster, by sport</h2>
-<details class="sport" open><summary><b>Soccer</b>
+<details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
+<div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
+<details class="sport"><summary><b>Soccer</b>
 <span class="mut"> · 8 tested · 2 in Production</span></summary>
 <div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Over 1.5 form rule</b>
 <div class="sm mut">Soccer · Over 1.5 · Rule</div></summary>
@@ -141,7 +158,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 <td><span class="sig n">Waiting for results</span></td>
 <td class="num">—</td><td class="num">—</td><td class="num">—</td>
 <td class="num">23</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
-<details class="sport" open><summary><b>Tennis</b>
+<details class="sport"><summary><b>Tennis</b>
 <span class="mut"> · 4 tested · 1 in Production · best: Tennis favourite-band rule +5.5% on 197</span></summary>
 <div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Tennis favourite-band rule</b>
 <div class="sm mut">Tennis · Rule</div></summary>
@@ -164,7 +181,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 <td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
 <td class="num">0–1<div class="sm mut">1 settled</div></td><td class="num">0 v 0.2<div class="sm mut">-0.2 wins</div></td><td class="num"><span class="mut">-100.0%</span></td>
 <td class="num">—</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
-<details class="sport" open><summary><b>MLB</b>
+<details class="sport"><summary><b>MLB</b>
 <span class="mut"> · 3 tested · 1 in Production</span></summary>
 <div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
 <div class="sm mut">MLB · Statistical model</div></summary>
@@ -182,7 +199,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 <td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
 <td class="num">1–0<div class="sm mut">1 settled</div></td><td class="num">1 v 0.6<div class="sm mut">+0.4 wins</div></td><td class="num"><span class="mut">+55.3%</span></td>
 <td class="num">6</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
-<details class="sport" open><summary><b>NFL</b>
+<details class="sport"><summary><b>NFL</b>
 <span class="mut"> · 3 tested · 1 in Production</span></summary>
 <div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
 <div class="sm mut">NFL · Statistical model</div></summary>
@@ -265,9 +282,10 @@ available before the start. <b>Won v priced</b>: wins against the wins the price
 whole test. <b>Verdict</b>: read only at 30+ settled bets — <i>Proven edge</i> is ahead of the prices by
 z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only <i>Promising</i> or
 <i>Behind so far</i>, and under 10 it is <i>Too early</i>. Production is entered by hand. Click a name for what it is.</div>
+</details>
 
-<h2>Running now (490)</h2>
-<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…"><div id="live"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr class="grp"><td colspan="7">Soccer · 27 running</td></tr>
+<details class="sec"><summary><h2>Running now (490)</h2></summary>
+<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…"><div id="live"><details class="grp-fold"><summary><b>Soccer</b> <span class="mut">· 27 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Soccer</td>
 <td><a href="https://kalshi.com/markets/kxjleaguegame" target="_blank" rel="noopener">Frontale vs Kashima</a></td>
@@ -324,7 +342,7 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td><b>Arsenal</b></td>
 <td class="num">0.59</td>
 <td class="num pos"><span class="mut">pick</span></td></tr>
-</table></div><details class="more"><summary>Show 482 more running bets</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr><td class="mut">2026-09-19</td>
+<tr><td class="mut">2026-09-19</td>
 <td>Soccer</td>
 <td><a href="https://kalshi.com/markets/kxeflchampionshipgame" target="_blank" rel="noopener">Lincoln vs Swansea</a></td>
 <td>SoccerPredictions.ai</td>
@@ -456,8 +474,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Scores24</td>
 <td><b>Vancouver</b></td>
 <td class="num">0.53</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · BTTS · 12 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Soccer · BTTS</b> <span class="mut">· 12 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Soccer · BTTS</td>
 <td><a href="https://kalshi.com/markets/kxbundesligabtts" target="_blank" rel="noopener">Werder Bremen v FC Augsburg: both teams to score</a></td>
@@ -541,8 +559,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>BTTS form rule</td>
 <td><b>Yes</b></td>
 <td class="num">0.73</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Over 1.5 · 13 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Soccer · Over 1.5</b> <span class="mut">· 13 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Soccer · Over 1.5</td>
 <td><a href="https://kalshi.com/markets/kxbundesligatotal" target="_blank" rel="noopener">Hamburg SV v FC Cologne: over 1.5 goals</a></td>
@@ -633,8 +651,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Over 1.5 form rule</td>
 <td><b>Yes</b></td>
 <td class="num">0.90</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Team 1+ · 9 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Soccer · Team 1+</b> <span class="mut">· 9 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Soccer · Team 1+</td>
 <td><a href="https://kalshi.com/markets/kxbundesligateamtotal" target="_blank" rel="noopener">Hamburg SV v FC Cologne: FC Cologne to score 1+</a></td>
@@ -697,8 +715,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Team scores 1+ form rule</td>
 <td><b>Yes</b></td>
 <td class="num">0.76</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Team 2+ · 2 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Soccer · Team 2+</b> <span class="mut">· 2 running · next 2026-09-20</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-20</td>
 <td>Soccer · Team 2+</td>
 <td><a href="https://kalshi.com/markets/kxmlsteamtotal" target="_blank" rel="noopener">Sporting Kansas City v Philadelphia Union: Philadelphia Union to score 2+</a></td>
@@ -712,8 +730,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Team scores 2+ form rule</td>
 <td><b>Yes</b></td>
 <td class="num">0.69</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Under 3.5 · 6 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Soccer · Under 3.5</b> <span class="mut">· 6 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Soccer · Under 3.5</td>
 <td><a href="https://kalshi.com/markets/kxscottishpremtotal" target="_blank" rel="noopener">St Mirren v Dundee United: over 3.5 goals</a></td>
@@ -755,8 +773,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Under 3.5 low-scoring rule</td>
 <td><b>No</b></td>
 <td class="num">0.73</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Soccer · Team +0.5 · 13 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Soccer · Team +0.5</b> <span class="mut">· 13 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Soccer · Team +0.5</td>
 <td><a href="https://kalshi.com/markets/kxbundesligagame" target="_blank" rel="noopener">Werder Bremen v FC Augsburg: Werder Bremen to win (No = FC Augsburg +0.5)</a></td>
@@ -847,8 +865,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Team +0.5 unbeaten rule</td>
 <td><b>No</b></td>
 <td class="num">0.82</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Tennis · 23 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Tennis</b> <span class="mut">· 23 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Tennis</td>
 <td><a href="https://polymarket.us/event/utr-chaeli-ishhar-2026-09-19" target="_blank" rel="noopener">Cham, Elijah vs Ishikawa, Haruto</a></td>
@@ -1009,16 +1027,16 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Tennis favourite-band rule</td>
 <td><b>Marat Sharipov</b></td>
 <td class="num">0.83</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Table Tennis · 1 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Table Tennis</b> <span class="mut">· 1 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Table Tennis</td>
 <td><a href="https://polymarket.us/event/setkameua-hohser-rezrom-2026-09-19" target="_blank" rel="noopener">Hohenko Serhei vs Reznychenko Roman</a></td>
 <td>Polymarket</td>
 <td><b>Reznychenko Roman</b></td>
 <td class="num">0.35</td>
-<td class="num pos">+5.0%</td></tr>
-<tr class="grp"><td colspan="7">Boxing · 3 running</td></tr>
+<td class="num pos">+5.0%</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Boxing</b> <span class="mut">· 3 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Boxing</td>
 <td><a href="https://polymarket.us/event/boxing-shamas-ckaman-2026-09-19" target="_blank" rel="noopener">Shabaz Masoud vs Ckari Cani Mansilla</a></td>
@@ -1039,8 +1057,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>OLBG community tips</td>
 <td><b>Isaac Cruz Gonzalez</b></td>
 <td class="num">0.85</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">MMA · 12 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>MMA</b> <span class="mut">· 12 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>MMA</td>
 <td><a href="https://kalshi.com/markets/kxufcfight" target="_blank" rel="noopener">Michael Aswell vs Joo Sang Yoo</a></td>
@@ -1124,8 +1142,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>OLBG community tips</td>
 <td><b>Iwo Baraniewski</b></td>
 <td class="num">0.68</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">NFL · 18 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>NFL</b> <span class="mut">· 18 running · next 2026-09-20</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-20</td>
 <td>NFL</td>
 <td><a href="https://kalshi.com/markets/kxnflgame" target="_blank" rel="noopener">Cleveland vs Tampa Bay</a></td>
@@ -1251,16 +1269,16 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Covers / OddsShark computer picks</td>
 <td><b>Los Angeles R</b></td>
 <td class="num">0.75</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Cricket · 1 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Cricket</b> <span class="mut">· 1 running · next 2026-09-18</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-18</td>
 <td>Cricket</td>
 <td><a href="https://polymarket.us/event/cplcr-gaw-jka-2026-09-18" target="_blank" rel="noopener">Guyana Amazon Warriors vs Jamaica Kingsmen</a></td>
 <td>Oddspedia community tips</td>
 <td><b>Jamaica Kingsmen</b></td>
 <td class="num">0.46</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">MLB · 81 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>MLB</b> <span class="mut">· 81 running · next 2026-09-18</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-18</td>
 <td>MLB</td>
 <td><a href="https://polymarket.us/event/mlb-kc-pit-2026-09-18" target="_blank" rel="noopener">Kansas City Royals vs Pittsburgh Pirates</a></td>
@@ -1827,8 +1845,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>ESPN FPI / Matchup Predictor</td>
 <td><b>Minnesota Twins</b></td>
 <td class="num">0.47</td>
-<td class="num pos">+5.6%</td></tr>
-<tr class="grp"><td colspan="7">Crypto · 2 running</td></tr>
+<td class="num pos">+5.6%</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Crypto</b> <span class="mut">· 2 running · next 2026-09-19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-19</td>
 <td>Crypto</td>
 <td><a href="https://kalshi.com/markets/kxsold" target="_blank" rel="noopener">SOL price on Sep 19, 2026?</a></td>
@@ -1842,8 +1860,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Spot price</td>
 <td><b>$112 or above</b></td>
 <td class="num">0.70</td>
-<td class="num pos"><span class="mut">pick</span></td></tr>
-<tr class="grp"><td colspan="7">Commodities · 267 running</td></tr>
+<td class="num pos"><span class="mut">pick</span></td></tr></table></div></details>
+<details class="grp-fold"><summary><b>Commodities</b> <span class="mut">· 267 running · next 2026-09-18</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>
 <tr><td class="mut">2026-09-18</td>
 <td>Commodities</td>
 <td><a href="https://kalshi.com/markets/kxwti" target="_blank" rel="noopener">Will the WTI crude oil settlement price be above 99.99 USD/Bbl on Sep 18, 2026?</a></td>
@@ -3713,9 +3731,10 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td><b>Above $4198</b></td>
 <td class="num">0.99</td>
 <td class="num pos"><span class="mut">pick</span></td></tr></table></div></details></div>
+</details>
 
-<h2>Settled (799 · 73 void)</h2>
-<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…"><div id="hist"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr class="grp"><td colspan="8">2026-09-19 · 10/14 won · +$220</td></tr>
+<details class="sec"><summary><h2>Settled (799 · 73 void)</h2></summary>
+<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…"><div id="hist"><details class="grp-fold"><summary><b>2026-09-19</b> <span class="mut">· 10/14 won · </span><span class="pos">+$220</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-18</td>
 <td>Tennis</td><td>Nicolas Zanellato vs Lorenzo Sverzut Corsini</td>
 <td>Tennis favourite-band rule</td>
@@ -3764,7 +3783,7 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>$1.32 to 1.3399</td><td class="num">0.21</td>
 <td><span class="st lost">LOST</span></td>
 <td class="num neg">−$100</td></tr>
-</table></div><details class="more"><summary>Show 864 more settled bets</summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr><tr><td class="mut">2026-09-18</td>
+<tr><td class="mut">2026-09-18</td>
 <td>Crypto</td><td>SOL price on Sep 18, 2026?</td>
 <td>Spot price</td>
 <td>$101 or above</td><td class="num">0.52</td>
@@ -3799,8 +3818,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Spot price</td>
 <td>$102 or above</td><td class="num">0.56</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$79</td></tr>
-<tr class="grp"><td colspan="8">2026-09-18 · 60/80 won · +$520</td></tr>
+<td class="num pos">+$79</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-18</b> <span class="mut">· 60/77 won · </span><span class="pos">+$520</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-18</td>
 <td>Tennis</td><td>Michael Zheng vs Mitchell Krueger</td>
 <td>Tennis favourite-band rule</td>
@@ -4280,8 +4299,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Spot price</td>
 <td>$99 or above</td><td class="num">0.61</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$64</td></tr>
-<tr class="grp"><td colspan="8">2026-09-17 · 82/129 won · +$279</td></tr>
+<td class="num pos">+$64</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-17</b> <span class="mut">· 82/123 won · </span><span class="pos">+$279</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-17</td>
 <td>Tennis</td><td>Borna Gojo vs Matteo Martineau</td>
 <td>Tennis favourite-band rule</td>
@@ -5055,8 +5074,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>ESPN FPI / Matchup Predictor</td>
 <td>Tampa Bay Rays</td><td class="num">0.55</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$83</td></tr>
-<tr class="grp"><td colspan="8">2026-09-16 · 84/142 won · +$2,208</td></tr>
+<td class="num pos">+$83</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-16</b> <span class="mut">· 84/139 won · </span><span class="pos">+$2,208</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-15</td>
 <td>Tennis</td><td>Vendula Valdmannova vs Laura Pigossi</td>
 <td>Tennis favourite-band rule</td>
@@ -5908,8 +5927,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>ESPN FPI / Matchup Predictor</td>
 <td>Tampa Bay Rays</td><td class="num">0.52</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$94</td></tr>
-<tr class="grp"><td colspan="8">2026-09-15 · 106/161 won · +$1,057</td></tr>
+<td class="num pos">+$94</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-15</b> <span class="mut">· 106/157 won · </span><span class="pos">+$1,057</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-15</td>
 <td>Tennis</td><td>Isadora Sigrist vs Beatriz Nahmias Melo Rodrigues</td>
 <td>Tennis favourite-band rule</td>
@@ -6875,8 +6894,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Kalshi</td>
 <td>Los Angeles Dodgers</td><td class="num">0.56</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$80</td></tr>
-<tr class="grp"><td colspan="8">2026-09-14 · 25/54 won · −$319</td></tr>
+<td class="num pos">+$80</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-14</b> <span class="mut">· 25/48 won · </span><span class="neg">−$319</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-14</td>
 <td>Table Tennis</td><td>Storozhenko Oleksandr vs Pytsko Ivan</td>
 <td>Table tennis 0.55-0.60 band</td>
@@ -7200,8 +7219,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Scores24</td>
 <td>Boston Red Sox</td><td class="num">0.63</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$59</td></tr>
-<tr class="grp"><td colspan="8">2026-09-13 · 56/169 won · −$1,963</td></tr>
+<td class="num pos">+$59</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-13</b> <span class="mut">· 56/127 won · </span><span class="neg">−$1,963</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-13</td>
 <td>Crypto</td><td>SOL price on Sep 13, 2026?</td>
 <td>Spot price</td>
@@ -8215,8 +8234,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>SoccerPredictions.ai</td>
 <td>Draw</td><td class="num">0.32</td>
 <td><span class="st lost">LOST</span></td>
-<td class="num neg">−$100</td></tr>
-<tr class="grp"><td colspan="8">2026-09-12 · 55/100 won · +$2,177</td></tr>
+<td class="num neg">−$100</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-12</b> <span class="mut">· 55/97 won · </span><span class="pos">+$2,177</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-12</td>
 <td>MLB</td><td>San Diego Padres vs San Francisco Giants</td>
 <td>Scores24</td>
@@ -8816,8 +8835,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Covers / OddsShark computer picks</td>
 <td>Tampa Bay Rays</td><td class="num">0.61</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$63</td></tr>
-<tr class="grp"><td colspan="8">2026-09-11 · 7/19 won · +$74</td></tr>
+<td class="num pos">+$63</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-11</b> <span class="mut">· 7/13 won · </span><span class="pos">+$74</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-11</td>
 <td>Soccer</td><td>Al Wahda vs Sharjah</td>
 <td>SoccerPredictions.ai</td>
@@ -8931,8 +8950,8 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>ESPN FPI / Matchup Predictor</td>
 <td>49ers</td><td class="num">0.35</td>
 <td><span class="st won">WON</span></td>
-<td class="num pos">+$182</td></tr>
-<tr class="grp"><td colspan="8">2026-09-10 · 2/4 won · −$19</td></tr>
+<td class="num pos">+$182</td></tr></table></div></details>
+<details class="grp-fold"><summary><b>2026-09-10</b> <span class="mut">· 2/4 won · </span><span class="neg">−$19</span></summary><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th><th class="num">Price</th><th></th><th class="num">P/L</th></tr>
 <tr><td class="mut">2026-09-10</td>
 <td>MLB</td><td>Tampa Bay Rays vs Atlanta Braves</td>
 <td>Covers / OddsShark computer picks</td>
@@ -8957,8 +8976,9 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td>Philadelphia Phillies</td><td class="num">0.62</td>
 <td><span class="st lost">LOST</span></td>
 <td class="num neg">−$100</td></tr></table></div></details></div>
+</details>
 
-<h2>Reference</h2>
+<details class="sec"><summary><h2>Reference</h2></summary>
 <details class="ref"><summary>Retired, or declared but not connected (7)</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr><tr><td><b>National Weather Service</b>
 <div class="mut sm">Forecaster · weather.gov</div><div class="sm">51 settled bets kept on record</div></td>
@@ -9087,8 +9107,13 @@ ask. Until 2026-09-13 the venue was polymarket.com; those bets still settle ther
 Quotes logged before the book rule on boxing, cricket and table tennis were voided (pre-gate: logged at an unverified Polymarket placeholder price). Pinnacle prices come through The Odds API: 0 of 2 allowed paid calls last run, 345 credits left until they reset on the 1st. A closing price counts only when taken within 60 minutes of the start (554 of 1200 so far).
 A positive ROI under 30 settled bets is not a finding.</div></details>
 
+</details>
+
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
+document.querySelectorAll('.folds-ctl button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('details.' + b.dataset.fold).forEach(dt => dt.open = b.dataset.open === '1');
+}));
 document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {
   const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
   box.querySelectorAll('details').forEach(dt => { if (q) dt.open = true; });
@@ -9101,6 +9126,8 @@ document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('inpu
       tr.hidden = !hit; any = any || hit;
     });
     if (grp) grp.hidden = !any;
+    const fold = t.closest('details.grp-fold');
+    if (fold) fold.hidden = q && !t.querySelector('tr:not([hidden]) td');
   });
 }));
 </script>
