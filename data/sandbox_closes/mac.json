@@ -151,8 +151,8 @@
    "price": 0.54
   },
   "covers:aec-mlb-sf-lad-2026-09-18": {
-   "at": "2026-09-19T01:59:08+00:00",
-   "lead_min": 15.9,
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 0.2,
    "price": 0.74
   },
   "covers:aec-mlb-sf-stl-2026-09-16": {
@@ -376,8 +376,8 @@
    "price": 0.46
   },
   "espn_fpi:aec-mlb-sf-lad-2026-09-18": {
-   "at": "2026-09-19T01:59:08+00:00",
-   "lead_min": 15.9,
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 0.2,
    "price": 0.265
   },
   "espn_fpi:aec-mlb-tor-tex-2026-09-18": {
@@ -579,6 +579,11 @@
    "at": "2026-09-15T00:29:15+00:00",
    "lead_min": 0.7,
    "price": 0.22
+  },
+  "polymarket:KXWTAMATCH-26SEP18DESOKA": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 45.2,
+   "price": 0.25
   },
   "polymarket:aec-atp-gerlee-felgil-2026-09-16": {
    "at": "2026-09-16T07:52:25+00:00",
@@ -1190,6 +1195,26 @@
    "lead_min": 4.3,
    "price": 0.78
   },
+  "tennis_fav_band:KXWTAMATCH-26SEP18DESOKA": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 45.2,
+   "price": 0.76
+  },
+  "tennis_fav_band:KXWTAMATCH-26SEP18GARPER": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 45.2,
+   "price": 0.92
+  },
+  "tennis_fav_band:KXWTAMATCH-26SEP18HONLEE": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 55.2,
+   "price": 0.8
+  },
+  "tennis_fav_band:KXWTAMATCH-26SEP18YAMEIK": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 45.2,
+   "price": 0.88
+  },
   "tennis_fav_band:aec-atp-cruhew-conkou-2026-09-15": {
    "at": "2026-09-17T02:46:07+00:00",
    "lead_min": 13.9,
@@ -1199,6 +1224,11 @@
    "at": "2026-09-15T04:15:14+00:00",
    "lead_min": 14.8,
    "price": 0.79
+  },
+  "tennis_fav_band:aec-atp-ilisim-hunhec-2026-09-18": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 45.2,
+   "price": 0.8
   },
   "tennis_fav_band:aec-atp-jamwat-shoshi-2026-09-18": {
    "at": "2026-09-19T01:28:48+00:00",
@@ -1800,6 +1830,11 @@
    "lead_min": 9.1,
    "price": 0.82
   },
+  "tennis_fav_band:aec-wta-annfri-deskra-2026-09-18": {
+   "at": "2026-09-19T02:14:48+00:00",
+   "lead_min": 45.2,
+   "price": 0.88
+  },
   "tennis_fav_band:aec-wta-carmon-sloste-2026-09-14": {
    "at": "2026-09-14T18:39:05+00:00",
    "lead_min": 20.9,
@@ -2036,5 +2071,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-09-19T01:59:08+00:00"
+ "updated": "2026-09-19T02:14:48+00:00"
 }
