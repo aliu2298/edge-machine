@@ -2938,7 +2938,9 @@ _ca = T.assess({"quotes": _cq}, "cmd_tail", "commodities")
 eq((_ca["n"], _ca["n_bets"], _ca["unit"]), (2, 31, "market-day"),
    "31 commodity bets over one gas day and one WTI day are 2 market-days")
 eq(S.market_day(_cq[0]) == S.market_day(_cq[15]), True, "every state's gas series on one day is one market-day")
-ok(abs(_ca["z"]) < 1, "so one quiet day cannot read as a proven edge")
+eq((_ca["won"], round(_ca["expected"], 2)), (1, 1.96),
+   "a day with one losing rung pays less than it risked: 1 won of 2 market-days v 1.96 priced")
+ok(_ca["z"] < 2, "and two market-days can never read as a proven edge")
 eq(T.assess({"quotes": [dict(q, sport="tennis") for q in _cq]}, "cmd_tail", "tennis")["n"], 31,
    "other sports still count every bet")
 
