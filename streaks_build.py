@@ -763,7 +763,7 @@ ordinary and the chip says so.</p>
 not a highlight reel, so a team with nothing going still appears.</p>
 <p><b>On fire</b> looks back further than the {FORM_GAMES}-game form window to catch genuinely
 long runs. Measured, long runs do <b>not</b> extend more often than a shuffled fixture list
-would produce — see the <a href="./record.html">Record</a> page.</p>
+would produce — see the <a href="./sandbox.html">Sandbox</a>.</p>
 <p>Every run carries a <b>rarity</b> chip: the share of tracked teams currently on a run that
 long. When that share is high the pattern is ordinary, and the chip says so.</p>
 <p>Form is measured across <b>all</b> tracked competitions (last {FORM_GAMES} games, minimum
@@ -948,7 +948,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>{esc(h1)}</h1>
 <div class="sub">{esc(sub)} · all times CT · updated {esc(now)}</div>
 <div class="nav">{nav}
-<a href="./record.html">Record</a><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a></div>
+<a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a></div>
 
 <details class="how">
 <summary>{explain_summary}</summary>
@@ -1217,7 +1217,7 @@ function render() {{
       survives correcting for testing six of them at once. A long streak is a striking
       fact about the past and survivorship in the present: the side still on a 12-game run
       is simply the one whose run has not broken yet.
-      <a href="./record.html">See the Record page.</a></div>`
+      <a href="./sandbox.html">See the Sandbox.</a></div>`
       + shownRows.map(fireRow).join('')
       + (hidden > 0
           ? `<button class="more" id="more">Show ${{hidden}} more team${{

@@ -321,7 +321,7 @@ details.fold details.fold>summary{{margin:12px 0 6px;font-size:14px}}</style>
 
 <h1>Production</h1>
 <div class="sub">The pairs moved here by hand, and the leads they publish · updated {esc(now_s)}</div>
-<div class="nav"><a class="" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
+<div class="nav"><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
 
 <div class="tiles">
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>

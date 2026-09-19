@@ -556,6 +556,18 @@ document.querySelector('#tabs button.on')?.click();
 </div></body></html>"""
 
 
+def root_stub(now):
+    """The site root: forwards to the Sandbox, and carries the watchdog's freshness stamp."""
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine</title>
+<meta http-equiv="refresh" content="0; url=./sandbox.html">
+<style>body{{background:#0a0d14;color:#8b94a7;font:14px system-ui,sans-serif;padding:28px}}a{{color:#7aa2f7}}</style>
+</head><body><p>Edge Machine · updated {now} — <a href="./sandbox.html">Sandbox</a> ·
+<a href="./production.html">Production</a></p>
+<script>location.replace("./sandbox.html")</script></body></html>"""
+
+
 def build():
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
     ld = T.report(fixtures)
@@ -570,13 +582,15 @@ def build():
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    out = os.path.join(OUT_DIR, "record.html")
-    root = os.path.join(OUT_DIR, "index.html")     # the Record page is the site root
-    page = page_html(ld, fr, bk, now, rc)
-    for path in (out, root):
-        with open(path, "w") as f:
-            f.write(page)
-    print(f"wrote {out} and {root}  ({os.path.getsize(out)/1024:.0f} KB) — "
+    # The Record page is HIDDEN since 2026-09-19: it mixed six unrelated tests on one ranked
+    # table and read as noise. page_html is kept so it can come back with one line. The
+    # site root is now a stub that sends visitors to the Sandbox and carries this run's
+    # "updated ... UTC" stamp — the backup watchdog reads that stamp off the root to know
+    # the boards pipeline deployed.
+    root = os.path.join(OUT_DIR, "index.html")
+    with open(root, "w") as f:
+        f.write(root_stub(now))
+    print(f"wrote {root} (root -> sandbox.html) — "
           f"leads {ld['graded']}, fire {fr['graded']}, book {bk['graded']} graded")
 
 

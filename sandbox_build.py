@@ -436,15 +436,6 @@ def unconnected_rows(d=None):
     return "\n".join(out)
 
 
-GROUPS = [
-    ("working", "Working", "ok", "30+ settled bets and ahead of the price: wins beat what the prices implied and ROI is positive."),
-    ("failing", "Not working", "bad", "30+ settled bets and not ahead of the price. Kept running — a record can turn — but nothing here is an edge today."),
-    ("leaning", "Too early · leaning ahead", "", "Under 30 settled bets, ahead of the price so far. Unreadable yet: watch, don't trust."),
-    ("behind", "Too early · leaning behind", "", "Under 30 settled bets, behind the price so far."),
-    ("waiting", "Waiting for results", "", "Bets logged, nothing settled yet."),
-]
-
-
 def pair_status(d, st, name, sport):
     """(group, sandbox record, QA-entry record, open bets, last logged) for one (source, sport)."""
     pair = (st.get("pairs") or {}).get(f"{name}|{sport}") or {}
@@ -469,56 +460,160 @@ def pair_status(d, st, name, sport):
     return group, a, qa, open_n, last, pair
 
 
-def pair_rows(d, st):
-    """Every betting (source, sport) pair, sorted into GROUPS. -> ({group: [html rows]}, counts)."""
-    rows = {g[0]: [] for g in GROUPS}
+# ------------------------------------------------------------------ the page's verdicts
+# One plain word per pair instead of a z score. The numbers stay on the row; the word says
+# what they add up to, on the same floor the ladder uses (MIN_N settled bets to read).
+VERDICTS = {                     # key -> (label, chip class, sort order)
+    "proven":    ("Proven edge", "y", 0),
+    "working":   ("Working", "y", 1),
+    "promising": ("Promising", "w", 2),
+    "behind":    ("Behind so far", "n", 3),
+    "early":     ("Too early", "n", 4),
+    "noedge":    ("No edge", "x", 5),
+    "waiting":   ("Waiting for results", "n", 6),
+}
+EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
+
+
+def verdict(a):
+    """proven / working / no edge at MIN_N+ settled; promising / behind from EARLY_N; early below."""
+    if not a["n"]:
+        return "waiting"
+    if a["n"] < EARLY_N:
+        return "early"
+    ahead = (a.get("roi_fee") or 0) > 0 and a["z"] > 0
+    if a["n"] >= MIN_N:
+        return ("proven" if a["z"] >= 2 else "working") if ahead else "noedge"
+    return "promising" if ahead else "behind"
+
+
+def family(sport):
+    """The section a pair sits in: Soccer's markets together, the yes/no markets together."""
+    return "Markets" if sport in MARKET_KEYS else S.SPORTS.get(sport, sport).split(" · ")[0]
+
+
+def pair_list(d, st):
+    """Every connected (source, sport) pair that has bet, with its record and verdict."""
+    out = []
     for name, meta in S.SOURCES.items():
-        if not meta["connected"]:
+        if not meta["connected"] or meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             continue
         for sport in meta["sports"]:
-            group, a, qa, open_n, last, pair = pair_status(d, st, name, sport)
+            group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             if group is None:
                 continue
-            if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
+            out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
+                            prod=pair.get("stage") == "production",
+                            moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
+                            v=verdict(a)))
+    return out
+
+
+def _who(r):
+    """'Tennis favourite-band rule' or 'ESPN FPI / Matchup Predictor · MLB'."""
+    label = r["meta"]["label"].split(" (")[0]
+    kind = r["meta"].get("kind")
+    return label if kind == "Rule" else f"{label} · {S.SPORTS.get(r['sport'], r['sport'])}"
+
+
+def _rec(r):
+    a = r["a"]
+    return (f'{a["won"]} won v {a["expected"]:.1f} the prices implied on {a["n"]} bets, '
+            f'{pct(a["roi_fee"], sign=True)} after fees')
+
+
+def insights(rows, now=None):
+    """What the Sandbox says, in sentences — the reason to open the page."""
+    now = now or datetime.now(timezone.utc)
+    li = []
+    good = sorted((r for r in rows if r["v"] in ("proven", "working")), key=lambda r: -r["a"]["z"])
+    if good:
+        li.append("<b>Holding up over 30+ bets:</b> " + "; ".join(
+            f'{esc(_who(r))} — {esc(_rec(r))}{" (in Production)" if r["prod"] else ""}' for r in good) + ".")
+    else:
+        li.append(f"<b>Nothing is proven yet:</b> no rule or tipster has {MIN_N}+ settled bets and a lead over the prices.")
+    close = sorted((r for r in rows if r["v"] == "promising"), key=lambda r: -r["a"]["n"])[:3]
+    if close:
+        li.append("<b>Closest to proven:</b> " + "; ".join(
+            f'{esc(_who(r))} ({r["a"]["n"]} of {MIN_N} bets, {pct(r["a"]["roi_fee"], sign=True)})'
+            for r in close) + ".")
+    bad = sorted((r for r in rows if r["v"] == "noedge"), key=lambda r: r["a"]["roi_fee"] or 0)
+    if bad:
+        li.append("<b>No edge after 30+ bets:</b> " + "; ".join(
+            f'{esc(_who(r))} ({pct(r["a"]["roi_fee"], sign=True)} on {r["a"]["n"]})' for r in bad) + ".")
+    worst = sorted((r for r in rows if r["v"] == "behind" and r["a"]["n"] >= 10),
+                   key=lambda r: r["a"]["roi_fee"] or 0)[:3]
+    if worst:
+        li.append("<b>Losing early:</b> " + "; ".join(
+            f'{esc(_who(r))} ({pct(r["a"]["roi_fee"], sign=True)} on {r["a"]["n"]})' for r in worst) + ".")
+    prod = [r for r in rows if r["prod"]]
+    if prod:
+        li.append(f'<b>In <a href="./production.html">Production</a> ({len(prod)}):</b> ' + "; ".join(
+            f'{esc(_who(r))} ({r["a"]["n"]} bets, {pct(r["a"]["roi_fee"], sign=True)})' if r["a"]["n"]
+            else f'{esc(_who(r))} (no settled bets yet)' for r in prod) + ".")
+    recent = []
+    for m in S.SOURCES.values():
+        items = ([(None, m["retired"])] if m.get("retired") else []) + list((m.get("retired_sports") or {}).items())
+        for sport, why in items:
+            try:
+                when = datetime.strptime(str(why)[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            except ValueError:
                 continue
-            gates = T.qa_entry(qa) if qa["n"] else []
-            passed = sum(1 for _k, _l, p, _d in gates if p)
-            if pair.get("stage") == "production":
-                stage = (f'<span class="sig g">IN PRODUCTION</span>'
-                         f'<div class="sm mut">moved by hand {esc(str(pair.get("by_hand") or pair.get("promoted_at"))[:10])}</div>')
-            else:
-                need = T.sport_rules(sport)["entry"]["min_bets"]
-                fill = min(100, int(100 * qa["n"] / need)) if need else 0
-                stage = (f'<span class="bar"><i style="width:{fill}%"></i></span> '
-                         f'<span class="sm">{qa["n"]}/{need}</span>'
-                         f'<div class="sm mut">{passed}/{len(gates) or 4} marks hold</div>')
-            won_exp = f'{a["won"]} v {a["expected"]:.1f}' if a["n"] else "—"
-            thin = a["n"] < MIN_N
-            vb = "—"
-            if a["base_roi"] is not None:
-                gap = a["own_roi"] - a["base_roi"]
-                vb = f'<span class="{"mut" if thin else cls(gap)}">{gap*100:+.1f}pp</span>'
-            clv = (f'<span class="{"mut" if a["clv_n"] < MIN_N else cls(a["clv"])}">{a["clv"]*100:+.1f}¢</span>'
-                   f'<div class="sm mut">{a["clv_n"]} closes</div>') if a["clv"] is not None else "—"
-            rows[group].append((a["z"] if a["n"] else -99, f"""<tr data-g="{group}">
-<td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>
-<div class="sm mut">{esc(S.SPORTS.get(sport, sport))} · {esc(meta['kind'])}</div></summary>
+            if (now - when).days <= 7:
+                recent.append(m["label"].split(" (")[0] + (f" · {S.SPORTS.get(sport, sport)}" if sport else ""))
+    if recent:
+        li.append(f"<b>Retired this week:</b> {esc(', '.join(recent))} — listed under Reference with their records.")
+    return '<ul class="ins">' + "".join(f"<li>{x}</li>" for x in li) + "</ul>"
+
+
+SPORT_HEAD = ('<tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th>'
+              '<th class="num">Won v priced</th><th class="num">ROI after fees</th>'
+              '<th class="num">Open</th><th>Stage</th></tr>')
+
+
+def _row(r):
+    a, meta = r["a"], r["meta"]
+    label, chip, _o = VERDICTS[r["v"]]
+    more = (f'<div class="sm mut">{MIN_N - a["n"]} more settled to read</div>'
+            if r["v"] in ("promising", "behind", "early") else "")
+    sub = S.SPORTS.get(r["sport"], r["sport"])
+    thin = a["n"] < MIN_N
+    rec = (f'{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{a["n"]} settled</div>' if a["n"] else "—")
+    vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins</div>'
+          if a["n"] else "—")
+    roi = (f'<span class="{"mut" if thin else cls(a["roi_fee"])}">{pct(a["roi_fee"], sign=True)}</span>'
+           if a["n"] else "—")
+    stage = (f'<span class="sig y">PRODUCTION</span><div class="sm mut">since {esc(r["moved"])}</div>'
+             if r["prod"] else '<span class="mut sm">Sandbox</span>')
+    return f"""<tr><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>
+<div class="sm mut">{esc(sub)} · {esc(meta['kind'])}</div></summary>
 <div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
-<td class="num">{a['n']}<div class="sm mut">{open_n} open{
-    f" · +{a['whole_n'] - a['n']} on retired venues" if a.get('whole_n', a['n']) > a['n'] else ''}</div></td>
-<td class="num">{won_exp}<div class="sm mut">{f"z {a['z']:+.2f}" if a['n'] else ''}</div></td>
-<td class="num"><span class="{'mut' if thin else cls(a['roi'])}">{pct(a['roi'], sign=True)}</span></td>
-<td class="num">{vb}</td>
-<td class="num">{clv}</td>
-<td>{stage}</td>
-<td class="num mut sm">{esc(last[:10]) or '—'}</td></tr>"""))
-    counts = {g: len(v) for g, v in rows.items()}
-    return {g: [r for _z, r in sorted(v, key=lambda t: -t[0])] for g, v in rows.items()}, counts
+<td><span class="sig {chip}">{esc(label)}</span>{more}</td>
+<td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
+<td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
 
 
-PAIR_HEAD = ('<tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th>'
-             '<th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th>'
-             '<th>Record so far</th><th class="num">Last bet</th></tr>')
+def sport_sections(rows):
+    """One folding section per sport: Production and the strongest records first."""
+    fams = {}
+    for r in rows:
+        fams.setdefault(family(r["sport"]), []).append(r)
+    order = sorted(fams, key=lambda f: (-sum(r["prod"] for r in fams[f]),
+                                        -sum(r["a"]["n"] for r in fams[f])))
+    out = []
+    for f in order:
+        rs = sorted(fams[f], key=lambda r: (not r["prod"], VERDICTS[r["v"]][2], -r["a"]["n"]))
+        n_prod = sum(r["prod"] for r in rs)
+        read = [r for r in rs if r["a"]["n"] >= MIN_N]      # a "best" on 1 bet is noise
+        best = max(read, key=lambda r: r["a"]["roi_fee"] or 0, default=None)
+        bits = [f"{len(rs)} tested"] + ([f"{n_prod} in Production"] if n_prod else [])
+        if best and (best["a"]["roi_fee"] or 0) > 0:
+            bits.append(f"best: {best['meta']['label'].split(' (')[0]} {pct(best['a']['roi_fee'], sign=True)}"
+                        f" on {best['a']['n']}")
+        out.append(f"""<details class="sport"{' open' if n_prod else ''}><summary><b>{esc(f)}</b>
+<span class="mut"> · {esc(' · '.join(bits))}</span></summary>
+<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r) for r in rs)}</table></div></details>""")
+    return "\n".join(out)
 
 
 def build():
@@ -536,30 +631,14 @@ def build():
     hist_rows, n_hist = settled_rows(d)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    settled_today = [q for q in d["quotes"] if q["bet"] and q["status"] in ("won", "lost")
-                     and str(q.get("settled") or "")[:10] == today]
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"] if q.get("bet"))
                    if x is not None and x >= 0)
     close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
                   f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far).")
 
-    groups, counts = pair_rows(d, st)
-    on = ' class="on"'
-    # Open on the first group that has anything in it.
-    first = next((g for g, *_r in GROUPS if counts[g]), "working")
-    tabs = "".join(f'<button type="button" data-tab="{g}"{on if g == first else ""}>{esc(t)}<b>{counts[g]}</b></button>'
-                   for g, t, _c, _n in GROUPS)
-    body = []
-    for g, title, klass, note in GROUPS:
-        if not groups[g]:
-            body.append(f'<tr class="grp {klass}" data-g="{g}"><td colspan="8">{esc(title)} · none right now</td></tr>'
-                        f'<tr data-g="{g}"><td colspan="8" class="mut sm">{esc(note)}</td></tr>')
-            continue
-        body.append(f'<tr class="grp {klass}" data-g="{g}"><td colspan="8">{esc(title)} · {len(groups[g])}</td></tr>'
-                    f'<tr data-g="{g}"><td colspan="8" class="mut sm">{esc(note)}</td></tr>')
-        body.extend(groups[g])
+    rows = pair_list(d, st)
+    vc = {k: sum(1 for r in rows if r["v"] == k) for k in VERDICTS}
 
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -609,6 +688,14 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.lost,.st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
 .st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
 .sig.w{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
+.sig.x{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
+ul.ins{{padding-left:18px;display:grid;gap:7px;color:var(--fg);font-size:13.5px;line-height:1.55}}
+details.sport{{background:var(--card);border:1px solid var(--bd);border-radius:11px;margin-bottom:10px}}
+details.sport>summary{{cursor:pointer;padding:12px 14px;font-size:14px;list-style:none}}
+details.sport>summary::-webkit-details-marker{{display:none}}
+details.sport>summary::before{{content:"▸ ";color:var(--mut)}}
+details.sport[open]>summary::before{{content:"▾ "}}
+details.sport .tbl{{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}}
 details.more{{margin:-4px 0 14px}}
 input.flt{{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
 border-radius:9px;padding:8px 12px;outline:none;width:100%;margin-bottom:9px}}
@@ -638,37 +725,27 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 
 <h1>Sandbox</h1>
 <div class="sub">Every source and rule under test, per sport · updated {esc(now)}</div>
-<div class="nav"><a class="" href="./record.html">Record</a><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
-
-<div class="note warn">Each <b>source in a sport</b> is tracked on its own: logged before the start at the price
-available then, flat ${int(T.STAKE)} a bet, settled on the real result. A pair is only <b>readable at
-{MIN_N}+ settled bets</b>; below that it is sorted by which way it leans, nothing more. Pairs that
-have been moved to <a href="./production.html">Production</a> by hand are marked below.</div>
+<div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="tiles">
-<div class="tile"><b class="{'pos' if counts['working'] else ''}">{counts['working']}</b><span>working</span></div>
-<div class="tile"><b class="{'neg' if counts['failing'] else ''}">{counts['failing']}</b><span>not working</span></div>
-<div class="tile"><b>{counts['leaning'] + counts['behind'] + counts['waiting']}</b><span>too early to tell</span></div>
-<div class="tile"><b>{in_prod}</b><span>in production</span></div>
+<div class="tile"><b>{in_prod}</b><span>in Production</span></div>
+<div class="tile"><b class="{'pos' if vc['proven'] + vc['working'] else ''}">{vc['proven'] + vc['working']}</b><span>working (30+ bets)</span></div>
+<div class="tile"><b>{vc['promising']}</b><span>promising (10+ bets)</span></div>
+<div class="tile"><b class="{'neg' if vc['noedge'] else ''}">{vc['noedge']}</b><span>no edge</span></div>
 <div class="tile"><b>{n_live:,}</b><span>bets running</span></div>
-<div class="tile"><b>{sum(1 for q in settled_today if q['status'] == 'won')}/{len(settled_today)}</b><span>won today</span></div>
 </div>
 {feed_health(d)}
 
-<h2>Sources and rules</h2>
-<div class="tabs" id="tabs">{tabs}<button type="button" data-tab="all">All</button></div>
-<div class="tbl"><table id="pairs">{PAIR_HEAD}{''.join(body)}</table></div>
-<div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
-samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
-the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
-<b>Record so far</b>: settled bets on the US exchanges, and how many of the four marks a pair would want to
-show before anyone moved it: enough bets, ahead of the prices paid, beating every blind rule, and steady across
-its record. Nothing here promotes anything — <b>Production is entered by hand</b>, and these are the numbers that
-decision is made on. <b>Thresholds are per sport</b>: most read against {T.QA_ENTRY['min_bets']}+ bets over
-{T.QA_ENTRY['min_days']}+ days at z ≥ {T.QA_ENTRY['z_min']:g}; high-volume sports
-({', '.join(S.SPORTS[x] for x in T.HIGH_VOLUME_SPORTS)}) against
-{T.SPORT_RULES['high']['entry']['min_bets']}+ bets at z ≥ {T.SPORT_RULES['high']['entry']['z_min']:g}, with no day
-span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under {MIN_N} bets.</div>
+<h2>What the Sandbox says</h2>
+<div class="note">{insights(rows)}</div>
+
+<h2>Every rule and tipster, by sport</h2>
+{sport_sections(rows)}
+<div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat ${int(T.STAKE)} a bet at the price
+available before the start. <b>Won v priced</b>: wins against the wins the prices implied — beating that is the
+whole test. <b>Verdict</b>: read only at {MIN_N}+ settled bets — <i>Proven edge</i> is ahead of the prices by
+z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under {MIN_N} a pair is only <i>Promising</i> or
+<i>Behind so far</i>, and under {EARLY_N} it is <i>Too early</i>. Production is entered by hand. Click a name for what it is.</div>
 
 <h2>Running now ({n_live:,})</h2>
 {('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + collapse(live_rows, LIVE_HEAD, n_live, "running bets") + '</div>') if n_live else '<div class="note">No open bets.</div>'}
@@ -677,6 +754,8 @@ span — a stricter bar in place of the calendar. Click a source for what it is.
 {('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + collapse(hist_rows, HIST_HEAD, n_hist, "settled bets") + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
 
 <h2>Reference</h2>
+<details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
+<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
 <div class="note">The stamp needs <b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>
 ({T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}, no day span, in high-volume sports),
@@ -686,8 +765,6 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 <details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
-<details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
-<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
 <details class="ref"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
 and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue
@@ -699,12 +776,6 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
-document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => {{
-  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
-  const t = b.dataset.tab;
-  document.querySelectorAll('#pairs tr[data-g]').forEach(tr => tr.hidden = t !== 'all' && tr.dataset.g !== t);
-}}));
-document.querySelector('#tabs button.on')?.click();
 document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {{
   const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
   box.querySelectorAll('details').forEach(dt => {{ if (q) dt.open = true; }});

@@ -1820,7 +1820,7 @@ ok("ESPN FPI / Matchup Predictor" in _html and "MLB · moved 2026-09-11" in _htm
    "a pair in Production is listed with its sport and the day it was moved")
 ok("How a pair gets here" in _html and "moved into Production by hand" in _html,
    "and the page says how pairs get there")
-ok('href="./sandbox.html"' in _html and 'href="./record.html"' in _html, "the nav is Record, Sandbox, Production")
+ok('href="./sandbox.html"' in _html and 'href="./record.html"' not in _html, "the nav is Sandbox, Production — Record is hidden")
 ok('href="./qa.html"' not in _html and 'href="./today.html"' not in _html,
    "and carries no QA or Today link")
 ok('href="./qa.html"' not in open("sandbox_build.py").read(), "nor does the Sandbox page")
@@ -1938,9 +1938,9 @@ print("\nheadline: no blended P/L")
 # ---------------------------------------------------------------------------
 _src = open("sandbox_build.py").read()
 ok("net P/L</span>" not in _src and "ROI on turnover" not in _src, "the blended P/L and ROI tiles are gone")
-ok("working</span>" in _src and "not working</span>" in _src, "replaced by working / not working counts")
-ok("v blind</th>" in _src and "Beat the close</th>" in _src,
-   "the pair table carries v blind and beat-the-close columns")
+ok("working (30+ bets)</span>" in _src and "no edge</span>" in _src, "replaced by working / no-edge counts")
+ok("Won v priced</th>" in _src and "ROI after fees</th>" in _src,
+   "each sport's table carries won-v-priced and ROI after fees")
 
 # ---------------------------------------------------------------------------
 print("\nsettled bets are archived, not lost")
@@ -2480,10 +2480,17 @@ def _pq2(src, sport, i, won, price=0.5):
 _pd = {"quotes": [_pq2("scores24", "soccer", i, i % 3 != 0) for i in range(36)]     # 24/36 at 0.5: working
                 + [_pq2("covers", "nfl", i, i % 3 == 0) for i in range(33)]         # 11/33: not working
                 + [_pq2("espn_fpi", "mlb", i, i % 2 == 0) for i in range(5)]}      # too early
-_g, _c = SB.pair_rows(_pd, {"pairs": {}})
-eq((_c["working"], _c["failing"]), (1, 1), "a readable pair ahead of the price is working; one behind it is not")
-ok(_c["leaning"] + _c["behind"] == 1, "a pair under the floor is too early, sorted by its lean")
-ok("Scores24" in "".join(_g["working"]) and S.SPORTS["soccer"] in "".join(_g["working"]), "rows name the source and the sport")
+_pl = {(r["name"], r["sport"]): r["v"] for r in SB.pair_list(_pd, {"pairs": {}})}
+eq((_pl[("scores24", "soccer")], _pl[("covers", "nfl")]), ("proven", "noedge"),
+   "24/36 at 0.50 is a proven edge (z > 2); 11/33 has no edge")
+eq(_pl[("espn_fpi", "mlb")], "early", "five bets is too early for any verdict, whichever way it leans")
+_secs = SB.sport_sections(SB.pair_list(_pd, {"pairs": {}}))
+ok("<b>Soccer</b>" in _secs and "<b>NFL</b>" in _secs and "Scores24" in _secs, "one section per sport, naming each source")
+ok("best: Scores24" in _secs, "a section names its best pair only from a readable record")
+_ins = SB.insights(SB.pair_list(_pd, {"pairs": {}}))
+ok("Holding up over 30+ bets" in _ins and "No edge after 30+ bets" in _ins, "the summary says what works and what does not")
+eq(SB.verdict(dict(n=12, z=0.5, roi_fee=0.04)), "promising", "10+ bets ahead is promising")
+eq(SB.verdict(dict(n=40, z=2.1, roi_fee=0.05)), "proven", "30+ bets ahead by z >= 2 is a proven edge")
 ok("in production" in SB.page_html(_pd, {"pairs": {}, "events": []}) if hasattr(SB, "page_html") else True,
    "the Sandbox page counts what is in Production")
 

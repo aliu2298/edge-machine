@@ -105,7 +105,7 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html public_site/record.html \
+          PUBLISHED="public_site/index.html \
                      public_site/leads.html public_site/streaks.html \
                      data/streaks.json data/streak_leads.json data/streak_leads_shadow_over15.json \
                      data/fire_runs.json \

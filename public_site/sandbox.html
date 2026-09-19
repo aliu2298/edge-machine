@@ -46,6 +46,14 @@ border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}
 .st.lost,.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
 .st.void,.sig.n{color:var(--mut);border-color:var(--bd)}
 .sig.w{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
+.sig.x{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
+ul.ins{padding-left:18px;display:grid;gap:7px;color:var(--fg);font-size:13.5px;line-height:1.55}
+details.sport{background:var(--card);border:1px solid var(--bd);border-radius:11px;margin-bottom:10px}
+details.sport>summary{cursor:pointer;padding:12px 14px;font-size:14px;list-style:none}
+details.sport>summary::-webkit-details-marker{display:none}
+details.sport>summary::before{content:"▸ ";color:var(--mut)}
+details.sport[open]>summary::before{content:"▾ "}
+details.sport .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}
 details.more{margin:-4px 0 14px}
 input.flt{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
 border-radius:9px;padding:8px 12px;outline:none;width:100%;margin-bottom:9px}
@@ -74,308 +82,189 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated 2026-09-19 01:12 UTC</div>
-<div class="nav"><a class="" href="./record.html">Record</a><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
-
-<div class="note warn">Each <b>source in a sport</b> is tracked on its own: logged before the start at the price
-available then, flat $100 a bet, settled on the real result. A pair is only <b>readable at
-30+ settled bets</b>; below that it is sorted by which way it leans, nothing more. Pairs that
-have been moved to <a href="./production.html">Production</a> by hand are marked below.</div>
+<div class="sub">Every source and rule under test, per sport · updated 2026-09-19 01:56 UTC</div>
+<div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="tiles">
-<div class="tile"><b class="pos">1</b><span>working</span></div>
-<div class="tile"><b class="">0</b><span>not working</span></div>
-<div class="tile"><b>26</b><span>too early to tell</span></div>
-<div class="tile"><b>5</b><span>in production</span></div>
+<div class="tile"><b>5</b><span>in Production</span></div>
+<div class="tile"><b class="pos">1</b><span>working (30+ bets)</span></div>
+<div class="tile"><b>1</b><span>promising (10+ bets)</span></div>
+<div class="tile"><b class="">0</b><span>no edge</span></div>
 <div class="tile"><b>490</b><span>bets running</span></div>
-<div class="tile"><b>10/14</b><span>won today</span></div>
 </div>
 
 
-<h2>Sources and rules</h2>
-<div class="tabs" id="tabs"><button type="button" data-tab="working" class="on">Working<b>1</b></button><button type="button" data-tab="failing">Not working<b>0</b></button><button type="button" data-tab="leaning">Too early · leaning ahead<b>11</b></button><button type="button" data-tab="behind">Too early · leaning behind<b>7</b></button><button type="button" data-tab="waiting">Waiting for results<b>8</b></button><button type="button" data-tab="all">All</button></div>
-<div class="tbl"><table id="pairs"><tr><th>Source · sport</th><th class="num">Settled</th><th class="num">Won v priced</th><th class="num">ROI</th><th class="num">v blind</th><th class="num">Beat the close</th><th>Record so far</th><th class="num">Last bet</th></tr><tr class="grp ok" data-g="working"><td colspan="8">Working · 1</td></tr><tr data-g="working"><td colspan="8" class="mut sm">30+ settled bets and ahead of the price: wins beat what the prices implied and ROI is positive.</td></tr><tr data-g="working">
-<td><details class="src"><summary><b>Tennis favourite-band rule</b>
-<div class="sm mut">Tennis · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14. Back the player the exchange prices between 0.75 and 0.90 (the ask), on every tennis match the Sandbox lists. Found in 427 settled matches over four days: players priced 0.75-0.90 won 86.4% against 81.1% priced (+5.2% after fees, z +1.26, 88 bets) — the favourite-longshot bias, which is well documented in tennis. Not significant on its own. Judged against backing the favourite on every match over the same period, so it only counts if this band beats favourites in general.</div></details></td>
-<td class="num">197<div class="sm mut">18 open</div></td>
-<td class="num">171 v 160.1<div class="sm mut">z +2.00</div></td>
-<td class="num"><span class="pos">+6.8%</span></td>
-<td class="num"><span class="pos">+4.7pp</span></td>
-<td class="num"><span class="neg">-0.5¢</span><div class="sm mut">188 closes</div></td>
-<td><span class="sig g">IN PRODUCTION</span><div class="sm mut">moved by hand 2026-09-17</div></td>
-<td class="num mut sm">2026-09-19</td></tr><tr class="grp bad" data-g="failing"><td colspan="8">Not working · none right now</td></tr><tr data-g="failing"><td colspan="8" class="mut sm">30+ settled bets and not ahead of the price. Kept running — a record can turn — but nothing here is an edge today.</td></tr><tr class="grp " data-g="leaning"><td colspan="8">Too early · leaning ahead · 11</td></tr><tr data-g="leaning"><td colspan="8" class="mut sm">Under 30 settled bets, ahead of the price so far. Unreadable yet: watch, don&#x27;t trust.</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Polymarket</b>
-<div class="sm mut">Cricket · Prediction market</div></summary>
-<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
-<td class="num">2<div class="sm mut">0 open</div></td>
-<td class="num">2 v 0.4<div class="sm mut">z +2.92</div></td>
-<td class="num"><span class="mut">+757.1%</span></td>
-<td class="num"><span class="mut">+0.0pp</span></td>
-<td class="num"><span class="mut">+30.0¢</span><div class="sm mut">2 closes</div></td>
-<td><span class="bar"><i style="width:6%"></i></span> <span class="sm">2/30</span><div class="sm mut">2/4 marks hold</div></td>
-<td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Oddspedia community tips</b>
-<div class="sm mut">Cricket · Tipster site</div></summary>
-<div class="sm mut">A public tipster community — named accounts with a visible record — reduced to a majority consensus per match, because its tipsters routinely take opposite sides of the same game. The only source found that tips the niche cricket Polymarket lists. Cloudflare-protected, so it comes through the headless browser. Tips carry no date, so each is resolved to the soonest fixture between those two sides.</div></details></td>
-<td class="num">5<div class="sm mut">1 open · +2 on retired venues</div></td>
-<td class="num">4 v 2.3<div class="sm mut">z +1.70</div></td>
-<td class="num"><span class="mut">+298.4%</span></td>
-<td class="num"><span class="mut">+21.8pp</span></td>
-<td class="num"><span class="mut">+19.0¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">3/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Team scores 1+ form rule</b>
-<div class="sm mut">Soccer · Team 1+ · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it scored in each of its last 5 competitive games and its opponent conceded in each of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. In Production since 2026-09-18, moved by hand.</div></details></td>
-<td class="num">7<div class="sm mut">9 open</div></td>
-<td class="num">7 v 5.9<div class="sm mut">z +1.19</div></td>
-<td class="num"><span class="mut">+20.4%</span></td>
-<td class="num"><span class="mut">+24.0pp</span></td>
-<td class="num"><span class="mut">+0.5¢</span><div class="sm mut">6 closes</div></td>
-<td><span class="sig g">IN PRODUCTION</span><div class="sm mut">moved by hand 2026-09-18</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Scores24</b>
-<div class="sm mut">Soccer · Tipster site</div></summary>
-<div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
-<td class="num">5<div class="sm mut">4 open</div></td>
-<td class="num">4 v 3.1<div class="sm mut">z +0.81</div></td>
-<td class="num"><span class="mut">+28.3%</span></td>
-<td class="num"><span class="mut">+0.0pp</span></td>
-<td class="num"><span class="mut">+3.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">1/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>DraftKings</b>
-<div class="sm mut">MLB · Sportsbook</div></summary>
-<div class="sm mut">Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line is the hardest public number to beat, so this is the ceiling.</div></details></td>
-<td class="num">1<div class="sm mut">6 open · +4 on retired venues</div></td>
-<td class="num">1 v 0.6<div class="sm mut">z +0.77</div></td>
-<td class="num"><span class="mut">+58.7%</span></td>
-<td class="num"><span class="mut">+0.0pp</span></td>
-<td class="num"><span class="mut">-2.5¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Polymarket</b>
-<div class="sm mut">MLB · Prediction market</div></summary>
-<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
-<td class="num">8<div class="sm mut">5 open</div></td>
-<td class="num">5 v 4.2<div class="sm mut">z +0.63</div></td>
-<td class="num"><span class="mut">+33.4%</span></td>
-<td class="num"><span class="mut">+7.8pp</span></td>
-<td class="num"><span class="mut">-4.2¢</span><div class="sm mut">8 closes</div></td>
-<td><span class="bar"><i style="width:26%"></i></span> <span class="sm">8/30</span><div class="sm mut">2/4 marks hold</div></td>
-<td class="num mut sm">2026-09-19</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
-<div class="sm mut">MLB · Statistical model</div></summary>
-<div class="sm mut">ESPN&#x27;s own win probability (gameProjection). A pure model with no money behind it, which makes it the most likely of the four to be beatable.</div></details></td>
-<td class="num">18<div class="sm mut">32 open · +49 on retired venues</div></td>
-<td class="num">9 v 7.8<div class="sm mut">z +0.59</div></td>
-<td class="num"><span class="mut">+10.4%</span></td>
-<td class="num"><span class="mut">+11.2pp</span></td>
-<td class="num"><span class="mut">+6.7¢</span><div class="sm mut">18 closes</div></td>
-<td><span class="sig g">IN PRODUCTION</span><div class="sm mut">moved by hand 2026-09-18</div></td>
-<td class="num mut sm">2026-09-19</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>MMA favourite-band rule</b>
-<div class="sm mut">MMA · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14: the tennis favourite-band rule applied unchanged to MMA — back the fighter the exchange prices between 0.75 and 0.90. Not fitted on MMA at all: the Sandbox had no settled, priced MMA fight when it was added, so this is a clean test of whether the favourite-longshot bias carries across sports. Judged against backing the favourite in every fight over the same period. MMA lists only a handful of fights a week, so it will take months to read.</div></details></td>
-<td class="num">1<div class="sm mut">3 open</div></td>
-<td class="num">1 v 0.8<div class="sm mut">z +0.56</div></td>
-<td class="num"><span class="mut">+31.6%</span></td>
-<td class="num"><span class="mut">+41.7pp</span></td>
-<td class="num"><span class="mut">-15.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 marks hold</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Under 3.5 low-scoring rule</b>
-<div class="sm mut">Soccer · Under 3.5 · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14. Back under 3.5 goals (No on Kalshi&#x27;s Over 3.5) where BOTH teams scored 1 or fewer in at least 7 of their last 10 games in this competition (HOF&#x27;s way of counting form; 10+ games each, ESPN results before kickoff). Research: 80.5% on 41 matches against the teams&#x27; own earlier 61.7% (z +2.48); at Kalshi&#x27;s under price just before kickoff 23 of 27 won at ~71% (+20.2% after fees). The same form counted across all competitions gave the same answer. Not significant across the 10 rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. Judged against backing the under on every Kalshi match.</div></details></td>
-<td class="num">1<div class="sm mut">6 open</div></td>
-<td class="num">1 v 0.8<div class="sm mut">z +0.52</div></td>
-<td class="num"><span class="mut">+26.6%</span></td>
-<td class="num"><span class="mut">+31.2pp</span></td>
-<td class="num"><span class="mut">-3.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 marks hold</div></td>
-<td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Over 1.5 form rule</b>
+<h2>What the Sandbox says</h2>
+<div class="note"><ul class="ins"><li><b>Holding up over 30+ bets:</b> Tennis favourite-band rule — 171 won v 160.1 the prices implied on 197 bets, +5.5% after fees (in Production).</li><li><b>Closest to proven:</b> ESPN FPI / Matchup Predictor · MLB (18 of 30 bets, +6.9%).</li><li><b>Losing early:</b> Scores24 · Tennis (-2.8% on 15).</li><li><b>In <a href="./production.html">Production</a> (5):</b> ESPN FPI / Matchup Predictor · NFL (no settled bets yet); ESPN FPI / Matchup Predictor · MLB (18 bets, +6.9%); Tennis favourite-band rule (197 bets, +5.5%); Over 1.5 form rule (7 bets, +5.4%); Team scores 1+ form rule (7 bets, +19.0%).</li><li><b>Retired this week:</b> Kalshi · MLB, Covers / OddsShark computer picks · MLB, National Weather Service, Table tennis 0.55-0.60 band, MLB fade-the-streak rule, SportsGambler, Scores24 · MLB — listed under Reference with their records.</li></ul></div>
+
+<h2>Every rule and tipster, by sport</h2>
+<details class="sport" open><summary><b>Soccer</b>
+<span class="mut"> · 8 tested · 2 in Production</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Over 1.5 form rule</b>
 <div class="sm mut">Soccer · Over 1.5 · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-14 from research fixed before it ran. Back over 1.5 at the Kalshi ask where BOTH teams&#x27; games went over 1.5 in at least 9 of their last 10 competitive games (10+ games each, ESPN results strictly before kickoff). Research: 92.9% on 84 matches against the teams&#x27; own earlier 81.4%. At real Kalshi prices in its first week, +2.0% on 20 — the market charges for most of it. The same rule selects the Leads board&#x27;s over-1.5 cards since 2026-09-14.</div></details></td>
-<td class="num">7<div class="sm mut">13 open</div></td>
-<td class="num">6 v 5.6<div class="sm mut">z +0.35</div></td>
-<td class="num"><span class="mut">+6.9%</span></td>
-<td class="num"><span class="mut">+11.3pp</span></td>
-<td class="num"><span class="mut">+3.0¢</span><div class="sm mut">6 closes</div></td>
-<td><span class="sig g">IN PRODUCTION</span><div class="sm mut">moved by hand 2026-09-18</div></td>
-<td class="num mut sm">2026-09-17</td></tr><tr data-g="leaning">
-<td><details class="src"><summary><b>Team scores 2+ form rule</b>
-<div class="sm mut">Soccer · Team 2+ · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14. Back a side to score 2+ at the Kalshi ask where it scored 2+ in at least 7 of its last 10 competitive games and its opponent conceded 2+ in at least 7 of theirs. Research: 76.2% on only 21 team-games against a 45.3% own earlier rate. Measured in the Sandbox; not in Production.</div></details></td>
-<td class="num">1<div class="sm mut">2 open</div></td>
-<td class="num">1 v 0.9<div class="sm mut">z +0.23</div></td>
-<td class="num"><span class="mut">+5.3%</span></td>
-<td class="num"><span class="mut">+3.0pp</span></td>
-<td class="num"><span class="mut">+0.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">1/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr class="grp " data-g="behind"><td colspan="8">Too early · leaning behind · 7</td></tr><tr data-g="behind"><td colspan="8" class="mut sm">Under 30 settled bets, behind the price so far.</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Polymarket</b>
-<div class="sm mut">Tennis · Prediction market</div></summary>
-<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
-<td class="num">8<div class="sm mut">3 open</div></td>
-<td class="num">3 v 3.0<div class="sm mut">z +0.02</div></td>
-<td class="num"><span class="mut">-12.6%</span></td>
-<td class="num"><span class="mut">-37.2pp</span></td>
-<td class="num"><span class="mut">+2.3¢</span><div class="sm mut">7 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">8/50</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Scores24</b>
-<div class="sm mut">Tennis · Tipster site</div></summary>
+<td><span class="sig n">Too early</span><div class="sm mut">23 more settled to read</div></td>
+<td class="num">6–1<div class="sm mut">7 settled</div></td><td class="num">6 v 5.6<div class="sm mut">+0.4 wins</div></td><td class="num"><span class="mut">+5.4%</span></td>
+<td class="num">13</td><td><span class="sig y">PRODUCTION</span><div class="sm mut">since 2026-09-18</div></td></tr><tr><td><details class="src"><summary><b>Team scores 1+ form rule</b>
+<div class="sm mut">Soccer · Team 1+ · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it scored in each of its last 5 competitive games and its opponent conceded in each of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own earlier rate; 10 of 10 at real Kalshi prices (avg 0.84) in its first week. In Production since 2026-09-18, moved by hand.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">23 more settled to read</div></td>
+<td class="num">7–0<div class="sm mut">7 settled</div></td><td class="num">7 v 5.9<div class="sm mut">+1.1 wins</div></td><td class="num"><span class="mut">+19.0%</span></td>
+<td class="num">9</td><td><span class="sig y">PRODUCTION</span><div class="sm mut">since 2026-09-18</div></td></tr><tr><td><details class="src"><summary><b>Scores24</b>
+<div class="sm mut">Soccer · Tipster site</div></summary>
 <div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
-<td class="num">15<div class="sm mut">2 open · +15 on retired venues</div></td>
-<td class="num">8 v 8.1<div class="sm mut">z -0.07</div></td>
-<td class="num"><span class="mut">+0.2%</span></td>
-<td class="num"><span class="mut">-9.0pp</span></td>
-<td class="num"><span class="mut">+6.7¢</span><div class="sm mut">12 closes</div></td>
-<td><span class="bar"><i style="width:30%"></i></span> <span class="sm">15/50</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Team +0.5 unbeaten rule</b>
-<div class="sm mut">Soccer · Team +0.5 · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-14. Back a team not to lose (+0.5: No on Kalshi&#x27;s market for its opponent to win) where the team is unbeaten in 8+ of its last 10 games in this competition and the opponent won 3 or fewer of its last 10 there (HOF&#x27;s windows, 10+ games each, ESPN results before kickoff). Research: 82.5% on 97 against the teams&#x27; own earlier 70.6% (z +2.56); none of 1,000 shuffled worlds produced a spread rule this strong across the six tried; at Kalshi&#x27;s price just before kickoff 54 of 64 won at ~77% (+11.2% after fees). 37 of those 64 were MLS. Judged against backing No on every Kalshi win market over the same period.</div></details></td>
-<td class="num">4<div class="sm mut">13 open</div></td>
-<td class="num">3 v 3.1<div class="sm mut">z -0.14</div></td>
-<td class="num"><span class="mut">+0.1%</span></td>
-<td class="num"><span class="mut">+20.4pp</span></td>
-<td class="num"><span class="mut">+4.7¢</span><div class="sm mut">3 closes</div></td>
-<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">1/4 marks hold</div></td>
-<td class="num mut sm">2026-09-16</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>BTTS form rule</b>
+<td><span class="sig n">Too early</span><div class="sm mut">25 more settled to read</div></td>
+<td class="num">4–1<div class="sm mut">5 settled</div></td><td class="num">4 v 3.1<div class="sm mut">+0.9 wins</div></td><td class="num"><span class="mut">+25.0%</span></td>
+<td class="num">4</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>BTTS form rule</b>
 <div class="sm mut">Soccer · BTTS · Rule</div></summary>
 <div class="sm mut">Pre-registered 2026-09-13, with no fitted number. Back Yes at the Kalshi ask on every match where BOTH teams saw both teams score in at least 7 of their last 10 competitive games (ESPN results strictly before kickoff). Found in research: +10pp over the teams&#x27; own earlier rate on 77 matches, but inside one period, not significant across the rules tried, and on 14 priced matches the market already charged for it. The Sandbox decides.</div></details></td>
-<td class="num">4<div class="sm mut">12 open</div></td>
-<td class="num">2 v 2.3<div class="sm mut">z -0.29</div></td>
-<td class="num"><span class="mut">-13.6%</span></td>
-<td class="num"><span class="mut">-2.8pp</span></td>
-<td class="num"><span class="mut">+1.0¢</span><div class="sm mut">4 closes</div></td>
-<td><span class="bar"><i style="width:13%"></i></span> <span class="sm">4/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-17</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Pinnacle</b>
-<div class="sm mut">Tennis · Sportsbook</div></summary>
-<div class="sm mut">The sharpest book there is — it takes the largest limits and moves on sharp money rather than shading against the public — de-vigged to a fair probability and read through The Odds API (ODDS_API_KEY), and backed where it beats the venue&#x27;s ask by 3pp. Planned after every other source: the month&#x27;s paced credits go first to the sport keys with the most contests no tipster, model or book covers. Soccer is de-vigged three-way. Coverage is partial: boxing and MMA well, soccer by league, cricket on majors and internationals, tennis only at the big tournaments — not ITF or Challenger.</div></details></td>
-<td class="num">1<div class="sm mut">0 open</div></td>
-<td class="num">0 v 0.2<div class="sm mut">z -0.52</div></td>
-<td class="num"><span class="mut">-100.0%</span></td>
-<td class="num"><span class="mut">-125.0pp</span></td>
-<td class="num"><span class="mut">+1.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:2%"></i></span> <span class="sm">1/50</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-14</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>Pinnacle</b>
-<div class="sm mut">Cricket · Sportsbook</div></summary>
-<div class="sm mut">The sharpest book there is — it takes the largest limits and moves on sharp money rather than shading against the public — de-vigged to a fair probability and read through The Odds API (ODDS_API_KEY), and backed where it beats the venue&#x27;s ask by 3pp. Planned after every other source: the month&#x27;s paced credits go first to the sport keys with the most contests no tipster, model or book covers. Soccer is de-vigged three-way. Coverage is partial: boxing and MMA well, soccer by league, cricket on majors and internationals, tennis only at the big tournaments — not ITF or Challenger.</div></details></td>
-<td class="num">1<div class="sm mut">0 open</div></td>
-<td class="num">0 v 0.2<div class="sm mut">z -0.53</div></td>
-<td class="num"><span class="mut">-100.0%</span></td>
-<td class="num"><span class="mut">-126.6pp</span></td>
-<td class="num"><span class="mut">-2.0¢</span><div class="sm mut">1 closes</div></td>
-<td><span class="bar"><i style="width:3%"></i></span> <span class="sm">1/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr data-g="behind">
-<td><details class="src"><summary><b>OLBG community tips</b>
-<div class="sm mut">MMA · Tipster site</div></summary>
-<div class="sm mut">A tipster community whose members post a Win Fight tip per bout. Reduced to one call per fight: a fighter must be the most popular selection, with at least three tips and a strict majority of them. Its tipsters compete on profit and often pile onto the draw at long odds; a fight whose top tip is the draw is no call, because the venue fight markets are two-way. Boxing, UFC and other MMA share its one listing page. The only connected tipster for either.</div></details></td>
-<td class="num">5<div class="sm mut">9 open</div></td>
-<td class="num">3 v 3.6<div class="sm mut">z -0.59</div></td>
-<td class="num"><span class="mut">-24.5%</span></td>
-<td class="num"><span class="mut">-18.0pp</span></td>
-<td class="num"><span class="mut">-3.8¢</span><div class="sm mut">5 closes</div></td>
-<td><span class="bar"><i style="width:16%"></i></span> <span class="sm">5/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-15</td></tr><tr class="grp " data-g="waiting"><td colspan="8">Waiting for results · 8</td></tr><tr data-g="waiting"><td colspan="8" class="mut sm">Bets logged, nothing settled yet.</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>Polymarket</b>
-<div class="sm mut">Table Tennis · Prediction market</div></summary>
-<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
-<td class="num">0<div class="sm mut">1 open</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/50</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-19</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
-<div class="sm mut">NFL · Statistical model</div></summary>
-<div class="sm mut">ESPN&#x27;s own win probability (gameProjection). A pure model with no money behind it, which makes it the most likely of the four to be beatable.</div></details></td>
-<td class="num">0<div class="sm mut">5 open · +4 on retired venues</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="sig g">IN PRODUCTION</span><div class="sm mut">moved by hand 2026-09-18</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>DraftKings</b>
-<div class="sm mut">NFL · Sportsbook</div></summary>
-<div class="sm mut">Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line is the hardest public number to beat, so this is the ceiling.</div></details></td>
-<td class="num">0<div class="sm mut">1 open</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
-<div class="sm mut">NFL · Tipster site</div></summary>
-<div class="sm mut">A published computer pick per game, free and dated. It states a projected SCORE rather than a probability, so it is backed at the market price with no edge filter and gets no Brier column — a pick cannot be calibrated.</div></details></td>
-<td class="num">0<div class="sm mut">12 open · +12 on retired venues</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-17</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>Commodity far-tail rule</b>
-<div class="sm mut">Commodities · Rule</div></summary>
-<div class="sm mut">Pre-registered 2026-09-18. Back the near-certain side of a daily commodity strike — WTI, Brent, gold, silver, copper, natural gas or AAA retail gasoline — where it is priced 0.97-0.995 with a two-sided book. Research over 61 days: 99.3% on 778 bets against a 98.3% price, +1.0% after fees; clustered by day and resampled, +0.3% to +1.5% with no losing world; steady in both halves and at every band from 0.95 up. The 0.90-0.97 band returned -1.3%, so this is the tail specifically, not &#x27;back favourites&#x27;. It is SELLING TAIL RISK for a penny: five of 778 bets lost and each cost about sixty wins, in two months that held no commodity shock. Logged and measured in the Sandbox only.</div></details></td>
-<td class="num">0<div class="sm mut">267 open</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-19</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>OLBG community tips</b>
-<div class="sm mut">Boxing · Tipster site</div></summary>
-<div class="sm mut">A tipster community whose members post a Win Fight tip per bout. Reduced to one call per fight: a fighter must be the most popular selection, with at least three tips and a strict majority of them. Its tipsters compete on profit and often pile onto the draw at long odds; a fight whose top tip is the draw is no call, because the venue fight markets are two-way. Boxing, UFC and other MMA share its one listing page. The only connected tipster for either.</div></details></td>
-<td class="num">0<div class="sm mut">2 open · +1 on retired venues</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>SoccerPredictions.ai</b>
+<td><span class="sig n">Too early</span><div class="sm mut">26 more settled to read</div></td>
+<td class="num">2–2<div class="sm mut">4 settled</div></td><td class="num">2 v 2.3<div class="sm mut">-0.3 wins</div></td><td class="num"><span class="mut">-16.0%</span></td>
+<td class="num">12</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Team +0.5 unbeaten rule</b>
+<div class="sm mut">Soccer · Team +0.5 · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-14. Back a team not to lose (+0.5: No on Kalshi&#x27;s market for its opponent to win) where the team is unbeaten in 8+ of its last 10 games in this competition and the opponent won 3 or fewer of its last 10 there (HOF&#x27;s windows, 10+ games each, ESPN results before kickoff). Research: 82.5% on 97 against the teams&#x27; own earlier 70.6% (z +2.56); none of 1,000 shuffled worlds produced a spread rule this strong across the six tried; at Kalshi&#x27;s price just before kickoff 54 of 64 won at ~77% (+11.2% after fees). 37 of those 64 were MLS. Judged against backing No on every Kalshi win market over the same period.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">26 more settled to read</div></td>
+<td class="num">3–1<div class="sm mut">4 settled</div></td><td class="num">3 v 3.1<div class="sm mut">-0.1 wins</div></td><td class="num"><span class="mut">-1.6%</span></td>
+<td class="num">13</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Under 3.5 low-scoring rule</b>
+<div class="sm mut">Soccer · Under 3.5 · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-14. Back under 3.5 goals (No on Kalshi&#x27;s Over 3.5) where BOTH teams scored 1 or fewer in at least 7 of their last 10 games in this competition (HOF&#x27;s way of counting form; 10+ games each, ESPN results before kickoff). Research: 80.5% on 41 matches against the teams&#x27; own earlier 61.7% (z +2.48); at Kalshi&#x27;s under price just before kickoff 23 of 27 won at ~71% (+20.2% after fees). The same form counted across all competitions gave the same answer. Not significant across the 10 rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. Judged against backing the under on every Kalshi match.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
+<td class="num">1–0<div class="sm mut">1 settled</div></td><td class="num">1 v 0.8<div class="sm mut">+0.2 wins</div></td><td class="num"><span class="mut">+24.8%</span></td>
+<td class="num">6</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Team scores 2+ form rule</b>
+<div class="sm mut">Soccer · Team 2+ · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-14. Back a side to score 2+ at the Kalshi ask where it scored 2+ in at least 7 of its last 10 competitive games and its opponent conceded 2+ in at least 7 of theirs. Research: 76.2% on only 21 team-games against a 45.3% own earlier rate. Measured in the Sandbox; not in Production.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
+<td class="num">1–0<div class="sm mut">1 settled</div></td><td class="num">1 v 0.9<div class="sm mut">+0.1 wins</div></td><td class="num"><span class="mut">+4.9%</span></td>
+<td class="num">2</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>SoccerPredictions.ai</b>
 <div class="sm mut">Soccer · Tipster site</div></summary>
 <div class="sm mut">One published tip per fixture. Only plain Home / Away / Draw calls are scored; combined tips such as &#x27;Home &amp; Over 2.5&#x27; are a different bet and are dropped rather than read as a result pick.</div></details></td>
-<td class="num">0<div class="sm mut">23 open</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-19</td></tr><tr data-g="waiting">
-<td><details class="src"><summary><b>Pinnacle</b>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">23</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport" open><summary><b>Tennis</b>
+<span class="mut"> · 4 tested · 1 in Production · best: Tennis favourite-band rule +5.5% on 197</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Tennis favourite-band rule</b>
+<div class="sm mut">Tennis · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-14. Back the player the exchange prices between 0.75 and 0.90 (the ask), on every tennis match the Sandbox lists. Found in 427 settled matches over four days: players priced 0.75-0.90 won 86.4% against 81.1% priced (+5.2% after fees, z +1.26, 88 bets) — the favourite-longshot bias, which is well documented in tennis. Not significant on its own. Judged against backing the favourite on every match over the same period, so it only counts if this band beats favourites in general.</div></details></td>
+<td><span class="sig y">Proven edge</span></td>
+<td class="num">171–26<div class="sm mut">197 settled</div></td><td class="num">171 v 160.1<div class="sm mut">+10.9 wins</div></td><td class="num"><span class="pos">+5.5%</span></td>
+<td class="num">18</td><td><span class="sig y">PRODUCTION</span><div class="sm mut">since 2026-09-17</div></td></tr><tr><td><details class="src"><summary><b>Scores24</b>
+<div class="sm mut">Tennis · Tipster site</div></summary>
+<div class="sm mut">Named human tipsters publishing a written call per match. Cloudflare 403s every plain request, so this is the one source fetched through a real headless browser. Only its MATCH-WINNER tips are scored — its totals and handicap tips settle on a different question than the market they would be booked against.</div></details></td>
+<td><span class="sig n">Behind so far</span><div class="sm mut">15 more settled to read</div></td>
+<td class="num">8–7<div class="sm mut">15 settled</div></td><td class="num">8 v 8.1<div class="sm mut">-0.1 wins</div></td><td class="num"><span class="mut">-2.8%</span></td>
+<td class="num">2</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Polymarket</b>
+<div class="sm mut">Tennis · Prediction market</div></summary>
+<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">22 more settled to read</div></td>
+<td class="num">3–5<div class="sm mut">8 settled</div></td><td class="num">3 v 3.0<div class="sm mut">+0.0 wins</div></td><td class="num"><span class="mut">-15.5%</span></td>
+<td class="num">3</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Pinnacle</b>
+<div class="sm mut">Tennis · Sportsbook</div></summary>
+<div class="sm mut">The sharpest book there is — it takes the largest limits and moves on sharp money rather than shading against the public — de-vigged to a fair probability and read through The Odds API (ODDS_API_KEY), and backed where it beats the venue&#x27;s ask by 3pp. Planned after every other source: the month&#x27;s paced credits go first to the sport keys with the most contests no tipster, model or book covers. Soccer is de-vigged three-way. Coverage is partial: boxing and MMA well, soccer by league, cricket on majors and internationals, tennis only at the big tournaments — not ITF or Challenger.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
+<td class="num">0–1<div class="sm mut">1 settled</div></td><td class="num">0 v 0.2<div class="sm mut">-0.2 wins</div></td><td class="num"><span class="mut">-100.0%</span></td>
+<td class="num">—</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport" open><summary><b>MLB</b>
+<span class="mut"> · 3 tested · 1 in Production</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
+<div class="sm mut">MLB · Statistical model</div></summary>
+<div class="sm mut">ESPN&#x27;s own win probability (gameProjection). A pure model with no money behind it, which makes it the most likely of the four to be beatable.</div></details></td>
+<td><span class="sig w">Promising</span><div class="sm mut">12 more settled to read</div></td>
+<td class="num">9–9<div class="sm mut">18 settled</div></td><td class="num">9 v 7.8<div class="sm mut">+1.2 wins</div></td><td class="num"><span class="mut">+6.9%</span></td>
+<td class="num">32</td><td><span class="sig y">PRODUCTION</span><div class="sm mut">since 2026-09-18</div></td></tr><tr><td><details class="src"><summary><b>Polymarket</b>
+<div class="sm mut">MLB · Prediction market</div></summary>
+<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">22 more settled to read</div></td>
+<td class="num">5–3<div class="sm mut">8 settled</div></td><td class="num">5 v 4.2<div class="sm mut">+0.8 wins</div></td><td class="num"><span class="mut">+29.2%</span></td>
+<td class="num">5</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>DraftKings</b>
+<div class="sm mut">MLB · Sportsbook</div></summary>
+<div class="sm mut">Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line is the hardest public number to beat, so this is the ceiling.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
+<td class="num">1–0<div class="sm mut">1 settled</div></td><td class="num">1 v 0.6<div class="sm mut">+0.4 wins</div></td><td class="num"><span class="mut">+55.3%</span></td>
+<td class="num">6</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport" open><summary><b>NFL</b>
+<span class="mut"> · 3 tested · 1 in Production</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>ESPN FPI / Matchup Predictor</b>
+<div class="sm mut">NFL · Statistical model</div></summary>
+<div class="sm mut">ESPN&#x27;s own win probability (gameProjection). A pure model with no money behind it, which makes it the most likely of the four to be beatable.</div></details></td>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">5</td><td><span class="sig y">PRODUCTION</span><div class="sm mut">since 2026-09-18</div></td></tr><tr><td><details class="src"><summary><b>DraftKings</b>
+<div class="sm mut">NFL · Sportsbook</div></summary>
+<div class="sm mut">Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line is the hardest public number to beat, so this is the ceiling.</div></details></td>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">1</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Covers / OddsShark computer picks</b>
+<div class="sm mut">NFL · Tipster site</div></summary>
+<div class="sm mut">A published computer pick per game, free and dated. It states a projected SCORE rather than a probability, so it is backed at the market price with no edge filter and gets no Brier column — a pick cannot be calibrated.</div></details></td>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">12</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport"><summary><b>Cricket</b>
+<span class="mut"> · 3 tested</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Oddspedia community tips</b>
+<div class="sm mut">Cricket · Tipster site</div></summary>
+<div class="sm mut">A public tipster community — named accounts with a visible record — reduced to a majority consensus per match, because its tipsters routinely take opposite sides of the same game. The only source found that tips the niche cricket Polymarket lists. Cloudflare-protected, so it comes through the headless browser. Tips carry no date, so each is resolved to the soonest fixture between those two sides.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">25 more settled to read</div></td>
+<td class="num">4–1<div class="sm mut">5 settled</div></td><td class="num">4 v 2.3<div class="sm mut">+1.7 wins</div></td><td class="num"><span class="mut">+280.0%</span></td>
+<td class="num">1</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Polymarket</b>
+<div class="sm mut">Cricket · Prediction market</div></summary>
+<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">28 more settled to read</div></td>
+<td class="num">2–0<div class="sm mut">2 settled</div></td><td class="num">2 v 0.4<div class="sm mut">+1.6 wins</div></td><td class="num"><span class="mut">+714.0%</span></td>
+<td class="num">—</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Pinnacle</b>
+<div class="sm mut">Cricket · Sportsbook</div></summary>
+<div class="sm mut">The sharpest book there is — it takes the largest limits and moves on sharp money rather than shading against the public — de-vigged to a fair probability and read through The Odds API (ODDS_API_KEY), and backed where it beats the venue&#x27;s ask by 3pp. Planned after every other source: the month&#x27;s paced credits go first to the sport keys with the most contests no tipster, model or book covers. Soccer is de-vigged three-way. Coverage is partial: boxing and MMA well, soccer by league, cricket on majors and internationals, tennis only at the big tournaments — not ITF or Challenger.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
+<td class="num">0–1<div class="sm mut">1 settled</div></td><td class="num">0 v 0.2<div class="sm mut">-0.2 wins</div></td><td class="num"><span class="mut">-100.0%</span></td>
+<td class="num">—</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport"><summary><b>MMA</b>
+<span class="mut"> · 2 tested</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>OLBG community tips</b>
+<div class="sm mut">MMA · Tipster site</div></summary>
+<div class="sm mut">A tipster community whose members post a Win Fight tip per bout. Reduced to one call per fight: a fighter must be the most popular selection, with at least three tips and a strict majority of them. Its tipsters compete on profit and often pile onto the draw at long odds; a fight whose top tip is the draw is no call, because the venue fight markets are two-way. Boxing, UFC and other MMA share its one listing page. The only connected tipster for either.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">25 more settled to read</div></td>
+<td class="num">3–2<div class="sm mut">5 settled</div></td><td class="num">3 v 3.6<div class="sm mut">-0.6 wins</div></td><td class="num"><span class="mut">-25.6%</span></td>
+<td class="num">9</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>MMA favourite-band rule</b>
+<div class="sm mut">MMA · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-14: the tennis favourite-band rule applied unchanged to MMA — back the fighter the exchange prices between 0.75 and 0.90. Not fitted on MMA at all: the Sandbox had no settled, priced MMA fight when it was added, so this is a clean test of whether the favourite-longshot bias carries across sports. Judged against backing the favourite in every fight over the same period. MMA lists only a handful of fights a week, so it will take months to read.</div></details></td>
+<td><span class="sig n">Too early</span><div class="sm mut">29 more settled to read</div></td>
+<td class="num">1–0<div class="sm mut">1 settled</div></td><td class="num">1 v 0.8<div class="sm mut">+0.2 wins</div></td><td class="num"><span class="mut">+29.4%</span></td>
+<td class="num">3</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport"><summary><b>Table Tennis</b>
+<span class="mut"> · 1 tested</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Polymarket</b>
+<div class="sm mut">Table Tennis · Prediction market</div></summary>
+<div class="sm mut">The venue until 2026-09-13, now a comparison source: its midpoint against the Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. Before the switch it was the benchmark and could not bet.</div></details></td>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">1</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport"><summary><b>Markets</b>
+<span class="mut"> · 1 tested</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>Commodity far-tail rule</b>
+<div class="sm mut">Commodities · Rule</div></summary>
+<div class="sm mut">Pre-registered 2026-09-18. Back the near-certain side of a daily commodity strike — WTI, Brent, gold, silver, copper, natural gas or AAA retail gasoline — where it is priced 0.97-0.995 with a two-sided book. Research over 61 days: 99.3% on 778 bets against a 98.3% price, +1.0% after fees; clustered by day and resampled, +0.3% to +1.5% with no losing world; steady in both halves and at every band from 0.95 up. The 0.90-0.97 band returned -1.3%, so this is the tail specifically, not &#x27;back favourites&#x27;. It is SELLING TAIL RISK for a penny: five of 778 bets lost and each cost about sixty wins, in two months that held no commodity shock. Logged and measured in the Sandbox only.</div></details></td>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">267</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<details class="sport"><summary><b>Boxing</b>
+<span class="mut"> · 2 tested</span></summary>
+<div class="tbl"><table><tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">Open</th><th>Stage</th></tr><tr><td><details class="src"><summary><b>OLBG community tips</b>
+<div class="sm mut">Boxing · Tipster site</div></summary>
+<div class="sm mut">A tipster community whose members post a Win Fight tip per bout. Reduced to one call per fight: a fighter must be the most popular selection, with at least three tips and a strict majority of them. Its tipsters compete on profit and often pile onto the draw at long odds; a fight whose top tip is the draw is no call, because the venue fight markets are two-way. Boxing, UFC and other MMA share its one listing page. The only connected tipster for either.</div></details></td>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">2</td><td><span class="mut sm">Sandbox</span></td></tr><tr><td><details class="src"><summary><b>Pinnacle</b>
 <div class="sm mut">Boxing · Sportsbook</div></summary>
 <div class="sm mut">The sharpest book there is — it takes the largest limits and moves on sharp money rather than shading against the public — de-vigged to a fair probability and read through The Odds API (ODDS_API_KEY), and backed where it beats the venue&#x27;s ask by 3pp. Planned after every other source: the month&#x27;s paced credits go first to the sport keys with the most contests no tipster, model or book covers. Soccer is de-vigged three-way. Coverage is partial: boxing and MMA well, soccer by league, cricket on majors and internationals, tennis only at the big tournaments — not ITF or Challenger.</div></details></td>
-<td class="num">0<div class="sm mut">1 open</div></td>
-<td class="num">—<div class="sm mut"></div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num">—</td>
-<td class="num">—</td>
-<td><span class="bar"><i style="width:0%"></i></span> <span class="sm">0/30</span><div class="sm mut">0/4 marks hold</div></td>
-<td class="num mut sm">2026-09-18</td></tr></table></div>
-<div class="note sm"><b>Won v priced</b>: wins against the wins the prices implied — the test that matters while
-samples are small. <b>v blind</b>: ROI minus the best blind rule (back the favourite / underdog / draw, or
-the rule's own population) on the same contests. <b>Beat the close</b>: closing price minus price paid.
-<b>Record so far</b>: settled bets on the US exchanges, and how many of the four marks a pair would want to
-show before anyone moved it: enough bets, ahead of the prices paid, beating every blind rule, and steady across
-its record. Nothing here promotes anything — <b>Production is entered by hand</b>, and these are the numbers that
-decision is made on. <b>Thresholds are per sport</b>: most read against 30+ bets over
-14+ days at z ≥ 1; high-volume sports
-(Tennis, Table Tennis) against
-50+ bets at z ≥ 1.5, with no day
-span — a stricter bar in place of the calendar. Click a source for what it is. Grey figures are under 30 bets.</div>
+<td><span class="sig n">Waiting for results</span></td>
+<td class="num">—</td><td class="num">—</td><td class="num">—</td>
+<td class="num">1</td><td><span class="mut sm">Sandbox</span></td></tr></table></div></details>
+<div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat $100 a bet at the price
+available before the start. <b>Won v priced</b>: wins against the wins the prices implied — beating that is the
+whole test. <b>Verdict</b>: read only at 30+ settled bets — <i>Proven edge</i> is ahead of the prices by
+z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only <i>Promising</i> or
+<i>Behind so far</i>, and under 10 it is <i>Too early</i>. Production is entered by hand. Click a name for what it is.</div>
 
 <h2>Running now (490)</h2>
 <input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…"><div id="live"><div class="tbl"><table><tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr><tr class="grp"><td colspan="7">Soccer · 27 running</td></tr>
@@ -9070,6 +8959,37 @@ span — a stricter bar in place of the calendar. Click a source for what it is.
 <td class="num neg">−$100</td></tr></table></div></details></div>
 
 <h2>Reference</h2>
+<details class="ref"><summary>Retired, or declared but not connected (7)</summary>
+<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr><tr><td><b>National Weather Service</b>
+<div class="mut sm">Forecaster · weather.gov</div><div class="sm">51 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-15: 12 won v 13.6 priced on 31 settled (z -0.85, -18.8%). The forecast is already in Kalshi&#x27;s temperature prices.</td></tr>
+<tr><td><b>Table tennis 0.55-0.60 band (confirmation test)</b>
+<div class="mut sm">Rule · edge-machine</div><div class="sm">78 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.</td></tr>
+<tr><td><b>MLB fade-the-streak rule (cold team v hot team, last 10)</b>
+<div class="mut sm">Rule · edge-machine</div><div class="sm">7 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-18: 2 won v 2.8 priced on 7 settled (z -0.64, -35.6% after fees). The research edge did not show up on live prices.</td></tr>
+<tr><td><b>SportsGambler</b>
+<div class="mut sm">Tipster site · sportsgambler.com</div><div class="sm">52 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-15: 20 won v 21.2 priced on 43 settled (z -0.36, -7.0%). Its match tips add nothing over the price.</td></tr>
+<tr><td><b>Tennis Explorer</b>
+<div class="mut sm">Tipster site · tennisexplorer.com</div></td>
+<td class="mut">Parser written and kept, but the match page carries a price on only a handful of rows — most cells are empty. Connecting it would have produced an almost-always-zero column indistinguishable from a broken feed.</td></tr>
+<tr><td><b>NFL Pickwatch (expert consensus)</b>
+<div class="mut sm">Tipster site · nflpickwatch.com</div></td>
+<td class="mut">Expert consensus is rendered client-side and the useful views sit behind a paid trial, so there is nothing a plain fetch can read.</td></tr>
+<tr><td><b>Forebet</b>
+<div class="mut sm">Tipster site · forebet.com</div></td>
+<td class="mut">Cloudflare returns 403 to any non-browser request, including from GitHub&#x27;s runners. Reachable only through a headless browser, which this pipeline deliberately does not run.</td></tr>
+<tr><td><b>Kalshi · MLB</b>
+<div class="mut sm">Prediction market · kalshi.com</div><div class="sm">15 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-18: 1 won v 2.4 priced on 6 settled (z -1.23, -70.2% after fees).</td></tr>
+<tr><td><b>Covers / OddsShark computer picks · MLB</b>
+<div class="mut sm">Tipster site · covers.com</div><div class="sm">55 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-18: 8 won v 9.4 priced on 16 settled (z -0.73, -20.2% after fees).</td></tr>
+<tr><td><b>Scores24 · MLB</b>
+<div class="mut sm">Tipster site · scores24.live</div><div class="sm">47 settled bets kept on record</div></td>
+<td class="mut"><b class="neg">Retired</b> 2026-09-18: 12 won v 13.6 priced on 24 settled (z -0.68, -14.9% after fees).</td></tr></table></div></details>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
 <div class="note">The stamp needs <b>50+ settled bets spanning 28+ days</b>
 (50+ fresh bets at z ≥ 2.5, no day span, in high-volume sports),
@@ -9158,37 +9078,6 @@ are skipped (0 last run). Last run's paid calls: none.</div></details>
 <details class="ref"><summary>Feed coverage on the last run</summary><div class="tbl"><table>
 <tr><th>Sport</th><th class="num">Polymarket US</th><th class="num">Polymarket</th><th class="num">Kalshi</th><th class="num">ESPN FPI / Matchup Predictor</th><th class="num">DraftKings</th><th class="num">Covers / OddsShark computer picks</th><th class="num">Oddspedia community tips</th><th class="num">Kalshi BTTS price</th><th class="num">BTTS form rule</th><th class="num">Tennis favourite-band rule</th><th class="num">MMA favourite-band rule</th><th class="num">Kalshi goals price</th><th class="num">Over 1.5 form rule</th><th class="num">Team scores 1+ form rule</th><th class="num">Team +0.5 unbeaten rule</th><th class="num">Kalshi commodity price</th><th class="num">Commodity far-tail rule</th><th class="num">NHL rest rule</th><th class="num">NHL underdog +1.5</th><th class="num">Under 3.5 low-scoring rule</th><th class="num">Team scores 2+ form rule</th><th class="num">Spot price</th><th class="num">OLBG community tips</th><th class="num">SoccerPredictions.ai</th><th class="num">Scores24</th><th class="num">Pinnacle</th></tr>
 <tr><td><b>Soccer</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">23</td><td class="num pos">3</td><td class="num neg">—</td></tr><tr><td><b>Soccer · BTTS</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">79</td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Over 1.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">79</td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team 1+</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">114</td><td class="num mut">n/a</td><td class="num pos">9</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team 2+</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">114</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">2</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Under 3.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">79</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">6</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Soccer · Team +0.5</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">158</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">13</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Tennis</b></td><td class="num pos">40</td><td class="num pos">29</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">14</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">2</td><td class="num neg">0</td></tr><tr><td><b>Table Tennis</b></td><td class="num pos">40</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Boxing</b></td><td class="num pos">18</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">5</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td></tr><tr><td><b>MMA</b></td><td class="num pos">17</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">5</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">5</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td></tr><tr><td><b>NFL</b></td><td class="num pos">15</td><td class="num pos">15</td><td class="num pos">15</td><td class="num pos">15</td><td class="num pos">15</td><td class="num pos">12</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td></tr><tr><td><b>Cricket</b></td><td class="num pos">5</td><td class="num pos">5</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td></tr><tr><td><b>MLB</b></td><td class="num pos">37</td><td class="num pos">31</td><td class="num mut">n/a</td><td class="num pos">33</td><td class="num pos">11</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>NHL · Rest</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">0</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>NHL · Puck line</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num neg">—</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Climate</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Crypto</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">1</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Economics</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Commodities</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num pos">400</td><td class="num pos">79</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Finance</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Politics</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr><tr><td><b>Elections</b></td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td><td class="num mut">n/a</td></tr></table></div></details>
-<details class="ref"><summary>Retired, or declared but not connected (7)</summary>
-<div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr><tr><td><b>National Weather Service</b>
-<div class="mut sm">Forecaster · weather.gov</div><div class="sm">51 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-15: 12 won v 13.6 priced on 31 settled (z -0.85, -18.8%). The forecast is already in Kalshi&#x27;s temperature prices.</td></tr>
-<tr><td><b>Table tennis 0.55-0.60 band (confirmation test)</b>
-<div class="mut sm">Rule · edge-machine</div><div class="sm">78 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.</td></tr>
-<tr><td><b>MLB fade-the-streak rule (cold team v hot team, last 10)</b>
-<div class="mut sm">Rule · edge-machine</div><div class="sm">7 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-18: 2 won v 2.8 priced on 7 settled (z -0.64, -35.6% after fees). The research edge did not show up on live prices.</td></tr>
-<tr><td><b>SportsGambler</b>
-<div class="mut sm">Tipster site · sportsgambler.com</div><div class="sm">52 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-15: 20 won v 21.2 priced on 43 settled (z -0.36, -7.0%). Its match tips add nothing over the price.</td></tr>
-<tr><td><b>Tennis Explorer</b>
-<div class="mut sm">Tipster site · tennisexplorer.com</div></td>
-<td class="mut">Parser written and kept, but the match page carries a price on only a handful of rows — most cells are empty. Connecting it would have produced an almost-always-zero column indistinguishable from a broken feed.</td></tr>
-<tr><td><b>NFL Pickwatch (expert consensus)</b>
-<div class="mut sm">Tipster site · nflpickwatch.com</div></td>
-<td class="mut">Expert consensus is rendered client-side and the useful views sit behind a paid trial, so there is nothing a plain fetch can read.</td></tr>
-<tr><td><b>Forebet</b>
-<div class="mut sm">Tipster site · forebet.com</div></td>
-<td class="mut">Cloudflare returns 403 to any non-browser request, including from GitHub&#x27;s runners. Reachable only through a headless browser, which this pipeline deliberately does not run.</td></tr>
-<tr><td><b>Kalshi · MLB</b>
-<div class="mut sm">Prediction market · kalshi.com</div><div class="sm">15 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-18: 1 won v 2.4 priced on 6 settled (z -1.23, -70.2% after fees).</td></tr>
-<tr><td><b>Covers / OddsShark computer picks · MLB</b>
-<div class="mut sm">Tipster site · covers.com</div><div class="sm">55 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-18: 8 won v 9.4 priced on 16 settled (z -0.73, -20.2% after fees).</td></tr>
-<tr><td><b>Scores24 · MLB</b>
-<div class="mut sm">Tipster site · scores24.live</div><div class="sm">47 settled bets kept on record</div></td>
-<td class="mut"><b class="neg">Retired</b> 2026-09-18: 12 won v 13.6 priced on 24 settled (z -0.68, -14.9% after fees).</td></tr></table></div></details>
 <details class="ref"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
 and are backed only on a 3pp disagreement with the price. <b>Polymarket US</b> is the venue
@@ -9200,12 +9089,6 @@ A positive ROI under 30 settled bets is not a finding.</div></details>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
-document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
-  const t = b.dataset.tab;
-  document.querySelectorAll('#pairs tr[data-g]').forEach(tr => tr.hidden = t !== 'all' && tr.dataset.g !== t);
-}));
-document.querySelector('#tabs button.on')?.click();
 document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {
   const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
   box.querySelectorAll('details').forEach(dt => { if (q) dt.open = true; });

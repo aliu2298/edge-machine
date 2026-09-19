@@ -421,7 +421,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>Edge Machine · Today</h1>
 <div class="sub">Every tracked fixture kicking off today · the leads' control group · all times CT · updated {esc(now)}</div>
 <div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a href="./record.html">Record</a>
+<a href="./streaks.html">Streaks</a><a href="./sandbox.html">Sandbox</a>
 <a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
 
 <div class="note">The whole day, in kickoff order: <b>what the rules picked, what they
