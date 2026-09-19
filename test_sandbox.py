@@ -2338,7 +2338,7 @@ _gevs = {
 }
 _gst = {}
 _grows = S.fetch_kalshi_goals(fixtures=_gall, now=_g0, events_by_series=_gevs, stats=_gst)
-eq({k: sorted(r["market_id"] for r in v) for k, v in _grows.items()},
+eq({k: sorted(r["market_id"] for r in v) for k, v in _grows.items() if k in S.GOALS_BASE},
    {"soccer_o15": ["KXEPLTOTAL-26SEP15GOALEA-2", "KXEPLTOTAL-26SEP16DULSIE-2"],
     "soccer_team1": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", "KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"],
     "soccer_team2": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"],
@@ -2959,6 +2959,36 @@ eq((_rr["v"], _rr["removed"]["a"]["n"], _rr["removed"]["at"]), ("removed", 40, "
    "a removed pair shows as removed, with the 40 bets it was removed on, not as waiting")
 ok("Removed 2026-09-18 on 16 won" in SB._row(_rr), "and its row says what it was removed on")
 ok("Removed from Production:" in SB.insights([_rr]), "and the summary names it")
+
+# ---- Cups and Internationals: the same form rules as SEPARATE Sandbox pairs (2026-09-19) ----
+_cupfx = [dict(f, comp="cup") if f.get("played") is False else dict(f, comp="league") for f in _gall]
+_cevs = {k.replace("KXEPL", "KXEFLCUP"): [dict(ev, event_ticker=ev["event_ticker"].replace("KXEPL", "KXEFLCUP"),
+                                              markets=[dict(m, ticker=m["ticker"].replace("KXEPL", "KXEFLCUP")) for m in ev["markets"]])
+                                         for ev in v] for k, v in _gevs.items()}
+_crows = S.fetch_kalshi_goals(fixtures=_cupfx, now=_g0, events_by_series=_cevs)
+eq(sorted(r["market_id"] for r in _crows["soccer_o15_cup"]),
+   ["KXEFLCUPTOTAL-26SEP15GOALEA-2", "KXEFLCUPTOTAL-26SEP16DULSIE-2"],
+   "an EFL Cup totals market lands in the Over 1.5 · Cups domain")
+eq((len(_crows["soccer_o15"]), {r["comp"] for r in _crows["soccer_o15_cup"]}), (0, {"cup"}),
+   "and never in the league domain, which the Production pair reads")
+_lrows = S.fetch_kalshi_goals(fixtures=_cupfx, now=_g0, events_by_series=_gevs)
+eq(len(_lrows["soccer_o15"]), 0, "a league market is not matched to a cup tie between the same clubs")
+eq([p["market_id"] for p in S.fetch_o15_form_l10("soccer_o15_cup", universe=_crows, fixtures=_cupfx)],
+   ["KXEFLCUPTOTAL-26SEP15GOALEA-2"], "the Over 1.5 rule reads the cup domain with the same thresholds")
+eq((S._form_league({"comp": "cup", "league": "EFL Cup"}), S._form_league({"league": "Serie A"})),
+   (None, "Serie A"), "cup and international pairs count form across all competitions; league pairs as before")
+for _src in ("o15_form_l10", "team1_form_l5", "team2_form_l10", "u35_low_scoring", "p05_unbeaten", "btts_form_l10"):
+    _base = S.SOURCES[_src]["sports"][0]
+    eq(S.SOURCES[_src]["sports"], [_base, _base + "_cup", _base + "_intl"], f"{_src} runs as league, Cups and Internationals pairs")
+eq(S.SPORTS["soccer_o15_intl"], "Soccer · Over 1.5 · Internationals", "twins are labelled for review under Soccer")
+ok(not any(k.endswith(("_cup", "|soccer_o15_intl")) or "_cup" in k or "_intl" in k for k in T.PAIR_OVERRIDES),
+   "no cup or international pair is in Production")
+ok(not T.placeable(dict(_crows["soccer_o15_cup"][0], pick="a", bet=True)),
+   "and the Production feed could not publish one if it were")
+_twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_form_l10"],
+             a=dict(n=0, won=0, expected=0, z=0, roi_fee=None), open=2, last="", prod=False, moved="", v="waiting")
+eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")
+ok("CUPS PAIR" in SB._row(_twin) and "EFL Cup" in SB._row(_twin), "its row says what it covers and that it is separate")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

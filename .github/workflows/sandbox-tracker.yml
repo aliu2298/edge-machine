@@ -88,7 +88,7 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/sandbox.html public_site/production.html data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json"
+          PUBLISHED="public_site/sandbox.html public_site/production.html data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
 
           git add $PUBLISHED
           if git diff --cached --quiet; then

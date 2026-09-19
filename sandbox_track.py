@@ -385,12 +385,12 @@ def collect(verbose=True):
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
-        if sport == "soccer_btts":
+        if sport in S.BTTS_SPORTS:
             bstats = {}
             try:
-                rows = S.fetch_kalshi_btts(stats=bstats)
+                rows = S.fetch_kalshi_btts(stats=bstats, scope=sport[len("soccer_btts"):])
             except Exception as e:
-                print(f"  ! kalshi/soccer_btts failed: {type(e).__name__}: {str(e)[:70]}")
+                print(f"  ! kalshi/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
                 rows = []
             universe[sport] = rows
             coverage.setdefault(sport, {})["kalshi_venue"] = len(rows)

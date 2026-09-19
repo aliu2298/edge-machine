@@ -32,7 +32,7 @@ STAMP = {
 # The board covers two different things now, and one table of fourteen columns would be
 # unreadable. Sports are contests between two named sides; the rest are yes/no questions
 # with a forecaster on the other side of them.
-SPORT_KEYS = ["soccer", "soccer_btts", "soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05", "tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb", "nhl_rest", "nhl_pl"]
+SPORT_KEYS = [k for k in S.SPORTS if k.startswith("soccer")] + ["tennis", "table_tennis", "boxing", "mma", "nfl", "cricket", "mlb", "nhl_rest", "nhl_pl"]
 
 # Long lists are the part of the page that grows without bound. The first few rows show
 # what the list is; the rest sit behind a toggle so the tables that carry the verdicts
@@ -566,7 +566,15 @@ def _who(r):
     """'Tennis favourite-band rule' or 'ESPN FPI / Matchup Predictor · MLB'."""
     label = r["meta"]["label"].split(" (")[0]
     kind = r["meta"].get("kind")
-    return label if kind == "Rule" else f"{label} · {S.SPORTS.get(r['sport'], r['sport'])}"
+    sfx = _scope(r["sport"])
+    if kind == "Rule":
+        return f"{label} · {S.SCOPE_LABEL[sfx]}" if sfx else label
+    return f"{label} · {S.SPORTS.get(r['sport'], r['sport'])}"
+
+
+def _scope(sport):
+    """'_cup' / '_intl' for a soccer form twin, '' otherwise."""
+    return next((x for x in S.SCOPE_LABEL if str(sport).endswith(x)), "")
 
 
 def _rec(r):
@@ -656,9 +664,14 @@ def _row(r):
            if a["n"] else "—")
     stage = (f'<span class="sig y">PRODUCTION</span><div class="sm mut">since {esc(r["moved"])}</div>'
              if r["prod"] else '<span class="mut sm">Sandbox</span>')
-    return f"""<tr><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>
+    sfx = _scope(r["sport"])
+    frags = S.CUP_FRAGS if sfx == "_cup" else S.INTL_FRAGS
+    scope_note = (f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join(frags.values())))}</b></div>'
+                  if sfx else "")
+    tag = f' <span class="sig w">{esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
+    return f"""<tr><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
 <div class="sm mut">{esc(sub)} · {esc(meta['kind'])}</div></summary>
-<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
+{scope_note}<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""

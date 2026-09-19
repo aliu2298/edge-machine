@@ -63,6 +63,17 @@ SPORTS = {
     "elections":    "Elections",
 }
 
+GOALS_SPORTS_ALL = tuple(b + x for b in ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
+                         for x in ("", "_cup", "_intl"))
+
+# Each soccer form market gets a Cups and an Internationals twin, listed right after it
+# (see SCOPES). Labels read "Soccer · Over 1.5 · Cups" so the page files them under Soccer.
+SPORTS = dict(
+    [(k, v) for k, v in SPORTS.items() if not k.startswith("soccer_")] [:1]
+    + [(k2, v2) for k, v in SPORTS.items() if k.startswith("soccer_")
+       for k2, v2 in ((k, v), (k + "_cup", v + " · Cups"), (k + "_intl", v + " · Internationals"))]
+    + [(k, v) for k, v in SPORTS.items() if not k.startswith("soccer_")][1:])
+
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
 # six returns open, tradeable markets. table-tennis is the surprise — Polymarket carries
 # a deep book of Ukrainian/WTT singles matches.
@@ -141,13 +152,13 @@ SOURCES = {
              "sample in a week rather than months."),
     "btts_market": dict(
         label="Kalshi BTTS price (every match)", kind="Baseline", connected=True,
-        site="kalshi.com", sports=["soccer_btts"],
+        site="kalshi.com", sports=["soccer_btts", "soccer_btts_cup", "soccer_btts_intl"],
         note="The market's own midpoint on every Kalshi both-teams-to-score market the Sandbox "
              "lists. Never bets. It is the population a BTTS rule is judged against: what "
              "backing Yes on every match would have made over the same period."),
     "btts_form_l10": dict(
         label="BTTS form rule (both teams 7+ of last 10)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_btts"], baseline="population",
+        site="edge-machine", sports=["soccer_btts", "soccer_btts_cup", "soccer_btts_intl"], baseline="population",
         note="Pre-registered 2026-09-13, with no fitted number. Back Yes at the Kalshi ask on "
              "every match where BOTH teams saw both teams score in at least 7 of their last 10 "
              "competitive games (ESPN results strictly before kickoff). Found in research: "
@@ -197,13 +208,13 @@ SOURCES = {
              "the same games."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
-        site="kalshi.com", sports=["soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05"],
+        site="kalshi.com", sports=list(GOALS_SPORTS_ALL),
         note="The market's own midpoint on every Kalshi over-1.5 and team-total market the "
              "Sandbox lists. Never bets. The population each goals rule is judged against: "
              "backing Yes on every listed match of that market over the same period."),
     "o15_form_l10": dict(
         label="Over 1.5 form rule (both teams 9+ of last 10)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_o15"], baseline="population",
+        site="edge-machine", sports=["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"], baseline="population",
         note="Pre-registered 2026-09-14 from research fixed before it ran. Back over 1.5 at the "
              "Kalshi ask where BOTH teams' games went over 1.5 in at least 9 of their last 10 "
              "competitive games (10+ games each, ESPN results strictly before kickoff). "
@@ -212,7 +223,7 @@ SOURCES = {
              "The same rule selects the Leads board's over-1.5 cards since 2026-09-14."),
     "team1_form_l5": dict(
         label="Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_team1"], baseline="population",
+        connected=True, site="edge-machine", sports=["soccer_team1", "soccer_team1_cup", "soccer_team1_intl"], baseline="population",
         note="Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it "
              "scored in each of its last 5 competitive games and its opponent conceded in each "
              "of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own "
@@ -220,7 +231,7 @@ SOURCES = {
              "In Production since 2026-09-18, moved by hand."),
     "p05_unbeaten": dict(
         label="Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_p05"], baseline="population",
+        connected=True, site="edge-machine", sports=["soccer_p05", "soccer_p05_cup", "soccer_p05_intl"], baseline="population",
         note="Pre-registered 2026-09-14. Back a team not to lose (+0.5: No on Kalshi's market for "
              "its opponent to win) where the team is unbeaten in 8+ of its last 10 games in this "
              "competition and the opponent won 3 or fewer of its last 10 there (HOF's windows, "
@@ -274,7 +285,7 @@ SOURCES = {
              "question is closed. Every listed game is backed, so nothing here is selected."),
     "u35_low_scoring": dict(
         label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_u35"], baseline="population",
+        connected=True, site="edge-machine", sports=["soccer_u35", "soccer_u35_cup", "soccer_u35_intl"], baseline="population",
         note="Pre-registered 2026-09-14. Back under 3.5 goals (No on Kalshi's Over 3.5) where BOTH "
              "teams scored 1 or fewer in at least 7 of their last 10 games in this competition "
              "(HOF's way of counting form; 10+ games each, ESPN results before kickoff). Research: "
@@ -285,7 +296,7 @@ SOURCES = {
              "Judged against backing the under on every Kalshi match."),
     "team2_form_l10": dict(
         label="Team scores 2+ form rule (7+/10 scored 2+, opponent 7+/10 conceded 2+)",
-        kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2"],
+        kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2", "soccer_team2_cup", "soccer_team2_intl"],
         baseline="population",
         note="Pre-registered 2026-09-14. Back a side to score 2+ at the Kalshi ask where it "
              "scored 2+ in at least 7 of its last 10 competitive games and its opponent "
@@ -2349,6 +2360,33 @@ BTTS_LEAGUES = {                 # Kalshi fragment -> board league name (ESPN fo
     "LIGAPORTUGAL": "Primeira Liga", "SAUDIPL": "Saudi Pro League",
     "SCOTTISHPREM": "Scottish Premiership",
 }
+# CUPS and INTERNATIONALS (2026-09-19). The same six form rules, applied to cup ties and to
+# national teams as SEPARATE Sandbox pairs — "soccer_o15_cup", "soccer_o15_intl" and so on —
+# so their records never mix with the league rules', and nothing reaches Production unless it
+# is moved there by hand. Kalshi series with goals markets, checked 2026-09-19 against what
+# Kalshi has actually listed; Copa del Rey and Coupe de France are left out (Kalshi has listed
+# almost no goals markets for either). The Nations League series exists but had never listed a
+# goals market by that date: it is wired so the rules act the day Kalshi lists one.
+CUP_FRAGS = {
+    "UECL": "UEFA Conference League", "EFLCUP": "EFL Cup", "FACUP": "FA Cup",
+    "DFBPOKAL": "DFB Pokal", "COPPAITALIA": "Coppa Italia", "TACAPORT": "Taça de Portugal",
+    "KNVBCUP": "KNVB Cup", "SCOCUP": "Scottish Cup", "LEAGUESCUP": "Leagues Cup",
+    "USOPENCUP": "US Open Cup", "CONMEBOLLIB": "Copa Libertadores",
+    "CONMEBOLSUD": "Copa Sudamericana", "AFCCL": "AFC Champions League",
+}
+INTL_FRAGS = {"UEFANL": "UEFA Nations League", "INTLFRIENDLY": "International Friendly"}
+SCOPES = (("", BTTS_LEAGUES, "league"), ("_cup", CUP_FRAGS, "cup"), ("_intl", INTL_FRAGS, "intl"))
+SCOPE_LABEL = {"_cup": "Cups", "_intl": "Internationals"}
+SCOPE_NOTE = {
+    "_cup": ("CUPS PAIR — the same rule applied only to cup ties ({}). Form is every competitive "
+             "game (league and cup, lower tiers included), 90-minute results only. A separate "
+             "record from the league rule; not in Production."),
+    "_intl": ("INTERNATIONALS PAIR — the same rule applied only to national teams ({}). Form is a "
+              "national team's internationals over two years, friendlies included, 90-minute "
+              "results only. A separate record from the league rule; not in Production."),
+}
+BTTS_SPORTS = ("soccer_btts", "soccer_btts_cup", "soccer_btts_intl")
+
 BTTS_FORM_WINDOW = 10
 BTTS_FORM_MIN = 7
 
@@ -2361,7 +2399,7 @@ def _espn_fixtures():
         return []
 
 
-def fetch_kalshi_btts(horizon_days=4, fixtures=None, now=None, stats=None, events_by_series=None):
+def fetch_kalshi_btts(horizon_days=4, fixtures=None, now=None, stats=None, events_by_series=None, scope=""):
     """Kalshi soccer BTTS markets as yes/no universe rows, each tied to its ESPN fixture.
 
     A row is kept only when the Kalshi event (home first) matches an upcoming ESPN fixture
@@ -2381,7 +2419,9 @@ def fetch_kalshi_btts(horizon_days=4, fixtures=None, now=None, stats=None, event
         if now < ko <= now + timedelta(days=horizon_days):
             upcoming.append((ko, f))
     rows, listed = [], 0
-    for frag, league in BTTS_LEAGUES.items():
+    _sfx, frags, comp = next(x for x in SCOPES if x[0] == scope)
+    upcoming = [(ko, f) for ko, f in upcoming if f.get("comp", "league") == comp]
+    for frag, league in frags.items():
         series = f"KX{frag}BTTS"
         if events_by_series is not None:
             events = events_by_series.get(series, [])
@@ -2415,7 +2455,7 @@ def fetch_kalshi_btts(horizon_days=4, fixtures=None, now=None, stats=None, event
                                           and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD)
             tradeable = {"a": tight(yb, ya), "b": tight(nb, na)}
             rows.append(dict(
-                sport="soccer_btts", venue="kalshi_binary", market_id=m["ticker"],
+                sport="soccer_btts" + scope, venue="kalshi_binary", market_id=m["ticker"], comp=comp,
                 label=f"{f['home']} v {f['away']}: both teams to score",
                 side_a="Yes", side_b="No", price_a=ya, price_b=na, price_draw=None,
                 mid_a=round((ya + (yb if yb is not None else ya)) / 2, 4),
@@ -2483,7 +2523,8 @@ def fetch_btts_form_l10(sport, universe=None, fixtures=None):
 # Kalshi lists no team totals for the Eredivisie or Primeira Liga (checked 2026-09-14); those
 # fixtures simply produce no team rows.
 NHL_SPORTS = ("nhl_rest", "nhl_pl")
-GOALS_SPORTS = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
+GOALS_BASE = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
+GOALS_SPORTS = GOALS_BASE + tuple(b + x for x in ("_cup", "_intl") for b in GOALS_BASE)
 
 # The three rules found in the ESPN research of 2026-09-13 (530 matches, cutoffs fixed before
 # the run). Every count is over COMPETITIVE games that kicked off strictly before the match,
@@ -2560,69 +2601,74 @@ def fetch_kalshi_goals(horizon_days=4, fixtures=None, now=None, stats=None, even
     upcoming = _upcoming_espn(fixtures, now, horizon_days)
     out = {s: [] for s in GOALS_SPORTS}
     listed = 0
-    for frag, league in BTTS_LEAGUES.items():
-        series = f"KX{frag}TOTAL"
-        for ev in _kalshi_open_events(series, events_by_series):
-            hit = _espn_fixture_for(ev, upcoming)
-            # soccer_u35 is the Over 3.5 market itself: side a = Yes (over), side b = No (under).
-            for line, sport in (("over 1.5", "soccer_o15"), ("over 3.5", "soccer_u35")):
-                m = next((x for x in ev.get("markets") or []
-                          if line in str(x.get("yes_sub_title") or "").lower()
-                          and str(x.get("status", "")).lower() in ("active", "open")), None)
-                if not m:
-                    continue
-                listed += 1
-                row = hit and _yes_no_row(m, sport, f"{hit[1]['home']} v {hit[1]['away']}: {line} goals",
-                                          hit[0], hit[1], league, series)
-                if row:
-                    out[sport].append(row)
-        # soccer_p05: each side's win market on the GAME event. Side a = Yes (that side wins),
-        # side b = No — the OTHER team does not lose, i.e. the other team +0.5. The row's
-        # `team` is that other team (the +0.5 side), `opponent` the market's own side.
-        series = f"KX{frag}GAME"
-        for ev in _kalshi_open_events(series, events_by_series):
-            hit = _espn_fixture_for(ev, upcoming)
-            for m in ev.get("markets") or []:
-                if _kalshi_is_tie(m) or str(m.get("status", "")).lower() not in ("active", "open"):
-                    continue
-                listed += 1
-                if not hit:
-                    continue
-                ko, f = hit
-                who = str(m.get("yes_sub_title") or "")
-                sh, sa = _score(who, f["home"], "soccer"), _score(who, f["away"], "soccer")
-                if max(sh, sa) < 0.5 or sh == sa:
-                    continue
-                winner, other = (f["home"], f["away"]) if sh > sa else (f["away"], f["home"])
-                row = _yes_no_row(m, "soccer_p05", f"{f['home']} v {f['away']}: {winner} to win (No = {other} +0.5)",
-                                  ko, f, league, series, team=other, opponent=winner)
-                if row:
-                    out["soccer_p05"].append(row)
-        series = f"KX{frag}TEAMTOTAL"
-        for ev in _kalshi_open_events(series, events_by_series):
-            hit = _espn_fixture_for(ev, upcoming)
-            for m in ev.get("markets") or []:
-                sub = str(m.get("yes_sub_title") or "")
-                line = sub.lower().rsplit(" over ", 1)
-                if len(line) != 2 or str(m.get("status", "")).lower() not in ("active", "open"):
-                    continue
-                sport = {"0.5 goals": "soccer_team1", "1.5 goals": "soccer_team2"}.get(line[1].strip())
-                if not sport:
-                    continue
-                listed += 1
-                if not hit:
-                    continue
-                ko, f = hit
-                who = sub[:len(line[0])]
-                sh, sa = _score(who, f["home"], "soccer"), _score(who, f["away"], "soccer")
-                if max(sh, sa) < 0.5 or sh == sa:
-                    continue                          # cannot tell which side the market is about
-                team, opp = (f["home"], f["away"]) if sh > sa else (f["away"], f["home"])
-                n = 1 if sport == "soccer_team1" else 2
-                row = _yes_no_row(m, sport, f"{f['home']} v {f['away']}: {team} to score {n}+",
-                                  ko, f, league, series, team=team, opponent=opp)
-                if row:
-                    out[sport].append(row)
+    for sfx, frags, comp in SCOPES:
+        # A league series is matched only to league fixtures, a cup series to cup ties, an
+        # international one to internationals: two clubs can meet in the league and the cup
+        # within days, and the market must land on the right match.
+        up = [(ko, f) for ko, f in upcoming if f.get("comp", "league") == comp]
+        for frag, league in frags.items():
+            series = f"KX{frag}TOTAL"
+            for ev in _kalshi_open_events(series, events_by_series):
+                hit = _espn_fixture_for(ev, up)
+                # soccer_u35 is the Over 3.5 market itself: side a = Yes (over), side b = No (under).
+                for line, sport in (("over 1.5", "soccer_o15" + sfx), ("over 3.5", "soccer_u35" + sfx)):
+                    m = next((x for x in ev.get("markets") or []
+                              if line in str(x.get("yes_sub_title") or "").lower()
+                              and str(x.get("status", "")).lower() in ("active", "open")), None)
+                    if not m:
+                        continue
+                    listed += 1
+                    row = hit and _yes_no_row(m, sport, f"{hit[1]['home']} v {hit[1]['away']}: {line} goals",
+                                              hit[0], hit[1], league, series, comp=comp)
+                    if row:
+                        out[sport].append(row)
+            # soccer_p05: each side's win market on the GAME event. Side a = Yes (that side wins),
+            # side b = No — the OTHER team does not lose, i.e. the other team +0.5. The row's
+            # `team` is that other team (the +0.5 side), `opponent` the market's own side.
+            series = f"KX{frag}GAME"
+            for ev in _kalshi_open_events(series, events_by_series):
+                hit = _espn_fixture_for(ev, up)
+                for m in ev.get("markets") or []:
+                    if _kalshi_is_tie(m) or str(m.get("status", "")).lower() not in ("active", "open"):
+                        continue
+                    listed += 1
+                    if not hit:
+                        continue
+                    ko, f = hit
+                    who = str(m.get("yes_sub_title") or "")
+                    sh, sa = _score(who, f["home"], "soccer"), _score(who, f["away"], "soccer")
+                    if max(sh, sa) < 0.5 or sh == sa:
+                        continue
+                    winner, other = (f["home"], f["away"]) if sh > sa else (f["away"], f["home"])
+                    row = _yes_no_row(m, "soccer_p05" + sfx, f"{f['home']} v {f['away']}: {winner} to win (No = {other} +0.5)",
+                                      ko, f, league, series, team=other, opponent=winner, comp=comp)
+                    if row:
+                        out["soccer_p05" + sfx].append(row)
+            series = f"KX{frag}TEAMTOTAL"
+            for ev in _kalshi_open_events(series, events_by_series):
+                hit = _espn_fixture_for(ev, up)
+                for m in ev.get("markets") or []:
+                    sub = str(m.get("yes_sub_title") or "")
+                    line = sub.lower().rsplit(" over ", 1)
+                    if len(line) != 2 or str(m.get("status", "")).lower() not in ("active", "open"):
+                        continue
+                    sport = {"0.5 goals": "soccer_team1" + sfx, "1.5 goals": "soccer_team2" + sfx}.get(line[1].strip())
+                    if not sport:
+                        continue
+                    listed += 1
+                    if not hit:
+                        continue
+                    ko, f = hit
+                    who = sub[:len(line[0])]
+                    sh, sa = _score(who, f["home"], "soccer"), _score(who, f["away"], "soccer")
+                    if max(sh, sa) < 0.5 or sh == sa:
+                        continue                          # cannot tell which side the market is about
+                    team, opp = (f["home"], f["away"]) if sh > sa else (f["away"], f["home"])
+                    n = 1 if sport.startswith("soccer_team1") else 2
+                    row = _yes_no_row(m, sport, f"{f['home']} v {f['away']}: {team} to score {n}+",
+                                      ko, f, league, series, team=team, opponent=opp, comp=comp)
+                    if row:
+                        out[sport].append(row)
     for rows in out.values():
         rows.sort(key=lambda r: r["start"])
     if stats is not None:
@@ -3133,14 +3179,22 @@ def _team_rule(sport, universe, fixtures, n, window, need):
 P05_WINDOW, P05_UNBEATEN_MIN, P05_OPP_WINS_MAX = 10, 8, 3
 
 
+def _form_league(r):
+    """The competition the +0.5 and under-3.5 rules count form in: the row's own league (HOF's
+    way) — except for cup ties and internationals, where no team plays 10 games in one
+    competition, so every competitive game counts (the cup and international pairs only)."""
+    return None if r.get("comp") in ("cup", "intl") else r.get("league")
+
+
 def fetch_p05_unbeaten(sport, universe=None, fixtures=None):
     """Back a team +0.5 (No on its opponent winning) where the team is unbeaten in 8+ of its last
     10 games in this competition and the opponent won 3 or fewer of its last 10 there."""
     fixtures = _espn_fixtures() if fixtures is None else fixtures
     out = []
     for r, ko in _rule_rows(sport, universe):
-        u, _un, uall = team_form(fixtures, r.get("team"), ko, lambda gf, ga: gf >= ga, P05_WINDOW, league=r.get("league"))
-        w, _wn, wall = team_form(fixtures, r.get("opponent"), ko, lambda gf, ga: gf > ga, P05_WINDOW, league=r.get("league"))
+        lg = _form_league(r)
+        u, _un, uall = team_form(fixtures, r.get("team"), ko, lambda gf, ga: gf >= ga, P05_WINDOW, league=lg)
+        w, _wn, wall = team_form(fixtures, r.get("opponent"), ko, lambda gf, ga: gf > ga, P05_WINDOW, league=lg)
         if min(uall, wall) >= P05_WINDOW and u >= P05_UNBEATEN_MIN and w <= P05_OPP_WINS_MAX:
             out.append(dict(market_id=r["market_id"], pick="b"))
     return out
@@ -3156,8 +3210,9 @@ def fetch_u35_low_scoring(sport, universe=None, fixtures=None):
     low = lambda gf, ga: gf <= U35_MAX_SCORED
     out = []
     for r, ko in _rule_rows(sport, universe):
-        h, _hn, hall = team_form(fixtures, r.get("espn_home"), ko, low, U35_WINDOW, league=r.get("league"))
-        a, _an, aall = team_form(fixtures, r.get("espn_away"), ko, low, U35_WINDOW, league=r.get("league"))
+        lg = _form_league(r)
+        h, _hn, hall = team_form(fixtures, r.get("espn_home"), ko, low, U35_WINDOW, league=lg)
+        a, _an, aall = team_form(fixtures, r.get("espn_away"), ko, low, U35_WINDOW, league=lg)
         if min(hall, aall) >= U35_WINDOW and h >= U35_MIN and a >= U35_MIN:
             out.append(dict(market_id=r["market_id"], pick="b"))
     return out

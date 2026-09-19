@@ -77,6 +77,36 @@ FORM_LEAGUES = {
 
 # Form history. 180 days comfortably covers a mid-season domestic run AND bridges the
 # European summer gap, so early-season sides still have a usable sample.
+# CUPS and INTERNATIONALS (2026-09-19) — for the Sandbox's cup and international form-rule
+# pairs, never for a lead or a Production pair. Cup ties are counted as competitive form for
+# the clubs in them; the lower tiers are there so a cup opponent from League Two or the
+# 2. Bundesliga has a form line at all. National teams count every international, friendlies
+# included (without them only 29 of the 54 Nations League sides had 10 games in a year), over
+# a two-year window. Extra-time and penalty games (STATUS_FINAL_AET / _PEN) are never parsed,
+# so form is only ever counted from games decided in 90 minutes — how Kalshi settles.
+CUP_LEAGUES = {
+    "uefa.europa.conf": "UEFA Conference League", "eng.league_cup": "EFL Cup",
+    "eng.fa": "FA Cup", "ger.dfb_pokal": "DFB Pokal", "ita.coppa_italia": "Coppa Italia",
+    "por.taca.portugal": "Taça de Portugal", "ned.cup": "KNVB Cup", "sco.tennents": "Scottish Cup",
+    "usa.open": "US Open Cup", "concacaf.leagues.cup": "Leagues Cup",
+    "conmebol.libertadores": "Copa Libertadores", "conmebol.sudamericana": "Copa Sudamericana",
+    "afc.champions": "AFC Champions League",
+}
+CUP_FORM_LEAGUES = {
+    "eng.2": "EFL Championship", "eng.3": "EFL League One", "eng.4": "EFL League Two",
+    "ger.2": "2. Bundesliga", "ita.2": "Serie B", "esp.2": "LaLiga 2", "fra.2": "Ligue 2",
+    "ned.2": "Eerste Divisie", "sco.2": "Scottish Championship", "bra.1": "Brasileirão",
+    "arg.1": "Liga Profesional", "jpn.1": "J1 League", "mex.1": "Liga MX",
+}
+INTL_LEAGUES = {
+    "uefa.nations": "UEFA Nations League", "fifa.friendly": "International Friendly",
+    "fifa.worldq.uefa": "World Cup Qualifying (UEFA)", "fifa.worldq.conmebol": "World Cup Qualifying (CONMEBOL)",
+    "fifa.worldq.concacaf": "World Cup Qualifying (Concacaf)", "fifa.worldq.caf": "World Cup Qualifying (CAF)",
+    "fifa.worldq.afc": "World Cup Qualifying (AFC)", "fifa.world": "FIFA World Cup",
+    "uefa.euro": "UEFA European Championship", "concacaf.nations.league": "Concacaf Nations League",
+}
+INTL_HISTORY_DAYS = 730
+
 HISTORY_DAYS = 180
 # Upcoming window. Long enough to catch the next round in every competition.
 HORIZON_DAYS = 14
@@ -165,8 +195,21 @@ def fetch_range(slug, first, last):
 
     base = f"{HOST}/apis/site/v2/sports/soccer/{slug}/scoreboard?dates="
     month = first.replace(day=1)
+    cache = _load_history(slug)
+    today = datetime.datetime.now(datetime.timezone.utc).date()
     while month <= last:
-        data = get(base + month.strftime("%Y%m"))
+        key = month.strftime("%Y%m")
+        nxt = (month.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
+        # A month that ended more than HISTORY_SETTLE_DAYS ago cannot change: read it from
+        # the committed cache instead of ESPN, so two years of internationals cost nothing
+        # after the first run.
+        closed = nxt <= today - datetime.timedelta(days=HISTORY_SETTLE_DAYS)
+        if closed and key in cache:
+            take({"events": cache[key]}, keep_all=True)
+            month = nxt
+            continue
+        n_before = len(events)
+        data = get(base + key)
         if len(data.get("events", [])) >= MONTH_CAP:
             day = max(first, month)
             nxt = (month.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
@@ -176,9 +219,41 @@ def fetch_range(slug, first, last):
                 time.sleep(0.1)
         else:
             take(data)
-        month = (month.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
+        if closed:
+            cache[key] = [_trim(e) for e in events[n_before:]]
+            _save_history(slug, cache)
+        month = nxt
         time.sleep(0.2)
     return events
+
+
+HISTORY_DIR = os.path.join(ROOT, "data", "espn_history")
+HISTORY_SETTLE_DAYS = 7
+
+
+def _trim(ev):
+    """Only what parse_event reads — a month of ESPN events is ~1 MB untrimmed."""
+    comp = (ev.get("competitions") or [{}])[0]
+    return {"id": ev.get("id"), "date": ev.get("date"),
+            "competitions": [{"status": {"type": {"name": ((comp.get("status") or {}).get("type") or {}).get("name")}},
+                              "competitors": [{"homeAway": c.get("homeAway"), "score": c.get("score"),
+                                               "team": {"displayName": (c.get("team") or {}).get("displayName"),
+                                                        "id": (c.get("team") or {}).get("id")}}
+                                              for c in comp.get("competitors") or []]}]}
+
+
+def _load_history(slug):
+    try:
+        with open(os.path.join(HISTORY_DIR, f"{slug}.json")) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def _save_history(slug, cache):
+    os.makedirs(HISTORY_DIR, exist_ok=True)
+    with open(os.path.join(HISTORY_DIR, f"{slug}.json"), "w") as f:
+        json.dump(cache, f, separators=(",", ":"), sort_keys=True)
 
 
 def fetch():
@@ -188,21 +263,24 @@ def fetch():
     end = (today + datetime.timedelta(days=HORIZON_DAYS)).strftime("%Y%m%d")
 
     rows, per_league = [], {}
-    feeds = ([(s, n_, True, True) for s, n_ in LEAGUES.items()] +
-             [(s, n_, True, False) for s, n_ in FORM_LEAGUES.items()] +
-             [(s, n_, False, False) for s, n_ in FORM_ONLY_LEAGUES.items()])
-    for n, (slug, name, competitive, lead_source) in enumerate(feeds):
+    feeds = ([(s, n_, True, True, HISTORY_DAYS, "league") for s, n_ in LEAGUES.items()] +
+             [(s, n_, True, False, HISTORY_DAYS, "league") for s, n_ in FORM_LEAGUES.items()] +
+             [(s, n_, False, False, HISTORY_DAYS, "league") for s, n_ in FORM_ONLY_LEAGUES.items()] +
+             [(s, n_, True, False, HISTORY_DAYS, "cup") for s, n_ in CUP_LEAGUES.items()] +
+             [(s, n_, True, False, HISTORY_DAYS, "league") for s, n_ in CUP_FORM_LEAGUES.items()] +
+             [(s, n_, True, False, INTL_HISTORY_DAYS, "intl") for s, n_ in INTL_LEAGUES.items()])
+    for n, (slug, name, competitive, lead_source, days, comp) in enumerate(feeds):
         if n:
             time.sleep(0.4)            # be polite; ESPN has no documented limit
         try:
-            events = fetch_range(slug, today - datetime.timedelta(days=HISTORY_DAYS),
+            events = fetch_range(slug, today - datetime.timedelta(days=days),
                                  today + datetime.timedelta(days=HORIZON_DAYS))
         except Exception as e:
             print(f"  {name}: FETCH FAILED ({e}) — skipped")
             per_league[name] = 0
             continue
-        got = [r for r in (parse_event(e, slug, name, competitive, lead_source)
-                           for e in events) if r]
+        got = [dict(r, comp=comp) for r in (parse_event(e, slug, name, competitive, lead_source)
+                                            for e in events) if r]
         rows += got
         played = sum(1 for r in got if r["played"])
         per_league[name] = len(got)
