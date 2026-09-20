@@ -763,9 +763,9 @@ def build():
     trade_rules = MT.report(md)
     trade_open = sum(r["open"] for r in trade_rules)
     trade_note = ("" if MS.configured() else
-                  '<div class="note warn">No market data source is connected on the machine that '
-                  'builds this page, so the trading rules log nothing. They are listed with what '
-                  'they will do.</div>')
+                  '<div class="note">These rules are scanned and graded on the machine that holds '
+                  'the market data keys, and the record below is what it published. This page is '
+                  'built elsewhere and only renders it, so it does not reach the market itself.</div>')
 
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
