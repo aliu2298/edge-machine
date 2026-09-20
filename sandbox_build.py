@@ -703,6 +703,38 @@ def sport_sections(rows):
     return "\n".join(out)
 
 
+TRADE_HEAD = ('<tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th>'
+              '<th class="num">Trades</th><th class="num">Mean per day</th>'
+              '<th class="num">v SPY</th><th class="num">P/L</th><th class="num">Last</th></tr>')
+
+
+def trading_rows(md):
+    """The trading lane: one row per rule, counted per ENTRY DAY (see market_track)."""
+    import market_track as MT
+    rows = []
+    for r in sorted(MT.report(md), key=lambda r: (MT.VERDICTS[r["verdict"]][2], -r["days"])):
+        meta = MT.RULES[r["rule"]]
+        label, chip, _o = MT.VERDICTS[r["verdict"]]
+        more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
+                if r["verdict"] in ("promising", "behind", "early") else "")
+        pc = lambda x: "—" if x is None else f'<span class="{cls(x)}">{x*100:+.2f}%</span>'
+        rows.append(f"""<tr><td><details class="src"><summary><b>{esc(meta['label'])}</b>
+<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div></summary>
+<div class="sm mut">{esc(meta['note'])}</div></details></td>
+<td><span class="sig {chip}">{esc(label)}</span>{more}</td>
+<td class="num">{r['days']}</td>
+<td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
+<td class="num">{pc(r['mean'])}<div class="sm mut">{f"t {r['t']:+.2f}" if r['days'] > 1 else ''}</div></td>
+<td class="num">{pc(r['edge'])}<div class="sm mut">{f"t {r['edge_t']:+.2f}" if r['days'] > 1 else ''}</div></td>
+<td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}</td>
+<td class="num mut sm">{esc(r['last'][:10]) or '—'}</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live ({esc(str((r.get('research_window') or ['', ''])[0]))} to
+{esc(str((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
+{r['research_days']} entry days, {r['research_trades']} trades,
+{'—' if r['research_edge'] is None else f"{r['research_edge']*100:+.2f}%"} a day v SPY, t {r['research_t']:+.2f}.</td></tr>""")
+    return "\n".join(rows)
+
+
 def build():
     d = T.load()
     st = T.load_stages()
@@ -726,6 +758,14 @@ def build():
 
     rows = pair_list(d, st)
     vc = {k: sum(1 for r in rows if r["v"] == k) for k in VERDICTS}
+    import market_track as MT, market_sources as MS
+    md = MT.load()
+    trade_rules = MT.report(md)
+    trade_open = sum(r["open"] for r in trade_rules)
+    trade_note = ("" if MS.configured() else
+                  '<div class="note warn">No market data source is connected on the machine that '
+                  'builds this page, so the trading rules log nothing. They are listed with what '
+                  'they will do.</div>')
 
     return f"""<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -839,7 +879,10 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </div>
 {feed_health(d)}
 
-<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
+<details class="sec" open><summary><div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>{len(rows)}</b></button><button type="button" data-lane="trading">Trading<b>{len(trade_rules)}</b></button></div>
+
+<div data-lane="sports">
+<h2>What the Sandbox says</h2></summary>
 <div class="note">{insights(rows)}</div></details>
 
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
@@ -860,6 +903,28 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under {MIN_N} a pair is
 {('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + hist_html + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
 </details>
 
+</div>
+
+<div data-lane="trading" hidden>
+<div class="tiles">
+<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
+<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
+<div class="tile"><b class="{'neg' if any(r['verdict'] == 'noedge' for r in trade_rules) else ''}">{sum(1 for r in trade_rules if r['verdict'] == 'noedge')}</b><span>no edge</span></div>
+<div class="tile"><b>{sum(r['trades'] for r in trade_rules):,}</b><span>trades logged</span></div>
+<div class="tile"><b>{trade_open:,}</b><span>open now</span></div>
+</div>
+{trade_note}
+<h2>Stock rules under test</h2>
+<div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
+<div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
+logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
+never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
+<b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
+<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days;
+under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it does.</div>
+</div>
+
+<div data-lane="sports">
 <details class="sec"><summary><h2>Reference</h2></summary>
 <details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
@@ -883,8 +948,14 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 
 </details>
 
+</div>
+
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
+document.querySelectorAll('#lanes button').forEach(b => b.addEventListener('click', () => {{
+  document.querySelectorAll('#lanes button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('[data-lane]:not(button)').forEach(el => el.hidden = el.dataset.lane !== b.dataset.lane);
+}}));
 document.querySelectorAll('.folds-ctl button').forEach(b => b.addEventListener('click', () => {{
   document.querySelectorAll('details.' + b.dataset.fold).forEach(dt => dt.open = b.dataset.open === '1');
 }}));

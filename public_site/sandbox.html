@@ -98,7 +98,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated 2026-09-20 01:06 UTC</div>
+<div class="sub">Every source and rule under test, per sport · updated 2026-09-20 03:24 UTC</div>
 <div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
 
 <div class="tiles">
@@ -110,7 +110,10 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </div>
 
 
-<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
+<details class="sec" open><summary><div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>42</b></button><button type="button" data-lane="trading">Trading<b>4</b></button></div>
+
+<div data-lane="sports">
+<h2>What the Sandbox says</h2></summary>
 <div class="note"><ul class="ins"><li><b>Holding up over 30+ bets:</b> Tennis favourite-band rule — 200 won v 190.6 the prices implied on 235 bets, +3.7% after fees (in Production); ESPN FPI / Matchup Predictor · MLB — 15 won v 12.9 the prices implied on 30 bets, +6.0% after fees (in Production).</li><li><b>Closest to proven:</b> SoccerPredictions.ai · Soccer (23 of 30 bets, +25.6%).</li><li><b>Losing early:</b> Polymarket · Tennis (-11.3% on 15); Scores24 · Tennis (-4.7% on 17); Over 1.5 form rule (-3.7% on 16).</li><li><b>In <a href="./production.html">Production</a> (5):</b> ESPN FPI / Matchup Predictor · NFL (no settled bets yet); ESPN FPI / Matchup Predictor · MLB (30 bets, +6.0%); Tennis favourite-band rule (235 bets, +3.7%); Over 1.5 form rule (16 bets, -3.7%); Team scores 1+ form rule (9 bets, +18.6%).</li><li><b>Removed from Production:</b> SoccerPredictions.ai · Soccer on 2026-09-18 — 31 won v 31.1 priced over 82 bets, -0.2% after fees. Back in the Sandbox, counting again.</li><li><b>Retired this week:</b> Kalshi · MLB, Covers / OddsShark computer picks · MLB, National Weather Service, Table tennis 0.55-0.60 band, MLB fade-the-streak rule, SportsGambler, Scores24 · MLB — listed under Reference with their records.</li></ul></div></details>
 
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
@@ -11205,6 +11208,83 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <td class="num neg">−$100</td></tr></table></div></details></div>
 </details>
 
+</div>
+
+<div data-lane="trading" hidden>
+<div class="tiles">
+<div class="tile"><b>0</b><span>working (30+ days)</span></div>
+<div class="tile"><b>0</b><span>promising</span></div>
+<div class="tile"><b class="">0</b><span>no edge</span></div>
+<div class="tile"><b>0</b><span>trades logged</span></div>
+<div class="tile"><b>0</b><span>open now</span></div>
+</div>
+
+<h2>Stock rules under test</h2>
+<div class="tbl"><table><tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th><th class="num">Trades</th><th class="num">Mean per day</th><th class="num">v SPY</th><th class="num">P/L</th><th class="num">Last</th></tr><tr><td><details class="src"><summary><b>RSI(2) pullback in an uptrend</b>
+<div class="sm mut">Swing · sw_rsi2_pullback</div></summary>
+<div class="sm mut">Pre-registered 2026-09-19 (Connors&#x27; published RSI-2 rule, thresholds unchanged). Buy the next open when a stock closes above its 200-day average, below its 5-day average, with a 2-period RSI under 5. Leave at the open after the first close back above the 5-day average, or after 10 sessions, whichever comes first. The oldest published mean-reversion rule there is, which is the point: if a rule this well known still pays after costs, the Sandbox will show it; if it does not, that is the answer for every variant of it.</div></details></td>
+<td><span class="sig n">Waiting for trades</span></td>
+<td class="num">0</td>
+<td class="num">0<div class="sm mut">0 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num mut">—</td>
+<td class="num mut sm">—</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-02-25 to
+2026-09-18, not part of the record above):
+141 entry days, 3730 trades,
+-0.10% a day v SPY, t -0.46.</td></tr>
+<tr><td><details class="src"><summary><b>52-week breakout on volume</b>
+<div class="sm mut">Swing · sw_52w_breakout</div></summary>
+<div class="sm mut">Pre-registered 2026-09-19. Buy the next open when a stock closes at its highest close of the last 252 sessions on volume at least 1.5x its 50-day average. Leave at the open after the first close below the 20-day average, or after 40 sessions. Momentum is the one anomaly with decades of out-of-sample evidence; the open question is whether it survives 10bp of round-trip cost at this holding period.</div></details></td>
+<td><span class="sig n">Waiting for trades</span></td>
+<td class="num">0</td>
+<td class="num">0<div class="sm mut">0 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num mut">—</td>
+<td class="num mut sm">—</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-02-25 to
+2026-09-18, not part of the record above):
+70 entry days, 244 trades,
+-2.42% a day v SPY, t -3.81.</td></tr>
+<tr><td><details class="src"><summary><b>Gap-down reversal above the 200-day</b>
+<div class="sm mut">Swing · sw_gap_down_reversal</div></summary>
+<div class="sm mut">Pre-registered 2026-09-19. Buy the next open when a stock in an uptrend (prior close above its 200-day average) gaps down 3% or more and still closes above its own open that day. Hold 5 sessions, then leave at the open. Tests whether the crowd overreacts to a single bad headline in a name the market otherwise likes.</div></details></td>
+<td><span class="sig n">Waiting for trades</span></td>
+<td class="num">0</td>
+<td class="num">0<div class="sm mut">0 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num mut">—</td>
+<td class="num mut sm">—</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-02-25 to
+2026-09-18, not part of the record above):
+84 entry days, 362 trades,
+-0.26% a day v SPY, t -0.31.</td></tr>
+<tr><td><details class="src"><summary><b>10/100 MA cross with an RSI filter</b>
+<div class="sm mut">Swing · sw_ma_cross_rsi</div></summary>
+<div class="sm mut">The swing-trader project&#x27;s own strategy (~/Swing trader, June 2026), registered here unchanged so the Sandbox judges it on the same terms as everything else: buy the next open within 3 sessions of a 10-day average crossing above the 100-day, with RSI(14) between 50 and 75; leave when the 10-day falls back under the 100-day or after 60 sessions. Its own README reports it beating buy-and-hold on risk-adjusted terms over a cycle while lagging in strong bull markets — this lane measures it against SPY over the identical days, which is the test that settles it.</div></details></td>
+<td><span class="sig n">Waiting for trades</span></td>
+<td class="num">0</td>
+<td class="num">0<div class="sm mut">0 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num mut">—</td>
+<td class="num mut sm">—</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-02-25 to
+2026-09-18, not part of the record above):
+112 entry days, 349 trades,
++2.43% a day v SPY, t +0.80.</td></tr></table></div>
+<div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
+logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
+never the signal bar's close. Costs of 5bp a side are charged on entry and exit.
+<b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
+<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at 30+ entry days;
+under 10 a rule is only <i>Too early</i>. Click a rule for what it does.</div>
+</div>
+
+<div data-lane="sports">
 <details class="sec"><summary><h2>Reference</h2></summary>
 <details class="ref"><summary>Retired, or declared but not connected (7)</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr><tr><td><b>National Weather Service</b>
@@ -11336,8 +11416,14 @@ A positive ROI under 30 settled bets is not a finding.</div></details>
 
 </details>
 
+</div>
+
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
+document.querySelectorAll('#lanes button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('#lanes button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('[data-lane]:not(button)').forEach(el => el.hidden = el.dataset.lane !== b.dataset.lane);
+}));
 document.querySelectorAll('.folds-ctl button').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('details.' + b.dataset.fold).forEach(dt => dt.open = b.dataset.open === '1');
 }));
