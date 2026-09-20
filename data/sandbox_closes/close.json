@@ -170,6 +170,11 @@
    "lead_min": 25.9,
    "price": 0.43
   },
+  "draftkings:aec-mlb-mil-bal-2026-09-20": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 55.8,
+   "price": 0.35
+  },
   "draftkings:aec-mlb-nyy-min-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 29.7,
@@ -239,6 +244,11 @@
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 25.6,
    "price": 0.29
+  },
+  "espn_fpi:KXMLBGAME-26SEP201920MILBAL": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 55.8,
+   "price": 0.35
   },
   "espn_fpi:aec-mlb-ath-cle-2026-09-20": {
    "at": "2026-09-20T17:39:31+00:00",
@@ -380,10 +390,20 @@
    "lead_min": 55.9,
    "price": 0.465
   },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP20CARFLA-FLA2": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 35.8,
+   "price": 0.45
+  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP20SJANA-ANA2": {
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 15.6,
    "price": 0.5
+  },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP20UTACOL-COL2": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 35.8,
+   "price": 0.63
   },
   "o15_form_l10:KXBUNDESLIGATOTAL-26SEP19HSVKOE-2": {
    "at": "2026-09-19T13:23:06+00:00",
@@ -435,6 +455,11 @@
    "lead_min": 55.1,
    "price": 0.4
   },
+  "oddspedia:aec-cplcr-aabf-jka-2026-09-20": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 35.8,
+   "price": 0.56
+  },
   "oddspedia:aec-etpl-gcl-afm-2026-09-16": {
    "at": "2026-09-16T12:34:39+00:00",
    "lead_min": 40.3,
@@ -460,6 +485,11 @@
    "lead_min": 22.1,
    "price": 0.81
   },
+  "pinnacle:aec-cplcr-aabf-jka-2026-09-20": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 35.8,
+   "price": 0.45
+  },
   "pinnacle:aec-t20icr-eng-slr-2026-09-15": {
    "at": "2026-09-15T16:58:52+00:00",
    "lead_min": 31.1,
@@ -474,6 +504,11 @@
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 25.6,
    "price": 0.29
+  },
+  "polymarket:aec-cplcr-aabf-jka-2026-09-20": {
+   "at": "2026-09-20T22:24:11+00:00",
+   "lead_min": 35.8,
+   "price": 0.45
   },
   "polymarket:aec-etpl-gcl-afm-2026-09-16": {
    "at": "2026-09-16T12:34:39+00:00",
@@ -1106,5 +1141,5 @@
    "price": 0.61
   }
  },
- "updated": "2026-09-20T19:44:21+00:00"
+ "updated": "2026-09-20T22:24:11+00:00"
 }
