@@ -881,8 +881,8 @@
    "price": 0.33
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP20NSHTB-TB2": {
-   "at": "2026-09-20T20:28:32+00:00",
-   "lead_min": 31.5,
+   "at": "2026-09-20T20:43:36+00:00",
+   "lead_min": 16.4,
    "price": 0.51
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP20SJANA-ANA2": {
@@ -1620,6 +1620,11 @@
    "lead_min": 7.7,
    "price": 0.37
   },
+  "soccerpredictions:KXBRASILEIROBGAME-26SEP20LONFOR": {
+   "at": "2026-09-20T20:43:36+00:00",
+   "lead_min": 46.4,
+   "price": 0.32
+  },
   "soccerpredictions:KXBRASILEIROGAME-26SEP19CRSAN": {
    "at": "2026-09-19T21:22:52+00:00",
    "lead_min": 7.1,
@@ -2285,15 +2290,25 @@
    "lead_min": 3.3,
    "price": 0.71
   },
+  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP20JOHGOR": {
+   "at": "2026-09-20T20:43:36+00:00",
+   "lead_min": 46.4,
+   "price": 0.69
+  },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP20KAOBOU": {
    "at": "2026-09-20T07:55:25+00:00",
    "lead_min": 4.6,
    "price": 0.73
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP20LOFZHU": {
-   "at": "2026-09-20T20:28:32+00:00",
-   "lead_min": 31.5,
+   "at": "2026-09-20T20:43:36+00:00",
+   "lead_min": 16.4,
    "price": 0.89
+  },
+  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP20MAYLEE": {
+   "at": "2026-09-20T20:43:36+00:00",
+   "lead_min": 46.4,
+   "price": 0.69
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP20MONMAL": {
    "at": "2026-09-20T17:27:49+00:00",
@@ -3621,5 +3636,5 @@
    "price": 0.83
   }
  },
- "updated": "2026-09-20T20:28:32+00:00"
+ "updated": "2026-09-20T20:43:36+00:00"
 }
