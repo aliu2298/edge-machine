@@ -879,10 +879,10 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </div>
 {feed_health(d)}
 
-<details class="sec" open><summary><div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>{len(rows)}</b></button><button type="button" data-lane="trading">Trading<b>{len(trade_rules)}</b></button></div>
+<div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>{len(rows)}</b></button><button type="button" data-lane="trading">Trading<b>{len(trade_rules)}</b></button></div>
 
 <div data-lane="sports">
-<h2>What the Sandbox says</h2></summary>
+<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
 <div class="note">{insights(rows)}</div></details>
 
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
