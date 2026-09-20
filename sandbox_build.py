@@ -515,6 +515,7 @@ VERDICTS = {                     # key -> (label, chip class, sort order)
     "waiting":   ("Waiting for results", "n", 6),
     "removed":   ("Removed from Production", "x", 5),
     "nobets":    ("No qualifying match yet", "n", 7),
+    "retired":   ("Retired", "x", 8),
 }
 EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
 
@@ -536,13 +537,21 @@ def family(sport):
     return "Markets" if sport in MARKET_KEYS else S.SPORTS.get(sport, sport).split(" · ")[0]
 
 
-def pair_list(d, st):
-    """Every connected (source, sport) pair that has bet, with its record and verdict."""
+def pair_list(d, st, include_retired=True):
+    """Every (source, sport) pair that has bet, with its record and verdict.
+
+    Retired pairs are listed too, marked, so a sport's section accounts for its own history
+    rather than sending the reader to the Reference table to find where the bets went.
+    """
     out = []
     for name, meta in S.SOURCES.items():
-        if not meta["connected"] or meta.get("kind") in T.NEVER_PROMOTED_KINDS:
+        if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             continue
-        for sport in meta["sports"]:
+        sports = list(meta["sports"]) if meta["connected"] else []
+        gone = {} if not include_retired else dict(
+            {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
+            **({sp: meta["retired"] for sp in meta["sports"]} if not meta["connected"] and meta.get("retired") else {}))
+        for sport in sports + [sp for sp in gone if sp not in sports]:
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
             # reviewed before its first qualifying match; other pairs appear once they bet.
@@ -558,8 +567,10 @@ def pair_list(d, st):
             v = verdict(a) if group is not None else "nobets"
             if removed and v in ("waiting", "early"):
                 v = "removed"
+            if sport in gone:
+                v = "retired"
             out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
-                            prod=pair.get("stage") == "production",
+                            gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
                             removed=removed, v=v))
     return out
@@ -672,12 +683,42 @@ def _row(r):
     scope_note = (f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join(frags.values())))}</b></div>'
                   if sfx else "")
     tag = f' <span class="sig w">{esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
+    if r.get("gone"):
+        scope_note = f'<div class="sm"><b>{esc(str(r["gone"]))}</b></div>' + scope_note
     return f"""<tr><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
 <div class="sm mut">{esc(sub)} · {esc(meta['kind'])}</div></summary>
 {scope_note}<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
+
+
+def reconcile(d, rows):
+    """Where every settled bet is. The sections judge a subset on purpose — a retired venue's
+    bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
+    from a verdict — so the page says so in numbers rather than leaving a gap to find."""
+    bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")]
+    shown = {(r["name"], r["sport"]) for r in rows}
+    in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
+    venue = base = before = other = 0
+    for q in bets:
+        key = (q["source"], q["sport"])
+        if key in shown:
+            if (q.get("venue") or "polymarket") not in T.TRADEABLE_VENUES:
+                venue += 1
+            continue
+        if (S.SOURCES.get(q["source"]) or {}).get("kind") in T.NEVER_PROMOTED_KINDS:
+            base += 1
+        else:
+            other += 1
+    before = max(0, len(bets) - in_sections - venue - base - other)
+    parts = [f"{venue:,} on the retired polymarket.com venue" if venue else "",
+             f"{before:,} logged before a pair's clock was reset" if before else "",
+             f"{base:,} from the never-betting baselines" if base else "",
+             f"{other:,} elsewhere" if other else ""]
+    return (f'<div class="note sm"><b>Where the {len(bets):,} settled bets are:</b> '
+            f'{in_sections:,} sit in the sections above, counted toward a verdict. The rest are kept '
+            f'on record but not judged — ' + ", ".join(p for p in parts if p) + '.</div>')
 
 
 def sport_sections(rows):
@@ -757,7 +798,7 @@ def build():
                   f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far).")
 
     rows = pair_list(d, st)
-    vc = {k: sum(1 for r in rows if r["v"] == k) for k in VERDICTS}
+    vc = {k: sum(1 for r in rows if r["v"] == k and not r.get("gone")) for k in VERDICTS}
     import market_track as MT, market_sources as MS
     md = MT.load()
     trade_rules = MT.report(md)
@@ -888,6 +929,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
 <div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
 {sport_sections(rows)}
+{reconcile(d, rows)}
 <div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat ${int(T.STAKE)} a bet at the price
 available before the start. <b>Won v priced</b>: wins against the wins the prices implied — beating that is the
 whole test. <b>Verdict</b>: read only at {MIN_N}+ settled bets — <i>Proven edge</i> is ahead of the prices by

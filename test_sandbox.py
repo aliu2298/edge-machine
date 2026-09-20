@@ -3034,6 +3034,25 @@ ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corne
    "and the page says so")
 ok("soccer_corners" not in [k.split("|")[1] for k in T.PAIR_OVERRIDES], "the corners rule is not in Production")
 
+# Every settled bet is accounted for: a sport's section lists its retired pairs too, and the
+# line under the sections reconciles what is judged against what is only kept on record.
+_recq = {"quotes": [
+    dict(id=f"rc{i}", source="scores24", sport="mlb", bet=True, venue="polymarket_us", market_id=f"m{i}",
+         pick="a", price=0.5, price_a=0.5, price_b=0.5, result="a", status="won", pnl=100.0, stake=100.0,
+         start=f"2026-08-{1+i:02d}T18:00:00+00:00", logged=f"2026-08-{1+i:02d}T10:00:00+00:00") for i in range(4)]
+    + [dict(id="rc-old", source="scores24", sport="mlb", bet=True, venue="polymarket", market_id="old",
+            pick="a", price=0.5, price_a=0.5, price_b=0.5, result="a", status="won", pnl=100.0, stake=100.0,
+            start="2026-07-01T18:00:00+00:00", logged="2026-07-01T10:00:00+00:00")]}
+_recr = SB.pair_list(_recq, {"pairs": {}})
+ok_ = lambda c, w: ok(c, w)
+ok(any(r["name"] == "scores24" and r["sport"] == "mlb" for r in _recr),
+   "a retired pair is listed inside its own sport, not only under Reference")
+eq(next(r["v"] for r in _recr if r["name"] == "scores24"), "retired", "and is marked Retired")
+_rec = SB.reconcile(_recq, _recr)
+ok("5 settled bets" in _rec and "1 on the retired polymarket.com venue" in _rec,
+   "the line under the sections reconciles every settled bet, judged or not")
+ok("4 sit in the sections above" in _rec, "and says how many are counted toward a verdict")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
