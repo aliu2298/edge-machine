@@ -168,7 +168,123 @@ RULES = {
              "or after 60 sessions. Its own README reports it beating buy-and-hold on "
              "risk-adjusted terms over a cycle while lagging in strong bull markets — this lane "
              "measures it against SPY over the identical days, which is the test that settles it."),
+    "dt_orb30": dict(
+        lane="day", label="Opening-range breakout (30 min)", signal=None, exit=None,
+        note="Pre-registered 2026-09-19. On the 20 most liquid names only: take the first "
+             "5-minute close beyond the first 30 minutes' range, enter at the next bar's open, "
+             "stop at the other side of that range, and leave at the close — one trade a day a "
+             "name, long or short. The textbook day-trading rule. On a year of BTC 5-minute bars "
+             "the same rule made +1.6bp a trade before costs (t 0.20) and lost 18bp a trade "
+             "after them; this lane asks whether US equities, with an actual opening auction, "
+             "behave differently."),
+    "dt_vwap_reclaim": dict(
+        lane="day", label="VWAP reclaim", signal=None, exit=None,
+        note="Pre-registered 2026-09-19. Long only, same 20 names: after a stock has traded "
+             "below the session VWAP, take the first 5-minute close back above it from 14:00 UTC, "
+             "enter at the next bar's open, stop at the session low to that point, and leave at "
+             "the close. VWAP is the most-watched intraday level there is, which is exactly why "
+             "it is worth measuring rather than assuming."),
 }
+
+
+# --------------------------------------------------------------------------- the day lane
+# A fixed, pre-registered universe: the most liquid ETFs and mega caps, where a 5bp round trip
+# is realistic. Day rules are priced on 5-minute bars, and intraday spread is the whole game —
+# scanning 500 names would mean logging trades in places this cost model does not describe.
+DAY_UNIVERSE = ["SPY", "QQQ", "IWM", "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA",
+                "AMD", "AVGO", "NFLX", "JPM", "XOM", "COIN", "MU", "CRM", "BAC", "DIS"]
+OPEN_BARS = 6          # the first 30 minutes, in 5-minute bars
+SESSION_END = 19 * 60 + 55
+
+
+def _mins(bar):
+    t = str(bar["t"])
+    return int(t[11:13]) * 60 + int(t[14:16])
+
+
+def _vwap_series(bars):
+    pv = vv = 0.0
+    out = []
+    for b in bars:
+        tp = (b["h"] + b["l"] + b["c"]) / 3
+        pv += tp * max(b["v"], 1); vv += max(b["v"], 1)
+        out.append(pv / vv)
+    return out
+
+
+def day_trades(bars, rule):
+    """One session's 5-minute bars -> at most one trade for `rule`. Entry is always the NEXT
+    bar's open after the signal bar closes; the exit is the stop's price or the last bar's
+    close. Returns (side, entry_bar_index, entry, exit_bar_index, exit) or None."""
+    ses = [b for b in bars if 13 * 60 + 30 <= _mins(b) <= SESSION_END]
+    if len(ses) < OPEN_BARS + 4:
+        return None
+    if rule == "dt_orb30":
+        hi = max(b["h"] for b in ses[:OPEN_BARS]); lo = min(b["l"] for b in ses[:OPEN_BARS])
+        for i in range(OPEN_BARS, len(ses) - 1):
+            side = 1 if ses[i]["c"] > hi else -1 if ses[i]["c"] < lo else 0
+            if not side:
+                continue
+            entry = ses[i + 1]["o"]; stop = lo if side > 0 else hi
+            for j in range(i + 1, len(ses)):
+                if (side > 0 and ses[j]["l"] <= stop) or (side < 0 and ses[j]["h"] >= stop):
+                    return (side, i + 1, entry, j, stop)
+            return (side, i + 1, entry, len(ses) - 1, ses[-1]["c"])
+        return None
+    if rule == "dt_vwap_reclaim":
+        vw = _vwap_series(ses)
+        below = False
+        for i in range(2, len(ses) - 1):
+            if ses[i]["c"] < vw[i]:
+                below = True
+                continue
+            if below and ses[i]["c"] > vw[i] and _mins(ses[i]) >= 14 * 60:
+                entry = ses[i + 1]["o"]; stop = min(b["l"] for b in ses[:i + 1])
+                for j in range(i + 1, len(ses)):
+                    if ses[j]["l"] <= stop:
+                        return (1, i + 1, entry, j, stop)
+                return (1, i + 1, entry, len(ses) - 1, ses[-1]["c"])
+        return None
+    return None
+
+
+def scan_day(bars_by_symbol, d, research_before=None, rules=None):
+    """Log the day lane's completed trades. Intraday trades open and close inside one session,
+    so they are logged after it, from bars that all existed before each decision."""
+    rules = rules or RULES
+    seen = {t["id"] for t in d["trades"]}
+    bench_day = {}
+    for b in bars_by_symbol.get(BENCH, []):
+        bench_day.setdefault(_day(b), []).append(b)
+    added = 0
+    for name, rule in rules.items():
+        if rule["lane"] != "day":
+            continue
+        for sym, bars in bars_by_symbol.items():
+            if sym == BENCH:
+                continue
+            byday = {}
+            for b in bars:
+                byday.setdefault(_day(b), []).append(b)
+            for day, ses in byday.items():
+                tid = trade_id(name, sym, day)
+                if tid in seen or (research_before and day < research_before):
+                    continue
+                got = day_trades(ses, name)
+                if not got:
+                    continue
+                side, _i, entry, _j, exit_px = got
+                gross = side * (exit_px - entry) / entry
+                bs = sorted(bench_day.get(day, []), key=lambda b: _mins(b))
+                bench = ((bs[-1]["c"] - bs[0]["o"]) / bs[0]["o"]) if len(bs) > 1 else None
+                d["trades"].append(dict(
+                    id=tid, rule=name, lane="day", symbol=sym, signal_day=day, entry_day=day,
+                    entry=round(float(entry), 4), status="closed", exit=round(float(exit_px), 4),
+                    exit_day=day, side=side, ret_gross=round(gross, 6),
+                    ret_net=round(gross - 2 * M.COST_BPS_PER_SIDE / 10000.0, 6),
+                    bench_ret=(round(bench * side, 6) if bench is not None else None), bars_held=None))
+                seen.add(tid); added += 1
+    return added
 
 
 # --------------------------------------------------------------------------- ledger
@@ -338,6 +454,9 @@ def main():
     live_from = d["meta"].setdefault("live_from", datetime.date.today().isoformat())
     added = scan(bars, d, research_before=live_from)
     closed = grade(bars, d)
+    intraday = M.bars(DAY_UNIVERSE + [BENCH], "5Min",
+                      start=(datetime.date.today() - datetime.timedelta(days=30)).isoformat())
+    added += scan_day(intraday, d, research_before=live_from)
     save(d)
     print(f"logged {added} new trade(s), closed {closed}")
     for r in report(d):

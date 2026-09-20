@@ -104,6 +104,41 @@ _d4 = {"trades": [dict(t, ret_net=-0.004, bench_ret=0.004) for t in _d3["trades"
 eq(T.assess(_d4, "r")["verdict"], "noedge", "the same sample behind SPY reads as no edge")
 eq(T.assess({"trades": [], "meta": {}}, "r")["verdict"], "waiting", "a rule with no trades is waiting")
 
+print("\nthe day lane: one session, one trade, entered at the next bar")
+def m5(day, hhmm, o, h, l, c, v=100000):
+    return {"t": f"{day}T{hhmm}:00Z", "o": o, "h": h, "l": l, "c": c, "v": v}
+def session(day, path):
+    """path: list of (hh:mm, o, h, l, c) tuples, from 13:30 UTC."""
+    return [m5(day, row[0], *row[1:]) for row in path]
+_D = "2026-09-18"
+# first 30 min ranges 100-102, then a clean break up that holds to the close
+_up_day = session(_D, [("13:30",100,102,100,101),("13:35",101,102,100,101),("13:40",101,102,100,100.5),
+                       ("13:45",100.5,101,100,100.8),("13:50",100.8,101.5,100.2,101),("13:55",101,102,100.5,101.5),
+                       ("14:00",101.5,103,101.4,102.5),("14:05",102.6,104,102.5,103.5),("14:10",103.5,105,103,104.5),
+                       ("19:55",104.5,105,104,104.8)])
+_t = T.day_trades(_up_day, "dt_orb30")
+eq((_t[0], _t[2]), (1, 102.6), "the break above the range enters LONG at the next bar's open, not the signal close")
+eq(round(_t[4], 2), 104.8, "and with no stop hit it leaves at the session's last close")
+# same range, break down, then the stop (the range high) is taken out
+_rev = session(_D, [("13:30",100,102,100,101),("13:35",101,102,100,101),("13:40",101,102,100,100.5),
+                    ("13:45",100.5,101,100,100.8),("13:50",100.8,101.5,100.2,101),("13:55",101,102,100.5,101.5),
+                    ("14:00",101,101.5,99,99.5),("14:05",99.4,100,99,99.8),("14:10",99.8,103,99.5,102.5),
+                    ("19:55",102.5,103,102,102.8)])
+_t2 = T.day_trades(_rev, "dt_orb30")
+eq((_t2[0], _t2[2], _t2[4]), (-1, 99.4, 102), "a break DOWN goes short, and stops out at the range high")
+eq(T.day_trades(_up_day[:4], "dt_orb30"), None, "a session too short to have an opening range trades nothing")
+_dd = {"trades": [], "meta": {}}
+_n5 = T.scan_day({"AAA": _up_day, "SPY": _up_day}, _dd, rules={"dt_orb30": T.RULES["dt_orb30"]})
+eq(_n5, 1, "one session, one logged day trade")
+_dt = _dd["trades"][0]
+eq((_dt["lane"], _dt["status"], _dt["entry_day"] == _dt["exit_day"]), ("day", "closed", True),
+   "a day trade is logged already closed, inside its own session")
+eq(round(_dt["ret_gross"] - _dt["ret_net"], 6), round(2 * M.COST_BPS_PER_SIDE / 10000, 6),
+   "and is charged a cost on both sides like every other trade")
+eq(T.scan_day({"AAA": _up_day, "SPY": _up_day}, _dd, rules={"dt_orb30": T.RULES["dt_orb30"]}), 0,
+   "a second pass over the same session logs nothing twice")
+ok_(T.DAY_UNIVERSE and len(T.DAY_UNIVERSE) <= 25, "the day lane's universe is a small pre-registered list")
+
 print("\nhousekeeping")
 ok_(all(r["lane"] in ("swing", "day") for r in T.RULES.values()), "every rule declares its lane")
 ok_(all(len(r["note"]) > 200 for r in T.RULES.values()),

@@ -110,7 +110,7 @@ footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 </div>
 
 
-<details class="sec" open><summary><div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>42</b></button><button type="button" data-lane="trading">Trading<b>4</b></button></div>
+<details class="sec" open><summary><div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>42</b></button><button type="button" data-lane="trading">Trading<b>6</b></button></div>
 
 <div data-lane="sports">
 <h2>What the Sandbox says</h2></summary>
@@ -11387,7 +11387,35 @@ z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under 30 a pair is only
 <tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-02-25 to
 2026-09-18, not part of the record above):
 112 entry days, 349 trades,
-+2.43% a day v SPY, t +0.80.</td></tr></table></div>
++2.43% a day v SPY, t +0.80.</td></tr>
+<tr><td><details class="src"><summary><b>Opening-range breakout (30 min)</b>
+<div class="sm mut">Day · dt_orb30</div></summary>
+<div class="sm mut">Pre-registered 2026-09-19. On the 20 most liquid names only: take the first 5-minute close beyond the first 30 minutes&#x27; range, enter at the next bar&#x27;s open, stop at the other side of that range, and leave at the close — one trade a day a name, long or short. The textbook day-trading rule. On a year of BTC 5-minute bars the same rule made +1.6bp a trade before costs (t 0.20) and lost 18bp a trade after them; this lane asks whether US equities, with an actual opening auction, behave differently.</div></details></td>
+<td><span class="sig n">Waiting for trades</span></td>
+<td class="num">0</td>
+<td class="num">0<div class="sm mut">0 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num mut">—</td>
+<td class="num mut sm">—</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-08-05 to
+2026-09-18, not part of the record above):
+32 entry days, 550 trades,
+-0.25% a day v SPY, t -5.34.</td></tr>
+<tr><td><details class="src"><summary><b>VWAP reclaim</b>
+<div class="sm mut">Day · dt_vwap_reclaim</div></summary>
+<div class="sm mut">Pre-registered 2026-09-19. Long only, same 20 names: after a stock has traded below the session VWAP, take the first 5-minute close back above it from 14:00 UTC, enter at the next bar&#x27;s open, stop at the session low to that point, and leave at the close. VWAP is the most-watched intraday level there is, which is exactly why it is worth measuring rather than assuming.</div></details></td>
+<td><span class="sig n">Waiting for trades</span></td>
+<td class="num">0</td>
+<td class="num">0<div class="sm mut">0 open</div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num">—<div class="sm mut"></div></td>
+<td class="num mut">—</td>
+<td class="num mut sm">—</td></tr>
+<tr><td colspan="8" class="sm mut">Backtest before the lane went live (2026-08-05 to
+2026-09-18, not part of the record above):
+32 entry days, 551 trades,
+-0.09% a day v SPY, t -1.69.</td></tr></table></div>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
 never the signal bar's close. Costs of 5bp a side are charged on entry and exit.
