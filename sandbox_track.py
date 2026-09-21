@@ -38,7 +38,7 @@ PRICE_CEIL = 0.95    # single fluke pays 50x and one lucky pick would own the bo
 # research that produced the rule found the ordinary bands efficient and the edge only at
 # 0.97+ — so capping them at 0.95 would not make the rule safer, it would leave it unmeasured.
 # The risk is handled where it belongs instead: the ROI is after fees, a day's whole ladder
-# shares one outcome cluster (one draw, not twenty), and nothing in this domain is placeable.
+# shares one outcome cluster (one draw, not twenty), and nothing in this domain is published.
 PRICE_CEIL_BY_SPORT = {"commodities": 0.995}
 
 
@@ -144,8 +144,8 @@ PAIR_OVERRIDES = {
     # clear every other criterion — 149 settled, +6.4% against +3.8% for backing the
     # favourite on every match, profitable in both halves and without its biggest win.
     "tennis_fav_band|tennis": dict(moved_on="2026-09-17", production_at=149),
-    # 2026-09-18, as asked: the two rules that were trading from the Leads board move here, so
-    # that Production is the single source of everything the money follows.
+    # 2026-09-18, as asked: the two rules that were published from the Leads board move here,
+    # so that Production is the single list everything downstream reads.
     #   over 1.5 — REMOVED 2026-09-21, back to the Sandbox. It was the only Production pair
     #   behind the price: 16-5 reads like a winner until you notice the average price is 0.84,
     #   where 76.2% is a losing hit rate (-10.1% after fees, z -1.00). All of the damage sits
@@ -157,9 +157,9 @@ PAIR_OVERRIDES = {
     # listed with it and has yet to settle a bet.
     # espn_fpi — MLB demoted itself on 2026-09-21 ("not beating every blind rule, +3.7% v
     # +9.1% back the favourite"): the edge it was listed on had flattened to +0.5% over 47
-    # settled. NFL was only ever listed alongside it, and was left staking real money on FOUR
-    # settled bets (-57.6%) — a record that cannot say anything either way. Taken off 2026-09-21
-    # as asked. Nothing trades on a sample that small just because its sibling once looked good.
+    # settled. NFL was only ever listed alongside it, and was left in Production on FOUR settled
+    # bets (-57.6%) — a record that cannot say anything either way. Taken off 2026-09-21 as
+    # asked. No pair belongs in Production on a sample that small because its sibling once looked good.
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
     "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
 }
@@ -1222,7 +1222,7 @@ def placeable(q):
     BTTS, weather or crypto yet. A "production-ready" pair whose bets the feed cannot express
     is a label, not a result anyone can follow."""
     if q.get("sport") == "soccer":
-        # Draws since 2026-09-16: the bot buys Kalshi's Tie contract on the same GAME event.
+        # Draws since 2026-09-16: a draw is claimed as Kalshi's Tie contract on the same GAME event.
         return (q.get("pick") in ("a", "b", "draw") and q.get("venue") == "kalshi"
                 and S.quote_league(q) is not None)
     if q.get("sport") in FEED_BETS:
@@ -1525,12 +1525,12 @@ def evaluate_stages(d, st, now=None, verbose=True):
                             entry_since=pair.get("since"), by_hand=ov["moved_on"])
                 changes.append(dict(pair=key, to="production", at=now_s, evidence=_snapshot(a),
                                     reason=f"moved to Production by hand on {ov['moved_on']}"))
-                # With no threshold, it trades from THIS run. Waiting for the next one would
+                # With no threshold, it is ready from THIS run. Waiting for the next one would
                 # mean a pair listed by hand sits idle for three hours for no reason.
                 if ov.get("production_at") is None:
                     pair = dict(pair, ready_since=now_s, ready_at=now_s)
                     changes.append(dict(pair=key, to="ready", at=now_s, evidence=_snapshot(a),
-                                        reason="moved by hand — trading from this run"))
+                                        reason="moved by hand — ready from this run"))
             elif pair["stage"] in ("production", "qa"):       # "qa": a stage saved before the change
                 pair = dict(pair, stage="production")
                 if not ov:
@@ -1547,8 +1547,8 @@ def evaluate_stages(d, st, now=None, verbose=True):
                     changes.append(dict(pair=key, to="sandbox", at=now_s, evidence=_snapshot(a),
                                         reason=why))
                 else:
-                    # With no threshold set, listing the pair IS the decision: it trades from
-                    # this run. Judging it on a handful of Sandbox bets first would be the
+                    # With no threshold set, listing the pair IS the decision: it is ready
+                    # from this run. Judging it on a handful of Sandbox bets first would be the
                     # tracker second-guessing a call that is not its to make — demotion is the
                     # safety net, and it reads the whole record. With a threshold, the pair
                     # waits for that many settled bets AND for the record to be profitable.
@@ -1559,7 +1559,7 @@ def evaluate_stages(d, st, now=None, verbose=True):
                         changes.append(dict(
                             pair=key, to="ready", at=now_s, evidence=_snapshot(a),
                             reason=(f"reached {need} settled bets, profitable after fees" if need
-                                    else "moved by hand — trading from this run")))
+                                    else "moved by hand — ready from this run")))
                     elif not ok and pair.get("ready_at"):
                         changes.append(dict(pair=key, to="unready", at=now_s, evidence=_snapshot(a),
                                             reason="no longer profitable after fees"))

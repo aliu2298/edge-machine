@@ -1,0 +1,47 @@
+name: Sandbox Audit
+
+# An independent check that the Sandbox record is right. The tracker writes the ledger; this
+# reads it back, recomputes every figure it can from the raw bets, and asks the venues again
+# for a sample of results. See sandbox_audit.py for the full list.
+#
+# It is deliberately separate from the tracker: a check that runs inside the thing it checks
+# shares its blind spots. It has read-only access, so it can report a wrong record but can
+# never write one. A failed run means the record is wrong or the grader has stopped; GitHub
+# emails the repository owner on a failed scheduled run, so a fault does not sit unnoticed.
+
+on:
+  schedule:
+    # Every 6h at :45 on 03, 09, 15, 21 UTC — an hour and a half after the tracker's 02:11,
+    # 08:11, 14:11 and 20:11 runs have committed, and well before the next one starts, so it
+    # always reads a settled snapshot rather than one being written.
+    - cron: "45 3-23/6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sandbox-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      # First prove the auditor still catches what it claims to: every check is fed a record
+      # with a planted fault and must fire. An audit that could no longer fail would pass
+      # everything, which is worse than having none.
+      - name: The audit catches planted faults
+        run: python3 test_audit.py
+
+      # Then audit the record itself, asking the venues again. Stdlib only.
+      - name: Audit the Sandbox record
+        run: python3 sandbox_audit.py --sample 25

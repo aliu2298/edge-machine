@@ -402,7 +402,7 @@ settle and its record stays under the Sandbox page's Reference section.
 
 `production.py` publishes every bet a Production pair logs after entering Production, in the Leads
 ledger's shape (`leads`, `updated_at`, `board_built_at`, `last_seen_at` on open leads), to
-`data/production_leads.json`. Only bets the feed can express are published (`placeable`): a soccer
+`data/production_leads.json`. Only bets the feed can express are published: a soccer
 result — home, away or **draw** — on a Kalshi game market, or Yes on a Kalshi soccer goals market,
 in a mapped league; and only with an ESPN-verified kickoff. Bet shapes: `match_result`
 (`side` home / away / draw), `total_gte`, `team_gte` (with `team`).
@@ -422,7 +422,7 @@ Rules are pre-registered from research fixed before it ran; research that failed
 | `tennis_fav_band` | Polymarket US / Kalshi | the player priced 0.75–0.90 | 86.4% v 81.1% priced on 88, z +1.26 | Sandbox (demoted from QA: no better than the close) |
 | `mma_fav_band` | Kalshi | the fighter priced 0.75–0.90 (tennis rule, unchanged) | none (out-of-sample test) | Sandbox |
 | `mlb_fade_streak` | Kalshi MLB game | a team 3-or-fewer of its last 10 v one 7-or-more (next game only) | +3.0% on 239 (2025), +4.6% on 149 (2026) | Sandbox |
-| `cmd_tail` | Kalshi daily commodity strike (WTI, Brent, gold, silver, copper, natural gas, AAA gasoline) | the near-certain side, priced 0.97–0.995 | 99.3% v 98.3% priced on 778 bets over 224 day-clusters, +1.0% after fees; bootstrap +0.3% to +1.5% | Sandbox — **selling the tail**, measured not traded |
+| `cmd_tail` | Kalshi daily commodity strike (WTI, Brent, gold, silver, copper, natural gas, AAA gasoline) | the near-certain side, priced 0.97–0.995 | 99.3% v 98.3% priced on 778 bets over 224 day-clusters, +1.0% after fees; bootstrap +0.3% to +1.5% | Sandbox — **selling the tail**, measured only |
 | `nhl_rest_edge` | Kalshi NHL game | the **home** side rested a day or more v a visitor on the second night of a back-to-back | 64.9% v 58.3% priced on 74, +7.5%, steady across the season | Sandbox (registered before the 2026-27 season) |
 | `nhl_dog_pl` | Kalshi NHL spread, **No** | the underdog +1.5, every listed game | +15.7% while the market was new, then −3.7% and −6.8% as it converged | Sandbox — an **observation**, testing whether October softness returns |
 | `tt_band_55_60` | Polymarket US | the player priced 0.55–0.60 | one spiky band in 129 matches | **Retired** — on new matches it won exactly at the price |

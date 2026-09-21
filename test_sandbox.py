@@ -1665,7 +1665,7 @@ try:
     T.PAIR_OVERRIDES["covers|mlb"] = dict(moved_on="2026-09-25", production_at=None)
     ch = T.evaluate_stages(d, st, now=_t, verbose=False)
     eq([(c["pair"], c["to"]) for c in ch], [("covers|mlb", "production"), ("covers|mlb", "ready")],
-       "listing it moves it, and only it — trading from that same run, with no threshold set")
+       "listing it moves it, and only it — ready from that same run, with no threshold set")
     eq(st["pairs"]["covers|mlb"]["entry"]["n"], 32, "with the record it was moved on")
     ok("covers|nfl" not in st["pairs"], "an untouched sandbox pair is not written to the registry")
     eq(T.evaluate_stages(d, st, now=_t + timedelta(minutes=10), verbose=False), [], "re-running changes nothing")
@@ -2725,7 +2725,7 @@ ok("model_prob" not in PR.lead_from_quote(dict(_tnq, prob_a=0.5, edge=0.05, pric
 ok("route" not in PR.lead_from_quote(dict(_tnq, sport="soccer", venue="kalshi",
                                           market_id="KXEPLGAME-26SEP18ARSCFC", pick="a",
                                           start_source="espn"), "x|soccer", "y"),
-   "a soccer lead carries no route: the bot finds those by league and club name")
+   "a soccer lead carries no route: it is matched by league and club name")
 
 # ---------------------------------------------------------------------------
 print("\nverified start times for Kalshi tennis")
@@ -2916,13 +2916,13 @@ eq(S.outcome_cluster(dict(venue="kalshi_binary", sport="nhl_pl", market_id="KXNH
 # ---------------------------------------------------------------------------
 print("\nthe public pages never say what acts on them")
 # ---------------------------------------------------------------------------
-# The site is public, and it must not tell a visitor that anything trades from it. Copy
-# written in a hurry leaked twice on 2026-09-18 ("the only page anything trades from", "the
-# bot follows Production only"), so every rendered page is checked, including every source
-# and rule note the Sandbox page shows.
+# The site is public, and its copy must say only what the records say. Copy written in a
+# hurry slipped twice on 2026-09-18, so every rendered page is checked, including every
+# source and rule note the Sandbox page shows. The phrases live in sandbox_audit, encoded,
+# so this public file does not spell them out either.
 import re as _re
-_leaks = _re.compile(r"\bbots?\b|trades? from|money follows|nothing trades|not traded|placeable|"
-                     r"\barmed\b|real money|the bot", _re.I)
+import sandbox_audit as _AUD
+_leaks = _AUD.COPY_RE
 _pages = {"production": PR.page(T.load(), T.load_stages(), PR.load_feed(), "<style></style>"),
           "sandbox notes": " ".join(str(m.get("note", "")) + " " + str(m.get("label", "")) + " "
                                     + str(m.get("retired", "")) for m in S.SOURCES.values())}

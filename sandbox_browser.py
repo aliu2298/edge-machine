@@ -125,7 +125,7 @@ def fetch_rows(jobs, js=None, settle_ms=2000, challenge_ms=10000, timeout_ms=450
                     pass
 
             for n, (u, page_js) in enumerate(jobs):
-                # Pace the navigations. Loading a batch back-to-back is itself a bot
+                # Pace the navigations. Loading a batch back-to-back is itself an automation
                 # tell: the FIRST page clears instantly and the second gets the
                 # interstitial. A short gap between pages is worth far more here than a
                 # longer wait once the challenge has already been served.

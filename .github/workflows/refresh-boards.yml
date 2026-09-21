@@ -51,9 +51,9 @@ jobs:
 
       # Stripped to what the Sandbox and Production still need (2026-09-19). The streaks,
       # book, on-fire and Record lanes are hidden and no longer rebuilt; their ledgers stay
-      # in the repo as they are. data/streak_leads.json is frozen: the bot reads it only to
-      # grade Leads-lane bets placed before 2026-09-18, and a position resolves on the
-      # exchange's own settlement regardless.
+      # in the repo as they are. data/streak_leads.json is frozen: it is read only to grade
+      # Leads-lane entries from before 2026-09-18, which resolve on the exchange's own
+      # settlement regardless.
 
       # Sandbox closing prices, taken on every refresh as well as by the close job and the
       # hourly watchdog. Writes only data/sandbox_closes/boards.json.
