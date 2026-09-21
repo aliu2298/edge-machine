@@ -1139,6 +1139,17 @@ def faded(d, name, sport=None, venues=None):
 
     Three-way contests are skipped (n=0): the opposite of "back the home side" is the away
     side AND the draw, so there is no single other side to price.
+
+    Judged in the same units assess() uses, because the z is only honest if the outcomes
+    are counted the way they actually fall:
+      * a domain judged per market-day (S.DAY_CLUSTERED) collapses to one unit a day. Its
+        rungs are nested ("above $2.89" and "above $2.95" come in together), so summing
+        them as one draw is as wrong as counting them as independent ones.
+      * elsewhere, variance is taken per outcome cluster. A temperature ladder's buckets
+        cannot both come in, so the rule hits at most one of the k it backed and the fade
+        wins k or k-1: one 0/1 draw of variance P(1-P), P the rule's summed prices. That
+        covariance is NEGATIVE, so counting the buckets as independent overstated the
+        variance and understated the z — NWS reads +1.23 correctly counted, not +0.92.
     """
     bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
             and q["status"] in ("won", "lost")
@@ -1150,16 +1161,36 @@ def faded(d, name, sport=None, venues=None):
         other = "b" if q["pick"] == "a" else "a"
         price = q.get(f"price_{other}")
         if price:
-            rows.append((float(price), q.get("result") == other,
-                         FEE_RATE.get(q.get("venue") or "polymarket", 0.07)))
-    n = len(rows)
-    if not n:
-        return dict(n=0, won=0, expected=0.0, roi=None, z=0.0)
-    won = sum(1 for _p, w, _f in rows if w)
-    exp = sum(p for p, _w, _f in rows)
-    var = sum(p * (1 - p) for p, _w, _f in rows)
-    cost = sum(p + f * p * (1 - p) for p, _w, f in rows)
-    return dict(n=n, won=won, expected=exp, roi=(won - cost) / cost,
+            p = float(price)
+            f = FEE_RATE.get(q.get("venue") or "polymarket", 0.07)
+            w = q.get("result") == other
+            rows.append(dict(q=q, p=p, fee=f, won=w,
+                             pnl=(STAKE * (1.0 / (p + f * p * (1 - p)) - 1.0)) if w else -STAKE))
+    if not rows:
+        return dict(n=0, won=0, expected=0.0, roi=None, z=0.0, outcomes=0)
+    cost = sum(r["p"] + r["fee"] * r["p"] * (1 - r["p"]) for r in rows)
+    roi = (sum(1 for r in rows if r["won"]) - cost) / cost
+
+    if sport in S.DAY_CLUSTERED:
+        days = {}
+        for r in rows:
+            days.setdefault(S.market_day(r["q"]), []).append(r)
+        units = [(sum(r["p"] for r in rs) / len(rs), sum(r["pnl"] for r in rs) / len(rs) > 0)
+                 for rs in days.values()]
+        won = sum(1 for _p, w in units if w)
+        exp = sum(p for p, _w in units)
+        var = sum(p * (1 - p) for p, _w in units)
+        return dict(n=len(units), won=won, expected=exp, roi=roi, outcomes=len(units),
+                    unit="market-day", n_bets=len(rows),
+                    z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
+
+    clusters = {}
+    for r in rows:
+        clusters.setdefault(S.outcome_cluster(r["q"]), []).append(r["q"]["price"])
+    won = sum(1 for r in rows if r["won"])
+    exp = sum(r["p"] for r in rows)
+    var = sum(min(1.0, sum(c)) * (1 - min(1.0, sum(c))) for c in clusters.values())
+    return dict(n=len(rows), won=won, expected=exp, roi=roi, outcomes=len(clusters),
                 z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
 
 

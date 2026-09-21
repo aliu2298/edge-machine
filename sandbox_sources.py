@@ -124,10 +124,12 @@ SOURCES = {
              "Before the switch it was the benchmark and could not bet."),
     "kalshi": dict(
         label="Kalshi", kind="Prediction market", connected=True,
-        site="kalshi.com", sports=["nfl", "tennis"],
-        retired_sports={"mlb": "2026-09-18: 1 won v 2.4 priced on 6 settled (z -1.23, -70.2% after fees)."},
+        site="kalshi.com", sports=["nfl", "tennis", "mlb"],
         note="A second regulated exchange. Where the two exchanges disagree, one of them "
-             "is mispriced, and this is the lane that finds out which."),
+             "is mispriced, and this is the lane that finds out which. MLB was retired "
+             "2026-09-18 (1 won v 2.4 priced on 6 settled, z -1.23) and RE-OPENED "
+             "2026-09-21 to measure its fade forward: backing the other side of its MLB "
+             "picks ran +12.4% on 23 (z +0.85). Re-opened in the Sandbox only."),
     "espn_fpi": dict(
         label="ESPN FPI / Matchup Predictor", kind="Statistical model", connected=True,
         site="espn.com", sports=["nfl", "mlb"],
@@ -140,11 +142,12 @@ SOURCES = {
              "is the hardest public number to beat, so this is the ceiling."),
     "covers": dict(
         label="Covers / OddsShark computer picks", kind="Tipster site", connected=True,
-        site="covers.com", sports=["nfl"],
-        retired_sports={"mlb": "2026-09-18: 8 won v 9.4 priced on 16 settled (z -0.73, -20.2% after fees)."},
+        site="covers.com", sports=["nfl", "mlb"],
         note="A published computer pick per game, free and dated. It states a projected "
              "SCORE rather than a probability, so it is backed at the market price with "
-             "no edge filter and gets no Brier column — a pick cannot be calibrated."),
+             "no edge filter and gets no Brier column — a pick cannot be calibrated. MLB was "
+             "retired 2026-09-18 (8 won v 9.4 priced on 16, z -0.73) and RE-OPENED 2026-09-21 "
+             "to measure its fade forward (+8.0% on 24, z +0.49). Sandbox only."),
     "oddspedia": dict(
         label="Oddspedia community tips", kind="Tipster site", connected=True,
         site="oddspedia.com", sports=["cricket"],
@@ -155,12 +158,16 @@ SOURCES = {
              "the headless browser. Tips carry no date, so each is resolved to the "
              "soonest fixture between those two sides."),
     "nws": dict(
-        label="National Weather Service", kind="Forecaster", connected=False, retired="2026-09-15: 12 won v 13.6 priced on 31 settled (z -0.85, -18.8%). The forecast is already in Kalshi's temperature prices.",
+        label="National Weather Service", kind="Forecaster", connected=True,
         site="weather.gov", sports=["climate"],
         note="The public forecast for each city, against Kalshi's temperature buckets for "
              "the same city and day. The one non-sport domain with a genuinely "
              "independent forecaster — and it settles overnight, so it reaches a readable "
-             "sample in a week rather than months."),
+             "sample in a week rather than months. Retired 2026-09-15 (12 won v 13.6 priced "
+             "on 31, z -0.85: the forecast looked already priced in) and RE-OPENED 2026-09-21 "
+             "to measure its fade forward: backing against its buckets ran +7.3% on 51 bets, "
+             "35 independent outcomes, z +1.23 — the strongest fade among the retired pairs "
+             "once its buckets are counted as the single draws they are."),
     "btts_market": dict(
         label="Kalshi BTTS price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=["soccer_btts", "soccer_btts_cup", "soccer_btts_intl"],
@@ -232,9 +239,7 @@ SOURCES = {
              "lists only a handful of fights a week, so it will take months to read."),
     "mlb_fade_streak": dict(
         label="MLB fade-the-streak rule (cold team v hot team, last 10)", kind="Rule",
-        connected=False, site="edge-machine", sports=["mlb"],
-        retired="2026-09-18: 2 won v 2.8 priced on 7 settled (z -0.64, -35.6% after fees). "
-                "The research edge did not show up on live prices.",
+        connected=True, site="edge-machine", sports=["mlb"],
         note="Pre-registered 2026-09-14. Back the team that won 3 or fewer of its last 10 games "
              "when it plays a team that won 7 or more of its last 10 (regular season, each with "
              "20+ games played, MLB Stats API results strictly before first pitch). Research on "
@@ -242,7 +247,10 @@ SOURCES = {
              "priced ~57% and won 51-56%, so backing the cold team made +3.0% on 239 games in "
              "2025 and +4.6% on 149 in 2026 — found in one season, repeated in the next, but "
              "small (z +0.1 and +1.1). Judged against backing the favourite and the underdog on "
-             "the same games."),
+             "the same games. Retired 2026-09-18 (2 won v 2.8 priced on 7, z -0.64) and RE-OPENED "
+             "2026-09-21 to measure its fade forward (+25.3% on 8, z +0.96). Note what that fade "
+             "is: this rule already fades the hot team, so fading IT backs the hot team — which "
+             "is close to backing the favourite, a blind rule it is judged against anyway."),
     "goals_market": dict(
         label="Kalshi goals price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=list(GOALS_SPORTS_ALL),

@@ -2931,13 +2931,26 @@ for _name, _html in _pages.items():
 
 # Retired 2026-09-18: four MLB pairs losing on the exchanges. A source can lose one sport
 # and keep its others; the retired pair logs nothing new and stays on the record.
-for _src in ("kalshi", "covers", "scores24"):
-    ok("mlb" not in S.SOURCES[_src]["sports"] and "mlb" in S.SOURCES[_src]["retired_sports"],
-       f"{_src} MLB is retired, its other sports kept")
-ok("mlb_fade_streak" not in S.CHALLENGERS and S.SOURCES["mlb_fade_streak"].get("retired"),
-   "the MLB fade-the-streak rule is retired")
+ok("mlb" not in S.SOURCES["scores24"]["sports"] and "mlb" in S.SOURCES["scores24"]["retired_sports"],
+   "scores24 MLB is retired, its other sports kept")
 _ur = SB.unconnected_rows(None) if "SB" in dir() else __import__("sandbox_build").unconnected_rows(None)
-ok("Covers / OddsShark computer picks · MLB" in _ur, "a retired pair is listed with its reason")
+ok("Scores24 · MLB" in _ur, "a retired pair is listed with its reason")
+
+# RE-OPENED 2026-09-21: retired pairs whose FADE looked better than the rule go back to
+# logging, so the fade can be judged forward instead of frozen on the sample that retired
+# them. Scores24 MLB stays retired: its fade loses too (-2.8%), so it fails both ways.
+for _src in ("kalshi", "covers"):
+    ok("mlb" in S.SOURCES[_src]["sports"] and "mlb" not in (S.SOURCES[_src].get("retired_sports") or {}),
+       f"{_src} MLB is re-opened to measure its fade")
+    ok("RE-OPENED 2026-09-21" in S.SOURCES[_src]["note"], f"and {_src}'s note records why")
+for _src, _sp in (("mlb_fade_streak", "mlb"), ("nws", "climate")):
+    ok(_src in S.CHALLENGERS and not S.SOURCES[_src].get("retired") and _sp in S.SOURCES[_src]["sports"],
+       f"{_src} is reconnected")
+ok(S.SOURCES["tt_band_55_60"].get("retired") and "tt_band_55_60" not in S.CHALLENGERS,
+   "table tennis stays retired: a +0.4% fade on 78 is no better outlook, only noise")
+ok(all(f"{_s}|{_sp}" not in T.PAIR_OVERRIDES for _s, _sp in
+       (("kalshi", "mlb"), ("covers", "mlb"), ("mlb_fade_streak", "mlb"), ("nws", "climate"))),
+   "and none of them is anywhere near Production: re-opening is Sandbox only")
 
 # Commodities are judged per MARKET-DAY: 22 states' gas rungs on one day are one result.
 _cq = []
@@ -3224,6 +3237,40 @@ eq(T.faded(_3way, "fr", "soccer", venues=T.TRADEABLE_VENUES)["n"], 0,
 eq(T.faded({"quotes": [], "meta": {}}, "fr")["n"], 0, "and a pair with no bets fades nothing")
 _hd = RANKB.SPORT_HEAD
 ok("If faded" in _hd, "the sport table carries the column")
+
+# A temperature ladder: two buckets of one city-day cannot both land. Counted as independent
+# they overstate the variance; counted as the one draw they are, the z is larger.
+def _lad(i, bucket, won, price=0.30):
+    return dict(id=f"lad:{i}", source="lr", sport="climate", venue="kalshi_binary",
+                market_id=f"KXHIGHNY-26SEP20-{bucket}", bet=True, pick="a", price=price,
+                price_a=price, price_b=0.72, price_draw=None,
+                result="a" if won else "b", status="won" if won else "lost", pnl=0.0,
+                stake=100.0, start="2026-09-20T00:00:00+00:00", logged="2026-09-19T00:00:00+00:00")
+_ld = {"quotes": [_lad(0, "B70", False), _lad(1, "B72", False)], "meta": {}}
+eq(S.outcome_cluster(_ld["quotes"][0]), S.outcome_cluster(_ld["quotes"][1]),
+   "two buckets of one ladder share an outcome cluster")
+_lf = T.faded(_ld, "lr", "climate", venues=T.TRADEABLE_VENUES)
+eq((_lf["n"], _lf["outcomes"]), (2, 1), "the fade counts 2 bets but only 1 independent outcome")
+_indep_var = 2 * 0.72 * 0.28
+_clust_var = 0.60 * 0.40            # the rule's two buckets summed: P = 0.30 + 0.30
+close(_lf["z"], (2 - 1.44) / _clust_var ** 0.5,
+      "and its z uses the cluster's single-draw variance, not two independent ones", tol=1e-6)
+ok(_clust_var < _indep_var,
+   "exclusive buckets have NEGATIVE covariance, so independence overstated the variance")
+
+# A commodity day: nested "above $X" rungs all land together. The fade is one unit a day.
+def _cmd(i, won):
+    return dict(id=f"cmd:{i}", source="cr", sport="commodities", venue="kalshi_binary",
+                market_id=f"KXWTI-26SEP20-T{90+i}", date="2026-09-20", bet=True, pick="b",
+                price=0.98, price_a=0.04, price_b=0.98, price_draw=None,
+                result="b" if won else "a", status="won" if won else "lost", pnl=0.0,
+                stake=100.0, start="2026-09-20T18:00:00+00:00", logged="2026-09-19T00:00:00+00:00")
+_cf = T.faded({"quotes": [_cmd(i, True) for i in range(10)], "meta": {}},
+              "cr", "commodities", venues=T.TRADEABLE_VENUES)
+eq((_cf["n"], _cf.get("unit"), _cf.get("n_bets")), (1, "market-day", 10),
+   "ten rungs of one commodity day fade as ONE market-day, not ten bets")
+ok(abs(_cf["z"]) < 3,
+   "so a single quiet day can never print a huge z the way 438 independent rungs did")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

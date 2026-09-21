@@ -729,7 +729,8 @@ def _row(r, rank=None, provisional=False):
     fd = r.get("fade") or {}
     fade = ('<span class="mut">—</span>' if not fd.get("n") or fd.get("roi") is None else
             f'<span class="{"mut" if fd["n"] < MIN_N else cls(fd["roi"])}">{pct(fd["roi"], sign=True)}</span>'
-            f'<div class="sm mut">{fd["won"]} v {fd["expected"]:.1f} on {fd["n"]}</div>')
+            f'<div class="sm mut">{fd["won"]} v {fd["expected"]:.1f} on {fd["n"]}'
+            f'{" " + fd["unit"] + ("s" if fd["n"] != 1 else "") if fd.get("unit") else ""}</div>')
     sfx = _scope(r["sport"])
     frags = S.CUP_FRAGS if sfx == "_cup" else S.INTL_FRAGS
     scope_note = (f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join(frags.values())))}</b></div>'
