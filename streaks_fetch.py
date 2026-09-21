@@ -91,6 +91,10 @@ CUP_LEAGUES = {
     "usa.open": "US Open Cup", "concacaf.leagues.cup": "Leagues Cup",
     "conmebol.libertadores": "Copa Libertadores", "conmebol.sudamericana": "Copa Sudamericana",
     "afc.champions": "AFC Champions League",
+    # 2026-09-21. Copa del Rey's first round is the week of 2026-09-26. ESPN lists the Coupe
+    # de France only once the professional clubs enter (mid-November); verified on 24 ties in
+    # Jan-Feb 2026, so it is empty now and fills itself when those rounds arrive.
+    "esp.copa_del_rey": "Copa del Rey", "fra.coupe_de_france": "Coupe de France",
 }
 CUP_FORM_LEAGUES = {
     "eng.2": "EFL Championship", "eng.3": "EFL League One", "eng.4": "EFL League Two",

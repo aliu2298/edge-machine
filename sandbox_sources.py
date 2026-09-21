@@ -268,6 +268,20 @@ SOURCES = {
              "Research: 92.9% on 84 matches against the teams' own earlier 81.4%. At real "
              "Kalshi prices in its first week, +2.0% on 20 — the market charges for most of it. "
              "The same rule selects the Leads board's over-1.5 cards since 2026-09-14."),
+    "o15_cup_mismatch": dict(
+        label="Cup mismatch over 1.5 rule (favourite 0.70+ to win)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_o15_cup"], baseline="population",
+        note="Pre-registered 2026-09-21, before it logged anything. Back over 1.5 at the Kalshi "
+             "ask in any cup tie the Sandbox lists where one side's own price to win outright is "
+             "0.70 or more at the midpoint, read from the same tie's match-winner markets in the "
+             "same run. The claim: a mismatch produces goals, and the market prices a cup tie's "
+             "goals too much like a league match's. Where it came from matters, so it is stated: "
+             "23 Taça de Portugal over-1.5 markets in one week went over 20 times against 18.1 "
+             "priced (z +0.98), and that competition was the only place a cheap-over pattern "
+             "survived — found by slicing a sample, which proves nothing. So it applies to every "
+             "cup, not only Portugal's, with no cap on the over price. Judged against backing "
+             "over 1.5 on every cup tie, so it only counts if the mismatch tells the market "
+             "something its over price does not already hold."),
     "team1_form_l5": dict(
         label="Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_team1", "soccer_team1_cup", "soccer_team1_intl"], baseline="population",
@@ -2455,6 +2469,9 @@ CUP_FRAGS = {
     "KNVBCUP": "KNVB Cup", "SCOCUP": "Scottish Cup", "LEAGUESCUP": "Leagues Cup",
     "USOPENCUP": "US Open Cup", "CONMEBOLLIB": "Copa Libertadores",
     "CONMEBOLSUD": "Copa Sudamericana", "AFCCL": "AFC Champions League",
+    # Added 2026-09-21 for the cup mismatch rule: the two cups built on top-flight clubs
+    # visiting sides several divisions down. Both list over-1.5 and match-winner markets.
+    "COPADELREY": "Copa del Rey", "COUPEDEFRANCE": "Coupe de France",
 }
 INTL_FRAGS = {"UEFANL": "UEFA Nations League", "INTLFRIENDLY": "International Friendly"}
 SCOPES = (("", BTTS_LEAGUES, "league"), ("_cup", CUP_FRAGS, "cup"), ("_intl", INTL_FRAGS, "intl"))
@@ -3475,6 +3492,40 @@ def fetch_corners_market(sport, universe=None):
     return [dict(market_id=r["market_id"], prob_a=r.get("mid_a", r["price_a"])) for r in rows]
 
 
+# ---------------------------------------------------------------------------
+# Cup mismatch over 1.5 — pre-registered 2026-09-21
+# ---------------------------------------------------------------------------
+# A cup can pair a top-flight club with a side three divisions below it. The claim is that a
+# mismatch produces goals and the market prices a cup tie's goals too much like a league
+# match's. The mismatch is read from the tie's OWN match-winner markets, in the same run as
+# the over-1.5 price, so nothing here is known only after kickoff and nothing is fitted.
+#
+# The threshold is set on the mechanism, before any result was looked at: the favourite's
+# own win price at the midpoint, 0.70 or more. A draw takes a fifth to a quarter of a soccer
+# match, so a side priced 0.70 outright leaves its opponent roughly 5-10%. There is no cap
+# on the over-1.5 price. The idea came from Taça de Portugal overs priced 0.70-0.77, and
+# capping to that band would fit the rule to the one sample it was found in.
+CUP_MISMATCH_FAV = 0.70
+
+
+def _fixture_code(r):
+    """('Taça de Portugal', '26SEP19IMOTON'): one tie's markets share this across series."""
+    return (r.get("league"), (str(r.get("market_id") or "").split("-") + ["", ""])[1])
+
+
+def fetch_o15_cup_mismatch(sport, universe=None):
+    """Back over 1.5 in a cup tie where one side is priced CUP_MISMATCH_FAV+ to win outright."""
+    uni = universe if universe is not None else (UNIVERSE or {})
+    # The tie's match-winner markets are the +0.5 domain's rows: "X to win", Yes = X wins.
+    wins = {}
+    for r in uni.get(sport.replace("soccer_o15", "soccer_p05")) or []:
+        p = r.get("mid_a", r.get("price_a"))
+        if p is not None:
+            wins.setdefault(_fixture_code(r), []).append(float(p))
+    return [dict(market_id=r["market_id"], pick="a") for r, _ko in _rule_rows(sport, universe)
+            if max(wins.get(_fixture_code(r)) or [0.0]) >= CUP_MISMATCH_FAV]
+
+
 def fetch_o15_form_l10(sport, universe=None, fixtures=None):
     """Back over 1.5 where BOTH teams' games went over 1.5 in 9+ of their last 10."""
     fixtures = _espn_fixtures() if fixtures is None else fixtures
@@ -4206,6 +4257,7 @@ CHALLENGERS = {
     "tt_band_55_60": fetch_tt_band,
     "mlb_fade_streak": fetch_mlb_fade_streak,
     "o15_form_l10": fetch_o15_form_l10,
+    "o15_cup_mismatch": fetch_o15_cup_mismatch,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,

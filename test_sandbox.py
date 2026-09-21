@@ -3296,6 +3296,52 @@ for _s, _sp in (("p05_unbeaten", "soccer_p05"), ("team2_form_l10", "soccer_team2
     ok((_s, _sp) not in S.ELIMINATED and _sp in S.SOURCES[_s]["sports"],
        f"{_s} also failed both ways but stays in its sport, as asked")
 
+print("\ncup mismatch over 1.5: a heavy favourite in a cup tie")
+
+
+def _cm_total(code, league="Taça de Portugal", price=0.80):
+    return dict(market_id=f"KXTACAPORTTOTAL-{code}-2", league=league, price_a=price, price_b=0.24,
+                mid_a=price, start="2026-09-27T15:00:00+00:00", sport="soccer_o15_cup")
+
+
+def _cm_win(code, team, win, league="Taça de Portugal"):
+    return dict(market_id=f"KXTACAPORTGAME-{code}-{team}", league=league, price_a=win + 0.01,
+                mid_a=win, start="2026-09-27T15:00:00+00:00", sport="soccer_p05_cup")
+
+
+_cmu = {"soccer_o15_cup": [_cm_total("26SEP27BIGSML"), _cm_total("26SEP27EVNEVN"),
+                           _cm_total("26SEP27NOGAME"), _cm_total("26SEP27EDGEYY")],
+        "soccer_p05_cup": [_cm_win("26SEP27BIGSML", "BIG", 0.78), _cm_win("26SEP27BIGSML", "SML", 0.08),
+                           _cm_win("26SEP27EVNEVN", "AAA", 0.38), _cm_win("26SEP27EVNEVN", "BBB", 0.35),
+                           _cm_win("26SEP27EDGEYY", "EDG", 0.70)]}
+_cmp = [q["market_id"] for q in S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu)]
+ok("KXTACAPORTTOTAL-26SEP27BIGSML-2" in _cmp, "a 0.78 favourite in a cup tie: over 1.5 is backed")
+ok("KXTACAPORTTOTAL-26SEP27EVNEVN-2" not in _cmp, "an evenly matched tie is not")
+ok("KXTACAPORTTOTAL-26SEP27NOGAME-2" not in _cmp,
+   "a tie with no match-winner market to read is not: no mismatch is assumed")
+ok("KXTACAPORTTOTAL-26SEP27EDGEYY-2" in _cmp, "0.70 exactly qualifies: the threshold is inclusive")
+eq({q["pick"] for q in S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu)}, {"a"}, "it only ever backs the over")
+_cmu2 = dict(_cmu, soccer_p05_cup=[_cm_win("26SEP27EDGEYY", "EDG", 0.69)])
+ok("KXTACAPORTTOTAL-26SEP27EDGEYY-2" not in [q["market_id"] for q in S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu2)],
+   "and 0.69 does not")
+# the favourite is read at the MIDPOINT, not the ask: 0.69 mid with a 0.72 ask is not a mismatch
+_cmu3 = dict(_cmu, soccer_p05_cup=[dict(_cm_win("26SEP27EDGEYY", "EDG", 0.69), price_a=0.72)])
+ok(not S.fetch_o15_cup_mismatch("soccer_o15_cup", dict(_cmu3, soccer_o15_cup=[_cm_total("26SEP27EDGEYY")])),
+   "the favourite's price is read at the midpoint, so a wide ask cannot manufacture a mismatch")
+# a mismatch in ANOTHER competition on the same day's code never leaks across
+_cmu4 = {"soccer_o15_cup": [_cm_total("26SEP27BIGSML", league="DFB Pokal")],
+         "soccer_p05_cup": [_cm_win("26SEP27BIGSML", "BIG", 0.85, league="Taça de Portugal")]}
+ok(not S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu4),
+   "a tie is joined to its own match-winner markets by competition AND event, never across competitions")
+eq(S.SOURCES["o15_cup_mismatch"]["sports"], ["soccer_o15_cup"], "it is a cup rule only")
+ok("o15_cup_mismatch" in S.CHALLENGERS and ("o15_cup_mismatch", "soccer_o15_cup") not in S.ELIMINATED
+   and "o15_cup_mismatch|soccer_o15_cup" not in T.PAIR_OVERRIDES, "wired, in the Sandbox, nowhere near Production")
+ok(S.CUP_FRAGS.get("COPADELREY") == "Copa del Rey" and S.CUP_FRAGS.get("COUPEDEFRANCE") == "Coupe de France",
+   "the Copa del Rey and Coupe de France are listed cups")
+import streaks_fetch as _SF
+ok({"Copa del Rey", "Coupe de France"} <= set(_SF.CUP_LEAGUES.values()),
+   "with ESPN fixtures under the same names, which is how a cup market is matched to its tie")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
