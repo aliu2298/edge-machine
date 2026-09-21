@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-21T01:44:02+00:00",
+ "board_built_at": "2026-09-21T02:05:59+00:00",
  "leads": {
   "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
    "away": "Henrique Ortenblad Nogueira",
@@ -2600,36 +2600,6 @@
    "sport": "soccer_team1",
    "status": "hit"
   },
-  "2026-09-20|Eagles|Titans|Titans to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Titans",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": 0.047,
-   "first_seen": "2026-09-17",
-   "headline": "Titans to win",
-   "home": "Eagles",
-   "id": "2026-09-20|Eagles|Titans|Titans to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-20T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Eagles v Titans",
-   "model_prob": 0.297,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.25,
-   "route": {
-    "market": "aec-nfl-phi-ten-2026-09-20",
-    "outcome": "Titans",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-phi-ten-2026-09-20",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
-  },
   "2026-09-20|FC Dallas|Austin FC|Austin FC to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Austin FC",
    "bet": {
@@ -2856,36 +2826,6 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-09-20|Jaguars|Broncos|Jaguars to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Broncos",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": 0.199,
-   "first_seen": "2026-09-18",
-   "headline": "Jaguars to win",
-   "home": "Jaguars",
-   "id": "2026-09-20|Jaguars|Broncos|Jaguars to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-20T20:05Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Jaguars v Broncos",
-   "model_prob": 0.619,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.42,
-   "route": {
-    "market": "aec-nfl-jax-den-2026-09-20",
-    "outcome": "Jaguars",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-jax-den-2026-09-20",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
   },
   "2026-09-20|Jake Fellows|Aurel Ciocanu|Jake Fellows to win \u00b7 Tennis favourite-band rule": {
    "away": "Aurel Ciocanu",
@@ -3578,36 +3518,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-09-20|Panthers|Falcons|Panthers to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Falcons",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": 0.041,
-   "first_seen": "2026-09-18",
-   "headline": "Panthers to win",
-   "home": "Panthers",
-   "id": "2026-09-20|Panthers|Falcons|Panthers to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-20T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Panthers v Falcons",
-   "model_prob": 0.616,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.575,
-   "route": {
-    "market": "aec-nfl-car-atl-2026-09-20",
-    "outcome": "Panthers",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-car-atl-2026-09-20",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "hit"
-  },
   "2026-09-20|Paul Jubb|Charles Bertimon|Paul Jubb to win \u00b7 Tennis favourite-band rule": {
    "away": "Charles Bertimon",
    "bet": {
@@ -3805,36 +3715,6 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-09-20|Seahawks|Cardinals|Cardinals to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Cardinals",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": 0.187,
-   "first_seen": "2026-09-17",
-   "headline": "Cardinals to win",
-   "home": "Seahawks",
-   "id": "2026-09-20|Seahawks|Cardinals|Cardinals to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-20T20:25Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Seahawks v Cardinals",
-   "model_prob": 0.537,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.35,
-   "route": {
-    "market": "aec-nfl-sea-ari-2026-09-20",
-    "outcome": "Cardinals",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-sea-ari-2026-09-20",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
   },
   "2026-09-20|Sitong Chen|Noelani Sara Teso|Sitong Chen to win \u00b7 Tennis favourite-band rule": {
    "away": "Noelani Sara Teso",
@@ -4189,7 +4069,7 @@
    "kickoff": "2026-09-21T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Chan H-C / Wu F-H v Charaeva A / Rakhimova K",
    "pair": "tennis_fav_band|tennis",
@@ -4220,7 +4100,7 @@
    "kickoff": "2026-09-21T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Cheng Lu v Ryoma Cogan",
    "pair": "tennis_fav_band|tennis",
@@ -4232,37 +4112,6 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-itfme-chenlu-ryocog-2026-09-21",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-21|Chia Yi Tsao|Marika TANAKA|Chia Yi Tsao to win \u00b7 Tennis favourite-band rule": {
-   "away": "Marika TANAKA",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-21",
-   "edge_at_log": null,
-   "first_seen": "2026-09-20",
-   "headline": "Chia Yi Tsao to win",
-   "home": "Chia Yi Tsao",
-   "id": "2026-09-21|Chia Yi Tsao|Marika TANAKA|Chia Yi Tsao to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-21T02:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
-   "league": "Tennis",
-   "match": "Chia Yi Tsao v Marika TANAKA",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.83,
-   "route": {
-    "market": "aec-itfwo-chitsa-martan-2026-09-21",
-    "outcome": "Chia Yi Tsao",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-itfwo-chitsa-martan-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4282,7 +4131,7 @@
    "kickoff": "2026-09-21T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Eikeri U / Gleason Q v Lansere S / Prozorova T",
    "pair": "tennis_fav_band|tennis",
@@ -4313,7 +4162,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Hugo Grenier v Vadym Ursu",
    "pair": "tennis_fav_band|tennis",
@@ -4344,7 +4193,7 @@
    "kickoff": "2026-09-21T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Hunter / Krawczyk v Ninomiya M / Radisic N",
    "pair": "tennis_fav_band|tennis",
@@ -4375,7 +4224,7 @@
    "kickoff": "2026-09-21T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Lee E / Park So v Lee Y-H / Ye Q Y",
    "pair": "tennis_fav_band|tennis",
@@ -4406,7 +4255,7 @@
    "kickoff": "2026-09-21T02:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Mariya Zharkikh v Le Yi Liu",
    "pair": "tennis_fav_band|tennis",
@@ -4418,37 +4267,6 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-itfwo-marzha-leliu-2026-09-21",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-21|Matthew Shearer|Tianlin Xie|Matthew Shearer to win \u00b7 Tennis favourite-band rule": {
-   "away": "Tianlin Xie",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-21",
-   "edge_at_log": null,
-   "first_seen": "2026-09-20",
-   "headline": "Matthew Shearer to win",
-   "home": "Matthew Shearer",
-   "id": "2026-09-21|Matthew Shearer|Tianlin Xie|Matthew Shearer to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-21T02:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
-   "league": "Tennis",
-   "match": "Matthew Shearer v Tianlin Xie",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.83,
-   "route": {
-    "market": "aec-itfme-matshe-tiaxie-2026-09-21",
-    "outcome": "Matthew Shearer",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-itfme-matshe-tiaxie-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4468,7 +4286,7 @@
    "kickoff": "2026-09-21T02:10Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Mirdzhaliev, Mirgiiaz v Ishikawa, Masaki",
    "pair": "tennis_fav_band|tennis",
@@ -4499,7 +4317,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Moez Echargui v Karl Poling",
    "pair": "tennis_fav_band|tennis",
@@ -4530,7 +4348,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Murphy Cassone v Patrick Zahraj",
    "pair": "tennis_fav_band|tennis",
@@ -4561,7 +4379,7 @@
    "kickoff": "2026-09-21T02:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Niehua Tian v Qige Yi",
    "pair": "tennis_fav_band|tennis",
@@ -4592,7 +4410,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Pavlos Tsitsipas v Nikita Mashtakov",
    "pair": "tennis_fav_band|tennis",
@@ -4604,37 +4422,6 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP21TSIMAS",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-21|Sheng Tang|Yuqiao Song|Sheng Tang to win \u00b7 Tennis favourite-band rule": {
-   "away": "Yuqiao Song",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-21",
-   "edge_at_log": null,
-   "first_seen": "2026-09-20",
-   "headline": "Sheng Tang to win",
-   "home": "Sheng Tang",
-   "id": "2026-09-21|Sheng Tang|Yuqiao Song|Sheng Tang to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-21T02:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
-   "league": "Tennis",
-   "match": "Sheng Tang v Yuqiao Song",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.89,
-   "route": {
-    "market": "aec-itfme-shetan-yuqson-2026-09-21",
-    "outcome": "Sheng Tang",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-itfme-shetan-yuqson-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4654,7 +4441,7 @@
    "kickoff": "2026-09-21T02:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
    "match": "Xiaochuan Nie v Zijun Jiang",
    "pair": "tennis_fav_band|tennis",
@@ -4670,125 +4457,39 @@
    "sport": "tennis",
    "status": "pending"
   },
-  "2026-09-21|Yue Xia|MINGLIANG YUE|Yue Xia to win \u00b7 Tennis favourite-band rule": {
-   "away": "MINGLIANG YUE",
+  "2026-09-21|Zijiang Yang|Sile Hu|Zijiang Yang to win \u00b7 Tennis favourite-band rule": {
+   "away": "Sile Hu",
    "bet": {
     "kind": "match_result",
     "side": "home"
    },
    "date": "2026-09-21",
    "edge_at_log": null,
-   "first_seen": "2026-09-20",
-   "headline": "Yue Xia to win",
-   "home": "Yue Xia",
-   "id": "2026-09-21|Yue Xia|MINGLIANG YUE|Yue Xia to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-21T02:00Z",
+   "first_seen": "2026-09-21",
+   "headline": "Zijiang Yang to win",
+   "home": "Zijiang Yang",
+   "id": "2026-09-21|Zijiang Yang|Sile Hu|Zijiang Yang to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T02:08Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
+   "last_seen_at": "2026-09-21T02:05:59+00:00",
    "league": "Tennis",
-   "match": "Yue Xia v MINGLIANG YUE",
+   "match": "Zijiang Yang v Sile Hu",
    "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.81,
+   "price_at_log": 0.84,
    "route": {
-    "market": "aec-itfme-yuexia-minyue-2026-09-21",
-    "outcome": "Yue Xia",
+    "market": "aec-itfme-zijyan-silhu-2026-09-21",
+    "outcome": "Zijiang Yang",
     "outcome_side": "yes",
     "venue": "polymarket_us"
    },
-   "sandbox_quote": "tennis_fav_band:aec-itfme-yuexia-minyue-2026-09-21",
+   "sandbox_quote": "tennis_fav_band:aec-itfme-zijyan-silhu-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-22|Giants|Rams|Giants to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Rams",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-22",
-   "edge_at_log": 0.086,
-   "first_seen": "2026-09-18",
-   "headline": "Giants to win",
-   "home": "Giants",
-   "id": "2026-09-22|Giants|Rams|Giants to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-22T00:15Z",
-   "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
-   "league": "NFL",
-   "match": "Giants v Rams",
-   "model_prob": 0.341,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.255,
-   "route": {
-    "market": "aec-nfl-nyg-lar-2026-09-21",
-    "outcome": "Giants",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-nyg-lar-2026-09-21",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "pending"
-  },
-  "2026-09-25|Falcons|Packers|Falcons to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Packers",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-25",
-   "edge_at_log": 0.063,
-   "first_seen": "2026-09-21",
-   "headline": "Falcons to win",
-   "home": "Falcons",
-   "id": "2026-09-25|Falcons|Packers|Falcons to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-09-25T00:15Z",
-   "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T01:44:02+00:00",
-   "league": "NFL",
-   "match": "Falcons v Packers",
-   "model_prob": 0.323,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.26,
-   "route": {
-    "market": "aec-nfl-atl-gb-2026-09-24",
-    "outcome": "Falcons",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-atl-gb-2026-09-24",
-   "source": "espn_fpi",
-   "sport": "nfl",
    "status": "pending"
   }
  },
  "pairs": {
-  "espn_fpi|nfl": {
-   "by_hand": "2026-09-18",
-   "entered_at": "2026-09-18T04:54:35+00:00",
-   "promoted_at": "2026-09-18T04:54:35+00:00",
-   "ready_at": "2026-09-18T04:54:35+00:00",
-   "route": "moved by hand on 2026-09-18",
-   "sandbox_clv": 0.005,
-   "sandbox_n": 2,
-   "sandbox_roi": -0.1305,
-   "sandbox_roi_fee": -0.152
-  },
-  "soccerpredictions|soccer": {
-   "by_hand": "2026-09-21",
-   "entered_at": "2026-09-21T01:44:02+00:00",
-   "promoted_at": "2026-09-21T01:44:02+00:00",
-   "ready_at": "2026-09-21T01:44:02+00:00",
-   "route": "moved by hand on 2026-09-21",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
-  },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
    "entered_at": "2026-09-18T00:51:24+00:00",
@@ -4815,5 +4516,5 @@
  "stage": "production",
  "unlisted_skipped": 31,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-21T01:44:02+00:00"
+ "updated_at": "2026-09-21T02:05:59+00:00"
 }
