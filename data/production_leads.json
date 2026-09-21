@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-21T04:21:25+00:00",
+ "board_built_at": "2026-09-21T04:49:00+00:00",
  "leads": {
   "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
    "away": "Henrique Ortenblad Nogueira",
@@ -4098,7 +4098,7 @@
    "kickoff": "2026-09-21T16:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "David Goffin v Mark Lajal",
    "pair": "tennis_fav_band|tennis",
@@ -4129,7 +4129,7 @@
    "kickoff": "2026-09-21T06:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Deney Wassermann v Aristotelis Bezianis",
    "pair": "tennis_fav_band|tennis",
@@ -4160,7 +4160,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Hugo Grenier v Vadym Ursu",
    "pair": "tennis_fav_band|tennis",
@@ -4191,7 +4191,7 @@
    "kickoff": "2026-09-21T05:24Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Ivan Dorokhov v Boda Zheng",
    "pair": "tennis_fav_band|tennis",
@@ -4236,6 +4236,37 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-09-21|Karina Elena Gabriela Dumitru|Daria Ioana Pastoric|Karina Elena Gabriela Dumitru to win \u00b7 Tennis favourite-band rule": {
+   "away": "Daria Ioana Pastoric",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-21",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Karina Elena Gabriela Dumitru to win",
+   "home": "Karina Elena Gabriela Dumitru",
+   "id": "2026-09-21|Karina Elena Gabriela Dumitru|Daria Ioana Pastoric|Karina Elena Gabriela Dumitru to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T06:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-21",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
+   "league": "Tennis",
+   "match": "Karina Elena Gabriela Dumitru v Daria Ioana Pastoric",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "aec-itfwo-kardum-darpas-2026-09-21",
+    "outcome": "Karina Elena Gabriela Dumitru",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-kardum-darpas-2026-09-21",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-09-21|Kazuki Nakajima|JIANGAO CHANG|Kazuki Nakajima to win \u00b7 Tennis favourite-band rule": {
    "away": "JIANGAO CHANG",
    "bet": {
@@ -4251,7 +4282,7 @@
    "kickoff": "2026-09-21T05:24Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Kazuki Nakajima v JIANGAO CHANG",
    "pair": "tennis_fav_band|tennis",
@@ -4263,6 +4294,37 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-itfme-kaznak-jiacha-2026-09-21",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-21|Margarita Gasparyan|Liana Dvalishvili|Margarita Gasparyan to win \u00b7 Tennis favourite-band rule": {
+   "away": "Liana Dvalishvili",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-21",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Margarita Gasparyan to win",
+   "home": "Margarita Gasparyan",
+   "id": "2026-09-21|Margarita Gasparyan|Liana Dvalishvili|Margarita Gasparyan to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T06:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-21",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
+   "league": "Tennis",
+   "match": "Margarita Gasparyan v Liana Dvalishvili",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.86,
+   "route": {
+    "market": "aec-itfwo-marggas-liadva-2026-09-21",
+    "outcome": "Margarita Gasparyan",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-marggas-liadva-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4282,7 +4344,7 @@
    "kickoff": "2026-09-21T14:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Max Alcala Gurri v Eliakim Coulibaly",
    "pair": "tennis_fav_band|tennis",
@@ -4294,6 +4356,37 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP21ALCCOU",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-21|Melinda Biro|Ema Harajda|Melinda Biro to win \u00b7 Tennis favourite-band rule": {
+   "away": "Ema Harajda",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-21",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Melinda Biro to win",
+   "home": "Melinda Biro",
+   "id": "2026-09-21|Melinda Biro|Ema Harajda|Melinda Biro to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T06:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-21",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
+   "league": "Tennis",
+   "match": "Melinda Biro v Ema Harajda",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.89,
+   "route": {
+    "market": "aec-itfwo-melbir-emahar-2026-09-21",
+    "outcome": "Melinda Biro",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-melbir-emahar-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4313,7 +4406,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Moez Echargui v Karl Poling",
    "pair": "tennis_fav_band|tennis",
@@ -4344,7 +4437,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Murphy Cassone v Patrick Zahraj",
    "pair": "tennis_fav_band|tennis",
@@ -4375,7 +4468,7 @@
    "kickoff": "2026-09-21T06:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Oleg Syrovatskiy v Bogdan Seleznev",
    "pair": "tennis_fav_band|tennis",
@@ -4406,7 +4499,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Pavlos Tsitsipas v Nikita Mashtakov",
    "pair": "tennis_fav_band|tennis",
@@ -4466,7 +4559,7 @@
    "kickoff": "2026-09-21T05:46Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "last_seen_at": "2026-09-21T04:49:00+00:00",
    "league": "Tennis",
    "match": "Ying Xue v Sitong Chen",
    "pair": "tennis_fav_band|tennis",
@@ -4510,5 +4603,5 @@
  "stage": "production",
  "unlisted_skipped": 27,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-21T04:21:25+00:00"
+ "updated_at": "2026-09-21T04:49:00+00:00"
 }
