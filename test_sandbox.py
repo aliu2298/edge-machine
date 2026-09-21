@@ -3333,6 +3333,14 @@ _cmu4 = {"soccer_o15_cup": [_cm_total("26SEP27BIGSML", league="DFB Pokal")],
          "soccer_p05_cup": [_cm_win("26SEP27BIGSML", "BIG", 0.85, league="Taça de Portugal")]}
 ok(not S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu4),
    "a tie is joined to its own match-winner markets by competition AND event, never across competitions")
+# an EMPTY match-winner book has a placeholder midpoint; it must never be read as a mismatch
+_cmu5 = {"soccer_o15_cup": [_cm_total("26SEP27BIGSML")],
+         "soccer_p05_cup": [dict(_cm_win("26SEP27BIGSML", "BIG", 0.78), untraded=True, tradeable={"a": False})]}
+ok(not S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu5),
+   "a favourite read off an empty book is no mismatch: no book, no reading")
+_cmu6 = {"soccer_o15_cup": [_cm_total("26SEP27BIGSML")],
+         "soccer_p05_cup": [dict(_cm_win("26SEP27BIGSML", "BIG", 0.78), untraded=False, tradeable={"a": True})]}
+ok(S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu6), "the same favourite on a real book is")
 eq(S.SOURCES["o15_cup_mismatch"]["sports"], ["soccer_o15_cup"], "it is a cup rule only")
 ok("o15_cup_mismatch" in S.CHALLENGERS and ("o15_cup_mismatch", "soccer_o15_cup") not in S.ELIMINATED
    and "o15_cup_mismatch|soccer_o15_cup" not in T.PAIR_OVERRIDES, "wired, in the Sandbox, nowhere near Production")

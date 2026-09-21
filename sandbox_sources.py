@@ -3517,10 +3517,13 @@ def fetch_o15_cup_mismatch(sport, universe=None):
     """Back over 1.5 in a cup tie where one side is priced CUP_MISMATCH_FAV+ to win outright."""
     uni = universe if universe is not None else (UNIVERSE or {})
     # The tie's match-winner markets are the +0.5 domain's rows: "X to win", Yes = X wins.
+    # Read only from a real book. An empty one (a 0.80 ask over no bid, as the Copa del Rey's
+    # preliminary round sat five days out) has a midpoint that is pure placeholder, and one
+    # of those reading 0.70+ beside a properly priced over would invent a mismatch.
     wins = {}
     for r in uni.get(sport.replace("soccer_o15", "soccer_p05")) or []:
         p = r.get("mid_a", r.get("price_a"))
-        if p is not None:
+        if p is not None and not r.get("untraded") and (r.get("tradeable") or {}).get("a", True):
             wins.setdefault(_fixture_code(r), []).append(float(p))
     return [dict(market_id=r["market_id"], pick="a") for r, _ko in _rule_rows(sport, universe)
             if max(wins.get(_fixture_code(r)) or [0.0]) >= CUP_MISMATCH_FAV]
