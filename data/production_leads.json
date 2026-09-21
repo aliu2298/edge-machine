@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-21T14:44:47+00:00",
+ "board_built_at": "2026-09-21T15:09:53+00:00",
  "leads": {
   "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
    "away": "Henrique Ortenblad Nogueira",
@@ -2682,6 +2682,35 @@
    "sport": "soccer_team1",
    "status": "miss"
   },
+  "2026-09-20|Fermin Tenti|Mariano Kestelboim|Mariano Kestelboim to win \u00b7 Tennis favourite-band rule": {
+   "away": "Mariano Kestelboim",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-20",
+   "edge_at_log": null,
+   "first_seen": "2026-09-20",
+   "headline": "Mariano Kestelboim to win",
+   "home": "Fermin Tenti",
+   "id": "2026-09-20|Fermin Tenti|Mariano Kestelboim|Mariano Kestelboim to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-20T17:30Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Fermin Tenti v Mariano Kestelboim",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.78,
+   "route": {
+    "market": "KXATPCHALLENGERMATCH-26SEP20TENKES",
+    "outcome": "Mariano Kestelboim",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP20TENKES",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "miss"
+  },
   "2026-09-20|Francesca Franchi|Kahyeon Han|Francesca Franchi to win \u00b7 Tennis favourite-band rule": {
    "away": "Kahyeon Han",
    "bet": {
@@ -4388,7 +4417,7 @@
    "kickoff": "2026-09-21T16:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "David Goffin v Mark Lajal",
    "pair": "tennis_fav_band|tennis",
@@ -4448,7 +4477,7 @@
    "kickoff": "2026-09-21T15:33Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Eduardo Lage v Eugenio Almeida Junior",
    "pair": "tennis_fav_band|tennis",
@@ -4595,7 +4624,7 @@
    "kickoff": "2026-09-21T18:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Jakub Vrba v Spencer Johnson",
    "pair": "tennis_fav_band|tennis",
@@ -4945,7 +4974,7 @@
    "kickoff": "2026-09-21T15:33Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Max Sheldon v Kabeer Kapasi",
    "pair": "tennis_fav_band|tennis",
@@ -5208,7 +5237,7 @@
    "kickoff": "2026-09-21T15:33Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Sidney Emanuel Meneguetti v Leonel Cesar Castro",
    "pair": "tennis_fav_band|tennis",
@@ -5297,7 +5326,7 @@
    "kickoff": "2026-09-21T19:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Timo Legout v Daniil Ostapenkov",
    "pair": "tennis_fav_band|tennis",
@@ -5328,7 +5357,7 @@
    "kickoff": "2026-09-21T15:45Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Valerio Aboian v Matias Franco Descotte",
    "pair": "tennis_fav_band|tennis",
@@ -5359,7 +5388,7 @@
    "kickoff": "2026-09-21T15:33Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T14:44:47+00:00",
+   "last_seen_at": "2026-09-21T15:09:53+00:00",
    "league": "Tennis",
    "match": "Victor Bini v Felipe Moretti",
    "pair": "tennis_fav_band|tennis",
@@ -5626,14 +5655,14 @@
    "promoted_at": "2026-09-17T21:42:13+00:00",
    "ready_at": "2026-09-17T21:49:17+00:00",
    "route": "moved by hand on 2026-09-17",
-   "sandbox_clv": -0.0127,
-   "sandbox_n": 172,
-   "sandbox_roi": 0.0046,
-   "sandbox_roi_fee": -0.0064
+   "sandbox_clv": -0.0125,
+   "sandbox_n": 173,
+   "sandbox_roi": -0.0012,
+   "sandbox_roi_fee": -0.0122
   }
  },
  "stage": "production",
  "unlisted_skipped": 40,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-21T14:44:47+00:00"
+ "updated_at": "2026-09-21T15:09:53+00:00"
 }
