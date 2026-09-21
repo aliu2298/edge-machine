@@ -3146,6 +3146,49 @@ close(_dd["quotes"][0]["pnl"], round(100.0 * (1 / 0.65 - 1), 2),
       "and pays it at the basket's own price, not a leg's")
 S.resolve_polymarket = _saved[0]
 
+print("\neach sport ranks its pairs, best first")
+import sandbox_build as RANKB
+
+
+def _rk(name, n, won, expected, prod=False, v=None, sport="tennis"):
+    a = dict(n=n, won=won, expected=expected, roi_fee=0.0, z=0.0, n_bets=n)
+    return dict(name=name, sport=sport, meta=dict(label=name, kind="Rule"), a=a, open=0,
+                last="", gone=None, prod=prod, moved="", removed=None,
+                v=v or ("retired" if name == "gone" else "working" if n >= RANKB.MIN_N else
+                        "promising" if n >= RANKB.EARLY_N else "early"))
+
+
+_strong = _rk("strong", 60, 40, 34.0)          # +0.100 a bet, readable
+_mid    = _rk("mid",    60, 36, 34.0)          # +0.033 a bet, readable
+_weak   = _rk("weak",   60, 30, 34.0)          # -0.067 a bet, readable
+_fluke  = _rk("fluke",  12, 12,  4.0)          # +0.667 a bet -- but only 12 settled
+_tiny   = _rk("tiny",    3,  3,  0.3)          # 3-0: nothing to rank
+_dead   = _rk("gone",   99, 90, 40.0, v="retired")   # retired, however good it looked
+_ranked = RANKB.rank_rows([_tiny, _weak, _fluke, _dead, _mid, _strong])
+eq([(rk, r["name"]) for rk, _p, r in _ranked],
+   [(1, "strong"), (2, "mid"), (3, "weak"), (4, "fluke"), (None, "tiny"), (None, "gone")],
+   "readable pairs rank first by wins above the price, then the thin ones, then nothing")
+ok(not _ranked[0][1] and _ranked[3][1],
+   "and the thin one is flagged provisional while the readable ones are not")
+ok(RANKB.rank_key(_fluke) > RANKB.rank_key(_strong),
+   "the 12-bet fluke has the better per-bet number ...")
+eq([r["name"] for rk, _p, r in _ranked if rk][0], "strong",
+   "... and still does not outrank a readable pair: that is the whole point of the tiers")
+eq(RANKB.rank_key(_rk("none", 0, 0, 0.0)), 0.0, "a pair with no settled bets ranks on nothing")
+
+# ROI is NOT the key: two pairs can post the same ROI off completely different prices.
+_longshot = _rk("longshot", 40, 10, 8.0)       # backs 0.20 shots, beats the price
+_chalk    = _rk("chalk",    40, 34, 35.0)      # backs 0.875 favourites, behind it
+eq([r["name"] for _rk_, _p, r in RANKB.rank_rows([_chalk, _longshot])], ["longshot", "chalk"],
+   "the pair beating its prices ranks above the one behind them, whatever the prices were")
+
+_prod_bad = _rk("prodbad", 60, 30, 34.0, prod=True)
+eq([r["name"] for _rk_, _p, r in RANKB.rank_rows([_prod_bad, _mid])], ["mid", "prodbad"],
+   "a Production pair does NOT float to the top: being behind the price is the thing to see")
+_html = RANKB.sport_sections([_strong, _weak, _fluke])
+ok("Ranked best to worst" in _html, "the section says what it is ranked on")
+ok('class="rank">1<' in _html, "and the leader carries rank 1")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

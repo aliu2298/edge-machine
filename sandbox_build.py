@@ -648,12 +648,53 @@ def insights(rows, now=None):
     return '<ul class="ins">' + "".join(f"<li>{x}</li>" for x in li) + "</ul>"
 
 
-SPORT_HEAD = ('<tr><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th>'
+SPORT_HEAD = ('<tr><th class="num">#</th><th>Rule or tipster</th><th>Verdict</th>'
+              '<th class="num">Record</th>'
               '<th class="num">Won v priced</th><th class="num">ROI after fees</th>'
               '<th class="num">Open</th><th>Stage</th></tr>')
 
 
-def _row(r):
+def rank_key(r):
+    """How far ahead of the price a pair is, per bet — the thing every verdict here turns on.
+
+    Not ROI. ROI says how much a pair made, which depends on the prices it happened to be
+    offered: a tipster backing 0.30 shots and one backing 0.85 favourites can post the same
+    ROI off completely different skill. Wins above what the prices implied, divided by the
+    bets, is the same number for both and is what "beating the market" actually means.
+    """
+    a = r["a"]
+    return (a["won"] - a["expected"]) / a["n"] if a["n"] else 0.0
+
+
+def rank_rows(rs):
+    """A sport's pairs, best first, as [(rank|None, provisional, row)].
+
+    Ranked in TIERS, because a ranking that lets 3-0 outrank 201-37 is worse than no
+    ranking at all. A pair readable on its own terms (MIN_N settled) is ranked first; one
+    with enough to lean on but not to read is ranked below every readable pair however
+    pretty its numbers, and marked provisional. Anything thinner, and anything retired, is
+    not ranked at all — there is nothing there to rank.
+    """
+    readable, thin, unranked, retired = [], [], [], []
+    for r in rs:
+        if r["v"] == "retired":
+            retired.append(r)
+        elif r["a"]["n"] >= MIN_N:
+            readable.append(r)
+        elif r["a"]["n"] >= EARLY_N:
+            thin.append(r)
+        else:
+            unranked.append(r)
+    readable.sort(key=lambda r: (-rank_key(r), -r["a"]["n"]))
+    thin.sort(key=lambda r: (-rank_key(r), -r["a"]["n"]))
+    unranked.sort(key=lambda r: (-r["a"]["n"], not r["prod"]))
+    retired.sort(key=lambda r: -r["a"]["n"])
+    out = [(i + 1, False, r) for i, r in enumerate(readable)]
+    out += [(len(readable) + i + 1, True, r) for i, r in enumerate(thin)]
+    return out + [(None, False, r) for r in unranked + retired]
+
+
+def _row(r, rank=None, provisional=False):
     a, meta = r["a"], r["meta"]
     label, chip, _o = VERDICTS[r["v"]]
     rm = r.get("removed")
@@ -672,8 +713,10 @@ def _row(r):
     unit = (f'{a["n"]} {a["unit"]}{"" if a["n"] == 1 else ("es" if a["unit"] == "match" else "s")} · {a["n_bets"]} bets'
             if a.get("unit") in ("market-day", "match") else f'{a["n"]} settled')
     rec = (f'{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{unit}</div>' if a["n"] else "—")
-    vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins</div>'
-          if a["n"] else "—")
+    # The per-bet figure is what the ranking sorts on, shown here so a position can be
+    # checked against the row rather than taken on trust.
+    vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins '
+          f'· {rank_key(r):+.3f}/bet</div>' if a["n"] else "—")
     roi = (f'<span class="{"mut" if thin else cls(a["roi_fee"])}">{pct(a["roi_fee"], sign=True)}</span>'
            if a["n"] else "—")
     stage = (f'<span class="sig y">PRODUCTION</span><div class="sm mut">since {esc(r["moved"])}</div>'
@@ -685,7 +728,12 @@ def _row(r):
     tag = f' <span class="sig w">{esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
     if r.get("gone"):
         scope_note = f'<div class="sm"><b>{esc(str(r["gone"]))}</b></div>' + scope_note
-    return f"""<tr><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
+    # The rank is greyed while a pair is too thin to read, so the number never pretends to
+    # more than it has. An unranked pair shows a dash, not a position it has not earned.
+    rk = ('<span class="mut">—</span>' if rank is None else
+          f'<span class="{"mut" if provisional else "rank"}">{rank}</span>'
+          + ('<div class="sm mut">early</div>' if provisional else ''))
+    return f"""<tr><td class="num">{rk}</td><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
 <div class="sm mut">{esc(sub)} · {esc(meta['kind'])}</div></summary>
 {scope_note}<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
@@ -730,17 +778,24 @@ def sport_sections(rows):
                                         -sum(r["a"]["n"] for r in fams[f])))
     out = []
     for f in order:
-        rs = sorted(fams[f], key=lambda r: (not r["prod"], VERDICTS[r["v"]][2], -r["a"]["n"]))
+        ranked = rank_rows(fams[f])
+        rs = [r for _rk, _p, r in ranked]
         n_prod = sum(r["prod"] for r in rs)
-        read = [r for r in rs if r["a"]["n"] >= MIN_N]      # a "best" on 1 bet is noise
-        best = max(read, key=lambda r: r["a"]["roi_fee"] or 0, default=None)
+        # The top of the ranking, named in the summary, so the order is visible without
+        # opening the section. Only a readable pair can be "best" — never a provisional one.
+        best = next((r for rk, prov, r in ranked if rk and not prov), None)
         bits = [f"{len(rs)} tested"] + ([f"{n_prod} in Production"] if n_prod else [])
-        if best and (best["a"]["roi_fee"] or 0) > 0:
-            bits.append(f"best: {best['meta']['label'].split(' (')[0]} {pct(best['a']['roi_fee'], sign=True)}"
-                        f" on {best['a']['n']}")
+        if best:
+            bits.append(f"best: {best['meta']['label'].split(' (')[0]} "
+                        f"{best['a']['won'] - best['a']['expected']:+.1f} wins v the price "
+                        f"on {best['a']['n']}")
         out.append(f"""<details class="sport"><summary><b>{esc(f)}</b>
 <span class="mut"> · {esc(' · '.join(bits))}</span></summary>
-<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r) for r in rs)}</table></div></details>""")
+<div class="note sm">Ranked best to worst by <b>wins above what the prices implied, per bet</b> —
+not by ROI, which mostly reflects the prices a pair happened to be offered. A pair is ranked
+once it has {MIN_N} settled; between {EARLY_N} and {MIN_N} it ranks below every readable pair and
+is greyed; under {EARLY_N}, and once retired, it is not ranked at all.</div>
+<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, prov) for rk, prov, r in ranked)}</table></div></details>""")
     return "\n".join(out)
 
 
@@ -850,6 +905,7 @@ color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:
 td{{padding:9px 11px;border-bottom:1px solid #1a1f2b;vertical-align:top}}
 tr:last-child td{{border-bottom:none}}
 .num{{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}}
+.rank{{font-weight:800;font-size:15px}}
 .st,.sig{{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.05em;
 border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.won,.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
