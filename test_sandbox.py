@@ -3103,14 +3103,14 @@ _tu = {"tennis": [
     _leg("TH", "2026-09-21T08:00:00+00:00", 0.95),          # outside it the other way
 ]}
 _rows = S.tennis_combo_rows(_tu)
-eq(sorted(r["market_id"] for r in _rows), ["combo2:2026-09-21", "combo3:2026-09-21"],
-   "one basket a day per leg count")
-_c2 = next(r for r in _rows if r["market_id"] == "combo2:2026-09-21")
-_c3 = next(r for r in _rows if r["market_id"] == "combo3:2026-09-21")
+_c2s = [r for r in _rows if r["market_id"].startswith("combo2:2026-09-21:")]
+_c3s = [r for r in _rows if r["market_id"].startswith("combo3:2026-09-21:")]
+eq((len(_c2s), len(_c3s)), (1, 1), "three eligible legs make one 2-leg basket (one leg left over) and one 3-leg")
+_c2, _c3 = _c2s[0], _c3s[0]
 eq([l["market_id"] for l in _c2["legs"]], ["T1", "T2"],
-   "the legs are the EARLIEST by start time, never the nicest priced")
+   "the legs are taken in start-time order, never the nicest priced")
 eq([l["market_id"] for l in _c3["legs"]], ["T1", "T2", "T3"],
-   "and the three-leg basket extends the same order")
+   "and the three-leg basket cuts the same order")
 close(_c2["price_a"], round(0.85 * 0.75 * (1 + S.COMBO_MARKUP[2]), 4),
       "the two-leg price is the product of the legs plus the measured RFQ markup")
 close(_c3["price_a"], round(0.85 * 0.75 * 0.80 * (1 + S.COMBO_MARKUP[3]), 4),
@@ -3120,18 +3120,54 @@ ok(all(r["sport"] == "tennis_combo" for r in _rows),
    "baskets sit in their own domain, so they never mix into the single-leg tennis record")
 eq(S.tennis_combo_rows({"tennis": _tu["tennis"][:1]}), [],
    "a day with one eligible leg makes no basket at all")
-eq([r["market_id"] for r in S.tennis_combo_rows({"tennis": _tu["tennis"][1:3]})],
-   ["combo2:2026-09-21"], "two eligible legs make the two-leg basket only")
+eq([r["market_id"].split(":")[0] for r in S.tennis_combo_rows({"tennis": _tu["tennis"][1:3]})],
+   ["combo2"], "two eligible legs make the two-leg basket only")
 _untraded = [dict(_leg("T1", "2026-09-21T10:00:00+00:00", 0.85), untraded=True),
              _leg("T2", "2026-09-21T12:00:00+00:00", 0.75),
              _leg("T3", "2026-09-21T14:00:00+00:00", 0.80)]
 eq([l["market_id"] for l in S.tennis_combo_rows({"tennis": _untraded})[0]["legs"]], ["T2", "T3"],
    "a leg with no book is never put in a basket")
-eq(S.fetch_tennis_combo2("tennis_combo", {"tennis_combo": _rows}),
-   [dict(market_id="combo2:2026-09-21", pick="a")],
-   "the two-leg source buys its own basket and nothing else")
+eq([q["market_id"] for q in S.fetch_tennis_combo2("tennis_combo", {"tennis_combo": _rows})],
+   [_c2["market_id"]], "the two-leg source buys two-leg baskets and nothing else")
+eq({q["pick"] for q in S.fetch_tennis_combo2("tennis_combo", {"tennis_combo": _rows})}, {"a"},
+   "backing that every leg wins")
 eq([q["market_id"] for q in S.fetch_tennis_combo3("tennis_combo", {"tennis_combo": _rows})],
-   ["combo3:2026-09-21"], "and the three-leg source buys its own")
+   [_c3["market_id"]], "and the three-leg source its own")
+
+# A full day: seven eligible legs make three disjoint 2-leg baskets and two 3-leg ones.
+_day = {"tennis": [_leg(f"D{i}", f"2026-09-22T{8 + i:02d}:00:00+00:00", 0.80, day="2026-09-22")
+                   for i in range(7)]}
+_dr = S.tennis_combo_rows(_day)
+_d2 = [r for r in _dr if r["market_id"].startswith("combo2:")]
+_d3 = [r for r in _dr if r["market_id"].startswith("combo3:")]
+eq((len(_d2), len(_d3)), (3, 2), "seven legs: three 2-leg baskets and two 3-leg, every leg that fits used")
+for _grp, _nm in ((_d2, "2-leg"), (_d3, "3-leg")):
+    _all = [l["market_id"] for r in _grp for l in r["legs"]]
+    eq(len(_all), len(set(_all)), f"no match appears in two {_nm} baskets: each basket is independent")
+eq([[l["market_id"] for l in r["legs"]] for r in _d2], [["D0", "D1"], ["D2", "D3"], ["D4", "D5"]],
+   "baskets are consecutive in start order, so none is picked after the fact")
+# A later run: D0-D3 are already in logged 2-leg baskets. They are skipped, never reused.
+_later = S.tennis_combo_rows(_day, used={2: {"D0", "D1", "D2", "D3"}})
+eq([[l["market_id"] for l in r["legs"]] for r in _later if r["market_id"].startswith("combo2:")],
+   [["D4", "D5"]], "a leg already in a logged basket is skipped, so no leg is ever counted twice")
+eq(len([r for r in _later if r["market_id"].startswith("combo3:")]), 2,
+   "and 'used' is per size: the 3-leg lane still cuts its own baskets from the same legs")
+# The same legs are the same basket whichever run builds it, so it is logged once.
+_rev = {"tennis": list(reversed(_day["tennis"]))}
+eq(sorted(r["market_id"] for r in S.tennis_combo_rows(_rev)), sorted(r["market_id"] for r in _dr),
+   "a basket's id comes from its legs, so the order they arrive in cannot change it")
+
+# publish() must not mistake two different baskets for one contest: they share side names.
+_qa = dict(sport="tennis_combo", venue="combo", start="2026-09-22T08:00:00+00:00",
+           side_a="All 2 win", side_b="Any one loses", market_id=_d2[0]["market_id"])
+ok(not T._same_contest_quote(_qa, dict(_qa, market_id=_d2[1]["market_id"])),
+   "two baskets with the same side names are NOT the same contest: a basket is its id")
+ok(T._same_contest_quote(_qa, dict(_qa)), "while the same basket twice still is")
+_dq = {"quotes": [dict(id="x", sport="tennis_combo", legs=[dict(market_id="D0"), dict(market_id="D1")]),
+                  dict(id="y", sport="tennis_combo", legs=[dict(market_id="D0"), dict(market_id="D1"),
+                                                           dict(market_id="D2")])]}
+eq(T.combo_used_legs(_dq), {2: {"D0", "D1"}, 3: {"D0", "D1", "D2"}},
+   "the tracker reads which legs each size has already used from the logged baskets")
 
 _res = {"A": "a", "B": "a", "C": "b", "D": "void", "E": None}
 _saved = (S.resolve_polymarket,)

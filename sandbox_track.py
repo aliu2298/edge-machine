@@ -379,7 +379,16 @@ def decide(prob_a, price_a, price_b):
 # Publish
 # ---------------------------------------------------------------------------
 
-def collect(verbose=True):
+def combo_used_legs(d):
+    """{n: leg market ids already in a logged n-leg basket} — see S.tennis_combo_rows."""
+    used = {}
+    for q in d.get("quotes") or []:
+        if q.get("sport") == "tennis_combo" and q.get("legs"):
+            used.setdefault(len(q["legs"]), set()).update(l["market_id"] for l in q["legs"])
+    return used
+
+
+def collect(verbose=True, combo_used=None):
     """Fetch the universe for every sport. Returns (universe_by_sport, coverage).
 
     Polymarket is the venue wherever it lists a contest. Kalshi fills in what it does
@@ -400,7 +409,7 @@ def collect(verbose=True):
             # run already priced, so a leg and the basket holding it always carry the same
             # number. SPORTS lists this domain after tennis, so those rows exist by now.
             try:
-                rows = S.tennis_combo_rows(universe)
+                rows = S.tennis_combo_rows(universe, used=combo_used)
             except Exception as e:
                 print(f"  ! tennis_combo build failed: {type(e).__name__}: {str(e)[:70]}")
                 rows = []
@@ -1629,7 +1638,10 @@ def _same_contest_quote(a, b):
         return False
     if gap > SAME_CONTEST_H_BY_SPORT.get(a["sport"], SAME_CONTEST_H) * 3600:
         return False
-    if a.get("venue") == "kalshi_binary" or b.get("venue") == "kalshi_binary":
+    # A yes/no market, and a combo basket, is identified by its id alone. Every basket is
+    # named "All n win" v "Any one loses", so matching on side names made every basket of a
+    # day look like the same contest and dropped all but the first.
+    if a.get("venue") in ("kalshi_binary", "combo") or b.get("venue") in ("kalshi_binary", "combo"):
         return a.get("market_id") == b.get("market_id")
     score, _flip = S.pair_match(a["side_a"], a["side_b"], b["side_a"], b["side_b"], sport=a["sport"])
     return score > 0
@@ -1786,7 +1798,7 @@ def main():
     # CPU — all of it waiting on the network, and no log line said where.
     t0 = time.time()
     print(" collecting…")
-    universe, coverage = collect()
+    universe, coverage = collect(combo_used=combo_used_legs(d))
     print(f"  ({time.time() - t0:.0f}s)")
     t1 = time.time()
     print(" publishing…")

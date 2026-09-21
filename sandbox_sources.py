@@ -198,8 +198,9 @@ SOURCES = {
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="Pre-registered 2026-09-21, before it logged anything. Take the first 2 of the "
-             "day's favourite-band legs by start time and buy them as ONE combo contract, which "
+        note="Pre-registered 2026-09-21, before it logged anything. Cut each day's "
+             "favourite-band legs, in start-time order, into consecutive baskets of 2 and buy "
+             "each basket as ONE combo contract, which "
              "pays only if all 2 win. A combo multiplies a rule's edge rather "
              "than averaging it: at m = 1.042 over 238 settled single-leg bets, 2 legs would "
              "run at 8.5% over the price it pays — and at about the same multiple BELOW it if "
@@ -207,12 +208,13 @@ SOURCES = {
              "Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
              "median 0.84% over the product of the legs, far inside the 8.5% the edge could "
              "absorb. The price here is that product plus the measured markup, not a live "
-             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. One basket a day, so a day is one result.'),
+             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. Each leg sits in one basket of each size and baskets share no match, so each is an independent result, judged per basket like the single-leg rule. Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.'),
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="Pre-registered 2026-09-21, before it logged anything. Take the first 3 of the "
-             "day's favourite-band legs by start time and buy them as ONE combo contract, which "
+        note="Pre-registered 2026-09-21, before it logged anything. Cut each day's "
+             "favourite-band legs, in start-time order, into consecutive baskets of 3 and buy "
+             "each basket as ONE combo contract, which "
              "pays only if all 3 win. A combo multiplies a rule's edge rather "
              "than averaging it: at m = 1.042 over 238 settled single-leg bets, 3 legs would "
              "run at 13.1% over the price it pays — and at about the same multiple BELOW it if "
@@ -220,7 +222,7 @@ SOURCES = {
              "Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
              "median 1.06% over the product of the legs, far inside the 13.1% the edge could "
              "absorb. The price here is that product plus the measured markup, not a live "
-             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. One basket a day, so a day is one result.'),
+             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. Each leg sits in one basket of each size and baskets share no match, so each is an independent result, judged per basket like the single-leg rule. Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.'),
     "tt_band_55_60": dict(
         label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=False, retired='2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.',
         site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
@@ -2848,14 +2850,24 @@ COMBO_LEGS = (2, 3)
 COMBO_MARKUP = {2: 0.0084, 3: 0.0106}     # measured, Kalshi RFQ, 2026-09-21, 20 baskets
 
 
-def tennis_combo_rows(universe=None, now=None):
-    """One basket a day per leg count, from the legs tennis_fav_band takes that day.
+def tennis_combo_rows(universe=None, now=None, used=None):
+    """Baskets of each day's favourite-band legs: every eligible leg, each in at most one
+    basket of a given size.
 
-    The basket is fixed by construction, never chosen: the day's eligible legs are sorted
-    by start time (market id breaks a tie) and the first n are taken. There is no way to
-    pick a nicer basket after the fact, which is the only reason a record of this is worth
-    anything.
+    Built, never chosen: the day's eligible legs sort by start time (market id breaks a
+    tie) and are cut into consecutive baskets of n, so there is no way to pick a nicer
+    basket after the fact. Baskets share no match, which is what makes each one an
+    independent result — judged per basket, the way the single-leg rule is judged per bet.
+
+    `used` is {n: leg market ids already in a logged basket of that size}. The tracker runs
+    every three hours and matches drop out of the universe as they start, so cutting the
+    remaining legs afresh each run would put a leg into two baskets. Legs already used are
+    skipped instead. A basket's id is derived from its legs, so it is the same basket
+    whichever run builds it. (Until 2026-09-21 this built ONE basket a day per size, from
+    the first n legs, and left ~55 of a typical day's ~60 eligible legs unused.)
     """
+    import hashlib
+    used = used or {}
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
     now = now or datetime.now(timezone.utc)
     lo, hi = FAV_BAND
@@ -2874,27 +2886,29 @@ def tennis_combo_rows(universe=None, now=None):
     for day, group in sorted(by_day.items()):
         group.sort(key=lambda t: (str(t[0].get("start")), str(t[0]["market_id"])))
         for n in COMBO_LEGS:
-            if len(group) < n:
-                continue
-            pick = group[:n]
-            prod = 1.0
-            for r, _side, p in pick:
-                prod *= p
-            price = round(prod * (1 + COMBO_MARKUP[n]), 4)
-            names = " + ".join(str(r["side_a"] if sd == "a" else r["side_b"])[:22]
-                               for r, sd, _ in pick)
-            out.append(dict(
-                sport="tennis_combo", venue="combo", market_id=f"combo{n}:{day}",
-                label=f"{n}-leg tennis combo: {names}",
-                side_a=f"All {n} win", side_b="Any one loses",
-                price_a=price, price_b=round(1 - price, 4), mid_a=price,
-                spread=None, liquidity=None, volume=0.0, untraded=False,
-                tradeable={"a": True, "b": True},
-                start=min(str(r["start"]) for r, _, _ in pick),
-                date=day, url="https://kalshi.com/combos",
-                legs=[dict(market_id=r["market_id"], pick=sd, venue=r.get("venue", "polymarket"))
-                      for r, sd, _ in pick],
-            ))
+            free = [t for t in group if t[0]["market_id"] not in (used.get(n) or ())]
+            for i in range(0, len(free) - n + 1, n):
+                pick = free[i:i + n]
+                prod = 1.0
+                for _r, _side, p in pick:
+                    prod *= p
+                price = round(prod * (1 + COMBO_MARKUP[n]), 4)
+                names = " + ".join(str(r["side_a"] if sd == "a" else r["side_b"])[:22]
+                                   for r, sd, _ in pick)
+                key = hashlib.sha1("|".join(sorted(r["market_id"] for r, _, _ in pick))
+                                   .encode()).hexdigest()[:10]
+                out.append(dict(
+                    sport="tennis_combo", venue="combo", market_id=f"combo{n}:{day}:{key}",
+                    label=f"{n}-leg tennis combo: {names}",
+                    side_a=f"All {n} win", side_b="Any one loses",
+                    price_a=price, price_b=round(1 - price, 4), mid_a=price,
+                    spread=None, liquidity=None, volume=0.0, untraded=False,
+                    tradeable={"a": True, "b": True},
+                    start=min(str(r["start"]) for r, _, _ in pick),
+                    date=day, url="https://kalshi.com/combos",
+                    legs=[dict(market_id=r["market_id"], pick=sd, venue=r.get("venue", "polymarket"))
+                          for r, sd, _ in pick],
+                ))
     return out
 
 
