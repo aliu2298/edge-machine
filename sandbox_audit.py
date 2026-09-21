@@ -60,7 +60,11 @@ _COPY = base64.b64decode(
     "XGJib3RzP1xifFxidHJhZCg/OmVzP3xpbmcpIGZyb21cYnxcYm1vbmV5IGZvbGxvd3NcYnxcYm5vdGhpbmcgdHJh"
     "ZGVzXGJ8XGJub3QgdHJhZGVkXGJ8XGJwbGFjZWFibGVcYnxcYmFybWVkXGJ8XGJyZWFsIG1vbmV5XGJ8XGJsaXZl"
     "IG1vbmV5XGJ8XGJ0aGUgYm90XGJ8XGJmb2xsb3dzIHByb2R1Y3Rpb25cYg==").decode()
-COPY_RE = re.compile(_COPY, re.I)
+# A phrase wrapped across a line — "real" at the end of one comment line, "money" at the
+# start of the next — reads the same to a visitor, so the gap between words may be any run
+# of whitespace and comment markers, and files are scanned whole, not line by line. The
+# first version matched a literal space and missed exactly such a wrapped phrase.
+COPY_RE = re.compile(_COPY.replace(" ", r"[\s#/*]+"), re.I)
 # An internal function name is not copy. It is exempt only where it is plainly an identifier.
 # Spelled in two halves for the same reason the patterns are encoded.
 _FN = "place" + "able"
@@ -337,14 +341,19 @@ def check_copy(rep):
         if f not in COPY_DATA and (not f.endswith(COPY_TYPES) or f.startswith("data/")):
             continue
         try:
-            lines = open(os.path.join(ROOT, f), errors="replace").read().splitlines()
+            text = open(os.path.join(ROOT, f), errors="replace").read()
         except OSError:
             continue
-        for i, line in enumerate(lines, 1):
-            if COPY_RE.search(line) and not (f.endswith(".py") and _IDENT.search(line)
-                                             and not COPY_RE.search(_IDENT.sub("", line))):
-                rep.error("copy", f"{f}:{i} uses a phrase the public pages are kept free of")
-                hits += 1
+        lines = text.splitlines()
+        for m in COPY_RE.finditer(text):
+            i = text.count("\n", 0, m.start()) + 1
+            line = lines[i - 1] if i <= len(lines) else ""
+            # An internal function name, and nothing else guarded on its line, is not copy.
+            if (f.endswith(".py") and m.group(0).lower() == _FN and _IDENT.search(line)
+                    and not COPY_RE.search(_IDENT.sub("", line))):
+                continue
+            rep.error("copy", f"{f}:{i} uses a phrase the public pages are kept free of")
+            hits += 1
     if not hits:
         rep.ok("copy", "no public file uses a phrase the public pages are kept free of")
 

@@ -129,6 +129,9 @@ print("\ncopy: the public files stay free of the guarded phrases")
 _plain = "".join(chr(c) for c in (116, 104, 101, 32, 98, 111, 116))      # built, not written
 ok(A.COPY_RE.search(f"# and {_plain} reads this"), "a guarded phrase is caught")
 ok(not A.COPY_RE.search("the bottom of the list"), "a word that merely starts the same way is not")
+_w = _plain.split(" ")
+ok(A.COPY_RE.search(f"# ends with {_w[0]}\n    # {_w[1]} starts the next line"),
+   "a phrase wrapped across two comment lines is still caught")
 ok(A._IDENT.search("if T." + A._FN + "(q):"), "an internal function name is recognised as one")
 ok(A.COPY_RE.pattern == A._COPY and "\\b" in A._COPY, "the patterns decode to word-bounded phrases")
 ok(A._FN not in open("sandbox_audit.py").read().replace('"place" + "able"', ""),
