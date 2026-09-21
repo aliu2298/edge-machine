@@ -286,28 +286,31 @@
    "pair": "soccerpredictions|soccer",
    "reason": "fresh QA record behind the price, z -0.01",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-09-21T01:06:15+00:00",
+   "evidence": {
+    "base_roi": 0.091,
+    "clv": 0.0483,
+    "clv_n": 46,
+    "n": 47,
+    "own_roi": 0.0372,
+    "roi": 0.0372,
+    "roi_fee": 0.0054,
+    "span_days": 4.125,
+    "weeks": 0,
+    "z": 0.6517
+   },
+   "pair": "espn_fpi|mlb",
+   "reason": "not beating every blind rule (+3.7% v +9.1% back the favourite)",
+   "to": "sandbox"
   }
  ],
  "pairs": {
   "espn_fpi|mlb": {
-   "by_hand": "2026-09-18",
-   "entry": {
-    "base_roi": 0.0131,
-    "clv": 0.0687,
-    "clv_n": 19,
-    "n": 19,
-    "own_roi": 0.1513,
-    "roi": 0.1513,
-    "roi_fee": 0.115,
-    "span_days": 1.2882,
-    "weeks": 0,
-    "z": 0.8165
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-18T04:54:35+00:00",
-   "ready_at": "2026-09-18T04:54:35+00:00",
-   "ready_since": "2026-09-18T04:54:35+00:00",
-   "stage": "production"
+   "demoted_at": "2026-09-21T01:06:15+00:00",
+   "since": "2026-09-21T01:06:15+00:00",
+   "stage": "sandbox"
   },
   "espn_fpi|nfl": {
    "by_hand": "2026-09-18",
@@ -395,5 +398,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-09-20T22:29:27+00:00"
+ "updated": "2026-09-21T01:06:15+00:00"
 }
