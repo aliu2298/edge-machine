@@ -2614,14 +2614,13 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
-eq(T.PAIR_OVERRIDES.get("o15_form_l10|soccer_o15"), None,
-   "over 1.5 is OFF the Production list: it was the only pair there behind the price")
-_spo = T.PAIR_OVERRIDES.get("soccerpredictions|soccer") or {}
-eq((_spo.get("moved_on"), _spo.get("production_at")), ("2026-09-21", None),
-   "SoccerPredictions takes its place, listed after its own demotion so the record is restored")
-_sp_prev = "2026-09-18"      # the day it was demoted
-ok(_spo.get("moved_on", "") >= _sp_prev,
-   "and the listing is dated after that demotion, or the demotion would simply stand")
+eq(sorted(T.PAIR_OVERRIDES), ["team1_form_l5|soccer_team1", "tennis_fav_band|tennis"],
+   "the Production list is the two pairs that have earned it, and nothing else")
+for _gone, _why in (("o15_form_l10|soccer_o15", "it was the only pair there behind the price"),
+                    ("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
+                    ("espn_fpi|nfl", "it was staking money on four settled bets"),
+                    ("espn_fpi|mlb", "it stopped beating the blind rules and demoted itself")):
+    eq(T.PAIR_OVERRIDES.get(_gone), None, f"{_gone.split('|')[0]} is OFF the list: {_why}")
 
 # ---------------------------------------------------------------------------
 print("\na pair moved by hand after a demotion")

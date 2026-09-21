@@ -132,17 +132,12 @@ SPORT_RULES = {
 # reaches `production_at` settled bets while profitable after fees — `None` for straight away.
 # Demotion still applies: see the note at the top of this file.
 PAIR_OVERRIDES = {
-    # 2026-09-21, as asked: it takes over 1.5's place. Listed once before on 2026-09-16, it
-    # traded from 70 settled bets and was DEMOTED two days later with its fresh Production
-    # record level with the price (z -0.01). This listing is dated after that demotion, which
-    # cancels it and restores the whole record — the rule the demotion note describes.
-    # Where it stands now: 105 settled on the US exchanges, 42 won against 39.3 the prices
-    # implied (+5.4% after fees, z +0.56), and since the demotion 11-12 on 23 bets at +25.6%
-    # (z +1.22). It beats every blind rule on the same matches (+10.1% v +7.8% for backing the
-    # draw), is profitable in both halves and without its biggest win. It does NOT clear the
-    # z >= 2 price test or the 28-day span, so this is a judgement call, not a stamp — and it
-    # is the second one on this pair. Demotion is the safety net and it reads the whole record.
-    "soccerpredictions|soccer": dict(moved_on="2026-09-21", production_at=None),
+    # soccerpredictions — listed 2026-09-21 and taken off the SAME DAY, as asked. It was put
+    # here on a record of 105 settled at +5.4% (z +0.56); the tracker run that promoted it
+    # also settled 23 more of its bets, which went 7 won against 8.4 priced (-$470), leaving
+    # the whole record at 128 settled, 49 won v 47.7 priced, +0.18%, z +0.24. That is level
+    # with the price, and the margin the promotion argued from was gone within the hour. This
+    # is the pair's second demotion. A third listing needs a reason that is not its ROI.
     # 2026-09-17, as asked. Demoted from QA the day before for the reason that still stands:
     # its closing-line value is -0.07% and it beats the close on 28% of bets, so it wins at
     # prices that were already right (z +1.64 against the 2.5 the old gate asked for). It does
@@ -160,8 +155,11 @@ PAIR_OVERRIDES = {
     # unusually, it BEATS THE CLOSE by 6.9c — its picks get dearer after it makes them, which
     # is the opposite of the tennis band. Small and young: one day's span, z +0.82. NFL is
     # listed with it and has yet to settle a bet.
-    "espn_fpi|mlb": dict(moved_on="2026-09-18", production_at=None),
-    "espn_fpi|nfl": dict(moved_on="2026-09-18", production_at=None),
+    # espn_fpi — MLB demoted itself on 2026-09-21 ("not beating every blind rule, +3.7% v
+    # +9.1% back the favourite"): the edge it was listed on had flattened to +0.5% over 47
+    # settled. NFL was only ever listed alongside it, and was left staking real money on FOUR
+    # settled bets (-57.6%) — a record that cannot say anything either way. Taken off 2026-09-21
+    # as asked. Nothing trades on a sample that small just because its sibling once looked good.
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
     "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
 }
