@@ -2581,7 +2581,10 @@ eq(T.qa_since(dict(promoted_at="2026-09-20T00:00:00+00:00"), "mlb"), "2026-09-20
    "every other sport is still judged on fresh bets only")
 
 
-print("\nSoccerPredictions moved to QA by hand; production at 70 bets")
+print("\na pair listed by hand with a settled-bet threshold")
+# Tested against a TEMPORARY listing, not whatever PAIR_OVERRIDES says today: pinning the
+# live config here meant every real promotion decision broke the suite, which is how the
+# 2026-09-21 SoccerPredictions change shipped on a stale pass.
 def _spq(i, won):
     # a tipster that mixes favourites and underdogs, so it can beat both blind rules
     pick = "a" if i % 2 == 0 else "b"
@@ -2594,6 +2597,8 @@ def _spq(i, won):
                 logged="2026-09-01T00:00:00+00:00")
 _spd = {"quotes": [_spq(i, i % 3 != 0) for i in range(20)]}
 _sps = {"pairs": {}, "events": []}
+_live_ov = dict(T.PAIR_OVERRIDES)
+T.PAIR_OVERRIDES["soccerpredictions|soccer"] = dict(moved_on="2026-09-16", production_at=70)
 T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 17, tzinfo=timezone.utc), verbose=False)
 _spp = _sps["pairs"]["soccerpredictions|soccer"]
 eq((_spp["stage"], _spp.get("by_hand"), _spp.get("ready_at")), ("production", "2026-09-16", None),
@@ -2605,6 +2610,18 @@ ok("soccerpredictions|soccer" in PR.production_pairs(_sps), "and the Production 
 _spd["quotes"] = [dict(q, status="lost", result="draw", pnl=-100.0) if int(q["id"].split(":")[1]) % 3 else q for q in _spd["quotes"]]
 T.evaluate_stages(_spd, _sps, now=datetime(2026, 9, 18, 6, tzinfo=timezone.utc), verbose=False)
 ok(not _sps["pairs"]["soccerpredictions|soccer"].get("ready_at"), "and leaves it the run it stops being profitable")
+T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
+
+# What the live board is actually set to, stated once so a change here is a deliberate edit
+# and not a surprise. These are judgement calls; the test only pins that they were made.
+eq(T.PAIR_OVERRIDES.get("o15_form_l10|soccer_o15"), None,
+   "over 1.5 is OFF the Production list: it was the only pair there behind the price")
+_spo = T.PAIR_OVERRIDES.get("soccerpredictions|soccer") or {}
+eq((_spo.get("moved_on"), _spo.get("production_at")), ("2026-09-21", None),
+   "SoccerPredictions takes its place, listed after its own demotion so the record is restored")
+_sp_prev = "2026-09-18"      # the day it was demoted
+ok(_spo.get("moved_on", "") >= _sp_prev,
+   "and the listing is dated after that demotion, or the demotion would simply stand")
 
 # ---------------------------------------------------------------------------
 print("\na pair moved by hand after a demotion")
