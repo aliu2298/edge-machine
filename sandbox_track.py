@@ -1125,6 +1125,44 @@ def pnl_after_fee(q):
     return round(STAKE * (1.0 / (p + fee) - 1.0), 2) if q["status"] == "won" else -STAKE
 
 
+def faded(d, name, sport=None, venues=None):
+    """What the OTHER side of this pair's bets would have done — dict(n, won, expected, roi, z).
+
+    Not a strategy, a diagnostic. A rule whose fade is strongly positive is not merely
+    failing to find an edge, it is pointing at the wrong side, which is a different and
+    much more useful complaint: the selection works and the direction is inverted.
+
+    It is NOT the rule's own return with the sign flipped. Both sides of a book are sold
+    above fair, so the two asks sum to more than 1 and a fade of a merely average rule
+    loses that overround plus its own fee. A fade only shows a profit where the rule is
+    wrong by more than the cost of being on either side.
+
+    Three-way contests are skipped (n=0): the opposite of "back the home side" is the away
+    side AND the draw, so there is no single other side to price.
+    """
+    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+            and q["status"] in ("won", "lost")
+            and (sport is None or q["sport"] == sport)
+            and q.get("price_draw") is None and q.get("pick") in ("a", "b")
+            and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    rows = []
+    for q in bets:
+        other = "b" if q["pick"] == "a" else "a"
+        price = q.get(f"price_{other}")
+        if price:
+            rows.append((float(price), q.get("result") == other,
+                         FEE_RATE.get(q.get("venue") or "polymarket", 0.07)))
+    n = len(rows)
+    if not n:
+        return dict(n=0, won=0, expected=0.0, roi=None, z=0.0)
+    won = sum(1 for _p, w, _f in rows if w)
+    exp = sum(p for p, _w, _f in rows)
+    var = sum(p * (1 - p) for p, _w, _f in rows)
+    cost = sum(p + f * p * (1 - p) for p, _w, f in rows)
+    return dict(n=n, won=won, expected=exp, roi=(won - cost) / cost,
+                z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
+
+
 # ---- QA judges only bets on the exchanges a follower can use (2026-09-13) --------------------
 # The Sandbox's non-soccer venue was polymarket.com until 2026-09-13, an international exchange
 # unavailable to US accounts. QA entry, readiness and demotion count only bets on these venues;

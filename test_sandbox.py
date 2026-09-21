@@ -3189,6 +3189,42 @@ _html = RANKB.sport_sections([_strong, _weak, _fluke])
 ok("Ranked best to worst" in _html, "the section says what it is ranked on")
 ok('class="rank">1<' in _html, "and the leader carries rank 1")
 
+print("\nthe fade column: what the other side would have done")
+
+
+def _fq(i, won, pa=0.80, pb=0.22, pick="a"):
+    res = pick if won else ("b" if pick == "a" else "a")
+    return dict(id=f"fd:{i}", source="fr", sport="soccer_o15", market_id=f"m{i}", venue="kalshi_binary",
+                bet=True, pick=pick, price=pa if pick == "a" else pb, price_a=pa, price_b=pb,
+                price_draw=None, result=res, status="won" if won else "lost",
+                pnl=0.0, stake=100.0, start="2026-09-20T00:00:00+00:00",
+                logged="2026-09-19T00:00:00+00:00")
+
+
+# 20 bets at 0.80 that won only 12 -- the rule is badly wrong, so its fade should show a profit
+_fd = {"quotes": [_fq(i, i < 12) for i in range(20)], "meta": {}}
+_f = T.faded(_fd, "fr", "soccer_o15", venues=T.TRADEABLE_VENUES)
+eq((_f["n"], _f["won"]), (20, 8), "the fade counts the same bets, won where the rule lost")
+close(_f["expected"], 20 * 0.22, "and is priced at the OTHER side's ask, not 1 minus the rule's")
+ok(_f["roi"] > 0, "a rule that loses badly shows a profitable fade")
+ok(_f["z"] > 0, "and a positive z, because the other side beat its own price")
+
+# the key property: fading a rule that is exactly right at its price still LOSES, because
+# both asks are sold above fair (0.80 + 0.22 = 1.02).
+_fair = {"quotes": [_fq(i, i < 16) for i in range(20)], "meta": {}}
+_ff = T.faded(_fair, "fr", "soccer_o15", venues=T.TRADEABLE_VENUES)
+ok(_ff["roi"] < 0, "fading a rule that is exactly right at its price loses the overround")
+_ffa = T.assess(_fair, "fr", "soccer_o15", venues=T.TRADEABLE_VENUES)
+ok((_ffa["roi_fee"] or 0) < 0 and _ff["roi"] < 0,
+   "so BOTH sides lose there: a fade is not the rule's return with the sign flipped")
+
+_3way = {"quotes": [dict(_fq(i, i < 5), price_draw=0.25, sport="soccer") for i in range(10)], "meta": {}}
+eq(T.faded(_3way, "fr", "soccer", venues=T.TRADEABLE_VENUES)["n"], 0,
+   "a three-way contest has no single other side, so it is not faded at all")
+eq(T.faded({"quotes": [], "meta": {}}, "fr")["n"], 0, "and a pair with no bets fades nothing")
+_hd = RANKB.SPORT_HEAD
+ok("If faded" in _hd, "the sport table carries the column")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

@@ -570,6 +570,7 @@ def pair_list(d, st, include_retired=True):
             if sport in gone:
                 v = "retired"
             out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
+                            fade=T.faded(d, name, sport, venues=T.TRADEABLE_VENUES),
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
                             removed=removed, v=v))
@@ -651,6 +652,7 @@ def insights(rows, now=None):
 SPORT_HEAD = ('<tr><th class="num">#</th><th>Rule or tipster</th><th>Verdict</th>'
               '<th class="num">Record</th>'
               '<th class="num">Won v priced</th><th class="num">ROI after fees</th>'
+              '<th class="num">If faded</th>'
               '<th class="num">Open</th><th>Stage</th></tr>')
 
 
@@ -721,6 +723,13 @@ def _row(r, rank=None, provisional=False):
            if a["n"] else "—")
     stage = (f'<span class="sig y">PRODUCTION</span><div class="sm mut">since {esc(r["moved"])}</div>'
              if r["prod"] else '<span class="mut sm">Sandbox</span>')
+    # Backing the other side of the same bets. A big positive here is the loud complaint:
+    # the selection is finding something and the direction is inverted. Greyed under the
+    # read floor, and a dash where there is no single other side (three-way contests).
+    fd = r.get("fade") or {}
+    fade = ('<span class="mut">—</span>' if not fd.get("n") or fd.get("roi") is None else
+            f'<span class="{"mut" if fd["n"] < MIN_N else cls(fd["roi"])}">{pct(fd["roi"], sign=True)}</span>'
+            f'<div class="sm mut">{fd["won"]} v {fd["expected"]:.1f} on {fd["n"]}</div>')
     sfx = _scope(r["sport"])
     frags = S.CUP_FRAGS if sfx == "_cup" else S.INTL_FRAGS
     scope_note = (f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join(frags.values())))}</b></div>'
@@ -738,6 +747,7 @@ def _row(r, rank=None, provisional=False):
 {scope_note}<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
+<td class="num">{fade}</td>
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
 
 
@@ -794,7 +804,11 @@ def sport_sections(rows):
 <div class="note sm">Ranked best to worst by <b>wins above what the prices implied, per bet</b> —
 not by ROI, which mostly reflects the prices a pair happened to be offered. A pair is ranked
 once it has {MIN_N} settled; between {EARLY_N} and {MIN_N} it ranks below every readable pair and
-is greyed; under {EARLY_N}, and once retired, it is not ranked at all.</div>
+is greyed; under {EARLY_N}, and once retired, it is not ranked at all.
+<b>If faded</b> is what backing the OTHER side of the same bets would have returned. It is not
+this row's ROI with the sign flipped — both sides of a book are sold above fair, so fading an
+average rule loses that overround plus its fee. A large positive there means the rule is
+picking the wrong side, which is a different complaint from having no edge.</div>
 <div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, prov) for rk, prov, r in ranked)}</table></div></details>""")
     return "\n".join(out)
 
