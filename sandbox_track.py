@@ -132,7 +132,17 @@ SPORT_RULES = {
 # reaches `production_at` settled bets while profitable after fees — `None` for straight away.
 # Demotion still applies: see the note at the top of this file.
 PAIR_OVERRIDES = {
-    "soccerpredictions|soccer": dict(moved_on="2026-09-16", production_at=70),
+    # 2026-09-21, as asked: it takes over 1.5's place. Listed once before on 2026-09-16, it
+    # traded from 70 settled bets and was DEMOTED two days later with its fresh Production
+    # record level with the price (z -0.01). This listing is dated after that demotion, which
+    # cancels it and restores the whole record — the rule the demotion note describes.
+    # Where it stands now: 105 settled on the US exchanges, 42 won against 39.3 the prices
+    # implied (+5.4% after fees, z +0.56), and since the demotion 11-12 on 23 bets at +25.6%
+    # (z +1.22). It beats every blind rule on the same matches (+10.1% v +7.8% for backing the
+    # draw), is profitable in both halves and without its biggest win. It does NOT clear the
+    # z >= 2 price test or the 28-day span, so this is a judgement call, not a stamp — and it
+    # is the second one on this pair. Demotion is the safety net and it reads the whole record.
+    "soccerpredictions|soccer": dict(moved_on="2026-09-21", production_at=None),
     # 2026-09-17, as asked. Demoted from QA the day before for the reason that still stands:
     # its closing-line value is -0.07% and it beats the close on 28% of bets, so it wins at
     # prices that were already right (z +1.64 against the 2.5 the old gate asked for). It does
@@ -141,9 +151,11 @@ PAIR_OVERRIDES = {
     "tennis_fav_band|tennis": dict(moved_on="2026-09-17", production_at=149),
     # 2026-09-18, as asked: the two rules that were trading from the Leads board move here, so
     # that Production is the single source of everything the money follows.
-    #   over 1.5 — both teams' games went over 1.5 in 9+ of their last 10. It has been traded
-    #   from the Leads lane since 2026-09-12; this is the same rule, judged in one place.
-    "o15_form_l10|soccer_o15": dict(moved_on="2026-09-18", production_at=None),
+    #   over 1.5 — REMOVED 2026-09-21, back to the Sandbox. It was the only Production pair
+    #   behind the price: 16-5 reads like a winner until you notice the average price is 0.84,
+    #   where 76.2% is a losing hit rate (-10.1% after fees, z -1.00). All of the damage sits
+    #   in the 0.80 band, which is also most of its volume. The rule is kept and still
+    #   measured; what it needs is a different selection, not a different wrapper.
     # 2026-09-18, as asked. 19 settled on the US exchanges at +15.1% (+11.5% after fees) and,
     # unusually, it BEATS THE CLOSE by 6.9c — its picks get dearer after it makes them, which
     # is the opposite of the tennis band. Small and young: one day's span, z +0.82. NFL is
@@ -385,6 +397,21 @@ def collect(verbose=True):
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
+        if sport == "tennis_combo":
+            # Derived, never fetched: the baskets are built from the tennis rows this same
+            # run already priced, so a leg and the basket holding it always carry the same
+            # number. SPORTS lists this domain after tennis, so those rows exist by now.
+            try:
+                rows = S.tennis_combo_rows(universe)
+            except Exception as e:
+                print(f"  ! tennis_combo build failed: {type(e).__name__}: {str(e)[:70]}")
+                rows = []
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["combo"] = len(rows)
+            if verbose:
+                print(f"  {S.SPORTS[sport]:<13} built {len(rows)} baskets from the day's "
+                      f"favourite-band legs ({time.time() - t0:.0f}s)")
+            continue
         if sport == "soccer_corners":
             cstats = {}
             try:
@@ -761,6 +788,10 @@ def publish(d, universe, coverage, verbose=True):
                     # Production lead can name them without re-matching.
                     **{k: r[k] for k in ("league", "espn_home", "espn_away", "team", "opponent")
                        if r.get(k) and r.get("venue") == "kalshi_binary"},
+                    # A combo basket carries its legs, because that is the only thing that
+                    # can settle it later. Stored on the quote rather than looked up again,
+                    # so the basket is judged on exactly the legs it was bought with.
+                    **({"legs": r["legs"]} if r.get("legs") else {}),
                     # Pinnacle only: was this a contest nothing else had covered? That is
                     # the Pinnacle-versus-venue rule's own lane, reported separately.
                     uncovered=(mid not in (covered.get(sport) or set())
@@ -929,7 +960,11 @@ def grade(d, verbose=True):
         mid = q["market_id"]
         if mid not in resolved:
             venue = q.get("venue")
-            resolved[mid] = (S.resolve_kalshi(mid) if venue == "kalshi"
+            # A basket has no market of its own to ask: it is settled by its legs, and only
+            # once every one of them has. Cached per basket like any other market, so the
+            # two- and three-leg sources never re-resolve the same legs.
+            resolved[mid] = (S.resolve_combo(q.get("legs") or []) if venue == "combo"
+                             else S.resolve_kalshi(mid) if venue == "kalshi"
                              else S.resolve_kalshi_market(mid) if venue == "kalshi_binary"
                              else S.resolve_polymarket_us(mid) if venue == "polymarket_us"
                              else S.resolve_polymarket(mid))

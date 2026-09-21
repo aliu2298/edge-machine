@@ -80,6 +80,11 @@ SPORTS = dict(
     + [("soccer_corners", SPORTS["soccer_corners"])]
     + [(k, v) for k, v in SPORTS.items() if not k.startswith("soccer_")][1:])
 
+# Tennis combos (2026-09-21): baskets of the same legs the favourite-band rule takes, bought
+# as ONE Kalshi combo contract instead of separately. Its own domain, so a basket can never
+# mix into the single-leg tennis record and the two can be read side by side.
+SPORTS["tennis_combo"] = "Tennis · Combos"
+
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
 # six returns open, tradeable markets. table-tennis is the surprise — Polymarket carries
 # a deep book of Ukrainian/WTT singles matches.
@@ -181,6 +186,32 @@ SOURCES = {
              "documented in tennis. Not significant on its own. Judged against backing the "
              "favourite on every match over the same period, so it only counts if this band "
              "beats favourites in general."),
+    "tennis_combo2": dict(
+        label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
+        note="Pre-registered 2026-09-21, before it logged anything. Take the first 2 of the "
+             "day's favourite-band legs by start time and buy them as ONE combo contract, which "
+             "pays only if all 2 win. A combo multiplies a rule's edge rather "
+             "than averaging it: at m = 1.042 over 238 settled single-leg bets, 2 legs would "
+             "run at 8.5% over the price it pays — and at about the same multiple BELOW it if "
+             "that edge is really zero, which is why this is in the Sandbox and not in "
+             "Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
+             "median 0.84% over the product of the legs, far inside the 8.5% the edge could "
+             "absorb. The price here is that product plus the measured markup, not a live "
+             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. One basket a day, so a day is one result.'),
+    "tennis_combo3": dict(
+        label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
+        note="Pre-registered 2026-09-21, before it logged anything. Take the first 3 of the "
+             "day's favourite-band legs by start time and buy them as ONE combo contract, which "
+             "pays only if all 3 win. A combo multiplies a rule's edge rather "
+             "than averaging it: at m = 1.042 over 238 settled single-leg bets, 3 legs would "
+             "run at 13.1% over the price it pays — and at about the same multiple BELOW it if "
+             "that edge is really zero, which is why this is in the Sandbox and not in "
+             "Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
+             "median 1.06% over the product of the legs, far inside the 13.1% the edge could "
+             "absorb. The price here is that product plus the measured markup, not a live "
+             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. One basket a day, so a day is one result.'),
     "tt_band_55_60": dict(
         label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=False, retired='2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.',
         site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
@@ -2755,6 +2786,114 @@ def band_picks(sport, band, universe=None):
 
 
 # ---------------------------------------------------------------------------
+# Tennis combos — pre-registered 2026-09-21
+# ---------------------------------------------------------------------------
+# A combo pays only if EVERY leg wins, so it multiplies the edge instead of averaging it:
+# if a rule's hit rate beats the price it pays by a factor m, an n-leg basket beats its own
+# price by m**n. The tennis favourite-band rule has run at m = 1.042 over 238 settled bets,
+# which would be 1.085 at two legs and 1.131 at three. That cuts BOTH ways and is the whole
+# point of sandboxing it: if m is really 1.0, the basket loses about three times as fast.
+#
+# The cost of the wrapper was measured before a line of this was written. On 2026-09-21,
+# 20 baskets built from that day's real in-band legs were quoted by Kalshi's RFQ (7-14
+# market makers answered each one): the quote sat a median 0.84% over the product of the
+# legs at two legs and 1.06% at three. Those are COMBO_MARKUP below. The same baskets' own
+# resting order books were far worse — 1 of 20 had any ask at all, at +7.4% and +9.8% — so
+# a live version of this must request a quote and must never take the book.
+#
+# The price logged here is therefore the product of the legs' asks plus that measured
+# markup: a modelled cost, not a live quote, because the RFQ needs credentials that must
+# not reach a CI runner. It is re-measurable at any time by the same method, and if this
+# lane earns its keep the upgrade is to price it on the VPS the way the trading lane runs.
+COMBO_LEGS = (2, 3)
+COMBO_MARKUP = {2: 0.0084, 3: 0.0106}     # measured, Kalshi RFQ, 2026-09-21, 20 baskets
+
+
+def tennis_combo_rows(universe=None, now=None):
+    """One basket a day per leg count, from the legs tennis_fav_band takes that day.
+
+    The basket is fixed by construction, never chosen: the day's eligible legs are sorted
+    by start time (market id breaks a tie) and the first n are taken. There is no way to
+    pick a nicer basket after the fact, which is the only reason a record of this is worth
+    anything.
+    """
+    rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
+    now = now or datetime.now(timezone.utc)
+    lo, hi = FAV_BAND
+    by_day = {}
+    for r in rows:
+        if r.get("untraded") or r.get("price_draw") is not None:
+            continue
+        for side in ("a", "b"):
+            p = r.get(f"price_{side}")
+            if p is None or not (r.get("tradeable") or {}).get(side):
+                continue
+            if lo <= p < hi:
+                by_day.setdefault(r.get("date"), []).append((r, side, float(p)))
+                break                      # one leg per match: the sides cannot both win
+    out = []
+    for day, group in sorted(by_day.items()):
+        group.sort(key=lambda t: (str(t[0].get("start")), str(t[0]["market_id"])))
+        for n in COMBO_LEGS:
+            if len(group) < n:
+                continue
+            pick = group[:n]
+            prod = 1.0
+            for r, _side, p in pick:
+                prod *= p
+            price = round(prod * (1 + COMBO_MARKUP[n]), 4)
+            names = " + ".join(str(r["side_a"] if sd == "a" else r["side_b"])[:22]
+                               for r, sd, _ in pick)
+            out.append(dict(
+                sport="tennis_combo", venue="combo", market_id=f"combo{n}:{day}",
+                label=f"{n}-leg tennis combo: {names}",
+                side_a=f"All {n} win", side_b="Any one loses",
+                price_a=price, price_b=round(1 - price, 4), mid_a=price,
+                spread=None, liquidity=None, volume=0.0, untraded=False,
+                tradeable={"a": True, "b": True},
+                start=min(str(r["start"]) for r, _, _ in pick),
+                date=day, url="https://kalshi.com/combos",
+                legs=[dict(market_id=r["market_id"], pick=sd, venue=r.get("venue", "polymarket"))
+                      for r, sd, _ in pick],
+            ))
+    return out
+
+
+def fetch_tennis_combo2(sport, universe=None):
+    """Buy the day's two-leg basket."""
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if str(r["market_id"]).startswith("combo2:")]
+
+
+def fetch_tennis_combo3(sport, universe=None):
+    """Buy the day's three-leg basket."""
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if str(r["market_id"]).startswith("combo3:")]
+
+
+def resolve_combo(legs):
+    """'a' if every leg won, 'b' if one lost, 'void' if a leg voided, None while any is open."""
+    if not legs:
+        return None
+    lost = False
+    for leg in legs:
+        v = leg.get("venue")
+        res = (resolve_kalshi(leg["market_id"]) if v == "kalshi"
+               else resolve_kalshi_market(leg["market_id"]) if v == "kalshi_binary"
+               else resolve_polymarket_us(leg["market_id"]) if v == "polymarket_us"
+               else resolve_polymarket(leg["market_id"]))
+        if res == "void":
+            return "void"              # a voided leg is refunded, so the basket is too
+        if res is None:
+            return None                # still running: a basket is never settled early
+        if res != leg["pick"]:
+            lost = True
+    return "b" if lost else "a"
+
+
+# ---------------------------------------------------------------------------
 # Verified start times for tennis (2026-09-17)
 # ---------------------------------------------------------------------------
 # Kalshi's tennis markets carry no start. What they carry is an expected END
@@ -4039,6 +4178,8 @@ CHALLENGERS = {
     "corners_market": fetch_corners_market,
     "corners_under": fetch_corners_under,
     "tennis_fav_band": fetch_tennis_fav_band,
+    "tennis_combo2": fetch_tennis_combo2,
+    "tennis_combo3": fetch_tennis_combo3,
     "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
     "tt_band_55_60": fetch_tt_band,
     "mlb_fade_streak": fetch_mlb_fade_streak,

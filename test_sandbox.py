@@ -3053,6 +3053,83 @@ ok("5 settled bets" in _rec and "1 on the retired polymarket.com venue" in _rec,
    "the line under the sections reconciles every settled bet, judged or not")
 ok("4 sit in the sections above" in _rec, "and says how many are counted toward a verdict")
 
+print("\ntennis combos: baskets of the favourite-band legs")
+
+
+def _leg(mid, start, pa, pb=None, day="2026-09-21", traded=("a", "b")):
+    return dict(sport="tennis", venue="kalshi", market_id=mid, label=mid,
+                side_a=f"{mid} A", side_b=f"{mid} B", price_a=pa,
+                price_b=pb if pb is not None else round(1 - pa, 2), mid_a=pa,
+                price_draw=None, start=start, date=day, untraded=False, volume=0.0,
+                url="u", tradeable={k: True for k in traded})
+
+
+_tu = {"tennis": [
+    _leg("T3", "2026-09-21T14:00:00+00:00", 0.80),
+    _leg("T1", "2026-09-21T10:00:00+00:00", 0.85),
+    _leg("T2", "2026-09-21T12:00:00+00:00", 0.75),
+    _leg("TL", "2026-09-21T09:00:00+00:00", 0.60),          # outside the 0.75-0.90 band
+    _leg("TH", "2026-09-21T08:00:00+00:00", 0.95),          # outside it the other way
+]}
+_rows = S.tennis_combo_rows(_tu)
+eq(sorted(r["market_id"] for r in _rows), ["combo2:2026-09-21", "combo3:2026-09-21"],
+   "one basket a day per leg count")
+_c2 = next(r for r in _rows if r["market_id"] == "combo2:2026-09-21")
+_c3 = next(r for r in _rows if r["market_id"] == "combo3:2026-09-21")
+eq([l["market_id"] for l in _c2["legs"]], ["T1", "T2"],
+   "the legs are the EARLIEST by start time, never the nicest priced")
+eq([l["market_id"] for l in _c3["legs"]], ["T1", "T2", "T3"],
+   "and the three-leg basket extends the same order")
+close(_c2["price_a"], round(0.85 * 0.75 * (1 + S.COMBO_MARKUP[2]), 4),
+      "the two-leg price is the product of the legs plus the measured RFQ markup")
+close(_c3["price_a"], round(0.85 * 0.75 * 0.80 * (1 + S.COMBO_MARKUP[3]), 4),
+      "and the three-leg price likewise")
+ok(_c3["price_a"] < _c2["price_a"], "a longer basket is cheaper, because it wins less often")
+ok(all(r["sport"] == "tennis_combo" for r in _rows),
+   "baskets sit in their own domain, so they never mix into the single-leg tennis record")
+eq(S.tennis_combo_rows({"tennis": _tu["tennis"][:1]}), [],
+   "a day with one eligible leg makes no basket at all")
+eq([r["market_id"] for r in S.tennis_combo_rows({"tennis": _tu["tennis"][1:3]})],
+   ["combo2:2026-09-21"], "two eligible legs make the two-leg basket only")
+_untraded = [dict(_leg("T1", "2026-09-21T10:00:00+00:00", 0.85), untraded=True),
+             _leg("T2", "2026-09-21T12:00:00+00:00", 0.75),
+             _leg("T3", "2026-09-21T14:00:00+00:00", 0.80)]
+eq([l["market_id"] for l in S.tennis_combo_rows({"tennis": _untraded})[0]["legs"]], ["T2", "T3"],
+   "a leg with no book is never put in a basket")
+eq(S.fetch_tennis_combo2("tennis_combo", {"tennis_combo": _rows}),
+   [dict(market_id="combo2:2026-09-21", pick="a")],
+   "the two-leg source buys its own basket and nothing else")
+eq([q["market_id"] for q in S.fetch_tennis_combo3("tennis_combo", {"tennis_combo": _rows})],
+   ["combo3:2026-09-21"], "and the three-leg source buys its own")
+
+_res = {"A": "a", "B": "a", "C": "b", "D": "void", "E": None}
+_saved = (S.resolve_polymarket,)
+S.resolve_polymarket = lambda mid: _res.get(mid)
+_L = lambda *ids: [dict(market_id=i, pick="a", venue="polymarket") for i in ids]
+eq(S.resolve_combo(_L("A", "B")), "a", "every leg won, so the basket won")
+eq(S.resolve_combo(_L("A", "C")), "b", "one leg lost, so the whole basket lost")
+eq(S.resolve_combo(_L("A", "E")), None, "a basket with a leg still running is never settled early")
+eq(S.resolve_combo(_L("A", "D")), "void", "a voided leg refunds the basket")
+eq(S.resolve_combo(_L("C", "E")), None,
+   "and a lost leg does NOT settle it while another is open: the void could still refund it")
+eq(S.resolve_combo([]), None, "a basket with no legs settles nothing")
+S.resolve_polymarket = _saved[0]
+
+_cq = dict(id="tennis_combo2:combo2:2026-09-21", source="tennis_combo2", sport="tennis_combo",
+           market_id="combo2:2026-09-21", venue="combo", bet=True, pick="a", price=0.65,
+           stake=100.0, status="open", pnl=0.0, result=None, settled=None,
+           start=(datetime.now(timezone.utc) - timedelta(hours=6)).isoformat(),
+           legs=_L("A", "B"), label="basket", side_a="All 2 win", side_b="Any one loses",
+           date="2026-09-21", url="u", price_a=0.65, price_b=0.35, price_draw=None,
+           prob_a=None, edge=None, untraded=False, logged="2026-09-21T00:00:00+00:00")
+S.resolve_polymarket = lambda mid: _res.get(mid)
+_dd = {"quotes": [dict(_cq)], "meta": {}}
+T.grade(_dd, verbose=False)
+eq(_dd["quotes"][0]["status"], "won", "grade() settles a basket from its legs")
+close(_dd["quotes"][0]["pnl"], round(100.0 * (1 / 0.65 - 1), 2),
+      "and pays it at the basket's own price, not a leg's")
+S.resolve_polymarket = _saved[0]
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
