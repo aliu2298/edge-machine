@@ -752,6 +752,27 @@ def _row(r, rank=None, provisional=False):
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
 
 
+def eliminated(r):
+    """A pair that fails in every direction, moved out of the sport sections (S.ELIMINATED)."""
+    return (r["name"], r["sport"]) in S.ELIMINATED
+
+
+def eliminated_section(rows):
+    """The eliminated pairs, in one collapsed list below the sports: out of sight, on record."""
+    gone = sorted((r for r in rows if eliminated(r)), key=lambda r: -r["a"]["n"])
+    if not gone:
+        return ""
+    n_bets = sum(r["a"]["n"] for r in gone)
+    return f"""<details class="sport"><summary><b>Eliminated</b>
+<span class="mut"> · {len(gone)} pairs · {n_bets} settled bets · failed in every direction</span></summary>
+<div class="note sm">Each of these lost after fees AND lost when the other side of the same bets was
+backed instead. That is what a pair with no information looks like: with no skill, both sides of a
+book lose, because the spread is paid whichever way you face. Retired pairs stay in their own sport;
+these were moved out of the sport sections so they stop taking up room. They log nothing new, and
+their bets are still counted in the line below.</div>
+<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r) for r in gone)}</table></div></details>"""
+
+
 def reconcile(d, rows):
     """Where every settled bet is. The sections judge a subset on purpose — a retired venue's
     bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
@@ -868,6 +889,9 @@ def build():
                   f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far).")
 
     rows = pair_list(d, st)
+    # Eliminated pairs leave the sport sections and the insights, but NOT the reconciliation:
+    # every settled bet still has to be accounted for, out of sight or not.
+    shown = [r for r in rows if not eliminated(r)]
     vc = {k: sum(1 for r in rows if r["v"] == k and not r.get("gone")) for k in VERDICTS}
     import market_track as MT, market_sources as MS
     md = MT.load()
@@ -995,11 +1019,12 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 
 <div data-lane="sports">
 <details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
-<div class="note">{insights(rows)}</div></details>
+<div class="note">{insights(shown)}</div></details>
 
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
 <div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
-{sport_sections(rows)}
+{sport_sections(shown)}
+{eliminated_section(rows)}
 {reconcile(d, rows)}
 <div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat ${int(T.STAKE)} a bet at the price
 available before the start. <b>Won v priced</b>: wins against the wins the prices implied — beating that is the

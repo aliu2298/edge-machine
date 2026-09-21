@@ -2032,12 +2032,14 @@ eq(S.pmus_sides({"outcomes": '["A","B"]', "marketSides": [{"description": "A", "
    ("A", "B"), "an ambiguous marketSides (two longs) falls back, never guesses")
 eq(S.SOURCES["polymarket_us"]["kind"], "Prediction market", "Polymarket US is listed as a source")
 ok("polymarket" in S.CHALLENGERS, "polymarket.com is now a comparison source")
-_uni = {"tennis": [dict(market_id="u1", venue="polymarket_us", sport="tennis", label="Iga Swiatek vs Coco Gauff",
-                        side_a="Iga Swiatek", side_b="Coco Gauff", price_a=0.62, price_b=0.40, mid_a=0.61,
-                        untraded=False, start=(_now_us + timedelta(hours=5)).isoformat(),
-                        date=_now_us.strftime("%Y-%m-%d"), volume=0.0, url="")]}
+# The fixture is MLB, not tennis: polymarket.com's tennis pair was eliminated on 2026-09-21
+# (it failed both ways), and the mechanism under test is the same in any sport it still covers.
+_uni = {"mlb": [dict(market_id="u1", venue="polymarket_us", sport="mlb", label="New York Yankees vs Boston Red Sox",
+                     side_a="New York Yankees", side_b="Boston Red Sox", price_a=0.62, price_b=0.40, mid_a=0.61,
+                     untraded=False, start=(_now_us + timedelta(hours=5)).isoformat(),
+                     date=_now_us.strftime("%Y-%m-%d"), volume=0.0, url="")]}
 _saved_ch2 = S.CHALLENGERS
-S.CHALLENGERS = {"polymarket": lambda sp: [dict(a="Iga Swiatek", b="Coco Gauff", prob_a=0.70,
+S.CHALLENGERS = {"polymarket": lambda sp: [dict(a="New York Yankees", b="Boston Red Sox", prob_a=0.70,
                                                  date=_now_us.strftime("%Y-%m-%d"))]}
 try:
     _dp = {"quotes": [], "meta": {}, "coverage": {}}
@@ -3271,6 +3273,28 @@ eq((_cf["n"], _cf.get("unit"), _cf.get("n_bets")), (1, "market-day", 10),
    "ten rungs of one commodity day fade as ONE market-day, not ten bets")
 ok(abs(_cf["z"]) < 3,
    "so a single quiet day can never print a huge z the way 438 independent rungs did")
+
+print("\npairs that fail in every direction are eliminated, out of sight")
+_ELIM = {("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb")}
+eq(S.ELIMINATED, _ELIM, "the four pairs that failed both ways are the eliminated set")
+for _s, _sp in sorted(_ELIM):
+    ok(_sp not in S.SOURCES[_s]["sports"] and _sp in (S.SOURCES[_s].get("retired_sports") or {}),
+       f"{_s} {_sp} logs nothing new")
+    ok("Eliminated 2026-09-21" in S.SOURCES[_s]["retired_sports"][_sp], f"and its reason says eliminated, and why")
+ok("table_tennis" in S.SOURCES["polymarket"]["sports"] and "nfl" in S.SOURCES["draftkings"]["sports"]
+   and "soccer" in S.SOURCES["scores24"]["sports"],
+   "each source keeps its OTHER sports: only the failing pair goes")
+
+_er = [_rk("keep", 60, 36, 34.0), dict(_rk("gone", 40, 18, 20.0, v="retired"), name="draftkings", sport="mlb")]
+ok(RANKB.eliminated(_er[1]) and not RANKB.eliminated(_er[0]), "eliminated() picks out only the listed pairs")
+_es = RANKB.eliminated_section(_er)
+ok("<b>Eliminated</b>" in _es and "failed in every direction" in _es, "they get their own collapsed list")
+ok('<details class="sport">' in _es and " open" not in _es.split(">")[0], "which is closed by default: out of sight")
+eq(RANKB.eliminated_section([_er[0]]), "", "and the list is not drawn at all when nothing is eliminated")
+# the three other both-ways failures were NOT eliminated -- they stay in their sports
+for _s, _sp in (("p05_unbeaten", "soccer_p05"), ("team2_form_l10", "soccer_team2"), ("nhl_dog_pl", "nhl_pl")):
+    ok((_s, _sp) not in S.ELIMINATED and _sp in S.SOURCES[_s]["sports"],
+       f"{_s} also failed both ways but stays in its sport, as asked")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

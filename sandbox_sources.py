@@ -118,7 +118,8 @@ SOURCES = {
         # Listed explicitly. This was once "every domain except soccer", which silently
         # claimed climate, crypto and elections the moment those domains were added —
         # showing a source as covering markets it has never priced.
-        sports=["tennis", "table_tennis", "boxing", "nfl", "cricket", "mlb"],
+        sports=["table_tennis", "boxing", "nfl", "cricket", "mlb"],
+        retired_sports={"tennis": "Eliminated 2026-09-21: fails in EVERY direction — backing its tennis picks lost 11.3% after fees on 15, and backing the other side lost 4.3%. It points neither way; it only pays the spread."},
         note="The venue until 2026-09-13, now a comparison source: its midpoint against the "
              "Polymarket US / Kalshi ask, backed at a 3pp disagreement like any exchange. "
              "Before the switch it was the benchmark and could not bet."),
@@ -137,7 +138,8 @@ SOURCES = {
              "behind it, which makes it the most likely of the four to be beatable."),
     "draftkings": dict(
         label="DraftKings (via ESPN)", kind="Sportsbook", connected=True,
-        site="draftkings.com", sports=["nfl", "mlb"],
+        site="draftkings.com", sports=["nfl"],
+        retired_sports={"mlb": "Eliminated 2026-09-21: fails in EVERY direction — backing its MLB picks lost 5.6% after fees on 7, and backing the other side lost 9.4%. A de-vigged book line is, by design, the market with its margin taken out — there is nothing left to disagree with."},
         note="Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line "
              "is the hardest public number to beat, so this is the ceiling."),
     "covers": dict(
@@ -416,8 +418,11 @@ SOURCES = {
              "deliberately does not run."),
     "scores24": dict(
         label="Scores24 (editorial tips)", kind="Tipster site", connected=True,
-        site="scores24.live", sports=["soccer", "tennis", "nfl"],
-        retired_sports={"mlb": "2026-09-18: 12 won v 13.6 priced on 24 settled (z -0.68, -14.9% after fees)."},
+        site="scores24.live", sports=["soccer", "nfl"],
+        retired_sports={
+            "mlb": "2026-09-18: 12 won v 13.6 priced on 24 settled (z -0.68, -14.9% after fees). "
+                   "Eliminated 2026-09-21: fails in EVERY direction — on 36 settled its picks lost 4.5% and backing the other side lost 2.8%.",
+            "tennis": "Eliminated 2026-09-21: fails in EVERY direction — backing its tennis picks lost 4.7% after fees on 17, and backing the other side lost 2.9%."},
         note="Named human tipsters publishing a written call per match. Cloudflare 403s "
              "every plain request, so this is the one source fetched through a real "
              "headless browser. Only its MATCH-WINNER tips are scored — its totals and "
@@ -2242,6 +2247,15 @@ def outcome_cluster(q):
     if q.get("venue") == "kalshi_binary" and q.get("market_id") and q.get("sport") not in GOALS_SPORTS:
         return str(q["market_id"]).rsplit("-", 1)[0]
     return q.get("id") or ("row", id(q))          # no id: every quote is its own outcome
+
+
+# ELIMINATED (2026-09-21): pairs that fail in EVERY direction — their picks lose after fees
+# AND backing the other side of the same bets loses too. That is the exact signature of a
+# pair carrying no information: with no skill, both sides of a book lose, because the spread
+# is paid whichever way you face. A retired pair still sits in its sport; an eliminated one is
+# moved out of the sport sections entirely, into its own collapsed list at the bottom. Its
+# bets stay on record and in the page's reconciliation — out of sight, never out of the count.
+ELIMINATED = {("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb")}
 
 
 # Sports judged per MARKET-DAY rather than per bet. A commodity ladder's "above $X" rungs
