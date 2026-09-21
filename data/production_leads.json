@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-21T03:53:29+00:00",
+ "board_built_at": "2026-09-21T04:21:25+00:00",
  "leads": {
   "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
    "away": "Henrique Ortenblad Nogueira",
@@ -4054,33 +4054,62 @@
    "sport": "tennis",
    "status": "miss"
   },
-  "2026-09-21|Ayumi Miyamoto|Maiko Uchijima|Ayumi Miyamoto to win \u00b7 Tennis favourite-band rule": {
-   "away": "Maiko Uchijima",
+  "2026-09-21|Chia Yi Tsao|Marika TANAKA|Chia Yi Tsao to win \u00b7 Tennis favourite-band rule": {
+   "away": "Marika TANAKA",
    "bet": {
     "kind": "match_result",
     "side": "home"
    },
    "date": "2026-09-21",
    "edge_at_log": null,
-   "first_seen": "2026-09-21",
-   "headline": "Ayumi Miyamoto to win",
-   "home": "Ayumi Miyamoto",
-   "id": "2026-09-21|Ayumi Miyamoto|Maiko Uchijima|Ayumi Miyamoto to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-21T04:17Z",
+   "first_seen": "2026-09-20",
+   "headline": "Chia Yi Tsao to win",
+   "home": "Chia Yi Tsao",
+   "id": "2026-09-21|Chia Yi Tsao|Marika TANAKA|Chia Yi Tsao to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T02:00Z",
    "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
    "league": "Tennis",
-   "match": "Ayumi Miyamoto v Maiko Uchijima",
+   "match": "Chia Yi Tsao v Marika TANAKA",
    "pair": "tennis_fav_band|tennis",
    "price_at_log": 0.83,
    "route": {
-    "market": "aec-itfwo-ayumiy-maiuch-2026-09-21",
-    "outcome": "Ayumi Miyamoto",
+    "market": "aec-itfwo-chitsa-martan-2026-09-21",
+    "outcome": "Chia Yi Tsao",
     "outcome_side": "yes",
     "venue": "polymarket_us"
    },
-   "sandbox_quote": "tennis_fav_band:aec-itfwo-ayumiy-maiuch-2026-09-21",
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-chitsa-martan-2026-09-21",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
+  },
+  "2026-09-21|David Goffin|Mark Lajal|Mark Lajal to win \u00b7 Tennis favourite-band rule": {
+   "away": "Mark Lajal",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-21",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Mark Lajal to win",
+   "home": "David Goffin",
+   "id": "2026-09-21|David Goffin|Mark Lajal|Mark Lajal to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T16:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-21",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "league": "Tennis",
+   "match": "David Goffin v Mark Lajal",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.78,
+   "route": {
+    "market": "KXATPCHALLENGERMATCH-26SEP21GOFLAJ",
+    "outcome": "Mark Lajal",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP21GOFLAJ",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4100,7 +4129,7 @@
    "kickoff": "2026-09-21T06:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Deney Wassermann v Aristotelis Bezianis",
    "pair": "tennis_fav_band|tennis",
@@ -4131,7 +4160,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Hugo Grenier v Vadym Ursu",
    "pair": "tennis_fav_band|tennis",
@@ -4162,7 +4191,7 @@
    "kickoff": "2026-09-21T05:24Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Ivan Dorokhov v Boda Zheng",
    "pair": "tennis_fav_band|tennis",
@@ -4174,37 +4203,6 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-itfme-ivador-bodzhe-2026-09-21",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-21|Jiangxue HAN|Rena Tanaka|Jiangxue HAN to win \u00b7 Tennis favourite-band rule": {
-   "away": "Rena Tanaka",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-21",
-   "edge_at_log": null,
-   "first_seen": "2026-09-21",
-   "headline": "Jiangxue HAN to win",
-   "home": "Jiangxue HAN",
-   "id": "2026-09-21|Jiangxue HAN|Rena Tanaka|Jiangxue HAN to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-21T04:08Z",
-   "lane": "production",
-   "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
-   "league": "Tennis",
-   "match": "Jiangxue HAN v Rena Tanaka",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.86,
-   "route": {
-    "market": "aec-itfwo-jiahan-rentan-2026-09-21",
-    "outcome": "Jiangxue HAN",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-itfwo-jiahan-rentan-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4253,7 +4251,7 @@
    "kickoff": "2026-09-21T05:24Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Kazuki Nakajima v JIANGAO CHANG",
    "pair": "tennis_fav_band|tennis",
@@ -4284,7 +4282,7 @@
    "kickoff": "2026-09-21T14:00Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Max Alcala Gurri v Eliakim Coulibaly",
    "pair": "tennis_fav_band|tennis",
@@ -4315,7 +4313,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Moez Echargui v Karl Poling",
    "pair": "tennis_fav_band|tennis",
@@ -4346,7 +4344,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Murphy Cassone v Patrick Zahraj",
    "pair": "tennis_fav_band|tennis",
@@ -4358,6 +4356,37 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP21CASZAH",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-21|Oleg Syrovatskiy|Bogdan Seleznev|Bogdan Seleznev to win \u00b7 Tennis favourite-band rule": {
+   "away": "Bogdan Seleznev",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-21",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Bogdan Seleznev to win",
+   "home": "Oleg Syrovatskiy",
+   "id": "2026-09-21|Oleg Syrovatskiy|Bogdan Seleznev|Bogdan Seleznev to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-21T06:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-21",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
+   "league": "Tennis",
+   "match": "Oleg Syrovatskiy v Bogdan Seleznev",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.75,
+   "route": {
+    "market": "aec-itfme-olesyr-bogsel-2026-09-21",
+    "outcome": "Bogdan Seleznev",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-olesyr-bogsel-2026-09-21",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -4377,7 +4406,7 @@
    "kickoff": "2026-09-21T09:30Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Pavlos Tsitsipas v Nikita Mashtakov",
    "pair": "tennis_fav_band|tennis",
@@ -4437,7 +4466,7 @@
    "kickoff": "2026-09-21T05:46Z",
    "lane": "production",
    "last_seen": "2026-09-21",
-   "last_seen_at": "2026-09-21T03:53:29+00:00",
+   "last_seen_at": "2026-09-21T04:21:25+00:00",
    "league": "Tennis",
    "match": "Ying Xue v Sitong Chen",
    "pair": "tennis_fav_band|tennis",
@@ -4472,14 +4501,14 @@
    "promoted_at": "2026-09-17T21:42:13+00:00",
    "ready_at": "2026-09-17T21:49:17+00:00",
    "route": "moved by hand on 2026-09-17",
-   "sandbox_clv": -0.0142,
-   "sandbox_n": 124,
-   "sandbox_roi": 0.0248,
-   "sandbox_roi_fee": 0.0133
+   "sandbox_clv": -0.0134,
+   "sandbox_n": 125,
+   "sandbox_roi": 0.0263,
+   "sandbox_roi_fee": 0.0148
   }
  },
  "stage": "production",
  "unlisted_skipped": 27,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-21T03:53:29+00:00"
+ "updated_at": "2026-09-21T04:21:25+00:00"
 }
