@@ -133,7 +133,8 @@ _w = _plain.split(" ")
 ok(A.COPY_RE.search(f"# ends with {_w[0]}\n    # {_w[1]} starts the next line"),
    "a phrase wrapped across two comment lines is still caught")
 ok(A._IDENT.search("if T." + A._FN + "(q):"), "an internal function name is recognised as one")
-ok(A.COPY_RE.pattern == A._COPY and "\\b" in A._COPY, "the patterns decode to word-bounded phrases")
+ok(A.COPY_RE.pattern == A._COPY.replace(" ", r"[\s#/*]+") and "\\b" in A._COPY,
+   "the patterns decode to word-bounded phrases, spaced to survive a line wrap")
 ok(A._FN not in open("sandbox_audit.py").read().replace('"place" + "able"', ""),
    "and the audit's own source never spells the function name out")
 
