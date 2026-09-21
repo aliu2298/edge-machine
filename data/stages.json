@@ -304,6 +304,48 @@
    "pair": "espn_fpi|mlb",
    "reason": "not beating every blind rule (+3.7% v +9.1% back the favourite)",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-09-21T01:44:02+00:00",
+   "pair": "o15_form_l10|soccer_o15",
+   "reason": "taken off the Production list by hand",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-09-21T01:44:02+00:00",
+   "evidence": {
+    "base_roi": 0.0144,
+    "clv": 0.0012,
+    "clv_n": 73,
+    "n": 128,
+    "own_roi": 0.0462,
+    "roi": 0.0462,
+    "roi_fee": 0.0018,
+    "span_days": 9.2083,
+    "weeks": 1,
+    "z": 0.2447
+   },
+   "pair": "soccerpredictions|soccer",
+   "reason": "moved to Production by hand on 2026-09-21",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-21T01:44:02+00:00",
+   "evidence": {
+    "base_roi": 0.0144,
+    "clv": 0.0012,
+    "clv_n": 73,
+    "n": 128,
+    "own_roi": 0.0462,
+    "roi": 0.0462,
+    "roi_fee": 0.0018,
+    "span_days": 9.2083,
+    "weeks": 1,
+    "z": 0.2447
+   },
+   "pair": "soccerpredictions|soccer",
+   "reason": "moved by hand \u2014 trading from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -333,29 +375,28 @@
    "stage": "production"
   },
   "o15_form_l10|soccer_o15": {
-   "by_hand": "2026-09-18",
-   "entry": {
-    "base_roi": -0.0851,
-    "clv": 0.0367,
-    "clv_n": 3,
-    "n": 4,
-    "own_roi": -0.0408,
-    "roi": -0.0408,
-    "roi_fee": -0.0553,
-    "span_days": 3.0104,
-    "weeks": 0,
-    "z": -0.1838
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-18T00:43:21+00:00",
-   "ready_at": "2026-09-18T00:51:24+00:00",
-   "ready_since": "2026-09-18T00:51:24+00:00",
-   "stage": "production"
+   "since": "2026-09-21T01:44:02+00:00",
+   "stage": "sandbox"
   },
   "soccerpredictions|soccer": {
-   "demoted_at": "2026-09-18T21:30:42+00:00",
-   "since": "2026-09-18T21:30:42+00:00",
-   "stage": "sandbox"
+   "by_hand": "2026-09-21",
+   "entry": {
+    "base_roi": 0.0144,
+    "clv": 0.0012,
+    "clv_n": 73,
+    "n": 128,
+    "own_roi": 0.0462,
+    "roi": 0.0462,
+    "roi_fee": 0.0018,
+    "span_days": 9.2083,
+    "weeks": 1,
+    "z": 0.2447
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-21T01:44:02+00:00",
+   "ready_at": "2026-09-21T01:44:02+00:00",
+   "ready_since": "2026-09-21T01:44:02+00:00",
+   "stage": "production"
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -398,5 +439,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-09-21T01:06:15+00:00"
+ "updated": "2026-09-21T01:44:02+00:00"
 }
