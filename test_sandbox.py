@@ -1869,6 +1869,9 @@ T.CLOSES_DIR = _cdir
 _saved_load = T.load
 T.load = lambda: {"quotes": [_cq(start=(datetime.now(timezone.utc) + timedelta(minutes=20)).isoformat())]}
 _saved_vp = S.venue_price
+# The real default is captured, not written back by hand: hard-coding it here once meant a
+# later change to run()'s default was silently undone for every test after this one.
+_saved_rd = SC.run.__defaults__
 SC.S.venue_price = lambda q: 0.44
 try:
     SC.run.__defaults__ = (None, lambda q: 0.44)
@@ -1880,7 +1883,7 @@ try:
        "and never touches another writer's")
 finally:
     T.CLOSES_DIR, T.load, SC.S.venue_price = _saved_cd, _saved_load, _saved_vp
-    SC.run.__defaults__ = (None, S.venue_price)
+    SC.run.__defaults__ = _saved_rd
 _dm = {"quotes": [_cq(close_price=0.41, close_at=(_c0 - timedelta(hours=5)).isoformat())]}
 eq(T.apply_closes(_dm, _cl), 1, "the close job's later snapshot is merged into the ledger")
 eq((_dm["quotes"][0]["close_price"], _dm["quotes"][0]["close_at"]), (0.43, _c0.isoformat()), "and replaces the older one")
@@ -3220,6 +3223,7 @@ S.resolve_polymarket = _saved[0]
 
 print("\neach sport ranks its pairs, best first")
 import sandbox_build as RANKB
+import sandbox_close as CLOSEB
 
 
 def _rk(name, n, won, expected, prod=False, v=None, sport="tennis"):
@@ -3604,6 +3608,69 @@ eq(S.fetch_o25_congestion("soccer_o25", _uni, [_fx("A", 2)]), [],
 ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
    "judged against backing the under on every listed over-2.5 market")
 
+
+print("\nclosing prices on books an entry would refuse")
+
+
+def _kb(yes_bid, yes_ask, status="active"):
+    return {"market": {"status": status, "yes_bid_dollars": str(yes_bid),
+                       "yes_ask_dollars": str(yes_ask),
+                       "no_bid_dollars": str(round(1 - yes_ask, 4)),
+                       "no_ask_dollars": str(round(1 - yes_bid, 4))}}
+
+
+def _with_book(fn, book):
+    real = S._get
+    S._get = lambda url, **kw: book
+    try:
+        return fn()
+    finally:
+        S._get = real
+
+
+_q = dict(venue="kalshi_binary", pick="a", market_id="KXHIGHNY-26SEP22-B65.5", sport="climate")
+eq(_with_book(lambda: S.venue_price(_q), _kb(0.0, 0.01)), None,
+   "an entry is refused on a book with no bid: you could buy it and never sell it")
+eq(_with_book(lambda: S.closing_price(_q), _kb(0.0, 0.01)), 0.01,
+   "but the CLOSE is recorded — a contract written off to a cent has an ask and no bid by definition")
+eq(_with_book(lambda: S.closing_price(_q), _kb(0.0, 0.40)), None,
+   "a no-bid book wider than the spread cap is still refused: an empty mid-range book is not a price")
+eq(_with_book(lambda: S.closing_price(_q), _kb(0.55, 0.58)), 0.58,
+   "an ordinary two-sided book is unchanged")
+eq(_with_book(lambda: S.closing_price(_q), _kb(0.0, 0.01, status="closed")), None,
+   "and a closed market has no price either way")
+ok(CLOSEB.run.__defaults__[-1] is S.closing_price,
+   "the close job takes its prices under the closing rule, not the entry one")
+
+print("\na basket's closing price comes from its legs")
+
+_legs = [dict(market_id="L1", pick="a", venue="kalshi"), dict(market_id="L2", pick="a", venue="kalshi")]
+_cq = dict(venue="combo", pick="a", sport="tennis_combo", market_id="combo2:x", legs=_legs)
+
+
+def _with_legs(fn, prices):
+    real = S.venue_price
+    def fake(q, closing=False):
+        if q.get("venue") == "combo":
+            return real(q, closing=closing)
+        return prices.get(q.get("market_id"))
+    S.venue_price = fake
+    try:
+        return fn()
+    finally:
+        S.venue_price = real
+
+
+_p = _with_legs(lambda: S.venue_price(_cq, closing=True), {"L1": 0.80, "L2": 0.85})
+ok(_p is not None and abs(_p - round(0.80 * 0.85 * (1 + S.COMBO_MARKUP[2]), 4)) < 1e-9,
+   f"the product of the legs plus the measured wrapper markup, as at entry (got {_p})")
+eq(_with_legs(lambda: S.venue_price(dict(_cq, pick="b"), closing=True), {"L1": 0.80, "L2": 0.85}),
+   round(1 - _p, 4), "and the other side is one minus it")
+eq(_with_legs(lambda: S.venue_price(_cq, closing=True), {"L1": 0.80}), None,
+   "a basket is only as priceable as its thinnest leg: one unreadable leg and there is no close")
+eq(S.venue_price(dict(_cq, legs=[]), closing=True), None, "a basket with no legs has no price")
+eq(S.venue_price(dict(_cq, legs=_legs * 3), closing=True), None,
+   "and a leg count with no measured markup is refused rather than guessed")
 
 print("\nthe closing-price read")
 

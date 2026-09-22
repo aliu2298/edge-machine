@@ -1036,10 +1036,17 @@ def build():
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
-    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"] if q.get("bet"))
+    # Counted over the pairs still running. Pooling every bet ever logged put this at 46%,
+    # but 952 of the misses were one retired rule that quoted hundreds of ladder rungs a day
+    # and can never improve — a number dragged down by history says nothing about whether the
+    # snapshots are working now.
+    live = {(r["name"], r["sport"]) for r in pair_list(d, st) if r["v"] != "retired"}
+    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"]
+                               if q.get("bet") and (q["source"], q["sport"]) in live)
                    if x is not None and x >= 0)
     close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
-                  f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} so far).")
+                  f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} "
+                  f"on the pairs still running).") if leads else ""
 
     rows = pair_list(d, st)
     # Eliminated pairs leave the sport sections and the insights, but NOT the reconciliation:

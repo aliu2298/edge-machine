@@ -36,7 +36,7 @@ def due(d, now, window_min=CLOSE_WINDOW_MIN):
     return out
 
 
-def run(d, closes, now=None, price=S.venue_price):
+def run(d, closes, now=None, price=S.closing_price):
     """Snapshot every due bet into `closes`; prune old entries. Returns (taken, due)."""
     now = now or datetime.now(timezone.utc)
     stamp = now.replace(microsecond=0).isoformat()

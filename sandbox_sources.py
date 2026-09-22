@@ -3951,15 +3951,45 @@ def resolve_kalshi_market(ticker):
     return {"yes": "a", "no": "b"}.get(result, "void")
 
 
-def venue_price(q):
+def venue_price(q, closing=False):
     """The price backing `q`'s side would cost right now on its own venue, or None.
 
     For the closing-price job: one targeted read per bet instead of a whole sport's
     universe. The same books and the same tradeability rules as the fetchers — the ask,
     and only while that side's book is tight — so a closing price is comparable with the
     price the bet was logged at. None when the market is closed, the book is untradeable,
-    or the read fails; the last good snapshot then stands."""
+    or the read fails; the last good snapshot then stands.
+
+    `closing`: this read is a closing snapshot, not a price anyone would enter at, which
+    changes one rule. An ENTRY is refused on a book with no bid — you could buy it and
+    never sell it. A CLOSE is not a trade; it is the record of where the market ended, and
+    a contract the market has written off to a cent has an ask and no bid almost by
+    definition. Refusing those lost the whole weather lane: every one of the National
+    Weather Service's 60 settled bets, including all 29 since the fade began, had no
+    closing price on file for this reason and nothing else. Worse, it lost them
+    ASYMMETRICALLY — a bid vanishes when a contract collapses, so the prices being
+    discarded were the ones that had moved hardest AGAINST the pick, and the CLV that
+    survived was flattered. The spread cap still applies, so a zero bid is only accepted
+    where the ask is inside it: a written-off contract counts, an empty mid-range book
+    still does not.
+    """
     venue, pick = q.get("venue") or "polymarket", q.get("pick")
+    if venue == "combo":
+        # A basket has no book of its own: it is priced the way it was logged, as the
+        # product of its legs' asks plus the measured wrapper markup. So its close is that
+        # same sum taken again now — and a basket is only as priceable as its thinnest leg.
+        legs = q.get("legs") or []
+        markup = COMBO_MARKUP.get(len(legs))
+        if markup is None or pick not in ("a", "b"):
+            return None
+        prod = 1.0
+        for leg in legs:
+            p = venue_price(dict(leg), closing=closing)
+            if p is None:
+                return None
+            prod *= p
+        price = min(0.9999, round(prod * (1 + markup), 4))
+        return price if pick == "a" else round(1 - price, 4)
     try:
         if venue == "polymarket_us":
             d = (_get(f"{PMUS}/v1/markets/{urllib.parse.quote(str(q['market_id']))}/bbo", tries=2,
@@ -3992,9 +4022,16 @@ def venue_price(q):
             return None
     except (RuntimeError, KeyError, TypeError, AttributeError):
         return None
-    if bid is None or ask is None or not (bid > 0 and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD):
+    if bid is None or ask is None or not (0 < ask < 1) or ask - bid > KALSHI_MAX_SPREAD:
         return None
+    if bid <= 0 and not closing:
+        return None                 # nothing to sell into: fine to record, not to enter on
     return round(ask, 4)
+
+
+def closing_price(q):
+    """venue_price for a closing snapshot. See the `closing` argument there."""
+    return venue_price(q, closing=True)
 
 
 # ---------------------------------------------------------------------------
