@@ -205,9 +205,15 @@ def check_production(d, st, rep):
         rep.error("production", f"the Production feed cannot be read: {e}")
         return
     published = set(feed.get("pairs") or {})
-    if prod != listed:
-        rep.error("production", f"the stages file and the hand-kept list disagree: only in stages "
-                                f"{sorted(prod - listed)}, only in the list {sorted(listed - prod)}")
+    # In Production but OFF the hand-kept list is a real fault: a pair taken off by hand is
+    # still being published. On the list but NOT in Production is not: it is either waiting
+    # for the next tracker run to promote it, or the demotion net took it out, which is that
+    # net doing its job (ESPN MLB, 2026-09-21).
+    if prod - listed:
+        rep.error("production", f"in Production but off the hand-kept list: {sorted(prod - listed)}")
+    if listed - prod:
+        rep.warn("production", f"on the hand-kept list, not in Production: {sorted(listed - prod)} — "
+                               f"awaiting the next tracker run, or demoted by the net")
     if published != prod:
         rep.error("production", f"the feed and the stages file disagree: only in the feed "
                                 f"{sorted(published - prod)}, only in stages {sorted(prod - published)}")

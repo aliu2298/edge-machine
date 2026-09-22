@@ -2616,8 +2616,17 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
-eq(sorted(T.PAIR_OVERRIDES), ["team1_form_l5|soccer_team1", "tennis_fav_band|tennis"],
-   "the Production list is the two pairs that have earned it, and nothing else")
+eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|soccer_team1",
+                               "tennis_fav_band|tennis"],
+   "the Production list is exactly the pairs moved there by hand, and nothing else")
+ok(T.placeable(dict(sport="mma", venue="polymarket_us", pick="a", market_id="m", side_a="A", side_b="B")),
+   "an MMA pick on Polymarket US reaches the feed, now that fights route")
+ok(not T.placeable(dict(sport="mma", venue="kalshi", pick="a", market_id="m", side_a="A", side_b="B",
+                        start_source="venue")),
+   "but a Kalshi fight with only Kalshi's own start estimate does not: it could land after the walk-out")
+ok("combo" in T.TRADEABLE_VENUES and not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a",
+                                                            market_id="combo2:x", side_a="A", side_b="B")),
+   "a tennis basket counts toward its own record, and can never reach the feed")
 for _gone, _why in (("o15_form_l10|soccer_o15", "it was the only pair there behind the price"),
                     ("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
                     ("espn_fpi|nfl", "it was staking money on four settled bets"),

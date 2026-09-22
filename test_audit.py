@@ -111,6 +111,25 @@ ok(not fresh(5).errors and fresh(5).warnings, "graded 5h ago: one late run, a wa
 ok(errs(fresh(8), "fresh"), "graded 8h ago: two runs missed, the grader has stopped")
 ok(errs(fresh(None), "fresh"), "no last-graded time at all: an error")
 
+print("\nproduction: only a pair published without being listed is a fault")
+import sandbox_track as _T
+_saved_ov = dict(_T.PAIR_OVERRIDES)
+_st = {"pairs": {"a|x": {"stage": "production"}}}
+try:
+    _T.PAIR_OVERRIDES.clear(); _T.PAIR_OVERRIDES.update({"a|x": {}, "b|y": {}})
+    _rp = A.Report()
+    A.check_production({"quotes": []}, _st, _rp)
+    ok(not [m for c, m in _rp.errors if "off the hand-kept list" in m] and
+       any("not in Production" in m for c, m in _rp.warnings),
+       "listed but not yet promoted, or demoted by the net: a warning, never an error")
+    _T.PAIR_OVERRIDES.clear(); _T.PAIR_OVERRIDES.update({"b|y": {}})
+    _rp = A.Report()
+    A.check_production({"quotes": []}, _st, _rp)
+    ok(any("off the hand-kept list" in m for c, m in _rp.errors),
+       "in Production but taken off the list: an error — it is still being published")
+finally:
+    _T.PAIR_OVERRIDES.clear(); _T.PAIR_OVERRIDES.update(_saved_ov)
+
 print("\nsettlement: the stored result must be the venue's")
 _saved_k = S.resolve_kalshi
 try:

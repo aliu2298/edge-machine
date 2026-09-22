@@ -162,6 +162,12 @@ PAIR_OVERRIDES = {
     # asked. No pair belongs in Production on a sample that small because its sibling once looked good.
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
     "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
+    # 2026-09-22, as asked — without waiting for 30 settled. Both are ahead of the price on
+    # records too small to read: the MMA favourite band 4-0 (4 won v 3.2 priced, +23.4% after
+    # fees, z +1.00), OLBG's boxing tips 3-0 (3 won v 2.7 priced, +11.1%, z +0.59). The
+    # demotion net reads their whole record from here. Both keep their Sandbox record.
+    "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
+    "olbg|boxing": dict(moved_on="2026-09-22", production_at=None),
 }
 
 
@@ -1212,14 +1218,20 @@ def faded(d, name, sport=None, venues=None):
 # The Sandbox's non-soccer venue was polymarket.com until 2026-09-13, an international exchange
 # unavailable to US accounts. QA entry, readiness and demotion count only bets on these venues;
 # the .com record stays on the Sandbox page (and in the Sandbox's own stamp) but never moves a pair.
-TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary")
+# "combo" since 2026-09-22: a tennis basket is a Kalshi combo, which a US account can buy, and
+# leaving it off this list had silently kept every settled basket out of its own record.
+TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 
 # The claim each soccer yes/no domain publishes to the Production feed, in the Leads board's
 # bet vocabulary.
 # Sports the feed publishes by ROUTE — the venue's own market id and outcome — because there
 # is no league table to find the contest in. Soccer is not here: its leads are found by league
 # and club name, which is what the Kalshi and Polymarket league maps are for.
-ROUTED_SPORTS = ("tennis", "mlb", "nfl")
+# mma and boxing since 2026-09-22, so the pairs moved to Production can publish. A Kalshi
+# fight still needs a verified start (VERIFIED_STARTS) — Kalshi's own is an estimate, and a
+# bout can walk out well after its card begins — so until one exists only Polymarket US
+# fights, which carry their own start, reach the feed.
+ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing")
 # start_source values that mean a real start time, not the venue's estimate.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb")
 
