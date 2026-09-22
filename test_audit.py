@@ -180,6 +180,16 @@ ok(A.COPY_RE.pattern == A._COPY.replace(" ", r"[\s#/*]+") and "\\b" in A._COPY,
 ok(A._FN not in open("sandbox_audit.py").read().replace('"place" + "able"', ""),
    "and the audit's own source never spells the function name out")
 
+print("\nmilestones: a watch counts only what settled since its own date")
+import sandbox_milestones as M
+_mw = dict(key="t", source="src", sport="mlb", since="2026-09-10", settled=3, title="t", why="w")
+_md = {"quotes": [bet(i, logged="2026-09-12T00:00:00+00:00") for i in range(2)]
+                 + [bet(9, logged="2026-09-01T00:00:00+00:00")], "meta": {}}
+eq_ = M.status(_md, _mw)[0]
+ok(eq_ == 2, "bets logged before the watch began do not count toward it")
+ok(M.status(_md, dict(_mw, since="2026-08-01"))[0] == 3, "and every settled one after it does")
+ok(M.WATCHES and all(w["settled"] > 0 and w["since"] for w in M.WATCHES), "every watch names a size and a start")
+
 print("\nthe live repository")
 # Freshness is left to the audit step itself: a stalled tracker should fail THAT step, with
 # its own message, not make this one claim the auditor is broken.

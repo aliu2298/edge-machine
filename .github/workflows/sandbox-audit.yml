@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: read
+  issues: write      # the milestone step raises an issue; the record itself stays read-only
 
 concurrency:
   group: sandbox-audit
@@ -45,3 +46,12 @@ jobs:
       # Then audit the record itself, asking the venues again. Stdlib only.
       - name: Audit the Sandbox record
         run: python3 sandbox_audit.py --sample 25
+
+      # Milestones: when a record reaches a size worth deciding on, raise an issue that
+      # mentions the owner, which GitHub emails. Each fires once. Runs whatever the audit
+      # found, since it answers a different question.
+      - name: Milestones
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 sandbox_milestones.py
