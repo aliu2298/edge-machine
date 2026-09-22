@@ -181,6 +181,23 @@ def check_records(d, st, rep):
         if (len(raw), won) != (a["n"], a["won"]) or abs(exp - a["expected"]) > 1e-6:
             rep.error("records", f"{key}: raw bets say {won}/{len(raw)} v {exp:.2f} priced, "
                                  f"the page says {a['won']}/{a['n']} v {a['expected']:.2f}")
+        # The closing-price read, recounted the same way. It is checked here and not taken on
+        # trust because it is now a Production gate — nothing is promoted without beating the
+        # close by t CLV_T — and because it is the one figure on the page whose inputs (a
+        # closing price, and whether it was taken in time) arrive from a different run than
+        # the bet did, which is exactly where a quiet mismatch would hide.
+        moves = [q["close_price"] - q["price"] for q in raw if T.fresh_close(q)]
+        mean = (sum(moves) / len(moves)) if moves else None
+        if len(moves) != a["clv_n"] or (mean is None) != (a["clv"] is None) or (
+                mean is not None and abs(mean - a["clv"]) > 1e-9):
+            rep.error("records", f"{key}: raw bets say {len(moves)} fresh closes"
+                                 + (f" averaging {mean*100:+.2f}c" if mean is not None else "")
+                                 + f", the page says {a['clv_n']}"
+                                 + (f" averaging {a['clv']*100:+.2f}c" if a["clv"] is not None else ""))
+        want = T.clv_read(len(moves), a.get("clv_t"))
+        if want != a.get("clv_read"):
+            rep.error("records", f"{key}: the closing prices read {want} on {len(moves)} closes, "
+                                 f"the page says {a.get('clv_read')}")
         n += 1
     shown = {(r["name"], r["sport"]) for r in rows}
     settled = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")]

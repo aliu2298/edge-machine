@@ -102,6 +102,21 @@ APPROVAL = dict(min_bets=50, min_days=28, z_min=2.0)
 QA_ENTRY = dict(min_bets=30, min_days=14, z_min=1.0)     # reported on the Sandbox page
 QA_DEMOTE = dict(min_bets=30, z_below=0.0)
 READY_CLV = dict(min_n=30, min_share=0.5)
+# ---- The CLV read (pre-registered 2026-09-22) -----------------------------------------------
+# Closing-line value is the only figure here that converges fast enough to judge an efficient
+# market in a usable time. A win/loss record carries the outcome's own noise: at a true 2% edge
+# on a 0.51 price, z >= 2 needs on the order of 5,000 settled bets, which soccer totals will
+# never supply. CLV removes that noise and asks a narrower question — did the price move toward
+# this pick before the start — so it reads on tens of bets rather than thousands. The Sandbox's
+# own record shows the difference: the tennis favourite-band rule is z +1.91 on 428 settled
+# bets (ambiguous) and t -3.61 on 429 closing prices (not ambiguous at all).
+#
+# It is a DIFFERENT question, not a cheaper version of the same one, and it is only evidence
+# where the closing price is real: CLOSE_MAX_LEAD_MIN gates that, and roughly half of settled
+# bets have a close fresh enough to count. A rule can beat the close and still lose money, and
+# it can make money with no CLV at all. So CLV is read beside the record, never instead of it.
+CLV_T = 2.0            # a mean beating the close by this many standard errors
+CLV_MIN_N = 20         # ...over at least this many fresh closes
 READY_HOLD_DAYS = 7
 STALE_DAYS = 21
 NEVER_PROMOTED_KINDS = ("Baseline",)
@@ -1407,6 +1422,18 @@ def day_units(bets):
     return sorted(out, key=lambda q: q["start"])
 
 
+def clv_read(n, t):
+    """What the closing prices say on their own: "ahead"|"behind"|"level"|None (too few).
+
+    Deliberately three-valued. "level" is a real answer — a rule that neither beats nor loses
+    to the close is taking the price the market ends up at, which is what most of them do —
+    and it must not be confused with not yet knowing.
+    """
+    if n < CLV_MIN_N or t is None:
+        return None
+    return "ahead" if t >= CLV_T else "behind" if t <= -CLV_T else "level"
+
+
 def assess(d, name, sport=None, since=None, venues=None, until=None):
     """Judge one source (optionally in one sport) against APPROVAL.
 
@@ -1539,12 +1566,18 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         status = "watch"
     pnl_fee = sum(pnl_after_fee(q) for q in bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
+    # The spread of the moves, not just their average: a mean of +1c means one thing when the
+    # moves are all +1c and another when they run from -20c to +22c. t is that mean over its
+    # own standard error, which is what makes CLV readable long before the win record is.
+    clv_sd = (sum((c - sum(clv) / len(clv)) ** 2 for c in clv) / len(clv)) ** 0.5 if len(clv) > 1 else None
+    clv_t = ((sum(clv) / len(clv)) / (clv_sd / len(clv) ** 0.5)) if clv_sd else None
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
                 n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
                                      "market-day" if sport in S.DAY_CLUSTERED else "bet"),
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / (n * STAKE)) if n else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
+                clv_sd=clv_sd, clv_t=clv_t, clv_read=clv_read(len(clv), clv_t),
                 routed=sum(1 for q in bets if placeable(q)),
                 clv_beat=(sum(1 for c in clv if c > 0) / len(clv)) if clv else None)
 
@@ -1574,10 +1607,11 @@ def ready_gate(a):
     """Production-ready, judged on QA's fresh data: the stamp, positive CLV, positive after fees."""
     stamp = [(k, l, p, det) for k, l, p, det in a["criteria"]]
     return stamp + [
-        ("clv", f"beats the closing price on average ({READY_CLV['min_n']}+ closes, "
+        ("clv", f"beats the closing price by t ≥ {CLV_T:g} ({READY_CLV['min_n']}+ closes, "
                 f"{READY_CLV['min_share']:.0%}+ of bets)",
-         clv_sample(a) and a["clv"] > 0,
-         (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} of {a['n']} bets, {a['clv_beat']:.0%} beat the close"
+         clv_sample(a) and a["clv"] > 0 and (a.get("clv_t") or 0) >= CLV_T,
+         (f"{a['clv']*100:+.1f}¢ on {a['clv_n']} of {a['n']} bets, t {a.get('clv_t') or 0:+.2f}, "
+          f"{a['clv_beat']:.0%} beat the close"
           if a["clv"] is not None else "no closing prices yet")),
         ("route", "every one of these bets is a standard exchange market the feed can publish",
          a["n"] > 0 and a.get("routed", 0) == a["n"],

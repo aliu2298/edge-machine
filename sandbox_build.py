@@ -201,11 +201,6 @@ def leaderboard(scores, d):
             kind = a["criteria"][2][3].split(" back the ")[-1]
             vb_cell = (f'<span class="{cls(gap) if not thin else "mut"}">{"+" if gap >= 0 else ""}'
                        f'{gap*100:.1f}pp</span><div class="sm mut">v back the {esc(kind)}</div>')
-        clv_cell = "—"
-        if a and a["clv"] is not None:
-            clv_cell = (f'<span class="{cls(a["clv"]) if a["clv_n"] >= MIN_N else "mut"}">'
-                        f'{"+" if a["clv"] >= 0 else ""}{a["clv"]*100:.1f}¢</span>'
-                        f'<div class="sm mut">{a["clv_n"]} bet{"" if a["clv_n"] == 1 else "s"}</div>')
         vp = vs_price(d, name)
         vp_cell = "—"
         if vp:
@@ -220,7 +215,7 @@ def leaderboard(scores, d):
 <td class="num">{vp_cell}</td>
 <td class="num">{roi}</td>
 <td class="num">{vb_cell}</td>
-<td class="num">{clv_cell}</td>
+<td class="num">{close_cell(a)}</td>
 <td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['settled'] else '—'}</td>
 <td class="num">{f"{s['brier']:.4f}" if s['brier'] is not None else '—'}</td>
 <td>{verdict}</td></tr>""")
@@ -654,8 +649,29 @@ def insights(rows, now=None):
 SPORT_HEAD = ('<tr><th class="num">#</th><th>Rule or tipster</th><th>Verdict</th>'
               '<th class="num">Record</th>'
               '<th class="num">Won v priced</th><th class="num">ROI after fees</th>'
+              '<th class="num">v the close</th>'
               '<th class="num">If faded</th>'
               '<th class="num">Open</th><th>Stage</th></tr>')
+
+
+def close_cell(a):
+    """Where this pair's entry prices sat against the closing price.
+
+    Beside the record rather than inside it, because it answers a different question: not
+    "did these bets win" but "did the price move toward them before the start". It is the
+    only figure here that reads in tens of bets instead of thousands, which is the whole
+    reason it is on the page — an efficient market will never hand over 5,000 settled bets.
+    Greyed until there are enough fresh closes to say anything, and a pair that is level is
+    told so plainly: taking the price the market ends at is what most of them do.
+    """
+    if not a or a.get("clv") is None or not a.get("clv_n"):
+        return '<span class="mut">—</span>'
+    read = a.get("clv_read")
+    tone = {"ahead": "pos", "behind": "neg"}.get(read, "mut")
+    t = a.get("clv_t")
+    bits = (f't {t:+.2f} · ' if t is not None else "") + f'{a["clv_n"]} close' + ("" if a["clv_n"] == 1 else "s")
+    return (f'<span class="{tone}">{a["clv"] * 100:+.1f}¢</span>'
+            f'<div class="sm mut">{bits}{" · " + read if read else ""}</div>')
 
 
 def rank_key(r):
@@ -750,6 +766,7 @@ def _row(r, rank=None, provisional=False):
 {scope_note}<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
+<td class="num">{close_cell(a)}</td>
 <td class="num">{fade}</td>
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
 
@@ -954,7 +971,15 @@ is greyed; under {EARLY_N}, and once retired, it is not ranked at all.
 <b>If faded</b> is what backing the OTHER side of the same bets would have returned. It is not
 this row's ROI with the sign flipped — both sides of a book are sold above fair, so fading an
 average rule loses that overround plus its fee. A large positive there means the rule is
-picking the wrong side, which is a different complaint from having no edge.</div>
+picking the wrong side, which is a different complaint from having no edge.
+<b>v the close</b> is how far the price moved toward this pair's pick between its bet and the
+start, in cents per bet, with t — the mean over its own standard error. It answers a different
+question from the record, and far sooner: a win record carries the outcome's own noise, so on a
+market priced near even a real 2% edge needs thousands of settled bets to reach z 2, while the
+same rule's closing prices can read in tens. Read at {T.CLV_MIN_N}+ fresh closes and called
+<b>ahead</b> or <b>behind</b> at t {T.CLV_T:g}; <b>level</b> is a real answer, not a missing one.
+Beating the close is not the same as making money, and nothing is promoted or retired on it
+alone.</div>
 <div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, prov) for rk, prov, r in ranked)}</table></div>
 {league_panel(d, rs) if f in BY_LEAGUE else ''}</details>""")
     return "\n".join(out)

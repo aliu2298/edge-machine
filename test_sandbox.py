@@ -3605,6 +3605,54 @@ ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
    "judged against backing the under on every listed over-2.5 market")
 
 
+print("\nthe closing-price read")
+
+eq(T.clv_read(19, 9.0), None, "under the floor there is no read, however big the t")
+eq(T.clv_read(20, None), None, "and none without a t at all")
+eq(T.clv_read(20, 2.0), "ahead", "at the floor and at t 2 the read is ahead")
+eq(T.clv_read(50, -2.5), "behind", "a rule the price moves AWAY from is behind, not merely unproven")
+eq(T.clv_read(50, 1.9), "level", "inside the band the answer is level — a real answer, not a missing one")
+eq(T.clv_read(50, 0.0), "level", "taking the price the market ends at is what most rules do")
+
+
+def _clvq(i, paid, close, lead_min=30):
+    st = datetime(2026, 9, 10, 18, 0, tzinfo=timezone.utc) + timedelta(days=i)
+    return dict(id=f"c:{i}", source="cv", sport="tennis", market_id=f"cm{i}", venue="kalshi",
+                bet=True, pick="a", price=paid, price_a=paid, price_b=round(1 - paid + 0.02, 2),
+                close_price=close, close_at=(st - timedelta(minutes=lead_min)).isoformat(),
+                result="a", status="won", pnl=10.0, stake=100.0,
+                start=st.isoformat(), logged=(st - timedelta(hours=8)).isoformat())
+
+
+_cd = {"quotes": [_clvq(i, 0.50, 0.54) for i in range(24)]}
+_ca = T.assess(_cd, "cv", "tennis", venues=T.TRADEABLE_VENUES)
+eq(_ca["clv_n"], 24, "every bet with a close taken inside the window counts")
+ok(abs(_ca["clv"] - 0.04) < 1e-9, "the mean move is the mean move")
+eq(_ca["clv_sd"], 0.0, "identical moves have no spread ...")
+eq(_ca["clv_read"], None, "... and with no spread there is no t, so no read is claimed")
+_cd2 = {"quotes": [_clvq(i, 0.50, 0.54 if i % 2 else 0.52) for i in range(24)]}
+_ca2 = T.assess(_cd2, "cv", "tennis", venues=T.TRADEABLE_VENUES)
+ok(_ca2["clv_t"] is not None and _ca2["clv_t"] > 2 and _ca2["clv_read"] == "ahead",
+   f"a steady +2 to +4c move on 24 closes reads ahead (t {_ca2['clv_t']:+.2f})")
+_cd3 = {"quotes": [_clvq(i, 0.50, 0.46 if i % 2 else 0.48) for i in range(24)]}
+eq(T.assess(_cd3, "cv", "tennis", venues=T.TRADEABLE_VENUES)["clv_read"], "behind",
+   "and the same size of move the other way reads behind")
+_cd4 = {"quotes": [_clvq(i, 0.50, 0.54, lead_min=T.CLOSE_MAX_LEAD_MIN + 30) for i in range(24)]}
+eq(T.assess(_cd4, "cv", "tennis", venues=T.TRADEABLE_VENUES)["clv_n"], 0,
+   "a price taken too long before the start is not a closing price and is not counted")
+
+ok("behind" in RANKB.close_cell(_cd3 and T.assess(_cd3, "cv", "tennis", venues=T.TRADEABLE_VENUES)),
+   "the page cell says which way the read went")
+ok(RANKB.close_cell(dict(clv=None, clv_n=0)) == '<span class="mut">—</span>',
+   "and says nothing at all where there are no closes")
+_gate = T.ready_gate(_ca2)
+ok(any(k == "clv" and f"t \u2265 {T.CLV_T:g}" in l for k, l, _p, _d in _gate),
+   "the Production gate asks for a SIGNIFICANT beat, not merely a positive average")
+_weak = dict(_ca2, clv=0.0001, clv_t=0.3, clv_n=40, n=40)
+ok(not next(p for k, _l, p, _d in T.ready_gate(_weak) if k == "clv"),
+   "a whisker above zero on 40 closes no longer passes it")
+
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
