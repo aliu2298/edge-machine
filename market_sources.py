@@ -36,6 +36,15 @@ SP500_CSV = ("https://raw.githubusercontent.com/datasets/s-and-p-500-companies/"
 # zero cost is not a rule. Raised for anything thinner by MIN_DOLLAR_VOLUME below.
 COST_BPS_PER_SIDE = 5.0
 MIN_DOLLAR_VOLUME = 20_000_000      # a name must trade this much a day to be logged at all
+# Crypto costs far more to cross. Alpaca's base tier (under $100k 30-day volume) charges 0.25%
+# taker a side (0.15% maker), verified 2026-09-22 against its published fee schedule — five
+# times the equity cost, which decides any short-hold crypto rule before its signal does.
+CRYPTO_COST_BPS_PER_SIDE = 25.0
+
+# The index ETFs rules may trade themselves (SPY is also the benchmark for stock picks), and the
+# crypto pairs, both fetched beside the S&P 500 list. Kept out of the S&P universe on purpose.
+ETFS = ["SPY", "QQQ", "IWM", "DIA"]
+CRYPTO = ["BTC/USD", "ETH/USD"]
 
 
 def _creds():
@@ -137,6 +146,33 @@ def bars(symbols, timeframe="1Day", start=None, end=None, limit=10000, feed="iex
             page = d.get("next_page_token")
             if not page:
                 break
+        time.sleep(0.2)
+    for sym in out:
+        out[sym].sort(key=lambda b: b["t"])
+    return out
+
+
+def crypto_bars(symbols, timeframe="1Day", start=None, end=None, limit=10000):
+    """{pair: [bar, ...]} from Alpaca's crypto feed, oldest first. Same shape as bars()."""
+    if not configured() or not symbols:
+        return {}
+    out, page = {}, None
+    start = start or (datetime.date.today() - datetime.timedelta(days=400)).isoformat()
+    while True:
+        q = {"symbols": ",".join(symbols), "timeframe": timeframe, "start": start, "limit": limit}
+        if end:
+            q["end"] = end
+        if page:
+            q["page_token"] = page
+        try:
+            d = _get(f"{DATA_HOST}/v1beta3/crypto/us/bars?{urllib.parse.urlencode(q)}")
+        except Exception:
+            break
+        for sym, rows in (d.get("bars") or {}).items():
+            out.setdefault(sym, []).extend(rows)
+        page = d.get("next_page_token")
+        if not page:
+            break
         time.sleep(0.2)
     for sym in out:
         out[sym].sort(key=lambda b: b["t"])

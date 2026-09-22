@@ -839,7 +839,7 @@ picking the wrong side, which is a different complaint from having no edge.</div
 
 TRADE_HEAD = ('<tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th>'
               '<th class="num">Trades</th><th class="num">Mean per day</th>'
-              '<th class="num">v SPY</th><th class="num">P/L</th><th class="num">Last</th></tr>')
+              '<th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr>')
 
 
 def trading_rows(md):
@@ -852,6 +852,9 @@ def trading_rows(md):
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
                 if r["verdict"] in ("promising", "behind", "early") else "")
         pc = lambda x: "—" if x is None else f'<span class="{cls(x)}">{x*100:+.2f}%</span>'
+        # A stock pick is judged against SPY over its own days; a timing rule on an index or a
+        # coin against cash, since set against its own asset it would show zero edge by design.
+        vs = "v cash" if meta.get("bench") == "cash" else "v SPY"
         rows.append(f"""<tr><td><details class="src"><summary><b>{esc(meta['label'])}</b>
 <div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div></summary>
 <div class="sm mut">{esc(meta['note'])}</div></details></td>
@@ -859,13 +862,13 @@ def trading_rows(md):
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
 <td class="num">{pc(r['mean'])}<div class="sm mut">{f"t {r['t']:+.2f}" if r['days'] > 1 else ''}</div></td>
-<td class="num">{pc(r['edge'])}<div class="sm mut">{f"t {r['edge_t']:+.2f}" if r['days'] > 1 else ''}</div></td>
+<td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{f" · t {r['edge_t']:+.2f}" if r['days'] > 1 else ''}</div></td>
 <td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}</td>
 <td class="num mut sm">{esc(r['last'][:10]) or '—'}</td></tr>
 <tr><td colspan="8" class="sm mut">Backtest before the lane went live ({esc(str((r.get('research_window') or ['', ''])[0]))} to
 {esc(str((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
 {r['research_days']} entry days, {r['research_trades']} trades,
-{'—' if r['research_edge'] is None else f"{r['research_edge']*100:+.2f}%"} a day v SPY, t {r['research_t']:+.2f}.</td></tr>""")
+{'—' if r['research_edge'] is None else f"{r['research_edge']*100:+.2f}%"} a day {vs}, t {r['research_t']:+.2f}.</td></tr>""")
     return "\n".join(rows)
 
 
