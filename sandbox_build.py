@@ -803,7 +803,129 @@ def reconcile(d, rows):
             f'on record but not judged — ' + ", ".join(p for p in parts if p) + '.</div>')
 
 
-def sport_sections(rows):
+LEAGUE_HEAD = ('<tr><th>Rule or tipster</th><th>Market</th><th class="num">Record</th>'
+               '<th class="num">Won v priced</th><th class="num">ROI after fees</th>'
+               '<th class="num">If faded</th></tr>')
+
+SUMMARY_HEAD = ('<tr><th>Competition</th><th class="num">Settled</th><th class="num">Both sides cost</th>'
+                '<th class="num">Won v priced</th><th class="num">ROI after fees</th>'
+                '<th class="num">If faded</th><th>Best rule here</th></tr>')
+
+LEAGUE_FOLD_N = 8     # a competition gets its own table once it has this many settled bets
+LEAGUE_MIN = 3        # under three, a competition has nothing to show, not even a lean
+
+
+def _cell(v, n, fade=False):
+    """A percentage, greyed while the competition is too thin for the number to mean anything."""
+    return ('<span class="mut">—</span>' if v is None else
+            f'<span class="{"mut" if n < EARLY_N else cls(v)}">{pct(v, sign=True)}</span>')
+
+
+def _league_row(r, sp):
+    """One rule's record inside one competition. The sport table's columns, thinner."""
+    rec = f'{sp["won"]}–{sp["n"] - sp["won"]}<div class="sm mut">{sp["n"]} settled</div>'
+    vp = (f'{sp["won"]} v {sp["expected"]:.1f}<div class="sm mut">{sp["won"] - sp["expected"]:+.1f} wins '
+          f'· {sp["edge"]:+.3f}/bet</div>')
+    fade = ('<span class="mut">—</span>' if not sp["fade_n"] or sp["fade_roi"] is None else
+            _cell(sp["fade_roi"], sp["n"])
+            + f'<div class="sm mut">{sp["fade_won"]} v {sp["fade_expected"]:.1f} on {sp["fade_n"]}</div>')
+    mkt = S.SPORTS.get(r["sport"], r["sport"]).split(" · ", 1)
+    prod = '<span class="sig y">PRODUCTION</span>' if r["prod"] else ""
+    return (f'<tr><td><b>{esc(r["meta"]["label"].split(" (")[0])}</b> {prod}</td>'
+            f'<td class="sm mut">{esc(mkt[1] if len(mkt) > 1 else mkt[0])}</td>'
+            f'<td class="num">{rec}</td><td class="num">{vp}</td>'
+            f'<td class="num">{_cell(sp["roi_fee"], sp["n"])}</td><td class="num">{fade}</td></tr>')
+
+
+def _league_totals(items):
+    """Every rule's bets in one competition added together — the summary row's numbers."""
+    n = sum(sp["n"] for _r, sp in items)
+    won = sum(sp["won"] for _r, sp in items)
+    exp = sum(sp["expected"] for _r, sp in items)
+    roi = sum(sp["roi_fee"] * sp["n"] for _r, sp in items) / n if n else None
+    fn = sum(sp["fade_n"] for _r, sp in items)
+    fade = (sum(sp["fade_roi"] * sp["fade_n"] for _r, sp in items if sp["fade_roi"] is not None)
+            / fn) if fn else None
+    return n, won, exp, roi, fade
+
+
+def league_panel(d, rs):
+    """Soccer's records split by the competition each bet was struck in.
+
+    A table of every competition first, so the question "which league is a rule working in"
+    is answered by scanning one column rather than opening thirty folds; then a table per
+    competition with enough bets to be worth opening. Each competition carries its toll —
+    what both sides of its markets cost above 100 — because that is the number every rule in
+    it clears before it earns anything, and it runs from about 1.5% on a league match winner
+    to 6.6% in a cup.
+    """
+    splits = {}
+    for r in rs:
+        if not r["a"]["n"]:
+            continue
+        for sp in T.league_split(d, r["name"], r["sport"], venues=T.TRADEABLE_VENUES):
+            splits.setdefault(sp["league"], []).append((r, sp))
+    if not splits:
+        return ""
+    cost = T.league_cost(d, {r["sport"] for r in rs}, venues=T.TRADEABLE_VENUES)
+    for items in splits.values():
+        items.sort(key=lambda t: (-t[1]["edge"], -t[1]["n"]))
+    # Ranked the way the sport tables rank: by wins above what the prices implied, per bet —
+    # but in TIERS, because on this little data per competition an ordering that lets 3-1
+    # outrank 18-7 is worse than none. A competition with enough settled bets to lean on is
+    # ordered first; everything thinner sits below it however pretty its numbers, and
+    # "Other competitions" is a bag of one-offs rather than a competition, so it sits last.
+    def _order_key(lg):
+        n, won, exp, _roi, _fade = _league_totals(splits[lg])
+        return (lg == "Other competitions", n < EARLY_N, -(won - exp) / n)
+
+    order = sorted((lg for lg in splits if _league_totals(splits[lg])[0] >= LEAGUE_MIN), key=_order_key)
+    if not order:
+        return ""
+    summary, folds = [], []
+    for lg in order:
+        items = splits[lg]
+        n, won, exp, roi, fade = _league_totals(items)
+        hold, hold_n = cost.get(lg, (None, 0))
+        best = items[0]
+        thin = "" if n >= EARLY_N else '<div class="sm mut">too thin to read</div>'
+        summary.append(
+            f'<tr><td><b>{esc(lg)}</b>{thin}</td><td class="num">{n}</td>'
+            f'<td class="num">{"—" if hold is None else f"{hold * 100:.1f}%"}'
+            f'<div class="sm mut">{f"on {hold_n} quoted" if hold is not None else ""}</div></td>'
+            f'<td class="num">{won} v {exp:.1f}<div class="sm mut">{won - exp:+.1f} wins '
+            f'· {(won - exp) / n:+.3f}/bet</div></td>'
+            f'<td class="num">{_cell(roi, n)}</td><td class="num">{_cell(fade, n)}</td>'
+            f'<td class="sm">{esc(best[0]["meta"]["label"].split(" (")[0])}'
+            f'<div class="sm mut">{best[1]["won"]}–{best[1]["n"] - best[1]["won"]} '
+            f'· {best[1]["edge"]:+.3f}/bet</div></td></tr>')
+        if n >= LEAGUE_FOLD_N:
+            folds.append(f"""<details class="sport"><summary><b>{esc(lg)}</b>
+<span class="mut"> · {n} settled{"" if hold is None else f" · both sides cost {hold * 100:.1f}%"}
+ · {len(items)} rule{"" if len(items) == 1 else "s"}</span></summary>
+<div class="tbl"><table>{LEAGUE_HEAD}{''.join(_league_row(r, sp) for r, sp in items)}</table></div></details>""")
+    return f"""<details class="sport"><summary><b>By competition</b>
+<span class="mut"> · {len(order)} competitions · which league a rule works in, and what that league costs</span></summary>
+<div class="note sm">The same rules, split by the competition each bet was struck in, because they
+are not one market: over the two years of results on file the Bundesliga scored 3.49 goals a game
+and Serie A 2.38, and the toll in the <b>Both sides cost</b> column runs from about 1.5% to 6.6%.
+That toll is what a rule has to clear in that competition before it earns anything.
+<b>Read this as description, not as a verdict.</b> Cutting a record this many ways multiplies the
+looks, and the best slice always looks good: across 47 league-by-market cells of the market's own
+prices, five beat z 1.5 where chance alone produces six, and none reached z 2 where chance
+produces two. Figures are greyed under {EARLY_N} settled, nothing here promotes or retires a rule,
+and the verdict column above goes on reading the whole record. A competition gets its own table at
+{LEAGUE_FOLD_N} settled bets; below that it is a summary row only.</div>
+<div class="tbl"><table>{SUMMARY_HEAD}{''.join(summary)}</table></div>
+{''.join(folds)}</details>"""
+
+
+# Soccer only, for now: it is the one sport where the same rule meets a materially
+# different market in each competition, and the one with enough competitions to sort.
+BY_LEAGUE = ("Soccer",)
+
+
+def sport_sections(d, rows):
     """One folding section per sport: Production and the strongest records first."""
     fams = {}
     for r in rows:
@@ -833,7 +955,8 @@ is greyed; under {EARLY_N}, and once retired, it is not ranked at all.
 this row's ROI with the sign flipped — both sides of a book are sold above fair, so fading an
 average rule loses that overround plus its fee. A large positive there means the rule is
 picking the wrong side, which is a different complaint from having no edge.</div>
-<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, prov) for rk, prov, r in ranked)}</table></div></details>""")
+<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, prov) for rk, prov, r in ranked)}</table></div>
+{league_panel(d, rs) if f in BY_LEAGUE else ''}</details>""")
     return "\n".join(out)
 
 
@@ -1028,7 +1151,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
 <div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
-{sport_sections(shown)}
+{sport_sections(d, shown)}
 {eliminated_section(rows)}
 {reconcile(d, rows)}
 <div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat ${int(T.STAKE)} a bet at the price

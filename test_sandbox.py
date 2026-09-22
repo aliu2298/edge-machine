@@ -2486,9 +2486,12 @@ _pl = {(r["name"], r["sport"]): r["v"] for r in SB.pair_list(_pd, {"pairs": {}})
 eq((_pl[("scores24", "soccer")], _pl[("covers", "nfl")]), ("proven", "noedge"),
    "24/36 at 0.50 is a proven edge (z > 2); 11/33 has no edge")
 eq(_pl[("espn_fpi", "mlb")], "early", "five bets is too early for any verdict, whichever way it leans")
-_secs = SB.sport_sections(SB.pair_list(_pd, {"pairs": {}}))
+_secs = SB.sport_sections(_pd, SB.pair_list(_pd, {"pairs": {}}))
 ok("<b>Soccer</b>" in _secs and "<b>NFL</b>" in _secs and "Scores24" in _secs, "one section per sport, naming each source")
 ok("best: Scores24" in _secs, "a section names its best pair only from a readable record")
+ok("By competition" in _secs, "Soccer carries a per-competition breakdown; other sports do not")
+ok("<b>NFL</b>" in _secs and _secs.split("<b>NFL</b>")[1].count("By competition") == 0,
+   "the per-competition panel is Soccer's only")
 _ins = SB.insights(SB.pair_list(_pd, {"pairs": {}}))
 ok("Holding up over 30+ bets" in _ins and "No edge after 30+ bets" in _ins, "the summary says what works and what does not")
 eq(SB.verdict(dict(n=12, z=0.5, roi_fee=0.04)), "promising", "10+ bets ahead is promising")
@@ -3252,7 +3255,7 @@ eq([r["name"] for _rk_, _p, r in RANKB.rank_rows([_chalk, _longshot])], ["longsh
 _prod_bad = _rk("prodbad", 60, 30, 34.0, prod=True)
 eq([r["name"] for _rk_, _p, r in RANKB.rank_rows([_prod_bad, _mid])], ["mid", "prodbad"],
    "a Production pair does NOT float to the top: being behind the price is the thing to see")
-_html = RANKB.sport_sections([_strong, _weak, _fluke])
+_html = RANKB.sport_sections({"quotes": []}, [_strong, _weak, _fluke])
 ok("Ranked best to worst" in _html, "the section says what it is ranked on")
 ok('class="rank">1<' in _html, "and the leader carries rank 1")
 

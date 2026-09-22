@@ -1261,6 +1261,80 @@ def faded(d, name, sport=None, venues=None):
                 z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
 
 
+# ---- Per-competition records (2026-09-22) ---------------------------------------------------
+# A soccer rule does not meet one market; it meets a different one in every competition. Across
+# the two years of ESPN results the Sandbox keeps, the Bundesliga scored 3.49 goals a game and
+# Serie A 2.38, and on the Sandbox's own quotes both sides of a cup market cost about 6.6%
+# against 1.5% on a league match winner. Pooling that into a single row can bury a rule that
+# works in one league inside an average saying it does not, and can hide a rule that is only
+# ever paying a toll. So a pair is split by the competition its bets were actually struck in.
+#
+# The split is DESCRIPTIVE and never a verdict. Cutting a record eleven ways multiplies the
+# looks, and the best slice always looks good: across 47 league-by-market cells of the market's
+# own prices, five beat |z| 1.5 where chance alone produces six, and none reached |z| 2 where
+# chance produces two. Nothing here promotes, demotes or retires a pair — the verdict column
+# goes on reading the whole record.
+
+def league_split(d, name, sport=None, venues=None):
+    """A pair's record per competition, best first: [dict(league, n, won, expected, ...)].
+
+    Each entry carries the same figures the sport tables use — wins against what the prices
+    implied, return after fees, and what backing the other side of those same bets would have
+    returned — so a league row reads exactly like a pair row, only thinner.
+    """
+    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+            and q["status"] in ("won", "lost")
+            and (sport is None or q["sport"] == sport)
+            and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    by = {}
+    for q in bets:
+        by.setdefault(S.display_league(q) or "Other competitions", []).append(q)
+    out = []
+    for lg, qs in by.items():
+        n = len(qs)
+        won = sum(1 for q in qs if q["status"] == "won")
+        exp = sum(q["price"] for q in qs)
+        var = sum(q["price"] * (1 - q["price"]) for q in qs)
+        # The other side of the same bets, priced at ITS OWN ask — never this row's price with
+        # the sign flipped, which would hand the fade a spread it in fact also has to pay.
+        rows = []
+        for q in qs:
+            other = "b" if q["pick"] == "a" else "a"
+            p = q.get("price_" + other)
+            if q.get("price_draw") is None and q.get("pick") in ("a", "b") and p:
+                f = FEE_RATE.get(q.get("venue") or "polymarket", 0.07)
+                rows.append((float(p), f, q.get("result") == other))
+        cost = sum(p + f * p * (1 - p) for p, f, _w in rows)
+        out.append(dict(
+            league=lg, n=n, won=won, expected=exp, edge=(won - exp) / n,
+            z=(won - exp) / var ** 0.5 if var > 0 else 0.0,
+            roi_fee=sum(pnl_after_fee(q) for q in qs) / (n * STAKE),
+            fade_n=len(rows), fade_won=sum(1 for _p, _f, w in rows if w),
+            fade_expected=sum(p for p, _f, _w in rows),
+            fade_roi=((sum(1 for _p, _f, w in rows if w) - cost) / cost) if cost else None))
+    return sorted(out, key=lambda r: (-r["edge"], -r["n"]))
+
+
+def league_cost(d, sports, venues=None):
+    """What both sides of a market cost above 100, per competition — {league: (hold, n)}.
+
+    Read from the never-betting baseline rows, which quote every listed market whether or not
+    a rule bet on it, so the toll is measured across the whole board rather than only where a
+    rule happened to act. It is the floor every rule in that competition has to clear before it
+    earns anything, and it is not small or uniform.
+    """
+    out = {}
+    for q in all_bets(d):
+        if (q["sport"] not in sports
+                or (S.SOURCES.get(q["source"]) or {}).get("kind") not in NEVER_PROMOTED_KINDS
+                or not q.get("price_a") or not q.get("price_b")
+                or (venues is not None and (q.get("venue") or "polymarket") not in venues)):
+            continue
+        out.setdefault(S.display_league(q) or "Other competitions", []).append(
+            q["price_a"] + q["price_b"] - 1.0)
+    return {k: (sum(v) / len(v), len(v)) for k, v in out.items()}
+
+
 # ---- QA judges only bets on the exchanges a follower can use (2026-09-13) --------------------
 # The Sandbox's non-soccer venue was polymarket.com until 2026-09-13, an international exchange
 # unavailable to US accounts. QA entry, readiness and demotion count only bets on these venues;

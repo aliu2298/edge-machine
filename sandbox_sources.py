@@ -2285,6 +2285,39 @@ def quote_league(q):
     return None
 
 
+# The rest of Kalshi's soccer series, for naming a competition when the board has no league
+# name for it — a tipster's lead can land on the Swiss Super League or the Scottish Cup, and
+# filing those under "other" would hide a whole competition's record. The names are the
+# venue's OWN series titles, read from its /series endpoint on 2026-09-22 rather than guessed
+# from the ticker, so a competition is named the way the exchange names it. DISPLAY ONLY:
+# unlike KALSHI_GAME_LEAGUES these never reach a Production lead.
+SERIES_LEAGUES = {
+    "KXEFLCHAMPIONSHIPGAME": "EFL Championship", "KXLALIGA2GAME": "LaLiga 2",
+    "KXSWISSLEAGUEGAME": "Swiss Super League", "KXEFLL1GAME": "EFL League One",
+    "KXBUNDESLIGA2GAME": "Bundesliga 2", "KXBELGIANPLGAME": "Belgian Pro League",
+    "KXBRASILEIROBGAME": "Brasileiro Serie B", "KXSUPERLIGGAME": "Turkish Super Lig",
+    "KXALLSVENSKANGAME": "Allsvenskan", "KXPERLIGA1GAME": "Peru Liga 1",
+    "KXLIGAMXGAME": "Liga MX", "KXKLEAGUEGAME": "Korea K League",
+    "KXK2LEAGUEGAME": "Korea K-League 2", "KXJLEAGUEGAME": "Japan J League",
+    "KXELITESERIENGAME": "Eliteserien", "KXCONMEBOLLIBGAME": "CONMEBOL Libertadores",
+    "KXSVK2LGAME": "Slovakian 2. Liga", "KXTHAIL1GAME": "Thai League 1",
+    "KXSCOCUPGAME": "Scottish Cup", "KXECULPGAME": "Ecuador Liga Pro",
+    "KXAFCCLGAME": "AFC Champions League", "KXEGYPLGAME": "Egyptian Premier League",
+    "KXCONMEBOLSUDGAME": "CONMEBOL Sudamericana", "KXFROPLGAME": "Faroe Islands Premier League",
+    "KXUELBTTS": "Europa League", "KXEFLCUPGAME": "EFL Cup",
+}
+
+
+def display_league(q):
+    """The competition a quote belongs to, for grouping a record by league — None if unknown.
+
+    The board's own league name first, so a Kalshi row and an ESPN row for the same
+    competition land in the same group and are not split into two.
+    """
+    return (q.get("league") or quote_league(q)
+            or SERIES_LEAGUES.get(str(q.get("market_id") or "").split("-")[0]))
+
+
 NWS_CITY_NAMES = {"KXHIGHNY": "New York", "KXHIGHCHI": "Chicago", "KXHIGHMIA": "Miami",
                   "KXHIGHAUS": "Austin", "KXHIGHDEN": "Denver", "KXHIGHLAX": "Los Angeles",
                   "KXHIGHPHIL": "Philadelphia"}
