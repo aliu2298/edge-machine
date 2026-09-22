@@ -2328,8 +2328,12 @@ KALSHI_BINARY = {
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
     # Seven commodity ladders a day (WTI, Brent, gold, silver, copper, natural gas, retail
     # gasoline), each 20-65 strikes: take the soonest ladder of each, not 80 of the first.
+    # The 21 STATE gasoline series are dropped (2026-09-21). They move with the national
+    # average, only the retired far-tail rule ever used them, and at ~17 strikes each they
+    # filled the 400 cap before gold, silver, copper, natural gas or Brent could enter —
+    # and could one day have pushed out the national ladder the gas rule depends on.
     "commodities": dict(category="Commodities", freq=("daily",), lead_h=6, cap=400,
-                        ladders_per_series=1),
+                        ladders_per_series=1, drop_series=r"^KXAAAGASD[A-Z]{2}$"),
     "finance":     dict(category="Financials",  freq=("daily",), lead_h=6, cap=30),
 }
 
@@ -2399,6 +2403,8 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
     horizon = now + timedelta(days=horizon_days)
     earliest = now + timedelta(hours=cfg["lead_h"])
     series = cfg.get("series") or kalshi_series(cfg["category"], cfg["freq"])
+    if cfg.get("drop_series"):
+        series = [x for x in series if not re.match(cfg["drop_series"], x)]
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
         fetched = dict(zip(series, pool.map(_kalshi_open, series)))

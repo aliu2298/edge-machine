@@ -3449,6 +3449,12 @@ finally:
     S.CHALLENGERS = _saved_chal
 eq(len([q for q in _pd["quotes"] if q["source"] == "gas_nochange"]), 1,
    "a second strike the same day is not logged: one_per_day holds across runs")
+import re as _re2
+_drop = S.KALSHI_BINARY["commodities"]["drop_series"]
+ok(all(_re2.match(_drop, x) for x in ("KXAAAGASDTX", "KXAAAGASDCA", "KXAAAGASDMI")),
+   "the 21 state gasoline series are dropped from the commodity lane")
+ok(not any(_re2.match(_drop, x) for x in ("KXAAAGASD", "KXWTI", "KXGOLDD", "KXNATGASD")),
+   "while the national series the gas rule needs, and every other commodity, stay")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
