@@ -42,6 +42,7 @@ SPORTS = {
     "soccer":       "Soccer",
     "soccer_btts":  "Soccer · BTTS",
     "soccer_o15":   "Soccer · Over 1.5",
+    "soccer_o25":   "Soccer · Over 2.5",
     "soccer_team1": "Soccer · Team 1+",
     "soccer_team2": "Soccer · Team 2+",
     "soccer_u35":   "Soccer · Under 3.5",
@@ -68,7 +69,8 @@ SPORTS = {
 # international twin — Kalshi lists corners only for league and Champions League matches.
 SPORTS["soccer_corners"] = "Soccer · Corners"
 
-GOALS_SPORTS_ALL = tuple(b + x for b in ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
+GOALS_SPORTS_ALL = tuple(b + x for b in ("soccer_o15", "soccer_o25", "soccer_team1", "soccer_team2",
+                                         "soccer_u35", "soccer_p05")
                          for x in ("", "_cup", "_intl"))
 
 # Each soccer form market gets a Cups and an Internationals twin, listed right after it
@@ -391,6 +393,22 @@ SOURCES = {
              "happened 38.9%. Either that softness comes back when the market relists each "
              "October, in which case it is a seasonal edge worth having, or it does not and the "
              "question is closed. Every listed game is backed, so nothing here is selected."),
+    "o25_congestion": dict(
+        label="Congestion under 2.5 rule (one side's 2nd game in 4 days)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
+        baseline="population",
+        note="Pre-registered 2026-09-22, before it logged anything, with both thresholds taken "
+             "from the study rather than chosen here. Back under 2.5 (No on Kalshi's Over 2.5) "
+             "where one side is playing its second competitive match within four days and the "
+             "other has had six days or more, read from ESPN kickoffs strictly before this one. "
+             "The claim, from Stüttgen (Journal of Sports Economics, 2025) over five Bundesliga "
+             "seasons: a congested side attacks less, and defends better at home — the "
+             "defensive half replicated in Spain and England, the offensive half did not. Both "
+             "point the same way on a total. This has never been tested against a price, here "
+             "or in the literature; fixture calendars are public, so the honest prior is that "
+             "it is already in the number. Judged against backing the under on every listed "
+             "over-2.5 market, so it only counts if the rest gap tells the market something "
+             "its own price does not already hold."),
     "u35_low_scoring": dict(
         label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_u35", "soccer_u35_cup", "soccer_u35_intl"], baseline="population",
@@ -500,6 +518,22 @@ SOURCES = {
              "model or book covers. Soccer is de-vigged three-way. Coverage is partial: "
              "boxing and MMA well, soccer by league, cricket on majors and internationals, "
              "tennis only at the big tournaments — not ITF or Challenger."),
+    "pin_totals": dict(
+        label="Pinnacle's goal total v Kalshi's", kind="Sportsbook", connected=True,
+        site="pinnacle.com", sports=["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
+        note="Pre-registered 2026-09-22, before it logged anything. No forecast and no form: "
+             "Pinnacle's own over-2.5 price, de-vigged against its under, backed where it beats "
+             "the Kalshi ask by 3pp — the standing edge every price source here is held to. "
+             "Why: on 152 graded fixtures the book's de-vigged fair was accurate to within a "
+             "point on four of five markets and our own model was worse on all five, so the "
+             "remaining question is not who forecasts better but whether the young exchange "
+             "and the sharp book ever disagree. The same test on the match winner already "
+             "failed — 57 soccer quotes, not one reaching 3pp, which is why soccer is retired "
+             "from paid match-winner calls — and totals are a different market with a "
+             "different book. Only the 2.5 line, because it is the one both venues quote "
+             "without paying for alternates. Lines over an hour old are dropped, and a run "
+             "buys at most one league key and at most half its paced credits, so the older "
+             "match-winner lane keeps its share and the month's budget does not shorten."),
 }
 
 
@@ -2708,7 +2742,7 @@ def fetch_btts_form_l10(sport, universe=None, fixtures=None):
 # Kalshi lists no team totals for the Eredivisie or Primeira Liga (checked 2026-09-14); those
 # fixtures simply produce no team rows.
 NHL_SPORTS = ("nhl_rest", "nhl_pl")
-GOALS_BASE = ("soccer_o15", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
+GOALS_BASE = ("soccer_o15", "soccer_o25", "soccer_team1", "soccer_team2", "soccer_u35", "soccer_p05")
 GOALS_SPORTS = GOALS_BASE + tuple(b + x for x in ("_cup", "_intl") for b in GOALS_BASE)
 
 # The three rules found in the ESPN research of 2026-09-13 (530 matches, cutoffs fixed before
@@ -2795,8 +2829,13 @@ def fetch_kalshi_goals(horizon_days=4, fixtures=None, now=None, stats=None, even
             series = f"KX{frag}TOTAL"
             for ev in _kalshi_open_events(series, events_by_series):
                 hit = _espn_fixture_for(ev, up)
-                # soccer_u35 is the Over 3.5 market itself: side a = Yes (over), side b = No (under).
-                for line, sport in (("over 1.5", "soccer_o15" + sfx), ("over 3.5", "soccer_u35" + sfx)):
+                # soccer_u35 is the Over 3.5 market itself: side a = Yes (over), side b = No (under),
+                # and soccer_o25 is the Over 2.5 market the same way. Kalshi lists 0.5 through 5.5 on
+                # every TOTAL event; 2.5 is added (2026-09-22) because it is the line Pinnacle quotes
+                # as its main total, so it is the only one the two venues can be compared on without
+                # paying for alternate lines — and it is where a match is least decided in advance.
+                for line, sport in (("over 1.5", "soccer_o15" + sfx), ("over 2.5", "soccer_o25" + sfx),
+                                    ("over 3.5", "soccer_u35" + sfx)):
                     m = next((x for x in ev.get("markets") or []
                               if line in str(x.get("yes_sub_title") or "").lower()
                               and str(x.get("status", "")).lower() in ("active", "open")), None)
@@ -3810,6 +3849,62 @@ def fetch_p05_unbeaten(sport, universe=None, fixtures=None):
     return out
 
 
+# Fixture congestion (2026-09-22). Stüttgen, Journal of Sports Economics 2025: over five
+# Bundesliga seasons a side playing its second competitive match within four days shows
+# reduced offensive strength, and improved defensive strength at home; the defensive half
+# replicated in Spain and England, the offensive half did not. Both signs push the same way
+# on a match total — fewer goals — which makes it a rule that can be stated in one line and
+# cannot be tuned after the fact.
+#
+# It is here because it is the only situational signal on goals with a peer-reviewed effect
+# and NO published test against a price. Fixture calendars are public and the market has had
+# them for as long as anyone; the honest prior is that this is already in the number and the
+# rule returns the toll. That is worth finding out for the cost of counting days.
+#
+# Both thresholds are the paper's, not ours: "within four days" is its own definition, and the
+# rested side must have had six or more so the two sides are actually in different states
+# rather than a day apart. Cups and internationals count as competitive games, because a
+# midweek cup tie is exactly the congestion the paper is about.
+CONGEST_GAP_D = 4.0            # the congested side's previous match kicked off within this
+CONGEST_REST_D = 6.0           # the opponent's previous match was at least this long ago
+
+
+def days_rest(fixtures, team, before):
+    """Days from `team`'s last completed competitive kickoff to `before`, or None if unknown.
+
+    None matters: a side with no earlier match on file is not a rested side, it is a side we
+    cannot see, and the rule must decline rather than guess.
+    """
+    last = None
+    for f in fixtures:
+        if (not f.get("played") or not f.get("competitive", True) or not f.get("kickoff")
+                or team not in (f.get("home"), f.get("away"))):
+            continue
+        try:
+            ko = datetime.fromisoformat(str(f["kickoff"]).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if ko < before and (last is None or ko > last):
+            last = ko
+    return None if last is None else (before - last).total_seconds() / 86400
+
+
+def fetch_o25_congestion(sport, universe=None, fixtures=None):
+    """Back UNDER 2.5 (No on Kalshi's Over 2.5) where one side is playing its second
+    competitive match within four days and the other has had six days or more."""
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    out = []
+    for r, ko in _rule_rows(sport, universe):
+        h = days_rest(fixtures, r.get("espn_home"), ko)
+        a = days_rest(fixtures, r.get("espn_away"), ko)
+        if h is None or a is None:
+            continue
+        if ((h < CONGEST_GAP_D and a >= CONGEST_REST_D)
+                or (a < CONGEST_GAP_D and h >= CONGEST_REST_D)):
+            out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
 U35_WINDOW, U35_MIN, U35_MAX_SCORED = 10, 7, 1
 
 
@@ -4330,6 +4425,165 @@ def fetch_pinnacle(sport):
     return plan_pinnacle({sport: (UNIVERSE or {}).get(sport) or []}).get(sport, [])
 
 
+# ---------------------------------------------------------------------------
+# Pinnacle's goal total against Kalshi's (2026-09-22)
+# ---------------------------------------------------------------------------
+# The forecasting lane is finished: on 152 graded fixtures the book's de-vigged fair price
+# was accurate to within a point on four of five markets, and our own model was worse than
+# it on all five. What is NOT finished is the PRICE. Kalshi is a young exchange with a wide
+# book; Pinnacle is the sharpest there is. Where the two disagree on the same line, one of
+# them is wrong, and it costs nothing to find out which — no model, no forecast, no form.
+#
+# This is the same test the h2h lane already ran and LOST: 57 soccer match-winner quotes
+# against Kalshi never once reached the 3pp edge, so soccer is retired from paid h2h calls.
+# That result is about the match winner only. Totals are a different market with a different
+# book, and the comparison has never been made, here or (as far as the literature goes)
+# anywhere. If it comes back like the h2h one did, that is an answer too, and a cheap one.
+#
+# 2.5 ONLY, and that is not a preference. The Odds API returns one main total per bookmaker,
+# and Pinnacle's is almost always 2.5; every other line would need the alternate-totals
+# market, which costs another credit per call. So the two venues are compared where they
+# already quote the same number — which is also the line where a match is least decided in
+# advance, and therefore where a real disagreement has the most room to show.
+PIN_TOTALS_POINT = 2.5
+PIN_TOTALS_MAX_CALLS = 1       # per run, and only out of what the h2h pass leaves unspent
+
+
+def pinnacle_total_prob(event, point):
+    """De-vigged Pinnacle probability that the match goes OVER `point`, or None.
+
+    Only the exact line is read. A 2.5 quote is not evidence about a 2.75 market, and
+    converting between them needs a goal model — which is the thing this lane exists to
+    avoid relying on.
+    """
+    for bk in event.get("bookmakers") or []:
+        if bk.get("key") != "pinnacle":
+            continue
+        for mk in bk.get("markets") or []:
+            if mk.get("key") != "totals":
+                continue
+            over = under = None
+            for o in mk.get("outcomes") or []:
+                try:
+                    if float(o.get("point")) != float(point):
+                        continue
+                except (TypeError, ValueError):
+                    continue
+                if str(o.get("name")).lower() == "over":
+                    over = o.get("price")
+                elif str(o.get("name")).lower() == "under":
+                    under = o.get("price")
+            if not over or not under:
+                return None
+            try:
+                pa, _pb = devig(1 / float(over), 1 / float(under))
+            except (TypeError, ValueError, ZeroDivisionError):
+                return None
+            return pa
+    return None
+
+
+def plan_pinnacle_totals(universe, now=None):
+    """Pinnacle's main goal total for the fixtures Kalshi lists an over-2.5 market on.
+
+    Spends only what the h2h pass leaves of the run's paced allowance, and at most
+    PIN_TOTALS_MAX_CALLS, so adding this lane cannot shorten the month's credits. The event
+    list that picks WHICH key to buy is free and already cached by pinnacle_events().
+    Returns {sport: [{market_id, prob_a}]}.
+    """
+    now = now or datetime.now(timezone.utc)
+    out = {}
+    rows = [(sp, r) for sp in universe if sp.split("_cup")[0].split("_intl")[0] == "soccer_o25"
+            for r in (universe.get(sp) or []) if not r.get("untraded") and r.get("espn_home")]
+    if not rows or not _odds_key():
+        return out
+    events = pinnacle_events("soccer")               # free; also loads the credit balance
+    if not events:
+        return out
+    if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
+        _mark("pinnacle", False, f"credit reserve reached ({ODDS_USAGE['remaining']} left)")
+        return out
+    if "allowance" not in ODDS_USAGE:
+        ODDS_USAGE["allowance"] = odds_allowance(ODDS_USAGE.get("remaining"), now)
+    # Half the run's allowance at most, and never more than one call. This lane is fetched
+    # with the other challengers, which is BEFORE the match-winner pass plans its spending —
+    # so without a cap a new test would quietly take the credits an established lane was
+    # already using. On a one-credit run the integer halving gives this lane nothing and the
+    # older one keeps it, which is the right way round.
+    left = min(PIN_TOTALS_MAX_CALLS, ODDS_USAGE["allowance"] // 2)
+    if left <= 0:
+        return out
+
+    # Which Odds API key covers most of the fixtures Kalshi has priced. One row is matched to
+    # at most one event, so a key cannot be credited twice for the same fixture.
+    hits = {}
+    for sp, r in rows:
+        best = None
+        for ev in events:
+            score, _flip = pair_match(r["espn_home"], r["espn_away"], ev["a"], ev["b"], sport="soccer")
+            if score > 0 and (best is None or score > best[0]):
+                best = (score, ev)
+        if best:
+            hits.setdefault(best[1]["key"], []).append((sp, r, best[1]))
+    window = dict(commenceTimeFrom=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                  commenceTimeTo=(now + timedelta(days=ODDS_HORIZON_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    for key, want in sorted(hits.items(), key=lambda kv: -len(kv[1]))[:left]:
+        try:
+            odds, headers = _odds_get(f"/sports/{key}/odds",
+                                      dict(window, bookmakers="pinnacle", markets="totals",
+                                           oddsFormat="decimal", dateFormat="iso"))
+        except RuntimeError as e:
+            _mark("pinnacle", False, str(e))
+            continue
+        ODDS_USAGE["calls"] = ODDS_USAGE.get("calls", 0) + 1
+        ODDS_USAGE.setdefault("totals_on", []).append(dict(key=key, listed=len(want)))
+        _odds_note_usage(headers)
+        for sp, r, _ev in want:
+            for e2 in odds:
+                if pair_match(r["espn_home"], r["espn_away"], e2.get("home_team", ""),
+                              e2.get("away_team", ""), sport="soccer")[0] <= 0:
+                    continue
+                # A line Pinnacle has already moved on is not a disagreement with Kalshi,
+                # it is a stale number; the h2h lane drops those for the same reason.
+                _p, upd = pinnacle_line(e2)
+                stamp = next((m.get("last_update") for bk in e2.get("bookmakers") or []
+                              if bk.get("key") == "pinnacle"
+                              for m in bk.get("markets") or [] if m.get("key") == "totals"), None)
+                try:
+                    upd = datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) if stamp else upd
+                except ValueError:
+                    pass
+                if upd is not None and (now - upd).total_seconds() > PINNACLE_MAX_AGE_MIN * 60:
+                    ODDS_USAGE["stale"] = ODDS_USAGE.get("stale", 0) + 1
+                    break
+                prob = pinnacle_total_prob(e2, PIN_TOTALS_POINT)
+                if prob is not None:
+                    out.setdefault(sp, []).append(dict(market_id=r["market_id"], prob_a=prob))
+                break
+    return out
+
+
+_pin_totals_cache = {}
+
+
+def fetch_pin_totals(sport, universe=None):
+    """Pinnacle's over-2.5 probability on every Kalshi over-2.5 market it also prices.
+
+    Planned once per run across all three scopes, because one paid call covers a whole
+    league key and the league's cup ties may sit in another domain.
+    """
+    uni = universe if universe is not None else (UNIVERSE or {})
+    key = id(uni)
+    if key not in _pin_totals_cache:
+        _pin_totals_cache.clear()
+        try:
+            _pin_totals_cache[key] = plan_pinnacle_totals(uni)
+        except Exception as e:                      # a dead feed must not stop the run
+            print(f"  ! pinnacle totals plan failed: {type(e).__name__}: {str(e)[:70]}")
+            _pin_totals_cache[key] = {}
+    return _pin_totals_cache[key].get(sport, [])
+
+
 def _odds_keys(sport):
     """Active, non-outright Odds API sport keys for one of our sports (free /sports)."""
     global _odds_sports
@@ -4498,6 +4752,8 @@ CHALLENGERS = {
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,
+    "o25_congestion": fetch_o25_congestion,
+    "pin_totals": fetch_pin_totals,
     "p05_unbeaten": fetch_p05_unbeaten,
     "cmd_tail": fetch_cmd_tail,
     "gas_nochange": fetch_gas_nochange,

@@ -2329,6 +2329,7 @@ _gevs = {
     "KXEPLTOTAL": [{"event_ticker": "KXEPLTOTAL-26SEP15GOALEA", "title": "Goal FC vs Leak FC: Total Goals",
                     "markets": [_gm("KXEPLTOTAL-26SEP15GOALEA-1", "Over 0.5 goals scored", 0.95, 0.94),
                                 _gm("KXEPLTOTAL-26SEP15GOALEA-2", "Over 1.5 goals scored", 0.84, 0.83),
+                                _gm("KXEPLTOTAL-26SEP15GOALEA-3", "Over 2.5 goals scored", 0.58, 0.57),
                                 _gm("KXEPLTOTAL-26SEP15GOALEA-4", "Over 3.5 goals scored", 0.33, 0.32)]},
                    {"event_ticker": "KXEPLTOTAL-26SEP16DULSIE", "title": "Dull FC vs Sieve FC: Total Goals",
                     "markets": [_gm("KXEPLTOTAL-26SEP16DULSIE-2", "Over 1.5 goals scored", 0.70, 0.69)]}],
@@ -2342,10 +2343,11 @@ _gst = {}
 _grows = S.fetch_kalshi_goals(fixtures=_gall, now=_g0, events_by_series=_gevs, stats=_gst)
 eq({k: sorted(r["market_id"] for r in v) for k, v in _grows.items() if k in S.GOALS_BASE},
    {"soccer_o15": ["KXEPLTOTAL-26SEP15GOALEA-2", "KXEPLTOTAL-26SEP16DULSIE-2"],
+    "soccer_o25": ["KXEPLTOTAL-26SEP15GOALEA-3"],
     "soccer_team1": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1", "KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"],
     "soccer_team2": ["KXEPLTEAMTOTAL-26SEP15GOALEA-GOA2"],
     "soccer_u35": ["KXEPLTOTAL-26SEP15GOALEA-4"], "soccer_p05": []},
-   "over 1.5 from the totals ladder; over 0.5 / 1.5 per side from team totals; other lines ignored")
+   "over 1.5 and over 2.5 from the totals ladder; over 0.5 / 1.5 per side from team totals; other lines ignored")
 _t1 = {r["market_id"]: r for r in _grows["soccer_team1"]}
 eq((_t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["team"], _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["opponent"],
     _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["league"], _t1["KXEPLTEAMTOTAL-26SEP15GOALEA-LEA1"]["start_source"]),
@@ -3494,6 +3496,114 @@ ok("cricket_consensus" in S.SOURCES and "cricket_consensus" not in S.CHALLENGERS
    "the consensus row reads the others' opinions; it has no feed of its own")
 ok(any(r["name"] == "cricket_consensus" for r in RANKB.pair_list(T.load(), T.load_stages())),
    "and it is on the page from the day it is wired")
+
+_KO = datetime(2026, 9, 20, 18, 0, tzinfo=timezone.utc)
+
+
+def _o25row(mid="m1", home="A", away="B"):
+    return dict(market_id=mid, sport="soccer_o25", start=_KO.isoformat(), espn_home=home,
+                espn_away=away, side_a="Yes", side_b="No")
+
+
+print("\npinnacle's goal total against kalshi's")
+
+
+def _pin_ev(home="Arsenal", away="Chelsea", over=1.90, under=1.95, point=2.5, upd=None):
+    mk = dict(key="totals", last_update=upd,
+              outcomes=[dict(name="Over", price=over, point=point),
+                        dict(name="Under", price=under, point=point)])
+    return dict(home_team=home, away_team=away,
+                bookmakers=[dict(key="pinnacle", last_update=upd, markets=[mk])])
+
+
+_pp = S.pinnacle_total_prob(_pin_ev(over=1.90, under=1.95), 2.5)
+ok(_pp is not None and abs(_pp - 0.5065) < 0.001,
+   f"the over price is de-vigged against the under, not read raw (got {_pp:.4f}, want ~0.5065)")
+eq(S.pinnacle_total_prob(_pin_ev(point=3.0), 2.5), None,
+   "a 3.0 line says nothing about a 2.5 market: converting between them needs the model this lane avoids")
+eq(S.pinnacle_total_prob(dict(bookmakers=[dict(key="draftkings", markets=[])]), 2.5), None,
+   "only pinnacle is read, whoever else is in the response")
+_half = _pin_ev()
+_half["bookmakers"][0]["markets"][0]["outcomes"] = [dict(name="Over", price=1.9, point=2.5)]
+eq(S.pinnacle_total_prob(_half, 2.5), None, "one side of a two-way market cannot be de-vigged")
+ok(S.PIN_TOTALS_POINT == 2.5 and S.SOURCES["pin_totals"]["sports"] == ["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
+   "the lane is wired to the over-2.5 market only")
+ok("soccer_o25" in S.SOURCES["goals_market"]["sports"],
+   "and the over-2.5 market has its own never-betting baseline, so the rule on it has a population")
+eq(S.SPORTS["soccer_o25"], "Soccer · Over 2.5", "the market is named on the page")
+
+# The credit guard, exercised with the network stubbed out: this lane is fetched before the
+# match-winner pass plans its spending, so what it may take is the whole safety story.
+_pin_calls = []
+
+
+def _pin_stub(allowance, remaining=200, upd=None, point=2.5):
+    _pin_calls.clear()
+    S.ODDS_USAGE.clear()
+    S.ODDS_USAGE.update(allowance=allowance, remaining=remaining)
+    S._pin_totals_cache.clear()
+    real = (S._odds_key, S.pinnacle_events, S._odds_get)
+    S._odds_key = lambda: "stub"
+    S.pinnacle_events = lambda sport: [dict(a="Arsenal", b="Chelsea", start=_KO, key="soccer_epl")]
+
+    def _get(path, params):
+        _pin_calls.append(path)
+        return [dict(home_team="Arsenal", away_team="Chelsea",
+                     bookmakers=[dict(key="pinnacle", last_update=upd, markets=[dict(
+                         key="totals", last_update=upd,
+                         outcomes=[dict(name="Over", price=1.90, point=point),
+                                   dict(name="Under", price=1.95, point=point)])])])], {}
+    S._odds_get = _get
+    try:
+        uni = {"soccer_o25": [_o25row(home="Arsenal", away="Chelsea")]}
+        return S.plan_pinnacle_totals(uni, now=_KO)
+    finally:
+        S._odds_key, S.pinnacle_events, S._odds_get = real
+
+
+eq(_pin_stub(allowance=1), {}, "on a one-credit run this lane takes nothing: the older match-winner lane keeps it")
+eq(len(_pin_calls), 0, "and makes no paid call at all")
+_got = _pin_stub(allowance=2)
+eq(len(_pin_calls), 1, "on a two-credit run it buys exactly one league key, never more")
+eq([q["market_id"] for q in _got.get("soccer_o25", [])], ["m1"], "and prices the Kalshi market it matched")
+ok(abs(_got["soccer_o25"][0]["prob_a"] - 0.5065) < 0.001, "at the de-vigged over probability")
+eq(_pin_stub(allowance=2, point=3.0), {}, "a Pinnacle line on another total is not a quote on this one")
+eq(_pin_stub(allowance=2, upd="2026-09-20T12:00:00Z"), {},
+   "a line Pinnacle set six hours ago is stale, not a disagreement")
+eq(_pin_stub(allowance=2, remaining=5), {}, "and nothing is bought once the credit reserve is reached")
+
+print("\nthe congestion under-2.5 rule")
+
+
+def _fx(team, days_ago, other="Someone", played=True, competitive=True):
+    ko = (datetime(2026, 9, 20, 18, 0, tzinfo=timezone.utc) - timedelta(days=days_ago))
+    return dict(home=team, away=other, played=played, competitive=competitive,
+                home_goals=1, away_goals=1, kickoff=ko.isoformat().replace("+00:00", "Z"))
+
+
+eq(round(S.days_rest([_fx("A", 3)], "A", _KO), 2), 3.0, "rest is counted from the last competitive kickoff")
+eq(S.days_rest([_fx("A", 3)], "B", _KO), None, "a side with no earlier match on file is unknown, not rested")
+eq(S.days_rest([_fx("A", 3, played=False)], "A", _KO), None, "a fixture that has not been played is not rest")
+eq(S.days_rest([_fx("A", 3, competitive=False)], "A", _KO), None, "nor is a friendly")
+eq(round(S.days_rest([_fx("A", 9), _fx("A", 2)], "A", _KO), 2), 2.0, "the MOST recent match sets the rest")
+
+_uni = {"soccer_o25": [_o25row()]}
+_fix = [_fx("A", 2), _fx("B", 7)]
+eq(S.fetch_o25_congestion("soccer_o25", _uni, _fix), [dict(market_id="m1", pick="b")],
+   "one side on 2 days and the other on 7: back the under")
+eq(S.fetch_o25_congestion("soccer_o25", _uni, [_fx("A", 7), _fx("B", 2)]),
+   [dict(market_id="m1", pick="b")], "and the same the other way round — the rule is about the GAP, not who is home")
+eq(S.fetch_o25_congestion("soccer_o25", _uni, [_fx("A", 2), _fx("B", 3)]), [],
+   "two congested sides is not the contrast the study is about")
+eq(S.fetch_o25_congestion("soccer_o25", _uni, [_fx("A", 2), _fx("B", 5)]), [],
+   "five days is not six: the threshold is the paper's and is not bent to catch one more match")
+eq(S.fetch_o25_congestion("soccer_o25", _uni, [_fx("A", 4), _fx("B", 9)]), [],
+   "four days is not WITHIN four days")
+eq(S.fetch_o25_congestion("soccer_o25", _uni, [_fx("A", 2)]), [],
+   "and a side whose last match is unknown is declined, never assumed rested")
+ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
+   "judged against backing the under on every listed over-2.5 market")
+
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
