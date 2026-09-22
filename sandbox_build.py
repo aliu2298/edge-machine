@@ -555,7 +555,9 @@ def pair_list(d, st, include_retired=True):
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
             # reviewed before its first qualifying match; other pairs appear once they bet.
-            if group is None and not _scope(sport):
+            # A consensus row is listed from the day it is wired too: it only ever bets where
+            # two sources agree, so it can sit empty for days and should be visible meanwhile.
+            if group is None and not _scope(sport) and name not in T.CONSENSUS:
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Waiting for results") and hides the record it was removed on.

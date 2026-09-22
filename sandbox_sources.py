@@ -150,6 +150,19 @@ SOURCES = {
              "no edge filter and gets no Brier column — a pick cannot be calibrated. MLB was "
              "retired 2026-09-18 (8 won v 9.4 priced on 16, z -0.73) and RE-OPENED 2026-09-21 "
              "to measure its fade forward (+8.0% on 24, z +0.49). Sandbox only."),
+    "cricket_consensus": dict(
+        label="Cricket consensus (Oddspedia and Polymarket agree)", kind="Rule", connected=True,
+        site="edge-machine", sports=["cricket"],
+        note="Pre-registered 2026-09-22, before it logged anything. Back a cricket match only "
+             "where the two cricket sources with records — Oddspedia's community tips and "
+             "Polymarket's international price — both back the same side, at the going price "
+             "the moment they agree. Each source's side is its logged bet on that market, or this "
+             "run's opinion read the way it would bet: Oddspedia's pick as it stands, Polymarket's "
+             "price only where it clears the 3pp edge. Context, because it is thin: on the three "
+             "matches both have bet so far they agreed twice and both won — but those two were "
+             "the 0.07 and 0.11 longshots that make up nearly all of both records — and on the "
+             "third they disagreed and Oddspedia was right. So this measures whether agreement "
+             "is worth more than either source alone, from here on."),
     "oddspedia": dict(
         label="Oddspedia community tips", kind="Tipster site", connected=True,
         site="oddspedia.com", sports=["cricket"],
@@ -223,6 +236,18 @@ SOURCES = {
              "median 1.06% over the product of the legs, far inside the 13.1% the edge could "
              "absorb. The price here is that product plus the measured markup, not a live "
              "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. Each leg sits in one basket of each size and baskets share no match, so each is an independent result, judged per basket like the single-leg rule. Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.'),
+    "tennis_combo4": dict(
+        label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
+        note="Pre-registered 2026-09-22, before it logged anything. The same construction as the "
+             "2- and 3-leg rules at four legs: each day's favourite-band legs, in start-time order, "
+             "cut into consecutive baskets of four, each bought as ONE combo contract that pays "
+             "only if all four win. At m = 1.042 a leg, four legs would run at about 1.18 over the "
+             "price — and about as far below it if that edge is really zero. Kalshi's RFQ was "
+             "measured first: 12 real baskets, 12-18 market makers each, a median 0.66% over the "
+             "product of the legs. The price logged is that product plus the measured markup. "
+             "Each leg sits in one 4-leg basket and baskets share no match, so each is an "
+             "independent result, judged per basket."),
     "tt_band_55_60": dict(
         label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=False, retired='2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.',
         site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
@@ -2872,8 +2897,11 @@ def band_picks(sport, band, universe=None):
 # markup: a modelled cost, not a live quote, because the RFQ needs credentials that must
 # not reach a CI runner. It is re-measurable at any time by the same method, and if this
 # lane earns its keep the upgrade is to price it on the VPS the way the trading lane runs.
-COMBO_LEGS = (2, 3)
-COMBO_MARKUP = {2: 0.0084, 3: 0.0106}     # measured, Kalshi RFQ, 2026-09-21, 20 baskets
+COMBO_LEGS = (2, 3, 4)
+# Measured, Kalshi RFQ: 2 and 3 legs on 2026-09-21 (20 baskets), 4 legs on 2026-09-22 (12
+# baskets, 12-18 makers each). The 4-leg figure sitting below the 3-leg one is day-to-day
+# noise across different legs, not a cheaper wrapper; each size uses its own measurement.
+COMBO_MARKUP = {2: 0.0084, 3: 0.0106, 4: 0.0066}
 
 
 def tennis_combo_rows(universe=None, now=None, used=None):
@@ -2950,6 +2978,13 @@ def fetch_tennis_combo3(sport, universe=None):
     return [dict(market_id=r["market_id"], pick="a")
             for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
             if str(r["market_id"]).startswith("combo3:")]
+
+
+def fetch_tennis_combo4(sport, universe=None):
+    """Buy the day's four-leg baskets."""
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if str(r["market_id"]).startswith("combo4:")]
 
 
 def resolve_combo(legs):
@@ -4421,6 +4456,7 @@ CHALLENGERS = {
     "tennis_fav_band": fetch_tennis_fav_band,
     "tennis_combo2": fetch_tennis_combo2,
     "tennis_combo3": fetch_tennis_combo3,
+    "tennis_combo4": fetch_tennis_combo4,
     "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
     "tt_band_55_60": fetch_tt_band,
     "mlb_fade_streak": fetch_mlb_fade_streak,

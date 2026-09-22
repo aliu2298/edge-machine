@@ -369,6 +369,46 @@ def match_quotes(universe, quotes, day_slack=1):
     return out
 
 
+# CONSENSUS PAIRS (2026-09-22). A pair that backs a side only where two named sources both
+# back it on the same market. Each source's side comes from a bet it has already logged there
+# or from this run's opinion, read the way that source would bet it — a tipster's pick as it
+# stands, a probability only where it clears EDGE_MIN against the price. Logged, like a
+# tipster, at the going price the moment the two agree.
+CONSENSUS = {"cricket_consensus": dict(sport="cricket", sources=("oddspedia", "polymarket"))}
+
+
+def backed_side(opinion, row):
+    """The side an opinion would bet on this row, or None."""
+    kind, value = opinion
+    if kind == "pick":
+        return value
+    if row.get("price_draw") is not None:
+        return "a" if value - row["price_a"] >= EDGE_MIN else None
+    pick, edge, _price = decide(value, row["price_a"], row["price_b"])
+    return pick if pick and edge >= EDGE_MIN else None
+
+
+def consensus_probs(name, rows, source_probs, prior):
+    """{market_id: ("pick", side)} where every source of consensus pair `name` backs one side."""
+    cfg = CONSENSUS[name]
+    by_id = {r["market_id"]: r for r in rows}
+    sides = {}
+    for src in cfg["sources"]:
+        mine = {}
+        for q in prior.get((src, cfg["sport"]), ()):
+            if q.get("bet") and q.get("pick"):
+                mine.setdefault(q["market_id"], q["pick"])
+        for mid, opinion in (source_probs.get(src) or {}).items():
+            if mid in by_id and mid not in mine:
+                side = backed_side(opinion, by_id[mid])
+                if side:
+                    mine[mid] = side
+        sides[src] = mine
+    first, *rest = cfg["sources"]
+    return {mid: ("pick", side) for mid, side in sides[first].items()
+            if mid in by_id and all(sides[o].get(mid) == side for o in rest)}
+
+
 def decide(prob_a, price_a, price_b):
     """Which side does this probability back, and by how much?
 
@@ -722,6 +762,13 @@ def publish(d, universe, coverage, verbose=True):
         print(f"  pinnacle credits: {u.get('calls', 0)}/{u.get('allowance', '?')} paid calls, "
               f"{u.get('remaining', '?')} left, {u.get('stale', 0)} stale lines skipped "
               f"({time.time() - t0:.0f}s)")
+
+    # Consensus pairs, once every source has spoken for this run and before anything is logged.
+    for name, cfg in CONSENSUS.items():
+        if cfg["sport"] in per_sport and (S.SOURCES.get(name) or {}).get("connected"):
+            by_id, source_probs = per_sport[cfg["sport"]]
+            source_probs[name] = consensus_probs(name, list(by_id.values()), source_probs, prior)
+            coverage.setdefault(cfg["sport"], {})[name] = len(source_probs[name])
 
     for sport, (by_id, source_probs) in per_sport.items():
         for name, probs in source_probs.items():

@@ -3465,6 +3465,33 @@ ok(all(_re2.match(_drop, x) for x in ("KXAAAGASDTX", "KXAAAGASDCA", "KXAAAGASDMI
 ok(not any(_re2.match(_drop, x) for x in ("KXAAAGASD", "KXWTI", "KXGOLDD", "KXNATGASD")),
    "while the national series the gas rule needs, and every other commodity, stay")
 
+print("\nfour-leg combos and the cricket consensus row")
+_d4 = [r for r in S.tennis_combo_rows(_day) if r["market_id"].startswith("combo4:")]
+eq(len(_d4), 1, "seven legs make one 4-leg basket, the three left over wait for more")
+eq([l["market_id"] for l in _d4[0]["legs"]], ["D0", "D1", "D2", "D3"], "cut in start order like the others")
+close(_d4[0]["price_a"], round(0.80 ** 4 * (1 + S.COMBO_MARKUP[4]), 4),
+      "priced at the product of the legs plus the MEASURED 4-leg markup")
+eq([q["market_id"] for q in S.fetch_tennis_combo4("tennis_combo", {"tennis_combo": _d4})],
+   [_d4[0]["market_id"]], "the 4-leg source buys 4-leg baskets")
+ok("tennis_combo4" in S.CHALLENGERS and S.COMBO_LEGS == (2, 3, 4), "wired alongside the 2- and 3-leg lanes")
+
+_cr = {"m1": dict(market_id="m1", price_a=0.40, price_b=0.62, price_draw=None),
+       "m2": dict(market_id="m2", price_a=0.40, price_b=0.62, price_draw=None),
+       "m3": dict(market_id="m3", price_a=0.40, price_b=0.62, price_draw=None)}
+_sp = {"oddspedia": {"m1": ("pick", "b"), "m2": ("pick", "a"), "m3": ("pick", "a")},
+       "polymarket": {"m1": ("prob", 0.30), "m2": ("prob", 0.30), "m3": ("prob", 0.41)}}
+_cc = T.consensus_probs("cricket_consensus", list(_cr.values()), _sp, {})
+eq(_cc, {"m1": ("pick", "b")}, "backed only where both sources point at the same side")
+ok("m2" not in _cc, "a tip on one side and a price on the other is no consensus")
+ok("m3" not in _cc, "and a price that does not clear the 3pp edge is no opinion to agree with")
+_prior = {("polymarket", "cricket"): [dict(market_id="m2", pick="a", bet=True)]}
+eq(T.consensus_probs("cricket_consensus", list(_cr.values()), _sp, _prior).get("m2"), ("pick", "a"),
+   "a source's bet already logged on the market counts as its side")
+ok("cricket_consensus" in S.SOURCES and "cricket_consensus" not in S.CHALLENGERS,
+   "the consensus row reads the others' opinions; it has no feed of its own")
+ok(any(r["name"] == "cricket_consensus" for r in RANKB.pair_list(T.load(), T.load_stages())),
+   "and it is on the page from the day it is wired")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

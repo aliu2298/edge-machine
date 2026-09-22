@@ -130,6 +130,29 @@ try:
 finally:
     _T.PAIR_OVERRIDES.clear(); _T.PAIR_OVERRIDES.update(_saved_ov)
 
+print("\ncombos: a basket must agree with its own legs")
+
+
+def _leg_q(mid, res):
+    return dict(id=f"t:{mid}", source="tennis_fav_band", sport="tennis", market_id=mid, result=res,
+                bet=False, status="graded")
+
+
+def _basket(i, legs, result, status):
+    return dict(id=f"c{i}", source="tennis_combo2", sport="tennis_combo", market_id=f"combo2:2026-09-22:{i}",
+                legs=[dict(market_id=m, pick="a") for m in legs], result=result, status=status, bet=False)
+
+
+_ok = [_leg_q("L1", "a"), _leg_q("L2", "a"), _leg_q("L3", "b"), _leg_q("L4", "a")]
+_rc = A.Report(); A.check_combos({"quotes": _ok + [_basket(1, ["L1", "L2"], "a", "won"),
+                                                   _basket(2, ["L3", "L4"], "b", "lost")]}, _rc)
+ok(not _rc.errors, "baskets settled as their legs say pass")
+_rc = A.Report(); A.check_combos({"quotes": _ok + [_basket(1, ["L1", "L3"], "a", "won")]}, _rc)
+ok(errs(_rc, "combos"), "a basket marked won with a losing leg is caught")
+_rc = A.Report(); A.check_combos({"quotes": _ok + [_basket(1, ["L1", "L2"], "a", "won"),
+                                                   _basket(2, ["L2", "L4"], "a", "won")]}, _rc)
+ok(errs(_rc, "combos"), "a leg sitting in two baskets of one size is caught: they are not independent")
+
 print("\nsettlement: the stored result must be the venue's")
 _saved_k = S.resolve_kalshi
 try:

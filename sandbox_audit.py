@@ -235,14 +235,33 @@ def check_production(d, st, rep):
 
 
 def check_combos(d, rep):
-    qs = [q for q in d["quotes"] if q.get("sport") == "tennis_combo"]
+    """Every basket: the legs its name says, no leg shared with another basket of its size, and
+    a settled result that matches its legs' own recorded results in the ledger."""
+    qs = [q for q in T.all_bets(d) if q.get("sport") == "tennis_combo"]
+    leg_res = {}
+    for q in T.all_bets(d):
+        if q.get("sport") == "tennis" and q.get("result") in ("a", "b", "void"):
+            leg_res.setdefault(q["market_id"], q["result"])
+    used, checked = collections.Counter(), 0
     for q in qs:
         legs = q.get("legs") or []
         want = int(q["market_id"][5]) if str(q["market_id"]).startswith("combo") else None
         if not legs or want != len(legs):
             rep.error("combos", f"{q['id']}: named for {want} legs, holds {len(legs)}")
+            continue
+        used.update((len(legs), l["market_id"]) for l in legs)
+        rs = [leg_res.get(l["market_id"]) for l in legs]
+        if q.get("status") in ("won", "lost", "void") and None not in rs:
+            expect = "void" if "void" in rs else ("a" if all(r == l["pick"] for r, l in zip(rs, legs)) else "b")
+            if q.get("result") != expect:
+                rep.error("combos", f"{q['id']}: settled {q.get('result')}, but its legs say {expect}")
+            checked += 1
+    for (n, leg), k in used.items():
+        if k > 1:
+            rep.error("combos", f"leg {leg} sits in {k} {n}-leg baskets: they are not independent")
     if not any(c == "combos" for c, _ in rep.errors):
-        rep.ok("combos", f"{len(qs)} baskets hold the legs their names say")
+        rep.ok("combos", f"{len(qs)} baskets hold their legs, share none, and the {checked} settled "
+                         f"ones match their legs' own results")
 
 
 def check_settlement(d, rep, sample):
