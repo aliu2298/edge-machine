@@ -312,7 +312,12 @@ SOURCES = {
              "efficient?' It was: backing whichever side the market favoured won 87.7% "
              "against an 87.5% price over 61 days."),
     "cmd_tail": dict(
-        label="Commodity far-tail rule (priced 0.97-0.995)", kind="Rule", connected=True,
+        label="Commodity far-tail rule (priced 0.97-0.995)", kind="Rule", connected=False,
+        retired="2026-09-21: replaced by the AAA gasoline no-change rule. It was ahead of the "
+                "price (+1.9% after fees) but by design backed the near-certain side of every "
+                "strike on every ladder: 200-360 bets a day, 442 across 3 market-days, each "
+                "risking about 98c to make 2c. Chasing pennies at that volume is not a strategy "
+                "worth reading, however long it runs.",
         site="edge-machine", sports=["commodities"], baseline="population",
         note="Pre-registered 2026-09-18. Back the near-certain side of a daily commodity "
              "strike — WTI, Brent, gold, silver, copper, natural gas or AAA retail gasoline — "
@@ -323,6 +328,21 @@ SOURCES = {
              "specifically, not 'back favourites'. It is SELLING TAIL RISK for a penny: five "
              "of 778 bets lost and each cost about sixty wins, in two months that held no "
              "commodity shock. Logged and measured in the Sandbox only."),
+    "gas_nochange": dict(
+        label="AAA gasoline no-change rule (one bet a day)", kind="Rule", connected=True,
+        site="edge-machine", sports=["commodities"], baseline="population", one_per_day=True,
+        note="Pre-registered 2026-09-21, before it logged anything. On Kalshi's national AAA "
+             "gasoline ladder, project today's figure at yesterday's — no change — and back the "
+             "one strike that projection beats by 5c after fees, at an ask of 0.25-0.80, in the "
+             "last hours before the ladder closes. At most one bet a day. How it was found is "
+             "stated because it decides how far to trust it: AAA gas trends (same direction as "
+             "the day before on 78% of 68 days), so a rule betting the trend CONTINUES was "
+             "pre-registered first, and it failed — -18.0% following on 39 bets, +2.4% fading: "
+             "the market already prices the trend. This variant, projecting no change, ran "
+             "+15.0% following and -21.3% fading on 34 (z +1.00), which would mean the market "
+             "over-extrapolates the trend. It was found by trying a second version, so that is "
+             "in-sample and proves nothing; the forward record decides whether to follow it, "
+             "fade it, or neither. Replaces the far-tail rule."),
     "nhl_rest_edge": dict(
         label="NHL rest rule (rested home team v a visitor on a back-to-back)", kind="Rule",
         connected=True, site="edge-machine", sports=["nhl_rest"], baseline="favourite_population",
@@ -3345,6 +3365,131 @@ def fetch_nhl_dog_pl(sport, universe=None):
 CMD_BAND = (0.97, 0.995)
 
 
+# ---------------------------------------------------------------------------
+# AAA gasoline no-change rule — pre-registered 2026-09-21
+# ---------------------------------------------------------------------------
+# Replaces the far-tail rule, which backed the near-certain side of every strike on every
+# ladder: 200-360 bets a day for a penny each. This makes at most ONE bet a day, at prices
+# where a win pays 25% or more.
+#
+# How it was found, stated in full because it decides how far to trust it. The national AAA
+# average moves slowly and keeps moving the same way: over 68 days it went the same direction
+# as the day before 78% of the time (z +4.5), the only one of seven daily commodities to do so.
+# A rule was pre-registered to bet that the trend CONTINUES, and it failed its backtest:
+# -18.0% following on 39 bets (-12.5% and -24.4% in the two halves), +2.4% fading. The market
+# already prices the trend, and better — pump prices follow wholesale gasoline with a lag, and
+# a model that only reads gas's own past cannot see that.
+#
+# This rule is the variant that projects NO change: tomorrow at yesterday's figure. It ran
+# +15.0% following and -21.3% fading on 34 bets (z +1.00) — the two directions disagreeing
+# cleanly, the shape a real signal has. The claim is that the market over-extrapolates the gas
+# trend. But it was found by trying a second version after the first failed, so it is an
+# in-sample result, not evidence. The forward record is the test.
+#
+# The rule is the backtested variant exactly: the projection is yesterday's figure; sigma is
+# the residual sd of today's change on yesterday's, fitted on days strictly before; the
+# chance of a strike is Phi((projection - strike) / sigma); the bet is the side beating its
+# ask by 5c after the Kalshi fee, asks 0.25-0.80, on a two-sided book; one strike a day, the
+# largest edge; and only in the last hours before the ladder closes, which is when the
+# backtest priced it (02:00 UTC, the ladder closing 03:59) and when the book is deepest.
+GAS_SERIES = "KXAAAGASD"          # the national average; the 21 state series move with it
+GAS_EDGE = 0.05
+GAS_BAND = (0.25, 0.80)
+GAS_MIN_HIST = 14
+GAS_WINDOW_H = 4
+_gas_hist = None
+
+
+def gas_history(refresh=False):
+    """[(date, value)] of the national AAA average from Kalshi's settled daily ladders.
+
+    Sorted by DATE. Sorted by event ticker it reads AUG before JUL, which is how the first
+    backtest of this rule fitted itself on future days and printed a fake +33.6%.
+    """
+    global _gas_hist
+    if _gas_hist is not None and not refresh:
+        return _gas_hist
+    out, cur = {}, None
+    for _ in range(3):
+        q = {"series_ticker": GAS_SERIES, "with_nested_markets": "true", "limit": 200}
+        if cur:
+            q["cursor"] = cur
+        try:
+            d = _get("https://api.elections.kalshi.com/trade-api/v2/events?" + urllib.parse.urlencode(q),
+                     tries=2, timeout=30)
+        except RuntimeError:
+            break
+        for e in (d or {}).get("events") or []:
+            ms = e.get("markets") or []
+            vals = {m.get("expiration_value") for m in ms if m.get("expiration_value") not in (None, "")}
+            if ms and len(vals) == 1:
+                try:
+                    out[max(str(m.get("close_time") or "") for m in ms)[:10]] = float(vals.pop())
+                except ValueError:
+                    pass
+        cur = (d or {}).get("cursor")
+        if not cur:
+            break
+    _gas_hist = sorted(out.items())
+    return _gas_hist
+
+
+def _gas_sigma(vals):
+    """Residual sd of today's change on yesterday's (slope through the origin), or None."""
+    d = [vals[i] - vals[i - 1] for i in range(1, len(vals))]
+    pairs = [(d[i - 1], d[i]) for i in range(1, len(d))]
+    if len(pairs) < GAS_MIN_HIST:
+        return None
+    sxx = sum(a * a for a, _ in pairs)
+    lam = sum(a * b for a, b in pairs) / sxx if sxx else 0.0
+    res = [b - lam * a for a, b in pairs]
+    return math.sqrt(sum(r * r for r in res) / (len(res) - 1))
+
+
+def fetch_gas_nochange(sport, universe=None, history=None, now=None):
+    """At most one bet a day on the national AAA ladder: the strike yesterday's figure misprices most."""
+    now = now or datetime.now(timezone.utc)
+    rows = [r for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if r.get("series") == GAS_SERIES and (r.get("market") or {}).get("strike_type") == "greater"]
+    if not rows:
+        return []
+    hist = sorted(gas_history() if history is None else history)   # by date, whatever it arrived as
+    by_day, out = {}, []
+    for r in rows:
+        by_day.setdefault(r["date"], []).append(r)
+    for day, ladder in sorted(by_day.items()):
+        try:
+            close = datetime.fromisoformat(str(ladder[0]["market"]["close_time"]).replace("Z", "+00:00"))
+            prev = (datetime.fromisoformat(day) - timedelta(days=1)).strftime("%Y-%m-%d")
+        except (KeyError, ValueError, TypeError):
+            continue
+        if not (close - timedelta(hours=GAS_WINDOW_H) <= now < close):
+            continue                            # only in the last hours before the ladder closes
+        prior = [(dt, v) for dt, v in hist if dt < day]
+        if not prior or prior[-1][0] != prev:
+            continue                            # yesterday's figure is not out: never guess it
+        sd = _gas_sigma([v for _dt, v in prior])
+        if not sd:
+            continue
+        proj, best = prior[-1][1], None
+        for r in ladder:
+            try:
+                p_yes = 0.5 * (1 + math.erf((proj - float(r["market"]["floor_strike"])) / sd / math.sqrt(2)))
+            except (KeyError, TypeError, ValueError):
+                continue
+            for side, p_mod, ask in (("a", p_yes, r.get("price_a")), ("b", 1 - p_yes, r.get("price_b"))):
+                if ask is None or not (r.get("tradeable") or {}).get(side):
+                    continue
+                if not GAS_BAND[0] <= ask <= GAS_BAND[1]:
+                    continue
+                edge = p_mod - ask - 0.07 * ask * (1 - ask)
+                if edge >= GAS_EDGE and (best is None or edge > best[0]):
+                    best = (edge, r["market_id"], side)
+        if best:
+            out.append(dict(market_id=best[1], pick=best[2]))
+    return out
+
+
 def fetch_cmd_tail(sport, universe=None):
     """Back the near-certain side of a daily commodity strike, priced in CMD_BAND."""
     lo, hi = CMD_BAND
@@ -4280,6 +4425,7 @@ CHALLENGERS = {
     "u35_low_scoring": fetch_u35_low_scoring,
     "p05_unbeaten": fetch_p05_unbeaten,
     "cmd_tail": fetch_cmd_tail,
+    "gas_nochange": fetch_gas_nochange,
     "cmd_market": fetch_cmd_market,
     "nhl_rest_edge": fetch_nhl_rest_edge,
     "nhl_dog_pl": fetch_nhl_dog_pl,

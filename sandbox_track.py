@@ -728,6 +728,11 @@ def publish(d, universe, coverage, verbose=True):
                              market_id=mid, venue=r.get("venue", "polymarket"))
                 if any(_same_contest_quote(p, probe) for p in prior.get((name, sport), ())):
                     continue
+                # A rule registered as one bet a day gets one bet a day, even when two runs
+                # fall inside its window and prices have moved it onto a different strike.
+                if (S.SOURCES.get(name) or {}).get("one_per_day") and any(
+                        p.get("date") == r["date"] for p in prior.get((name, sport), ())):
+                    continue
                 # Strictly before the start, for every source and every venue, checked at
                 # the moment of logging. The venue feeds keep a contest for five minutes
                 # past its start to absorb clock skew, and that window let a tip on Al

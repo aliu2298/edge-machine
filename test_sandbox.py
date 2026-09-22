@@ -2858,7 +2858,14 @@ _crow = dict(sport="commodities", venue="kalshi_binary", market_id="KXWTI-26SEP3
              mid_a=0.98, tradeable={"a": True, "b": True}, untraded=False,
              start="2026-09-30T21:00:00+00:00", date="2026-09-30", volume=0.0,
              url="https://kalshi.com/markets/kxwti")
-T.publish(_cd, {"commodities": [_crow]}, {}, verbose=False)
+# The far-tail rule retired on 2026-09-21, but the band it relied on is still how the domain
+# works, so a stand-in picker drives the same row through publish().
+_saved_chal = S.CHALLENGERS
+S.CHALLENGERS = {"cmd_tail": lambda sp: [dict(market_id="KXWTI-26SEP30-T90", pick="a")]}
+try:
+    T.publish(_cd, {"commodities": [_crow]}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_chal
 _cb = [q for q in _cd["quotes"] if q["source"] == "cmd_tail"]
 eq([(q["pick"], q["bet"], q["price"]) for q in _cb], [("a", True, 0.98)],
    "a 0.98 commodity pick is logged as a real bet")
@@ -3385,6 +3392,63 @@ ok(S.CUP_FRAGS.get("COPADELREY") == "Copa del Rey" and S.CUP_FRAGS.get("COUPEDEF
 import streaks_fetch as _SF
 ok({"Copa del Rey", "Coupe de France"} <= set(_SF.CUP_LEAGUES.values()),
    "with ESPN fixtures under the same names, which is how a cup market is matched to its tie")
+
+print("\ncommodities: the far-tail rule retires, the AAA gasoline no-change rule replaces it")
+eq((S.SOURCES["cmd_tail"]["connected"], "cmd_tail" in S.CHALLENGERS), (False, False),
+   "the far-tail rule logs nothing new: 200-360 bets a day for a penny each")
+ok("2026-09-21" in S.SOURCES["cmd_tail"]["retired"], "and its retirement says when and why")
+ok("gas_nochange" in S.CHALLENGERS and S.SOURCES["gas_nochange"].get("one_per_day"),
+   "the no-change rule is wired and registered as one bet a day")
+_gh = [(f"2026-08-{d:02d}", 4.00 + 0.001 * (d % 3)) for d in range(1, 31)] + [("2026-08-31", 4.1000)]
+
+
+def _gr(k, ya, yb, day="2026-09-01", series="KXAAAGASD", tight=True, stype="greater"):
+    return dict(series=series, date=day, market_id=f"{series}-26SEP01-{k}",
+                market=dict(strike_type=stype, floor_strike=k, close_time=f"{day}T03:59:00+00:00"),
+                price_a=ya, price_b=round(1 - yb, 4), tradeable={"a": tight, "b": tight})
+
+
+_gnow = datetime(2026, 9, 1, 2, 11, tzinfo=timezone.utc)
+# yesterday settled 4.1000; the 4.1000 strike is a coin flip, so a 0.30 Yes ask there is cheap
+_gl = [_gr(4.1000, 0.30, 0.26), _gr(4.0950, 0.62, 0.55), _gr(4.1050, 0.40, 0.33)]
+_gp = S.fetch_gas_nochange("commodities", {"commodities": _gl}, history=_gh, now=_gnow)
+eq(len(_gp), 1, "at most one bet a day, however many strikes clear the edge")
+eq((_gp[0]["market_id"].rsplit("-", 1)[1], _gp[0]["pick"]), ("4.1", "a"),
+   "the projection is yesterday's figure: a coin-flip strike offered at 0.30 is the bet")
+eq(S.fetch_gas_nochange("commodities", {"commodities": _gl}, history=_gh,
+                        now=datetime(2026, 8, 31, 22, 0, tzinfo=timezone.utc)), [],
+   "nothing more than four hours before the ladder closes, when the backtest did not price it")
+eq(S.fetch_gas_nochange("commodities", {"commodities": _gl}, history=_gh[:-1], now=_gnow), [],
+   "no bet while yesterday's figure is not out: it is never guessed from an older one")
+eq(S.fetch_gas_nochange("commodities", {"commodities": [_gr(4.1000, 0.30, 0.26, series="KXAAAGASDTX")]},
+                        history=_gh, now=_gnow), [],
+   "the state series are ignored: they move with the national average, so they add no result")
+eq(S.fetch_gas_nochange("commodities", {"commodities": [_gr(4.1000, 0.30, 0.26, tight=False)]},
+                        history=_gh, now=_gnow), [], "a strike with no two-sided book is never bet")
+eq(S.fetch_gas_nochange("commodities", {"commodities": [_gr(4.1000, 0.10, 0.06)]},
+                        history=_gh, now=_gnow), [],
+   "nor one priced under 0.25: a win has to pay something worth having")
+eq(S.fetch_gas_nochange("commodities", {"commodities": _gl}, history=_gh[:10], now=_gnow), [],
+   "and not before 14 days of history to size the day-to-day noise")
+# history must be read by DATE: a list handed over out of order is still read correctly
+eq(S.fetch_gas_nochange("commodities", {"commodities": _gl}, history=list(reversed(_gh)), now=_gnow), _gp,
+   "an out-of-order history is sorted by date first, so yesterday is always yesterday")
+# publish() holds the rule to one bet a day across runs, even if prices move it to another strike
+_pd = {"quotes": [dict(id="gas_nochange:KXAAAGASD-26SEP01-4.1", source="gas_nochange",
+                       sport="commodities", market_id="KXAAAGASD-26SEP01-4.1", date="2026-09-01",
+                       start="2026-09-01T14:00:00+00:00", side_a="Above 4.1", side_b="No",
+                       venue="kalshi_binary", status="open", bet=True)], "meta": {}}
+_saved_chal = S.CHALLENGERS
+S.CHALLENGERS = {"gas_nochange": lambda sp: [dict(market_id="KXAAAGASD-26SEP01-4.105", pick="a")]}
+try:
+    T.publish(_pd, {"commodities": [dict(_gr(4.105, 0.40, 0.33), sport="commodities", venue="kalshi_binary",
+                                         label="Above 4.105", side_a="Above 4.105", side_b="No",
+                                         untraded=False, start="2026-09-01T14:00:00+00:00", url="u",
+                                         volume=0.0, price_draw=None)]}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_chal
+eq(len([q for q in _pd["quotes"] if q["source"] == "gas_nochange"]), 1,
+   "a second strike the same day is not logged: one_per_day holds across runs")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
