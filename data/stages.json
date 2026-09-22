@@ -358,6 +358,78 @@
    "pair": "soccerpredictions|soccer",
    "reason": "taken off the Production list by hand",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-09-22T16:20:08+00:00",
+   "evidence": {
+    "base_roi": -0.1737,
+    "clv": -0.2167,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2517,
+    "roi": 0.2517,
+    "roi_fee": 0.2343,
+    "span_days": 4.1181,
+    "weeks": 0,
+    "z": 1.0027
+   },
+   "pair": "mma_fav_band|mma",
+   "reason": "moved to Production by hand on 2026-09-22",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-22T16:20:08+00:00",
+   "evidence": {
+    "base_roi": -0.1737,
+    "clv": -0.2167,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2517,
+    "roi": 0.2517,
+    "roi_fee": 0.2343,
+    "span_days": 4.1181,
+    "weeks": 0,
+    "z": 1.0027
+   },
+   "pair": "mma_fav_band|mma",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-09-22T16:20:08+00:00",
+   "evidence": {
+    "base_roi": 0.1176,
+    "clv": -0.21,
+    "clv_n": 2,
+    "n": 3,
+    "own_roi": 0.1176,
+    "roi": 0.1176,
+    "roi_fee": 0.1106,
+    "span_days": 1.3958,
+    "weeks": 0,
+    "z": 0.5934
+   },
+   "pair": "olbg|boxing",
+   "reason": "moved to Production by hand on 2026-09-22",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-22T16:20:08+00:00",
+   "evidence": {
+    "base_roi": 0.1176,
+    "clv": -0.21,
+    "clv_n": 2,
+    "n": 3,
+    "own_roi": 0.1176,
+    "roi": 0.1176,
+    "roi_fee": 0.1106,
+    "span_days": 1.3958,
+    "weeks": 0,
+    "z": 0.5934
+   },
+   "pair": "olbg|boxing",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -370,9 +442,49 @@
    "since": "2026-09-21T02:05:59+00:00",
    "stage": "sandbox"
   },
+  "mma_fav_band|mma": {
+   "by_hand": "2026-09-22",
+   "entry": {
+    "base_roi": -0.1737,
+    "clv": -0.2167,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2517,
+    "roi": 0.2517,
+    "roi_fee": 0.2343,
+    "span_days": 4.1181,
+    "weeks": 0,
+    "z": 1.0027
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-22T16:20:08+00:00",
+   "ready_at": "2026-09-22T16:20:08+00:00",
+   "ready_since": "2026-09-22T16:20:08+00:00",
+   "stage": "production"
+  },
   "o15_form_l10|soccer_o15": {
    "since": "2026-09-21T01:44:02+00:00",
    "stage": "sandbox"
+  },
+  "olbg|boxing": {
+   "by_hand": "2026-09-22",
+   "entry": {
+    "base_roi": 0.1176,
+    "clv": -0.21,
+    "clv_n": 2,
+    "n": 3,
+    "own_roi": 0.1176,
+    "roi": 0.1176,
+    "roi_fee": 0.1106,
+    "span_days": 1.3958,
+    "weeks": 0,
+    "z": 0.5934
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-22T16:20:08+00:00",
+   "ready_at": "2026-09-22T16:20:08+00:00",
+   "ready_since": "2026-09-22T16:20:08+00:00",
+   "stage": "production"
   },
   "soccerpredictions|soccer": {
    "since": "2026-09-21T02:05:59+00:00",
@@ -419,5 +531,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-09-22T15:42:39+00:00"
+ "updated": "2026-09-22T16:20:08+00:00"
 }

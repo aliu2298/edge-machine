@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-22T15:42:39+00:00",
+ "board_built_at": "2026-09-22T16:20:08+00:00",
  "leads": {
   "2026-09-17|Paulo Andre Saraiva Dos Santos|Henrique Ortenblad Nogueira|Paulo Andre Saraiva Dos Santos to win \u00b7 Tennis favourite-band rule": {
    "away": "Henrique Ortenblad Nogueira",
@@ -6142,6 +6142,35 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-09-22|ALLANI - Hamrouni|Boullay - Ruchkina|Boullay - Ruchkina to win \u00b7 Tennis favourite-band rule": {
+   "away": "Boullay - Ruchkina",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Boullay - Ruchkina to win",
+   "home": "ALLANI - Hamrouni",
+   "id": "2026-09-22|ALLANI - Hamrouni|Boullay - Ruchkina|Boullay - Ruchkina to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-22T13:51Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "ALLANI - Hamrouni v Boullay - Ruchkina",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.86,
+   "route": {
+    "market": "aec-itfwo-safallnadham-ophboukseruc-2026-09-22",
+    "outcome": "Boullay - Ruchkina",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-safallnadham-ophboukseruc-2026-09-22",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-09-22|Alessio Basile|Denis Vishenchuk Vishenko|Alessio Basile to win \u00b7 Tennis favourite-band rule": {
    "away": "Denis Vishenchuk Vishenko",
    "bet": {
@@ -6170,6 +6199,37 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
+  },
+  "2026-09-22|Ana Julia Sartori|Paola Lopez|Paola Lopez to win \u00b7 Tennis favourite-band rule": {
+   "away": "Paola Lopez",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Paola Lopez to win",
+   "home": "Ana Julia Sartori",
+   "id": "2026-09-22|Ana Julia Sartori|Paola Lopez|Paola Lopez to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-22T18:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-22",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
+   "league": "Tennis",
+   "match": "Ana Julia Sartori v Paola Lopez",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.87,
+   "route": {
+    "market": "aec-itfwo-anasar-paolop-2026-09-22",
+    "outcome": "Paola Lopez",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-anasar-paolop-2026-09-22",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-09-22|Anastasia Tikhonova|Anastasia Gasanova|Anastasia Gasanova to win \u00b7 Tennis favourite-band rule": {
    "away": "Anastasia Gasanova",
@@ -6403,37 +6463,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-09-22|Eduardo Ribeiro|Pedro Martinez|Pedro Martinez to win \u00b7 Tennis favourite-band rule": {
-   "away": "Pedro Martinez",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-22",
-   "edge_at_log": null,
-   "first_seen": "2026-09-22",
-   "headline": "Pedro Martinez to win",
-   "home": "Eduardo Ribeiro",
-   "id": "2026-09-22|Eduardo Ribeiro|Pedro Martinez|Pedro Martinez to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-22T16:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
-   "league": "Tennis",
-   "match": "Eduardo Ribeiro v Pedro Martinez",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.87,
-   "route": {
-    "market": "KXATPCHALLENGERMATCH-26SEP22RIBMAR",
-    "outcome": "Pedro Martinez",
-    "outcome_side": "yes",
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP22RIBMAR",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-09-22|Erik Arutiunian|Trevor Svajda|Trevor Svajda to win \u00b7 Tennis favourite-band rule": {
    "away": "Trevor Svajda",
    "bet": {
@@ -6449,7 +6478,7 @@
    "kickoff": "2026-09-22T19:30Z",
    "lane": "production",
    "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
    "league": "Tennis",
    "match": "Erik Arutiunian v Trevor Svajda",
    "pair": "tennis_fav_band|tennis",
@@ -6480,7 +6509,7 @@
    "kickoff": "2026-09-22T18:00Z",
    "lane": "production",
    "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
    "league": "Tennis",
    "match": "Evan Zhu v Henry Searle",
    "pair": "tennis_fav_band|tennis",
@@ -6627,7 +6656,7 @@
    "kickoff": "2026-09-22T17:00Z",
    "lane": "production",
    "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
    "league": "Tennis",
    "match": "Francisco Comesana v Juan Estevez",
    "pair": "tennis_fav_band|tennis",
@@ -6642,6 +6671,35 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
+  },
+  "2026-09-22|Garcian - Nagel|Clerc - Trufelli|Garcian - Nagel to win \u00b7 Tennis favourite-band rule": {
+   "away": "Clerc - Trufelli",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Garcian - Nagel to win",
+   "home": "Garcian - Nagel",
+   "id": "2026-09-22|Garcian - Nagel|Clerc - Trufelli|Garcian - Nagel to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-22T14:00Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Garcian - Nagel v Clerc - Trufelli",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.79,
+   "route": {
+    "market": "aec-itfme-axegarartnag-damcletimtru-2026-09-22",
+    "outcome": "Garcian - Nagel",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-axegarartnag-damcletimtru-2026-09-22",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
   },
   "2026-09-22|Grippo - Villoslada|Sarishvili - Sutiashvili|Grippo - Villoslada to win \u00b7 Tennis favourite-band rule": {
    "away": "Sarishvili - Sutiashvili",
@@ -6668,6 +6726,35 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-itfme-valgriedovil-leosarlazsut-2026-09-22",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "hit"
+  },
+  "2026-09-22|Homola - Postolka|Dominko - Planinsek|Dominko - Planinsek to win \u00b7 Tennis favourite-band rule": {
+   "away": "Dominko - Planinsek",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Dominko - Planinsek to win",
+   "home": "Homola - Postolka",
+   "id": "2026-09-22|Homola - Postolka|Dominko - Planinsek|Dominko - Planinsek to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-22T13:45Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Homola - Postolka v Dominko - Planinsek",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.75,
+   "route": {
+    "market": "aec-itfme-pathomrompos-sebdomfilpla-2026-09-22",
+    "outcome": "Dominko - Planinsek",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-pathomrompos-sebdomfilpla-2026-09-22",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
@@ -6759,68 +6846,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-09-22|Juan Carlos Prado Angelo|Lorenzo Joaquin Rodriguez|Juan Carlos Prado Angelo to win \u00b7 Tennis favourite-band rule": {
-   "away": "Lorenzo Joaquin Rodriguez",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-22",
-   "edge_at_log": null,
-   "first_seen": "2026-09-22",
-   "headline": "Juan Carlos Prado Angelo to win",
-   "home": "Juan Carlos Prado Angelo",
-   "id": "2026-09-22|Juan Carlos Prado Angelo|Lorenzo Joaquin Rodriguez|Juan Carlos Prado Angelo to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-22T16:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
-   "league": "Tennis",
-   "match": "Juan Carlos Prado Angelo v Lorenzo Joaquin Rodriguez",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.76,
-   "route": {
-    "market": "KXATPCHALLENGERMATCH-26SEP22PRAROD",
-    "outcome": "Juan Carlos Prado Angelo",
-    "outcome_side": "yes",
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP22PRAROD",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
-  "2026-09-22|Kaltenecker - Muller|Frydrych - Lakshmanan|Frydrych - Lakshmanan to win \u00b7 Tennis favourite-band rule": {
-   "away": "Frydrych - Lakshmanan",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-22",
-   "edge_at_log": null,
-   "first_seen": "2026-09-22",
-   "headline": "Frydrych - Lakshmanan to win",
-   "home": "Kaltenecker - Muller",
-   "id": "2026-09-22|Kaltenecker - Muller|Frydrych - Lakshmanan|Frydrych - Lakshmanan to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-22T16:17Z",
-   "lane": "production",
-   "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
-   "league": "Tennis",
-   "match": "Kaltenecker - Muller v Frydrych - Lakshmanan",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.83,
-   "route": {
-    "market": "aec-itfme-wilkalmaxmul-vikfryarylak-2026-09-22",
-    "outcome": "Frydrych - Lakshmanan",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-itfme-wilkalmaxmul-vikfryarylak-2026-09-22",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-09-22|Kanon Sawashiro|Remika Ohashi|Kanon Sawashiro to win \u00b7 Tennis favourite-band rule": {
    "away": "Remika Ohashi",
    "bet": {
@@ -6907,6 +6932,37 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
+  },
+  "2026-09-22|Mayu Crossley|Emma Kamper|Mayu Crossley to win \u00b7 Tennis favourite-band rule": {
+   "away": "Emma Kamper",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Mayu Crossley to win",
+   "home": "Mayu Crossley",
+   "id": "2026-09-22|Mayu Crossley|Emma Kamper|Mayu Crossley to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-22T18:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-22",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
+   "league": "Tennis",
+   "match": "Mayu Crossley v Emma Kamper",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.82,
+   "route": {
+    "market": "aec-itfwo-maycro-emmkam-2026-09-22",
+    "outcome": "Mayu Crossley",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfwo-maycro-emmkam-2026-09-22",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-09-22|Mika Petkovic|Thiago Monteiro|Thiago Monteiro to win \u00b7 Tennis favourite-band rule": {
    "away": "Thiago Monteiro",
@@ -7039,7 +7095,7 @@
    "kickoff": "2026-09-22T16:30Z",
    "lane": "production",
    "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
    "league": "Tennis",
    "match": "Mueller - Herck v Fusenig - Saulino",
    "pair": "tennis_fav_band|tennis",
@@ -7051,6 +7107,37 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "tennis_fav_band:aec-itfme-calmuelouher-tomfusfelsau-2026-09-22",
+   "source": "tennis_fav_band",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-09-22|Murgett - Stice|Bertrand - Poullain|Bertrand - Poullain to win \u00b7 Tennis favourite-band rule": {
+   "away": "Bertrand - Poullain",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Bertrand - Poullain to win",
+   "home": "Murgett - Stice",
+   "id": "2026-09-22|Murgett - Stice|Bertrand - Poullain|Bertrand - Poullain to win \u00b7 Tennis favourite-band rule",
+   "kickoff": "2026-09-22T16:20Z",
+   "lane": "production",
+   "last_seen": "2026-09-22",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
+   "league": "Tennis",
+   "match": "Murgett - Stice v Bertrand - Poullain",
+   "pair": "tennis_fav_band|tennis",
+   "price_at_log": 0.88,
+   "route": {
+    "market": "aec-itfme-finmurtylsti-robberlucpou-2026-09-22",
+    "outcome": "Bertrand - Poullain",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_fav_band:aec-itfme-finmurtylsti-robberlucpou-2026-09-22",
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "pending"
@@ -7112,6 +7199,37 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
+  },
+  "2026-09-22|Norbert Novenyi Jr.|Theo Haig|Norbert Novenyi Jr. to win \u00b7 MMA favourite-band rule": {
+   "away": "Theo Haig",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-22",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Norbert Novenyi Jr. to win",
+   "home": "Norbert Novenyi Jr.",
+   "id": "2026-09-22|Norbert Novenyi Jr.|Theo Haig|Norbert Novenyi Jr. to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-22T21:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-22",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
+   "league": "MMA",
+   "match": "Norbert Novenyi Jr. v Theo Haig",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.79,
+   "route": {
+    "market": "aec-dwcs-nornov-thehai-2026-09-22",
+    "outcome": "Norbert Novenyi Jr.",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-nornov-thehai-2026-09-22",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
   },
   "2026-09-22|Oscar Brown|Tamerlan Azizov|Oscar Brown to win \u00b7 Tennis favourite-band rule": {
    "away": "Tamerlan Azizov",
@@ -7287,37 +7405,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-09-22|Solana Sierra|Deniz Dilek|Solana Sierra to win \u00b7 Tennis favourite-band rule": {
-   "away": "Deniz Dilek",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-22",
-   "edge_at_log": null,
-   "first_seen": "2026-09-22",
-   "headline": "Solana Sierra to win",
-   "home": "Solana Sierra",
-   "id": "2026-09-22|Solana Sierra|Deniz Dilek|Solana Sierra to win \u00b7 Tennis favourite-band rule",
-   "kickoff": "2026-09-22T16:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
-   "league": "Tennis",
-   "match": "Solana Sierra v Deniz Dilek",
-   "pair": "tennis_fav_band|tennis",
-   "price_at_log": 0.85,
-   "route": {
-    "market": "aec-wta-solsie-dendil-2026-09-21",
-    "outcome": "Solana Sierra",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_fav_band:aec-wta-solsie-dendil-2026-09-21",
-   "source": "tennis_fav_band",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-09-22|Tiana Tian Deng|Sera Nishimoto|Tiana Tian Deng to win \u00b7 Tennis favourite-band rule": {
    "away": "Sera Nishimoto",
    "bet": {
@@ -7391,7 +7478,7 @@
    "kickoff": "2026-09-22T17:00Z",
    "lane": "production",
    "last_seen": "2026-09-22",
-   "last_seen_at": "2026-09-22T15:42:39+00:00",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
    "league": "Tennis",
    "match": "William Moxon v Antonin Witz",
    "pair": "tennis_fav_band|tennis",
@@ -7464,9 +7551,93 @@
    "source": "tennis_fav_band",
    "sport": "tennis",
    "status": "hit"
+  },
+  "2026-09-23|Marcos Degli|Paris Moran|Marcos Degli to win \u00b7 MMA favourite-band rule": {
+   "away": "Paris Moran",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-23",
+   "edge_at_log": null,
+   "first_seen": "2026-09-21",
+   "headline": "Marcos Degli to win",
+   "home": "Marcos Degli",
+   "id": "2026-09-23|Marcos Degli|Paris Moran|Marcos Degli to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-23T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-22",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
+   "league": "MMA",
+   "match": "Marcos Degli v Paris Moran",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.76,
+   "route": {
+    "market": "aec-dwcs-mardeg-parmor-2026-09-22",
+    "outcome": "Marcos Degli",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-mardeg-parmor-2026-09-22",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
+  },
+  "2026-09-26|Nathan Heaney|Gerome Warburton|Gerome Warburton to win \u00b7 OLBG community tips": {
+   "away": "Gerome Warburton",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Gerome Warburton to win",
+   "home": "Nathan Heaney",
+   "id": "2026-09-26|Nathan Heaney|Gerome Warburton|Gerome Warburton to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T03:00Z",
+   "lane": "production",
+   "last_seen": "2026-09-22",
+   "last_seen_at": "2026-09-22T16:20:08+00:00",
+   "league": "Boxing",
+   "match": "Nathan Heaney v Gerome Warburton",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.64,
+   "route": {
+    "market": "aec-boxing-nathea-gerwar-2026-09-26",
+    "outcome": "Gerome Warburton",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-nathea-gerwar-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "pending"
   }
  },
  "pairs": {
+  "mma_fav_band|mma": {
+   "by_hand": "2026-09-22",
+   "entered_at": "2026-09-22T16:20:08+00:00",
+   "promoted_at": "2026-09-22T16:20:08+00:00",
+   "ready_at": "2026-09-22T16:20:08+00:00",
+   "route": "moved by hand on 2026-09-22",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
+  "olbg|boxing": {
+   "by_hand": "2026-09-22",
+   "entered_at": "2026-09-22T16:20:08+00:00",
+   "promoted_at": "2026-09-22T16:20:08+00:00",
+   "ready_at": "2026-09-22T16:20:08+00:00",
+   "route": "moved by hand on 2026-09-22",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
    "entered_at": "2026-09-18T00:51:24+00:00",
@@ -7484,14 +7655,14 @@
    "promoted_at": "2026-09-17T21:42:13+00:00",
    "ready_at": "2026-09-17T21:49:17+00:00",
    "route": "moved by hand on 2026-09-17",
-   "sandbox_clv": -0.009,
-   "sandbox_n": 247,
-   "sandbox_roi": 0.0347,
-   "sandbox_roi_fee": 0.023
+   "sandbox_clv": -0.0087,
+   "sandbox_n": 250,
+   "sandbox_roi": 0.0373,
+   "sandbox_roi_fee": 0.0256
   }
  },
  "stage": "production",
- "unlisted_skipped": 50,
+ "unlisted_skipped": 52,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-22T15:42:39+00:00"
+ "updated_at": "2026-09-22T16:20:08+00:00"
 }
