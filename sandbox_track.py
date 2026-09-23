@@ -1330,6 +1330,20 @@ def league_split(d, name, sport=None, venues=None):
     return sorted(out, key=lambda r: (-r["edge"], -r["n"]))
 
 
+def market_cost(d, sports, venues=None):
+    """(hold, quotes) for one market: what both its sides cost above 100, pooled.
+
+    The same reading league_cost gives per competition, taken per MARKET instead, because
+    that is the other way a rule's toll varies and the bigger of the two: a league match
+    winner costs about 1.5% and a side to score 1+ about 4.7%, on the same fixtures.
+    """
+    v = [q["price_a"] + q["price_b"] - 1.0 for q in all_bets(d)
+         if q["sport"] in sports and (S.SOURCES.get(q["source"]) or {}).get("kind") in NEVER_PROMOTED_KINDS
+         and q.get("price_a") and q.get("price_b")
+         and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    return (sum(v) / len(v), len(v)) if v else (None, 0)
+
+
 def league_cost(d, sports, venues=None):
     """What both sides of a market cost above 100, per competition — {league: (hold, n)}.
 

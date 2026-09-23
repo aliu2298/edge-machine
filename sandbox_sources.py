@@ -2348,6 +2348,27 @@ SERIES_LEAGUES = {
 }
 
 
+def market_url(q):
+    """Where to send a reader to see THIS contest — not the series it belongs to.
+
+    Every Kalshi row has been logged with the SERIES page as its link
+    (kalshi.com/markets/kxserieatotal), which opens on whatever event that series happens to
+    list first. So a link on a Torino v Roma bet led to somebody else's match, and a reader
+    checking the record against the venue was checking the wrong game.
+
+    Kalshi routes an event by its ticker in the fragment and needs no slug, so the link is
+    derived from the row's own market id rather than stored: the id IS the event ticker on a
+    game market, and on a yes/no market the event is the id without its strike
+    (KXEPLTOTAL-26SEP15GOALEA-2 -> KXEPLTOTAL-26SEP15GOALEA). Derived at render time on
+    purpose — that repairs every row already in the ledger without rewriting one of them.
+    """
+    venue, mid = q.get("venue"), str(q.get("market_id") or "")
+    if venue not in ("kalshi", "kalshi_binary") or "-" not in mid:
+        return q.get("url") or ""
+    event = mid.rsplit("-", 1)[0] if venue == "kalshi_binary" and mid.count("-") >= 2 else mid
+    return f"https://kalshi.com/markets/{mid.split('-')[0].lower()}#{event.lower()}"
+
+
 def display_league(q):
     """The competition a quote belongs to, for grouping a record by league — None if unknown.
 

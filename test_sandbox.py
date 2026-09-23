@@ -3043,7 +3043,11 @@ ok(not T.placeable(dict(_crows["soccer_o15_cup"][0], pick="a", bet=True)),
 _twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_form_l10"],
              a=dict(n=0, won=0, expected=0, z=0, roi_fee=None), open=2, last="", prod=False, moved="", v="waiting")
 eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")
-ok("CUPS PAIR" in SB._row(_twin) and "EFL Cup" in SB._row(_twin), "its row says what it covers and that it is separate")
+ok("CUPS" in SB._row(_twin), "its row is tagged as a separate cup record")
+ok("EFL Cup" in SB.definitions([_twin]) and "Over 1.5 form rule" in SB.definitions([_twin]),
+   "and what a cup pair covers is written once, in the definitions, not in every row")
+ok("Pre-registered" not in SB._row(_twin),
+   "a row carries no description: the table is for comparing records")
 
 # ---- Corners under form rule (2026-09-19) ----
 _c0 = datetime(2026, 9, 20, 12, tzinfo=timezone.utc)

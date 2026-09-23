@@ -338,7 +338,7 @@ def open_rows(d, limit=None):
         side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td>
-<td><a href="{esc(q['url'])}" target="_blank" rel="noopener">{esc(S.display_label(q))}</a></td>
+<td><a href="{esc(S.market_url(q))}" target="_blank" rel="noopener">{esc(S.display_label(q))}</a></td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td><b>{esc(side)}</b></td>
 <td class="num">{q['price']:.2f}</td>
@@ -714,7 +714,7 @@ def rank_rows(rs):
     return out + [(None, False, r) for r in unranked + retired]
 
 
-def _row(r, rank=None, provisional=False):
+def _row(r, rank=None, provisional=False, in_market=False):
     a, meta = r["a"], r["meta"]
     label, chip, _o = VERDICTS[r["v"]]
     rm = r.get("removed")
@@ -750,25 +750,63 @@ def _row(r, rank=None, provisional=False):
             f'<div class="sm mut">{fd["won"]} v {fd["expected"]:.1f} on {fd["n"]}'
             f'{" " + fd["unit"] + ("s" if fd["n"] != 1 else "") if fd.get("unit") else ""}</div>')
     sfx = _scope(r["sport"])
-    frags = S.CUP_FRAGS if sfx == "_cup" else S.INTL_FRAGS
-    scope_note = (f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join(frags.values())))}</b></div>'
-                  if sfx else "")
     tag = f' <span class="sig w">{esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
-    if r.get("gone"):
-        scope_note = f'<div class="sm"><b>{esc(str(r["gone"]))}</b></div>' + scope_note
+    # What a pair IS lives in one place per sport now ("How each rule is defined"), not in
+    # every row. A table is for comparing records; a paragraph inside a row is read once and
+    # then scrolled past forever, and 26 of them made the soccer section unreadable.
+    gone = f'<div class="sm mut">{esc(str(r["gone"]))}</div>' if r.get("gone") else ""
     # The rank is greyed while a pair is too thin to read, so the number never pretends to
     # more than it has. An unranked pair shows a dash, not a position it has not earned.
     rk = ('<span class="mut">—</span>' if rank is None else
           f'<span class="{"mut" if provisional else "rank"}">{rank}</span>'
           + ('<div class="sm mut">early</div>' if provisional else ''))
-    return f"""<tr><td class="num">{rk}</td><td><details class="src"><summary><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
-<div class="sm mut">{esc(sub)} · {esc(meta['kind'])}</div></summary>
-{scope_note}<div class="sm mut">{esc(meta.get('note', ''))}</div></details></td>
+    return f"""<tr><td class="num">{rk}</td>
+<td><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
+<div class="sm mut">{esc(sub if not in_market else meta['kind'])}</div>{gone}</td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{close_cell(a)}</td>
 <td class="num">{fade}</td>
 <td class="num">{r['open'] or '—'}</td><td>{stage}</td></tr>"""
+
+
+def definitions(rs):
+    """Every rule in this sport, in its own words, in ONE collapsed block.
+
+    The pre-registration is the record: what a rule backs, where the claim came from, and
+    what was fixed before it ran. That has to stay readable, and it has to stay out of the
+    table, which exists to compare numbers. Cup and international twins share their parent's
+    definition, so each is written once and its scopes are named beside it.
+    """
+    seen = {}
+    for r in rs:
+        note = (r["meta"].get("note") or "").strip()
+        if not note:
+            continue
+        key = r["meta"]["label"].split(" (")[0]
+        seen.setdefault(key, [note, set(), r["meta"]["kind"]])
+        sfx = _scope(r["sport"])
+        seen[key][1].add(S.SCOPE_LABEL[sfx] if sfx else "League")
+    if not seen:
+        return ""
+    items = []
+    for name, (note, scopes, kind) in sorted(seen.items()):
+        where = ", ".join(sorted(scopes, key=lambda x: ("League", "Cups", "Internationals").index(x)
+                                 if x in ("League", "Cups", "Internationals") else 9))
+        # A cup or international twin is a SEPARATE record on a different set of competitions,
+        # and which ones is part of the definition — it used to sit in the row and now lives
+        # here, so the table stays a table and the scope is still written down somewhere.
+        extra = "".join(
+            f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join((S.CUP_FRAGS if sfx == "_cup" else S.INTL_FRAGS).values())))}</b></div>'
+            for sfx, lab in S.SCOPE_LABEL.items() if lab in scopes)
+        items.append(f'<div class="def"><b>{esc(name)}</b>'
+                     f'<span class="mut sm"> · {esc(kind)} · {esc(where)}</span>'
+                     f'{extra}<div class="sm mut">{esc(note)}</div></div>')
+    return (f'<details class="sport"><summary><b>How each rule is defined</b>'
+            f'<span class="mut"> · {len(items)} of them, as registered</span></summary>'
+            f'<div class="note sm">What each one backs, where the claim came from, and what was '
+            f'fixed before it ran. Written once and left alone: a definition that moves after the '
+            f'bets start is not a pre-registration.</div>{"".join(items)}</details>')
 
 
 def eliminated(r):
@@ -917,9 +955,9 @@ def league_panel(d, rs):
             f'<div class="sm mut">{best[1]["won"]}–{best[1]["n"] - best[1]["won"]} '
             f'· {best[1]["edge"]:+.3f}/bet</div></td></tr>')
         if n >= LEAGUE_FOLD_N:
+            cost_bit = "" if hold is None else f" · both sides cost {hold * 100:.1f}%"
             folds.append(f"""<details class="sport"><summary><b>{esc(lg)}</b>
-<span class="mut"> · {n} settled{"" if hold is None else f" · both sides cost {hold * 100:.1f}%"}
- · {len(items)} rule{"" if len(items) == 1 else "s"}</span></summary>
+<span class="mut"> · {n} settled{cost_bit} · {len(items)} rule{"" if len(items) == 1 else "s"}</span></summary>
 <div class="tbl"><table>{LEAGUE_HEAD}{''.join(_league_row(r, sp) for r, sp in items)}</table></div></details>""")
     return f"""<details class="sport"><summary><b>By competition</b>
 <span class="mut"> · {len(order)} competitions · which league a rule works in, and what that league costs</span></summary>
@@ -937,9 +975,58 @@ and the verdict column above goes on reading the whole record. A competition get
 {''.join(folds)}</details>"""
 
 
+def _base_sport(sport):
+    """The market a pair trades, with its scope stripped: soccer_o15_cup -> soccer_o15."""
+    for sfx in S.SCOPE_LABEL:
+        if str(sport).endswith(sfx):
+            return str(sport)[:-len(sfx)]
+    return str(sport)
+
+
+def market_folds(d, rs):
+    """Soccer's rules grouped by the MARKET they trade, rather than listed flat.
+
+    Soccer is not one test, it is eight: over 1.5, over 2.5, under 3.5, a side to score 1+,
+    a side to score 2+, a side +0.5, both to score, corners. Each asks a different question
+    at a different toll — 2.4% on a side +0.5 against 4.8% on a side to score 1+, on the same
+    fixtures — and each carries a cup and an international twin. Listed flat that came to 26
+    rows of which 22 had never settled a bet, which is a list nobody reads. Grouped, a reader
+    picks the market first and then reads three or four rows, and each market's rules are
+    ranked against each other rather than against rules answering a different question.
+    """
+    groups = {}
+    for r in rs:
+        groups.setdefault(_base_sport(r["sport"]), []).append(r)
+    out = []
+    for base in sorted(groups, key=lambda b: (-sum(r["a"]["n"] for r in groups[b]),
+                                              S.SPORTS.get(b, b))):
+        g = groups[base]
+        ranked = rank_rows(g)
+        n = sum(r["a"]["n"] for r in g)
+        hold, _hn = T.market_cost(d, {base, base + "_cup", base + "_intl"},
+                                  venues=T.TRADEABLE_VENUES)
+        prod = sum(r["prod"] for r in g)
+        bits = [f"{len(g)} rule" + ("" if len(g) == 1 else "s"),
+                f"{n} settled" if n else "nothing settled yet"]
+        if hold is not None:
+            bits.append(f"both sides cost {hold * 100:.1f}%")
+        if prod:
+            bits.append(f"{prod} in Production")
+        # The bare "soccer" domain is the match-winner market; inside a section already
+        # titled Soccer, "Soccer" names nothing.
+        name = ("Match winner" if base == "soccer"
+                else S.SPORTS.get(base, base).split(" · ")[-1])
+        out.append(f"""<details class="sport"><summary><b>{esc(name)}</b>
+<span class="mut"> · {esc(' · '.join(bits))}</span></summary>
+<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, pv, in_market=True) for rk, pv, r in ranked)}</table></div></details>""")
+    return "\n".join(out)
+
+
 # Soccer only, for now: it is the one sport where the same rule meets a materially
 # different market in each competition, and the one with enough competitions to sort.
 BY_LEAGUE = ("Soccer",)
+# ...and the one with enough different MARKETS that a flat list of its rules is unreadable.
+BY_MARKET = ("Soccer",)
 
 
 def sport_sections(d, rows):
@@ -980,8 +1067,9 @@ same rule's closing prices can read in tens. Read at {T.CLV_MIN_N}+ fresh closes
 <b>ahead</b> or <b>behind</b> at t {T.CLV_T:g}; <b>level</b> is a real answer, not a missing one.
 Beating the close is not the same as making money, and nothing is promoted or retired on it
 alone.</div>
-<div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, prov) for rk, prov, r in ranked)}</table></div>
-{league_panel(d, rs) if f in BY_LEAGUE else ''}</details>""")
+{market_folds(d, rs) if f in BY_MARKET else '<div class="tbl"><table>' + SPORT_HEAD + ''.join(_row(r, rk, prov) for rk, prov, r in ranked) + '</table></div>'}
+{league_panel(d, rs) if f in BY_LEAGUE else ''}
+{definitions(rs)}</details>""")
     return "\n".join(out)
 
 
@@ -1096,6 +1184,9 @@ border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12
 border-radius:10px;padding:11px 13px}}
 .tile b{{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}}
 .tile span{{font-size:11px;color:var(--mut)}}
+.def{{padding:11px 14px;border-bottom:1px solid #1a1f2b}}
+.def:last-child{{border-bottom:none}}
+.def b{{font-size:13px}}
 .tbl{{background:var(--card);border:1px solid var(--bd);border-radius:11px;
 overflow-x:auto;margin-bottom:13px}}
 table{{width:100%;border-collapse:collapse;font-size:12.5px}}
