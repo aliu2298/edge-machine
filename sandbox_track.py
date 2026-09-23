@@ -1982,6 +1982,17 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
 
 def main():
     print("Sandbox Tracker")
+    # The feed first, before anything slow. A pair demoted since the last run is still named
+    # in it until it is rebuilt, and the rebuild is at the END of a run that takes minutes.
+    # The feed is the one artefact here that reaches past a web page, so it stops naming a
+    # demoted pair now rather than in ten minutes' time.
+    try:
+        import production
+        n_pruned = production.prune_feed()
+        if n_pruned:
+            print(f" production feed: dropped {n_pruned} lead(s) from pairs no longer in Production")
+    except Exception as e:
+        print(f"  ! production feed prune failed: {type(e).__name__}: {str(e)[:80]}")
     d = load()
     print(f" closing prices merged from the close job: {apply_closes(d, load_closes())}")
     retire_pre_gate(d)
@@ -2017,7 +2028,16 @@ def main():
               f"{feed['unlisted_skipped']} unpublishable and {feed['unverified_kickoff_skipped']} "
               f"unverified-kickoff bet(s) held back")
     except Exception as e:
+        # A failed rebuild leaves the OLD feed on disk, which is the dangerous failure: the
+        # run warns and the stale file keeps being served. Whatever else is wrong, it must not
+        # go on naming a pair that is no longer in Production.
         print(f"  ! production feed failed: {type(e).__name__}: {str(e)[:80]}")
+        try:
+            import production
+            dropped = production.prune_feed(st=st)
+            print(f"  ! feed left as it was, minus {dropped} lead(s) from demoted pairs")
+        except Exception as e2:
+            print(f"  ! and the feed could not be pruned either: {type(e2).__name__}")
 
     print("\n source                     quotes  bets  settled   hit      ROI   Brier")
     for name, s in score(d).items():

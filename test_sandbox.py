@@ -3623,6 +3623,35 @@ ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
    "judged against backing the under on every listed over-2.5 market")
 
 
+print("\ndemotion clears the feed")
+
+import production as PROD
+
+_fdir = _os.path.join(_cdir, "feed") if "_cdir" in dir() else None
+_fpath = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".test_feed.json")
+_st_live = {"pairs": {"keep|mlb": dict(stage="production", ready_at="2026-09-01T00:00:00+00:00"),
+                      "gone|tennis": dict(stage="sandbox", since="2026-09-23T00:00:00+00:00")},
+            "events": []}
+_blob = {"updated_at": "2026-09-23T00:00:00+00:00",
+         "pairs": {"keep|mlb": {}, "gone|tennis": {}},
+         "leads": {"L1": {"pair": "keep|mlb"}, "L2": {"pair": "gone|tennis"},
+                   "L3": {"pair": "gone|tennis"}, "L4": {"pair": "never|listed"}}}
+json.dump(_blob, open(_fpath, "w"))
+eq(PROD.prune_feed(_fpath, _st_live), 3,
+   "every lead from a pair not in Production goes, whether it was demoted or never listed")
+_after = json.load(open(_fpath))
+eq(sorted(_after["leads"]), ["L1"], "and the Production pair's lead stays")
+eq(sorted(_after["pairs"]), ["keep|mlb"], "the demoted pair's record leaves the feed with it")
+ok(_after.get("pruned_at"), "the file says when it was pruned, so a stale one is visible")
+eq(PROD.prune_feed(_fpath, _st_live), 0, "running it again changes nothing")
+_os.remove(_fpath)
+eq(PROD.prune_feed(_fpath, _st_live), 0, "a missing feed is not an error: there is nothing to clear")
+json.dump({"leads": {}}, open(_fpath, "w"))
+eq(PROD.prune_feed(_fpath, {"pairs": {}}), 0, "nor is an empty one")
+_os.remove(_fpath)
+ok("--prune-feed" in open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "production.py")).read(),
+   "and a demotion made by hand can clear it without waiting for a tracker run")
+
 print("\nthe tennis band, narrowed")
 
 eq(S.fav_band("tennis"), (0.75, 0.80), "tennis backs the cheap third of the old band")

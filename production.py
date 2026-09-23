@@ -143,6 +143,45 @@ def _sandbox_record(d, key, since):
             "sandbox_clv": r(a["clv"])}
 
 
+def prune_feed(path=None, st=None):
+    """Strip every lead from a pair that is no longer in Production. Returns how many went.
+
+    The feed is rebuilt from scratch on each tracker run, so it is correct three hours after
+    a demotion. Three hours is too long: this file is the one thing here that reaches past a
+    web page, and a follower reading it has no way to know a pair was taken off the list an
+    hour ago. On 2026-09-23 the tennis band left Production and the feed went on naming 285
+    of its open leads until the next run.
+
+    Two holes, one fix. This runs BEFORE anything else in a tracker run, so a demotion
+    committed since the last one takes effect immediately rather than at the end; and it runs
+    again if build_feed throws, because the old file staying put is exactly the failure that
+    would otherwise go unnoticed -- the run prints a warning and the stale feed keeps being
+    served.
+
+    It reads the file and the stage registry only. No ledger, no network, nothing that can
+    fail in a way that leaves a demoted pair published.
+    """
+    path = path or FEED
+    try:
+        with open(path) as f:
+            blob = json.load(f)
+    except (OSError, ValueError):
+        return 0
+    live = set(production_pairs(st if st is not None else T.load_stages()))
+    leads = blob.get("leads") or {}
+    gone = [i for i, l in leads.items() if l.get("pair") not in live]
+    stale_pairs = [k for k in (blob.get("pairs") or {}) if k not in live]
+    if not gone and not stale_pairs:
+        return 0
+    for i in gone:
+        del leads[i]
+    for k in stale_pairs:
+        del blob["pairs"][k]
+    blob["pruned_at"] = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat()
+    save_feed(blob, path)
+    return len(gone)
+
+
 def build_feed(d, st, now=None):
     """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage registry."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
@@ -364,3 +403,28 @@ on the same contests. Every lead a Production pair logs is published to
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 </div></body></html>"""
+
+
+def main(argv=None):
+    """`python3 production.py --prune-feed` — drop leads from pairs no longer in Production.
+
+    For a demotion made by hand: the feed stops naming the pair straight away, without
+    waiting for a tracker run. Prints what it dropped, and says so when there was nothing.
+    """
+    import sys
+    argv = sys.argv[1:] if argv is None else argv
+    if "--prune-feed" not in argv:
+        print(__doc__.strip().splitlines()[0])
+        print("usage: python3 production.py --prune-feed")
+        return 2
+    st = T.load_stages()
+    live = sorted(production_pairs(st))
+    n = prune_feed(st=st)
+    print(f"in Production: {', '.join(live) if live else 'nothing'}")
+    print(f"dropped {n} lead(s) from pairs no longer in Production"
+          if n else "feed already names only Production pairs")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
