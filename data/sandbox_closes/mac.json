@@ -906,8 +906,8 @@
    "price": 0.59
   },
   "covers:aec-mlb-wsh-det-2026-09-23": {
-   "at": "2026-09-23T16:45:39+00:00",
-   "lead_min": 24.3,
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 9.2,
    "price": 0.62
   },
   "covers:aec-nfl-det-buf-2026-09-17": {
@@ -1336,8 +1336,8 @@
    "price": 0.415
   },
   "espn_fpi:aec-mlb-wsh-det-2026-09-23": {
-   "at": "2026-09-23T16:45:39+00:00",
-   "lead_min": 24.3,
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 9.2,
    "price": 0.385
   },
   "espn_fpi:aec-mlb-wsh-stl-2026-09-19": {
@@ -1709,6 +1709,11 @@
    "at": "2026-09-23T06:58:08+00:00",
    "lead_min": 1.9,
    "price": 0.01
+  },
+  "o15_cup_mismatch:KXKNVBCUPTOTAL-26SEP23IJSGEM-2": {
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 59.2,
+   "price": 0.85
   },
   "o15_form_l10:KXBUNDESLIGATOTAL-26SEP19HSVKOE-2": {
    "at": "2026-09-19T13:20:56+00:00",
@@ -3115,6 +3120,11 @@
    "lead_min": 0.6,
    "price": 0.6863
   },
+  "tennis_combo2:combo2:2026-09-23:7faf1d3a4c": {
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 59.2,
+   "price": 0.6134
+  },
   "tennis_combo3:combo3:2026-09-22:fd0c6eee1c": {
    "at": "2026-09-23T02:57:08+00:00",
    "lead_min": 2.9,
@@ -3124,6 +3134,11 @@
    "at": "2026-09-23T11:29:22+00:00",
    "lead_min": 0.6,
    "price": 0.5709
+  },
+  "tennis_combo3:combo3:2026-09-23:b3476984f5": {
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 59.2,
+   "price": 0.4857
   },
   "tennis_combo4:combo4:2026-09-22:ff6c8f402c": {
    "at": "2026-09-23T02:57:08+00:00",
@@ -3499,6 +3514,16 @@
    "at": "2026-09-23T11:29:22+00:00",
    "lead_min": 0.6,
    "price": 0.82
+  },
+  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23KICDEL": {
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 59.2,
+   "price": 0.79
+  },
+  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23NEUMAR": {
+   "at": "2026-09-23T17:00:47+00:00",
+   "lead_min": 59.2,
+   "price": 0.77
   },
   "tennis_fav_band:KXATPMATCH-26SEP21BORUGO": {
    "at": "2026-09-22T01:50:48+00:00",
@@ -5606,5 +5631,5 @@
    "price": 0.83
   }
  },
- "updated": "2026-09-23T16:45:39+00:00"
+ "updated": "2026-09-23T17:00:47+00:00"
 }
