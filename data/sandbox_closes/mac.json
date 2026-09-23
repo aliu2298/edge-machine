@@ -775,10 +775,20 @@
    "lead_min": 3.8,
    "price": 0.685
   },
+  "covers:aec-mlb-cin-atl-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 56.9,
+   "price": 0.715
+  },
   "covers:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:41:08+00:00",
    "lead_min": 3.9,
    "price": 0.535
+  },
+  "covers:aec-mlb-cle-bos-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.565
   },
   "covers:aec-mlb-cws-cle-2026-09-15": {
    "at": "2026-09-15T21:59:13+00:00",
@@ -846,8 +856,8 @@
    "price": 0.58
   },
   "covers:aec-mlb-mil-phi-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 37.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 21.9,
    "price": 0.465
   },
   "covers:aec-mlb-nym-tex-2026-09-22": {
@@ -881,8 +891,8 @@
    "price": 0.6
   },
   "covers:aec-mlb-stl-pit-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 37.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 21.9,
    "price": 0.565
   },
   "covers:aec-mlb-tb-nyy-2026-09-22-dh1": {
@@ -894,6 +904,11 @@
    "at": "2026-09-22T22:56:08+00:00",
    "lead_min": 8.9,
    "price": 0.54
+  },
+  "covers:aec-mlb-tb-nyy-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 46.9,
+   "price": 0.56
   },
   "covers:aec-mlb-tor-bal-2026-09-21": {
    "at": "2026-09-21T22:19:58+00:00",
@@ -1120,10 +1135,20 @@
    "lead_min": 3.8,
    "price": 0.685
   },
+  "espn_fpi:aec-mlb-cin-atl-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 56.9,
+   "price": 0.715
+  },
   "espn_fpi:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:41:08+00:00",
    "lead_min": 3.9,
    "price": 0.535
+  },
+  "espn_fpi:aec-mlb-cle-bos-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.565
   },
   "espn_fpi:aec-mlb-cws-cle-2026-09-16": {
    "at": "2026-09-16T16:43:01+00:00",
@@ -1211,8 +1236,8 @@
    "price": 0.425
   },
   "espn_fpi:aec-mlb-mil-phi-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 37.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 21.9,
    "price": 0.54
   },
   "espn_fpi:aec-mlb-mil-pit-2026-09-16": {
@@ -1321,8 +1346,8 @@
    "price": 0.6
   },
   "espn_fpi:aec-mlb-stl-pit-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 37.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 21.9,
    "price": 0.565
   },
   "espn_fpi:aec-mlb-tb-nyy-2026-09-22-dh1": {
@@ -1346,8 +1371,8 @@
    "price": 0.52
   },
   "espn_fpi:aec-mlb-tor-bal-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 32.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 16.9,
    "price": 0.48
   },
   "espn_fpi:aec-mlb-tor-tex-2026-09-18": {
@@ -1549,6 +1574,11 @@
    "at": "2026-09-22T23:11:10+00:00",
    "lead_min": 3.8,
    "price": 0.32
+  },
+  "mlb_fade_streak:aec-mlb-cin-atl-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 56.9,
+   "price": 0.29
   },
   "mlb_fade_streak:aec-mlb-det-cws-2026-09-17": {
    "at": "2026-09-17T23:33:47+00:00",
@@ -2211,8 +2241,8 @@
    "price": 0.655
   },
   "polymarket:aec-mlb-mil-phi-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 37.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 21.9,
    "price": 0.54
   },
   "polymarket:aec-mlb-mil-pit-2026-09-16": {
@@ -2260,14 +2290,19 @@
    "lead_min": 13.9,
    "price": 0.405
   },
+  "polymarket:aec-mlb-tb-nyy-2026-09-23": {
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 46.9,
+   "price": 0.445
+  },
   "polymarket:aec-mlb-tor-bal-2026-09-22": {
    "at": "2026-09-22T22:26:03+00:00",
    "lead_min": 8.9,
    "price": 0.52
   },
   "polymarket:aec-mlb-tor-bal-2026-09-23": {
-   "at": "2026-09-23T22:02:48+00:00",
-   "lead_min": 32.2,
+   "at": "2026-09-23T22:18:08+00:00",
+   "lead_min": 16.9,
    "price": 0.48
   },
   "polymarket:aec-mlb-wsh-det-2026-09-21": {
@@ -5716,5 +5751,5 @@
    "price": 0.83
   }
  },
- "updated": "2026-09-23T22:02:48+00:00"
+ "updated": "2026-09-23T22:18:08+00:00"
 }
