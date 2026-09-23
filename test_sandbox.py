@@ -3629,6 +3629,51 @@ ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
    "judged against backing the under on every listed over-2.5 market")
 
 
+print("\nthe feed carries a basket")
+import production as PROD
+
+def _cleg(mid, start, price, name):
+    return dict(market_id=mid, sport="tennis", side_a=name, side_b="Other", price_a=price,
+                price_b=round(1 - price + 0.02, 2), tradeable={"a": True, "b": True},
+                start=start, date=start[:10], venue="kalshi", start_source="tennisexplorer",
+                price_draw=None, untraded=False)
+
+
+_cu = {"tennis": [_cleg("KXATPMATCH-A", "2026-09-24T10:00:00+00:00", 0.78, "Alcaraz"),
+                  _cleg("KXATPMATCH-B", "2026-09-24T12:00:00+00:00", 0.76, "Sinner"),
+                  _cleg("KXATPMATCH-C", "2026-09-24T14:00:00+00:00", 0.77, "Zverev")]}
+_crow = [r for r in S.tennis_combo_rows(_cu) if r["market_id"].startswith("combo3")][0]
+_cq = dict(_crow, id="tennis_combo3:" + _crow["market_id"], source="tennis_combo3", bet=True,
+           pick="a", price=_crow["price_a"], status="open", logged="2026-09-23T09:00:00+00:00")
+eq(_crow["start_source"], "tennisexplorer",
+   "a basket inherits its legs' start source, so it can be verified like any other bet")
+eq([l["name"] for l in _crow["legs"]], ["Alcaraz", "Sinner", "Zverev"],
+   "and each leg carries its own name — a market ticker is not something a reader can check")
+ok(T.placeable(_cq), "a basket IS publishable: the feed can say exactly what to ask for")
+ok(PROD.start_verified(_cq), "and its start is verified through its legs")
+_clead = PROD.lead_from_quote(_cq, "tennis_combo3|tennis_combo", "2026-09-23T13:30:00+00:00")
+_cr = _clead["route"]
+eq((_cr["instrument"], _cr["how"]), ("combo", "request_quote"),
+   "the route says ASK for a quote — a basket is not a market anyone can hit, and the resting "
+   "book was 7.4% and 9.8% worse on the only baskets that had an ask at all")
+eq(_cr["collection"], S.COMBO_COLLECTION, "named in the collection the markup was measured through")
+close(_cr["max_price"], _crow["price_a"],
+      "max_price is the ceiling: the legs' product plus the measured markup, and a quote above "
+      "it is a different bet")
+eq([(l["market"], l["side"]) for l in _cr["legs"]],
+   [("KXATPMATCH-A", "yes"), ("KXATPMATCH-B", "yes"), ("KXATPMATCH-C", "yes")],
+   "every leg and which side of it")
+eq(_clead["bet"], {"kind": "combo", "n": 3, "all_must_win": True}, "and that all of them must win")
+ok(not T.placeable(dict(_cq, legs=[dict(l, venue="polymarket_us") for l in _cq["legs"]])),
+   "a leg somewhere other than Kalshi is not publishable: the collection lives on Kalshi")
+ok(not T.placeable(dict(_cq, price=1.4)), "nor a basket priced outside 0 to 1")
+ok(not T.placeable(dict(_cq, legs=[dict(l, name=None) for l in _cq["legs"]])),
+   "nor one whose legs cannot be named")
+ok(not T.placeable(dict(_cq, pick="b")),
+   "and only the side that needs every leg: 'any one loses' is not the bet the rule makes")
+ok(not PROD.start_verified(dict(_cq, start_source=None)),
+   "a basket with one unverified leg is held back — it cannot be bought once any leg is under way")
+
 print("\ndemotion clears the feed")
 
 import production as PROD

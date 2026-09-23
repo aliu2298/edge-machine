@@ -72,6 +72,10 @@ def start_verified(q):
     on a match already under way. Polymarket US publishes the match start itself, which is
     where the tennis lane's times come from.
     """
+    if q.get("venue") == "combo":
+        # A basket inherits the verification of its WORST leg -- the builder already reduced
+        # them to one -- because it cannot be bought once any single leg has started.
+        return q.get("start_source") in T.VERIFIED_STARTS
     if q.get("sport") in T.ROUTED_SPORTS:
         # Polymarket US publishes the contest's own start; a Kalshi row has one only once
         # something else has confirmed it (the tennis schedule, an ESPN fixture).
@@ -85,7 +89,12 @@ def lead_from_quote(q, pair_key, built):
     ko = _kickoff(q)
     label = S.SOURCES.get(q["source"], {}).get("label", q["source"]).split(" (")[0]
     date = ko.date().isoformat()
-    if q["sport"] in T.FEED_BETS:
+    if q.get("venue") == "combo":
+        legs = q.get("legs") or []
+        home = away = None
+        headline = f"{len(legs)}-leg combo: " + " + ".join(str(l.get("name"))[:18] for l in legs)
+        bet = {"kind": "combo", "n": len(legs), "all_must_win": True}
+    elif q["sport"] in T.FEED_BETS:
         bet = dict(T.FEED_BETS[q["sport"]])
         home, away = q["espn_home"], q["espn_away"]
         if bet["kind"] == "team_gte":
@@ -93,7 +102,7 @@ def lead_from_quote(q, pair_key, built):
             headline = f"{q['team']} to score {bet['n']}+"
         else:
             headline = "Over 1.5 goals"
-    else:
+    elif True:
         home, away = q["side_a"], q["side_b"]
         side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]
         bet = {"kind": "match_result", "side": side}
@@ -102,7 +111,19 @@ def lead_from_quote(q, pair_key, built):
     # instead, so a follower buys the contract this bet was priced on rather than one found
     # by matching two player names across two sites.
     route = None
-    if q["sport"] in T.ROUTED_SPORTS:
+    if q.get("venue") == "combo":
+        # A basket has no market to hit. The route therefore says what to ASK for, not what
+        # to buy: the collection, each leg and its side, and max_price -- the most this bet
+        # is worth paying, which is the product of the legs plus the markup Kalshi's RFQ was
+        # measured at. A quote above that is a different bet, and the resting book (7.4% and
+        # 9.8% worse on the only baskets that had an ask) is never it.
+        route = {"venue": "kalshi", "instrument": "combo", "how": "request_quote",
+                 "collection": S.COMBO_COLLECTION,
+                 "max_price": round(float(q["price"]), 4),
+                 "legs": [{"market": l["market_id"], "name": l.get("name"),
+                           "side": "yes" if l["pick"] == "a" else "no",
+                           "starts": str(l.get("start"))[:16]} for l in (q.get("legs") or [])]}
+    elif q["sport"] in T.ROUTED_SPORTS:
         # Kalshi lists a market per player inside one event, so backing either player is a
         # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,
         # so the second player is the No side of it.
@@ -110,10 +131,11 @@ def lead_from_quote(q, pair_key, built):
                  "outcome": home if q["pick"] == "a" else away,
                  "outcome_side": "yes" if (q["pick"] == "a" or q["venue"] == "kalshi") else "no"}
     lead = {
-        "id": f"{date}|{home}|{away}|{headline} · {label}",
+        "id": (f"{date}|{q['market_id']}|{headline} · {label}" if home is None
+               else f"{date}|{home}|{away}|{headline} · {label}"),
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
         "league": S.quote_league(q) or (S.SPORTS.get(q["sport"]) if q["sport"] in T.ROUTED_SPORTS else None),
-        "match": f"{home} v {away}",
+        "match": headline if home is None else f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,
         "status": STATUS.get(q["status"], "void"),

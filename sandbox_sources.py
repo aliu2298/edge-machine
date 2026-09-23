@@ -3035,6 +3035,12 @@ COMBO_LEGS = (2, 3, 4)
 # baskets, 12-18 makers each). The 4-leg figure sitting below the 3-leg one is day-to-day
 # noise across different legs, not a cheaper wrapper; each size uses its own measurement.
 COMBO_MARKUP = {2: 0.0084, 3: 0.0106, 4: 0.0066}
+# The Kalshi collection a basket is built in. Checked open on 2026-09-23, and it is the one
+# the markup above was measured through. A basket is not a market you can hit: you name the
+# legs to this collection and ASK for a quote. The same baskets' resting order books were
+# 7.4% and 9.8% worse on the one occasion any of them had an ask at all, so a follower who
+# takes the book instead of asking is not making this bet.
+COMBO_COLLECTION = "KXMVECROSSCATEGORY-R"
 
 
 def tennis_combo_rows(universe=None, now=None, used=None):
@@ -3095,8 +3101,19 @@ def tennis_combo_rows(universe=None, now=None, used=None):
                     spread=None, liquidity=None, volume=0.0, untraded=False,
                     tradeable={"a": True, "b": True},
                     start=min(str(r["start"]) for r, _, _ in pick),
+                    # A basket is only as verified as its WORST leg: one leg whose start is
+                    # an estimate makes the whole basket's start an estimate, because the
+                    # basket cannot be bought after any leg has begun.
+                    start_source=(None if any(not r.get("start_source") for r, _, _ in pick)
+                                  else sorted({str(r["start_source"]) for r, _, _ in pick})[0]),
                     date=day, url="https://kalshi.com/combos",
-                    legs=[dict(market_id=r["market_id"], pick=sd, venue=r.get("venue", "polymarket"))
+                    # The leg's own NAME travels with it. A basket is bought by naming its
+                    # legs to the venue, and "KXATPMATCH-26SEP24MARBOL yes" is not something
+                    # a reader can check against the match they think they are backing.
+                    legs=[dict(market_id=r["market_id"], pick=sd,
+                               venue=r.get("venue", "polymarket"),
+                               name=str(r["side_a"] if sd == "a" else r["side_b"]),
+                               start=str(r["start"]))
                           for r, sd, _ in pick],
                 ))
     return out

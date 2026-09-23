@@ -1421,6 +1421,17 @@ def placeable(q):
         return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
                 and (FEED_BETS[q["sport"]]["kind"] != "team_gte" or bool(q.get("team"))))
+    # A basket. It is publishable because the feed can say exactly what to ask for -- the
+    # legs, which side of each, and the most it is worth paying -- even though there is no
+    # single market to hit. Every leg must be a Kalshi market, since that is where the
+    # collection lives, and the basket's own price is the ceiling.
+    if q.get("venue") == "combo":
+        legs = q.get("legs") or []
+        return bool(
+            q.get("pick") == "a" and legs and len(legs) in S.COMBO_MARKUP
+            and q.get("price") and 0 < float(q["price"]) < 1
+            and all(l.get("venue") == "kalshi" and l.get("market_id") and l.get("pick") in ("a", "b")
+                    and l.get("name") for l in legs))
     if q.get("sport") in ROUTED_SPORTS:
         # A contest with no league table to look a fixture up in: the lead carries the market
         # it was priced on and which outcome to back. Polymarket US lists a match as ONE
