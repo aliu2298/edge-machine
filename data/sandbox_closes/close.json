@@ -240,10 +240,20 @@
    "lead_min": 54.7,
    "price": 0.565
   },
+  "covers:aec-mlb-cin-atl-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 59.6,
+   "price": 0.71
+  },
   "covers:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 41.0,
    "price": 0.535
+  },
+  "covers:aec-mlb-cle-bos-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 54.6,
+   "price": 0.565
   },
   "covers:aec-mlb-kc-hou-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
@@ -275,6 +285,11 @@
    "lead_min": 36.0,
    "price": 0.565
   },
+  "covers:aec-mlb-mil-phi-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 24.6,
+   "price": 0.465
+  },
   "covers:aec-mlb-phi-nym-2026-09-17": {
    "at": "2026-09-17T23:04:51+00:00",
    "lead_min": 10.1,
@@ -289,6 +304,16 @@
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 36.0,
    "price": 0.6
+  },
+  "covers:aec-mlb-stl-pit-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 24.6,
+   "price": 0.565
+  },
+  "covers:aec-mlb-tb-nyy-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 49.6,
+   "price": 0.56
   },
   "covers:aec-mlb-tor-bal-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
@@ -425,10 +450,20 @@
    "lead_min": 55.8,
    "price": 0.575
   },
+  "espn_fpi:aec-mlb-cin-atl-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 59.6,
+   "price": 0.71
+  },
   "espn_fpi:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 41.0,
    "price": 0.535
+  },
+  "espn_fpi:aec-mlb-cle-bos-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 54.6,
+   "price": 0.565
   },
   "espn_fpi:aec-mlb-det-cws-2026-09-17": {
    "at": "2026-09-17T23:04:51+00:00",
@@ -460,6 +495,11 @@
    "lead_min": 32.1,
    "price": 0.415
   },
+  "espn_fpi:aec-mlb-mil-phi-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 24.6,
+   "price": 0.54
+  },
   "espn_fpi:aec-mlb-min-sf-2026-09-23": {
    "at": "2026-09-23T19:01:51+00:00",
    "lead_min": 43.1,
@@ -490,10 +530,20 @@
    "lead_min": 36.0,
    "price": 0.6
   },
+  "espn_fpi:aec-mlb-stl-pit-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 24.6,
+   "price": 0.565
+  },
   "espn_fpi:aec-mlb-tor-bal-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 31.0,
    "price": 0.52
+  },
+  "espn_fpi:aec-mlb-tor-bal-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 19.6,
+   "price": 0.48
   },
   "espn_fpi:aec-mlb-wsh-det-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
@@ -559,6 +609,11 @@
    "at": "2026-09-14T22:44:07+00:00",
    "lead_min": 25.9,
    "price": 0.575
+  },
+  "mlb_fade_streak:aec-mlb-cin-atl-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 59.6,
+   "price": 0.295
   },
   "mlb_fade_streak:aec-mlb-det-cws-2026-09-17": {
    "at": "2026-09-17T23:04:51+00:00",
@@ -745,6 +800,11 @@
    "lead_min": 55.7,
    "price": 0.4
   },
+  "polymarket:aec-mlb-mil-phi-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 24.6,
+   "price": 0.54
+  },
   "polymarket:aec-mlb-min-laa-2026-09-17": {
    "at": "2026-09-18T01:15:44+00:00",
    "lead_min": 22.3,
@@ -760,10 +820,20 @@
    "lead_min": 36.0,
    "price": 0.405
   },
+  "polymarket:aec-mlb-tb-nyy-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 49.6,
+   "price": 0.445
+  },
   "polymarket:aec-mlb-tor-bal-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 31.0,
    "price": 0.52
+  },
+  "polymarket:aec-mlb-tor-bal-2026-09-23": {
+   "at": "2026-09-23T22:15:25+00:00",
+   "lead_min": 19.6,
+   "price": 0.48
   },
   "polymarket:aec-mlb-wsh-det-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
@@ -959,16 +1029,6 @@
    "at": "2026-09-15T12:09:46+00:00",
    "lead_min": 5.2,
    "price": 0.66
-  },
-  "sportsgambler:KXBRASILEIROBGAME-26SEP13FORCEA": {
-   "at": "2026-09-13T21:25:00+00:00",
-   "lead_min": 5.0,
-   "price": 0.43
-  },
-  "sportsgambler:KXBRASILEIROBGAME-26SEP13GRNCUI": {
-   "at": "2026-09-13T21:25:00+00:00",
-   "lead_min": 5.0,
-   "price": 0.61
   },
   "spot:KXSOLD-26SEP2217-T115.9999": {
    "at": "2026-09-22T18:50:45+00:00",
@@ -1511,5 +1571,5 @@
    "price": 0.61
   }
  },
- "updated": "2026-09-23T19:01:51+00:00"
+ "updated": "2026-09-23T22:15:25+00:00"
 }
