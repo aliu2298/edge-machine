@@ -754,7 +754,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     # What a pair IS lives in one place per sport now ("How each rule is defined"), not in
     # every row. A table is for comparing records; a paragraph inside a row is read once and
     # then scrolled past forever, and 26 of them made the soccer section unreadable.
-    gone = f'<div class="sm mut">{esc(str(r["gone"]))}</div>' if r.get("gone") else ""
+    gone = ""
     # The rank is greyed while a pair is too thin to read, so the number never pretends to
     # more than it has. An unranked pair shows a dash, not a position it has not earned.
     rk = ('<span class="mut">—</span>' if rank is None else
@@ -784,13 +784,17 @@ def definitions(rs):
         if not note:
             continue
         key = r["meta"]["label"].split(" (")[0]
-        seen.setdefault(key, [note, set(), r["meta"]["kind"]])
+        seen.setdefault(key, [note, set(), r["meta"]["kind"], []])
         sfx = _scope(r["sport"])
         seen[key][1].add(S.SCOPE_LABEL[sfx] if sfx else "League")
+        # Why a pair was retired belongs with its definition, not in the row: it is the last
+        # thing written about it and the least often read.
+        if r.get("gone") and str(r["gone"]) not in seen[key][3]:
+            seen[key][3].append(str(r["gone"]))
     if not seen:
         return ""
     items = []
-    for name, (note, scopes, kind) in sorted(seen.items()):
+    for name, (note, scopes, kind, why) in sorted(seen.items()):
         where = ", ".join(sorted(scopes, key=lambda x: ("League", "Cups", "Internationals").index(x)
                                  if x in ("League", "Cups", "Internationals") else 9))
         # A cup or international twin is a SEPARATE record on a different set of competitions,
@@ -799,9 +803,11 @@ def definitions(rs):
         extra = "".join(
             f'<div class="sm"><b>{esc(S.SCOPE_NOTE[sfx].format(", ".join((S.CUP_FRAGS if sfx == "_cup" else S.INTL_FRAGS).values())))}</b></div>'
             for sfx, lab in S.SCOPE_LABEL.items() if lab in scopes)
+        retired = "".join(f'<div class="sm"><b>Retired.</b> <span class="mut">{esc(w)}</span></div>'
+                          for w in why)
         items.append(f'<div class="def"><b>{esc(name)}</b>'
                      f'<span class="mut sm"> · {esc(kind)} · {esc(where)}</span>'
-                     f'{extra}<div class="sm mut">{esc(note)}</div></div>')
+                     f'{extra}{retired}<div class="sm mut">{esc(note)}</div></div>')
     return (f'<details class="sport"><summary><b>How each rule is defined</b>'
             f'<span class="mut"> · {len(items)} of them, as registered</span></summary>'
             f'<div class="note sm">What each one backs, where the claim came from, and what was '
@@ -975,6 +981,35 @@ and the verdict column above goes on reading the whole record. A competition get
 {''.join(folds)}</details>"""
 
 
+def legend():
+    """What the columns mean — once, folded, for a reader who wants it.
+
+    It used to be repeated in full under every sport, which is ten copies of the same
+    paragraph in a page whose job is to let someone compare numbers.
+    """
+    return f"""<details class="sport"><summary><b>How to read this</b>
+<span class="mut"> · what the columns mean</span></summary>
+<div class="note sm"><b>Record</b> is settled bets won\u2013lost on the US exchanges, flat
+${int(T.STAKE)} a bet at the price available before the start. <b>Won v priced</b> is wins against
+the wins the prices implied \u2014 beating that is the whole test, and the ranking sorts on it per
+bet rather than on ROI, which mostly reflects the prices a pair happened to be offered.
+<b>Verdict</b> is read only at {MIN_N}+ settled bets: <i>Proven edge</i> is ahead of the prices by
+z \u2265 2, <i>Working</i> is ahead, <i>No edge</i> is not; under {MIN_N} a pair is only
+<i>Promising</i> or <i>Behind so far</i>, and under {EARLY_N} it is <i>Too early</i> and is not
+ranked at all. <b>If faded</b> is what backing the OTHER side of the same bets would have
+returned \u2014 not this row's ROI with the sign flipped, since both sides of a book are sold
+above fair, so fading an average rule loses that overround plus its fee; a large positive there
+means the rule is picking the wrong side, which is a different complaint from having no edge.
+<b>v the close</b> is how far the price moved toward the pick between the bet and the start, in
+cents, with t \u2014 the mean over its own standard error. It answers a different question and
+answers it sooner: a win record carries the outcome's own noise, so near an even price a real 2%
+edge needs thousands of settled bets to reach z 2, while the same closing prices read in tens.
+Called <b>ahead</b> or <b>behind</b> at t {T.CLV_T:g} over {T.CLV_MIN_N}+ fresh closes;
+<b>level</b> is a real answer, not a missing one. Beating the close is not the same as making
+money, and nothing is promoted or retired on it alone. Production is entered by hand.</div>
+</details>"""
+
+
 def _base_sport(sport):
     """The market a pair trades, with its scope stripped: soccer_o15_cup -> soccer_o15."""
     for sfx in S.SCOPE_LABEL:
@@ -983,7 +1018,7 @@ def _base_sport(sport):
     return str(sport)
 
 
-def market_folds(d, rs):
+def market_folds(d, rs, fam):
     """Soccer's rules grouped by the MARKET they trade, rather than listed flat.
 
     Soccer is not one test, it is eight: over 1.5, over 2.5, under 3.5, a side to score 1+,
@@ -1012,10 +1047,11 @@ def market_folds(d, rs):
             bits.append(f"both sides cost {hold * 100:.1f}%")
         if prod:
             bits.append(f"{prod} in Production")
-        # The bare "soccer" domain is the match-winner market; inside a section already
-        # titled Soccer, "Soccer" names nothing.
-        name = ("Match winner" if base == "soccer"
-                else S.SPORTS.get(base, base).split(" · ")[-1])
+        # A sport key whose label IS the section's own title names nothing — "Soccer" under
+        # Soccer, "Tennis" under Tennis. That domain is the match-winner market, so it is
+        # called what it is. Climate and Commodities under Markets keep their own names.
+        full = S.SPORTS.get(base, base)
+        name = "Match winner" if full == fam else full.split(" · ")[-1]
         out.append(f"""<details class="sport"><summary><b>{esc(name)}</b>
 <span class="mut"> · {esc(' · '.join(bits))}</span></summary>
 <div class="tbl"><table>{SPORT_HEAD}{''.join(_row(r, rk, pv, in_market=True) for rk, pv, r in ranked)}</table></div></details>""")
@@ -1025,8 +1061,6 @@ def market_folds(d, rs):
 # Soccer only, for now: it is the one sport where the same rule meets a materially
 # different market in each competition, and the one with enough competitions to sort.
 BY_LEAGUE = ("Soccer",)
-# ...and the one with enough different MARKETS that a flat list of its rules is unreadable.
-BY_MARKET = ("Soccer",)
 
 
 def sport_sections(d, rows):
@@ -1051,23 +1085,7 @@ def sport_sections(d, rows):
                         f"on {best['a']['n']}")
         out.append(f"""<details class="sport"><summary><b>{esc(f)}</b>
 <span class="mut"> · {esc(' · '.join(bits))}</span></summary>
-<div class="note sm">Ranked best to worst by <b>wins above what the prices implied, per bet</b> —
-not by ROI, which mostly reflects the prices a pair happened to be offered. A pair is ranked
-once it has {MIN_N} settled; between {EARLY_N} and {MIN_N} it ranks below every readable pair and
-is greyed; under {EARLY_N}, and once retired, it is not ranked at all.
-<b>If faded</b> is what backing the OTHER side of the same bets would have returned. It is not
-this row's ROI with the sign flipped — both sides of a book are sold above fair, so fading an
-average rule loses that overround plus its fee. A large positive there means the rule is
-picking the wrong side, which is a different complaint from having no edge.
-<b>v the close</b> is how far the price moved toward this pair's pick between its bet and the
-start, in cents per bet, with t — the mean over its own standard error. It answers a different
-question from the record, and far sooner: a win record carries the outcome's own noise, so on a
-market priced near even a real 2% edge needs thousands of settled bets to reach z 2, while the
-same rule's closing prices can read in tens. Read at {T.CLV_MIN_N}+ fresh closes and called
-<b>ahead</b> or <b>behind</b> at t {T.CLV_T:g}; <b>level</b> is a real answer, not a missing one.
-Beating the close is not the same as making money, and nothing is promoted or retired on it
-alone.</div>
-{market_folds(d, rs) if f in BY_MARKET else '<div class="tbl"><table>' + SPORT_HEAD + ''.join(_row(r, rk, prov) for rk, prov, r in ranked) + '</table></div>'}
+{market_folds(d, rs, f) if len({_base_sport(r["sport"]) for r in rs}) > 1 else '<div class="tbl"><table>' + SPORT_HEAD + ''.join(_row(r, rk, prov) for rk, prov, r in ranked) + '</table></div>'}
 {league_panel(d, rs) if f in BY_LEAGUE else ''}
 {definitions(rs)}</details>""")
     return "\n".join(out)
@@ -1269,19 +1287,16 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>{len(rows)}</b></button><button type="button" data-lane="trading">Trading<b>{len(trade_rules)}</b></button></div>
 
 <div data-lane="sports">
-<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
+<details class="sec"><summary><h2>What the Sandbox says</h2></summary>
 <div class="note">{insights(shown)}</div></details>
 
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
 <div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
+{legend()}
 {sport_sections(d, shown)}
 {eliminated_section(rows)}
 {reconcile(d, rows)}
-<div class="note sm"><b>Record</b>: settled bets won–lost on the US exchanges, flat ${int(T.STAKE)} a bet at the price
-available before the start. <b>Won v priced</b>: wins against the wins the prices implied — beating that is the
-whole test. <b>Verdict</b>: read only at {MIN_N}+ settled bets — <i>Proven edge</i> is ahead of the prices by
-z ≥ 2, <i>Working</i> is ahead, <i>No edge</i> is not; under {MIN_N} a pair is only <i>Promising</i> or
-<i>Behind so far</i>, and under {EARLY_N} it is <i>Too early</i>. Production is entered by hand. Click a name for what it is.</div>
+
 </details>
 
 <details class="sec"><summary><h2>Running now ({n_live:,})</h2></summary>

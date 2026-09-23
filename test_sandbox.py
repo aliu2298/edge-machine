@@ -3266,7 +3266,11 @@ _prod_bad = _rk("prodbad", 60, 30, 34.0, prod=True)
 eq([r["name"] for _rk_, _p, r in RANKB.rank_rows([_prod_bad, _mid])], ["mid", "prodbad"],
    "a Production pair does NOT float to the top: being behind the price is the thing to see")
 _html = RANKB.sport_sections({"quotes": []}, [_strong, _weak, _fluke])
-ok("Ranked best to worst" in _html, "the section says what it is ranked on")
+_lg = RANKB.legend()
+ok(all(x in _lg for x in ("Won v priced", "If faded", "v the close", "Verdict")),
+   "every column the tables carry is explained once, in the legend")
+ok("Ranked best to worst" not in _html and "Record</b>: settled bets" not in _html,
+   "and not repeated under every sport: a section carries records, not paragraphs")
 ok('class="rank">1<' in _html, "and the leader carries rank 1")
 
 print("\nthe fade column: what the other side would have done")
