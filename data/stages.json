@@ -430,6 +430,11 @@
    "pair": "olbg|boxing",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-09-23T12:40:39+00:00",
+   "kind": "reset",
+   "what": "tennis favourite band narrowed to 0.75-0.80 and taken out of Production; the rule and its 2/3/4-leg combos count from zero"
   }
  ],
  "pairs": {
@@ -510,25 +515,25 @@
    "ready_since": "2026-09-18T00:51:24+00:00",
    "stage": "production"
   },
+  "tennis_combo2|tennis_combo": {
+   "reset": "2026-09-23: band narrowed to 0.75-0.80; the wide-band record is on file but counts toward nothing here",
+   "since": "2026-09-23T12:40:39+00:00",
+   "stage": "sandbox"
+  },
+  "tennis_combo3|tennis_combo": {
+   "reset": "2026-09-23: band narrowed to 0.75-0.80; the wide-band record is on file but counts toward nothing here",
+   "since": "2026-09-23T12:40:39+00:00",
+   "stage": "sandbox"
+  },
+  "tennis_combo4|tennis_combo": {
+   "reset": "2026-09-23: band narrowed to 0.75-0.80; the wide-band record is on file but counts toward nothing here",
+   "since": "2026-09-23T12:40:39+00:00",
+   "stage": "sandbox"
+  },
   "tennis_fav_band|tennis": {
-   "by_hand": "2026-09-17",
-   "entry": {
-    "base_roi": 0.0153,
-    "clv": -0.0008,
-    "clv_n": 141,
-    "n": 150,
-    "own_roi": 0.0647,
-    "roi": 0.0647,
-    "roi_fee": 0.0526,
-    "span_days": 3.0595,
-    "weeks": 0,
-    "z": 1.6723
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-17T21:42:13+00:00",
-   "ready_at": "2026-09-17T21:49:17+00:00",
-   "ready_since": "2026-09-17T21:49:17+00:00",
-   "stage": "production"
+   "reset": "2026-09-23: band narrowed to 0.75-0.80; the wide-band record is on file but counts toward nothing here",
+   "since": "2026-09-23T12:40:39+00:00",
+   "stage": "sandbox"
   }
  },
  "updated": "2026-09-23T11:30:19+00:00"

@@ -158,7 +158,15 @@ PAIR_OVERRIDES = {
     # prices that were already right (z +1.64 against the 2.5 the old gate asked for). It does
     # clear every other criterion — 149 settled, +6.4% against +3.8% for backing the
     # favourite on every match, profitable in both halves and without its biggest win.
-    "tennis_fav_band|tennis": dict(moved_on="2026-09-17", production_at=149),
+    #   tennis favourite band — REMOVED 2026-09-23, back to the Sandbox, as asked, and its
+    #   band narrowed from 0.75-0.90 to 0.75-0.80 at the same time. Over 446 settled it was
+    #   +2.63% at z +1.68, but the whole of that sat in the cheap third: 0.75-0.80 ran +5.5%
+    #   (z +1.75) on 181 bets and 0.80-0.90 ran +0.7% on 265, which is flat and the reverse of
+    #   the favourite-longshot bias it was built on. It was also half as good after promotion
+    #   as before it (+1.22% on 274 v +4.89% on 172), and its closing prices had been saying so
+    #   for a week: -0.85c a bet over 437 closes, t -3.66. The narrowing was found IN that
+    #   record, so it is a new claim and the record cannot test it — hence the reset, and hence
+    #   Production is not the place for it until a narrow-band record exists.
     # 2026-09-18, as asked: the two rules that were published from the Leads board move here,
     # so that Production is the single list everything downstream reads.
     #   over 1.5 — REMOVED 2026-09-21, back to the Sandbox. It was the only Production pair

@@ -201,19 +201,30 @@ SOURCES = {
              "significant across the rules tried, and on 14 priced matches the market already "
              "charged for it. The Sandbox decides."),
     "tennis_fav_band": dict(
-        label="Tennis favourite-band rule (priced 0.75-0.90)", kind="Rule", connected=True,
+        label="Tennis favourite-band rule (priced 0.75-0.80)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis"], baseline="favourite_population",
-        note="Pre-registered 2026-09-14. Back the player the exchange prices between 0.75 and "
-             "0.90 (the ask), on every tennis match the Sandbox lists. Found in 427 settled "
-             "matches over four days: players priced 0.75-0.90 won 86.4% against 81.1% priced "
-             "(+5.2% after fees, z +1.26, 88 bets) — the favourite-longshot bias, which is well "
-             "documented in tennis. Not significant on its own. Judged against backing the "
-             "favourite on every match over the same period, so it only counts if this band "
-             "beats favourites in general."),
+        note="NARROWED AND RESET 2026-09-23, counting from zero. Back the player the exchange "
+             "prices between 0.75 and 0.80 (the ask), on every tennis match the Sandbox lists. "
+             "It ran on 0.75-0.90 from 2026-09-14 and reached 377-69 over 446 settled, +2.63% "
+             "after fees, z +1.68 — but the edge was not spread across that band. 0.75-0.80 "
+             "returned +5.5% (149 won v 139.1 priced, z +1.75) on 181 bets; 0.80-0.90 returned "
+             "+0.7% on the other 265, which is flat. That is the REVERSE of the "
+             "favourite-longshot bias the rule was built on, which says the bias grows as the "
+             "price shortens. Two things follow and both are unwelcome: the narrowing was found "
+             "IN this record, so it is a fitted claim that none of those 446 bets can test, and "
+             "the rule's stated mechanism did not survive its own data. So it left Production "
+             "the same day and starts again at zero; the old record stays on file under "
+             "Reference. The closing prices were the warning all along — -0.85c a bet over 437 "
+             "closes, t -3.66, the market drifting away from its picks while the win record "
+             "said otherwise. Judged against backing the favourite on every match over the same "
+             "period, so it only counts if this band beats favourites in general."),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="Pre-registered 2026-09-21, before it logged anything. Cut each day's "
+        note="NARROWED AND RESET 2026-09-23 with the single-leg rule it wraps: its legs are "
+             "now priced 0.75-0.80, not 0.75-0.90, so a basket struck before that date counts "
+             "toward nothing here and stays on file under Reference — a basket of narrow legs "
+             "is a different contract. Cut each day's "
              "favourite-band legs, in start-time order, into consecutive baskets of 2 and buy "
              "each basket as ONE combo contract, which "
              "pays only if all 2 win. A combo multiplies a rule's edge rather "
@@ -227,7 +238,10 @@ SOURCES = {
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="Pre-registered 2026-09-21, before it logged anything. Cut each day's "
+        note="NARROWED AND RESET 2026-09-23 with the single-leg rule it wraps: its legs are "
+             "now priced 0.75-0.80, not 0.75-0.90, so a basket struck before that date counts "
+             "toward nothing here and stays on file under Reference — a basket of narrow legs "
+             "is a different contract. Cut each day's "
              "favourite-band legs, in start-time order, into consecutive baskets of 3 and buy "
              "each basket as ONE combo contract, which "
              "pays only if all 3 win. A combo multiplies a rule's edge rather "
@@ -241,7 +255,9 @@ SOURCES = {
     "tennis_combo4": dict(
         label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="Pre-registered 2026-09-22, before it logged anything. The same construction as the "
+        note="NARROWED AND RESET 2026-09-23 with the single-leg rule it wraps: its legs are now "
+             "priced 0.75-0.80, not 0.75-0.90, so a basket struck before that date counts toward "
+             "nothing here and stays on file under Reference. The same construction as the "
              "2- and 3-leg rules at four legs: each day's favourite-band legs, in start-time order, "
              "cut into consecutive baskets of four, each bought as ONE combo contract that pays "
              "only if all four win. At m = 1.042 a leg, four legs would run at about 1.18 over the "
@@ -2961,6 +2977,24 @@ def _rule_rows(sport, universe):
 
 
 FAV_BAND = (0.75, 0.90)
+# Narrowed for TENNIS on 2026-09-23, and for tennis only. Over 446 settled bets the whole
+# 0.75-0.90 band was +2.63% after fees at z +1.68, but split by price the edge was not spread
+# across it: 0.75-0.80 ran +5.5% (149 won v 139.1 priced, z +1.75) on 181 bets, while
+# 0.80-0.85 and 0.85-0.90 were +0.6% and +0.8% on 265 bets between them -- flat, and inside
+# the noise. That is the opposite of the favourite-longshot story the rule was built on,
+# which predicts the bias grows as the price shortens.
+#
+# The narrowing was found in that record, so it is NOT a result: it is a new claim, fitted to
+# the data it came from, and the only way to learn anything from it is to start again. The
+# pair is therefore taken out of Production and its clock reset, so nothing it did on the
+# wide band counts toward the narrow one. MMA keeps the full band -- its record is four bets
+# and there is nothing in it to narrow on.
+BAND_BY_SPORT = {"tennis": (0.75, 0.80)}
+
+
+def fav_band(sport):
+    """The favourite band this sport backs. See BAND_BY_SPORT."""
+    return BAND_BY_SPORT.get(str(sport).split("_")[0], FAV_BAND)
 TT_BAND = (0.55, 0.60)
 
 
@@ -3023,7 +3057,10 @@ def tennis_combo_rows(universe=None, now=None, used=None):
     used = used or {}
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
     now = now or datetime.now(timezone.utc)
-    lo, hi = FAV_BAND
+    # The legs are the tennis rule's own picks, so they follow its band. Narrowed with it on
+    # 2026-09-23, which resets these records too: a basket of 0.75-0.80 legs is not the same
+    # contract as a basket of 0.75-0.90 legs, and counting them together would hide both.
+    lo, hi = fav_band("tennis")
     by_day = {}
     for r in rows:
         if r.get("untraded") or r.get("price_draw") is not None:
@@ -3209,8 +3246,8 @@ def apply_tennis_starts(rows, schedule=None, now=None):
 
 
 def fetch_tennis_fav_band(sport, universe=None):
-    """FAV_BAND. Used for tennis and, unchanged, for MMA (mma_fav_band)."""
-    return band_picks(sport, FAV_BAND, universe)
+    """The sport's own favourite band: narrowed for tennis, the full band for MMA."""
+    return band_picks(sport, fav_band(sport), universe)
 
 
 def fetch_tt_band(sport, universe=None):

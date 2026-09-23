@@ -1015,12 +1015,10 @@ text-transform:uppercase;letter-spacing:.07em;text-align:left;white-space:nowrap
 {sel} td[data-l="Rule or tipster"],{sel} td[data-l="Competition"],{sel} td[data-l="Rule"],
 {sel} td[data-l="Contest"],{sel} td[data-l="Source"]{{display:block;text-align:left;
 padding:0 0 7px}}
-{sel} td[data-l="Rule or tipster"]>.sm,{sel} td[data-l="Competition"]>.sm,
-{sel} td[data-l="Rule"]>.sm,{sel} td[data-l="Contest"]>.sm,
-{sel} td[data-l="Source"]>.sm{{text-align:left}}
-{sel} td[data-l="Rule or tipster"]::before,{sel} td[data-l="Competition"]::before,
-{sel} td[data-l="Rule"]::before,{sel} td[data-l="Contest"]::before,
-{sel} td[data-l="Source"]::before{{content:none}}
+{sel} td:first-child:not([data-l="#"]),{sel} td[data-l="#"]+td{{display:block;
+text-align:left;padding:0 0 7px}}
+{sel} td:first-child:not([data-l="#"])::before,{sel} td[data-l="#"]+td::before{{content:none}}
+{sel} td:first-child:not([data-l="#"])>.sm,{sel} td[data-l="#"]+td>.sm{{text-align:left}}
 {sel} td[data-l=""]::before{{content:none}}
 {sel} td[data-empty]{{display:none}}
 {sel} td[data-l="#"]>.sm{{flex:0 0 auto;text-align:left}}
