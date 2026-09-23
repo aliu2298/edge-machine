@@ -160,6 +160,11 @@
    "lead_min": 39.1,
    "price": 0.57
   },
+  "covers:aec-mlb-hou-sea-2026-09-22": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 41.0,
+   "price": 0.555
+  },
   "covers:aec-mlb-kc-hou-2026-09-17": {
    "at": "2026-09-17T23:08:49+00:00",
    "lead_min": 6.2,
@@ -300,6 +305,11 @@
    "lead_min": 31.2,
    "price": 0.49
   },
+  "espn_fpi:aec-mlb-hou-sea-2026-09-22": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 41.0,
+   "price": 0.555
+  },
   "espn_fpi:aec-mlb-kc-hou-2026-09-17": {
    "at": "2026-09-17T23:08:49+00:00",
    "lead_min": 6.2,
@@ -314,6 +324,11 @@
    "at": "2026-09-19T21:48:18+00:00",
    "lead_min": 51.7,
    "price": 0.52
+  },
+  "espn_fpi:aec-mlb-laa-ath-2026-09-22": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 41.0,
+   "price": 0.505
   },
   "espn_fpi:aec-mlb-lad-cin-2026-09-16": {
    "at": "2026-09-16T22:24:54+00:00",
@@ -339,6 +354,11 @@
    "at": "2026-09-19T00:42:48+00:00",
    "lead_min": 55.2,
    "price": 0.495
+  },
+  "espn_fpi:aec-mlb-min-sf-2026-09-22": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 46.0,
+   "price": 0.45
   },
   "espn_fpi:aec-mlb-phi-nym-2026-09-17": {
    "at": "2026-09-17T23:08:49+00:00",
@@ -1295,10 +1315,20 @@
    "lead_min": 41.1,
    "price": 0.88
   },
+  "tennis_fav_band:aec-itfwo-darkho-marshi-2026-09-23": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 31.0,
+   "price": 0.96
+  },
   "tennis_fav_band:aec-itfwo-hancha-kaieva-2026-09-22": {
    "at": "2026-09-22T19:17:40+00:00",
    "lead_min": 12.3,
    "price": 0.76
+  },
+  "tennis_fav_band:aec-itfwo-harara-hirabe-2026-09-23": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 1.0,
+   "price": 0.88
   },
   "tennis_fav_band:aec-itfwo-hirabe-miomus-2026-09-17": {
    "at": "2026-09-17T00:55:14+00:00",
@@ -1309,6 +1339,11 @@
    "at": "2026-09-22T00:18:56+00:00",
    "lead_min": 41.1,
    "price": 0.82
+  },
+  "tennis_fav_band:aec-itfwo-jialu-cheshe-2026-09-23": {
+   "at": "2026-09-23T00:59:01+00:00",
+   "lead_min": 1.0,
+   "price": 0.83
   },
   "tennis_fav_band:aec-itfwo-jiayan-zijjia-2026-09-20": {
    "at": "2026-09-19T23:39:57+00:00",
@@ -1546,5 +1581,5 @@
    "price": 0.83
   }
  },
- "updated": "2026-09-22T22:26:38+00:00"
+ "updated": "2026-09-23T00:59:01+00:00"
 }
