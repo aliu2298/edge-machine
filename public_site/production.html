@@ -122,12 +122,10 @@ html:not([data-view="table"]) td[data-l="#"]::before{content:none}
 html:not([data-view="table"]) td[data-l="Rule or tipster"],html:not([data-view="table"]) td[data-l="Competition"],html:not([data-view="table"]) td[data-l="Rule"],
 html:not([data-view="table"]) td[data-l="Contest"],html:not([data-view="table"]) td[data-l="Source"]{display:block;text-align:left;
 padding:0 0 7px}
-html:not([data-view="table"]) td[data-l="Rule or tipster"]>.sm,html:not([data-view="table"]) td[data-l="Competition"]>.sm,
-html:not([data-view="table"]) td[data-l="Rule"]>.sm,html:not([data-view="table"]) td[data-l="Contest"]>.sm,
-html:not([data-view="table"]) td[data-l="Source"]>.sm{text-align:left}
-html:not([data-view="table"]) td[data-l="Rule or tipster"]::before,html:not([data-view="table"]) td[data-l="Competition"]::before,
-html:not([data-view="table"]) td[data-l="Rule"]::before,html:not([data-view="table"]) td[data-l="Contest"]::before,
-html:not([data-view="table"]) td[data-l="Source"]::before{content:none}
+html:not([data-view="table"]) td:first-child:not([data-l="#"]),html:not([data-view="table"]) td[data-l="#"]+td{display:block;
+text-align:left;padding:0 0 7px}
+html:not([data-view="table"]) td:first-child:not([data-l="#"])::before,html:not([data-view="table"]) td[data-l="#"]+td::before{content:none}
+html:not([data-view="table"]) td:first-child:not([data-l="#"])>.sm,html:not([data-view="table"]) td[data-l="#"]+td>.sm{text-align:left}
 html:not([data-view="table"]) td[data-l=""]::before{content:none}
 html:not([data-view="table"]) td[data-empty]{display:none}
 html:not([data-view="table"]) td[data-l="#"]>.sm{flex:0 0 auto;text-align:left}
@@ -150,12 +148,10 @@ html[data-view="cards"] td[data-l="#"]::before{content:none}
 html[data-view="cards"] td[data-l="Rule or tipster"],html[data-view="cards"] td[data-l="Competition"],html[data-view="cards"] td[data-l="Rule"],
 html[data-view="cards"] td[data-l="Contest"],html[data-view="cards"] td[data-l="Source"]{display:block;text-align:left;
 padding:0 0 7px}
-html[data-view="cards"] td[data-l="Rule or tipster"]>.sm,html[data-view="cards"] td[data-l="Competition"]>.sm,
-html[data-view="cards"] td[data-l="Rule"]>.sm,html[data-view="cards"] td[data-l="Contest"]>.sm,
-html[data-view="cards"] td[data-l="Source"]>.sm{text-align:left}
-html[data-view="cards"] td[data-l="Rule or tipster"]::before,html[data-view="cards"] td[data-l="Competition"]::before,
-html[data-view="cards"] td[data-l="Rule"]::before,html[data-view="cards"] td[data-l="Contest"]::before,
-html[data-view="cards"] td[data-l="Source"]::before{content:none}
+html[data-view="cards"] td:first-child:not([data-l="#"]),html[data-view="cards"] td[data-l="#"]+td{display:block;
+text-align:left;padding:0 0 7px}
+html[data-view="cards"] td:first-child:not([data-l="#"])::before,html[data-view="cards"] td[data-l="#"]+td::before{content:none}
+html[data-view="cards"] td:first-child:not([data-l="#"])>.sm,html[data-view="cards"] td[data-l="#"]+td>.sm{text-align:left}
 html[data-view="cards"] td[data-l=""]::before{content:none}
 html[data-view="cards"] td[data-empty]{display:none}
 html[data-view="cards"] td[data-l="#"]>.sm{flex:0 0 auto;text-align:left}
@@ -180,17 +176,17 @@ details.fold details.fold>summary{margin:12px 0 6px;font-size:14px}</style>
 </head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-23 11:30 UTC</div>
+<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-23 12:53 UTC</div>
 <div class="nav"><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
 
 <div class="tiles">
-<div class="tile"><b>4</b><span>pairs in Production</span></div>
-<div class="tile"><b>10</b><span>leads still to come</span></div>
-<div class="tile"><b>250/298</b><span>recent leads landed</span></div>
-<div class="tile"><b style="font-size:17px">2026-09-23 11:45</b><span>next lead (UTC)</span></div>
+<div class="tile"><b>3</b><span>pairs in Production</span></div>
+<div class="tile"><b>3</b><span>leads still to come</span></div>
+<div class="tile"><b>14/15</b><span>recent leads landed</span></div>
+<div class="tile"><b style="font-size:17px">2026-09-26 03:00</b><span>next lead (UTC)</span></div>
 </div>
 
-<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· 4</span></summary>
+<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· 3</span></summary>
 <p class="sm mut">Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
 and its record since it entered Production. Under 10 settled bets an ROI is grey: one win at 0.46 reads
 +117%, and means nothing yet. CLV is the closing price minus the price at logging: positive means its leads got
@@ -220,34 +216,10 @@ dearer after they were published.</p>
 <td class="num" data-l="Leads to come">+0.1¢<div class="sm mut">v the close</div></td>
 <td class="num" data-l="Bets">6–1<div class="sm mut">7 settled</div></td>
 <td class="num" data-l="ROI"><span class="mut">-1.6%</span><div class="sm mut">too early</div></td>
-<td class="num" data-l="CLV"><b>0</b></td></tr><tr>
-<td data-l="Pair"><b>Tennis favourite-band rule</b><div class="sm mut">Tennis · moved 2026-09-17</div></td>
-<td class="num" data-l="Sandbox record (US exchanges)">485<div class="sm mut">settled</div></td>
-<td class="num" data-l="Since Production"><span class="pos">+1.5%</span><div class="sm mut">after fees</div></td>
-<td class="num" data-l="Leads to come">-0.7¢<div class="sm mut">v the close</div></td>
-<td class="num" data-l="Bets">257–55<div class="sm mut">312 settled</div></td>
-<td class="num" data-l="ROI"><span class="neg">-0.4%</span></td>
-<td class="num" data-l="CLV"><b>7</b></td></tr></tbody></table></div></details>
+<td class="num" data-l="CLV"><b>0</b></td></tr></tbody></table></div></details>
 
-<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 10 leads over 2 days</span></summary>
-<details class="fold" open><summary>Today
-<span class="mut sm">· 7 leads</span></summary>
-<div class="tbl"><table><thead><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr></thead><tbody><tr><td class="mut" data-l="UTC">11:45</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Majdandzic - Walters v Bakhshaliev - Bakshi</td><td data-l="Lead"><b>Majdandzic - Walters to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.78</td></tr><tr><td class="mut" data-l="UTC">12:00</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Breaz - Todoni v Dumitru - Lazar</td><td data-l="Lead"><b>Breaz - Todoni to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.84</td></tr><tr><td class="mut" data-l="UTC">12:00</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Friedsam A / Sasnovich A v Routliffe / Sutjiadi</td><td data-l="Lead"><b>Routliffe / Sutjiadi to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.86</td></tr><tr><td class="mut" data-l="UTC">12:01</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Keshav Chopra v Aristarkh Safonov</td><td data-l="Lead"><b>Keshav Chopra to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.88</td></tr><tr><td class="mut" data-l="UTC">15:00</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Murkel Dellien v Juan Pablo Varillas</td><td data-l="Lead"><b>Juan Pablo Varillas to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.83</td></tr><tr><td class="mut" data-l="UTC">18:00</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Lukas Neumayer v Juan Cruz Martin Manzano</td><td data-l="Lead"><b>Lukas Neumayer to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.77</td></tr><tr><td class="mut" data-l="UTC">18:00</td><td data-l="Competition">Tennis</td>
-<td data-l="Match">Nicolas Kicker v Hugo Dellien</td><td data-l="Lead"><b>Hugo Dellien to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Logged at">0.81</td></tr></tbody></table></div></details><details class="fold"><summary>Sat 26 Sep
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 3 leads over 1 day</span></summary>
+<details class="fold" open><summary>Sat 26 Sep
 <span class="mut sm">· 3 leads</span></summary>
 <div class="tbl"><table><thead><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr></thead><tbody><tr><td class="mut" data-l="UTC">03:00</td><td data-l="Competition">Boxing</td>
@@ -258,63 +230,43 @@ dearer after they were published.</p>
 <td data-l="Match">Vanessa Demopoulos v Yazmin Jauregui</td><td data-l="Lead"><b>Yazmin Jauregui to win</b></td><td class="mut" data-l="From">MMA favourite-band rule</td>
 <td class="num" data-l="Logged at">0.87</td></tr></tbody></table></div></details></details>
 
-<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· 250 of 298 landed</span></summary>
+<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· 14 of 15 landed</span></summary>
 <div class="tbl"><table><thead><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Result</th></tr></thead><tbody><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Billy Blaydes v Daniel Domingos</td>
-<td data-l="Lead">Billy Blaydes to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Kristina Kroitor v Maria Oliver sanchez</td>
-<td data-l="Lead">Kristina Kroitor to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Lan Mi v Midori Castillo Meza</td>
-<td data-l="Lead">Lan Mi to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Mariia Masiianskaia v Irem Kurt</td>
-<td data-l="Lead">Irem Kurt to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Simona Cucu v Sonja Zhenikhova</td>
-<td data-l="Lead">Sonja Zhenikhova to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Keuler, Mia v Romanova, Leticia</td>
-<td data-l="Lead">Romanova, Leticia to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Ammar Faleh Alhogbani v Michal Krajci</td>
-<td data-l="Lead">Michal Krajci to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Carles Cordoba v Bruno Pujol Navarro</td>
-<td data-l="Lead">Carles Cordoba to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Elizara Yaneva v Margaux Maquet</td>
-<td data-l="Lead">Elizara Yaneva to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Kuparev, Anastasiya v Siedliska, Natalia</td>
-<td data-l="Lead">Siedliska, Natalia to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Noah Thurner v Daniel De Jonge</td>
-<td data-l="Lead">Daniel De Jonge to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">TIM Handel v Pedro Vives Marcos</td>
-<td data-l="Lead">Pedro Vives Marcos to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Alessandra Mazzola v Rositsa Dencheva</td>
-<td data-l="Lead">Rositsa Dencheva to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Alina Korneeva v Darya Astakhova</td>
-<td data-l="Lead">Alina Korneeva to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Joody Elkady v Ksenia Smirnova</td>
-<td data-l="Lead">Ksenia Smirnova to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Binda - Pankin v Chen - Tang</td>
-<td data-l="Lead">Binda - Pankin to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">YUE - Zheng v Hsieh - Sinclair</td>
-<td data-l="Lead">Hsieh - Sinclair to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Jing-Jing Lu v Qige Yi</td>
-<td data-l="Lead">Jing-Jing Lu to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Aleksandre Bakshi v Dmitry Dolzhenkov</td>
-<td data-l="Lead">Aleksandre Bakshi to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Pietro Ricci v Stijn Paardekooper</td>
-<td data-l="Lead">Stijn Paardekooper to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Rohan Mehra v Kaya Arinc</td>
-<td data-l="Lead">Rohan Mehra to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Dalibor Svrcina v Rio Noguchi</td>
-<td data-l="Lead">Dalibor Svrcina to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Wanbing Wang v Zijun Jiang</td>
-<td data-l="Lead">Zijun Jiang to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Polina Leykina v Xiao Tang</td>
-<td data-l="Lead">Polina Leykina to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Xiaowei Li v Onyu Choi</td>
-<td data-l="Lead">Onyu Choi to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
-<td class="num" data-l="Result"><span class="neg">missed</span></td></tr></tbody></table></div></details>
+<th class="num">Result</th></tr></thead><tbody><tr><td class="mut" data-l="Date">2026-09-23</td><td data-l="Match">Marcos Degli v Paris Moran</td>
+<td data-l="Lead">Marcos Degli to win</td><td class="mut" data-l="From">MMA favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Norbert Novenyi Jr. v Theo Haig</td>
+<td data-l="Lead">Norbert Novenyi Jr. to win</td><td class="mut" data-l="From">MMA favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">Deportivo v Real Betis</td>
+<td data-l="Lead">Real Betis to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">AJ Auxerre v Brest</td>
+<td data-l="Lead">AJ Auxerre to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">Real Salt Lake v Vancouver Whitecaps</td>
+<td data-l="Lead">Vancouver Whitecaps to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">FC Dallas v Austin FC</td>
+<td data-l="Lead">Austin FC to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">Minnesota United FC v LA Galaxy</td>
+<td data-l="Lead">Minnesota United FC to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">Sporting Kansas City v Philadelphia Union</td>
+<td data-l="Lead">Philadelphia Union to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-20</td><td data-l="Match">St. Louis CITY SC v Toronto FC</td>
+<td data-l="Lead">St. Louis CITY SC to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-19</td><td data-l="Match">New England Revolution v Orlando City SC</td>
+<td data-l="Lead">Orlando City SC to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-19</td><td data-l="Match">VfB Stuttgart v Borussia Dortmund</td>
+<td data-l="Lead">Borussia Dortmund to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-19</td><td data-l="Match">Hamburg SV v FC Cologne</td>
+<td data-l="Lead">FC Cologne to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-18</td><td data-l="Match">Brentford v Chelsea</td>
+<td data-l="Lead">Brentford to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-18</td><td data-l="Match">Espanyol v Elche</td>
+<td data-l="Lead">Espanyol to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-18</td><td data-l="Match">AS Monaco v Lens</td>
+<td data-l="Lead">AS Monaco to score 1+</td><td class="mut" data-l="From">Team scores 1+ form rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr></tbody></table></div></details>
 
-<details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· 53</span></summary>
-<div class="note">53 bets from these pairs were not published:
-53 cannot be expressed as a standard market, and
+<details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· 2</span></summary>
+<div class="note">2 bets from these pairs were not published:
+2 cannot be expressed as a standard market, and
 0 are waiting for a verified start
 time. A lead is only published once its start has been confirmed.</div></details>
 
