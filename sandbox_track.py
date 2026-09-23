@@ -189,6 +189,14 @@ PAIR_OVERRIDES = {
     # records too small to read: the MMA favourite band 4-0 (4 won v 3.2 priced, +23.4% after
     # fees, z +1.00), OLBG's boxing tips 3-0 (3 won v 2.7 priced, +11.1%, z +0.59). The
     # demotion net reads their whole record from here. Both keep their Sandbox record.
+    # 2026-09-23, as asked, replacing the single-leg tennis rule that left the same day. Its
+    # record is 6-4 over 10 baskets (6 won v 5.3 priced, z +0.45, +10.8% after fees) — and all
+    # ten were struck on the OLD 0.75-0.90 legs, so on its current definition it enters with
+    # nothing settled at all. Stated plainly because a combo multiplies its legs' edge, m^n:
+    # the narrow band's +5.5% is a claim fitted to the record it was found in, and at three
+    # legs a fitted edge that turns out to be noise costs about three times as fast as it
+    # would at one. The demotion net reads its whole record from here.
+    "tennis_combo3|tennis_combo": dict(moved_on="2026-09-23", production_at=None),
     "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
     "olbg|boxing": dict(moved_on="2026-09-22", production_at=None),
 }

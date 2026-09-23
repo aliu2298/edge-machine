@@ -2628,8 +2628,14 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
-eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|soccer_team1"],
+eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|soccer_team1",
+                              "tennis_combo3|tennis_combo"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
+ok(not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a", market_id="combo3:x",
+                        side_a="All 3 win", side_b="Any one loses")),
+   "a basket is NOT publishable: the feed can express a resting market, and a combo is bought "
+   "by asking for a quote. So the 3-leg pair is in Production and publishes nothing until the "
+   "feed learns combos — a label, not something a follower can act on")
 ok(T.placeable(dict(sport="mma", venue="polymarket_us", pick="a", market_id="m", side_a="A", side_b="B")),
    "an MMA pick on Polymarket US reaches the feed, now that fights route")
 ok(not T.placeable(dict(sport="mma", venue="kalshi", pick="a", market_id="m", side_a="A", side_b="B",
