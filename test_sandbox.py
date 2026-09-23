@@ -3609,6 +3609,22 @@ ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
    "judged against backing the under on every listed over-2.5 market")
 
 
+print("\nthe five-season results file")
+
+sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "scripts"))
+import espn_seasons as SEASONS
+
+_ss = SEASONS.load()
+ok(len(_ss) > 20000, f"five seasons is tens of thousands of matches, not hundreds ({len(_ss)})")
+eq([m for m in _ss if m["tot"] != m["hs"] + m["a_s"]], [], "every row's total is its own two scores")
+eq(sorted(_ss, key=lambda m: m["date"]) == _ss, True, "the file is in date order, so 'before this match' is a slice")
+ok(all(m["home"] and m["away"] and m["comp"] for m in _ss), "no row is missing a side or a competition")
+ok(len({m["comp"] for m in _ss}) >= 10, "and it spans the competitions the Sandbox prices")
+_dupes = len(_ss) - len({(m["date"], m["home"], m["away"]) for m in _ss})
+ok(_dupes <= len(_ss) * 0.001, f"the same fixture is not counted twice ({_dupes} repeats)")
+ok(not any("odds" in k or "price" in k for m in _ss[:1] for k in m),
+   "scores only: nothing here can be judged against a price, and the file cannot pretend otherwise")
+
 print("\nclosing prices on books an entry would refuse")
 
 
