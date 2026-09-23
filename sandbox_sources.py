@@ -404,11 +404,17 @@ SOURCES = {
              "The claim, from Stüttgen (Journal of Sports Economics, 2025) over five Bundesliga "
              "seasons: a congested side attacks less, and defends better at home — the "
              "defensive half replicated in Spain and England, the offensive half did not. Both "
-             "point the same way on a total. This has never been tested against a price, here "
-             "or in the literature; fixture calendars are public, so the honest prior is that "
-             "it is already in the number. Judged against backing the under on every listed "
-             "over-2.5 market, so it only counts if the rest gap tells the market something "
-             "its own price does not already hold."),
+             "point the same way on a total. Backtested AFTER registering, on five seasons of "
+             "results (data/espn_seasons.json, scores only — no prices exist for these): on "
+             "1,718 qualifying matches it went over 2.5 55.5% of the time against 57.3% from a "
+             "goal model built on the clubs\u2019 own scoring and calibrated to be right on "
+             "average — \u22121.9pp, z \u22121.63. The right direction, not significant, and "
+             "fragile: neighbouring thresholds run from \u22123.6pp to +0.6pp, and the paper\u2019s "
+             "per-side mechanism does not cleanly replicate once home advantage is allowed for. "
+             "So this is a weak prior forward-tested, not a finding. Fixture calendars are public, "
+             "so the price may hold it already. Judged against backing the under on every listed "
+             "over-2.5 market, so it only counts if the rest gap tells the market something its "
+             "own price does not."),
     "u35_low_scoring": dict(
         label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_u35", "soccer_u35_cup", "soccer_u35_intl"], baseline="population",
