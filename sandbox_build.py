@@ -981,6 +981,97 @@ and the verdict column above goes on reading the whole record. A competition get
 {''.join(folds)}</details>"""
 
 
+_TH = re.compile(r"<th[^>]*>(.*?)</th>", re.S)
+_TD = re.compile(r"<td(?:\s[^>]*)?>(.*?)</td>", re.S)
+_DASH = re.compile(r"^(?:\s|—|-)*$")
+_TR = re.compile(r"<tr>.*?</tr>", re.S)
+_TABLE = re.compile(r"<table>(.*?)</table>", re.S)
+
+
+def cards_css(sel):
+    """One card per row instead of a wide table: the phone layout.
+
+    Written once and applied twice on purpose. CSS cannot say "narrow screen OR the reader
+    asked for it" in a single rule, so the same block is emitted inside the width query
+    (unless the reader has asked for the table) and again for an explicit request. A reader
+    on a phone who wants the full grid, and one on a laptop checking how it reads on a
+    phone, both get what they asked for, and the choice is remembered.
+    """
+    return f"""
+{sel} .tbl{{overflow-x:visible}}
+{sel} table{{display:block}}
+{sel} thead{{display:none}}
+{sel} tbody,{sel} tr,{sel} td{{display:block;width:100%}}
+{sel} tr{{padding:12px 14px;border-bottom:1px solid var(--bd)}}
+{sel} tr:last-child{{border-bottom:none}}
+{sel} td{{padding:3px 0;border:none;display:flex;gap:14px;align-items:baseline;
+justify-content:space-between;text-align:right}}
+{sel} td::before{{content:attr(data-l);color:var(--mut);font-size:10px;font-weight:700;
+text-transform:uppercase;letter-spacing:.07em;text-align:left;white-space:nowrap;flex:0 0 auto}}
+{sel} td{{flex-wrap:wrap}}
+{sel} td>.sm{{flex:1 0 100%;text-align:right}}
+{sel} td[data-l="#"]{{justify-content:flex-start;gap:8px;text-align:left}}
+{sel} td[data-l="#"]::before{{content:none}}
+{sel} td[data-l="Rule or tipster"],{sel} td[data-l="Competition"],{sel} td[data-l="Rule"],
+{sel} td[data-l="Contest"],{sel} td[data-l="Source"]{{display:block;text-align:left;
+padding:0 0 7px}}
+{sel} td[data-l="Rule or tipster"]>.sm,{sel} td[data-l="Competition"]>.sm,
+{sel} td[data-l="Rule"]>.sm,{sel} td[data-l="Contest"]>.sm,
+{sel} td[data-l="Source"]>.sm{{text-align:left}}
+{sel} td[data-l="Rule or tipster"]::before,{sel} td[data-l="Competition"]::before,
+{sel} td[data-l="Rule"]::before,{sel} td[data-l="Contest"]::before,
+{sel} td[data-l="Source"]::before{{content:none}}
+{sel} td[data-l=""]::before{{content:none}}
+{sel} td[data-empty]{{display:none}}
+{sel} td[data-l="#"]>.sm{{flex:0 0 auto;text-align:left}}
+"""
+
+
+def label_cells(page):
+    """Give every table cell the name of its own column, for the phone layout.
+
+    A ten-column table cannot be read on a 375px screen: three columns fit and the reader
+    has to swipe sideways for the record, which is the part they came for. Under 760px the
+    stylesheet stacks each row into a card and prints the column name beside the value —
+    which only works if the cell knows its column. That is attached here, read from each
+    table's own header row, rather than written by hand in six different row builders where
+    a column added to one and not the other would silently mislabel a number.
+
+    Generated markup only: no nested tables, every cell opened with a plain <td>.
+    """
+    out, pos = [], 0
+    for m in _TABLE.finditer(page):
+        out.append(page[pos:m.start()])
+        body = m.group(1)
+        heads = [re.sub(r"<[^>]+>", " ", h).strip() for h in _TH.findall(body)]
+
+        def one_row(rm):
+            i = [0]
+
+            def cell(cm):
+                k = i[0]
+                i[0] += 1
+                lab = heads[k] if k < len(heads) else ""
+                # A cell holding nothing but a dash is a column this row has no answer for.
+                # Worth a blank in a grid, where the eye skips it; worth nothing on a phone,
+                # where it is a whole labelled line saying "no". Marked here, hidden there.
+                inner = re.sub(r"<[^>]+>", "", cm.group(1))
+                empty = ' data-empty="1"' if _DASH.match(html.unescape(inner)) else ""
+                open_tag = cm.group(0)[:cm.group(0).index(">")]
+                return f'{open_tag} data-l="{esc(lab)}"{empty}>{cm.group(1)}</td>'
+            return _TD.sub(cell, rm.group(0))
+
+        body = _TR.sub(one_row, body)
+        first = _TR.search(body)
+        if first and "<th" in first.group(0):
+            body = (body[:first.start()] + "<thead>" + first.group(0) + "</thead><tbody>"
+                    + body[first.end():] + "</tbody>")
+        out.append("<table>" + body + "</table>")
+        pos = m.end()
+    out.append(page[pos:])
+    return "".join(out)
+
+
 def legend():
     """What the columns mean — once, folded, for a reader who wants it.
 
@@ -1193,6 +1284,9 @@ a{{color:var(--acc);text-decoration:none}}a:hover{{text-decoration:underline}}
 border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
 .nav a:hover{{color:var(--fg);border-color:var(--mut)}}
 .nav a.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
+.vw{{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:none;
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px;cursor:pointer;margin-left:auto}}
+.vw:hover{{color:var(--fg);border-color:var(--mut)}}
 .note{{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
 border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}}
 .note b{{color:var(--fg);font-weight:600}}
@@ -1269,11 +1363,22 @@ details.ref[open]>summary{{margin-bottom:10px}}
 .bar i{{display:block;height:100%;background:var(--acc)}}
 footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 @media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
+/* The phone layout. Auto below 760px unless the reader asked for the table; forced
+   either way by the view switch in the header. */
+@media (max-width:760px){{{cards_css('html:not([data-view="table"])')}}}
+{cards_css('html[data-view="cards"]')}
+@media (max-width:760px){{
+h1{{font-size:19px}}
+body{{padding:20px 14px 48px}}
+.tile{{min-width:calc(50% - 5px)}}
+.tabs button{{flex:1}}
+details.sport>summary{{line-height:1.5}}
+}}
 </style></head><body><div class="wrap">
 
 <h1>Sandbox</h1>
 <div class="sub">Every source and rule under test, per sport · updated {esc(now)}</div>
-<div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
+<div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a><button type="button" id="vw" class="vw" title="Switch between the phone layout and the full table">Phone view</button></div>
 
 <div class="tiles">
 <div class="tile"><b>{in_prod}</b><span>in Production</span></div>
@@ -1356,6 +1461,31 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 <script>
+// The view switch. Nothing is set until the reader chooses, so the width query decides by
+// default; a choice is remembered per browser and the button always names what it will
+// switch TO. Storage can throw in a private window, so every touch of it is guarded and the
+// page renders correctly without it.
+(function () {{
+  var root = document.documentElement, btn = document.getElementById('vw');
+  var narrow = function () {{ return window.matchMedia('(max-width:760px)').matches; }};
+  var showing = function () {{
+    var v = root.getAttribute('data-view');
+    return v ? v : (narrow() ? 'cards' : 'table');
+  }};
+  var paint = function () {{ btn.textContent = showing() === 'cards' ? 'Full table' : 'Phone view'; }};
+  try {{
+    var saved = localStorage.getItem('sandbox-view');
+    if (saved === 'cards' || saved === 'table') root.setAttribute('data-view', saved);
+  }} catch (e) {{}}
+  paint();
+  window.matchMedia('(max-width:760px)').addEventListener('change', paint);
+  btn.addEventListener('click', function () {{
+    var next = showing() === 'cards' ? 'table' : 'cards';
+    root.setAttribute('data-view', next);
+    paint();
+    try {{ localStorage.setItem('sandbox-view', next); }} catch (e) {{}}
+  }});
+}}());
 document.querySelectorAll('#lanes button').forEach(b => b.addEventListener('click', () => {{
   document.querySelectorAll('#lanes button').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('[data-lane]:not(button)').forEach(el => el.hidden = el.dataset.lane !== b.dataset.lane);
@@ -1395,6 +1525,7 @@ def _ticks(gate):
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     page = build()
+    page = label_cells(page)
     with open(OUT, "w") as f:
         f.write(page)
     print(f"wrote {OUT}")
@@ -1403,7 +1534,10 @@ def main():
     import production
     prod_out = os.path.join(os.path.dirname(OUT), "production.html")
     with open(prod_out, "w") as f:
-        f.write(production.page(T.load(), T.load_stages(), production.load_feed(), style))
+        # The Production page shares this page's stylesheet, so it inherits the phone
+        # layout — which needs the column names on its cells too, or its rows would stack
+        # into unlabelled numbers.
+        f.write(label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), style)))
     print(f"wrote {prod_out}")
     return 0
 

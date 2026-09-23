@@ -23,6 +23,9 @@ a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
 border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
 .nav a:hover{color:var(--fg);border-color:var(--mut)}
 .nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
+.vw{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:none;
+border:1px solid var(--bd);border-radius:999px;padding:5px 13px;cursor:pointer;margin-left:auto}
+.vw:hover{color:var(--fg);border-color:var(--mut)}
 .note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
 border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
 .note b{color:var(--fg);font-weight:600}
@@ -99,6 +102,71 @@ details.ref[open]>summary{margin-bottom:10px}
 .bar i{display:block;height:100%;background:var(--acc)}
 footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
 @media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
+/* The phone layout. Auto below 760px unless the reader asked for the table; forced
+   either way by the view switch in the header. */
+@media (max-width:760px){
+html:not([data-view="table"]) .tbl{overflow-x:visible}
+html:not([data-view="table"]) table{display:block}
+html:not([data-view="table"]) thead{display:none}
+html:not([data-view="table"]) tbody,html:not([data-view="table"]) tr,html:not([data-view="table"]) td{display:block;width:100%}
+html:not([data-view="table"]) tr{padding:12px 14px;border-bottom:1px solid var(--bd)}
+html:not([data-view="table"]) tr:last-child{border-bottom:none}
+html:not([data-view="table"]) td{padding:3px 0;border:none;display:flex;gap:14px;align-items:baseline;
+justify-content:space-between;text-align:right}
+html:not([data-view="table"]) td::before{content:attr(data-l);color:var(--mut);font-size:10px;font-weight:700;
+text-transform:uppercase;letter-spacing:.07em;text-align:left;white-space:nowrap;flex:0 0 auto}
+html:not([data-view="table"]) td{flex-wrap:wrap}
+html:not([data-view="table"]) td>.sm{flex:1 0 100%;text-align:right}
+html:not([data-view="table"]) td[data-l="#"]{justify-content:flex-start;gap:8px;text-align:left}
+html:not([data-view="table"]) td[data-l="#"]::before{content:none}
+html:not([data-view="table"]) td[data-l="Rule or tipster"],html:not([data-view="table"]) td[data-l="Competition"],html:not([data-view="table"]) td[data-l="Rule"],
+html:not([data-view="table"]) td[data-l="Contest"],html:not([data-view="table"]) td[data-l="Source"]{display:block;text-align:left;
+padding:0 0 7px}
+html:not([data-view="table"]) td[data-l="Rule or tipster"]>.sm,html:not([data-view="table"]) td[data-l="Competition"]>.sm,
+html:not([data-view="table"]) td[data-l="Rule"]>.sm,html:not([data-view="table"]) td[data-l="Contest"]>.sm,
+html:not([data-view="table"]) td[data-l="Source"]>.sm{text-align:left}
+html:not([data-view="table"]) td[data-l="Rule or tipster"]::before,html:not([data-view="table"]) td[data-l="Competition"]::before,
+html:not([data-view="table"]) td[data-l="Rule"]::before,html:not([data-view="table"]) td[data-l="Contest"]::before,
+html:not([data-view="table"]) td[data-l="Source"]::before{content:none}
+html:not([data-view="table"]) td[data-l=""]::before{content:none}
+html:not([data-view="table"]) td[data-empty]{display:none}
+html:not([data-view="table"]) td[data-l="#"]>.sm{flex:0 0 auto;text-align:left}
+}
+
+html[data-view="cards"] .tbl{overflow-x:visible}
+html[data-view="cards"] table{display:block}
+html[data-view="cards"] thead{display:none}
+html[data-view="cards"] tbody,html[data-view="cards"] tr,html[data-view="cards"] td{display:block;width:100%}
+html[data-view="cards"] tr{padding:12px 14px;border-bottom:1px solid var(--bd)}
+html[data-view="cards"] tr:last-child{border-bottom:none}
+html[data-view="cards"] td{padding:3px 0;border:none;display:flex;gap:14px;align-items:baseline;
+justify-content:space-between;text-align:right}
+html[data-view="cards"] td::before{content:attr(data-l);color:var(--mut);font-size:10px;font-weight:700;
+text-transform:uppercase;letter-spacing:.07em;text-align:left;white-space:nowrap;flex:0 0 auto}
+html[data-view="cards"] td{flex-wrap:wrap}
+html[data-view="cards"] td>.sm{flex:1 0 100%;text-align:right}
+html[data-view="cards"] td[data-l="#"]{justify-content:flex-start;gap:8px;text-align:left}
+html[data-view="cards"] td[data-l="#"]::before{content:none}
+html[data-view="cards"] td[data-l="Rule or tipster"],html[data-view="cards"] td[data-l="Competition"],html[data-view="cards"] td[data-l="Rule"],
+html[data-view="cards"] td[data-l="Contest"],html[data-view="cards"] td[data-l="Source"]{display:block;text-align:left;
+padding:0 0 7px}
+html[data-view="cards"] td[data-l="Rule or tipster"]>.sm,html[data-view="cards"] td[data-l="Competition"]>.sm,
+html[data-view="cards"] td[data-l="Rule"]>.sm,html[data-view="cards"] td[data-l="Contest"]>.sm,
+html[data-view="cards"] td[data-l="Source"]>.sm{text-align:left}
+html[data-view="cards"] td[data-l="Rule or tipster"]::before,html[data-view="cards"] td[data-l="Competition"]::before,
+html[data-view="cards"] td[data-l="Rule"]::before,html[data-view="cards"] td[data-l="Contest"]::before,
+html[data-view="cards"] td[data-l="Source"]::before{content:none}
+html[data-view="cards"] td[data-l=""]::before{content:none}
+html[data-view="cards"] td[data-empty]{display:none}
+html[data-view="cards"] td[data-l="#"]>.sm{flex:0 0 auto;text-align:left}
+
+@media (max-width:760px){
+h1{font-size:19px}
+body{padding:20px 14px 48px}
+.tile{min-width:calc(50% - 5px)}
+.tabs button{flex:1}
+details.sport>summary{line-height:1.5}
+}
 </style>
 <style>th.grp{text-align:center;border-bottom:1px solid var(--bd)}
 details.fold>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px;
@@ -112,14 +180,14 @@ details.fold details.fold>summary{margin:12px 0 6px;font-size:14px}</style>
 </head><body><div class="wrap">
 
 <h1>Production</h1>
-<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-23 03:50 UTC</div>
+<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-23 04:02 UTC</div>
 <div class="nav"><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
 
 <div class="tiles">
 <div class="tile"><b>4</b><span>pairs in Production</span></div>
-<div class="tile"><b>5</b><span>leads still to come</span></div>
+<div class="tile"><b>4</b><span>leads still to come</span></div>
 <div class="tile"><b>223/262</b><span>recent leads landed</span></div>
-<div class="tile"><b style="font-size:17px">2026-09-23 04:00</b><span>next lead (UTC)</span></div>
+<div class="tile"><b style="font-size:17px">2026-09-23 11:30</b><span>next lead (UTC)</span></div>
 </div>
 
 <details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· 4</span></summary>
@@ -128,111 +196,109 @@ and its record since it entered Production. Under 10 settled bets an ROI is grey
 +117%, and means nothing yet. CLV is the closing price minus the price at logging: positive means its leads got
 dearer after they were published.</p>
 <div class="tbl"><table>
-<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
-<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<thead><tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
+<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Leads<br>to come</th></tr></thead><tbody>
 <tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
 <tr>
-<td><b>OLBG community tips</b><div class="sm mut">Boxing · moved 2026-09-22</div></td>
-<td class="num">3<div class="sm mut">settled</div></td>
-<td class="num"><span class="pos">+11.1%</span><div class="sm mut">after fees</div></td>
-<td class="num">-21.0¢<div class="sm mut">v the close</div></td>
-<td class="num">—<div class="sm mut">none yet</div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num"><b>1</b></td></tr><tr>
-<td><b>MMA favourite-band rule</b><div class="sm mut">MMA · moved 2026-09-22</div></td>
-<td class="num">4<div class="sm mut">settled</div></td>
-<td class="num"><span class="pos">+23.4%</span><div class="sm mut">after fees</div></td>
-<td class="num">-21.7¢<div class="sm mut">v the close</div></td>
-<td class="num">—<div class="sm mut">none yet</div></td>
-<td class="num"><span class="mut">—</span></td>
-<td class="num"><b>2</b></td></tr><tr>
-<td><b>Team scores 1+ form rule</b><div class="sm mut">Soccer · Team 1+ · moved 2026-09-18</div></td>
-<td class="num">17<div class="sm mut">settled</div></td>
-<td class="num"><span class="pos">+10.6%</span><div class="sm mut">after fees</div></td>
-<td class="num">+0.1¢<div class="sm mut">v the close</div></td>
-<td class="num">6–1<div class="sm mut">7 settled</div></td>
-<td class="num"><span class="mut">-1.6%</span><div class="sm mut">too early</div></td>
-<td class="num"><b>0</b></td></tr><tr>
-<td><b>Tennis favourite-band rule</b><div class="sm mut">Tennis · moved 2026-09-17</div></td>
-<td class="num">446<div class="sm mut">settled</div></td>
-<td class="num"><span class="pos">+2.6%</span><div class="sm mut">after fees</div></td>
-<td class="num">-0.9¢<div class="sm mut">v the close</div></td>
-<td class="num">228–45<div class="sm mut">273 settled</div></td>
-<td class="num"><span class="pos">+1.1%</span></td>
-<td class="num"><b>2</b></td></tr></table></div></details>
+<td data-l="Pair"><b>OLBG community tips</b><div class="sm mut">Boxing · moved 2026-09-22</div></td>
+<td class="num" data-l="Sandbox record (US exchanges)">3<div class="sm mut">settled</div></td>
+<td class="num" data-l="Since Production"><span class="pos">+11.1%</span><div class="sm mut">after fees</div></td>
+<td class="num" data-l="Leads to come">-21.0¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="Bets">—<div class="sm mut">none yet</div></td>
+<td class="num" data-l="ROI" data-empty="1"><span class="mut">—</span></td>
+<td class="num" data-l="CLV"><b>1</b></td></tr><tr>
+<td data-l="Pair"><b>MMA favourite-band rule</b><div class="sm mut">MMA · moved 2026-09-22</div></td>
+<td class="num" data-l="Sandbox record (US exchanges)">4<div class="sm mut">settled</div></td>
+<td class="num" data-l="Since Production"><span class="pos">+23.4%</span><div class="sm mut">after fees</div></td>
+<td class="num" data-l="Leads to come">-21.7¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="Bets">—<div class="sm mut">none yet</div></td>
+<td class="num" data-l="ROI" data-empty="1"><span class="mut">—</span></td>
+<td class="num" data-l="CLV"><b>2</b></td></tr><tr>
+<td data-l="Pair"><b>Team scores 1+ form rule</b><div class="sm mut">Soccer · Team 1+ · moved 2026-09-18</div></td>
+<td class="num" data-l="Sandbox record (US exchanges)">17<div class="sm mut">settled</div></td>
+<td class="num" data-l="Since Production"><span class="pos">+10.6%</span><div class="sm mut">after fees</div></td>
+<td class="num" data-l="Leads to come">+0.1¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="Bets">6–1<div class="sm mut">7 settled</div></td>
+<td class="num" data-l="ROI"><span class="mut">-1.6%</span><div class="sm mut">too early</div></td>
+<td class="num" data-l="CLV"><b>0</b></td></tr><tr>
+<td data-l="Pair"><b>Tennis favourite-band rule</b><div class="sm mut">Tennis · moved 2026-09-17</div></td>
+<td class="num" data-l="Sandbox record (US exchanges)">446<div class="sm mut">settled</div></td>
+<td class="num" data-l="Since Production"><span class="pos">+2.6%</span><div class="sm mut">after fees</div></td>
+<td class="num" data-l="Leads to come">-0.9¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="Bets">228–45<div class="sm mut">273 settled</div></td>
+<td class="num" data-l="ROI"><span class="pos">+1.1%</span></td>
+<td class="num" data-l="CLV"><b>1</b></td></tr></tbody></table></div></details>
 
-<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 5 leads over 2 days</span></summary>
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 4 leads over 2 days</span></summary>
 <details class="fold" open><summary>Today
-<span class="mut sm">· 2 leads</span></summary>
-<div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr><tr><td class="mut">04:00</td><td>Tennis</td>
-<td>Halys Q / Miedler L v Marozsan F / Rikl P</td><td><b>Halys Q / Miedler L to win</b></td><td class="mut">Tennis favourite-band rule</td>
-<td class="num">0.75</td></tr><tr><td class="mut">11:30</td><td>Tennis</td>
-<td>Thomas Faurel v Mark Lajal</td><td><b>Mark Lajal to win</b></td><td class="mut">Tennis favourite-band rule</td>
-<td class="num">0.84</td></tr></table></div></details><details class="fold"><summary>Sat 26 Sep
+<span class="mut sm">· 1 lead</span></summary>
+<div class="tbl"><table><thead><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Logged at</th></tr></thead><tbody><tr><td class="mut" data-l="UTC">11:30</td><td data-l="Competition">Tennis</td>
+<td data-l="Match">Thomas Faurel v Mark Lajal</td><td data-l="Lead"><b>Mark Lajal to win</b></td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Logged at">0.84</td></tr></tbody></table></div></details><details class="fold"><summary>Sat 26 Sep
 <span class="mut sm">· 3 leads</span></summary>
-<div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr><tr><td class="mut">03:00</td><td>Boxing</td>
-<td>Nathan Heaney v Gerome Warburton</td><td><b>Gerome Warburton to win</b></td><td class="mut">OLBG community tips</td>
-<td class="num">0.64</td></tr><tr><td class="mut">18:30</td><td>MMA</td>
-<td>Brady Hiestand v Rinya Nakamura</td><td><b>Rinya Nakamura to win</b></td><td class="mut">MMA favourite-band rule</td>
-<td class="num">0.75</td></tr><tr><td class="mut">18:30</td><td>MMA</td>
-<td>Vanessa Demopoulos v Yazmin Jauregui</td><td><b>Yazmin Jauregui to win</b></td><td class="mut">MMA favourite-band rule</td>
-<td class="num">0.87</td></tr></table></div></details></details>
+<div class="tbl"><table><thead><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Logged at</th></tr></thead><tbody><tr><td class="mut" data-l="UTC">03:00</td><td data-l="Competition">Boxing</td>
+<td data-l="Match">Nathan Heaney v Gerome Warburton</td><td data-l="Lead"><b>Gerome Warburton to win</b></td><td class="mut" data-l="From">OLBG community tips</td>
+<td class="num" data-l="Logged at">0.64</td></tr><tr><td class="mut" data-l="UTC">18:30</td><td data-l="Competition">MMA</td>
+<td data-l="Match">Brady Hiestand v Rinya Nakamura</td><td data-l="Lead"><b>Rinya Nakamura to win</b></td><td class="mut" data-l="From">MMA favourite-band rule</td>
+<td class="num" data-l="Logged at">0.75</td></tr><tr><td class="mut" data-l="UTC">18:30</td><td data-l="Competition">MMA</td>
+<td data-l="Match">Vanessa Demopoulos v Yazmin Jauregui</td><td data-l="Lead"><b>Yazmin Jauregui to win</b></td><td class="mut" data-l="From">MMA favourite-band rule</td>
+<td class="num" data-l="Logged at">0.87</td></tr></tbody></table></div></details></details>
 
 <details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· 223 of 262 landed</span></summary>
-<div class="tbl"><table><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Result</th></tr><tr><td class="mut">2026-09-22</td><td>Werner - Insfran v Goncalves - Soares</td>
-<td>Werner - Insfran to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Tosetto - Zanellato v Silveira - Gava</td>
-<td>Tosetto - Zanellato to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Erik Arutiunian v Trevor Svajda</td>
-<td>Trevor Svajda to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Hanna Chang v Kailey Evans</td>
-<td>Hanna Chang to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Victoria Rodriguez v Evialina Laskevich</td>
-<td>Evialina Laskevich to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Florencia Belen Moron v Alicia Reichel</td>
-<td>Alicia Reichel to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Giulia Gomes Ferreira v Bruna Roberta Bouth Pinheiro</td>
-<td>Giulia Gomes Ferreira to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>albieri - Ferreira v Catanzarite - Lopez</td>
-<td>Catanzarite - Lopez to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Ana Julia Sartori v Paola Lopez</td>
-<td>Paola Lopez to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Evan Zhu v Henry Searle</td>
-<td>Henry Searle to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Mayu Crossley v Emma Kamper</td>
-<td>Mayu Crossley to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Francisco Comesana v Juan Estevez</td>
-<td>Francisco Comesana to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>William Moxon v Antonin Witz</td>
-<td>Antonin Witz to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Mueller - Herck v Fusenig - Saulino</td>
-<td>Mueller - Herck to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Murgett - Stice v Bertrand - Poullain</td>
-<td>Bertrand - Poullain to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Kaltenecker - Muller v Frydrych - Lakshmanan</td>
-<td>Frydrych - Lakshmanan to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Eduardo Ribeiro v Pedro Martinez</td>
-<td>Pedro Martinez to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Juan Carlos Prado Angelo v Lorenzo Joaquin Rodriguez</td>
-<td>Juan Carlos Prado Angelo to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Appleton - Hietaranta v Tanguilig - Tomase</td>
-<td>Appleton - Hietaranta to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Alejandro Juan Mano v Francesco Passaro</td>
-<td>Francesco Passaro to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="neg">missed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Tomas Martinez v Nicolas Kicker</td>
-<td>Nicolas Kicker to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Kaua Lorenzo Santos Gava v Pedro Sakamoto</td>
-<td>Pedro Sakamoto to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Garcian - Nagel v Clerc - Trufelli</td>
-<td>Garcian - Nagel to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>ALLANI - Hamrouni v Boullay - Ruchkina</td>
-<td>Boullay - Ruchkina to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr><tr><td class="mut">2026-09-22</td><td>Homola - Postolka v Dominko - Planinsek</td>
-<td>Dominko - Planinsek to win</td><td class="mut">Tennis favourite-band rule</td>
-<td class="num"><span class="pos">landed</span></td></tr></table></div></details>
+<div class="tbl"><table><thead><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Result</th></tr></thead><tbody><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Werner - Insfran v Goncalves - Soares</td>
+<td data-l="Lead">Werner - Insfran to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Tosetto - Zanellato v Silveira - Gava</td>
+<td data-l="Lead">Tosetto - Zanellato to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Erik Arutiunian v Trevor Svajda</td>
+<td data-l="Lead">Trevor Svajda to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Hanna Chang v Kailey Evans</td>
+<td data-l="Lead">Hanna Chang to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Victoria Rodriguez v Evialina Laskevich</td>
+<td data-l="Lead">Evialina Laskevich to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Florencia Belen Moron v Alicia Reichel</td>
+<td data-l="Lead">Alicia Reichel to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Giulia Gomes Ferreira v Bruna Roberta Bouth Pinheiro</td>
+<td data-l="Lead">Giulia Gomes Ferreira to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">albieri - Ferreira v Catanzarite - Lopez</td>
+<td data-l="Lead">Catanzarite - Lopez to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Ana Julia Sartori v Paola Lopez</td>
+<td data-l="Lead">Paola Lopez to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Evan Zhu v Henry Searle</td>
+<td data-l="Lead">Henry Searle to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Mayu Crossley v Emma Kamper</td>
+<td data-l="Lead">Mayu Crossley to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Francisco Comesana v Juan Estevez</td>
+<td data-l="Lead">Francisco Comesana to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">William Moxon v Antonin Witz</td>
+<td data-l="Lead">Antonin Witz to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Mueller - Herck v Fusenig - Saulino</td>
+<td data-l="Lead">Mueller - Herck to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Murgett - Stice v Bertrand - Poullain</td>
+<td data-l="Lead">Bertrand - Poullain to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Kaltenecker - Muller v Frydrych - Lakshmanan</td>
+<td data-l="Lead">Frydrych - Lakshmanan to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Eduardo Ribeiro v Pedro Martinez</td>
+<td data-l="Lead">Pedro Martinez to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Juan Carlos Prado Angelo v Lorenzo Joaquin Rodriguez</td>
+<td data-l="Lead">Juan Carlos Prado Angelo to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Appleton - Hietaranta v Tanguilig - Tomase</td>
+<td data-l="Lead">Appleton - Hietaranta to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Alejandro Juan Mano v Francesco Passaro</td>
+<td data-l="Lead">Francesco Passaro to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="neg">missed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Tomas Martinez v Nicolas Kicker</td>
+<td data-l="Lead">Nicolas Kicker to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Kaua Lorenzo Santos Gava v Pedro Sakamoto</td>
+<td data-l="Lead">Pedro Sakamoto to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Garcian - Nagel v Clerc - Trufelli</td>
+<td data-l="Lead">Garcian - Nagel to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">ALLANI - Hamrouni v Boullay - Ruchkina</td>
+<td data-l="Lead">Boullay - Ruchkina to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Homola - Postolka v Dominko - Planinsek</td>
+<td data-l="Lead">Dominko - Planinsek to win</td><td class="mut" data-l="From">Tennis favourite-band rule</td>
+<td class="num" data-l="Result"><span class="pos">landed</span></td></tr></tbody></table></div></details>
 
 <details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· 52</span></summary>
 <div class="note">52 bets from these pairs were not published:

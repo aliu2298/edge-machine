@@ -3617,6 +3617,40 @@ ok(S.SOURCES["o25_congestion"]["baseline"] == "population",
    "judged against backing the under on every listed over-2.5 market")
 
 
+print("\nthe phone layout")
+
+_t = ('<table><tr><th>Rule</th><th class="num">Record</th><th class="num">ROI</th></tr>'
+      '<tr><td><b>A rule</b></td><td class="num">7\u20134</td><td class="num">+6.2%</td></tr>'
+      '<tr><td><b>B rule</b></td><td class="num">\u2014</td><td class="num">\u2014</td></tr></table>')
+_lab = RANKB.label_cells(_t)
+ok('data-l="Record"' in _lab and 'data-l="ROI"' in _lab and 'data-l="Rule"' in _lab,
+   "every cell is given the name of its own column, read from that table's header")
+eq(_lab.count('data-l="Record"'), 2, "one per row, header excluded")
+ok("<thead><tr><th>Rule</th>" in _lab and "</thead><tbody>" in _lab,
+   "the header row is wrapped in thead, which is what the phone layout hides — our tables "
+   "write a bare <tr><th> that a browser would otherwise put inside tbody")
+eq(_lab.count('data-empty="1"'), 2,
+   "a cell holding nothing but a dash is marked, so a rule with no bets is three lines on a "
+   "phone instead of nine")
+ok('data-empty' not in _lab.split("+6.2%")[0].rsplit("<td", 1)[1],
+   "and a cell with a real number is not")
+_odd = RANKB.label_cells('<table><tr><th>One</th></tr><tr><td>a</td><td>b</td></tr></table>')
+ok('data-l="One"' in _odd and 'data-l=""' in _odd,
+   "a row with more cells than the header has columns is labelled as far as it can be, not dropped")
+ok(RANKB.label_cells("<p>no tables here</p>") == "<p>no tables here</p>",
+   "markup with no table is returned untouched")
+
+_css = RANKB.cards_css('html[data-view="cards"]')
+ok("thead{display:none}" in _css.replace("\n", "") and "content:attr(data-l)" in _css,
+   "the phone layout hides the header and prints each column name from the cell")
+_pg = open(RANKB.OUT).read() if _os.path.exists(RANKB.OUT) else ""
+if _pg:
+    ok('@media (max-width:760px)' in _pg and 'html[data-view="cards"]' in _pg,
+       "it is emitted twice: by width, and by the reader's own choice")
+    ok('html:not([data-view="table"])' in _pg,
+       "and the width rule stands down when the reader has asked for the full table")
+    ok('id="vw"' in _pg and "sandbox-view" in _pg, "the switch is on the page and remembers")
+
 print("\nthe five-season results file")
 
 sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "scripts"))
