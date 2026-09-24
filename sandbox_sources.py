@@ -4106,41 +4106,95 @@ def fetch_o15_cup_mismatch(sport, universe=None):
 # over-1.5 market. That is the only question it asks -- whether ranking and a ceiling beat
 # taking the board.
 O15_RANK_TAKE, O15_RANK_MAX_ASK, O15_RANK_MIN_POOL = 2, 0.80, 6
+# A mismatch only makes goals if the underdog LEAKS them. Strong attack against a leaky
+# defence scores freely; strong attack against a low block does not, and that fixture is the
+# trap this rule would otherwise walk into, because it ranks HIGH on mismatch while being a
+# poor over-1.5 bet. Pre-registered as one test on 2026-09-24, from the mechanism rather than
+# by searching: within mismatches (fav 0.60+), an underdog that conceded 2+ in 7+ of its last
+# 10 gives 83.15% over 1.5 against 80.56% for the rest (+2.59pp, z +1.31) -- nearly twice
+# what the mirror-image SCORING form of the underdog was worth (+1.41pp, z +0.67).
+#
+# The rule takes the EXCLUSION, not the selection. The tempting cell is "conceded 2+ in 8-10
+# of 10" at +5.91pp, but that is n=153 and one of four buckets I looked at. The exclusion
+# below rests on n=616 and is a NEGATIVE signal, which is far harder to manufacture by
+# searching because it is not selecting on the outcome you want: underdogs conceding 2+ in
+# fewer than 4 of their last 10 went over 1.5 just 78.41%, -2.61pp on the mismatch baseline
+# (z -1.65). Dropping them lifts the selection to 81.68%, worth about +0.8pp of ROI under
+# the ceiling; taking the leaky cell instead would claim +2.7pp on a quarter of the evidence.
+#
+# The signal is PRICED (leaky v the market's own fair: +1.13pp, z +0.49), which does not
+# matter here. This rule earns by buying a high-probability event under a ceiling, so
+# anything that raises the true probability of what gets SELECTED converts into ROI whether
+# the market knows it or not.
+O15_RANK_MIN_LEAK = 4               # underdog must have conceded 2+ in 4+ of its last 10
 
 
 def rank_o15_candidates(sport, universe=None):
-    """[(fav_prob, row)] for one over-1.5 domain, best-ranked first.
+    """[(fav_prob, underdog, row)] for one over-1.5 domain, best-ranked first.
 
     The rank is the favourite's de-vigged win probability on the same fixture, taken from the
     match-winner rows the +0.5 domain carries. A fixture with no readable winner book is not
     ranked at all rather than ranked at zero: an unpriced tie is unknown, not competitive.
+
+    On a +0.5 row, `opponent` is the side whose win probability price_a gives ("Maldives to
+    win (No = China +0.5)" carries team=China, opponent=Maldives), so the dearest row's
+    `team` IS the underdog. Read it from there rather than re-deriving it from the label.
     """
     uni = universe if universe is not None else (UNIVERSE or {})
     wins = {}
     for r in uni.get(str(sport).replace("soccer_o15", "soccer_p05")) or []:
         p = r.get("mid_a", r.get("price_a"))
         if p is not None and not r.get("untraded") and (r.get("tradeable") or {}).get("a", True):
-            wins.setdefault(_fixture_code(r), []).append(float(p))
+            wins.setdefault(_fixture_code(r), []).append((float(p), r.get("team")))
     out = []
     for r, _ko in _rule_rows(sport, universe):
         w = wins.get(_fixture_code(r))
         if not w:
             continue
-        out.append((max(w), r))
-    out.sort(key=lambda t: (-t[0], str(t[1].get("market_id"))))
+        fav, dog = max(w, key=lambda t: t[0])
+        out.append((fav, dog, r))
+    out.sort(key=lambda t: (-t[0], str(t[2].get("market_id"))))
     return out
 
 
-def fetch_o15_ranked(sport, universe=None):
-    """Back over 1.5 on the day's top-ranked mismatches, and only under the ceiling.
+def underdog_leaks(dog, ko, fixtures):
+    """Did the underdog concede 2+ in O15_RANK_MIN_LEAK+ of its last 10? See O15_RANK_MIN_LEAK.
 
-    The ceiling is applied BEFORE the ranking, not after. Ranking first and then dropping
-    what is too dear would let a day's two best candidates both price out and leave the rule
-    idle beside twenty affordable ones it never considered.
+    An underdog whose form cannot be read is KEPT, not dropped. This rule lives on
+    international weeks, where a third of sides have not played ten competitive games in the
+    cache at all; dropping every one of them would silently starve the lane rather than
+    filter it. The cost is that the exclusion simply does not apply there, which is the
+    honest failure — it never claims a fixture passed a test it could not run.
     """
-    ranked = [(f, r) for f, r in rank_o15_candidates(sport, universe)
-              if (r.get("price_a") is not None and float(r["price_a"]) <= O15_RANK_MAX_ASK
-                  and not r.get("untraded") and (r.get("tradeable") or {}).get("a", True))]
+    if not dog:
+        return True
+    n, _seen, total = team_form(fixtures, dog, ko, lambda gf, ga: ga >= 2, O15_WINDOW)
+    if total < GOALS_MIN_GAMES:
+        return True
+    return n >= O15_RANK_MIN_LEAK
+
+
+def fetch_o15_ranked(sport, universe=None, fixtures=None):
+    """Back over 1.5 on the day's top-ranked mismatches, under the ceiling, skipping low blocks.
+
+    The ceiling and the exclusion are applied BEFORE the ranking, not after. Ranking first and
+    then dropping what is too dear or too defensive would let a day's two best candidates fall
+    away and leave the rule idle beside twenty it never considered.
+    """
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    ranked = []
+    for fav, dog, r in rank_o15_candidates(sport, universe):
+        if r.get("price_a") is None or float(r["price_a"]) > O15_RANK_MAX_ASK:
+            continue
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
+            continue
+        try:
+            ko = datetime.fromisoformat(str(r["start"]))
+        except (KeyError, ValueError):
+            continue
+        if not underdog_leaks(dog, ko, fixtures):
+            continue
+        ranked.append((fav, r))
     if len(ranked) < O15_RANK_MIN_POOL:
         return []                      # no pool, no choice, no rule
     return [dict(market_id=r["market_id"], pick="a")

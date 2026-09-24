@@ -3743,6 +3743,32 @@ _nowin = {"soccer_o15": _ru["soccer_o15"], "soccer_p05": []}
 eq(S.fetch_o15_ranked("soccer_o15", _nowin), [],
    "a fixture whose winner book cannot be read is not ranked at all — an unpriced tie is "
    "unknown, not competitive, and ranking it zero would call it the safest bet on the board")
+# The low-block exclusion, added 2026-09-24. A mismatch only makes goals if the underdog
+# leaks them; a strong attack against a low block ranks HIGH on mismatch and is a poor bet.
+def _fxleak(dog, leak):
+    return [dict(played=True, competitive=True, home=dog, away="X", home_goals=0,
+                 away_goals=(2 if i < leak else 0), league="L",
+                 kickoff=f"2026-09-{i+1:02d}T12:00:00+00:00") for i in range(10)]
+_ru2 = {"soccer_o15": [_o15r(f"KXO15-{c}C", a) for c, _f, a in
+                       [(c, f, 0.79) for c, f, _a in _spec]],
+        "soccer_p05": [dict(_p05r(f"KXP05-{c}C", f), team=f"Dog{c}", opponent="Fav")
+                       for c, f, _a in _spec]}
+_fx2 = [g for c, _f, _a in _spec for g in _fxleak(f"Dog{c}", 2 if c == "A" else 8)]
+eq([_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru2, fixtures=_fx2)], ["B", "C"],
+   "A is the biggest mismatch on the board and is DROPPED: its underdog conceded 2+ in only "
+   "2 of its last 10, which is a low block — the fixture that ranks highest on mismatch and "
+   "is a poor over-1.5 bet, at 78.41% against the 81.01% mismatch baseline (z -1.65)")
+eq([_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru2, fixtures=[])], ["A", "B"],
+   "an underdog whose form cannot be read is KEPT, not dropped: a third of sides have no "
+   "10-game history and this rule lives on international weeks, so dropping them would "
+   "silently starve the lane rather than filter it")
+eq(S.O15_RANK_MIN_LEAK, 4,
+   "the rule takes the EXCLUSION, not the selection: 'conceded 2+ in 8-10 of 10' looked "
+   "better at +5.91pp but is n=153 and one of four buckets, while the exclusion rests on "
+   "n=616 and is a NEGATIVE signal, which is far harder to manufacture by searching")
+eq([d for _f, d, _r in S.rank_o15_candidates("soccer_o15", _ru2)][:2], ["DogA", "DogB"],
+   "the underdog is read off the dearest winner row's `team` — on a +0.5 row `opponent` is "
+   "the side whose win probability price_a gives, so `team` is the other one")
 eq(S.O15_RANK_TAKE, 2, "it takes two a day")
 ok(S.O15_RANK_MAX_ASK <= 0.81,
    "under a ceiling, because the mismatch signal is ALREADY priced (buckets at +0.81, -0.05, "
