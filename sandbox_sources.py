@@ -3097,12 +3097,23 @@ COMBO_COLLECTION = "KXMVECROSSCATEGORY-R"
 # significant (t +1.66 and +0.81). If the true edge is zero a basket does not return zero, it
 # loses the full wrapper-and-fee drag every time.
 #
-# MEASURED ON ONE BASKET, WHICH IS THE WEAK POINT. A pre-match two-leg combo quoted live on
-# 2026-09-24 (GB Packers 1.43x + KC Chiefs 1.17x, $25 -> $40.73 = 1.6292x) sat 2.69% over the
-# product of its legs. Kalshi's own constants come from 20 RFQ baskets; this is one, on NFL
-# rather than tennis, so treat it as provisional and re-measure. The three- and four-leg
-# figures below are EXTRAPOLATED from it on Kalshi's observed 2->3 shape (0.84% -> 1.06%,
-# a factor of 1.26) and are not measurements at all.
+# MEASURED ON TWO BASKETS, WHICH IS STILL THE WEAK POINT. Both read live on 2026-09-24:
+#   NFL, pre-match, 2 legs: 1.43x + 1.17x, $25 -> $40.73 = 1.6292x  ->  +2.69% over the
+#     product. Exact, because the venue shows per-leg multipliers for NFL.
+#   Tennis, in-play, 2 legs: 72% + 66% -> 2.08x  ->  +1.17% central, but tennis rows show
+#     only whole-number percentages, so rounding puts it anywhere in -0.3% to +2.7%.
+# Kalshi's constants come from 20 RFQ baskets. Two is not 20, and the tennis one is the
+# imprecise one, so this stays provisional. The constant keeps the DEARER of the two: pricing
+# the basket as more expensive than it may be makes this lane's returns conservative, and
+# under-claiming is the safe direction for a lane whose whole risk is over-claiming an edge.
+# The three- and four-leg figures are EXTRAPOLATED from it on Kalshi's observed 2->3 shape
+# (0.84% -> 1.06%, a factor of 1.26) and are not measurements at all.
+#
+# A WARNING FOR WHOEVER RE-MEASURES THIS. The payout is rendered by an animated digit reel.
+# A value read while the button says "Updating" is a frame, not a price: 1.32x came up for
+# BOTH a 3-leg tennis basket and a 2-leg NFL one that settled at 1.63x, and reading it as
+# real produced an imaginary +38% markup and a tidy story about in-play margins to explain
+# it. Take the number from the settled DOM text, never from a screenshot mid-animation.
 #
 # Priced as a model, not a live quote, for the same reason the Kalshi lane is: the real
 # number lives behind the account's logged-in session on web.polymarket.us, and that must
