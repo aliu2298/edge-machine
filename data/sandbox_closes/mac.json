@@ -640,11 +640,6 @@
    "lead_min": 1.9,
    "price": 0.5
   },
-  "covers:4363821": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 8.1,
-   "price": 0.57
-  },
   "covers:4363825": {
    "at": "2026-09-14T23:29:02+00:00",
    "lead_min": 11.0,
@@ -760,11 +755,6 @@
    "lead_min": 12.2,
    "price": 0.48
   },
-  "covers:aec-mlb-bal-nym-2026-09-14": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 11.1,
-   "price": 0.43
-  },
   "covers:aec-mlb-cin-atl-2026-09-22": {
    "at": "2026-09-22T23:11:10+00:00",
    "lead_min": 3.8,
@@ -776,9 +766,9 @@
    "price": 0.715
   },
   "covers:aec-mlb-cin-atl-2026-09-24": {
-   "at": "2026-09-24T22:49:27+00:00",
-   "lead_min": 25.5,
-   "price": 0.68
+   "at": "2026-09-24T23:04:39+00:00",
+   "lead_min": 10.3,
+   "price": 0.685
   },
   "covers:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:41:08+00:00",
@@ -951,8 +941,8 @@
    "price": 0.56
   },
   "covers:aec-mlb-tb-nyy-2026-09-24": {
-   "at": "2026-09-24T22:49:27+00:00",
-   "lead_min": 15.5,
+   "at": "2026-09-24T23:04:39+00:00",
+   "lead_min": 0.3,
    "price": 0.575
   },
   "covers:aec-mlb-tor-bal-2026-09-21": {
@@ -1020,11 +1010,6 @@
    "lead_min": 12.9,
    "price": 0.405
   },
-  "draftkings:aec-mlb-bal-nym-2026-09-14": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 11.1,
-   "price": 0.43
-  },
   "draftkings:aec-mlb-lad-cin-2026-09-17": {
    "at": "2026-09-17T16:27:48+00:00",
    "lead_min": 12.2,
@@ -1039,16 +1024,6 @@
    "at": "2026-09-20T20:13:28+00:00",
    "lead_min": 11.5,
    "price": 0.115
-  },
-  "espn_fpi:4363821": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 8.1,
-   "price": 0.44
-  },
-  "espn_fpi:4363823": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 11.1,
-   "price": 0.43
   },
   "espn_fpi:4363825": {
    "at": "2026-09-14T23:29:02+00:00",
@@ -1181,9 +1156,9 @@
    "price": 0.715
   },
   "espn_fpi:aec-mlb-cin-atl-2026-09-24": {
-   "at": "2026-09-24T22:49:27+00:00",
-   "lead_min": 25.5,
-   "price": 0.325
+   "at": "2026-09-24T23:04:39+00:00",
+   "lead_min": 10.3,
+   "price": 0.32
   },
   "espn_fpi:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:41:08+00:00",
@@ -1456,8 +1431,8 @@
    "price": 0.54
   },
   "espn_fpi:aec-mlb-tb-nyy-2026-09-24": {
-   "at": "2026-09-24T22:49:27+00:00",
-   "lead_min": 15.5,
+   "at": "2026-09-24T23:04:39+00:00",
+   "lead_min": 0.3,
    "price": 0.575
   },
   "espn_fpi:aec-mlb-tor-bal-2026-09-21": {
@@ -1670,11 +1645,6 @@
    "lead_min": 6.7,
    "price": 0.51
   },
-  "mlb_fade_streak:aec-mlb-bal-nym-2026-09-14": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 11.1,
-   "price": 0.575
-  },
   "mlb_fade_streak:aec-mlb-cin-atl-2026-09-22": {
    "at": "2026-09-22T23:11:10+00:00",
    "lead_min": 3.8,
@@ -1879,6 +1849,11 @@
    "at": "2026-09-24T22:49:27+00:00",
    "lead_min": 10.5,
    "price": 0.54
+  },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP24CHISTL-STL2": {
+   "at": "2026-09-24T23:04:39+00:00",
+   "lead_min": 55.3,
+   "price": 0.7
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP24FLATB-TB2": {
    "at": "2026-09-24T22:49:27+00:00",
@@ -4175,11 +4150,6 @@
    "lead_min": 2.9,
    "price": 0.85
   },
-  "tennis_fav_band:aec-atp-karsel-micmmo-2026-09-14": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 1.1,
-   "price": 0.81
-  },
   "tennis_fav_band:aec-atp-moikou-filpel-2026-09-16": {
    "at": "2026-09-17T02:46:07+00:00",
    "lead_min": 13.9,
@@ -5965,11 +5935,6 @@
    "lead_min": 0.4,
    "price": 0.56
   },
-  "tt_band_55_60:aec-setkameua-stoole-malden-2026-09-14": {
-   "at": "2026-09-14T22:58:56+00:00",
-   "lead_min": 1.1,
-   "price": 0.59
-  },
   "tt_band_55_60:aec-setkameua-sukiho-krovit-2026-09-15": {
    "at": "2026-09-15T21:59:13+00:00",
    "lead_min": 0.8,
@@ -6041,5 +6006,5 @@
    "price": 0.76
   }
  },
- "updated": "2026-09-24T22:49:27+00:00"
+ "updated": "2026-09-24T23:04:39+00:00"
 }
