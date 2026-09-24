@@ -880,6 +880,11 @@
    "lead_min": 6.6,
    "price": 0.47
   },
+  "covers:aec-mlb-mil-phi-2026-09-24": {
+   "at": "2026-09-24T21:18:31+00:00",
+   "lead_min": 46.5,
+   "price": 0.56
+  },
   "covers:aec-mlb-nym-tex-2026-09-22": {
    "at": "2026-09-22T23:56:26+00:00",
    "lead_min": 8.6,
@@ -1294,6 +1299,11 @@
    "at": "2026-09-23T22:33:22+00:00",
    "lead_min": 6.6,
    "price": 0.535
+  },
+  "espn_fpi:aec-mlb-mil-phi-2026-09-24": {
+   "at": "2026-09-24T21:18:31+00:00",
+   "lead_min": 46.5,
+   "price": 0.445
   },
   "espn_fpi:aec-mlb-mil-pit-2026-09-16": {
    "at": "2026-09-16T22:26:46+00:00",
@@ -5765,11 +5775,6 @@
    "lead_min": 1.3,
    "price": 0.83
   },
-  "tennis_fav_band:aec-wta-tatmar-taytow-2026-09-13": {
-   "at": "2026-09-14T21:13:30+00:00",
-   "lead_min": 1.5,
-   "price": 0.65
-  },
   "tennis_fav_band:aec-wta-venval-laupig-2026-09-14": {
    "at": "2026-09-15T21:59:13+00:00",
    "lead_min": 0.8,
@@ -5854,11 +5859,6 @@
    "at": "2026-09-15T02:29:43+00:00",
    "lead_min": 0.3,
    "price": 0.53
-  },
-  "tt_band_55_60:aec-setkamemd-veryar-mitana-2026-09-14": {
-   "at": "2026-09-14T21:13:30+00:00",
-   "lead_min": 1.5,
-   "price": 0.57
   },
   "tt_band_55_60:aec-setkameua-derdmy-hnorom-2026-09-15": {
    "at": "2026-09-15T01:14:25+00:00",
@@ -6026,5 +6026,5 @@
    "price": 0.76
   }
  },
- "updated": "2026-09-24T21:03:08+00:00"
+ "updated": "2026-09-24T21:18:31+00:00"
 }
