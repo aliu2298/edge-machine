@@ -3043,6 +3043,47 @@ COMBO_MARKUP = {2: 0.0084, 3: 0.0106, 4: 0.0066}
 COMBO_COLLECTION = "KXMVECROSSCATEGORY-R"
 
 
+def combo_legs_by_day(universe=None):
+    """{date: [(row, side, price)]} — the legs a basket may be cut from, KALSHI ONLY.
+
+    Every leg must be a Kalshi market. A basket is not a market anyone can hit: you name its
+    legs to COMBO_COLLECTION and ask for a quote, and that collection lives on Kalshi, so a
+    Polymarket leg cannot go in one. `sandbox_track.placeable` enforces the same rule at the
+    other end, and would reject any basket built from one.
+
+    That used to happen BY ACCIDENT and it cost a day of Production. Polymarket rows carry no
+    "tradeable" key at all (fetch_polymarket_us sets only `untraded`), and the price check
+    below read a missing key as untradeable, so Polymarket legs were dropped silently -- every
+    one of the first 115 legs ever used was a Kalshi leg and nothing said why. When the tennis
+    band narrowed to 0.75-0.80 on 2026-09-23 the in-band Kalshi legs fell below two, the pool
+    emptied, and the build printed a bare "0 baskets" while tennis_fav_band went on picking
+    Polymarket legs happily. The venue rule is stated outright here, and the caller reports
+    the leg count when it cannot fill a basket.
+
+    The band is the tennis rule's own -- the legs ARE its picks -- so it moves with it. A
+    basket of 0.75-0.80 legs is not the same contract as one of 0.75-0.90 legs, which is why
+    narrowing the band resets these records too.
+    """
+    rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
+    lo, hi = fav_band("tennis")
+    by_day = {}
+    for r in rows:
+        if r.get("venue") != "kalshi":
+            continue
+        if r.get("untraded") or r.get("price_draw") is not None:
+            continue
+        for side in ("a", "b"):
+            p = r.get(f"price_{side}")
+            # Default True, as every other reader of this field does: a row that does not
+            # say is tradeable. The venue check above is what keeps the pool honest.
+            if p is None or not (r.get("tradeable") or {}).get(side, True):
+                continue
+            if lo <= p < hi:
+                by_day.setdefault(r.get("date"), []).append((r, side, float(p)))
+                break                      # one leg per match: the sides cannot both win
+    return by_day
+
+
 def tennis_combo_rows(universe=None, now=None, used=None):
     """Baskets of each day's favourite-band legs: every eligible leg, each in at most one
     basket of a given size.
@@ -3061,23 +3102,8 @@ def tennis_combo_rows(universe=None, now=None, used=None):
     """
     import hashlib
     used = used or {}
-    rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
     now = now or datetime.now(timezone.utc)
-    # The legs are the tennis rule's own picks, so they follow its band. Narrowed with it on
-    # 2026-09-23, which resets these records too: a basket of 0.75-0.80 legs is not the same
-    # contract as a basket of 0.75-0.90 legs, and counting them together would hide both.
-    lo, hi = fav_band("tennis")
-    by_day = {}
-    for r in rows:
-        if r.get("untraded") or r.get("price_draw") is not None:
-            continue
-        for side in ("a", "b"):
-            p = r.get(f"price_{side}")
-            if p is None or not (r.get("tradeable") or {}).get(side):
-                continue
-            if lo <= p < hi:
-                by_day.setdefault(r.get("date"), []).append((r, side, float(p)))
-                break                      # one leg per match: the sides cannot both win
+    by_day = combo_legs_by_day(universe)
     out = []
     for day, group in sorted(by_day.items()):
         group.sort(key=lambda t: (str(t[0].get("start")), str(t[0]["market_id"])))

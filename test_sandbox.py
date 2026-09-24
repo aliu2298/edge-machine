@@ -2633,9 +2633,9 @@ eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 ok(not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a", market_id="combo3:x",
                         side_a="All 3 win", side_b="Any one loses")),
-   "a basket is NOT publishable: the feed can express a resting market, and a combo is bought "
-   "by asking for a quote. So the 3-leg pair is in Production and publishes nothing until the "
-   "feed learns combos — a label, not something a follower can act on")
+   "a basket with no legs is not publishable: the feed names the legs to ask a quote for, and "
+   "there is nothing here to name. A well-formed basket IS publishable — see the combo feed "
+   "tests below, which is the case this one must not be read as denying")
 ok(T.placeable(dict(sport="mma", venue="polymarket_us", pick="a", market_id="m", side_a="A", side_b="B")),
    "an MMA pick on Polymarket US reaches the feed, now that fights route")
 ok(not T.placeable(dict(sport="mma", venue="kalshi", pick="a", market_id="m", side_a="A", side_b="B",
@@ -2643,7 +2643,8 @@ ok(not T.placeable(dict(sport="mma", venue="kalshi", pick="a", market_id="m", si
    "but a Kalshi fight with only Kalshi's own start estimate does not: it could land after the walk-out")
 ok("combo" in T.TRADEABLE_VENUES and not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a",
                                                             market_id="combo2:x", side_a="A", side_b="B")),
-   "a tennis basket counts toward its own record, and can never reach the feed")
+   "a tennis basket counts toward its own record, and reaches the feed only once it carries "
+   "its legs — this one has none")
 for _gone, _why in (("o15_form_l10|soccer_o15", "it was the only pair there behind the price"),
                     ("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
                     ("espn_fpi|nfl", "it was staking money on four settled bets"),
@@ -3673,6 +3674,31 @@ ok(not T.placeable(dict(_cq, pick="b")),
    "and only the side that needs every leg: 'any one loses' is not the bet the rule makes")
 ok(not PROD.start_verified(dict(_cq, start_source=None)),
    "a basket with one unverified leg is held back — it cannot be bought once any leg is under way")
+
+# The legs pool is Kalshi-only, said outright rather than falling out of a missing default.
+# On 2026-09-23 this was implicit: Polymarket rows carry no "tradeable" key, the price check
+# read that as untradeable, and the pool emptied silently when the band narrowed — leaving a
+# Production pair that could not fire and a log line that only said "0 baskets".
+_cpm = {"tennis": [dict(_cleg("PM-A", "2026-09-24T10:00:00+00:00", 0.78, "Alcaraz"),
+                        venue="polymarket_us", tradeable=None),
+                   dict(_cleg("PM-B", "2026-09-24T12:00:00+00:00", 0.76, "Sinner"),
+                        venue="polymarket_us", tradeable=None)]}
+eq(S.combo_legs_by_day(_cpm), {},
+   "a Polymarket leg is never in the pool: the collection lives on Kalshi, so a basket "
+   "holding one could not be quoted and placeable() would reject it anyway")
+eq(S.tennis_combo_rows(_cpm), [], "so no basket is built from Polymarket rows")
+eq(sum(len(v) for v in S.combo_legs_by_day(_cu).values()), 3,
+   "the three Kalshi legs are the pool, and the caller counts them to say WHY a day "
+   "built nothing rather than printing a bare zero")
+_cmix = {"tennis": _cu["tennis"] + _cpm["tennis"]}
+eq(sorted(l[0]["market_id"] for v in S.combo_legs_by_day(_cmix).values() for l in v),
+   ["KXATPMATCH-A", "KXATPMATCH-B", "KXATPMATCH-C"],
+   "and a mixed universe keeps only the Kalshi side of it")
+_cnt = {"tennis": [dict(_cleg("KXATPMATCH-D", "2026-09-24T10:00:00+00:00", 0.78, "Draper"),
+                        tradeable=None)]}
+eq([l[0]["market_id"] for v in S.combo_legs_by_day(_cnt).values() for l in v], ["KXATPMATCH-D"],
+   "a Kalshi row that does not state 'tradeable' still counts, the way every other reader "
+   "of that field treats it — the venue check is what does the work here")
 
 print("\ndemotion clears the feed")
 

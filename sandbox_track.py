@@ -487,14 +487,26 @@ def collect(verbose=True, combo_used=None):
             # number. SPORTS lists this domain after tennis, so those rows exist by now.
             try:
                 rows = S.tennis_combo_rows(universe, used=combo_used)
+                legs = S.combo_legs_by_day(universe)
             except Exception as e:
                 print(f"  ! tennis_combo build failed: {type(e).__name__}: {str(e)[:70]}")
-                rows = []
+                rows, legs = [], {}
             universe[sport] = rows
             coverage.setdefault(sport, {})["combo"] = len(rows)
+            # A bare "0 baskets" hides the two reasons it happens -- no in-band Kalshi legs at
+            # all, or too few on any one day to cut the smallest basket -- and those need
+            # different answers. Say which, so a starved lane cannot look like a broken one.
+            n_legs = sum(len(v) for v in legs.values())
+            coverage[sport]["legs"] = n_legs
             if verbose:
+                why = ""
+                if not rows:
+                    lo, hi = S.fav_band("tennis")
+                    best = max((len(v) for v in legs.values()), default=0)
+                    why = (f" -- {n_legs} in-band Kalshi legs ({lo:.2f}-{hi:.2f}), most on any "
+                           f"one day {best}, and the smallest basket needs {min(S.COMBO_LEGS)}")
                 print(f"  {S.SPORTS[sport]:<13} built {len(rows)} baskets from the day's "
-                      f"favourite-band legs ({time.time() - t0:.0f}s)")
+                      f"favourite-band legs{why} ({time.time() - t0:.0f}s)")
             continue
         if sport == "soccer_corners":
             cstats = {}
