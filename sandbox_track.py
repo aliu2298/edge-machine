@@ -940,6 +940,13 @@ def publish(d, universe, coverage, verbose=True):
                     # can settle it later. Stored on the quote rather than looked up again,
                     # so the basket is judged on exactly the legs it was bought with.
                     **({"legs": r["legs"]} if r.get("legs") else {}),
+                    # Tennis: which tour, stamped from the market id at log time. The id has
+                    # always said it, but nothing carried it onto the quote, so the record
+                    # could not be split by tier without re-parsing ids afterwards. Not a
+                    # rule -- the pre-registered question it will answer is whether a
+                    # favourite in a shallower field beats the same price in a deeper one.
+                    **({"tier": S.tennis_tier(mid)}
+                       if str(sport).startswith("tennis") and S.tennis_tier(mid) else {}),
                     # Pinnacle only: was this a contest nothing else had covered? That is
                     # the Pinnacle-versus-venue rule's own lane, reported separately.
                     uncovered=(mid not in (covered.get(sport) or set())

@@ -205,9 +205,9 @@ SOURCES = {
              "significant across the rules tried, and on 14 priced matches the market already "
              "charged for it. The Sandbox decides."),
     "tennis_fav_band": dict(
-        label="Tennis favourite-band rule (priced 0.75-0.80)", kind="Rule", connected=True,
+        label="Tennis favourite-band rule (priced 0.77-0.81)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis"], baseline="favourite_population",
-        note="NARROWED AND RESET 2026-09-23, counting from zero. Back the player the exchange "
+        note="NARROWED AGAIN 2026-09-24 to 0.77-0.81, and the clock reset with it. The 0.75-0.77 slice was the whole problem: on 220 settled bets in the 0.75-0.80 band it returned -1.03% alone (74.7% hit against a 75.5c average ask), while 0.77-0.81 returned +9.83% (86.2%, z +2.36) and was the ONLY slice positive in both halves of the record (+11.8% then +7.8%); 0.75-0.77 went -8.3% then +7.0% and every band above 0.81 flipped sign. Weak part stated: that band was chosen after looking at five, and both halves are the same eleven days and largely the same tournaments, so it is a defensible narrowing rather than a proven one — hence the reset. Each quote now also carries its TOUR (S.tennis_tier), which is not a rule: the pre-registered question, fixed today and read in four weeks, is whether a favourite in a shallower field beats the same price in a deeper one. Today that is directionally right and unreadable — ITF men +4.30% on 185, WTA -3.87% on 55 — and contradicted by ATP at +23.99% on 27 bets with no losses, which is what luck looks like. EARLIER: NARROWED AND RESET 2026-09-23, counting from zero. Back the player the exchange "
              "prices between 0.75 and 0.80 (the ask), on every tennis match the Sandbox lists. "
              "It ran on 0.75-0.90 from 2026-09-14 and reached 377-69 over 446 settled, +2.63% "
              "after fees, z +1.68 — but the edge was not spread across that band. 0.75-0.80 "
@@ -225,8 +225,8 @@ SOURCES = {
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="NARROWED AND RESET 2026-09-23 with the single-leg rule it wraps: its legs are "
-             "now priced 0.75-0.80, not 0.75-0.90, so a basket struck before that date counts "
+        note="NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
+             "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts "
              "toward nothing here and stays on file under Reference — a basket of narrow legs "
              "is a different contract. Cut each day's "
              "favourite-band legs, in start-time order, into consecutive baskets of 2 and buy "
@@ -242,8 +242,8 @@ SOURCES = {
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="NARROWED AND RESET 2026-09-23 with the single-leg rule it wraps: its legs are "
-             "now priced 0.75-0.80, not 0.75-0.90, so a basket struck before that date counts "
+        note="NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
+             "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts "
              "toward nothing here and stays on file under Reference — a basket of narrow legs "
              "is a different contract. Cut each day's "
              "favourite-band legs, in start-time order, into consecutive baskets of 3 and buy "
@@ -259,8 +259,8 @@ SOURCES = {
     "tennis_combo4": dict(
         label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="NARROWED AND RESET 2026-09-23 with the single-leg rule it wraps: its legs are now "
-             "priced 0.75-0.80, not 0.75-0.90, so a basket struck before that date counts toward "
+        note="NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
+             "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts toward "
              "nothing here and stays on file under Reference. The same construction as the "
              "2- and 3-leg rules at four legs: each day's favourite-band legs, in start-time order, "
              "cut into consecutive baskets of four, each bought as ONE combo contract that pays "
@@ -277,7 +277,9 @@ SOURCES = {
              "from Polymarket US legs instead. Built because that is where the legs are: after "
              "the 2026-09-23 band narrowing the tennis rule picked 15 of 15 on Polymarket US, "
              "and the Kalshi basket lane went to zero for want of in-band Kalshi legs. In the "
-             "0.75-0.80 band Polymarket US supplied 14.6 in-band legs a day against Kalshi's "
+             "0.75-0.80 band it was measured in (the legs follow the single-leg rule and moved to "
+             "0.77-0.81 on 2026-09-24, so re-measure) Polymarket US supplied 14.6 in-band "
+             "legs a day against Kalshi's "
              "6.3, and returned +6.86% gross a leg (n=146) against Kalshi's +5.45% (n=58). "
              "NEITHER of those leg edges is significant (t +1.66 and +0.81), and a basket "
              "multiplies the error as surely as the edge: if the true edge is zero this does "
@@ -3049,7 +3051,53 @@ FAV_BAND = (0.75, 0.90)
 # pair is therefore taken out of Production and its clock reset, so nothing it did on the
 # wide band counts toward the narrow one. MMA keeps the full band -- its record is four bets
 # and there is nothing in it to narrow on.
-BAND_BY_SPORT = {"tennis": (0.75, 0.80)}
+# NARROWED AGAIN 2026-09-24, from 0.75-0.80. The 0.75-0.77 slice was the whole problem: on
+# 220 settled bets in the old band it returned -1.03% on its own (74.7% hit against a 75.5c
+# average ask) while 0.77-0.81 returned +9.83% (86.2%, z +2.36) and was the ONLY slice
+# positive in both halves of the record -- +11.8% then +7.8%, where 0.75-0.77 went -8.3% then
+# +7.0% and every band above 0.81 flipped sign.
+#
+# Said plainly, because it is the weak part: that band was chosen after looking at five of
+# them, and the two "halves" are the same eleven days and largely the same tournaments. It is
+# a defensible narrowing, not a proven one, which is why it resets the clock exactly as the
+# last one did. A 0.77-0.81 record is not a 0.75-0.80 record and counting them together would
+# hide both.
+BAND_BY_SPORT = {"tennis": (0.77, 0.81)}
+
+# ---- Phase 2: the tier travels with the row ------------------------------------------------
+# Every tennis market id already says which tour it belongs to -- Polymarket US slugs read
+# "aec-{tier}-{players}-{date}" and Kalshi's read "KX{TOUR}MATCH-..." -- but nothing carried
+# it onto the quote, so the record could not be split by tour without re-parsing ids after the
+# fact. Stamped here so it accumulates from today.
+#
+# It is deliberately NOT a rule yet. The pre-registered hypothesis, fixed now and read later:
+# a favourite in a SHALLOWER field is more dominant than the same price in a deeper one, so
+# lower tiers should beat higher ones at equal price. Today's record is directionally right
+# and nowhere near readable -- ITF men +4.30% on 185, WTA -3.87% on 55 -- and flatly
+# contradicted by ATP at +23.99% on 27 bets with zero losses, which is what luck looks like.
+# Four weeks of stamped rows decides it; fitting a tier rule to 27 bets would not.
+TENNIS_TIERS = {"atp": "ATP", "wta": "WTA", "atpch": "ATP Challenger", "atpcq": "ATP Ch. Qual",
+                "itfme": "ITF Men", "itfwo": "ITF Women", "atpdb": "ATP Doubles",
+                "wtadb": "WTA Doubles", "utr": "UTR"}
+_KALSHI_TENNIS_TIER = (("KXATPCHALLENGERMATCH", "atpch"), ("KXATPMATCH", "atp"),
+                       ("KXWTAMATCH", "wta"), ("KXITFMATCH", "itfme"))
+
+
+def tennis_tier(market_id):
+    """The tour a tennis market belongs to, read off its id, or None.
+
+    Longest Kalshi prefix first: "KXATPCHALLENGERMATCH" also starts with neither "KXATPMATCH"
+    nor "KXWTAMATCH", but an id scheme that gains a shorter overlapping prefix later would
+    silently mis-tier every Challenger, so the order is fixed here rather than left to chance.
+    """
+    m = str(market_id or "")
+    if m.startswith("aec-"):
+        t = (m.split("-") + ["", ""])[1].lower()
+        return t if t in TENNIS_TIERS else None
+    for pre, tier in _KALSHI_TENNIS_TIER:
+        if m.startswith(pre):
+            return tier
+    return None
 
 
 def fav_band(sport):

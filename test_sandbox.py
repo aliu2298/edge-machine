@@ -2429,12 +2429,12 @@ ok("moved 2026-09-14" in PR.page({"quotes": [_open]}, _st_p, _fd, ""),
 
 
 print("\ntennis favourite-band rule")
-_tr = [dict(market_id="t1", price_a=0.80, price_b=0.22, price_draw=None),
-       dict(market_id="t2", price_a=0.30, price_b=0.75, price_draw=None),
+_tr = [dict(market_id="t1", price_a=0.81, price_b=0.21, price_draw=None),
+       dict(market_id="t2", price_a=0.30, price_b=0.78, price_draw=None),
        dict(market_id="t3", price_a=0.90, price_b=0.12, price_draw=None),
        dict(market_id="t4", price_a=0.60, price_b=0.42, price_draw=None)]
 eq(S.fetch_tennis_fav_band("tennis", universe={"tennis": _tr}), [dict(market_id="t2", pick="b")],
-   "backs 0.75 up to (not including) 0.80 since the 2026-09-23 narrowing, on either side of "
+   "backs 0.77 up to (not including) 0.81 since the 2026-09-24 narrowing, on either side of "
    "the contest — 0.80 itself is now out")
 eq(S.fetch_tennis_fav_band("mma", universe={"mma": [dict(x, sport="mma") for x in _tr]}),
    [dict(market_id="t1", pick="a"), dict(market_id="t2", pick="b")],
@@ -3138,15 +3138,15 @@ def _leg(mid, start, pa, pb=None, day="2026-09-21", traded=("a", "b")):
                 url="u", tradeable={k: True for k in traded})
 
 
-# Legs priced inside the band the rule backs. Narrowed to 0.75-0.80 on 2026-09-23, so 0.85
-# and 0.80 are no longer legs — the fixture moved with the rule, which is the point of a
+# Legs priced inside the band the rule backs. Narrowed again to 0.77-0.81 on 2026-09-24, so
+# 0.75 and 0.85 are no longer legs — the fixture moves WITH the rule, which is the point of a
 # fixture: it has to be legal picks, or it tests the builder against bets nothing would make.
 _tu = {"tennis": [
     _leg("T3", "2026-09-21T14:00:00+00:00", 0.79),
     _leg("T1", "2026-09-21T10:00:00+00:00", 0.77),
-    _leg("T2", "2026-09-21T12:00:00+00:00", 0.75),
-    _leg("TL", "2026-09-21T09:00:00+00:00", 0.60),          # under the band
-    _leg("TH", "2026-09-21T08:00:00+00:00", 0.85),          # over it, since the narrowing
+    _leg("T2", "2026-09-21T12:00:00+00:00", 0.80),
+    _leg("TL", "2026-09-21T09:00:00+00:00", 0.75),          # under the band since 2026-09-24
+    _leg("TH", "2026-09-21T08:00:00+00:00", 0.85),          # over it, since 2026-09-23
 ]}
 _rows = S.tennis_combo_rows(_tu)
 _c2s = [r for r in _rows if r["market_id"].startswith("combo2:2026-09-21:")]
@@ -3157,9 +3157,9 @@ eq([l["market_id"] for l in _c2["legs"]], ["T1", "T2"],
    "the legs are taken in start-time order, never the nicest priced")
 eq([l["market_id"] for l in _c3["legs"]], ["T1", "T2", "T3"],
    "and the three-leg basket cuts the same order")
-close(_c2["price_a"], round(0.77 * 0.75 * (1 + S.COMBO_MARKUP[2]), 4),
+close(_c2["price_a"], round(0.77 * 0.80 * (1 + S.COMBO_MARKUP[2]), 4),
       "the two-leg price is the product of the legs plus the measured RFQ markup")
-close(_c3["price_a"], round(0.77 * 0.75 * 0.79 * (1 + S.COMBO_MARKUP[3]), 4),
+close(_c3["price_a"], round(0.77 * 0.80 * 0.79 * (1 + S.COMBO_MARKUP[3]), 4),
       "and the three-leg price likewise")
 ok(_c3["price_a"] < _c2["price_a"], "a longer basket is cheaper, because it wins less often")
 ok(all(r["sport"] == "tennis_combo" for r in _rows),
@@ -3169,7 +3169,7 @@ eq(S.tennis_combo_rows({"tennis": _tu["tennis"][:1]}), [],
 eq([r["market_id"].split(":")[0] for r in S.tennis_combo_rows({"tennis": _tu["tennis"][1:3]})],
    ["combo2"], "two eligible legs make the two-leg basket only")
 _untraded = [dict(_leg("T1", "2026-09-21T10:00:00+00:00", 0.77), untraded=True),
-             _leg("T2", "2026-09-21T12:00:00+00:00", 0.75),
+             _leg("T2", "2026-09-21T12:00:00+00:00", 0.80),
              _leg("T3", "2026-09-21T14:00:00+00:00", 0.79)]
 eq([l["market_id"] for l in S.tennis_combo_rows({"tennis": _untraded})[0]["legs"]], ["T2", "T3"],
    "a leg with no book is never put in a basket")
@@ -3646,7 +3646,7 @@ def _cleg(mid, start, price, name):
 
 
 _cu = {"tennis": [_cleg("KXATPMATCH-A", "2026-09-24T10:00:00+00:00", 0.78, "Alcaraz"),
-                  _cleg("KXATPMATCH-B", "2026-09-24T12:00:00+00:00", 0.76, "Sinner"),
+                  _cleg("KXATPMATCH-B", "2026-09-24T12:00:00+00:00", 0.79, "Sinner"),
                   _cleg("KXATPMATCH-C", "2026-09-24T14:00:00+00:00", 0.77, "Zverev")]}
 _crow = [r for r in S.tennis_combo_rows(_cu) if r["market_id"].startswith("combo3")][0]
 _cq = dict(_crow, id="tennis_combo3:" + _crow["market_id"], source="tennis_combo3", bet=True,
@@ -3686,7 +3686,7 @@ ok(not PROD.start_verified(dict(_cq, start_source=None)),
 # Production pair that could not fire and a log line that only said "0 baskets".
 _cpm = {"tennis": [dict(_cleg("PM-A", "2026-09-24T10:00:00+00:00", 0.78, "Alcaraz"),
                         venue="polymarket_us", tradeable=None),
-                   dict(_cleg("PM-B", "2026-09-24T12:00:00+00:00", 0.76, "Sinner"),
+                   dict(_cleg("PM-B", "2026-09-24T12:00:00+00:00", 0.79, "Sinner"),
                         venue="polymarket_us", tradeable=None)]}
 eq(S.combo_legs_by_day(_cpm), {},
    "a Polymarket leg is never in the pool: the collection lives on Kalshi, so a basket "
@@ -3704,6 +3704,42 @@ _cnt = {"tennis": [dict(_cleg("KXATPMATCH-D", "2026-09-24T10:00:00+00:00", 0.78,
 eq([l[0]["market_id"] for v in S.combo_legs_by_day(_cnt).values() for l in v], ["KXATPMATCH-D"],
    "a Kalshi row that does not state 'tradeable' still counts, the way every other reader "
    "of that field treats it — the venue check is what does the work here")
+
+print("\ntennis: band narrowed to 0.77-0.81, and the tour stamped on every quote")
+
+# Phase 1, 2026-09-24. The 0.75-0.77 slice returned -1.03% alone on 220 settled bets in the
+# old band (74.7% against a 75.5c ask) while 0.77-0.81 returned +9.83% (86.2%, z +2.36) and
+# was the only slice positive in BOTH halves. Chosen after looking at five bands, on eleven
+# days and largely the same tournaments — hence the clock reset, not a claim of proof.
+eq(S.fav_band("tennis"), (0.77, 0.81),
+   "the tennis band is 0.77-0.81: the only slice positive in both halves of the record")
+eq(S.fav_band("mma"), S.FAV_BAND,
+   "and MMA keeps the wide band — narrowing tennis must not move a sport it was not measured on")
+eq(S.band_picks("tennis", S.fav_band("tennis"),
+                {"tennis": [dict(market_id="x", price_a=0.76, price_b=0.26, price_draw=None),
+                            dict(market_id="y", price_a=0.78, price_b=0.24, price_draw=None),
+                            dict(market_id="z", price_a=0.81, price_b=0.21, price_draw=None)]}),
+   [dict(market_id="y", pick="a")],
+   "0.76 is now out and 0.81 itself is out (upper bound exclusive, as it always was)")
+
+# Phase 2: the tour, stamped from the market id. NOT a rule — the pre-registered question is
+# whether a favourite in a shallower field beats the same price in a deeper one.
+for _mid, _want in (("aec-itfme-matsil-materey-2026-09-14", "itfme"),
+                    ("aec-wta-jesman-domsal-2026-09-14", "wta"),
+                    ("aec-atp-karsel-micmmo-2026-09-14", "atp"),
+                    ("KXATPCHALLENGERMATCH-26SEP23FAULAJ", "atpch"),
+                    ("KXATPMATCH-26SEP22SVRNOG", "atp"),
+                    ("KXWTAMATCH-26SEP22BACJOI", "wta")):
+    eq(S.tennis_tier(_mid), _want, f"{_mid.split('-')[0]} reads as {_want}")
+eq(S.tennis_tier("KXATPCHALLENGERMATCH-26SEP23FAULAJ"), "atpch",
+   "a Challenger is not an ATP main-draw match: the longest Kalshi prefix is matched first, "
+   "and getting that backwards would silently mis-tier every Challenger")
+eq(S.tennis_tier("aec-bogus-x-y"), None,
+   "an unknown tour is None rather than a guess — a made-up tier would pool two fields")
+eq(S.tennis_tier("KXMLSTOTAL-26SEP26PHIORL-2"), None, "and a soccer market has no tour at all")
+eq(S.tennis_tier(None), None, "nor does a missing id")
+ok(set(S.TENNIS_TIERS) >= {"atp", "wta", "itfme", "itfwo", "atpch"},
+   "the tiers the record actually contains are all known")
 
 print("\nover 1.5, ranked rather than thresholded")
 
@@ -3785,7 +3821,7 @@ print("\nthe Polymarket US basket lane")
 # built nothing at all. The two lanes are deliberately identical except for the venue.
 _pml = {"tennis": [dict(_cleg("pm-a", "2026-09-25T10:00:00+00:00", 0.79, "Draper"),
                         venue="polymarket_us"),
-                   dict(_cleg("pm-b", "2026-09-25T12:00:00+00:00", 0.75, "Rune"),
+                   dict(_cleg("pm-b", "2026-09-25T12:00:00+00:00", 0.79, "Rune"),
                         venue="polymarket_us"),
                    dict(_cleg("pm-c", "2026-09-25T14:00:00+00:00", 0.78, "Fritz"),
                         venue="polymarket_us")]}
@@ -3801,9 +3837,9 @@ _p3 = _pr[0]
 eq(_p3["sport"], "tennis_pmcombo",
    "its own domain, so a Polymarket basket can never pool into the Kalshi basket record — "
    "they are different contracts at different costs and the point is to read them apart")
-close(_p3["price_a"], round(0.79 * 0.75 * 0.78 * (1 + S.PM_COMBO_MARKUP[3]), 4),
+close(_p3["price_a"], round(0.79 * 0.79 * 0.78 * (1 + S.PM_COMBO_MARKUP[3]), 4),
       "priced as the product of the legs plus the venue's own markup")
-ok(_p3["price_a"] > round(0.79 * 0.75 * 0.78 * (1 + S.COMBO_MARKUP[3]), 4),
+ok(_p3["price_a"] > round(0.79 * 0.79 * 0.78 * (1 + S.COMBO_MARKUP[3]), 4),
    "which is DEARER than Kalshi's on the same legs: 3.39% against 1.06%. Kalshi has the "
    "cheaper wrapper and it is the lane that cannot fire — a cheap wrapper on nothing is worth "
    "nothing")
@@ -3857,8 +3893,9 @@ ok("--prune-feed" in open(_os.path.join(_os.path.dirname(_os.path.abspath(__file
 
 print("\nthe tennis band, narrowed")
 
-eq(S.fav_band("tennis"), (0.75, 0.80), "tennis backs the cheap third of the old band")
-eq(S.fav_band("tennis_combo"), (0.75, 0.80), "and a combo leg is the same pick, so it follows")
+eq(S.fav_band("tennis"), (0.77, 0.81),
+   "tennis backs 0.77-0.81 since 2026-09-24: 0.75-0.77 returned -1.03% on its own")
+eq(S.fav_band("tennis_combo"), (0.77, 0.81), "and a combo leg is the same pick, so it follows")
 eq(S.fav_band("mma"), S.FAV_BAND,
    "MMA keeps the full band: four settled bets is nothing to narrow on")
 _bp = [dict(market_id="m1", sport="tennis", side_a="A", side_b="B", price_a=0.78, price_b=0.25,
@@ -3870,10 +3907,11 @@ eq([q["market_id"] for q in _got], ["m1"],
    "0.78 is backed and 0.86 is not: the 0.80-0.90 half returned +0.7% on 265 bets and is gone")
 eq([q["market_id"] for q in S.fetch_tennis_fav_band("mma", {"mma": [dict(_bp[1], sport="mma")]})],
    ["m2"], "the same 0.86 price is still a bet in MMA")
-ok("0.75-0.80" in S.SOURCES["tennis_fav_band"]["label"], "the label says which band it is now")
+ok("0.77-0.81" in S.SOURCES["tennis_fav_band"]["label"], "the label says which band it is now")
 for _k in ("tennis_fav_band", "tennis_combo2", "tennis_combo3", "tennis_combo4"):
-    ok("NARROWED AND RESET" in S.SOURCES[_k]["note"],
-       f"{_k} records the reset in its own words, so the old record is never read as this one's")
+    ok("NARROWED" in S.SOURCES[_k]["note"] and "2026-09-24" in S.SOURCES[_k]["note"],
+       f"{_k} records the latest reset in its own words, so a 0.75-0.80 record is never read "
+       f"as a 0.77-0.81 one")
 ok("tennis_fav_band|tennis" not in T.PAIR_OVERRIDES,
    "and it is out of Production until a narrow-band record exists")
 _st = T.load_stages()
