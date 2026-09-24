@@ -1780,6 +1780,11 @@
    "lead_min": 3.2,
    "price": 0.61
   },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP23LAANA-ANA2": {
+   "at": "2026-09-24T01:05:06+00:00",
+   "lead_min": 54.9,
+   "price": 0.67
+  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP23MINDAL-DAL2": {
    "at": "2026-09-23T23:49:08+00:00",
    "lead_min": 10.9,
@@ -1789,6 +1794,11 @@
    "at": "2026-09-22T22:56:08+00:00",
    "lead_min": 3.9,
    "price": 0.7
+  },
+  "nhl_rest_edge:KXNHLGAME-26SEP23LAANA": {
+   "at": "2026-09-24T01:05:06+00:00",
+   "lead_min": 54.9,
+   "price": 0.57
   },
   "nws:KXHIGHDEN-26SEP22-B81.5": {
    "at": "2026-09-23T06:58:08+00:00",
@@ -1906,8 +1916,8 @@
    "price": 0.86
   },
   "o15_form_l10:KXMLSTOTAL-26SEP23SEARSL-2": {
-   "at": "2026-09-24T00:49:45+00:00",
-   "lead_min": 40.2,
+   "at": "2026-09-24T01:05:06+00:00",
+   "lead_min": 24.9,
    "price": 0.85
   },
   "o15_form_l10:KXSERIEATOTAL-26SEP19ROMINT-2": {
@@ -4955,6 +4965,11 @@
    "lead_min": 14.8,
    "price": 0.88
   },
+  "tennis_fav_band:aec-itfwo-jinlu-annkub-2026-09-24": {
+   "at": "2026-09-24T01:05:06+00:00",
+   "lead_min": 54.9,
+   "price": 0.78
+  },
   "tennis_fav_band:aec-itfwo-jinlu-qigyi-2026-09-23": {
    "at": "2026-09-23T05:57:56+00:00",
    "lead_min": 4.8,
@@ -5203,6 +5218,11 @@
   "tennis_fav_band:aec-itfwo-seocho-ruizha-2026-09-22": {
    "at": "2026-09-22T03:36:14+00:00",
    "lead_min": 2.5,
+   "price": 0.79
+  },
+  "tennis_fav_band:aec-itfwo-shiye-yanhou-2026-09-24": {
+   "at": "2026-09-24T01:05:06+00:00",
+   "lead_min": 54.9,
    "price": 0.79
   },
   "tennis_fav_band:aec-itfwo-sijwei-zhubai-2026-09-17": {
@@ -5771,9 +5791,9 @@
    "price": 0.65
   },
   "u35_low_scoring:KXMLSTOTAL-26SEP23SEARSL-4": {
-   "at": "2026-09-24T00:49:45+00:00",
-   "lead_min": 40.2,
-   "price": 0.6
+   "at": "2026-09-24T01:05:06+00:00",
+   "lead_min": 24.9,
+   "price": 0.59
   },
   "u35_low_scoring:KXSCOTTISHPREMTOTAL-26SEP19MIRDUU-4": {
    "at": "2026-09-19T13:51:04+00:00",
@@ -5786,5 +5806,5 @@
    "price": 0.83
   }
  },
- "updated": "2026-09-24T00:49:45+00:00"
+ "updated": "2026-09-24T01:05:06+00:00"
 }
