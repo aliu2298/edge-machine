@@ -350,6 +350,29 @@ SOURCES = {
              "Research: 92.9% on 84 matches against the teams' own earlier 81.4%. At real "
              "Kalshi prices in its first week, +2.0% on 20 — the market charges for most of it. "
              "The same rule selects the Leads board's over-1.5 cards since 2026-09-14."),
+    "o15_ranked": dict(
+        label="Over 1.5, ranked: the day's top 2 mismatches under 0.80", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"],
+        baseline="population",
+        note="PRE-REGISTERED 2026-09-24, before it logged anything. Every other over-1.5 rule "
+             "here is a THRESHOLD -- it takes every match clearing a bar and lands on their "
+             "average, which on five seasons is 81.4% against an ask that has averaged 0.850 "
+             "and demands 85%. That loses by construction, and o15_form_l10's live -10.4% on "
+             "25 bets is what it looks like. This one RANKS: on 401 matchdays with a 20+ "
+             "candidate pool (median 45 games), the whole field hit 77.0%, the top 10 80.8%, "
+             "the top 2 82.7%, the top 1 84.5% -- ranking is worth ~7.5pp over taking the "
+             "board. It ranks on MISMATCH, not on a good fixture: over 1.5 runs 73.7% where "
+             "the favourite is 0.30-0.40 and 87.5% where it is 0.80+, monotonically, and "
+             "matches with every price above 2.00 go over 4.67pp LESS often than ones with a "
+             "clear favourite (z -5.79). The marquee tie is the worst candidate on the board. "
+             "The signal is ALREADY PRICED -- against the market's own de-vigged fair the "
+             "mismatch buckets sit at +0.81, -0.05, +1.13, +1.08 and -0.58pp, none at z 1.1 "
+             "-- so the rule can only earn by paying less than a ranked candidate is worth, "
+             "which is what the 0.80 ceiling is for. Backtested at 0.80 the top 2 return "
+             "+3.3% and the top 1 +5.7%, against -2.7% and -0.5% at 0.85. Stated plainly: "
+             "that backtest ranks on the same five seasons everything else here was fitted "
+             "on, so it is a reason to run the rule, not a result. Judged against backing Yes "
+             "on every listed over-1.5 market, which is the only question it asks."),
     "o15_cup_mismatch": dict(
         label="Cup mismatch over 1.5 rule (favourite 0.70+ to win)", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_o15_cup"], baseline="population",
@@ -4046,6 +4069,84 @@ def fetch_o15_cup_mismatch(sport, universe=None):
             if max(wins.get(_fixture_code(r)) or [0.0]) >= CUP_MISMATCH_FAV]
 
 
+# ---------------------------------------------------------------------------
+# Over 1.5, RANKED — pre-registered 2026-09-24
+# ---------------------------------------------------------------------------
+# Every other over-1.5 rule here is a THRESHOLD: it takes every match clearing a bar and
+# lands on their average. On five seasons that average is 81.4%, against a Kalshi ask that
+# has averaged 0.850 and so demands 85% — losing by construction before any bad luck, which
+# is what o15_form_l10's live -10.4% on 25 bets is.
+#
+# This one RANKS instead. On 401 matchdays with 20+ candidates (median pool 45 games, which
+# is an ordinary international or midweek slate), taking every candidate hit 77.0%, the top
+# 10 hit 80.8%, the top 2 hit 82.7% and the top 1 hit 84.5%. Ranking is worth about 7.5pp
+# over taking the field, and no threshold rule can collect it.
+#
+# WHAT IT RANKS ON, AND WHY NOT THE OBVIOUS THING. Goals come from MISMATCHES, not from good
+# matches. Over five seasons and 11,153 priced matches, over-1.5 runs 73.7% where the
+# favourite is 0.30-0.40 to win and 87.5% where it is 0.80+, rising monotonically the whole
+# way; matches with every price above 2.00 go over 1.5 4.67pp LESS often than matches with a
+# clear favourite (z -5.79). A competitive marquee tie is the worst over-1.5 candidate on the
+# board, not the best. So the rank is the favourite's own de-vigged win probability, read
+# from the same fixture's match-winner markets in the same run -- the generalisation of
+# o15_cup_mismatch from cups to everything.
+#
+# AND THE SIGNAL IS ALREADY PRICED, WHICH IS THE POINT OF THE CEILING. Against the market's
+# own de-vigged fair, the mismatch buckets sit at +0.81, -0.05, +1.13, +1.08 and -0.58pp --
+# nothing reaching z 1.1. Ranking on it beats the field but not the price, so this rule can
+# only earn from paying LESS than the ranked candidate is worth. Hence O15_RANK_MAX_ASK: it
+# fires on the top O15_RANK_TAKE of a day's board and only under the ceiling. Backtested at
+# 0.80 the top 2 return +3.3% and the top 1 +5.7%, against -2.7% and -0.5% at 0.85.
+#
+# The ceiling leaves a real choice rather than starving the lane: of 191 Kalshi over-1.5 asks
+# the Sandbox has logged (median 0.820), 43% sit at or under 0.80, so a 45-game slate still
+# offers about 19 candidates to rank.
+#
+# Judged against the same population every goals rule is: backing Yes on every listed
+# over-1.5 market. That is the only question it asks -- whether ranking and a ceiling beat
+# taking the board.
+O15_RANK_TAKE, O15_RANK_MAX_ASK, O15_RANK_MIN_POOL = 2, 0.80, 6
+
+
+def rank_o15_candidates(sport, universe=None):
+    """[(fav_prob, row)] for one over-1.5 domain, best-ranked first.
+
+    The rank is the favourite's de-vigged win probability on the same fixture, taken from the
+    match-winner rows the +0.5 domain carries. A fixture with no readable winner book is not
+    ranked at all rather than ranked at zero: an unpriced tie is unknown, not competitive.
+    """
+    uni = universe if universe is not None else (UNIVERSE or {})
+    wins = {}
+    for r in uni.get(str(sport).replace("soccer_o15", "soccer_p05")) or []:
+        p = r.get("mid_a", r.get("price_a"))
+        if p is not None and not r.get("untraded") and (r.get("tradeable") or {}).get("a", True):
+            wins.setdefault(_fixture_code(r), []).append(float(p))
+    out = []
+    for r, _ko in _rule_rows(sport, universe):
+        w = wins.get(_fixture_code(r))
+        if not w:
+            continue
+        out.append((max(w), r))
+    out.sort(key=lambda t: (-t[0], str(t[1].get("market_id"))))
+    return out
+
+
+def fetch_o15_ranked(sport, universe=None):
+    """Back over 1.5 on the day's top-ranked mismatches, and only under the ceiling.
+
+    The ceiling is applied BEFORE the ranking, not after. Ranking first and then dropping
+    what is too dear would let a day's two best candidates both price out and leave the rule
+    idle beside twenty affordable ones it never considered.
+    """
+    ranked = [(f, r) for f, r in rank_o15_candidates(sport, universe)
+              if (r.get("price_a") is not None and float(r["price_a"]) <= O15_RANK_MAX_ASK
+                  and not r.get("untraded") and (r.get("tradeable") or {}).get("a", True))]
+    if len(ranked) < O15_RANK_MIN_POOL:
+        return []                      # no pool, no choice, no rule
+    return [dict(market_id=r["market_id"], pick="a")
+            for _f, r in ranked[:O15_RANK_TAKE]]
+
+
 def fetch_o15_form_l10(sport, universe=None, fixtures=None):
     """Back over 1.5 where BOTH teams' games went over 1.5 in 9+ of their last 10."""
     fixtures = _espn_fixtures() if fixtures is None else fixtures
@@ -5034,6 +5135,7 @@ CHALLENGERS = {
     "mlb_fade_streak": fetch_mlb_fade_streak,
     "o15_form_l10": fetch_o15_form_l10,
     "o15_cup_mismatch": fetch_o15_cup_mismatch,
+    "o15_ranked": fetch_o15_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,

@@ -3705,6 +3705,53 @@ eq([l[0]["market_id"] for v in S.combo_legs_by_day(_cnt).values() for l in v], [
    "a Kalshi row that does not state 'tradeable' still counts, the way every other reader "
    "of that field treats it — the venue check is what does the work here")
 
+print("\nover 1.5, ranked rather than thresholded")
+
+# Built 2026-09-24. Every other over-1.5 rule takes every match clearing a bar and lands on
+# their average (81.4% on five seasons) against an ask demanding 85%. This one ranks a whole
+# matchday and takes the best two under a ceiling.
+def _o15r(mid, ask):
+    return dict(market_id=mid, sport="soccer_o15", price_a=ask, mid_a=ask, league="L",
+                start="2026-09-24T18:00:00+00:00", untraded=False, tradeable={"a": True, "b": True})
+def _p05r(mid, fav):
+    return dict(market_id=mid, sport="soccer_p05", price_a=fav, mid_a=fav, league="L",
+                untraded=False, tradeable={"a": True, "b": True})
+_spec = [("A", 0.92, 0.79), ("B", 0.85, 0.78), ("C", 0.78, 0.95), ("D", 0.60, 0.72),
+         ("E", 0.55, 0.70), ("F", 0.45, 0.68), ("G", 0.40, 0.66), ("H", 0.35, 0.64)]
+_ru = {"soccer_o15": [_o15r(f"KXO15-{c}C", a) for c, _f, a in _spec],
+       "soccer_p05": [_p05r(f"KXP05-{c}C", f) for c, f, _a in _spec]}
+_code = lambda p: p["market_id"].split("-")[1][0]
+eq([_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru)], ["A", "B"],
+   "the two biggest mismatches on the board — goals come from mismatches, not good fixtures: "
+   "over 1.5 runs 73.7% at a 0.30-0.40 favourite and 87.5% at 0.80+, and an all-positive "
+   "match goes over 4.67pp LESS often than one with a clear favourite (z -5.79)")
+eq([c for c, _f, _a in _spec if _a > S.O15_RANK_MAX_ASK], ["C"],
+   "C is the third-biggest mismatch but is priced above the ceiling")
+ok("C" not in [_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru)],
+   "so it is dropped BEFORE the ranking, not after — ranking first and then dropping what is "
+   "too dear would let a day's best two price out and leave the rule idle beside affordable "
+   "candidates it never considered")
+_dear = {"soccer_o15": [_o15r(f"KXO15-{c}C", 0.95) for c, _f, _a in _spec],
+         "soccer_p05": _ru["soccer_p05"]}
+eq(S.fetch_o15_ranked("soccer_o15", _dear), [],
+   "a board with nothing under the ceiling fires nothing, rather than buying the cheapest "
+   "dear thing on it")
+eq(S.fetch_o15_ranked("soccer_o15", {"soccer_o15": _ru["soccer_o15"][:3],
+                                     "soccer_p05": _ru["soccer_p05"][:3]}), [],
+   "and a board too small to rank is not a pool: no choice, no rule")
+_nowin = {"soccer_o15": _ru["soccer_o15"], "soccer_p05": []}
+eq(S.fetch_o15_ranked("soccer_o15", _nowin), [],
+   "a fixture whose winner book cannot be read is not ranked at all — an unpriced tie is "
+   "unknown, not competitive, and ranking it zero would call it the safest bet on the board")
+eq(S.O15_RANK_TAKE, 2, "it takes two a day")
+ok(S.O15_RANK_MAX_ASK <= 0.81,
+   "under a ceiling, because the mismatch signal is ALREADY priced (buckets at +0.81, -0.05, "
+   "+1.13, +1.08, -0.58pp v the market's own fair, none at z 1.1). Ranking beats the field, "
+   "not the price, so the only thing left to earn is paying less than the candidate is worth")
+ok("o15_ranked" in S.SOURCES and S.SOURCES["o15_ranked"]["baseline"] == "population",
+   "judged against backing Yes on every listed over-1.5 market, which is the only question "
+   "it asks: does ranking with a ceiling beat taking the board")
+
 print("\nthe Polymarket US basket lane")
 
 # Built 2026-09-24 because the legs are there and were not on Kalshi: after the band
