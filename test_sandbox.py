@@ -2628,8 +2628,7 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
-eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|soccer_team1",
-                              "tennis_combo3|tennis_combo"],
+eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|soccer_team1"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 ok(not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a", market_id="combo3:x",
                         side_a="All 3 win", side_b="Any one loses")),
@@ -2648,7 +2647,13 @@ ok("combo" in T.TRADEABLE_VENUES and not T.placeable(dict(sport="tennis_combo", 
 for _gone, _why in (("o15_form_l10|soccer_o15", "it was the only pair there behind the price"),
                     ("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
                     ("espn_fpi|nfl", "it was staking money on four settled bets"),
-                    ("espn_fpi|mlb", "it stopped beating the blind rules and demoted itself")):
+                    ("espn_fpi|mlb", "it stopped beating the blind rules and demoted itself"),
+                    ("tennis_combo3|tennis_combo",
+                     "it could not place a bet at all — its legs must be Kalshi markets and "
+                     "the narrowed band left too few, so four runs built zero baskets"),
+                    ("pm_combo3|tennis_pmcombo",
+                     "the replacement is NOT promoted with the demotion: nothing settled, and "
+                     "placeable() refuses a basket whose legs are not Kalshi markets")):
     eq(T.PAIR_OVERRIDES.get(_gone), None, f"{_gone.split('|')[0]} is OFF the list: {_why}")
 
 # ---------------------------------------------------------------------------

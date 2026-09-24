@@ -189,14 +189,21 @@ PAIR_OVERRIDES = {
     # records too small to read: the MMA favourite band 4-0 (4 won v 3.2 priced, +23.4% after
     # fees, z +1.00), OLBG's boxing tips 3-0 (3 won v 2.7 priced, +11.1%, z +0.59). The
     # demotion net reads their whole record from here. Both keep their Sandbox record.
-    # 2026-09-23, as asked, replacing the single-leg tennis rule that left the same day. Its
-    # record is 6-4 over 10 baskets (6 won v 5.3 priced, z +0.45, +10.8% after fees) — and all
-    # ten were struck on the OLD 0.75-0.90 legs, so on its current definition it enters with
-    # nothing settled at all. Stated plainly because a combo multiplies its legs' edge, m^n:
-    # the narrow band's +5.5% is a claim fitted to the record it was found in, and at three
-    # legs a fitted edge that turns out to be noise costs about three times as fast as it
-    # would at one. The demotion net reads its whole record from here.
-    "tennis_combo3|tennis_combo": dict(moved_on="2026-09-23", production_at=None),
+    # tennis_combo3 — listed 2026-09-23, OUT 2026-09-24, as asked. Not on its record: on the
+    # fact that it could not place a bet at all. Its legs must be Kalshi markets, because the
+    # basket is quoted through Kalshi's RFQ collection and a Polymarket leg cannot be named in
+    # one. Narrowing the tennis band to 0.75-0.80 the same day it was promoted cut the in-band
+    # KALSHI legs from 14.1 a day to 6.3, below what a run can see ahead of it, and four
+    # consecutive tracker runs built zero baskets while the single-leg rule went on picking 15
+    # of 15 on Polymarket US. A pair in Production that cannot fire is worse than no pair: it
+    # reads as a live lane and tests nothing.
+    #
+    # The replacement is pm_combo2/3/4 (SPORTS["tennis_pmcombo"]), the same construction on
+    # Polymarket US, where the legs actually are — 14.6 in-band a day against Kalshi's 6.3.
+    # It is NOT promoted with this demotion and should not be: it has nothing settled, and
+    # placeable() rightly refuses a basket whose legs are not Kalshi markets, so it could not
+    # publish a lead today even if listed. It earns a hearing at 30 settled baskets like
+    # anything else.
     "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
     "olbg|boxing": dict(moved_on="2026-09-22", production_at=None),
 }
