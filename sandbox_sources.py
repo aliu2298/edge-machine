@@ -352,6 +352,30 @@ SOURCES = {
              "Research: 92.9% on 84 matches against the teams' own earlier 81.4%. At real "
              "Kalshi prices in its first week, +2.0% on 20 — the market charges for most of it. "
              "The same rule selects the Leads board's over-1.5 cards since 2026-09-14."),
+    "team2_ranked": dict(
+        label="Favourite to score 2+, ranked by margin (top 2, 5pp+)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_team2", "soccer_team2_cup", "soccer_team2_intl"],
+        baseline="population",
+        note="PRE-REGISTERED 2026-09-24, before it logged anything. This market has the widest "
+             "rankable spread measured here: on 11,152 priced matches the favourite scores "
+             "twice 40.3% of the time at a 0.30-0.40 win price and 80.0% at 0.80+, rising "
+             "monotonically (+35.4pp end to end, z +20.1, against +12.7pp for over 1.5). AND "
+             "RANKING ON THAT WOULD STILL LOSE, which is why it does not. Joining 92 real "
+             "Kalshi asks to their own fixture's winner book: a 0.75+ favourite is asked 0.766 "
+             "against a true 0.780, a 0.65-0.75 one is asked 0.709 against 0.653, and the mean "
+             "margin across all 92 is -3.53pp — the vig, almost exactly. Taking the day's two "
+             "biggest mismatches buys at a loss on average however well mismatch predicts. So "
+             "it ranks on MARGIN: what the fixture's own winner price says the market is "
+             "worth (TEAM2_RATE_BY_FAV, a coarse empirical lookup, not a goals forecast of "
+             "ours — the market supplies the probability and only the mapping is ours) minus "
+             "what it costs. The top of the board by margin is not the top by mismatch: the "
+             "best of those 92 was Malta at a 0.41 favourite priced 0.30 (+16.3pp), which a "
+             "mismatch ranker would never have looked at. It fires RARELY on purpose — 15.2% "
+             "of the 92 cleared 5pp and 6.5% cleared 8pp, about 1.3 and 0.5 a day — because a "
+             "rule firing twice a day here would be buying the -3.53pp average. The low-block "
+             "exclusion carries over and fits tighter than it did for over 1.5: a favourite "
+             "needs its opponent to concede TWICE. Judged against backing Yes on every listed "
+             "score-2+ market."),
     "o15_ranked": dict(
         label="Over 1.5, ranked: the day's top 2 mismatches under 0.80", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"],
@@ -4222,6 +4246,104 @@ def underdog_leaks(dog, ko, fixtures):
     return n >= O15_RANK_MIN_LEAK
 
 
+# ---------------------------------------------------------------------------
+# A team to score 2+, ranked by MARGIN — pre-registered 2026-09-24
+# ---------------------------------------------------------------------------
+# The widest rankable spread of any market measured here: over 11,152 priced matches the
+# favourite scores twice 40.3% of the time when it is a 0.30-0.40 shot and 80.0% when it is
+# 0.80+, rising monotonically the whole way (+35.4pp end to end, z +20.1, against +12.7pp for
+# over 1.5). That makes the winner market a strong INDEPENDENT ranker for this one.
+#
+# AND RANKING ON IT WOULD STILL LOSE, WHICH IS WHY THIS RANKS ON SOMETHING ELSE. Joining 92
+# real Kalshi "favourite to score 2+" asks to their own fixture's winner book: a 0.75+
+# favourite is asked 0.766 against a true 0.780, a 0.65-0.75 one is asked 0.709 against 0.653.
+# Mean margin across all 92 is -3.53pp and the median -3.70pp -- the vig, almost exactly. Take
+# the day's two biggest mismatches and you buy at a loss on average, however well the
+# mismatch predicts.
+#
+# So the rank is the MARGIN: what the mismatch says the market is worth, minus what it costs.
+# TEAM2_RATE_BY_FAV is that mapping, measured on the 11,152 matches and deliberately coarse --
+# it is a lookup from the market's OWN winner price to an empirical rate, not a goals forecast
+# of our own. That matters: this project's shrunk-Poisson model lost to the book on all five
+# markets it was tried on, and the difference here is that nothing is being predicted. The
+# market supplies the probability; only the mapping to "scores twice" is ours.
+#
+# The top of the board by margin is NOT the top by mismatch, which is the whole point: the
+# best of the 92 was Malta at a 0.41 favourite priced 0.30 (+16.3pp), which a mismatch ranker
+# would never have looked at, beside Lithuania at 0.76 priced 0.62 (+16.0pp).
+#
+# Expect it to fire rarely and that is deliberate: 15.2% of those 92 cleared 5pp of margin,
+# 6.5% cleared 8pp -- about 1.3 and 0.5 a day at the board sizes we see. A rule that fires
+# twice a day here would be buying the -3.53pp average.
+# Monotonic by construction, because the mapping is only meaningful if it is. The measured
+# 0.40-0.45 and 0.45-0.50 buckets came back at 0.449 (n=2,020) and 0.448 (n=1,704) -- the same
+# number, and encoding that inversion would have said a STRONGER favourite scores twice less
+# often. Merged into one 0.40-0.50 bucket at the pooled 0.449 rather than carried as signal.
+TEAM2_RATE_BY_FAV = ((0.80, 0.800), (0.75, 0.765), (0.70, 0.698), (0.65, 0.677),
+                     (0.60, 0.607), (0.55, 0.560), (0.50, 0.522), (0.40, 0.449),
+                     (0.00, 0.403))
+TEAM2_RANK_TAKE, TEAM2_RANK_MIN_MARGIN = 2, 0.05
+
+
+def team2_expected_rate(fav_prob):
+    """How often a favourite of this strength scores twice. See TEAM2_RATE_BY_FAV."""
+    for lo, rate in TEAM2_RATE_BY_FAV:
+        if fav_prob >= lo:
+            return rate
+    return TEAM2_RATE_BY_FAV[-1][1]
+
+
+def rank_team2_candidates(sport, universe=None):
+    """[(margin, fav_prob, underdog, row)] — the favourite's own score-2+ market, best margin
+    first. Only the FAVOURITE's market is a candidate: the mapping is measured on favourites,
+    and the underdog's own score-2+ rate is a different number entirely (it FALLS with
+    mismatch, 70.3% to 50.9%, where the favourite's rises)."""
+    uni = universe if universe is not None else (UNIVERSE or {})
+    wins = {}
+    for r in uni.get(str(sport).replace("soccer_team2", "soccer_p05")) or []:
+        p = r.get("mid_a", r.get("price_a"))
+        if p is not None and not r.get("untraded") and (r.get("tradeable") or {}).get("a", True):
+            wins.setdefault(_fixture_code(r), []).append((float(p), r.get("team")))
+    out = []
+    for r, _ko in _rule_rows(sport, universe):
+        w = wins.get(_fixture_code(r))
+        ask = r.get("price_a")
+        if not w or ask is None or r.get("untraded"):
+            continue
+        if not (r.get("tradeable") or {}).get("a", True):
+            continue
+        fav_prob, dog = max(w, key=lambda t: t[0])
+        # On a +0.5 row `team` is the side being backed +0.5, i.e. the UNDERDOG of that pair.
+        # This market names a team too; it is a candidate only when that team is the favourite.
+        if not r.get("team") or r.get("team") == dog:
+            continue
+        out.append((team2_expected_rate(fav_prob) - float(ask), fav_prob, dog, r))
+    out.sort(key=lambda t: (-t[0], str(t[3].get("market_id"))))
+    return out
+
+
+def fetch_team2_ranked(sport, universe=None, fixtures=None):
+    """Back the favourite to score 2+ where the price is furthest below what its own winner
+    price says it is worth, skipping low blocks."""
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    out = []
+    for margin, _fav, dog, r in rank_team2_candidates(sport, universe):
+        if margin < TEAM2_RANK_MIN_MARGIN:
+            break                      # sorted, so nothing below here clears it either
+        try:
+            ko = datetime.fromisoformat(str(r["start"]))
+        except (KeyError, ValueError):
+            continue
+        # A favourite needs its opponent to concede TWICE. The low-block exclusion is a
+        # tighter fit here than it was for over 1.5, where one goal from either side did.
+        if not underdog_leaks(dog, ko, fixtures):
+            continue
+        out.append(dict(market_id=r["market_id"], pick="a"))
+        if len(out) >= TEAM2_RANK_TAKE:
+            break
+    return out
+
+
 def fetch_o15_ranked(sport, universe=None, fixtures=None):
     """Back over 1.5 on the day's top-ranked mismatches, under the ceiling, skipping low blocks.
 
@@ -5238,6 +5360,7 @@ CHALLENGERS = {
     "o15_form_l10": fetch_o15_form_l10,
     "o15_cup_mismatch": fetch_o15_cup_mismatch,
     "o15_ranked": fetch_o15_ranked,
+    "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "u35_low_scoring": fetch_u35_low_scoring,

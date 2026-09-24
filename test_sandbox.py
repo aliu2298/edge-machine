@@ -3705,6 +3705,62 @@ eq([l[0]["market_id"] for v in S.combo_legs_by_day(_cnt).values() for l in v], [
    "a Kalshi row that does not state 'tradeable' still counts, the way every other reader "
    "of that field treats it — the venue check is what does the work here")
 
+print("\na team to score 2+, ranked by margin rather than mismatch")
+
+# Pre-registered 2026-09-24. This market has the widest rankable spread measured here
+# (+35.4pp end to end, z +20.1) and ranking on that spread would still LOSE: 92 real Kalshi
+# asks joined to their own winner book average -3.53pp of margin, which is the vig.
+for _p, _want in ((0.82, 0.800), (0.77, 0.765), (0.66, 0.677), (0.41, 0.449), (0.20, 0.403)):
+    close(S.team2_expected_rate(_p), _want, f"a {_p:.2f} favourite scores twice {_want:.1%} of the time")
+ok(all(a >= b for a, b in zip([r for _p, r in S.TEAM2_RATE_BY_FAV],
+                              [r for _p, r in S.TEAM2_RATE_BY_FAV][1:])),
+   "the mapping is monotonic in the favourite's price, as the 11,152 matches are")
+
+def _t2r(mid, ask, team, opp):
+    return dict(market_id=mid, sport="soccer_team2", price_a=ask, mid_a=ask, league="L",
+                team=team, opponent=opp, start="2026-09-25T18:00:00+00:00",
+                untraded=False, tradeable={"a": True, "b": True})
+def _p05q(mid, p, team, opp):
+    return dict(market_id=mid, sport="soccer_p05", price_a=p, mid_a=p, league="L",
+                team=team, opponent=opp, untraded=False, tradeable={"a": True, "b": True})
+_t2spec = [("A", 0.77, "FavA", "DogA", 0.62), ("B", 0.41, "FavB", "DogB", 0.30),
+           ("C", 0.80, "FavC", "DogC", 0.79), ("D", 0.66, "FavD", "DogD", 0.55)]
+_t2u = {"soccer_team2": [_t2r(f"KXT2-{c}C", a, f, d) for c, _p, f, d, a in _t2spec],
+        "soccer_p05": [_p05q(f"KXP05-{c}C", p, d, f) for c, p, f, d, _a in _t2spec]}
+def _leaky(dog, conceded_two):
+    return [dict(played=True, competitive=True, home=dog, away="X", home_goals=0,
+                 away_goals=(2 if conceded_two else 0), league="L",
+                 kickoff=f"2026-09-{i+1:02d}T12:00:00+00:00") for i in range(10)]
+_t2fx = [g for c, _p, _f, d, _a in _t2spec for g in _leaky(d, True)]
+_t2code = lambda q: q["market_id"].split("-")[1][0]
+eq([_t2code(x) for x in S.fetch_team2_ranked("soccer_team2", _t2u, fixtures=_t2fx)], ["B", "A"],
+   "B is a 0.41 favourite and outranks C, which is a 0.80 favourite: the rank is MARGIN, not "
+   "mismatch. The best of 92 real asks was exactly this shape — Malta at a 0.41 favourite "
+   "priced 0.30 — which a mismatch ranker would never have looked at")
+ok("C" not in [_t2code(x) for x in S.fetch_team2_ranked("soccer_team2", _t2u, fixtures=_t2fx)],
+   "and the biggest mismatch on the board is skipped at +1.0pp of margin, because a 0.75+ "
+   "favourite is asked 0.766 against a true 0.780 and that is not a bet")
+_t2dear = {"soccer_team2": [_t2r(f"KXT2-{c}C", 0.79, f, d) for c, _p, f, d, _a in _t2spec],
+           "soccer_p05": _t2u["soccer_p05"]}
+eq(S.fetch_team2_ranked("soccer_team2", _t2dear, fixtures=_t2fx), [],
+   "a board with no margin fires NOTHING — firing twice a day here would buy the -3.53pp "
+   "average, so rarely is the design and not a fault")
+_t2block = [g for c, _p, _f, d, _a in _t2spec for g in _leaky(d, d != "DogA")]
+eq([_t2code(x) for x in S.fetch_team2_ranked("soccer_team2", _t2u, fixtures=_t2block)], ["B", "D"],
+   "A drops when its underdog stops conceding: the favourite needs its opponent to concede "
+   "TWICE, which fits tighter here than it did for over 1.5")
+_t2dogmkt = {"soccer_team2": [_t2r(f"KXT2-{c}C", a, d, f) for c, _p, f, d, a in _t2spec],
+             "soccer_p05": _t2u["soccer_p05"]}
+eq(S.fetch_team2_ranked("soccer_team2", _t2dogmkt, fixtures=_t2fx), [],
+   "the UNDERDOG's own score-2+ market is never a candidate: the mapping is measured on "
+   "favourites, and the underdog's rate FALLS with mismatch (70.3% to 50.9%) where the "
+   "favourite's rises")
+eq(S.TEAM2_RANK_TAKE, 2, "two a day at most")
+close(S.TEAM2_RANK_MIN_MARGIN, 0.05,
+      "and only at 5pp+ of margin — 15.2% of the 92 real asks cleared that, about 1.3 a day")
+ok("team2_ranked" in S.CHALLENGERS and S.SOURCES["team2_ranked"]["baseline"] == "population",
+   "registered, and judged against backing Yes on every listed score-2+ market")
+
 print("\ntennis: band narrowed to 0.77-0.81, and the tour stamped on every quote")
 
 # Phase 1, 2026-09-24. The 0.75-0.77 slice returned -1.03% alone on 220 settled bets in the
