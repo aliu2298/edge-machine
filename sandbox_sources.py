@@ -86,6 +86,10 @@ SPORTS = dict(
 # as ONE Kalshi combo contract instead of separately. Its own domain, so a basket can never
 # mix into the single-leg tennis record and the two can be read side by side.
 SPORTS["tennis_combo"] = "Tennis · Combos"
+# The same construction on Polymarket US, which has its own combo builder. A separate domain
+# so the two venues' baskets can never pool into one record: they are different contracts at
+# different costs, and the whole point is to read them side by side.
+SPORTS["tennis_pmcombo"] = "Tennis · PM Combos"
 
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
 # six returns open, tradeable markets. table-tennis is the surprise — Polymarket carries
@@ -266,6 +270,39 @@ SOURCES = {
              "product of the legs. The price logged is that product plus the measured markup. "
              "Each leg sits in one 4-leg basket and baskets share no match, so each is an "
              "independent result, judged per basket."),
+    "pm_combo2": dict(
+        label="Tennis 2-leg combo on Polymarket US", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
+        note="PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut "
+             "from Polymarket US legs instead. Built because that is where the legs are: after "
+             "the 2026-09-23 band narrowing the tennis rule picked 15 of 15 on Polymarket US, "
+             "and the Kalshi basket lane went to zero for want of in-band Kalshi legs. In the "
+             "0.75-0.80 band Polymarket US supplied 14.6 in-band legs a day against Kalshi's "
+             "6.3, and returned +6.86% gross a leg (n=146) against Kalshi's +5.45% (n=58). "
+             "NEITHER of those leg edges is significant (t +1.66 and +0.81), and a basket "
+             "multiplies the error as surely as the edge: if the true edge is zero this does "
+             "not return zero, it loses the wrapper and the fee every time. That is what this "
+             "lane is for and why it starts here and not in Production. The price is the "
+             "product of the legs plus PM_COMBO_MARKUP -- a MODEL, and a thin one: the 2-leg "
+             "markup comes from a single pre-match quote read live on 2026-09-24 (2.69% over "
+             "the product), against the 20 baskets behind Kalshi's. Re-measure it."),
+    "pm_combo3": dict(
+        label="Tennis 3-leg combo on Polymarket US", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
+        note="PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's "
+             "in-band Polymarket US legs in start-time order, cut into consecutive baskets of "
+             "three, each bought as ONE combo contract paying only if all three win. Its "
+             "3-leg markup is NOT measured: it is extrapolated from the single 2-leg reading "
+             "on the shape Kalshi's own constants showed from two legs to three, so the price "
+             "is the weakest part of this lane and the first thing to firm up. Judged against "
+             "the same legs bet singly, which is the only question a basket asks."),
+    "pm_combo4": dict(
+        label="Tennis 4-leg combo on Polymarket US", kind="Rule", connected=True,
+        site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
+        note="PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and "
+             "unmeasured markup as the 3-leg rule. Four legs compound both the edge and the "
+             "error hardest, so this is the rung that answers soonest whether the leg edge is "
+             "real -- in either direction."),
     "tt_band_55_60": dict(
         label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=False, retired='2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.',
         site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
@@ -3043,6 +3080,58 @@ COMBO_MARKUP = {2: 0.0084, 3: 0.0106, 4: 0.0066}
 COMBO_COLLECTION = "KXMVECROSSCATEGORY-R"
 
 
+# ---------------------------------------------------------------------------
+# Polymarket US combos — pre-registered 2026-09-24
+# ---------------------------------------------------------------------------
+# Kalshi is not the only venue with baskets. Polymarket US ships a "Build a Combo" builder
+# covering ATP, WTA, ITF, Davis Cup, UTR and both doubles draws, priced by its own
+# gateway.combos.v1.CombosService/ValidateCombo. That matters because the tennis rule picks
+# almost entirely on Polymarket US -- every one of its 15 bets after the 2026-09-23 band
+# narrowing -- while the Kalshi basket lane starved to zero for want of in-band Kalshi legs.
+#
+# Why this lane exists at all: the legs there are BOTH more plentiful and better. In the
+# 0.75-0.80 band, Polymarket US supplied 14.6 in-band legs a day against Kalshi's 6.3, and
+# returned +6.86% gross a leg (n=146) against Kalshi's +5.45% (n=58). A basket multiplies the
+# leg edge, so that gap compounds -- and so does the error, which is the whole risk here and
+# the reason this starts in the Sandbox rather than Production. NEITHER leg edge is
+# significant (t +1.66 and +0.81). If the true edge is zero a basket does not return zero, it
+# loses the full wrapper-and-fee drag every time.
+#
+# MEASURED ON ONE BASKET, WHICH IS THE WEAK POINT. A pre-match two-leg combo quoted live on
+# 2026-09-24 (GB Packers 1.43x + KC Chiefs 1.17x, $25 -> $40.73 = 1.6292x) sat 2.69% over the
+# product of its legs. Kalshi's own constants come from 20 RFQ baskets; this is one, on NFL
+# rather than tennis, so treat it as provisional and re-measure. The three- and four-leg
+# figures below are EXTRAPOLATED from it on Kalshi's observed 2->3 shape (0.84% -> 1.06%,
+# a factor of 1.26) and are not measurements at all.
+#
+# Priced as a model, not a live quote, for the same reason the Kalshi lane is: the real
+# number lives behind the account's logged-in session on web.polymarket.us, and that must
+# never reach a CI runner.
+PM_COMBO_MARKUP = {2: 0.0269, 3: 0.0339, 4: 0.0427}
+PM_COMBO_MEASURED = {2: True, 3: False, 4: False}
+
+
+def pm_combo_legs_by_day(universe=None):
+    """{date: [(row, side, price)]} — basket legs on POLYMARKET US, the mirror of
+    combo_legs_by_day. Same band, same one-leg-per-match rule, the other venue."""
+    rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
+    lo, hi = fav_band("tennis")
+    by_day = {}
+    for r in rows:
+        if r.get("venue") != "polymarket_us":
+            continue
+        if r.get("untraded") or r.get("price_draw") is not None:
+            continue
+        for side in ("a", "b"):
+            p = r.get(f"price_{side}")
+            if p is None or not (r.get("tradeable") or {}).get(side, True):
+                continue
+            if lo <= p < hi:
+                by_day.setdefault(r.get("date"), []).append((r, side, float(p)))
+                break
+    return by_day
+
+
 def combo_legs_by_day(universe=None):
     """{date: [(row, side, price)]} — the legs a basket may be cut from, KALSHI ONLY.
 
@@ -3100,10 +3189,27 @@ def tennis_combo_rows(universe=None, now=None, used=None):
     whichever run builds it. (Until 2026-09-21 this built ONE basket a day per size, from
     the first n legs, and left ~55 of a typical day's ~60 eligible legs unused.)
     """
+    return _basket_rows(combo_legs_by_day(universe), used, COMBO_MARKUP,
+                        sport="tennis_combo", prefix="combo", url="https://kalshi.com/combos")
+
+
+def pm_tennis_combo_rows(universe=None, now=None, used=None):
+    """The same baskets, cut from POLYMARKET US legs and priced with PM_COMBO_MARKUP.
+
+    Identical construction to tennis_combo_rows on purpose: same band, same start-time
+    order, same consecutive cutting, so the two venues' records are comparable and any
+    difference between them is the venues, not the rule. See PM_COMBO_MARKUP for what the
+    price is and how weakly the markup is measured.
+    """
+    return _basket_rows(pm_combo_legs_by_day(universe), used, PM_COMBO_MARKUP,
+                        sport="tennis_pmcombo", prefix="pmcombo",
+                        url="https://polymarket.us")
+
+
+def _basket_rows(by_day, used, markup, sport, prefix, url):
+    """Cut day-grouped legs into consecutive baskets. Shared by both venues' lanes."""
     import hashlib
     used = used or {}
-    now = now or datetime.now(timezone.utc)
-    by_day = combo_legs_by_day(universe)
     out = []
     for day, group in sorted(by_day.items()):
         group.sort(key=lambda t: (str(t[0].get("start")), str(t[0]["market_id"])))
@@ -3114,13 +3220,13 @@ def tennis_combo_rows(universe=None, now=None, used=None):
                 prod = 1.0
                 for _r, _side, p in pick:
                     prod *= p
-                price = round(prod * (1 + COMBO_MARKUP[n]), 4)
+                price = round(prod * (1 + markup[n]), 4)
                 names = " + ".join(str(r["side_a"] if sd == "a" else r["side_b"])[:22]
                                    for r, sd, _ in pick)
                 key = hashlib.sha1("|".join(sorted(r["market_id"] for r, _, _ in pick))
                                    .encode()).hexdigest()[:10]
                 out.append(dict(
-                    sport="tennis_combo", venue="combo", market_id=f"combo{n}:{day}:{key}",
+                    sport=sport, venue="combo", market_id=f"{prefix}{n}:{day}:{key}",
                     label=f"{n}-leg tennis combo: {names}",
                     side_a=f"All {n} win", side_b="Any one loses",
                     price_a=price, price_b=round(1 - price, 4), mid_a=price,
@@ -3132,7 +3238,7 @@ def tennis_combo_rows(universe=None, now=None, used=None):
                     # basket cannot be bought after any leg has begun.
                     start_source=(None if any(not r.get("start_source") for r, _, _ in pick)
                                   else sorted({str(r["start_source"]) for r, _, _ in pick})[0]),
-                    date=day, url="https://kalshi.com/combos",
+                    date=day, url=url,
                     # The leg's own NAME travels with it. A basket is bought by naming its
                     # legs to the venue, and "KXATPMATCH-26SEP24MARBOL yes" is not something
                     # a reader can check against the match they think they are backing.
@@ -3164,6 +3270,27 @@ def fetch_tennis_combo4(sport, universe=None):
     return [dict(market_id=r["market_id"], pick="a")
             for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
             if str(r["market_id"]).startswith("combo4:")]
+
+
+def fetch_pm_combo2(sport, universe=None):
+    """Buy the day's two-leg Polymarket US basket."""
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if str(r["market_id"]).startswith("pmcombo2:")]
+
+
+def fetch_pm_combo3(sport, universe=None):
+    """Buy the day's three-leg Polymarket US basket."""
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if str(r["market_id"]).startswith("pmcombo3:")]
+
+
+def fetch_pm_combo4(sport, universe=None):
+    """Buy the day's four-leg Polymarket US baskets."""
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in ((universe if universe is not None else (UNIVERSE or {})).get(sport) or [])
+            if str(r["market_id"]).startswith("pmcombo4:")]
 
 
 def resolve_combo(legs):
@@ -4888,6 +5015,9 @@ CHALLENGERS = {
     "tennis_combo2": fetch_tennis_combo2,
     "tennis_combo3": fetch_tennis_combo3,
     "tennis_combo4": fetch_tennis_combo4,
+    "pm_combo2": fetch_pm_combo2,
+    "pm_combo3": fetch_pm_combo3,
+    "pm_combo4": fetch_pm_combo4,
     "mma_fav_band": fetch_tennis_fav_band,          # the same band, another sport
     "tt_band_55_60": fetch_tt_band,
     "mlb_fade_streak": fetch_mlb_fade_streak,

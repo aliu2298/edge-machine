@@ -254,7 +254,7 @@ def check_production(d, st, rep):
 def check_combos(d, rep):
     """Every basket: the legs its name says, no leg shared with another basket of its size, and
     a settled result that matches its legs' own recorded results in the ledger."""
-    qs = [q for q in T.all_bets(d) if q.get("sport") == "tennis_combo"]
+    qs = [q for q in T.all_bets(d) if q.get("sport") in T.COMBO_SPORTS]
     leg_res = {}
     for q in T.all_bets(d):
         if q.get("sport") == "tennis" and q.get("result") in ("a", "b", "void"):
@@ -262,7 +262,10 @@ def check_combos(d, rep):
     used, checked = collections.Counter(), 0
     for q in qs:
         legs = q.get("legs") or []
-        want = int(q["market_id"][5]) if str(q["market_id"]).startswith("combo") else None
+        # "combo3:..." and "pmcombo3:..." both say their size; read it rather than counting
+        # characters, which quietly returned the wrong digit the moment a second prefix existed.
+        m = re.match(r"^(?:pm)?combo(\d+):", str(q["market_id"]))
+        want = int(m.group(1)) if m else None
         if not legs or want != len(legs):
             rep.error("combos", f"{q['id']}: named for {want} legs, holds {len(legs)}")
             continue

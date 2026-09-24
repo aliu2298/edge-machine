@@ -456,11 +456,21 @@ def decide(prob_a, price_a, price_b):
 # Publish
 # ---------------------------------------------------------------------------
 
+COMBO_SPORTS = ("tennis_combo", "tennis_pmcombo")
+
+
 def combo_used_legs(d):
-    """{n: leg market ids already in a logged n-leg basket} — see S.tennis_combo_rows."""
+    """{n: leg market ids already in a logged n-leg basket} — see S.tennis_combo_rows.
+
+    Both venues' lanes share one set. A Kalshi leg id (KXATPMATCH-...) is never a Polymarket
+    slug, so they cannot block each other; what this does prevent is either lane re-cutting
+    its OWN legs into a second basket on a later run, which is the duplication the builder's
+    docstring is about. Missing a lane here does not fail loudly — it quietly logs the same
+    basket again every three hours.
+    """
     used = {}
     for q in d.get("quotes") or []:
-        if q.get("sport") == "tennis_combo" and q.get("legs"):
+        if q.get("sport") in COMBO_SPORTS and q.get("legs"):
             used.setdefault(len(q["legs"]), set()).update(l["market_id"] for l in q["legs"])
     return used
 
@@ -481,6 +491,29 @@ def collect(verbose=True, combo_used=None):
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
+        if sport == "tennis_pmcombo":
+            # The Polymarket US twin of the Kalshi basket lane. Derived from the same tennis
+            # rows, so it costs no fetch; SPORTS lists it after tennis, as tennis_combo is.
+            try:
+                rows = S.pm_tennis_combo_rows(universe, used=combo_used)
+                legs = S.pm_combo_legs_by_day(universe)
+            except Exception as e:
+                print(f"  ! tennis_pmcombo build failed: {type(e).__name__}: {str(e)[:70]}")
+                rows, legs = [], {}
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["combo"] = len(rows)
+            n_legs = sum(len(v) for v in legs.values())
+            coverage[sport]["legs"] = n_legs
+            if verbose:
+                why = ""
+                if not rows:
+                    lo, hi = S.fav_band("tennis")
+                    best = max((len(v) for v in legs.values()), default=0)
+                    why = (f" -- {n_legs} in-band Polymarket US legs ({lo:.2f}-{hi:.2f}), most "
+                           f"on any one day {best}, smallest basket needs {min(S.COMBO_LEGS)}")
+                print(f"  {S.SPORTS[sport]:<13} built {len(rows)} baskets from the day's "
+                      f"favourite-band legs{why} ({time.time() - t0:.0f}s)")
+            continue
         if sport == "tennis_combo":
             # Derived, never fetched: the baskets are built from the tennis rows this same
             # run already priced, so a leg and the basket holding it always carry the same

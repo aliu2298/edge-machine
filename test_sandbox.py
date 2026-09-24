@@ -3700,6 +3700,54 @@ eq([l[0]["market_id"] for v in S.combo_legs_by_day(_cnt).values() for l in v], [
    "a Kalshi row that does not state 'tradeable' still counts, the way every other reader "
    "of that field treats it — the venue check is what does the work here")
 
+print("\nthe Polymarket US basket lane")
+
+# Built 2026-09-24 because the legs are there and were not on Kalshi: after the band
+# narrowed, the tennis rule picked 15 of 15 on Polymarket US while the Kalshi basket lane
+# built nothing at all. The two lanes are deliberately identical except for the venue.
+_pml = {"tennis": [dict(_cleg("pm-a", "2026-09-25T10:00:00+00:00", 0.79, "Draper"),
+                        venue="polymarket_us"),
+                   dict(_cleg("pm-b", "2026-09-25T12:00:00+00:00", 0.75, "Rune"),
+                        venue="polymarket_us"),
+                   dict(_cleg("pm-c", "2026-09-25T14:00:00+00:00", 0.78, "Fritz"),
+                        venue="polymarket_us")]}
+_mix = {"tennis": _pml["tennis"] + _cu["tennis"]}
+eq(sorted(l[0]["market_id"] for v in S.pm_combo_legs_by_day(_mix).values() for l in v),
+   ["pm-a", "pm-b", "pm-c"],
+   "the Polymarket pool takes only Polymarket legs, as the Kalshi pool takes only Kalshi ones "
+   "— the two venues never mix into one basket, because a basket is bought at ONE venue")
+eq(S.pm_combo_legs_by_day(_cu), {}, "and a Kalshi-only universe builds no Polymarket pool")
+_pr = [r for r in S.pm_tennis_combo_rows(_pml) if r["market_id"].startswith("pmcombo3")]
+eq(len(_pr), 1, "three in-band Polymarket legs make one three-leg basket")
+_p3 = _pr[0]
+eq(_p3["sport"], "tennis_pmcombo",
+   "its own domain, so a Polymarket basket can never pool into the Kalshi basket record — "
+   "they are different contracts at different costs and the point is to read them apart")
+close(_p3["price_a"], round(0.79 * 0.75 * 0.78 * (1 + S.PM_COMBO_MARKUP[3]), 4),
+      "priced as the product of the legs plus the venue's own markup")
+ok(_p3["price_a"] > round(0.79 * 0.75 * 0.78 * (1 + S.COMBO_MARKUP[3]), 4),
+   "which is DEARER than Kalshi's on the same legs: 3.39% against 1.06%. Kalshi has the "
+   "cheaper wrapper and it is the lane that cannot fire — a cheap wrapper on nothing is worth "
+   "nothing")
+eq([l["name"] for l in _p3["legs"]], ["Draper", "Rune", "Fritz"],
+   "and each leg still carries its name")
+eq(S.PM_COMBO_MEASURED, {2: True, 3: False, 4: False},
+   "the 2-leg markup is one live pre-match quote; the 3- and 4-leg figures are EXTRAPOLATED "
+   "and flagged as such, against the 20 RFQ baskets behind Kalshi's. This is the weakest "
+   "number in the lane and the flag is what says so")
+ok("tennis_pmcombo" in S.SPORTS and all(k in S.SOURCES for k in ("pm_combo2", "pm_combo3", "pm_combo4")),
+   "the domain and all three rungs are registered, so the board judges them")
+ok(all(S.SOURCES[k]["sports"] == ["tennis_pmcombo"] for k in ("pm_combo2", "pm_combo3", "pm_combo4")),
+   "and each claims only its own domain")
+eq(sorted(T.COMBO_SPORTS), ["tennis_combo", "tennis_pmcombo"],
+   "both lanes are known to combo_used_legs — a lane missing from it does not fail loudly, "
+   "it silently re-logs the same basket every three hours")
+_pu = T.combo_used_legs({"quotes": [dict(sport="tennis_pmcombo", legs=_p3["legs"])]})
+eq({k: sorted(v) for k, v in _pu.items()}, {3: ["pm-a", "pm-b", "pm-c"]},
+   "so a Polymarket basket's legs are marked used")
+eq([r["market_id"].split(":")[0] for r in S.pm_tennis_combo_rows(_pml, used=_pu)], ["pmcombo2"],
+   "and the next run does not cut them into the same basket again")
+
 print("\ndemotion clears the feed")
 
 import production as PROD
