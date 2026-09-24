@@ -175,16 +175,6 @@
    "lead_min": 40.8,
    "price": 0.98
   },
-  "covers:4363821": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 22.9,
-   "price": 0.57
-  },
-  "covers:4363825": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 55.9,
-   "price": 0.56
-  },
   "covers:4363835": {
    "at": "2026-09-15T01:24:59+00:00",
    "lead_min": 15.0,
@@ -229,11 +219,6 @@
    "at": "2026-09-16T23:14:16+00:00",
    "lead_min": 25.7,
    "price": 0.405
-  },
-  "covers:aec-mlb-bal-nym-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 25.9,
-   "price": 0.43
   },
   "covers:aec-mlb-bos-tex-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
@@ -325,6 +310,11 @@
    "lead_min": 36.0,
    "price": 0.59
   },
+  "covers:aec-nfl-atl-gb-2026-09-24": {
+   "at": "2026-09-24T23:25:57+00:00",
+   "lead_min": 49.0,
+   "price": 0.695
+  },
   "draftkings:KXMLBGAME-26SEP192010SEACOL": {
    "at": "2026-09-20T00:07:56+00:00",
    "lead_min": 2.1,
@@ -340,11 +330,6 @@
    "lead_min": 25.7,
    "price": 0.405
   },
-  "draftkings:aec-mlb-bal-nym-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 25.9,
-   "price": 0.43
-  },
   "draftkings:aec-mlb-mil-bal-2026-09-20": {
    "at": "2026-09-20T22:24:11+00:00",
    "lead_min": 55.8,
@@ -359,21 +344,6 @@
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 40.6,
    "price": 0.105
-  },
-  "espn_fpi:4363821": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 22.9,
-   "price": 0.44
-  },
-  "espn_fpi:4363823": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 25.9,
-   "price": 0.43
-  },
-  "espn_fpi:4363825": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 55.9,
-   "price": 0.56
   },
   "espn_fpi:4363833": {
    "at": "2026-09-15T01:24:59+00:00",
@@ -555,6 +525,11 @@
    "lead_min": 35.5,
    "price": 0.545
   },
+  "espn_fpi:aec-nfl-atl-gb-2026-09-24": {
+   "at": "2026-09-24T23:25:57+00:00",
+   "lead_min": 49.0,
+   "price": 0.31
+  },
   "espn_fpi:aec-nfl-jax-den-2026-09-20": {
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 20.6,
@@ -605,11 +580,6 @@
    "lead_min": 2.1,
    "price": 0.575
   },
-  "mlb_fade_streak:aec-mlb-bal-nym-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 25.9,
-   "price": 0.575
-  },
   "mlb_fade_streak:aec-mlb-cin-atl-2026-09-23": {
    "at": "2026-09-23T22:15:25+00:00",
    "lead_min": 59.6,
@@ -619,11 +589,6 @@
    "at": "2026-09-17T23:04:51+00:00",
    "lead_min": 35.1,
    "price": 0.515
-  },
-  "mlb_fade_streak:aec-mlb-nyy-min-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 55.9,
-   "price": 0.465
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP20CARFLA-FLA2": {
    "at": "2026-09-20T22:24:11+00:00",
@@ -664,6 +629,11 @@
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 56.0,
    "price": 0.54
+  },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP24CHISTL-STL2": {
+   "at": "2026-09-24T23:25:57+00:00",
+   "lead_min": 34.0,
+   "price": 0.7
   },
   "nhl_rest_edge:KXNHLGAME-26SEP22PHIBOS": {
    "at": "2026-09-22T22:04:02+00:00",
@@ -1275,11 +1245,6 @@
    "lead_min": 16.9,
    "price": 0.83
   },
-  "tennis_fav_band:aec-atp-karsel-micmmo-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 15.9,
-   "price": 0.79
-  },
   "tennis_fav_band:aec-atpdb-luzmat-paulstrick-2026-09-19": {
    "at": "2026-09-19T16:48:12+00:00",
    "lead_min": 11.8,
@@ -1590,20 +1555,10 @@
    "lead_min": 50.0,
    "price": 0.56
   },
-  "tt_band_55_60:aec-setkameua-khavit-abaspa-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 10.9,
-   "price": 0.59
-  },
   "tt_band_55_60:aec-setkameua-panvol-rubedu-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 44.7,
    "price": 0.59
-  },
-  "tt_band_55_60:aec-setkameua-stoole-malden-2026-09-14": {
-   "at": "2026-09-14T22:44:07+00:00",
-   "lead_min": 15.9,
-   "price": 0.6
   },
   "u35_low_scoring:KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-4": {
    "at": "2026-09-19T16:48:12+00:00",
@@ -1626,5 +1581,5 @@
    "price": 0.61
   }
  },
- "updated": "2026-09-24T20:28:01+00:00"
+ "updated": "2026-09-24T23:25:57+00:00"
 }
