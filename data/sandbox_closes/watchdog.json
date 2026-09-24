@@ -230,6 +230,11 @@
    "lead_min": 13.4,
    "price": 0.59
   },
+  "covers:aec-nfl-atl-gb-2026-09-24": {
+   "at": "2026-09-24T23:35:59+00:00",
+   "lead_min": 39.0,
+   "price": 0.695
+  },
   "draftkings:KXMLBGAME-26SEP192010SEACOL": {
    "at": "2026-09-19T23:39:57+00:00",
    "lead_min": 30.0,
@@ -450,6 +455,11 @@
    "lead_min": 13.4,
    "price": 0.415
   },
+  "espn_fpi:aec-nfl-atl-gb-2026-09-24": {
+   "at": "2026-09-24T23:35:59+00:00",
+   "lead_min": 39.0,
+   "price": 0.31
+  },
   "espn_fpi:aec-nfl-car-atl-2026-09-20": {
    "at": "2026-09-20T16:31:44+00:00",
    "lead_min": 28.3,
@@ -599,6 +609,11 @@
    "at": "2026-09-23T23:14:42+00:00",
    "lead_min": 45.3,
    "price": 0.62
+  },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP24CHISTL-STL2": {
+   "at": "2026-09-24T23:35:59+00:00",
+   "lead_min": 24.0,
+   "price": 0.7
   },
   "nhl_rest_edge:KXNHLGAME-26SEP22PHIBOS": {
    "at": "2026-09-22T22:26:38+00:00",
@@ -1650,16 +1665,6 @@
    "lead_min": 47.9,
    "price": 0.77
   },
-  "tennis_fav_band:aec-wta-suzlam-caralv-2026-09-14": {
-   "at": "2026-09-14T21:04:04+00:00",
-   "lead_min": 55.9,
-   "price": 0.84
-  },
-  "tennis_fav_band:aec-wta-tatmar-taytow-2026-09-13": {
-   "at": "2026-09-14T21:04:04+00:00",
-   "lead_min": 10.9,
-   "price": 0.75
-  },
   "tt_band_55_60:aec-setkamecz-ullmil-senjak-2026-09-15": {
    "at": "2026-09-15T05:29:54+00:00",
    "lead_min": 0.1,
@@ -1680,29 +1685,14 @@
    "lead_min": 58.2,
    "price": 0.58
   },
-  "tt_band_55_60:aec-setkamemd-veryar-mitana-2026-09-14": {
-   "at": "2026-09-14T21:04:04+00:00",
-   "lead_min": 10.9,
-   "price": 0.57
-  },
   "tt_band_55_60:aec-setkameua-hraand-yurart-2026-09-15": {
    "at": "2026-09-15T15:17:39+00:00",
    "lead_min": 12.3,
    "price": 0.55
   },
-  "tt_band_55_60:aec-setkameua-hreiur-krovit-2026-09-14": {
-   "at": "2026-09-14T21:04:04+00:00",
-   "lead_min": 40.9,
-   "price": 0.57
-  },
   "tt_band_55_60:aec-setkameua-khavit-skaser-2026-09-15": {
    "at": "2026-09-15T00:01:45+00:00",
    "lead_min": 23.2,
-   "price": 0.55
-  },
-  "tt_band_55_60:aec-setkameua-kobvit-khaser-2026-09-14": {
-   "at": "2026-09-14T21:04:04+00:00",
-   "lead_min": 0.9,
    "price": 0.55
   },
   "tt_band_55_60:aec-setkameua-kusser-krydmy-2026-09-15": {
@@ -1751,5 +1741,5 @@
    "price": 0.83
   }
  },
- "updated": "2026-09-24T17:35:23+00:00"
+ "updated": "2026-09-24T23:35:59+00:00"
 }
