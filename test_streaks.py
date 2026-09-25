@@ -789,11 +789,18 @@ def _fake_get(url, tries=3):
                        {"id": f"m{q}", "date": f"{q[:4]}-{q[4:6]}-{dd}T12:00Z"},
                        {"id": f"old{q}", "date": "2026-06-01T12:00Z"}]}
 _saved_get, _saved_sleep = SF.get, SF.time.sleep
+_saved_load, _saved_save = SF._load_history, SF._save_history
 SF.get, SF.time.sleep = _fake_get, (lambda s: None)
+# July and August are closed once today is past early September, and the committed
+# history cache then answers them without a fetch. This test is about the month-cap
+# path, so it must not read or write that cache.
+SF._load_history = lambda slug: {}
+SF._save_history = lambda slug, cache: None
 try:
     _ev = SF.fetch_range("eng.1", datetime.date(2026, 7, 20), datetime.date(2026, 9, 5))
 finally:
     SF.get, SF.time.sleep = _saved_get, _saved_sleep
+    SF._load_history, SF._save_history = _saved_load, _saved_save
 check("never asks ESPN for a date range", any("-" in c for c in _calls), False)
 check("months first, then every day of a capped month", _calls[:2] + [_calls[-1]], ["202607", "202608", "202609"])
 check("a capped month is re-read one day at a time", sum(1 for c in _calls if c.startswith("202608") and len(c) == 8), 31)
