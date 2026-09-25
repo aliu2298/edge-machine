@@ -4200,6 +4200,334 @@ ok(not next(p for k, _l, p, _d in T.ready_gate(_weak) if k == "clv"),
    "a whisker above zero on 40 closes no longer passes it")
 
 
+print("\ntracker exit: a production-feed failure fails the run")
+
+import production as _PROD
+
+
+def _patch_main(feed_boom=False, save_boom=False):
+    """Stub the network and the ledger so main() can be judged on its exit alone."""
+    saved = {
+        "load": T.load, "load_closes": T.load_closes, "apply_closes": T.apply_closes,
+        "retire_pre_gate": T.retire_pre_gate, "retire_late": T.retire_late,
+        "retire_venue_duplicates": T.retire_venue_duplicates, "collect": T.collect,
+        "publish": T.publish, "grade": T.grade, "prune": T.prune, "save": T.save,
+        "load_stages": T.load_stages, "evaluate_stages": T.evaluate_stages,
+        "save_stages": T.save_stages, "score": T.score,
+        "build_feed": _PROD.build_feed, "prune_feed": _PROD.prune_feed,
+        "save_feed": _PROD.save_feed,
+    }
+    T.load = lambda: {"quotes": [], "meta": {"runs": 0}, "coverage": {}}
+    T.load_closes = lambda *a, **k: {"closes": {}}
+    T.apply_closes = lambda d, c: 0
+    T.retire_pre_gate = lambda d: None
+    T.retire_late = lambda d: None
+    T.retire_venue_duplicates = lambda d: None
+    T.collect = lambda **k: ({}, {})
+    T.publish = lambda *a, **k: None
+    T.grade = lambda d: None
+    T.prune = lambda d: None
+    T.load_stages = lambda *a, **k: {"pairs": {}, "events": []}
+    T.evaluate_stages = lambda d, st: None
+    T.save_stages = lambda st, path=None: None
+    T.score = lambda d: {}
+    _PROD.prune_feed = lambda *a, **k: 0
+    _PROD.save_feed = lambda *a, **k: None
+    if save_boom:
+        def _save_boom(*a, **k):
+            raise RuntimeError("ledger write crashed")
+        T.save = _save_boom
+    else:
+        T.save = lambda *a, **k: None
+    if feed_boom:
+        def _feed_boom(*a, **k):
+            raise RuntimeError("production feed down")
+        _PROD.build_feed = _feed_boom
+    else:
+        _PROD.build_feed = lambda d, st: {"pairs": {}, "leads": {},
+                                          "unlisted_skipped": 0, "unverified_kickoff_skipped": 0}
+    return saved
+
+
+def _restore_main(saved):
+    for name, fn in saved.items():
+        if name in ("build_feed", "prune_feed", "save_feed"):
+            setattr(_PROD, name, fn)
+        else:
+            setattr(T, name, fn)
+
+
+_saved_main = _patch_main(feed_boom=True)
+try:
+    _code = T.main()
+finally:
+    _restore_main(_saved_main)
+ok(_code not in (0, None), "a production-feed failure makes main() return non-zero")
+
+_saved_main = _patch_main(save_boom=True)
+_crashed = False
+try:
+    try:
+        T.main()
+    except RuntimeError:
+        _crashed = True
+finally:
+    _restore_main(_saved_main)
+ok(_crashed, "a crash in main() propagates instead of being reported as success")
+
+_saved_main = _patch_main()
+try:
+    _ok_code = T.main()
+finally:
+    _restore_main(_saved_main)
+eq(_ok_code, 0, "a clean run still returns 0")
+
+_tracker_wf = open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                                 ".github", "workflows", "sandbox-tracker.yml")).read()
+ok("sandbox_track.py || echo" not in _tracker_wf and "sandbox_track.py || true" not in _tracker_wf,
+   "the tracker workflow does not mask sandbox_track.py with || echo or || true")
+ok("sandbox_build.py || echo" not in _tracker_wf and "sandbox_build.py || true" not in _tracker_wf,
+   "the tracker workflow does not mask sandbox_build.py with || echo or || true")
+
+
+print("\nledger save is atomic")
+
+_ldir = _os.path.join(_tf.mkdtemp(prefix="ledger-"), "")
+_lpath = _os.path.join(_ldir, "sandbox_ledger.json")
+_orig_ledger = T.LEDGER
+_good = {"coverage": {}, "meta": {"created": "2026-09-01T00:00:00Z", "runs": 3},
+         "quotes": [{"id": "keep"}]}
+json.dump(_good, open(_lpath, "w"))
+_before_bytes = open(_lpath, "rb").read()
+T.LEDGER = _lpath
+_real_dump = json.dump
+try:
+    def _dump_boom(*a, **k):
+        raise OSError("disk full mid-write")
+    json.dump = _dump_boom
+    _raised = False
+    try:
+        T.save({"meta": {"created": "2026-09-01T00:00:00Z", "runs": 3},
+                "quotes": [{"id": "keep"}, {"id": "new"}], "coverage": {}})
+    except OSError:
+        _raised = True
+    ok(_raised, "a failure inside the ledger write is not swallowed")
+finally:
+    json.dump = _real_dump
+    T.LEDGER = _orig_ledger
+ok(open(_lpath, "rb").read() == _before_bytes, "a mid-write failure leaves the original ledger bytes untouched")
+try:
+    _parsed = json.load(open(_lpath))
+except (OSError, ValueError):
+    _parsed = None
+ok(_parsed is not None and _parsed.get("quotes") == [{"id": "keep"}],
+   "and that ledger still parses as the previous quotes")
+ok(sorted(_os.listdir(_ldir)) == ["sandbox_ledger.json"],
+   "a mid-write failure leaves no temp file behind")
+
+json.dump(_good, open(_lpath, "w"))
+_before_bytes = open(_lpath, "rb").read()
+T.LEDGER = _lpath
+_real_replace = _os.replace
+try:
+    def _replace_boom(src, dst):
+        raise OSError("replaced nothing")
+    # sandbox_track.os is this same module, so one patch covers the save.
+    _os.replace = _replace_boom
+    _raised = False
+    try:
+        T.save({"meta": {"created": "2026-09-01T00:00:00Z", "runs": 3},
+                "quotes": [{"id": "keep"}, {"id": "new"}], "coverage": {}})
+    except OSError:
+        _raised = True
+    ok(_raised, "a failed replace does not report the ledger as saved")
+finally:
+    _os.replace = _real_replace
+    T.LEDGER = _orig_ledger
+ok(open(_lpath, "rb").read() == _before_bytes, "a failed replace leaves the original ledger intact")
+try:
+    _parsed = json.load(open(_lpath))
+except (OSError, ValueError):
+    _parsed = None
+ok(_parsed is not None and _parsed.get("quotes") == [{"id": "keep"}], "and it still parses")
+ok(sorted(_os.listdir(_ldir)) == ["sandbox_ledger.json"],
+   "a failed replace removes its temp file")
+
+
+print("\nwatchdog: sandbox and production stamps, not the site root")
+
+try:
+    import page_freshness as PF
+except ImportError:
+    PF = None
+ok(PF is not None, "the freshness parser lives in the repo so the watchdog can be tested")
+
+if PF is not None:
+    _now = datetime(2026, 9, 25, 18, 0, tzinfo=timezone.utc)
+    def _page(stamp):
+        return f'<div class="sub">Every source · updated {stamp}</div>'
+    _fresh_html = _page("2026-09-25 16:30 UTC")
+    _ok_fresh, _msg_fresh = PF.freshness(_fresh_html, _now, "sandbox.html")
+    ok(_ok_fresh, "a stamp under 5h old passes")
+    ok("sandbox.html" in _msg_fresh, "a fresh result still names the page")
+    _stale_html = _page("2026-09-25 12:00 UTC")
+    _ok_stale, _msg_stale = PF.freshness(_stale_html, _now, "production.html")
+    ok(not _ok_stale, "a stamp older than 5h fails")
+    ok("production.html" in _msg_stale and "old" in _msg_stale,
+       "the stale failure names the page and its age")
+    _edge_now = datetime(2026, 9, 25, 17, 30, tzinfo=timezone.utc)
+    ok(PF.freshness(_page("2026-09-25 12:30 UTC"), _edge_now, "sandbox.html")[0],
+       "a stamp exactly 5h old is not stale")
+    ok(not PF.freshness(_page("2026-09-25 12:29 UTC"), _edge_now, "sandbox.html")[0],
+       "one minute past 5h is stale")
+    for _bad, _why in (("", "an empty page"),
+                       ("<p>no stamp here</p>", "a page with no stamp"),
+                       ("updated not-a-date UTC", "a garbled stamp"),
+                       ("updated 2026-13-40 99:99 UTC", "a stamp that is not a real time"),
+                       ("Edge Machine · updated Sep 25 2026 · 15:50 UTC",
+                        "the site-root stub format")):
+        _ok_bad, _msg_bad = PF.freshness(_bad, _now, "sandbox.html")
+        ok(not _ok_bad and "sandbox.html" in _msg_bad, f"{_why} fails as stale")
+    eq(PF.PAGES, ("sandbox.html", "production.html"),
+       "the checker reads sandbox.html and production.html, not the site root")
+    ok("index.html" not in PF.PAGES, "the site-root stub is not one of the pages")
+    _root = _os.path.dirname(_os.path.abspath(__file__))
+    for _name in PF.PAGES:
+        _live = open(_os.path.join(_root, "public_site", _name), encoding="utf-8").read()
+        ok(PF.parse_stamp(_live) is not None, f"the published {_name} carries a tracker stamp")
+    _stub = open(_os.path.join(_root, "public_site", "index.html"), encoding="utf-8").read()
+    ok(PF.parse_stamp(_stub) is None, "the published site root does not carry that stamp")
+
+_watch_wf = open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                               ".github", "workflows", "backup-refresh.yml")).read()
+ok("page_freshness" in _watch_wf, "the watchdog calls the tested parser")
+ok("sandbox.html" in _watch_wf and "production.html" in _watch_wf,
+   "the watchdog workflow names both tracker pages")
+ok('curl -fsSL "${BOARD_URL}"' not in _watch_wf,
+   "the watchdog does not curl the site root for its freshness stamp")
+ok("updated [A-Z][a-z]*" not in _watch_wf,
+   "the watchdog no longer parses the root stub's Mon DD YYYY stamp")
+
+
+print("\nwatchdog: a stale page after takeover fails the job")
+
+ok(PF is not None and hasattr(PF, "recheck_exit"),
+   "stale-after-takeover is a function the job can fail on")
+if PF is not None and hasattr(PF, "recheck_exit"):
+    _code, _detail = PF.recheck_exit([
+        (False, "sandbox.html is 6.0h old (updated 2026-09-25 12:00 UTC)"),
+        (True, "production.html is 1.5h old (updated 2026-09-25 16:30 UTC)"),
+    ])
+    eq(_code, 1, "a stale page after takeover fails the job")
+    ok("sandbox.html" in _detail and "6.0h" in _detail,
+       "that failure names the page and its age")
+    _code, _detail = PF.recheck_exit([
+        (True, "sandbox.html is 1.5h old (updated 2026-09-25 16:30 UTC)"),
+        (True, "production.html is 1.5h old (updated 2026-09-25 16:30 UTC)"),
+    ])
+    eq(_code, 0, "fresh pages after takeover pass")
+    _code, _detail = PF.recheck_exit([
+        (False, "production.html has no readable updated stamp"),
+        (True, "sandbox.html is 1.0h old (updated 2026-09-25 17:00 UTC)"),
+    ])
+    eq(_code, 1, "a missing stamp after takeover fails the job")
+    ok("production.html" in _detail, "a missing page is named in the failure")
+
+    class _Body:
+        def __init__(self, text):
+            self._text = text.encode()
+        def read(self):
+            return self._text
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+
+    _now = datetime(2026, 9, 25, 18, 0, tzinfo=timezone.utc)
+
+    def _open_stale(url, timeout=30):
+        stamp = "2026-09-25 12:00 UTC" if url.endswith("sandbox.html") else "2026-09-25 16:30 UTC"
+        return _Body(f"updated {stamp}")
+
+    _code, _detail = PF.recheck_exit(PF.fetch_pages(
+        "https://example.test/edge-machine/", stale_hours=5, now=_now, opener=_open_stale))
+    eq(_code, 1, "a page that is still stale after takeover fails the job")
+    ok("sandbox.html" in _detail and "old" in _detail,
+       "that failure names the page and its age")
+
+    def _open_fresh(url, timeout=30):
+        return _Body("updated 2026-09-25 16:30 UTC")
+
+    _code, _ = PF.recheck_exit(PF.fetch_pages(
+        "https://example.test/edge-machine", stale_hours=5, now=_now, opener=_open_fresh))
+    eq(_code, 0, "pages that are fresh after takeover pass")
+
+    def _open_down(url, timeout=30):
+        raise OSError("timed out")
+
+    _code, _detail = PF.recheck_exit(PF.fetch_pages(
+        "https://example.test/", now=_now, opener=_open_down))
+    eq(_code, 1, "a page that does not respond after takeover fails the job")
+    ok("sandbox.html" in _detail and "production.html" in _detail,
+       "each page that did not respond is named")
+
+ok("sandbox-tracker.yml" in _watch_wf,
+   "the watchdog checks that sandbox-tracker.yml succeeded recently")
+_after_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[-1]
+ok("recheck_main" in _after_deploy,
+   "after the takeover deploy the pages are checked again")
+ok("steps.check.outputs.run != 'true'" in _watch_wf and _watch_wf.count("recheck_main") >= 2,
+   "when takeover does not run, a stale page still fails the job")
+
+
+print("\natomic writes: temp files are ignored, and the feed and stages survive a mid-write crash")
+
+_gi = open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".gitignore")).read()
+for _pat in (".ledger-*", ".archive-*", ".closes-*", ".settlement-watch-*",
+             ".stages-*", ".feed-*", ".atomic-*"):
+    ok("\n" + _pat + "\n" in "\n" + _gi + "\n" or _gi.endswith("\n" + _pat),
+       f"gitignore ignores leftover {_pat} temp files")
+
+
+def _midwrite(label, write, path, original, updated):
+    json.dump(original, open(path, "w"))
+    before = open(path, "rb").read()
+    real = json.dump
+    try:
+        def _boom(*a, **k):
+            raise OSError("disk full mid-write")
+        json.dump = _boom
+        raised = False
+        try:
+            write(updated, path)
+        except OSError:
+            raised = True
+        ok(raised, f"a failure inside the {label} write is not swallowed")
+    finally:
+        json.dump = real
+    ok(open(path, "rb").read() == before,
+       f"a mid-write failure leaves the original {label} bytes untouched")
+    try:
+        parsed = json.load(open(path))
+    except (OSError, ValueError):
+        parsed = None
+    ok(parsed == original, f"and that {label} still parses as the previous contents")
+    ok(sorted(_os.listdir(_os.path.dirname(path))) == [_os.path.basename(path)],
+       f"a mid-write failure leaves no {label} temp file behind")
+
+
+_fdir = _tf.mkdtemp(prefix="feed-")
+_midwrite("production feed", _PROD.save_feed,
+          _os.path.join(_fdir, "production_leads.json"),
+          {"leads": {"keep": 1}, "pairs": {}},
+          {"leads": {"keep": 1, "new": 2}, "pairs": {}})
+_sdir = _tf.mkdtemp(prefix="stages-")
+_midwrite("stages", T.save_stages,
+          _os.path.join(_sdir, "stages.json"),
+          {"events": [], "pairs": {"keep": 1}},
+          {"events": ["x"], "pairs": {"keep": 1}})
+
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

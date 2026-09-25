@@ -66,10 +66,10 @@ jobs:
         run: python3 test_sandbox.py
 
       # Fetch every source, log new pre-match quotes, settle whatever has resolved.
-      # Never fails the run: a source going dark should show up as an empty column on the
-      # coverage table, which is exactly what that table is for. A hard failure here
-      # would instead mean no GRADING happened either, so losing the run costs more than
-      # a partial one.
+      # A source going dark is an empty column inside the script (collect catches it)
+      # and grading still runs. A crash, or a production feed that cannot be rebuilt,
+      # exits non-zero. This step must fail then: the commit and Pages deploy below
+      # would otherwise publish a broken or stale ledger on a green run.
       #
       # ODDS_API_KEY reads Pinnacle's lines through The Odds API. It is a repository
       # secret: GitHub masks it in logs, never passes it to workflows triggered from a
@@ -78,10 +78,10 @@ jobs:
       - name: Collect predictions and settle results
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python3 sandbox_track.py || echo "::warning::tracker run failed — keeping the previous ledger"
+        run: python3 sandbox_track.py
 
       - name: Build the tracker page
-        run: python3 sandbox_build.py || echo "::warning::page build failed — keeping the previous page"
+        run: python3 sandbox_build.py
 
       - name: Commit and push if changed
         run: |

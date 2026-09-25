@@ -6,11 +6,19 @@ name: Backup refresh (watchdog)
 # the primary on push. This instead runs 3h after each primary slot, asks whether the
 # primary actually did its job, and only takes over when it did not.
 #
-# Two independent things are checked, because they fail in different ways:
+# Three independent things are checked, because they fail in different ways:
 #   1. Did the primary workflow SUCCEED recently?   (it never ran, or it ran red)
-#   2. Is the LIVE BOARD actually fresh?            (it ran green but the deploy is stale —
-#      the Pages deploy has flaked before on an OIDC token timeout)
-# Either being wrong is enough to take over.
+#   2. Did the tracker workflow SUCCEED recently?   (it rebuilds the two pages;
+#      takeover only rewrites index.html and cannot rebuild them)
+#   3. Are the LIVE Sandbox and Production pages fresh?
+#      (a workflow ran green but those pages are stale — the Pages deploy has
+#      flaked before on an OIDC token timeout). The site root is not this check:
+#      site_root.py rewrites that redirect stub every refresh, so it stays new
+#      even when the tracker is dead.
+# Any of these is enough to take over. Takeover still cannot rebuild the two
+# pages, so after that deploy — and when takeover does not run — the pages are
+# checked again. If either is still stale or missing, the job fails. A dead
+# tracker must not stay green.
 #
 # Two jobs (2026-09-13). GitHub started the 6-hourly primary as much as seven hours apart,
 # and a watchdog that only acted at 8 hours left the published leads that stale before it
@@ -57,6 +65,7 @@ jobs:
         id: check
         env:
           GH_TOKEN: ${{ github.token }}
+          FORCE_TAKEOVER: ${{ github.event.inputs.force }}
         run: |
           set -euo pipefail
           REASONS=""
@@ -75,26 +84,52 @@ jobs:
             fi
           fi
 
-          # --- 2. is the live board actually fresh? ---
-          # Catches the case the run history cannot see: workflow green, deploy stale.
-          BODY=$(curl -fsSL "${BOARD_URL}" || true)
-          if [ -z "$BODY" ]; then
-            REASONS="${REASONS:+$REASONS; }live board did not respond"
+          # --- 1b. when did the tracker last SUCCEED? ---
+          # Same window as the primary: the tracker runs every 3h, so 5h is one
+          # missed slot. This only adds a takeover reason. Failing the watch job
+          # here would skip takeover, and the loud failure belongs after deploy.
+          TLAST=$(gh api \
+            "/repos/${{ github.repository }}/actions/workflows/sandbox-tracker.yml/runs?status=success&per_page=1" \
+            --jq '.workflow_runs[0].created_at // empty' || true)
+          if [ -z "$TLAST" ]; then
+            REASONS="${REASONS:+$REASONS; }tracker has no successful run on record"
           else
-            # subtitle carries: "updated Aug 29 2026 · 19:34 UTC"
-            STAMP=$(printf '%s' "$BODY" | grep -o 'updated [A-Z][a-z]* [0-9]\{1,2\} [0-9]\{4\} · [0-9]\{2\}:[0-9]\{2\} UTC' | head -1 | sed 's/^updated //; s/ · / /; s/ UTC$//')
-            if [ -z "$STAMP" ]; then
-              REASONS="${REASONS:+$REASONS; }could not read the board's timestamp"
-            else
-              BAGE=$(( ( $(date -u +%s) - $(date -u -d "$STAMP" +%s) ) / 3600 ))
-              echo "live board is ${BAGE}h old ($STAMP)"
-              if [ "$BAGE" -gt "${STALE_AFTER_HOURS}" ]; then
-                REASONS="${REASONS:+$REASONS; }live board is ${BAGE}h old"
-              fi
+            TAGE=$(( ( $(date -u +%s) - $(date -u -d "$TLAST" +%s) ) / 3600 ))
+            echo "tracker last succeeded ${TAGE}h ago ($TLAST)"
+            if [ "$TAGE" -gt "${STALE_AFTER_HOURS}" ]; then
+              REASONS="${REASONS:+$REASONS; }tracker last succeeded ${TAGE}h ago"
             fi
           fi
 
-          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+          # --- 2. are sandbox.html and production.html actually fresh? ---
+          # The site root is a redirect stub rewritten every refresh, so its stamp
+          # stays new when the tracker is dead. These two pages carry the tracker's
+          # own "updated YYYY-MM-DD HH:MM UTC" stamp. A missing or unparseable stamp
+          # is stale. page_freshness.py is what the unit tests exercise.
+          # Stale pages are a takeover reason, not a failure of this step. Takeover
+          # cannot rebuild them; the recheck after deploy (and the no-takeover step
+          # below) exits 1 if they are still stale. Exiting here would skip that.
+          if ! PAGE_REASONS=$(python3 - << 'PY'
+          import os, sys
+          from page_freshness import PAGES, fetch_pages
+
+          if tuple(PAGES) != ("sandbox.html", "production.html"):
+              sys.exit("page_freshness.PAGES must be sandbox.html and production.html")
+          hours = float(os.environ["STALE_AFTER_HOURS"])
+          results = fetch_pages(os.environ["BOARD_URL"], stale_hours=hours)
+          for ok, msg in results:
+              print(msg, file=sys.stderr)
+          sys.stdout.write("; ".join(msg for ok, msg in results if not ok))
+          PY
+          ); then
+            echo "::error::could not check sandbox.html and production.html"
+            exit 1
+          fi
+          if [ -n "$PAGE_REASONS" ]; then
+            REASONS="${REASONS:+$REASONS; }$PAGE_REASONS"
+          fi
+
+          if [ "$FORCE_TAKEOVER" = "true" ]; then
             REASONS="${REASONS:-forced by manual dispatch}"
           fi
 
@@ -125,6 +160,19 @@ jobs:
             git pull --rebase origin main
           done
           echo "::warning::could not push closing prices"
+
+      # Takeover did not run. The check above only warns, and a dead tracker would
+      # otherwise leave this hourly job green. Re-read the live pages and fail if
+      # either is still stale or missing.
+      - name: Fail if the tracker pages are stale and takeover will not run
+        if: steps.check.outputs.run != 'true'
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import page_freshness
+          import sys
+          sys.exit(page_freshness.recheck_main())
+          PY
 
   takeover:
     needs: watch
@@ -193,3 +241,14 @@ jobs:
           path: public_site
       - id: deployment
         uses: actions/deploy-pages@v5
+
+      # index.html is redeployed above. That does not rebuild sandbox.html or
+      # production.html, so a tracker that is still dead must fail this job.
+      - name: Fail if the tracker pages are still stale
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import page_freshness
+          import sys
+          sys.exit(page_freshness.recheck_main())
+          PY

@@ -65,6 +65,7 @@ jobs:
           name: settlement-mismatches
           path: data/settlement_mismatches.json
           if-no-files-found: error
+          retention-days: 1
 
       # Milestones: when a record reaches a size worth deciding on, raise an issue that
       # mentions the owner, which GitHub emails. Each fires once. Runs whatever the audit
@@ -115,6 +116,10 @@ jobs:
               print(f"::error::expected one settlement_mismatches.json in the artifact, found {found}")
               sys.exit(1)
           path = found[0]
+          size = os.path.getsize(path)
+          if size > 256 * 1024:
+              print(f"::error::watch list is {size} bytes, over the 256 KB cap")
+              sys.exit(1)
           try:
               with open(path) as f:
                   data = json.load(f)
@@ -124,6 +129,9 @@ jobs:
           allowed = {"market_id", "quote_id", "stored", "venue", "venue_result"}
           if not isinstance(data, dict) or set(data) != {"markets"} or not isinstance(data["markets"], list):
               print("::error::watch list must be a JSON object whose only key is \"markets\", a list")
+              sys.exit(1)
+          if len(data["markets"]) > 1000:
+              print(f"::error::watch list has {len(data['markets'])} rows, over the 1000 row cap")
               sys.exit(1)
           for i, row in enumerate(data["markets"]):
               if not isinstance(row, dict) or set(row) - allowed or "market_id" not in row:
@@ -135,6 +143,9 @@ jobs:
               for key, value in row.items():
                   if not isinstance(value, str):
                       print(f"::error::markets[{i}].{key} must be a string")
+                      sys.exit(1)
+                  if len(value) > 200:
+                      print(f"::error::markets[{i}].{key} is {len(value)} chars, over the 200 char cap")
                       sys.exit(1)
           dest = "data/settlement_mismatches.json"
           os.makedirs("data", exist_ok=True)

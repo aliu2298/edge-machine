@@ -14,7 +14,7 @@ workflows ever commit the same file. No Odds API credits are spent here.
 
 Usage:  python3 sandbox_close.py [--writer close|watchdog|boards]
 """
-import json, os, sys
+import os, sys
 from datetime import datetime, timedelta, timezone
 
 import sandbox_sources as S
@@ -71,9 +71,7 @@ def main(argv=None):
           f"{len(closes['closes'])} on file")
     # Written only when something changed, so an hourly run with nothing due makes no commit.
     if taken or len(closes["closes"]) != before or not os.path.exists(path):
-        os.makedirs(T.CLOSES_DIR, exist_ok=True)
-        with open(path, "w") as f:
-            json.dump(closes, f, indent=1, sort_keys=True)
+        T.atomic_write_json(path, closes, prefix=".closes-")
     return 0
 
 

@@ -60,8 +60,9 @@ jobs:
       - name: Snapshot Sandbox closing prices
         run: python3 sandbox_close.py --writer boards || echo "close snapshot failed — continuing"
 
-      # The site root: forwards to the Sandbox and carries the "updated ... UTC" stamp the
-      # backup watchdog reads to know this job deployed.
+      # The site root: forwards visitors to the Sandbox. Its stamp is not the watchdog's
+      # freshness check — that reads sandbox.html and production.html, which this job
+      # does not rebuild.
       - name: Write the site root
         run: python3 site_root.py
 

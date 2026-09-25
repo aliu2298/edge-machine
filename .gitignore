@@ -45,3 +45,13 @@ public_site/.netlify/
 # run. data/streaks.json (the computed leads) is committed; this input is not.
 data/streaks_raw.json
 data/market_daily.log
+
+# temp files from atomic_write_json. A hard kill can leave one behind, and
+# `git add data/sandbox_archive` would otherwise stage it.
+.ledger-*
+.archive-*
+.closes-*
+.settlement-watch-*
+.stages-*
+.feed-*
+.atomic-*

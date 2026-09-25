@@ -293,15 +293,41 @@ def load():
     return d
 
 
+def atomic_write_json(path, obj, prefix=".atomic-"):
+    """Replace `path` with `obj` as JSON, or leave the previous file untouched.
+
+    The new bytes go to a temp file in the same directory, are flushed and fsynced,
+    then moved into place with os.replace. replace on the same filesystem does not
+    leave a half-written destination, so a crash mid-write cannot truncate the
+    ledger the next run has to read. The temp file is removed if the write fails
+    before that replace.
+    """
+    directory = os.path.dirname(os.path.abspath(path)) or "."
+    os.makedirs(directory, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(prefix=prefix, dir=directory)
+    try:
+        with os.fdopen(fd, "w") as f:
+            json.dump(obj, f, indent=1, sort_keys=True)
+            f.write("\n")
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+        tmp = None
+    finally:
+        if tmp is not None:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+
+
 def save(d, archive_dir=None):
     d["meta"]["updated"] = now_iso()
     d["meta"]["runs"] = d["meta"].get("runs", 0) + 1
-    os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
     dirty = d.pop("_archive_dirty", set())
     archive = d.pop("_archive", None)
     try:
-        with open(LEDGER, "w") as f:
-            json.dump(d, f, indent=1, sort_keys=True)
+        atomic_write_json(LEDGER, d, prefix=".ledger-")
         if dirty and archive is not None:
             save_archive(archive, dirty, archive_dir)
     finally:
@@ -315,8 +341,7 @@ def save_archive(archive, months, path=None):
     for month in sorted(months):
         rows = sorted((q for q in archive if str(q.get("settled", ""))[:7] == month),
                       key=lambda q: (q["settled"], q["id"]))
-        with open(os.path.join(path, f"{month}.json"), "w") as f:
-            json.dump(rows, f, indent=1, sort_keys=True)
+        atomic_write_json(os.path.join(path, f"{month}.json"), rows, prefix=".archive-")
 
 
 # ---------------------------------------------------------------------------
@@ -1144,8 +1169,6 @@ def save_settlement_watch(rows, path=None):
     that as an empty list and forget every mismatch it was supposed to keep failing on.
     """
     path = path or MISMATCHES
-    directory = os.path.dirname(os.path.abspath(path))
-    os.makedirs(directory, exist_ok=True)
     seen, markets = set(), []
     for row in rows:
         mid = row.get("market_id")
@@ -1155,21 +1178,7 @@ def save_settlement_watch(rows, path=None):
         seen.add(key)
         markets.append({k: row[k] for k in _WATCH_FIELDS if row.get(k) is not None})
     markets.sort(key=lambda r: (str(r.get("venue") or ""), str(r["market_id"])))
-    fd, tmp = tempfile.mkstemp(prefix=".settlement-watch-", dir=directory)
-    try:
-        with os.fdopen(fd, "w") as f:
-            json.dump({"markets": markets}, f, indent=1, sort_keys=True)
-            f.write("\n")
-            f.flush()
-            os.fsync(f.fileno())
-        os.replace(tmp, path)
-        tmp = None
-    finally:
-        if tmp is not None:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
+    atomic_write_json(path, {"markets": markets}, prefix=".settlement-watch-")
 
 
 def _resolve_market(q):
@@ -1909,8 +1918,7 @@ def load_stages(path=None):
 
 def save_stages(st, path=None):
     path = path or STAGES
-    with open(path, "w") as f:
-        json.dump(st, f, indent=1, sort_keys=True)
+    atomic_write_json(path, st, prefix=".stages-")
 
 
 def _snapshot(a):
@@ -2245,6 +2253,10 @@ def main():
         if n_pruned:
             print(f" production feed: dropped {n_pruned} lead(s) from pairs no longer in Production")
     except Exception as e:
+        # Soft-fail, and only here. This prune drops leads the rebuild at the end of
+        # the run would drop anyway; bailing out would also skip grading. A failure
+        # of that rebuild is not soft: main() returns non-zero so the job does not
+        # publish a feed that was left as it was.
         print(f"  ! production feed prune failed: {type(e).__name__}: {str(e)[:80]}")
     d = load()
     print(f" closing prices merged from the close job: {apply_closes(d, load_closes())}")
@@ -2272,6 +2284,10 @@ def main():
     evaluate_stages(d, st)
     save_stages(st)
     # Production: the machine-readable feed of Production leads, next to the Leads ledger.
+    # A failed rebuild used to log and return 0. The workflow then committed and
+    # published on a green run, serving the previous feed. Returning non-zero after
+    # the log makes that step fail, so nothing downstream commits or deploys.
+    feed_failed = False
     try:
         import production
         feed = production.build_feed(d, st)
@@ -2281,9 +2297,10 @@ def main():
               f"{feed['unlisted_skipped']} unpublishable and {feed['unverified_kickoff_skipped']} "
               f"unverified-kickoff bet(s) held back")
     except Exception as e:
-        # A failed rebuild leaves the OLD feed on disk, which is the dangerous failure: the
-        # run warns and the stale file keeps being served. Whatever else is wrong, it must not
-        # go on naming a pair that is no longer in Production.
+        feed_failed = True
+        # A failed rebuild leaves the OLD feed on disk, which is the dangerous failure.
+        # Whatever else is wrong, it must not go on naming a pair that is no longer
+        # in Production — and the run must not look successful.
         print(f"  ! production feed failed: {type(e).__name__}: {str(e)[:80]}")
         try:
             import production
@@ -2302,6 +2319,8 @@ def main():
         print(f" {s['label']:<26}{s['quotes']:>6}{s['bets']:>6}{s['settled']:>9}"
               f"  {hit}  {roi}  {br}")
     print(f"\n ledger: {LEDGER} ({len(d['quotes'])} quotes total)")
+    if feed_failed:
+        return 1
     return 0
 
 
