@@ -189,6 +189,18 @@ SOURCES = {
              "to measure its fade forward: backing against its buckets ran +7.3% on 51 bets, "
              "35 independent outcomes, z +1.23 — the strongest fade among the retired pairs "
              "once its buckets are counted as the single draws they are."),
+    "nws_fade": dict(
+        label="National Weather Service, the other side", kind="Rule", connected=True,
+        site="edge-machine", sports=["climate"],
+        note="PAPER TEST, registered 2026-09-25, before it logged anything. Takes the other "
+             "side of each pick the NWS lane would make, on the same market, at the same flat "
+             "stake the tracker uses for every source. The follow lane is paused; this one is "
+             "logged under its own source so the two records never pool. If the follow lane is "
+             "turned back on, both may log the same city-day, and duplicate protection will "
+             "not stop either one — it is per source. READ POINT: 100 settled independent "
+             "outcomes, fixed now. One city-day is one outcome, because the buckets of a "
+             "single ladder cannot all happen. Do not retune the side, the stake, or this "
+             "number before that many independent outcomes have settled."),
     "btts_market": dict(
         label="Kalshi BTTS price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=["soccer_btts", "soccer_btts_cup", "soccer_btts_intl"],
@@ -222,6 +234,18 @@ SOURCES = {
              "closes, t -3.66, the market drifting away from its picks while the win record "
              "said otherwise. Judged against backing the favourite on every match over the same "
              "period, so it only counts if this band beats favourites in general."),
+    "tennis_fav_band_3h": dict(
+        label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
+        connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
+        note="PAPER TEST, registered 2026-09-25, before it logged anything. The same selection "
+             "as tennis_fav_band — the player priced 0.77-0.81 — and only when the entry is "
+             "within 3 hours of the scheduled start. tennis_fav_band is unchanged and keeps "
+             "logging every in-band match, including ones more than 3 hours out, so the two "
+             "records can be compared. A match that qualifies for both is logged by both. "
+             "That overlap is the comparison: duplicate protection is per source, so one "
+             "lane's quote cannot block or void the other. Why the window: closing-line "
+             "value on the band was about -1.2c on entries 3 or more hours before the start, "
+             "and about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees)."),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
@@ -643,6 +667,96 @@ SOURCES = {
              "buys at most one league key and at most half its paced credits, so the older "
              "match-winner lane keeps its share and the month's budget does not shorten."),
 }
+
+
+# ---------------------------------------------------------------------------
+# Paused lanes (2026-09-25). Approved in full; paper only.
+# ---------------------------------------------------------------------------
+# A paused lane logs no NEW entry. Every row already in the ledger stays, with its
+# result and its P/L, and any entry still open keeps settling on the usual grade.
+# Nothing here deletes a source, an adapter, or a row.
+#
+# Re-enable a whole lane by deleting its line. Re-enable one sport of a partial
+# pause by deleting that sport from its set. Re-enable NFL for sources that are
+# not themselves paused by deleting "nfl" from PAUSED_SPORTS. Both gates apply:
+# taking "nfl" out of PAUSED_SPORTS does not resume a source that is paused on
+# its own, and taking a source off PAUSED_LANES does not resume NFL.
+#
+# tt_band_55_60, cmd_tail and sportsgambler were already retired (connected=False)
+# before this list. They stay listed, so setting connected=True does not by itself
+# resume them — delete the line as well. Their open rows still settle.
+#
+# Value None pauses every sport. {"keep": {...}} pauses every sport not named.
+# {"sports": {...}} pauses only those sports.
+
+PAUSED_LANES = {
+    # −6.7% after fees.
+    "covers": None,
+    # Kalshi, all of it MLB, −19.7% after fees.
+    "kalshi": None,
+    # Outside soccer is negative. Soccer (n=11, +6.2%) stays.
+    "scores24": {"keep": frozenset({"soccer"})},
+    # The whole comparison lane, MLB included.
+    "polymarket": None,
+    "draftkings": None,
+    "mlb_fade_streak": None,
+    # The follow direction. The other side is nws_fade, which is not paused.
+    "nws": None,
+    # Already retired. Kept here so reconnecting it does not resume it.
+    "tt_band_55_60": None,
+    # MMA −11.9%. Boxing, and any other OLBG sport, stays.
+    "olbg": {"sports": frozenset({"mma"})},
+    # 1 of 6.
+    "pinnacle": None,
+    # Flat, with tail risk. Already retired; kept here so it cannot resume alone.
+    "cmd_tail": None,
+    "btts_form_l10": None,
+    "o15_form_l10": None,
+    # Already retired. Kept here so reconnecting it does not resume it.
+    "sportsgambler": None,
+    # 3- and 4-leg tennis baskets. The 2-leg lanes (tennis_combo2, pm_combo2) stay.
+    "tennis_combo3": None,
+    "tennis_combo4": None,
+    "pm_combo3": None,
+    "pm_combo4": None,
+    "nhl_dog_pl": None,
+    "gas_nochange": None,
+    "oddspedia": None,
+    # NFL only. MLB stays.
+    "espn_fpi": {"sports": frozenset({"nfl"})},
+}
+
+# Every NFL entry, from any lane, including a source that is not listed above.
+PAUSED_SPORTS = frozenset({"nfl"})
+
+_NOT_PAUSED = object()
+
+
+def lane_paused(source, sport):
+    """True when (source, sport) must not log a new entry.
+
+    Open entries already in the ledger are not this function's business: grade()
+    settles them whether or not the lane is paused. Re-enable by editing
+    PAUSED_LANES or PAUSED_SPORTS — see those.
+    """
+    if sport in PAUSED_SPORTS:
+        return True
+    spec = PAUSED_LANES.get(source, _NOT_PAUSED)
+    if spec is _NOT_PAUSED:
+        return False
+    if spec is None:
+        return True
+    if "keep" in spec:
+        return sport not in spec["keep"]
+    return sport in (spec.get("sports") or ())
+
+
+def source_fully_paused(source):
+    """True when no sport this source logs may take a new entry."""
+    sports = (SOURCES.get(source) or {}).get("sports") or ()
+    if not sports:
+        return lane_paused(source, None)
+    return all(lane_paused(source, sp) for sp in sports)
 
 
 # ---------------------------------------------------------------------------
@@ -3526,6 +3640,36 @@ def fetch_tennis_fav_band(sport, universe=None):
     return band_picks(sport, fav_band(sport), universe)
 
 
+# The comparison window for tennis_fav_band_3h. Fixed 2026-09-25 with the lane.
+TENNIS_FAV_3H = timedelta(hours=3)
+
+
+def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
+    """tennis_fav_band's band, only when the start is within TENNIS_FAV_3H.
+
+    tennis_fav_band itself is not filtered. A match inside the window is returned
+    here AND there; publish logs both, under two sources. See that source's note.
+    """
+    if sport != "tennis":
+        return []
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    uni = universe if universe is not None else (UNIVERSE or {})
+    near = []
+    for r in uni.get(sport) or []:
+        try:
+            start = datetime.fromisoformat(str(r.get("start")))
+        except (TypeError, ValueError):
+            continue
+        if start.tzinfo is None:
+            start = start.replace(tzinfo=timezone.utc)
+        lead = start - now
+        if timedelta(0) < lead <= TENNIS_FAV_3H:
+            near.append(r)
+    return band_picks(sport, fav_band("tennis"), {sport: near})
+
+
 def fetch_tt_band(sport, universe=None):
     """TT_BAND, table tennis only — a confirmation test of one suspect band (see SOURCES)."""
     return band_picks(sport, TT_BAND, universe)
@@ -4646,8 +4790,12 @@ def _most_uncertain(rows):
                                     abs((r.get("price_a") or 0.5) - 0.5)))
 
 
-def fetch_nws(domain):
-    """One pick per city per day: the bucket the NWS forecast lands in."""
+def _nws_forecast_picks(domain):
+    """One pick per city per day: the bucket the NWS forecast lands in.
+
+    The network read. publish() and nws_picks share one result per run, so this
+    runs once even when both the follow lane and nws_fade want it.
+    """
     if domain != "climate":
         return []
     groups = {}
@@ -4664,6 +4812,53 @@ def fetch_nws(domain):
     return [dict(market_id=_most_uncertain(rs)["market_id"], pick="a",
                  detail=f"NWS forecast {t}F")
             for (_s, _d, t), rs in groups.items()]
+
+
+# Picks for the publish in progress. Cleared by clear_nws_run at each end of publish.
+_nws_run = {}
+
+
+def clear_nws_run():
+    """Forget the shared NWS picks. The next reader fetches again."""
+    _nws_run.clear()
+
+
+def nws_picks(domain):
+    """Follow-lane picks for this run. Computed once; nws and nws_fade both read them."""
+    if domain not in _nws_run:
+        _nws_run[domain] = _nws_forecast_picks(domain)
+    return _nws_run[domain]
+
+
+def fetch_nws(domain):
+    """The follow lane. A copy, so a later reader cannot change the shared picks."""
+    return [dict(p) for p in nws_picks(domain)]
+
+
+# Fixed 2026-09-25, before nws_fade logged an entry. One city-day is one outcome
+# (outcome_cluster). Do not change this number, or the side fetch_nws_fade takes,
+# before this many independent outcomes have settled.
+NWS_FADE_READ_N = 100
+
+
+def fetch_nws_fade(domain):
+    """The other side of each pick fetch_nws would make. Same markets, same stake.
+
+    Reads nws_picks, the same list the follow lane uses, so a run does not fetch
+    the forecast twice. The side is the opposite of the follow lane and nothing
+    else. Do not retune it before NWS_FADE_READ_N settled independent outcomes.
+    """
+    out = []
+    for p in nws_picks(domain):
+        side = p.get("pick")
+        if side == "a":
+            flip = "b"
+        elif side == "b":
+            flip = "a"
+        else:
+            continue
+        out.append(dict(p, pick=flip, detail=f"other side of {p.get('detail') or 'NWS'}"))
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -5348,6 +5543,7 @@ CHALLENGERS = {
     "corners_market": fetch_corners_market,
     "corners_under": fetch_corners_under,
     "tennis_fav_band": fetch_tennis_fav_band,
+    "tennis_fav_band_3h": fetch_tennis_fav_band_3h,
     "tennis_combo2": fetch_tennis_combo2,
     "tennis_combo3": fetch_tennis_combo3,
     "tennis_combo4": fetch_tennis_combo4,
@@ -5382,6 +5578,7 @@ CHALLENGERS = {
     "sportsgambler": fetch_sportsgambler,
     "soccerpredictions": fetch_soccerpredictions,
     "nws": fetch_nws,
+    "nws_fade": fetch_nws_fade,
     "spot": fetch_spot,
 }# Retired sources (connected=False, with a `retired` reason) are dropped from the run: they log
 # nothing new, while their open bets still settle and their record stays on the board.

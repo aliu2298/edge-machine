@@ -797,6 +797,9 @@ def publish(d, universe, coverage, verbose=True):
     # prices — a page that can never be scored is not worth a polite second of waiting.
     S.UNIVERSE = universe
     S.FEED_STATUS.clear()
+    # nws and nws_fade share one forecast read. Cleared here so a previous run's
+    # picks cannot be reused, and again on the way out.
+    S.clear_nws_run()
 
     # Contests some covering source (tipster, model, book, forecaster) has ever quoted.
     covering = {n for n, m in S.SOURCES.items() if m["kind"] in S.COVERING_KINDS}
@@ -831,6 +834,12 @@ def publish(d, universe, coverage, verbose=True):
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
                 continue
+            # A fully paused source logs no sport, so the fetch would be a network
+            # call with nothing to enter. A partial pause still fetches: scores24
+            # soccer and espn_fpi MLB are logged from that same pass, and the
+            # paused sports of those lanes are read in it too.
+            if S.source_fully_paused(name):
+                continue
             t0 = time.time()
             try:
                 quotes = fetch(sport)
@@ -856,13 +865,19 @@ def publish(d, universe, coverage, verbose=True):
         per_sport[sport] = (by_id, source_probs)
 
     # Pinnacle LAST and across every sport at once, so its credits go to the contests
-    # nothing above covered.
+    # nothing above covered. A fully paused lane spends nothing: a paid call whose
+    # quotes would be thrown away is not a measurement.
     t0 = time.time()
-    try:
-        pin = S.plan_pinnacle(universe, covered, retired=pinnacle_retired(d))
-    except Exception as e:
-        print(f"  ! pinnacle plan failed: {type(e).__name__}: {str(e)[:70]}")
+    if S.source_fully_paused("pinnacle"):
         pin = {}
+        if verbose:
+            print("  pinnacle: paused, no new entries and no paid call")
+    else:
+        try:
+            pin = S.plan_pinnacle(universe, covered, retired=pinnacle_retired(d))
+        except Exception as e:
+            print(f"  ! pinnacle plan failed: {type(e).__name__}: {str(e)[:70]}")
+            pin = {}
     for sport, quotes in pin.items():
         if sport not in per_sport:
             continue
@@ -890,12 +905,23 @@ def publish(d, universe, coverage, verbose=True):
     for sport, (by_id, source_probs) in per_sport.items():
         for name, probs in source_probs.items():
             for mid, opinion in probs.items():
+                # A pause stops a new entry and nothing else. Logging the row with
+                # the stake cleared would still consume the one quote a source gets
+                # on a market, so turning the lane back on could not enter it.
+                # Rows already in the ledger are not read here; grade() settles
+                # them as before. See S.PAUSED_LANES.
+                if S.lane_paused(name, sport):
+                    continue
                 qid = f"{name}:{mid}"
                 if qid in seen:
                     continue
                 r = by_id[mid]
                 probe = dict(sport=sport, start=r["start"], side_a=r["side_a"], side_b=r["side_b"],
                              market_id=mid, venue=r.get("venue", "polymarket"))
+                # Per source, on purpose. tennis_fav_band and tennis_fav_band_3h
+                # may both log one match, and nws_fade may log the market nws would
+                # have logged. That overlap is the comparison. Neither quote is a
+                # duplicate of the other, and neither can void the other.
                 if any(_same_contest_quote(p, probe) for p in prior.get((name, sport), ())):
                     continue
                 # A rule registered as one bet a day gets one bet a day, even when two runs
@@ -999,6 +1025,7 @@ def publish(d, universe, coverage, verbose=True):
         d["meta"]["odds_api"] = dict(S.ODDS_USAGE, at=now_iso())
     if verbose:
         print(f"  logged {added} new quotes, closing price refreshed on {snapped} open bets")
+    S.clear_nws_run()
     return added
 
 
