@@ -2,8 +2,10 @@
 """site_root.py — write public_site/index.html: the site root.
 
 The root forwards visitors to the Sandbox and carries this run's "updated ... UTC" stamp.
-The backup watchdog (backup-refresh.yml) reads that stamp off the live root to tell a
-deployed refresh from a stale one, so the format must stay "updated Mon DD YYYY · HH:MM UTC".
+That stamp is NOT what the backup watchdog reads: site_root.py rewrites this stub on
+every refresh, so it stays new even when the tracker is dead. backup-refresh.yml reads
+the tracker's stamp on sandbox.html and production.html instead. The root format stays
+"updated Mon DD YYYY · HH:MM UTC" so a check pointed at it on purpose fails closed.
 
 Usage:  python3 site_root.py
 """
@@ -14,7 +16,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "i
 
 
 def root_stub(now):
-    """The site root: forwards to the Sandbox, and carries the watchdog's freshness stamp."""
+    """The site root: forwards to the Sandbox. Not the watchdog's freshness stamp."""
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine</title>
