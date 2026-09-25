@@ -4,6 +4,7 @@
 An audit that has only ever passed proves nothing, so every check here is fed a record with
 one planted fault and must fire, and the same record with the fault removed must not.
 """
+import json
 import os
 import sys
 import tempfile
@@ -230,6 +231,40 @@ try:
        "and the market is dropped from the watch list")
 finally:
     S.resolve_kalshi = _saved_k
+
+print("\nwatch list: a rewrite replaces the file instead of truncating it")
+_wd = tempfile.mkdtemp(prefix="watch-")
+_wp = os.path.join(_wd, "settlement_mismatches.json")
+T.save_settlement_watch(
+    [{"venue": "kalshi", "market_id": "m1", "stored": "a", "venue_result": "b"}], _wp)
+_on_disk = json.load(open(_wp))
+ok(_on_disk == {"markets": [{"market_id": "m1", "stored": "a", "venue": "kalshi",
+                             "venue_result": "b"}]},
+   "the watch list is stored as {markets: [...]} and nothing else")
+ok(not any(n.startswith(".settlement-watch-") for n in os.listdir(_wd)),
+   "the temp file is gone after a successful write")
+_before = open(_wp).read()
+_real_replace = os.replace
+
+
+def _replace_fails(src, dst):
+    raise OSError("replaced nothing")
+
+
+os.replace = _replace_fails
+try:
+    _raised = False
+    try:
+        T.save_settlement_watch(
+            [{"venue": "kalshi", "market_id": "m2", "stored": "b", "venue_result": "a"}], _wp)
+    except OSError:
+        _raised = True
+finally:
+    os.replace = _real_replace
+ok(_raised, "a failed replace does not report the watch list as saved")
+ok(open(_wp).read() == _before, "a failed replace leaves the previous watch list intact")
+ok(not any(n.startswith(".settlement-watch-") for n in os.listdir(_wd)),
+   "a failed replace removes its temp file")
 
 print("\ncopy: the public files stay free of the guarded phrases")
 _plain = "".join(chr(c) for c in (116, 104, 101, 32, 98, 111, 116))      # built, not written

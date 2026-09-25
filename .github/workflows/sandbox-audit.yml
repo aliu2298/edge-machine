@@ -5,11 +5,11 @@ name: Sandbox Audit
 # for a sample of results. See sandbox_audit.py for the full list.
 #
 # It is deliberately separate from the tracker: a check that runs inside the thing it checks
-# shares its blind spots. It must not write the ledger. The one file it commits is
-# data/settlement_mismatches.json — market ids whose stored result disagreed with the
-# venue — so the next run still fails on them when the random sample misses the row.
-# A failed run means the record is wrong or the grader has stopped; GitHub emails the
-# repository owner on a failed scheduled run, so a fault does not sit unnoticed.
+# shares its blind spots. The audit job cannot push. It writes data/settlement_mismatches.json
+# locally and uploads that file. A second job, with contents: write and nothing else that can
+# reach a secret, is the only thing that commits it — and only when that file is the sole
+# difference from main. A failed run means the record is wrong or the grader has stopped;
+# GitHub emails the repository owner on a failed scheduled run, so a fault does not sit unnoticed.
 
 on:
   schedule:
@@ -19,9 +19,10 @@ on:
     - cron: "45 3-23/6 * * *"
   workflow_dispatch:
 
+# The audit job narrows this further. contents: write is not granted here: a token set on
+# the workflow is held by every step, including actions/checkout.
 permissions:
-  contents: write    # commit data/settlement_mismatches.json only; the ledger stays untouched
-  issues: write      # the milestone step raises an issue
+  contents: read
 
 concurrency:
   group: sandbox-audit
@@ -31,9 +32,15 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write      # the milestone step raises an issue; it cannot push
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The read token stays out of the workspace. Later steps cannot push with it.
+          persist-credentials: false
 
       - uses: actions/setup-python@v7
         with:
@@ -45,21 +52,97 @@ jobs:
       - name: The audit catches planted faults
         run: python3 test_audit.py
 
-      # Then audit the record itself, asking the venues again. Stdlib only.
-      # A failure here still continues to the next step: the watch list has to be committed
-      # on the run that found the mismatch, or the following run never hears about it.
+      # Then audit the record itself, asking the venues again. Stdlib only. A failing run
+      # is when the watch list matters, so the upload below still runs.
       - name: Audit the Sandbox record
         id: audit
         run: python3 sandbox_audit.py --sample 25
 
-      # The ledger is not staged. Anything else staged is refused rather than published.
-      - name: Remember settlement mismatches
+      - name: Upload settlement watch list
         if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: settlement-mismatches
+          path: data/settlement_mismatches.json
+          if-no-files-found: error
+
+      # Milestones: when a record reaches a size worth deciding on, raise an issue that
+      # mentions the owner, which GitHub emails. Each fires once. Runs whatever the audit
+      # found, since it answers a different question.
+      - name: Milestones
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 sandbox_milestones.py
+
+  # Commits the watch list and nothing else. needs: audit so it sees that job's artifact,
+  # including when the audit step failed. actions: read is what download-artifact requires;
+  # it cannot push. No secrets and no env keys are passed in.
+  remember:
+    needs: audit
+    if: ${{ always() && (needs.audit.result == 'success' || needs.audit.result == 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download settlement watch list
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: settlement-mismatches
+          path: ${{ runner.temp }}/settlement-watch
+
+      - name: Validate, commit, and push the watch list
         run: |
-          if [ ! -f data/settlement_mismatches.json ]; then
-            echo "no watch list to commit"
-            exit 0
-          fi
+          set -euo pipefail
+          python3 - << 'PY'
+          import json, os, sys
+          root = os.environ["RUNNER_TEMP"] + "/settlement-watch"
+          found = []
+          for dirpath, _dirs, files in os.walk(root):
+              for name in files:
+                  if name == "settlement_mismatches.json":
+                      found.append(os.path.join(dirpath, name))
+          if len(found) != 1:
+              print(f"::error::expected one settlement_mismatches.json in the artifact, found {found}")
+              sys.exit(1)
+          path = found[0]
+          try:
+              with open(path) as f:
+                  data = json.load(f)
+          except (OSError, ValueError) as e:
+              print(f"::error::watch list is not JSON: {e}")
+              sys.exit(1)
+          allowed = {"market_id", "quote_id", "stored", "venue", "venue_result"}
+          if not isinstance(data, dict) or set(data) != {"markets"} or not isinstance(data["markets"], list):
+              print("::error::watch list must be a JSON object whose only key is \"markets\", a list")
+              sys.exit(1)
+          for i, row in enumerate(data["markets"]):
+              if not isinstance(row, dict) or set(row) - allowed or "market_id" not in row:
+                  print(f"::error::markets[{i}] is not a watch-list row")
+                  sys.exit(1)
+              if not isinstance(row["market_id"], str) or not row["market_id"]:
+                  print(f"::error::markets[{i}].market_id must be a non-empty string")
+                  sys.exit(1)
+              for key, value in row.items():
+                  if not isinstance(value, str):
+                      print(f"::error::markets[{i}].{key} must be a string")
+                      sys.exit(1)
+          dest = "data/settlement_mismatches.json"
+          os.makedirs("data", exist_ok=True)
+          with open(dest, "w") as out, open(path) as src:
+              out.write(src.read())
+          print(f"watch list ok: {len(data['markets'])} market(s)")
+          PY
+
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           git add -- data/settlement_mismatches.json
@@ -74,22 +157,37 @@ jobs:
             exit 1
           fi
           git commit -m "Sandbox audit: remember settlement mismatches ($(date -u +%Y-%m-%d\ %H:%MZ))"
+
+          # The tree diff against origin/main must be this file alone. Anything else
+          # ahead of main — a rebased feature branch, a second path in the commit —
+          # fails the job before the push. Checked again after every rebase.
+          ahead_only_watch() {
+            git fetch origin main
+            if ! git merge-base --is-ancestor origin/main HEAD; then
+              echo "rebasing onto origin/main before the diff check"
+              git rebase origin/main || { echo "::error::rebase onto origin/main failed"; exit 1; }
+            fi
+            diff=$(git diff --name-only origin/main HEAD)
+            if [ -z "$diff" ]; then
+              echo "origin/main already has this watch list"
+              exit 0
+            fi
+            if [ "$diff" != "data/settlement_mismatches.json" ]; then
+              echo "::error::refusing to push: HEAD differs from origin/main by more than data/settlement_mismatches.json"
+              echo "$diff"
+              exit 1
+            fi
+          }
+
           for attempt in 1 2 3; do
-            if git push origin main; then
+            ahead_only_watch
+            if git push origin HEAD:main; then
               echo "watch list published on attempt $attempt"
               exit 0
             fi
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
-            git pull --rebase origin main
+            git fetch origin main
+            git rebase origin/main || { echo "::error::rebase onto origin/main failed"; exit 1; }
           done
           echo "::error::could not push the settlement watch list after 3 attempts"
           exit 1
-
-      # Milestones: when a record reaches a size worth deciding on, raise an issue that
-      # mentions the owner, which GitHub emails. Each fires once. Runs whatever the audit
-      # found, since it answers a different question.
-      - name: Milestones
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 sandbox_milestones.py

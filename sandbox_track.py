@@ -20,6 +20,7 @@ import difflib
 import json
 import os
 import sys
+import tempfile
 import time
 from datetime import datetime, timedelta, timezone
 
@@ -30,7 +31,7 @@ LEDGER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandb
 # this every networked run and re-asks every id in it until the ledger matches, so a
 # mismatch the hourly sample found once cannot vanish when a later sample misses it.
 # grade() re-resolves these however old they are. The tracker commits the corrected
-# ledger; the audit commits only this file, never the ledger.
+# ledger. A separate job, not the audit itself, commits only this file.
 MISMATCHES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "settlement_mismatches.json")
 _WATCH_FIELDS = ("market_id", "quote_id", "stored", "venue", "venue_result")
 
@@ -1136,9 +1137,15 @@ def settlement_watch_keys(path=None):
 
 
 def save_settlement_watch(rows, path=None):
-    """Rewrite the watch list. The audit is the only caller; grade() only reads it."""
+    """Rewrite the watch list. The audit is the only caller; grade() only reads it.
+
+    The new list is written to a temp file in the same directory and then moved into
+    place. A crash mid-write must not leave a truncated file: the next run would read
+    that as an empty list and forget every mismatch it was supposed to keep failing on.
+    """
     path = path or MISMATCHES
-    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    directory = os.path.dirname(os.path.abspath(path))
+    os.makedirs(directory, exist_ok=True)
     seen, markets = set(), []
     for row in rows:
         mid = row.get("market_id")
@@ -1148,9 +1155,21 @@ def save_settlement_watch(rows, path=None):
         seen.add(key)
         markets.append({k: row[k] for k in _WATCH_FIELDS if row.get(k) is not None})
     markets.sort(key=lambda r: (str(r.get("venue") or ""), str(r["market_id"])))
-    with open(path, "w") as f:
-        json.dump({"markets": markets}, f, indent=1, sort_keys=True)
-        f.write("\n")
+    fd, tmp = tempfile.mkstemp(prefix=".settlement-watch-", dir=directory)
+    try:
+        with os.fdopen(fd, "w") as f:
+            json.dump({"markets": markets}, f, indent=1, sort_keys=True)
+            f.write("\n")
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+        tmp = None
+    finally:
+        if tmp is not None:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
 
 
 def _resolve_market(q):

@@ -288,7 +288,8 @@ def check_combos(d, rep):
 
 
 # Where remembered mismatches live. Tests point this at a temp file; the default is
-# the ledger's sibling, which the workflow commits and grade() reads back.
+# the ledger's sibling. The audit job only writes it locally; a separate job commits
+# it, and grade() reads it back.
 MISMATCHES = T.MISMATCHES
 _WATCH_STATUSES = ("won", "lost", "graded", "void")
 _WATCH_RESULTS = ("a", "b", "draw", "void")
