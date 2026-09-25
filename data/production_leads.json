@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-25T01:34:07+00:00",
+ "board_built_at": "2026-09-25T05:11:53+00:00",
  "leads": {
   "2026-09-18|AS Monaco|Lens|AS Monaco to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Lens",
@@ -386,7 +386,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T01:34:07+00:00",
+   "last_seen_at": "2026-09-25T05:11:53+00:00",
    "league": "MMA",
    "match": "Brady Hiestand v Rinya Nakamura",
    "pair": "mma_fav_band|mma",
@@ -417,7 +417,7 @@
    "kickoff": "2026-09-26T21:30Z",
    "lane": "production",
    "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T01:34:07+00:00",
+   "last_seen_at": "2026-09-25T05:11:53+00:00",
    "league": "MMA",
    "match": "John Castaneda v Alatengheili",
    "pair": "mma_fav_band|mma",
@@ -448,7 +448,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T01:34:07+00:00",
+   "last_seen_at": "2026-09-25T05:11:53+00:00",
    "league": "Boxing",
    "match": "Luke McCormack v Kayamba Prospere",
    "pair": "olbg|boxing",
@@ -479,7 +479,7 @@
    "kickoff": "2026-09-26T03:00Z",
    "lane": "production",
    "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T01:34:07+00:00",
+   "last_seen_at": "2026-09-25T05:11:53+00:00",
    "league": "Boxing",
    "match": "Nathan Heaney v Gerome Warburton",
    "pair": "olbg|boxing",
@@ -510,7 +510,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T01:34:07+00:00",
+   "last_seen_at": "2026-09-25T05:11:53+00:00",
    "league": "MMA",
    "match": "Vanessa Demopoulos v Yazmin Jauregui",
    "pair": "mma_fav_band|mma",
@@ -524,6 +524,32 @@
    "sandbox_quote": "mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26",
    "source": "mma_fav_band",
    "sport": "mma",
+   "status": "pending"
+  },
+  "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "New England Revolution",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "New England Revolution"
+   },
+   "date": "2026-09-27",
+   "edge_at_log": null,
+   "first_seen": "2026-09-25",
+   "headline": "New England Revolution to score 1+",
+   "home": "Real Salt Lake",
+   "id": "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-09-27T01:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-25",
+   "last_seen_at": "2026-09-25T05:11:53+00:00",
+   "league": "MLS",
+   "match": "Real Salt Lake v New England Revolution",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.8,
+   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP26RSLNE-NE1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
    "status": "pending"
   }
  },
@@ -565,5 +591,5 @@
  "stage": "production",
  "unlisted_skipped": 2,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-25T01:34:07+00:00"
+ "updated_at": "2026-09-25T05:11:53+00:00"
 }
