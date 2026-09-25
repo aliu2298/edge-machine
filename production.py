@@ -252,10 +252,13 @@ def build_feed(d, st, now=None):
 
 
 def save_feed(blob, path=None):
+    """Replace the published feed, or leave the previous file untouched.
+
+    production_leads.json is what the site serves. A crash mid-write must not
+    truncate it to empty for the next reader.
+    """
     path = path or FEED
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w") as f:
-        json.dump(blob, f, indent=1, sort_keys=True)
+    T.atomic_write_json(path, blob, prefix=".feed-")
 
 
 def load_feed(path=None):

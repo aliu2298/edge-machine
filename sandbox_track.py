@@ -1918,8 +1918,7 @@ def load_stages(path=None):
 
 def save_stages(st, path=None):
     path = path or STAGES
-    with open(path, "w") as f:
-        json.dump(st, f, indent=1, sort_keys=True)
+    atomic_write_json(path, st, prefix=".stages-")
 
 
 def _snapshot(a):

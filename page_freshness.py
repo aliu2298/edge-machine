@@ -49,3 +49,54 @@ def freshness(html, now, page, stale_hours=STALE_AFTER_HOURS):
     msg = (f"{page} is {age:.1f}h old "
            f"(updated {stamp.strftime('%Y-%m-%d %H:%M')} UTC)")
     return age <= stale_hours, msg
+
+
+def fetch_pages(base_url, stale_hours=STALE_AFTER_HOURS, now=None, opener=None):
+    """(ok, message) for each published page, in PAGES order.
+
+    A page that does not respond is not ok. `message` names the page.
+    """
+    import urllib.request
+    if opener is None:
+        opener = urllib.request.urlopen
+    if now is None:
+        now = datetime.now(timezone.utc)
+    base = base_url.rstrip("/") + "/"
+    results = []
+    for page in PAGES:
+        try:
+            with opener(base + page, timeout=30) as resp:
+                body = resp.read().decode("utf-8", "replace")
+        except Exception as e:
+            results.append((False, f"{page} did not respond ({type(e).__name__})"))
+            continue
+        results.append(freshness(body, now, page, stale_hours=stale_hours))
+    return results
+
+
+def recheck_exit(results):
+    """(exit_code, detail) after takeover, or when takeover did not run.
+
+    Takeover rewrites index.html and redeploys. That cannot rebuild sandbox.html
+    or production.html, so a page that is still stale or missing fails the job.
+    exit_code is 1 in that case and 0 when every page is fresh. `detail` is the
+    freshness messages, which name the page and, when the stamp parsed, its age.
+    """
+    bad = [msg for ok, msg in results if not ok]
+    if bad:
+        return 1, "; ".join(bad)
+    return 0, "; ".join(msg for _ok, msg in results)
+
+
+def recheck_main():
+    """Re-read the live pages. Return 1 when either is still stale or missing."""
+    import os
+    import sys
+    hours = float(os.environ.get("STALE_AFTER_HOURS", STALE_AFTER_HOURS))
+    results = fetch_pages(os.environ["BOARD_URL"], stale_hours=hours)
+    code, detail = recheck_exit(results)
+    for _ok, msg in results:
+        print(msg, file=sys.stderr)
+    if code:
+        print(f"::error::{detail}", file=sys.stderr)
+    return code

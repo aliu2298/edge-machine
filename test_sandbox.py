@@ -4409,6 +4409,125 @@ ok("updated [A-Z][a-z]*" not in _watch_wf,
    "the watchdog no longer parses the root stub's Mon DD YYYY stamp")
 
 
+print("\nwatchdog: a stale page after takeover fails the job")
+
+ok(PF is not None and hasattr(PF, "recheck_exit"),
+   "stale-after-takeover is a function the job can fail on")
+if PF is not None and hasattr(PF, "recheck_exit"):
+    _code, _detail = PF.recheck_exit([
+        (False, "sandbox.html is 6.0h old (updated 2026-09-25 12:00 UTC)"),
+        (True, "production.html is 1.5h old (updated 2026-09-25 16:30 UTC)"),
+    ])
+    eq(_code, 1, "a stale page after takeover fails the job")
+    ok("sandbox.html" in _detail and "6.0h" in _detail,
+       "that failure names the page and its age")
+    _code, _detail = PF.recheck_exit([
+        (True, "sandbox.html is 1.5h old (updated 2026-09-25 16:30 UTC)"),
+        (True, "production.html is 1.5h old (updated 2026-09-25 16:30 UTC)"),
+    ])
+    eq(_code, 0, "fresh pages after takeover pass")
+    _code, _detail = PF.recheck_exit([
+        (False, "production.html has no readable updated stamp"),
+        (True, "sandbox.html is 1.0h old (updated 2026-09-25 17:00 UTC)"),
+    ])
+    eq(_code, 1, "a missing stamp after takeover fails the job")
+    ok("production.html" in _detail, "a missing page is named in the failure")
+
+    class _Body:
+        def __init__(self, text):
+            self._text = text.encode()
+        def read(self):
+            return self._text
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+
+    _now = datetime(2026, 9, 25, 18, 0, tzinfo=timezone.utc)
+
+    def _open_stale(url, timeout=30):
+        stamp = "2026-09-25 12:00 UTC" if url.endswith("sandbox.html") else "2026-09-25 16:30 UTC"
+        return _Body(f"updated {stamp}")
+
+    _code, _detail = PF.recheck_exit(PF.fetch_pages(
+        "https://example.test/edge-machine/", stale_hours=5, now=_now, opener=_open_stale))
+    eq(_code, 1, "a page that is still stale after takeover fails the job")
+    ok("sandbox.html" in _detail and "old" in _detail,
+       "that failure names the page and its age")
+
+    def _open_fresh(url, timeout=30):
+        return _Body("updated 2026-09-25 16:30 UTC")
+
+    _code, _ = PF.recheck_exit(PF.fetch_pages(
+        "https://example.test/edge-machine", stale_hours=5, now=_now, opener=_open_fresh))
+    eq(_code, 0, "pages that are fresh after takeover pass")
+
+    def _open_down(url, timeout=30):
+        raise OSError("timed out")
+
+    _code, _detail = PF.recheck_exit(PF.fetch_pages(
+        "https://example.test/", now=_now, opener=_open_down))
+    eq(_code, 1, "a page that does not respond after takeover fails the job")
+    ok("sandbox.html" in _detail and "production.html" in _detail,
+       "each page that did not respond is named")
+
+ok("sandbox-tracker.yml" in _watch_wf,
+   "the watchdog checks that sandbox-tracker.yml succeeded recently")
+_after_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[-1]
+ok("recheck_main" in _after_deploy,
+   "after the takeover deploy the pages are checked again")
+ok("steps.check.outputs.run != 'true'" in _watch_wf and _watch_wf.count("recheck_main") >= 2,
+   "when takeover does not run, a stale page still fails the job")
+
+
+print("\natomic writes: temp files are ignored, and the feed and stages survive a mid-write crash")
+
+_gi = open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".gitignore")).read()
+for _pat in (".ledger-*", ".archive-*", ".closes-*", ".settlement-watch-*",
+             ".stages-*", ".feed-*", ".atomic-*"):
+    ok("\n" + _pat + "\n" in "\n" + _gi + "\n" or _gi.endswith("\n" + _pat),
+       f"gitignore ignores leftover {_pat} temp files")
+
+
+def _midwrite(label, write, path, original, updated):
+    json.dump(original, open(path, "w"))
+    before = open(path, "rb").read()
+    real = json.dump
+    try:
+        def _boom(*a, **k):
+            raise OSError("disk full mid-write")
+        json.dump = _boom
+        raised = False
+        try:
+            write(updated, path)
+        except OSError:
+            raised = True
+        ok(raised, f"a failure inside the {label} write is not swallowed")
+    finally:
+        json.dump = real
+    ok(open(path, "rb").read() == before,
+       f"a mid-write failure leaves the original {label} bytes untouched")
+    try:
+        parsed = json.load(open(path))
+    except (OSError, ValueError):
+        parsed = None
+    ok(parsed == original, f"and that {label} still parses as the previous contents")
+    ok(sorted(_os.listdir(_os.path.dirname(path))) == [_os.path.basename(path)],
+       f"a mid-write failure leaves no {label} temp file behind")
+
+
+_fdir = _tf.mkdtemp(prefix="feed-")
+_midwrite("production feed", _PROD.save_feed,
+          _os.path.join(_fdir, "production_leads.json"),
+          {"leads": {"keep": 1}, "pairs": {}},
+          {"leads": {"keep": 1, "new": 2}, "pairs": {}})
+_sdir = _tf.mkdtemp(prefix="stages-")
+_midwrite("stages", T.save_stages,
+          _os.path.join(_sdir, "stages.json"),
+          {"events": [], "pairs": {"keep": 1}},
+          {"events": ["x"], "pairs": {"keep": 1}})
+
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
