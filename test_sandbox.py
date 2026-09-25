@@ -278,6 +278,7 @@ print("\nidempotency")
 # ---------------------------------------------------------------------------
 row = dict(market_id="m1", sport="mlb", label="A vs B", side_a="Cincinnati Reds",
            side_b="Los Angeles Dodgers", price_a=0.4, price_b=0.6, untraded=False,
+           venue="polymarket_us",
            start=(datetime.now(timezone.utc) + timedelta(days=1)).isoformat(),
            date="2026-09-11", volume=100.0, url="")
 d = {"quotes": [], "meta": {}, "coverage": {}}
@@ -420,16 +421,16 @@ flipped_tip = T.match_quotes(
 eq(flipped_tip["t2"], ("pick", "a"),
    "a reversed fixture flips WHICH SIDE was picked — the opposite bet otherwise")
 
-row_tip = dict(market_id="t3", sport="nfl", label="Giants vs Rams", side_a="Giants",
-               side_b="Rams", price_a=0.35, price_b=0.65, untraded=False,
+row_tip = dict(market_id="t3", sport="boxing", label="Garcia vs Benn", side_a="Ryan Garcia",
+               side_b="Conor Benn", price_a=0.35, price_b=0.65, untraded=False,
                start=(datetime.now(timezone.utc) + timedelta(days=1)).isoformat(),
                date="2026-09-14", volume=500.0, url="")
 d = {"quotes": [], "meta": {}, "coverage": {}}
 saved = S.CHALLENGERS
-S.CHALLENGERS = {"covers": lambda sp: [dict(a="Giants", b="Rams", pick="a", date="2026-09-14")]}
-T.publish(d, {"nfl": [row_tip]}, {}, verbose=False)
+S.CHALLENGERS = {"olbg": lambda sp: [dict(a="Ryan Garcia", b="Conor Benn", pick="a", date="2026-09-14")]}
+T.publish(d, {"boxing": [row_tip]}, {}, verbose=False)
 S.CHALLENGERS = saved
-tips = [q for q in d["quotes"] if q["source"] == "covers"]
+tips = [q for q in d["quotes"] if q["source"] == "olbg"]
 eq(len(tips), 1, "the tipster's pick is logged")
 eq(tips[0]["pick"], "a", "on the side it actually named")
 eq(tips[0]["bet"], True, "a bare pick is backed with no edge threshold to clear")
@@ -447,7 +448,7 @@ eq(tips[0]["status"], "won", "a tipster's winning pick settles as won")
 close(tips[0]["pnl"], round(100.0 * (1 / 0.35 - 1), 2),
       "and pays at the price it was backed at")
 
-sc = T.score(d)["covers"]
+sc = T.score(d)["olbg"]
 close(sc["roi"], round(100.0 * (1 / 0.35 - 1), 2) / 100.0,
       "the tipster's ROI is real")
 eq(sc["brier"], None, "but it has no Brier score — there is nothing to calibrate")
@@ -607,7 +608,7 @@ d = {"quotes": [], "meta": {}, "coverage": {}}
 saved = S.CHALLENGERS
 S.CHALLENGERS = {
     "soccerpredictions": lambda sp: [dict(a="Leeds", b="Newcastle United", pick="draw", date=krow["date"])],
-    "sportsgambler": lambda sp: [dict(a="Leeds United", b="Newcastle", pick="b", date=krow["date"])],
+    "scores24": lambda sp: [dict(a="Leeds United", b="Newcastle", pick="b", date=krow["date"])],
 }
 T.publish(d, {"soccer": [krow]}, {}, verbose=False)
 S.CHALLENGERS = saved
@@ -615,7 +616,7 @@ byq = {q["source"]: q for q in d["quotes"]}
 eq(byq["soccerpredictions"]["pick"], "draw", "a Draw tip is logged as a draw")
 close(byq["soccerpredictions"]["price"], 0.28, "and priced at the Tie ask")
 eq(byq["soccerpredictions"]["bet"], True, "a Draw tip on a tight Tie book is backed")
-eq(byq["sportsgambler"]["bet"], False, "a tip on an untradeable side is logged but never backed")
+eq(byq["scores24"]["bet"], False, "a tip on an untradeable side is logged but never backed")
 ok("polymarket" not in byq, "no Polymarket self-quote is invented on a Kalshi-venue contest")
 
 nfl_k = dict(sport="nfl", venue="kalshi", market_id="KXNFLGAME-X", label="Denver vs Kansas City",
@@ -1075,21 +1076,21 @@ eq(_stats["priced"], 1, "the coverage count reports priced books under the gate"
 # publish: nothing at all is logged against an unpriced row — tipsters included — and the
 # market's own quote is its midpoint, not its ask.
 _saved_ch = S.CHALLENGERS
-S.CHALLENGERS = {"oddspedia": lambda sp: [dict(a="Vlad Panin", b="Dakota Linger", pick="a", date=_start[:10]),
-                                          dict(a="Ryan Garcia", b="Conor Benn", pick="a", date=_start[:10])]}
-S.SOURCES["oddspedia"]["sports"].append("boxing")
+S.CHALLENGERS = {"olbg": lambda sp: [dict(a="Vlad Panin", b="Dakota Linger", pick="a", date=_start[:10]),
+                                     dict(a="Ryan Garcia", b="Conor Benn", pick="a", date=_start[:10])]}
+for _r in _rows:
+    _r["venue"] = "polymarket_us"
 try:
     d = {"quotes": [], "meta": {}, "coverage": {}}
     T.publish(d, {"boxing": _rows}, {}, verbose=False)
 finally:
-    S.SOURCES["oddspedia"]["sports"].remove("boxing")
     S.CHALLENGERS = _saved_ch
 _logged = {(q["source"], q["market_id"]): q for q in d["quotes"]}
 ok(not any(mid == "thin" for _s, mid in _logged),
    "no source is logged against the placeholder book, so it can be quoted later at a real price")
-close(_logged[("polymarket", "deep")]["prob_a"], 0.705, "Polymarket's own quote is the midpoint")
-close(_logged[("oddspedia", "deep")]["price"], 0.71, "a tip is booked at the ask a follower pays")
-eq((_logged[("oddspedia", "deep")]["spread"], _logged[("oddspedia", "deep")]["liquidity"]),
+close(_logged[("polymarket_us", "deep")]["prob_a"], 0.705, "the venue's own quote is the midpoint")
+close(_logged[("olbg", "deep")]["price"], 0.71, "a tip is booked at the ask a follower pays")
+eq((_logged[("olbg", "deep")]["spread"], _logged[("olbg", "deep")]["liquidity"]),
    (0.01, 101568.0), "every quote records the book it was priced against")
 
 # ---------------------------------------------------------------------------
@@ -1664,13 +1665,11 @@ try:
         T.publish(d, _rows, {}, verbose=False)
     finally:
         S.CHALLENGERS = _saved_ch
-    _pq = {q["market_id"]: q for q in d["quotes"] if q["source"] == "pinnacle"}
-    eq((_pq["sc1"]["uncovered"], _pq["sc3"]["uncovered"]), (False, True),
-       "a contest a tipster covered this run is not uncovered; one nobody touched is")
-    close(_pq["sc3"]["prob_a"], (1 / 2.1) / (1 / 2.1 + 1 / 3.3 + 1 / 3.6), "soccer Pinnacle probability includes the draw", tol=1e-3)
-    eq(_pq["sc3"]["bet"], True, "Everton at 0.30 against a Pinnacle 0.45 is a bet")
-    ok(all(q.get("uncovered") is None for q in d["quotes"] if q["source"] != "pinnacle"),
-       "only Pinnacle quotes carry the uncovered flag")
+    eq([q for q in d["quotes"] if q["source"] == "pinnacle"], [],
+       "pinnacle is paused: the run logs no new entry")
+    eq(_paid, [], "and a paused pinnacle lane spends no credit")
+    ok(all(q.get("uncovered") is None for q in d["quotes"]),
+       "no other source carries pinnacle's uncovered flag")
     ok("pinnacle" not in S.CHALLENGERS, "Pinnacle is planned, not fetched sport by sport")
 finally:
     S._odds_get = _saved_get2
@@ -2115,8 +2114,8 @@ finally:
 _qs = {q["source"]: q for q in _dp["quotes"]}
 eq((_qs["polymarket_us"]["bet"], _qs["polymarket_us"]["prob_a"]), (False, 0.61),
    "the US exchange's own midpoint is logged for Brier and never bets")
-eq((_qs["polymarket"]["bet"], _qs["polymarket"]["venue"], _qs["polymarket"]["price"]), (True, "polymarket_us", 0.62),
-   "polymarket.com at 0.70 against a 0.62 US ask is a bet, booked on the US venue")
+ok("polymarket" not in _qs,
+   "polymarket is paused, its MLB included: a 0.70 price against a 0.62 ask is not entered")
 eq(T.FEE_RATE["polymarket_us"], 0.06, "Polymarket US taker fee applies to QA's after-fee ROI")
 
 # ---------------------------------------------------------------------------
@@ -2353,8 +2352,8 @@ try:
 finally:
     S.CHALLENGERS = _saved_ch4
 _bq = {(q["source"], q["market_id"]): q for q in _db["quotes"]}
-_rq = _bq[("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS")]
-eq((_rq["bet"], _rq["pick"], _rq["price"]), (True, "a", 0.62), "the rule's bet is booked at the Yes ask")
+ok(("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS") not in _bq,
+   "btts_form_l10 is paused: publish enters nothing, and the selector above still finds the match")
 ok(not any(q["bet"] for q in _db["quotes"] if q["source"] == "btts_market"), "the market's own price never bets")
 
 # population baseline: rule 2/2 at 0.62 against backing Yes on all 4 matches (2 won at 0.62, 2 lost at 0.55)
@@ -2956,12 +2955,12 @@ _crow = dict(sport="commodities", venue="kalshi_binary", market_id="KXWTI-26SEP3
 # The far-tail rule retired on 2026-09-21, but the band it relied on is still how the domain
 # works, so a stand-in picker drives the same row through publish().
 _saved_chal = S.CHALLENGERS
-S.CHALLENGERS = {"cmd_tail": lambda sp: [dict(market_id="KXWTI-26SEP30-T90", pick="a")]}
+S.CHALLENGERS = {"cmd_market": lambda sp: [dict(market_id="KXWTI-26SEP30-T90", pick="a")]}
 try:
     T.publish(_cd, {"commodities": [_crow]}, {}, verbose=False)
 finally:
     S.CHALLENGERS = _saved_chal
-_cb = [q for q in _cd["quotes"] if q["source"] == "cmd_tail"]
+_cb = [q for q in _cd["quotes"] if q["source"] == "cmd_market"]
 eq([(q["pick"], q["bet"], q["price"]) for q in _cb], [("a", True, 0.98)],
    "a 0.98 commodity pick is logged as a real bet")
 _sd = {"quotes": [], "meta": {}}
@@ -4526,6 +4525,305 @@ _midwrite("stages", T.save_stages,
           _os.path.join(_sdir, "stages.json"),
           {"events": [], "pairs": {"keep": 1}},
           {"events": ["x"], "pairs": {"keep": 1}})
+
+
+print("\npaused lanes: no new entries, open ones still settle")
+
+_PAUSED_NAMES = {
+    "covers", "kalshi", "scores24", "polymarket", "draftkings", "mlb_fade_streak", "nws",
+    "tt_band_55_60", "olbg", "pinnacle", "cmd_tail", "btts_form_l10", "o15_form_l10",
+    "sportsgambler", "tennis_combo3", "tennis_combo4", "pm_combo3", "pm_combo4",
+    "nhl_dog_pl", "gas_nochange", "oddspedia", "espn_fpi",
+}
+eq(set(S.PAUSED_LANES), _PAUSED_NAMES, "the pause list is exactly the lanes the memo named")
+ok("nfl" in S.PAUSED_SPORTS, "every NFL entry is paused, from any lane")
+ok(S.lane_paused("covers", "mlb") and S.lane_paused("kalshi", "mlb") and S.lane_paused("nws", "climate"),
+   "a whole-lane pause covers every sport that source logs")
+ok(not S.lane_paused("scores24", "soccer") and S.lane_paused("scores24", "nfl")
+   and S.lane_paused("scores24", "mlb"),
+   "scores24 soccer stays; every other scores24 sport is paused")
+ok(S.lane_paused("olbg", "mma") and not S.lane_paused("olbg", "boxing"),
+   "OLBG MMA is paused and OLBG boxing is not")
+ok(S.lane_paused("espn_fpi", "nfl") and not S.lane_paused("espn_fpi", "mlb"),
+   "ESPN FPI NFL is paused and ESPN FPI MLB is not")
+ok(S.lane_paused("tennis_combo3", "tennis_combo") and S.lane_paused("tennis_combo4", "tennis_combo")
+   and S.lane_paused("pm_combo3", "tennis_pmcombo") and S.lane_paused("pm_combo4", "tennis_pmcombo")
+   and not S.lane_paused("tennis_combo2", "tennis_combo")
+   and not S.lane_paused("pm_combo2", "tennis_pmcombo"),
+   "3- and 4-leg combos are paused; both 2-leg combos stay")
+ok(S.lane_paused("soccerpredictions", "nfl") and not S.lane_paused("soccerpredictions", "soccer"),
+   "NFL is paused on a source that is not otherwise paused")
+ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
+   and not S.source_fully_paused("olbg") and not S.source_fully_paused("scores24")
+   and not S.source_fully_paused("espn_fpi"),
+   "a partial pause leaves the source able to log its other sports")
+for _name, _sport in (
+        ("soccerpredictions", "soccer"), ("espn_fpi", "mlb"), ("tennis_fav_band", "tennis"),
+        ("tennis_fav_band_3h", "tennis"), ("spot", "crypto"), ("mma_fav_band", "mma"),
+        ("olbg", "boxing"), ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
+        ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
+        ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),
+        ("nhl_rest_edge", "nhl_rest"), ("nws_fade", "climate"), ("o15_ranked", "soccer_o15"),
+        ("pin_totals", "soccer_o25"), ("btts_market", "soccer_btts")):
+    ok(not S.lane_paused(_name, _sport), f"{_name}/{_sport} is not paused")
+
+_saved_pause = dict(S.PAUSED_LANES)
+S.PAUSED_LANES = {k: v for k, v in S.PAUSED_LANES.items() if k != "covers"}
+try:
+    ok(not S.lane_paused("covers", "mlb"), "deleting the covers line re-enables covers")
+finally:
+    S.PAUSED_LANES = _saved_pause
+ok(S.lane_paused("covers", "mlb"), "that check does not leave covers re-enabled")
+
+_probe_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()
+_probe_day = _probe_at[:10]
+
+
+def _prow(sport, mid, venue="polymarket_us", price_a=0.40, price_b=0.62):
+    return dict(market_id=mid, sport=sport, label="Alpha vs Beta", side_a="Alpha", side_b="Beta",
+                price_a=price_a, price_b=price_b, mid_a=0.50, price_draw=None, untraded=False,
+                tradeable={"a": True, "b": True}, start=_probe_at, date=_probe_day,
+                volume=10.0, url="", venue=venue)
+
+
+_uni, _ch = {}, {}
+for _name, _spec in S.PAUSED_LANES.items():
+    _sports = list((S.SOURCES.get(_name) or {}).get("sports") or [])
+    if _spec is None:
+        _use = [s for s in _sports if s != "nfl"][:1] or _sports[:1]
+    elif "keep" in _spec:
+        _use = [s for s in _sports if s not in _spec["keep"]] or ["nfl"]
+    else:
+        _use = [s for s in _spec.get("sports", ()) if s in _sports] or list(_spec.get("sports") or ())
+    for _sp in _use:
+        _uni.setdefault(_sp, [])
+        if not any(r["market_id"] == f"probe-{_sp}" for r in _uni[_sp]):
+            _uni[_sp].append(_prow(_sp, f"probe-{_sp}"))
+    _ch[_name] = lambda sp: [dict(market_id=f"probe-{sp}", pick="a", a="Alpha", b="Beta",
+                                  date=_probe_day, prob_a=0.80)]
+_saved_ch = S.CHALLENGERS
+S.CHALLENGERS = _ch
+try:
+    _pd = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_pd, _uni, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch
+_paused_new = [q for q in _pd["quotes"] if S.lane_paused(q["source"], q["sport"])]
+eq(_paused_new, [], "every paused lane logs no new entry")
+ok(not any(q.get("bet") for q in _paused_new), "and therefore places no new bet")
+
+_saved_ch = S.CHALLENGERS
+S.SOURCES["soccerpredictions"]["sports"].append("nfl")
+S.CHALLENGERS = {
+    "scores24": lambda sp: [dict(market_id=f"keep-{sp}", pick="a", a="Alpha", b="Beta", date=_probe_day)],
+    "olbg": lambda sp: [dict(market_id=f"keep-{sp}", pick="a", a="Alpha", b="Beta", date=_probe_day)],
+    "espn_fpi": lambda sp: [dict(market_id=f"keep-{sp}", prob_a=0.80, a="Alpha", b="Beta", date=_probe_day)],
+    "soccerpredictions": lambda sp: [dict(market_id=f"keep-{sp}", pick="a", a="Alpha", b="Beta",
+                                          date=_probe_day)],
+    "tennis_combo2": lambda sp: [dict(market_id="combo2:day:k", pick="a")],
+    "tennis_combo3": lambda sp: [dict(market_id="combo3:day:k", pick="a")],
+    "pm_combo2": lambda sp: [dict(market_id="pmcombo2:day:k", pick="a")],
+    "pm_combo4": lambda sp: [dict(market_id="pmcombo4:day:k", pick="a")],
+}
+_keep_uni = {
+    "soccer": [_prow("soccer", "keep-soccer", venue="kalshi")],
+    "nfl": [_prow("nfl", "keep-nfl")],
+    "boxing": [_prow("boxing", "keep-boxing")],
+    "mma": [_prow("mma", "keep-mma")],
+    "mlb": [_prow("mlb", "keep-mlb")],
+    "tennis_combo": [_prow("tennis_combo", "combo2:day:k", venue="combo"),
+                     _prow("tennis_combo", "combo3:day:k", venue="combo")],
+    "tennis_pmcombo": [_prow("tennis_pmcombo", "pmcombo2:day:k", venue="combo"),
+                       _prow("tennis_pmcombo", "pmcombo4:day:k", venue="combo")],
+}
+try:
+    _kd = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_kd, _keep_uni, {}, verbose=False)
+finally:
+    S.SOURCES["soccerpredictions"]["sports"].remove("nfl")
+    S.CHALLENGERS = _saved_ch
+_kb = {(q["source"], q["sport"]): q for q in _kd["quotes"]}
+eq(_kb[("scores24", "soccer")]["bet"], True, "scores24 soccer still enters")
+ok(("scores24", "nfl") not in _kb, "scores24 NFL does not")
+eq(_kb[("olbg", "boxing")]["bet"], True, "OLBG boxing still enters")
+ok(("olbg", "mma") not in _kb, "OLBG MMA does not")
+eq(_kb[("espn_fpi", "mlb")]["bet"], True, "ESPN FPI MLB still enters")
+ok(("espn_fpi", "nfl") not in _kb, "ESPN FPI NFL does not")
+ok(("soccerpredictions", "nfl") not in _kb, "a source that is otherwise active enters nothing on NFL")
+eq(_kb[("soccerpredictions", "soccer")]["bet"], True, "and still enters on soccer")
+eq(_kb[("tennis_combo2", "tennis_combo")]["bet"], True, "the 2-leg Kalshi combo still enters")
+ok(("tennis_combo3", "tennis_combo") not in _kb, "the 3-leg Kalshi combo does not")
+eq(_kb[("pm_combo2", "tennis_pmcombo")]["bet"], True, "the 2-leg Polymarket combo still enters")
+ok(("pm_combo4", "tennis_pmcombo") not in _kb, "the 4-leg Polymarket combo does not")
+
+_open = []
+for _name in sorted(S.PAUSED_LANES):
+    _spec = S.PAUSED_LANES[_name]
+    _sports = list((S.SOURCES.get(_name) or {}).get("sports") or ["mlb"])
+    if _spec is None:
+        _sp = next((s for s in _sports if s != "nfl"), _sports[0])
+    elif "sports" in _spec:
+        _sp = next(iter(_spec["sports"]))
+    else:
+        _sp = next((s for s in _sports if s not in _spec.get("keep", ())), "nfl")
+    _open.append(dict(
+        id=f"{_name}:open-{_sp}", source=_name, sport=_sp, market_id=f"open-{_name}-{_sp}",
+        venue="polymarket_us", status="open", bet=True, pick="a", price=0.40,
+        price_a=0.40, price_b=0.62, stake=T.STAKE, pnl=0.0,
+        start=(datetime.now(timezone.utc) - timedelta(days=2)).isoformat(),
+        side_a="Alpha", side_b="Beta", label="Alpha vs Beta"))
+_real_us = S.resolve_polymarket_us
+S.resolve_polymarket_us = lambda mid: "a"
+try:
+    T.grade({"quotes": _open, "meta": {}}, verbose=False)
+finally:
+    S.resolve_polymarket_us = _real_us
+for _q in _open:
+    eq((_q["status"], _q["pnl"]), ("won", round(T.STAKE * (1 / 0.40 - 1), 2)),
+       f"{_q['source']} / {_q['sport']} still settles an entry that was already open")
+
+
+print("\nnws_fade: the other side, same stake, fixed read point")
+
+eq(S.NWS_FADE_READ_N, 100, "the read point is 100 settled independent outcomes")
+ok(str(S.NWS_FADE_READ_N) in S.SOURCES["nws_fade"]["note"]
+   and "independent" in S.SOURCES["nws_fade"]["note"]
+   and "Do not retune" in S.SOURCES["nws_fade"]["note"],
+   "the source note states the read point and that nothing is tuned before it")
+ok("nws_fade" in S.CHALLENGERS and S.SOURCES["nws_fade"]["connected"]
+   and "climate" in S.SOURCES["nws_fade"]["sports"],
+   "nws_fade is wired, on climate, under its own source")
+_nws_rows = [dict(sport="climate", venue="kalshi_binary", market_id=f"KXHIGHNY-26SEP12-{t}",
+                  series="KXHIGHNY", date="2026-09-12", market=_m, price_a=p, price_b=round(1 - p, 2),
+                  side_a="Yes", side_b="No", label="bucket", untraded=False,
+                  tradeable={"a": True, "b": True},
+                  start=(datetime.now(timezone.utc) + timedelta(hours=20)).isoformat(),
+                  volume=1.0, url="")
+             for t, _m, p in (("B75.5", bm(floor_strike=75, cap_strike=76), 0.20),
+                              ("B77.5", bm(floor_strike=77, cap_strike=78), 0.34),
+                              ("B79.5", bm(floor_strike=79, cap_strike=80), 0.46))]
+_real_highs = S.nws_highs
+S.nws_highs = lambda lat, lon: {"2026-09-12": 78.0}
+S.UNIVERSE = {"climate": _nws_rows}
+try:
+    _follow = S.fetch_nws("climate")
+    _fade = S.fetch_nws_fade("climate")
+finally:
+    S.nws_highs = _real_highs
+eq((len(_follow), len(_fade)), (1, 1), "each direction names one bucket")
+eq(_follow[0]["pick"], "a", "the follow lane still names YES on the forecast bucket")
+eq((_fade[0]["market_id"], _fade[0]["pick"]), (_follow[0]["market_id"], "b"),
+   "nws_fade takes the other side of that same bucket")
+_saved_ch = S.CHALLENGERS
+S.CHALLENGERS = {"nws": S.fetch_nws, "nws_fade": S.fetch_nws_fade}
+S.nws_highs = lambda lat, lon: {"2026-09-12": 78.0}
+try:
+    _nd = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_nd, {"climate": _nws_rows}, {}, verbose=False)
+finally:
+    S.nws_highs = _real_highs
+    S.CHALLENGERS = _saved_ch
+_nq = {q["source"]: q for q in _nd["quotes"]}
+ok("nws" not in _nq, "the paused follow lane logs nothing")
+eq((_nq["nws_fade"]["source"], _nq["nws_fade"]["pick"], _nq["nws_fade"]["bet"], _nq["nws_fade"]["stake"]),
+   ("nws_fade", "b", True, T.STAKE),
+   "nws_fade logs the other side under source nws_fade, at the same flat stake")
+close(_nq["nws_fade"]["price"], 0.66, "the price is the other side's ask")
+
+
+print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged lane")
+
+eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is 3 hours, fixed with the lane")
+ok("3 hours" in S.SOURCES["tennis_fav_band_3h"]["note"]
+   and "tennis_fav_band" in S.SOURCES["tennis_fav_band_3h"]["note"]
+   and "per source" in S.SOURCES["tennis_fav_band_3h"]["note"],
+   "the note says the window, that the old lane is unchanged, and that overlap is per source")
+_tnow = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
+
+
+def _trow(mid, price, start):
+    return dict(market_id=mid, sport="tennis", side_a="Player A", side_b="Player B",
+                price_a=price, price_b=round(1 - price + 0.02, 2), price_draw=None,
+                tradeable={"a": True, "b": True}, untraded=False, start=start.isoformat(),
+                date=start.strftime("%Y-%m-%d"), venue="polymarket_us", label="A vs B",
+                volume=1.0, url="", mid_a=price)
+
+
+_tuni = {"tennis": [
+    _trow("in", 0.78, _tnow + timedelta(hours=2)),
+    _trow("exact", 0.78, _tnow + timedelta(hours=3)),
+    _trow("over", 0.78, _tnow + timedelta(hours=3, seconds=1)),
+    _trow("low", 0.76, _tnow + timedelta(hours=1)),
+    _trow("high", 0.81, _tnow + timedelta(hours=1)),
+    _trow("past", 0.78, _tnow - timedelta(minutes=1)),
+]}
+eq(sorted(q["market_id"] for q in S.fetch_tennis_fav_band_3h("tennis", _tuni, now=_tnow)),
+   ["exact", "in"],
+   "only in-band matches strictly inside the 3-hour window, including one that starts in exactly 3 hours")
+eq(sorted(q["market_id"] for q in S.fetch_tennis_fav_band("tennis", _tuni)),
+   ["exact", "in", "over", "past"],
+   "tennis_fav_band is unchanged: the same band, with no clock on it")
+ok("over" not in [q["market_id"] for q in S.fetch_tennis_fav_band_3h("tennis", _tuni, now=_tnow)],
+   "a match more than 3 hours out is not logged by the 3-hour lane")
+
+_live = datetime.now(timezone.utc)
+_live_rows = [
+    _trow("near", 0.78, _live + timedelta(hours=2)),
+    _trow("far", 0.78, _live + timedelta(hours=6)),
+]
+_saved_ch = S.CHALLENGERS
+S.CHALLENGERS = {"tennis_fav_band": S.fetch_tennis_fav_band,
+                 "tennis_fav_band_3h": S.fetch_tennis_fav_band_3h}
+try:
+    _td = {"quotes": [], "meta": {}, "coverage": {}}
+    T.publish(_td, {"tennis": _live_rows}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch
+_ts = {(q["source"], q["market_id"]): q for q in _td["quotes"] if q["source"].startswith("tennis_fav")}
+eq(_ts[("tennis_fav_band", "near")]["bet"], True, "the wide lane logs the match inside 3 hours")
+eq(_ts[("tennis_fav_band_3h", "near")]["bet"], True, "and the 3-hour lane logs it too")
+eq(_ts[("tennis_fav_band", "far")]["bet"], True, "the wide lane also logs the match 6 hours out")
+ok(("tennis_fav_band_3h", "far") not in _ts, "the 3-hour lane does not log that one")
+eq(T.retire_venue_duplicates(_td, verbose=False), 0,
+   "duplicate protection does not void either lane when both logged the same match")
+ok(all(q["status"] == "open" for q in _td["quotes"] if q["source"].startswith("tennis_fav")),
+   "both entries on the shared match stay open")
+
+
+print("\nledger history is unchanged by the pause")
+
+def _lane_pnl(quotes):
+    acc = {}
+    for q in quotes:
+        if q.get("bet") and q.get("status") in ("won", "lost"):
+            k = (q.get("source"), q.get("sport"))
+            n, p = acc.get(k, (0, 0.0))
+            acc[k] = (n + 1, round(p + float(q.get("pnl") or 0), 2))
+    return acc
+
+
+_led = json.load(open(T.LEDGER))
+_before_ids = {q["id"]: (q.get("status"), q.get("pnl"), q.get("bet"), q.get("source"), q.get("sport"))
+               for q in _led["quotes"]}
+_before_pnl = _lane_pnl(_led["quotes"])
+_saved_ch = S.CHALLENGERS
+_saved_uni = S.UNIVERSE
+S.CHALLENGERS = {"covers": lambda sp: [dict(market_id="ledger-probe", pick="a", a="Alpha", b="Beta",
+                                            date=_probe_day)],
+                 "nws": S.fetch_nws}
+try:
+    T.publish(_led, {"mlb": [_prow("mlb", "ledger-probe")]}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch
+    S.UNIVERSE = _saved_uni
+_after_ids = {q["id"]: (q.get("status"), q.get("pnl"), q.get("bet"), q.get("source"), q.get("sport"))
+              for q in _led["quotes"] if q["id"] in _before_ids}
+eq(_after_ids, _before_ids, "no row that was already in the ledger is rewritten")
+eq(_lane_pnl(_led["quotes"]), _before_pnl,
+   "per-lane settled counts and P&L are identical after the pause logic runs")
+ok(not any(q["id"] not in _before_ids and q.get("bet") and S.lane_paused(q["source"], q["sport"])
+           for q in _led["quotes"]),
+   "the run added no bet on a paused lane")
 
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
