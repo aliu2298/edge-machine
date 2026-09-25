@@ -143,6 +143,11 @@ jobs:
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE
           else
+            # A failed build leaves public_site modified but unstaged. git pull
+            # --rebase refuses to start with that dirt, the close job has usually
+            # moved main, and all three push retries then die. The ledger this
+            # gate exists to save never lands. Put the pages back before add.
+            git checkout -- public_site/
             git add $DATA
           fi
           if git diff --cached --quiet; then
@@ -171,7 +176,9 @@ jobs:
             # commit being replayed). The pages are regenerated from this run's ledger, and a
             # hand-built copy pushed from a laptop mid-run made the rebase stop and the run lose
             # its promotions (2026-09-16 22:08).
-            git pull --rebase -X theirs origin main
+            # --autostash: anything still dirty outside the data list (public_site is already
+            # restored above) must not make this rebase refuse.
+            git pull --rebase --autostash -X theirs origin main
           done
           echo "::error::could not push the ledger after 3 attempts"
           exit 1
@@ -201,6 +208,12 @@ jobs:
         run: |
           set -euo pipefail
           code=0
+          # Skipped when setup, the logic tests, or a cancel stopped the run.
+          # An empty code used to exit 0, so the job looked green.
+          if [ -z "${TRACK_RC}" ] || [ -z "${BUILD_RC}" ]; then
+            echo "::error::tracker step did not run"
+            code=1
+          fi
           if [ -n "${TRACK_RC}" ] && [ "$TRACK_RC" != "0" ]; then
             echo "::error::Collect predictions and settle results failed (sandbox_track.py exit ${TRACK_RC})"
             code=1
@@ -209,7 +222,8 @@ jobs:
             echo "::error::Build the tracker page failed (sandbox_build.py exit ${BUILD_RC})"
             code=1
           fi
-          if [ "$code" -eq 0 ] && [ "${GATE_FAIL}" = "true" ]; then
+          # Reported even when a step already failed: a bad ledger is its own fault.
+          if [ "${GATE_FAIL}" = "true" ]; then
             echo "::error::data/sandbox_ledger.json is missing or not valid JSON"
             code=1
           fi

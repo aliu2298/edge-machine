@@ -4334,9 +4334,139 @@ ok("git add -A" not in _tracker_wf and "\ngit add ." not in _tracker_wf and "git
 ok('DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"' in _tracker_wf
    and 'SITE="public_site/sandbox.html public_site/production.html"' in _tracker_wf
    and "git add $DATA\n" in _tracker_wf and "git add $DATA $SITE" in _tracker_wf,
-   "a failed run commits the data files and leaves public_site unstaged")
+   "a failed run commits the data files and not public_site")
 ok("could not push the ledger after 3 attempts" in _tracker_wf and "exit 1" in _tracker_wf,
    "the push retry still ends in exit 1")
+
+_commit_step = _tracker_wf.split("- name: Commit and push if changed", 1)[-1].split("\n      - ", 1)[0]
+_else = _commit_step.split("\n          else\n", 1)[-1].split("\n          fi\n", 1)[0]
+ok("git checkout -- public_site/" in _else
+   and _else.find("git checkout -- public_site/") < _else.find("git add"),
+   "the failure path restores public_site before git add")
+ok("git pull --rebase --autostash -X theirs origin main" in _commit_step
+   and _commit_step.find("git checkout -- public_site/") < _commit_step.find("git pull --rebase"),
+   "public_site is restored before the rebase, and the rebase autostashes anything else left dirty")
+
+_fail_step = _tracker_wf.split("- name: Fail the job if the tracker or the page build failed", 1)[-1]
+ok("::error::tracker step did not run" in _fail_step,
+   "a skipped tracker step is an error, not a green job")
+
+
+def _step_script(wf, name):
+    step = wf.split("- name: " + name, 1)[-1]
+    nxt = step.find("\n      - ")
+    if nxt != -1:
+        step = step[:nxt]
+    run_at = step.find("run: |\n")
+    if run_at < 0:
+        return ""
+    lines = []
+    for line in step[run_at + len("run: |\n"):].splitlines():
+        if line.startswith("          "):
+            lines.append(line[10:])
+        elif line.strip() == "":
+            lines.append("")
+        else:
+            break
+    return "\n".join(lines) + "\n"
+
+
+def _bash(script, env, cwd=None):
+    import subprocess as _sub
+    e = _os.environ.copy()
+    e.update(env)
+    return _sub.run(["bash", "-c", script], cwd=cwd, env=e, capture_output=True, text=True)
+
+
+_fail_script = _step_script(_tracker_wf, "Fail the job if the tracker or the page build failed")
+ok('[ "$code" -eq 0 ] &&' not in _fail_script,
+   "an invalid ledger is reported even when a step already failed")
+_skipped = _bash(_fail_script, {"TRACK_RC": "", "BUILD_RC": "", "GATE_FAIL": ""})
+eq(_skipped.returncode, 1, "empty track and build codes fail the job")
+ok("::error::tracker step did not run" in _skipped.stdout,
+   "and the error says the tracker step did not run")
+_both = _bash(_fail_script, {"TRACK_RC": "1", "BUILD_RC": "0", "GATE_FAIL": "true"})
+eq(_both.returncode, 1, "a feed failure with a bad ledger still fails")
+ok("Collect predictions and settle results failed" in _both.stdout
+   and "data/sandbox_ledger.json is missing or not valid JSON" in _both.stdout,
+   "the feed failure and the invalid ledger are both named")
+_green = _bash(_fail_script, {"TRACK_RC": "0", "BUILD_RC": "0", "GATE_FAIL": "false"})
+eq(_green.returncode, 0, "a green run with a valid ledger does not fail here")
+ok("::error::" not in _green.stdout, "and it prints no error")
+
+# The commit step, against a temp repo: public_site is half-written, another
+# tracked file is dirty, and origin/main has moved. The ledger must still land.
+_push_script = _step_script(_tracker_wf, "Commit and push if changed")
+_repo = _tf.mkdtemp(prefix="ledger-push-")
+_origin = _os.path.join(_repo, "origin.git")
+_local = _os.path.join(_repo, "local")
+_ahead = _os.path.join(_repo, "ahead")
+_git_env = {
+    "GIT_AUTHOR_NAME": "T", "GIT_AUTHOR_EMAIL": "t@example.com",
+    "GIT_COMMITTER_NAME": "T", "GIT_COMMITTER_EMAIL": "t@example.com",
+}
+
+
+def _git(cwd, *args, env=None):
+    import subprocess as _sub
+    e = _os.environ.copy()
+    e.update(_git_env)
+    if env:
+        e.update(env)
+    return _sub.run(["git", "-C", cwd, *args], env=e, capture_output=True, text=True)
+
+
+def _write(path, text):
+    _os.makedirs(_os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as fh:
+        fh.write(text)
+
+
+_git(_repo, "init", "--bare", "-b", "main", _origin)
+_git(_repo, "init", "-b", "main", _local)
+_git(_local, "config", "user.email", "t@example.com")
+_git(_local, "config", "user.name", "T")
+_git(_local, "config", "commit.gpgsign", "false")
+_page = "updated 2026-09-25 12:00 UTC\n"
+_write(_os.path.join(_local, "data", "sandbox_ledger.json"), '{"quotes": []}\n')
+_write(_os.path.join(_local, "data", "stages.json"), "{}\n")
+_write(_os.path.join(_local, "data", "production_leads.json"), "{}\n")
+_write(_os.path.join(_local, "data", "sandbox_archive", "2026-09.json"), "[]\n")
+_write(_os.path.join(_local, "data", "espn_history", "keep.json"), "{}\n")
+_write(_os.path.join(_local, "public_site", "sandbox.html"), _page)
+_write(_os.path.join(_local, "public_site", "production.html"), _page)
+_write(_os.path.join(_local, "extra.txt"), "clean\n")
+_git(_local, "add", "-A")
+_git(_local, "commit", "-m", "base")
+_git(_local, "remote", "add", "origin", _origin)
+_git(_local, "push", "-u", "origin", "main")
+_git(_repo, "clone", _origin, _ahead)
+_git(_ahead, "config", "user.email", "t@example.com")
+_git(_ahead, "config", "user.name", "T")
+_git(_ahead, "config", "commit.gpgsign", "false")
+_write(_os.path.join(_ahead, "data", "sandbox_closes", "mac.json"), '{"from": "close"}\n')
+_git(_ahead, "add", "-A")
+_git(_ahead, "commit", "-m", "close job")
+_git(_ahead, "push", "origin", "main")
+_write(_os.path.join(_local, "data", "sandbox_ledger.json"), '{"quotes": [{"id": "saved"}]}\n')
+_write(_os.path.join(_local, "public_site", "sandbox.html"), "HALF-WRITTEN\n")
+_write(_os.path.join(_local, "extra.txt"), "dirty\n")
+_write(_os.path.join(_local, "scratch.txt"), "untracked\n")
+_pushed = _bash(_push_script, {"COMMIT_SITE": "false", **_git_env}, cwd=_local)
+ok(_pushed.returncode == 0,
+   "a half-written public_site and a moved main still publish the ledger"
+   + ("" if _pushed.returncode == 0 else "\n" + _pushed.stdout + _pushed.stderr))
+if _pushed.returncode == 0:
+    _led = _git(_origin, "show", "main:data/sandbox_ledger.json").stdout
+    ok('"saved"' in _led, "the remote ledger is the one this run saved")
+    _site = _git(_origin, "show", "main:public_site/sandbox.html").stdout
+    eq(_site, _page, "the half-written page was not pushed")
+    _close = _git(_origin, "show", "main:data/sandbox_closes/mac.json").stdout
+    ok('"close"' in _close, "the close job's commit is still on main")
+    _extra = _git(_origin, "show", "main:extra.txt").stdout
+    eq(_extra, "clean\n", "a dirty file outside the data list was not committed")
+    eq(open(_os.path.join(_local, "public_site", "sandbox.html")).read(), _page,
+       "the worktree page is restored, so it cannot block a later rebase")
 
 
 print("\nledger save is atomic")
