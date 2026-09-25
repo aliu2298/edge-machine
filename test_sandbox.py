@@ -185,6 +185,69 @@ eq(d["quotes"][0]["status"], "open", "a future fixture is not graded early")
 S.resolve_polymarket = S_resolve
 
 # ---------------------------------------------------------------------------
+print("\nregrade: a settled result follows the venue when it flips")
+# ---------------------------------------------------------------------------
+def _settled_pm(**kw):
+    q = quote(venue="polymarket_us", market_id="m", id="pinnacle:m", source="pinnacle",
+              pick="b", price=0.46, price_a=0.56, price_b=0.46, prob_a=0.5079,
+              status="lost", result="a", pnl=-100.0,
+              settled=(datetime.now(timezone.utc) - timedelta(hours=12)).isoformat())
+    q.update(kw)
+    return q
+
+_saved_pmus = S.resolve_polymarket_us
+_asked = []
+S.resolve_polymarket_us = lambda mid: _asked.append(mid) or "b"
+_bet = _settled_pm()
+_self = _settled_pm(id="polymarket_us:m", source="polymarket_us", bet=False, stake=0.0,
+                    pick=None, price=None, status="graded", pnl=0.0, prob_a=0.55)
+_d = {"quotes": [_bet, _self], "meta": {}, "coverage": {}}
+T.grade(_d, verbose=False, mismatches=set())
+eq(_asked, ["m"], "one settlement read covers the bet and the self-quote on that market")
+eq(_bet["result"], "b", "regrade flips a settled loss when the venue's final answer flips")
+eq(_bet["status"], "won", "the pick matches the revised result, so the bet is a win")
+close(_bet["pnl"], round(100.0 * (1.0 / 0.46 - 1.0), 2),
+      "P/L is recomputed at the logged price: $100 at 0.46")
+close(T.pnl_after_fee(_bet), 110.57, "after the 6% Polymarket US fee that P/L is $110.57")
+eq(_self["result"], "b", "the self-quote on that market is regraded with the bet")
+eq(_self["status"], "graded", "a no-bet quote stays graded — it is a score, not a stake")
+eq(_self["pnl"], 0.0, "and it still carries no P/L")
+close(T.score(_d)["polymarket_us"]["brier"], (0.55 - 0.0) ** 2,
+      "its Brier follows the revised result, not the side stored first")
+T.grade(_d, verbose=False, mismatches=set())
+eq(_bet["status"], "won", "grading again with the same venue answer leaves the correction in place")
+close(_bet["pnl"], round(100.0 * (1.0 / 0.46 - 1.0), 2), "and does not recompute a second P/L on top")
+
+_asked.clear()
+S.resolve_polymarket_us = lambda mid: _asked.append(mid) or None
+_kept = _settled_pm(id="pinnacle:none")
+T.grade({"quotes": [_kept], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
+eq(_asked, ["m"], "regrade does re-ask a settled bet inside the window")
+eq((_kept["result"], _kept["status"], _kept["pnl"]), ("a", "lost", -100.0),
+   "regrade does not overwrite a stored result when the venue says None")
+
+_asked.clear()
+S.resolve_polymarket_us = lambda mid: _asked.append(mid) or "void"
+_vague = _settled_pm(id="pinnacle:void")
+T.grade({"quotes": [_vague], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
+eq(_asked, ["m"], "a void answer is still a re-ask, not a skipped row")
+eq((_vague["result"], _vague["status"], _vague["pnl"]), ("a", "lost", -100.0),
+   "regrade does not overwrite a stored win or loss when the venue says void")
+
+_asked.clear()
+S.resolve_polymarket_us = lambda mid: _asked.append(mid) or "b"
+_old = _settled_pm(settled=(datetime.now(timezone.utc) - timedelta(days=30)).isoformat())
+T.grade({"quotes": [_old], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
+eq(_asked, [], "a bet outside the regrade window is not re-asked")
+eq(_old["result"], "a", "and its stored result stays")
+T.grade({"quotes": [_old], "meta": {}, "coverage": {}}, verbose=False,
+        mismatches={("polymarket_us", "m")})
+eq(_asked, ["m"], "a watched market outside the window is re-asked")
+eq(_old["result"], "b", "and then regraded to the venue's side")
+eq(_old["status"], "won", "so a watched loss becomes a win when the venue says the pick won")
+S.resolve_polymarket_us = _saved_pmus
+
+# ---------------------------------------------------------------------------
 print("\nscoring")
 # ---------------------------------------------------------------------------
 d = {"quotes": [

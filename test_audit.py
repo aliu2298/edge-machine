@@ -4,11 +4,15 @@
 An audit that has only ever passed proves nothing, so every check here is fed a record with
 one planted fault and must fire, and the same record with the fault removed must not.
 """
+import json
+import os
 import sys
+import tempfile
 from datetime import datetime, timedelta, timezone
 
 import sandbox_audit as A
 import sandbox_sources as S
+import sandbox_track as T
 
 FAILS = []
 
@@ -153,19 +157,114 @@ _rc = A.Report(); A.check_combos({"quotes": _ok + [_basket(1, ["L1", "L2"], "a",
                                                    _basket(2, ["L2", "L4"], "a", "won")]}, _rc)
 ok(errs(_rc, "combos"), "a leg sitting in two baskets of one size is caught: they are not independent")
 
+def settlement(quotes, sample, prior=None):
+    """check_settlement against a private watch file, so the test never touches the repo's."""
+    fd, path = tempfile.mkstemp(prefix="settle-", suffix=".json")
+    os.close(fd)
+    if prior:
+        T.save_settlement_watch(prior, path)
+    else:
+        os.remove(path)
+    saved = A.MISMATCHES
+    A.MISMATCHES = path
+    try:
+        rep = A.Report()
+        A.check_settlement({"quotes": quotes, "meta": {}}, rep, sample)
+        return rep, T.load_settlement_watch(path)
+    finally:
+        A.MISMATCHES = saved
+        try:
+            os.remove(path)
+        except OSError:
+            pass
+
+
 print("\nsettlement: the stored result must be the venue's")
 _saved_k = S.resolve_kalshi
 try:
     S.resolve_kalshi = lambda mid: "a"
-    ok(not run(A.check_settlement, [bet(i) for i in range(5)], 5).errors, "results that match the venue pass")
+    r, watched = settlement([bet(i) for i in range(5)], 5)
+    ok(not r.errors, "results that match the venue pass")
+    ok(not watched, "a match is not remembered")
     S.resolve_kalshi = lambda mid: "b"
-    ok(errs(run(A.check_settlement, [bet(i) for i in range(5)], 5), "settlement"),
-       "a stored win the venue calls a loss is caught")
+    r, watched = settlement([bet(i) for i in range(5)], 5)
+    ok(errs(r, "settlement"), "a stored win the venue calls a loss is caught")
+    ok(len(watched) == 5, "each disagreed market is remembered")
     S.resolve_kalshi = lambda mid: None
-    r = run(A.check_settlement, [bet(i) for i in range(5)], 5)
+    r, watched = settlement([bet(i) for i in range(5)], 5)
     ok(not r.errors and r.warnings, "a market that no longer answers is a warning, not a false alarm")
+    ok(not watched, "a venue that never answered is not a mismatch to remember")
 finally:
     S.resolve_kalshi = _saved_k
+
+print("\nsettlement: a remembered mismatch keeps failing until the ledger matches")
+_prior = [{"venue": "kalshi", "market_id": "stuck", "stored": "a", "venue_result": "b",
+           "quote_id": "src:stuck"}]
+_stuck = bet(0, market_id="stuck", id="src:stuck")
+_others = [bet(i) for i in range(1, 30)]
+try:
+    S.resolve_kalshi = lambda mid: "b" if mid == "stuck" else "a"
+    r, watched = settlement([_stuck] + _others, 0, prior=_prior)
+    ok(errs(r, "settlement"), "a remembered mismatch fails even when the sample is empty")
+    ok(any(w.get("market_id") == "stuck" for w in watched),
+       "it stays remembered while the venue still disagrees")
+
+    S.resolve_kalshi = lambda mid: None
+    r, watched = settlement([_stuck] + _others, 0, prior=_prior)
+    ok(errs(r, "settlement"), "a remembered mismatch is not cleared when the venue does not answer")
+    ok(any(w.get("market_id") == "stuck" for w in watched),
+       "silence leaves the market on the watch list")
+
+    _fixed = bet(0, market_id="stuck", id="src:stuck", won=False)
+    _self = dict(id="self:stuck", source="polymarket_us", sport="mlb", market_id="stuck",
+                 venue="kalshi", bet=False, status="graded", result="a", pnl=0.0)
+    S.resolve_kalshi = lambda mid: "b" if mid == "stuck" else "a"
+    r, watched = settlement([_fixed, _self] + _others, 0, prior=_prior)
+    ok(errs(r, "settlement"), "a self-quote still storing the old side keeps the mismatch open")
+    ok(any(w.get("market_id") == "stuck" for w in watched),
+       "and the market stays remembered until that quote is corrected too")
+
+    _self["result"] = "b"
+    r, watched = settlement([_fixed, _self] + _others, 0, prior=_prior)
+    ok(not errs(r, "settlement"), "once the ledger matches the venue, the remembered mismatch passes")
+    ok(not any(w.get("market_id") == "stuck" for w in watched),
+       "and the market is dropped from the watch list")
+finally:
+    S.resolve_kalshi = _saved_k
+
+print("\nwatch list: a rewrite replaces the file instead of truncating it")
+_wd = tempfile.mkdtemp(prefix="watch-")
+_wp = os.path.join(_wd, "settlement_mismatches.json")
+T.save_settlement_watch(
+    [{"venue": "kalshi", "market_id": "m1", "stored": "a", "venue_result": "b"}], _wp)
+_on_disk = json.load(open(_wp))
+ok(_on_disk == {"markets": [{"market_id": "m1", "stored": "a", "venue": "kalshi",
+                             "venue_result": "b"}]},
+   "the watch list is stored as {markets: [...]} and nothing else")
+ok(not any(n.startswith(".settlement-watch-") for n in os.listdir(_wd)),
+   "the temp file is gone after a successful write")
+_before = open(_wp).read()
+_real_replace = os.replace
+
+
+def _replace_fails(src, dst):
+    raise OSError("replaced nothing")
+
+
+os.replace = _replace_fails
+try:
+    _raised = False
+    try:
+        T.save_settlement_watch(
+            [{"venue": "kalshi", "market_id": "m2", "stored": "b", "venue_result": "a"}], _wp)
+    except OSError:
+        _raised = True
+finally:
+    os.replace = _real_replace
+ok(_raised, "a failed replace does not report the watch list as saved")
+ok(open(_wp).read() == _before, "a failed replace leaves the previous watch list intact")
+ok(not any(n.startswith(".settlement-watch-") for n in os.listdir(_wd)),
+   "a failed replace removes its temp file")
 
 print("\ncopy: the public files stay free of the guarded phrases")
 _plain = "".join(chr(c) for c in (116, 104, 101, 32, 98, 111, 116))      # built, not written
