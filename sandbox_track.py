@@ -2311,9 +2311,9 @@ def main():
     evaluate_stages(d, st)
     save_stages(st)
     # Production: the machine-readable feed of Production leads, next to the Leads ledger.
-    # A failed rebuild used to log and return 0. The workflow then committed and
-    # published on a green run, serving the previous feed. Returning non-zero after
-    # the log makes that step fail, so nothing downstream commits or deploys.
+    # The ledger is already saved above. A failed rebuild returns non-zero so the
+    # workflow commits that data, skips the Pages deploy, and still fails the job.
+    # Returning 0 used to publish the previous feed on a green run.
     feed_failed = False
     try:
         import production

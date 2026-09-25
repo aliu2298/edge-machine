@@ -68,29 +68,88 @@ jobs:
       # Fetch every source, log new pre-match quotes, settle whatever has resolved.
       # A source going dark is an empty column inside the script (collect catches it)
       # and grading still runs. A crash, or a production feed that cannot be rebuilt,
-      # exits non-zero. This step must fail then: the commit and Pages deploy below
-      # would otherwise publish a broken or stale ledger on a green run.
+      # exits non-zero. The exit code is recorded and the step itself stays green:
+      # failing here would skip the commit, and the pre-match quotes cannot be
+      # recreated. The job still goes red in the final step.
       #
       # ODDS_API_KEY reads Pinnacle's lines through The Odds API. It is a repository
       # secret: GitHub masks it in logs, never passes it to workflows triggered from a
       # fork, and the adapter never prints the URL it travels in. Without it the Pinnacle
       # column reports itself down and every other source runs as before.
       - name: Collect predictions and settle results
+        id: track
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python3 sandbox_track.py
+        run: |
+          set +e
+          python3 sandbox_track.py
+          echo "track_rc=$?" >> "$GITHUB_OUTPUT"
 
       - name: Build the tracker page
-        run: python3 sandbox_build.py
+        id: build
+        run: |
+          set +e
+          python3 sandbox_build.py
+          echo "build_rc=$?" >> "$GITHUB_OUTPUT"
+
+      # pipeline_gate.decide is what the tests exercise. A valid ledger is committed
+      # even when the feed or the page build failed. public_site is committed, and
+      # Pages is deployed, only when both steps exited 0. A missing or invalid
+      # ledger is not committed at all.
+      - name: Decide what a failed run may publish
+        id: gate
+        env:
+          TRACK_RC: ${{ steps.track.outputs.track_rc }}
+          BUILD_RC: ${{ steps.build.outputs.build_rc }}
+        run: |
+          set -euo pipefail
+          LEDGER_OK=0
+          if python3 -c 'import json; json.load(open("data/sandbox_ledger.json"))'; then
+            LEDGER_OK=1
+          fi
+          export LEDGER_OK
+          python3 - << 'PY'
+          import os
+          from pipeline_gate import decide
+          commit_data, commit_site, deploy, fail = decide(
+              os.environ.get("TRACK_RC", ""),
+              os.environ.get("BUILD_RC", ""),
+              os.environ.get("LEDGER_OK") == "1",
+          )
+          with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+              fh.write("commit_data=%s\n" % ("true" if commit_data else "false"))
+              fh.write("commit_site=%s\n" % ("true" if commit_site else "false"))
+              fh.write("deploy=%s\n" % ("true" if deploy else "false"))
+              fh.write("fail=%s\n" % ("true" if fail else "false"))
+          PY
 
       - name: Commit and push if changed
+        if: steps.gate.outputs.commit_data == 'true'
+        env:
+          COMMIT_SITE: ${{ steps.gate.outputs.commit_site }}
         run: |
+          set -euo pipefail
+          # Guard the gate. Atomic writes should keep this file valid; a missing
+          # or truncated ledger is still not committed.
+          python3 -c 'import json; json.load(open("data/sandbox_ledger.json"))'
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/sandbox.html public_site/production.html data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
-
-          git add $PUBLISHED
+          # The same explicit paths as before. A failed feed or page build
+          # commits the data files only — not public_site, which may be half
+          # written or still describing the previous feed.
+          DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
+          SITE="public_site/sandbox.html public_site/production.html"
+          if [ "$COMMIT_SITE" = "true" ]; then
+            git add $DATA $SITE
+          else
+            # A failed build leaves public_site modified but unstaged. git pull
+            # --rebase refuses to start with that dirt, the close job has usually
+            # moved main, and all three push retries then die. The ledger this
+            # gate exists to save never lands. Put the pages back before add.
+            git checkout -- public_site/
+            git add $DATA
+          fi
           if git diff --cached --quiet; then
             echo "no changes — nothing to commit"
             exit 0
@@ -117,17 +176,55 @@ jobs:
             # commit being replayed). The pages are regenerated from this run's ledger, and a
             # hand-built copy pushed from a laptop mid-run made the rebase stop and the run lose
             # its promotions (2026-09-16 22:08).
-            git pull --rebase -X theirs origin main
+            # --autostash: anything still dirty outside the data list (public_site is already
+            # restored above) must not make this rebase refuse.
+            git pull --rebase --autostash -X theirs origin main
           done
           echo "::error::could not push the ledger after 3 attempts"
           exit 1
 
       # Publishes the whole site, so it carries the boards along with it. Safe because
       # the shared concurrency group means refresh-boards cannot be mid-flight, and the
-      # rebase above leaves this checkout at origin/main.
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      # rebase above leaves this checkout at origin/main. Skipped when the feed or the
+      # page build failed: the ledger commit above already kept the quotes.
+      - if: steps.gate.outputs.deploy == 'true'
+        uses: actions/configure-pages@v6
+      - if: steps.gate.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public_site
       - id: deployment
+        if: steps.gate.outputs.deploy == 'true'
         uses: actions/deploy-pages@v5
+
+      # The track and build steps stay green so the ledger can be committed. This
+      # step is what makes the job red, and what sends the mail.
+      - name: Fail the job if the tracker or the page build failed
+        if: always()
+        env:
+          TRACK_RC: ${{ steps.track.outputs.track_rc }}
+          BUILD_RC: ${{ steps.build.outputs.build_rc }}
+          GATE_FAIL: ${{ steps.gate.outputs.fail }}
+        run: |
+          set -euo pipefail
+          code=0
+          # Skipped when setup, the logic tests, or a cancel stopped the run.
+          # An empty code used to exit 0, so the job looked green.
+          if [ -z "${TRACK_RC}" ] || [ -z "${BUILD_RC}" ]; then
+            echo "::error::tracker step did not run"
+            code=1
+          fi
+          if [ -n "${TRACK_RC}" ] && [ "$TRACK_RC" != "0" ]; then
+            echo "::error::Collect predictions and settle results failed (sandbox_track.py exit ${TRACK_RC})"
+            code=1
+          fi
+          if [ -n "${BUILD_RC}" ] && [ "$BUILD_RC" != "0" ]; then
+            echo "::error::Build the tracker page failed (sandbox_build.py exit ${BUILD_RC})"
+            code=1
+          fi
+          # Reported even when a step already failed: a bad ledger is its own fault.
+          if [ "${GATE_FAIL}" = "true" ]; then
+            echo "::error::data/sandbox_ledger.json is missing or not valid JSON"
+            code=1
+          fi
+          exit "$code"

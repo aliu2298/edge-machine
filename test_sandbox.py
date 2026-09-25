@@ -4360,6 +4360,185 @@ ok("sandbox_build.py || echo" not in _tracker_wf and "sandbox_build.py || true" 
    "the tracker workflow does not mask sandbox_build.py with || echo or || true")
 
 
+print("\npipeline gate: a feed or build failure still commits the ledger")
+
+try:
+    import pipeline_gate as _GATE
+except ImportError:
+    _GATE = None
+ok(_GATE is not None and hasattr(_GATE, "decide"),
+   "pipeline_gate.decide chooses what a run commits and deploys")
+if _GATE is not None and hasattr(_GATE, "decide"):
+    eq(_GATE.decide(0, 1, True), (True, False, False, True),
+       "a page-build failure commits the data, skips the site and the deploy, and fails the job")
+    eq(_GATE.decide(1, 0, True), (True, False, False, True),
+       "a feed failure with a valid ledger does the same")
+    eq(_GATE.decide(0, 0, True), (True, True, True, False),
+       "a green run commits the data and the site, deploys, and does not fail")
+    eq(_GATE.decide(0, 0, False), (False, False, False, True),
+       "an invalid ledger is not committed, and the job fails")
+    eq(_GATE.decide(1, 1, False), (False, False, False, True),
+       "a crash before the ledger is saved commits nothing")
+
+ok('echo "track_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf
+   and 'echo "build_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf,
+   "the tracker and the page build record their exit codes")
+ok("set +e" in _tracker_wf and "continue-on-error" in _tracker_wf.split("sandbox_track.py")[0],
+   "the browser install may continue, and the tracker steps are not continue-on-error")
+ok(_tracker_wf.count("continue-on-error") == 1,
+   "only the browser install is continue-on-error")
+ok('json.load(open("data/sandbox_ledger.json"))' in _tracker_wf,
+   "a missing or invalid ledger is checked before anything is committed")
+ok("from pipeline_gate import decide" in _tracker_wf,
+   "the workflow uses the tested gate")
+ok("steps.gate.outputs.commit_data == 'true'" in _tracker_wf,
+   "the commit step runs only when the gate will commit the ledger")
+ok(_tracker_wf.count("steps.gate.outputs.deploy == 'true'") >= 3,
+   "configure-pages, upload, and deploy run only when the gate allows a deploy")
+ok("if: always()" in _tracker_wf
+   and "Collect predictions and settle results failed" in _tracker_wf
+   and "Build the tracker page failed" in _tracker_wf,
+   "a final step fails the job and names which step failed")
+ok("git add -A" not in _tracker_wf and "\ngit add ." not in _tracker_wf and "git add .\n" not in _tracker_wf,
+   "the commit lists paths explicitly")
+ok('DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"' in _tracker_wf
+   and 'SITE="public_site/sandbox.html public_site/production.html"' in _tracker_wf
+   and "git add $DATA\n" in _tracker_wf and "git add $DATA $SITE" in _tracker_wf,
+   "a failed run commits the data files and not public_site")
+ok("could not push the ledger after 3 attempts" in _tracker_wf and "exit 1" in _tracker_wf,
+   "the push retry still ends in exit 1")
+
+_commit_step = _tracker_wf.split("- name: Commit and push if changed", 1)[-1].split("\n      - ", 1)[0]
+_else = _commit_step.split("\n          else\n", 1)[-1].split("\n          fi\n", 1)[0]
+ok("git checkout -- public_site/" in _else
+   and _else.find("git checkout -- public_site/") < _else.find("git add"),
+   "the failure path restores public_site before git add")
+ok("git pull --rebase --autostash -X theirs origin main" in _commit_step
+   and _commit_step.find("git checkout -- public_site/") < _commit_step.find("git pull --rebase"),
+   "public_site is restored before the rebase, and the rebase autostashes anything else left dirty")
+
+_fail_step = _tracker_wf.split("- name: Fail the job if the tracker or the page build failed", 1)[-1]
+ok("::error::tracker step did not run" in _fail_step,
+   "a skipped tracker step is an error, not a green job")
+
+
+def _step_script(wf, name):
+    step = wf.split("- name: " + name, 1)[-1]
+    nxt = step.find("\n      - ")
+    if nxt != -1:
+        step = step[:nxt]
+    run_at = step.find("run: |\n")
+    if run_at < 0:
+        return ""
+    lines = []
+    for line in step[run_at + len("run: |\n"):].splitlines():
+        if line.startswith("          "):
+            lines.append(line[10:])
+        elif line.strip() == "":
+            lines.append("")
+        else:
+            break
+    return "\n".join(lines) + "\n"
+
+
+def _bash(script, env, cwd=None):
+    import subprocess as _sub
+    e = _os.environ.copy()
+    e.update(env)
+    return _sub.run(["bash", "-c", script], cwd=cwd, env=e, capture_output=True, text=True)
+
+
+_fail_script = _step_script(_tracker_wf, "Fail the job if the tracker or the page build failed")
+ok('[ "$code" -eq 0 ] &&' not in _fail_script,
+   "an invalid ledger is reported even when a step already failed")
+_skipped = _bash(_fail_script, {"TRACK_RC": "", "BUILD_RC": "", "GATE_FAIL": ""})
+eq(_skipped.returncode, 1, "empty track and build codes fail the job")
+ok("::error::tracker step did not run" in _skipped.stdout,
+   "and the error says the tracker step did not run")
+_both = _bash(_fail_script, {"TRACK_RC": "1", "BUILD_RC": "0", "GATE_FAIL": "true"})
+eq(_both.returncode, 1, "a feed failure with a bad ledger still fails")
+ok("Collect predictions and settle results failed" in _both.stdout
+   and "data/sandbox_ledger.json is missing or not valid JSON" in _both.stdout,
+   "the feed failure and the invalid ledger are both named")
+_green = _bash(_fail_script, {"TRACK_RC": "0", "BUILD_RC": "0", "GATE_FAIL": "false"})
+eq(_green.returncode, 0, "a green run with a valid ledger does not fail here")
+ok("::error::" not in _green.stdout, "and it prints no error")
+
+# The commit step, against a temp repo: public_site is half-written, another
+# tracked file is dirty, and origin/main has moved. The ledger must still land.
+_push_script = _step_script(_tracker_wf, "Commit and push if changed")
+_repo = _tf.mkdtemp(prefix="ledger-push-")
+_origin = _os.path.join(_repo, "origin.git")
+_local = _os.path.join(_repo, "local")
+_ahead = _os.path.join(_repo, "ahead")
+_git_env = {
+    "GIT_AUTHOR_NAME": "T", "GIT_AUTHOR_EMAIL": "t@example.com",
+    "GIT_COMMITTER_NAME": "T", "GIT_COMMITTER_EMAIL": "t@example.com",
+}
+
+
+def _git(cwd, *args, env=None):
+    import subprocess as _sub
+    e = _os.environ.copy()
+    e.update(_git_env)
+    if env:
+        e.update(env)
+    return _sub.run(["git", "-C", cwd, *args], env=e, capture_output=True, text=True)
+
+
+def _write(path, text):
+    _os.makedirs(_os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as fh:
+        fh.write(text)
+
+
+_git(_repo, "init", "--bare", "-b", "main", _origin)
+_git(_repo, "init", "-b", "main", _local)
+_git(_local, "config", "user.email", "t@example.com")
+_git(_local, "config", "user.name", "T")
+_git(_local, "config", "commit.gpgsign", "false")
+_page = "updated 2026-09-25 12:00 UTC\n"
+_write(_os.path.join(_local, "data", "sandbox_ledger.json"), '{"quotes": []}\n')
+_write(_os.path.join(_local, "data", "stages.json"), "{}\n")
+_write(_os.path.join(_local, "data", "production_leads.json"), "{}\n")
+_write(_os.path.join(_local, "data", "sandbox_archive", "2026-09.json"), "[]\n")
+_write(_os.path.join(_local, "data", "espn_history", "keep.json"), "{}\n")
+_write(_os.path.join(_local, "public_site", "sandbox.html"), _page)
+_write(_os.path.join(_local, "public_site", "production.html"), _page)
+_write(_os.path.join(_local, "extra.txt"), "clean\n")
+_git(_local, "add", "-A")
+_git(_local, "commit", "-m", "base")
+_git(_local, "remote", "add", "origin", _origin)
+_git(_local, "push", "-u", "origin", "main")
+_git(_repo, "clone", _origin, _ahead)
+_git(_ahead, "config", "user.email", "t@example.com")
+_git(_ahead, "config", "user.name", "T")
+_git(_ahead, "config", "commit.gpgsign", "false")
+_write(_os.path.join(_ahead, "data", "sandbox_closes", "mac.json"), '{"from": "close"}\n')
+_git(_ahead, "add", "-A")
+_git(_ahead, "commit", "-m", "close job")
+_git(_ahead, "push", "origin", "main")
+_write(_os.path.join(_local, "data", "sandbox_ledger.json"), '{"quotes": [{"id": "saved"}]}\n')
+_write(_os.path.join(_local, "public_site", "sandbox.html"), "HALF-WRITTEN\n")
+_write(_os.path.join(_local, "extra.txt"), "dirty\n")
+_write(_os.path.join(_local, "scratch.txt"), "untracked\n")
+_pushed = _bash(_push_script, {"COMMIT_SITE": "false", **_git_env}, cwd=_local)
+ok(_pushed.returncode == 0,
+   "a half-written public_site and a moved main still publish the ledger"
+   + ("" if _pushed.returncode == 0 else "\n" + _pushed.stdout + _pushed.stderr))
+if _pushed.returncode == 0:
+    _led = _git(_origin, "show", "main:data/sandbox_ledger.json").stdout
+    ok('"saved"' in _led, "the remote ledger is the one this run saved")
+    _site = _git(_origin, "show", "main:public_site/sandbox.html").stdout
+    eq(_site, _page, "the half-written page was not pushed")
+    _close = _git(_origin, "show", "main:data/sandbox_closes/mac.json").stdout
+    ok('"close"' in _close, "the close job's commit is still on main")
+    _extra = _git(_origin, "show", "main:extra.txt").stdout
+    eq(_extra, "clean\n", "a dirty file outside the data list was not committed")
+    eq(open(_os.path.join(_local, "public_site", "sandbox.html")).read(), _page,
+       "the worktree page is restored, so it cannot block a later rebase")
+
+
 print("\nledger save is atomic")
 
 _ldir = _os.path.join(_tf.mkdtemp(prefix="ledger-"), "")
@@ -4544,10 +4723,125 @@ if PF is not None and hasattr(PF, "recheck_exit"):
 ok("sandbox-tracker.yml" in _watch_wf,
    "the watchdog checks that sandbox-tracker.yml succeeded recently")
 _after_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[-1]
-ok("recheck_main" in _after_deploy,
-   "after the takeover deploy the pages are checked again")
-ok("steps.check.outputs.run != 'true'" in _watch_wf and _watch_wf.count("recheck_main") >= 2,
+_before_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[0]
+ok("recheck_after_deploy" in _after_deploy,
+   "after the takeover deploy the pages are rechecked through the CDN window")
+ok("recheck_after_deploy" not in _before_deploy,
+   "the long refetch waits only after a deploy")
+ok("steps.check.outputs.run != 'true'" in _watch_wf and "recheck_main" in _before_deploy,
    "when takeover does not run, a stale page still fails the job")
+
+
+print("\nwatchdog: CDN retry, and 5h takes over while 7h fails")
+
+eq(getattr(PF, "TAKEOVER_AFTER_HOURS", None), 5, "takeover stays at 5 hours")
+eq(getattr(PF, "FAIL_AFTER_HOURS", None), 7, "a failure waits until 7 hours")
+ok(PF is not None and 60 <= getattr(PF, "RETRY_INTERVAL_SECONDS", 0) <= 90,
+   "a post-deploy refetch waits 60–90 seconds")
+ok(PF is not None and 9 * 60 <= getattr(PF, "RETRY_WINDOW_SECONDS", 0) <= 11 * 60,
+   "a post-deploy refetch covers about 10 minutes")
+_stamp5 = "2026-09-25 12:00 UTC"
+_page5 = f"updated {_stamp5}"
+_at = lambda h, m=0: datetime(2026, 9, 25, h, m, tzinfo=timezone.utc)
+if PF is not None and hasattr(PF, "TAKEOVER_AFTER_HOURS"):
+    ok(PF.freshness(_page5, _at(17, 0), "sandbox.html", PF.TAKEOVER_AFTER_HOURS)[0],
+       "exactly 5h is still inside the takeover window")
+    ok(not PF.freshness(_page5, _at(17, 1), "sandbox.html", PF.TAKEOVER_AFTER_HOURS)[0],
+       "one minute past 5h is stale enough to take over")
+    ok(PF.freshness(_page5, _at(19, 0), "production.html", PF.FAIL_AFTER_HOURS)[0],
+       "exactly 7h does not fail the job")
+    _past7, _past7_msg = PF.freshness(
+        _page5, _at(19, 1), "production.html", PF.FAIL_AFTER_HOURS)
+    ok(not _past7 and "production.html" in _past7_msg and "old" in _past7_msg,
+       "one minute past 7h fails the job and names the page and its age")
+    ok(not PF.freshness(_page5, _at(18, 0), "sandbox.html", PF.TAKEOVER_AFTER_HOURS)[0],
+       "a 6h gap is past the takeover window")
+    ok(PF.freshness(_page5, _at(18, 0), "sandbox.html", PF.FAIL_AFTER_HOURS)[0],
+       "a 6h gap, the delayed tracker schedule, does not fail the job")
+
+ok(PF is not None and hasattr(PF, "recheck_until_fresh"),
+   "the post-deploy recheck refetches instead of trusting the first response")
+if PF is not None and hasattr(PF, "recheck_until_fresh"):
+    class _Clock:
+        def __init__(self, start):
+            self.t = start
+            self.slept = []
+        def __call__(self):
+            return self.t
+        def sleep(self, seconds):
+            self.slept.append(seconds)
+            self.t += seconds
+
+    _urls = []
+
+    def _open_then_fresh(url, timeout=30):
+        _urls.append(url)
+        if len(_urls) <= 2:
+            return _Body("updated 2026-09-25 10:00 UTC")
+        return _Body("updated 2026-09-25 16:30 UTC")
+
+    _clock = _Clock(1_700_000_000)
+    _code, _detail = PF.recheck_until_fresh(
+        "https://example.test/edge-machine", stale_hours=PF.FAIL_AFTER_HOURS,
+        now=_now, opener=_open_then_fresh, sleep=_clock.sleep, clock=_clock)
+    eq(_code, 0, "stale on the first fetch and fresh on the second passes")
+    eq(_clock.slept, [PF.RETRY_INTERVAL_SECONDS],
+       "it waits one interval and then passes without fetching again")
+    ok(len(_urls) == 4 and all("?t=" in u for u in _urls),
+       "every refetch carries a cache-busting ?t= query")
+    ok(all(u.endswith("?t=1700000000") for u in _urls[:2]),
+       "the first fetch is busted with the clock at the start")
+    ok(all(u.endswith(f"?t={1700000000 + PF.RETRY_INTERVAL_SECONDS}") for u in _urls[2:]),
+       "the second fetch is busted with the clock after the wait")
+
+    _urls = []
+
+    def _open_always_stale(url, timeout=30):
+        _urls.append(url)
+        return _Body("updated 2026-09-25 10:00 UTC")
+
+    _clock = _Clock(1_700_000_000)
+    _code, _detail = PF.recheck_until_fresh(
+        "https://example.test/edge-machine", stale_hours=PF.FAIL_AFTER_HOURS,
+        now=_now, opener=_open_always_stale, sleep=_clock.sleep, clock=_clock)
+    eq(_code, 1, "a page that stays stale for the whole window fails")
+    ok("sandbox.html" in _detail and "production.html" in _detail and "old" in _detail,
+       "that failure names each page and its age")
+    ok(len(_urls) > 4 and all("?t=" in u for u in _urls),
+       "it keeps busting the cache until the window runs out")
+    import io
+    from contextlib import redirect_stderr
+    _err = io.StringIO()
+    _clock = _Clock(1_700_000_000)
+    with redirect_stderr(_err):
+        _code = PF.recheck_after_deploy(
+            sleep=_clock.sleep, clock=_clock, opener=_open_always_stale,
+            now=_now, base_url="https://example.test/edge-machine")
+    eq(_code, 1, "the deploy recheck returns 1 when the pages never go fresh")
+    ok("::error::" in _err.getvalue() and "sandbox.html" in _err.getvalue(),
+       "only the final stale result is an ::error::, and it names the page")
+    _err = io.StringIO()
+    _urls = []
+    _clock = _Clock(1_700_000_000)
+    with redirect_stderr(_err):
+        _code = PF.recheck_after_deploy(
+            sleep=_clock.sleep, clock=_clock, opener=_open_then_fresh,
+            now=_now, base_url="https://example.test/edge-machine")
+    eq(_code, 0, "the deploy recheck passes as soon as both pages are fresh")
+    ok("::error::" not in _err.getvalue(),
+       "a page that turns fresh is not reported as an error")
+
+ok('FAIL_AFTER_HOURS: 7' in _watch_wf, "the workflow fails the job at 7 hours")
+ok('STALE_AFTER_HOURS: 5' in _watch_wf, "the workflow still takes over at 5 hours")
+ok('[ "$TAGE" -gt "${FAIL_AFTER_HOURS}" ]' in _watch_wf,
+   "the tracker success check fails the job at 7 hours, not at 5")
+ok('[ "$AGE" -gt "${STALE_AFTER_HOURS}" ]' in _watch_wf,
+   "the primary success check still takes over at 5 hours")
+ok("|| true" not in _watch_wf, "a failed gh api call is not discarded")
+ok("GitHub API failed reading refresh-boards.yml run history" in _watch_wf,
+   "a failed primary run-history call is named")
+ok("GitHub API failed reading sandbox-tracker.yml run history" in _watch_wf,
+   "a failed tracker run-history call is named")
 
 
 print("\natomic writes: temp files are ignored, and the feed and stages survive a mid-write crash")
