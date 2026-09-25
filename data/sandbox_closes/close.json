@@ -175,11 +175,6 @@
    "lead_min": 40.8,
    "price": 0.98
   },
-  "covers:4363835": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 15.0,
-   "price": 0.56
-  },
   "covers:KXNFLGAME-26SEP20JACDEN": {
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 20.6,
@@ -280,6 +275,11 @@
    "lead_min": 10.1,
    "price": 0.54
   },
+  "covers:aec-mlb-sd-lad-2026-09-24": {
+   "at": "2026-09-25T01:53:08+00:00",
+   "lead_min": 16.9,
+   "price": 0.615
+  },
   "covers:aec-mlb-sf-stl-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 34.7,
@@ -344,11 +344,6 @@
    "at": "2026-09-20T19:44:21+00:00",
    "lead_min": 40.6,
    "price": 0.105
-  },
-  "espn_fpi:4363833": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 13.0,
-   "price": 0.51
   },
   "espn_fpi:4405230": {
    "at": "2026-09-15T23:10:15+00:00",
@@ -490,6 +485,11 @@
    "lead_min": 51.8,
    "price": 0.535
   },
+  "espn_fpi:aec-mlb-sd-lad-2026-09-24": {
+   "at": "2026-09-25T01:53:08+00:00",
+   "lead_min": 16.9,
+   "price": 0.615
+  },
   "espn_fpi:aec-mlb-sea-col-2026-09-19": {
    "at": "2026-09-20T00:07:56+00:00",
    "lead_min": 2.1,
@@ -630,15 +630,30 @@
    "lead_min": 56.0,
    "price": 0.54
   },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP24ANASJ-SJ2": {
+   "at": "2026-09-25T01:53:08+00:00",
+   "lead_min": 6.9,
+   "price": 0.5
+  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP24CHISTL-STL2": {
    "at": "2026-09-24T23:25:57+00:00",
    "lead_min": 34.0,
    "price": 0.7
   },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP24UTAVGK-VGK2": {
+   "at": "2026-09-25T01:53:08+00:00",
+   "lead_min": 6.9,
+   "price": 0.56
+  },
   "nhl_rest_edge:KXNHLGAME-26SEP22PHIBOS": {
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 56.0,
    "price": 0.7
+  },
+  "nhl_rest_edge:KXNHLGAME-26SEP24ANASJ": {
+   "at": "2026-09-25T01:53:08+00:00",
+   "lead_min": 6.9,
+   "price": 0.71
   },
   "nws:KXHIGHDEN-26SEP23-B78.5": {
    "at": "2026-09-24T06:08:44+00:00",
@@ -900,11 +915,6 @@
    "lead_min": 10.1,
    "price": 0.585
   },
-  "scores24:aec-mlb-mia-az-2026-09-14": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 15.0,
-   "price": 0.445
-  },
   "scores24:aec-mlb-mia-az-2026-09-15": {
    "at": "2026-09-16T01:25:33+00:00",
    "lead_min": 14.4,
@@ -919,11 +929,6 @@
    "at": "2026-09-17T23:04:51+00:00",
    "lead_min": 10.1,
    "price": 0.54
-  },
-  "scores24:aec-mlb-sea-laa-2026-09-14": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 13.0,
-   "price": 0.505
   },
   "scores24:aec-mlb-sea-laa-2026-09-15": {
    "at": "2026-09-16T01:25:33+00:00",
@@ -1385,20 +1390,10 @@
    "lead_min": 19.2,
    "price": 0.88
   },
-  "tennis_fav_band:aec-itfme-zihgao-ivador-2026-09-15": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 35.0,
-   "price": 0.76
-  },
   "tennis_fav_band:aec-itfwo-analiz-katkuz-2026-09-17": {
    "at": "2026-09-17T06:40:29+00:00",
    "lead_min": 19.5,
    "price": 0.76
-  },
-  "tennis_fav_band:aec-itfwo-arusag-asyary-2026-09-15": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 35.0,
-   "price": 0.78
   },
   "tennis_fav_band:aec-itfwo-chitsa-miynak-2026-09-22": {
    "at": "2026-09-22T00:03:47+00:00",
@@ -1470,11 +1465,6 @@
    "lead_min": 52.1,
    "price": 0.6
   },
-  "tennis_fav_band:aec-itfwo-mutuem-miynak-2026-09-15": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 35.0,
-   "price": 0.78
-  },
   "tennis_fav_band:aec-itfwo-naghan-mankaw-2026-09-22": {
    "at": "2026-09-22T00:03:47+00:00",
    "lead_min": 56.2,
@@ -1545,16 +1535,6 @@
    "lead_min": 1.3,
    "price": 0.77
   },
-  "tt_band_55_60:aec-setkameua-derdmy-hnorom-2026-09-15": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 0.0,
-   "price": 0.53
-  },
-  "tt_band_55_60:aec-setkameua-hreiur-konrom-2026-09-15": {
-   "at": "2026-09-15T01:24:59+00:00",
-   "lead_min": 50.0,
-   "price": 0.56
-  },
   "tt_band_55_60:aec-setkameua-panvol-rubedu-2026-09-15": {
    "at": "2026-09-15T23:10:15+00:00",
    "lead_min": 44.7,
@@ -1581,5 +1561,5 @@
    "price": 0.61
   }
  },
- "updated": "2026-09-24T23:25:57+00:00"
+ "updated": "2026-09-25T01:53:08+00:00"
 }
