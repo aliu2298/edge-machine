@@ -4290,6 +4290,55 @@ ok("sandbox_build.py || echo" not in _tracker_wf and "sandbox_build.py || true" 
    "the tracker workflow does not mask sandbox_build.py with || echo or || true")
 
 
+print("\npipeline gate: a feed or build failure still commits the ledger")
+
+try:
+    import pipeline_gate as _GATE
+except ImportError:
+    _GATE = None
+ok(_GATE is not None and hasattr(_GATE, "decide"),
+   "pipeline_gate.decide chooses what a run commits and deploys")
+if _GATE is not None and hasattr(_GATE, "decide"):
+    eq(_GATE.decide(0, 1, True), (True, False, False, True),
+       "a page-build failure commits the data, skips the site and the deploy, and fails the job")
+    eq(_GATE.decide(1, 0, True), (True, False, False, True),
+       "a feed failure with a valid ledger does the same")
+    eq(_GATE.decide(0, 0, True), (True, True, True, False),
+       "a green run commits the data and the site, deploys, and does not fail")
+    eq(_GATE.decide(0, 0, False), (False, False, False, True),
+       "an invalid ledger is not committed, and the job fails")
+    eq(_GATE.decide(1, 1, False), (False, False, False, True),
+       "a crash before the ledger is saved commits nothing")
+
+ok('echo "track_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf
+   and 'echo "build_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf,
+   "the tracker and the page build record their exit codes")
+ok("set +e" in _tracker_wf and "continue-on-error" in _tracker_wf.split("sandbox_track.py")[0],
+   "the browser install may continue, and the tracker steps are not continue-on-error")
+ok(_tracker_wf.count("continue-on-error") == 1,
+   "only the browser install is continue-on-error")
+ok('json.load(open("data/sandbox_ledger.json"))' in _tracker_wf,
+   "a missing or invalid ledger is checked before anything is committed")
+ok("from pipeline_gate import decide" in _tracker_wf,
+   "the workflow uses the tested gate")
+ok("steps.gate.outputs.commit_data == 'true'" in _tracker_wf,
+   "the commit step runs only when the gate will commit the ledger")
+ok(_tracker_wf.count("steps.gate.outputs.deploy == 'true'") >= 3,
+   "configure-pages, upload, and deploy run only when the gate allows a deploy")
+ok("if: always()" in _tracker_wf
+   and "Collect predictions and settle results failed" in _tracker_wf
+   and "Build the tracker page failed" in _tracker_wf,
+   "a final step fails the job and names which step failed")
+ok("git add -A" not in _tracker_wf and "\ngit add ." not in _tracker_wf and "git add .\n" not in _tracker_wf,
+   "the commit lists paths explicitly")
+ok('DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"' in _tracker_wf
+   and 'SITE="public_site/sandbox.html public_site/production.html"' in _tracker_wf
+   and "git add $DATA\n" in _tracker_wf and "git add $DATA $SITE" in _tracker_wf,
+   "a failed run commits the data files and leaves public_site unstaged")
+ok("could not push the ledger after 3 attempts" in _tracker_wf and "exit 1" in _tracker_wf,
+   "the push retry still ends in exit 1")
+
+
 print("\nledger save is atomic")
 
 _ldir = _os.path.join(_tf.mkdtemp(prefix="ledger-"), "")
