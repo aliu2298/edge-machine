@@ -825,6 +825,11 @@
    "lead_min": 12.9,
    "price": 0.64
   },
+  "covers:aec-mlb-laa-sea-2026-09-24": {
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 49.2,
+   "price": 0.64
+  },
   "covers:aec-mlb-mia-az-2026-09-15": {
    "at": "2026-09-16T01:36:21+00:00",
    "lead_min": 3.6,
@@ -1069,6 +1074,11 @@
    "at": "2026-09-20T23:14:13+00:00",
    "lead_min": 5.8,
    "price": 0.35
+  },
+  "espn_fpi:KXMLBGAME-26SEP242140LAASEA": {
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 49.2,
+   "price": 0.64
   },
   "espn_fpi:aec-mlb-ath-cle-2026-09-20": {
    "at": "2026-09-20T17:27:49+00:00",
@@ -1835,14 +1845,19 @@
    "lead_min": 10.5,
    "price": 0.54
   },
+  "nhl_dog_pl:KXNHLSPREAD-26SEP24CGYSEA-SEA2": {
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 49.2,
+   "price": 0.5
+  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP24CHISTL-STL2": {
    "at": "2026-09-24T23:50:08+00:00",
    "lead_min": 9.9,
    "price": 0.71
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP24EDMVAN-VAN2": {
-   "at": "2026-09-25T00:35:37+00:00",
-   "lead_min": 24.4,
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 9.2,
    "price": 0.51
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP24FLATB-TB2": {
@@ -2041,9 +2056,9 @@
    "price": 0.56
   },
   "oddspedia:KXT20MATCH-26SEP242000OMAHKG": {
-   "at": "2026-09-25T00:35:37+00:00",
-   "lead_min": 24.4,
-   "price": 0.58
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 9.2,
+   "price": 0.68
   },
   "oddspedia:aec-cplcr-aabf-gaw-2026-09-18": {
    "at": "2026-09-17T23:48:48+00:00",
@@ -2316,9 +2331,9 @@
    "price": 0.5824
   },
   "pm_combo2:pmcombo2:2026-09-25:04efd5334c": {
-   "at": "2026-09-25T00:35:37+00:00",
-   "lead_min": 24.4,
-   "price": 0.6212
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 9.2,
+   "price": 0.5808
   },
   "pm_combo3:pmcombo3:2026-09-24:3eaa6451de": {
    "at": "2026-09-24T18:01:17+00:00",
@@ -2336,9 +2351,9 @@
    "price": 0.4734
   },
   "pm_combo3:pmcombo3:2026-09-25:e02e899691": {
-   "at": "2026-09-25T00:35:37+00:00",
-   "lead_min": 24.4,
-   "price": 0.4793
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 9.2,
+   "price": 0.4482
   },
   "pm_combo4:pmcombo4:2026-09-24:39de4c569c": {
    "at": "2026-09-24T06:23:16+00:00",
@@ -5511,8 +5526,8 @@
    "price": 0.76
   },
   "tennis_fav_band:aec-itfwo-tiaden-micoze-2026-09-25": {
-   "at": "2026-09-25T00:35:37+00:00",
-   "lead_min": 24.4,
+   "at": "2026-09-25T00:50:47+00:00",
+   "lead_min": 9.2,
    "price": 0.8
   },
   "tennis_fav_band:aec-itfwo-tiaden-sernis-2026-09-22": {
@@ -5976,5 +5991,5 @@
    "price": 0.76
   }
  },
- "updated": "2026-09-25T00:35:37+00:00"
+ "updated": "2026-09-25T00:50:47+00:00"
 }
