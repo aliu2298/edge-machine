@@ -4474,10 +4474,125 @@ if PF is not None and hasattr(PF, "recheck_exit"):
 ok("sandbox-tracker.yml" in _watch_wf,
    "the watchdog checks that sandbox-tracker.yml succeeded recently")
 _after_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[-1]
-ok("recheck_main" in _after_deploy,
-   "after the takeover deploy the pages are checked again")
-ok("steps.check.outputs.run != 'true'" in _watch_wf and _watch_wf.count("recheck_main") >= 2,
+_before_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[0]
+ok("recheck_after_deploy" in _after_deploy,
+   "after the takeover deploy the pages are rechecked through the CDN window")
+ok("recheck_after_deploy" not in _before_deploy,
+   "the long refetch waits only after a deploy")
+ok("steps.check.outputs.run != 'true'" in _watch_wf and "recheck_main" in _before_deploy,
    "when takeover does not run, a stale page still fails the job")
+
+
+print("\nwatchdog: CDN retry, and 5h takes over while 7h fails")
+
+eq(getattr(PF, "TAKEOVER_AFTER_HOURS", None), 5, "takeover stays at 5 hours")
+eq(getattr(PF, "FAIL_AFTER_HOURS", None), 7, "a failure waits until 7 hours")
+ok(PF is not None and 60 <= getattr(PF, "RETRY_INTERVAL_SECONDS", 0) <= 90,
+   "a post-deploy refetch waits 60–90 seconds")
+ok(PF is not None and 9 * 60 <= getattr(PF, "RETRY_WINDOW_SECONDS", 0) <= 11 * 60,
+   "a post-deploy refetch covers about 10 minutes")
+_stamp5 = "2026-09-25 12:00 UTC"
+_page5 = f"updated {_stamp5}"
+_at = lambda h, m=0: datetime(2026, 9, 25, h, m, tzinfo=timezone.utc)
+if PF is not None and hasattr(PF, "TAKEOVER_AFTER_HOURS"):
+    ok(PF.freshness(_page5, _at(17, 0), "sandbox.html", PF.TAKEOVER_AFTER_HOURS)[0],
+       "exactly 5h is still inside the takeover window")
+    ok(not PF.freshness(_page5, _at(17, 1), "sandbox.html", PF.TAKEOVER_AFTER_HOURS)[0],
+       "one minute past 5h is stale enough to take over")
+    ok(PF.freshness(_page5, _at(19, 0), "production.html", PF.FAIL_AFTER_HOURS)[0],
+       "exactly 7h does not fail the job")
+    _past7, _past7_msg = PF.freshness(
+        _page5, _at(19, 1), "production.html", PF.FAIL_AFTER_HOURS)
+    ok(not _past7 and "production.html" in _past7_msg and "old" in _past7_msg,
+       "one minute past 7h fails the job and names the page and its age")
+    ok(not PF.freshness(_page5, _at(18, 0), "sandbox.html", PF.TAKEOVER_AFTER_HOURS)[0],
+       "a 6h gap is past the takeover window")
+    ok(PF.freshness(_page5, _at(18, 0), "sandbox.html", PF.FAIL_AFTER_HOURS)[0],
+       "a 6h gap, the delayed tracker schedule, does not fail the job")
+
+ok(PF is not None and hasattr(PF, "recheck_until_fresh"),
+   "the post-deploy recheck refetches instead of trusting the first response")
+if PF is not None and hasattr(PF, "recheck_until_fresh"):
+    class _Clock:
+        def __init__(self, start):
+            self.t = start
+            self.slept = []
+        def __call__(self):
+            return self.t
+        def sleep(self, seconds):
+            self.slept.append(seconds)
+            self.t += seconds
+
+    _urls = []
+
+    def _open_then_fresh(url, timeout=30):
+        _urls.append(url)
+        if len(_urls) <= 2:
+            return _Body("updated 2026-09-25 10:00 UTC")
+        return _Body("updated 2026-09-25 16:30 UTC")
+
+    _clock = _Clock(1_700_000_000)
+    _code, _detail = PF.recheck_until_fresh(
+        "https://example.test/edge-machine", stale_hours=PF.FAIL_AFTER_HOURS,
+        now=_now, opener=_open_then_fresh, sleep=_clock.sleep, clock=_clock)
+    eq(_code, 0, "stale on the first fetch and fresh on the second passes")
+    eq(_clock.slept, [PF.RETRY_INTERVAL_SECONDS],
+       "it waits one interval and then passes without fetching again")
+    ok(len(_urls) == 4 and all("?t=" in u for u in _urls),
+       "every refetch carries a cache-busting ?t= query")
+    ok(all(u.endswith("?t=1700000000") for u in _urls[:2]),
+       "the first fetch is busted with the clock at the start")
+    ok(all(u.endswith(f"?t={1700000000 + PF.RETRY_INTERVAL_SECONDS}") for u in _urls[2:]),
+       "the second fetch is busted with the clock after the wait")
+
+    _urls = []
+
+    def _open_always_stale(url, timeout=30):
+        _urls.append(url)
+        return _Body("updated 2026-09-25 10:00 UTC")
+
+    _clock = _Clock(1_700_000_000)
+    _code, _detail = PF.recheck_until_fresh(
+        "https://example.test/edge-machine", stale_hours=PF.FAIL_AFTER_HOURS,
+        now=_now, opener=_open_always_stale, sleep=_clock.sleep, clock=_clock)
+    eq(_code, 1, "a page that stays stale for the whole window fails")
+    ok("sandbox.html" in _detail and "production.html" in _detail and "old" in _detail,
+       "that failure names each page and its age")
+    ok(len(_urls) > 4 and all("?t=" in u for u in _urls),
+       "it keeps busting the cache until the window runs out")
+    import io
+    from contextlib import redirect_stderr
+    _err = io.StringIO()
+    _clock = _Clock(1_700_000_000)
+    with redirect_stderr(_err):
+        _code = PF.recheck_after_deploy(
+            sleep=_clock.sleep, clock=_clock, opener=_open_always_stale,
+            now=_now, base_url="https://example.test/edge-machine")
+    eq(_code, 1, "the deploy recheck returns 1 when the pages never go fresh")
+    ok("::error::" in _err.getvalue() and "sandbox.html" in _err.getvalue(),
+       "only the final stale result is an ::error::, and it names the page")
+    _err = io.StringIO()
+    _urls = []
+    _clock = _Clock(1_700_000_000)
+    with redirect_stderr(_err):
+        _code = PF.recheck_after_deploy(
+            sleep=_clock.sleep, clock=_clock, opener=_open_then_fresh,
+            now=_now, base_url="https://example.test/edge-machine")
+    eq(_code, 0, "the deploy recheck passes as soon as both pages are fresh")
+    ok("::error::" not in _err.getvalue(),
+       "a page that turns fresh is not reported as an error")
+
+ok('FAIL_AFTER_HOURS: 7' in _watch_wf, "the workflow fails the job at 7 hours")
+ok('STALE_AFTER_HOURS: 5' in _watch_wf, "the workflow still takes over at 5 hours")
+ok('[ "$TAGE" -gt "${FAIL_AFTER_HOURS}" ]' in _watch_wf,
+   "the tracker success check fails the job at 7 hours, not at 5")
+ok('[ "$AGE" -gt "${STALE_AFTER_HOURS}" ]' in _watch_wf,
+   "the primary success check still takes over at 5 hours")
+ok("|| true" not in _watch_wf, "a failed gh api call is not discarded")
+ok("GitHub API failed reading refresh-boards.yml run history" in _watch_wf,
+   "a failed primary run-history call is named")
+ok("GitHub API failed reading sandbox-tracker.yml run history" in _watch_wf,
+   "a failed tracker run-history call is named")
 
 
 print("\natomic writes: temp files are ignored, and the feed and stages survive a mid-write crash")

@@ -15,10 +15,15 @@ name: Backup refresh (watchdog)
 #      flaked before on an OIDC token timeout). The site root is not this check:
 #      site_root.py rewrites that redirect stub every refresh, so it stays new
 #      even when the tracker is dead.
-# Any of these is enough to take over. Takeover still cannot rebuild the two
-# pages, so after that deploy — and when takeover does not run — the pages are
-# checked again. If either is still stale or missing, the job fails. A dead
-# tracker must not stay green.
+# Any of these is enough to take over, judged at 5h. Takeover still cannot
+# rebuild the two pages, so after that deploy — and when takeover does not
+# run — the pages are checked again, and so is the tracker's last success.
+# Those three checks FAIL the job at 7h, not 5h: a scheduled tracker run
+# regularly lands about 6h late when GitHub delays it. A dead tracker must
+# not stay green, and a merely delayed one must not page anyone.
+# GitHub Pages caches a deploy for about 10 minutes, so the post-deploy
+# recheck refetches with ?t=<epoch> every 90s until both pages are fresh
+# or that window runs out.
 #
 # Two jobs (2026-09-13). GitHub started the 6-hourly primary as much as seven hours apart,
 # and a watchdog that only acted at 8 hours left the published leads that stale before it
@@ -47,8 +52,11 @@ permissions:
 
 env:
   # The primary runs every 3h, so a healthy board is under ~3h old (plus GitHub's start
-  # delay). 5h fires on one missed or badly late slot.
+  # delay). 5h fires takeover on one missed or badly late slot. 7h is what fails the
+  # job: the tracker cron regularly lands ~6h apart, and Pages can serve a stale copy
+  # for ~10 minutes after a deploy.
   STALE_AFTER_HOURS: 5
+  FAIL_AFTER_HOURS: 7
   BOARD_URL: https://aliu2298.github.io/edge-machine/
 
 jobs:
@@ -57,6 +65,8 @@ jobs:
     timeout-minutes: 10
     outputs:
       run: ${{ steps.check.outputs.run }}
+      tracker_fail: ${{ steps.check.outputs.tracker_fail }}
+      tracker_detail: ${{ steps.check.outputs.tracker_detail }}
 
     steps:
       - uses: actions/checkout@v7
@@ -71,9 +81,13 @@ jobs:
           REASONS=""
 
           # --- 1. when did the primary last SUCCEED? ---
-          LAST=$(gh api \
+          # A failed API call is not "no runs". Treating it as empty used to take over.
+          if ! LAST=$(gh api \
             "/repos/${{ github.repository }}/actions/workflows/refresh-boards.yml/runs?status=success&per_page=1" \
-            --jq '.workflow_runs[0].created_at // empty' || true)
+            --jq '.workflow_runs[0].created_at // empty'); then
+            echo "::error::GitHub API failed reading refresh-boards.yml run history"
+            exit 1
+          fi
           if [ -z "$LAST" ]; then
             REASONS="primary has no successful run on record"
           else
@@ -85,21 +99,32 @@ jobs:
           fi
 
           # --- 1b. when did the tracker last SUCCEED? ---
-          # Same window as the primary: the tracker runs every 3h, so 5h is one
-          # missed slot. This only adds a takeover reason. Failing the watch job
-          # here would skip takeover, and the loud failure belongs after deploy.
-          TLAST=$(gh api \
+          # This FAILS the job at 7h. It does not take over at 5h: a scheduled run
+          # (cron 11 2-23/3) regularly lands about 6h apart. Failing the watch job
+          # here would skip takeover, so the flag is recorded and the step after
+          # the closing-price snapshot (or the takeover job) exits 1.
+          TRACKER_FAIL=false
+          TRACKER_DETAIL=""
+          if ! TLAST=$(gh api \
             "/repos/${{ github.repository }}/actions/workflows/sandbox-tracker.yml/runs?status=success&per_page=1" \
-            --jq '.workflow_runs[0].created_at // empty' || true)
+            --jq '.workflow_runs[0].created_at // empty'); then
+            echo "::error::GitHub API failed reading sandbox-tracker.yml run history"
+            exit 1
+          fi
           if [ -z "$TLAST" ]; then
-            REASONS="${REASONS:+$REASONS; }tracker has no successful run on record"
+            echo "tracker has no successful run on record"
+            TRACKER_FAIL=true
+            TRACKER_DETAIL="tracker has no successful run on record"
           else
             TAGE=$(( ( $(date -u +%s) - $(date -u -d "$TLAST" +%s) ) / 3600 ))
             echo "tracker last succeeded ${TAGE}h ago ($TLAST)"
-            if [ "$TAGE" -gt "${STALE_AFTER_HOURS}" ]; then
-              REASONS="${REASONS:+$REASONS; }tracker last succeeded ${TAGE}h ago"
+            if [ "$TAGE" -gt "${FAIL_AFTER_HOURS}" ]; then
+              TRACKER_FAIL=true
+              TRACKER_DETAIL="tracker last succeeded ${TAGE}h ago"
             fi
           fi
+          echo "tracker_fail=$TRACKER_FAIL" >> "$GITHUB_OUTPUT"
+          echo "tracker_detail=$TRACKER_DETAIL" >> "$GITHUB_OUTPUT"
 
           # --- 2. are sandbox.html and production.html actually fresh? ---
           # The site root is a redirect stub rewritten every refresh, so its stamp
@@ -162,16 +187,24 @@ jobs:
           echo "::warning::could not push closing prices"
 
       # Takeover did not run. The check above only warns, and a dead tracker would
-      # otherwise leave this hourly job green. Re-read the live pages and fail if
-      # either is still stale or missing.
+      # otherwise leave this hourly job green. Re-read the live pages at 7h, and
+      # fail if the tracker's last success is past that same window.
       - name: Fail if the tracker pages are stale and takeover will not run
         if: steps.check.outputs.run != 'true'
+        env:
+          TRACKER_FAIL: ${{ steps.check.outputs.tracker_fail }}
+          TRACKER_DETAIL: ${{ steps.check.outputs.tracker_detail }}
         run: |
           set -euo pipefail
           python3 - << 'PY'
+          import os, sys
           import page_freshness
-          import sys
-          sys.exit(page_freshness.recheck_main())
+          code = page_freshness.recheck_main()
+          if os.environ.get("TRACKER_FAIL") == "true":
+              msg = os.environ.get("TRACKER_DETAIL") or "sandbox-tracker.yml has not succeeded within the fail window"
+              print(f"::error::{msg}", file=sys.stderr)
+              code = 1
+          sys.exit(code)
           PY
 
   takeover:
@@ -242,13 +275,23 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v5
 
-      # index.html is redeployed above. That does not rebuild sandbox.html or
-      # production.html, so a tracker that is still dead must fail this job.
+      # index.html is redeployed above. Pages caches that for about 10 minutes, and
+      # the deploy does not rebuild sandbox.html or production.html. Refetch until
+      # both are fresh or the cache window ends; a tracker success older than 7h
+      # fails here too, where it cannot skip this deploy.
       - name: Fail if the tracker pages are still stale
+        env:
+          TRACKER_FAIL: ${{ needs.watch.outputs.tracker_fail }}
+          TRACKER_DETAIL: ${{ needs.watch.outputs.tracker_detail }}
         run: |
           set -euo pipefail
           python3 - << 'PY'
+          import os, sys
           import page_freshness
-          import sys
-          sys.exit(page_freshness.recheck_main())
+          code = page_freshness.recheck_after_deploy()
+          if os.environ.get("TRACKER_FAIL") == "true":
+              msg = os.environ.get("TRACKER_DETAIL") or "sandbox-tracker.yml has not succeeded within the fail window"
+              print(f"::error::{msg}", file=sys.stderr)
+              code = 1
+          sys.exit(code)
           PY

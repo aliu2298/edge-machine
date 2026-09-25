@@ -13,7 +13,18 @@ form does not match, so a check pointed at the root fails closed.
 """
 from datetime import datetime, timezone
 
-STALE_AFTER_HOURS = 5
+# Takeover still fires at 5h: one missed 3h slot for the primary or the pages.
+# The checks that fail the job wait until 7h. Scheduled sandbox-tracker.yml runs
+# (cron 11 2-23/3) regularly land about 6h apart when GitHub delays them, so a
+# 5h failure there would be red on a normal week. Only a manual dispatch keeps
+# the gap under 5h.
+TAKEOVER_AFTER_HOURS = 5
+FAIL_AFTER_HOURS = 7
+STALE_AFTER_HOURS = TAKEOVER_AFTER_HOURS
+# GitHub Pages caches the deployed files for about 10 minutes. After deploy,
+# refetch inside that window instead of trusting the first response.
+RETRY_INTERVAL_SECONDS = 90
+RETRY_WINDOW_SECONDS = 10 * 60
 PAGES = ("sandbox.html", "production.html")
 
 
@@ -51,10 +62,13 @@ def freshness(html, now, page, stale_hours=STALE_AFTER_HOURS):
     return age <= stale_hours, msg
 
 
-def fetch_pages(base_url, stale_hours=STALE_AFTER_HOURS, now=None, opener=None):
+def fetch_pages(base_url, stale_hours=STALE_AFTER_HOURS, now=None, opener=None,
+                cache_bust=None):
     """(ok, message) for each published page, in PAGES order.
 
     A page that does not respond is not ok. `message` names the page.
+    `cache_bust`, when set, is appended as `?t=<epoch>` so a CDN that is still
+    holding the previous deploy is not reused.
     """
     import urllib.request
     if opener is None:
@@ -64,8 +78,11 @@ def fetch_pages(base_url, stale_hours=STALE_AFTER_HOURS, now=None, opener=None):
     base = base_url.rstrip("/") + "/"
     results = []
     for page in PAGES:
+        url = base + page
+        if cache_bust is not None:
+            url = f"{url}?t={int(cache_bust)}"
         try:
-            with opener(base + page, timeout=30) as resp:
+            with opener(url, timeout=30) as resp:
                 body = resp.read().decode("utf-8", "replace")
         except Exception as e:
             results.append((False, f"{page} did not respond ({type(e).__name__})"))
@@ -88,15 +105,73 @@ def recheck_exit(results):
     return 0, "; ".join(msg for _ok, msg in results)
 
 
-def recheck_main():
-    """Re-read the live pages. Return 1 when either is still stale or missing."""
+def recheck_until_fresh(base_url, stale_hours=FAIL_AFTER_HOURS, now=None, opener=None,
+                        sleep=None, clock=None,
+                        interval=RETRY_INTERVAL_SECONDS, window=RETRY_WINDOW_SECONDS):
+    """Refetch until both pages are fresh, or `window` seconds have passed.
+
+    The first fetch is immediate. Each later fetch waits `interval` seconds
+    (60–90) and every URL carries `?t=<epoch>` from `clock`. `sleep` and `clock`
+    are injectable so a test does not wait. Returns (exit_code, detail) from
+    the fetch that passed, or from the last fetch if one page is still stale
+    when the window runs out.
+    """
+    import time
+    if sleep is None:
+        sleep = time.sleep
+    if clock is None:
+        clock = time.time
+    started = clock()
+    attempts = int(window // interval) + 1
+    code, detail = 1, "no page was fetched"
+    for n in range(attempts):
+        code, detail = recheck_exit(fetch_pages(
+            base_url, stale_hours=stale_hours, now=now, opener=opener,
+            cache_bust=clock()))
+        if code == 0 or n + 1 == attempts:
+            return code, detail
+        if clock() - started + interval > window:
+            return code, detail
+        sleep(interval)
+    return code, detail
+
+
+def _fail_hours():
+    import os
+    return float(os.environ.get("FAIL_AFTER_HOURS", FAIL_AFTER_HOURS))
+
+
+def recheck_main(opener=None, now=None, base_url=None):
+    """One read of the live pages, judged on FAIL_AFTER_HOURS.
+
+    This is the no-takeover path: nothing was just deployed, so there is no
+    CDN window to wait out. Return 1 when either page is still stale or missing.
+    """
     import os
     import sys
-    hours = float(os.environ.get("STALE_AFTER_HOURS", STALE_AFTER_HOURS))
-    results = fetch_pages(os.environ["BOARD_URL"], stale_hours=hours)
+    base = base_url if base_url is not None else os.environ["BOARD_URL"]
+    results = fetch_pages(base, stale_hours=_fail_hours(), now=now, opener=opener)
     code, detail = recheck_exit(results)
     for _ok, msg in results:
         print(msg, file=sys.stderr)
+    if code:
+        print(f"::error::{detail}", file=sys.stderr)
+    return code
+
+
+def recheck_after_deploy(sleep=None, clock=None, opener=None, now=None, base_url=None):
+    """Refetch for about 10 minutes after a Pages deploy.
+
+    Pass as soon as both pages are fresh. Print `::error::` with the page and
+    its age only when one is still stale at the end of the window.
+    """
+    import os
+    import sys
+    base = base_url if base_url is not None else os.environ["BOARD_URL"]
+    code, detail = recheck_until_fresh(
+        base, stale_hours=_fail_hours(), now=now, opener=opener,
+        sleep=sleep, clock=clock)
+    print(detail, file=sys.stderr)
     if code:
         print(f"::error::{detail}", file=sys.stderr)
     return code
