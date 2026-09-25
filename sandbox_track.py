@@ -7,7 +7,8 @@ One run does three things, in this order and for a reason:
                        moment. This is the whole discipline of the thing. A prediction
                        recorded after kickoff, or scored against a price nobody could
                        still get, is not evidence of anything.
-  grade                every logged quote whose market has since resolved.
+  grade                every logged quote whose market has since resolved, and a bounded
+                       re-check of settlements the venue has since corrected.
   score                per-source hit rate, ROI and Brier over the accumulated ledger.
 
 The ledger is append-only and idempotent: a market is quoted ONCE per source, the first
@@ -25,6 +26,13 @@ from datetime import datetime, timedelta, timezone
 import sandbox_sources as S
 
 LEDGER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandbox_ledger.json")
+# Markets the settlement audit has seen disagree with the venue. The audit rewrites
+# this every networked run and re-asks every id in it until the ledger matches, so a
+# mismatch the hourly sample found once cannot vanish when a later sample misses it.
+# grade() re-resolves these however old they are. The tracker commits the corrected
+# ledger; the audit commits only this file, never the ledger.
+MISMATCHES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "settlement_mismatches.json")
+_WATCH_FIELDS = ("market_id", "quote_id", "stored", "venue", "venue_result")
 
 STAKE = 100.0        # flat, always. Any staking plan mixes bet-sizing skill into the
                      # source's score, and the question here is only "is it right?".
@@ -1085,10 +1093,167 @@ def snap_closing(d, universe, now=None):
 # Grade
 # ---------------------------------------------------------------------------
 
-def grade(d, verbose=True):
-    """Settle every open quote whose market has resolved."""
-    now = datetime.now(timezone.utc)
+# A stored a/b/draw is a side. `void` is not one we will overwrite a side with:
+# Polymarket uses it for "closed, but not a clean 1/0" (cancelled, or still
+# disputed), and a None is "the venue did not answer". Neither may replace a
+# win or a loss. A later decisive side may still replace a stored void.
+DECISIVE_RESULTS = ("a", "b", "draw")
+# Re-asking every settled market every run is a few thousand calls (about 7,000
+# distinct markets in a week, mostly table tennis and Kalshi binaries). Bets
+# settled inside this window are a couple of hundred reads, one per market, and
+# that one read corrects every quote on the market — the bet's P&L and the
+# venue self-quote whose Brier uses the same result. Anything older is re-asked
+# only when the audit has put it on the watch list.
+REGRADE_HOURS = 48
+REGRADE_CAP = 150          # per venue, a spike must not turn the window into a full scan
+_SETTLED = ("won", "lost", "graded", "void")
+_STORED_RESULTS = ("a", "b", "draw", "void")
+
+
+def load_settlement_watch(path=None):
+    """Rows the audit is still holding open. A missing or unreadable file is an empty list."""
+    path = path or MISMATCHES
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return []
+    rows, seen = [], set()
+    for row in (data.get("markets") or []) if isinstance(data, dict) else []:
+        if not isinstance(row, dict) or not row.get("market_id"):
+            continue
+        key = (row.get("venue"), row["market_id"])
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append({k: row.get(k) for k in _WATCH_FIELDS})
+    return rows
+
+
+def settlement_watch_keys(path=None):
+    """(venue, market_id) pairs grade() re-resolves however long ago they settled."""
+    return {(r.get("venue"), r["market_id"]) for r in load_settlement_watch(path)}
+
+
+def save_settlement_watch(rows, path=None):
+    """Rewrite the watch list. The audit is the only caller; grade() only reads it."""
+    path = path or MISMATCHES
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    seen, markets = set(), []
+    for row in rows:
+        mid = row.get("market_id")
+        key = (row.get("venue"), mid)
+        if not mid or key in seen:
+            continue
+        seen.add(key)
+        markets.append({k: row[k] for k in _WATCH_FIELDS if row.get(k) is not None})
+    markets.sort(key=lambda r: (str(r.get("venue") or ""), str(r["market_id"])))
+    with open(path, "w") as f:
+        json.dump({"markets": markets}, f, indent=1, sort_keys=True)
+        f.write("\n")
+
+
+def _resolve_market(q):
+    """The venue's current answer for one quote: 'a'/'b'/'draw'/'void', or None."""
+    venue, mid = q.get("venue"), q.get("market_id")
+    if venue == "combo":
+        return S.resolve_combo(q.get("legs") or [])
+    if venue == "kalshi":
+        return S.resolve_kalshi(mid)
+    if venue == "kalshi_binary":
+        return S.resolve_kalshi_market(mid)
+    if venue == "polymarket_us":
+        return S.resolve_polymarket_us(mid)
+    if venue == "espn":
+        return None
+    return S.resolve_polymarket(mid)
+
+
+def _apply_result(q, res, stamp):
+    """Record one venue result: status, P/L, and the stamp.
+
+    The same rules as a first grading. Brier is not stored on the quote — score()
+    and prune() both read `result` — so rewriting it is what corrects the score.
+    A no-bet quote is scored and never staked. A draw beats a side bet; it is
+    not a refund.
+    """
+    q["result"] = res
+    q["settled"] = stamp
+    if res == "void":
+        q["status"] = "void"
+        q["pnl"] = 0.0
+    elif not q["bet"]:
+        # Scored for accuracy, never staked. Kept as a distinct status so a
+        # no-bet quote can never be mistaken for a losing one.
+        q["status"] = "graded"
+        q["pnl"] = 0.0
+    elif q["pick"] == res:
+        # Compared BEFORE any draw handling. The previous version asked "was it a
+        # draw?" first and marked every bet on a drawn match lost — which would
+        # have scored a correct Draw tip as a loss.
+        q["status"] = "won"
+        q["pnl"] = round(q["stake"] * (1.0 / q["price"] - 1.0), 2)
+    else:
+        # Includes a side backed in a match that was drawn: in a three-way market
+        # the draw beats it as surely as defeat does, and it is never refunded.
+        q["status"] = "lost"
+        q["pnl"] = -q["stake"]
+
+
+def _regrade_markets(quotes, now, watched, skip_ids):
+    """One quote per market worth asking the venue about again.
+
+    A market qualifies when a bet on it settled inside REGRADE_HOURS, or when
+    the audit is watching it. Quotes grade() just settled in this same call are
+    skipped: their answer is already this run's. The cap keeps a volume spike
+    from turning the window into a scan of every settled row; watched markets
+    are never dropped to make room.
+    """
+    cutoff = (now - timedelta(hours=REGRADE_HOURS)).replace(microsecond=0).isoformat()
+    chosen = {}
+    for q in quotes:
+        if id(q) in skip_ids or q.get("status") not in _SETTLED:
+            continue
+        if q.get("venue") == "espn" or not q.get("market_id"):
+            continue
+        if q.get("result") not in _STORED_RESULTS:
+            continue
+        key = (q.get("venue"), q.get("market_id"))
+        flagged = key in watched
+        recent = bool(q.get("bet") and q.get("status") in ("won", "lost", "void")
+                      and (q.get("settled") or "") >= cutoff)
+        if not flagged and not recent:
+            continue
+        prev = chosen.get(key)
+        # A basket settles from the legs on the quote. Keep a copy that has them.
+        if prev is None or (q.get("legs") and not prev[0].get("legs")):
+            chosen[key] = (q, flagged, q.get("settled") or "")
+    out = []
+    by_venue = {}
+    for key, item in chosen.items():
+        by_venue.setdefault(key[0], []).append(item)
+    for rows in by_venue.values():
+        out.extend(q for q, flagged, _s in rows if flagged)
+        recent = sorted(((q, s) for q, flagged, s in rows if not flagged), key=lambda qs: qs[1])
+        out.extend(q for q, _s in recent[:REGRADE_CAP])
+    return out
+
+
+def grade(d, verbose=True, now=None, mismatches=None):
+    """Settle every open quote, then correct a settled one whose venue has revised.
+
+    `mismatches` overrides the watch file (tests pass a set). None reads it.
+    A re-resolved None or void never replaces a stored side. Returns how many
+    open quotes settled this call; corrections are counted separately in the log.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    watched = settlement_watch_keys() if mismatches is None else set(mismatches)
     resolved, settled = {}, 0
+    # Settled at the top of this call, from the venue, moments ago. Re-asking
+    # them would double every settlement read the run already made.
+    just_settled = {id(q) for q in d["quotes"] if q.get("status") == "open"}
 
     for q in d["quotes"]:
         if q["status"] != "open":
@@ -1114,44 +1279,35 @@ def grade(d, verbose=True):
 
         mid = q["market_id"]
         if mid not in resolved:
-            venue = q.get("venue")
             # A basket has no market of its own to ask: it is settled by its legs, and only
             # once every one of them has. Cached per basket like any other market, so the
             # two- and three-leg sources never re-resolve the same legs.
-            resolved[mid] = (S.resolve_combo(q.get("legs") or []) if venue == "combo"
-                             else S.resolve_kalshi(mid) if venue == "kalshi"
-                             else S.resolve_kalshi_market(mid) if venue == "kalshi_binary"
-                             else S.resolve_polymarket_us(mid) if venue == "polymarket_us"
-                             else S.resolve_polymarket(mid))
+            resolved[mid] = _resolve_market(q)
         res = resolved[mid]
         if res is None:
             continue
-
-        q["result"] = res
-        q["settled"] = now_iso()
-        if res == "void":
-            q["status"] = "void"
-            q["pnl"] = 0.0
-        elif not q["bet"]:
-            # Scored for accuracy, never staked. Kept as a distinct status so a
-            # no-bet quote can never be mistaken for a losing one.
-            q["status"] = "graded"
-            q["pnl"] = 0.0
-        elif q["pick"] == res:
-            # Compared BEFORE any draw handling. The previous version asked "was it a
-            # draw?" first and marked every bet on a drawn match lost — which would
-            # have scored a correct Draw tip as a loss.
-            q["status"] = "won"
-            q["pnl"] = round(q["stake"] * (1.0 / q["price"] - 1.0), 2)
-        else:
-            # Includes a side backed in a match that was drawn: in a three-way market
-            # the draw beats it as surely as defeat does, and it is never refunded.
-            q["status"] = "lost"
-            q["pnl"] = -q["stake"]
+        _apply_result(q, res, now_iso())
         settled += 1
 
+    regraded = 0
+    results = {}
+    for q in _regrade_markets(d["quotes"], now, watched, just_settled):
+        key = (q.get("venue"), q.get("market_id"))
+        if key not in results:
+            results[key] = _resolve_market(q)
+    for q in d["quotes"]:
+        if id(q) in just_settled or q.get("status") not in _SETTLED:
+            continue
+        res = results.get((q.get("venue"), q.get("market_id")))
+        # None, void, or any other non-side must not overwrite a stored win/loss.
+        # A decisive side that merely repeats the stored result is not a correction.
+        if res not in DECISIVE_RESULTS or res == q.get("result"):
+            continue
+        _apply_result(q, res, now_iso())
+        regraded += 1
+
     if verbose:
-        print(f"  settled {settled} quotes")
+        print(f"  settled {settled} quotes" + (f", regraded {regraded}" if regraded else ""))
     return settled
 
 

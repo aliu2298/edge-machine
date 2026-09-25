@@ -4,7 +4,8 @@
 A wrong record is worse than no record: it gets believed. The tracker writes the ledger and
 this reads it back, recomputing everything it can from first principles and asking the venues
 again, so an error in the tracker cannot also be an error in the check. It never writes the
-ledger; it runs with read-only permissions in its own workflow.
+ledger. The one file it writes is data/settlement_mismatches.json: market ids whose stored
+result disagreed with the venue, re-checked on every later run until the ledger matches.
 
 Checks, each an ERROR (fails the run) unless marked:
 
@@ -18,6 +19,8 @@ Checks, each an ERROR (fails the run) unless marked:
               and no open lead belonging to a pair that is not.
   combos      every basket holds the legs its name says.
   settlement  a sample of settled bets asked of the venue again; the stored result must match.
+              A mismatch is remembered and re-asked every run until it does, so a later
+              sample that misses the row cannot turn the check green.
   fresh       the ledger was graded recently. Two missed tracker runs is an ERROR: nothing is
               being settled, so every other check here is reading a record that stopped.
   stale       a bet open two days past its start. An ERROR only if the venue went final BEFORE
@@ -284,10 +287,35 @@ def check_combos(d, rep):
                          f"ones match their legs' own results")
 
 
-def check_settlement(d, rep, sample):
-    """Ask the venues again. The stored result must be the venue's result."""
+# Where remembered mismatches live. Tests point this at a temp file; the default is
+# the ledger's sibling, which the workflow commits and grade() reads back.
+MISMATCHES = T.MISMATCHES
+_WATCH_STATUSES = ("won", "lost", "graded", "void")
+_WATCH_RESULTS = ("a", "b", "draw", "void")
+
+
+def check_settlement(d, rep, sample, path=None):
+    """Ask the venues again. The stored result must be the venue's result.
+
+    The random sample is unchanged: 25 of the latest 400 settled bets per venue, so a
+    quiet row ages out of it. Any market this check has already seen disagree is loaded
+    from the watch file and asked again even when the sample misses it, and so is every
+    other settled quote on that market (a self-quote's Brier uses the same result as the
+    bet). The market stays on the list until a decisive venue answer matches every one
+    of those quotes. None, and a void standing in for a stored side, do not count as
+    agreement and do not clear it — a void is how these venues say "closed, but not a
+    clean winner", which is not a correction to apply.
+    """
+    path = MISMATCHES if path is None else path
+    prior = {(r.get("venue"), r["market_id"]): r for r in T.load_settlement_watch(path)}
+    watched = set(prior)
+
     by = collections.defaultdict(list)
+    by_key = collections.defaultdict(list)
     for q in d["quotes"]:
+        key = (q.get("venue"), q.get("market_id"))
+        if q.get("status") in _WATCH_STATUSES and q.get("result") in _WATCH_RESULTS and q.get("market_id"):
+            by_key[key].append(q)
         if q.get("bet") and q["status"] in ("won", "lost") and q.get("venue") in (
                 "kalshi", "kalshi_binary", "polymarket_us", "combo"):
             by[q["venue"]].append(q)
@@ -295,16 +323,85 @@ def check_settlement(d, rep, sample):
     picked = []
     for v, qs in by.items():
         recent = sorted(qs, key=lambda q: q.get("settled") or "", reverse=True)[:400]
-        picked += rng.sample(recent, min(sample, len(recent)))
-    match = gone = 0
+        n = min(sample, len(recent))
+        if n:
+            picked += rng.sample(recent, n)
+
+    # One quote per watched market the sample did not already draw, so the resolve
+    # happens even when the hourly draw misses the row.
+    rep_for = {}
     for q in picked:
-        r = _resolve(q)
+        rep_for.setdefault((q.get("venue"), q.get("market_id")), q)
+    for key in watched:
+        if key in rep_for:
+            continue
+        rows = by_key.get(key) or []
+        if rows:
+            rep_for[key] = rows[0]
+    resolved = {key: _resolve(q) for key, q in rep_for.items()}
+
+    def hold(key, q, venue_result):
+        """Keep `key` on the watch list. A non-side answer does not replace a decisive one."""
+        if venue_result not in T.DECISIVE_RESULTS and key in still:
+            return
+        base = prior.get(key) or {}
+        if venue_result in T.DECISIVE_RESULTS:
+            still[key] = dict(venue=key[0], market_id=key[1], stored=q.get("result"),
+                              venue_result=venue_result, quote_id=q.get("id"))
+        else:
+            still[key] = dict(venue=key[0], market_id=key[1],
+                              stored=base.get("stored", q.get("result")),
+                              venue_result=base.get("venue_result"),
+                              quote_id=base.get("quote_id") or q.get("id"))
+
+    still = {}
+    match = gone = 0
+    checked = {id(q) for q in picked}
+    for q in picked:
+        key = (q.get("venue"), q.get("market_id"))
+        r = resolved[key]
         if r is None:
             gone += 1
+            if key in watched:
+                hold(key, q, None)
+                rep.error("settlement", f"{q['id']} ({q['venue']}): stored {q['result']}, "
+                                         f"the venue did not answer; {q['market_id']} stays on the watch list")
         elif r == q["result"]:
             match += 1
         else:
             rep.error("settlement", f"{q['id']} ({q['venue']}): stored {q['result']}, the venue now says {r}")
+            if r in T.DECISIVE_RESULTS or key in watched:
+                hold(key, q, r)
+
+    # Every other settled quote on a market we just asked about. This is what keeps a
+    # corrected bet from clearing the watch while its self-quote still stores the old side.
+    for key, r in resolved.items():
+        if r not in T.DECISIVE_RESULTS:
+            # None never agrees. A void agrees only when every stored quote is already
+            # void; a void against a stored side is not a correction and must not clear.
+            rows = by_key.get(key) or []
+            agreed = r is not None and rows and all(row.get("result") == r for row in rows)
+            if key in watched and key not in still and not agreed:
+                q = rep_for[key]
+                hold(key, q, r)
+                if r is None:
+                    rep.error("settlement", f"{q['id']} ({q.get('venue')}): stored {q.get('result')}, "
+                                            f"the venue did not answer; {q['market_id']} stays on the watch list")
+                else:
+                    rep.error("settlement", f"{q['id']} ({q.get('venue')}): stored {q.get('result')}, "
+                                            f"the venue now says {r}; {q['market_id']} stays on the watch list")
+            continue
+        for row in by_key.get(key, []):
+            if id(row) in checked or row.get("result") == r:
+                continue
+            rep.error("settlement", f"{row['id']} ({row.get('venue')}): stored {row.get('result')}, "
+                                    f"the venue now says {r}")
+            hold(key, row, r)
+    for key in watched:
+        if key not in rep_for:
+            rep.warn("settlement", f"{key[1]}: remembered mismatch has no settled quote left in the ledger")
+    T.save_settlement_watch(list(still.values()), path)
+
     if gone:
         rep.warn("settlement", f"{gone} of {len(picked)} sampled bets no longer answer at the venue")
     if not any(c == "settlement" for c, _ in rep.errors):
