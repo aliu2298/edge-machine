@@ -4790,8 +4790,12 @@ def _most_uncertain(rows):
                                     abs((r.get("price_a") or 0.5) - 0.5)))
 
 
-def fetch_nws(domain):
-    """One pick per city per day: the bucket the NWS forecast lands in."""
+def _nws_forecast_picks(domain):
+    """One pick per city per day: the bucket the NWS forecast lands in.
+
+    The network read. publish() and nws_picks share one result per run, so this
+    runs once even when both the follow lane and nws_fade want it.
+    """
     if domain != "climate":
         return []
     groups = {}
@@ -4810,6 +4814,27 @@ def fetch_nws(domain):
             for (_s, _d, t), rs in groups.items()]
 
 
+# Picks for the publish in progress. Cleared by clear_nws_run at each end of publish.
+_nws_run = {}
+
+
+def clear_nws_run():
+    """Forget the shared NWS picks. The next reader fetches again."""
+    _nws_run.clear()
+
+
+def nws_picks(domain):
+    """Follow-lane picks for this run. Computed once; nws and nws_fade both read them."""
+    if domain not in _nws_run:
+        _nws_run[domain] = _nws_forecast_picks(domain)
+    return _nws_run[domain]
+
+
+def fetch_nws(domain):
+    """The follow lane. A copy, so a later reader cannot change the shared picks."""
+    return [dict(p) for p in nws_picks(domain)]
+
+
 # Fixed 2026-09-25, before nws_fade logged an entry. One city-day is one outcome
 # (outcome_cluster). Do not change this number, or the side fetch_nws_fade takes,
 # before this many independent outcomes have settled.
@@ -4819,11 +4844,12 @@ NWS_FADE_READ_N = 100
 def fetch_nws_fade(domain):
     """The other side of each pick fetch_nws would make. Same markets, same stake.
 
-    The side is the opposite of the follow lane and nothing else. Do not retune it
-    before NWS_FADE_READ_N settled independent outcomes.
+    Reads nws_picks, the same list the follow lane uses, so a run does not fetch
+    the forecast twice. The side is the opposite of the follow lane and nothing
+    else. Do not retune it before NWS_FADE_READ_N settled independent outcomes.
     """
     out = []
-    for p in fetch_nws(domain):
+    for p in nws_picks(domain):
         side = p.get("pick")
         if side == "a":
             flip = "b"

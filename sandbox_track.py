@@ -797,6 +797,9 @@ def publish(d, universe, coverage, verbose=True):
     # prices — a page that can never be scored is not worth a polite second of waiting.
     S.UNIVERSE = universe
     S.FEED_STATUS.clear()
+    # nws and nws_fade share one forecast read. Cleared here so a previous run's
+    # picks cannot be reused, and again on the way out.
+    S.clear_nws_run()
 
     # Contests some covering source (tipster, model, book, forecaster) has ever quoted.
     covering = {n for n, m in S.SOURCES.items() if m["kind"] in S.COVERING_KINDS}
@@ -830,6 +833,12 @@ def publish(d, universe, coverage, verbose=True):
 
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
+                continue
+            # A fully paused source logs no sport, so the fetch would be a network
+            # call with nothing to enter. A partial pause still fetches: scores24
+            # soccer and espn_fpi MLB are logged from that same pass, and the
+            # paused sports of those lanes are read in it too.
+            if S.source_fully_paused(name):
                 continue
             t0 = time.time()
             try:
@@ -1016,6 +1025,7 @@ def publish(d, universe, coverage, verbose=True):
         d["meta"]["odds_api"] = dict(S.ODDS_USAGE, at=now_iso())
     if verbose:
         print(f"  logged {added} new quotes, closing price refreshed on {snapped} open bets")
+    S.clear_nws_run()
     return added
 
 

@@ -6,6 +6,7 @@ Most of these are regressions from the first live runs, not hypotheticals.
 """
 
 import sys
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 import sandbox_sources as S
@@ -28,6 +29,21 @@ def eq(a, b, msg):
 
 def close(a, b, msg, tol=1e-6):
     ok(a is not None and abs(a - b) < tol, f"{msg} (got {a!r}, want ~{b!r})")
+
+
+@contextmanager
+def _without_pause(*names):
+    """Drop lanes from PAUSED_LANES for one check, then put the dict back.
+
+    The same restore the covers re-enable check uses. A test of what a lane does
+    once it is turned back on must not leave it turned on.
+    """
+    saved = dict(S.PAUSED_LANES)
+    S.PAUSED_LANES = {k: v for k, v in S.PAUSED_LANES.items() if k not in names}
+    try:
+        yield
+    finally:
+        S.PAUSED_LANES = saved
 
 
 # ---------------------------------------------------------------------------
@@ -1671,6 +1687,27 @@ try:
     ok(all(q.get("uncovered") is None for q in d["quotes"]),
        "no other source carries pinnacle's uncovered flag")
     ok("pinnacle" not in S.CHALLENGERS, "Pinnacle is planned, not fetched sport by sport")
+
+    # The booking check from before the pause, with the lane turned back on for
+    # this publish only. The paused assertions above stay.
+    _reset_odds(); _paid.clear()
+    S.ODDS_USAGE["allowance"] = 2
+    S.CHALLENGERS = {"soccerpredictions": lambda sp: [dict(market_id="sc1", pick="draw")]}
+    try:
+        with _without_pause("pinnacle"):
+            d_on = {"quotes": [], "meta": {}, "coverage": {}}
+            T.publish(d_on, _rows, {}, verbose=False)
+    finally:
+        S.CHALLENGERS = _saved_ch
+    _pq = {q["market_id"]: q for q in d_on["quotes"] if q["source"] == "pinnacle"}
+    eq((_pq["sc1"]["uncovered"], _pq["sc3"]["uncovered"]), (False, True),
+       "with pinnacle re-enabled, a contest a tipster covered this run is not uncovered; one nobody touched is")
+    close(_pq["sc3"]["prob_a"], (1 / 2.1) / (1 / 2.1 + 1 / 3.3 + 1 / 3.6),
+          "soccer Pinnacle probability includes the draw", tol=1e-3)
+    eq(_pq["sc3"]["bet"], True, "Everton at 0.30 against a Pinnacle 0.45 is a bet")
+    ok(all(q.get("uncovered") is None for q in d_on["quotes"] if q["source"] != "pinnacle"),
+       "only Pinnacle quotes carry the uncovered flag")
+    ok(S.lane_paused("pinnacle", "soccer"), "the re-enable check put pinnacle back on the pause list")
 finally:
     S._odds_get = _saved_get2
     _reset_odds()
@@ -2116,6 +2153,19 @@ eq((_qs["polymarket_us"]["bet"], _qs["polymarket_us"]["prob_a"]), (False, 0.61),
    "the US exchange's own midpoint is logged for Brier and never bets")
 ok("polymarket" not in _qs,
    "polymarket is paused, its MLB included: a 0.70 price against a 0.62 ask is not entered")
+S.CHALLENGERS = {"polymarket": lambda sp: [dict(a="New York Yankees", b="Boston Red Sox", prob_a=0.70,
+                                                 date=_now_us.strftime("%Y-%m-%d"))]}
+try:
+    with _without_pause("polymarket"):
+        _dp_on = {"quotes": [], "meta": {}, "coverage": {}}
+        T.publish(_dp_on, _uni, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch2
+_qs_on = {q["source"]: q for q in _dp_on["quotes"]}
+eq((_qs_on["polymarket"]["bet"], _qs_on["polymarket"]["venue"], _qs_on["polymarket"]["price"]),
+   (True, "polymarket_us", 0.62),
+   "with polymarket re-enabled, polymarket.com at 0.70 against a 0.62 US ask is a bet, booked on the US venue")
+ok(S.lane_paused("polymarket", "mlb"), "the re-enable check put polymarket back on the pause list")
 eq(T.FEE_RATE["polymarket_us"], 0.06, "Polymarket US taker fee applies to QA's after-fee ROI")
 
 # ---------------------------------------------------------------------------
@@ -2355,6 +2405,27 @@ _bq = {(q["source"], q["market_id"]): q for q in _db["quotes"]}
 ok(("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS") not in _bq,
    "btts_form_l10 is paused: publish enters nothing, and the selector above still finds the match")
 ok(not any(q["bet"] for q in _db["quotes"] if q["source"] == "btts_market"), "the market's own price never bets")
+S.CHALLENGERS = {"btts_market": lambda sp: S.fetch_btts_market(sp, universe={"soccer_btts": _brows}),
+                 "btts_form_l10": lambda sp: S.fetch_btts_form_l10(sp, universe={"soccer_btts": _brows}, fixtures=_fx_all)}
+try:
+    with _without_pause("btts_form_l10"):
+        _db_on = {"quotes": [], "meta": {}, "coverage": {}}
+        _real_started = T._started
+        T._started = lambda r, _now, _f=_real_started: _f(r, _b0)
+        try:
+            T.publish(_db_on, {"soccer_btts": _brows}, {}, verbose=False)
+        finally:
+            T._started = _real_started
+finally:
+    S.CHALLENGERS = _saved_ch4
+_bq_on = {(q["source"], q["market_id"]): q for q in _db_on["quotes"]}
+_rq = _bq_on[("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS")]
+eq((_rq["bet"], _rq["pick"], _rq["price"]), (True, "a", 0.62),
+   "with btts_form_l10 re-enabled, the rule's bet is booked at the Yes ask")
+ok(not any(q["bet"] for q in _db_on["quotes"] if q["source"] == "btts_market"),
+   "the market's own price never bets, paused or not")
+ok(S.lane_paused("btts_form_l10", "soccer_btts"),
+   "the re-enable check put btts_form_l10 back on the pause list")
 
 # population baseline: rule 2/2 at 0.62 against backing Yes on all 4 matches (2 won at 0.62, 2 lost at 0.55)
 def _pb(mid, src, won, price, bet):
@@ -4612,6 +4683,39 @@ _paused_new = [q for q in _pd["quotes"] if S.lane_paused(q["source"], q["sport"]
 eq(_paused_new, [], "every paused lane logs no new entry")
 ok(not any(q.get("bet") for q in _paused_new), "and therefore places no new bet")
 
+_fetch_calls = []
+
+
+def _spy(name):
+    def fetch(sp, _name=name):
+        _fetch_calls.append((_name, sp))
+        return [dict(market_id=f"probe-{sp}", pick="a", a="Alpha", b="Beta", date=_probe_day)]
+    return fetch
+
+
+_saved_ch = S.CHALLENGERS
+S.CHALLENGERS = {
+    "covers": _spy("covers"),
+    "soccerpredictions": _spy("soccerpredictions"),
+    "scores24": _spy("scores24"),
+    "espn_fpi": _spy("espn_fpi"),
+}
+try:
+    T.publish({"quotes": [], "meta": {}, "coverage": {}}, {
+        "mlb": [_prow("mlb", "probe-mlb")],
+        "soccer": [_prow("soccer", "probe-soccer", venue="kalshi")],
+        "nfl": [_prow("nfl", "probe-nfl")],
+    }, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch
+ok(("covers", "mlb") not in _fetch_calls and ("covers", "nfl") not in _fetch_calls,
+   "a fully paused lane's fetcher is not called")
+ok(("soccerpredictions", "soccer") in _fetch_calls, "an active lane's fetcher is called")
+ok(("scores24", "soccer") in _fetch_calls and ("scores24", "nfl") in _fetch_calls,
+   "a partial pause still fetches, including the sport it will not enter")
+ok(("espn_fpi", "mlb") in _fetch_calls and ("espn_fpi", "nfl") in _fetch_calls,
+   "espn_fpi still fetches NFL, the sport it is paused on, and MLB")
+
 _saved_ch = S.CHALLENGERS
 S.SOURCES["soccerpredictions"]["sports"].append("nfl")
 S.CHALLENGERS = {
@@ -4703,32 +4807,66 @@ _nws_rows = [dict(sport="climate", venue="kalshi_binary", market_id=f"KXHIGHNY-2
                               ("B77.5", bm(floor_strike=77, cap_strike=78), 0.34),
                               ("B79.5", bm(floor_strike=79, cap_strike=80), 0.46))]
 _real_highs = S.nws_highs
+_saved_uni_nws = S.UNIVERSE
 S.nws_highs = lambda lat, lon: {"2026-09-12": 78.0}
 S.UNIVERSE = {"climate": _nws_rows}
+S.clear_nws_run()
 try:
     _follow = S.fetch_nws("climate")
     _fade = S.fetch_nws_fade("climate")
 finally:
     S.nws_highs = _real_highs
+    S.UNIVERSE = _saved_uni_nws
+    S.clear_nws_run()
 eq((len(_follow), len(_fade)), (1, 1), "each direction names one bucket")
 eq(_follow[0]["pick"], "a", "the follow lane still names YES on the forecast bucket")
 eq((_fade[0]["market_id"], _fade[0]["pick"]), (_follow[0]["market_id"], "b"),
    "nws_fade takes the other side of that same bucket")
+_forecast_n = {"n": 0}
+_slot_n = {"n": 0}
+_real_fc = S._nws_forecast_picks
+
+
+def _count_fc(domain):
+    _forecast_n["n"] += 1
+    return _real_fc(domain)
+
+
+def _nws_slot(domain):
+    _slot_n["n"] += 1
+    return S.fetch_nws(domain)
+
+
 _saved_ch = S.CHALLENGERS
-S.CHALLENGERS = {"nws": S.fetch_nws, "nws_fade": S.fetch_nws_fade}
+S._nws_forecast_picks = _count_fc
+S.CHALLENGERS = {"nws": _nws_slot, "nws_fade": S.fetch_nws_fade}
 S.nws_highs = lambda lat, lon: {"2026-09-12": 78.0}
 try:
     _nd = {"quotes": [], "meta": {}, "coverage": {}}
     T.publish(_nd, {"climate": _nws_rows}, {}, verbose=False)
+    eq(_slot_n["n"], 0, "the paused follow lane's fetcher is not called")
+    eq(_forecast_n["n"], 1, "the NWS forecast is fetched once per run and shared with nws_fade")
+    _forecast_n["n"] = 0
+    with _without_pause("nws"):
+        _nd_on = {"quotes": [], "meta": {}, "coverage": {}}
+        T.publish(_nd_on, {"climate": _nws_rows}, {}, verbose=False)
+    eq((_forecast_n["n"], _slot_n["n"]), (1, 1),
+       "with the follow lane back on, the forecast is still fetched once and both lanes read it")
 finally:
+    S._nws_forecast_picks = _real_fc
     S.nws_highs = _real_highs
     S.CHALLENGERS = _saved_ch
+    S.clear_nws_run()
 _nq = {q["source"]: q for q in _nd["quotes"]}
 ok("nws" not in _nq, "the paused follow lane logs nothing")
 eq((_nq["nws_fade"]["source"], _nq["nws_fade"]["pick"], _nq["nws_fade"]["bet"], _nq["nws_fade"]["stake"]),
    ("nws_fade", "b", True, T.STAKE),
    "nws_fade logs the other side under source nws_fade, at the same flat stake")
 close(_nq["nws_fade"]["price"], 0.66, "the price is the other side's ask")
+_on = {q["source"]: q for q in _nd_on["quotes"]}
+eq((_on["nws"]["pick"], _on["nws_fade"]["pick"]), ("a", "b"),
+   "re-enabled, the follow lane and the fade log opposite sides of the shared forecast")
+ok(S.lane_paused("nws", "climate"), "the share check put nws back on the pause list")
 
 
 print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged lane")
