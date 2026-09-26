@@ -6,6 +6,8 @@ one planted fault and must fire, and the same record with the fault removed must
 """
 import json
 import os
+import shutil
+import subprocess
 import sys
 import tempfile
 from datetime import datetime, timedelta, timezone
@@ -295,6 +297,23 @@ print("\nthe live repository")
 _rep = A.run(network=False)
 _live = [e for e in _rep.errors if e[0] != "fresh"]
 ok(not _live, "the Sandbox as committed passes every offline check" + ("" if not _live else f" — {_live[:3]}"))
+
+print("\nado-upload: the deploy pipeline is not part of this repo")
+_root = os.path.dirname(os.path.abspath(__file__))
+_ado = os.path.join(_root, "ado-upload")
+ok(not os.path.exists(_ado), "ado-upload/ does not exist")
+with open(os.path.join(_root, ".gitignore"), encoding="utf-8") as _gf:
+    _ignore_lines = _gf.read().splitlines()
+ok("ado-upload/" in _ignore_lines, ".gitignore contains ado-upload/")
+_git = shutil.which("git")
+if _git:
+    _ls = subprocess.run(
+        [_git, "ls-files", "--", "ado-upload"],
+        cwd=_root, capture_output=True, text=True, check=False,
+    )
+    _listed = _ls.stdout if _ls.returncode == 0 else f"git ls-files exited {_ls.returncode}"
+    ok(_ls.returncode == 0 and _ls.stdout == "",
+       "git ls-files ado-upload returns nothing" + ("" if _listed == "" else f" — {_listed!r}"))
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all audit tests passed'}")
 for f in FAILS:

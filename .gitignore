@@ -34,6 +34,9 @@ __pycache__/
 # --- backups / scratch ---
 *.bak
 
+# Deploy pipeline that does not belong in this public repo.
+ado-upload/
+
 # --- node / build output ---
 web/node_modules/
 web/dist/
