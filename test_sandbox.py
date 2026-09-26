@@ -5258,6 +5258,81 @@ ok(not any(q["id"] not in _before_ids and q.get("bet") and S.lane_paused(q["sour
    "the run added no bet on a paused lane")
 
 
+# ---------------------------------------------------------------------------
+# The Eredivisie draw band — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+def _er(mid, pa, pdr, pb, venue="kalshi", trade=True, untraded=False):
+    return dict(venue=venue, market_id=mid, price_a=pa, price_draw=pdr, price_b=pb,
+                tradeable={"a": True, "draw": trade, "b": True}, untraded=untraded)
+
+# Real Kalshi boards from 2026-09-12/19, which is where the band was checked against live prices.
+_eu = {"soccer": [
+    _er("KXEREDIVISIEGAME-26SEP26HEETEL", 0.58, 0.22, 0.21),   # de-vig 0.2178 -> IN
+    _er("KXEREDIVISIEGAME-26SEP26GAEGRO", 0.42, 0.25, 0.35),   # de-vig 0.2451 -> IN
+    _er("KXEREDIVISIEGAME-26SEP26SPAHEE", 0.38, 0.26, 0.38),   # de-vig 0.2549 -> out, too dear
+    _er("KXEREDIVISIEGAME-26SEP26ZWOFEY", 0.15, 0.19, 0.67),   # de-vig 0.1881 -> out, too cheap
+    _er("KXEPLGAME-26SEP26ARSMCI",        0.42, 0.24, 0.36),   # de-vig 0.2353, WRONG LEAGUE
+]}
+eq([p["market_id"] for p in S.fetch_ere_draw("soccer", universe=_eu)],
+   ["KXEREDIVISIEGAME-26SEP26HEETEL", "KXEREDIVISIEGAME-26SEP26GAEGRO"],
+   "Eredivisie draw band takes the two in-band ties and leaves the dear one, the cheap one and the EPL match")
+eq({p["pick"] for p in S.fetch_ere_draw("soccer", universe=_eu)}, {"draw"},
+   "and it backs the draw, never a side")
+close(S.devig_draw(_eu["soccer"][0]), 0.22 / 1.01, "de-vig divides the tie by the whole three-way board")
+eq(S.devig_draw(dict(price_a=0.5, price_draw=None, price_b=0.5)), None,
+   "a two-way row has no draw to de-vig")
+
+# The band edges are the rule, so both are pinned: lower inclusive, upper exclusive.
+eq(len(S.fetch_ere_draw("soccer", universe={"soccer": [_er("KXEREDIVISIEGAME-x", 0.40, 0.20, 0.40)]})), 1,
+   "a de-vigged draw exactly on 0.20 is in (lower bound inclusive)")
+eq(S.fetch_ere_draw("soccer", universe={"soccer": [_er("KXEREDIVISIEGAME-y", 0.375, 0.25, 0.375)]}), [],
+   "a de-vigged draw exactly on 0.25 is out (upper bound exclusive)")
+# The ask ceiling is break-even at the measured strike, not a filter: it must bite on a wide book
+# even when the de-vigged share still reads in band.
+eq(S.fetch_ere_draw("soccer", universe={"soccer": [_er("KXEREDIVISIEGAME-z", 0.55, 0.27, 0.35)]}), [],
+   "an ask above ERE_DRAW_MAX_ASK is refused even though de-vig 0.2308 sits in the band")
+eq((S.ERE_DRAW_BAND, S.ERE_DRAW_MAX_ASK, S.ERE_DRAW_SERIES),
+   ((0.20, 0.25), 0.26, "KXEREDIVISIEGAME"),
+   "band, ceiling and series are the pre-registered ones")
+
+eq(S.fetch_ere_draw("soccer", universe={"soccer": [_er("KXEREDIVISIEGAME-v", 0.58, 0.22, 0.21, venue="polymarket_us")]}), [],
+   "only Kalshi boards are read — the band was measured on a three-way price")
+eq(S.fetch_ere_draw("soccer", universe={"soccer": [_er("KXEREDIVISIEGAME-w", 0.58, 0.22, 0.21, trade=False)]}), [],
+   "an untradeable tie leg is skipped")
+eq(S.fetch_ere_draw("soccer", universe={"soccer": [_er("KXEREDIVISIEGAME-u", 0.58, 0.22, 0.21, untraded=True)]}), [],
+   "an untraded board is skipped")
+eq(S.fetch_ere_draw("tennis", universe=_eu), [], "no other domain has a draw to back")
+
+eq((S.SOURCES["ere_draw"]["sports"], S.SOURCES["ere_draw"]["baseline"],
+    S.CHALLENGERS["ere_draw"] is S.fetch_ere_draw),
+   (["soccer"], "draw_population", True), "ere_draw is registered on three-way soccer and wired up")
+ok(not S.lane_paused("ere_draw", "soccer"), "the new lane is not paused")
+_en = S.SOURCES["ere_draw"]["note"]
+ok("0.20-0.25" in _en and "z +2.39" in _en and "429" in _en,
+   "the note pins the band and the held-out result it was registered on")
+ok("z -0.14" in _en and "twelve leagues" in _en,
+   "and records that the same band is exactly fair pooled across leagues, so it is not widened by mistake")
+
+# Judged against backing the draw on EVERY three-way match, because on its own contests the
+# rule IS "back the draw" and the same-contest blind could never separate them.
+def _eq_(mid, src, bet, result, pdr=0.22):
+    return dict(id=f"{src}:{mid}", source=src, sport="soccer", market_id=mid, venue="kalshi",
+                bet=bet, pick="draw" if bet else None, price=pdr if bet else None,
+                price_a=0.58, price_b=0.21, price_draw=pdr, result=result,
+                status=("won" if result == "draw" else "lost") if bet else "graded",
+                pnl=(round(100 * (1 / pdr - 1), 2) if result == "draw" else -100.0) if bet else 0.0,
+                start="2026-09-26T18:00:00+00:00", logged="2026-09-20T00:00:00+00:00")
+_ed = {"quotes": [_eq_("e1", "ere_draw", True, "draw"), _eq_("e2", "ere_draw", True, "a"),
+                  _eq_("e3", "ere_draw", True, "draw"), _eq_("e4", "ere_draw", True, "b"),
+                  # the population: every three-way match listed, drawing 1 in 5
+                  _eq_("p1", "kalshi", False, "draw"), _eq_("p2", "kalshi", False, "a"),
+                  _eq_("p3", "kalshi", False, "b"), _eq_("p4", "kalshi", False, "a"),
+                  _eq_("p5", "kalshi", False, "b")]}
+_ea = dict((k, (p, det)) for k, _l, p, det in T.assess(_ed, "ere_draw", "soccer")["criteria"])
+ok("the draw on every match" in _ea["baseline"][1],
+   "ere_draw is judged against backing the draw on every three-way match")
+eq(_ea["baseline"][0], True, "and beats it here (2 of 4 against the population's 1 of 5)")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

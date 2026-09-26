@@ -1835,6 +1835,28 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
                 fav.append(pnl_f)
         own = sum(q["pnl"] for q in bets) / (len(bets) * STAKE)
         blind = [("the favourite on every match", own, sum(fav) / (len(fav) * STAKE))] if fav else []
+    # A DRAW-band rule backs the draw on every contest it touches, so the same-contest "back
+    # the draw" blind above IS that rule by construction and could never tell it apart. Its
+    # population is the same one in spirit as favourite_population: backing the DRAW on every
+    # three-way contest the Sandbox listed over the same period, one quote per contest, inside
+    # the same price band. Set with baseline="draw_population". Note this pools ALL three-way
+    # soccer, not just the rule's own competition — a harder test than the league-only one,
+    # and the only one with enough contests to read.
+    if (S.SOURCES.get(name) or {}).get("baseline") == "draw_population" and bets:
+        seen_c, drawn = set(), []
+        for q in sorted(all_bets(d), key=lambda q: str(q.get("logged") or "")):
+            if (q["sport"] not in {b["sport"] for b in bets}
+                    or q.get("result") not in ("a", "b", "draw")
+                    or q.get("price_draw") is None
+                    or q["market_id"] in seen_c or (since is not None and q["logged"] < since)
+                    or (venues is not None and (q.get("venue") or "polymarket") not in venues)):
+                continue
+            pnl_d = blind_pnl(q, "draw")
+            if pnl_d is not None:
+                seen_c.add(q["market_id"])
+                drawn.append(pnl_d)
+        own = sum(q["pnl"] for q in bets) / (len(bets) * STAKE)
+        blind = [("the draw on every match", own, sum(drawn) / (len(drawn) * STAKE))] if drawn else []
     beats_all = bool(blind) and all(own > base for _k, own, base in blind)
     hardest = max(blind, key=lambda t: t[2] - t[1]) if blind else None
     base_roi = hardest[2] if hardest else None

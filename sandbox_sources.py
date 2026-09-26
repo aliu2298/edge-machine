@@ -552,6 +552,28 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "ere_draw": dict(
+        label="Eredivisie draw band (de-vigged 0.20-0.25)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer"], baseline="draw_population",
+        note="Pre-registered 2026-09-26, before it logged anything, with every number fixed "
+             "in advance. Back the TIE on a Kalshi Eredivisie match when the board's own "
+             "de-vigged draw probability — price_draw / (price_a + price_draw + price_b) — "
+             "sits in 0.20-0.25 and the ask is 0.26 or less. Nothing else selects the match: "
+             "no form, no model, no ranker. Research on 3,904 Eredivisie matches with closing "
+             "prices (2013/14-2025/26): the band was chosen on the 2013/14-2020/21 half alone, "
+             "the best of seven scanned there at +3.5pp over the price, then applied untouched "
+             "to the 429 band matches of 2021/22-2025/26 — 28.0% drew against 22.8% priced, "
+             "+5.2pp, z +2.39 — and it strengthens again on closing prices only (+5.9pp, "
+             "z +3.19). The same band pooled over twelve leagues is EXACTLY fair (z -0.14, "
+             "ROI +0.00%), so this is a Dutch-league claim and widening it needs that test "
+             "re-run. Expect ~2-3 bets a matchweek, a 27-28% strike at ~0.23, twelve-bet "
+             "losing runs, and 30 settled bets no sooner than mid-December. Weak parts stated "
+             "now: the held-out ROI bootstrap is [-1.2%, +33.9%] and its lower bound touches "
+             "zero; 1,114 band matches are thirteen seasons, not 1,114 independent draws, and "
+             "four of those thirteen lost money; and Kalshi's Eredivisie book is thin, so if "
+             "the ask sits above 0.26 the rule correctly stops firing and there is no lane. "
+             "Judged against backing the draw on every three-way match the Sandbox lists over "
+             "the same period, so it only counts if THIS band beats draws in general."),
     "team2_form_l10": dict(
         label="Team scores 2+ form rule (7+/10 scored 2+, opponent 7+/10 conceded 2+)",
         kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2", "soccer_team2_cup", "soccer_team2_intl"],
@@ -3257,6 +3279,80 @@ def band_picks(sport, band, universe=None):
 
 
 # ---------------------------------------------------------------------------
+# The Eredivisie draw band — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+# One league, one market, one price band, and nothing else. Kalshi lists an Eredivisie match
+# as three Yes/No contracts; this backs the Tie when the board's own opinion of the draw,
+# with Kalshi's margin removed, sits in ERE_DRAW_BAND.
+#
+# Why the band and not the whole league: measured on 3,904 Eredivisie matches with closing
+# prices, 2013/14-2025/26 (football-data.co.uk). The band was chosen on the 2013/14-2020/21
+# half ALONE — it was the best of seven overlapping bands scanned there, at +3.5pp over the
+# de-vigged price — and then applied untouched to 2021/22-2025/26, which it had never seen:
+# 429 matches, 28.0% drew against 22.8% priced, +5.2pp, z +2.39. It strengthened out of
+# sample, and strengthened again when restricted to matches carrying a true closing price
+# (+5.9pp, z +3.19). Overfitting decays under both of those; this did the opposite.
+#
+# Why Eredivisie and not soccer: the SAME band pooled over all twelve leagues in that data
+# set is exactly fair — 22.8% drew against 22.9% priced, z -0.14, ROI +0.00%. This is a
+# Dutch-league fact, not a draw fact, and the lane must never be widened without re-running
+# that test. Turkey (-3.0pp) and Belgium (-4.0pp) sit at the other end and are NOT a rule:
+# train sign predicted test sign in only 7 of 12 leagues, which is a coin flip.
+#
+# What is NOT in the rule, and deliberately: no form, no model, no ranker. The band was split
+# four ways in the held-out half — closest half, widest half, cheapest draws, priciest draws —
+# and every quarter returned +12% to +20%. The edge is the band itself, spread evenly, so any
+# filter bolted on can only subtract. The other markets Kalshi lists for Eredivisie were swept
+# on the same 3,904 matches against a benchmark corrected on the other eleven leagues and are
+# flat: BTTS +0.1pp, Over 2.5 -0.1pp, Over 3.5 +0.8pp, team-to-score -0.2pp. Over 1.5 is the
+# near miss and is excluded on purpose — +1.9pp in 2013-2021, +0.5pp in 2021-2026. It was a
+# real edge and the market closed it.
+ERE_DRAW_SERIES = "KXEREDIVISIEGAME"
+ERE_DRAW_BAND = (0.20, 0.25)
+# Break-even, not a fitted number: at the band's measured 27% strike and Kalshi's
+# 0.07*p*(1-p) fee, an ask of 0.266 returns exactly zero. This is the safety rail below it.
+# A 0.25 de-vigged draw quotes near 0.255 on a normal 2% board, so it should rarely bind;
+# when it does, the book is wide and the bet is not the one that was measured.
+ERE_DRAW_MAX_ASK = 0.26
+
+
+def devig_draw(r):
+    """The draw's share of a three-way board with the venue's margin removed, or None."""
+    pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+    if pa is None or pdr is None or pb is None:
+        return None
+    total = float(pa) + float(pdr) + float(pb)
+    return (float(pdr) / total) if total > 0 else None
+
+
+def ere_draw_picks(universe=None):
+    """Back the Tie on every Kalshi Eredivisie match whose de-vigged draw sits in the band."""
+    out = []
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(ERE_DRAW_SERIES):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("draw", True):
+            continue
+        p = devig_draw(r)
+        if p is None or not (ERE_DRAW_BAND[0] <= p < ERE_DRAW_BAND[1]):
+            continue
+        if float(r["price_draw"]) > ERE_DRAW_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="draw"))
+    return out
+
+
+def fetch_ere_draw(sport, universe=None):
+    """ERE_DRAW_BAND, Eredivisie only. Three-way soccer is the only domain that has a draw."""
+    if sport != "soccer":
+        return []
+    return ere_draw_picks(universe)
+
+
+# ---------------------------------------------------------------------------
 # Tennis combos — pre-registered 2026-09-21
 # ---------------------------------------------------------------------------
 # A combo pays only if EVERY leg wins, so it multiplies the edge instead of averaging it:
@@ -5559,6 +5655,7 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "ere_draw": fetch_ere_draw,
     "u35_low_scoring": fetch_u35_low_scoring,
     "o25_congestion": fetch_o25_congestion,
     "pin_totals": fetch_pin_totals,
