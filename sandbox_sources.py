@@ -566,7 +566,9 @@ SOURCES = {
              "+5.2pp, z +2.39 — and it strengthens again on closing prices only (+5.9pp, "
              "z +3.19). The same band pooled over twelve leagues is EXACTLY fair (z -0.14, "
              "ROI +0.00%), so this is a Dutch-league claim and widening it needs that test "
-             "re-run. Expect ~2-3 bets a matchweek, a 27-28% strike at ~0.23, twelve-bet "
+             "re-run. Eredivisie over 1.5 inside the 3.21-4.00 underdog band is a SEPARATE "
+             "and larger finding (+5.7pp held out, z +2.64) and is not part of this rule. "
+             "Expect ~2-3 bets a matchweek, a 27-28% strike at ~0.23, twelve-bet "
              "losing runs, and 30 settled bets no sooner than mid-December. Weak parts stated "
              "now: the held-out ROI bootstrap is [-1.2%, +33.9%] and its lower bound touches "
              "zero; 1,114 band matches are thirteen seasons, not 1,114 independent draws, and "
@@ -3304,9 +3306,13 @@ def band_picks(sport, band, universe=None):
 # and every quarter returned +12% to +20%. The edge is the band itself, spread evenly, so any
 # filter bolted on can only subtract. The other markets Kalshi lists for Eredivisie were swept
 # on the same 3,904 matches against a benchmark corrected on the other eleven leagues and are
-# flat: BTTS +0.1pp, Over 2.5 -0.1pp, Over 3.5 +0.8pp, team-to-score -0.2pp. Over 1.5 is the
-# near miss and is excluded on purpose — +1.9pp in 2013-2021, +0.5pp in 2021-2026. It was a
-# real edge and the market closed it.
+# flat: BTTS +0.1pp, Over 2.5 -0.1pp, Over 3.5 +0.8pp, team-to-score -0.2pp.
+#
+# Over 1.5 is the exception and the first reading of it here was WRONG. League-wide it looks
+# spent (+1.9pp in 2013-2021, +0.5pp in 2021-2026), but that average hides its shape: inside
+# the underdog band 3.21-4.00 it runs +3.7pp on the train half and +5.7pp on the held-out half
+# (z +2.64), while the other eleven leagues sit at exactly zero in the same band. That is a
+# separate and larger lane, not this one. Corrected 2026-09-26.
 ERE_DRAW_SERIES = "KXEREDIVISIEGAME"
 ERE_DRAW_BAND = (0.20, 0.25)
 # Break-even, not a fitted number: at the band's measured 27% strike and Kalshi's
