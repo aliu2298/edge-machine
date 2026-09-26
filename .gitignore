@@ -17,6 +17,7 @@
 # --- personal data / runtime state ---
 predictions.db
 staged_orders.json
+staged_orders_archive_cycle2.json
 
 web/src/components/StagedOrders.tsx
 lovable_earnings_spec.md
@@ -33,6 +34,9 @@ __pycache__/
 
 # --- backups / scratch ---
 *.bak
+
+# Deploy pipeline that does not belong in this public repo.
+ado-upload/
 
 # --- node / build output ---
 web/node_modules/

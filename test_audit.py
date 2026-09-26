@@ -6,6 +6,8 @@ one planted fault and must fire, and the same record with the fault removed must
 """
 import json
 import os
+import shutil
+import subprocess
 import sys
 import tempfile
 from datetime import datetime, timedelta, timezone
@@ -295,6 +297,27 @@ print("\nthe live repository")
 _rep = A.run(network=False)
 _live = [e for e in _rep.errors if e[0] != "fresh"]
 ok(not _live, "the Sandbox as committed passes every offline check" + ("" if not _live else f" — {_live[:3]}"))
+
+print("\nremoved paths: the deploy pipeline and the orders archive stay out of this repo")
+_root = os.path.dirname(os.path.abspath(__file__))
+_removed = ("ado-upload", "staged_orders_archive_cycle2.json")
+for _name in _removed:
+    ok(not os.path.exists(os.path.join(_root, _name)), f"{_name} does not exist")
+with open(os.path.join(_root, ".gitignore"), encoding="utf-8") as _gf:
+    _ignore_lines = _gf.read().splitlines()
+ok("ado-upload/" in _ignore_lines, ".gitignore contains ado-upload/")
+ok("staged_orders_archive_cycle2.json" in _ignore_lines,
+   ".gitignore contains staged_orders_archive_cycle2.json")
+_git = shutil.which("git")
+if _git:
+    for _name in _removed:
+        _ls = subprocess.run(
+            [_git, "ls-files", "--", _name],
+            cwd=_root, capture_output=True, text=True, check=False,
+        )
+        _listed = _ls.stdout if _ls.returncode == 0 else f"git ls-files exited {_ls.returncode}"
+        ok(_ls.returncode == 0 and _ls.stdout == "",
+           f"git ls-files {_name} returns nothing" + ("" if _listed == "" else f" — {_listed!r}"))
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all audit tests passed'}")
 for f in FAILS:
