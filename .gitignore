@@ -17,6 +17,7 @@
 # --- personal data / runtime state ---
 predictions.db
 staged_orders.json
+staged_orders_archive_cycle2.json
 
 web/src/components/StagedOrders.tsx
 lovable_earnings_spec.md
