@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-25T23:21:33+00:00",
+ "board_built_at": "2026-09-26T03:02:20+00:00",
  "leads": {
   "2026-09-19|Hamburg SV|FC Cologne|FC Cologne to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "FC Cologne",
@@ -313,8 +313,8 @@
    "id": "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule",
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
-   "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T23:21:33+00:00",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T03:02:20+00:00",
    "league": "MMA",
    "match": "Brady Hiestand v Rinya Nakamura",
    "pair": "mma_fav_band|mma",
@@ -344,8 +344,8 @@
    "id": "2026-09-26|John Castaneda|Alatengheili|John Castaneda to win \u00b7 MMA favourite-band rule",
    "kickoff": "2026-09-26T21:30Z",
    "lane": "production",
-   "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T23:21:33+00:00",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T03:02:20+00:00",
    "league": "MMA",
    "match": "John Castaneda v Alatengheili",
    "pair": "mma_fav_band|mma",
@@ -375,8 +375,8 @@
    "id": "2026-09-26|Luke McCormack|Kayamba Prospere|Luke McCormack to win \u00b7 OLBG community tips",
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
-   "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T23:21:33+00:00",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T03:02:20+00:00",
    "league": "Boxing",
    "match": "Luke McCormack v Kayamba Prospere",
    "pair": "olbg|boxing",
@@ -388,37 +388,6 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "olbg:aec-boxing-lukmcc-kaypro-2026-09-26",
-   "source": "olbg",
-   "sport": "boxing",
-   "status": "pending"
-  },
-  "2026-09-26|Nathan Heaney|Gerome Warburton|Gerome Warburton to win \u00b7 OLBG community tips": {
-   "away": "Gerome Warburton",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-26",
-   "edge_at_log": null,
-   "first_seen": "2026-09-22",
-   "headline": "Gerome Warburton to win",
-   "home": "Nathan Heaney",
-   "id": "2026-09-26|Nathan Heaney|Gerome Warburton|Gerome Warburton to win \u00b7 OLBG community tips",
-   "kickoff": "2026-09-26T03:00Z",
-   "lane": "production",
-   "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T23:21:33+00:00",
-   "league": "Boxing",
-   "match": "Nathan Heaney v Gerome Warburton",
-   "pair": "olbg|boxing",
-   "price_at_log": 0.64,
-   "route": {
-    "market": "aec-boxing-nathea-gerwar-2026-09-26",
-    "outcome": "Gerome Warburton",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "olbg:aec-boxing-nathea-gerwar-2026-09-26",
    "source": "olbg",
    "sport": "boxing",
    "status": "pending"
@@ -437,8 +406,8 @@
    "id": "2026-09-26|Vanessa Demopoulos|Yazmin Jauregui|Yazmin Jauregui to win \u00b7 MMA favourite-band rule",
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
-   "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T23:21:33+00:00",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T03:02:20+00:00",
    "league": "MMA",
    "match": "Vanessa Demopoulos v Yazmin Jauregui",
    "pair": "mma_fav_band|mma",
@@ -469,8 +438,8 @@
    "id": "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-27T01:30Z",
    "lane": "production",
-   "last_seen": "2026-09-25",
-   "last_seen_at": "2026-09-25T23:21:33+00:00",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T03:02:20+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v New England Revolution",
    "pair": "team1_form_l5|soccer_team1",
@@ -519,5 +488,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-25T23:21:33+00:00"
+ "updated_at": "2026-09-26T03:02:20+00:00"
 }
