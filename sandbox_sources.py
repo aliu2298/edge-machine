@@ -552,6 +552,33 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "turkey_o25_dog": dict(
+        label="Turkey over 2.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_o25"], baseline="population",
+        note="Pre-registered 2026-09-26, before it logged anything. Back OVER 2.5 GOALS on a "
+             "Kalshi Turkish Super Lig match when that fixture's own three-way board prices "
+             "the underdog under a de-vigged 0.135 (bookmaker decimal 7.00+), with the ask at "
+             "0.70 or less and the board holding no more than 6%. This is the strongest "
+             "finding of a 1,424-cell study across twelve leagues AND the only one measured "
+             "against REAL prices rather than a modelled benchmark: on 449 matches, "
+             "2013/14-2025/26, over 2.5 landed 71.05% against the match's own closing "
+             "over/under fair price of 63.03% — league part +6.9pp, z +3.03; train +6.1pp "
+             "(z +2.05), HELD OUT +8.0pp (z +2.27). In money at prices that existed: +5.95% "
+             "(+-3.26%) at the average closing price, +9.91% at the best. Turkey LEAGUE-WIDE "
+             "is flat on every line (-0.7, -0.1, +0.4, +0.8pp), so this is the band, not the "
+             "league. The same band fires on six lines at once — BTTS +10.3pp, dog-to-score "
+             "+9.2pp, over 3.5 +5.9pp — which is one finding: Turkish heavy mismatches are "
+             "far more open than the market prices them. ON SIGNIFICANCE, both ways: the BTTS "
+             "version at z +4.40 is the only cell of 1,424 that clears the permutation bar of "
+             "4.16, but BTTS has no real price so that figure is model-implied; the over-2.5 "
+             "version has a real price and reaches z +3.03, which does NOT clear. The cell "
+             "that clears is modelled, the cell that is verified does not clear. COVERAGE "
+             "RISK, stated up front: Kalshi publishes KXSUPERLIGTOTAL as a series but has "
+             "never listed a market we have seen, because Turkey was missing from "
+             "BTTS_LEAGUES until today and we never asked. If Kalshi lists no Turkish totals "
+             "this lane logs nothing, which is itself the answer. ~1 bet a matchweek, so the "
+             "30-bet floor is far off. Judged against backing the over on every match of this "
+             "market."),
     "liga_btts_even": dict(
         label="La Liga BTTS in balanced matches (favourite 1.60-2.00)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_btts"], baseline="population",
@@ -2949,6 +2976,15 @@ BTTS_LEAGUES = {                 # Kalshi fragment -> board league name (ESPN fo
     "UEL": "Europa League", "MLS": "MLS", "EREDIVISIE": "Eredivisie",
     "LIGAPORTUGAL": "Primeira Liga", "SAUDIPL": "Saudi Pro League",
     "SCOTTISHPREM": "Scottish Premiership",
+    # SUPERLIG added 2026-09-26. Kalshi has published KXSUPERLIGTOTAL and KXSUPERLIGBTTS as
+    # series all along — the API returns both — but this list is what asks for them, and
+    # Turkey was never on it, so the tracker has only ever seen the 3-way board. Nothing
+    # about Kalshi changed; we simply never requested the totals. ESPN covers tur.1, so the
+    # fixture join the goals rows depend on already works. Whether Kalshi LISTS Turkish
+    # totals week to week is still unknown: the Nations League series existed for months
+    # without ever listing a goals market (see CUP_FRAGS below), and this may be the same.
+    # Adding the fragment is how we find out, and it costs nothing if the answer is no.
+    "SUPERLIG": "Turkish Super Lig",
 }
 # CUPS and INTERNATIONALS (2026-09-19). The same six form rules, applied to cup ties and to
 # national teams as SEPARATE Sandbox pairs — "soccer_o15_cup", "soccer_o15_intl" and so on —
@@ -3731,6 +3767,92 @@ def _liga_rows(sport, universe, series, side):
         if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > LIGA_MAX_HOLD:
             continue
         out.append(r)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Turkey: over 2.5 in a heavy mismatch — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+# The strongest thing found in a 1,424-cell study across twelve leagues, and the only one
+# measured end to end against REAL prices rather than a modelled benchmark.
+#
+# Turkish Super Lig, underdog under a de-vigged 0.135 (bookmaker decimal 7.00+), over 2.5
+# goals, against the match's own closing over/under price:
+#
+#     ALL 13 seasons   n=449   realized 71.05%   market fair 63.03%   league part +6.9pp  z +3.03
+#     TRAIN 13/14-20/21 n=267  realized 67.79%   fair 60.90%          league part +6.1pp  z +2.05
+#     TEST  21/22-25/26 n=182  realized 75.82%   fair 66.15%          league part +8.0pp  z +2.27
+#
+# In money, at prices that actually existed: +5.95% (+-3.26%) at the average closing price,
+# +9.91% (+-3.39%) at the best. Every other lane in this file is benchmarked against a
+# Poisson fitted to a price; this one is the price.
+#
+# LEAGUE-WIDE TURKEY IS FLAT — over 1.5 -0.7pp, over 2.5 -0.1pp, over 3.5 +0.4pp, BTTS
+# +0.8pp — so this is the band and not the league, which is the opposite of the Bundesliga
+# lanes. The same band fires on six lines at once (BTTS +10.3pp, dog-to-score +9.2pp, over
+# 3.5 +5.9pp, favourite-to-score +3.1pp), all with both halves positive: one finding, which
+# is that Turkish heavy mismatches are far more open than the market prices them.
+#
+# ON SIGNIFICANCE, because it cuts both ways. The BTTS version of this cell (z +4.40) is the
+# ONLY cell of 1,424 that clears the permutation bar of 4.16 — but BTTS has no real price
+# here, so that number is model-implied. The over-2.5 version has a real price and reaches
+# z +3.03, which does NOT clear the bar. The cell that clears is modelled; the cell that is
+# verified does not clear. That is the honest state of it, and the Sandbox is what settles
+# the difference.
+TURKEY_TOTAL = "KXSUPERLIGTOTAL"
+TURKEY_GAME = "KXSUPERLIGGAME"
+# De-vigged underdog win probability. Decimal 7.00+ in Turkey spans up to 0.1341; 0.135 is
+# the round number just above it, and the same cut the La Liga lane uses.
+TURKEY_O25_DOG_MAX = 0.135
+# Break-even, not fitted: at the band's measured 71.05% and Kalshi's 0.07*p*(1-p) fee an ask
+# of 0.700 returns zero. It sits far above the 0.63 these matches usually price at, so it is
+# a rail against a bad quote rather than a filter.
+TURKEY_O25_MAX_ASK = 0.70
+TURKEY_MAX_HOLD = 0.06
+
+
+def turkey_o25_dogs(universe=None):
+    """{fixture code: de-vigged underdog probability} off the Kalshi Turkish three-way board."""
+    out = {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(TURKEY_GAME):
+            continue
+        pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+        if pa is None or pdr is None or pb is None:
+            continue
+        total = float(pa) + float(pdr) + float(pb)
+        if total <= 0:
+            continue
+        out[_ere_code(r.get("market_id"))] = min(float(pa), float(pb)) / total
+    return out
+
+
+def fetch_turkey_o25_dog(sport, universe=None):
+    """Back over 2.5 on a Turkish match the board prices as a heavy mismatch."""
+    if sport != "soccer_o25":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    dogs = turkey_o25_dogs(uni)
+    out = []
+    for r in uni.get(sport) or []:
+        if r.get("venue") != "kalshi_binary":
+            continue
+        if not str(r.get("market_id") or "").startswith(TURKEY_TOTAL):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
+            continue
+        a, b = r.get("price_a"), r.get("price_b")
+        if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > TURKEY_MAX_HOLD:
+            continue
+        p = dogs.get(_ere_code(r.get("market_id")))
+        if p is None or p >= TURKEY_O25_DOG_MAX:
+            continue
+        if float(a) > TURKEY_O25_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="a"))
     return out
 
 
@@ -6095,6 +6217,7 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "turkey_o25_dog": fetch_turkey_o25_dog,
     "liga_btts_even": fetch_liga_btts_even,
     "liga_u15_dog": fetch_liga_u15_dog,
     "bund_o35": fetch_bund_o35,

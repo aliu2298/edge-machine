@@ -5551,6 +5551,67 @@ ok("z -3.46" in S.SOURCES["liga_u15_dog"]["note"] and "fifteen weeks" in S.SOURC
 ok("UNDER league" in S.SOURCES["liga_btts_even"]["note"],
    "and records that this pocket runs AGAINST its own league, so it is not widened by mistake")
 
+# ---------------------------------------------------------------------------
+# Turkey over 2.5 in heavy mismatches — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+ok("SUPERLIG" in S.BTTS_LEAGUES,
+   "Turkey is on the fetch list — without it KXSUPERLIGTOTAL is never requested and the lane cannot fire")
+eq(S.BTTS_LEAGUES["SUPERLIG"], "Turkish Super Lig", "and it is named the way the board groups it")
+
+def _tg(code, pa, pdr, pb):
+    return dict(venue="kalshi", market_id=f"KXSUPERLIGGAME-{code}", price_a=pa, price_draw=pdr, price_b=pb)
+def _tt(code, ask, no=None, trade=True, untraded=False, series="KXSUPERLIGTOTAL"):
+    return dict(venue="kalshi_binary", market_id=f"{series}-{code}-3", price_a=ask,
+                price_b=no if no is not None else round(1.03 - ask, 2),
+                tradeable={"a": trade, "b": True}, untraded=untraded)
+
+_tu = {"soccer": [_tg("26OCT03GALKAS", 0.86, 0.10, 0.06),   # dog 0.0588 -> heavy mismatch
+                  _tg("26OCT03TRASAM", 0.45, 0.28, 0.29)],  # dog 0.2843 -> competitive
+       "soccer_o25": [_tt("26OCT03GALKAS", 0.64), _tt("26OCT03TRASAM", 0.55)]}
+eq([p["market_id"] for p in S.fetch_turkey_o25_dog("soccer_o25", universe=_tu)],
+   ["KXSUPERLIGTOTAL-26OCT03GALKAS-3"],
+   "Turkey lane takes the heavy mismatch and leaves the competitive match")
+eq([p["pick"] for p in S.fetch_turkey_o25_dog("soccer_o25", universe=_tu)], ["a"],
+   "and it buys the OVER")
+eq(len(S.fetch_turkey_o25_dog("soccer_o25", universe={
+    "soccer": [_tg("d1", 0.72, 0.18, 0.14)], "soccer_o25": [_tt("d1", 0.64)]})), 1,
+   "a de-vigged underdog of 0.1346 is inside the cut")
+eq(S.fetch_turkey_o25_dog("soccer_o25", universe={
+    "soccer": [_tg("d2", 0.71, 0.18, 0.15)], "soccer_o25": [_tt("d2", 0.64)]}), [],
+   "but 0.1442 is out — the cut is 0.135, exclusive")
+eq(S.fetch_turkey_o25_dog("soccer_o25", universe={
+    "soccer": [_tg("c1", 0.86, 0.10, 0.06)], "soccer_o25": [_tt("c1", 0.71)]}), [],
+   "an ask of 0.71 is refused — 0.700 is break-even at the measured 71.05%")
+eq(len(S.fetch_turkey_o25_dog("soccer_o25", universe={
+    "soccer": [_tg("c2", 0.86, 0.10, 0.06)], "soccer_o25": [_tt("c2", 0.70)]})), 1,
+   "an ask of exactly 0.70 is still taken")
+eq(S.fetch_turkey_o25_dog("soccer_o25", universe={
+    "soccer": [_tg("h1", 0.86, 0.10, 0.06)], "soccer_o25": [_tt("h1", 0.64, 0.45)]}), [],
+   "a board holding 9% is refused")
+eq(S.fetch_turkey_o25_dog("soccer_o25", universe={"soccer": [], "soccer_o25": [_tt("m1", 0.64)]}), [],
+   "a total with no winner board is skipped, never assumed a mismatch")
+eq(S.fetch_turkey_o25_dog("soccer_o25", universe={
+    "soccer": [_tg("x1", 0.86, 0.10, 0.06)], "soccer_o25": [_tt("x1", 0.64, series="KXEPLTOTAL")]}), [],
+   "another league's total is not this lane's")
+eq((S.fetch_turkey_o25_dog("soccer_o15", universe=_tu), S.fetch_turkey_o25_dog("soccer_u35", universe=_tu)),
+   ([], []), "the lane is over 2.5 only — the TOTAL series carries 1.5 and 3.5 as well")
+eq((S.TURKEY_O25_DOG_MAX, S.TURKEY_O25_MAX_ASK, S.TURKEY_TOTAL, S.TURKEY_GAME),
+   (0.135, 0.70, "KXSUPERLIGTOTAL", "KXSUPERLIGGAME"),
+   "cut, ceiling and both series are the pre-registered ones")
+eq((S.SOURCES["turkey_o25_dog"]["sports"], S.SOURCES["turkey_o25_dog"]["baseline"],
+    S.CHALLENGERS["turkey_o25_dog"] is S.fetch_turkey_o25_dog),
+   (["soccer_o25"], "population", True), "turkey_o25_dog is registered on the over-2.5 domain and wired up")
+ok(not S.lane_paused("turkey_o25_dog", "soccer_o25"), "the Turkey lane is not paused")
+_tn = S.SOURCES["turkey_o25_dog"]["note"]
+ok("z +3.03" in _tn and "71.05" in _tn and "63.03" in _tn,
+   "the note pins the realized rate, the real market price it beat, and the z")
+ok("+5.95" in _tn and "REAL prices" in _tn,
+   "and records that this is the one lane measured against real prices, with its ROI")
+ok("does NOT clear" in _tn and "4.16" in _tn,
+   "and states plainly that the verified version does not clear the permutation bar")
+ok("COVERAGE RISK" in _tn,
+   "and warns that Kalshi may never list Turkish totals, in which case the lane logs nothing")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
