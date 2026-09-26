@@ -552,6 +552,31 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "ere_o15": dict(
+        label="Eredivisie over 1.5, underdog priced 3.21-4.00", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_o15"], baseline="population",
+        note="Pre-registered 2026-09-26, before it logged anything. Back OVER 1.5 GOALS on a "
+             "Kalshi Eredivisie match when that fixture's own three-way board prices the "
+             "underdog at a de-vigged 0.234-0.296 — the translation of bookmaker decimal odds "
+             "3.21-4.00, a clear but not overwhelming favourite — and the over-1.5 ask is 0.81 "
+             "or less. Nothing else selects it. Research on 3,904 Eredivisie matches with "
+             "closing prices (2013/14-2025/26), measured against the over-1.5 probability "
+             "implied by each match's own closing over-2.5 price and with the other eleven "
+             "leagues' excess in the same band subtracted: all 13 seasons 82.4% against 78.4% "
+             "implied, league part +4.0pp, z +3.13; train 13/14-20/21 +3.0pp (z +1.87); HELD "
+             "OUT 21/22-25/26 +5.7pp (z +2.73), larger on the half the band never saw. "
+             "Positive in all three disjoint eras and in ten of thirteen seasons. THE CASE "
+             "AGAINST, stated now rather than later: it is a SPIKE and not a gradient — "
+             "disjoint underdog bands read +0.7pp, +4.3pp, -0.1pp, -0.3pp, +1.3pp, and the "
+             "correlation between any 1X2 price and the over-1.5 residual is 0.00 both here "
+             "and in the other eleven leagues, so there is no mechanism behind it. 60 league x "
+             "band cells were scanned and this ranks FIRST at z +3.27 against an expected max "
+             "of ~2.86 under noise, while the same field throws off La Liga dog 7.00+ at "
+             "z -3.44, a larger deviation nobody has a story for. Expect ~2 bets a matchweek "
+             "and a 0.81 ceiling that BINDS often, since Kalshi quotes Eredivisie over-1.5 at "
+             "0.84-0.93 on the mismatches it lists most. Judged against backing over 1.5 on "
+             "every match of this market over the same period, so it only counts if THIS band "
+             "beats overs in general."),
     "ere_draw": dict(
         label="Eredivisie draw band (de-vigged 0.20-0.25)", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer"], baseline="draw_population",
@@ -3359,6 +3384,102 @@ def fetch_ere_draw(sport, universe=None):
 
 
 # ---------------------------------------------------------------------------
+# Eredivisie over 1.5, by the underdog's price — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+# The second Eredivisie lane, and a different market from ere_draw: back OVER 1.5 GOALS when
+# the same fixture's three-way board prices the underdog inside ERE_O15_DOG_BAND. The band is
+# the de-vig of bookmaker decimal odds 3.21-4.00 — a clear but not overwhelming favourite.
+#
+# Measured on 3,904 Eredivisie matches with closing prices, 2013/14-2025/26, against the
+# over-1.5 probability implied by the same match's closing over-2.5 price, with the other
+# eleven leagues' own excess in the same band SUBTRACTED so only the league-specific part
+# is counted. All 13 seasons: 82.4% against 78.4% implied, league part +4.0pp, z +3.13.
+# Train 13/14-20/21: +3.0pp (z +1.87). Held out 21/22-25/26: +5.7pp (z +2.73) — larger on
+# the half the band never saw. Ten of thirteen seasons finished above implied, and the cell
+# is positive in all three disjoint eras (+4.0pp, +2.3pp, +6.9pp).
+#
+# THE CASE AGAINST, recorded here so the record is judged against an honest prior. This is a
+# SPIKE, not a gradient. Disjoint underdog bands across the same 13 seasons read +0.7pp,
+# +4.3pp, -0.1pp, -0.3pp, +1.3pp — everything either side of it is flat, and the correlation
+# between any 1X2 price and the over-1.5 residual is 0.00 in Eredivisie AND in the other
+# eleven leagues. So there is no mechanism, only a bucket. Worse, 60 league x band cells were
+# scanned and this one ranks FIRST at z +3.27 against an expected maximum of ~2.86 under pure
+# noise — and the same field throws off La Liga's dog 7.00+ at z -3.44, a LARGER deviation in
+# a direction nobody has a story for. A field that produces that can produce this. The lane
+# exists because the Sandbox settles it forward on bets nobody has seen, which is the only
+# thing that can separate the two, not because the backtest proved it.
+#
+# ere_draw's band was re-checked against this and they are different markets on mostly
+# different fixtures; neither is a filter on the other, and both log independently.
+ERE_O15_TOTAL = "KXEREDIVISIETOTAL"
+ERE_O15_GAME = "KXEREDIVISIEGAME"
+# De-vigged underdog win probability. This is the mechanical translation of the registered
+# 3.21-4.00 decimal band at Eredivisie's measured 6.2% three-way hold, so it carries to a
+# 2%-hold venue unchanged. A slightly different window (0.230-0.290) scores better on the
+# same data (z +3.39 v +3.13); it was NOT taken, because choosing it after seeing that is
+# refitting the band on the evidence meant to test it.
+ERE_O15_DOG_BAND = (0.234, 0.296)
+# Break-even, not fitted: at the band's measured 82.4% and Kalshi's 0.07*p*(1-p) fee, an ask
+# of 0.816 returns exactly zero. Kalshi quoted Eredivisie over-1.5 at 0.84-0.93 on the big
+# mismatches it lists most often, so this ceiling is expected to BIND often and that is the
+# point — above it the bet being measured is not the bet being offered.
+ERE_O15_MAX_ASK = 0.81
+
+
+def _ere_code(market_id):
+    """'KXEREDIVISIETOTAL-26SEP18GROZWO-2' -> '26SEP18GROZWO'; one fixture's markets share it."""
+    return (str(market_id or "").split("-") + ["", ""])[1]
+
+
+def ere_o15_dogs(universe=None):
+    """{fixture code: de-vigged underdog win probability} off the Kalshi Eredivisie 3-way board."""
+    out = {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(ERE_O15_GAME):
+            continue
+        pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+        if pa is None or pdr is None or pb is None:
+            continue
+        total = float(pa) + float(pdr) + float(pb)
+        if total <= 0:
+            continue
+        out[_ere_code(r.get("market_id"))] = min(float(pa), float(pb)) / total
+    return out
+
+
+def ere_o15_picks(sport, universe=None):
+    """Back over 1.5 on a Kalshi Eredivisie total when its own winner board prices the dog in band."""
+    uni = universe if universe is not None else (UNIVERSE or {})
+    dogs = ere_o15_dogs(uni)
+    out = []
+    for r in uni.get(sport) or []:
+        if r.get("venue") != "kalshi_binary":
+            continue
+        if not str(r.get("market_id") or "").startswith(ERE_O15_TOTAL):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
+            continue
+        p = dogs.get(_ere_code(r.get("market_id")))
+        if p is None or not (ERE_O15_DOG_BAND[0] <= p < ERE_O15_DOG_BAND[1]):
+            continue
+        ask = r.get("price_a")
+        if ask is None or float(ask) > ERE_O15_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
+def fetch_ere_o15(sport, universe=None):
+    """ERE_O15_DOG_BAND, Eredivisie league matches only. No cup or international twin exists."""
+    if sport != "soccer_o15":
+        return []
+    return ere_o15_picks(sport, universe)
+
+
+# ---------------------------------------------------------------------------
 # Tennis combos — pre-registered 2026-09-21
 # ---------------------------------------------------------------------------
 # A combo pays only if EVERY leg wins, so it multiplies the edge instead of averaging it:
@@ -5661,6 +5782,7 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "ere_o15": fetch_ere_o15,
     "ere_draw": fetch_ere_draw,
     "u35_low_scoring": fetch_u35_low_scoring,
     "o25_congestion": fetch_o25_congestion,

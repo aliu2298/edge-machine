@@ -5333,6 +5333,73 @@ ok("the draw on every match" in _ea["baseline"][1],
    "ere_draw is judged against backing the draw on every three-way match")
 eq(_ea["baseline"][0], True, "and beats it here (2 of 4 against the population's 1 of 5)")
 
+# ---------------------------------------------------------------------------
+# Eredivisie over 1.5 by the underdog's price — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+def _eg(code, pa, pdr, pb):
+    return dict(venue="kalshi", market_id=f"KXEREDIVISIEGAME-{code}",
+                price_a=pa, price_draw=pdr, price_b=pb)
+def _et(code, ask, no=None, trade=True, untraded=False, series="KXEREDIVISIETOTAL"):
+    return dict(venue="kalshi_binary", market_id=f"{series}-{code}-2", price_a=ask,
+                price_b=no if no is not None else round(1.04 - ask, 2),
+                tradeable={"a": trade, "b": True}, untraded=untraded)
+
+_ou = {"soccer": [_eg("26SEP26ZWONIJ", 0.27, 0.25, 0.50),    # dog 0.2647 -> IN BAND
+                  _eg("26SEP26AJAWIL", 0.90, 0.08, 0.04),    # dog 0.0392 -> blowout, out
+                  _eg("26SEP26SPAUTR", 0.34, 0.26, 0.42),    # dog 0.3333 -> too even, out
+                  _eg("26SEP26TELCAM", 0.60, 0.22, 0.20)],   # dog 0.1951 -> too lopsided, out
+       "soccer_o15": [_et("26SEP26ZWONIJ", 0.79), _et("26SEP26AJAWIL", 0.93),
+                      _et("26SEP26SPAUTR", 0.80), _et("26SEP26TELCAM", 0.86)]}
+eq(S.fetch_ere_o15("soccer_o15", universe=_ou),
+   [dict(market_id="KXEREDIVISIETOTAL-26SEP26ZWONIJ-2", pick="a")],
+   "Eredivisie over-1.5 backs only the fixture whose own winner board prices the dog in band")
+close(S.ere_o15_dogs(_ou)["26SEP26ZWONIJ"], 0.27 / 1.02,
+      "the underdog probability is the CHEAPER side de-vigged over the whole three-way board")
+eq(S._ere_code("KXEREDIVISIETOTAL-26SEP18GROZWO-2"), "26SEP18GROZWO",
+   "a total and its winner board share one fixture code")
+
+# Band edges, and the ceiling, are the rule.
+eq(len(S.fetch_ere_o15("soccer_o15", universe={
+    "soccer": [_eg("c1", 0.2387, 0.25, 0.5313)], "soccer_o15": [_et("c1", 0.79)]})), 1,
+   "a de-vigged dog exactly on 0.234 is in (lower bound inclusive)")
+eq(S.fetch_ere_o15("soccer_o15", universe={
+    "soccer": [_eg("c2", 0.302, 0.25, 0.468)], "soccer_o15": [_et("c2", 0.79)]}), [],
+   "a de-vigged dog of 0.296 is out (upper bound exclusive)")
+eq(S.fetch_ere_o15("soccer_o15", universe={
+    "soccer": [_eg("c3", 0.27, 0.25, 0.50)], "soccer_o15": [_et("c3", 0.82)]}), [],
+   "an ask above ERE_O15_MAX_ASK is refused — 0.816 is break-even at the measured 82.4%")
+eq((S.ERE_O15_DOG_BAND, S.ERE_O15_MAX_ASK, S.ERE_O15_TOTAL, S.ERE_O15_GAME),
+   ((0.234, 0.296), 0.81, "KXEREDIVISIETOTAL", "KXEREDIVISIEGAME"),
+   "band, ceiling and both series are the pre-registered ones")
+
+# A total with no winner board is unknown, not in band — it must never be bet on a default.
+eq(S.fetch_ere_o15("soccer_o15", universe={"soccer": [], "soccer_o15": [_et("c4", 0.79)]}), [],
+   "a total whose winner board is missing is skipped, never assumed in band")
+eq(S.fetch_ere_o15("soccer_o15", universe={
+    "soccer": [_eg("c5", 0.27, 0.25, 0.50)], "soccer_o15": [_et("c5", 0.79, trade=False)]}), [],
+   "an untradeable over leg is skipped")
+eq(S.fetch_ere_o15("soccer_o15", universe={
+    "soccer": [_eg("c6", 0.27, 0.25, 0.50)], "soccer_o15": [_et("c6", 0.79, untraded=True)]}), [],
+   "an untraded over market is skipped")
+eq(S.fetch_ere_o15("soccer_o15", universe={
+    "soccer": [_eg("c7", 0.27, 0.25, 0.50)], "soccer_o15": [_et("c7", 0.79, series="KXEPLTOTAL")]}), [],
+   "another league's total is not this lane's, even when an Eredivisie code collides")
+eq(S.fetch_ere_o15("soccer_o25", universe=_ou), [],
+   "the lane is over 1.5 only — the over-2.5 domain shares the series ticker and must not fire")
+eq(S.fetch_ere_o15("soccer_o15_cup", universe=_ou), [],
+   "no cup twin: Kalshi lists Eredivisie league matches only")
+
+eq((S.SOURCES["ere_o15"]["sports"], S.SOURCES["ere_o15"]["baseline"],
+    S.CHALLENGERS["ere_o15"] is S.fetch_ere_o15),
+   (["soccer_o15"], "population", True), "ere_o15 is registered on the over-1.5 domain and wired up")
+ok(not S.lane_paused("ere_o15", "soccer_o15"), "the new lane is not paused")
+_on = S.SOURCES["ere_o15"]["note"]
+ok("z +2.73" in _on and "0.234-0.296" in _on, "the note pins the band and its held-out result")
+ok("SPIKE" in _on and "z -3.44" in _on and "60 league" in _on,
+   "and the note carries the case AGAINST — the spike, the 60-cell scan and the larger opposite cell")
+ok(S.SOURCES["ere_o15"]["sports"] != S.SOURCES["ere_draw"]["sports"],
+   "the two Eredivisie lanes sit in different domains and cannot pool into one record")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
