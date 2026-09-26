@@ -552,6 +552,47 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "bund_o35": dict(
+        label="Bundesliga over 3.5, every match", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_u35"], baseline="population",
+        note="Pre-registered 2026-09-26, before it logged anything. Back OVER 3.5 GOALS on "
+             "every Kalshi Bundesliga match, skipping only a board holding more than 6%. "
+             "NOTHING is selected — no band, no form, no model — which is the whole point: "
+             "this is the only finding in a 540-cell study that survives its own correction, "
+             "and it survives because no cell was picked. Bundesliga 2022/23-2025/26, all "
+             "1,224 matches: the league beat its own price on over 3.5 by +3.71pp while the "
+             "other eleven leagues ran -0.67pp, a difference of +4.39pp at z +3.01. Counted "
+             "as six implicit tests (three goal lines x two eras) that needs 2.64, and it "
+             "clears. The same test on 2013/14-2017/18 gives -0.11pp, z -0.09 — so this has a "
+             "date, not a story. Mechanism is market lag on a regime shift: Bundesliga goals "
+             "went 2.88 to 3.13 to 3.19 across the three eras while the price's implied total "
+             "went 2.91 to 3.10 and then stopped, and the other eleven leagues' gap never "
+             "left +-1pp. WHY EVERYTHING ELSE WAS REJECTED: a permutation test reshuffling "
+             "league labels 300 times over all 52,335 matches showed this grid makes a "
+             "maximum |z| of 3.30 half the time from pure noise and needs 4.09 for "
+             "family-wise 5%; the largest cell in the real data was 3.44, permutation "
+             "p = 0.363. No absolute price ceiling, deliberately — the claim is relative "
+             "(+4.4pp over whatever the market says for that match), and a ceiling at the "
+             "long-run 37.5% base rate would reject every board Kalshi has quoted. Expect ~9 "
+             "bets a matchweek. If the regime reverts, this lane loses and the Sandbox says "
+             "so. Judged against backing the over on every match of this market."),
+    "bund_o35_draw": dict(
+        label="Bundesliga over 3.5, draw priced 3.60-4.00", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_u35"], baseline="population",
+        note="Pre-registered 2026-09-26, as the companion to bund_o35 and judged against it. "
+             "Identical bet — over 3.5 on a Kalshi Bundesliga match, 6% hold cap — but only "
+             "where that fixture's own three-way board prices the draw at a de-vigged "
+             "0.235-0.267, the translation of bookmaker decimal 3.60-4.00. That is where the "
+             "league's over-3.5 excess concentrates: +4.0pp over 13 seasons at z +2.82 on "
+             "1,188 matches against +1.7pp for the league as a whole. It is NOT proven and "
+             "the shape says so — train 13/14-20/21 gives +0.4pp (z +0.24) and the held-out "
+             "half +8.7pp (z +3.99), which is a trend appearing mid-sample rather than an "
+             "effect present throughout, and it could as easily be drift about to revert. It "
+             "also fails the study's own bar: the permutation threshold for a scanned cell in "
+             "this grid is |z| >= 4.09 and this is 2.82. bund_o35 keeps logging every match "
+             "including these, so a fixture in the band is logged by BOTH lanes and the "
+             "overlap is the comparison. If the band adds nothing over the plain league, the "
+             "two records converge and this lane is deleted. ~2.7 bets a matchweek."),
     "ere_o15": dict(
         label="Eredivisie over 1.5, underdog priced 3.21-4.00", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_o15"], baseline="population",
@@ -3480,6 +3521,116 @@ def fetch_ere_o15(sport, universe=None):
 
 
 # ---------------------------------------------------------------------------
+# Bundesliga over 3.5 — pre-registered 2026-09-26. Two lanes, wide and narrow.
+# ---------------------------------------------------------------------------
+# THE FINDING, and it is the only one in a 540-cell study that survives its own correction.
+# Bundesliga scores more than its price says, on the over-3.5 line, and only recently:
+#
+#            2022/23-2025/26   n=1224   Bundesliga +3.71pp   other 11 leagues -0.67pp
+#                                       difference +4.39pp,  z +3.01
+#            2013/14-2017/18   n=1530   difference -0.11pp,  z -0.09
+#
+# No band was chosen for that test and no cell was picked — it is the whole league on one
+# line. Count it as six implicit tests (three goal lines x two eras) and it needs z >= 2.64;
+# it clears. Everything else in the study does not, and the reason is worth keeping: a
+# permutation test that reshuffled league labels 300 times across all 52,335 matches found
+# that this grid produces a maximum |z| of 3.30 HALF THE TIME from pure noise, and needs
+# 4.09 for family-wise 5%. The largest cell anywhere in the real data was 3.44 — permutation
+# p = 0.363. Backtest magnitude proves nothing here. What makes this one different is that it
+# was not selected, and that the early era is flat, so it has a date rather than a story.
+#
+# The mechanism is market lag on a regime shift. Bundesliga goals went 2.88 -> 3.13 -> 3.19
+# across the three eras while the price's implied total went 2.91 -> 3.10 -> 3.10 and stopped
+# following. Over the same eras the other eleven leagues' gap never left +-1pp.
+#
+# TWO LANES, deliberately. bund_o35 takes every match — nothing selected, so nothing to
+# discount. bund_o35_draw takes only the draw-price band where the effect concentrates,
+# which is a real but unproven refinement (z +2.82 over 13 seasons, and +0.4pp train against
+# +8.7pp held out — the TREND shape, not the replicating one). A match in the band is logged
+# by BOTH, and that overlap is the comparison: if the band adds nothing, the two records
+# converge and the narrow lane is deleted.
+BUND_O35_TOTAL = "KXBUNDESLIGATOTAL"
+BUND_O35_GAME = "KXBUNDESLIGAGAME"
+# De-vigged draw probability. The mechanical translation of bookmaker decimal 3.60-4.00 at
+# Bundesliga's measured hold: the matches in that decimal band span exactly 0.2351-0.2669.
+BUND_O35_DRAW_BAND = (0.235, 0.267)
+# NOT an absolute price ceiling, on purpose. This lane's claim is RELATIVE — +4.4pp over
+# whatever the market says for that match — so a fixed ceiling would be measuring the wrong
+# thing. At Kalshi's typical over-3.5 ask of 0.41 against a de-vigged 0.40 the bet returns
+# about +6.5% net, while an absolute ceiling set at the long-run 37.5% base rate would have
+# rejected every Bundesliga board Kalshi has actually quoted. The guard that belongs here is
+# against a WIDE book, where the ask is not the price: skip anything holding more than this.
+# Kalshi's over-3.5 markets have averaged +3.33%.
+BUND_O35_MAX_HOLD = 0.06
+
+
+def _bund_o35_rows(sport, universe):
+    """The Kalshi Bundesliga over-3.5 rows, gated on liquidity and book width."""
+    out = []
+    for r in (universe or {}).get(sport) or []:
+        if r.get("venue") != "kalshi_binary":
+            continue
+        if not str(r.get("market_id") or "").startswith(BUND_O35_TOTAL):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
+            continue
+        a, b = r.get("price_a"), r.get("price_b")
+        # Rounded: prices arrive in whole cents, but 0.50 + 0.56 - 1.0 is 0.06000000000000005
+        # in binary floating point, which rejected a board holding exactly the cap.
+        if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > BUND_O35_MAX_HOLD:
+            continue
+        out.append(r)
+    return out
+
+
+def bund_o35_draws(universe=None):
+    """{fixture code: de-vigged draw probability} off the Kalshi Bundesliga three-way board."""
+    out = {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(BUND_O35_GAME):
+            continue
+        pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+        if pa is None or pdr is None or pb is None:
+            continue
+        total = float(pa) + float(pdr) + float(pb)
+        if total <= 0:
+            continue
+        out[_ere_code(r.get("market_id"))] = float(pdr) / total
+    return out
+
+
+def fetch_bund_o35(sport, universe=None):
+    """Back over 3.5 on every Kalshi Bundesliga match. Nothing is selected."""
+    if sport != "soccer_u35":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    return [dict(market_id=r["market_id"], pick="a") for r in _bund_o35_rows(sport, uni)]
+
+
+def fetch_bund_o35_draw(sport, universe=None):
+    """bund_o35's bet, only where the winner board prices the draw in BUND_O35_DRAW_BAND.
+
+    bund_o35 is NOT filtered and keeps logging every Bundesliga match, so a fixture in the
+    band is logged by both lanes under two sources and the two records can be read side by
+    side. Duplicate protection is per source, so that overlap is intended, not a fault.
+    """
+    if sport != "soccer_u35":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    draws = bund_o35_draws(uni)
+    out = []
+    for r in _bund_o35_rows(sport, uni):
+        p = draws.get(_ere_code(r.get("market_id")))
+        if p is None or not (BUND_O35_DRAW_BAND[0] <= p < BUND_O35_DRAW_BAND[1]):
+            continue
+        out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Tennis combos — pre-registered 2026-09-21
 # ---------------------------------------------------------------------------
 # A combo pays only if EVERY leg wins, so it multiplies the edge instead of averaging it:
@@ -5782,6 +5933,8 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "bund_o35": fetch_bund_o35,
+    "bund_o35_draw": fetch_bund_o35_draw,
     "ere_o15": fetch_ere_o15,
     "ere_draw": fetch_ere_draw,
     "u35_low_scoring": fetch_u35_low_scoring,

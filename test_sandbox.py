@@ -5400,6 +5400,68 @@ ok("SPIKE" in _on and "z -3.44" in _on and "60 league" in _on,
 ok(S.SOURCES["ere_o15"]["sports"] != S.SOURCES["ere_draw"]["sports"],
    "the two Eredivisie lanes sit in different domains and cannot pool into one record")
 
+# ---------------------------------------------------------------------------
+# Bundesliga over 3.5, wide and narrow — pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+def _bg(code, pa, pdr, pb):
+    return dict(venue="kalshi", market_id=f"KXBUNDESLIGAGAME-{code}",
+                price_a=pa, price_draw=pdr, price_b=pb)
+def _bt(code, ask, no=None, trade=True, untraded=False, series="KXBUNDESLIGATOTAL"):
+    return dict(venue="kalshi_binary", market_id=f"{series}-{code}-4", price_a=ask,
+                price_b=no if no is not None else round(1.03 - ask, 2),
+                tradeable={"a": trade, "b": True}, untraded=untraded)
+
+_bu = {"soccer": [_bg("26SEP27BVBSGE", 0.45, 0.26, 0.31),    # draw 0.2549 -> IN BAND
+                  _bg("26SEP27BAYHOF", 0.88, 0.09, 0.05),    # draw 0.0882 -> out
+                  _bg("26SEP27FCBRBL", 0.34, 0.29, 0.39)],   # draw 0.2837 -> out, too even
+       "soccer_u35": [_bt("26SEP27BVBSGE", 0.44), _bt("26SEP27BAYHOF", 0.52),
+                      _bt("26SEP27FCBRBL", 0.40)]}
+eq({p["market_id"] for p in S.fetch_bund_o35("soccer_u35", universe=_bu)},
+   {"KXBUNDESLIGATOTAL-26SEP27BVBSGE-4", "KXBUNDESLIGATOTAL-26SEP27BAYHOF-4",
+    "KXBUNDESLIGATOTAL-26SEP27FCBRBL-4"},
+   "the WIDE lane takes every Bundesliga over-3.5 board — nothing is selected")
+eq([p["market_id"] for p in S.fetch_bund_o35_draw("soccer_u35", universe=_bu)],
+   ["KXBUNDESLIGATOTAL-26SEP27BVBSGE-4"],
+   "the NARROW lane takes only the fixture whose winner board prices the draw in band")
+eq({p["pick"] for p in S.fetch_bund_o35("soccer_u35", universe=_bu)}, {"a"},
+   "both lanes buy the OVER, never the under")
+ok(all(p["market_id"] in {q["market_id"] for q in S.fetch_bund_o35("soccer_u35", universe=_bu)}
+       for p in S.fetch_bund_o35_draw("soccer_u35", universe=_bu)),
+   "narrow is a strict subset of wide, so the overlap is the comparison between them")
+
+# The hold cap is the only price guard, and it must bite on a wide book.
+eq(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("w1", 0.50, 0.60)]}), [],
+   "a board holding 10% is refused — on a wide book the ask is not the price")
+eq(len(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("w2", 0.50, 0.56)]})), 1,
+   "a board holding 6% is still taken (cap is inclusive)")
+eq(len(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("w3", 0.55)]})), 1,
+   "there is NO absolute ask ceiling: the claim is relative, and 0.55 is above every base rate")
+eq((S.BUND_O35_DRAW_BAND, S.BUND_O35_MAX_HOLD, S.BUND_O35_TOTAL, S.BUND_O35_GAME),
+   ((0.235, 0.267), 0.06, "KXBUNDESLIGATOTAL", "KXBUNDESLIGAGAME"),
+   "band, hold cap and both series are the pre-registered ones")
+
+eq(S.fetch_bund_o35_draw("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n1", 0.44)]}), [],
+   "narrow skips a total whose winner board is missing, never assumes it in band")
+eq(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n2", 0.44, trade=False)]}), [],
+   "an untradeable over leg is skipped")
+eq(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n3", 0.44, series="KXEPLTOTAL")]}), [],
+   "another league's total is not this lane's")
+eq((S.fetch_bund_o35("soccer_o15", universe=_bu), S.fetch_bund_o35_draw("soccer_o25", universe=_bu)),
+   ([], []), "both lanes are over-3.5 only — the series ticker is shared with other goal lines")
+
+for _n in ("bund_o35", "bund_o35_draw"):
+    eq((S.SOURCES[_n]["sports"], S.SOURCES[_n]["baseline"]), (["soccer_u35"], "population"),
+       f"{_n} is registered on the over-3.5 domain, judged against the population")
+    ok(not S.lane_paused(_n, "soccer_u35"), f"{_n} is not paused")
+ok("z +3.01" in S.SOURCES["bund_o35"]["note"] and "z -0.09" in S.SOURCES["bund_o35"]["note"],
+   "the wide lane's note pins both the recent result and the flat early era that dates it")
+ok("4.09" in S.SOURCES["bund_o35"]["note"] and "p = 0.363" in S.SOURCES["bund_o35"]["note"],
+   "and the permutation threshold that rejected every other cell in the study")
+ok("z +2.82" in S.SOURCES["bund_o35_draw"]["note"] and "4.09" in S.SOURCES["bund_o35_draw"]["note"],
+   "the narrow lane's note states it does NOT clear that threshold")
+ok(S.CHALLENGERS["bund_o35"] is not S.CHALLENGERS["bund_o35_draw"],
+   "the two lanes are separate sources so neither can pool into the other's record")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)
