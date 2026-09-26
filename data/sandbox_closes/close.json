@@ -380,6 +380,11 @@
    "lead_min": 59.6,
    "price": 0.71
   },
+  "espn_fpi:aec-mlb-cin-tor-2026-09-26": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 32.7,
+   "price": 0.6
+  },
   "espn_fpi:aec-mlb-cle-bos-2026-09-22": {
    "at": "2026-09-22T22:04:02+00:00",
    "lead_min": 41.0,
@@ -434,11 +439,6 @@
    "at": "2026-09-25T21:49:07+00:00",
    "lead_min": 55.9,
    "price": 0.505
-  },
-  "espn_fpi:aec-mlb-nyy-min-2026-09-16": {
-   "at": "2026-09-16T17:16:20+00:00",
-   "lead_min": 23.7,
-   "price": 0.615
   },
   "espn_fpi:aec-mlb-phi-nym-2026-09-17": {
    "at": "2026-09-17T23:04:51+00:00",
@@ -690,6 +690,11 @@
    "lead_min": 17.6,
    "price": 0.79
   },
+  "o15_ranked:KXUEFANLTOTAL-26SEP26MKDSUI-2": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 10.7,
+   "price": 0.77
+  },
   "oddspedia:aec-cplcr-aabf-gaw-2026-09-18": {
    "at": "2026-09-17T23:04:51+00:00",
    "lead_min": 55.1,
@@ -734,6 +739,11 @@
    "at": "2026-09-25T18:32:55+00:00",
    "lead_min": 12.1,
    "price": 0.85
+  },
+  "p05_unbeaten:KXUEFANLGAME-26SEP26MKDSUI-MKD": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 10.7,
+   "price": 0.94
   },
   "pinnacle:aec-cplcr-aabf-jka-2026-09-20": {
    "at": "2026-09-20T22:24:11+00:00",
@@ -860,11 +870,6 @@
    "lead_min": 11.8,
    "price": 0.45
   },
-  "scores24:KXWTAMATCH-26SEP16SEMKOS": {
-   "at": "2026-09-16T17:16:20+00:00",
-   "lead_min": 43.7,
-   "price": 0.56
-  },
   "scores24:aec-mlb-ath-tb-2026-09-17": {
    "at": "2026-09-17T16:57:14+00:00",
    "lead_min": 12.8,
@@ -885,11 +890,6 @@
    "lead_min": 10.1,
    "price": 0.585
   },
-  "scores24:aec-mlb-nyy-min-2026-09-16": {
-   "at": "2026-09-16T17:16:20+00:00",
-   "lead_min": 23.7,
-   "price": 0.615
-  },
   "scores24:aec-mlb-phi-nym-2026-09-17": {
    "at": "2026-09-17T23:04:51+00:00",
    "lead_min": 10.1,
@@ -904,6 +904,11 @@
    "at": "2026-09-20T14:12:01+00:00",
    "lead_min": 18.0,
    "price": 0.39
+  },
+  "soccerpredictions:KXBRASILEIROBGAME-26SEP26NAUREC": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 55.7,
+   "price": 0.42
   },
   "soccerpredictions:KXBUNDESLIGAGAME-26SEP19HSVKOE": {
    "at": "2026-09-19T13:23:06+00:00",
@@ -1050,6 +1055,21 @@
    "lead_min": 32.1,
    "price": 0.77
   },
+  "spot:KXSOLD-26SEP2617-T119.9999": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 30.7,
+   "price": 0.96
+  },
+  "spot:KXSOLD-26SEP2617-T120.9999": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 30.7,
+   "price": 0.72
+  },
+  "spot:KXSOLD-26SEP2617-T121.9999": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 30.7,
+   "price": 0.16
+  },
   "team1_form_l5:KXBUNDESLIGATEAMTOTAL-26SEP19HSVKOE-KOE1": {
    "at": "2026-09-19T13:23:06+00:00",
    "lead_min": 6.9,
@@ -1075,6 +1095,11 @@
    "lead_min": 22.1,
    "price": 0.9
   },
+  "team1_form_l5:KXUEFANLTEAMTOTAL-26SEP26CZECRO-CRO1": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 10.7,
+   "price": 0.82
+  },
   "team2_form_l10:KXMLSTEAMTOTAL-26SEP19SKCPHI-PHI2": {
    "at": "2026-09-20T00:07:56+00:00",
    "lead_min": 22.1,
@@ -1085,10 +1110,20 @@
    "lead_min": 12.1,
    "price": 0.58
   },
-  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP16MALMMO": {
-   "at": "2026-09-16T17:16:20+00:00",
-   "lead_min": 53.7,
-   "price": 0.76
+  "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26ALBBLR-ALB2": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 10.7,
+   "price": 0.52
+  },
+  "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26MKDSUI-SUI2": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 10.7,
+   "price": 0.66
+  },
+  "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26SVKMDA-SVK2": {
+   "at": "2026-09-26T18:34:15+00:00",
+   "lead_min": 10.7,
+   "price": 0.77
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP17BINSUN": {
    "at": "2026-09-17T06:40:29+00:00",
@@ -1169,11 +1204,6 @@
    "at": "2026-09-22T04:48:39+00:00",
    "lead_min": 11.3,
    "price": 0.91
-  },
-  "tennis_fav_band:KXWTAMATCH-26SEP16SONJOV": {
-   "at": "2026-09-16T17:16:20+00:00",
-   "lead_min": 43.7,
-   "price": 0.79
   },
   "tennis_fav_band:KXWTAMATCH-26SEP19LIASAI": {
    "at": "2026-09-19T05:01:53+00:00",
@@ -1506,5 +1536,5 @@
    "price": 0.61
   }
  },
- "updated": "2026-09-26T14:43:16+00:00"
+ "updated": "2026-09-26T18:34:15+00:00"
 }
