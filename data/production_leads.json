@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-26T11:26:07+00:00",
+ "board_built_at": "2026-09-26T13:06:17+00:00",
  "leads": {
   "2026-09-19|Hamburg SV|FC Cologne|FC Cologne to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "FC Cologne",
@@ -299,6 +299,37 @@
    "sport": "mma",
    "status": "hit"
   },
+  "2026-09-26|Alexis de la Cerda|Cain Lewis|Alexis de la Cerda to win \u00b7 OLBG community tips": {
+   "away": "Cain Lewis",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-26",
+   "headline": "Alexis de la Cerda to win",
+   "home": "Alexis de la Cerda",
+   "id": "2026-09-26|Alexis de la Cerda|Cain Lewis|Alexis de la Cerda to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T15:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
+   "league": "Boxing",
+   "match": "Alexis de la Cerda v Cain Lewis",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.78,
+   "route": {
+    "market": "aec-boxing-alecer-cailew-2026-09-26",
+    "outcome": "Alexis de la Cerda",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-alecer-cailew-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "pending"
+  },
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
    "bet": {
@@ -314,7 +345,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "MMA",
    "match": "Brady Hiestand v Rinya Nakamura",
    "pair": "mma_fav_band|mma",
@@ -345,7 +376,7 @@
    "kickoff": "2026-09-26T21:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "MMA",
    "match": "John Castaneda v Alatengheili",
    "pair": "mma_fav_band|mma",
@@ -376,7 +407,7 @@
    "kickoff": "2026-09-26T14:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "Boxing",
    "match": "Lewis Richardson v Ivan Trofimovic",
    "pair": "olbg|boxing",
@@ -407,7 +438,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "Boxing",
    "match": "Luke McCormack v Kayamba Prospere",
    "pair": "olbg|boxing",
@@ -438,7 +469,7 @@
    "kickoff": "2026-09-26T15:50Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "Boxing",
    "match": "Nelson Birchall v Lewis Morris",
    "pair": "olbg|boxing",
@@ -469,7 +500,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "MMA",
    "match": "Vanessa Demopoulos v Yazmin Jauregui",
    "pair": "mma_fav_band|mma",
@@ -501,7 +532,7 @@
    "kickoff": "2026-09-27T01:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "last_seen_at": "2026-09-26T13:06:17+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v New England Revolution",
    "pair": "team1_form_l5|soccer_team1",
@@ -550,5 +581,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-26T11:26:07+00:00"
+ "updated_at": "2026-09-26T13:06:17+00:00"
 }
