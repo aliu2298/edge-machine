@@ -2051,13 +2051,13 @@
    "price": 0.01
   },
   "nws:KXHIGHLAX-26SEP25-B81.5": {
-   "at": "2026-09-26T06:38:31+00:00",
-   "lead_min": 21.5,
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 6.3,
    "price": 0.01
   },
   "nws:KXHIGHLAX-26SEP25-B83.5": {
-   "at": "2026-09-26T06:38:31+00:00",
-   "lead_min": 21.5,
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 6.3,
    "price": 0.01
   },
   "o15_cup_mismatch:KXKNVBCUPTOTAL-26SEP23IJSGEM-2": {
@@ -2510,10 +2510,20 @@
    "lead_min": 6.7,
    "price": 0.5979
   },
+  "pm_combo2:pmcombo2:2026-09-26:27879edbe2": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 56.3,
+   "price": 0.6134
+  },
   "pm_combo2:pmcombo2:2026-09-26:6fa9f32c61": {
    "at": "2026-09-26T02:05:48+00:00",
    "lead_min": 4.2,
    "price": 0.6135
+  },
+  "pm_combo2:pmcombo2:2026-09-26:81a09442cc": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 36.3,
+   "price": 0.6056
   },
   "pm_combo3:pmcombo3:2026-09-24:3eaa6451de": {
    "at": "2026-09-24T18:01:17+00:00",
@@ -4330,6 +4340,11 @@
    "lead_min": 7.3,
    "price": 0.81
   },
+  "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 56.3,
+   "price": 0.79
+  },
   "tennis_fav_band:aec-atp-eervas-luccat-2026-09-19": {
    "at": "2026-09-19T13:35:59+00:00",
    "lead_min": 4.0,
@@ -4556,8 +4571,8 @@
    "price": 0.78
   },
   "tennis_fav_band:aec-itfme-clapie-jirciz-2026-09-26": {
-   "at": "2026-09-26T06:38:31+00:00",
-   "lead_min": 51.5,
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 36.3,
    "price": 0.77
   },
   "tennis_fav_band:aec-itfme-corcra-atakar-2026-09-23": {
@@ -5880,6 +5895,11 @@
    "lead_min": 14.9,
    "price": 0.86
   },
+  "tennis_fav_band:aec-wta-annsis-ginfei-2026-09-26": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 36.3,
+   "price": 0.78
+  },
   "tennis_fav_band:aec-wta-clabur-joeste-2026-09-19": {
    "at": "2026-09-19T14:51:19+00:00",
    "lead_min": 8.7,
@@ -5975,9 +5995,24 @@
    "lead_min": 15.0,
    "price": 0.77
   },
+  "tennis_fav_band_3h:aec-atp-danmed-valroy-2026-09-23": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 56.3,
+   "price": 0.79
+  },
+  "tennis_fav_band_3h:aec-itfme-clapie-jirciz-2026-09-26": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 36.3,
+   "price": 0.77
+  },
   "tennis_fav_band_3h:aec-utr-crocor-tanryo-2026-09-26": {
    "at": "2026-09-26T02:05:48+00:00",
    "lead_min": 4.2,
+   "price": 0.78
+  },
+  "tennis_fav_band_3h:aec-wta-annsis-ginfei-2026-09-26": {
+   "at": "2026-09-26T06:53:43+00:00",
+   "lead_min": 36.3,
    "price": 0.78
   },
   "tennis_fav_band_3h:aec-wta-polley-wuszhe-2026-09-26": {
@@ -6046,5 +6081,5 @@
    "price": 0.78
   }
  },
- "updated": "2026-09-26T06:38:31+00:00"
+ "updated": "2026-09-26T06:53:43+00:00"
 }
