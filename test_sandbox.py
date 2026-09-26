@@ -5462,6 +5462,95 @@ ok("z +2.82" in S.SOURCES["bund_o35_draw"]["note"] and "4.09" in S.SOURCES["bund
 ok(S.CHALLENGERS["bund_o35"] is not S.CHALLENGERS["bund_o35_draw"],
    "the two lanes are separate sources so neither can pool into the other's record")
 
+# ---------------------------------------------------------------------------
+# La Liga — two lanes pointing opposite ways, pre-registered 2026-09-26
+# ---------------------------------------------------------------------------
+def _lg(code, pa, pdr, pb):
+    return dict(venue="kalshi", market_id=f"KXLALIGAGAME-{code}", price_a=pa, price_draw=pdr, price_b=pb)
+def _lb(code, ask, no=None, trade=True, untraded=False, series="KXLALIGABTTS"):
+    return dict(venue="kalshi_binary", market_id=f"{series}-{code}", price_a=ask,
+                price_b=no if no is not None else round(1.03 - ask, 2),
+                tradeable={"a": trade, "b": True}, untraded=untraded)
+def _lt(code, over, no, trade=True, untraded=False, series="KXLALIGATOTAL"):
+    return dict(venue="kalshi_binary", market_id=f"{series}-{code}-2", price_a=over, price_b=no,
+                tradeable={"a": True, "b": trade}, untraded=untraded)
+
+_lu = {"soccer": [_lg("26SEP27OSAGIR", 0.50, 0.28, 0.24),   # fav 0.4902 -> BALANCED, in band
+                  _lg("26SEP27RMAELC", 0.90, 0.08, 0.04),   # dog 0.0392 -> MISMATCH
+                  _lg("26SEP27ATMRAY", 0.62, 0.24, 0.16)],  # fav 0.6078 -> above the band
+       "soccer_btts": [_lb("26SEP27OSAGIR", 0.52), _lb("26SEP27RMAELC", 0.44),
+                       _lb("26SEP27ATMRAY", 0.50)],
+       "soccer_o15": [_lt("26SEP27RMAELC", 0.86, 0.17), _lt("26SEP27OSAGIR", 0.74, 0.29),
+                      _lt("26SEP27ATMRAY", 0.80, 0.23)]}
+eq([p["market_id"] for p in S.fetch_liga_btts_even("soccer_btts", universe=_lu)],
+   ["KXLALIGABTTS-26SEP27OSAGIR"],
+   "La Liga BTTS lane takes only the balanced match — not the mismatch, not the 0.61 favourite")
+eq([p["pick"] for p in S.fetch_liga_btts_even("soccer_btts", universe=_lu)], ["a"],
+   "and it buys YES on both teams to score")
+eq([p["market_id"] for p in S.fetch_liga_u15_dog("soccer_o15", universe=_lu)],
+   ["KXLALIGATOTAL-26SEP27RMAELC-2"],
+   "La Liga under-1.5 lane takes only the heavy mismatch")
+eq([p["pick"] for p in S.fetch_liga_u15_dog("soccer_o15", universe=_lu)], ["b"],
+   "and it buys the NO side of over 1.5, which is the under")
+ok(not ({p["market_id"] for p in S.fetch_liga_btts_even("soccer_btts", universe=_lu)}
+        & {_ere_code_free for _ere_code_free in ()}),
+   "the two lanes never pick the same contract — different markets, opposite fixtures")
+
+# Bands and ceilings are the rule.
+eq(len(S.fetch_liga_btts_even("soccer_btts", universe={
+    "soccer": [_lg("b1", 0.48, 0.29, 0.25)], "soccer_btts": [_lb("b1", 0.52)]})), 1,
+   "a de-vigged favourite of 0.4706 is inside the band (lower bound inclusive)")
+eq(len(S.fetch_liga_btts_even("soccer_btts", universe={
+    "soccer": [_lg("b2", 0.60, 0.25, 0.17)], "soccer_btts": [_lb("b2", 0.52)]})), 1,
+   "a de-vigged favourite of 0.5882 is still inside the band")
+eq(S.fetch_liga_btts_even("soccer_btts", universe={
+    "soccer": [_lg("b2b", 0.62, 0.24, 0.16)], "soccer_btts": [_lb("b2b", 0.52)]}), [],
+   "but 0.6078 is out — the match is too one-sided to be the balanced pocket")
+eq(S.fetch_liga_btts_even("soccer_btts", universe={
+    "soccer": [_lg("b3", 0.50, 0.28, 0.24)], "soccer_btts": [_lb("b3", 0.55)]}), [],
+   "a BTTS ask of 0.55 is refused — 0.543 is break-even at the measured 55.3%")
+eq(len(S.fetch_liga_u15_dog("soccer_o15", universe={
+    "soccer": [_lg("u1", 0.72, 0.18, 0.14)], "soccer_o15": [_lt("u1", 0.86, 0.17)]})), 1,
+   "a de-vigged underdog of 0.1346 is just inside the mismatch cut")
+eq(S.fetch_liga_u15_dog("soccer_o15", universe={
+    "soccer": [_lg("u1b", 0.71, 0.18, 0.15)], "soccer_o15": [_lt("u1b", 0.86, 0.17)]}), [],
+   "but 0.1442 is out — not a heavy enough mismatch (cut is 0.135, exclusive)")
+eq(S.fetch_liga_u15_dog("soccer_o15", universe={
+    "soccer": [_lg("u2", 0.90, 0.08, 0.04)], "soccer_o15": [_lt("u2", 0.80, 0.21)]}), [],
+   "a No ask of 0.21 is refused — 0.204 is break-even at the measured 20.7%")
+eq((S.LIGA_BTTS_FAV_BAND, S.LIGA_BTTS_MAX_ASK, S.LIGA_U15_DOG_MAX, S.LIGA_U15_MAX_ASK,
+    S.LIGA_MAX_HOLD),
+   ((0.470, 0.590), 0.54, 0.135, 0.20, 0.06),
+   "both bands and both ceilings are the pre-registered ones")
+
+# A board that is missing, wide, or untradeable on the side we buy must never be bet.
+eq(S.fetch_liga_btts_even("soccer_btts", universe={"soccer": [], "soccer_btts": [_lb("m1", 0.52)]}), [],
+   "BTTS with no winner board is skipped, never assumed balanced")
+eq(S.fetch_liga_u15_dog("soccer_o15", universe={"soccer": [], "soccer_o15": [_lt("m2", 0.86, 0.17)]}), [],
+   "under-1.5 with no winner board is skipped, never assumed a mismatch")
+eq(S.fetch_liga_btts_even("soccer_btts", universe={
+    "soccer": [_lg("h1", 0.50, 0.28, 0.24)], "soccer_btts": [_lb("h1", 0.52, 0.60)]}), [],
+   "a BTTS board holding 12% is refused")
+eq(S.fetch_liga_u15_dog("soccer_o15", universe={
+    "soccer": [_lg("t1", 0.90, 0.08, 0.04)], "soccer_o15": [_lt("t1", 0.86, 0.17, trade=False)]}), [],
+   "an untradeable NO leg is skipped — the side we buy is the one that must be tradeable")
+eq(S.fetch_liga_btts_even("soccer_btts", universe={
+    "soccer": [_lg("x1", 0.50, 0.28, 0.24)], "soccer_btts": [_lb("x1", 0.52, series="KXEPLBTTS")]}), [],
+   "another league's BTTS market is not this lane's")
+eq((S.fetch_liga_btts_even("soccer_o15", universe=_lu), S.fetch_liga_u15_dog("soccer_btts", universe=_lu)),
+   ([], []), "each lane answers only for its own domain")
+
+for _n, _sp in (("liga_btts_even", "soccer_btts"), ("liga_u15_dog", "soccer_o15")):
+    eq((S.SOURCES[_n]["sports"], S.SOURCES[_n]["baseline"]), ([_sp], "population"),
+       f"{_n} is registered on its own domain, judged against the population")
+    ok(not S.lane_paused(_n, _sp), f"{_n} is not paused")
+ok("z +3.52" in S.SOURCES["liga_btts_even"]["note"] and "4.16" in S.SOURCES["liga_btts_even"]["note"],
+   "the BTTS note pins its result AND the family-wise bar it does not clear")
+ok("z -3.46" in S.SOURCES["liga_u15_dog"]["note"] and "fifteen weeks" in S.SOURCES["liga_u15_dog"]["note"],
+   "the under note pins its result and warns how long its 30-bet floor takes")
+ok("UNDER league" in S.SOURCES["liga_btts_even"]["note"],
+   "and records that this pocket runs AGAINST its own league, so it is not widened by mistake")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

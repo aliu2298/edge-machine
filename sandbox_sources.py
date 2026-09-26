@@ -552,6 +552,47 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "liga_btts_even": dict(
+        label="La Liga BTTS in balanced matches (favourite 1.60-2.00)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_btts"], baseline="population",
+        note="Pre-registered 2026-09-26, before it logged anything. Back BOTH TEAMS TO SCORE "
+             "on a Kalshi La Liga match when that fixture's own three-way board prices the "
+             "favourite at a de-vigged 0.470-0.590 — the span of bookmaker decimal 1.60-2.00 "
+             "— with the ask at 0.54 or less and the board holding no more than 6%. Research "
+             "on 4,940 La Liga matches, 2013/14-2025/26: both teams scored 55.3% against "
+             "49.3% implied, league part +4.7pp at z +3.52 on 1,387 matches, train +3.4pp "
+             "(z +1.97) and HELD OUT +6.7pp (z +3.15) — larger on the half it never saw. The "
+             "favourite's own scoring in the same band is flat at +1.4pp, so the whole effect "
+             "is the UNDERDOG getting on the scoresheet, and it shows identically on 'dog to "
+             "score 1+' (+4.8pp, z +3.60) which is the same finding seen twice. Note La Liga "
+             "is the UNDER league overall (2.64 goals v 2.73 across twelve, every goal line "
+             "below its price), so this is a pocket that runs against its own league. WEAK "
+             "PART: it does not clear the grid's own bar. Adding team-to-score and BTTS took "
+             "the scan to 1,424 cells and a permutation over all 52,999 matches puts "
+             "family-wise 5% at |z| >= 4.16; this is 3.52, and the largest cell anywhere is "
+             "4.30 in Turkey. Break-even ask is 0.543 at the measured rate, so the 0.54 "
+             "ceiling will bite often. ~2.8 bets a matchweek. Judged against backing BTTS on "
+             "every match of this market."),
+    "liga_u15_dog": dict(
+        label="La Liga under 1.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_o15"], baseline="population",
+        note="Pre-registered 2026-09-26, before it logged anything, and the mirror of "
+             "liga_btts_even. Back UNDER 1.5 GOALS — the No side of Kalshi's over-1.5 — on a "
+             "La Liga match whose own three-way board prices the underdog under a de-vigged "
+             "0.135 (bookmaker decimal 7.00+), with the No ask at 0.20 or less and the board "
+             "holding no more than 6%. Research on 4,940 matches, 2013/14-2025/26: over 1.5 "
+             "landed 79.3% against 82.3% implied, league part -4.2pp at z -3.46 on 967 "
+             "matches, train -2.8pp (z -1.90) and HELD OUT -7.4pp (z -3.24). Spain's big "
+             "clubs shut minnows out more thoroughly than the price says, and the same band "
+             "reads -3.9pp on over 2.5 and -3.4pp on the underdog scoring at all. This is the "
+             "OPPOSITE of what the same band does in Turkey (+10.3pp on BTTS) and in "
+             "Bundesliga, which is why it is a La Liga lane and not a mismatch lane. WEAK "
+             "PARTS: it does not clear the grid's family-wise bar of |z| >= 4.16 (this is "
+             "3.46); and the shape of the bet is unlike anything else here — a 20.7% strike "
+             "at about five to one, so long losing runs are normal and at ~2 bets a matchweek "
+             "the 30-bet floor is roughly fifteen weeks out. Break-even on the No side is "
+             "0.204 at the measured rate. Judged against backing the under on every match of "
+             "this market."),
     "bund_o35": dict(
         label="Bundesliga over 3.5, every match", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_u35"], baseline="population",
@@ -3610,6 +3651,127 @@ def fetch_bund_o35(sport, universe=None):
     return [dict(market_id=r["market_id"], pick="a") for r in _bund_o35_rows(sport, uni)]
 
 
+# ---------------------------------------------------------------------------
+# La Liga — pre-registered 2026-09-26. Two lanes pointing in OPPOSITE directions.
+# ---------------------------------------------------------------------------
+# La Liga is the under league of the twelve: 2.64 goals a game against an all-league 2.73,
+# and every goal line sits below its price (-0.9pp, -1.1pp, -1.2pp on over 1.5/2.5/3.5).
+# But the league splits in two, and the split is what makes it worth two lanes:
+#
+#   HEAVY MISMATCHES score LESS than priced. With the underdog under a de-vigged 0.135,
+#   over 1.5 lands 79.3% against 82.3% implied - league part -4.2pp, z -3.46, and it
+#   STRENGTHENS out of sample (train -2.8pp, held out -7.4pp). Spain's big clubs shut
+#   minnows out more thoroughly than the market charges for.
+#
+#   BALANCED MATCHES produce MORE from the underdog than priced. With the favourite inside
+#   a de-vigged 0.470-0.590, both teams score 55.3% against 49.3% implied - +4.7pp, z +3.52,
+#   train +3.4pp and held out +6.7pp. The favourite's own scoring is flat (+1.4pp): the
+#   whole effect is the weaker side getting on the scoresheet.
+#
+# NEITHER CLEARS THE GRID'S OWN BAR, and both notes say so. Adding team-to-score and BTTS
+# took the scan to 1,424 cells; a permutation reshuffling league labels 200 times over all
+# 52,999 matches puts the family-wise 5% threshold at |z| >= 4.16, and the largest cell
+# anywhere in the real data is 4.30 (Turkey, not Spain). These two are 3.52 and 3.46. They
+# are built on the same footing as the Eredivisie and Bundesliga lanes - they replicate
+# across both halves - not because the backtest proved them.
+#
+# A note on the statistic, because it changed an answer here: z is computed against the
+# IMPLIED rate, not the observed one. Using the observed rate degenerates on near-certain
+# lines - a band where every favourite scored returned a z of 15,424 - and two of the top
+# cells in the first pass were that artifact and nothing else.
+LIGA_BTTS = "KXLALIGABTTS"
+LIGA_TOTAL = "KXLALIGATOTAL"
+LIGA_GAME = "KXLALIGAGAME"
+# De-vigged FAVOURITE win probability. The mechanical span of bookmaker decimal 1.60-2.00
+# in La Liga, which is exactly 0.4702-0.6002.
+LIGA_BTTS_FAV_BAND = (0.470, 0.590)
+# Break-even, not fitted: at the band's measured 55.3% BTTS rate and Kalshi's 0.07*p*(1-p)
+# fee, an ask of 0.543 returns zero.
+LIGA_BTTS_MAX_ASK = 0.54
+# De-vigged UNDERDOG win probability. The span of decimal 7.00+ in La Liga tops out at
+# 0.1371; 0.135 is the round number inside it.
+LIGA_U15_DOG_MAX = 0.135
+# Break-even on the NO side: under 1.5 landed 20.7% in this band, so 0.204 returns zero.
+LIGA_U15_MAX_ASK = 0.20
+# Both lanes skip a board holding more than this. Kalshi's soccer binaries average ~3.4%.
+LIGA_MAX_HOLD = 0.06
+
+
+def liga_fav_dog(universe=None):
+    """{fixture code: (de-vigged favourite prob, de-vigged underdog prob)} off the La Liga board."""
+    out = {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(LIGA_GAME):
+            continue
+        pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+        if pa is None or pdr is None or pb is None:
+            continue
+        total = float(pa) + float(pdr) + float(pb)
+        if total <= 0:
+            continue
+        out[_ere_code(r.get("market_id"))] = (max(float(pa), float(pb)) / total,
+                                              min(float(pa), float(pb)) / total)
+    return out
+
+
+def _liga_rows(sport, universe, series, side):
+    """La Liga rows on one Kalshi series, gated on liquidity and book width."""
+    out = []
+    for r in (universe or {}).get(sport) or []:
+        if r.get("venue") != "kalshi_binary":
+            continue
+        if not str(r.get("market_id") or "").startswith(series):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get(side, True):
+            continue
+        a, b = r.get("price_a"), r.get("price_b")
+        if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > LIGA_MAX_HOLD:
+            continue
+        out.append(r)
+    return out
+
+
+def fetch_liga_btts_even(sport, universe=None):
+    """Back BTTS Yes in a La Liga match the board prices as roughly balanced."""
+    if sport != "soccer_btts":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    board = liga_fav_dog(uni)
+    out = []
+    for r in _liga_rows(sport, uni, LIGA_BTTS, "a"):
+        pf = (board.get(_ere_code(r.get("market_id"))) or (None, None))[0]
+        if pf is None or not (LIGA_BTTS_FAV_BAND[0] <= pf < LIGA_BTTS_FAV_BAND[1]):
+            continue
+        if float(r["price_a"]) > LIGA_BTTS_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
+def fetch_liga_u15_dog(sport, universe=None):
+    """Back UNDER 1.5 (No on Kalshi's over 1.5) in a La Liga heavy mismatch.
+
+    A 20% strike at about five to one. Expect long losing runs; at ~2 bets a matchweek the
+    30-bet floor is roughly fifteen weeks away.
+    """
+    if sport != "soccer_o15":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    board = liga_fav_dog(uni)
+    out = []
+    for r in _liga_rows(sport, uni, LIGA_TOTAL, "b"):
+        pd_ = (board.get(_ere_code(r.get("market_id"))) or (None, None))[1]
+        if pd_ is None or pd_ >= LIGA_U15_DOG_MAX:
+            continue
+        if float(r["price_b"]) > LIGA_U15_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
 def fetch_bund_o35_draw(sport, universe=None):
     """bund_o35's bet, only where the winner board prices the draw in BUND_O35_DRAW_BAND.
 
@@ -5933,6 +6095,8 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "liga_btts_even": fetch_liga_btts_even,
+    "liga_u15_dog": fetch_liga_u15_dog,
     "bund_o35": fetch_bund_o35,
     "bund_o35_draw": fetch_bund_o35_draw,
     "ere_o15": fetch_ere_o15,
