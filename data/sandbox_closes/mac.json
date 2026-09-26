@@ -1200,6 +1200,16 @@
    "lead_min": 5.9,
    "price": 0.44
   },
+  "espn_fpi:aec-mlb-cle-kc-2026-09-26": {
+   "at": "2026-09-26T22:16:08+00:00",
+   "lead_min": 53.9,
+   "price": 0.5
+  },
+  "espn_fpi:aec-mlb-col-cws-2026-09-26": {
+   "at": "2026-09-26T22:16:08+00:00",
+   "lead_min": 53.9,
+   "price": 0.695
+  },
   "espn_fpi:aec-mlb-cws-kc-2026-09-22": {
    "at": "2026-09-22T23:26:19+00:00",
    "lead_min": 13.7,
@@ -1484,6 +1494,11 @@
    "at": "2026-09-24T23:04:39+00:00",
    "lead_min": 0.3,
    "price": 0.575
+  },
+  "espn_fpi:aec-mlb-tb-phi-2026-09-26": {
+   "at": "2026-09-26T22:16:08+00:00",
+   "lead_min": 58.9,
+   "price": 0.535
   },
   "espn_fpi:aec-mlb-tex-min-2026-09-26": {
    "at": "2026-09-26T20:00:31+00:00",
@@ -2745,6 +2760,11 @@
    "lead_min": 7.8,
    "price": 0.505
   },
+  "polymarket:aec-mlb-chc-bos-2026-09-26": {
+   "at": "2026-09-26T22:16:08+00:00",
+   "lead_min": 58.9,
+   "price": 0.47
+  },
   "polymarket:aec-mlb-cle-kc-2026-09-25": {
    "at": "2026-09-25T23:34:08+00:00",
    "lead_min": 5.9,
@@ -3301,8 +3321,8 @@
    "price": 0.41
   },
   "soccerpredictions:KXLIGAMXGAME-26SEP26CRATOL": {
-   "at": "2026-09-26T22:01:06+00:00",
-   "lead_min": 48.9,
+   "at": "2026-09-26T22:16:08+00:00",
+   "lead_min": 33.9,
    "price": 0.37
   },
   "soccerpredictions:KXLIGAPORTUGALGAME-26SEP20FCPBEN": {
@@ -6156,5 +6176,5 @@
    "price": 0.87
   }
  },
- "updated": "2026-09-26T22:01:06+00:00"
+ "updated": "2026-09-26T22:16:08+00:00"
 }
