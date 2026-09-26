@@ -1786,13 +1786,13 @@
    "price": 0.8
   },
   "mma_fav_band:aec-ufc-brahie-rinnak-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.77
   },
   "mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.88
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP20CARFLA-FLA2": {
@@ -2200,6 +2200,11 @@
    "lead_min": 0.9,
    "price": 0.83
   },
+  "o15_ranked:KXUEFANLTOTAL-26SEP26MKDSUI-2": {
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 45.1,
+   "price": 0.75
+  },
   "oddspedia:KXT20MATCH-26SEP201430BMUCYM": {
    "at": "2026-09-20T19:13:08+00:00",
    "lead_min": 16.9,
@@ -2301,8 +2306,8 @@
    "price": 0.94
   },
   "olbg:aec-boxing-lukmcc-kaypro-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.9
   },
   "olbg:aec-boxing-nelbir-lewmor-2026-09-26": {
@@ -2346,8 +2351,8 @@
    "price": 0.72
   },
   "olbg:aec-ufc-brahie-rinnak-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.77
   },
   "olbg:aec-ufc-josvan-alepan-2026-09-19": {
@@ -2356,13 +2361,13 @@
    "price": 0.59
   },
   "olbg:aec-ufc-monjac-ricsim-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.68
   },
   "olbg:aec-ufc-nordum-ailper-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.4
   },
   "olbg:aec-ufc-patpit-doocho-2026-09-19": {
@@ -2371,13 +2376,13 @@
    "price": 0.7
   },
   "olbg:aec-ufc-rodbel-chredw-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.63
   },
   "olbg:aec-ufc-vandem-yazjau-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 45.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 30.1,
    "price": 0.88
   },
   "p05_unbeaten:KXBUNDESLIGAGAME-26SEP19SVWFCA-SVW": {
@@ -2479,6 +2484,11 @@
    "at": "2026-09-25T18:31:07+00:00",
    "lead_min": 13.9,
    "price": 0.85
+  },
+  "p05_unbeaten:KXUEFANLGAME-26SEP26MKDSUI-MKD": {
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 45.1,
+   "price": 0.93
   },
   "pinnacle:aec-boxing-tomraf-liawal-2026-09-19": {
    "at": "2026-09-19T14:51:19+00:00",
@@ -3605,6 +3615,11 @@
    "lead_min": 13.5,
    "price": 0.84
   },
+  "team1_form_l5:KXUEFANLTEAMTOTAL-26SEP26CZECRO-CRO1": {
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 45.1,
+   "price": 0.83
+  },
   "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26SEP18BMUUNI-BMU2": {
    "at": "2026-09-18T18:24:08+00:00",
    "lead_min": 5.9,
@@ -3635,6 +3650,11 @@
    "lead_min": 13.9,
    "price": 0.58
   },
+  "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26ALBBLR-ALB2": {
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 45.1,
+   "price": 0.52
+  },
   "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26BULLUX-BUL2": {
    "at": "2026-09-26T15:59:08+00:00",
    "lead_min": 0.9,
@@ -3644,6 +3664,16 @@
    "at": "2026-09-26T15:59:08+00:00",
    "lead_min": 0.9,
    "price": 0.72
+  },
+  "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26MKDSUI-SUI2": {
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 45.1,
+   "price": 0.63
+  },
+  "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26SVKMDA-SVK2": {
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 45.1,
+   "price": 0.78
   },
   "tennis_combo2:combo2:2026-09-22:2aa02ecfc0": {
    "at": "2026-09-23T02:57:08+00:00",
@@ -5746,8 +5776,8 @@
    "price": 0.81
   },
   "tennis_fav_band:aec-lavercup-caralc-tayfri-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 15.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 0.1,
    "price": 0.78
   },
   "tennis_fav_band:aec-utr-chaeli-ishhar-2026-09-19": {
@@ -5976,8 +6006,8 @@
    "price": 0.81
   },
   "tennis_fav_band_3h:aec-lavercup-caralc-tayfri-2026-09-26": {
-   "at": "2026-09-26T17:44:51+00:00",
-   "lead_min": 15.1,
+   "at": "2026-09-26T17:59:54+00:00",
+   "lead_min": 0.1,
    "price": 0.78
   },
   "tennis_fav_band_3h:aec-utr-crocor-tanryo-2026-09-26": {
@@ -6061,5 +6091,5 @@
    "price": 0.87
   }
  },
- "updated": "2026-09-26T17:44:51+00:00"
+ "updated": "2026-09-26T17:59:54+00:00"
 }
