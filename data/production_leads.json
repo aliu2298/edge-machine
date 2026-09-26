@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-26T07:41:16+00:00",
+ "board_built_at": "2026-09-26T11:26:07+00:00",
  "leads": {
   "2026-09-19|Hamburg SV|FC Cologne|FC Cologne to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "FC Cologne",
@@ -314,7 +314,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T07:41:16+00:00",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
    "league": "MMA",
    "match": "Brady Hiestand v Rinya Nakamura",
    "pair": "mma_fav_band|mma",
@@ -345,7 +345,7 @@
    "kickoff": "2026-09-26T21:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T07:41:16+00:00",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
    "league": "MMA",
    "match": "John Castaneda v Alatengheili",
    "pair": "mma_fav_band|mma",
@@ -359,6 +359,37 @@
    "sandbox_quote": "mma_fav_band:aec-ufc-johcas-alaten-2026-09-26",
    "source": "mma_fav_band",
    "sport": "mma",
+   "status": "pending"
+  },
+  "2026-09-26|Lewis Richardson|Ivan Trofimovic|Lewis Richardson to win \u00b7 OLBG community tips": {
+   "away": "Ivan Trofimovic",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-26",
+   "headline": "Lewis Richardson to win",
+   "home": "Lewis Richardson",
+   "id": "2026-09-26|Lewis Richardson|Ivan Trofimovic|Lewis Richardson to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T14:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "league": "Boxing",
+   "match": "Lewis Richardson v Ivan Trofimovic",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.94,
+   "route": {
+    "market": "aec-boxing-lewric-ivatro-2026-09-26",
+    "outcome": "Lewis Richardson",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-lewric-ivatro-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
    "status": "pending"
   },
   "2026-09-26|Luke McCormack|Kayamba Prospere|Luke McCormack to win \u00b7 OLBG community tips": {
@@ -376,7 +407,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T07:41:16+00:00",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
    "league": "Boxing",
    "match": "Luke McCormack v Kayamba Prospere",
    "pair": "olbg|boxing",
@@ -388,6 +419,37 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "olbg:aec-boxing-lukmcc-kaypro-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "pending"
+  },
+  "2026-09-26|Nelson Birchall|Lewis Morris|Nelson Birchall to win \u00b7 OLBG community tips": {
+   "away": "Lewis Morris",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-26",
+   "headline": "Nelson Birchall to win",
+   "home": "Nelson Birchall",
+   "id": "2026-09-26|Nelson Birchall|Lewis Morris|Nelson Birchall to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T15:50Z",
+   "lane": "production",
+   "last_seen": "2026-09-26",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
+   "league": "Boxing",
+   "match": "Nelson Birchall v Lewis Morris",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.94,
+   "route": {
+    "market": "aec-boxing-nelbir-lewmor-2026-09-26",
+    "outcome": "Nelson Birchall",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-nelbir-lewmor-2026-09-26",
    "source": "olbg",
    "sport": "boxing",
    "status": "pending"
@@ -407,7 +469,7 @@
    "kickoff": "2026-09-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T07:41:16+00:00",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
    "league": "MMA",
    "match": "Vanessa Demopoulos v Yazmin Jauregui",
    "pair": "mma_fav_band|mma",
@@ -439,7 +501,7 @@
    "kickoff": "2026-09-27T01:30Z",
    "lane": "production",
    "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T07:41:16+00:00",
+   "last_seen_at": "2026-09-26T11:26:07+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v New England Revolution",
    "pair": "team1_form_l5|soccer_team1",
@@ -488,5 +550,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-26T07:41:16+00:00"
+ "updated_at": "2026-09-26T11:26:07+00:00"
 }
