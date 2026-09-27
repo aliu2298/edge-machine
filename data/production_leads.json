@@ -1,30 +1,6 @@
 {
- "board_built_at": "2026-09-27T13:59:16+00:00",
+ "board_built_at": "2026-09-27T17:34:53+00:00",
  "leads": {
-  "2026-09-20|Deportivo|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Real Betis",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Real Betis"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-19",
-   "headline": "Real Betis to score 1+",
-   "home": "Deportivo",
-   "id": "2026-09-20|Deportivo|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T16:30Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Deportivo v Real Betis",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.82,
-   "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP20DEPRBB-RBB1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-09-22|Norbert Novenyi Jr.|Theo Haig|Norbert Novenyi Jr. to win \u00b7 MMA favourite-band rule": {
    "away": "Theo Haig",
    "bet": {
@@ -139,7 +115,7 @@
    "sandbox_quote": "mma_fav_band:aec-ufc-brahie-rinnak-2026-09-26",
    "source": "mma_fav_band",
    "sport": "mma",
-   "status": "miss"
+   "status": "void"
   },
   "2026-09-26|John Castaneda|Alatengheili|John Castaneda to win \u00b7 MMA favourite-band rule": {
    "away": "Alatengheili",
@@ -313,7 +289,7 @@
    "sandbox_quote": "mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26",
    "source": "mma_fav_band",
    "sport": "mma",
-   "status": "hit"
+   "status": "void"
   },
   "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "New England Revolution",
@@ -348,9 +324,9 @@
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
    "sandbox_clv": 0.015,
-   "sandbox_n": 4,
-   "sandbox_roi": -0.7127,
-   "sandbox_roi_fee": -0.7149
+   "sandbox_n": 2,
+   "sandbox_roi": -1.0,
+   "sandbox_roi_fee": -1.0
   },
   "olbg|boxing": {
    "by_hand": "2026-09-22",
@@ -378,5 +354,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-27T13:59:16+00:00"
+ "updated_at": "2026-09-27T17:34:53+00:00"
 }
