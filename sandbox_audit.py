@@ -32,6 +32,12 @@ Checks, each an ERROR (fails the run) unless marked:
   copy        no public file uses the phrases the public pages are kept free of.
 
 Usage:  python3 sandbox_audit.py [--no-network] [--sample N]
+
+--no-network skips only the checks that contact a venue: the settlement
+spot-check, and the stale-bet lookup of when that venue went final. Each
+prints a line starting with "skipped:". The scheduled audit on main does not
+pass this flag, so those checks still run there.
+
 Writes GitHub Actions annotations and a run summary when run in Actions. Exits 1 on any ERROR.
 """
 import argparse
@@ -80,7 +86,7 @@ COPY_DATA = ("data/stages.json", "data/production_leads.json")
 
 class Report:
     def __init__(self):
-        self.errors, self.warnings, self.passed = [], [], []
+        self.errors, self.warnings, self.passed, self.skipped = [], [], [], []
 
     def error(self, check, msg):
         self.errors.append((check, msg))
@@ -90,6 +96,10 @@ class Report:
 
     def ok(self, check, msg):
         self.passed.append((check, msg))
+
+    def skip(self, check, msg):
+        """A check that did not run. Printed as `skipped: ...`, never as a pass."""
+        self.skipped.append((check, msg))
 
 
 def _dt(x):
@@ -504,6 +514,8 @@ def check_copy(rep):
 def emit(rep):
     """Print, annotate for GitHub Actions, and write the run summary."""
     gha = os.environ.get("GITHUB_ACTIONS") == "true"
+    for c, m in rep.skipped:
+        print(f"skipped: {c} — {m}")
     for c, m in rep.errors:
         print(f"::error title=Sandbox audit: {c}::{m}" if gha else f"  ERROR [{c}] {m}")
     for c, m in rep.warnings:
@@ -512,6 +524,8 @@ def emit(rep):
         print(f"  ok    [{c}] {m}")
     verdict = (f"{len(rep.errors)} error(s)" if rep.errors else "clean") + (
         f", {len(rep.warnings)} warning(s)" if rep.warnings else "")
+    if rep.skipped:
+        verdict += f", {len(rep.skipped)} network check(s) skipped"
     print(f"\nSandbox audit: {verdict}")
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     if path:
@@ -520,6 +534,8 @@ def emit(rep):
             for mark, rows in (("❌", rep.errors), ("⚠️", rep.warnings), ("✅", rep.passed)):
                 for c, m in rows:
                     f.write(f"| {mark} | {c} | {m.replace('|', '/')} |\n")
+            for c, m in rep.skipped:
+                f.write(f"| skipped | {c} | {m.replace('|', '/')} |\n")
 
 
 def run(network=True, sample=25):
@@ -531,14 +547,20 @@ def run(network=True, sample=25):
     check_fresh(d, rep)
     if network:
         check_settlement(d, rep, sample)
+    else:
+        # Not a pass. The scheduled audit does not take this branch.
+        rep.skip("settlement", "live venue spot-check (--no-network)")
     check_stale(d, rep, network)
+    if not network:
+        rep.skip("stale", "venue final-time lookup (--no-network)")
     check_copy(rep)
     return rep
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--no-network", action="store_true", help="skip every check that asks a venue")
+    ap.add_argument("--no-network", action="store_true",
+                    help="skip venue spot-checks and print a 'skipped:' line for each")
     ap.add_argument("--sample", type=int, default=25, help="settled bets re-asked per venue")
     args = ap.parse_args()
     rep = run(network=not args.no_network, sample=args.sample)
