@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-27T01:28:43+00:00",
+ "board_built_at": "2026-09-27T05:12:42+00:00",
  "leads": {
   "2026-09-20|AJ Auxerre|Brest|AJ Auxerre to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Brest",
@@ -45,30 +45,6 @@
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.82,
    "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26SEP20DEPRBB-RBB1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
-  "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Vancouver Whitecaps to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Vancouver Whitecaps",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Vancouver Whitecaps"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "Vancouver Whitecaps to score 1+",
-   "home": "Real Salt Lake",
-   "id": "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Vancouver Whitecaps to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T01:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Real Salt Lake v Vancouver Whitecaps",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.88,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19RSLVAN-VAN1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
    "status": "hit"
@@ -218,6 +194,35 @@
    "sport": "mma",
    "status": "miss"
   },
+  "2026-09-26|Lewis Richardson|Ivan Trofimovic|Lewis Richardson to win \u00b7 OLBG community tips": {
+   "away": "Ivan Trofimovic",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-26",
+   "headline": "Lewis Richardson to win",
+   "home": "Lewis Richardson",
+   "id": "2026-09-26|Lewis Richardson|Ivan Trofimovic|Lewis Richardson to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T14:30Z",
+   "lane": "production",
+   "league": "Boxing",
+   "match": "Lewis Richardson v Ivan Trofimovic",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.94,
+   "route": {
+    "market": "aec-boxing-lewric-ivatro-2026-09-26",
+    "outcome": "Lewis Richardson",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-lewric-ivatro-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "hit"
+  },
   "2026-09-26|Luke McCormack|Kayamba Prospere|Luke McCormack to win \u00b7 OLBG community tips": {
    "away": "Kayamba Prospere",
    "bet": {
@@ -243,6 +248,35 @@
     "venue": "polymarket_us"
    },
    "sandbox_quote": "olbg:aec-boxing-lukmcc-kaypro-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "hit"
+  },
+  "2026-09-26|Nathan Heaney|Gerome Warburton|Gerome Warburton to win \u00b7 OLBG community tips": {
+   "away": "Gerome Warburton",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-22",
+   "headline": "Gerome Warburton to win",
+   "home": "Nathan Heaney",
+   "id": "2026-09-26|Nathan Heaney|Gerome Warburton|Gerome Warburton to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T03:00Z",
+   "lane": "production",
+   "league": "Boxing",
+   "match": "Nathan Heaney v Gerome Warburton",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.64,
+   "route": {
+    "market": "aec-boxing-nathea-gerwar-2026-09-26",
+    "outcome": "Gerome Warburton",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-nathea-gerwar-2026-09-26",
    "source": "olbg",
    "sport": "boxing",
    "status": "hit"
@@ -320,8 +354,6 @@
    "id": "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-27T01:30Z",
    "lane": "production",
-   "last_seen": "2026-09-27",
-   "last_seen_at": "2026-09-27T01:28:43+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v New England Revolution",
    "pair": "team1_form_l5|soccer_team1",
@@ -329,7 +361,7 @@
    "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP26RSLNE-NE1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
-   "status": "pending"
+   "status": "miss"
   }
  },
  "pairs": {
@@ -350,10 +382,10 @@
    "promoted_at": "2026-09-22T16:20:08+00:00",
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": -0.02,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.1366,
-   "sandbox_roi_fee": 0.1284
+   "sandbox_clv": -0.015,
+   "sandbox_n": 4,
+   "sandbox_roi": 0.1184,
+   "sandbox_roi_fee": 0.1113
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -361,14 +393,14 @@
    "promoted_at": "2026-09-18T00:43:21+00:00",
    "ready_at": "2026-09-18T00:51:24+00:00",
    "route": "moved by hand on 2026-09-18",
-   "sandbox_clv": 0.0029,
-   "sandbox_n": 7,
-   "sandbox_roi": -0.0062,
-   "sandbox_roi_fee": -0.0157
+   "sandbox_clv": -0.0,
+   "sandbox_n": 8,
+   "sandbox_roi": -0.1304,
+   "sandbox_roi_fee": -0.1387
   }
  },
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-27T01:28:43+00:00"
+ "updated_at": "2026-09-27T05:12:42+00:00"
 }
