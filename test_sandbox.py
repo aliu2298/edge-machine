@@ -4823,8 +4823,8 @@ if PF is not None and hasattr(PF, "recheck_exit"):
 
 ok("sandbox-tracker.yml" in _watch_wf,
    "the watchdog checks that sandbox-tracker.yml succeeded recently")
-_after_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[-1]
-_before_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[0]
+_after_deploy = _watch_wf.split("actions/deploy-pages@", 1)[-1]
+_before_deploy = _watch_wf.split("actions/deploy-pages@", 1)[0]
 ok("recheck_after_deploy" in _after_deploy,
    "after the takeover deploy the pages are rechecked through the CDN window")
 ok("recheck_after_deploy" not in _before_deploy,

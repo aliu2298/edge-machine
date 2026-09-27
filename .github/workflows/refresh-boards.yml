@@ -41,9 +41,9 @@ jobs:
     timeout-minutes: 25
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
@@ -68,6 +68,7 @@ jobs:
 
       - name: Commit and push if changed
         run: |
+          set -euo pipefail
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
@@ -99,7 +100,8 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 site_root.py && { python3 sandbox_close.py --writer boards || true; }
+            python3 site_root.py
+            python3 sandbox_close.py --writer boards || true
           done
 
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"
@@ -108,9 +110,9 @@ jobs:
       # GitHub Pages is the ONLY host (Netlify dropped Aug 3 2026 — it was skipping
       # every deploy for exceeded credit usage, and nothing here needed a feature
       # Pages lacks). Runs unconditionally so the board publishes even when nothing changed.
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

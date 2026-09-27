@@ -69,7 +69,7 @@ jobs:
       tracker_detail: ${{ steps.check.outputs.tracker_detail }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Decide whether to take over
         id: check
@@ -166,7 +166,7 @@ jobs:
             echo "run=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
@@ -174,17 +174,27 @@ jobs:
       # which nothing else commits, so the rebase below cannot conflict.
       - name: Snapshot Sandbox closing prices
         run: |
+          set -euo pipefail
           python3 sandbox_close.py --writer watchdog || { echo "::warning::close snapshot failed"; exit 0; }
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           git add data/sandbox_closes/watchdog.json
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            exit 0
+          fi
           git commit -m "Sandbox closing prices via watchdog ($(date -u +%Y-%m-%d\ %H:%MZ))"
           for attempt in 1 2 3; do
-            git push origin main && exit 0
-            git pull --rebase origin main
+            if git push origin main; then
+              exit 0
+            fi
+            echo "push rejected — rebasing onto origin/main (attempt $attempt)"
+            if ! git pull --rebase origin main; then
+              echo "::error::rebase onto origin/main failed on attempt $attempt"
+              exit 1
+            fi
           done
-          echo "::warning::could not push closing prices"
+          echo "::error::could not push closing prices after 3 attempts"
+          exit 1
 
       # Takeover did not run. The check above only warns, and a dead tracker would
       # otherwise leave this hourly job green. Re-read the live pages at 7h, and
@@ -217,9 +227,9 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
@@ -229,6 +239,7 @@ jobs:
 
       - name: Commit and push if changed
         run: |
+          set -euo pipefail
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
@@ -268,12 +279,12 @@ jobs:
 
       # Deploy runs whenever the backup took over, even if nothing changed — a stale LIVE
       # board with an unchanged repo is exactly the failure this workflow exists to fix.
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
       # index.html is redeployed above. Pages caches that for about 10 minutes, and
       # the deploy does not rebuild sandbox.html or production.html. Refetch until
