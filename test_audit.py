@@ -405,6 +405,20 @@ _tt2 = bet(8, sport="table_tennis", source="tt_band_55_60",
            start="2026-09-14T01:05:00+00:00", logged="2026-09-13T22:00:00+00:00")
 ok(not run(A.check_duplicates, [_tt1, _tt2]).errors,
    "a table-tennis rematch 35 minutes later is not flagged")
+_lee_k = bet(9, sport="tennis", source="tennis_fav_band",
+             id="tennis_fav_band:KXWTAMATCH-26SEP18HONLEE",
+             market_id="KXWTAMATCH-26SEP18HONLEE", venue="kalshi",
+             side_a="Mai Hontama", side_b="Eunhye Lee (b. 2000)",
+             start="2026-09-19T03:10:00+00:00", date="2026-09-18",
+             logged="2026-09-18T16:54:51+00:00", won=False)
+_lee_p = bet(10, sport="tennis", source="tennis_fav_band",
+             id="tennis_fav_band:aec-wta-maihon-eunlee-2026-09-18",
+             market_id="aec-wta-maihon-eunlee-2026-09-18", venue="polymarket_us",
+             side_a="Mai Hontama", side_b="Eun-Hye Lee",
+             start="2026-09-19T03:30:00+00:00", date="2026-09-19",
+             logged="2026-09-18T21:30:34+00:00", won=False)
+ok(errs(run(A.check_duplicates, [_lee_k, _lee_p]), "duplicates"),
+   "a bracketed birth year or a hyphenated given name does not hide a duplicate")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all audit tests passed'}")
 for f in FAILS:

@@ -5973,6 +5973,19 @@ _hi_p = dict(_pm, market_id="aec-ufc-brahie-rinnak-2026-09-26", side_a="Brady Hi
              side_b="Rinya Nakamura", start="2026-09-26T18:30:00+00:00")
 ok(T._same_contest_quote(_hi_k, _hi_p),
    "an 8.5h Kalshi placeholder on the same fight is still one contest")
+ok(S.pair_match("Mai Hontama", "Eunhye Lee (b. 2000)", "Mai Hontama", "Eun-Hye Lee",
+               sport="tennis")[0] > 0,
+   "Eunhye Lee (b. 2000) and Eun-Hye Lee are the same player")
+_hon_k = dict(sport="tennis", venue="kalshi", source="tennis_fav_band",
+              market_id="KXWTAMATCH-26SEP18HONLEE",
+              side_a="Mai Hontama", side_b="Eunhye Lee (b. 2000)",
+              start="2026-09-19T03:10:00+00:00", date="2026-09-18")
+_hon_p = dict(sport="tennis", venue="polymarket_us", source="tennis_fav_band",
+              market_id="aec-wta-maihon-eunlee-2026-09-18",
+              side_a="Mai Hontama", side_b="Eun-Hye Lee",
+              start="2026-09-19T03:30:00+00:00", date="2026-09-19")
+ok(T._same_contest_quote(_hon_k, _hon_p),
+   "Hontama v Lee is one contest across the bracketed and hyphenated spellings")
 _g1 = dict(sport="mlb", venue="polymarket_us", market_id="aec-mlb-tb-nyy-2026-09-22-dh1",
            side_a="Tampa Bay Rays", side_b="New York Yankees",
            start="2026-09-22T17:05:00+00:00", date="2026-09-22")
