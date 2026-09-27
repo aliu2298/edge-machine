@@ -1,30 +1,6 @@
 {
- "board_built_at": "2026-09-26T22:49:13+00:00",
+ "board_built_at": "2026-09-27T01:28:43+00:00",
  "leads": {
-  "2026-09-19|New England Revolution|Orlando City SC|Orlando City SC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Orlando City SC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Orlando City SC"
-   },
-   "date": "2026-09-19",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "Orlando City SC to score 1+",
-   "home": "New England Revolution",
-   "id": "2026-09-19|New England Revolution|Orlando City SC|Orlando City SC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-19T23:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "New England Revolution v Orlando City SC",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.8,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19NEORL-ORL1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-09-20|AJ Auxerre|Brest|AJ Auxerre to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Brest",
    "bet": {
@@ -73,54 +49,6 @@
    "sport": "soccer_team1",
    "status": "hit"
   },
-  "2026-09-20|FC Dallas|Austin FC|Austin FC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Austin FC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Austin FC"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "Austin FC to score 1+",
-   "home": "FC Dallas",
-   "id": "2026-09-20|FC Dallas|Austin FC|Austin FC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "FC Dallas v Austin FC",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.72,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19DALATX-ATX1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "miss"
-  },
-  "2026-09-20|Minnesota United FC|LA Galaxy|Minnesota United FC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "LA Galaxy",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Minnesota United FC"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "Minnesota United FC to score 1+",
-   "home": "Minnesota United FC",
-   "id": "2026-09-20|Minnesota United FC|LA Galaxy|Minnesota United FC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Minnesota United FC v LA Galaxy",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.91,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19MINLAG-MIN1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-09-20|Real Salt Lake|Vancouver Whitecaps|Vancouver Whitecaps to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Vancouver Whitecaps",
    "bet": {
@@ -141,54 +69,6 @@
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.88,
    "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19RSLVAN-VAN1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
-  "2026-09-20|Sporting Kansas City|Philadelphia Union|Philadelphia Union to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Philadelphia Union",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Philadelphia Union"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "Philadelphia Union to score 1+",
-   "home": "Sporting Kansas City",
-   "id": "2026-09-20|Sporting Kansas City|Philadelphia Union|Philadelphia Union to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Sporting Kansas City v Philadelphia Union",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.92,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19SKCPHI-PHI1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
-  "2026-09-20|St. Louis CITY SC|Toronto FC|St. Louis CITY SC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Toronto FC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "St. Louis CITY SC"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "St. Louis CITY SC to score 1+",
-   "home": "St. Louis CITY SC",
-   "id": "2026-09-20|St. Louis CITY SC|Toronto FC|St. Louis CITY SC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "St. Louis CITY SC v Toronto FC",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.91,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP19STLTOR-STL1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
    "status": "hit"
@@ -280,6 +160,122 @@
    "sport": "boxing",
    "status": "hit"
   },
+  "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
+   "away": "Rinya Nakamura",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-23",
+   "headline": "Rinya Nakamura to win",
+   "home": "Brady Hiestand",
+   "id": "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-26T18:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Brady Hiestand v Rinya Nakamura",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.75,
+   "route": {
+    "market": "aec-ufc-brahie-rinnak-2026-09-26",
+    "outcome": "Rinya Nakamura",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-brahie-rinnak-2026-09-26",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "miss"
+  },
+  "2026-09-26|John Castaneda|Alatengheili|John Castaneda to win \u00b7 MMA favourite-band rule": {
+   "away": "Alatengheili",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-24",
+   "headline": "John Castaneda to win",
+   "home": "John Castaneda",
+   "id": "2026-09-26|John Castaneda|Alatengheili|John Castaneda to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-26T21:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "John Castaneda v Alatengheili",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.75,
+   "route": {
+    "market": "aec-ufc-johcas-alaten-2026-09-26",
+    "outcome": "John Castaneda",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-johcas-alaten-2026-09-26",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "miss"
+  },
+  "2026-09-26|Luke McCormack|Kayamba Prospere|Luke McCormack to win \u00b7 OLBG community tips": {
+   "away": "Kayamba Prospere",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-24",
+   "headline": "Luke McCormack to win",
+   "home": "Luke McCormack",
+   "id": "2026-09-26|Luke McCormack|Kayamba Prospere|Luke McCormack to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T18:30Z",
+   "lane": "production",
+   "league": "Boxing",
+   "match": "Luke McCormack v Kayamba Prospere",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.94,
+   "route": {
+    "market": "aec-boxing-lukmcc-kaypro-2026-09-26",
+    "outcome": "Luke McCormack",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-lukmcc-kaypro-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "hit"
+  },
+  "2026-09-26|Nelson Birchall|Lewis Morris|Nelson Birchall to win \u00b7 OLBG community tips": {
+   "away": "Lewis Morris",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-26",
+   "edge_at_log": null,
+   "first_seen": "2026-09-26",
+   "headline": "Nelson Birchall to win",
+   "home": "Nelson Birchall",
+   "id": "2026-09-26|Nelson Birchall|Lewis Morris|Nelson Birchall to win \u00b7 OLBG community tips",
+   "kickoff": "2026-09-26T15:50Z",
+   "lane": "production",
+   "league": "Boxing",
+   "match": "Nelson Birchall v Lewis Morris",
+   "pair": "olbg|boxing",
+   "price_at_log": 0.94,
+   "route": {
+    "market": "aec-boxing-nelbir-lewmor-2026-09-26",
+    "outcome": "Nelson Birchall",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "olbg:aec-boxing-nelbir-lewmor-2026-09-26",
+   "source": "olbg",
+   "sport": "boxing",
+   "status": "hit"
+  },
   "2026-09-26|Vanessa Demopoulos|Yazmin Jauregui|Yazmin Jauregui to win \u00b7 MMA favourite-band rule": {
    "away": "Yazmin Jauregui",
    "bet": {
@@ -324,8 +320,8 @@
    "id": "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-09-27T01:30Z",
    "lane": "production",
-   "last_seen": "2026-09-26",
-   "last_seen_at": "2026-09-26T22:49:13+00:00",
+   "last_seen": "2026-09-27",
+   "last_seen_at": "2026-09-27T01:28:43+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v New England Revolution",
    "pair": "team1_form_l5|soccer_team1",
@@ -343,10 +339,10 @@
    "promoted_at": "2026-09-22T16:20:08+00:00",
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": 0.01,
-   "sandbox_n": 1,
-   "sandbox_roi": 0.1494,
-   "sandbox_roi_fee": 0.1405
+   "sandbox_clv": 0.015,
+   "sandbox_n": 4,
+   "sandbox_roi": -0.7127,
+   "sandbox_roi_fee": -0.7149
   },
   "olbg|boxing": {
    "by_hand": "2026-09-22",
@@ -354,10 +350,10 @@
    "promoted_at": "2026-09-22T16:20:08+00:00",
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": -0.01,
-   "sandbox_n": 1,
-   "sandbox_roi": 0.2821,
-   "sandbox_roi_fee": 0.2653
+   "sandbox_clv": -0.02,
+   "sandbox_n": 3,
+   "sandbox_roi": 0.1366,
+   "sandbox_roi_fee": 0.1284
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -372,7 +368,7 @@
   }
  },
  "stage": "production",
- "unlisted_skipped": 2,
+ "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-26T22:49:13+00:00"
+ "updated_at": "2026-09-27T01:28:43+00:00"
 }
