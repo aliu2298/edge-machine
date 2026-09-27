@@ -173,9 +173,13 @@ jobs:
       # Every hour, whatever the board's state. Writes only data/sandbox_closes/watchdog.json,
       # which nothing else commits, so the rebase below cannot conflict.
       - name: Snapshot Sandbox closing prices
+        id: close_snapshot
         run: |
           set -euo pipefail
-          python3 sandbox_close.py --writer watchdog || { echo "::warning::close snapshot failed"; exit 0; }
+          if ! python3 sandbox_close.py --writer watchdog; then
+            echo "::error::Sandbox closing-price snapshot failed"
+            exit 1
+          fi
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           git add data/sandbox_closes/watchdog.json
@@ -200,7 +204,10 @@ jobs:
       # otherwise leave this hourly job green. Re-read the live pages at 7h, and
       # fail if the tracker's last success is past that same window.
       - name: Fail if the tracker pages are stale and takeover will not run
-        if: steps.check.outputs.run != 'true'
+        # !cancelled() so a red snapshot above does not skip this check. A skipped
+        # snapshot (the check itself failed) still skips it. The snapshot step
+        # still fails the job.
+        if: ${{ !cancelled() && steps.check.outputs.run != 'true' && steps.close_snapshot.outcome != 'skipped' }}
         env:
           TRACKER_FAIL: ${{ steps.check.outputs.tracker_fail }}
           TRACKER_DETAIL: ${{ steps.check.outputs.tracker_detail }}
@@ -219,7 +226,9 @@ jobs:
 
   takeover:
     needs: watch
-    if: needs.watch.outputs.run == 'true'
+    # !cancelled() so a red snapshot in watch does not skip a failover the check
+    # already asked for. The watch job is still red.
+    if: ${{ !cancelled() && needs.watch.outputs.run == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     concurrency:

@@ -54,9 +54,12 @@ jobs:
       # one column and never the run.
       - name: Install headless browser
         run: |
+          # A missing browser costs one column and must not fail the run.
+          # The step exits 0 itself, so a missing browser never fails the job.
+          set +e
           python3 -m pip install --quiet playwright
           python3 -m playwright install --with-deps chromium
-        continue-on-error: true
+          exit 0
 
       # Correctness gate, BEFORE anything is fetched or written. Every assertion in here
       # covers a failure that is invisible on the finished page: a flipped probability, a

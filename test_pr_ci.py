@@ -8,8 +8,10 @@ contents: read, leaves a uses: action unpinned, references secrets, hides a
 failure, or does not run a test_*.py file in the repo root.
 
 Also fails when any workflow pins a uses: to something other than a full
-commit SHA, when a git push line swallows failure, or when a pushing
-workflow's push step still exits 0 after the remote rejects the push.
+commit SHA, when a git push line swallows failure, when any workflow sets
+continue-on-error, or when a pushing workflow's push step still exits 0
+after the remote rejects the push or a rebase conflicts, or exits non-zero
+when there is nothing to commit.
 """
 import glob
 import os
@@ -23,6 +25,7 @@ FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WORKFLOW = os.path.join(ROOT, ".github", "workflows", "pr-tests.yml")
 SHA = re.compile(r"[\w.-]+(?:/[\w.-]+)+@[0-9a-f]{40}\Z")
+_CONTINUE_ON_ERROR = re.compile(r"""(?i)["']?continue-on-error["']?\s*:""")
 WF_DIR = os.path.join(ROOT, ".github", "workflows")
 _USES_RE = re.compile(r"(?m)(?:^|[\s{,])uses[ \t]*:[ \t]*['\"]?([^'\"\s#>,}]+)")
 _PUSH_SWALLOW = re.compile(r"\|\|\s*(?:true\b|:(?:\s|$)|exit\s+0\b|echo\b)")
@@ -322,6 +325,44 @@ def _glob_runs_every_test(script):
     return re.search(rf"\bpython3?[ \t]+['\"]?\$\{{?{loop.group(1)}\}}?", script) is not None
 
 
+def _test_step_if_faults(text):
+    """Any if: on the step that runs the root tests, including if: success()."""
+    faults = []
+    for step in _steps(text):
+        if "test_*.py" not in step and not re.search(r"python3?[ \t]+['\"]?test_", step):
+            continue
+        if re.search(r"""(?m)(?:^|[{\s,])["']?if["']?[ \t]*:""", step):
+            faults.append("the test step sets if:")
+    return faults
+
+
+def _pull_request_types(text):
+    """True when the pull_request trigger restricts types:."""
+    lines = text.splitlines()
+    i = 0
+    while i < len(lines):
+        m = re.match(r"""^([ \t]*)["']?pull_request["']?[ \t]*:(.*)$""", lines[i])
+        if not m:
+            i += 1
+            continue
+        if re.search(r"""(?i)["']?types["']?[ \t]*:""", m.group(2)):
+            return True
+        base = len(m.group(1))
+        j = i + 1
+        while j < len(lines):
+            line = lines[j]
+            if line.strip() == "":
+                j += 1
+                continue
+            if _indent(line) <= base:
+                break
+            if re.search(r"""(?i)["']?types["']?[ \t]*:""", line):
+                return True
+            j += 1
+        i = j
+    return False
+
+
 def problems(text, test_names):
     """Faults in a workflow document. Empty means it meets the PR-test rules."""
     text = _strip_comments(text)
@@ -361,17 +402,22 @@ def problems(text, test_names):
             faults.append(f"uses: is not pinned to a 40-character SHA ({spec})")
     faults.extend(_persist_faults(text))
 
-    if (re.search(r"secrets\s*\.", text) or re.search(r"secrets\s*\[", text)
-            or re.search(r"toJSON\s*\(\s*secrets\b", text)):
+    if (re.search(r"(?i)secrets\s*[.\[]", text)
+            or re.search(r"(?i)tojson\s*\(\s*secrets\b", text)):
         faults.append("references secrets.")
-    if re.search(r"continue-on-error\s*:", text):
+    if _CONTINUE_ON_ERROR.search(text):
         faults.append("sets continue-on-error, so a failing test would not fail the job")
-    if re.search(r"(?m)(?:^|[\s{,])if[ \t]*:[ \t]*['\"]?false\b", text):
+    if re.search(r"(?i)(?:^|[\s{,])[\"']?if[\"']?[ \t]*:[ \t]*(\$\{\{\s*)?['\"]?false\b", text):
         faults.append("sets if: false")
+    faults.extend(_test_step_if_faults(text))
     trigger = _top_keyed_body(text, "on")
-    if re.search(r"(?<![\w-])paths-ignore[ \t]*:", trigger) or re.search(
-            r"(?<![\w-])paths[ \t]*:", trigger):
+    if re.search(r"(?i)(?<![\w-])[\"']?paths-ignore[\"']?[ \t]*:", trigger) or re.search(
+            r"(?i)(?<![\w-])[\"']?paths[\"']?[ \t]*:", trigger):
         faults.append("trigger sets paths or paths-ignore")
+    if _pull_request_types(text):
+        faults.append("pull_request trigger sets types")
+    if re.search(r"(?i)shell[ \t]*:[ \t]*['\"]?bash[ \t]*\{0\}", text):
+        faults.append("shell: bash {0} disables errexit")
     if re.search(r"\|\|\s*true\b", text) or re.search(r"\|\|\s*echo\b", text):
         faults.append("swallows a command failure with || true or || echo")
     faults.extend(_push_swallow_faults(text))
@@ -386,6 +432,13 @@ def problems(text, test_names):
     scripts = _run_scripts(text)
     if any(re.search(r"\bset\s+\+e", s) for s in scripts):
         faults.append("set +e in a run step")
+    if any(re.search(r"\bset\s+\+o\s+errexit\b", s) for s in scripts):
+        faults.append("set +o errexit in a run step")
+    for script in scripts:
+        for line in script.splitlines():
+            if re.search(r"\|\|\s*(?:true\b|:(?:\s|$)|exit\s+0\b)", line):
+                faults.append(f"a run line swallows failure ({line.strip()})")
+                break
     swallowed = any(
         re.search(r"\|\|\s*true\b", s) or re.search(r"\|\|\s*echo\b", s) for s in scripts)
     glob_ok = (not swallowed) and any(_glob_runs_every_test(s) for s in scripts)
@@ -519,6 +572,55 @@ ok(any("if: false" in f for f in problems(
     _GOOD.replace("    timeout-minutes: 20\n", "    timeout-minutes: 20\n    if: false\n"),
     ["test_pr_ci.py"])),
    "rejects if: false")
+ok(any("if: false" in f for f in problems(
+    _GOOD.replace("    timeout-minutes: 20\n",
+                  "    timeout-minutes: 20\n    if: ${{ false }}\n"),
+    ["test_pr_ci.py"])),
+   "rejects if: ${{ false }}")
+ok(any("secrets." in f for f in problems(
+    _GOOD.replace("concurrency:", "env:\n  K: ${{ toJson(secrets) }}\nconcurrency:"),
+    ["test_pr_ci.py"])),
+   "rejects toJson(secrets)")
+ok(any("secrets." in f for f in problems(
+    _GOOD.replace("concurrency:", "env:\n  K: ${{ tojson(secrets) }}\nconcurrency:"),
+    ["test_pr_ci.py"])),
+   "rejects tojson(secrets)")
+ok(any("the test step sets if:" in f for f in problems(
+    _GOOD.replace("      - name: Run every root test\n        run: |",
+                  "      - name: Run every root test\n        if: success()\n        run: |"),
+    ["test_pr_ci.py"])),
+   "rejects any if: on the test step")
+ok(any("continue-on-error" in f for f in problems(
+    _GOOD.replace("    steps:\n",
+                  '    steps:\n      - "continue-on-error": true\n        run: echo hi\n'),
+    ["test_pr_ci.py"])),
+   'rejects a quoted "continue-on-error" key')
+ok(any("paths" in f for f in problems(
+    _GOOD.replace("    branches: [main]\n",
+                  '    branches: [main]\n    "paths":\n      - "**"\n'),
+    ["test_pr_ci.py"])),
+   'rejects a quoted "paths" key on the trigger')
+ok(any("types" in f for f in problems(
+    _GOOD.replace("    branches: [main]\n",
+                  "    branches: [main]\n    types: [opened]\n"),
+    ["test_pr_ci.py"])),
+   "rejects types: on the pull_request trigger")
+ok(any("set +o errexit" in f for f in problems(
+    _GOOD.replace("set -euo pipefail", "set +o errexit"), ["test_pr_ci.py"])),
+   "rejects set +o errexit in a run step")
+ok(any("bash {0}" in f for f in problems(
+    _GOOD.replace("      - name: Run every root test\n        run: |",
+                  "      - name: Run every root test\n        shell: bash {0}\n        run: |"),
+    ["test_pr_ci.py"])),
+   "rejects shell: bash {0}")
+for _swallow_line, _why in (
+        ('python3 "$f" || :', "|| :"),
+        ('python3 "$f" || true', "|| true"),
+        ('python3 "$f" || exit 0', "|| exit 0"),
+):
+    ok(any("swallows failure" in f for f in problems(
+        _GOOD.replace('python3 "$f"', _swallow_line), ["test_pr_ci.py"])),
+       f"rejects {_why} on a run line that is not git push")
 ok(any("paths" in f for f in problems(
     _GOOD.replace("    branches: [main]\n",
                   "    branches: [main]\n    paths:\n      - '**'\n"),
@@ -556,14 +658,18 @@ _wf_paths += sorted(glob.glob(os.path.join(WF_DIR, "*.yaml")))
 ok(bool(_wf_paths), "the repo has workflow files")
 _pin_bad = []
 _swallow_bad = []
+_coe_bad = []
 for _path in _wf_paths:
     _raw = open(_path, encoding="utf-8").read()
     _rel = os.path.relpath(_path, ROOT)
-    for _spec in _uses_specs(_strip_comments(_raw)):
+    _stripped = _strip_comments(_raw)
+    for _spec in _uses_specs(_stripped):
         if not SHA.fullmatch(_spec):
             _pin_bad.append(f"{_rel}: {_spec}")
-    for _fault in _push_swallow_faults(_strip_comments(_raw)):
+    for _fault in _push_swallow_faults(_stripped):
         _swallow_bad.append(f"{_rel}: {_fault}")
+    if _CONTINUE_ON_ERROR.search(_stripped):
+        _coe_bad.append(_rel)
 if _pin_bad:
     for _item in _pin_bad:
         ok(False, f"uses: is not pinned to a 40-character SHA ({_item})")
@@ -574,6 +680,11 @@ if _swallow_bad:
         ok(False, _item)
 else:
     ok(True, "no git push line swallows failure with || true, || :, || exit 0, or || echo")
+if _coe_bad:
+    for _item in _coe_bad:
+        ok(False, f"{_item} sets continue-on-error")
+else:
+    ok(True, "no workflow step sets continue-on-error")
 
 
 def _added_paths(script):
@@ -612,8 +723,24 @@ def _dirty(path):
             fh.write("changed\n")
 
 
-def _push_rejected(script):
-    """Run a push step against a local remote whose git push always fails."""
+def _rewrite(path, plain, json_text):
+    if os.path.isdir(path):
+        for dirpath, _dirs, files in os.walk(path):
+            for name in files:
+                _rewrite(os.path.join(dirpath, name), plain, json_text)
+        return
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as fh:
+        fh.write(json_text if path.endswith(".json") else plain)
+
+
+def _push_rejected(script, mode="reject"):
+    """Run a push step against a local remote.
+
+    mode "reject": the tree is dirty and every git push fails.
+    mode "conflict": origin/main changes the same paths, then every push fails.
+    mode "empty": the tree matches HEAD, so the step must exit 0 without pushing.
+    """
     tmp = tempfile.mkdtemp(prefix="push-fail-")
     try:
         origin = os.path.join(tmp, "origin.git")
@@ -683,35 +810,62 @@ def _push_rejected(script):
         git(local, "commit", "-m", "base")
         git(local, "remote", "add", "origin", origin)
         git(local, "push", "origin", "main")
+        added = _added_paths(_dedent_run(script))
+        if mode == "conflict":
+            # A second clone lands a different copy of the same paths on
+            # origin/main before the step runs, so a later rebase conflicts.
+            other = os.path.join(tmp, "other")
+            git(tmp, "clone", origin, other)
+            for rel in added:
+                _rewrite(os.path.join(other, rel), "remote-side\n", '{"remote": true}\n')
+            git(other, "add", "-A")
+            git(other, "commit", "-m", "remote edit")
+            git(other, "push", "origin", "main")
         # Only the paths this step stages. Other dirty files make `git pull --rebase`
         # fail for a reason other than the rejected push, which hides a loop that
-        # exits 0 when the rebase itself succeeds.
-        for rel in _added_paths(_dedent_run(script)):
-            _dirty(os.path.join(local, rel))
+        # exits 0 when the rebase itself succeeds. An empty diff leaves them clean.
+        if mode != "empty":
+            for rel in added:
+                _dirty(os.path.join(local, rel))
+        same = mode == "empty"
         with open(os.path.join(local, "site_root.py"), "w") as fh:
             fh.write(
                 "import os\n"
                 "os.makedirs('public_site', exist_ok=True)\n"
-                "open('public_site/index.html','w').write('rebuilt-site-root\\n')\n"
+                "open('public_site/index.html','w').write(%r)\n"
+                % ("old\n" if same else "rebuilt-site-root\n")
             )
         with open(os.path.join(local, "sandbox_close.py"), "w") as fh:
-            fh.write(
-                "import os, sys\n"
-                "writer = 'close'\n"
-                "if '--writer' in sys.argv:\n"
-                "    writer = sys.argv[sys.argv.index('--writer') + 1]\n"
-                "os.makedirs('data/sandbox_closes', exist_ok=True)\n"
-                "open('data/sandbox_closes/%s.json' % writer, 'w').write("
-                "'{\"stub\":\"%s\"}\\n' % writer)\n"
-            )
+            if same:
+                fh.write(
+                    "import os, sys\n"
+                    "writer = 'close'\n"
+                    "if '--writer' in sys.argv:\n"
+                    "    writer = sys.argv[sys.argv.index('--writer') + 1]\n"
+                    "os.makedirs('data/sandbox_closes', exist_ok=True)\n"
+                    "open('data/sandbox_closes/%s.json' % writer, 'w').write('{\"v\":0}\\n')\n"
+                )
+            else:
+                fh.write(
+                    "import os, sys\n"
+                    "writer = 'close'\n"
+                    "if '--writer' in sys.argv:\n"
+                    "    writer = sys.argv[sys.argv.index('--writer') + 1]\n"
+                    "os.makedirs('data/sandbox_closes', exist_ok=True)\n"
+                    "open('data/sandbox_closes/%s.json' % writer, 'w').write("
+                    "'{\"stub\":\"%s\"}\\n' % writer)\n"
+                )
         runner = os.path.join(tmp, "runner")
         watch = os.path.join(runner, "settlement-watch")
         os.makedirs(watch)
         with open(os.path.join(watch, "settlement_mismatches.json"), "w") as fh:
-            fh.write(
-                '{"markets":[{"market_id":"m1","stored":"a",'
-                '"venue":"v","venue_result":"yes"}]}\n'
-            )
+            if same:
+                fh.write('{"markets":[]}\n')
+            else:
+                fh.write(
+                    '{"markets":[{"market_id":"m1","stored":"a",'
+                    '"venue":"v","venue_result":"yes"}]}\n'
+                )
         env["RUNNER_TEMP"] = runner
         env["PATH"] = bindir + os.pathsep + env.get("PATH", "")
         return subprocess.run(
@@ -743,18 +897,26 @@ ok(sum(1 for _rel, _n, _s in _push_steps if _rel.endswith("backup-refresh.yml"))
    "backup-refresh's snapshot push and its takeover push are both covered")
 for _rel, _name, _script in _push_steps:
     _label = f"{_rel} step { _name or '(unnamed)' }"
-    try:
-        _ran = _push_rejected(_script)
-    except Exception as _exc:
-        ok(False, f"{_label} harness error: {_exc}")
-        continue
-    _out = (_ran.stdout or "") + "\n" + (_ran.stderr or "")
-    _good = _ran.returncode != 0 and "hook-rejected-push" in _out
-    _why = f"{_label} exits non-zero when the push is rejected"
-    if not _good:
-        _tail = [ln for ln in _out.splitlines() if ln.strip()][-12:]
-        _why += f" (exit {_ran.returncode}; " + " | ".join(_tail) + ")"
-    ok(_good, _why)
+    for _mode in ("reject", "conflict", "empty"):
+        try:
+            _ran = _push_rejected(_script, _mode)
+        except Exception as _exc:
+            ok(False, f"{_label} {_mode} harness error: {_exc}")
+            continue
+        _out = (_ran.stdout or "") + "\n" + (_ran.stderr or "")
+        if _mode == "empty":
+            _good = _ran.returncode == 0 and "hook-rejected-push" not in _out
+            _why = f"{_label} exits 0 when the diff is empty"
+        elif _mode == "conflict":
+            _good = _ran.returncode != 0
+            _why = f"{_label} exits non-zero when the rebase conflicts"
+        else:
+            _good = _ran.returncode != 0 and "hook-rejected-push" in _out
+            _why = f"{_label} exits non-zero when the push is rejected"
+        if not _good:
+            _tail = [ln for ln in _out.splitlines() if ln.strip()][-12:]
+            _why += f" (exit {_ran.returncode}; " + " | ".join(_tail) + ")"
+        ok(_good, _why)
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all pull-request workflow checks passed'}")
 for _f in FAILS:

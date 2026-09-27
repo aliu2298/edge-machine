@@ -4484,10 +4484,13 @@ if _GATE is not None and hasattr(_GATE, "decide"):
 ok('echo "track_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf
    and 'echo "build_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf,
    "the tracker and the page build record their exit codes")
-ok("set +e" in _tracker_wf and "continue-on-error" in _tracker_wf.split("sandbox_track.py")[0],
-   "the browser install may continue, and the tracker steps are not continue-on-error")
-ok(_tracker_wf.count("continue-on-error") == 1,
-   "only the browser install is continue-on-error")
+_install = _tracker_wf.split("- name: Install headless browser", 1)[-1].split("- name: Logic tests", 1)[0]
+ok("continue-on-error" not in _tracker_wf,
+   "no tracker step uses continue-on-error")
+ok("set +e" in _install and "exit 0" in _install,
+   "the browser install may continue without continue-on-error")
+ok("set +e" in _tracker_wf.split("sandbox_track.py")[0],
+   "the tracker steps record a failing run with set +e rather than continue-on-error")
 ok('json.load(open("data/sandbox_ledger.json"))' in _tracker_wf,
    "a missing or invalid ledger is checked before anything is committed")
 ok("from pipeline_gate import decide" in _tracker_wf,
