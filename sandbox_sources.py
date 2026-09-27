@@ -644,23 +644,28 @@ SOURCES = {
              "long-run 37.5% base rate would reject every board Kalshi has quoted. Expect ~9 "
              "bets a matchweek. If the regime reverts, this lane loses and the Sandbox says "
              "so. Judged against backing the over on every match of this market."),
-    "bund_o35_draw": dict(
-        label="Bundesliga over 3.5, draw priced 3.60-4.00", kind="Rule", connected=True,
+    "bund_o35_fav": dict(
+        label="Bundesliga over 3.5, favourite priced 2.00-2.60", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_u35"], baseline="population",
-        note="Pre-registered 2026-09-26, as the companion to bund_o35 and judged against it. "
-             "Identical bet — over 3.5 on a Kalshi Bundesliga match, 6% hold cap — but only "
-             "where that fixture's own three-way board prices the draw at a de-vigged "
-             "0.235-0.267, the translation of bookmaker decimal 3.60-4.00. That is where the "
-             "league's over-3.5 excess concentrates: +4.0pp over 13 seasons at z +2.82 on "
-             "1,188 matches against +1.7pp for the league as a whole. It is NOT proven and "
-             "the shape says so — train 13/14-20/21 gives +0.4pp (z +0.24) and the held-out "
-             "half +8.7pp (z +3.99), which is a trend appearing mid-sample rather than an "
-             "effect present throughout, and it could as easily be drift about to revert. It "
-             "also fails the study's own bar: the permutation threshold for a scanned cell in "
-             "this grid is |z| >= 4.09 and this is 2.82. bund_o35 keeps logging every match "
-             "including these, so a fixture in the band is logged by BOTH lanes and the "
-             "overlap is the comparison. If the band adds nothing over the plain league, the "
-             "two records converge and this lane is deleted. ~2.7 bets a matchweek."),
+        note="Pre-registered 2026-09-26 as the companion to bund_o35 and the REPLACEMENT for "
+             "bund_o35_draw, retired the same day. Identical bet — over 3.5 on a Kalshi "
+             "Bundesliga match, 6% hold cap — but only where that fixture's own three-way "
+             "board prices the FAVOURITE at a de-vigged 0.363-0.481, the mechanical "
+             "translation of bookmaker decimal 2.00-2.60, with the ask at 0.41 or less. "
+             "Measured on the LAST THREE SEASONS (2023/24-2025/26), the window this project "
+             "now uses: a permutation test shows a 3-season grid is no noisier than a "
+             "13-season one (max |z| under a null 3.44 v 3.69, 95% bar 4.11 v 4.16) because "
+             "z scales with root-n. On 402 matches over 3.5 landed 41.79% against 33.84% "
+             "implied — league part +8.6pp at z +3.65 — and splitting two-seasons-in against "
+             "2025/26 held out gives +8.0pp (z +2.72) then +9.9pp (z +2.48), stronger on the "
+             "season it never saw. WHY IT REPLACED THE DRAW BAND: bund_o35_draw used draw "
+             "3.60-4.00, which on three seasons is the single largest cell in the whole study "
+             "(+13.0pp, z +4.41) and the least trustworthy — four of its seven lines FLIP "
+             "SIGN in the held-out season (BTTS +13.6 to -1.7, over 1.5 +9.6 to -0.8, "
+             "dog-to-score +9.5 to -2.2) and over 3.5 itself halves. That lane had logged no "
+             "bets, so it was removed rather than paused. Break-even ask is 0.411 and these "
+             "matches price near 0.34, so the ceiling is a rail. ~3.9 bets a matchweek. "
+             "Judged against backing the over on every match of this market."),
     "ere_o15": dict(
         label="Eredivisie over 1.5, underdog priced 3.21-4.00", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_o15"], baseline="population",
@@ -3620,17 +3625,37 @@ def fetch_ere_o15(sport, universe=None):
 # across the three eras while the price's implied total went 2.91 -> 3.10 -> 3.10 and stopped
 # following. Over the same eras the other eleven leagues' gap never left +-1pp.
 #
+# RE-MEASURED ON THE LAST 3 SEASONS, 2026-09-26. A 13-season average blends a dead regime
+# with the live one, and a permutation test says three seasons is no noisier than thirteen:
+# the grid's max |z| under a null is 3.44 against 3.69, and its 95% bar 4.11 against 4.16,
+# because z scales with root-n so the noise ceiling barely moves. On 2023/24-2025/26 alone
+# the league-wide effect is LARGER than the 13-season figure — over 3.5 runs +4.9pp
+# (z +3.06) against +2.2pp — and it is over 3.5 ALONE: over 1.5 +1.1pp, over 2.5 +1.5pp,
+# BTTS +0.4pp, both team-to-score lines flat.
+#
 # TWO LANES, deliberately. bund_o35 takes every match — nothing selected, so nothing to
-# discount. bund_o35_draw takes only the draw-price band where the effect concentrates,
-# which is a real but unproven refinement (z +2.82 over 13 seasons, and +0.4pp train against
-# +8.7pp held out — the TREND shape, not the replicating one). A match in the band is logged
-# by BOTH, and that overlap is the comparison: if the band adds nothing, the two records
-# converge and the narrow lane is deleted.
+# discount. bund_o35_fav takes the band where the effect concentrates on the current regime.
+# A match in the band is logged by BOTH, and that overlap is the comparison.
+#
+# WHAT REPLACED WHAT, because this corrects something built earlier the same day.
+# bund_o35_draw took the draw band 3.60-4.00 on a 13-season reading. Re-measured on three
+# seasons that band is the single largest cell in the whole study (+13.0pp, z +4.41) and
+# also the least trustworthy: split two-seasons-in against 2025/26 held out, FOUR of its
+# seven lines FLIP SIGN in the held-out season — BTTS +13.6 -> -1.7, over 1.5 +9.6 -> -0.8,
+# dog-to-score +9.5 -> -2.2 — and over 3.5 itself halves, +16.2 -> +7.3. Its whole
+# appearance rests on 2023/24 and 2024/25. It had logged no bets, so it was removed rather
+# than paused. The favourite band 0.363-0.481 replaces it: +8.6pp over three seasons
+# (z +3.65), +8.0pp on the two in-seasons and +9.9pp on the held-out one — stronger on the
+# season it never saw, which is the opposite of what the draw band does.
 BUND_O35_TOTAL = "KXBUNDESLIGATOTAL"
 BUND_O35_GAME = "KXBUNDESLIGAGAME"
-# De-vigged draw probability. The mechanical translation of bookmaker decimal 3.60-4.00 at
-# Bundesliga's measured hold: the matches in that decimal band span exactly 0.2351-0.2669.
-BUND_O35_DRAW_BAND = (0.235, 0.267)
+# De-vigged FAVOURITE probability — the mechanical translation of bookmaker decimal
+# 2.00-2.60, whose matches span exactly 0.3629-0.4801. This REPLACED the draw band
+# 3.60-4.00 on 2026-09-26; the comment above says why.
+BUND_O35_FAV_BAND = (0.363, 0.481)
+# Break-even, not fitted: at the band's measured 41.79% and Kalshi's 0.07*p*(1-p) fee an ask
+# of 0.411 returns zero. These matches price near 0.34, so it is a rail, not a filter.
+BUND_O35_FAV_MAX_ASK = 0.41
 # NOT an absolute price ceiling, on purpose. This lane's claim is RELATIVE — +4.4pp over
 # whatever the market says for that match — so a fixed ceiling would be measuring the wrong
 # thing. At Kalshi's typical over-3.5 ask of 0.41 against a de-vigged 0.40 the bet returns
@@ -3661,8 +3686,8 @@ def _bund_o35_rows(sport, universe):
     return out
 
 
-def bund_o35_draws(universe=None):
-    """{fixture code: de-vigged draw probability} off the Kalshi Bundesliga three-way board."""
+def bund_o35_favs(universe=None):
+    """{fixture code: de-vigged FAVOURITE probability} off the Kalshi Bundesliga board."""
     out = {}
     for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
         if r.get("venue") != "kalshi":
@@ -3675,7 +3700,7 @@ def bund_o35_draws(universe=None):
         total = float(pa) + float(pdr) + float(pb)
         if total <= 0:
             continue
-        out[_ere_code(r.get("market_id"))] = float(pdr) / total
+        out[_ere_code(r.get("market_id"))] = max(float(pa), float(pb)) / total
     return out
 
 
@@ -3894,8 +3919,8 @@ def fetch_liga_u15_dog(sport, universe=None):
     return out
 
 
-def fetch_bund_o35_draw(sport, universe=None):
-    """bund_o35's bet, only where the winner board prices the draw in BUND_O35_DRAW_BAND.
+def fetch_bund_o35_fav(sport, universe=None):
+    """bund_o35's bet, only where the winner board prices the favourite in BUND_O35_FAV_BAND.
 
     bund_o35 is NOT filtered and keeps logging every Bundesliga match, so a fixture in the
     band is logged by both lanes under two sources and the two records can be read side by
@@ -3904,11 +3929,13 @@ def fetch_bund_o35_draw(sport, universe=None):
     if sport != "soccer_u35":
         return []
     uni = universe if universe is not None else (UNIVERSE or {})
-    draws = bund_o35_draws(uni)
+    favs = bund_o35_favs(uni)
     out = []
     for r in _bund_o35_rows(sport, uni):
-        p = draws.get(_ere_code(r.get("market_id")))
-        if p is None or not (BUND_O35_DRAW_BAND[0] <= p < BUND_O35_DRAW_BAND[1]):
+        p = favs.get(_ere_code(r.get("market_id")))
+        if p is None or not (BUND_O35_FAV_BAND[0] <= p < BUND_O35_FAV_BAND[1]):
+            continue
+        if float(r["price_a"]) > BUND_O35_FAV_MAX_ASK:
             continue
         out.append(dict(market_id=r["market_id"], pick="a"))
     return out
@@ -6221,7 +6248,7 @@ CHALLENGERS = {
     "liga_btts_even": fetch_liga_btts_even,
     "liga_u15_dog": fetch_liga_u15_dog,
     "bund_o35": fetch_bund_o35,
-    "bund_o35_draw": fetch_bund_o35_draw,
+    "bund_o35_fav": fetch_bund_o35_fav,
     "ere_o15": fetch_ere_o15,
     "ere_draw": fetch_ere_draw,
     "u35_low_scoring": fetch_u35_low_scoring,

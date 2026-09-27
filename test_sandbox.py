@@ -5420,14 +5420,24 @@ eq({p["market_id"] for p in S.fetch_bund_o35("soccer_u35", universe=_bu)},
    {"KXBUNDESLIGATOTAL-26SEP27BVBSGE-4", "KXBUNDESLIGATOTAL-26SEP27BAYHOF-4",
     "KXBUNDESLIGATOTAL-26SEP27FCBRBL-4"},
    "the WIDE lane takes every Bundesliga over-3.5 board — nothing is selected")
-eq([p["market_id"] for p in S.fetch_bund_o35_draw("soccer_u35", universe=_bu)],
-   ["KXBUNDESLIGATOTAL-26SEP27BVBSGE-4"],
-   "the NARROW lane takes only the fixture whose winner board prices the draw in band")
+# Three fixtures, three different outcomes, and both gates get exercised:
+#   FCBRBL  favourite 0.3824 in band, ask 0.40 <= 0.41  -> taken
+#   BVBSGE  favourite 0.4412 in band, ask 0.44 >  0.41  -> refused on PRICE
+#   BAYHOF  favourite 0.8627 out of band                -> refused on BAND
+eq({p["market_id"] for p in S.fetch_bund_o35_fav("soccer_u35", universe=_bu)},
+   {"KXBUNDESLIGATOTAL-26SEP27FCBRBL-4"},
+   "the NARROW lane takes the in-band fixture, refuses the in-band one whose ask is too dear, "
+   "and refuses the blowout")
 eq({p["pick"] for p in S.fetch_bund_o35("soccer_u35", universe=_bu)}, {"a"},
    "both lanes buy the OVER, never the under")
 ok(all(p["market_id"] in {q["market_id"] for q in S.fetch_bund_o35("soccer_u35", universe=_bu)}
-       for p in S.fetch_bund_o35_draw("soccer_u35", universe=_bu)),
+       for p in S.fetch_bund_o35_fav("soccer_u35", universe=_bu)),
    "narrow is a strict subset of wide, so the overlap is the comparison between them")
+# The band that was RETIRED must not come back by accident.
+ok(not hasattr(S, "fetch_bund_o35_draw") and "bund_o35_draw" not in S.SOURCES
+   and "bund_o35_draw" not in S.CHALLENGERS and not hasattr(S, "BUND_O35_DRAW_BAND"),
+   "bund_o35_draw is gone entirely — it had logged no bets, so it was removed not paused")
+
 
 # The hold cap is the only price guard, and it must bite on a wide book.
 eq(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("w1", 0.50, 0.60)]}), [],
@@ -5436,20 +5446,37 @@ eq(len(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt
    "a board holding 6% is still taken (cap is inclusive)")
 eq(len(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("w3", 0.55)]})), 1,
    "there is NO absolute ask ceiling: the claim is relative, and 0.55 is above every base rate")
-eq((S.BUND_O35_DRAW_BAND, S.BUND_O35_MAX_HOLD, S.BUND_O35_TOTAL, S.BUND_O35_GAME),
-   ((0.235, 0.267), 0.06, "KXBUNDESLIGATOTAL", "KXBUNDESLIGAGAME"),
-   "band, hold cap and both series are the pre-registered ones")
+eq((S.BUND_O35_FAV_BAND, S.BUND_O35_FAV_MAX_ASK, S.BUND_O35_MAX_HOLD,
+    S.BUND_O35_TOTAL, S.BUND_O35_GAME),
+   ((0.363, 0.481), 0.41, 0.06, "KXBUNDESLIGATOTAL", "KXBUNDESLIGAGAME"),
+   "band, ask ceiling, hold cap and both series are the pre-registered ones")
+# Band edges. _bg(a, draw, b) de-vigs the FAVOURITE as max(a,b)/(a+draw+b).
+eq(S.fetch_bund_o35_fav("soccer_u35", universe={
+    "soccer": [_bg("e1", 0.37, 0.30, 0.35)], "soccer_u35": [_bt("e1", 0.36)]}), [],
+   "a de-vigged favourite of 0.3627 is just BELOW the 0.363 floor and is refused")
+eq(len(S.fetch_bund_o35_fav("soccer_u35", universe={
+    "soccer": [_bg("e2", 0.38, 0.30, 0.35)], "soccer_u35": [_bt("e2", 0.36)]})), 1,
+   "0.3689 is just inside the floor and is taken")
+eq(len(S.fetch_bund_o35_fav("soccer_u35", universe={
+    "soccer": [_bg("e3", 0.49, 0.27, 0.26)], "soccer_u35": [_bt("e3", 0.36)]})), 1,
+   "0.4804 is just inside the 0.481 ceiling and is taken")
+eq(S.fetch_bund_o35_fav("soccer_u35", universe={
+    "soccer": [_bg("e4", 0.50, 0.27, 0.25)], "soccer_u35": [_bt("e4", 0.36)]}), [],
+   "0.4902 is above the ceiling and is refused — a favourite that short is not this band")
+eq(S.fetch_bund_o35_fav("soccer_u35", universe={
+    "soccer": [_bg("e5", 0.42, 0.28, 0.32)], "soccer_u35": [_bt("e5", 0.42)]}), [],
+   "an ask of 0.42 is refused — 0.411 is break-even at the measured 41.79%")
 
-eq(S.fetch_bund_o35_draw("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n1", 0.44)]}), [],
+eq(S.fetch_bund_o35_fav("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n1", 0.36)]}), [],
    "narrow skips a total whose winner board is missing, never assumes it in band")
 eq(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n2", 0.44, trade=False)]}), [],
    "an untradeable over leg is skipped")
 eq(S.fetch_bund_o35("soccer_u35", universe={"soccer": [], "soccer_u35": [_bt("n3", 0.44, series="KXEPLTOTAL")]}), [],
    "another league's total is not this lane's")
-eq((S.fetch_bund_o35("soccer_o15", universe=_bu), S.fetch_bund_o35_draw("soccer_o25", universe=_bu)),
+eq((S.fetch_bund_o35("soccer_o15", universe=_bu), S.fetch_bund_o35_fav("soccer_o25", universe=_bu)),
    ([], []), "both lanes are over-3.5 only — the series ticker is shared with other goal lines")
 
-for _n in ("bund_o35", "bund_o35_draw"):
+for _n in ("bund_o35", "bund_o35_fav"):
     eq((S.SOURCES[_n]["sports"], S.SOURCES[_n]["baseline"]), (["soccer_u35"], "population"),
        f"{_n} is registered on the over-3.5 domain, judged against the population")
     ok(not S.lane_paused(_n, "soccer_u35"), f"{_n} is not paused")
@@ -5457,9 +5484,9 @@ ok("z +3.01" in S.SOURCES["bund_o35"]["note"] and "z -0.09" in S.SOURCES["bund_o
    "the wide lane's note pins both the recent result and the flat early era that dates it")
 ok("4.09" in S.SOURCES["bund_o35"]["note"] and "p = 0.363" in S.SOURCES["bund_o35"]["note"],
    "and the permutation threshold that rejected every other cell in the study")
-ok("z +2.82" in S.SOURCES["bund_o35_draw"]["note"] and "4.09" in S.SOURCES["bund_o35_draw"]["note"],
-   "the narrow lane's note states it does NOT clear that threshold")
-ok(S.CHALLENGERS["bund_o35"] is not S.CHALLENGERS["bund_o35_draw"],
+ok("z +3.65" in S.SOURCES["bund_o35_fav"]["note"] and "FLIP SIGN" in S.SOURCES["bund_o35_fav"]["note"],
+   "the narrow lane's note pins its result and records why the draw band it replaced was retired")
+ok(S.CHALLENGERS["bund_o35"] is not S.CHALLENGERS["bund_o35_fav"],
    "the two lanes are separate sources so neither can pool into the other's record")
 
 # ---------------------------------------------------------------------------
