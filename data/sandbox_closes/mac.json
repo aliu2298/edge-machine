@@ -716,14 +716,14 @@
    "price": 0.99
   },
   "covers:KXNFLGAME-26SEP27HOUIND": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.85
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 22.8,
+   "price": 0.83
   },
   "covers:KXNFLGAME-26SEP27LACBUF": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.38
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 22.8,
+   "price": 0.66
   },
   "covers:KXNFLGAME-26SEP27NEJAC": {
    "at": "2026-09-27T19:07:05+00:00",
@@ -731,14 +731,14 @@
    "price": 0.96
   },
   "covers:KXNFLGAME-26SEP27NYJDET": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.93
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 22.8,
+   "price": 0.79
   },
   "covers:KXNFLGAME-26SEP27TENNYG": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.92
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 22.8,
+   "price": 0.85
   },
   "covers:aec-mlb-ath-cle-2026-09-18": {
    "at": "2026-09-18T22:57:18+00:00",
@@ -1551,14 +1551,19 @@
    "price": 0.54
   },
   "espn_fpi:aec-nfl-ari-sf-2026-09-27": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 42.9,
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 27.8,
    "price": 0.775
   },
   "espn_fpi:aec-nfl-atl-gb-2026-09-24": {
    "at": "2026-09-25T00:05:16+00:00",
    "lead_min": 9.7,
    "price": 0.315
+  },
+  "espn_fpi:aec-nfl-bal-dal-2026-09-27": {
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 47.8,
+   "price": 0.38
   },
   "espn_fpi:aec-nfl-car-atl-2026-09-20": {
    "at": "2026-09-20T16:57:42+00:00",
@@ -2269,6 +2274,11 @@
    "at": "2026-09-25T13:58:28+00:00",
    "lead_min": 1.5,
    "price": 0.8
+  },
+  "o15_ranked:KXINTLFRIENDLYTOTAL-26SEP27BOLPAR-2": {
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 52.8,
+   "price": 0.75
   },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26SEP27MLTLIE-2": {
    "at": "2026-09-27T16:21:09+00:00",
@@ -4166,9 +4176,9 @@
    "price": 0.81
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP27PALOST": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.77
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 22.8,
+   "price": 0.74
   },
   "tennis_fav_band:KXATPMATCH-26SEP21BORUGO": {
    "at": "2026-09-22T01:50:48+00:00",
@@ -5906,9 +5916,9 @@
    "price": 0.79
   },
   "tennis_fav_band_3h:aec-atp-ilipal-danost-2026-09-27": {
-   "at": "2026-09-27T19:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.77
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 22.8,
+   "price": 0.75
   },
   "tennis_fav_band_3h:aec-atp-jamtro-aleoko-2026-09-27": {
    "at": "2026-09-27T18:21:52+00:00",
@@ -6000,6 +6010,11 @@
    "lead_min": 4.5,
    "price": 0.8
   },
+  "u35_low_scoring:KXINTLFRIENDLYTOTAL-26SEP27BOLPAR-4": {
+   "at": "2026-09-27T19:37:09+00:00",
+   "lead_min": 52.8,
+   "price": 0.74
+  },
   "u35_low_scoring:KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-4": {
    "at": "2026-09-19T16:51:48+00:00",
    "lead_min": 8.2,
@@ -6076,5 +6091,5 @@
    "price": 0.86
   }
  },
- "updated": "2026-09-27T19:22:06+00:00"
+ "updated": "2026-09-27T19:37:09+00:00"
 }
