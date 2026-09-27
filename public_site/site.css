@@ -1,6 +1,7 @@
 /* Edge Machine public site. Dark only: no light theme, no toggle. System fonts. */
 :root {
   color-scheme: dark;
+  --sticky-top: 104px;
   --bg: #0b0c0f;
   --card: #16181d;
   --raised: #1f2229;
@@ -184,7 +185,8 @@ h2 {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--r);
-  overflow-x: auto;
+  /* visible so a sticky header can stick to the page, not to this card */
+  overflow: visible;
   margin-bottom: 16px;
 }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -199,6 +201,9 @@ th {
   border-bottom: 1px solid var(--line);
   background: var(--raised);
   white-space: nowrap;
+  position: sticky;
+  top: var(--sticky-top);
+  z-index: 2;
 }
 th.grp { text-align: center; border-bottom: 1px solid var(--line); }
 td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
@@ -264,7 +269,7 @@ details.grp-fold .tbl { border: none; border-top: 1px solid var(--line); border-
 .folds-ctl button:hover { color: var(--fg); }
 details.sport .tbl { border: none; border-top: 1px solid var(--line); border-radius: 0 0 var(--r) var(--r); margin: 0; }
 details.more { margin: -4px 0 16px; }
-input.flt {
+input.flt, .table-tools select {
   font: inherit;
   font-size: 14px;
   color: var(--fg);
@@ -272,8 +277,35 @@ input.flt {
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 8px 12px;
-  width: 100%;
-  margin-bottom: 10px;
+}
+input.flt { width: 100%; margin-bottom: 10px; }
+.table-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 10px;
+}
+.table-tools input.flt { flex: 1 1 220px; width: auto; margin: 0; min-width: 0; }
+.table-tools select { background: var(--card); }
+.table-tools .count { margin-left: auto; color: var(--mut); font-size: 13px; white-space: nowrap; }
+table.sortable th { cursor: pointer; }
+table.sortable th[aria-sort="ascending"]::after { content: " \2191"; }
+table.sortable th[aria-sort="descending"]::after { content: " \2193"; }
+.tbl td:first-child, .tbl th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+.tbl td:first-child { background: var(--card); box-shadow: 1px 0 0 var(--line); }
+.tbl th:first-child { z-index: 3; background: var(--raised); box-shadow: 1px 0 0 var(--line); }
+.tbl tbody tr:hover td:first-child { background: var(--raised); }
+ul.weeks { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+ul.weeks li {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px 16px;
 }
 details.more > summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--acc); padding: 6px 2px; list-style: none; }
 details.more > summary::-webkit-details-marker { display: none; }
@@ -388,6 +420,8 @@ details.fold details.fold > summary { margin: 12px 0 6px; font-size: 15px; }
   html:not([data-view="table"]) td[data-l=""]::before { content: none; }
   html:not([data-view="table"]) td[data-empty] { display: none; }
   html:not([data-view="table"]) td[data-l="#"] > .sm { flex: 0 0 auto; text-align: left; }
+  html:not([data-view="table"]) td,
+  html:not([data-view="table"]) th { position: static; left: auto; box-shadow: none; }
 }
 html[data-view="cards"] .tbl { overflow-x: visible; }
 html[data-view="cards"] table { display: block; }
@@ -444,8 +478,10 @@ html[data-view="cards"] td[data-l="#"] + td > .sm { text-align: left; }
 html[data-view="cards"] td[data-l=""]::before { content: none; }
 html[data-view="cards"] td[data-empty] { display: none; }
 html[data-view="cards"] td[data-l="#"] > .sm { flex: 0 0 auto; text-align: left; }
+html[data-view="cards"] td, html[data-view="cards"] th { position: static; left: auto; box-shadow: none; }
 
 @media (max-width: 640px) {
+  :root { --sticky-top: 0px; }
   .topbar { padding: 0 16px; gap: 10px; }
   .stamp { display: none; }
   nav.toc { padding: 0 16px 8px; gap: 14px; }
@@ -456,4 +492,32 @@ html[data-view="cards"] td[data-l="#"] > .sm { flex: 0 0 auto; text-align: left;
   .tiles { grid-template-columns: 1fr 1fr; }
   .tile b { font-size: 24px; }
   th, td { padding: 10px 12px; }
+  /* Under 640px the table stays a table and scrolls sideways inside the card,
+     unless the reader asked for the phone cards. */
+  html:not([data-view="cards"]) .tbl {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  html:not([data-view="cards"]) table { display: table; width: max-content; min-width: 100%; }
+  html:not([data-view="cards"]) thead { display: table-header-group; }
+  html:not([data-view="cards"]) tbody { display: table-row-group; }
+  html:not([data-view="cards"]) tr { display: table-row; width: auto; padding: 0; border-bottom: none; }
+  html:not([data-view="cards"]) td,
+  html:not([data-view="cards"]) th { display: table-cell; width: auto; }
+  html:not([data-view="cards"]) td::before { content: none; }
+  html:not([data-view="cards"]) td[data-empty] { display: table-cell; }
+  html:not([data-view="cards"]) td:first-child:not([data-l="#"]),
+  html:not([data-view="cards"]) td[data-l="#"] + td {
+    display: table-cell;
+    text-align: left;
+    padding: 10px 12px;
+  }
+  html:not([data-view="cards"]) .tbl td:first-child,
+  html:not([data-view="cards"]) .tbl th:first-child {
+    position: sticky;
+    left: 0;
+    max-width: 11rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }

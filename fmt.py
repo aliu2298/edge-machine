@@ -133,3 +133,63 @@ def machine_stamp(value):
 def iso_z(value):
     """UTC instant for a <time datetime> attribute."""
     return _as_utc(value).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def tone(value, spec=".1f", scale=100):
+    """'pos', 'neg', or 'mut' from the value as it would be displayed.
+
+    `spec` formats the scaled absolute value, the same way money and pct round.
+    A value that rounds to zero at that precision is 'mut', even when the raw
+    value is negative. -0.0004 shown as 0.0% (digits 1) is neutral.
+    """
+    if value is None:
+        return "mut"
+    scaled = value * scale
+    body = _magnitude(scaled, spec)
+    sign = _sign(scaled, body, plus=True)
+    if sign == MINUS:
+        return "neg"
+    if sign == "+":
+        return "pos"
+    return "mut"
+
+
+def shown_digits(value, spec=",.0f", scale=1):
+    """The number as displayed, ASCII-signed, with no unit and no thousands comma.
+
+    None stays None. A value that rounds to zero is '0', with no minus. Negatives
+    use ASCII '-' so a data-v attribute stays a number. The displayed text still
+    uses U+2212 via money() and pct().
+    """
+    if value is None:
+        return None
+    scaled = value * scale
+    body = _magnitude(scaled, spec).replace(",", "")
+    if _is_displayed_zero(body):
+        return "0"
+    if scaled < 0:
+        return "-" + body
+    return body
+
+
+def shown_cents_digits(x):
+    """The cent figure cents() prints, ASCII-signed. 0.77 -> '77'. None stays None."""
+    if x is None:
+        return None
+    shown = f"{float(x):.2f}"
+    n = int(round(abs(float(shown)) * 100))
+    if n == 0:
+        return "0"
+    return f"-{n}" if shown.startswith("-") else str(n)
+
+
+def tstat(value):
+    """A t statistic the way the pages print it.
+
+    A value that rounds to 0.00 is 't 0.00', with no plus. A negative uses
+    U+2212. A positive keeps the plus: 't +1.23'. None is an em dash.
+    """
+    if value is None:
+        return "—"
+    body = _magnitude(value, ".2f")
+    return f"t {_sign(value, body, plus=True)}{body}"

@@ -3,10 +3,15 @@
 (function () {
   var root = document.documentElement, btn = document.getElementById("vw");
   if (!btn) return;
-  var narrow = function () { return window.matchMedia("(max-width:760px)").matches; };
+  var phoneCards = function () {
+    // 641–760px keeps the card layout. Under 640px the table scrolls sideways
+    // until the reader asks for cards.
+    return window.matchMedia("(max-width:760px)").matches
+      && !window.matchMedia("(max-width:640px)").matches;
+  };
   var showing = function () {
     var v = root.getAttribute("data-view");
-    return v ? v : (narrow() ? "cards" : "table");
+    return v ? v : (phoneCards() ? "cards" : "table");
   };
   var paint = function () { btn.textContent = showing() === "cards" ? "Full table" : "Phone view"; };
   try {
@@ -15,6 +20,7 @@
   } catch (e) {}
   paint();
   window.matchMedia("(max-width:760px)").addEventListener("change", paint);
+  window.matchMedia("(max-width:640px)").addEventListener("change", paint);
   btn.addEventListener("click", function () {
     var next = showing() === "cards" ? "table" : "cards";
     root.setAttribute("data-view", next);
@@ -36,6 +42,7 @@ document.querySelectorAll("input.flt").forEach(function (inp) {
     var box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
     box.querySelectorAll("details").forEach(function (dt) { if (q) dt.open = true; });
     box.querySelectorAll("table").forEach(function (t) {
+      if (t.classList.contains("sortable")) return;
       var grp = null, any = false;
       t.querySelectorAll("tr").forEach(function (tr) {
         if (tr.querySelector("th")) return;

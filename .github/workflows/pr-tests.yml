@@ -50,6 +50,18 @@ jobs:
             python3 "$f"
           done
 
+      # Node is preinstalled on the GitHub-hosted runner. No setup action:
+      # this step only runs the same-origin table sort test.
+      - name: Table sort and filter
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v node >/dev/null 2>&1; then
+            echo "skipped: node is not installed on this runner"
+            exit 0
+          fi
+          node test_tables.js
+
       # Venue spot-checks need the network. --no-network skips only those and
       # prints a skipped: line for each. It does not touch the scheduled audit.
       - name: Audit the Sandbox record offline

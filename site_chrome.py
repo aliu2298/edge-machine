@@ -24,7 +24,33 @@ def esc(x):
     return html.escape(str(x))
 
 
-def nav(active):
+def _root(prefix):
+    """'./' or '../'. A missing prefix is the site root, same as './'."""
+    if not prefix:
+        return "./"
+    if not prefix.endswith("/"):
+        prefix += "/"
+    return prefix
+
+
+def _href(path, prefix):
+    """Rewrite a './' link for a page that lives in a subdirectory."""
+    root = _root(prefix)
+    if path.startswith("./"):
+        return root + path[2:]
+    return path
+
+
+# Same-origin only. No inline script, no inline style, no third-party host.
+CSP = (
+    '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; '
+    'script-src \'self\'; style-src \'self\'; img-src \'self\' data:; '
+    'base-uri \'none\'; form-action \'none\'">'
+)
+REFERRER = '<meta name="referrer" content="no-referrer">'
+
+
+def nav(active, prefix="./"):
     """The four links, with aria-current on exactly one."""
     parts = []
     current = 0
@@ -33,7 +59,7 @@ def nav(active):
         if key == active:
             attr = ' aria-current="page"'
             current += 1
-        parts.append(f'<a href="{href}"{attr}>{esc(label)}</a>')
+        parts.append(f'<a href="{esc(_href(href, prefix))}"{attr}>{esc(label)}</a>')
     if current != 1:
         raise ValueError(f"aria-current must mark one page, got {current} for {active!r}")
     return f'<nav class="main" aria-label="Pages">{"".join(parts)}</nav>'
@@ -58,13 +84,13 @@ def stamp(when, machine=True):
     return body
 
 
-def header(active, sections, stamp_html, tools=""):
+def header(active, sections, stamp_html, tools="", prefix="./"):
     tool = f"{tools}" if tools else ""
     return f"""<a class="skip" href="#content">Skip to content</a>
 <header class="site">
 <div class="topbar">
-<a class="brand" href="./sandbox.html">Edge Machine</a>
-{nav(active)}
+<a class="brand" href="{esc(_href("./sandbox.html", prefix))}">Edge Machine</a>
+{nav(active, prefix)}
 {tool}
 <p class="stamp">{stamp_html}</p>
 </div>
@@ -73,8 +99,15 @@ def header(active, sections, stamp_html, tools=""):
 
 
 def document(title, description, active, sections, stamp_html, body,
-             script_src=None, extra_head="", tools=""):
-    script = f'\n<script src="{esc(script_src)}"></script>' if script_src else ""
+             script_src=None, extra_head="", tools="", scripts=None, prefix="./"):
+    srcs = []
+    if script_src:
+        srcs.append(script_src)
+    for src in scripts or ():
+        if src not in srcs:
+            srcs.append(src)
+    script = "".join(
+        f'\n<script src="{esc(_href(src, prefix))}"></script>' for src in srcs)
     extra = f"\n{extra_head}" if extra_head else ""
     return f"""<!doctype html>
 <html lang="en">
@@ -83,10 +116,12 @@ def document(title, description, active, sections, stamp_html, body,
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
-<link rel="stylesheet" href="./site.css">{extra}
+<link rel="stylesheet" href="{esc(_href("./site.css", prefix))}">
+{CSP}
+{REFERRER}{extra}
 </head>
 <body>
-{header(active, sections, stamp_html, tools=tools)}
+{header(active, sections, stamp_html, tools=tools, prefix=prefix)}
 <main id="content" class="wrap">
 {body}
 </main>{script}
