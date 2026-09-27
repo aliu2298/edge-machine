@@ -2317,7 +2317,8 @@ eq((_ap["n"], _ap["n_eff"]), (2, 1), "two bets, one independent outcome")
 print("\nbet lists: every bet, searchable, counts that agree")
 # ---------------------------------------------------------------------------
 _lsrc = open("sandbox_build.py").read()
-ok('class="flt"' in _lsrc and "input.flt" in _lsrc, "running and settled lists carry a filter box")
+_flt_js = open(_os.path.join("public_site", "site.js")).read()
+ok('class="flt"' in _lsrc and "input.flt" in _flt_js, "running and settled lists carry a filter box")
 ok("def open_rows(d, limit=None)" in _lsrc and "def settled_rows(d, limit=None)" in _lsrc,
    "no bet is cut from the lists any more")
 ok('{n_hist - n_void:,}{f" · {n_void} void"' in _lsrc, "the settled heading counts won/lost apart from voids")
@@ -4238,11 +4239,20 @@ ok("thead{display:none}" in _css.replace("\n", "") and "content:attr(data-l)" in
    "the phone layout hides the header and prints each column name from the cell")
 _pg = open(RANKB.OUT).read() if _os.path.exists(RANKB.OUT) else ""
 if _pg:
-    ok('@media (max-width:760px)' in _pg and 'html[data-view="cards"]' in _pg,
+    # The card rules and the view switch live in the shared stylesheet and
+    # script the page links. The page itself still carries the button.
+    _sheet = _pg
+    _script = ""
+    _pub = _os.path.dirname(RANKB.OUT)
+    if 'href="./site.css"' in _pg:
+        _sheet += open(_os.path.join(_pub, "site.css")).read()
+    if 'src="./site.js"' in _pg:
+        _script = open(_os.path.join(_pub, "site.js")).read()
+    ok('@media (max-width:760px)' in _sheet and 'html[data-view="cards"]' in _sheet,
        "it is emitted twice: by width, and by the reader's own choice")
-    ok('html:not([data-view="table"])' in _pg,
+    ok('html:not([data-view="table"])' in _sheet,
        "and the width rule stands down when the reader has asked for the full table")
-    ok('id="vw"' in _pg and "sandbox-view" in _pg, "the switch is on the page and remembers")
+    ok('id="vw"' in _pg and "sandbox-view" in (_pg + _script), "the switch is on the page and remembers")
 
 print("\nthe five-season results file")
 

@@ -144,8 +144,11 @@ jobs:
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE
             # trading.html is rebuilt with the other pages. site.css and the
-            # first-party scripts are static and already in the tree.
-            git add public_site/trading.html
+            # first-party scripts are static and already in the tree. Skip the
+            # add when the page is absent so an empty diff still exits 0.
+            if [ -f public_site/trading.html ]; then
+              git add public_site/trading.html
+            fi
           else
             # A failed build leaves public_site modified but unstaged. git pull
             # --rebase refuses to start with that dirt, the close job has usually

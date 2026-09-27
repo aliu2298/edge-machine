@@ -332,7 +332,7 @@ details.fold.sec > summary h2 { margin: 0; display: inline; }
 details.fold details.fold > summary { margin: 12px 0 6px; font-size: 15px; }
 
 /* Phone cards. Auto below 760px unless the reader asked for the table. */
-@media (max-width: 760px) {
+@media (max-width:760px) {
   html:not([data-view="table"]) .tbl { overflow-x: visible; }
   html:not([data-view="table"]) table { display: block; }
   html:not([data-view="table"]) thead { display: none; }
