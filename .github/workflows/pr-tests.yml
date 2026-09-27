@@ -1,0 +1,59 @@
+name: PR tests
+
+# Logic tests plus an offline Sandbox audit, on every pull request into main.
+# Read-only: contents: read, no secrets, no push, no artifact upload, no Pages
+# deploy. The scheduled audit on main is a different workflow and still
+# contacts the venues.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A new push to the same PR replaces the run already in progress.
+concurrency:
+  group: pr-tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      # Stdlib only, same interpreter as sandbox-audit.yml and sandbox-tracker.yml.
+      - name: Run every root test
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          tests=(test_*.py)
+          if [ ${#tests[@]} -eq 0 ]; then
+            echo "no test_*.py files in the repo root"
+            exit 1
+          fi
+          for f in "${tests[@]}"; do
+            echo "=== $f ==="
+            python3 "$f"
+          done
+
+      # Venue spot-checks need the network. --no-network skips only those and
+      # prints a skipped: line for each. It does not touch the scheduled audit.
+      - name: Audit the Sandbox record offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 sandbox_audit.py --no-network
