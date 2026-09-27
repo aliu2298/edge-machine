@@ -432,6 +432,40 @@ ok(_feed_raised is None, "build_feed does not crash on an out-of-range kickoff"
    + (f" ({type(_feed_raised).__name__}: {_feed_raised})" if _feed_raised else ""))
 
 
+print("\ntest_running_rows_match_header_and_keep_sport")
+
+_run = _section(_sandbox, "running")
+_run_tables = _sortable_tables(_run)
+ok(len(_run_tables) == 1, "sandbox.html has one Running table")
+if _run_tables:
+    _head_n = len(re.findall(r"<th\b", _run_tables[0]))
+    _sports = {q["id"]: (q.get("sport") or "") for q in T.load()["quotes"]
+               if q.get("bet") and q.get("status") == "open"}
+    _checked = 0
+    for _row in _rows(_run_tables[0]):
+        _cells = re.findall(r"<td\b([^>]*)>(.*?)</td>", _row, re.S)
+        if len(_cells) != _head_n:
+            ok(False, f"a Running row has {len(_cells)} cells, the header has {_head_n}")
+            break
+        _qid = html_lib.unescape(re.search(r'data-id="([^"]*)"', _row).group(1))
+        _sport_cell = next((inner for attrs, inner in _cells if 'data-l="Sport"' in attrs), "")
+        _sport_text = re.sub(r"<[^>]+>", "", html_lib.unescape(_sport_cell)).strip()
+        if _sports.get(_qid) and not _sport_text:
+            ok(False, f"Running row {_qid} has a ledger sport and an empty Sport cell")
+            break
+        _checked += 1
+    else:
+        ok(_checked > 0 and _checked == len(_sports),
+           f"all {_checked} Running rows match the header, and Sport is filled when the ledger has one")
+
+_css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
+_narrow = _css.split("@media (max-width: 640px)", 1)[-1]
+ok('td[data-l="Source"]' in _narrow and "display: table-cell" in _narrow and "text-align: left" in _narrow,
+   "under 640px the card rules do not leave Sport or Source as a right-aligned block")
+ok(_narrow.count("vertical-align: top") >= 2,
+   "under 640px every cell uses the same vertical alignment")
+
+
 if FAILS:
     print(f"\n{len(FAILS)} FAILED")
     sys.exit(1)

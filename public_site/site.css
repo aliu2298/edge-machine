@@ -491,9 +491,13 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   h2 { font-size: 20px; }
   .tiles { grid-template-columns: 1fr 1fr; }
   .tile b { font-size: 24px; }
-  th, td { padding: 10px 12px; }
+  th, td { padding: 10px 12px; vertical-align: top; }
   /* Under 640px the table stays a table and scrolls sideways inside the card,
-     unless the reader asked for the phone cards. */
+     unless the reader asked for the phone cards. The card rules above are
+     more specific for named columns (display:block, text-align:right,
+     tighter padding). Repeat those selectors here so a short value such as
+     "MLB" stays at the left of its column, and every cell shares one padding
+     and one vertical alignment. */
   html:not([data-view="cards"]) .tbl {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -503,15 +507,33 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   html:not([data-view="cards"]) tbody { display: table-row-group; }
   html:not([data-view="cards"]) tr { display: table-row; width: auto; padding: 0; border-bottom: none; }
   html:not([data-view="cards"]) td,
-  html:not([data-view="cards"]) th { display: table-cell; width: auto; }
-  html:not([data-view="cards"]) td::before { content: none; }
-  html:not([data-view="cards"]) td[data-empty] { display: table-cell; }
+  html:not([data-view="cards"]) th,
+  html:not([data-view="cards"]) td[data-l],
+  html:not([data-view="cards"]) td[data-empty],
+  html:not([data-view="cards"]) td[data-l="Rule or tipster"],
+  html:not([data-view="cards"]) td[data-l="Competition"],
+  html:not([data-view="cards"]) td[data-l="Rule"],
+  html:not([data-view="cards"]) td[data-l="Contest"],
+  html:not([data-view="cards"]) td[data-l="Source"],
+  html:not([data-view="cards"]) td[data-l="Pair"],
   html:not([data-view="cards"]) td:first-child:not([data-l="#"]),
   html:not([data-view="cards"]) td[data-l="#"] + td {
     display: table-cell;
-    text-align: left;
+    width: auto;
     padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    text-align: left;
   }
+  html:not([data-view="cards"]) td.num,
+  html:not([data-view="cards"]) th.num {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  html:not([data-view="cards"]) td::before,
+  html:not([data-view="cards"]) td:first-child:not([data-l="#"])::before,
+  html:not([data-view="cards"]) td[data-l="#"] + td::before { content: none; }
   html:not([data-view="cards"]) .tbl td:first-child,
   html:not([data-view="cards"]) .tbl th:first-child {
     position: sticky;
@@ -519,5 +541,6 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     max-width: 11rem;
     white-space: normal;
     overflow-wrap: anywhere;
+    vertical-align: top;
   }
 }
