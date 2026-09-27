@@ -1,30 +1,60 @@
 #!/usr/bin/env python3
 """site_root.py — write public_site/index.html: the site root.
 
-The root forwards visitors to the Sandbox and carries this run's "updated ... UTC" stamp.
-That stamp is NOT what the backup watchdog reads: site_root.py rewrites this stub on
-every refresh, so it stays new even when the tracker is dead. backup-refresh.yml reads
-the tracker's stamp on sandbox.html and production.html instead. The root format stays
-"updated Mon DD YYYY · HH:MM UTC" so a check pointed at it on purpose fails closed.
+The root forwards visitors to the Sandbox. Its visible time is Central Time.
+It must NOT contain the tracker stamp "updated YYYY-MM-DD HH:MM UTC": that form
+lives on sandbox.html and production.html, and a freshness check pointed at
+this stub fails closed on purpose. backup-refresh.yml reads those two pages.
 
 Usage:  python3 site_root.py
 """
 import datetime
 import os
 
+import fmt
+import site_chrome
+
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "index.html")
+
+
+def _as_utc(now):
+    """A datetime, or the old 'Sep 25 2026 · 15:50 UTC' string record_build still passes."""
+    if isinstance(now, datetime.datetime):
+        if now.tzinfo is None:
+            return now.replace(tzinfo=datetime.timezone.utc)
+        return now.astimezone(datetime.timezone.utc)
+    text = str(now).strip()
+    for pattern in ("%b %d %Y · %H:%M UTC", "%Y-%m-%d %H:%M UTC"):
+        try:
+            return datetime.datetime.strptime(text, pattern).replace(tzinfo=datetime.timezone.utc)
+        except ValueError:
+            continue
+    return None
 
 
 def root_stub(now):
     """The site root: forwards to the Sandbox. Not the watchdog's freshness stamp."""
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine</title>
-<meta http-equiv="refresh" content="0; url=./sandbox.html">
-<style>body{{background:#0a0d14;color:#8b94a7;font:14px system-ui,sans-serif;padding:28px}}a{{color:#7aa2f7}}</style>
-</head><body><p>Edge Machine · updated {now} — <a href="./sandbox.html">Sandbox</a> ·
-<a href="./production.html">Production</a></p>
-<script>location.replace("./sandbox.html")</script></body></html>"""
+    when = _as_utc(now)
+    if when is None:
+        # Unparseable caller text. Show it, and do not invent the tracker form.
+        stamp_html = site_chrome.esc(str(now))
+    else:
+        stamp_html = site_chrome.stamp(when, machine=False)
+    visible = fmt.display_updated(when) if when is not None else str(now)
+    body = f"""<h1>Edge Machine</h1>
+<p class="lede">{site_chrome.esc(visible)}</p>
+<p><a href="./sandbox.html">Continue to the Sandbox</a></p>
+"""
+    return site_chrome.document(
+        "Edge Machine",
+        "Which rules and tipsters are making money, and which are failing.",
+        "sandbox",
+        (("content", "Sandbox"),),
+        stamp_html,
+        body,
+        script_src="./root.js",
+        extra_head='<meta http-equiv="refresh" content="0; url=./sandbox.html">',
+    )
 
 
 def write_atomic(path, text):
@@ -51,9 +81,9 @@ def write_atomic(path, text):
 
 
 def main():
-    now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
+    now = datetime.datetime.now(datetime.timezone.utc)
     write_atomic(OUT, root_stub(now))
-    print(f"wrote {OUT} (updated {now})")
+    print(f"wrote {OUT} ({fmt.display_updated(now)})")
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ import re
 import sys
 from datetime import datetime, timezone
 
+import fmt
 import production as PROD
 import sandbox_build as SB
 import sandbox_track as T
@@ -182,14 +183,15 @@ ok("javascript:" not in _links.lower(),
    "a javascript url is not written into the page")
 for _name, _price in (("JS contest", "0.41"), ("Case contest", "0.42"), ("Data contest", "0.43")):
     _row = _row_with(_links, _name)
+    _shown = fmt.cents(float(_price))
     ok(_row and "href=" not in _row, f"{_name} is text, with no href")
-    ok(_price in _row, f"{_name} still shows its price {_price}")
+    ok(_shown in _row, f"{_name} still shows its price {_price}")
 ok("data:" not in _row_with(_links, "Data contest"), "a data: url is not an href")
 _https = _row_with(_links, "HTTPS contest")
 ok('href="https://polymarket.us/event/ok"' in _https
    and 'rel="noopener noreferrer"' in _https and 'target="_blank"' in _https,
    "an https url is an external link")
-ok("0.55" in _https, "the https row's price is unchanged")
+ok(fmt.cents(0.55) in _https, "the https row's price is unchanged")
 _esc = _row_with(_links, "A &amp; B &lt;x&gt;")
 ok('href="https://example.com/?q=1&amp;b=2"' in _esc,
    "the link text and the url are still escaped")
@@ -202,11 +204,12 @@ ok('href="https://kalshi.com/markets/kxmlbgame#kxmlbgame-26sep27abcd"' in _kalsh
    "a Kalshi row still links the derived https page, not a stored javascript url")
 # The prices above are the fixture. None of them moved when the link was dropped.
 for _price in ("0.41", "0.42", "0.43", "0.55", "0.56", "0.57", "0.58"):
-    ok(f">{_price}<" in _links or f">{_price}</td>" in _links,
+    _shown = fmt.cents(float(_price))
+    ok(f">{_shown}<" in _links or f">{_shown}</td>" in _links,
        f"rendered price {_price} is unchanged")
 
-# open_rows prints the price as a bare number inside the cell. Pin the exact cell.
-ok("0.41" in _row_with(_links, "JS contest") and "0.58" in _kalshi,
+# open_rows prints the price in cents inside the cell. Pin the exact cell.
+ok(fmt.cents(0.41) in _row_with(_links, "JS contest") and fmt.cents(0.58) in _kalshi,
    "dropping an unsafe href does not change the numeric cells")
 
 for _name, _price in (("Tab contest", "0.61"), ("Newline contest", "0.62"),
@@ -214,7 +217,7 @@ for _name, _price in (("Tab contest", "0.61"), ("Newline contest", "0.62"),
                       ("Relative contest", "0.65"), ("Long s contest", "0.67")):
     _row = _row_with(_links, _name)
     ok(_row and "href=" not in _row, f"{_name} is text, with no href")
-    ok(_price in _row, f"{_name} still shows its price {_price}")
+    ok(fmt.cents(float(_price)) in _row, f"{_name} still shows its price {_price}")
 ok("evil.example" not in _row_with(_links, "Relative contest"),
    "a scheme-relative url is not written out")
 ok("&#" not in _row_with(_links, "Entity contest") and "javascript" not in _row_with(_links, "Entity contest").lower(),
@@ -233,7 +236,7 @@ ok('href="https://x.example/&quot; onmouseover=&quot;alert(1)"' in _break
    "a quote in an https url stays escaped inside the href")
 ok(' onmouseover="' not in _break and _break.count("href=") == 1,
    "that quote does not open a new attribute")
-ok("0.66" in _break, "the breakout row's price is unchanged")
+ok(fmt.cents(0.66) in _break, "the breakout row's price is unchanged")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all presentation tests passed'}")
 for _f in FAILS:

@@ -1,191 +1,35 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Production</title>
 <meta name="description" content="The pairs moved into Production by hand, and their published leads.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
---pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}
-*{box-sizing:border-box;margin:0}
-body{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
-letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
-.wrap{max-width:1040px;margin:0 auto}
-h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
-h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
-color:var(--mut);margin:34px 0 12px}
-.sub{color:var(--mut);font-size:13px;margin-top:4px}
-.sm{font-size:11px}
-.mut{color:var(--mut)}.pos{color:var(--pos)}.neg{color:var(--neg)}
-a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
-.nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.nav a{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
-border:1px solid var(--bd);border-radius:999px;padding:5px 13px}
-.nav a:hover{color:var(--fg);border-color:var(--mut)}
-.nav a.on{color:var(--fg);border-color:var(--mut);background:#161b26}
-.vw{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:none;
-border:1px solid var(--bd);border-radius:999px;padding:5px 13px;cursor:pointer;margin-left:auto}
-.vw:hover{color:var(--fg);border-color:var(--mut)}
-.note{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
-border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}
-.note b{color:var(--fg);font-weight:600}
-.note.warn{border-color:#f0b42944;background:#f0b4290a}
-.tiles{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}
-.tile{flex:1;min-width:112px;background:var(--card);border:1px solid var(--bd);
-border-radius:10px;padding:11px 13px}
-.tile b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
-.tile span{font-size:11px;color:var(--mut)}
-.def{padding:11px 14px;border-bottom:1px solid #1a1f2b}
-.def:last-child{border-bottom:none}
-.def b{font-size:13px}
-.tbl{background:var(--card);border:1px solid var(--bd);border-radius:11px;
-overflow-x:auto;margin-bottom:13px}
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
-color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:nowrap}
-td{padding:9px 11px;border-bottom:1px solid #1a1f2b;vertical-align:top}
-tr:last-child td{border-bottom:none}
-.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
-.rank{font-weight:800;font-size:15px}
-.st,.sig{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.05em;
-border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}
-.st.won,.sig.y{color:var(--pos);border-color:#3fb97055;background:#3fb97014}
-.st.lost,.st.miss{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
-.st.void,.st.price,.sig.n{color:var(--mut);border-color:var(--bd)}
-.sig.w{color:var(--warn);border-color:#f0b42955;background:#f0b42914}
-.sig.x{color:var(--neg);border-color:#e06c7555;background:#e06c7514}
-ul.ins{padding-left:18px;display:grid;gap:7px;color:var(--fg);font-size:13.5px;line-height:1.55}
-details.sport{background:var(--card);border:1px solid var(--bd);border-radius:11px;margin-bottom:10px}
-details.sport>summary{cursor:pointer;padding:12px 14px;font-size:14px;list-style:none}
-details.sport>summary::-webkit-details-marker{display:none}
-details.sport>summary::before{content:"▸ ";color:var(--mut)}
-details.sport[open]>summary::before{content:"▾ "}
-details.sec{margin-top:26px}
-details.sec>summary{cursor:pointer;list-style:none}details.sec>summary::-webkit-details-marker{display:none}
-details.sec>summary h2{display:inline;margin:0}
-details.sec>summary::before{content:"▸ ";color:var(--mut);font-size:12px}
-details.sec[open]>summary::before{content:"▾ "}
-details.sec[open]>summary{margin-bottom:12px}
-details.grp-fold{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}
-details.grp-fold>summary{cursor:pointer;padding:10px 13px;font-size:13px;list-style:none}
-details.grp-fold>summary::-webkit-details-marker{display:none}
-details.grp-fold>summary::before{content:"▸ ";color:var(--mut)}
-details.grp-fold[open]>summary::before{content:"▾ "}
-details.grp-fold .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 10px 10px;margin:0}
-.folds-ctl{display:flex;gap:6px;margin-bottom:10px}
-.folds-ctl button{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);background:var(--card);
-border:1px solid var(--bd);border-radius:999px;padding:4px 11px;cursor:pointer}
-.folds-ctl button:hover{color:var(--fg)}
-details.sport .tbl{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}
-details.more{margin:-4px 0 14px}
-input.flt{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
-border-radius:9px;padding:8px 12px;outline:none;width:100%;margin-bottom:9px}
-input.flt:focus{border-color:var(--acc)}
-details.more>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--acc);
-padding:6px 2px;list-style:none}
-details.more>summary::-webkit-details-marker{display:none}
-details.more>summary::before{content:"▸ "}
-details.more[open]>summary::before{content:"▾ "}
-.grp td{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
-.tabs button{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:var(--card);
-border:1px solid var(--bd);border-radius:999px;padding:6px 13px;cursor:pointer}
-.tabs button.on{color:var(--fg);border-color:var(--mut);background:#161b26}
-.tabs button b{margin-left:5px}
-.grp.ok td{color:var(--pos)}.grp.bad td{color:var(--neg)}
-details.src>summary{cursor:pointer;list-style:none}details.src>summary::-webkit-details-marker{display:none}
-details.src .sm{margin-top:6px;max-width:420px;line-height:1.5}
-details.ref{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;margin-bottom:10px}
-details.ref>summary{cursor:pointer;font-size:12.5px;font-weight:700}
-details.ref[open]>summary{margin-bottom:10px}
-.bar{display:inline-block;width:64px;height:5px;border-radius:3px;background:#1a1f2b;vertical-align:middle;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--acc)}
-footer{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}
-@media (max-width:600px){body{padding:18px 10px 44px;font-size:14px}h1{font-size:19px}}
-/* The phone layout. Auto below 760px unless the reader asked for the table; forced
-   either way by the view switch in the header. */
-@media (max-width:760px){
-html:not([data-view="table"]) .tbl{overflow-x:visible}
-html:not([data-view="table"]) table{display:block}
-html:not([data-view="table"]) thead{display:none}
-html:not([data-view="table"]) tbody,html:not([data-view="table"]) tr,html:not([data-view="table"]) td{display:block;width:100%}
-html:not([data-view="table"]) tr{padding:12px 14px;border-bottom:1px solid var(--bd)}
-html:not([data-view="table"]) tr:last-child{border-bottom:none}
-html:not([data-view="table"]) td{padding:3px 0;border:none;display:flex;gap:14px;align-items:baseline;
-justify-content:space-between;text-align:right}
-html:not([data-view="table"]) td::before{content:attr(data-l);color:var(--mut);font-size:10px;font-weight:700;
-text-transform:uppercase;letter-spacing:.07em;text-align:left;white-space:nowrap;flex:0 0 auto}
-html:not([data-view="table"]) td{flex-wrap:wrap}
-html:not([data-view="table"]) td>.sm{flex:1 0 100%;text-align:right}
-html:not([data-view="table"]) td[data-l="#"]{justify-content:flex-start;gap:8px;text-align:left}
-html:not([data-view="table"]) td[data-l="#"]::before{content:none}
-html:not([data-view="table"]) td[data-l="Rule or tipster"],html:not([data-view="table"]) td[data-l="Competition"],html:not([data-view="table"]) td[data-l="Rule"],
-html:not([data-view="table"]) td[data-l="Contest"],html:not([data-view="table"]) td[data-l="Source"]{display:block;text-align:left;
-padding:0 0 7px}
-html:not([data-view="table"]) td:first-child:not([data-l="#"]),html:not([data-view="table"]) td[data-l="#"]+td{display:block;
-text-align:left;padding:0 0 7px}
-html:not([data-view="table"]) td:first-child:not([data-l="#"])::before,html:not([data-view="table"]) td[data-l="#"]+td::before{content:none}
-html:not([data-view="table"]) td:first-child:not([data-l="#"])>.sm,html:not([data-view="table"]) td[data-l="#"]+td>.sm{text-align:left}
-html:not([data-view="table"]) td[data-l=""]::before{content:none}
-html:not([data-view="table"]) td[data-empty]{display:none}
-html:not([data-view="table"]) td[data-l="#"]>.sm{flex:0 0 auto;text-align:left}
-}
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site">
+<div class="topbar">
+<a class="brand" href="./sandbox.html">Edge Machine</a>
+<nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html" aria-current="page">Production</a><a href="./trading.html">Trading</a><a href="./sandbox.html#method">Method</a></nav>
 
-html[data-view="cards"] .tbl{overflow-x:visible}
-html[data-view="cards"] table{display:block}
-html[data-view="cards"] thead{display:none}
-html[data-view="cards"] tbody,html[data-view="cards"] tr,html[data-view="cards"] td{display:block;width:100%}
-html[data-view="cards"] tr{padding:12px 14px;border-bottom:1px solid var(--bd)}
-html[data-view="cards"] tr:last-child{border-bottom:none}
-html[data-view="cards"] td{padding:3px 0;border:none;display:flex;gap:14px;align-items:baseline;
-justify-content:space-between;text-align:right}
-html[data-view="cards"] td::before{content:attr(data-l);color:var(--mut);font-size:10px;font-weight:700;
-text-transform:uppercase;letter-spacing:.07em;text-align:left;white-space:nowrap;flex:0 0 auto}
-html[data-view="cards"] td{flex-wrap:wrap}
-html[data-view="cards"] td>.sm{flex:1 0 100%;text-align:right}
-html[data-view="cards"] td[data-l="#"]{justify-content:flex-start;gap:8px;text-align:left}
-html[data-view="cards"] td[data-l="#"]::before{content:none}
-html[data-view="cards"] td[data-l="Rule or tipster"],html[data-view="cards"] td[data-l="Competition"],html[data-view="cards"] td[data-l="Rule"],
-html[data-view="cards"] td[data-l="Contest"],html[data-view="cards"] td[data-l="Source"]{display:block;text-align:left;
-padding:0 0 7px}
-html[data-view="cards"] td:first-child:not([data-l="#"]),html[data-view="cards"] td[data-l="#"]+td{display:block;
-text-align:left;padding:0 0 7px}
-html[data-view="cards"] td:first-child:not([data-l="#"])::before,html[data-view="cards"] td[data-l="#"]+td::before{content:none}
-html[data-view="cards"] td:first-child:not([data-l="#"])>.sm,html[data-view="cards"] td[data-l="#"]+td>.sm{text-align:left}
-html[data-view="cards"] td[data-l=""]::before{content:none}
-html[data-view="cards"] td[data-empty]{display:none}
-html[data-view="cards"] td[data-l="#"]>.sm{flex:0 0 auto;text-align:left}
-
-@media (max-width:760px){
-h1{font-size:19px}
-body{padding:20px 14px 48px}
-.tile{min-width:calc(50% - 5px)}
-.tabs button{flex:1}
-details.sport>summary{line-height:1.5}
-}
-</style>
-<style>th.grp{text-align:center;border-bottom:1px solid var(--bd)}
-details.fold>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px;
-  margin:18px 0 8px;font-weight:600;font-size:15px;user-select:none}
-details.fold>summary::-webkit-details-marker{display:none}
-details.fold>summary::before{content:"▸";color:var(--mut);font-size:12px;width:12px;transition:transform .15s}
-details.fold[open]>summary::before{transform:rotate(90deg)}
-details.fold.sec>summary{margin-top:26px}
-details.fold.sec>summary h2{margin:0;display:inline}
-details.fold details.fold>summary{margin:12px 0 6px;font-size:14px}</style>
-</head><body><div class="wrap">
-
+<p class="stamp"><time datetime="2026-09-27T17:56:38Z">Updated Sep 27, 12:56 PM CT</time><span class="sr-only">updated 2026-09-27 17:56 UTC</span></p>
+</div>
+<nav class="toc" aria-label="On this page"><a href="#pairs">Pairs</a><a href="#coming-up">Coming up</a><a href="#recent">Recently settled</a><a href="#held-back">Held back</a><a href="#how">How a pair gets here</a></nav>
+</header>
+<main id="content" class="wrap">
 <h1>Production</h1>
-<div class="sub">The pairs moved here by hand, and the leads they publish · updated 2026-09-27 17:34 UTC</div>
-<div class="nav"><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
+<p class="lede">The pairs moved here by hand, and the leads they publish.</p>
 
 <div class="tiles">
 <div class="tile"><b>3</b><span>pairs in Production</span></div>
 <div class="tile"><b>0</b><span>leads still to come</span></div>
 <div class="tile"><b>7/9</b><span>recent leads landed</span></div>
-<div class="tile"><b style="font-size:17px">—</b><span>next lead (UTC)</span></div>
+<div class="tile"><b class="when">—</b><span>next lead (CT)</span></div>
 </div>
 
+<section id="pairs">
 <details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· 3</span></summary>
 <p class="sm mut">Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
 and its record since it entered Production. Under 10 settled bets an ROI is grey: one win at 0.46 reads
@@ -199,28 +43,32 @@ dearer after they were published.</p>
 <td data-l="Pair"><b>OLBG community tips</b><div class="sm mut">Boxing · moved 2026-09-22</div></td>
 <td class="num" data-l="Bets">8<div class="sm mut">settled</div></td>
 <td class="num" data-l="ROI"><span class="pos">+16.3%</span><div class="sm mut">after fees</div></td>
-<td class="num" data-l="CLV">-8.0¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="CLV">−8.0¢<div class="sm mut">v the close</div></td>
 <td class="num" data-l="Record">4–0<div class="sm mut">4 settled</div></td>
 <td class="num" data-l="ROI"><span class="mut">+11.1%</span><div class="sm mut">too early</div></td>
 <td class="num" data-l="Leads to come"><b>0</b></td></tr><tr>
 <td data-l="Pair"><b>MMA favourite-band rule</b><div class="sm mut">MMA · moved 2026-09-22</div></td>
 <td class="num" data-l="Bets">10<div class="sm mut">settled</div></td>
-<td class="num" data-l="ROI"><span class="neg">-13.8%</span><div class="sm mut">after fees</div></td>
-<td class="num" data-l="CLV">-8.1¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="ROI"><span class="neg">−13.8%</span><div class="sm mut">after fees</div></td>
+<td class="num" data-l="CLV">−8.1¢<div class="sm mut">v the close</div></td>
 <td class="num" data-l="Record">0–2<div class="sm mut">2 settled</div></td>
-<td class="num" data-l="ROI"><span class="mut">-100.0%</span><div class="sm mut">too early</div></td>
+<td class="num" data-l="ROI"><span class="mut">−100.0%</span><div class="sm mut">too early</div></td>
 <td class="num" data-l="Leads to come"><b>0</b></td></tr><tr>
 <td data-l="Pair"><b>Team scores 1+ form rule</b><div class="sm mut">Soccer · Team 1+ · moved 2026-09-18</div></td>
 <td class="num" data-l="Bets">18<div class="sm mut">settled</div></td>
 <td class="num" data-l="ROI"><span class="pos">+4.4%</span><div class="sm mut">after fees</div></td>
-<td class="num" data-l="CLV">-0.1¢<div class="sm mut">v the close</div></td>
+<td class="num" data-l="CLV">−0.1¢<div class="sm mut">v the close</div></td>
 <td class="num" data-l="Record">6–2<div class="sm mut">8 settled</div></td>
-<td class="num" data-l="ROI"><span class="mut">-13.9%</span><div class="sm mut">too early</div></td>
+<td class="num" data-l="ROI"><span class="mut">−13.9%</span><div class="sm mut">too early</div></td>
 <td class="num" data-l="Leads to come"><b>0</b></td></tr></tbody></table></div></details>
+</section>
 
+<section id="coming-up">
 <details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· 0 leads over 0 days</span></summary>
 <div class="note">No leads still to come.</div></details>
+</section>
 
+<section id="recent">
 <details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· 7 of 9 landed</span></summary>
 <div class="tbl"><table><thead><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Result</th></tr></thead><tbody><tr><td class="mut" data-l="Date">2026-09-27</td><td data-l="Match">Real Salt Lake v New England Revolution</td>
@@ -242,13 +90,17 @@ dearer after they were published.</p>
 <td class="num" data-l="Result"><span class="pos">landed</span></td></tr><tr><td class="mut" data-l="Date">2026-09-22</td><td data-l="Match">Norbert Novenyi Jr. v Theo Haig</td>
 <td data-l="Lead">Norbert Novenyi Jr. to win</td><td class="mut" data-l="From">MMA favourite-band rule</td>
 <td class="num" data-l="Result"><span class="pos">landed</span></td></tr></tbody></table></div></details>
+</section>
 
+<section id="held-back">
 <details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· 3</span></summary>
 <div class="note">3 bets from these pairs were not published:
 3 cannot be expressed as a standard market, and
 0 are waiting for a verified start
 time. A lead is only published once its start has been confirmed.</div></details>
+</section>
 
+<section id="how">
 <details class="fold sec"><summary><h2>How a pair gets here</h2></summary>
 <div class="note">Nothing promotes itself. Every source and rule starts in the <a href="./sandbox.html">Sandbox</a>,
 logged before the start at the price available then and graded on the real result. A pair — one source in
@@ -256,6 +108,10 @@ one sport — is moved into Production by hand, on that record. It leaves the sa
 stops working: no new bet for 21 days, behind the prices it logged at, or beaten by a blind rule
 on the same contests. Every lead a Production pair logs is published to
 <code>data/production_leads.json</code>.</div></details>
+</section>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-</div></body></html>
+
+</main>
+</body>
+</html>

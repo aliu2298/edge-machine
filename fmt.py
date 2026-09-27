@@ -1,0 +1,104 @@
+"""Presentation formatting for the public pages.
+
+Money, percents, prices, and clock times. Nothing here settles, grades, or
+changes a stored number. Callers keep the same values they already computed.
+"""
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+MINUS = "\u2212"  # U+2212, not a hyphen
+CHICAGO = ZoneInfo("America/Chicago")
+_MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+
+def _as_utc(value):
+    """A datetime or ISO instant, as UTC. A naive datetime is UTC."""
+    if isinstance(value, datetime):
+        dt = value
+    else:
+        text = str(value).strip().replace("Z", "+00:00")
+        dt = datetime.fromisoformat(text)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
+def money(x):
+    """Whole dollars, signed. −$100 uses U+2212. None is an em dash."""
+    if x is None:
+        return "—"
+    sign = "+" if x >= 0 else MINUS
+    return f"{sign}${abs(x):,.0f}"
+
+
+def pct(x, digits=1, sign=False):
+    """x is a ratio (0.01 == 1%). A negative uses U+2212."""
+    if x is None:
+        return "—"
+    raw = f"{x * 100:+.{digits}f}%" if sign else f"{x * 100:.{digits}f}%"
+    return raw.replace("-", MINUS)
+
+
+def cents(x):
+    """An exchange price as whole cents. 0.77 -> 77¢.
+
+    Rounded with the same two-decimal step the pages used to print, so 0.333
+    is 33¢ just as it used to print 0.33. None is an em dash.
+    """
+    if x is None:
+        return "—"
+    shown = f"{float(x):.2f}"
+    neg = shown.startswith("-")
+    n = int(round(abs(float(shown)) * 100))
+    return f"{MINUS if neg else ''}{n}¢"
+
+
+def signed_cents(x, digits=1):
+    """A price difference stored as a fraction, shown in signed cents.
+
+    0.07 -> +7.0¢ and -0.08 -> −8.0¢. This is the CLV display. None is an em dash.
+    """
+    if x is None:
+        return "—"
+    return f"{x * 100:+.{digits}f}¢".replace("-", MINUS)
+
+
+def chicago(value):
+    """The instant in America/Chicago, so CDT and CST both come out right."""
+    return _as_utc(value).astimezone(CHICAGO)
+
+
+def zone_abbr(value):
+    """CDT in summer, CST after the fall-back. Empty if the zone has no name."""
+    return chicago(value).tzname() or ""
+
+
+def clock(value):
+    """12-hour clock labelled CT. 2026-09-27T05:12:00Z -> 12:12 AM CT."""
+    local = chicago(value)
+    hour = local.hour % 12 or 12
+    ampm = "AM" if local.hour < 12 else "PM"
+    return f"{hour}:{local.minute:02d} {ampm} CT"
+
+
+def when(value):
+    """Sep 27, 12:12 AM CT. The date is the Chicago calendar day."""
+    local = chicago(value)
+    month = _MONTHS[local.month - 1]
+    return f"{month} {local.day}, {clock(value)}"
+
+
+def display_updated(value):
+    """Updated Sep 27, 12:12 AM CT."""
+    return "Updated " + when(value)
+
+
+def machine_stamp(value):
+    """The tracker freshness form. Sandbox and Production carry this; the root must not."""
+    return _as_utc(value).strftime("updated %Y-%m-%d %H:%M UTC")
+
+
+def iso_z(value):
+    """UTC instant for a <time datetime> attribute."""
+    return _as_utc(value).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")

@@ -12,8 +12,10 @@ import re
 import sys
 from datetime import datetime, timezone
 
+import fmt
 import sandbox_sources as S
 import sandbox_track as T
+import site_chrome
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "sandbox.html")
 
@@ -72,15 +74,11 @@ def safe_href(url, label):
 
 
 def pct(x, digits=1, sign=False):
-    if x is None:
-        return "—"
-    return f"{x*100:+.{digits}f}%" if sign else f"{x*100:.{digits}f}%"
+    return fmt.pct(x, digits=digits, sign=sign)
 
 
 def money(x):
-    if x is None:
-        return "—"
-    return f"{'+' if x >= 0 else '−'}${abs(x):,.0f}"
+    return fmt.money(x)
 
 
 def cls(x):
@@ -367,7 +365,7 @@ def open_rows(d, limit=None):
 <td>{safe_href(S.market_url(q), S.display_label(q))}</td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td><b>{esc(side)}</b></td>
-<td class="num">{q['price']:.2f}</td>
+<td class="num">{fmt.cents(q['price'])}</td>
 <td class="num pos">{pct(q['edge'], sign=True) if q.get('edge') is not None else '<span class="mut">pick</span>'}</td></tr>""")
     return "\n".join(out), len(live)
 
@@ -409,7 +407,7 @@ def settled_rows(d, limit=None):
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td><td>{esc(S.display_label(q))}</td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
-<td>{esc(side)}</td><td class="num">{q['price']:.2f}</td>
+<td>{esc(side)}</td><td class="num">{fmt.cents(q['price'])}</td>
 <td><span class="st {klass}">{label}</span></td>
 <td class="num {cls(q['pnl'])}">{money(q['pnl'])}</td></tr>""")
     return "\n".join(out), len(done)
@@ -713,7 +711,7 @@ def close_cell(a):
     tone = {"ahead": "pos", "behind": "neg"}.get(read, "mut")
     t = a.get("clv_t")
     bits = (f't {t:+.2f} · ' if t is not None else "") + f'{a["clv_n"]} close' + ("" if a["clv_n"] == 1 else "s")
-    return (f'<span class="{tone}">{a["clv"] * 100:+.1f}¢</span>'
+    return (f'<span class="{tone}">{fmt.signed_cents(a["clv"])}</span>'
             f'<div class="sm mut">{bits}{" · " + read if read else ""}</div>')
 
 
@@ -1312,7 +1310,7 @@ def trading_rows(md):
         label, chip, _o = MT.VERDICTS[r["verdict"]]
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
                 if r["verdict"] in ("promising", "behind", "early") else "")
-        pc = lambda x: "—" if x is None else f'<span class="{cls(x)}">{x*100:+.2f}%</span>'
+        pc = lambda x: "—" if x is None else f'<span class="{cls(x)}">{fmt.pct(x, digits=2, sign=True)}</span>'
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
         # coin against cash, since set against its own asset it would show zero edge by design.
         vs = "v cash" if meta.get("bench") == "cash" else "v SPY"
@@ -1329,7 +1327,7 @@ def trading_rows(md):
 <tr><td colspan="8" class="sm mut">Backtest before the lane went live ({esc(str((r.get('research_window') or ['', ''])[0]))} to
 {esc(str((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
 {r['research_days']} entry days, {r['research_trades']} trades,
-{'—' if r['research_edge'] is None else f"{r['research_edge']*100:+.2f}%"} a day {vs}, t {r['research_t']:+.2f}.</td></tr>""")
+{'—' if r['research_edge'] is None else fmt.pct(r['research_edge'], digits=2, sign=True)} a day {vs}, t {r['research_t']:+.2f}.</td></tr>""")
     return "\n".join(rows)
 
 
@@ -1338,7 +1336,7 @@ def build():
     st = T.load_stages()
     scores = T.score(d)
     cov = d.get("coverage") or {}
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    now_dt = datetime.now(timezone.utc)
     ou = (d.get("meta") or {}).get("odds_api") or {}
     odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} of "
                  f"{ou.get('allowance', '?')} allowed paid calls last run, "
@@ -1366,136 +1364,9 @@ def build():
     # every settled bet still has to be accounted for, out of sight or not.
     shown = [r for r in rows if not eliminated(r)]
     vc = {k: sum(1 for r in rows if r["v"] == k and not r.get("gone")) for k in VERDICTS}
-    import market_track as MT, market_sources as MS
-    md = MT.load()
-    trade_rules = MT.report(md)
-    trade_open = sum(r["open"] for r in trade_rules)
-    trade_note = ("" if MS.configured() else
-                  '<div class="note">These rules are scanned and graded on the machine that holds '
-                  'the market data keys, and the record below is what it published. This page is '
-                  'built elsewhere and only renders it, so it does not reach the market itself.</div>')
 
-    return f"""<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sandbox Tracker</title>
-<meta name="description" content="Every source and rule under test, per sport, at real prices and settled on real results — what is working and what is not.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
---pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}}
-*{{box-sizing:border-box;margin:0}}
-body{{background:var(--bg);color:var(--fg);font:15px/1.45 Inter,system-ui,sans-serif;
-letter-spacing:-.011em;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}}
-.wrap{{max-width:1040px;margin:0 auto}}
-h1{{font-size:22px;font-weight:800;letter-spacing:-.02em}}
-h2{{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
-color:var(--mut);margin:34px 0 12px}}
-.sub{{color:var(--mut);font-size:13px;margin-top:4px}}
-.sm{{font-size:11px}}
-.mut{{color:var(--mut)}}.pos{{color:var(--pos)}}.neg{{color:var(--neg)}}
-a{{color:var(--acc);text-decoration:none}}a:hover{{text-decoration:underline}}
-.nav{{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}}
-.nav a{{font-size:12px;font-weight:700;text-decoration:none;color:var(--mut);
-border:1px solid var(--bd);border-radius:999px;padding:5px 13px}}
-.nav a:hover{{color:var(--fg);border-color:var(--mut)}}
-.nav a.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
-.vw{{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:none;
-border:1px solid var(--bd);border-radius:999px;padding:5px 13px;cursor:pointer;margin-left:auto}}
-.vw:hover{{color:var(--fg);border-color:var(--mut)}}
-.note{{font-size:12.5px;color:var(--mut);line-height:1.6;background:var(--card);
-border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:12px}}
-.note b{{color:var(--fg);font-weight:600}}
-.note.warn{{border-color:#f0b42944;background:#f0b4290a}}
-.tiles{{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}}
-.tile{{flex:1;min-width:112px;background:var(--card);border:1px solid var(--bd);
-border-radius:10px;padding:11px 13px}}
-.tile b{{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}}
-.tile span{{font-size:11px;color:var(--mut)}}
-.def{{padding:11px 14px;border-bottom:1px solid #1a1f2b}}
-.def:last-child{{border-bottom:none}}
-.def b{{font-size:13px}}
-.tbl{{background:var(--card);border:1px solid var(--bd);border-radius:11px;
-overflow-x:auto;margin-bottom:13px}}
-table{{width:100%;border-collapse:collapse;font-size:12.5px}}
-th{{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
-color:var(--mut);padding:9px 11px;border-bottom:1px solid var(--bd);white-space:nowrap}}
-td{{padding:9px 11px;border-bottom:1px solid #1a1f2b;vertical-align:top}}
-tr:last-child td{{border-bottom:none}}
-.num{{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}}
-.rank{{font-weight:800;font-size:15px}}
-.st,.sig{{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.05em;
-border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
-.st.won,.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
-.st.lost,.st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
-.st.void,.st.price,.sig.n{{color:var(--mut);border-color:var(--bd)}}
-.sig.w{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
-.sig.x{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
-ul.ins{{padding-left:18px;display:grid;gap:7px;color:var(--fg);font-size:13.5px;line-height:1.55}}
-details.sport{{background:var(--card);border:1px solid var(--bd);border-radius:11px;margin-bottom:10px}}
-details.sport>summary{{cursor:pointer;padding:12px 14px;font-size:14px;list-style:none}}
-details.sport>summary::-webkit-details-marker{{display:none}}
-details.sport>summary::before{{content:"▸ ";color:var(--mut)}}
-details.sport[open]>summary::before{{content:"▾ "}}
-details.sec{{margin-top:26px}}
-details.sec>summary{{cursor:pointer;list-style:none}}details.sec>summary::-webkit-details-marker{{display:none}}
-details.sec>summary h2{{display:inline;margin:0}}
-details.sec>summary::before{{content:"▸ ";color:var(--mut);font-size:12px}}
-details.sec[open]>summary::before{{content:"▾ "}}
-details.sec[open]>summary{{margin-bottom:12px}}
-details.grp-fold{{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}}
-details.grp-fold>summary{{cursor:pointer;padding:10px 13px;font-size:13px;list-style:none}}
-details.grp-fold>summary::-webkit-details-marker{{display:none}}
-details.grp-fold>summary::before{{content:"▸ ";color:var(--mut)}}
-details.grp-fold[open]>summary::before{{content:"▾ "}}
-details.grp-fold .tbl{{border:none;border-top:1px solid var(--bd);border-radius:0 0 10px 10px;margin:0}}
-.folds-ctl{{display:flex;gap:6px;margin-bottom:10px}}
-.folds-ctl button{{font:inherit;font-size:11.5px;font-weight:700;color:var(--mut);background:var(--card);
-border:1px solid var(--bd);border-radius:999px;padding:4px 11px;cursor:pointer}}
-.folds-ctl button:hover{{color:var(--fg)}}
-details.sport .tbl{{border:none;border-top:1px solid var(--bd);border-radius:0 0 11px 11px;margin:0}}
-details.more{{margin:-4px 0 14px}}
-input.flt{{font:inherit;font-size:13px;color:var(--fg);background:var(--card);border:1px solid var(--bd);
-border-radius:9px;padding:8px 12px;outline:none;width:100%;margin-bottom:9px}}
-input.flt:focus{{border-color:var(--acc)}}
-details.more>summary{{cursor:pointer;font-size:12px;font-weight:700;color:var(--acc);
-padding:6px 2px;list-style:none}}
-details.more>summary::-webkit-details-marker{{display:none}}
-details.more>summary::before{{content:"▸ "}}
-details.more[open]>summary::before{{content:"▾ "}}
-.grp td{{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:#0d1119;padding:7px 11px}}
-.tabs{{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}}
-.tabs button{{font:inherit;font-size:12px;font-weight:700;color:var(--mut);background:var(--card);
-border:1px solid var(--bd);border-radius:999px;padding:6px 13px;cursor:pointer}}
-.tabs button.on{{color:var(--fg);border-color:var(--mut);background:#161b26}}
-.tabs button b{{margin-left:5px}}
-.grp.ok td{{color:var(--pos)}}.grp.bad td{{color:var(--neg)}}
-details.src>summary{{cursor:pointer;list-style:none}}details.src>summary::-webkit-details-marker{{display:none}}
-details.src .sm{{margin-top:6px;max-width:420px;line-height:1.5}}
-details.ref{{background:var(--card);border:1px solid var(--bd);border-radius:11px;padding:10px 14px;margin-bottom:10px}}
-details.ref>summary{{cursor:pointer;font-size:12.5px;font-weight:700}}
-details.ref[open]>summary{{margin-bottom:10px}}
-.bar{{display:inline-block;width:64px;height:5px;border-radius:3px;background:#1a1f2b;vertical-align:middle;overflow:hidden}}
-.bar i{{display:block;height:100%;background:var(--acc)}}
-footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
-@media (max-width:600px){{body{{padding:18px 10px 44px;font-size:14px}}h1{{font-size:19px}}}}
-/* The phone layout. Auto below 760px unless the reader asked for the table; forced
-   either way by the view switch in the header. */
-@media (max-width:760px){{{cards_css('html:not([data-view="table"])')}}}
-{cards_css('html[data-view="cards"]')}
-@media (max-width:760px){{
-h1{{font-size:19px}}
-body{{padding:20px 14px 48px}}
-.tile{{min-width:calc(50% - 5px)}}
-.tabs button{{flex:1}}
-details.sport>summary{{line-height:1.5}}
-}}
-</style></head><body><div class="wrap">
-
-<h1>Sandbox</h1>
-<div class="sub">Every source and rule under test, per sport · updated {esc(now)}</div>
-<div class="nav"><a class="on" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a><button type="button" id="vw" class="vw" title="Switch between the phone layout and the full table">Phone view</button></div>
-
+    body = f"""<h1>Sandbox</h1>
+<p class="lede">Which rules and tipsters are making money, and which are failing. Every one is backed at real prices and settled on real results. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>{in_prod}</b><span>in Production</span></div>
 <div class="tile"><b class="{'pos' if vc['proven'] + vc['working'] else ''}">{vc['proven'] + vc['working']}</b><span>working (30+ bets)</span></div>
@@ -1505,12 +1376,12 @@ details.sport>summary{{line-height:1.5}}
 </div>
 {feed_health(d)}
 
-<div class="tabs" id="lanes"><button type="button" data-lane="sports" class="on">Sports<b>{len(rows)}</b></button><button type="button" data-lane="trading">Trading<b>{len(trade_rules)}</b></button></div>
-
-<div data-lane="sports">
+<section id="summary">
 <details class="sec"><summary><h2>What the Sandbox says</h2></summary>
 <div class="note">{insights(shown)}</div></details>
+</section>
 
+<section id="by-sport">
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
 <div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
 {legend()}
@@ -1519,37 +1390,22 @@ details.sport>summary{{line-height:1.5}}
 {reconcile(d, rows)}
 
 </details>
+</section>
 
+<section id="running">
 <details class="sec"><summary><h2>Running now ({n_live:,})</h2></summary>
 {('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + live_html + '</div>') if n_live else '<div class="note">No open bets.</div>'}
 </details>
+</section>
 
+<section id="settled">
 <details class="sec"><summary><h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""})</h2></summary>
 {('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + hist_html + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
 </details>
 
-</div>
+</section>
 
-<div data-lane="trading" hidden>
-<div class="tiles">
-<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
-<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
-<div class="tile"><b class="{'neg' if any(r['verdict'] == 'noedge' for r in trade_rules) else ''}">{sum(1 for r in trade_rules if r['verdict'] == 'noedge')}</b><span>no edge</span></div>
-<div class="tile"><b>{sum(r['trades'] for r in trade_rules):,}</b><span>trades logged</span></div>
-<div class="tile"><b>{trade_open:,}</b><span>open now</span></div>
-</div>
-{trade_note}
-<h2>Stock rules under test</h2>
-<div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
-<div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
-logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
-never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
-<b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
-<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days;
-under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it does.</div>
-</div>
-
-<div data-lane="sports">
+<section id="reference">
 <details class="sec"><summary><h2>Reference</h2></summary>
 <details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
@@ -1562,7 +1418,7 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 <details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
-<details class="ref"><summary>Method</summary><div class="note">
+<details class="ref" id="method"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
 and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue
 wherever it lists a contest; <b>Kalshi</b> is the venue for soccer and anything Polymarket US is missing, with
@@ -1572,61 +1428,29 @@ Quotes logged before the book rule on boxing, cricket and table tennis were void
 A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 
 </details>
-
-</div>
+</section>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-<script>
-// The view switch. Nothing is set until the reader chooses, so the width query decides by
-// default; a choice is remembered per browser and the button always names what it will
-// switch TO. Storage can throw in a private window, so every touch of it is guarded and the
-// page renders correctly without it.
-(function () {{
-  var root = document.documentElement, btn = document.getElementById('vw');
-  var narrow = function () {{ return window.matchMedia('(max-width:760px)').matches; }};
-  var showing = function () {{
-    var v = root.getAttribute('data-view');
-    return v ? v : (narrow() ? 'cards' : 'table');
-  }};
-  var paint = function () {{ btn.textContent = showing() === 'cards' ? 'Full table' : 'Phone view'; }};
-  try {{
-    var saved = localStorage.getItem('sandbox-view');
-    if (saved === 'cards' || saved === 'table') root.setAttribute('data-view', saved);
-  }} catch (e) {{}}
-  paint();
-  window.matchMedia('(max-width:760px)').addEventListener('change', paint);
-  btn.addEventListener('click', function () {{
-    var next = showing() === 'cards' ? 'table' : 'cards';
-    root.setAttribute('data-view', next);
-    paint();
-    try {{ localStorage.setItem('sandbox-view', next); }} catch (e) {{}}
-  }});
-}}());
-document.querySelectorAll('#lanes button').forEach(b => b.addEventListener('click', () => {{
-  document.querySelectorAll('#lanes button').forEach(x => x.classList.toggle('on', x === b));
-  document.querySelectorAll('[data-lane]:not(button)').forEach(el => el.hidden = el.dataset.lane !== b.dataset.lane);
-}}));
-document.querySelectorAll('.folds-ctl button').forEach(b => b.addEventListener('click', () => {{
-  document.querySelectorAll('details.' + b.dataset.fold).forEach(dt => dt.open = b.dataset.open === '1');
-}}));
-document.querySelectorAll('input.flt').forEach(inp => inp.addEventListener('input', () => {{
-  const box = document.getElementById(inp.dataset.for), q = inp.value.trim().toLowerCase();
-  box.querySelectorAll('details').forEach(dt => {{ if (q) dt.open = true; }});
-  box.querySelectorAll('table').forEach(t => {{
-    let grp = null, any = false;
-    t.querySelectorAll('tr').forEach(tr => {{
-      if (tr.querySelector('th')) return;
-      if (tr.classList.contains('grp')) {{ if (grp) grp.hidden = !any; grp = tr; any = false; return; }}
-      const hit = !q || tr.textContent.toLowerCase().includes(q);
-      tr.hidden = !hit; any = any || hit;
-    }});
-    if (grp) grp.hidden = !any;
-    const fold = t.closest('details.grp-fold');
-    if (fold) fold.hidden = q && !t.querySelector('tr:not([hidden]) td');
-  }});
-}}));
-</script>
-</div></body></html>"""
+"""
+    sections = (
+        ("summary", "What it says"),
+        ("by-sport", "By sport"),
+        ("running", "Running"),
+        ("settled", "Settled"),
+        ("reference", "Reference"),
+        ("method", "Method"),
+    )
+    return site_chrome.document(
+        "Sandbox Tracker",
+        "Every source and rule under test, per sport, at real prices and settled on real results — what is working and what is not.",
+        "sandbox",
+        sections,
+        site_chrome.stamp(now_dt),
+        body,
+        script_src="./site.js",
+        tools=site_chrome.VIEW_BUTTON,
+    )
+
 
 
 # The QA page is gone (2026-09-18): the ladder is Sandbox, then Production by hand.
@@ -1638,23 +1462,72 @@ def _ticks(gate):
     return passed, cells
 
 
+def trading_page(now=None):
+    """public_site/trading.html — the trading lane, on its own page.
+
+    Same rows as the old hidden tab: trading_rows() is unchanged apart from
+    the percent sign glyph.
+    """
+    import market_sources as MS
+    import market_track as MT
+    now_dt = now or datetime.now(timezone.utc)
+    if now_dt.tzinfo is None:
+        now_dt = now_dt.replace(tzinfo=timezone.utc)
+    md = MT.load()
+    trade_rules = MT.report(md)
+    trade_open = sum(r["open"] for r in trade_rules)
+    trade_note = ("" if MS.configured() else
+                  '<div class="note">These rules are scanned and graded on the machine that holds '
+                  'the market data keys, and the record below is what it published. This page is '
+                  'built elsewhere and only renders it, so it does not reach the market itself.</div>')
+    body = f"""<h1>Trading</h1>
+<p class="lede">Stock and crypto rules under test, judged per entry day. Paper only.</p>
+<div class="tiles">
+<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
+<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
+<div class="tile"><b class="{'neg' if any(r['verdict'] == 'noedge' for r in trade_rules) else ''}">{sum(1 for r in trade_rules if r['verdict'] == 'noedge')}</b><span>no edge</span></div>
+<div class="tile"><b>{sum(r['trades'] for r in trade_rules):,}</b><span>trades logged</span></div>
+<div class="tile"><b>{trade_open:,}</b><span>open now</span></div>
+</div>
+{trade_note}
+<section id="rules">
+<h2>Stock rules under test</h2>
+<div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
+<div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
+logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
+never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
+<b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
+<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days;
+under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it does.</div>
+</section>
+<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+"""
+    return site_chrome.document(
+        "Edge Machine · Trading",
+        "Stock and crypto rules under test, judged per entry day at real prices.",
+        "trading",
+        (("rules", "Rules"),),
+        site_chrome.stamp(now_dt),
+        body,
+    )
+
+
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    page = build()
-    page = label_cells(page)
+    page = label_cells(build())
     with open(OUT, "w") as f:
         f.write(page)
     print(f"wrote {OUT}")
-    # Production shares the Sandbox page's stylesheet rather than keeping a second copy of it.
-    style = re.search(r"<style>.*?</style>", page, re.S).group(0)
     import production
     prod_out = os.path.join(os.path.dirname(OUT), "production.html")
     with open(prod_out, "w") as f:
-        # The Production page shares this page's stylesheet, so it inherits the phone
-        # layout — which needs the column names on its cells too, or its rows would stack
-        # into unlabelled numbers.
-        f.write(label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), style)))
+        # Phone cards read data-l from each cell. The shared stylesheet does the layout.
+        f.write(label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), "")))
     print(f"wrote {prod_out}")
+    trade_out = os.path.join(os.path.dirname(OUT), "trading.html")
+    with open(trade_out, "w") as f:
+        f.write(label_cells(trading_page()))
+    print(f"wrote {trade_out}")
     return 0
 
 

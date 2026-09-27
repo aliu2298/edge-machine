@@ -30,8 +30,10 @@ tracker runs (every 3h).
 """
 import datetime, html, json, os
 
+import fmt
 import sandbox_sources as S
 import sandbox_track as T
+import site_chrome
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FEED = os.path.join(ROOT, "data", "production_leads.json")
@@ -283,6 +285,21 @@ def _day_label(day, today):
 EARLY_N = 10      # under this many settled bets an ROI is shown grey and marked too early
 
 
+def _ct_clock(kickoff):
+    """The kickoff clock in CT. The day bucket above stays the UTC date."""
+    try:
+        return fmt.clock(kickoff)
+    except (ValueError, TypeError):
+        return str(kickoff)[11:16]
+
+
+def _ct_when(kickoff):
+    try:
+        return fmt.when(kickoff)
+    except (ValueError, TypeError):
+        return str(kickoff).replace("T", " ").rstrip("Z")
+
+
 def page(d, st, blob, style, now=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -292,13 +309,12 @@ def page(d, st, blob, style, now=None):
     published leads and the record behind them, never anything that acts on them.
     """
     now_dt = now or datetime.datetime.now(datetime.timezone.utc)
-    now_s = now_dt.strftime("%Y-%m-%d %H:%M UTC")
     today = now_dt.date()
     pairs = production_pairs(st)
     name = lambda key: S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]
     sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
     label = lambda key: f"{name(key)} · {sport_of(key)}"
-    pct = lambda x: "—" if x is None else f"{x*100:+.1f}%"
+    pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: "mut" if not n or x is None else ("pos" if x > 0 else "neg")
     leads = list(blob.get("leads", {}).values())
     upcoming = sorted((l for l in leads if l["status"] == "pending"
@@ -319,7 +335,7 @@ def page(d, st, blob, style, now=None):
         live = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)
-        clv = ("—" if whole["clv"] is None else f"{whole['clv']*100:+.1f}¢")
+        clv = fmt.signed_cents(whole["clv"])
         cards.append(f"""<tr>
 <td><b>{esc(name(key))}</b><div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
@@ -347,14 +363,14 @@ def page(d, st, blob, style, now=None):
     days_html = ""
     for i, (day, ls) in enumerate(sorted(by_day.items())):
         rows = "".join(
-            f"""<tr><td class="mut">{esc(l['kickoff'][11:16])}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+            f"""<tr><td class="mut">{esc(_ct_clock(l['kickoff']))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
 <td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
-<td class="num">{f"{l['price_at_log']:.2f}" if l.get('price_at_log') else '—'}</td></tr>"""
+<td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
             for l in ls)
         # Each day folds; the soonest one starts open, since that is what a visitor came for.
         days_html += (f"""<details class="fold"{' open' if i == 0 else ''}><summary>{esc(_day_label(day, today))}
 <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
-<div class="tbl"><table><tr><th>UTC</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr>{rows}</table></div></details>""")
     upcoming_html = days_html or '<div class="note">No leads still to come.</div>'
 
@@ -370,56 +386,49 @@ def page(d, st, blob, style, now=None):
 <th class="num">Result</th></tr>{rec_rows}</table></div>""" if rec_rows else
                    '<div class="note">Nothing has settled since these pairs were moved.</div>')
 
-    nxt = upcoming[0]["kickoff"].replace("T", " ").rstrip("Z") if upcoming else "—"
+    nxt = _ct_when(upcoming[0]["kickoff"]) if upcoming else "—"
     held = blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
-    return f"""<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine · Production</title>
-<meta name="description" content="The pairs moved into Production by hand, and their published leads.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-{style}
-<style>th.grp{{text-align:center;border-bottom:1px solid var(--bd)}}
-details.fold>summary{{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px;
-  margin:18px 0 8px;font-weight:600;font-size:15px;user-select:none}}
-details.fold>summary::-webkit-details-marker{{display:none}}
-details.fold>summary::before{{content:"▸";color:var(--mut);font-size:12px;width:12px;transition:transform .15s}}
-details.fold[open]>summary::before{{transform:rotate(90deg)}}
-details.fold.sec>summary{{margin-top:26px}}
-details.fold.sec>summary h2{{margin:0;display:inline}}
-details.fold details.fold>summary{{margin:12px 0 6px;font-size:14px}}</style>
-</head><body><div class="wrap">
-
-<h1>Production</h1>
-<div class="sub">The pairs moved here by hand, and the leads they publish · updated {esc(now_s)}</div>
-<div class="nav"><a class="" href="./sandbox.html">Sandbox</a><a class="on" href="./production.html">Production</a></div>
+    # `style` used to be the Sandbox page's inline stylesheet. The shared site.css
+    # replaced it. The argument stays so existing callers do not break.
+    del style
+    body = f"""<h1>Production</h1>
+<p class="lede">The pairs moved here by hand, and the leads they publish.</p>
 
 <div class="tiles">
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
 <div class="tile"><b>{len(upcoming)}</b><span>leads still to come</span></div>
 <div class="tile"><b>{hits}/{len(landed)}</b><span>recent leads landed</span></div>
-<div class="tile"><b style="font-size:17px">{esc(nxt)}</b><span>next lead (UTC)</span></div>
+<div class="tile"><b class="when">{esc(nxt)}</b><span>next lead (CT)</span></div>
 </div>
 
+<section id="pairs">
 <details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}</span></summary>
 <p class="sm mut">Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
 and its record since it entered Production. Under {EARLY_N} settled bets an ROI is grey: one win at 0.46 reads
 +117%, and means nothing yet. CLV is the closing price minus the price at logging: positive means its leads got
 dearer after they were published.</p>
 {pairs_html}</details>
+</section>
 
+<section id="coming-up">
 <details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {len(upcoming)} leads over {len(by_day)} day{'s' if len(by_day) != 1 else ''}</span></summary>
 {upcoming_html}</details>
+</section>
 
+<section id="recent">
 <details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· {hits} of {len(landed)} landed</span></summary>
 {recent_html}</details>
+</section>
 
+<section id="held-back">
 <details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· {held}</span></summary>
 <div class="note">{held} bet{'s' if held != 1 else ''} from these pairs {'were' if held != 1 else 'was'} not published:
 {blob.get('unlisted_skipped', 0)} cannot be expressed as a standard market, and
 {blob.get('unverified_kickoff_skipped', 0)} {'are' if blob.get('unverified_kickoff_skipped', 0) != 1 else 'is'} waiting for a verified start
 time. A lead is only published once its start has been confirmed.</div></details>
+</section>
 
+<section id="how">
 <details class="fold sec"><summary><h2>How a pair gets here</h2></summary>
 <div class="note">Nothing promotes itself. Every source and rule starts in the <a href="./sandbox.html">Sandbox</a>,
 logged before the start at the price available then and graded on the real result. A pair — one source in
@@ -427,9 +436,19 @@ one sport — is moved into Production by hand, on that record. It leaves the sa
 stops working: no new bet for {T.STALE_DAYS} days, behind the prices it logged at, or beaten by a blind rule
 on the same contests. Every lead a Production pair logs is published to
 <code>data/production_leads.json</code>.</div></details>
+</section>
 
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-</div></body></html>"""
+"""
+    return site_chrome.document(
+        "Edge Machine · Production",
+        "The pairs moved into Production by hand, and their published leads.",
+        "production",
+        (("pairs", "Pairs"), ("coming-up", "Coming up"), ("recent", "Recently settled"),
+         ("held-back", "Held back"), ("how", "How a pair gets here")),
+        site_chrome.stamp(now_dt),
+        body,
+    )
 
 
 def main(argv=None):
