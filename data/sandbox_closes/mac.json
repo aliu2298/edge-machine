@@ -1061,9 +1061,9 @@
    "price": 0.52
   },
   "espn_fpi:KXMLBGAME-26SEP262040AZSD": {
-   "at": "2026-09-27T00:16:41+00:00",
-   "lead_min": 23.3,
-   "price": 0.55
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 8.3,
+   "price": 0.54
   },
   "espn_fpi:aec-mlb-ath-cle-2026-09-20": {
    "at": "2026-09-20T17:27:49+00:00",
@@ -1365,11 +1365,6 @@
    "lead_min": 10.3,
    "price": 0.53
   },
-  "espn_fpi:aec-mlb-sd-col-2026-09-16": {
-   "at": "2026-09-17T00:29:47+00:00",
-   "lead_min": 10.2,
-   "price": 0.39
-  },
   "espn_fpi:aec-mlb-sd-lad-2026-09-22": {
    "at": "2026-09-23T01:56:48+00:00",
    "lead_min": 13.2,
@@ -1541,8 +1536,8 @@
    "price": 0.45
   },
   "kalshi:aec-mlb-az-sd-2026-09-26": {
-   "at": "2026-09-27T00:16:41+00:00",
-   "lead_min": 23.3,
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 8.3,
    "price": 0.545
   },
   "kalshi:aec-mlb-chc-bos-2026-09-25": {
@@ -1639,11 +1634,6 @@
    "at": "2026-09-20T16:57:42+00:00",
    "lead_min": 12.3,
    "price": 0.405
-  },
-  "kalshi:aec-mlb-sd-col-2026-09-16": {
-   "at": "2026-09-17T00:29:47+00:00",
-   "lead_min": 10.2,
-   "price": 0.39
   },
   "kalshi:aec-mlb-sd-lad-2026-09-22": {
    "at": "2026-09-23T01:56:48+00:00",
@@ -2155,6 +2145,11 @@
    "lead_min": 13.5,
    "price": 0.92
   },
+  "o15_form_l10:KXMLSTOTAL-26SEP26RSLNE-2": {
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 58.3,
+   "price": 0.83
+  },
   "o15_form_l10:KXMLSTOTAL-26SEP26SEAMIN-2": {
    "at": "2026-09-27T00:16:41+00:00",
    "lead_min": 13.3,
@@ -2199,6 +2194,11 @@
    "at": "2026-09-26T18:30:01+00:00",
    "lead_min": 15.0,
    "price": 0.77
+  },
+  "o25_congestion:KXMLSTOTAL-26SEP26RSLNE-3": {
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 58.3,
+   "price": 0.39
   },
   "o25_congestion:KXMLSTOTAL-26SEP26SEAMIN-3": {
    "at": "2026-09-27T00:16:41+00:00",
@@ -2606,8 +2606,8 @@
    "price": 0.6371
   },
   "pm_combo2:pmcombo2:2026-09-27:2f833f6e3f": {
-   "at": "2026-09-27T00:16:41+00:00",
-   "lead_min": 43.3,
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 28.3,
    "price": 0.5825
   },
   "pm_combo2:pmcombo2:2026-09-27:b9ecd5fca2": {
@@ -2795,11 +2795,6 @@
    "lead_min": 12.3,
    "price": 0.405
   },
-  "polymarket:aec-mlb-sd-col-2026-09-16": {
-   "at": "2026-09-17T00:29:47+00:00",
-   "lead_min": 10.2,
-   "price": 0.615
-  },
   "polymarket:aec-mlb-sd-lad-2026-09-22": {
    "at": "2026-09-23T01:56:48+00:00",
    "lead_min": 13.2,
@@ -2979,11 +2974,6 @@
    "at": "2026-09-18T23:12:28+00:00",
    "lead_min": 2.5,
    "price": 0.47
-  },
-  "scores24:aec-mlb-sd-col-2026-09-16": {
-   "at": "2026-09-17T00:29:47+00:00",
-   "lead_min": 10.2,
-   "price": 0.615
   },
   "scores24:aec-mlb-sd-col-2026-09-17": {
    "at": "2026-09-17T19:00:08+00:00",
@@ -3350,11 +3340,6 @@
    "lead_min": 14.9,
    "price": 0.27
   },
-  "sportsgambler:KXCONMEBOLLIBGAME-26SEP16CORELP": {
-   "at": "2026-09-17T00:29:47+00:00",
-   "lead_min": 0.2,
-   "price": 0.47
-  },
   "spot:KXSOLD-26SEP1717-T100.9999": {
    "at": "2026-09-17T19:00:08+00:00",
    "lead_min": 4.9,
@@ -3624,6 +3609,11 @@
    "at": "2026-09-20T00:23:37+00:00",
    "lead_min": 6.4,
    "price": 0.9
+  },
+  "team1_form_l5:KXMLSTEAMTOTAL-26SEP26RSLNE-NE1": {
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 58.3,
+   "price": 0.78
   },
   "team1_form_l5:KXUEFANLTEAMTOTAL-26SEP24NEDGER-GER1": {
    "at": "2026-09-24T18:31:28+00:00",
@@ -5486,8 +5476,8 @@
    "price": 0.78
   },
   "tennis_fav_band:aec-itfwo-maasha-hazkad-2026-09-27": {
-   "at": "2026-09-27T00:16:41+00:00",
-   "lead_min": 43.3,
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 28.3,
    "price": 0.77
   },
   "tennis_fav_band:aec-itfwo-mancitmarmor-leyrisjosest-2026-09-17": {
@@ -5626,8 +5616,8 @@
    "price": 0.9
   },
   "tennis_fav_band:aec-itfwo-sakhos-hirabe-2026-09-27": {
-   "at": "2026-09-27T00:16:41+00:00",
-   "lead_min": 43.3,
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 28.3,
    "price": 0.76
   },
   "tennis_fav_band:aec-itfwo-sayish-rirkos-2026-09-22": {
@@ -6031,8 +6021,8 @@
    "price": 0.8
   },
   "tennis_fav_band_3h:aec-itfwo-maasha-hazkad-2026-09-27": {
-   "at": "2026-09-27T00:16:41+00:00",
-   "lead_min": 43.3,
+   "at": "2026-09-27T00:31:44+00:00",
+   "lead_min": 28.3,
    "price": 0.77
   },
   "tennis_fav_band_3h:aec-itfwo-marank-linyou-2026-09-27": {
@@ -6136,5 +6126,5 @@
    "price": 0.87
   }
  },
- "updated": "2026-09-27T00:16:41+00:00"
+ "updated": "2026-09-27T00:31:44+00:00"
 }
