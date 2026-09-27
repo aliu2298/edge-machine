@@ -9,9 +9,10 @@ failure, or does not run a test_*.py file in the repo root.
 
 Also fails when any workflow pins a uses: to something other than a full
 commit SHA, when a git push line swallows failure, when any workflow sets
-continue-on-error, or when a pushing workflow's push step still exits 0
-after the remote rejects the push or a rebase conflicts, or exits non-zero
-when there is nothing to commit.
+continue-on-error, when a step uses set +e and then an unconditional exit 0,
+when a site-root build can still publish or deploy, or when a pushing
+workflow's push step still exits 0 after the remote rejects the push or a
+rebase conflicts, or exits non-zero when there is nothing to commit.
 """
 import glob
 import os
@@ -652,6 +653,96 @@ ok(_persist_faults(
     + ", with: {persist-credentials: false}}]") == [],
    "a flow-style checkout with persist-credentials: false passes")
 
+_SITE_ROOT_OK = "steps.site_root.outcome == 'success'"
+_PAGES_USES = (
+    "actions/configure-pages@",
+    "actions/upload-pages-artifact@",
+    "actions/deploy-pages@",
+)
+
+
+def _job_bodies(text):
+    """Text of each job mapping under the top-level jobs: key."""
+    lines = text.splitlines()
+    bodies = []
+    i = 0
+    while i < len(lines):
+        if not re.match(r"^jobs[ \t]*:", lines[i]):
+            i += 1
+            continue
+        i += 1
+        while i < len(lines):
+            if lines[i].strip() == "":
+                i += 1
+                continue
+            if _indent(lines[i]) == 0:
+                break
+            if _indent(lines[i]) == 2 and re.match(r"^  \S", lines[i]):
+                start = i
+                i += 1
+                while i < len(lines) and (lines[i].strip() == "" or _indent(lines[i]) > 2):
+                    i += 1
+                bodies.append("\n".join(lines[start:i]))
+                continue
+            i += 1
+        break
+    return bodies
+
+
+def _publishes_site(step):
+    """A step that commits or deploys the site root, not the step that writes it."""
+    if re.search(r"(?m)^id:[ \t]*site_root\b", step):
+        return False
+    if re.search(r"(?m)^id:[ \t]*publish\b", step):
+        return True
+    if any(action in step for action in _PAGES_USES):
+        return True
+    if "git push" in step and "index.html" in step:
+        return True
+    return False
+
+
+def _site_root_gate_faults(text):
+    """Publish and Pages must require a successful site-root step in that job."""
+    faults = []
+    for job in _job_bodies(text):
+        steps = _steps(job)
+        writes_root = [
+            step for step in steps
+            if re.search(r"(?m)^id:[ \t]*site_root\b", step)
+            or ("site_root.py" in step and "git push" not in step)
+        ]
+        if not writes_root:
+            continue
+        if not any(re.search(r"(?m)^id:[ \t]*site_root\b", step) for step in steps):
+            faults.append("the site-root step has no id: site_root")
+        for step in steps:
+            if not _publishes_site(step):
+                continue
+            if _SITE_ROOT_OK not in step:
+                faults.append(
+                    "a publish or Pages step does not require steps.site_root.outcome == 'success'")
+    return faults
+
+
+def _set_plus_e_exit_faults(text):
+    """set +e followed by a bare exit 0 hides the step's real result."""
+    faults = []
+    for script in _run_scripts(text):
+        saw = False
+        for line in script.splitlines():
+            if re.search(r"\bset\s+\+e\b", line) and re.search(r"\bexit\s+0\b", line):
+                faults.append("set +e is followed by an unconditional exit 0")
+                saw = False
+                break
+            if re.search(r"\bset\s+\+e\b", line):
+                saw = True
+            if saw and re.match(r"\s*exit\s+0\s*$", line):
+                faults.append("set +e is followed by an unconditional exit 0")
+                break
+    return faults
+
+
 print("\nevery workflow pins actions and does not swallow a push")
 _wf_paths = sorted(glob.glob(os.path.join(WF_DIR, "*.yml")))
 _wf_paths += sorted(glob.glob(os.path.join(WF_DIR, "*.yaml")))
@@ -659,6 +750,8 @@ ok(bool(_wf_paths), "the repo has workflow files")
 _pin_bad = []
 _swallow_bad = []
 _coe_bad = []
+_exit0_bad = []
+_root_bad = []
 for _path in _wf_paths:
     _raw = open(_path, encoding="utf-8").read()
     _rel = os.path.relpath(_path, ROOT)
@@ -670,6 +763,10 @@ for _path in _wf_paths:
         _swallow_bad.append(f"{_rel}: {_fault}")
     if _CONTINUE_ON_ERROR.search(_stripped):
         _coe_bad.append(_rel)
+    for _fault in _set_plus_e_exit_faults(_stripped):
+        _exit0_bad.append(f"{_rel}: {_fault}")
+    for _fault in _site_root_gate_faults(_stripped):
+        _root_bad.append(f"{_rel}: {_fault}")
 if _pin_bad:
     for _item in _pin_bad:
         ok(False, f"uses: is not pinned to a 40-character SHA ({_item})")
@@ -685,6 +782,92 @@ if _coe_bad:
         ok(False, f"{_item} sets continue-on-error")
 else:
     ok(True, "no workflow step sets continue-on-error")
+if _exit0_bad:
+    for _item in _exit0_bad:
+        ok(False, _item)
+else:
+    ok(True, "no workflow step follows set +e with an unconditional exit 0")
+if _root_bad:
+    for _item in _root_bad:
+        ok(False, _item)
+else:
+    ok(True, "publish and Pages require steps.site_root.outcome == 'success'")
+
+_GATE_DOC = """
+jobs:
+  refresh:
+    steps:
+      - name: Write the site root
+        id: site_root
+        run: python3 site_root.py
+      - name: Commit and push if changed
+        id: publish
+        if: ${{ steps.site_root.outcome == 'success' }}
+        run: |
+          git add public_site/index.html
+          git push origin main
+      - if: ${{ steps.site_root.outcome == 'success' }}
+        uses: actions/configure-pages@0123456789abcdef0123456789abcdef01234567
+      - if: ${{ steps.site_root.outcome == 'success' }}
+        uses: actions/upload-pages-artifact@0123456789abcdef0123456789abcdef01234567
+      - if: ${{ steps.site_root.outcome == 'success' }}
+        uses: actions/deploy-pages@0123456789abcdef0123456789abcdef01234567
+"""
+ok(_site_root_gate_faults(_GATE_DOC) == [],
+   "a job that gates publish and Pages on the site root passes")
+ok(any("site_root" in f for f in _site_root_gate_faults(
+    _GATE_DOC.replace(" && steps.site_root.outcome == 'success'", "")
+            .replace("if: ${{ steps.site_root.outcome == 'success' }}\n", ""))),
+   "dropping the site-root success condition fails the guard")
+ok(_set_plus_e_exit_faults("run: |\n  set +e\n  python3 tool.py\n  exit 0\n") != [],
+   "set +e followed by exit 0 fails the guard")
+ok(_set_plus_e_exit_faults("run: |\n  set +e\n  python3 tool.py\n  echo rc=$?\n") == [],
+   "set +e without exit 0 is not that fault")
+
+import builtins
+_root_tmp = tempfile.mkdtemp(prefix="site-root-")
+try:
+    import site_root
+    _index = os.path.join(_root_tmp, "index.html")
+    with open(_index, "w") as _fh:
+        _fh.write("OLD-PAGE")
+    _saved_out = site_root.OUT
+    _real_open = builtins.open
+    def _trapping_open(file, mode="r", *args, **kwargs):
+        fh = _real_open(file, mode, *args, **kwargs)
+        if "w" in str(mode):
+            def _boom(_data):
+                raise OSError("simulated write failure")
+            fh.write = _boom
+        return fh
+    builtins.open = _trapping_open
+    site_root.OUT = _index
+    _raised = False
+    try:
+        try:
+            site_root.main()
+        except OSError:
+            _raised = True
+        with _real_open(_index, encoding="utf-8") as _fh:
+            _kept = _fh.read()
+    finally:
+        builtins.open = _real_open
+        site_root.OUT = _saved_out
+    ok(_raised and _kept == "OLD-PAGE",
+       "a failed site-root build leaves the old index.html intact")
+    if hasattr(site_root, "write_atomic"):
+        _fresh = os.path.join(_root_tmp, "fresh.html")
+        with open(_fresh, "w") as _fh:
+            _fh.write("OLD-PAGE")
+        site_root.write_atomic(_fresh, "NEW-PAGE")
+        with open(_fresh, encoding="utf-8") as _fh:
+            _wrote = _fh.read()
+        ok(_wrote == "NEW-PAGE" and not os.path.exists(_fresh + ".tmp"),
+           "a successful site-root build replaces index.html atomically")
+    else:
+        ok(False, "a successful site-root build replaces index.html atomically")
+finally:
+    shutil.rmtree(_root_tmp, ignore_errors=True)
 
 
 def _added_paths(script):

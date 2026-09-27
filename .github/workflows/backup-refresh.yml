@@ -243,10 +243,14 @@ jobs:
           python-version: "3.12"
 
       # From here the steps mirror the primary (stripped 2026-09-19 to the site root).
+      # Publish and Pages run only after this step succeeds, so a failed write cannot
+      # commit or deploy a truncated index.html.
       - name: Write the site root
+        id: site_root
         run: python3 site_root.py
 
       - name: Commit and push if changed
+        if: ${{ steps.site_root.outcome == 'success' }}
         run: |
           set -euo pipefail
           git config user.name  "aliu2298"
@@ -288,11 +292,15 @@ jobs:
 
       # Deploy runs whenever the backup took over, even if nothing changed — a stale LIVE
       # board with an unchanged repo is exactly the failure this workflow exists to fix.
-      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      # A failed site root still skips the deploy: there is no page to publish.
+      - if: ${{ steps.site_root.outcome == 'success' }}
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - if: ${{ steps.site_root.outcome == 'success' }}
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
       - id: deployment
+        if: ${{ steps.site_root.outcome == 'success' }}
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
       # index.html is redeployed above. Pages caches that for about 10 minutes, and

@@ -4487,8 +4487,9 @@ ok('echo "track_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf
 _install = _tracker_wf.split("- name: Install headless browser", 1)[-1].split("- name: Logic tests", 1)[0]
 ok("continue-on-error" not in _tracker_wf,
    "no tracker step uses continue-on-error")
-ok("set +e" in _install and "exit 0" in _install,
-   "the browser install may continue without continue-on-error")
+ok("::warning::headless browser install failed — browser column degraded" in _install
+   and "set +e" not in _install and "exit 0" not in _install,
+   "a missing browser warns and does not hide the failure with set +e and exit 0")
 ok("set +e" in _tracker_wf.split("sandbox_track.py")[0],
    "the tracker steps record a failing run with set +e rather than continue-on-error")
 ok('json.load(open("data/sandbox_ledger.json"))' in _tracker_wf,

@@ -72,14 +72,17 @@ jobs:
 
       # The site root: forwards visitors to the Sandbox. Its stamp is not the watchdog's
       # freshness check — that reads sandbox.html and production.html, which this job
-      # does not rebuild.
+      # does not rebuild. A failed write must not publish: site_root.py used to truncate
+      # index.html before the new page existed, and !cancelled() would still let the
+      # commit and the Pages deploy run.
       - name: Write the site root
+        id: site_root
         if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' }}
         run: python3 site_root.py
 
       - name: Commit and push if changed
         id: publish
-        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' }}
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' }}
         run: |
           set -euo pipefail
           git config user.name  "aliu2298"
@@ -126,12 +129,12 @@ jobs:
       # GitHub Pages is the ONLY host (Netlify dropped Aug 3 2026 — it was skipping
       # every deploy for exceeded credit usage, and nothing here needed a feature
       # Pages lacks). Runs unconditionally so the board publishes even when nothing changed.
-      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.publish.outcome == 'success' }}
+      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.publish.outcome == 'success' }}
+      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
       - id: deployment
-        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.publish.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
