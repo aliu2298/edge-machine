@@ -130,6 +130,32 @@ if fmt is not None:
     # The watchdog still reads this exact form. The root stub must not use it.
     eq(fmt.machine_stamp("2026-09-27T05:12:00Z"), "updated 2026-09-27 05:12 UTC",
        "the machine stamp stays the tracker form")
+    # A value that rounds to zero at the displayed precision has no minus.
+    # -0.0004 is -0.04 cents, which is 0.0¢ at one decimal place.
+    eq(fmt.signed_cents(-0.0), "0.0¢",
+       "test_signed_cents_negative_zero")
+    eq(fmt.signed_cents(-0.0004), "0.0¢",
+       "test_signed_cents_negative_four_hundredths")
+    eq(fmt.cents(-0.0), "0¢", "test_cents_negative_zero")
+    eq(fmt.cents(-0.004), "0¢", "test_cents_rounds_to_zero")
+    eq(fmt.money(-0.0), "$0", "test_money_negative_zero")
+    eq(fmt.money(-0.4), "$0", "test_money_negative_four_tenths")
+    eq(fmt.money(-0.5), "$0", "test_money_half_dollar_rounds_to_zero")
+    eq(fmt.money(0.4), "$0", "test_money_positive_rounds_to_zero")
+    eq(fmt.signed_cents(0.0), "0.0¢", "test_signed_cents_zero")
+    eq(fmt.pct(-0.0, digits=1, sign=True), "0.0%", "test_pct_negative_zero")
+    eq(fmt.pct(-0.00004, digits=1, sign=True), "0.0%",
+       "test_pct_rounds_to_zero")
+    eq(fmt.money(-1), f"{MINUS}$1", "test_money_real_negative_keeps_minus")
+    eq(fmt.signed_cents(-0.08), f"{MINUS}8.0¢",
+       "test_signed_cents_real_negative_keeps_minus")
+    eq(fmt.signed_cents(-0.0004, digits=2), f"{MINUS}0.04¢",
+       "test_signed_cents_real_hundredths_keep_minus")
+    eq(fmt.cents(-0.01), f"{MINUS}1¢", "test_cents_real_negative_keeps_minus")
+    for _shown in (fmt.money(-0.4), fmt.signed_cents(-0.0), fmt.signed_cents(-0.0004),
+                   fmt.cents(-0.0), fmt.pct(-0.0, sign=True)):
+        ok(MINUS not in _shown and "-" not in _shown,
+           f"test_rounded_zero_has_no_minus_glyph {_shown!r}")
 
 
 # ---------------------------------------------------------------------------

@@ -285,8 +285,21 @@ def _day_label(day, today):
 EARLY_N = 10      # under this many settled bets an ROI is shown grey and marked too early
 
 
+def _chicago_day(value):
+    """America/Chicago calendar date. fmt.chicago uses zoneinfo, so CDT and CST both apply."""
+    return fmt.chicago(value).date()
+
+
+def _ct_date(kickoff):
+    """YYYY-MM-DD of the kickoff on the Chicago calendar."""
+    try:
+        return _chicago_day(kickoff).isoformat()
+    except (TypeError, ValueError):
+        return str(kickoff)[:10]
+
+
 def _ct_clock(kickoff):
-    """The kickoff clock in CT. The day bucket above stays the UTC date."""
+    """The kickoff clock in CT."""
     try:
         return fmt.clock(kickoff)
     except (ValueError, TypeError):
@@ -309,7 +322,7 @@ def page(d, st, blob, style, now=None):
     published leads and the record behind them, never anything that acts on them.
     """
     now_dt = now or datetime.datetime.now(datetime.timezone.utc)
-    today = now_dt.date()
+    today = _chicago_day(now_dt)
     pairs = production_pairs(st)
     name = lambda key: S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]
     sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
@@ -356,8 +369,8 @@ def page(d, st, blob, style, now=None):
     by_day = {}
     for l in upcoming:
         try:
-            day = datetime.datetime.fromisoformat(l["kickoff"].replace("Z", "+00:00")).date()
-        except ValueError:
+            day = _chicago_day(l["kickoff"])
+        except (TypeError, ValueError):
             continue
         by_day.setdefault(day, []).append(l)
     days_html = ""
@@ -377,7 +390,7 @@ def page(d, st, blob, style, now=None):
     # ---- how the recent ones landed ----
     recent = settled[:25]
     rec_rows = "".join(
-        f"""<tr><td class="mut">{esc(l['kickoff'][:10])}</td><td>{esc(l['match'])}</td>
+        f"""<tr><td class="mut">{esc(_ct_date(l['kickoff']))}</td><td>{esc(l['match'])}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else ('paid' if l['status'] == 'price' else 'missed')}</span></td></tr>"""
         for l in recent)

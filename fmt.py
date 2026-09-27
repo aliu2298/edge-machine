@@ -24,44 +24,75 @@ def _as_utc(value):
     return dt.astimezone(timezone.utc)
 
 
+def _magnitude(value, spec):
+    """`value` rounded the way `format` prints it, without a sign."""
+    return format(abs(value), spec)
+
+
+def _is_displayed_zero(magnitude):
+    return float(magnitude.replace(",", "")) == 0.0
+
+
+def _sign(value, magnitude, plus):
+    """'' when the rounded magnitude is zero, else U+2212 or an optional plus."""
+    if _is_displayed_zero(magnitude):
+        return ""
+    if value < 0:
+        return MINUS
+    return "+" if plus else ""
+
+
 def money(x):
-    """Whole dollars, signed. −$100 uses U+2212. None is an em dash."""
+    """Whole dollars, signed. −$100 uses U+2212. None is an em dash.
+
+    A value that rounds to $0 prints with no sign.
+    """
     if x is None:
         return "—"
-    sign = "+" if x >= 0 else MINUS
-    return f"{sign}${abs(x):,.0f}"
+    body = _magnitude(x, ",.0f")
+    return f"{_sign(x, body, plus=True)}${body}"
 
 
 def pct(x, digits=1, sign=False):
-    """x is a ratio (0.01 == 1%). A negative uses U+2212."""
+    """x is a ratio (0.01 == 1%). A negative uses U+2212.
+
+    A value that rounds to zero at `digits` prints with no sign.
+    """
     if x is None:
         return "—"
-    raw = f"{x * 100:+.{digits}f}%" if sign else f"{x * 100:.{digits}f}%"
-    return raw.replace("-", MINUS)
+    scaled = x * 100
+    body = _magnitude(scaled, f".{digits}f")
+    return f"{_sign(scaled, body, plus=sign)}{body}%"
 
 
 def cents(x):
     """An exchange price as whole cents. 0.77 -> 77¢.
 
     Rounded with the same two-decimal step the pages used to print, so 0.333
-    is 33¢ just as it used to print 0.33. None is an em dash.
+    is 33¢ just as it used to print 0.33. None is an em dash. A price that
+    rounds to 0¢ has no minus sign.
     """
     if x is None:
         return "—"
     shown = f"{float(x):.2f}"
-    neg = shown.startswith("-")
     n = int(round(abs(float(shown)) * 100))
-    return f"{MINUS if neg else ''}{n}¢"
+    if n == 0:
+        return "0¢"
+    sign = MINUS if shown.startswith("-") else ""
+    return f"{sign}{n}¢"
 
 
 def signed_cents(x, digits=1):
     """A price difference stored as a fraction, shown in signed cents.
 
     0.07 -> +7.0¢ and -0.08 -> −8.0¢. This is the CLV display. None is an em dash.
+    A difference that rounds to 0.0¢ has no sign.
     """
     if x is None:
         return "—"
-    return f"{x * 100:+.{digits}f}¢".replace("-", MINUS)
+    scaled = x * 100
+    body = _magnitude(scaled, f".{digits}f")
+    return f"{_sign(scaled, body, plus=True)}{body}¢"
 
 
 def chicago(value):
