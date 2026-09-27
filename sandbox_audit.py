@@ -12,6 +12,10 @@ Checks, each an ERROR (fails the run) unless marked:
   bets        every settled bet's P/L follows from its price and stake; won/lost follows from
               pick against result; no duplicate ids; a bet's price sits in its domain's band
               and equals its side's ask; nothing counted was logged at or after the start.
+  duplicates  no settled bet repeats an earlier settled bet on the same contest on another
+              venue. A Kalshi placeholder start does not hide the pair. A doubleheader, a
+              series game, and a table-tennis rematch are different contests and are not
+              flagged.
   records     every pair's record recomputed straight from its raw bets, independently of the
               tracker's own assess(), and required to match it exactly.
   production  the Production list agrees three ways: the stages file, the hand-kept list in
@@ -188,6 +192,21 @@ def check_bets(d, rep):
     if not bad and not dup:
         n = sum(1 for q in qs if q.get("bet"))
         rep.ok("bets", f"{len(qs):,} quotes, {n:,} bets: P/L, status, prices and timing all consistent")
+
+
+def check_duplicates(d, rep):
+    """Flag a settled bet that repeats an earlier one on the same contest, another venue.
+
+    Both copies pay, so the P/L counts twice. Voiding the later copy is what clears it.
+    The matcher is the tracker's own, including the wider window for a Kalshi placeholder.
+    """
+    pairs = T.settled_cross_venue_dups(T.all_bets(d))
+    for later, kept in pairs:
+        rep.error("duplicates",
+                  f"{later.get('id')} repeats {kept.get('id')} "
+                  f"({later.get('source')}, {later.get('status')}, P/L {later.get('pnl')})")
+    if not pairs:
+        rep.ok("duplicates", "no settled bet repeats an earlier one on the same contest")
 
 
 def check_records(d, st, rep):
@@ -787,6 +806,7 @@ def emit(rep):
 def run(network=True, sample=25):
     d, st, rep = T.load(), T.load_stages(), Report()
     check_bets(d, rep)
+    check_duplicates(d, rep)
     check_records(d, st, rep)
     check_production(d, st, rep)
     check_combos(d, rep)

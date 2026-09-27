@@ -353,6 +353,59 @@ if _git:
         ok(_ls.returncode == 0 and _ls.stdout == "",
            f"git ls-files {_name} returns nothing" + ("" if _listed == "" else f" — {_listed!r}"))
 
+print("\nduplicates: a settled cross-venue pair is an error; a doubleheader is not")
+def _fight(i, **kw):
+    q = bet(i, sport="mma", source="mma_fav_band",
+            side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+            start="2026-09-26T23:00:00+00:00", date="2026-09-26",
+            logged="2026-09-22T00:41:36+00:00", venue="kalshi",
+            market_id="KXUFCFIGHT-26SEP26DEMJAU",
+            id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU")
+    q.update(kw)
+    return q
+
+
+_kept = _fight(1)
+_later = _fight(2, id="mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26",
+                market_id="aec-ufc-vandem-yazjau-2026-09-26", venue="polymarket_us",
+                start="2026-09-26T18:30:00+00:00", logged="2026-09-22T21:47:04+00:00")
+ok(errs(run(A.check_duplicates, [_kept, _later]), "duplicates"),
+   "a settled Kalshi and Polymarket US copy of one fight is flagged")
+_voided = dict(_later, status="void", pnl=0.0, note="dup of mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU")
+ok(not run(A.check_duplicates, [_kept, _voided]).errors,
+   "voiding the later copy clears the flag")
+_dh1 = bet(3, id="espn_fpi:aec-mlb-tb-nyy-2026-09-22-dh1",
+           market_id="aec-mlb-tb-nyy-2026-09-22-dh1", venue="polymarket_us",
+           side_a="Tampa Bay Rays", side_b="New York Yankees",
+           start="2026-09-22T17:05:00+00:00", logged="2026-09-22T12:00:00+00:00")
+_dh2 = bet(4, id="espn_fpi:KXMLBGAME-26SEP22TBNYY", market_id="KXMLBGAME-26SEP22TBNYY",
+           venue="kalshi", side_a="Tampa Bay Rays", side_b="New York Yankees",
+           start="2026-09-22T23:05:00+00:00", logged="2026-09-22T12:30:00+00:00",
+           date="2026-09-22")
+ok(not run(A.check_duplicates, [_dh1, _dh2]).errors,
+   "a doubleheader on two venues is not flagged")
+_series = bet(5, id="espn_fpi:aec-mlb-tb-nyy-2026-09-23",
+              market_id="aec-mlb-tb-nyy-2026-09-23", venue="polymarket_us",
+              side_a="Tampa Bay Rays", side_b="New York Yankees",
+              start="2026-09-23T23:10:00+00:00", logged="2026-09-23T15:00:00+00:00",
+              date="2026-09-23")
+_series_k = bet(6, id="espn_fpi:KXMLBGAME-26SEP22TBNYY2", market_id="KXMLBGAME-26SEP22TBNYY2",
+                venue="kalshi", side_a="Tampa Bay Rays", side_b="New York Yankees",
+                start="2026-09-23T07:10:00+00:00", logged="2026-09-22T18:00:00+00:00",
+                date="2026-09-22")
+ok(not run(A.check_duplicates, [_series, _series_k]).errors,
+   "the next game of a series is not flagged when a Kalshi start sits 8h off")
+_tt1 = bet(7, sport="table_tennis", source="tt_band_55_60",
+           id="tt:1", market_id="aec-setkameua-rak-pes-2026-09-14", venue="polymarket_us",
+           side_a="Rak Serhii", side_b="Pesternikov Denys",
+           start="2026-09-14T00:30:00+00:00", logged="2026-09-13T21:16:00+00:00")
+_tt2 = bet(8, sport="table_tennis", source="tt_band_55_60",
+           id="tt:2", market_id="KXTT-26SEP14RAKPES", venue="kalshi",
+           side_a="Rak Serhii", side_b="Pesternikov Denys",
+           start="2026-09-14T01:05:00+00:00", logged="2026-09-13T22:00:00+00:00")
+ok(not run(A.check_duplicates, [_tt1, _tt2]).errors,
+   "a table-tennis rematch 35 minutes later is not flagged")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all audit tests passed'}")
 for f in FAILS:
     print("   -", f)
