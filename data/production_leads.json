@@ -1,30 +1,6 @@
 {
- "board_built_at": "2026-09-27T11:53:17+00:00",
+ "board_built_at": "2026-09-27T13:59:16+00:00",
  "leads": {
-  "2026-09-20|AJ Auxerre|Brest|AJ Auxerre to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Brest",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "AJ Auxerre"
-   },
-   "date": "2026-09-20",
-   "edge_at_log": null,
-   "first_seen": "2026-09-18",
-   "headline": "AJ Auxerre to score 1+",
-   "home": "AJ Auxerre",
-   "id": "2026-09-20|AJ Auxerre|Brest|AJ Auxerre to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-20T13:00Z",
-   "lane": "production",
-   "league": "Ligue 1",
-   "match": "AJ Auxerre v Brest",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.76,
-   "sandbox_quote": "team1_form_l5:KXLIGUE1TEAMTOTAL-26SEP20AUXSTB-AUX1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-09-20|Deportivo|Real Betis|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Real Betis",
    "bet": {
@@ -402,5 +378,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-27T11:53:17+00:00"
+ "updated_at": "2026-09-27T13:59:16+00:00"
 }
