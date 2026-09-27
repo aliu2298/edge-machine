@@ -5639,6 +5639,59 @@ ok("does NOT clear" in _tn and "4.16" in _tn,
 ok("COVERAGE RISK" in _tn,
    "and warns that Kalshi may never list Turkish totals, in which case the lane logs nothing")
 
+# ---------------------------------------------------------------------------
+# Turkey BTTS in heavy mismatches — pre-registered 2026-09-27, beside turkey_o25_dog
+# ---------------------------------------------------------------------------
+def _tb(code, ask, no=None, trade=True, untraded=False, series="KXSUPERLIGBTTS"):
+    return dict(venue="kalshi_binary", market_id=f"{series}-{code}", price_a=ask,
+                price_b=no if no is not None else round(1.03 - ask, 2),
+                tradeable={"a": trade, "b": True}, untraded=untraded)
+
+_ku = {"soccer": [_tg("26OCT03GALKOC", 0.86, 0.10, 0.06),    # dog 0.0588 -> mismatch
+                  _tg("26OCT03TRASAM", 0.45, 0.28, 0.29)],   # dog 0.2843 -> competitive
+       "soccer_btts": [_tb("26OCT03GALKOC", 0.52), _tb("26OCT03TRASAM", 0.55)],
+       "soccer_o25": [_tt("26OCT03GALKOC", 0.64), _tt("26OCT03TRASAM", 0.55)]}
+eq([p["market_id"] for p in S.fetch_turkey_btts_dog("soccer_btts", universe=_ku)],
+   ["KXSUPERLIGBTTS-26OCT03GALKOC"],
+   "Turkey BTTS lane takes the heavy mismatch and leaves the competitive match")
+eq([p["pick"] for p in S.fetch_turkey_btts_dog("soccer_btts", universe=_ku)], ["a"],
+   "and it buys BTTS Yes")
+# The two Turkey lanes must cover the SAME fixtures — that is the whole comparison.
+eq({S._ere_code(p["market_id"]) for p in S.fetch_turkey_btts_dog("soccer_btts", universe=_ku)},
+   {S._ere_code(p["market_id"]) for p in S.fetch_turkey_o25_dog("soccer_o25", universe=_ku)},
+   "both Turkey lanes select the same fixtures, so their records answer which LINE is better")
+eq((S.TURKEY_BTTS, S.TURKEY_BTTS_MAX_ASK), ("KXSUPERLIGBTTS", 0.65),
+   "the BTTS series and its break-even ceiling are the pre-registered ones")
+eq(S.fetch_turkey_btts_dog("soccer_btts", universe={
+    "soccer": [_tg("c1", 0.86, 0.10, 0.06)], "soccer_btts": [_tb("c1", 0.66)]}), [],
+   "an ask of 0.66 is refused — 0.654 is break-even at the measured 66.43%")
+eq(len(S.fetch_turkey_btts_dog("soccer_btts", universe={
+    "soccer": [_tg("c2", 0.86, 0.10, 0.06)], "soccer_btts": [_tb("c2", 0.65)]})), 1,
+   "an ask of exactly 0.65 is still taken")
+eq(S.fetch_turkey_btts_dog("soccer_btts", universe={
+    "soccer": [_tg("h1", 0.86, 0.10, 0.06)], "soccer_btts": [_tb("h1", 0.52, 0.55)]}), [],
+   "a board holding 7% is refused")
+eq(S.fetch_turkey_btts_dog("soccer_btts", universe={"soccer": [], "soccer_btts": [_tb("m1", 0.52)]}), [],
+   "BTTS with no winner board is skipped, never assumed a mismatch")
+eq(S.fetch_turkey_btts_dog("soccer_btts", universe={
+    "soccer": [_tg("x1", 0.86, 0.10, 0.06)], "soccer_btts": [_tb("x1", 0.52, series="KXEPLBTTS")]}), [],
+   "another league's BTTS market is not this lane's")
+eq((S.fetch_turkey_btts_dog("soccer_o25", universe=_ku), S.fetch_turkey_o25_dog("soccer_btts", universe=_ku)),
+   ([], []), "each Turkey lane answers only for its own domain")
+eq((S.SOURCES["turkey_btts_dog"]["sports"], S.SOURCES["turkey_btts_dog"]["baseline"],
+    S.CHALLENGERS["turkey_btts_dog"] is S.fetch_turkey_btts_dog),
+   (["soccer_btts"], "population", True), "turkey_btts_dog is registered on the BTTS domain and wired up")
+ok(not S.lane_paused("turkey_btts_dog", "soccer_btts"), "the Turkey BTTS lane is not paused")
+_kn = S.SOURCES["turkey_btts_dog"]["note"]
+ok("z +3.51" in _kn and "z +4.59" in _kn,
+   "the note pins BTTS on both windows, including the cell that cleared the permutation bar")
+ok("2.03" in _kn and "0.504" in _kn and "0.517" in _kn,
+   "and records the three live boards that verified the model's price level to 1.3 points")
+ok("COVERAGE RISK" in _kn,
+   "and warns Kalshi may never list a Turkish BTTS market, in which case the lane logs nothing")
+ok("37 matches" in _kn,
+   "and flags that the held-out season rests on a small sample")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

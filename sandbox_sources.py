@@ -552,6 +552,31 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "turkey_btts_dog": dict(
+        label="Turkey BTTS in heavy mismatches (underdog 7.00+)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_btts"], baseline="population",
+        note="Pre-registered 2026-09-27 alongside turkey_o25_dog, on the SAME fixtures — "
+             "same de-vigged underdog cut of 0.135, same join to the three-way board — but "
+             "on BTTS instead of over 2.5, so the two records answer which line of the pair "
+             "is worth trading. Back BTTS Yes with the ask at 0.65 or less and the board "
+             "holding no more than 6%. BTTS is the stronger line by a wide margin: on the "
+             "last three seasons it runs +14.7pp at z +3.51 against over 2.5's +7.4pp at "
+             "z +1.87, and over thirteen seasons +10.8pp at z +4.59 — that thirteen-season "
+             "cell was the ONLY one of 1,424 in the original study to clear the permutation "
+             "bar of 4.16. Split two-seasons-in against 2025/26 held out it reads +9.5pp "
+             "(z +1.96) then +29.2pp (z +3.56); the held-out figure rests on 37 matches that "
+             "saw BTTS in 78.4% of them, which is a small sample and should be read as such. "
+             "WHY IT WAS NOT BUILT FIRST, and what changed: BTTS had no real price to verify "
+             "against, so its edge rested on a Poisson-implied benchmark. On 2026-09-26 three "
+             "live Turkish mismatch boards were read directly — BTTS at 2.03, 1.80 and 2.16, "
+             "a mean 0.504 implied against the model's 0.517. The benchmark was right to "
+             "within 1.3 points, which removes the objection. At those prices and the band's "
+             "66.4% the bet returns about +32.6% (+35%, +20%, +43% on the three), against "
+             "+12.0% for over 2.5 on the same boards. COVERAGE RISK: KXSUPERLIGBTTS exists as "
+             "a Kalshi series but no market from it has ever been seen, because Turkey was "
+             "missing from BTTS_LEAGUES until 2026-09-26. If Kalshi lists none, this lane "
+             "logs nothing, which is itself the answer. ~1.4 bets a matchweek. Judged against "
+             "backing BTTS on every match of this market."),
     "turkey_o25_dog": dict(
         label="Turkey over 2.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_o25"], baseline="population",
@@ -578,7 +603,26 @@ SOURCES = {
              "BTTS_LEAGUES until today and we never asked. If Kalshi lists no Turkish totals "
              "this lane logs nothing, which is itself the answer. ~1 bet a matchweek, so the "
              "30-bet floor is far off. Judged against backing the over on every match of this "
-             "market."),
+             "market. RE-MEASURED 2026-09-26 on the last three seasons, the window this "
+             "project now uses. The effect is LARGER and the sample smaller: 143 matches, "
+             "76.2% against a 66.6% market fair price — +7.4pp, ROI +6.76% at the average "
+             "closing price and +10.10% at the best, against the +6.9pp and +5.95% above. "
+             "Nothing is decaying; the realized rate barely moves across windows (0.710 over "
+             "thirteen seasons, 0.762 over three, 0.764 in, 0.757 held out). But z falls to "
+             "+1.87, BELOW the 2.0 the BUILD rule wants, with both sub-periods near 1.3 — at "
+             "about 48 band matches a year three seasons cannot resolve a 7pp effect. Read "
+             "the record against these numbers, not the thirteen-season ones. "
+             "THE BAND'S BEST LINE IS NOT THE ONE THIS LANE TRADES. On the same 143 matches "
+             "BTTS runs +14.7pp at z +3.51 and dog-to-score +13.4pp at z +3.23, against over "
+             "2.5 at +7.4pp — BTTS is twice the size and the only line clearing z 2. It was "
+             "not built because BTTS has no real price to verify against, which still holds; "
+             "but if a BTTS price becomes checkable, that is the better lane and this one "
+             "should be reconsidered. ALSO NEW: Turkey LEAGUE-WIDE has turned into a fade on "
+             "the current window — the underdog scores LESS than priced across the league "
+             "(dog-to-score-2+ -4.3pp at z -3.00, dog-to-score-1+ -3.3pp at z -2.23) while "
+             "inside this mismatch band it scores far more. Not a contradiction, since the "
+             "band is about 14% of matches, but it sharpens the claim: this is about heavy "
+             "mismatches specifically, not Turkish football in general."),
     "liga_btts_even": dict(
         label="La Liga BTTS in balanced matches (favourite 1.60-2.00)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_btts"], baseline="population",
@@ -3902,6 +3946,46 @@ def turkey_o25_dogs(universe=None):
     return out
 
 
+TURKEY_BTTS = "KXSUPERLIGBTTS"
+# Break-even, not fitted: at the band's measured 66.43% BTTS and Kalshi's 0.07*p*(1-p) fee
+# an ask of 0.654 returns zero. Three real Turkish mismatch boards read on 2026-09-26 asked
+# a mean 0.504 implied (BTTS at 2.03, 1.80, 2.16), so this is a wide rail, not a filter.
+TURKEY_BTTS_MAX_ASK = 0.65
+
+
+def fetch_turkey_btts_dog(sport, universe=None):
+    """Back BTTS Yes on a Turkish match the board prices as a heavy mismatch.
+
+    The SAME fixtures turkey_o25_dog takes — identical cut, identical join — on a different
+    market, so the two records answer which line of the pair is worth trading. See the
+    comment above TURKEY_TOTAL for why BTTS is the stronger line and why it was not built
+    first.
+    """
+    if sport != "soccer_btts":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    dogs = turkey_o25_dogs(uni)
+    out = []
+    for r in uni.get(sport) or []:
+        if r.get("venue") != "kalshi_binary":
+            continue
+        if not str(r.get("market_id") or "").startswith(TURKEY_BTTS):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
+            continue
+        a, b = r.get("price_a"), r.get("price_b")
+        if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > TURKEY_MAX_HOLD:
+            continue
+        p = dogs.get(_ere_code(r.get("market_id")))
+        if p is None or p >= TURKEY_O25_DOG_MAX:
+            continue
+        if float(a) > TURKEY_BTTS_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="a"))
+    return out
+
+
 def fetch_turkey_o25_dog(sport, universe=None):
     """Back over 2.5 on a Turkish match the board prices as a heavy mismatch."""
     if sport != "soccer_o25":
@@ -6292,6 +6376,7 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "turkey_btts_dog": fetch_turkey_btts_dog,
     "turkey_o25_dog": fetch_turkey_o25_dog,
     "liga_btts_even": fetch_liga_btts_even,
     "liga_u15_dog": fetch_liga_u15_dog,
