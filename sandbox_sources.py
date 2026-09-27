@@ -1678,8 +1678,10 @@ def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_S
 # its markets. The contest's own market is a two-outcome "winner" market whose best bid and
 # ask quote the FIRST outcome; buying the second outcome is selling the first, so its ask
 # is 1 - bid — the same arithmetic as .com. Settlement (/v1/markets/{slug}/settlement) is 1
-# when the first outcome won, 0 when it lost. An event whose `period` is anything but
-# not-started is in play and never quoted.
+# when the first outcome won and 0 when it lost. Exactly 0.5 is a void. Any other price
+# strictly between those is a final fair-market settlement with no winner: the quote stays
+# open and is flagged, never voided. See resolve_polymarket_us. An event whose `period`
+# is anything but not-started is in play and never quoted.
 PMUS = "https://gateway.polymarket.us"
 PMUS_SPORT = {"tennis": ("Tennis", None), "table_tennis": ("Table Tennis", None),
               "boxing": ("Boxing", None), "mma": ("MMA", None),
@@ -1791,18 +1793,93 @@ def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
     return rows[:cap] if cap else rows
 
 
+# Exactly one half is the venue's $0.50 (a draw, a no contest, or a walkover left at
+# half). Float noise around a JSON 0.5 still counts; 0.48 and 0.77 do not.
+_PMUS_HALF = 0.5
+_PMUS_HALF_EPS = 1e-9
+# Slugs this process has seen settle at an in-between price. Printed as they happen,
+# and kept so a run can show them instead of swallowing the price into a void.
+PMUS_REVIEW = []
+
+
+def polymarket_us_cancelled(payload):
+    """True when the settlement payload itself says the market was cancelled or voided.
+
+    The body is ordinarily just {slug, settlement}. A cancel/void flag is honoured
+    when one is present and true, and ignored when it is absent or false. A rules
+    blurb that merely mentions the word is not a flag.
+    """
+    if not isinstance(payload, dict):
+        return False
+    for key, val in payload.items():
+        norm = str(key).lower().replace("-", "").replace("_", "")
+        if norm in ("cancelled", "canceled", "void", "voided",
+                    "iscancelled", "iscanceled", "isvoid", "isvoided"):
+            if val is True:
+                return True
+            if isinstance(val, str) and val.strip().lower() in (
+                    "true", "yes", "1", "cancelled", "canceled", "void", "voided"):
+                return True
+        if norm in ("status", "state", "resolution", "settlementstatus", "marketstatus"):
+            if isinstance(val, str) and any(w in val.lower() for w in ("cancel", "void")):
+                return True
+    settlement = payload.get("settlement")
+    if isinstance(settlement, str) and settlement.strip().lower() in (
+            "void", "cancelled", "canceled", "cancel"):
+        return True
+    return False
+
+
+def classify_polymarket_us(payload):
+    """('a' | 'b' | 'void' | 'review' | None, value) for one settlement payload.
+
+    None means this body is not a settlement (missing, or not a number). 'review'
+    is a final price strictly between 0 and 1 that is not exactly 0.5 and not an
+    explicit cancel: not a winner, and not a void. Callers flag those and leave
+    the quote open.
+    """
+    if not isinstance(payload, dict):
+        return None, None
+    if polymarket_us_cancelled(payload):
+        return "void", None
+    try:
+        st = float(payload.get("settlement"))
+    except (TypeError, ValueError):
+        return None, None
+    if st >= 0.99:
+        return "a", st
+    if st <= 0.01:
+        return "b", st
+    if abs(st - _PMUS_HALF) <= _PMUS_HALF_EPS:
+        return "void", st
+    if 0.0 < st < 1.0:
+        return "review", st
+    return None, None
+
+
+def _flag_pmus_review(slug, value):
+    PMUS_REVIEW.append((str(slug), float(value)))
+    print(f"  ! polymarket_us {slug} settled at {value:g}: neither a winner nor a void; "
+          f"flagged for review")
+
+
 def resolve_polymarket_us(slug):
-    """'a' / 'b' / 'void' from Polymarket US's settlement, or None while unsettled."""
+    """'a' / 'b' / 'void' from Polymarket US's settlement, or None while unsettled.
+
+    Exactly 0.5, or an explicit cancel, is a refund. Any other price strictly
+    between 0 and 1 is a final fair-market settlement with no winner: None, and
+    flagged for review. A 404, a 429, or a non-numeric body is None and is not
+    flagged. outcomePrices and the last trade are never used to invent a winner.
+    """
     try:
         d = _get(f"{PMUS}/v1/markets/{urllib.parse.quote(str(slug))}/settlement", tries=1)
     except RuntimeError:
-        return None                                   # 404 until it settles
-    st = (d or {}).get("settlement") if isinstance(d, dict) else None
-    try:
-        st = float(st)
-    except (TypeError, ValueError):
+        return None                                   # 404, 429, or no body yet
+    kind, val = classify_polymarket_us(d)
+    if kind == "review":
+        _flag_pmus_review(slug, val)
         return None
-    return "a" if st >= 0.99 else "b" if st <= 0.01 else "void"
+    return kind if kind in ("a", "b", "void") else None
 
 
 def polymarket_com_probs(sport):

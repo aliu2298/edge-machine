@@ -102,6 +102,28 @@ _r = A.Report()
 A.check_stale({"quotes": [_fresh], "meta": {"updated": _G.isoformat()}}, _r, True, now=NOW)
 ok(not _r.warnings and not _r.errors, "a bet open a few hours past its start is not stale")
 
+print("\nstale: an in-between Polymarket US price is a review warning, not a pass")
+_pm = bet(9, status="open", result=None, pnl=0.0, settled=None, venue="polymarket_us",
+          market_id="aec-wta-annsis-ginfei-2026-09-26",
+          start=(NOW - timedelta(days=3)).isoformat())
+_saved_get, _saved_us = S._get, S.resolve_polymarket_us
+def _pmus_get(url, tries=3, timeout=20):
+    if str(url).endswith("/settlement"):
+        return {"slug": "aec-wta-annsis-ginfei-2026-09-26", "settlement": 0.77}
+    raise RuntimeError("404")
+# The resolver's answer is the bug this check must not trust.
+S._get, S.resolve_polymarket_us = _pmus_get, (lambda mid: "void")
+try:
+    _rp = A.Report()
+    A.check_stale({"quotes": [_pm], "meta": {"updated": _G.isoformat()}}, _rp, True, now=NOW)
+finally:
+    S._get, S.resolve_polymarket_us = _saved_get, _saved_us
+ok(not _rp.errors, "0.77 is not a missed grade")
+ok(any("flagged for review" in m and "0.77" in m for c, m in _rp.warnings if c == "stale"),
+   "0.77 is flagged for review, with the price")
+ok(not any(c == "stale" for c, _m in _rp.passed),
+   "that warning is not a silent pass of the stale check")
+
 print("\nfresh: the grader has to be running for any of this to mean anything")
 
 

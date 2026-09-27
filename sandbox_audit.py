@@ -26,9 +26,12 @@ Checks, each an ERROR (fails the run) unless marked:
   stale       a bet open two days past its start. An ERROR only if the venue went final BEFORE
               the ledger's last grading run, so the grader had its chance and missed it. A
               venue still pending is a WARNING (the venue is late); so is one that went final
-              after the last run (the next run settles it). Kalshi took 2.4 days to settle WTI
-              on 2026-09-18 and finalised it eight minutes after a grading run — a check that
-              could not tell those apart called a healthy grader broken.
+              after the last run (the next run settles it). A Polymarket US price strictly
+              between 0 and 1, other than exactly 0.5 and other than an explicit cancel, is
+              a WARNING flagged for review — this check reads the settlement itself, so a
+              resolver that voids that price cannot turn the warning into a pass. Kalshi took
+              2.4 days to settle WTI on 2026-09-18 and finalised it eight minutes after a
+              grading run — a check that could not tell those apart called a healthy grader broken.
   copy        no public file uses the phrases the public pages are kept free of.
 
 Usage:  python3 sandbox_audit.py [--no-network] [--sample N]
@@ -43,6 +46,7 @@ import random
 import re
 import subprocess
 import sys
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 
 import sandbox_build as B
@@ -441,6 +445,92 @@ def check_fresh(d, rep, now=None):
         rep.ok("fresh", f"the ledger was graded {age:.1f}h ago")
 
 
+def _pmus_kind(payload):
+    """This audit's own reading of a Polymarket US settlement payload.
+
+    Independent of resolve_polymarket_us. 'review' is a final price strictly between
+    0 and 1 that is not exactly 0.5 and not an explicit cancel. That must be a warning,
+    never a void and never a silent pass. None means the body is not a settlement.
+    """
+    if not isinstance(payload, dict):
+        return None, None
+    for key, val in payload.items():
+        norm = str(key).lower().replace("-", "").replace("_", "")
+        if norm in ("cancelled", "canceled", "void", "voided",
+                    "iscancelled", "iscanceled", "isvoid", "isvoided"):
+            if val is True or (isinstance(val, str) and val.strip().lower() in (
+                    "true", "yes", "1", "cancelled", "canceled", "void", "voided")):
+                return "void", None
+        if norm in ("status", "state", "resolution", "settlementstatus", "marketstatus"):
+            if isinstance(val, str) and any(w in val.lower() for w in ("cancel", "void")):
+                return "void", None
+    settlement = payload.get("settlement")
+    if isinstance(settlement, str) and settlement.strip().lower() in (
+            "void", "cancelled", "canceled", "cancel"):
+        return "void", None
+    try:
+        st = float(settlement)
+    except (TypeError, ValueError):
+        return None, None
+    if st >= 0.99:
+        return "a", st
+    if st <= 0.01:
+        return "b", st
+    if abs(st - 0.5) <= 1e-9:
+        return "void", st
+    if 0.0 < st < 1.0:
+        return "review", st
+    return None, None
+
+
+def _ask_pmus(slug):
+    """(kind, value) from the gateway, or (None, None) when it does not answer."""
+    if not slug:
+        return None, None
+    url = f"{S.PMUS}/v1/markets/{urllib.parse.quote(str(slug))}/settlement"
+    try:
+        body = S._get(url, tries=1, timeout=20)
+    except Exception:
+        return None, None
+    return _pmus_kind(body)
+
+
+def _review_text(market_id, value):
+    return (f"Polymarket US {market_id} settled at {value:g}, neither a winner nor a void; "
+            f"flagged for review")
+
+
+def _combo_review_text(q):
+    """The first Polymarket US leg that settled in between, or None.
+
+    Reads each leg's settlement itself. Does not ask resolve_combo, which would
+    hide the price behind the resolver's None.
+    """
+    for leg in q.get("legs") or []:
+        if leg.get("venue") != "polymarket_us":
+            continue
+        kind, val = _ask_pmus(leg.get("market_id"))
+        if kind == "review":
+            return _review_text(leg.get("market_id"), val)
+    return None
+
+
+def _stale_answer(q, network):
+    """(result, review_message). A review message means flag and stop."""
+    if not network:
+        return None, None
+    if q.get("venue") == "polymarket_us":
+        kind, val = _ask_pmus(q.get("market_id"))
+        if kind == "review":
+            return None, _review_text(q.get("market_id"), val)
+        return kind if kind in ("a", "b", "void") else None, None
+    if q.get("venue") == "combo":
+        text = _combo_review_text(q)
+        if text:
+            return None, text
+    return _resolve(q), None
+
+
 def check_stale(d, rep, network, now=None):
     now = now or datetime.now(timezone.utc)
     graded = _dt((d.get("meta") or {}).get("updated"))
@@ -451,7 +541,10 @@ def check_stale(d, rep, network, now=None):
         return
     for q in stale:
         age = (now - _dt(q["start"])).total_seconds() / 3600
-        r = _resolve(q) if network else None
+        r, review = _stale_answer(q, network)
+        if review:
+            rep.warn("stale", f"{q['id']}: {review}")
+            continue
         if r is None:
             rep.warn("stale", f"{q['id']}: open {age:.0f}h past the start; the venue has no final "
                               f"result yet{'' if network else ' (not asked: --no-network)'}")

@@ -2099,6 +2099,11 @@ _us_payload = {
         {"slug": "ev4", "period": "NS", "closed": True, "markets": [_usm("m4", "I J", "K L", 0.5, 0.51)]}]},
     "/v1/markets/m1/settlement": {"slug": "m1", "settlement": 1},
     "/v1/markets/m5/settlement": {"slug": "m5", "settlement": 0},
+    "/v1/markets/m50/settlement": {"slug": "m50", "settlement": 0.5},
+    "/v1/markets/m77/settlement": {"slug": "m77", "settlement": 0.77},
+    "/v1/markets/m48/settlement": {"slug": "m48", "settlement": 0.48},
+    "/v1/markets/mc/settlement": {"slug": "mc", "settlement": 0.4, "cancelled": True},
+    "/v1/markets/mbad/settlement": {"slug": "mbad", "settlement": "pending"},
     "/v1/markets/m1/bbo": {"marketData": {"bestBid": {"value": "0.63"}, "bestAsk": {"value": "0.65"}}},
 }
 _saved_get_us, _saved_leagues = S._get, S._pmus_leagues
@@ -2119,10 +2124,48 @@ try:
     eq(_by["m1"]["url"], "https://polymarket.us/event/ev1", "linked to the Polymarket US event")
     eq((S.resolve_polymarket_us("m1"), S.resolve_polymarket_us("m5"), S.resolve_polymarket_us("m9")),
        ("a", "b", None), "settlement 1 = first outcome won, 0 = lost, 404 = not yet")
+    S.PMUS_REVIEW.clear()
+    eq(S.resolve_polymarket_us("m50"), "void", "settlement exactly 0.5 is a void")
+    eq(S.resolve_polymarket_us("m77"), None,
+       "settlement 0.77 stays unresolved — not a void")
+    ok(len(S.PMUS_REVIEW) == 1 and S.PMUS_REVIEW[0][0] == "m77"
+       and abs(S.PMUS_REVIEW[0][1] - 0.77) < 1e-9,
+       "settlement 0.77 is flagged for review with the slug and the value")
+    eq(S.resolve_polymarket_us("m48"), None, "0.48 is not exactly 0.5, so it is not a void")
+    eq(S.resolve_polymarket_us("mc"), "void", "an explicit cancel is a void")
+    eq(S.resolve_polymarket_us("mbad"), None, "a non-numeric settlement is unsettled, not a void")
+    ok(all(slug != "mbad" for slug, _v in S.PMUS_REVIEW), "a non-numeric body is not flagged")
     eq(S.venue_price(dict(venue="polymarket_us", market_id="m1", pick="b")), 0.37,
        "the closing price for side B is 1 - bid on the US book")
 finally:
     S._get, S._pmus_leagues = _saved_get_us, _saved_leagues
+
+# An open bet whose market pays 0.77 must stay open. On main this settles void.
+_saved_get_77 = S._get
+def _get_77(url, tries=3, timeout=20):
+    if "aec-clean" in str(url):
+        return {"slug": "aec-clean", "settlement": 1}
+    if str(url).endswith("/settlement"):
+        return {"slug": "aec-wta-annsis-ginfei-2026-09-26", "settlement": 0.77}
+    raise RuntimeError("404")
+S._get = _get_77
+S.PMUS_REVIEW.clear()
+try:
+    _q77 = quote(id="tennis_fav_band:ann", source="tennis_fav_band", sport="tennis",
+                 venue="polymarket_us", market_id="aec-wta-annsis-ginfei-2026-09-26",
+                 pick="a", price=0.78, price_a=0.78, price_b=0.24, stake=100.0)
+    T.grade({"quotes": [_q77], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
+    eq((_q77["status"], _q77["result"], _q77["pnl"], _q77["settled"]),
+       ("open", None, 0.0, None),
+       "an open Polymarket US bet at settlement 0.77 stays open with no P/L")
+    ok(S.PMUS_REVIEW and S.PMUS_REVIEW[-1][0] == "aec-wta-annsis-ginfei-2026-09-26",
+       "and grade()'s settlement read flags that slug for review")
+    eq(S.resolve_combo([
+        dict(market_id="aec-clean", pick="a", venue="polymarket_us"),
+        dict(market_id="aec-wta-annsis-ginfei-2026-09-26", pick="a", venue="polymarket_us"),
+    ]), None, "a Polymarket US leg at 0.77 keeps the basket unsettled, never void")
+finally:
+    S._get = _saved_get_77
 # The long side is whatever marketSides flags, not outcomes[0] — the live Dolphins/49ers
 # market lists outcomes ["49ers", "Dolphins"] with the Dolphins' 0.10 book.
 _swapped = {"outcomes": '["49ers","Dolphins"]', "marketSides": [
@@ -5764,6 +5807,72 @@ ok(all("2026" in S.SOURCES[_n]["note"]
    "BOTH notes state that the in-progress 2026 season sits inside the measurement window")
 ok("DRAW IS DEAD" in S.SOURCES["mls_fade_home"]["note"],
    "and record that the MLS draw question is closed, so no one re-opens it")
+
+print("\nre-check: resolver voids only, and a second run changes nothing")
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location(
+    "recheck_pmus_voids",
+    _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "scripts", "recheck_pmus_voids.py"))
+_R = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_R)
+
+
+def _void_row(mid, **kw):
+    q = dict(id=f"src:{mid}", source="tennis_fav_band", sport="tennis", market_id=mid,
+             venue="polymarket_us", status="void", result="void", bet=True, pick="a",
+             price=0.40, price_a=0.40, price_b=0.62, stake=100.0, pnl=0.0,
+             settled="2026-09-20T00:00:00+00:00")
+    q.update(kw)
+    return q
+
+
+_stamp = "2026-09-27T12:00:00+00:00"
+_half = _void_row("m50")
+_mid = _void_row("m77", id="tennis_fav_band:m77", price=0.78, price_a=0.78, price_b=0.24)
+_win = _void_row("m1")
+_noted = _void_row("mnoted", id="dup:mnoted", note=T.DUPLICATE_NOTE)
+_same = _void_row("m77", id="dup:m77", note=T.DUPLICATE_NOTE)
+_unknown = _void_row("m429")
+_other = dict(id="won:ciz", source="tennis_fav_band", sport="tennis", market_id="ciz",
+              venue="polymarket_us", status="won", result="b", bet=True, pick="b",
+              price=0.77, stake=100.0, pnl=29.87, settled="2026-09-26T13:00:00+00:00")
+_basket = dict(id="pm_combo2:pmcombo2:day:x", source="pm_combo2", sport="tennis_pmcombo",
+               venue="combo", market_id="pmcombo2:day:x", status="void", result="void",
+               bet=True, pick="a", price=0.62, stake=100.0, pnl=0.0,
+               settled="2026-09-26T13:05:59+00:00",
+               legs=[dict(market_id="ciz", pick="b", venue="polymarket_us"),
+                     dict(market_id="m77", pick="a", venue="polymarket_us")])
+_rows = [_half, _mid, _win, _noted, _same, _unknown, _other, _basket]
+_fetched = {"m50": ("void", 0.5), "m77": ("review", 0.77), "m1": ("a", 1.0),
+            "mnoted": ("review", 0.66), "m429": ("unknown", None), "ciz": ("b", 0.0)}
+_changed = _R.recheck(_rows, _fetched, _stamp)
+_by = {c["id"]: c for c in _changed}
+eq((_by["tennis_fav_band:m77"]["old_status"], _by["tennis_fav_band:m77"]["new_status"],
+    _by["tennis_fav_band:m77"]["old_pnl"], _by["tennis_fav_band:m77"]["new_pnl"]),
+   ("void", "open", 0.0, 0.0), "the change record keeps the old void, not the rewritten row")
+eq((_by["src:m1"]["old_status"], _by["src:m1"]["new_status"], _by["src:m1"]["new_pnl"]),
+   ("void", "won", 150.0), "a re-settled win records the old void and the new P/L")
+close(_R.paper_pnl(_changed), 150.0, "paper P/L is the newly settled stake, not the voids")
+eq(_mid["status"], "open", "a 0.77 void reopens")
+eq((_mid["result"], _mid["pnl"], _mid["settled"]), (None, 0.0, None),
+   "and its result, P/L and settle time are cleared")
+eq((_half["status"], _half["result"], _half["pnl"], _half["settled"]),
+   ("void", "void", 0.0, "2026-09-20T00:00:00+00:00"), "a 0.5 void stays a void")
+eq((_win["status"], _win["result"], _win["settled"]), ("won", "a", _stamp),
+   "a clean 1 re-settles the pick as won")
+close(_win["pnl"], 150.0, "and pays stake * (1/price - 1), $100 at 0.40")
+eq((_noted["status"], _noted["result"], _noted["note"]), ("void", "void", T.DUPLICATE_NOTE),
+   "a noted duplicate void is untouched")
+eq(_same["status"], "void", "a noted void on the same market as a 0.77 stays void")
+eq((_unknown["status"], _unknown["result"]), ("void", "void"),
+   "a market that could not be re-checked is left void")
+eq((_basket["status"], _basket["result"], _basket["pnl"], _basket["settled"]),
+   ("open", None, 0.0, None), "a basket with a 0.77 leg reopens with the leg")
+eq((_other["status"], _other["pnl"]), ("won", 29.87), "a leg that was not a resolver void is not rewritten")
+_again = _R.recheck(_rows, _fetched, _stamp)
+eq(_again, [], "re-running changes nothing")
+eq(_mid["status"], "open", "and the reopened row stays open")
+eq(_win["pnl"], 150.0, "and the re-settled P/L is not applied twice")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
