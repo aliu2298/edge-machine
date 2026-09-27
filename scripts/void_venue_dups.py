@@ -15,7 +15,8 @@ or series, and a table-tennis rematch, are not the same contest.
 Dry-run is the default and writes nothing. --apply writes data/sandbox_ledger.json through
 the atomic writer. A row that lives only in data/sandbox_archive/ is voided there too, and
 the retired rollup is reduced by what that row had contributed. A second --apply finds
-nothing left to void and does not write.
+nothing left to void and does not write. If the post-check says the voids touched anything
+else, --apply exits without writing.
 
 Usage:
   python3 scripts/void_venue_dups.py
@@ -221,6 +222,12 @@ def run(apply=False, load=None, path=None):
     after = totals(d)
     confirm = confirm_untouched(snap, d, {c["voided_id"] for c in changes})
     print(format_report(changes, before, after, confirm))
+    if confirm.startswith("NOT CONFIRMED"):
+        # The voids in memory are discarded with the process. The file stays as it was.
+        print("  NOT CONFIRMED; ledger not written")
+        if apply:
+            raise SystemExit(1)
+        return changes
     if apply and changes:
         write_ledger(d, path)
         print(f"  wrote {len(changes)} void(s)")

@@ -6002,6 +6002,43 @@ _s_kalshi = dict(sport="mlb", venue="kalshi", market_id="KXMLBGAME-26SEP22TBNYY"
                  start="2026-09-23T07:10:00+00:00", date="2026-09-22")
 ok(not T._same_contest_quote(_s_next, _s_kalshi),
    "the next game of a series is not the same contest, Kalshi placeholder included")
+# Cricket is not in the baseball/table-tennis replay set, so the 12h Kalshi window applies.
+# A placeholder start is 4.5 to 8.5 hours off. Two T20s between Australia and England on
+# the same date, a morning match and a night match 14 hours later, are a second contest:
+# that gap is wider than any placeholder slip, even though the names and the date agree
+# and one row is a Kalshi ticker.
+_cric_m1 = dict(sport="cricket", venue="kalshi", source="cricket_consensus",
+                market_id="KXCRICKETT20MATCH-26SEP20AUSENG",
+                side_a="Australia", side_b="England",
+                start="2026-09-20T06:00:00+00:00", date="2026-09-20")
+_cric_m2 = dict(sport="cricket", venue="polymarket_us", source="cricket_consensus",
+                market_id="aec-cric-aus-eng-2026-09-20-2",
+                side_a="Australia", side_b="England",
+                start="2026-09-20T20:00:00+00:00", date="2026-09-20")
+ok(S.pair_match("Australia", "England", "Australia", "England", sport="cricket")[0] > 0,
+   "the two cricket rows do name the same two sides")
+_cric_slip = dict(_cric_m2, market_id="aec-cric-aus-eng-2026-09-20",
+                  start="2026-09-20T14:00:00+00:00")
+ok(T._same_contest_quote(_cric_m1, _cric_slip),
+   "the same T20 with a Kalshi start 8h off is still one contest")
+ok(not T._same_contest_quote(_cric_m1, _cric_m2),
+   "a same-day cricket rematch 14h apart is not one contest under the 12h Kalshi window")
+_cric_bets = [
+    dict(_cric_m1, id="cricket_consensus:KXCRICKETT20MATCH-26SEP20AUSENG", bet=True,
+         status="lost", pnl=-100.0, logged="2026-09-20T01:00:00+00:00"),
+    dict(_cric_m2, id="cricket_consensus:aec-cric-aus-eng-2026-09-20-2", bet=True,
+         status="lost", pnl=-100.0, logged="2026-09-20T12:00:00+00:00"),
+]
+eq(T.settled_cross_venue_dups(_cric_bets), [],
+   "the night T20 is not voided as a duplicate of the morning one")
+_cric_open = {"quotes": [
+    dict(_cric_m1, id="cricket_consensus:KXCRICKETT20MATCH-26SEP20AUSENG", status="open",
+         bet=True, logged="2026-09-20T01:00:00+00:00"),
+    dict(_cric_m2, id="cricket_consensus:aec-cric-aus-eng-2026-09-20-2", status="open",
+         bet=True, logged="2026-09-20T12:00:00+00:00"),
+]}
+eq(T.retire_venue_duplicates(_cric_open, verbose=False), 0,
+   "retiring duplicates leaves both cricket matches open")
 _open_kx = dict(_kx, id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", status="open", bet=True,
                 logged="2026-09-22T00:41:36+00:00", pick="b", price=0.87, pnl=0.0)
 _open_pm = dict(_pm, id="mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26", status="open", bet=True,
@@ -6118,6 +6155,38 @@ _loaded = json.load(open(_ledger))
 eq(_loaded["meta"]["runs"], 3, "applying the voids is not a tracker run")
 _voided_row = next(q for q in _loaded["quotes"] if q["id"] == _later_b["id"])
 eq(_voided_row["settled"], _settled_at, "the written row keeps the original settled time")
+
+print("\n--apply aborts without writing when confirm_untouched is NOT CONFIRMED")
+_bad_path = _os.path.join(_tmp, "ledger-not-confirmed.json")
+_bad_src = {"quotes": [dict(_kept_b), dict(_later_b, status="won", pnl=14.94, note=None)],
+            "meta": {"runs": 3}, "retired": {}}
+json.dump(_bad_src, open(_bad_path, "w"))
+_bad_before = open(_bad_path, "rb").read()
+_real_apply = _V.apply_voids
+
+
+def _apply_and_touch_kept(d):
+    """Void the later copy, then move the kept row's P/L so the check must refuse."""
+    changes = _real_apply(d)
+    for q in d["quotes"]:
+        if q.get("id") == _kept_b["id"]:
+            q["pnl"] = 999.0
+    return changes
+
+
+_V.apply_voids = _apply_and_touch_kept
+_abort = None
+try:
+    try:
+        _V.run(apply=True, load=lambda: json.load(open(_bad_path)), path=_bad_path)
+    except SystemExit as _exc:
+        _abort = _exc
+finally:
+    _V.apply_voids = _real_apply
+ok(_abort is not None and _abort.code not in (0, None),
+   "--apply exits non-zero when confirm_untouched reports NOT CONFIRMED")
+ok(open(_bad_path, "rb").read() == _bad_before,
+   "--apply does not write the ledger when confirm_untouched reports NOT CONFIRMED")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
