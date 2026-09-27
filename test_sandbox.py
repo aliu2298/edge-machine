@@ -5958,6 +5958,236 @@ eq(_again, [], "re-running under the price rule changes nothing")
 eq(_half["pnl"], round(100.0 * (0.5 / 0.40 - 1.0), 2), "and a 0.5 payout is not applied twice")
 eq(_win["pnl"], 150.0, "and the re-settled P/L is not applied twice")
 
+print("\nKalshi placeholder starts: same fight matches, a doubleheader does not")
+_kx = dict(sport="mma", venue="kalshi", market_id="KXUFCFIGHT-26SEP26DEMJAU", source="mma_fav_band",
+           side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+           start="2026-09-26T23:00:00+00:00", date="2026-09-26")
+_pm = dict(sport="mma", venue="polymarket_us", market_id="aec-ufc-vandem-yazjau-2026-09-26",
+           source="mma_fav_band", side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+           start="2026-09-26T18:30:00+00:00", date="2026-09-26")
+ok(T._same_contest_quote(_kx, _pm),
+   "a UFC fight whose Kalshi start is 4.5h off the real start is one contest")
+_hi_k = dict(_kx, market_id="KXUFCFIGHT-26SEP26HIENAK", side_a="Brady Hiestand",
+             side_b="Rinya Nakamura", start="2026-09-27T03:00:00+00:00")
+_hi_p = dict(_pm, market_id="aec-ufc-brahie-rinnak-2026-09-26", side_a="Brady Hiestand",
+             side_b="Rinya Nakamura", start="2026-09-26T18:30:00+00:00")
+ok(T._same_contest_quote(_hi_k, _hi_p),
+   "an 8.5h Kalshi placeholder on the same fight is still one contest")
+ok(S.pair_match("Mai Hontama", "Eunhye Lee (b. 2000)", "Mai Hontama", "Eun-Hye Lee",
+               sport="tennis")[0] > 0,
+   "Eunhye Lee (b. 2000) and Eun-Hye Lee are the same player")
+_hon_k = dict(sport="tennis", venue="kalshi", source="tennis_fav_band",
+              market_id="KXWTAMATCH-26SEP18HONLEE",
+              side_a="Mai Hontama", side_b="Eunhye Lee (b. 2000)",
+              start="2026-09-19T03:10:00+00:00", date="2026-09-18")
+_hon_p = dict(sport="tennis", venue="polymarket_us", source="tennis_fav_band",
+              market_id="aec-wta-maihon-eunlee-2026-09-18",
+              side_a="Mai Hontama", side_b="Eun-Hye Lee",
+              start="2026-09-19T03:30:00+00:00", date="2026-09-19")
+ok(T._same_contest_quote(_hon_k, _hon_p),
+   "Hontama v Lee is one contest across the bracketed and hyphenated spellings")
+_g1 = dict(sport="mlb", venue="polymarket_us", market_id="aec-mlb-tb-nyy-2026-09-22-dh1",
+           side_a="Tampa Bay Rays", side_b="New York Yankees",
+           start="2026-09-22T17:05:00+00:00", date="2026-09-22")
+_g2 = dict(_g1, market_id="aec-mlb-tb-nyy-2026-09-22-dh2", start="2026-09-22T23:05:00+00:00")
+ok(not T._same_contest_quote(_g1, _g2), "a doubleheader's two games, 6h apart, are not one contest")
+_g2_close = dict(_g2, start="2026-09-22T18:00:00+00:00")
+ok(not T._same_contest_quote(_g1, _g2_close),
+   "dh1 and dh2 stay two games even when their starts are pulled within an hour")
+_s_next = dict(sport="mlb", venue="polymarket_us", market_id="aec-mlb-tb-nyy-2026-09-23",
+               side_a="Tampa Bay Rays", side_b="New York Yankees",
+               start="2026-09-23T23:10:00+00:00", date="2026-09-23")
+_s_kalshi = dict(sport="mlb", venue="kalshi", market_id="KXMLBGAME-26SEP22TBNYY",
+                 side_a="Tampa Bay Rays", side_b="New York Yankees",
+                 start="2026-09-23T07:10:00+00:00", date="2026-09-22")
+ok(not T._same_contest_quote(_s_next, _s_kalshi),
+   "the next game of a series is not the same contest, Kalshi placeholder included")
+# Cricket is not in the baseball/table-tennis replay set, so the 12h Kalshi window applies.
+# A placeholder start is 4.5 to 8.5 hours off. Two T20s between Australia and England on
+# the same date, a morning match and a night match 14 hours later, are a second contest:
+# that gap is wider than any placeholder slip, even though the names and the date agree
+# and one row is a Kalshi ticker.
+_cric_m1 = dict(sport="cricket", venue="kalshi", source="cricket_consensus",
+                market_id="KXCRICKETT20MATCH-26SEP20AUSENG",
+                side_a="Australia", side_b="England",
+                start="2026-09-20T06:00:00+00:00", date="2026-09-20")
+_cric_m2 = dict(sport="cricket", venue="polymarket_us", source="cricket_consensus",
+                market_id="aec-cric-aus-eng-2026-09-20-2",
+                side_a="Australia", side_b="England",
+                start="2026-09-20T20:00:00+00:00", date="2026-09-20")
+ok(S.pair_match("Australia", "England", "Australia", "England", sport="cricket")[0] > 0,
+   "the two cricket rows do name the same two sides")
+_cric_slip = dict(_cric_m2, market_id="aec-cric-aus-eng-2026-09-20",
+                  start="2026-09-20T14:00:00+00:00")
+ok(T._same_contest_quote(_cric_m1, _cric_slip),
+   "the same T20 with a Kalshi start 8h off is still one contest")
+ok(not T._same_contest_quote(_cric_m1, _cric_m2),
+   "a same-day cricket rematch 14h apart is not one contest under the 12h Kalshi window")
+_cric_bets = [
+    dict(_cric_m1, id="cricket_consensus:KXCRICKETT20MATCH-26SEP20AUSENG", bet=True,
+         status="lost", pnl=-100.0, logged="2026-09-20T01:00:00+00:00"),
+    dict(_cric_m2, id="cricket_consensus:aec-cric-aus-eng-2026-09-20-2", bet=True,
+         status="lost", pnl=-100.0, logged="2026-09-20T12:00:00+00:00"),
+]
+eq(T.settled_cross_venue_dups(_cric_bets), [],
+   "the night T20 is not voided as a duplicate of the morning one")
+_cric_open = {"quotes": [
+    dict(_cric_m1, id="cricket_consensus:KXCRICKETT20MATCH-26SEP20AUSENG", status="open",
+         bet=True, logged="2026-09-20T01:00:00+00:00"),
+    dict(_cric_m2, id="cricket_consensus:aec-cric-aus-eng-2026-09-20-2", status="open",
+         bet=True, logged="2026-09-20T12:00:00+00:00"),
+]}
+eq(T.retire_venue_duplicates(_cric_open, verbose=False), 0,
+   "retiring duplicates leaves both cricket matches open")
+_open_kx = dict(_kx, id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", status="open", bet=True,
+                logged="2026-09-22T00:41:36+00:00", pick="b", price=0.87, pnl=0.0)
+_open_pm = dict(_pm, id="mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26", status="open", bet=True,
+                logged="2026-09-22T21:47:04+00:00", pick="b", price=0.87, pnl=0.0)
+_odh = {"quotes": [dict(_open_kx), dict(_open_pm)]}
+eq(T.retire_venue_duplicates(_odh, verbose=False), 1, "the later copy of the placeholder fight is voided")
+eq(_odh["quotes"][0]["status"], "open", "the earlier quote stands")
+eq((_odh["quotes"][1]["status"], _odh["quotes"][1]["note"]),
+   ("void", T.DUPLICATE_NOTE), "the re-quote on the other venue is the duplicate")
+_dh_open = {"quotes": [
+    dict(id="espn_fpi:dh1", source="espn_fpi", sport="mlb", status="open", bet=True,
+         market_id="aec-mlb-tb-nyy-2026-09-22-dh1", venue="polymarket_us",
+         side_a="Tampa Bay Rays", side_b="New York Yankees",
+         start="2026-09-22T17:05:00+00:00", date="2026-09-22",
+         logged="2026-09-22T12:00:00+00:00"),
+    dict(id="espn_fpi:dh2", source="espn_fpi", sport="mlb", status="open", bet=True,
+         market_id="aec-mlb-tb-nyy-2026-09-22-dh2", venue="kalshi",
+         side_a="Tampa Bay Rays", side_b="New York Yankees",
+         start="2026-09-22T23:05:00+00:00", date="2026-09-22",
+         logged="2026-09-22T13:00:00+00:00")]}
+eq(T.retire_venue_duplicates(_dh_open, verbose=False), 0, "a doubleheader is not retired as a duplicate")
+eq([q["status"] for q in _dh_open["quotes"]], ["open", "open"], "both games of the doubleheader stay open")
+
+_soon = datetime.now(timezone.utc) + timedelta(hours=5)
+_pub_row = dict(market_id="aec-ufc-vandem-yazjau-2026-09-26", venue="polymarket_us", sport="mma",
+                label="Vanessa Demopoulos vs Yazmin Jauregui",
+                side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+                price_a=0.80, price_b=0.22, mid_a=0.79, untraded=False,
+                start=_soon.isoformat(), date=_soon.date().isoformat(), volume=0.0, url="")
+_pub_prev = dict(id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", source="mma_fav_band", sport="mma",
+                 market_id="KXUFCFIGHT-26SEP26DEMJAU", venue="kalshi", status="open", bet=True,
+                 side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+                 start=(_soon + timedelta(hours=6)).isoformat(), date=_soon.date().isoformat(),
+                 logged="2026-09-22T00:41:36+00:00")
+_saved_ch_dup = S.CHALLENGERS
+S.CHALLENGERS = {"mma_fav_band": lambda sp: [dict(a="Vanessa Demopoulos", b="Yazmin Jauregui",
+                                                  prob_a=0.95, date=_soon.date().isoformat())]}
+try:
+    _dpub2 = {"quotes": [_pub_prev], "meta": {}, "coverage": {}}
+    T.publish(_dpub2, {"mma": [_pub_row]}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = _saved_ch_dup
+eq([q["id"] for q in _dpub2["quotes"] if q["source"] == "mma_fav_band"],
+   ["mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU"],
+   "publish will not log the Polymarket US copy of a fight already bet on Kalshi")
+
+print("\nvoid the later venue copy, once, and leave price rows and settled times alone")
+import importlib.util as _ilu2
+import tempfile as _tf
+_vspec = _ilu2.spec_from_file_location(
+    "void_venue_dups",
+    _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "scripts", "void_venue_dups.py"))
+_V = _ilu2.module_from_spec(_vspec)
+_vspec.loader.exec_module(_V)
+_settled_at = "2026-09-26T21:29:23+00:00"
+_kept_b = dict(id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", source="mma_fav_band", sport="mma",
+               venue="kalshi", market_id="KXUFCFIGHT-26SEP26DEMJAU", bet=True, status="won",
+               result="b", pnl=14.94, price=0.87, price_a=0.15, price_b=0.87, pick="b",
+               stake=100.0, side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+               start="2026-09-26T23:00:00+00:00", date="2026-09-26",
+               logged="2026-09-22T00:41:36+00:00", settled="2026-09-27T01:27:39+00:00")
+_later_b = dict(_kept_b, id="mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26",
+                market_id="aec-ufc-vandem-yazjau-2026-09-26", venue="polymarket_us",
+                start="2026-09-26T18:30:00+00:00", logged="2026-09-22T21:47:04+00:00",
+                settled=_settled_at, pnl=14.94)
+_price_b = dict(_later_b, id="mma_fav_band:aec-ufc-price-2026-09-26",
+                market_id="aec-ufc-price-2026-09-26", status="settled", result="price",
+                settle_px=0.77, pnl=round(100.0 * (0.77 / 0.87 - 1.0), 2),
+                logged="2026-09-22T22:10:00+00:00", settled="2026-09-26T21:00:00+00:00")
+_other_b = dict(_kept_b, id="mma_fav_band:KXUFCFIGHT-26SEP26OTHER",
+                market_id="KXUFCFIGHT-26SEP26OTHER", side_a="Other One", side_b="Other Two",
+                pnl=-100.0, status="lost", result="a", logged="2026-09-22T00:41:36+00:00")
+_price_before = {k: _price_b.get(k) for k in ("status", "result", "pnl", "settle_px", "settled", "note")}
+_kept_before = {k: _kept_b.get(k) for k in ("status", "pnl", "result", "settled", "note")}
+_vd = {"quotes": [_kept_b, _later_b, _price_b, _other_b], "meta": {}, "retired": {}}
+_vc = _V.apply_voids(_vd)
+eq(len(_vc), 1, "one later copy is voided")
+eq((_later_b["status"], _later_b["pnl"], _later_b["note"], _later_b["settled"], _later_b["result"]),
+   ("void", 0.0, "dup of mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", _settled_at, "b"),
+   "the later copy is void, P/L 0, noted, and keeps its settled time and result")
+eq(_kept_before, {k: _kept_b.get(k) for k in _kept_before}, "the earlier bet is untouched")
+eq(_price_before, {k: _price_b.get(k) for k in _price_before},
+   "a price settlement on the same fight is not regraded")
+eq((_other_b["status"], _other_b["pnl"]), ("lost", -100.0), "a different fight is untouched")
+eq(_V.apply_voids(_vd), [], "a second apply voids nothing")
+eq(_later_b["settled"], _settled_at, "the second apply does not restamp the settled time")
+_arch_later = dict(_later_b, id="scores24:4510599", source="scores24", sport="tennis",
+                   market_id="4510599", venue="polymarket", status="won", result="b", pnl=72.41,
+                   prob_a=0.4, side_a="Sara Sorribes Tormo", side_b="Caroline Dolehide",
+                   start="2026-09-13T16:00:00+00:00", date="2026-09-13",
+                   logged="2026-09-13T05:47:59+00:00", settled="2026-09-13T21:16:54+00:00",
+                   note=None)
+_arch_kept = dict(_arch_later, id="scores24:KXWTAMATCH-26SEP13SORDOL",
+                  market_id="KXWTAMATCH-26SEP13SORDOL", venue="kalshi",
+                  logged="2026-09-13T05:23:07+00:00")
+_ad = {"quotes": [_arch_kept], "meta": {},
+       "_archive": [_arch_later],
+       "retired": {"scores24": dict(quotes=1, bets=1, settled=1, won=1, staked=100.0,
+                                    pnl=72.41, brier_sum=0.16, brier_n=1)}}
+eq(len(_V.apply_voids(_ad)), 1, "an archived later copy is voided too")
+eq(_arch_later["status"], "void", "the archive row is void")
+eq(_ad["retired"]["scores24"]["pnl"], 0.0, "the retired rollup drops the voided P/L")
+eq(_ad["retired"]["scores24"]["settled"], 0, "and drops it from the settled count")
+eq(_ad["retired"]["scores24"]["brier_n"], 0, "and drops its Brier term")
+_tmp = _tf.mkdtemp()
+_ledger = _os.path.join(_tmp, "ledger.json")
+_fresh = {"quotes": [dict(_kept_b), dict(_later_b, status="won", pnl=14.94, note=None)],
+          "meta": {"runs": 3}, "retired": {}}
+_V.run(apply=True, load=lambda: _fresh, path=_ledger)
+_once = open(_ledger).read()
+_V.run(apply=True, load=lambda: json.load(open(_ledger)), path=_ledger)
+eq(open(_ledger).read(), _once, "a second --apply does not rewrite the ledger")
+_loaded = json.load(open(_ledger))
+eq(_loaded["meta"]["runs"], 3, "applying the voids is not a tracker run")
+_voided_row = next(q for q in _loaded["quotes"] if q["id"] == _later_b["id"])
+eq(_voided_row["settled"], _settled_at, "the written row keeps the original settled time")
+
+print("\n--apply aborts without writing when confirm_untouched is NOT CONFIRMED")
+_bad_path = _os.path.join(_tmp, "ledger-not-confirmed.json")
+_bad_src = {"quotes": [dict(_kept_b), dict(_later_b, status="won", pnl=14.94, note=None)],
+            "meta": {"runs": 3}, "retired": {}}
+json.dump(_bad_src, open(_bad_path, "w"))
+_bad_before = open(_bad_path, "rb").read()
+_real_apply = _V.apply_voids
+
+
+def _apply_and_touch_kept(d):
+    """Void the later copy, then move the kept row's P/L so the check must refuse."""
+    changes = _real_apply(d)
+    for q in d["quotes"]:
+        if q.get("id") == _kept_b["id"]:
+            q["pnl"] = 999.0
+    return changes
+
+
+_V.apply_voids = _apply_and_touch_kept
+_abort = None
+try:
+    try:
+        _V.run(apply=True, load=lambda: json.load(open(_bad_path)), path=_bad_path)
+    except SystemExit as _exc:
+        _abort = _exc
+finally:
+    _V.apply_voids = _real_apply
+ok(_abort is not None and _abort.code not in (0, None),
+   "--apply exits non-zero when confirm_untouched reports NOT CONFIRMED")
+ok(open(_bad_path, "rb").read() == _bad_before,
+   "--apply does not write the ledger when confirm_untouched reports NOT CONFIRMED")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

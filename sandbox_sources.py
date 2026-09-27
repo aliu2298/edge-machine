@@ -1200,6 +1200,17 @@ def _fold(name):
     return s.encode("ascii", "ignore").decode("ascii").lower()
 
 
+_BRACKETED = re.compile(r"\([^)]*\)|\[[^\]]*\]")
+
+
+def _name_text(name):
+    """Fold a name and drop asides that are not part of it.
+
+    "(b. 2000)" is a birth year Kalshi appends, not a different player.
+    """
+    return _BRACKETED.sub(" ", _fold(name))
+
+
 @functools.lru_cache(maxsize=50000)
 def tokens(name):
     """Lowercase alphanumeric tokens of a team or player name, minus filler.
@@ -1207,9 +1218,19 @@ def tokens(name):
     Cached, and frozen so a cached result can never be mutated by a caller. Matching is
     every quote against every fixture, and with soccer on Kalshi that is several
     hundred fixtures a run — recomputing each name thousands of times was the slow part.
+
+    A hyphen, and the space it would otherwise become, is spelling, not a word break:
+    "Eun-Hye" and "Eunhye" share a token. The split tokens stay too, so "Saint-Etienne"
+    still matches "Saint Etienne" and "Yankees" still matches "New York Yankees".
+    Bracketed asides are already gone, so "(b. 2000)" cannot keep two spellings apart.
     """
-    t = re.sub(r"[^a-z0-9 ]", " ", _fold(name))
-    return frozenset(w for w in t.split() if w and w not in STOP and len(w) > 1)
+    text = _name_text(name)
+    split = re.sub(r"[^a-z0-9 ]", " ", text)
+    # Delete hyphens instead of turning them into spaces, so "Eun-Hye" is "eunhye"
+    # and not "eun" + "hye". Spaces that separate given name from surname stay.
+    joined = re.sub(r"[^a-z0-9 ]", " ", text.replace("-", ""))
+    words = set(split.split()) | set(joined.split())
+    return frozenset(w for w in words if w and w not in STOP and len(w) > 1)
 
 
 def sim(a, b):

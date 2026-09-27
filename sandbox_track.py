@@ -19,6 +19,7 @@ its opinion that happened to age well, which is the single easiest way to fake a
 import difflib
 import json
 import os
+import re
 import sys
 import tempfile
 import time
@@ -2180,28 +2181,183 @@ SAME_CONTEST_H = 3          # doubleheaders start 3.5h+ apart; one contest never
 # Table tennis leagues (Setka Cup, TT Elite) replay the same pairing within the same evening,
 # so there two quotes are one contest only if their starts agree to the minute-scale.
 SAME_CONTEST_H_BY_SPORT = {"table_tennis": 10 / 60}
+# Kalshi stores a placeholder start, measured 4.5 to 8.5 hours off the real start. Twelve
+# hours covers that slip and still leaves a series (the next game, a day later) alone.
+# It is too wide for a doubleheader, so baseball does not use it.
+PLACEHOLDER_H = 12
+# Same two names can be two different contests inside one day: a baseball doubleheader
+# or series game, and a table-tennis rematch. Those keep the tight window only.
+SAME_DAY_REPLAY = frozenset({"mlb", "table_tennis"})
 DUPLICATE_SINCE = "2026-09-13T21:00:00+00:00"   # the venue switch; settled history is not rewritten
 DUPLICATE_NOTE = "duplicate: this source already had a quote on this contest on another venue"
+_KX_DATE = re.compile(r"-(\d{2})(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(\d{2})")
+_ISO_DATE = re.compile(r"(20\d{2}-\d{2}-\d{2})")
+_GAME_TAG = re.compile(r"-(dh\d+|g\d+)$", re.I)
+_MONTH_NUM = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6,
+              "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
+
+
+def _kalshi_sourced(q):
+    """A row priced on Kalshi, or carrying a Kalshi ticker, whose start may be a placeholder."""
+    if q.get("venue") in ("kalshi", "kalshi_binary"):
+        return True
+    return str(q.get("market_id") or "").startswith("KX")
+
+
+def _game_tag(q):
+    """dh1 / dh2 / g2 when the market id names one game of a doubleheader."""
+    m = _GAME_TAG.search(str(q.get("market_id") or ""))
+    return m.group(1).lower() if m else None
+
+
+def _separate_games(a, b):
+    """True when both ids name a game of a doubleheader and they are not the same game."""
+    ta, tb = _game_tag(a), _game_tag(b)
+    return bool(ta and tb and ta != tb)
+
+
+def _iso_day(text):
+    s = str(text or "")[:10]
+    if len(s) == 10 and s[4] == "-" and s[7] == "-":
+        try:
+            datetime.strptime(s, "%Y-%m-%d")
+        except ValueError:
+            return None
+        return s
+    return None
+
+
+def _event_dates(q):
+    """Calendar days that name this contest: the row's date, and any date encoded in its id.
+
+    The start is not included. A Kalshi placeholder start is the thing that is wrong, so
+    using it as the event date would make two different games look like one whenever the
+    placeholder happened to land on the other game's day.
+    """
+    out = set()
+    day = _iso_day(q.get("date"))
+    if day:
+        out.add(day)
+    mid = str(q.get("market_id") or "")
+    m = _KX_DATE.search(mid)
+    if m:
+        mon = _MONTH_NUM.get(m.group(2))
+        if mon:
+            out.add(f"20{m.group(1)}-{mon:02d}-{m.group(3)}")
+    for found in _ISO_DATE.findall(mid):
+        if _iso_day(found):
+            out.add(found)
+    if not out:
+        try:
+            start = datetime.fromisoformat(str(q["start"]))
+        except (KeyError, TypeError, ValueError):
+            start = None
+        if start is not None:
+            out.add(start.date().isoformat())
+    return out
+
+
+def _dates_compatible(a, b, slack_days=1):
+    """Same event date, or one day apart when a placeholder start crosses midnight."""
+    da, db = _event_dates(a), _event_dates(b)
+    if not da or not db:
+        return True
+    if da & db:
+        return True
+    for x in da:
+        for y in db:
+            try:
+                gap = abs((datetime.strptime(x, "%Y-%m-%d") - datetime.strptime(y, "%Y-%m-%d")).days)
+            except ValueError:
+                continue
+            if gap <= slack_days:
+                return True
+    return False
+
+
+def _id_scheme(q):
+    """How the market id is spelled. A venue switch mints a new scheme for the same contest."""
+    mid = str(q.get("market_id") or "")
+    if mid.startswith("KX"):
+        return "kalshi_ticker"
+    if mid.startswith("aec-"):
+        return "aec"
+    if mid.isdigit():
+        return "numeric"
+    return "other"
+
+
+def _cross_venue_ids(a, b):
+    """Two ids for one contest: different venue, or the same venue under a different id scheme."""
+    if a.get("market_id") == b.get("market_id"):
+        return False
+    if (a.get("venue") or "") != (b.get("venue") or ""):
+        return True
+    return _id_scheme(a) != _id_scheme(b)
 
 
 def _same_contest_quote(a, b):
-    """Are two quotes about the same contest, whatever venue or market id each carries?"""
-    if a["sport"] != b["sport"]:
+    """Are two quotes about the same contest, whatever venue or market id each carries?
+
+    Participants have to match, and so does the event date. A start within three hours is
+    enough on its own (a doubleheader's two games are further apart than that). A Kalshi
+    placeholder can sit 4.5 to 8.5 hours off the real start, so when one row is Kalshi's
+    the same participants on the same event date still count out to twelve hours. Baseball
+    and table tennis do not get that wider window: a doubleheader, a series game, and a
+    rematch are different contests that share names.
+    """
+    if a.get("sport") != b.get("sport"):
+        return False
+    if _separate_games(a, b):
         return False
     try:
         gap = abs((datetime.fromisoformat(str(a["start"])) -
                    datetime.fromisoformat(str(b["start"]))).total_seconds())
     except (KeyError, TypeError, ValueError):
         return False
-    if gap > SAME_CONTEST_H_BY_SPORT.get(a["sport"], SAME_CONTEST_H) * 3600:
-        return False
+    sport = a.get("sport")
+    tight = SAME_CONTEST_H_BY_SPORT.get(sport, SAME_CONTEST_H) * 3600
     # A yes/no market, and a combo basket, is identified by its id alone. Every basket is
     # named "All n win" v "Any one loses", so matching on side names made every basket of a
     # day look like the same contest and dropped all but the first.
     if a.get("venue") in ("kalshi_binary", "combo") or b.get("venue") in ("kalshi_binary", "combo"):
-        return a.get("market_id") == b.get("market_id")
-    score, _flip = S.pair_match(a["side_a"], a["side_b"], b["side_a"], b["side_b"], sport=a["sport"])
+        return gap <= tight and a.get("market_id") == b.get("market_id")
+    wide = (sport not in SAME_DAY_REPLAY and gap <= PLACEHOLDER_H * 3600
+            and (_kalshi_sourced(a) or _kalshi_sourced(b))
+            and _dates_compatible(a, b))
+    if gap > tight and not wide:
+        return False
+    score, _flip = S.pair_match(a.get("side_a"), a.get("side_b"), b.get("side_a"), b.get("side_b"),
+                                sport=sport)
     return score > 0
+
+
+def settled_cross_venue_dups(quotes):
+    """Settled bets that repeat an earlier settled bet on the same contest, another venue.
+
+    The earliest logged bet is the one that stands. Later copies are the ones to void.
+    A doubleheader, a series game, and a table-tennis rematch are not pairs: they fail
+    `_same_contest_quote`. Returns [(later, kept), ...] in log order of the later bet.
+    """
+    seen, rows = set(), []
+    for q in quotes:
+        i = q.get("id")
+        if i in seen:
+            continue
+        seen.add(i)
+        rows.append(q)
+    by, pairs = {}, []
+    for q in sorted(rows, key=lambda q: q.get("logged") or ""):
+        if not q.get("bet") or q.get("status") not in ("won", "lost"):
+            continue
+        pool = by.setdefault((q.get("source"), q.get("sport")), [])
+        earlier = next((p for p in pool
+                        if _cross_venue_ids(p, q) and _same_contest_quote(p, q)), None)
+        if earlier is not None:
+            pairs.append((q, earlier))
+            continue
+        pool.append(q)
+    return pairs
 
 
 def retire_venue_duplicates(d, verbose=True):
