@@ -168,6 +168,14 @@ _quotes = [
     _quote("  HtTpS://example.com/x  ", "Trim contest", 0.57, "2026-09-27T23:00:00Z"),
     _quote("javascript:alert(1)", "Kalshi contest", 0.58, "2026-09-28T00:00:00Z",
            venue="kalshi", market_id="KXMLBGAME-26SEP27ABCD"),
+    _quote("java\tscript:alert(1)", "Tab contest", 0.61, "2026-09-28T01:00:00Z"),
+    _quote("java\nscript:", "Newline contest", 0.62, "2026-09-28T02:00:00Z"),
+    _quote("&#106;avascript:alert(1)", "Entity contest", 0.63, "2026-09-28T03:00:00Z"),
+    _quote("javascript&colon;", "Ampersand contest", 0.64, "2026-09-28T04:00:00Z"),
+    _quote("//evil.example", "Relative contest", 0.65, "2026-09-28T05:00:00Z"),
+    _quote('https://x.example/" onmouseover="alert(1)', "Breakout contest", 0.66,
+           "2026-09-28T06:00:00Z"),
+    _quote("http\u017f://evil.example", "Long s contest", 0.67, "2026-09-28T07:00:00Z"),
 ]
 _links = SB.open_rows({"quotes": _quotes})[0]
 ok("javascript:" not in _links.lower(),
@@ -200,6 +208,32 @@ for _price in ("0.41", "0.42", "0.43", "0.55", "0.56", "0.57", "0.58"):
 # open_rows prints the price as a bare number inside the cell. Pin the exact cell.
 ok("0.41" in _row_with(_links, "JS contest") and "0.58" in _kalshi,
    "dropping an unsafe href does not change the numeric cells")
+
+for _name, _price in (("Tab contest", "0.61"), ("Newline contest", "0.62"),
+                      ("Entity contest", "0.63"), ("Ampersand contest", "0.64"),
+                      ("Relative contest", "0.65"), ("Long s contest", "0.67")):
+    _row = _row_with(_links, _name)
+    ok(_row and "href=" not in _row, f"{_name} is text, with no href")
+    ok(_price in _row, f"{_name} still shows its price {_price}")
+ok("evil.example" not in _row_with(_links, "Relative contest"),
+   "a scheme-relative url is not written out")
+ok("&#" not in _row_with(_links, "Entity contest") and "javascript" not in _row_with(_links, "Entity contest").lower(),
+   "an entity-encoded javascript scheme is not a link and is not decoded into one")
+ok("&colon" not in _row_with(_links, "Ampersand contest"),
+   "javascript&colon; is not a link")
+ok("\t" not in _row_with(_links, "Tab contest") and "alert" not in _row_with(_links, "Tab contest"),
+   "a tab inside javascript: is not an href")
+ok("script" not in _row_with(_links, "Newline contest"),
+   "a newline inside javascript: is not an href")
+ok("\u017f" not in _row_with(_links, "Long s contest"),
+   "a long s does not make httpſ:// an http link")
+_break = _row_with(_links, "Breakout contest")
+ok('href="https://x.example/&quot; onmouseover=&quot;alert(1)"' in _break
+   and 'rel="noopener noreferrer"' in _break,
+   "a quote in an https url stays escaped inside the href")
+ok(' onmouseover="' not in _break and _break.count("href=") == 1,
+   "that quote does not open a new attribute")
+ok("0.66" in _break, "the breakout row's price is unchanged")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all presentation tests passed'}")
 for _f in FAILS:

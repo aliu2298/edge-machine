@@ -46,8 +46,9 @@ def esc(x):
     return html.escape(str(x))
 
 
-# http(s) only, scheme case ignored. javascript: and data: are not links.
-_SAFE_SCHEME = re.compile(r"^https?://", re.IGNORECASE)
+# ASCII http(s) only, scheme case ignored. javascript: and data: are not links.
+# Without re.ASCII, IGNORECASE treats the long s (ſ) as s, so "httpſ://" matches.
+_SAFE_SCHEME = re.compile(r"^https?://", re.IGNORECASE | re.ASCII)
 
 
 def safe_href(url, label):
@@ -55,10 +56,12 @@ def safe_href(url, label):
 
     Contest links come from stored rows. Kalshi ones are built as https at
     render time; every other venue keeps the url it was logged with, and that
-    stored value is not checked when it is written. Trim, then allow only
-    http:// and https://. Anything else — javascript:, data:, a missing
-    scheme — is the escaped label with no href. The url is escaped too, and
-    an external link does not leak the referrer.
+    stored value is not checked when it is written. Trim, then allow only an
+    ASCII http:// or https://. Anything else — javascript: (including a tab or
+    newline inside the word), data:, a scheme-relative url, an entity-encoded
+    scheme, or a non-ASCII lookalike — is the escaped label with no href. The
+    url is escaped too, so a quote in it cannot open a new attribute, and an
+    external link does not leak the referrer.
     """
     text = esc(label)
     href = str("" if url is None else url).strip()
