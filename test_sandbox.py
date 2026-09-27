@@ -5692,6 +5692,79 @@ ok("COVERAGE RISK" in _kn,
 ok("37 matches" in _kn,
    "and flags that the held-out season rests on a small sample")
 
+# ---------------------------------------------------------------------------
+# MLS 1X2 — two lanes on disjoint fixtures, pre-registered 2026-09-27
+# ---------------------------------------------------------------------------
+def _mg(code, home, away, pa, pdr, pb, trade=True, untraded=False):
+    return dict(venue="kalshi", market_id=f"KXMLSGAME-{code}", side_a=home, side_b=away,
+                price_a=pa, price_draw=pdr, price_b=pb,
+                tradeable={"a": True, "b": trade, "draw": True}, untraded=untraded)
+def _mp(code, suffix, team, opponent, ask, no, trade=True, untraded=False):
+    return dict(venue="kalshi_binary", market_id=f"KXMLSGAME-{code}-{suffix}",
+                team=team, opponent=opponent, price_a=ask, price_b=no,
+                tradeable={"a": True, "b": trade}, untraded=untraded)
+
+_mu = {"soccer": [_mg("26OCT03ORLTOR", "Orlando", "Toronto", 0.43, 0.27, 0.32),  # home 0.422
+                  _mg("26OCT03LAFSEA", "LAFC", "Seattle", 0.55, 0.25, 0.23)],    # away 0.223
+       "soccer_p05": [_mp("26OCT03ORLTOR", "ORL", "Toronto", "Orlando", 0.42, 0.60),
+                      _mp("26OCT03ORLTOR", "TOR", "Orlando", "Toronto", 0.31, 0.71)]}
+eq([p["market_id"] for p in S.fetch_mls_away_band("soccer", universe=_mu)],
+   ["KXMLSGAME-26OCT03LAFSEA"],
+   "MLS away lane takes the 0.223 away side and leaves the 0.314 one")
+eq([p["pick"] for p in S.fetch_mls_away_band("soccer", universe=_mu)], ["b"],
+   "and it buys the AWAY side")
+eq([p["market_id"] for p in S.fetch_mls_fade_home("soccer_p05", universe=_mu)],
+   ["KXMLSGAME-26OCT03ORLTOR-ORL"],
+   "MLS fade lane takes the row whose OPPONENT is the home side, not the away side's row")
+eq([p["pick"] for p in S.fetch_mls_fade_home("soccer_p05", universe=_mu)], ["b"],
+   "and it buys the NO — away-or-draw, since Kalshi lists no double-chance contract")
+# The two lanes must never pick the same fixture; that disjointness is the claim.
+eq({S._ere_code(p["market_id"]) for p in S.fetch_mls_away_band("soccer", universe=_mu)}
+   & {S._ere_code(p["market_id"]) for p in S.fetch_mls_fade_home("soccer_p05", universe=_mu)},
+   set(), "the two MLS lanes select disjoint fixtures, so neither double-counts the other")
+
+eq(S.fetch_mls_away_band("soccer", universe={"soccer": [_mg("a1", "H", "A", 0.50, 0.28, 0.27)]}), [],
+   "a de-vigged away of 0.2571 is above the band and is refused")
+eq(len(S.fetch_mls_away_band("soccer", universe={"soccer": [_mg("a2", "H", "A", 0.53, 0.28, 0.24)]})), 1,
+   "0.2286 is inside the band and is taken")
+eq(S.fetch_mls_away_band("soccer", universe={"soccer": [_mg("a3", "H", "A", 0.50, 0.24, 0.27)]}), [],
+   "an away ask of 0.27 is refused — 0.268 is break-even at the measured 27.12%")
+eq(S.fetch_mls_fade_home("soccer_p05", universe={
+    "soccer": [_mg("b1", "H", "A", 0.48, 0.27, 0.28)],
+    "soccer_p05": [_mp("b1", "H", "A", "H", 0.47, 0.56)]}), [],
+   "a de-vigged home of 0.4660 is above the fade band and is refused")
+eq(S.fetch_mls_fade_home("soccer_p05", universe={
+    "soccer": [_mg("b2", "H", "A", 0.43, 0.27, 0.32)],
+    "soccer_p05": [_mp("b2", "H", "A", "H", 0.42, 0.67)]}), [],
+   "a No ask of 0.67 is refused — 0.667 is break-even at the measured 67.73%")
+eq(S.fetch_mls_fade_home("soccer_p05", universe={
+    "soccer": [], "soccer_p05": [_mp("b3", "H", "A", "H", 0.42, 0.60)]}), [],
+   "a +0.5 row with no three-way board is skipped, never assumed in band")
+eq(S.fetch_mls_fade_home("soccer_p05", universe={
+    "soccer": [_mg("b4", "H", "A", 0.43, 0.27, 0.32)],
+    "soccer_p05": [_mp("b4", "H", "A", "A", 0.42, 0.60)]}), [],
+   "a row whose opponent is the AWAY side is skipped — only the home side is faded")
+eq((S.MLS_AWAY_BAND, S.MLS_AWAY_MAX_ASK, S.MLS_FADE_HOME_BAND, S.MLS_FADE_HOME_MAX_ASK, S.MLS_GAME),
+   ((0.20, 0.25), 0.26, (0.40, 0.45), 0.66, "KXMLSGAME"),
+   "both bands, both ceilings and the series are the pre-registered ones")
+eq((S.fetch_mls_away_band("soccer_p05", universe=_mu), S.fetch_mls_fade_home("soccer", universe=_mu)),
+   ([], []), "each MLS lane answers only for its own domain")
+for _n, _sp, _bl in (("mls_away_band", "soccer", "favourite_population"),
+                     ("mls_fade_home", "soccer_p05", "population")):
+    eq((S.SOURCES[_n]["sports"], S.SOURCES[_n]["baseline"]), ([_sp], _bl),
+       f"{_n} is registered on its own domain with the right baseline")
+    ok(not S.lane_paused(_n, _sp), f"{_n} is not paused")
+ok("z +2.77" in S.SOURCES["mls_away_band"]["note"] and "-1.9pp" in S.SOURCES["mls_away_band"]["note"],
+   "the away note pins its result and the European subtraction that strengthens it")
+ok("z -3.20" in S.SOURCES["mls_fade_home"]["note"] and "spike rather than a gradient" in S.SOURCES["mls_fade_home"]["note"],
+   "the fade note pins its result and admits it is a single band")
+ok(all("2026" in S.SOURCES[_n]["note"]
+       and ("in progress" in S.SOURCES[_n]["note"] or "in-progress" in S.SOURCES[_n]["note"])
+       for _n in ("mls_away_band", "mls_fade_home")),
+   "BOTH notes state that the in-progress 2026 season sits inside the measurement window")
+ok("DRAW IS DEAD" in S.SOURCES["mls_fade_home"]["note"],
+   "and record that the MLS draw question is closed, so no one re-opens it")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

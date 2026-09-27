@@ -552,6 +552,46 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "mls_away_band": dict(
+        label="MLS away side priced 0.20-0.25", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer"], baseline="favourite_population",
+        note="Pre-registered 2026-09-27. Back the AWAY side on a Kalshi MLS match when the "
+             "board prices it at a de-vigged 0.20-0.25, with the ask at 0.26 or less and the "
+             "board holding no more than 6%. Measured on the LAST THREE SEASONS (2024-2026) "
+             "against the twelve European leagues in the same band over the same window, so a "
+             "bias every league shares subtracts out: 306 matches, the away side won 27.1% "
+             "against 22.5% implied — raw +4.7pp, Europe -1.9pp, league part +6.6pp at "
+             "z +2.77, with +7.1pp on 2024-2025 and +5.1pp on the 74 held-out 2026 matches. "
+             "It STRENGTHENS after subtraction because European away longshots in that band "
+             "run -1.9pp, the ordinary favourite-longshot bias, while MLS runs the other way. "
+             "WHY NOW: MLS home advantage has collapsed — home/draw/away was 49.3/25.2/25.5 "
+             "over fourteen seasons and is 44.8/25.2/30.0 over the last three — so the old "
+             "back-the-home edge is gone and this is its mirror. Break-even ask is 0.268 at "
+             "the measured rate. ~3 bets a matchweek. 2026 is an in-progress season and is "
+             "included in the measurement window; that is a known weakness of reading three "
+             "seasons and is stated here rather than hidden. Judged against backing the "
+             "favourite on every match."),
+    "mls_fade_home": dict(
+        label="MLS: fade the home side priced 0.40-0.45", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_p05"], baseline="population",
+        note="Pre-registered 2026-09-27, the mirror of mls_away_band on DISJOINT fixtures — "
+             "zero of the 306 away-band matches are also home-band matches, so these are two "
+             "findings rather than one seen twice. Buy the NO on the home side's own +0.5 "
+             "market — Kalshi lists no double-chance contract, and the No on 'home to win' IS "
+             "away-or-draw — when the three-way board prices that home side at a de-vigged "
+             "0.40-0.45, with the No ask at 0.66 or less and the board holding no more than "
+             "6%. Measured on the LAST THREE SEASONS (2024-2026) against the twelve European "
+             "leagues in the same band: 220 matches, the home side won just 32.3% against "
+             "42.5% implied. Europe in the same band runs +0.4pp — correctly priced — so "
+             "almost nothing subtracts away: league part -10.7pp at z -3.20, with -9.5pp on "
+             "2024-2025 and -13.7pp on the 61 held-out 2026 matches. The No lands 67.7%, so "
+             "break-even is an ask of 0.667. ~2.2 bets a matchweek. Weaknesses stated: 2026 "
+             "is in progress and is inside the window, and this is a single band — the "
+             "neighbouring ones (0.35-0.40 at -0.9pp, 0.45-0.50 at -2.2pp) are ordinary, so "
+             "the effect is a spike rather than a gradient. THE DRAW IS DEAD in MLS and that "
+             "question is closed: both populated draw bands read -0.4pp and -0.3pp with both "
+             "sub-periods negative on 635 and 698 matches, so there is no ere_draw equivalent "
+             "here. Judged against backing the same side on every match of this market."),
     "turkey_btts_dog": dict(
         label="Turkey BTTS in heavy mismatches (underdog 7.00+)", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_btts"], baseline="population",
@@ -3953,6 +3993,130 @@ TURKEY_BTTS = "KXSUPERLIGBTTS"
 TURKEY_BTTS_MAX_ASK = 0.65
 
 
+# ---------------------------------------------------------------------------
+# MLS, the 1X2 board — pre-registered 2026-09-27. Two lanes, disjoint fixtures.
+# ---------------------------------------------------------------------------
+# MLS's home advantage has collapsed, and the board has not fully followed. Over fourteen
+# seasons the league ran home 49.3% / draw 25.2% / away 25.5%; over the last three it is
+# 44.8% / 25.2% / 30.0%. The old edge — back the home side — is gone, and what is left is
+# its mirror. Both cells below are measured against the TWELVE EUROPEAN LEAGUES in the same
+# price band over the same three seasons, so a bias every league shares subtracts out.
+#
+#   HOME priced 0.40-0.45   n=220   won 32.3% against 42.5% implied
+#                                   raw -10.3pp, Europe +0.4pp -> league part -10.7pp, z -3.20
+#                                   in -9.5 (159) / held out -13.7 (61)
+#   AWAY priced 0.20-0.25   n=306   won 27.1% against 22.5% implied
+#                                   raw +4.7pp, Europe -1.9pp -> league part +6.6pp, z +2.77
+#                                   in +7.1 (232) / held out +5.1 (74)
+#
+# The away cell STRENGTHENS after subtraction: European away longshots in that band run
+# -1.9pp, the ordinary favourite-longshot bias, while MLS runs +4.7pp the other way.
+#
+# THE DRAW IS DEAD HERE and the question is closed. Both populated draw bands read -0.4pp
+# and -0.3pp with both sub-periods negative, on 635 and 698 matches. There is no ere_draw
+# equivalent in MLS, on the three-season window or the fourteen-season one.
+#
+# The two lanes select DISJOINT fixtures — zero of 306 away-band matches are also home-band
+# matches — so they are two findings, not one seen twice, and neither can double-count.
+MLS_GAME = "KXMLSGAME"
+# De-vigged AWAY win probability. mls_away_band buys the away side inside this.
+MLS_AWAY_BAND = (0.20, 0.25)
+# Break-even, not fitted: at the band's measured 27.12% and Kalshi's 0.07*p*(1-p) fee an ask
+# of 0.268 returns zero.
+MLS_AWAY_MAX_ASK = 0.26
+# De-vigged HOME win probability. mls_fade_home buys the NO on the home side's own +0.5
+# market inside this — Kalshi has no double-chance contract, and the No on "home to win" IS
+# away-or-draw.
+MLS_FADE_HOME_BAND = (0.40, 0.45)
+# Break-even on that No: the home side wins 32.27% here, so the No lands 67.73% and an ask
+# of 0.667 returns zero.
+MLS_FADE_HOME_MAX_ASK = 0.66
+MLS_MAX_HOLD = 0.06
+
+
+def mls_board(universe=None):
+    """{fixture code: (home name, de-vigged home prob, de-vigged away prob)} off the MLS board."""
+    out = {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(MLS_GAME):
+            continue
+        pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+        if pa is None or pdr is None or pb is None:
+            continue
+        total = float(pa) + float(pdr) + float(pb)
+        if total <= 0:
+            continue
+        out[_ere_code(r.get("market_id"))] = (r.get("side_a"), float(pa) / total, float(pb) / total)
+    return out
+
+
+def fetch_mls_away_band(sport, universe=None):
+    """Back the AWAY side on an MLS match the board prices at a de-vigged 0.20-0.25."""
+    if sport != "soccer":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    out = []
+    for r in uni.get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(MLS_GAME):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
+            continue
+        pa, pdr, pb = r.get("price_a"), r.get("price_draw"), r.get("price_b")
+        if pa is None or pdr is None or pb is None:
+            continue
+        total = float(pa) + float(pdr) + float(pb)
+        if total <= 0 or round(total - 1.0, 6) > MLS_MAX_HOLD:
+            continue
+        if not (MLS_AWAY_BAND[0] <= float(pb) / total < MLS_AWAY_BAND[1]):
+            continue
+        if float(pb) > MLS_AWAY_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
+def fetch_mls_fade_home(sport, universe=None):
+    """Buy the NO on the HOME side's own +0.5 market when the board prices it 0.40-0.45.
+
+    On a +0.5 row `opponent` is the side whose win price_a gives, so the row to fade is the
+    one whose opponent IS the home team from the three-way board. The No there is
+    away-or-draw, which is the bet — Kalshi lists no double-chance contract.
+    """
+    if sport != "soccer_p05":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    board = mls_board(uni)
+    out = []
+    for r in uni.get(sport) or []:
+        if r.get("venue") != "kalshi_binary":
+            continue
+        if not str(r.get("market_id") or "").startswith(MLS_GAME):
+            continue
+        # Default True, as every other reader of this field does.
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
+            continue
+        a, b = r.get("price_a"), r.get("price_b")
+        if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > MLS_MAX_HOLD:
+            continue
+        seen = board.get(_ere_code(r.get("market_id")))
+        if not seen:
+            continue
+        home, ph, _pa = seen
+        if not home or str(r.get("opponent")) != str(home):
+            continue
+        if not (MLS_FADE_HOME_BAND[0] <= ph < MLS_FADE_HOME_BAND[1]):
+            continue
+        if float(b) > MLS_FADE_HOME_MAX_ASK:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
 def fetch_turkey_btts_dog(sport, universe=None):
     """Back BTTS Yes on a Turkish match the board prices as a heavy mismatch.
 
@@ -6376,6 +6540,8 @@ CHALLENGERS = {
     "team2_ranked": fetch_team2_ranked,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
+    "mls_away_band": fetch_mls_away_band,
+    "mls_fade_home": fetch_mls_fade_home,
     "turkey_btts_dog": fetch_turkey_btts_dog,
     "turkey_o25_dog": fetch_turkey_o25_dog,
     "liga_btts_even": fetch_liga_btts_even,
