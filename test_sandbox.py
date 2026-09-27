@@ -4484,10 +4484,14 @@ if _GATE is not None and hasattr(_GATE, "decide"):
 ok('echo "track_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf
    and 'echo "build_rc=$?" >> "$GITHUB_OUTPUT"' in _tracker_wf,
    "the tracker and the page build record their exit codes")
-ok("set +e" in _tracker_wf and "continue-on-error" in _tracker_wf.split("sandbox_track.py")[0],
-   "the browser install may continue, and the tracker steps are not continue-on-error")
-ok(_tracker_wf.count("continue-on-error") == 1,
-   "only the browser install is continue-on-error")
+_install = _tracker_wf.split("- name: Install headless browser", 1)[-1].split("- name: Logic tests", 1)[0]
+ok("continue-on-error" not in _tracker_wf,
+   "no tracker step uses continue-on-error")
+ok("::warning::headless browser install failed — browser column degraded" in _install
+   and "set +e" not in _install and "exit 0" not in _install,
+   "a missing browser warns and does not hide the failure with set +e and exit 0")
+ok("set +e" in _tracker_wf.split("sandbox_track.py")[0],
+   "the tracker steps record a failing run with set +e rather than continue-on-error")
 ok('json.load(open("data/sandbox_ledger.json"))' in _tracker_wf,
    "a missing or invalid ledger is checked before anything is committed")
 ok("from pipeline_gate import decide" in _tracker_wf,
@@ -4823,8 +4827,8 @@ if PF is not None and hasattr(PF, "recheck_exit"):
 
 ok("sandbox-tracker.yml" in _watch_wf,
    "the watchdog checks that sandbox-tracker.yml succeeded recently")
-_after_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[-1]
-_before_deploy = _watch_wf.split("actions/deploy-pages@v5", 1)[0]
+_after_deploy = _watch_wf.split("actions/deploy-pages@", 1)[-1]
+_before_deploy = _watch_wf.split("actions/deploy-pages@", 1)[0]
 ok("recheck_after_deploy" in _after_deploy,
    "after the takeover deploy the pages are rechecked through the CDN window")
 ok("recheck_after_deploy" not in _before_deploy,

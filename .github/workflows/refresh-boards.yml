@@ -41,9 +41,9 @@ jobs:
     timeout-minutes: 25
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
@@ -57,17 +57,34 @@ jobs:
 
       # Sandbox closing prices, taken on every refresh as well as by the close job and the
       # hourly watchdog. Writes only data/sandbox_closes/boards.json.
+      # A failed read must not be a green step, and it must not skip the site root or
+      # the Pages deploy: those do not depend on this file. Later steps run when this
+      # one ran and the job was not cancelled, including when it exits 1. A skipped
+      # snapshot (checkout or setup failed) still skips them. The job is red.
       - name: Snapshot Sandbox closing prices
-        run: python3 sandbox_close.py --writer boards || echo "close snapshot failed — continuing"
+        id: close_snapshot
+        run: |
+          set -euo pipefail
+          if ! python3 sandbox_close.py --writer boards; then
+            echo "::error::Sandbox closing-price snapshot failed"
+            exit 1
+          fi
 
       # The site root: forwards visitors to the Sandbox. Its stamp is not the watchdog's
       # freshness check — that reads sandbox.html and production.html, which this job
-      # does not rebuild.
+      # does not rebuild. A failed write must not publish: site_root.py used to truncate
+      # index.html before the new page existed, and !cancelled() would still let the
+      # commit and the Pages deploy run.
       - name: Write the site root
+        id: site_root
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' }}
         run: python3 site_root.py
 
       - name: Commit and push if changed
+        id: publish
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' }}
         run: |
+          set -euo pipefail
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
@@ -99,7 +116,11 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 site_root.py && { python3 sandbox_close.py --writer boards || true; }
+            python3 site_root.py
+            if ! python3 sandbox_close.py --writer boards; then
+              echo "::error::Sandbox closing-price snapshot failed"
+              exit 1
+            fi
           done
 
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"
@@ -108,9 +129,12 @@ jobs:
       # GitHub Pages is the ONLY host (Netlify dropped Aug 3 2026 — it was skipping
       # every deploy for exceeded credit usage, and nothing here needed a feature
       # Pages lacks). Runs unconditionally so the board publishes even when nothing changed.
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
       - id: deployment
-        uses: actions/deploy-pages@v5
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

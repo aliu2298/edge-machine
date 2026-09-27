@@ -27,11 +27,32 @@ def root_stub(now):
 <script>location.replace("./sandbox.html")</script></body></html>"""
 
 
+def write_atomic(path, text):
+    """Write path via a temp file and os.replace.
+
+    open(path, "w") would truncate the live page before the new bytes exist, so a
+    failed build would leave an empty index.html for the next step to publish.
+    """
+    directory = os.path.dirname(path)
+    os.makedirs(directory, exist_ok=True)
+    tmp = path + ".tmp"
+    try:
+        with open(tmp, "w") as fh:
+            fh.write(text)
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(tmp, path)
+    except Exception:
+        try:
+            os.remove(tmp)
+        except OSError:
+            pass
+        raise
+
+
 def main():
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w") as f:
-        f.write(root_stub(now))
+    write_atomic(OUT, root_stub(now))
     print(f"wrote {OUT} (updated {now})")
 
 
