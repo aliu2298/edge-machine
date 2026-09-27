@@ -216,7 +216,7 @@ def leaderboard(scores, d):
 <td class="num">{roi}</td>
 <td class="num">{vb_cell}</td>
 <td class="num">{close_cell(a)}</td>
-<td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['settled'] else '—'}</td>
+<td class="num {cls(s['pnl'])}">{money(s['pnl']) if s['staked'] else '—'}</td>
 <td class="num">{f"{s['brier']:.4f}" if s['brier'] is not None else '—'}</td>
 <td>{verdict}</td></tr>""")
     return "\n".join(rows)
@@ -272,14 +272,15 @@ def pinnacle_table(d):
               and q["status"] != "void"]
         bets = [q for q in qs if q["bet"]]
         done = [q for q in bets if q["status"] in ("won", "lost")]
+        priced = [q for q in bets if q.get("status") == "settled" and q.get("result") == "price"]
         won = sum(1 for q in done if q["status"] == "won")
-        pnl = sum(q["pnl"] for q in done)
+        pnl = sum(q["pnl"] for q in done) + sum(q["pnl"] for q in priced)
         exp = sum(q["price"] for q in done)
         edges = [q["edge"] for q in qs if q.get("edge") is not None]
         rows.append(f"""<tr><td><b>{label}</b></td><td class="num">{len(qs)}</td>
 <td class="num">{len(bets)}</td><td class="num">{len(done)}</td>
 <td class="num">{f"{won} v {exp:.1f}" if done else "—"}</td>
-<td class="num"><span class="{cls(pnl) if len(done) >= MIN_N else 'mut'}">{pct(pnl / (len(done) * T.STAKE), sign=True) if done else '—'}</span></td>
+<td class="num"><span class="{cls(pnl) if len(done) + len(priced) >= MIN_N else 'mut'}">{pct(pnl / ((len(done) + len(priced)) * T.STAKE), sign=True) if done or priced else '—'}</span></td>
 <td class="num mut">{f"{max(edges)*100:+.1f}pp" if edges else "—"}</td></tr>""")
     ou = (d.get("meta") or {}).get("odds_api") or {}
     spent = ", ".join(f"{x['key']} ({x['uncovered']} uncovered)" for x in ou.get("spent_on", [])) or "none"
@@ -346,26 +347,45 @@ def open_rows(d, limit=None):
     return "\n".join(out), len(live)
 
 
+_HIST = ("won", "lost", "void", "settled")
+
+
+def _badge(q):
+    """(css class, label). A price payout is not painted as a win, a loss, or a void."""
+    if q.get("result") == "price":
+        return "price", "PRICE"
+    return q.get("status") or "", str(q.get("status") or "").upper()
+
+
+def _day_summary(qs):
+    won = sum(1 for q in qs if q["status"] == "won")
+    n = sum(1 for q in qs if q["status"] in ("won", "lost"))
+    n_price = sum(1 for q in qs if q.get("result") == "price")
+    pl = sum(q["pnl"] for q in qs)
+    extra = f" · {n_price} priced" if n_price else ""
+    return won, n, extra, pl
+
+
 def settled_rows(d, limit=None):
     """Settled bets, newest first, grouped by the day they settled."""
-    done = [q for q in d["quotes"] if q["status"] in ("won", "lost", "void") and q["bet"]]
+    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]]
     done.sort(key=lambda q: q.get("settled") or "", reverse=True)
     out, seen_day = [], None
     for q in (done[:limit] if limit else done):
         day = (q.get("settled") or "")[:10]
         if day != seen_day:
             seen_day = day
-            won = sum(1 for x in done if (x.get("settled") or "")[:10] == day and x["status"] == "won")
-            n = sum(1 for x in done if (x.get("settled") or "")[:10] == day)
-            pl = sum(x["pnl"] for x in done if (x.get("settled") or "")[:10] == day)
-            out.append(f'<tr class="grp"><td colspan="8">{esc(day)} · {won}/{n} won · '
+            day_qs = [x for x in done if (x.get("settled") or "")[:10] == day]
+            won, n, extra, pl = _day_summary(day_qs)
+            out.append(f'<tr class="grp"><td colspan="8">{esc(day)} · {won}/{n} won{extra} · '
                        f'{money(pl)}</td></tr>')
         side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
+        klass, label = _badge(q)
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td><td>{esc(S.display_label(q))}</td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td>{esc(side)}</td><td class="num">{q['price']:.2f}</td>
-<td><span class="st {q['status']}">{q['status'].upper()}</span></td>
+<td><span class="st {klass}">{label}</span></td>
 <td class="num {cls(q['pnl'])}">{money(q['pnl'])}</td></tr>""")
     return "\n".join(out), len(done)
 
@@ -395,7 +415,7 @@ def open_folds(d):
 
 def settled_folds(d):
     """Settled bets, one fold per day they settled, newest first."""
-    done = [q for q in d["quotes"] if q["status"] in ("won", "lost", "void") and q["bet"]]
+    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]]
     done.sort(key=lambda q: q.get("settled") or "", reverse=True)
     by = {}
     for q in done:
@@ -404,10 +424,8 @@ def settled_folds(d):
     for day, qs in by.items():
         rows, _n = settled_rows(dict(d, quotes=qs))
         rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
-        won = sum(1 for q in qs if q["status"] == "won")
-        n = sum(1 for q in qs if q["status"] in ("won", "lost"))
-        pl = sum(q["pnl"] for q in qs)
-        groups.append((f'<b>{esc(day)}</b> <span class="mut">· {won}/{n} won · </span>'
+        won, n, extra, pl = _day_summary(qs)
+        groups.append((f'<b>{esc(day)}</b> <span class="mut">· {won}/{n} won{extra} · </span>'
                        f'<span class="{cls(pl)}">{money(pl)}</span>', rows))
     return _folds(groups, HIST_HEAD), len(done)
 
@@ -1310,7 +1328,7 @@ tr:last-child td{{border-bottom:none}}
 border-radius:999px;padding:2px 7px;border:1px solid;white-space:nowrap}}
 .st.won,.sig.y{{color:var(--pos);border-color:#3fb97055;background:#3fb97014}}
 .st.lost,.st.miss{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
-.st.void,.sig.n{{color:var(--mut);border-color:var(--bd)}}
+.st.void,.st.price,.sig.n{{color:var(--mut);border-color:var(--bd)}}
 .sig.w{{color:var(--warn);border-color:#f0b42955;background:#f0b42914}}
 .sig.x{{color:var(--neg);border-color:#e06c7555;background:#e06c7514}}
 ul.ins{{padding-left:18px;display:grid;gap:7px;color:var(--fg);font-size:13.5px;line-height:1.55}}

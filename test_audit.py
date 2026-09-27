@@ -68,6 +68,13 @@ ok(not run(A.check_bets, [bet(1, status="void", pnl=0.0, **_late)]).errors,
    "but a late bet already voided for it is correctly handled, not an error")
 ok(errs(run(A.check_bets, [bet(1, status="void", pnl=40.0)]), "bets"), "a void that still carries P/L is caught")
 ok(errs(run(A.check_bets, [bet(1, bet=False, status="won")]), "bets"), "a non-bet marked won is caught")
+_paid = round(100.0 * (0.77 / 0.60 - 1.0), 2)
+ok(not run(A.check_bets, [bet(1, status="settled", result="price", settle_px=0.77, pnl=_paid)]).errors,
+   "a price payout at the paid price passes, and is not a win or a void")
+ok(errs(run(A.check_bets, [bet(1, status="settled", result="price", settle_px=0.77, pnl=_paid + 5)]), "bets"),
+   "a price payout with the wrong P/L is caught")
+ok(errs(run(A.check_bets, [bet(1, status="won", result="price", settle_px=0.77, pnl=_paid)]), "bets"),
+   "a price payout marked won is caught")
 
 print("\nstale: an old open bet is a fault only if the grader had its chance")
 _G = NOW - timedelta(hours=1)                      # the ledger's last grading run
@@ -101,6 +108,33 @@ _fresh = bet(8, status="open", result=None, pnl=0.0, settled=None, start=(NOW - 
 _r = A.Report()
 A.check_stale({"quotes": [_fresh], "meta": {"updated": _G.isoformat()}}, _r, True, now=NOW)
 ok(not _r.warnings and not _r.errors, "a bet open a few hours past its start is not stale")
+
+print("\nstale: a final Polymarket US price is a price settlement, not a void or a pass")
+_pm = bet(9, status="open", result=None, pnl=0.0, settled=None, venue="polymarket_us",
+          market_id="aec-wta-annsis-ginfei-2026-09-26",
+          start=(NOW - timedelta(days=3)).isoformat())
+_saved_get, _saved_us = S._get, S.resolve_polymarket_us
+def _pmus_get(url, tries=3, timeout=20):
+    u = str(url)
+    if u.endswith("/settlement"):
+        return {"slug": "aec-wta-annsis-ginfei-2026-09-26", "settlement": 0.77}
+    if "/v1/market/slug/" in u:
+        return {"market": {"status": "MARKET_STATUS_RESOLVED", "closed": True}}
+    raise RuntimeError("404")
+# The resolver's answer is the bug this check must not trust.
+S._get, S.resolve_polymarket_us = _pmus_get, (lambda mid: "void")
+try:
+    _rp = A.Report()
+    A.check_stale({"quotes": [_pm], "meta": {"updated": _G.isoformat()}}, _rp, True, now=NOW)
+finally:
+    S._get, S.resolve_polymarket_us = _saved_get, _saved_us
+ok(not _rp.errors, "a final 0.77 open for three days is a warning, not yet an error")
+ok(any("price 0.77" in m and "void" not in m for c, m in _rp.warnings if c == "stale"),
+   "0.77 is named as a price settlement, not a void")
+ok(not any("flagged for review" in m for c, m in _rp.warnings if c == "stale"),
+   "a final price is not left flagged for review")
+ok(not any(c == "stale" for c, _m in _rp.passed),
+   "that warning is not a silent pass of the stale check")
 
 print("\nfresh: the grader has to be running for any of this to mean anything")
 

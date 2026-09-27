@@ -1678,8 +1678,11 @@ def fetch_polymarket(sport, horizon_days=4, page=100, max_pages=8, cap=MAX_PER_S
 # its markets. The contest's own market is a two-outcome "winner" market whose best bid and
 # ask quote the FIRST outcome; buying the second outcome is selling the first, so its ask
 # is 1 - bid — the same arithmetic as .com. Settlement (/v1/markets/{slug}/settlement) is 1
-# when the first outcome won, 0 when it lost. An event whose `period` is anything but
-# not-started is in play and never quoted.
+# when the first outcome won and 0 when it lost. Any other final price strictly between
+# those, including exactly 0.5, pays that price: a walkover settles at the last fair price,
+# which is a payout, not a refund. Only an explicit cancel is a void. See
+# resolve_polymarket_us. An event whose `period` is anything but not-started is in play
+# and never quoted.
 PMUS = "https://gateway.polymarket.us"
 PMUS_SPORT = {"tennis": ("Tennis", None), "table_tennis": ("Table Tennis", None),
               "boxing": ("Boxing", None), "mma": ("MMA", None),
@@ -1791,18 +1794,112 @@ def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
     return rows[:cap] if cap else rows
 
 
+def polymarket_us_cancelled(payload):
+    """True when the settlement payload itself says the market was cancelled or voided.
+
+    The body is ordinarily just {slug, settlement}. A cancel/void flag is honoured
+    when one is present and true, and ignored when it is absent or false. A rules
+    blurb that merely mentions the word is not a flag.
+    """
+    if not isinstance(payload, dict):
+        return False
+    for key, val in payload.items():
+        norm = str(key).lower().replace("-", "").replace("_", "")
+        if norm in ("cancelled", "canceled", "void", "voided",
+                    "iscancelled", "iscanceled", "isvoid", "isvoided"):
+            if val is True:
+                return True
+            if isinstance(val, str) and val.strip().lower() in (
+                    "true", "yes", "1", "cancelled", "canceled", "void", "voided"):
+                return True
+        if norm in ("status", "state", "resolution", "settlementstatus", "marketstatus"):
+            if isinstance(val, str) and any(w in val.lower() for w in ("cancel", "void")):
+                return True
+    settlement = payload.get("settlement")
+    if isinstance(settlement, str) and settlement.strip().lower() in (
+            "void", "cancelled", "canceled", "cancel"):
+        return True
+    return False
+
+
+def classify_polymarket_us(payload):
+    """('a' | 'b' | 'void' | 'price' | None, value) for one settlement payload.
+
+    None means this body is not a settlement (missing, or not a number). 'price'
+    is a numeric settlement strictly between the clean 0 and 1 bands, including
+    exactly 0.5. That is the price the venue paid, not a winner and not a void.
+    The resolver still withholds it until the market itself is final.
+    """
+    if not isinstance(payload, dict):
+        return None, None
+    if polymarket_us_cancelled(payload):
+        return "void", None
+    try:
+        st = float(payload.get("settlement"))
+    except (TypeError, ValueError):
+        return None, None
+    if st >= 0.99:
+        return "a", st
+    if st <= 0.01:
+        return "b", st
+    if 0.0 < st < 1.0:
+        return "price", st
+    return None, None
+
+
+def polymarket_us_final(slug):
+    """True only when the market payload says the market is closed and resolved.
+
+    The settlement endpoint carries the number and no status. A price is paid only
+    once this says the market is finished. A 404, a 429, or a market that is still
+    open is not final.
+    """
+    try:
+        body = _get(f"{PMUS}/v1/market/slug/{urllib.parse.quote(str(slug))}", tries=1)
+    except RuntimeError:
+        return False
+    market = body.get("market") if isinstance(body, dict) else None
+    if not isinstance(market, dict):
+        return False
+    return (market.get("closed") is True
+            and str(market.get("status") or "") == "MARKET_STATUS_RESOLVED")
+
+
+def pmus_paid(pick, settlement):
+    """What one side was paid on a Polymarket US settlement.
+
+    The venue's number is the long side. A yes/long buyer is paid that number.
+    A no/short buyer is paid one minus it. A quote with no side keeps the long
+    number so the row still records what the market paid.
+    """
+    st = float(settlement)
+    if pick == "b":
+        return 1.0 - st
+    return st
+
+
 def resolve_polymarket_us(slug):
-    """'a' / 'b' / 'void' from Polymarket US's settlement, or None while unsettled."""
+    """'a' / 'b' / 'void' / ('price', settlement), or None while unsettled.
+
+    A clean 0 or 1 is the winner. An explicit cancel is a void. Any other numeric
+    settlement, including exactly 0.5, is ('price', settlement) — the price the
+    venue paid — and only when the market is closed and MARKET_STATUS_RESOLVED.
+    A 404, a 429, a non-numeric body, or a market that is not final is None.
+    None is not a void and not a price. outcomePrices and the last trade are
+    never used to invent a winner.
+    """
     try:
         d = _get(f"{PMUS}/v1/markets/{urllib.parse.quote(str(slug))}/settlement", tries=1)
     except RuntimeError:
-        return None                                   # 404 until it settles
-    st = (d or {}).get("settlement") if isinstance(d, dict) else None
-    try:
-        st = float(st)
-    except (TypeError, ValueError):
+        return None                                   # 404, 429, or no body yet
+    kind, val = classify_polymarket_us(d)
+    if kind in ("a", "b", "void"):
+        return kind
+    if kind != "price" or val is None:
         return None
-    return "a" if st >= 0.99 else "b" if st <= 0.01 else "void"
+    if not polymarket_us_final(slug):
+        return None
+    return ("price", float(val))
 
 
 def polymarket_com_probs(sport):
@@ -4494,24 +4591,66 @@ def fetch_pm_combo4(sport, universe=None):
             if str(r["market_id"]).startswith("pmcombo4:")]
 
 
+def _resolve_leg(leg):
+    """One combo leg's venue answer: a side, 'void', ('price', settlement), or None."""
+    v = leg.get("venue")
+    mid = leg.get("market_id")
+    if v == "kalshi":
+        return resolve_kalshi(mid)
+    if v == "kalshi_binary":
+        return resolve_kalshi_market(mid)
+    if v == "polymarket_us":
+        return resolve_polymarket_us(mid)
+    return resolve_polymarket(mid)
+
+
+def _price_result(res):
+    """The settlement number inside a ('price', number) answer, or None."""
+    if isinstance(res, tuple) and len(res) == 2 and res[0] == "price":
+        try:
+            return float(res[1])
+        except (TypeError, ValueError):
+            return None
+    return None
+
+
 def resolve_combo(legs):
-    """'a' if every leg won, 'b' if one lost, 'void' if a leg voided, None while any is open."""
+    """'a' if every leg won, 'b' as soon as one has lost, 'void' if a leg was
+    cancelled and none lost, ('price', product) when a leg paid a fair price,
+    None while any leg is still open and none has lost.
+
+    A loss is final. It settles the basket even when another leg is unresolved:
+    a later cancel cannot refund a leg that already lost. The product is what the
+    all-win side is paid — 1 for a won leg, the fair price for a price-settled leg.
+    """
     if not legs:
         return None
-    lost = False
+    product = 1.0
+    priced = False
+    voided = False
+    pending = False
     for leg in legs:
-        v = leg.get("venue")
-        res = (resolve_kalshi(leg["market_id"]) if v == "kalshi"
-               else resolve_kalshi_market(leg["market_id"]) if v == "kalshi_binary"
-               else resolve_polymarket_us(leg["market_id"]) if v == "polymarket_us"
-               else resolve_polymarket(leg["market_id"]))
-        if res == "void":
-            return "void"              # a voided leg is refunded, so the basket is too
+        res = _resolve_leg(leg)
+        settlement = _price_result(res)
+        if settlement is not None:
+            product *= pmus_paid(leg.get("pick"), settlement)
+            priced = True
+            continue
         if res is None:
-            return None                # still running: a basket is never settled early
-        if res != leg["pick"]:
-            lost = True
-    return "b" if lost else "a"
+            pending = True
+            continue
+        if res == "void":
+            voided = True
+            continue
+        if res != leg.get("pick"):
+            return "b"
+    if pending:
+        return None
+    if voided:
+        return "void"
+    if priced:
+        return ("price", product)
+    return "a"
 
 
 # ---------------------------------------------------------------------------
