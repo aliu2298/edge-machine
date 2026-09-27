@@ -706,9 +706,8 @@ def page_html(leads, teams, fire, track, meta, leagues, now, page="streaks",
     tab_btns = ("" if len(tabs) < 2 else "".join(
         f'<button class="tb{" on" if t == initial_tab else ""}" data-tab="{t}">'
         f'{TAB_LABEL[t]}</button>' for t in tabs))
-    nav = "".join(
-        f'<a{" class=\"on\"" if p == page else ""} href="./{_href(PAGES[p][0])}">'
-        f'{PAGES[p][1]}</a>' for p in ("leads", "streaks"))
+    # Leads and Streaks are not published. The nav is the four live pages.
+    nav = ""
     # Buttons must reflect what THIS page can actually filter. The Leads page listing
     # the Belgian, Danish and Turkish leagues was a dead end — those are form feeds and
     # never produce a lead, so every one of those buttons returned nothing.
@@ -773,8 +772,6 @@ long. When that share is high the pattern is ordinary, and the chip says so.</p>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
 --pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}}
@@ -948,7 +945,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 <h1>{esc(h1)}</h1>
 <div class="sub">{esc(sub)} · all times CT · updated {esc(now)}</div>
 <div class="nav">{nav}
-<a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a></div>
+<a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><a href="./sandbox.html#method">Method</a></div>
 
 <details class="how">
 <summary>{explain_summary}</summary>

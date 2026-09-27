@@ -312,8 +312,6 @@ def page_html(data, now):
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Today</title>
 <meta name="description" content="Every tracked fixture kicking off today — the leads' control group, with the market price and the model on every one.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
 --pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}}
@@ -420,9 +418,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Today</h1>
 <div class="sub">Every tracked fixture kicking off today · the leads' control group · all times CT · updated {esc(now)}</div>
-<div class="nav"><a href="./">Leads</a>
-<a href="./streaks.html">Streaks</a><a href="./sandbox.html">Sandbox</a>
-<a class="on" href="./today.html">Today</a><a href="./sandbox.html">Sandbox</a><a href="./qa.html">QA</a><a href="./production.html">Production</a></div>
+<div class="nav"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><a href="./sandbox.html#method">Method</a></div>
 
 <div class="note">The whole day, in kickoff order: <b>what the rules picked, what they
 passed over, and what the market and the model say about all of it.</b> A fixture with a lead

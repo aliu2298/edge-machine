@@ -449,8 +449,6 @@ def page_html(ld, fr, bk, now, rc=None):
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Record</title>
 <meta name="description" content="Every measured result, judged against what the teams involved do anyway.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{{--bg:#0a0d14;--card:#10141d;--bd:#232936;--fg:#eef2f7;--mut:#8b94a7;
 --pos:#3fb970;--neg:#e06c75;--warn:#f0b429;--acc:#7aa2f7}}
@@ -506,7 +504,7 @@ footer{{margin-top:40px;font-size:12px;color:var(--mut);text-align:center}}
 </style></head><body><div class="wrap">
 <h1>Edge Machine · Record</h1>
 <div class="sub">Everything that has been graded · all times CT · updated {esc(now)}</div>
-<div class="nav"><a class="on" href="./record.html">Record</a><a class="" href="./sandbox.html">Sandbox</a><a class="" href="./production.html">Production</a></div>
+<div class="nav"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><a href="./sandbox.html#method">Method</a></div>
 
 <div class="note warn">Every graded result on one table, sorted like the Sandbox: <b>working</b> and <b>not
 working</b> need 30+ graded; under that a result is only leaning. Each row is measured against a
