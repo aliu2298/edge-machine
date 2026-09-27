@@ -46,6 +46,28 @@ def esc(x):
     return html.escape(str(x))
 
 
+# http(s) only, scheme case ignored. javascript: and data: are not links.
+_SAFE_SCHEME = re.compile(r"^https?://", re.IGNORECASE)
+
+
+def safe_href(url, label):
+    """Render label as an external link only when url is http or https.
+
+    Contest links come from stored rows. Kalshi ones are built as https at
+    render time; every other venue keeps the url it was logged with, and that
+    stored value is not checked when it is written. Trim, then allow only
+    http:// and https://. Anything else — javascript:, data:, a missing
+    scheme — is the escaped label with no href. The url is escaped too, and
+    an external link does not leak the referrer.
+    """
+    text = esc(label)
+    href = str("" if url is None else url).strip()
+    if not _SAFE_SCHEME.match(href):
+        return text
+    return (f'<a href="{esc(href)}" target="_blank" rel="noopener noreferrer">'
+            f"{text}</a>")
+
+
 def pct(x, digits=1, sign=False):
     if x is None:
         return "—"
@@ -339,7 +361,7 @@ def open_rows(d, limit=None):
         side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
 <td>{esc(S.SPORTS[q['sport']])}</td>
-<td><a href="{esc(S.market_url(q))}" target="_blank" rel="noopener">{esc(S.display_label(q))}</a></td>
+<td>{safe_href(S.market_url(q), S.display_label(q))}</td>
 <td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
 <td><b>{esc(side)}</b></td>
 <td class="num">{q['price']:.2f}</td>
@@ -999,11 +1021,12 @@ and the verdict column above goes on reading the whole record. A competition get
 {''.join(folds)}</details>"""
 
 
-_TH = re.compile(r"<th[^>]*>(.*?)</th>", re.S)
-_TD = re.compile(r"<td(?:\s[^>]*)?>(.*?)</td>", re.S)
+_TH = re.compile(r"<th(\s[^>]*)?>(.*?)</th>", re.S)
+_TD = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 _DASH = re.compile(r"^(?:\s|—|-)*$")
 _TR = re.compile(r"<tr>.*?</tr>", re.S)
 _TABLE = re.compile(r"<table>(.*?)</table>", re.S)
+_ATTR_INT = re.compile(r"\b([A-Za-z]+)\s*=\s*\"(\d+)\"")
 
 
 def cards_css(sel):
@@ -1043,6 +1066,74 @@ text-align:left;padding:0 0 7px}}
 """
 
 
+def _attr_int(attrs, name):
+    """colspan/rowspan from a generated opening tag. Missing or zero means one."""
+    for key, val in _ATTR_INT.findall(attrs or ""):
+        if key.lower() == name:
+            n = int(val)
+            return n if n >= 1 else 1
+    return 1
+
+
+def _th_text(inner):
+    """Header text with tags turned into spaces, so 'Leads<br>to come' stays two words."""
+    return re.sub(r"<[^>]+>", " ", inner).strip()
+
+
+def _header_rows(body):
+    """The leading <tr> rows that are headers, and nothing after the first data row.
+
+    Group rows are <tr class="grp"> and are not matched here, same as before. A header
+    row is one that contains <th and no <td>.
+    """
+    rows = []
+    for rm in _TR.finditer(body):
+        row = rm.group(0)
+        if "<th" in row and "<td" not in row:
+            rows.append(rm)
+            continue
+        break
+    return rows
+
+
+def _column_labels(header_rows):
+    """The name of each column, honouring rowspan and colspan.
+
+    A cell's label is the header in the lowest header row of its column. A group
+    title (colspan on the top row only) is not that name — the sub-header under it
+    is. A rowspan cell occupies the rows below it, so it stays the label of that
+    column. Reading every <th> in document order and pairing it with the Nth <td>
+    mis-names the Production table: the group titles are not columns, and the
+    second header row was being used as if it were the next cells of the first.
+    """
+    covered = {}
+    ncols = 0
+    for r, row_html in enumerate(header_rows):
+        c = 0
+        for m in _TH.finditer(row_html):
+            while (r, c) in covered:
+                c += 1
+            attrs = m.group(1) or ""
+            colspan = _attr_int(attrs, "colspan")
+            rowspan = _attr_int(attrs, "rowspan")
+            text = _th_text(m.group(2))
+            for dr in range(rowspan):
+                for dc in range(colspan):
+                    covered[(r + dr, c + dc)] = text
+            c += colspan
+        ncols = max(ncols, c)
+    labels = []
+    nrows = len(header_rows)
+    for col in range(ncols):
+        lab = ""
+        for r in range(nrows - 1, -1, -1):
+            if (r, col) in covered:
+                lab = covered[(r, col)]
+                break
+        labels.append(lab)
+    return labels
+
+
 def label_cells(page):
     """Give every table cell the name of its own column, for the phone layout.
 
@@ -1050,8 +1141,12 @@ def label_cells(page):
     has to swipe sideways for the record, which is the part they came for. Under 760px the
     stylesheet stacks each row into a card and prints the column name beside the value —
     which only works if the cell knows its column. That is attached here, read from each
-    table's own header row, rather than written by hand in six different row builders where
+    table's own header, rather than written by hand in six different row builders where
     a column added to one and not the other would silently mislabel a number.
+
+    Headers may be more than one row. rowspan and colspan are followed so a cell is
+    named for the column it sits in, and every header row stays in <thead> — a second
+    header row left in the body is a row of labels the phone layout would show as data.
 
     Generated markup only: no nested tables, every cell opened with a plain <td>.
     """
@@ -1059,29 +1154,31 @@ def label_cells(page):
     for m in _TABLE.finditer(page):
         out.append(page[pos:m.start()])
         body = m.group(1)
-        heads = [re.sub(r"<[^>]+>", " ", h).strip() for h in _TH.findall(body)]
+        heads = _column_labels([rm.group(0) for rm in _header_rows(body)])
 
         def one_row(rm):
-            i = [0]
+            col = [0]
 
             def cell(cm):
-                k = i[0]
-                i[0] += 1
+                attrs = cm.group(1) or ""
+                k = col[0]
+                col[0] += _attr_int(attrs, "colspan")
                 lab = heads[k] if k < len(heads) else ""
                 # A cell holding nothing but a dash is a column this row has no answer for.
                 # Worth a blank in a grid, where the eye skips it; worth nothing on a phone,
                 # where it is a whole labelled line saying "no". Marked here, hidden there.
-                inner = re.sub(r"<[^>]+>", "", cm.group(1))
+                inner = re.sub(r"<[^>]+>", "", cm.group(2))
                 empty = ' data-empty="1"' if _DASH.match(html.unescape(inner)) else ""
                 open_tag = cm.group(0)[:cm.group(0).index(">")]
-                return f'{open_tag} data-l="{esc(lab)}"{empty}>{cm.group(1)}</td>'
+                return f'{open_tag} data-l="{esc(lab)}"{empty}>{cm.group(2)}</td>'
             return _TD.sub(cell, rm.group(0))
 
         body = _TR.sub(one_row, body)
-        first = _TR.search(body)
-        if first and "<th" in first.group(0):
-            body = (body[:first.start()] + "<thead>" + first.group(0) + "</thead><tbody>"
-                    + body[first.end():] + "</tbody>")
+        headers = _header_rows(body)
+        if headers:
+            first, last = headers[0], headers[-1]
+            body = (body[:first.start()] + "<thead>" + body[first.start():last.end()]
+                    + "</thead><tbody>" + body[last.end():] + "</tbody>")
         out.append("<table>" + body + "</table>")
         pos = m.end()
     out.append(page[pos:])
