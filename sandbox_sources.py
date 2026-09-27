@@ -599,7 +599,15 @@ SOURCES = {
              "family-wise 5% at |z| >= 4.16; this is 3.52, and the largest cell anywhere is "
              "4.30 in Turkey. Break-even ask is 0.543 at the measured rate, so the 0.54 "
              "ceiling will bite often. ~2.8 bets a matchweek. Judged against backing BTTS on "
-             "every match of this market."),
+             "every match of this market. RE-MEASURED 2026-09-26 on the last three seasons, "
+             "the window this project now uses, and it HOLDS: 352 matches, 56.2% against "
+             "49.7% priced — +6.2pp at z +2.32, larger than the +4.7pp quoted above. The "
+             "realized rate barely moves across windows (0.553 over thirteen seasons, 0.562 "
+             "over three, 0.565 on the two in-seasons, 0.558 held out), which is the "
+             "reassuring part; the held-out z of +0.60 is weak only because n falls to 113. "
+             "League-wide support on the same three seasons, with nothing selected: BTTS "
+             "+2.9pp (z +1.96) and favourite-to-score +3.1pp (z +2.60), both the same "
+             "direction as this lane. Parameters unchanged, expectation revised upward."),
     "liga_u15_dog": dict(
         label="La Liga under 1.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_o15"], baseline="population",
@@ -619,7 +627,22 @@ SOURCES = {
              "at about five to one, so long losing runs are normal and at ~2 bets a matchweek "
              "the 30-bet floor is roughly fifteen weeks out. Break-even on the No side is "
              "0.204 at the measured rate. Judged against backing the under on every match of "
-             "this market."),
+             "this market. RE-MEASURED 2026-09-26 on the last three seasons, and THE MOST "
+             "RECENT SEASON CONTRADICTS THIS LANE. Over three seasons the band still reads "
+             "-5.8pp (z -2.03), but split two-seasons-in against 2025/26 held out it goes "
+             "-8.2pp (z -2.38) then +0.2pp (z +0.04): in 2025/26 these matches ran over 1.5 "
+             "at 86.3% against 84.4% implied, which is the OPPOSITE of the thesis that heavy "
+             "La Liga mismatches are quieter than priced. The whole short-window reading "
+             "rests on 2023/24 and 2024/25. La Liga is also no longer the under league it was "
+             "across thirteen seasons: on the recent window over 1.5 is +0.4pp, over 2.5 "
+             "-0.7pp, over 3.5 -1.4pp, none of it significant. KEPT ANYWAY, deliberately and "
+             "with the case against it stated here rather than discovered later. Unlike "
+             "bund_o35_draw — retired the same day when four of its seven lines flipped sign "
+             "out of sample — this lane had a strong thirteen-season record that was "
+             "consistent across BOTH halves (-2.9pp then -7.7pp), and one held-out season of "
+             "51 matches is thin evidence to overturn that. It costs nothing in the Sandbox "
+             "and the forward record settles it. Read it against THIS paragraph, not the "
+             "figures above: if the reversal is real, this lane should lose."),
     "bund_o35": dict(
         label="Bundesliga over 3.5, every match", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_u35"], baseline="population",
@@ -690,7 +713,21 @@ SOURCES = {
              "and a 0.81 ceiling that BINDS often, since Kalshi quotes Eredivisie over-1.5 at "
              "0.84-0.93 on the mismatches it lists most. Judged against backing over 1.5 on "
              "every match of this market over the same period, so it only counts if THIS band "
-             "beats overs in general."),
+             "beats overs in general. RE-MEASURED 2026-09-26 on the last three seasons, and "
+             "it is WEAKER there — keep this lane's record against the short-window numbers, "
+             "not the ones above. The effect is larger (+5.6pp against +4.1pp) but n falls to "
+             "192, so z drops to +1.88, BELOW the 2.0 this project's BUILD rule requires, and "
+             "both sub-periods are under 1.6 (+6.0pp then +4.8pp). At roughly 64 band matches "
+             "a season, three years cannot resolve a 5pp effect. Two things still support "
+             "running it: the direction never flips across any window, and Eredivisie "
+             "LEAGUE-WIDE over 1.5 is +2.6pp at z +1.98 on the same three seasons with "
+             "nothing selected, so the league does beat its over-1.5 price generally and this "
+             "band is a concentration of something real. RETRACTED: the comment block above "
+             "describes this band as a WIDER DISTRIBUTION — over 1.5 and over 3.5 both up "
+             "with over 2.5 flat. On three seasons that does not hold. In the same band BTTS "
+             "runs -3.5pp and dog-to-score -3.1pp, so fewer matches have both teams scoring, "
+             "which is not a spread story. The selection is unchanged; the explanation for it "
+             "is withdrawn until something replaces it."),
     "ere_draw": dict(
         label="Eredivisie draw band (de-vigged 0.20-0.25)", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer"], baseline="draw_population",
@@ -714,7 +751,18 @@ SOURCES = {
              "four of those thirteen lost money; and Kalshi's Eredivisie book is thin, so if "
              "the ask sits above 0.26 the rule correctly stops firing and there is no lane. "
              "Judged against backing the draw on every three-way match the Sandbox lists over "
-             "the same period, so it only counts if THIS band beats draws in general."),
+             "the same period, so it only counts if THIS band beats draws in general. "
+             "RE-MEASURED 2026-09-26 on the last three seasons, which is the window this "
+             "project now uses (a permutation test shows a 3-season grid is no noisier than a "
+             "13-season one because z scales with root-n). The band is STRONGER on the "
+             "current regime than the figures above: 280 matches, 29.6% drew against 22.7% "
+             "priced — +6.9pp at z +2.75, worth +22.56% at the average closing price and "
+             "+29.02% at the best, against the +4.1pp and +11.45% quoted from thirteen "
+             "seasons. Split two-seasons-in against 2025/26 held out it reads +4.3pp then "
+             "+10.8pp, so the held-out season is the strongest of all; nearly three in ten of "
+             "these matches drew in 2025/26. The twelve-league pooled check is still flat on "
+             "the short window (+0.6pp, z +0.76), so it remains an Eredivisie fact and not a "
+             "draw fact. Parameters unchanged — only the expectation is revised upward."),
     "team2_form_l10": dict(
         label="Team scores 2+ form rule (7+/10 scored 2+, opponent 7+/10 conceded 2+)",
         kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2", "soccer_team2_cup", "soccer_team2_intl"],
