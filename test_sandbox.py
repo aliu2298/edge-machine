@@ -278,6 +278,27 @@ close(s["pnl"], 50.0, "P/L is the sum of the two")
 close(s["roi"], 0.25, "ROI is P/L over total staked, not over winnings")
 close(s["brier"], ((0.6 - 1) ** 2 + (0.6 - 0) ** 2) / 2, "Brier over both graded quotes")
 
+# A price payout is in the P/L and out of the win count, the hit rate, and Brier.
+_price = quote(id="kalshi:p", market_id="p", status="settled", result="price",
+               settle_px=0.5, pnl=round(100.0 * (0.5 / 0.4 - 1.0), 2), prob_a=0.6)
+d = {"quotes": [
+    quote(id="kalshi:1", market_id="1", status="won", pnl=150.0, result="a"),
+    _price,
+], "meta": {}, "coverage": {}}
+s = T.score(d)["kalshi"]
+eq((s["settled"], s["won"]), (1, 1), "a price payout is not a win and not a settled-bet count")
+eq(s["hit"], 1.0, "win rate ignores the price payout")
+close(s["pnl"], 150.0 + _price["pnl"], "P/L still adds the price payout")
+eq(s["brier_n"], 1, "Brier does not score a price payout")
+_a = T.assess(d, "kalshi", sport="mlb")
+eq((_a["n"], _a["won"]), (1, 1), "assess() keeps the price payout out of n and won")
+close(_a["pnl"], 150.0 + _price["pnl"], "assess() P/L includes the price payout")
+close(_a["z"], (1 - 0.4) / (0.4 * 0.6) ** 0.5,
+      "the z-score is still the win against its price, with the payout left out")
+close(T.pnl_after_fee(_price),
+      round(100.0 * (0.5 / (0.4 + 0.06 * 0.4 * 0.6) - 1.0), 2),
+      "the fee comes off a price payout the same way it does a win")
+
 # Placeholder 0.50/0.50 books must not drown the accuracy column.
 d = {"quotes": [
     quote(id="polymarket:1", source="polymarket", market_id="1", status="graded",
@@ -2102,8 +2123,13 @@ _us_payload = {
     "/v1/markets/m50/settlement": {"slug": "m50", "settlement": 0.5},
     "/v1/markets/m77/settlement": {"slug": "m77", "settlement": 0.77},
     "/v1/markets/m48/settlement": {"slug": "m48", "settlement": 0.48},
+    "/v1/markets/mopen/settlement": {"slug": "mopen", "settlement": 0.77},
     "/v1/markets/mc/settlement": {"slug": "mc", "settlement": 0.4, "cancelled": True},
     "/v1/markets/mbad/settlement": {"slug": "mbad", "settlement": "pending"},
+    "/v1/market/slug/m50": {"market": {"status": "MARKET_STATUS_RESOLVED", "closed": True}},
+    "/v1/market/slug/m77": {"market": {"status": "MARKET_STATUS_RESOLVED", "closed": True}},
+    "/v1/market/slug/m48": {"market": {"status": "MARKET_STATUS_RESOLVED", "closed": True}},
+    "/v1/market/slug/mopen": {"market": {"status": "MARKET_STATUS_OPEN", "closed": False}},
     "/v1/markets/m1/bbo": {"marketData": {"bestBid": {"value": "0.63"}, "bestAsk": {"value": "0.65"}}},
 }
 _saved_get_us, _saved_leagues = S._get, S._pmus_leagues
@@ -2124,46 +2150,76 @@ try:
     eq(_by["m1"]["url"], "https://polymarket.us/event/ev1", "linked to the Polymarket US event")
     eq((S.resolve_polymarket_us("m1"), S.resolve_polymarket_us("m5"), S.resolve_polymarket_us("m9")),
        ("a", "b", None), "settlement 1 = first outcome won, 0 = lost, 404 = not yet")
-    S.PMUS_REVIEW.clear()
-    eq(S.resolve_polymarket_us("m50"), "void", "settlement exactly 0.5 is a void")
-    eq(S.resolve_polymarket_us("m77"), None,
-       "settlement 0.77 stays unresolved — not a void")
-    ok(len(S.PMUS_REVIEW) == 1 and S.PMUS_REVIEW[0][0] == "m77"
-       and abs(S.PMUS_REVIEW[0][1] - 0.77) < 1e-9,
-       "settlement 0.77 is flagged for review with the slug and the value")
-    eq(S.resolve_polymarket_us("m48"), None, "0.48 is not exactly 0.5, so it is not a void")
+    # On main, 0.77 and 0.5 both come back as the string "void". A final price pays out.
+    ok(S.resolve_polymarket_us("m77") != "void",
+       "settlement 0.77 is not a void")
+    eq(S.resolve_polymarket_us("m77"), ("price", 0.77),
+       "a final 0.77 settles at the price the venue paid")
+    eq(S.resolve_polymarket_us("m50"), ("price", 0.5),
+       "exactly 0.5 is a price settlement, not a void")
+    eq(S.resolve_polymarket_us("m48"), ("price", 0.48),
+       "0.48 is a price settlement, not a void")
+    eq(S.resolve_polymarket_us("mopen"), None,
+       "a 0.77 whose market is not final stays unresolved, not a void and not a price")
     eq(S.resolve_polymarket_us("mc"), "void", "an explicit cancel is a void")
     eq(S.resolve_polymarket_us("mbad"), None, "a non-numeric settlement is unsettled, not a void")
-    ok(all(slug != "mbad" for slug, _v in S.PMUS_REVIEW), "a non-numeric body is not flagged")
     eq(S.venue_price(dict(venue="polymarket_us", market_id="m1", pick="b")), 0.37,
        "the closing price for side B is 1 - bid on the US book")
 finally:
     S._get, S._pmus_leagues = _saved_get_us, _saved_leagues
 
-# An open bet whose market pays 0.77 must stay open. On main this settles void.
+# A final 0.77 pays the price. On main the same body is the string "void".
 _saved_get_77 = S._get
 def _get_77(url, tries=3, timeout=20):
-    if "aec-clean" in str(url):
+    u = str(url)
+    if "aec-clean" in u and u.endswith("/settlement"):
         return {"slug": "aec-clean", "settlement": 1}
-    if str(url).endswith("/settlement"):
+    if "aec-lost" in u and u.endswith("/settlement"):
+        return {"slug": "aec-lost", "settlement": 0}
+    if u.endswith("/settlement"):
         return {"slug": "aec-wta-annsis-ginfei-2026-09-26", "settlement": 0.77}
+    if "/v1/market/slug/" in u and "aec-open" not in u:
+        return {"market": {"status": "MARKET_STATUS_RESOLVED", "closed": True}}
     raise RuntimeError("404")
 S._get = _get_77
-S.PMUS_REVIEW.clear()
 try:
     _q77 = quote(id="tennis_fav_band:ann", source="tennis_fav_band", sport="tennis",
                  venue="polymarket_us", market_id="aec-wta-annsis-ginfei-2026-09-26",
                  pick="a", price=0.78, price_a=0.78, price_b=0.24, stake=100.0)
     T.grade({"quotes": [_q77], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
-    eq((_q77["status"], _q77["result"], _q77["pnl"], _q77["settled"]),
-       ("open", None, 0.0, None),
-       "an open Polymarket US bet at settlement 0.77 stays open with no P/L")
-    ok(S.PMUS_REVIEW and S.PMUS_REVIEW[-1][0] == "aec-wta-annsis-ginfei-2026-09-26",
-       "and grade()'s settlement read flags that slug for review")
+    eq((_q77["status"], _q77["result"], _q77["settle_px"]),
+       ("settled", "price", 0.77),
+       "a yes buyer at a final 0.77 is paid 0.77, not voided and not left open")
+    close(_q77["pnl"], round(100.0 * (0.77 / 0.78 - 1.0), 2),
+          "yes-buyer P/L is stake * (paid / entry - 1)")
+    _qno = quote(id="tennis_fav_band:no", source="tennis_fav_band", sport="tennis",
+                 venue="polymarket_us", market_id="aec-wta-annsis-ginfei-2026-09-26",
+                 pick="b", price=0.24, price_a=0.78, price_b=0.24, stake=100.0)
+    T.grade({"quotes": [_qno], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
+    eq((_qno["status"], _qno["result"], _qno["settle_px"]),
+       ("settled", "price", 0.23),
+       "a no buyer is paid 1 - settlement")
+    close(_qno["pnl"], round(100.0 * (0.23 / 0.24 - 1.0), 2),
+          "no-buyer P/L uses that paid price")
     eq(S.resolve_combo([
         dict(market_id="aec-clean", pick="a", venue="polymarket_us"),
         dict(market_id="aec-wta-annsis-ginfei-2026-09-26", pick="a", venue="polymarket_us"),
-    ]), None, "a Polymarket US leg at 0.77 keeps the basket unsettled, never void")
+    ]), ("price", 0.77), "a won leg times a 0.77 leg pays the product, never a void")
+    _qb = quote(id="pm_combo2:basket", source="pm_combo2", sport="tennis_pmcombo",
+                venue="combo", market_id="pmcombo2:day:x", pick="a", price=0.6168,
+                stake=100.0, legs=[
+                    dict(market_id="aec-clean", pick="a", venue="polymarket_us"),
+                    dict(market_id="aec-wta-annsis-ginfei-2026-09-26", pick="a", venue="polymarket_us")])
+    T.grade({"quotes": [_qb], "meta": {}, "coverage": {}}, verbose=False, mismatches=set())
+    eq((_qb["status"], _qb["result"]), ("settled", "price"),
+       "grade() records the basket as a price payout")
+    close(_qb["settle_px"], 0.77, "the basket's paid price is the product of the legs")
+    close(_qb["pnl"], round(100.0 * (0.77 / 0.6168 - 1.0), 2),
+          "basket P/L is stake * (paid / basket entry - 1)")
+    eq(S.resolve_combo([
+        dict(market_id="aec-lost", pick="a", venue="polymarket_us"),
+        dict(market_id="aec-open", pick="a", venue="polymarket_us"),
+    ]), "b", "a lost leg settles the basket even while another leg is unresolved")
 finally:
     S._get = _saved_get_77
 # The long side is whatever marketSides flags, not outcomes[0] — the live Dolphins/49ers
@@ -3399,8 +3455,8 @@ eq(S.resolve_combo(_L("A", "B")), "a", "every leg won, so the basket won")
 eq(S.resolve_combo(_L("A", "C")), "b", "one leg lost, so the whole basket lost")
 eq(S.resolve_combo(_L("A", "E")), None, "a basket with a leg still running is never settled early")
 eq(S.resolve_combo(_L("A", "D")), "void", "a voided leg refunds the basket")
-eq(S.resolve_combo(_L("C", "E")), None,
-   "and a lost leg does NOT settle it while another is open: the void could still refund it")
+eq(S.resolve_combo(_L("C", "E")), "b",
+   "a lost leg settles the basket even while another leg is unresolved")
 eq(S.resolve_combo([]), None, "a basket with no legs settles nothing")
 S.resolve_polymarket = _saved[0]
 
@@ -5842,22 +5898,31 @@ _basket = dict(id="pm_combo2:pmcombo2:day:x", source="pm_combo2", sport="tennis_
                settled="2026-09-26T13:05:59+00:00",
                legs=[dict(market_id="ciz", pick="b", venue="polymarket_us"),
                      dict(market_id="m77", pick="a", venue="polymarket_us")])
-_rows = [_half, _mid, _win, _noted, _same, _unknown, _other, _basket]
-_fetched = {"m50": ("void", 0.5), "m77": ("review", 0.77), "m1": ("a", 1.0),
-            "mnoted": ("review", 0.66), "m429": ("unknown", None), "ciz": ("b", 0.0)}
-_changed = _R.recheck(_rows, _fetched, _stamp)
+_open = dict(id="open:m48", source="polymarket_us", sport="tennis", market_id="m48",
+             venue="polymarket_us", status="open", result=None, bet=False, pick=None,
+             price=None, stake=0.0, pnl=0.0, settled=None,
+             start="2026-09-01T00:00:00+00:00")
+_rows = [_half, _mid, _win, _noted, _same, _unknown, _other, _basket, _open]
+_fetched = {"m50": ("price", 0.5), "m77": ("price", 0.77), "m1": ("a", 1.0),
+            "mnoted": ("price", 0.66), "m429": ("unknown", None), "ciz": ("b", 0.0),
+            "m48": ("price", 0.48)}
+_now = datetime(2026, 9, 27, tzinfo=timezone.utc)
+_changed = _R.recheck(_rows, _fetched, _stamp, now=_now)
 _by = {c["id"]: c for c in _changed}
 eq((_by["tennis_fav_band:m77"]["old_status"], _by["tennis_fav_band:m77"]["new_status"],
-    _by["tennis_fav_band:m77"]["old_pnl"], _by["tennis_fav_band:m77"]["new_pnl"]),
-   ("void", "open", 0.0, 0.0), "the change record keeps the old void, not the rewritten row")
+    _by["tennis_fav_band:m77"]["old_result"], _by["tennis_fav_band:m77"]["new_result"]),
+   ("void", "settled", "void", "price"),
+   "the change record keeps the old void and the new price")
+close(_by["tennis_fav_band:m77"]["new_pnl"], round(100.0 * (0.77 / 0.78 - 1.0), 2),
+      "a 0.77 yes buyer is paid 0.77 against its entry")
 eq((_by["src:m1"]["old_status"], _by["src:m1"]["new_status"], _by["src:m1"]["new_pnl"]),
    ("void", "won", 150.0), "a re-settled win records the old void and the new P/L")
-close(_R.paper_pnl(_changed), 150.0, "paper P/L is the newly settled stake, not the voids")
-eq(_mid["status"], "open", "a 0.77 void reopens")
-eq((_mid["result"], _mid["pnl"], _mid["settled"]), (None, 0.0, None),
-   "and its result, P/L and settle time are cleared")
-eq((_half["status"], _half["result"], _half["pnl"], _half["settled"]),
-   ("void", "void", 0.0, "2026-09-20T00:00:00+00:00"), "a 0.5 void stays a void")
+eq((_half["status"], _half["result"], _half["settle_px"]),
+   ("settled", "price", 0.5), "exactly 0.5 is a price settlement, not a void")
+close(_half["pnl"], round(100.0 * (0.5 / 0.40 - 1.0), 2),
+      "and it pays stake * (0.5 / entry - 1)")
+eq((_mid["status"], _mid["result"], _mid["settle_px"]),
+   ("settled", "price", 0.77), "a 0.77 void is paid 0.77")
 eq((_win["status"], _win["result"], _win["settled"]), ("won", "a", _stamp),
    "a clean 1 re-settles the pick as won")
 close(_win["pnl"], 150.0, "and pays stake * (1/price - 1), $100 at 0.40")
@@ -5866,12 +5931,21 @@ eq((_noted["status"], _noted["result"], _noted["note"]), ("void", "void", T.DUPL
 eq(_same["status"], "void", "a noted void on the same market as a 0.77 stays void")
 eq((_unknown["status"], _unknown["result"]), ("void", "void"),
    "a market that could not be re-checked is left void")
-eq((_basket["status"], _basket["result"], _basket["pnl"], _basket["settled"]),
-   ("open", None, 0.0, None), "a basket with a 0.77 leg reopens with the leg")
+eq((_basket["status"], _basket["result"], _basket["settle_px"]),
+   ("settled", "price", 0.77), "a basket with a won leg and a 0.77 leg is paid the product")
+close(_basket["pnl"], round(100.0 * (0.77 / 0.62 - 1.0), 2),
+      "basket P/L uses the product against the basket entry")
 eq((_other["status"], _other["pnl"]), ("won", 29.87), "a leg that was not a resolver void is not rewritten")
-_again = _R.recheck(_rows, _fetched, _stamp)
-eq(_again, [], "re-running changes nothing")
-eq(_mid["status"], "open", "and the reopened row stays open")
+eq((_open["status"], _open["result"], _open["pnl"]),
+   ("settled", "price", 0.0), "an open no-note row at a final price is closed, with no stake")
+close(_R.paper_pnl(_changed),
+      150.0 + round(100.0 * (0.5 / 0.40 - 1.0), 2)
+      + round(100.0 * (0.77 / 0.78 - 1.0), 2)
+      + round(100.0 * (0.77 / 0.62 - 1.0), 2),
+      "paper P/L sums the bets and leaves the no-bet row at 0")
+_again = _R.recheck(_rows, _fetched, _stamp, now=_now)
+eq(_again, [], "re-running under the price rule changes nothing")
+eq(_half["pnl"], round(100.0 * (0.5 / 0.40 - 1.0), 2), "and a 0.5 payout is not applied twice")
 eq(_win["pnl"], 150.0, "and the re-settled P/L is not applied twice")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")

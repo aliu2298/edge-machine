@@ -27,9 +27,10 @@ Checks, each an ERROR (fails the run) unless marked:
               the ledger's last grading run, so the grader had its chance and missed it. A
               venue still pending is a WARNING (the venue is late); so is one that went final
               after the last run (the next run settles it). A Polymarket US price strictly
-              between 0 and 1, other than exactly 0.5 and other than an explicit cancel, is
-              a WARNING flagged for review — this check reads the settlement itself, so a
-              resolver that voids that price cannot turn the warning into a pass. Kalshi took
+              between 0 and 1, including exactly 0.5, is a price payout once the market is
+              final — not a void and not a review flag. This check reads the settlement and
+              the market status itself, so a resolver that voids that price cannot turn the
+              warning into a pass or into a win. Kalshi took
               2.4 days to settle WTI on 2026-09-18 and finalised it eight minutes after a
               grading run — a check that could not tell those apart called a healthy grader broken.
   copy        no public file uses the phrases the public pages are kept free of.
@@ -126,6 +127,9 @@ def check_bets(d, rep):
             if st in ("won", "lost"):
                 rep.error("bets", f"{tag}: a non-bet is marked {st}")
                 bad += 1
+            elif q.get("result") == "price" and abs(q.get("pnl") or 0) > 0.001:
+                rep.error("bets", f"{tag}: a non-bet price payout carries P/L {q.get('pnl')}")
+                bad += 1
             continue
         p, stake = q.get("price"), q.get("stake")
         if stake != T.STAKE:
@@ -149,6 +153,16 @@ def check_bets(d, rep):
         elif st == "void" and abs(q.get("pnl") or 0) > 0.001:
             rep.error("bets", f"{tag}: void but carries P/L {q['pnl']}")
             bad += 1
+        elif q.get("result") == "price" or st == "settled":
+            paid = q.get("settle_px")
+            if q.get("result") != "price" or st != "settled" or paid is None or not q.get("settled"):
+                rep.error("bets", f"{tag}: a price payout needs result price, status settled, "
+                                  f"a paid price and a settle time")
+                bad += 1
+            elif abs(q["pnl"] - round(stake * (float(paid) / p - 1.0), 2)) > PNL_TOL:
+                rep.error("bets", f"{tag}: price payout {paid} at {p}, P/L {q['pnl']} should be "
+                                  f"{round(stake * (float(paid) / p - 1.0), 2)}")
+                bad += 1
         if st in ("won", "lost"):
             if q.get("result") is None or not q.get("settled"):
                 rep.error("bets", f"{tag}: {st} with no result or settle time")
@@ -258,14 +272,84 @@ def check_production(d, st, rep):
                              f"every open lead belongs to one of them")
 
 
+def _venue_settlement(q):
+    """The long-side number a price quote was paid against, or None."""
+    px = q.get("settle_px")
+    if px is None:
+        return None
+    px = float(px)
+    if q.get("pick") == "b":
+        return 1.0 - px
+    return px
+
+
+def _leg_view(leg, rows):
+    """(kind, leg_payout) from quotes already stored on this leg's market.
+
+    kind is 'a'/'b'/'void'/'price'. A loss is the market's side, not this leg's
+    pick. A price payout is the fair price of the side the basket bought.
+    """
+    if not rows:
+        return None
+    matched = [q for q in rows if q.get("pick") == leg.get("pick")]
+    pool = matched or rows
+    for q in pool:
+        if q.get("result") in ("a", "b", "void"):
+            return q.get("result"), None
+    for q in pool:
+        if q.get("result") != "price":
+            continue
+        venue = _venue_settlement(q)
+        if venue is None:
+            continue
+        if leg.get("pick") == "b":
+            return "price", 1.0 - venue
+        if leg.get("pick") == "a":
+            return "price", venue
+    return None
+
+
+def _basket_expect(legs, by_market):
+    """What the stored leg results say the basket is, or None if a leg is missing.
+
+    'b' as soon as a stored leg has lost. ('price', product) when a leg paid a
+    fair price and none lost. 'void' when a leg is void and none lost.
+    """
+    product = 1.0
+    priced = False
+    voided = False
+    for leg in legs:
+        view = _leg_view(leg, by_market.get(leg.get("market_id")) or [])
+        if view is None:
+            return None
+        kind, paid = view
+        if kind in ("a", "b"):
+            if kind != leg.get("pick"):
+                return "b"
+            continue
+        if kind == "void":
+            voided = True
+            continue
+        if kind == "price" and paid is not None:
+            product *= paid
+            priced = True
+            continue
+        return None
+    if voided:
+        return "void"
+    if priced:
+        return ("price", product)
+    return "a"
+
+
 def check_combos(d, rep):
     """Every basket: the legs its name says, no leg shared with another basket of its size, and
     a settled result that matches its legs' own recorded results in the ledger."""
     qs = [q for q in T.all_bets(d) if q.get("sport") in T.COMBO_SPORTS]
-    leg_res = {}
+    by_market = collections.defaultdict(list)
     for q in T.all_bets(d):
-        if q.get("sport") == "tennis" and q.get("result") in ("a", "b", "void"):
-            leg_res.setdefault(q["market_id"], q["result"])
+        if q.get("sport") == "tennis" and q.get("result") in ("a", "b", "void", "price"):
+            by_market[q["market_id"]].append(q)
     used, checked = collections.Counter(), 0
     for q in qs:
         legs = q.get("legs") or []
@@ -277,12 +361,20 @@ def check_combos(d, rep):
             rep.error("combos", f"{q['id']}: named for {want} legs, holds {len(legs)}")
             continue
         used.update((len(legs), l["market_id"]) for l in legs)
-        rs = [leg_res.get(l["market_id"]) for l in legs]
-        if q.get("status") in ("won", "lost", "void") and None not in rs:
-            expect = "void" if "void" in rs else ("a" if all(r == l["pick"] for r, l in zip(rs, legs)) else "b")
-            if q.get("result") != expect:
-                rep.error("combos", f"{q['id']}: settled {q.get('result')}, but its legs say {expect}")
+        if q.get("status") not in ("won", "lost", "void", "settled"):
+            continue
+        expect = _basket_expect(legs, by_market)
+        if expect is None:
+            continue
+        if isinstance(expect, tuple):
+            paid = q.get("settle_px")
+            if q.get("result") != "price" or paid is None or abs(float(paid) - expect[1]) > 1e-4:
+                rep.error("combos", f"{q['id']}: price payout {paid}, but its legs pay {expect[1]}")
             checked += 1
+            continue
+        if q.get("result") != expect:
+            rep.error("combos", f"{q['id']}: settled {q.get('result')}, but its legs say {expect}")
+        checked += 1
     for (n, leg), k in used.items():
         if k > 1:
             rep.error("combos", f"leg {leg} sits in {k} {n}-leg baskets: they are not independent")
@@ -448,9 +540,10 @@ def check_fresh(d, rep, now=None):
 def _pmus_kind(payload):
     """This audit's own reading of a Polymarket US settlement payload.
 
-    Independent of resolve_polymarket_us. 'review' is a final price strictly between
-    0 and 1 that is not exactly 0.5 and not an explicit cancel. That must be a warning,
-    never a void and never a silent pass. None means the body is not a settlement.
+    Independent of resolve_polymarket_us. 'price' is a numeric settlement strictly
+    between 0 and 1, including exactly 0.5: the price the venue paid, not a winner
+    and not a void. It counts only once the market payload also says the market is
+    final. None means the body is not a settlement.
     """
     if not isinstance(payload, dict):
         return None, None
@@ -476,15 +569,33 @@ def _pmus_kind(payload):
         return "a", st
     if st <= 0.01:
         return "b", st
-    if abs(st - 0.5) <= 1e-9:
-        return "void", st
     if 0.0 < st < 1.0:
-        return "review", st
+        return "price", st
     return None, None
 
 
+def _pmus_market_final(slug):
+    """True only when this audit's own read says the market is closed and resolved."""
+    if not slug:
+        return False
+    url = f"{S.PMUS}/v1/market/slug/{urllib.parse.quote(str(slug))}"
+    try:
+        body = S._get(url, tries=1, timeout=20)
+    except Exception:
+        return False
+    market = body.get("market") if isinstance(body, dict) else None
+    if not isinstance(market, dict):
+        return False
+    return (market.get("closed") is True
+            and str(market.get("status") or "") == "MARKET_STATUS_RESOLVED")
+
+
 def _ask_pmus(slug):
-    """(kind, value) from the gateway, or (None, None) when it does not answer."""
+    """(kind, value) from the gateway, or (None, None) when it does not answer.
+
+    A price is returned only when the market is final. An error or a market that
+    is still open is (None, None), never a void and never a price.
+    """
     if not slug:
         return None, None
     url = f"{S.PMUS}/v1/markets/{urllib.parse.quote(str(slug))}/settlement"
@@ -492,42 +603,84 @@ def _ask_pmus(slug):
         body = S._get(url, tries=1, timeout=20)
     except Exception:
         return None, None
-    return _pmus_kind(body)
+    kind, val = _pmus_kind(body)
+    if kind == "price" and not _pmus_market_final(slug):
+        return None, None
+    return kind, val
 
 
-def _review_text(market_id, value):
-    return (f"Polymarket US {market_id} settled at {value:g}, neither a winner nor a void; "
-            f"flagged for review")
+def _shown_result(r):
+    """How a venue answer is named in a stale warning. A price is not a side."""
+    settlement = S._price_result(r)
+    if settlement is not None:
+        return f"price {settlement:g}"
+    return r
 
 
-def _combo_review_text(q):
-    """The first Polymarket US leg that settled in between, or None.
+def _leg_answer(leg):
+    """One leg, read without resolve_polymarket_us or resolve_combo."""
+    v = leg.get("venue")
+    mid = leg.get("market_id")
+    if v == "polymarket_us":
+        kind, val = _ask_pmus(mid)
+        if kind == "price":
+            return ("price", val)
+        return kind if kind in ("a", "b", "void") else None
+    if v == "kalshi":
+        return S.resolve_kalshi(mid)
+    if v == "kalshi_binary":
+        return S.resolve_kalshi_market(mid)
+    return S.resolve_polymarket(mid)
 
-    Reads each leg's settlement itself. Does not ask resolve_combo, which would
-    hide the price behind the resolver's None.
+
+def _combo_outcome(q):
+    """The basket's answer from its legs, independent of resolve_combo.
+
+    A lost leg settles it even when another leg has not. A final in-between
+    price is a payout in the product, not a void.
     """
-    for leg in q.get("legs") or []:
-        if leg.get("venue") != "polymarket_us":
+    legs = q.get("legs") or []
+    if not legs:
+        return None
+    product = 1.0
+    priced = False
+    voided = False
+    pending = False
+    for leg in legs:
+        res = _leg_answer(leg)
+        settlement = S._price_result(res)
+        if settlement is not None:
+            product *= S.pmus_paid(leg.get("pick"), settlement)
+            priced = True
             continue
-        kind, val = _ask_pmus(leg.get("market_id"))
-        if kind == "review":
-            return _review_text(leg.get("market_id"), val)
-    return None
+        if res is None:
+            pending = True
+            continue
+        if res == "void":
+            voided = True
+            continue
+        if res != leg.get("pick"):
+            return "b"
+    if pending:
+        return None
+    if voided:
+        return "void"
+    if priced:
+        return ("price", product)
+    return "a"
 
 
 def _stale_answer(q, network):
-    """(result, review_message). A review message means flag and stop."""
+    """(result, review_message). review_message stays None: a price is a result."""
     if not network:
         return None, None
     if q.get("venue") == "polymarket_us":
         kind, val = _ask_pmus(q.get("market_id"))
-        if kind == "review":
-            return None, _review_text(q.get("market_id"), val)
+        if kind == "price":
+            return ("price", val), None
         return kind if kind in ("a", "b", "void") else None, None
     if q.get("venue") == "combo":
-        text = _combo_review_text(q)
-        if text:
-            return None, text
+        return _combo_outcome(q), None
     return _resolve(q), None
 
 
@@ -551,17 +704,17 @@ def check_stale(d, rep, network, now=None):
             continue
         final = _final_at(q)
         if final and graded and final < graded:
-            rep.error("stale", f"{q['id']}: the venue went final ({r}) at {final:%Y-%m-%d %H:%M}Z, "
+            rep.error("stale", f"{q['id']}: the venue went final ({_shown_result(r)}) at {final:%Y-%m-%d %H:%M}Z, "
                                f"before the last grading run at {graded:%H:%M}Z, and the ledger still "
                                f"has it open — the grader missed it")
         elif final and graded:
-            rep.warn("stale", f"{q['id']}: the venue went final ({r}) at {final:%Y-%m-%d %H:%M}Z, after "
+            rep.warn("stale", f"{q['id']}: the venue went final ({_shown_result(r)}) at {final:%Y-%m-%d %H:%M}Z, after "
                               f"the last grading run at {graded:%H:%M}Z; the next run settles it")
         elif age > 24 * 7:
-            rep.error("stale", f"{q['id']}: the venue is final ({r}) and the ledger has had it open "
+            rep.error("stale", f"{q['id']}: the venue is final ({_shown_result(r)}) and the ledger has had it open "
                                f"{age / 24:.0f} days — far past any delay the grader could have")
         else:
-            rep.warn("stale", f"{q['id']}: the venue is final ({r}); it cannot say when, so if this "
+            rep.warn("stale", f"{q['id']}: the venue is final ({_shown_result(r)}); it cannot say when, so if this "
                               f"is still here next audit the grader has missed it")
 
 

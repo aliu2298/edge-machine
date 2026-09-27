@@ -20,7 +20,8 @@ data/production_leads.json is the machine-readable feed. It has the Leads ledger
   * bet {"kind": "match_result", "side": "home" | "away" | "draw"} (home = the Kalshi event's first
     side, sandbox_sources.kalshi_sides), or {"kind": "total_gte", "n": 2} /
     {"kind": "team_gte", "n": 1 | 2, "team": ...} — the Leads board's own bet vocabulary
-  * status pending / hit / miss / void from the Sandbox settlement
+  * status pending / hit / miss / void / price from the Sandbox settlement.
+    A price payout is the amount the venue paid. It is not a hit, a miss, or a void.
   * last_seen_at == board_built_at on every lead still open; a lead whose pair has left
     Production is dropped from the file, which reads as withdrawn
 
@@ -35,7 +36,7 @@ import sandbox_track as T
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FEED = os.path.join(ROOT, "data", "production_leads.json")
 KEEP_SETTLED_DAYS = 7          # settled leads stay in the feed this long, so results can be joined
-STATUS = {"open": "pending", "won": "hit", "lost": "miss", "void": "void"}
+STATUS = {"open": "pending", "won": "hit", "lost": "miss", "void": "void", "settled": "price"}
 
 
 def esc(x):
@@ -303,7 +304,8 @@ def page(d, st, blob, style, now=None):
     upcoming = sorted((l for l in leads if l["status"] == "pending"
                        and l["kickoff"] >= now_dt.strftime("%Y-%m-%dT%H:%MZ")),
                       key=lambda l: l["kickoff"])
-    settled = sorted((l for l in leads if l["status"] in ("hit", "miss")),
+    landed = [l for l in leads if l["status"] in ("hit", "miss")]
+    settled = sorted((l for l in leads if l["status"] in ("hit", "miss", "price")),
                      key=lambda l: l["kickoff"], reverse=True)
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
@@ -361,9 +363,9 @@ def page(d, st, blob, style, now=None):
     rec_rows = "".join(
         f"""<tr><td class="mut">{esc(l['kickoff'][:10])}</td><td>{esc(l['match'])}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
-<td class="num"><span class="{'pos' if l['status'] == 'hit' else 'neg'}">{'landed' if l['status'] == 'hit' else 'missed'}</span></td></tr>"""
+<td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else ('paid' if l['status'] == 'price' else 'missed')}</span></td></tr>"""
         for l in recent)
-    hits = sum(1 for l in settled if l["status"] == "hit")
+    hits = sum(1 for l in landed if l["status"] == "hit")
     recent_html = (f"""<div class="tbl"><table><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Result</th></tr>{rec_rows}</table></div>""" if rec_rows else
                    '<div class="note">Nothing has settled since these pairs were moved.</div>')
@@ -395,7 +397,7 @@ details.fold details.fold>summary{{margin:12px 0 6px;font-size:14px}}</style>
 <div class="tiles">
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
 <div class="tile"><b>{len(upcoming)}</b><span>leads still to come</span></div>
-<div class="tile"><b>{hits}/{len(settled)}</b><span>recent leads landed</span></div>
+<div class="tile"><b>{hits}/{len(landed)}</b><span>recent leads landed</span></div>
 <div class="tile"><b style="font-size:17px">{esc(nxt)}</b><span>next lead (UTC)</span></div>
 </div>
 
@@ -409,7 +411,7 @@ dearer after they were published.</p>
 <details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {len(upcoming)} leads over {len(by_day)} day{'s' if len(by_day) != 1 else ''}</span></summary>
 {upcoming_html}</details>
 
-<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· {hits} of {len(settled)} landed</span></summary>
+<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· {hits} of {len(landed)} landed</span></summary>
 {recent_html}</details>
 
 <details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· {held}</span></summary>

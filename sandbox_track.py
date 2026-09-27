@@ -1159,8 +1159,9 @@ DECISIVE_RESULTS = ("a", "b", "draw")
 # only when the audit has put it on the watch list.
 REGRADE_HOURS = 48
 REGRADE_CAP = 150          # per venue, a spike must not turn the window into a full scan
-_SETTLED = ("won", "lost", "graded", "void")
-_STORED_RESULTS = ("a", "b", "draw", "void")
+# 'settled' is a price payout: finished, but not a win, a loss, or a void.
+_SETTLED = ("won", "lost", "graded", "void", "settled")
+_STORED_RESULTS = ("a", "b", "draw", "void", "price")
 
 
 def load_settlement_watch(path=None):
@@ -1230,8 +1231,23 @@ def _apply_result(q, res, stamp):
     The same rules as a first grading. Brier is not stored on the quote — score()
     and prune() both read `result` — so rewriting it is what corrects the score.
     A no-bet quote is scored and never staked. A draw beats a side bet; it is
-    not a refund.
+    not a refund. A ('price', settlement) answer pays the side's fair price:
+    result 'price', status 'settled', settle_px the amount that side was paid.
+    That is a payout, counted in P/L, and it is not a win, a loss, or a void.
     """
+    settlement = S._price_result(res)
+    if settlement is not None:
+        paid = round(S.pmus_paid(q.get("pick"), settlement), 6)
+        q["result"] = "price"
+        q["settle_px"] = paid
+        q["settled"] = stamp
+        q["status"] = "settled"
+        if q.get("bet") and q.get("price"):
+            q["pnl"] = round(float(q["stake"]) * (paid / float(q["price"]) - 1.0), 2)
+        else:
+            q["pnl"] = 0.0
+        return
+    q.pop("settle_px", None)
     q["result"] = res
     q["settled"] = stamp
     if res == "void":
@@ -1275,7 +1291,7 @@ def _regrade_markets(quotes, now, watched, skip_ids):
             continue
         key = (q.get("venue"), q.get("market_id"))
         flagged = key in watched
-        recent = bool(q.get("bet") and q.get("status") in ("won", "lost", "void")
+        recent = bool(q.get("bet") and q.get("status") in ("won", "lost", "void", "settled")
                       and (q.get("settled") or "") >= cutoff)
         if not flagged and not recent:
             continue
@@ -1378,9 +1394,12 @@ def score(d, sport=None):
                 and (sport is None or q["sport"] == sport)]
         bets = [q for q in rows if q["bet"]]
         done = [q for q in bets if q["status"] in ("won", "lost")]
+        # A price payout is money. It is not a win or a loss, so it stays out of
+        # the hit rate, and out of Brier below (that filter wants a side).
+        priced = [q for q in bets if q.get("status") == "settled" and q.get("result") == "price"]
         won = [q for q in done if q["status"] == "won"]
-        staked = sum(q["stake"] for q in done)
-        pnl = sum(q["pnl"] for q in done)
+        staked = sum(q["stake"] for q in done) + sum(q["stake"] for q in priced)
+        pnl = sum(q["pnl"] for q in done) + sum(q["pnl"] for q in priced)
 
         # An untraded 0.50/0.50 book is excluded from Brier as well as from betting.
         # Table tennis is overwhelmingly made of these, and scoring a flat 0.5 against a
@@ -1487,10 +1506,18 @@ def baselines(d, sport=None):
 
 
 def pnl_after_fee(q):
-    """A settled bet's P/L if the taker fee had been paid on top of the price."""
+    """A settled bet's P/L if the taker fee had been paid on top of the price.
+
+    A win pays 1. A price payout pays settle_px, and the fee comes off the same
+    way: the stake buys `paid` at `price + fee` instead of at `price`.
+    """
     p = q["price"]
     fee = FEE_RATE.get(q.get("venue") or "polymarket", 0.07) * p * (1 - p)
-    return round(STAKE * (1.0 / (p + fee) - 1.0), 2) if q["status"] == "won" else -STAKE
+    if q["status"] == "won":
+        return round(STAKE * (1.0 / (p + fee) - 1.0), 2)
+    if q.get("result") == "price" and q.get("settle_px") is not None:
+        return round(STAKE * (float(q["settle_px"]) / (p + fee) - 1.0), 2)
+    return -STAKE
 
 
 def faded(d, name, sport=None, venues=None):
@@ -1587,11 +1614,20 @@ def league_split(d, name, sport=None, venues=None):
             and q["status"] in ("won", "lost")
             and (sport is None or q["sport"] == sport)
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    priced = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+              and q.get("status") == "settled" and q.get("result") == "price"
+              and (sport is None or q["sport"] == sport)
+              and (venues is None or (q.get("venue") or "polymarket") in venues)]
     by = {}
     for q in bets:
         by.setdefault(S.display_league(q) or "Other competitions", []).append(q)
+    price_by = {}
+    for q in priced:
+        price_by.setdefault(S.display_league(q) or "Other competitions", []).append(q)
     out = []
-    for lg, qs in by.items():
+    for lg in list(dict.fromkeys(list(by) + list(price_by))):
+        qs = by.get(lg) or []
+        pq = price_by.get(lg) or []
         n = len(qs)
         won = sum(1 for q in qs if q["status"] == "won")
         exp = sum(q["price"] for q in qs)
@@ -1606,10 +1642,12 @@ def league_split(d, name, sport=None, venues=None):
                 f = FEE_RATE.get(q.get("venue") or "polymarket", 0.07)
                 rows.append((float(p), f, q.get("result") == other))
         cost = sum(p + f * p * (1 - p) for p, f, _w in rows)
+        stake_n = n + len(pq)
+        fee_pnl = sum(pnl_after_fee(q) for q in qs) + sum(pnl_after_fee(q) for q in pq)
         out.append(dict(
-            league=lg, n=n, won=won, expected=exp, edge=(won - exp) / n,
+            league=lg, n=n, won=won, expected=exp, edge=((won - exp) / n) if n else 0.0,
             z=(won - exp) / var ** 0.5 if var > 0 else 0.0,
-            roi_fee=sum(pnl_after_fee(q) for q in qs) / (n * STAKE),
+            roi_fee=(fee_pnl / (stake_n * STAKE)) if stake_n else None,
             fade_n=len(rows), fade_won=sum(1 for _p, _f, w in rows if w),
             fade_expected=sum(p for p, _f, _w in rows),
             fade_roi=((sum(1 for _p, _f, w in rows if w) - cost) / cost) if cost else None))
@@ -1766,8 +1804,18 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         bets = day_units(bets)
     n = len(bets)
     won = sum(1 for q in bets if q["status"] == "won")
-    pnl = sum(q["pnl"] for q in bets)
-    roi = pnl / (n * STAKE) if n else None
+    # Price payouts are in the money totals and out of n, won, and z.
+    price_bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
+                         and q.get("status") == "settled" and q.get("result") == "price"
+                         and (sport is None or q["sport"] == sport)
+                         and (since is None or q["logged"] >= since)
+                         and (until is None or q["logged"] < until)
+                         and (venues is None or (q.get("venue") or "polymarket") in venues)),
+                        key=lambda q: q.get("start") or "")
+    pnl_wl = sum(q["pnl"] for q in bets)
+    pnl = pnl_wl + sum(q["pnl"] for q in price_bets)
+    money_stake = (n * STAKE) + sum(float(q.get("stake") or 0.0) for q in price_bets)
+    roi = pnl / money_stake if money_stake else None
     expected = sum(q["price"] for q in bets)
     # Significance counts INDEPENDENT outcomes. Bets that cannot all win together (two
     # buckets of one weather ladder) form one cluster: its wins are a single 0/1 draw with
@@ -1863,7 +1911,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     own_roi = hardest[1] if hardest else None
 
     top = max((q["pnl"] for q in bets if q["status"] == "won"), default=0.0)
-    roi_wo_top = ((pnl - top) / ((n - 1) * STAKE)) if n > 1 else None
+    roi_wo_top = ((pnl_wl - top) / ((n - 1) * STAKE)) if n > 1 else None
     half = n // 2
     roi_h1 = (sum(q["pnl"] for q in bets[:half]) / (half * STAKE)) if half else None
     roi_h2 = (sum(q["pnl"] for q in bets[half:]) / ((n - half) * STAKE)) if n - half else None
@@ -1897,7 +1945,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         status = "failing"
     else:
         status = "watch"
-    pnl_fee = sum(pnl_after_fee(q) for q in bets)
+    pnl_fee = sum(pnl_after_fee(q) for q in bets) + sum(pnl_after_fee(q) for q in price_bets)
     clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
     # The spread of the moves, not just their average: a mean of +1c means one thing when the
     # moves are all +1c and another when they run from -20c to +22c. t is that mean over its
@@ -1908,7 +1956,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
                 n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
                                      "market-day" if sport in S.DAY_CLUSTERED else "bet"),
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
-                roi_fee=(pnl_fee / (n * STAKE)) if n else None,
+                roi_fee=(pnl_fee / money_stake) if money_stake else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
                 clv_sd=clv_sd, clv_t=clv_t, clv_read=clv_read(len(clv), clv_t),
                 routed=sum(1 for q in bets if placeable(q)),
@@ -2258,7 +2306,8 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
         if q["status"] == "open" or not q.get("settled") or q["settled"] >= horizon:
             keep.append(q)
             continue
-        if q.get("bet") and q["status"] in ("won", "lost"):
+        if q.get("bet") and (q["status"] in ("won", "lost")
+                             or (q.get("status") == "settled" and q.get("result") == "price")):
             if q["id"] not in archived:
                 to_archive(q)
         elif (not q.get("bet") and q.get("result") in ("a", "b", "draw") and q.get("price_a") is not None
@@ -2276,6 +2325,10 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
         if q["status"] in ("won", "lost"):
             r["settled"] += 1
             r["won"] += 1 if q["status"] == "won" else 0
+            r["staked"] += q["stake"]
+            r["pnl"] += q["pnl"]
+        elif q.get("bet") and q.get("result") == "price" and q.get("status") == "settled":
+            # The money stays in the lifetime total. The win count does not move.
             r["staked"] += q["stake"]
             r["pnl"] += q["pnl"]
         if (q.get("result") in ("a", "b") and not q.get("untraded")
