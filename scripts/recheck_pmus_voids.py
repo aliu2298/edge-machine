@@ -20,7 +20,9 @@ A yes/long buyer is paid the settlement. A no/short buyer is paid one minus it.
 A basket is paid the product of its leg payouts (1 won, 0 lost, the fair price
 for a price-settled leg). A lost leg settles the basket even when another leg
 is unresolved. P/L is stake * (paid / entry - 1), before fees. The row stores
-result "price", status "settled", and settle_px.
+result "price", status "settled", and settle_px. A row that already has a
+settled time keeps it (the day it was voided). Only a row that never
+settled is stamped now.
 
 Dry-run by default. --apply writes data/sandbox_ledger.json through the atomic
 writer (temp file, then os.replace). A second --apply changes nothing: a

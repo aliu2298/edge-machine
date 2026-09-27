@@ -215,6 +215,7 @@ _saved_pmus = S.resolve_polymarket_us
 _asked = []
 S.resolve_polymarket_us = lambda mid: _asked.append(mid) or "b"
 _bet = _settled_pm()
+_bet_when = _bet["settled"]
 _self = _settled_pm(id="polymarket_us:m", source="polymarket_us", bet=False, stake=0.0,
                     pick=None, price=None, status="graded", pnl=0.0, prob_a=0.55)
 _d = {"quotes": [_bet, _self], "meta": {}, "coverage": {}}
@@ -222,6 +223,7 @@ T.grade(_d, verbose=False, mismatches=set())
 eq(_asked, ["m"], "one settlement read covers the bet and the self-quote on that market")
 eq(_bet["result"], "b", "regrade flips a settled loss when the venue's final answer flips")
 eq(_bet["status"], "won", "the pick matches the revised result, so the bet is a win")
+eq(_bet["settled"], _bet_when, "regrade keeps the settled time already on the row")
 close(_bet["pnl"], round(100.0 * (1.0 / 0.46 - 1.0), 2),
       "P/L is recomputed at the logged price: $100 at 0.46")
 close(T.pnl_after_fee(_bet), 110.57, "after the 6% Polymarket US fee that P/L is $110.57")
@@ -5923,8 +5925,16 @@ close(_half["pnl"], round(100.0 * (0.5 / 0.40 - 1.0), 2),
       "and it pays stake * (0.5 / entry - 1)")
 eq((_mid["status"], _mid["result"], _mid["settle_px"]),
    ("settled", "price", 0.77), "a 0.77 void is paid 0.77")
-eq((_win["status"], _win["result"], _win["settled"]), ("won", "a", _stamp),
-   "a clean 1 re-settles the pick as won")
+eq((_win["status"], _win["result"], _win["settled"]),
+   ("won", "a", "2026-09-20T00:00:00+00:00"),
+   "a clean 1 re-settles the pick as won and keeps the original settled time")
+eq(_half["settled"], "2026-09-20T00:00:00+00:00",
+   "a void row with an old settled time keeps it when it is price-settled")
+eq(_mid["settled"], "2026-09-20T00:00:00+00:00",
+   "a 0.77 void keeps the day it was first settled")
+eq(_basket["settled"], "2026-09-26T13:05:59+00:00",
+   "a voided basket keeps its original settled time")
+eq(_open["settled"], _stamp, "a row that never settled is stamped now")
 close(_win["pnl"], 150.0, "and pays stake * (1/price - 1), $100 at 0.40")
 eq((_noted["status"], _noted["result"], _noted["note"]), ("void", "void", T.DUPLICATE_NOTE),
    "a noted duplicate void is untouched")

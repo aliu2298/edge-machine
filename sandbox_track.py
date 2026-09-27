@@ -1234,13 +1234,17 @@ def _apply_result(q, res, stamp):
     not a refund. A ('price', settlement) answer pays the side's fair price:
     result 'price', status 'settled', settle_px the amount that side was paid.
     That is a payout, counted in P/L, and it is not a win, a loss, or a void.
+    A row that already has a settled time keeps it. Only a first settlement,
+    a row that never had one, is stamped now. Rewriting the time would move
+    the bet onto today's page and restart its retention clock.
     """
     settlement = S._price_result(res)
     if settlement is not None:
         paid = round(S.pmus_paid(q.get("pick"), settlement), 6)
         q["result"] = "price"
         q["settle_px"] = paid
-        q["settled"] = stamp
+        if not q.get("settled"):
+            q["settled"] = stamp
         q["status"] = "settled"
         if q.get("bet") and q.get("price"):
             q["pnl"] = round(float(q["stake"]) * (paid / float(q["price"]) - 1.0), 2)
@@ -1249,7 +1253,8 @@ def _apply_result(q, res, stamp):
         return
     q.pop("settle_px", None)
     q["result"] = res
-    q["settled"] = stamp
+    if not q.get("settled"):
+        q["settled"] = stamp
     if res == "void":
         q["status"] = "void"
         q["pnl"] = 0.0
