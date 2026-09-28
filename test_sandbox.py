@@ -2309,9 +2309,17 @@ _wb = lambda mid, won, price: dict(id=f"nws:{mid}", source="nws", sport="climate
                                    start="2026-09-13T19:00:00+00:00", logged="2026-09-13T01:00:00+00:00",
                                    result="a" if won else "b", price_a=price, price_b=1 - price, price_draw=None)
 _pair = [_wb("KXHIGHNY-26SEP13-B80.5", True, 0.3), _wb("KXHIGHNY-26SEP13-B82.5", False, 0.3)]
+# Same logged time, so the lesser market_id is the reading. B80.5 won at 0.30.
 _ap = T.assess({"quotes": _pair}, "nws")
-close(_ap["z"], (1 - 0.6) / (0.6 * 0.4) ** 0.5, "z uses the ladder as one draw: P = 0.6, var 0.24", tol=1e-9)
-eq((_ap["n"], _ap["n_eff"]), (2, 1), "two bets, one independent outcome")
+eq((_ap["n"], _ap["won"], _ap["unit"]), (1, 1, "bet"),
+   "two nws quotes on one city-day score as one reading: the earliest, else the lesser market_id")
+close(_ap["expected"], 0.3, "the kept quote's price, not the sum of both buckets")
+close(_ap["pnl"], round(100 * (1 / 0.3 - 1), 2), "and its P&L; the later quote is not in the money")
+# A YES ladder that is not an nws or nws_fade repeat is still one draw of two buckets.
+_wx = [dict(q, source="wx", id="wx:" + q["id"]) for q in _pair]
+_aw = T.assess({"quotes": _wx}, "wx")
+close(_aw["z"], (1 - 0.6) / (0.6 * 0.4) ** 0.5, "z uses the ladder as one draw: P = 0.6, var 0.24", tol=1e-9)
+eq((_aw["n"], _aw["n_eff"]), (2, 1), "two bets, one independent outcome")
 
 # ---------------------------------------------------------------------------
 print("\nbet lists: every bet, searchable, counts that agree")
@@ -6431,13 +6439,102 @@ ok("crypto" in S.DAY_CLUSTERED,
 ok("commodities" in S.DAY_CLUSTERED and "soccer_corners" in S.DAY_CLUSTERED,
    "commodities and soccer_corners stay day-clustered")
 ok("climate" not in S.DAY_CLUSTERED,
-   "climate is NOT day-clustered: its buckets really are exclusive, and collapsing them "
-   "would move the money ROI, not just the z")
+   "climate is NOT day-clustered: repeat quotes are dropped before scoring, and a YES "
+   "book or a nested ladder still raises")
 eq(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"}),
    "KXSOLD|20260918", "one coin's day is one market-day key")
 ok(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"})
    != S.market_day({"market_id": "KXXRP-26SEP1817-T99.9999", "date": "2026-09-18"}),
    "two different coins on one date are two market-days")
+
+# One climate reading per city-day (2026-09-28). nws_fade logged a second NO on
+# KXHIGHCHI-26SEP26 hours after the first, 0.67 + 0.90, and assess raised
+# DegenerateCluster: 4 of 15. Each city-day is one reading. The earliest logged
+# quote is kept; a tie breaks by market_id. Later quotes leave n, wins, P&L,
+# money ROI, z, and the fade. The ledger rows stay.
+print("\none climate reading per city-day")
+
+
+def _fade_q(mid, logged, price, won, pnl, pa):
+    return dict(id=f"nws_fade:{mid}", source="nws_fade", sport="climate", bet=True,
+                venue="kalshi_binary", market_id=mid, pick="b", price=price,
+                price_a=pa, price_b=price, price_draw=None,
+                status="won" if won else "lost", result="b" if won else "a",
+                pnl=pnl, stake=100.0, start="2026-09-26T23:59:00+00:00", logged=logged)
+
+
+_chi = [
+    _fade_q("KXHIGHCHI-26SEP26-B68.5", "2026-09-25T22:19:14+00:00", 0.67, False, -100.0, 0.34),
+    _fade_q("KXHIGHCHI-26SEP26-B66.5", "2026-09-26T16:47:54+00:00", 0.90, True, 11.11, 0.15),
+]
+_chi_kept = T.one_climate_reading(_chi)
+eq([q["id"] for q in _chi_kept], ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
+   "the earliest Chicago quote is the one kept")
+_chi_a = T.assess({"quotes": _chi}, "nws_fade", "climate")
+eq((_chi_a["n"], _chi_a["won"], _chi_a["unit"], _chi_a["z_dropped"]), (1, 0, "bet", 0),
+   "the Chicago pair scores as the lost 0.67 quote, and does not raise")
+close(_chi_a["pnl"], -100.0, "the later win's P&L is not in the record")
+close(_chi_a["expected"], 0.67, "nor is its price")
+close(_chi_a["roi"], -1.0, "money ROI is that one stake")
+_chi_f = T.faded({"quotes": _chi}, "nws_fade", "climate")
+eq((_chi_f["n"], _chi_f["z_dropped"]), (1, 0), "the fade drops the later quote too")
+close(_chi_f["expected"], 0.34, "and fades the earliest quote's other side")
+# Same logged time: the lesser market_id wins the tie.
+_tie = [
+    _fade_q("KXHIGHCHI-26SEP26-B68.5", "2026-09-25T22:19:14+00:00", 0.67, False, -100.0, 0.34),
+    _fade_q("KXHIGHCHI-26SEP26-B66.5", "2026-09-25T22:19:14+00:00", 0.90, True, 11.11, 0.15),
+]
+eq([q["market_id"] for q in T.one_climate_reading(_tie)], ["KXHIGHCHI-26SEP26-B66.5"],
+   "a logged-time tie is broken by market_id")
+# YES bets on one city-day whose prices sum past 1 are not an nws repeat, and
+# they still raise. So does handing those prices straight to cluster_stats.
+_yes = [dict(q, source="wx", id="wx:" + q["id"], pick="a", price=p, price_a=p, price_b=1 - p,
+             result="a" if won else "b", status="won" if won else "lost", pnl=-100.0)
+        for q, p, won in zip(_chi, (0.70, 0.87), (False, True))]
+_yes_raised = None
+try:
+    T.assess({"quotes": _yes}, "wx", "climate")
+except T.DegenerateCluster as _e:
+    _yes_raised = _e
+ok(_yes_raised is not None and "1 of 1" in str(_yes_raised),
+   "YES bets on one city-day whose prices sum past 1 still raise")
+_yes_cs = None
+try:
+    T.cluster_stats({"KXHIGHCHI-26SEP26": [(0.70, 0.70, False), (0.87, 0.87, True)]})
+except T.DegenerateCluster as _e:
+    _yes_cs = _e
+ok(_yes_cs is not None, "and cluster_stats still raises on that YES book")
+# The same two YES prices under nws are one reading, so they do not reach the guard.
+_yes_nws = [dict(q, source="nws", id=q["id"].replace("nws_fade", "nws"), pick="a",
+                 price=p, price_a=p, price_b=round(1 - p, 2))
+            for q, p in zip(_chi, (0.70, 0.87))]
+_yn = T.assess({"quotes": _yes_nws}, "nws", "climate")
+eq((_yn["n"], _yn["expected"], _yn["z_dropped"]), (1, 0.70, 0),
+   "two nws YES quotes on one city-day keep the earliest and do not raise")
+
+_live = T.load()
+_live_ids = {q["id"] for q in _live["quotes"]}
+ok("nws_fade:KXHIGHCHI-26SEP26-B68.5" in _live_ids
+   and "nws_fade:KXHIGHCHI-26SEP26-B66.5" in _live_ids,
+   "both Chicago quotes stay in the ledger")
+_live_raised = None
+try:
+    _live_rows = SB.pair_list(_live, T.load_stages())
+    _live_nf = T.assess(_live, "nws_fade", "climate")
+    _live_nws = T.assess(_live, "nws", "climate")
+    _live_ff = T.faded(_live, "nws_fade", "climate")
+except T.DegenerateCluster as _e:
+    _live_raised = _e
+ok(_live_raised is None, "the current ledger assesses, and the page's pair list with it")
+_nf_days = {S.outcome_cluster(q) for q in T.all_bets(_live)
+            if q.get("source") == "nws_fade" and q.get("bet") and q["status"] in ("won", "lost")}
+eq(len(_nf_days), 15, "nws_fade has 15 settled city-days on this ledger")
+eq((_live_nf["n"], _live_nf["n_eff"], _live_nf["z_dropped"], _live_nf["unit"]),
+   (15, 15, 0, "bet"),
+   "all 15 nws_fade city-days are scored, and none is degenerate or dropped")
+eq(_live_ff["z_dropped"], 0, "the fade drops none of them either")
+eq(_live_nws["z_dropped"], 0, "nws repeat quotes are one reading too, so none of its clusters is dropped")
+eq({q["id"] for q in _live["quotes"]}, _live_ids, "scoring does not remove ledger rows")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

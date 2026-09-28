@@ -226,6 +226,16 @@ def check_records(d, st, rep):
                and q.get("bet") and q["status"] in ("won", "lost")
                and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
                and (since is None or q["logged"] >= since)]
+        priced = [q for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
+                  and q.get("bet") and q.get("status") == "settled" and q.get("result") == "price"
+                  and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
+                  and (since is None or q["logged"] >= since)]
+        # The same one-reading rule assess uses. A later nws or nws_fade quote
+        # on a city-day already logged is not a second result, including when
+        # the earlier quote settled at a price. The sums below are still this
+        # function's, not assess's.
+        kept = {id(q) for q in T.one_climate_reading(raw + priced)}
+        raw = [q for q in raw if id(q) in kept]
         a = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
         won, exp = sum(1 for q in raw if q["status"] == "won"), sum(q["price"] for q in raw)
         if (len(raw), won) != (a["n"], a["won"]) or abs(exp - a["expected"]) > 1e-6:

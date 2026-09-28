@@ -1639,6 +1639,40 @@ def cluster_stats(clusters):
         outcomes=len(keep), dropped=len(dropped), n=sum(len(r) for r, _P in keep.values()))
 
 
+def one_climate_reading(bets):
+    """One temperature reading per city-day for nws and nws_fade.
+
+    When the forecast moves, the tracker logs another quote on the same
+    city-day — the same outcome_cluster, for example KXHIGHCHI-26SEP26 —
+    hours later. Each city-day is one reading per source. Keep the earliest
+    logged quote. If two quotes share a logged time, keep the lesser
+    market_id (then the lesser id). Every other quote leaves the scored
+    record: n, wins, P&L, money ROI, z, and the faded view. The ledger is
+    not edited. Any other source is left untouched, and cluster_stats is
+    not changed, so a nested ladder and YES bets on one city-day whose
+    prices sum past 1 still raise DegenerateCluster.
+    """
+    best = {}
+    for q in bets:
+        if q.get("source") not in ("nws", "nws_fade") or q.get("sport") != "climate":
+            continue
+        key = (q.get("source"), S.outcome_cluster(q))
+        rank = (str(q.get("logged") or ""), str(q.get("market_id") or ""), str(q.get("id") or ""))
+        prev = best.get(key)
+        if prev is None or rank < prev[0]:
+            best[key] = (rank, q)
+    if not best:
+        return list(bets)
+    keep = {id(pair[1]) for pair in best.values()}
+    out = []
+    for q in bets:
+        if q.get("source") not in ("nws", "nws_fade") or q.get("sport") != "climate":
+            out.append(q)
+        elif id(q) in keep:
+            out.append(q)
+    return out
+
+
 def faded(d, name, sport=None, venues=None):
     """What the OTHER side of this pair's bets would have done — dict(n, won, expected, roi, z).
 
@@ -1670,6 +1704,9 @@ def faded(d, name, sport=None, venues=None):
             and (sport is None or q["sport"] == sport)
             and q.get("price_draw") is None and q.get("pick") in ("a", "b")
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    # A later quote on a city-day the forecast already logged is not a second
+    # reading. Same rule as assess: earliest logged quote, tie broken by market_id.
+    bets = one_climate_reading(bets)
     rows = []
     for q in bets:
         other = "b" if q["pick"] == "a" else "a"
@@ -1928,19 +1965,11 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
                    and (until is None or q["logged"] < until)
                    and (venues is None or (q.get("venue") or "polymarket") in venues)),
                   key=lambda q: q["start"])
+    # n_bets is every filtered bet, including a later climate quote. The page's
+    # reconciliation counts those rows as on record. The scored n below does not.
     n_bets = len(bets)
-    # Day-clustering follows each bet's OWN sport, not the `sport` argument. The all-sport
-    # view passes sport=None, which is not in DAY_CLUSTERED, so before 2026-09-27 a source's
-    # combined row took the per-bet path and published exactly the z its own sport row was
-    # day-clustered to avoid. `spot` is single-sport, so its headline figure WAS that hole.
-    if bets:
-        clustered = [q for q in bets if q["sport"] in S.DAY_CLUSTERED]
-        if clustered:
-            rest = [q for q in bets if q["sport"] not in S.DAY_CLUSTERED]
-            bets = sorted(day_units(clustered) + rest, key=lambda q: q["start"])
-    n = len(bets)
-    won = sum(1 for q in bets if q["status"] == "won")
-    # Price payouts are in the money totals and out of n, won, and z.
+    # Price payouts share a city-day with a win/loss when the forecast moved
+    # and one of the two settled at a price. One reading covers both lists.
     price_bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
                          and q.get("status") == "settled" and q.get("result") == "price"
                          and (sport is None or q["sport"] == sport)
@@ -1948,6 +1977,24 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
                          and (until is None or q["logged"] < until)
                          and (venues is None or (q.get("venue") or "polymarket") in venues)),
                         key=lambda q: q.get("start") or "")
+    kept_ids = {id(q) for q in one_climate_reading(bets + price_bets)}
+    bets = [q for q in bets if id(q) in kept_ids]
+    price_bets = [q for q in price_bets if id(q) in kept_ids]
+    # Day-clustering follows each bet's OWN sport, not the `sport` argument. The all-sport
+    # view passes sport=None, which is not in DAY_CLUSTERED, so before 2026-09-27 a source's
+    # combined row took the per-bet path and published exactly the z its own sport row was
+    # day-clustered to avoid. `spot` is single-sport, so its headline figure WAS that hole.
+    day_collapsed = False
+    if bets:
+        clustered = [q for q in bets if q["sport"] in S.DAY_CLUSTERED]
+        if clustered:
+            day_collapsed = True
+            rest = [q for q in bets if q["sport"] not in S.DAY_CLUSTERED]
+            bets = sorted(day_units(clustered) + rest, key=lambda q: q["start"])
+    n = len(bets)
+    won = sum(1 for q in bets if q["status"] == "won")
+    # Price payouts are in the money totals and out of n, won, and z.
+    # price_bets was already limited to the one climate reading above.
     pnl_wl = sum(q["pnl"] for q in bets)
     pnl = pnl_wl + sum(q["pnl"] for q in price_bets)
     money_stake = (n * STAKE) + sum(float(q.get("stake") or 0.0) for q in price_bets)
@@ -2097,8 +2144,8 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     clv_t = ((sum(clv) / len(clv)) / (clv_sd / len(clv) ** 0.5)) if clv_sd else None
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
                 n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
-                                     "market-day" if sport in S.DAY_CLUSTERED else
-                                     "market-day" if n != n_bets else "bet"),
+                                     "market-day" if sport in S.DAY_CLUSTERED or day_collapsed else
+                                     "bet"),
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, z_dropped=z_dropped,
                 base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / money_stake) if money_stake else None,
