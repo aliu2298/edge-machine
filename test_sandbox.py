@@ -2865,7 +2865,8 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
-eq(sorted(T.PAIR_OVERRIDES), ["mma_fav_band|mma", "olbg|boxing", "team1_form_l5|soccer_team1"],
+eq(sorted(T.PAIR_OVERRIDES),
+   ["mma_fav_band|mma", "oddspedia|cricket", "olbg|boxing", "team1_form_l5|soccer_team1"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 ok(not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a", market_id="combo3:x",
                         side_a="All 3 win", side_b="Any one loses")),
@@ -3253,6 +3254,54 @@ ok(all(S.SOURCES[k]["connected"] for k in
    "the 3h variant and the six combo lanes are untouched: they cut baskets from the same band")
 ok("legs live on" in _tfb["retired"],
    "and the retirement says so rather than leaving it to be discovered")
+
+# ---------------------------------------------------------------------------
+# oddspedia cricket -> Production, 2026-09-27. Moved before the 50-bet stamp, as asked, and
+# cricket added to ROUTED_SPORTS the same day so the feed can express it at all: before that
+# the feed refused every cricket bet and the listing would have been a label.
+# ---------------------------------------------------------------------------
+print("\ncricket reaches the Production feed")
+ok("cricket" in T.ROUTED_SPORTS, "cricket is a routed sport, so a lead carries the venue's market")
+ok("oddspedia|cricket" in T.PAIR_OVERRIDES, "and the pair is listed in Production")
+# The reason it was listed early, and the caveat, have to be written down where the listing
+# is — the ROI is +203% and +214pp of that is two longshots landing.
+_povsrc = open(_os.path.join(_os.path.dirname(_os.path.abspath(T.__file__)),
+                             "sandbox_track.py")).read()
+_povblk = _povsrc[_povsrc.index("PAIR_OVERRIDES = {"):_povsrc.index('"oddspedia|cricket"')]
+ok("longshot" in _povblk and "+30%" in _povblk,
+   "and the listing records that two longshots carry the ROI, and what the other 10 bets did")
+
+def _crq(venue, pick="a", start_source=None):
+    return dict(id=f"cr:{venue}:{pick}", source="oddspedia", sport="cricket", bet=True,
+                venue=venue, market_id="aec-cplcr-bra-jka-2026-09-16", pick=pick, price=0.44,
+                price_a=0.44, price_b=0.60, price_draw=None,
+                side_a="Barbados Royals", side_b="Jamaica Kingsmen", start_source=start_source,
+                result="a", status="won", pnl=127.27, stake=100.0,
+                start="2026-09-16T18:00:00+00:00", logged="2026-09-16T09:00:00+00:00")
+
+ok(T.placeable(_crq("polymarket_us")),
+   "a Polymarket US cricket bet reaches the feed: that venue carries its own start")
+ok(not T.placeable(_crq("kalshi")),
+   "a Kalshi cricket bet is NOT, for want of a verified start — an innings can begin late")
+ok(T.placeable(_crq("kalshi", start_source="espn")),
+   "and it would be the moment a real start feed supplied one")
+ok(not T.placeable(_crq("polymarket")),
+   "polymarket.com is not a tradeable venue, so its cricket never routes")
+
+# The route must not invert the side. Backing side B on Polymarket US, which lists ONE market
+# with two outcomes, is the NO side of it — and `outcome` names who is backed, not the
+# market's primary outcome, so a follower cannot read it as "No on Jamaica Kingsmen".
+_crl = PR.lead_from_quote(_crq("polymarket_us", pick="b"), "oddspedia|cricket", "x")
+eq((_crl["route"]["outcome"], _crl["route"]["outcome_side"]), ("Jamaica Kingsmen", "no"),
+   "backing the away side on Polymarket US names that side and buys No")
+_crl2 = PR.lead_from_quote(_crq("polymarket_us", pick="a"), "oddspedia|cricket", "x")
+eq((_crl2["route"]["outcome"], _crl2["route"]["outcome_side"]), ("Barbados Royals", "yes"),
+   "and backing the home side buys Yes on the same market")
+_crl3 = PR.lead_from_quote(_crq("kalshi", pick="b", start_source="espn"), "oddspedia|cricket", "x")
+eq(_crl3["route"]["outcome_side"], "yes",
+   "on Kalshi either side is a plain Yes, because each side has its own market")
+eq(_crl["bet"], {"kind": "match_result", "side": "away"},
+   "a cricket lead is published as a match result, the vocabulary the board already has")
 
 ok(S.SOURCES["tt_band_55_60"].get("retired") and "tt_band_55_60" not in S.CHALLENGERS,
    "table tennis stays retired: a +0.4% fade on 78 is no better outlook, only noise")

@@ -195,6 +195,16 @@ PAIR_OVERRIDES = {
     # asked. No pair belongs in Production on a sample that small because its sibling once looked good.
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
     "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
+    # 2026-09-27, as asked, and before the 50-bet stamp. 12 settled on the US exchanges at
+    # +203% (z +2.22), clearing every criterion except the sample. Stated plainly because the
+    # ROI is not what it looks like: +214pp of it is TWO longshots landing, a 0.07 at +1328
+    # and a 0.11 at +809, and the other 10 bets return +30%. So the lane's character is
+    # longshot hits, not a steady margin, and its P/L will be lumpy in a way none of the
+    # soccer pairs are. cricket was added to ROUTED_SPORTS the same day so the feed can
+    # express it at all; before that the feed refused every cricket bet and the listing
+    # would have been a label. Only Polymarket US cricket reaches the feed — no cricket start
+    # feed exists, so the Kalshi half is refused for want of a verified start.
+    "oddspedia|cricket": dict(moved_on="2026-09-27", production_at=None),
     # 2026-09-22, as asked — without waiting for 30 settled. Both are ahead of the price on
     # records too small to read: the MMA favourite band 4-0 (4 won v 3.2 priced, +23.4% after
     # fees, z +1.00), OLBG's boxing tips 3-0 (3 won v 2.7 priced, +11.1%, z +0.59). The
@@ -1795,7 +1805,11 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 # fight still needs a verified start (VERIFIED_STARTS) — Kalshi's own is an estimate, and a
 # bout can walk out well after its card begins — so until one exists only Polymarket US
 # fights, which carry their own start, reach the feed.
-ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing")
+# cricket since 2026-09-27, so oddspedia|cricket can publish, and the same limit applies for
+# the same reason: no cricket feed supplies a start, so all 26 of its bets carry
+# start_source=None and only the 7 on Polymarket US reach the feed. The 10 on Kalshi are
+# refused until a verified start exists — a T20 innings can begin well after the listed time.
+ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # start_source values that mean a real start time, not the venue's estimate.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb")
 
