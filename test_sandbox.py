@@ -6447,12 +6447,16 @@ ok(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"}
    != S.market_day({"market_id": "KXXRP-26SEP1817-T99.9999", "date": "2026-09-18"}),
    "two different coins on one date are two market-days")
 
-# One climate reading per city-day (2026-09-28). nws_fade logged a second NO on
-# KXHIGHCHI-26SEP26 hours after the first, 0.67 + 0.90, and assess raised
-# DegenerateCluster: 4 of 15. Each city-day is one reading. The earliest logged
-# quote is kept; a tie breaks by market_id. Later quotes leave n, wins, P&L,
-# money ROI, z, and the fade. The ledger rows stay.
+# One climate reading per city-day per lane (2026-09-28). nws_fade logged a
+# second NO on KXHIGHCHI-26SEP26 hours after the first, 0.67 + 0.90, and assess
+# raised DegenerateCluster: 4 of 15. Each city-day is one reading. Which quote
+# is kept is CLIMATE_KEEP_RULE, provisional "first" until the owner picks
+# first / last / best. The others leave n, wins, P&L, money ROI, z, and the
+# fade. The ledger rows stay.
 print("\none climate reading per city-day")
+eq(T.CLIMATE_KEEP_RULE, "first", "the provisional keep-rule is the earliest logged quote")
+eq(T.CLIMATE_KEEP_RULES, ("first", "last", "best"),
+   "the switch is first, last (latest before start), and best (lowest price)")
 
 
 def _fade_q(mid, logged, price, won, pnl, pa):
@@ -6511,6 +6515,58 @@ _yes_nws = [dict(q, source="nws", id=q["id"].replace("nws_fade", "nws"), pick="a
 _yn = T.assess({"quotes": _yes_nws}, "nws", "climate")
 eq((_yn["n"], _yn["expected"], _yn["z_dropped"]), (1, 0.70, 0),
    "two nws YES quotes on one city-day keep the earliest and do not raise")
+# last: the latest quote still logged before that quote's start. best: the
+# cheapest price on the side that was bet. A quote logged after start is not
+# a "last" reading.
+eq([q["id"] for q in T.one_climate_reading(_chi, rule="last")],
+   ["nws_fade:KXHIGHCHI-26SEP26-B66.5"],
+   "last keeps the later Chicago quote, logged before start")
+eq([q["id"] for q in T.one_climate_reading(_chi, rule="best")],
+   ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
+   "best keeps the cheaper Chicago NO, 0.67 rather than 0.90")
+_saved_rule = T.CLIMATE_KEEP_RULE
+try:
+    T.CLIMATE_KEEP_RULE = "last"
+    _last_a = T.assess({"quotes": _chi}, "nws_fade", "climate")
+    eq((_last_a["n"], _last_a["won"], _last_a["expected"]), (1, 1, 0.90),
+       "assess follows CLIMATE_KEEP_RULE: last scores the 0.90 quote")
+finally:
+    T.CLIMATE_KEEP_RULE = _saved_rule
+eq(T.CLIMATE_KEEP_RULE, "first", "the keep-rule is put back")
+_late = [
+    _fade_q("KXHIGHCHI-26SEP27-B69.5", "2026-09-26T16:00:00+00:00", 0.70, False, -100.0, 0.30),
+    _fade_q("KXHIGHCHI-26SEP27-B67.5", "2026-09-27T02:00:00+00:00", 0.20, True, 400.0, 0.80),
+]
+eq([q["market_id"] for q in T.one_climate_reading(_late, rule="last")],
+   ["KXHIGHCHI-26SEP27-B69.5"],
+   "last ignores a quote logged after the market start")
+eq([q["price"] for q in T.one_climate_reading(_late, rule="best")], [0.20],
+   "best still takes the cheapest price, including one logged after start")
+eq(T.one_climate_reading([dict(q, logged="2026-09-27T05:00:00+00:00") for q in _late], rule="last"),
+   [], "last scores nothing when every quote is past start")
+_bad_rule = None
+try:
+    T.one_climate_reading(_chi, rule="middle")
+except ValueError as _e:
+    _bad_rule = _e
+ok(_bad_rule is not None, "an unknown keep-rule is refused")
+# A city-day that still holds several lane bets is scored on S, the sum of the
+# YES prices, for both the mean and the variance. 0.34 + 0.15 = 0.49. The NO
+# prices 0.67 + 0.90 are what used to raise.
+_srows = T.climate_cluster_rows(_chi)
+_sc = T.cluster_stats({"KXHIGHCHI-26SEP26": _srows})
+eq(_sc["dropped"], 0, "YES prices summing under 1 are not a degenerate cluster")
+eq(_sc["won"], 1, "the win count is the bets that paid")
+close(_sc["expected"], 0.49, "the mean is S, the sum of the YES prices")
+close(_sc["var"], 0.49 * 0.51, "the variance is S(1-S), the same S")
+_syes = [dict(q, source="nws", pick="a", price=p, price_a=p, price_b=round(1 - p, 2))
+         for q, p in zip(_chi, (0.70, 0.87))]
+_sraise = None
+try:
+    T.cluster_stats({"KXHIGHCHI-26SEP26": T.climate_cluster_rows(_syes)})
+except T.DegenerateCluster as _e:
+    _sraise = _e
+ok(_sraise is not None, "YES prices summing past 1 still raise when a cluster keeps several bets")
 
 _live = T.load()
 _live_ids = {q["id"] for q in _live["quotes"]}

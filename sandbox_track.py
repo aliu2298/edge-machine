@@ -1639,38 +1639,90 @@ def cluster_stats(clusters):
         outcomes=len(keep), dropped=len(dropped), n=sum(len(r) for r, _P in keep.values()))
 
 
-def one_climate_reading(bets):
-    """One temperature reading per city-day for nws and nws_fade.
+# Provisional, until the owner picks. One named switch for the whole scorer.
+#   first — earliest logged quote. Ties: lesser market_id, then lesser id.
+#   last  — latest quote logged strictly before that quote's start. Ties:
+#           lesser market_id, then lesser id. A quote logged at or after start
+#           is not a reading. If every quote on the city-day is past start,
+#           the city-day is not scored. start is the market start, not close_at.
+#   best  — lowest price paid for the side that was bet. Ties: earliest logged,
+#           then lesser market_id, then lesser id.
+# Collapse is per lane: nws and nws_fade are separate, one quote per city-day
+# event (outcome_cluster, for example KXHIGHCHI-26SEP26). The others leave n,
+# wins, P&L, money ROI, z, and the faded view. Ledger rows are not edited.
+CLIMATE_KEEP_RULE = "first"
+CLIMATE_KEEP_RULES = ("first", "last", "best")
+_CLIMATE_LANES = ("nws", "nws_fade")
 
-    When the forecast moves, the tracker logs another quote on the same
-    city-day — the same outcome_cluster, for example KXHIGHCHI-26SEP26 —
-    hours later. Each city-day is one reading per source. Keep the earliest
-    logged quote. If two quotes share a logged time, keep the lesser
-    market_id (then the lesser id). Every other quote leaves the scored
-    record: n, wins, P&L, money ROI, z, and the faded view. The ledger is
-    not edited. Any other source is left untouched, and cluster_stats is
-    not changed, so a nested ladder and YES bets on one city-day whose
-    prices sum past 1 still raise DegenerateCluster.
+
+def _climate_lane(q):
+    return q.get("source") in _CLIMATE_LANES and q.get("sport") == "climate"
+
+
+def _climate_pick(qs, rule):
+    """The one quote this city-day keeps under `rule`, or None."""
+    if rule not in CLIMATE_KEEP_RULES:
+        raise ValueError(f"CLIMATE_KEEP_RULE must be one of {CLIMATE_KEEP_RULES}, not {rule!r}")
+    ident = lambda q: (str(q.get("market_id") or ""), str(q.get("id") or ""))
+    logged = lambda q: str(q.get("logged") or "")
+    if rule == "first":
+        return min(qs, key=lambda q: (logged(q),) + ident(q))
+    if rule == "last":
+        elig = [q for q in qs if not q.get("start") or logged(q) < str(q["start"])]
+        if not elig:
+            return None
+        latest = max(logged(q) for q in elig)
+        tied = [q for q in elig if logged(q) == latest]
+        return min(tied, key=ident)
+    # best: cheapest price on the side that was bet.
+    return min(qs, key=lambda q: (float(q["price"]) if q.get("price") is not None else 1.0,
+                                  logged(q)) + ident(q))
+
+
+def one_climate_reading(bets, rule=None):
+    """One temperature reading per city-day per lane (nws, nws_fade).
+
+    `rule` defaults to CLIMATE_KEEP_RULE. See that constant for first / last /
+    best. Any other source is left untouched, so a nested ladder and YES bets
+    on one city-day whose prices sum past 1 still raise DegenerateCluster.
     """
-    best = {}
-    for q in bets:
-        if q.get("source") not in ("nws", "nws_fade") or q.get("sport") != "climate":
-            continue
-        key = (q.get("source"), S.outcome_cluster(q))
-        rank = (str(q.get("logged") or ""), str(q.get("market_id") or ""), str(q.get("id") or ""))
-        prev = best.get(key)
-        if prev is None or rank < prev[0]:
-            best[key] = (rank, q)
-    if not best:
+    rule = CLIMATE_KEEP_RULE if rule is None else rule
+    if not any(_climate_lane(q) for q in bets):
         return list(bets)
-    keep = {id(pair[1]) for pair in best.values()}
-    out = []
+    groups = {}
     for q in bets:
-        if q.get("source") not in ("nws", "nws_fade") or q.get("sport") != "climate":
-            out.append(q)
-        elif id(q) in keep:
-            out.append(q)
-    return out
+        if _climate_lane(q):
+            groups.setdefault((q.get("source"), S.outcome_cluster(q)), []).append(q)
+    keep = set()
+    for qs in groups.values():
+        chosen = _climate_pick(qs, rule)
+        if chosen is not None:
+            keep.add(id(chosen))
+    return [q for q in bets if not _climate_lane(q) or id(q) in keep]
+
+
+def climate_cluster_rows(quotes, won_of=None):
+    """cluster_stats rows for one outcome.
+
+    A single bet is that bet's own price, for the mean and the variance.
+    A multi-bet climate lane (nws or nws_fade still sharing a city-day) uses
+    S, the sum of the YES prices (price_a), for both the mean and the
+    variance. When S is 1 or more the YES prices are passed through, so
+    cluster_stats still raises. The keep-rule removes these before scoring;
+    this is the path for a cluster that still has several bets.
+    """
+    won_of = won_of or (lambda q: q.get("status") == "won")
+    own = [(float(q["price"]), float(q["price"]), bool(won_of(q))) for q in quotes]
+    if len(quotes) < 2 or not all(_climate_lane(q) for q in quotes):
+        return own
+    yes = sum(float(q.get("price_a") or 0.0) for q in quotes)
+    if yes >= 1.0:
+        return [(float(q.get("price_a") or 0.0), float(q.get("price_a") or 0.0), bool(won_of(q)))
+                for q in quotes]
+    wins = sum(1 for q in quotes if won_of(q))
+    if wins <= 0:
+        return [(yes, yes, False)]
+    return [(yes, yes, True)] + [(0.0, 0.0, True)] * (wins - 1)
 
 
 def faded(d, name, sport=None, venues=None):
@@ -1704,8 +1756,7 @@ def faded(d, name, sport=None, venues=None):
             and (sport is None or q["sport"] == sport)
             and q.get("price_draw") is None and q.get("pick") in ("a", "b")
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
-    # A later quote on a city-day the forecast already logged is not a second
-    # reading. Same rule as assess: earliest logged quote, tie broken by market_id.
+    # One reading per city-day per lane. Which quote is CLIMATE_KEEP_RULE.
     bets = one_climate_reading(bets)
     rows = []
     for q in bets:
@@ -1738,10 +1789,17 @@ def faded(d, name, sport=None, venues=None):
                     unit="market-day", n_bets=len(rows),
                     z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
 
-    clusters = {}
+    grouped = {}
     for r in rows:
-        clusters.setdefault(S.outcome_cluster(r["q"]), []).append(
-            (r["q"]["price"], r["p"], r["won"]))
+        grouped.setdefault(S.outcome_cluster(r["q"]), []).append(r)
+    clusters = {}
+    for key, rs in grouped.items():
+        qs = [r["q"] for r in rs]
+        if len(qs) > 1 and all(_climate_lane(q) for q in qs):
+            won = {id(r["q"]): r["won"] for r in rs}
+            clusters[key] = climate_cluster_rows(qs, won_of=lambda q, won=won: won[id(q)])
+        else:
+            clusters[key] = [(float(r["q"]["price"]), r["p"], r["won"]) for r in rs]
     c = cluster_stats(clusters)
     # n and roi stay over every bet: the money is the money. Only the z is taken over the
     # clusters that survived, and `dropped` says how many did not.
@@ -2006,10 +2064,10 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # would treat one day's weather as two coin flips. It drops a cluster that P(1-P) leaves
     # with no variance, and raises once too many of them are, so a nested ladder that does
     # not belong in this path cannot quietly hand back a z — see S.DAY_CLUSTERED.
-    clusters = {}
+    grouped = {}
     for q in bets:
-        clusters.setdefault(S.outcome_cluster(q), []).append(
-            (q["price"], q["price"], q["status"] == "won"))
+        grouped.setdefault(S.outcome_cluster(q), []).append(q)
+    clusters = {key: climate_cluster_rows(qs) for key, qs in grouped.items()}
     c = cluster_stats(clusters)
     var = c["var"]
     n_eff = c["outcomes"]
