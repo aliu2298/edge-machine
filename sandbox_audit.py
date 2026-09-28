@@ -227,11 +227,6 @@ def check_records(d, st, rep):
                and not T.climate_excluded(q)
                and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
                and (since is None or q["logged"] >= since)]
-        priced = [q for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
-                  and q.get("bet") and q.get("status") == "settled" and q.get("result") == "price"
-                  and not T.climate_excluded(q)
-                  and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
-                  and (since is None or q["logged"] >= since)]
         a = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
         won, exp = sum(1 for q in raw if q["status"] == "won"), sum(q["price"] for q in raw)
         if (len(raw), won) != (a["n"], a["won"]) or abs(exp - a["expected"]) > 1e-6:

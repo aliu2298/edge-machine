@@ -6490,8 +6490,12 @@ eq((_chi_drop["status"], _chi_drop["result"], _chi_drop["pnl"], _chi_drop["price
    ("won", "b", 11.11, 0.90), "the mark leaves the result, the price and the P/L")
 ok("excluded" not in _chi[0] and "note" not in _chi[0], "the kept row is not marked")
 _chi_a = T.assess(_chi_d, "nws_fade", "climate")
+_chi_days = {S.outcome_cluster(q) for q in _chi
+             if q.get("status") in ("won", "lost") and not T.climate_excluded(q)}
 eq((_chi_a["n"], _chi_a["won"], _chi_a["unit"], _chi_a["z_dropped"]), (1, 0, "bet", 0),
    "the Chicago pair scores as the lost 0.67 quote, and does not raise")
+eq(_chi_a["n_eff"], len(_chi_days),
+   "with keep-first applied, n_eff equals the number of city-days")
 close(_chi_a["pnl"], -100.0, "the later win's P&L is not in the record")
 close(_chi_a["expected"], 0.67, "nor is its price")
 close(_chi_a["roi"], -1.0, "money ROI is that one stake")
@@ -6595,23 +6599,46 @@ try:
 except ValueError as _e:
     _bad_rule = _e
 ok(_bad_rule is not None, "an unknown keep-rule is refused")
-# A city-day that still holds several lane bets is scored on S, the sum of the
-# YES prices, for both the mean and the variance. 0.34 + 0.15 = 0.49. The NO
-# prices 0.67 + 0.90 are what used to raise.
-_srows = T.climate_cluster_rows(_chi)
-_sc = T.cluster_stats({"KXHIGHCHI-26SEP26": _srows})
-eq(_sc["dropped"], 0, "YES prices summing under 1 are not a degenerate cluster")
-eq(_sc["won"], 1, "the win count is the bets that paid")
-close(_sc["expected"], 0.49, "the mean is S, the sum of the YES prices")
-close(_sc["var"], 0.49 * 0.51, "the variance is S(1-S), the same S")
-_syes = [dict(q, source="nws", pick="a", price=p, price_a=p, price_b=round(1 - p, 2))
-         for q, p in zip(_chi, (0.70, 0.87))]
-_sraise = None
+# Marks cleared, the Chicago pair is the cluster main raises on: two NO prices,
+# 0.67 + 0.90, on one city-day. The guard must still fire. Keep-first is what
+# stops it, and that path is the assess() above.
+_bare = []
+for _q in _chi:
+    _c = dict(_q)
+    _c.pop("excluded", None)
+    _c.pop("note", None)
+    _bare.append(_c)
+_bare_raised = None
 try:
-    T.cluster_stats({"KXHIGHCHI-26SEP26": T.climate_cluster_rows(_syes)})
+    T.assess({"quotes": _bare}, "nws_fade", "climate")
 except T.DegenerateCluster as _e:
-    _sraise = _e
-ok(_sraise is not None, "YES prices summing past 1 still raise when a cluster keeps several bets")
+    _bare_raised = _e
+ok(_bare_raised is not None and "KXHIGHCHI-26SEP26" in str(_bare_raised),
+   "with the marks cleared, assess('nws_fade') on the Chicago pair raises DegenerateCluster")
+# A void logged before either real quote is not the kept bet, and it is not
+# itself marked as the repeat.
+_void = dict(_chi[0], id="nws_fade:KXHIGHCHI-26SEP26-B70.5",
+             market_id="KXHIGHCHI-26SEP26-B70.5",
+             logged="2026-09-25T20:00:00+00:00", status="void", result="void", pnl=0.0)
+_void.pop("excluded", None)
+_void.pop("note", None)
+_vqs = [_void]
+for _q in _chi:
+    _c = dict(_q)
+    _c.pop("excluded", None)
+    _c.pop("note", None)
+    _vqs.append(_c)
+eq([q["id"] for q in T.one_climate_reading(_vqs)],
+   ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
+   "a void is never the kept bet; the earliest real quote is")
+_vd = {"quotes": _vqs, "meta": {}}
+T.mark_climate_citydays(_vd)
+ok("excluded" not in _void, "the void is not marked as a city-day repeat")
+ok("excluded" not in _vqs[1], "the earliest real quote stays unmarked")
+eq(_vqs[2].get("excluded"), "nws_cityday", "the later real quote is the one marked")
+_va = T.assess(_vd, "nws_fade", "climate")
+eq((_va["n"], _va["n_eff"], _va["z_dropped"]), (1, 1, 0),
+   "the void is off the record and the marked repeat does not reach the guard")
 
 _live = T.load()
 _live_ids = {q["id"] for q in _live["quotes"]}

@@ -1671,9 +1671,16 @@ def _climate_lane(q):
 
 
 def _climate_pick(qs, rule):
-    """The one quote this city-day keeps under `rule`, or None."""
+    """The one non-void quote this city-day keeps under `rule`, or None.
+
+    A void is never the kept bet. It is already off the record, and choosing
+    it would mark the real quotes as the repeats.
+    """
     if rule not in CLIMATE_KEEP_RULES:
         raise ValueError(f"CLIMATE_KEEP_RULE must be one of {CLIMATE_KEEP_RULES}, not {rule!r}")
+    qs = [q for q in qs if q.get("status") != "void"]
+    if not qs:
+        return None
     ident = lambda q: (str(q.get("market_id") or ""), str(q.get("id") or ""))
     logged = lambda q: str(q.get("logged") or "")
     if rule == "first":
@@ -1780,7 +1787,8 @@ def mark_climate_citydays(d, rule=None):
         kept_id = chosen.get("id") if chosen is not None else "none"
         for q in qs:
             seen.add(id(q))
-            if chosen is not None and q is chosen:
+            # A void is never the kept bet and never a marked repeat.
+            if q.get("status") == "void" or (chosen is not None and q is chosen):
                 moved = _clear_climate_mark(q)
             else:
                 moved = _set_climate_mark(q, kept_id, rule)
@@ -1801,30 +1809,6 @@ def mark_climate_citydays(d, rule=None):
                 if month:
                     d.setdefault("_archive_dirty", set()).add(month)
     return changed
-
-
-def climate_cluster_rows(quotes, won_of=None):
-    """cluster_stats rows for one outcome.
-
-    A single bet is that bet's own price, for the mean and the variance.
-    A multi-bet climate lane (nws or nws_fade still sharing a city-day) uses
-    S, the sum of the YES prices (price_a), for both the mean and the
-    variance. When S is 1 or more the YES prices are passed through, so
-    cluster_stats still raises. The keep-rule removes these before scoring;
-    this is the path for a cluster that still has several bets.
-    """
-    won_of = won_of or (lambda q: q.get("status") == "won")
-    own = [(float(q["price"]), float(q["price"]), bool(won_of(q))) for q in quotes]
-    if len(quotes) < 2 or not all(_climate_lane(q) for q in quotes):
-        return own
-    yes = sum(float(q.get("price_a") or 0.0) for q in quotes)
-    if yes >= 1.0:
-        return [(float(q.get("price_a") or 0.0), float(q.get("price_a") or 0.0), bool(won_of(q)))
-                for q in quotes]
-    wins = sum(1 for q in quotes if won_of(q))
-    if wins <= 0:
-        return [(yes, yes, False)]
-    return [(yes, yes, True)] + [(0.0, 0.0, True)] * (wins - 1)
 
 
 def faded(d, name, sport=None, venues=None):
@@ -1889,17 +1873,10 @@ def faded(d, name, sport=None, venues=None):
                     unit="market-day", n_bets=len(rows),
                     z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
 
-    grouped = {}
-    for r in rows:
-        grouped.setdefault(S.outcome_cluster(r["q"]), []).append(r)
     clusters = {}
-    for key, rs in grouped.items():
-        qs = [r["q"] for r in rs]
-        if len(qs) > 1 and all(_climate_lane(q) for q in qs):
-            won = {id(r["q"]): r["won"] for r in rs}
-            clusters[key] = climate_cluster_rows(qs, won_of=lambda q, won=won: won[id(q)])
-        else:
-            clusters[key] = [(float(r["q"]["price"]), r["p"], r["won"]) for r in rs]
+    for r in rows:
+        clusters.setdefault(S.outcome_cluster(r["q"]), []).append(
+            (r["q"]["price"], r["p"], r["won"]))
     c = cluster_stats(clusters)
     # n and roi stay over every bet: the money is the money. Only the z is taken over the
     # clusters that survived, and `dropped` says how many did not.
@@ -2160,10 +2137,10 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # would treat one day's weather as two coin flips. It drops a cluster that P(1-P) leaves
     # with no variance, and raises once too many of them are, so a nested ladder that does
     # not belong in this path cannot quietly hand back a z — see S.DAY_CLUSTERED.
-    grouped = {}
+    clusters = {}
     for q in bets:
-        grouped.setdefault(S.outcome_cluster(q), []).append(q)
-    clusters = {key: climate_cluster_rows(qs) for key, qs in grouped.items()}
+        clusters.setdefault(S.outcome_cluster(q), []).append(
+            (q["price"], q["price"], q["status"] == "won"))
     c = cluster_stats(clusters)
     var = c["var"]
     n_eff = c["outcomes"]
