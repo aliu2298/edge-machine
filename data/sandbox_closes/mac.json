@@ -100,6 +100,11 @@
    "lead_min": 13.9,
    "price": 0.55
   },
+  "btts_form_l10:KXUEFANLBTTS-26SEP28SWEPOL-BTTS": {
+   "at": "2026-09-28T17:55:09+00:00",
+   "lead_min": 49.8,
+   "price": 0.62
+  },
   "cmd_tail:KXBRENTD-26SEP2117-T100": {
    "at": "2026-09-21T14:48:03+00:00",
    "lead_min": 11.9,
@@ -2135,11 +2140,6 @@
    "lead_min": 3.3,
    "price": 0.83
   },
-  "o15_form_l10:KXEREDIVISIETOTAL-26SEP18GROZWO-2": {
-   "at": "2026-09-18T17:53:48+00:00",
-   "lead_min": 6.2,
-   "price": 0.89
-  },
   "o15_form_l10:KXEREDIVISIETOTAL-26SEP19ADOCAM-2": {
    "at": "2026-09-19T14:21:08+00:00",
    "lead_min": 8.9,
@@ -2250,10 +2250,20 @@
    "lead_min": 8.9,
    "price": 0.85
   },
+  "o15_form_l10:KXUEFANLTOTAL-26SEP28BELFRA-2": {
+   "at": "2026-09-28T17:55:09+00:00",
+   "lead_min": 49.8,
+   "price": 0.83
+  },
   "o15_form_l10:KXUEFANLTOTAL-26SEP28GEOUKR-2": {
    "at": "2026-09-28T15:53:08+00:00",
    "lead_min": 6.9,
    "price": 0.78
+  },
+  "o15_form_l10:KXUEFANLTOTAL-26SEP28SWEPOL-2": {
+   "at": "2026-09-28T17:55:09+00:00",
+   "lead_min": 49.8,
+   "price": 0.81
   },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26SEP25INDPAN-2": {
    "at": "2026-09-25T13:58:28+00:00",
@@ -2304,6 +2314,11 @@
    "at": "2026-09-28T15:53:08+00:00",
    "lead_min": 6.9,
    "price": 0.48
+  },
+  "o25_congestion:KXUEFANLTOTAL-26SEP28NIRHUN-3": {
+   "at": "2026-09-28T17:55:09+00:00",
+   "lead_min": 49.8,
+   "price": 0.67
   },
   "oddspedia:KXT20MATCH-26SEP201430BMUCYM": {
    "at": "2026-09-20T19:13:08+00:00",
@@ -2624,6 +2639,11 @@
    "at": "2026-09-27T15:51:04+00:00",
    "lead_min": 8.9,
    "price": 0.88
+  },
+  "p05_unbeaten:KXUEFANLGAME-26SEP28SWEPOL-SWE": {
+   "at": "2026-09-28T17:55:09+00:00",
+   "lead_min": 49.8,
+   "price": 0.51
   },
   "pinnacle:aec-boxing-tomraf-liawal-2026-09-19": {
    "at": "2026-09-19T14:51:19+00:00",
@@ -6031,5 +6051,5 @@
    "price": 0.86
   }
  },
- "updated": "2026-09-28T17:24:13+00:00"
+ "updated": "2026-09-28T17:55:09+00:00"
 }
