@@ -2866,8 +2866,28 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["mma_fav_band|mma", "oddspedia|cricket", "team1_form_l5|soccer_team1"],
+   ["mma_fav_band|mma", "oddspedia|cricket", "pm_combo4|tennis_pmcombo",
+    "team1_form_l5|soccer_team1"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
+# pm_combo4 listed 2026-09-28 as asked, and NOT executable: Polymarket US has no parlay API.
+# Both ends must stay honest about that, so neither drifts into emitting an actionable lead.
+ok("pm_combo4|tennis_pmcombo" in T.PAIR_OVERRIDES, "pm_combo4 is listed in Production")
+_pmq = dict(id="pmc:1", source="pm_combo4", sport="tennis_pmcombo", bet=True, venue="combo",
+            pick="a", market_id="pmcombo4:x", price=0.401, side_a="All 4 win",
+            side_b="Any one loses", status="won", pnl=149.5, stake=100.0,
+            start="2026-09-25T05:20:00+00:00", logged="2026-09-25T01:00:00+00:00",
+            legs=[dict(market_id=f"aec-atp-{i}", name=f"P{i}", pick="a", venue="polymarket_us",
+                       start="2026-09-25T05:20:00+00:00") for i in range(4)])
+ok(not T.placeable(_pmq),
+   "a basket of Polymarket US legs is still refused: that exchange publishes no parlay API")
+_kbq = dict(_pmq, id="kc:1", source="tennis_combo4", sport="tennis_combo",
+            legs=[dict(l, venue="kalshi") for l in _pmq["legs"]])
+ok(T.placeable(_kbq),
+   "while the Kalshi twin is expressible, because its RFQ collection does exist")
+ok(all(l["venue"] == "polymarket_us" for l in _pmq["legs"]),
+   "and the fixture above really is an all-Polymarket-US basket, not a mixed one")
+
+
 # OLBG boxing came off 2026-09-27 at 8-0. Pinned because the REASON is easy to lose and the
 # win record argues the other way: it tied the blind rule it is judged against, to the
 # decimal, by backing the favourite every time.

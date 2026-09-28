@@ -519,6 +519,42 @@
    "pair": "olbg|boxing",
    "reason": "taken off the Production list by hand",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-09-28T17:01:21+00:00",
+   "evidence": {
+    "base_roi": 0.1153,
+    "clv": -0.0135,
+    "clv_n": 4,
+    "n": 4,
+    "own_roi": 0.2473,
+    "roi": 0.2473,
+    "roi_fee": 0.1972,
+    "span_days": 1.0833,
+    "weeks": 0,
+    "z": 0.4526
+   },
+   "pair": "pm_combo4|tennis_pmcombo",
+   "reason": "moved to Production by hand on 2026-09-28",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-28T17:01:21+00:00",
+   "evidence": {
+    "base_roi": 0.1153,
+    "clv": -0.0135,
+    "clv_n": 4,
+    "n": 4,
+    "own_roi": 0.2473,
+    "roi": 0.2473,
+    "roi_fee": 0.1972,
+    "span_days": 1.0833,
+    "weeks": 0,
+    "z": 0.4526
+   },
+   "pair": "pm_combo4|tennis_pmcombo",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -579,6 +615,26 @@
    "since": "2026-09-28T02:59:44+00:00",
    "stage": "sandbox"
   },
+  "pm_combo4|tennis_pmcombo": {
+   "by_hand": "2026-09-28",
+   "entry": {
+    "base_roi": 0.1153,
+    "clv": -0.0135,
+    "clv_n": 4,
+    "n": 4,
+    "own_roi": 0.2473,
+    "roi": 0.2473,
+    "roi_fee": 0.1972,
+    "span_days": 1.0833,
+    "weeks": 0,
+    "z": 0.4526
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-28T17:01:21+00:00",
+   "ready_at": "2026-09-28T17:01:21+00:00",
+   "ready_since": "2026-09-28T17:01:21+00:00",
+   "stage": "production"
+  },
   "soccerpredictions|soccer": {
    "since": "2026-09-21T02:05:59+00:00",
    "stage": "sandbox"
@@ -624,5 +680,5 @@
    "stage": "sandbox"
   }
  },
- "updated": "2026-09-28T16:10:00+00:00"
+ "updated": "2026-09-28T17:01:21+00:00"
 }

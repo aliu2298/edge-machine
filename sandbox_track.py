@@ -205,6 +205,21 @@ PAIR_OVERRIDES = {
     # would have been a label. Only Polymarket US cricket reaches the feed — no cricket start
     # feed exists, so the Kalshi half is refused for want of a verified start.
     "oddspedia|cricket": dict(moved_on="2026-09-27", production_at=None),
+    # 2026-09-28, as asked. LISTED BUT NOT ACTIONABLE, and that is a fact about the exchange
+    # rather than a gap to be closed here, so it is written down instead of quietly retried:
+    # Polymarket US publishes no parlay API. Its official SDK (polymarket-us 0.1.2) takes a
+    # single `marketSlug` per order and holds no reference to a parlay, combo or basket
+    # anywhere in the package, and the public gateway serves no such endpoint. The exchange's
+    # own site does have a combo builder, which is why this lane exists and can be PRICED, but
+    # nothing reachable acts on one. So placeable() goes on refusing a basket whose legs are
+    # not Kalshi markets and no lead is published for it — checked deliberately, since a
+    # basket coerced onto one of its legs would be a different contract entirely.
+    # The record is also too small to argue from: 4 baskets over 1.1 days, z +0.45, -16.9%
+    # without its biggest win, halves -100% then +149%, and nothing new since 2026-09-25.
+    # A basket that could actually be acted on has to be the KALSHI twin: Kalshi does publish
+    # multivariate_event_collections, KXMVECROSSCATEGORY-R is live, and tennis_combo2 already
+    # clears placeable() on 7 leads. What is missing there is downstream, not an exchange.
+    "pm_combo4|tennis_pmcombo": dict(moved_on="2026-09-28", production_at=None),
     # 2026-09-22, as asked — without waiting for 30 settled. Both are ahead of the price on
     # records too small to read: the MMA favourite band 4-0 (4 won v 3.2 priced, +23.4% after
     # fees, z +1.00), OLBG's boxing tips 3-0 (3 won v 2.7 priced, +11.1%, z +0.59). The
