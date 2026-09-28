@@ -2310,13 +2310,18 @@ _wb = lambda mid, won, price: dict(id=f"nws:{mid}", source="nws", sport="climate
                                    result="a" if won else "b", price_a=price, price_b=1 - price, price_draw=None)
 _pair = [_wb("KXHIGHNY-26SEP13-B80.5", True, 0.3), _wb("KXHIGHNY-26SEP13-B82.5", False, 0.3)]
 # Same logged time, so the lesser market_id is the reading. B80.5 won at 0.30.
-_ap = T.assess({"quotes": _pair}, "nws")
+_pd = {"quotes": _pair, "meta": {}}
+T.mark_climate_citydays(_pd)
+_ap = T.assess(_pd, "nws")
 eq((_ap["n"], _ap["won"], _ap["unit"]), (1, 1, "bet"),
    "two nws quotes on one city-day score as one reading: the earliest, else the lesser market_id")
 close(_ap["expected"], 0.3, "the kept quote's price, not the sum of both buckets")
 close(_ap["pnl"], round(100 * (1 / 0.3 - 1), 2), "and its P&L; the later quote is not in the money")
 # A YES ladder that is not an nws or nws_fade repeat is still one draw of two buckets.
 _wx = [dict(q, source="wx", id="wx:" + q["id"]) for q in _pair]
+for _c in _wx:
+    _c.pop("excluded", None)
+    _c.pop("note", None)
 _aw = T.assess({"quotes": _wx}, "wx")
 close(_aw["z"], (1 - 0.6) / (0.6 * 0.4) ** 0.5, "z uses the ladder as one draw: P = 0.6, var 0.24", tol=1e-9)
 eq((_aw["n"], _aw["n_eff"]), (2, 1), "two bets, one independent outcome")
@@ -6474,13 +6479,30 @@ _chi = [
 _chi_kept = T.one_climate_reading(_chi)
 eq([q["id"] for q in _chi_kept], ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
    "the earliest Chicago quote is the one kept")
-_chi_a = T.assess({"quotes": _chi}, "nws_fade", "climate")
+_chi_d = {"quotes": _chi, "meta": {}}
+eq(T.mark_climate_citydays(_chi_d), 1, "the later Chicago quote is marked and the earlier one is not")
+eq(T.mark_climate_citydays(_chi_d), 0, "marking again under the same rule changes nothing")
+_chi_drop = _chi[1]
+eq(_chi_drop.get("excluded"), "nws_cityday", "the dropped row carries excluded=nws_cityday")
+ok("nws_fade:KXHIGHCHI-26SEP26-B68.5" in _chi_drop.get("note", "") and "under first" in _chi_drop["note"],
+   "the note names the kept id and the rule")
+eq((_chi_drop["status"], _chi_drop["result"], _chi_drop["pnl"], _chi_drop["price"]),
+   ("won", "b", 11.11, 0.90), "the mark leaves the result, the price and the P/L")
+ok("excluded" not in _chi[0] and "note" not in _chi[0], "the kept row is not marked")
+_chi_a = T.assess(_chi_d, "nws_fade", "climate")
 eq((_chi_a["n"], _chi_a["won"], _chi_a["unit"], _chi_a["z_dropped"]), (1, 0, "bet", 0),
    "the Chicago pair scores as the lost 0.67 quote, and does not raise")
 close(_chi_a["pnl"], -100.0, "the later win's P&L is not in the record")
 close(_chi_a["expected"], 0.67, "nor is its price")
 close(_chi_a["roi"], -1.0, "money ROI is that one stake")
-_chi_f = T.faded({"quotes": _chi}, "nws_fade", "climate")
+_chi_head = T.score(_chi_d, sport="climate")["nws_fade"]
+eq((_chi_head["settled"], _chi_head["won"]), (_chi_a["n"], _chi_a["won"]),
+   "the headline settled count matches the lane table")
+close(_chi_head["pnl"], _chi_a["pnl"], "and the headline P&L matches the lane P&L")
+_day_won, _day_n, _day_extra, _day_pl = SB._day_summary(_chi)
+eq((_day_won, _day_n), (0, 1), "the day subtotal counts the kept quote, not the marked repeat")
+close(_day_pl, -100.0, "and it does not add the marked quote's P&L")
+_chi_f = T.faded(_chi_d, "nws_fade", "climate")
 eq((_chi_f["n"], _chi_f["z_dropped"]), (1, 0), "the fade drops the later quote too")
 close(_chi_f["expected"], 0.34, "and fades the earliest quote's other side")
 # Same logged time: the lesser market_id wins the tie.
@@ -6495,6 +6517,9 @@ eq([q["market_id"] for q in T.one_climate_reading(_tie)], ["KXHIGHCHI-26SEP26-B6
 _yes = [dict(q, source="wx", id="wx:" + q["id"], pick="a", price=p, price_a=p, price_b=1 - p,
              result="a" if won else "b", status="won" if won else "lost", pnl=-100.0)
         for q, p, won in zip(_chi, (0.70, 0.87), (False, True))]
+for _c in _yes:
+    _c.pop("excluded", None)
+    _c.pop("note", None)
 _yes_raised = None
 try:
     T.assess({"quotes": _yes}, "wx", "climate")
@@ -6512,7 +6537,9 @@ ok(_yes_cs is not None, "and cluster_stats still raises on that YES book")
 _yes_nws = [dict(q, source="nws", id=q["id"].replace("nws_fade", "nws"), pick="a",
                  price=p, price_a=p, price_b=round(1 - p, 2))
             for q, p in zip(_chi, (0.70, 0.87))]
-_yn = T.assess({"quotes": _yes_nws}, "nws", "climate")
+_ynd = {"quotes": _yes_nws, "meta": {}}
+T.mark_climate_citydays(_ynd)
+_yn = T.assess(_ynd, "nws", "climate")
 eq((_yn["n"], _yn["expected"], _yn["z_dropped"]), (1, 0.70, 0),
    "two nws YES quotes on one city-day keep the earliest and do not raise")
 # last: the latest quote still logged before that quote's start. best: the
@@ -6525,14 +6552,32 @@ eq([q["id"] for q in T.one_climate_reading(_chi, rule="best")],
    ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
    "best keeps the cheaper Chicago NO, 0.67 rather than 0.90")
 _saved_rule = T.CLIMATE_KEEP_RULE
+_kept_fields = ("status", "result", "pnl", "price", "price_a", "price_b", "pick", "logged", "market_id")
+_before_switch = [{k: q.get(k) for k in _kept_fields} for q in _chi]
 try:
     T.CLIMATE_KEEP_RULE = "last"
-    _last_a = T.assess({"quotes": _chi}, "nws_fade", "climate")
+    eq(T.mark_climate_citydays(_chi_d), 2, "a new rule clears the old mark and writes the other")
+    eq(_chi[0].get("excluded"), "nws_cityday", "last marks the earlier Chicago quote")
+    ok("nws_fade:KXHIGHCHI-26SEP26-B66.5" in _chi[0].get("note", "") and "under last" in _chi[0]["note"],
+       "the new note names the quote last keeps, and the rule")
+    ok("excluded" not in _chi[1] and not str(_chi[1].get("note") or "").startswith("nws city-day:"),
+       "last clears the mark on the quote it keeps")
+    eq([{k: q.get(k) for k in _kept_fields} for q in _chi], _before_switch,
+       "switching rules does not touch the result, the prices or the P/L")
+    eq(T.mark_climate_citydays(_chi_d), 0, "the new rule is idempotent too")
+    _last_a = T.assess(_chi_d, "nws_fade", "climate")
     eq((_last_a["n"], _last_a["won"], _last_a["expected"]), (1, 1, 0.90),
-       "assess follows CLIMATE_KEEP_RULE: last scores the 0.90 quote")
+       "assess follows the mark: last scores the 0.90 quote")
+    _head_last = T.score(_chi_d, sport="climate")["nws_fade"]
+    eq((_head_last["settled"], _head_last["won"]), (_last_a["n"], _last_a["won"]),
+       "under last, the headline count matches the lane")
+    close(_head_last["pnl"], _last_a["pnl"], "and the headline P&L matches the lane")
 finally:
     T.CLIMATE_KEEP_RULE = _saved_rule
+    T.mark_climate_citydays(_chi_d)
 eq(T.CLIMATE_KEEP_RULE, "first", "the keep-rule is put back")
+eq(_chi[1].get("excluded"), "nws_cityday", "putting the rule back re-marks the later quote")
+ok("excluded" not in _chi[0], "and clears the earlier one")
 _late = [
     _fade_q("KXHIGHCHI-26SEP27-B69.5", "2026-09-26T16:00:00+00:00", 0.70, False, -100.0, 0.30),
     _fade_q("KXHIGHCHI-26SEP27-B67.5", "2026-09-27T02:00:00+00:00", 0.20, True, 400.0, 0.80),
@@ -6591,6 +6636,34 @@ eq((_live_nf["n"], _live_nf["n_eff"], _live_nf["z_dropped"], _live_nf["unit"]),
 eq(_live_ff["z_dropped"], 0, "the fade drops none of them either")
 eq(_live_nws["z_dropped"], 0, "nws repeat quotes are one reading too, so none of its clusters is dropped")
 eq({q["id"] for q in _live["quotes"]}, _live_ids, "scoring does not remove ledger rows")
+_live_head = T.score(_live, sport="climate")
+for _lane_name, _lane_a in (("nws", _live_nws), ("nws_fade", _live_nf)):
+    _hs = _live_head[_lane_name]
+    eq((_hs["settled"], _hs["won"]), (_lane_a["n"], _lane_a["won"]),
+       f"{_lane_name}: the headline settled count matches the lane table")
+    close(_hs["pnl"], _lane_a["pnl"], f"{_lane_name}: the headline P&L matches the lane table")
+_live_days = {}
+for _q in _live["quotes"]:
+    if not (_q.get("bet") and _q.get("status") in ("won", "lost", "void", "settled")):
+        continue
+    _live_days.setdefault((_q.get("settled") or "")[:10], []).append(_q)
+_day_pnl = 0.0
+_day_n = 0
+for _qs in _live_days.values():
+    _w, _n, _x, _pl = SB._day_summary(_qs)
+    _day_n += _n
+    _day_pnl += _pl
+_board_n = sum(s["settled"] for s in T.score(_live).values())
+_board_pnl = sum(s["pnl"] for s in T.score(_live).values())
+eq(_day_n, _board_n, "day subtotals count the same settled bets as the headline")
+close(_day_pnl, _board_pnl, "and the same P&L")
+import sandbox_milestones as _MS
+_ms_n, _ms_txt = _MS.status(_live, _MS.WATCHES[0])
+_ms_bets = [q for q in T.all_bets(_live) if q["source"] == "nws" and q["sport"] == "climate"
+            and q.get("bet") and q["status"] in ("won", "lost") and not T.climate_excluded(q)
+            and q["logged"] >= _MS.WATCHES[0]["since"]]
+eq(_ms_n, len(_ms_bets), "the milestone counts the marked record, not the repeat quotes")
+ok("after fees" in _ms_txt, "and it still reports the after-fees figure")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

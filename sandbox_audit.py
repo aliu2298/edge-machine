@@ -224,18 +224,14 @@ def check_records(d, st, rep):
                  else pair.get("since"))
         raw = [q for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
                and q.get("bet") and q["status"] in ("won", "lost")
+               and not T.climate_excluded(q)
                and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
                and (since is None or q["logged"] >= since)]
         priced = [q for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
                   and q.get("bet") and q.get("status") == "settled" and q.get("result") == "price"
+                  and not T.climate_excluded(q)
                   and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
                   and (since is None or q["logged"] >= since)]
-        # The same one-reading rule assess uses (CLIMATE_KEEP_RULE), per lane.
-        # A second nws or nws_fade quote on a city-day is not a second result,
-        # including when the earlier quote settled at a price. The sums below
-        # are still this function's, not assess's.
-        kept = {id(q) for q in T.one_climate_reading(raw + priced)}
-        raw = [q for q in raw if id(q) in kept]
         a = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
         won, exp = sum(1 for q in raw if q["status"] == "won"), sum(q["price"] for q in raw)
         if (len(raw), won) != (a["n"], a["won"]) or abs(exp - a["expected"]) > 1e-6:
@@ -260,7 +256,8 @@ def check_records(d, st, rep):
                                  f"the page says {a.get('clv_read')}")
         n += 1
     shown = {(r["name"], r["sport"]) for r in rows}
-    settled = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")]
+    settled = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
+               and not T.climate_excluded(q)]
     in_sec = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
     outside = sum(1 for q in settled if (q["source"], q["sport"]) not in shown
                   or (q.get("venue") or "polymarket") not in T.TRADEABLE_VENUES)

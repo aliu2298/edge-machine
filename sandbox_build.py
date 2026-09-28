@@ -197,7 +197,8 @@ def vs_price(d, name, sport=None):
     a hot ROI on heavy favourites is not an edge.
     """
     rows = [q for q in d["quotes"] if q["source"] == name and q["bet"]
-            and q["status"] in ("won", "lost") and (sport is None or q["sport"] == sport)]
+            and q["status"] in ("won", "lost") and not T.climate_excluded(q)
+            and (sport is None or q["sport"] == sport)]
     if not rows:
         return None
     return sum(1 for q in rows if q["status"] == "won"), sum(q["price"] for q in rows)
@@ -292,7 +293,7 @@ def pinnacle_table(d):
     rows = []
     for label, flag in (("Contests nothing else covers", True), ("Contests others also cover", False)):
         qs = [q for q in d["quotes"] if q["source"] == "pinnacle" and q.get("uncovered") is flag
-              and q["status"] != "void"]
+              and q["status"] != "void" and not T.climate_excluded(q)]
         bets = [q for q in qs if q["bet"]]
         done = [q for q in bets if q["status"] in ("won", "lost")]
         priced = [q for q in bets if q.get("status") == "settled" and q.get("result") == "price"]
@@ -350,7 +351,8 @@ def coverage_table(cov):
 
 def open_rows(d, limit=None):
     """Running bets, grouped by sport and soonest first."""
-    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]]
+    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
+            and not T.climate_excluded(q)]
     live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
     out, seen_sport = [], None
     for q in (live[:limit] if limit else live):
@@ -381,17 +383,21 @@ def _badge(q):
 
 
 def _day_summary(qs):
-    won = sum(1 for q in qs if q["status"] == "won")
-    n = sum(1 for q in qs if q["status"] in ("won", "lost"))
-    n_price = sum(1 for q in qs if q.get("result") == "price")
-    pl = sum(q["pnl"] for q in qs)
+    # A void stays in the list and adds nothing (its P/L is 0). A city-day
+    # repeat keeps its original P/L, so it has to be left out of the sum.
+    counted = [q for q in qs if not T.climate_excluded(q)]
+    won = sum(1 for q in counted if q["status"] == "won")
+    n = sum(1 for q in counted if q["status"] in ("won", "lost"))
+    n_price = sum(1 for q in counted if q.get("result") == "price")
+    pl = sum(q["pnl"] for q in counted)
     extra = f" · {n_price} priced" if n_price else ""
     return won, n, extra, pl
 
 
 def settled_rows(d, limit=None):
     """Settled bets, newest first, grouped by the day they settled."""
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]]
+    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+            and not T.climate_excluded(q)]
     done.sort(key=lambda q: q.get("settled") or "", reverse=True)
     out, seen_day = [], None
     for q in (done[:limit] if limit else done):
@@ -422,7 +428,8 @@ def _folds(groups, head, cls_="grp-fold"):
 
 def open_folds(d):
     """Running bets, one fold per sport, soonest first inside each."""
-    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]]
+    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
+            and not T.climate_excluded(q)]
     live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
     by = {}
     for q in live:
@@ -438,7 +445,8 @@ def open_folds(d):
 
 def settled_folds(d):
     """Settled bets, one fold per day they settled, newest first."""
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]]
+    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+            and not T.climate_excluded(q)]
     done.sort(key=lambda q: q.get("settled") or "", reverse=True)
     by = {}
     for q in done:
@@ -494,7 +502,8 @@ def unconnected_rows(d=None):
             continue
         rec = ""
         if m.get("retired") and d is not None:
-            n = sum(1 for q in T.all_bets(d) if q["source"] == name and q.get("bet") and q["status"] in ("won", "lost"))
+            n = sum(1 for q in T.all_bets(d) if q["source"] == name and q.get("bet")
+                    and q["status"] in ("won", "lost") and not T.climate_excluded(q))
             rec = f'<div class="sm">{n} settled bets kept on record</div>'
         why = (f'<b class="neg">Retired</b> {esc(m["retired"])}' if m.get("retired") else esc(m["note"]))
         out.append(f"""<tr><td><b>{esc(m['label'])}</b>
@@ -506,7 +515,8 @@ def unconnected_rows(d=None):
             rec = ""
             if d is not None:
                 n = sum(1 for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
-                        and q.get("bet") and q["status"] in ("won", "lost"))
+                        and q.get("bet") and q["status"] in ("won", "lost")
+                        and not T.climate_excluded(q))
                 rec = f'<div class="sm">{n} settled bets kept on record</div>'
             out.append(f"""<tr><td><b>{esc(m['label'].split(' (')[0])} · {esc(S.SPORTS.get(sport, sport))}</b>
 <div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div>{rec}</td>
@@ -527,7 +537,7 @@ def pair_status(d, st, name, sport):
     a = dict(a, whole_n=whole["n"], whole_roi=whole["roi"])
     qa = a
     mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")]
-    open_n = sum(1 for q in mine if q["status"] == "open")
+    open_n = sum(1 for q in mine if q["status"] == "open" and not T.climate_excluded(q))
     last = max((str(q.get("logged") or "") for q in mine), default="")
     if not a["n"]:
         group = "waiting" if open_n else None
@@ -881,7 +891,8 @@ def reconcile(d, rows):
     """Where every settled bet is. The sections judge a subset on purpose — a retired venue's
     bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
     from a verdict — so the page says so in numbers rather than leaving a gap to find."""
-    bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")]
+    bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
+            and not T.climate_excluded(q)]
     shown = {(r["name"], r["sport"]) for r in rows}
     in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
     venue = base = before = other = 0
@@ -1345,6 +1356,7 @@ def build():
     live_html, n_live = open_folds(d)
     hist_html, n_hist = settled_folds(d)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
+    n_city = sum(1 for q in d["quotes"] if q.get("bet") and T.climate_excluded(q))
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     # Counted over the pairs still running. Pooling every bet ever logged put this at 46%,
@@ -1399,7 +1411,7 @@ def build():
 </section>
 
 <section id="settled">
-<details class="sec"><summary><h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""})</h2></summary>
+<details class="sec"><summary><h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""}{f" · {n_city} city-day repeat" if n_city == 1 else (f" · {n_city} city-day repeats" if n_city else "")})</h2></summary>
 {('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + hist_html + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
 </details>
 
