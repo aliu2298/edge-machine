@@ -6439,6 +6439,127 @@ ok(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"}
    != S.market_day({"market_id": "KXXRP-26SEP1817-T99.9999", "date": "2026-09-18"}),
    "two different coins on one date are two market-days")
 
+# ---------------------------------------------------------------------------
+# nws_fade NO bets on one weather ladder (2026-09-28). The page build died in
+# assess() with DegenerateCluster: 4 of 15 clusters, first KXHIGHCHI-26SEP26.
+# Those rows are the NO side of exclusive buckets. 68-69° at 0.67 and 66-67° at
+# 0.90 sum past 1, which is what two NOs cost — both can land when the high is
+# somewhere else. The YES prices (0.34 and 0.15) are the exclusive rungs and sum
+# to 0.49. Grouping is right; p_draw was the NO price. Day-clustering climate
+# would also stop the raise, and would move the money ROI, which is the wrong fix.
+# ---------------------------------------------------------------------------
+print("\nweather NO clusters:")
+
+
+def _wx_no(event, strike, price, yes, won, logged="2026-09-26T16:47:54+00:00"):
+    return dict(id=f"nws_fade:{event}-{strike}", source="nws_fade", sport="climate",
+                venue="kalshi_binary", market_id=f"{event}-{strike}", bet=True, pick="b",
+                price=price, price_a=yes, price_b=price, price_draw=None,
+                result="b" if won else "a", status="won" if won else "lost",
+                pnl=round(100 * (1 / price - 1), 2) if won else -100.0, stake=100.0,
+                start="2026-09-27T19:00:00+00:00", logged=logged)
+
+
+# The live Chicago pair that the traceback named.
+_chi = [_wx_no("KXHIGHCHI-26SEP26", "B68.5", 0.67, 0.34, False, "2026-09-25T22:19:14+00:00"),
+        _wx_no("KXHIGHCHI-26SEP26", "B66.5", 0.90, 0.15, True)]
+_chi_d = {"quotes": _chi, "meta": {}}
+_chi_raised = None
+try:
+    _chi_a = T.assess(_chi_d, "nws_fade", "climate", venues=T.TRADEABLE_VENUES)
+except T.DegenerateCluster as _e:
+    _chi_raised = _e
+ok(_chi_raised is None,
+   "two NO bets on one Chicago high do not raise: their prices sum past 1 because both can land")
+if _chi_raised is None:
+    _P = 0.34 + 0.15
+    _var = _P * (1 - _P)
+    close(_chi_a["z"], (1 - (0.67 + 0.90)) / _var ** 0.5,
+          "the z uses P(1-P) on the YES rungs, and the NO prices only in the numerator", tol=1e-9)
+    eq(_chi_a["z_dropped"], 0, "a coherent YES sum is kept, not dropped")
+    eq((_chi_a["n"], _chi_a["n_bets"], _chi_a["unit"]), (2, 2, "bet"),
+       "both bets stay in the money count: climate is not collapsed to a market-day")
+    eq(_chi_a["n_eff"], 1, "and the two buckets are still one outcome")
+_chi_fade_raised = None
+try:
+    _chi_f = T.faded(_chi_d, "nws_fade", "climate", venues=T.TRADEABLE_VENUES)
+except T.DegenerateCluster as _e:
+    _chi_fade_raised = _e
+ok(_chi_fade_raised is None, "fading that same pair does not raise either")
+if _chi_fade_raised is None:
+    _P = 0.34 + 0.15
+    close(_chi_f["z"], (1 - _P) / (_P * (1 - _P)) ** 0.5,
+          "the fade is the YES side, so its z is the exclusive-rung z", tol=1e-9)
+    eq(_chi_f["z_dropped"], 0, "and nothing is dropped from it")
+
+# One NO is a Bernoulli at the price paid. Rewriting it to the YES price would
+# change the variance (0.67*0.33 vs 0.34*0.66) and every singleton fade with it.
+_one = {"quotes": [_wx_no("KXHIGHCHI-26SEP26", "B68.5", 0.67, 0.34, False)], "meta": {}}
+_one_a = T.assess(_one, "nws_fade", "climate", venues=T.TRADEABLE_VENUES)
+close(_one_a["z"], (0 - 0.67) / (0.67 * 0.33) ** 0.5,
+      "a single NO keeps p(1-p) at the price paid", tol=1e-9)
+
+# The same two prices on the YES side are the degenerate book the guard is for.
+_yes = [dict(q, id="nws:" + q["market_id"], source="nws", pick="a", price=q["price_a"],
+             price_b=round(1 - q["price_a"], 2),
+             result="a" if q["result"] == "b" else "b",
+             status="won" if q["result"] == "b" else "lost") for q in _chi]
+# Force the YES prices themselves past 1, as the Austin 0.70+0.87 quotes were.
+_yes[0].update(price=0.70, price_a=0.70)
+_yes[1].update(price=0.87, price_a=0.87)
+_yes_raised = None
+try:
+    T.assess({"quotes": _yes, "meta": {}}, "nws", "climate", venues=T.TRADEABLE_VENUES)
+except T.DegenerateCluster as _e:
+    _yes_raised = _e
+ok(_yes_raised is not None and "KXHIGHCHI-26SEP26" in str(_yes_raised),
+   "YES bets whose prices sum past 1 still raise: the guard is not switched off")
+
+# The record the build actually died on: 20 settled nws_fade bets, 15 city-days,
+# 4 of them with NO prices past 1. After the fix one city-day is still incoherent
+# (New York's YES quotes sum to 1.08) and is dropped; 1 of 15 is under 20%.
+_live = [
+    _wx_no("KXHIGHAUS-26SEP25", "B97.5", 0.09, 0.96, False, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHAUS-26SEP26", "B96.5", 0.59, 0.43, True, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHAUS-26SEP27", "B98.5", 0.51, 0.50, False),
+    _wx_no("KXHIGHCHI-26SEP26", "B68.5", 0.67, 0.34, False, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHCHI-26SEP26", "B66.5", 0.90, 0.15, True),
+    _wx_no("KXHIGHCHI-26SEP27", "B69.5", 0.78, 0.23, True),
+    _wx_no("KXHIGHCHI-26SEP27", "B67.5", 0.95, 0.06, True, "2026-09-26T21:29:00+00:00"),
+    _wx_no("KXHIGHDEN-26SEP26", "B81.5", 0.72, 0.30, False, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHDEN-26SEP27", "B82.5", 0.53, 0.50, False),
+    _wx_no("KXHIGHLAX-26SEP26", "T84", 0.91, 0.10, True, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHLAX-26SEP27", "B80.5", 0.59, 0.42, True),
+    _wx_no("KXHIGHMIA-26SEP26", "B87.5", 0.80, 0.21, False, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHMIA-26SEP27", "B87.5", 0.59, 0.42, True),
+    _wx_no("KXHIGHMIA-26SEP27", "B85.5", 0.95, 0.07, True, "2026-09-26T21:29:00+00:00"),
+    _wx_no("KXHIGHNY-26SEP26", "B62.5", 0.68, 0.34, True, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHNY-26SEP26", "T62", 0.29, 0.74, False, "2026-09-26T07:40:00+00:00"),
+    _wx_no("KXHIGHNY-26SEP27", "B67.5", 0.91, 0.10, True),
+    _wx_no("KXHIGHNY-26SEP27", "B65.5", 0.75, 0.26, True, "2026-09-26T21:29:00+00:00"),
+    _wx_no("KXHIGHPHIL-26SEP26", "B63.5", 0.85, 0.16, True, "2026-09-25T22:19:14+00:00"),
+    _wx_no("KXHIGHPHIL-26SEP27", "B65.5", 0.72, 0.33, True),
+]
+_live_d = {"quotes": _live, "meta": {}}
+_live_raised = None
+try:
+    _live_a = T.assess(_live_d, "nws_fade", "climate", venues=T.TRADEABLE_VENUES)
+    _live_all = T.assess(_live_d, "nws_fade", venues=T.TRADEABLE_VENUES)
+    _live_f = T.faded(_live_d, "nws_fade", "climate", venues=T.TRADEABLE_VENUES)
+except T.DegenerateCluster as _e:
+    _live_raised = _e
+ok(_live_raised is None,
+   "the 20-bet nws_fade record that aborted the page (4 of 15 on NO prices) assesses")
+if _live_raised is None:
+    eq(_live_a["z_dropped"], 1,
+       "one city-day is still incoherent (YES quotes sum past 1) and is dropped")
+    eq(_live_a["n"], 20, "the dropped city-day stays in the bet count")
+    close(_live_all["z"], _live_a["z"],
+          "the all-sport row uses the same z: sport=None is not a second crash", tol=1e-9)
+    eq(_live_f["z_dropped"], 1, "the fade drops that same incoherent city-day")
+else:
+    ok(False, f"live record raised: {_live_raised}")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:
     print("   -", f)

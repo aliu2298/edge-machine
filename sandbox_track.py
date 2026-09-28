@@ -1616,6 +1616,10 @@ def cluster_stats(clusters):
     So: above MAX_DEGENERATE of the clusters, raise DegenerateCluster — the grouping is
     wrong and no z is honest. At or below it, drop them and say how many.
 
+    The prices summed into P have to be the exclusive rungs. On a weather ladder that
+    is the YES price. A record of NOs (nws_fade) pays 0.67 and 0.90 for two buckets
+    that can both land, and those NO prices are not P — see cluster_inputs.
+
     Returns dict(won, expected, var, outcomes, dropped, n) over the clusters KEPT.
     """
     keep, dropped = {}, []
@@ -1637,6 +1641,47 @@ def cluster_stats(clusters):
         expected=sum(float(p) for rows, _P in keep.values() for _d, p, _w in rows),
         var=sum(P * (1.0 - P) for _rows, P in keep.values()),
         outcomes=len(keep), dropped=len(dropped), n=sum(len(r) for r, _P in keep.values()))
+
+
+def _weather_no(q):
+    """NO on a climate ladder, where the YES buckets are the exclusive rungs.
+
+    Climate stays out of S.DAY_CLUSTERED on purpose: the buckets cannot all land,
+    and collapsing a city-day would move the money ROI. The NO side of those same
+    buckets can all land (the high misses every one of them). Nested coin and
+    commodity ladders are the opposite shape and are not this — they are named in
+    DAY_CLUSTERED, and a nested ladder that is not named must still reach
+    cluster_stats with its own prices so the degenerate-cluster guard can fire.
+    """
+    return (q.get("sport") == "climate" and q.get("venue") == "kalshi_binary"
+            and q.get("pick") == "b" and q.get("price_a") is not None)
+
+
+def cluster_inputs(entries):
+    """{outcome cluster: [(p_draw, paid, won), ...]} for cluster_stats.
+
+    `entries` is (quote, paid, won). `paid` is the price this record paid.
+    `p_draw` is the quote's own price, except for two or more NO bets on one
+    weather ladder. Those NOs are not mutually exclusive — 66-67° and 68-69°
+    on KXHIGHCHI-26SEP26 were bought at 0.90 and 0.67, and both can pay when
+    the high is somewhere else — so summing the NO prices past 1 is the cost
+    of the bets, not a degenerate book. P is the YES prices (price_a), which
+    sum to 0.49 there. The win count is then k minus a draw of that P, and
+    its variance is P(1-P), the same figure a fade of the YES side already uses.
+
+    A single NO is left alone: one contract is a Bernoulli at the price paid.
+    Rewriting it to price_a would move every singleton's z by the overround.
+    """
+    groups = {}
+    for q, paid, won in entries:
+        groups.setdefault(S.outcome_cluster(q), []).append((q, paid, won))
+    out = {}
+    for key, rows in groups.items():
+        complement = len(rows) > 1 and all(_weather_no(q) for q, _p, _w in rows)
+        out[key] = [
+            (float(q["price_a"]) if complement else float(q["price"]), float(paid), won)
+            for q, paid, won in rows]
+    return out
 
 
 def faded(d, name, sport=None, venues=None):
@@ -1701,11 +1746,11 @@ def faded(d, name, sport=None, venues=None):
                     unit="market-day", n_bets=len(rows),
                     z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
 
-    clusters = {}
-    for r in rows:
-        clusters.setdefault(S.outcome_cluster(r["q"]), []).append(
-            (r["q"]["price"], r["p"], r["won"]))
-    c = cluster_stats(clusters)
+    # p_draw follows cluster_inputs. Fading a YES rule passes the rule's prices,
+    # which are the exclusive rungs. Fading a NO rule (nws_fade) is the reverse:
+    # the rule's own prices sum past 1, and the exclusive rungs are the YES side
+    # the fade is actually buying.
+    c = cluster_stats(cluster_inputs((r["q"], r["p"], r["won"]) for r in rows))
     # n and roi stay over every bet: the money is the money. Only the z is taken over the
     # clusters that survived, and `dropped` says how many did not.
     return dict(n=len(rows), won=sum(1 for r in rows if r["won"]),
@@ -1954,16 +1999,15 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     roi = pnl / money_stake if money_stake else None
     expected = sum(q["price"] for q in bets)
     # Significance counts INDEPENDENT outcomes. Bets that cannot all win together (two
-    # buckets of one weather ladder) form one cluster, and cluster_stats turns those into the
-    # variance of the win count: one 0/1 draw per cluster rather than one per bet, which
-    # would treat one day's weather as two coin flips. It drops a cluster that P(1-P) leaves
-    # with no variance, and raises once too many of them are, so a nested ladder that does
-    # not belong in this path cannot quietly hand back a z — see S.DAY_CLUSTERED.
-    clusters = {}
-    for q in bets:
-        clusters.setdefault(S.outcome_cluster(q), []).append(
-            (q["price"], q["price"], q["status"] == "won"))
-    c = cluster_stats(clusters)
+    # YES buckets of one weather ladder) form one cluster, and cluster_stats turns those
+    # into the variance of the win count: one 0/1 draw per cluster rather than one per bet,
+    # which would treat one day's weather as two coin flips. It drops a cluster that P(1-P)
+    # leaves with no variance, and raises once too many of them are, so a nested ladder that
+    # does not belong in this path cannot quietly hand back a z — see S.DAY_CLUSTERED.
+    # NO bets on that same ladder are not exclusive of each other. cluster_inputs passes
+    # the YES prices as p_draw so a city-day of NOs is not mistaken for one.
+    c = cluster_stats(cluster_inputs(
+        (q, q["price"], q["status"] == "won") for q in bets))
     var = c["var"]
     n_eff = c["outcomes"]
     # `won` and `expected` above are the whole record, and stay that way for the hit rate and
