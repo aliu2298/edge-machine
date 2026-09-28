@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-28T08:46:52+00:00",
+ "board_built_at": "2026-09-28T12:26:07+00:00",
  "leads": {
   "2026-09-22|Norbert Novenyi Jr.|Theo Haig|Norbert Novenyi Jr. to win \u00b7 MMA favourite-band rule": {
    "away": "Theo Haig",
@@ -169,6 +169,68 @@
    "source": "team1_form_l5",
    "sport": "soccer_team1",
    "status": "miss"
+  },
+  "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule": {
+   "away": "Camila Reynoso",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-29",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Aieza Bertolso to win",
+   "home": "Aieza Bertolso",
+   "id": "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-29T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-28",
+   "last_seen_at": "2026-09-28T12:26:07+00:00",
+   "league": "MMA",
+   "match": "Aieza Bertolso v Camila Reynoso",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-dwcs-aieber-camrey-2026-09-29",
+    "outcome": "Aieza Bertolso",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-aieber-camrey-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
+  },
+  "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule": {
+   "away": "Zaurbek Sabanov",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-30",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Zaurbek Sabanov to win",
+   "home": "Adama Diop",
+   "id": "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-30T00:30Z",
+   "lane": "production",
+   "last_seen": "2026-09-28",
+   "last_seen_at": "2026-09-28T12:26:07+00:00",
+   "league": "MMA",
+   "match": "Adama Diop v Zaurbek Sabanov",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-dwcs-adadio-zausab-2026-09-29",
+    "outcome": "Zaurbek Sabanov",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-adadio-zausab-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -209,5 +271,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-28T08:46:52+00:00"
+ "updated_at": "2026-09-28T12:26:07+00:00"
 }
