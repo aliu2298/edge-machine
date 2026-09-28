@@ -217,7 +217,24 @@ SOURCES = {
              "significant across the rules tried, and on 14 priced matches the market already "
              "charged for it. The Sandbox decides."),
     "tennis_fav_band": dict(
-        label="Tennis favourite-band rule (priced 0.77-0.81)", kind="Rule", connected=True,
+        label="Tennis favourite-band rule (priced 0.77-0.81)", kind="Rule", connected=False,
+        retired="2026-09-27: the narrowed band's out-of-sample test came back flat. 70 settled "
+                "since the 2026-09-24 reset, 55 won against 55.0 priced — the price exactly, so "
+                "the fees are the whole result. Backing the other side of those bets loses 23%, "
+                "which is the shape of a lane carrying no information rather than one facing the "
+                "wrong way. The wide-band record that preceded it was not evidence for this "
+                "band: of the 575 bets ever struck, 87% of the excess wins came from three days "
+                "in the first week (Sep 15/16/18 = +11.06 of +12.68), and 380 bets since Sep 19 "
+                "returned +0.56%. A repeat-player cut was checked before retiring, because the "
+                "same players kept reappearing and winning: a player's 2nd-or-later appearance "
+                "returned +8.71% after fees on 105 bets, z +2.10 — but 83 of those 105 were "
+                "struck in the OLD 0.75-0.90 band, only 22 in this one, and those 22 ran -2.61%. "
+                "Part of that effect is also mechanical: winning a first bet doubles a player's "
+                "chance of reappearing (22% against 8%), so pooling their first bet into the "
+                "repeat group imports wins by construction. Not built, at 1.6 bets a day it "
+                "would need a month to read. NOTE the legs live on: tennis_fav_band_3h and the "
+                "six combo lanes cut baskets from this same band and are unaffected by this "
+                "retirement.",
         site="edge-machine", sports=["tennis"], baseline="favourite_population",
         note="NARROWED AGAIN 2026-09-24 to 0.77-0.81, and the clock reset with it. The 0.75-0.77 slice was the whole problem: on 220 settled bets in the 0.75-0.80 band it returned -1.03% alone (74.7% hit against a 75.5c average ask), while 0.77-0.81 returned +9.83% (86.2%, z +2.36) and was the ONLY slice positive in both halves of the record (+11.8% then +7.8%); 0.75-0.77 went -8.3% then +7.0% and every band above 0.81 flipped sign. Weak part stated: that band was chosen after looking at five, and both halves are the same eleven days and largely the same tournaments, so it is a defensible narrowing rather than a proven one — hence the reset. Each quote now also carries its TOUR (S.tennis_tier), which is not a rule: the pre-registered question, fixed today and read in four weeks, is whether a favourite in a shallower field beats the same price in a deeper one. Today that is directionally right and unreadable — ITF men +4.30% on 185, WTA -3.87% on 55 — and contradicted by ATP at +23.99% on 27 bets with no losses, which is what luck looks like. EARLIER: NARROWED AND RESET 2026-09-23, counting from zero. Back the player the exchange "
              "prices between 0.75 and 0.80 (the ask), on every tennis match the Sandbox lists. "

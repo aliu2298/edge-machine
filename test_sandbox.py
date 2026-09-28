@@ -2690,7 +2690,9 @@ _at = T.assess(_dt, "tennis_fav_band", "tennis")
 _ct = dict((k, (p, det)) for k, _l, p, det in _at["criteria"])
 ok("the favourite on every match" in _ct["baseline"][1], "judged against backing the favourite on every match")
 eq(_ct["baseline"][0], True, "and beats it here (+25% v favourites losing two of three)")
-eq((S.SOURCES["mma_fav_band"]["sports"], S.CHALLENGERS["mma_fav_band"] is S.CHALLENGERS["tennis_fav_band"],
+# Compared against the FUNCTION, not against CHALLENGERS: tennis_fav_band was retired on
+# 2026-09-27 and so is no longer in that dict, while MMA goes on running the same fetcher.
+eq((S.SOURCES["mma_fav_band"]["sports"], S.CHALLENGERS["mma_fav_band"] is S.fetch_tennis_fav_band,
     S.SOURCES["mma_fav_band"]["baseline"]), (["mma"], True, "favourite_population"),
    "MMA runs the same band rule, judged the same way")
 eq(S.fetch_tt_band("table_tennis", universe={"table_tennis": [dict(market_id="x", price_a=0.44, price_b=0.57, price_draw=None),
@@ -2897,7 +2899,15 @@ print("\na pair moved by hand after a demotion")
 # Tennis was demoted for being level with the closing price and moved by hand the next day.
 # The move has to beat the demotion, restore the record the demotion reset, and stop the
 # closing price sending it straight back — while every other demotion still bites.
-def _tq(i, won=True, source="tennis_fav_band", bet=True, market=None):
+#
+# The fixture rides on tennis_fav_band_3h rather than tennis_fav_band: evaluate_stages skips
+# any source that is not connected, so pinning stage machinery to a lane that can be retired
+# makes these assertions fail the day it is (tennis_fav_band was retired 2026-09-27). The 3h
+# variant is the same sport and the same baseline, and nothing here is about either lane.
+_STAGE_PAIR = "tennis_fav_band_3h|tennis"
+
+
+def _tq(i, won=True, source="tennis_fav_band_3h", bet=True, market=None):
     when = (datetime(2026, 9, 10, tzinfo=timezone.utc) + timedelta(hours=i)).isoformat()
     return dict(id=f"{source}:{i}", source=source, sport="tennis", bet=bet, venue="kalshi",
                 market_id=market or f"t{i}", price=0.8, pick="a", result="a" if won else "b",
@@ -2908,31 +2918,31 @@ def _tq(i, won=True, source="tennis_fav_band", bet=True, market=None):
 # every match of the sport, which here wins less often than the rule does.
 _td = {"quotes": [_tq(i, i % 7 != 0) for i in range(160)]
                  + [_tq(1000 + i, i % 3 != 0, source="kalshi", bet=False, market=f"p{i}") for i in range(120)]}
-_ts = {"pairs": {"tennis_fav_band|tennis": dict(stage="sandbox", since="2026-09-16T22:34:42+00:00",
+_ts = {"pairs": {_STAGE_PAIR: dict(stage="sandbox", since="2026-09-16T22:34:42+00:00",
                                                 demoted_at="2026-09-16T22:34:42+00:00")}, "events": []}
 _tov = dict(T.PAIR_OVERRIDES)
-T.PAIR_OVERRIDES["tennis_fav_band|tennis"] = dict(moved_on="2026-09-17", production_at=149)
+T.PAIR_OVERRIDES[_STAGE_PAIR] = dict(moved_on="2026-09-17", production_at=149)
 T.evaluate_stages(_td, _ts, now=datetime(2026, 9, 17, 22, tzinfo=timezone.utc), verbose=False)
-_tp = _ts["pairs"]["tennis_fav_band|tennis"]
+_tp = _ts["pairs"][_STAGE_PAIR]
 eq((_tp["stage"], _tp.get("by_hand"), _tp.get("demoted_at")), ("production", "2026-09-17", None),
    "a move dated after the demotion cancels it")
 T.evaluate_stages(_td, _ts, now=datetime(2026, 9, 17, 22, 5, tzinfo=timezone.utc), verbose=False)
-ok(_ts["pairs"]["tennis_fav_band|tennis"].get("ready_at"),
+ok(_ts["pairs"][_STAGE_PAIR].get("ready_at"),
    "and it is judged on its whole record, not the bets since the demotion")
 # An override dated BEFORE a later demotion must not resurrect the pair.
-_ts2 = {"pairs": {"tennis_fav_band|tennis": dict(stage="sandbox", since="2026-09-20T00:00:00+00:00",
+_ts2 = {"pairs": {_STAGE_PAIR: dict(stage="sandbox", since="2026-09-20T00:00:00+00:00",
                                                  demoted_at="2026-09-20T00:00:00+00:00")}, "events": []}
 T.evaluate_stages(_td, _ts2, now=datetime(2026, 9, 21, tzinfo=timezone.utc), verbose=False)
-eq(_ts2["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
+eq(_ts2["pairs"][_STAGE_PAIR]["stage"], "sandbox",
    "an older by-hand move does not undo a demotion that came after it")
 # Losing to the prices paid still demotes a pair that was moved by hand.
 _tl = {"quotes": [_tq(i, i % 3 != 0) for i in range(160)]
                  + [_tq(1000 + i, True, source="kalshi", bet=False, market=f"p{i}") for i in range(120)]}
-_ts3 = {"pairs": {"tennis_fav_band|tennis": dict(stage="production", ready_at="2026-09-17T22:00:00+00:00",
+_ts3 = {"pairs": {_STAGE_PAIR: dict(stage="production", ready_at="2026-09-17T22:00:00+00:00",
                                                  promoted_at="2026-09-17T22:00:00+00:00",
                                                  by_hand="2026-09-17")}, "events": []}
 T.evaluate_stages(_tl, _ts3, now=datetime(2026, 9, 17, 23, tzinfo=timezone.utc), verbose=False)
-eq(_ts3["pairs"]["tennis_fav_band|tennis"]["stage"], "sandbox",
+eq(_ts3["pairs"][_STAGE_PAIR]["stage"], "sandbox",
    "…but losing to the price still sends it back, moved by hand or not")
 T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_tov)
 
@@ -2974,12 +2984,12 @@ ok(PR.start_verified(_tnq), "the venue publishes the match start, so the time is
 ok(not PR.start_verified(dict(_tnq, venue="kalshi")), "…and a Kalshi tennis row is not")
 ok(not PR.start_verified(dict(_tnq, sport="soccer", start_source=None)),
    "soccer still needs an ESPN kickoff")
-_tnl = PR.lead_from_quote(_tnq, "tennis_fav_band|tennis", "2026-09-18T06:00:00+00:00")
+_tnl = PR.lead_from_quote(_tnq, _STAGE_PAIR, "2026-09-18T06:00:00+00:00")
 eq(_tnl["bet"], {"kind": "match_result", "side": "away"}, "backing side B is the away side")
 eq(_tnl["route"], {"venue": "polymarket_us", "market": "aec-utr-a-b-2026-09-18",
                    "outcome": "Player B", "outcome_side": "no"},
    "the lead names the market and which outcome to buy — no name matching downstream")
-eq(PR.lead_from_quote(dict(_tnq, pick="a"), "tennis_fav_band|tennis", "x")["route"]["outcome_side"],
+eq(PR.lead_from_quote(dict(_tnq, pick="a"), _STAGE_PAIR, "x")["route"]["outcome_side"],
    "yes", "the first player is the Yes side of that same market")
 eq(_tnl["league"], "Tennis", "tennis leads carry a league name rather than an empty one")
 ok("model_prob" not in _tnl, "a rule's lead carries no model probability")
@@ -3033,7 +3043,7 @@ _kl = PR.lead_from_quote(dict(source="tennis_fav_band", id="q", sport="tennis", 
                               market_id="KXATPMATCH-26SEP18AB", side_a="A Player", side_b="B Player",
                               pick="b", price=0.8, status="open", start_source="tennisexplorer",
                               start="2026-09-18T12:00:00+00:00", logged="2026-09-18T06:00:00+00:00"),
-                         "tennis_fav_band|tennis", "2026-09-18T06:00:00+00:00")
+                         _STAGE_PAIR, "2026-09-18T06:00:00+00:00")
 eq(_kl["route"], {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome": "B Player",
                   "outcome_side": "yes"},
    "Kalshi lists a market per player, so either side is a plain Yes")
@@ -3222,6 +3232,28 @@ for _src in ("kalshi", "covers"):
 for _src, _sp in (("mlb_fade_streak", "mlb"), ("nws", "climate")):
     ok(_src in S.CHALLENGERS and not S.SOURCES[_src].get("retired") and _sp in S.SOURCES[_src]["sports"],
        f"{_src} is reconnected")
+# tennis_fav_band retired 2026-09-27: 70 bets since the Sep 24 reset, 55 won v 55.0 priced.
+_tfb = S.SOURCES["tennis_fav_band"]
+ok(_tfb.get("retired") and not _tfb["connected"] and "tennis_fav_band" not in S.CHALLENGERS,
+   "tennis_fav_band is retired and no longer picks")
+ok("55.0 priced" in _tfb["retired"] and "22" in _tfb["retired"],
+   "and its note records both the flat out-of-sample read and the 22-bet repeat cut")
+# It shares fetch_tennis_fav_band with mma_fav_band, which is IN PRODUCTION: retiring the
+# tennis lane must not touch it, and the two bands are different numbers.
+ok(S.SOURCES["mma_fav_band"]["connected"] and "mma_fav_band" in S.CHALLENGERS,
+   "mma_fav_band keeps running on the shared fetcher")
+ok("mma_fav_band|mma" in T.PAIR_OVERRIDES,
+   "and it is still the Production pair it was before")
+eq((S.fav_band("mma"), S.fav_band("tennis")), ((0.75, 0.90), (0.77, 0.81)),
+   "the two sports keep their own bands")
+# The legs live on elsewhere, which the retirement note says outright.
+ok(all(S.SOURCES[k]["connected"] for k in
+       ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3", "tennis_combo4",
+        "pm_combo2", "pm_combo3", "pm_combo4")),
+   "the 3h variant and the six combo lanes are untouched: they cut baskets from the same band")
+ok("legs live on" in _tfb["retired"],
+   "and the retirement says so rather than leaving it to be discovered")
+
 ok(S.SOURCES["tt_band_55_60"].get("retired") and "tt_band_55_60" not in S.CHALLENGERS,
    "table tennis stays retired: a +0.4% fade on 78 is no better outlook, only noise")
 ok(all(f"{_s}|{_sp}" not in T.PAIR_OVERRIDES for _s, _sp in
