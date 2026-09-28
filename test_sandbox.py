@@ -3246,8 +3246,20 @@ eq(S.market_day(_cq[0]) == S.market_day(_cq[15]), True, "every state's gas serie
 eq((_ca["won"], round(_ca["expected"], 2)), (1, 1.96),
    "a day with one losing rung pays less than it risked: 1 won of 2 market-days v 1.96 priced")
 ok(_ca["z"] < 2, "and two market-days can never read as a proven edge")
-eq(T.assess({"quotes": [dict(q, sport="tennis") for q in _cq]}, "cmd_tail", "tennis")["n"], 31,
+# A sport that is not day-clustered counts every bet. These rungs have to leave the
+# kalshi_binary ladder to make that point now: relabelled as tennis but left on the ladder,
+# ten nested gas rungs at 0.98 are exactly the grouping cluster_stats refuses (below).
+eq(T.assess({"quotes": [dict(q, sport="tennis", venue="kalshi") for q in _cq]},
+            "cmd_tail", "tennis")["n"], 31,
    "other sports still count every bet")
+_gas_raised = None
+try:
+    T.assess({"quotes": [dict(q, sport="tennis") for q in _cq]}, "cmd_tail", "tennis")
+except T.DegenerateCluster as _e:
+    _gas_raised = _e
+ok(_gas_raised is not None,
+   "a nested ladder NOT named in DAY_CLUSTERED raises rather than reporting a z: this is the "
+   "guard that would have caught spot's +10.40")
 
 # A pair taken out of Production keeps the record it was removed on in view.
 _rq = [dict(id=f"sp{i}", source="soccerpredictions", sport="soccer", bet=True, venue="kalshi",
@@ -6201,6 +6213,115 @@ ok(_abort is not None and _abort.code not in (0, None),
    "--apply exits non-zero when confirm_untouched reports NOT CONFIRMED")
 ok(open(_bad_path, "rb").read() == _bad_before,
    "--apply does not write the ledger when confirm_untouched reports NOT CONFIRMED")
+
+
+# ---------------------------------------------------------------------------
+# Outcome-cluster variance (2026-09-27). The bug: a cluster whose prices sum past 1 was
+# clamped to P=1, contributed P(1-P)=0 to the denominator, and kept its excess wins in the
+# numerator. `spot` read z +10.40 on 15 of 17 clusters being degenerate; the honest figure
+# on one-SOL-day-one-result is +0.24.
+# ---------------------------------------------------------------------------
+print("\noutcome clusters:")
+
+_c = T.cluster_stats({"x": [(0.40, 0.40, True)], "y": [(0.25, 0.25, False)]})
+eq(_c["outcomes"], 2, "two singletons are two outcomes")
+eq(_c["dropped"], 0, "a singleton is never dropped")
+close(_c["var"], 0.40 * 0.60 + 0.25 * 0.75, "a singleton cluster's variance is p(1-p) exactly")
+close(_c["expected"], 0.65, "expectation is the sum of the kept prices")
+eq(_c["won"], 1, "wins are counted over the kept clusters")
+
+# A coherent multi-bet cluster: two exclusive buckets priced 0.30 and 0.40 can be a real
+# simultaneous book, so P is their sum and the pair is ONE draw, not two coin flips.
+_c = T.cluster_stats({"k": [(0.30, 0.30, True), (0.40, 0.40, False)]})
+eq(_c["outcomes"], 1, "a coherent multi-bet cluster is one outcome")
+eq(_c["dropped"], 0, "a multi-bet cluster summing under 1 is kept")
+close(_c["var"], 0.70 * 0.30, "a multi-bet cluster's variance is P(1-P) on the summed price")
+
+# A singleton priced at 1.00 has no variance and that is CORRECT -- a certainty is a
+# certainty -- so the guard must not mistake it for the bug.
+_c = T.cluster_stats({"sure": [(1.0, 1.0, True)], "a": [(0.5, 0.5, True)], "b": [(0.5, 0.5, False)]})
+eq(_c["dropped"], 0, "a lone bet priced 1.00 is a certainty, not a degenerate cluster")
+close(_c["var"], 0.25 + 0.25, "a certain singleton adds no variance and is still kept")
+
+# THE BUG. Eight nested SOL rungs summing to 4.68, every one a winner. Clamped to P=1 the
+# old code gave this day zero variance while keeping its +3.32 excess in the numerator.
+_nested = {"KXSOLD-day": [(p, p, True) for p in
+                          (0.66, 0.52, 0.56, 0.65, 0.51, 0.57, 0.62, 0.59)],
+           "other": [(0.50, 0.50, False)]}
+_raised = None
+try:
+    T.cluster_stats(_nested)
+except T.DegenerateCluster as _e:
+    _raised = _e
+ok(_raised is not None,
+   "a record that is mostly degenerate clusters raises instead of returning a z")
+ok(_raised is not None and "DAY_CLUSTERED" in str(_raised),
+   "the raise names S.DAY_CLUSTERED as the remedy for a nested ladder")
+ok(_raised is not None and "1 of 2" in str(_raised),
+   "the raise counts the degenerate clusters against the total")
+
+# A HANDFUL of contradictory clusters is data noise, not a wrong grouping: dropped from all
+# three figures -- the numerator included, which is the part that mattered -- and counted.
+_mixed = {"bad": [(0.70, 0.70, False), (0.87, 0.87, True)]}
+for i in range(9):
+    _mixed[f"ok{i}"] = [(0.40, 0.40, i < 4)]
+_c = T.cluster_stats(_mixed)
+eq(_c["dropped"], 1, "one degenerate cluster in ten is dropped, not raised")
+eq(_c["outcomes"], 9, "the dropped cluster leaves the outcome count")
+eq(_c["won"], 4, "the dropped cluster's win leaves the NUMERATOR too")
+close(_c["expected"], 9 * 0.40, "the dropped cluster's price leaves the expectation")
+close(_c["var"], 9 * 0.40 * 0.60, "variance is taken over the kept clusters only")
+eq(_c["n"], 9, "n counts the bets in kept clusters")
+
+# The threshold itself, at the boundary in both directions.
+eq(T.MAX_DEGENERATE, 0.20, "the degenerate-cluster share that forces a raise is 20%")
+_five = {"bad0": [(0.6, 0.6, True), (0.6, 0.6, True)]}
+for i in range(4):
+    _five[f"ok{i}"] = [(0.4, 0.4, False)]
+ok(T.cluster_stats(_five)["dropped"] == 1, "1 of 5 clusters degenerate (20%) is dropped")
+_four = {"bad0": [(0.6, 0.6, True), (0.6, 0.6, True)]}
+for i in range(3):
+    _four[f"ok{i}"] = [(0.4, 0.4, False)]
+_raised2 = None
+try:
+    T.cluster_stats(_four)
+except T.DegenerateCluster as _e:
+    _raised2 = _e
+ok(_raised2 is not None, "1 of 4 clusters degenerate (25%) raises")
+
+# Crypto must be judged per market-day, for exactly the reason commodities is: a Kalshi coin
+# ladder is NESTED thresholds, so its rungs land together.
+# The all-sport view must not be a way around day-clustering. sport=None is not in
+# DAY_CLUSTERED, so the combined row used to take the per-bet path and publish exactly the z
+# the sport row was clustered to avoid — and for a single-sport source like `spot`, that row
+# IS the headline. Eight nested rungs of one coin-day, all winners at 0.55.
+_coin = [dict(id=f"coin{i}", source="spot", sport="crypto", bet=True, venue="kalshi_binary",
+              market_id=f"KXSOLD-26SEP18-T{100+i}", date="2026-09-18", pick="a", price=0.55,
+              price_a=0.55, price_b=0.46, price_draw=None, result="a", status="won",
+              pnl=81.8, stake=100.0, start="2026-09-18T21:00:00+00:00",
+              logged="2026-09-18T12:00:00+00:00") for i in range(8)]
+_ca_sport = T.assess({"quotes": _coin}, "spot", "crypto")
+_ca_all = T.assess({"quotes": _coin}, "spot")
+eq(_ca_sport["n"], 1, "eight nested rungs of one coin-day are ONE market-day")
+eq(_ca_all["n"], 1, "and the all-sport view collapses them the same way")
+close(_ca_all["z"], _ca_sport["z"],
+      "the all-sport z matches the sport z: sport=None is not a way around day-clustering")
+eq(_ca_all["unit"], "market-day", "and the all-sport row says it is counting market-days")
+ok(_ca_all["z"] < 2,
+   "one coin-day cannot read as a proven edge, however many rungs it held")
+
+ok("crypto" in S.DAY_CLUSTERED,
+   "crypto is judged per market-day: a coin ladder's rungs are nested, not exclusive")
+ok("commodities" in S.DAY_CLUSTERED and "soccer_corners" in S.DAY_CLUSTERED,
+   "commodities and soccer_corners stay day-clustered")
+ok("climate" not in S.DAY_CLUSTERED,
+   "climate is NOT day-clustered: its buckets really are exclusive, and collapsing them "
+   "would move the money ROI, not just the z")
+eq(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"}),
+   "KXSOLD|20260918", "one coin's day is one market-day key")
+ok(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"})
+   != S.market_day({"market_id": "KXXRP-26SEP1817-T99.9999", "date": "2026-09-18"}),
+   "two different coins on one date are two market-days")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
 for f in FAILS:

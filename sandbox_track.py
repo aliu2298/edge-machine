@@ -1526,6 +1526,84 @@ def pnl_after_fee(q):
     return -STAKE
 
 
+# A cluster whose logged prices sum to 1 or more is left with no variance by P(1-P), and
+# there are two very different reasons that happens. Below this share of a record it is read
+# as incoherent data and those clusters are dropped from the z; above it, the grouping itself
+# is wrong and no z is produced at all. `spot` before crypto joined S.DAY_CLUSTERED sat at
+# 15/17 = 88%; `nws`, whose weather buckets really are exclusive and whose sums pass 1 only
+# because two quotes on one city-day were logged hours apart, sits at 5/77 = 6%.
+MAX_DEGENERATE = 0.20
+
+
+class DegenerateCluster(Exception):
+    """Too much of a record is clusters that P(1-P) leaves with no variance.
+
+    Raised rather than worked around, because it means the outcomes were grouped wrongly and
+    every z over that grouping is inflated. See cluster_stats.
+    """
+
+
+def cluster_stats(clusters):
+    """Wins, expectation and variance over mutually exclusive outcome clusters.
+
+    `clusters`: {key: [(p_draw, price, won), ...]} keyed by S.outcome_cluster. At most one
+    bet in a cluster can land, so its wins are ONE 0/1 draw with probability P = the sum of
+    its `p_draw` and variance P(1-P) — not the sum of p(1-p), which would treat one day's
+    weather as two coin flips. A singleton is p(1-p) exactly.
+
+    `p_draw` and `price` are the same number for a pair's own record, and DIFFER for its
+    fade. Fading two exclusive buckets priced 0.30 means paying 0.72 twice, and the fade
+    wins 2 of them when neither bucket lands and 1 when one does: a win count of
+    2 - Bernoulli(0.60), whose variance is the RULE's 0.60 x 0.40, not the fade's
+    1.44. So the fade passes the rule's prices as `p_draw` and its own as `price`. Reading
+    P off the fade's prices would also make every such cluster look degenerate below.
+
+    A cluster holding more than one bet whose prices sum to 1 or more is left with zero
+    variance, and the old code summed that straight into the total. It is not a
+    near-certainty to wave through, it is a contradiction, and waving it through is what
+    inflated `spot` to z +10.40: the cluster's excess wins went into the NUMERATOR while it
+    contributed NOTHING to the denominator. Such clusters are dropped from all three figures
+    here — numerator included, which is the part that matters — and returned in `dropped`.
+
+    Two distinct things produce them, and only the share tells them apart:
+
+      * NESTED rungs, wrongly grouped as exclusive. A coin or commodity ladder, where
+        "$100 or above" and "$112 or above" both land on one move: `spot` had eight rungs of
+        one SOL day summing to 4.68, and 15 of its 17 clusters were degenerate. The premise
+        of the cluster is simply false, dropping would discard the record, and the remedy is
+        to name that sport in S.DAY_CLUSTERED so it is judged per market-day instead.
+      * INCOHERENT prices on genuinely exclusive rungs. `nws` backed 103°-104° at 0.70 and
+        101°-102° at 0.87 on one Austin day: no simultaneous book prices two exclusive
+        buckets at 1.57, and the sum only passes 1 because the two quotes were logged hours
+        apart as the forecast moved. Exactly one of them could land and exactly one did. The
+        cluster carries no usable expectation, but the other 72 do.
+
+    So: above MAX_DEGENERATE of the clusters, raise DegenerateCluster — the grouping is
+    wrong and no z is honest. At or below it, drop them and say how many.
+
+    Returns dict(won, expected, var, outcomes, dropped, n) over the clusters KEPT.
+    """
+    keep, dropped = {}, []
+    for key, rows in clusters.items():
+        P = min(1.0, sum(float(d) for d, _p, _w in rows))
+        if P * (1.0 - P) <= 0.0 and len(rows) > 1:
+            dropped.append(key)
+        else:
+            keep[key] = (rows, P)
+    if clusters and len(dropped) > MAX_DEGENERATE * len(clusters):
+        raise DegenerateCluster(
+            f"{len(dropped)} of {len(clusters)} outcome clusters hold several bets whose "
+            f"prices sum to 1 or more, leaving them no variance — past "
+            f"{MAX_DEGENERATE:.0%}, so these outcomes are grouped wrongly and no z over "
+            f"them is honest. If the rungs can all land together, as a coin or commodity "
+            f"ladder's can, name the sport in S.DAY_CLUSTERED. First: {dropped[0]!r}.")
+    return dict(
+        won=sum(1 for rows, _P in keep.values() for _d, _p, w in rows if w),
+        expected=sum(float(p) for rows, _P in keep.values() for _d, p, _w in rows),
+        var=sum(P * (1.0 - P) for _rows, P in keep.values()),
+        outcomes=len(keep), dropped=len(dropped), n=sum(len(r) for r, _P in keep.values()))
+
+
 def faded(d, name, sport=None, venues=None):
     """What the OTHER side of this pair's bets would have done — dict(n, won, expected, roi, z).
 
@@ -1572,10 +1650,13 @@ def faded(d, name, sport=None, venues=None):
     cost = sum(r["p"] + r["fee"] * r["p"] * (1 - r["p"]) for r in rows)
     roi = (sum(1 for r in rows if r["won"]) - cost) / cost
 
-    if sport in S.DAY_CLUSTERED:
+    # As in assess: follow each bet's own sport, so sport=None is not a way around this.
+    if sport in S.DAY_CLUSTERED or any(r["q"]["sport"] in S.DAY_CLUSTERED for r in rows):
         days = {}
         for r in rows:
-            days.setdefault(S.market_day(r["q"]), []).append(r)
+            key = (S.market_day(r["q"]) if r["q"]["sport"] in S.DAY_CLUSTERED
+                   else S.outcome_cluster(r["q"]))
+            days.setdefault(key, []).append(r)
         units = [(sum(r["p"] for r in rs) / len(rs), sum(r["pnl"] for r in rs) / len(rs) > 0)
                  for rs in days.values()]
         won = sum(1 for _p, w in units if w)
@@ -1587,12 +1668,15 @@ def faded(d, name, sport=None, venues=None):
 
     clusters = {}
     for r in rows:
-        clusters.setdefault(S.outcome_cluster(r["q"]), []).append(r["q"]["price"])
-    won = sum(1 for r in rows if r["won"])
-    exp = sum(r["p"] for r in rows)
-    var = sum(min(1.0, sum(c)) * (1 - min(1.0, sum(c))) for c in clusters.values())
-    return dict(n=len(rows), won=won, expected=exp, roi=roi, outcomes=len(clusters),
-                z=(won - exp) / var ** 0.5 if var > 0 else 0.0)
+        clusters.setdefault(S.outcome_cluster(r["q"]), []).append(
+            (r["q"]["price"], r["p"], r["won"]))
+    c = cluster_stats(clusters)
+    # n and roi stay over every bet: the money is the money. Only the z is taken over the
+    # clusters that survived, and `dropped` says how many did not.
+    return dict(n=len(rows), won=sum(1 for r in rows if r["won"]),
+                expected=sum(r["p"] for r in rows), roi=roi, outcomes=c["outcomes"],
+                z_dropped=c["dropped"],
+                z=(c["won"] - c["expected"]) / c["var"] ** 0.5 if c["var"] > 0 else 0.0)
 
 
 # ---- Per-competition records (2026-09-22) ---------------------------------------------------
@@ -1806,8 +1890,15 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
                    and (venues is None or (q.get("venue") or "polymarket") in venues)),
                   key=lambda q: q["start"])
     n_bets = len(bets)
-    if sport in S.DAY_CLUSTERED and bets:
-        bets = day_units(bets)
+    # Day-clustering follows each bet's OWN sport, not the `sport` argument. The all-sport
+    # view passes sport=None, which is not in DAY_CLUSTERED, so before 2026-09-27 a source's
+    # combined row took the per-bet path and published exactly the z its own sport row was
+    # day-clustered to avoid. `spot` is single-sport, so its headline figure WAS that hole.
+    if bets:
+        clustered = [q for q in bets if q["sport"] in S.DAY_CLUSTERED]
+        if clustered:
+            rest = [q for q in bets if q["sport"] not in S.DAY_CLUSTERED]
+            bets = sorted(day_units(clustered) + rest, key=lambda q: q["start"])
     n = len(bets)
     won = sum(1 for q in bets if q["status"] == "won")
     # Price payouts are in the money totals and out of n, won, and z.
@@ -1824,16 +1915,23 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     roi = pnl / money_stake if money_stake else None
     expected = sum(q["price"] for q in bets)
     # Significance counts INDEPENDENT outcomes. Bets that cannot all win together (two
-    # buckets of one weather ladder) form one cluster: its wins are a single 0/1 draw with
-    # probability P = the sum of its prices, variance P(1-P) — not the sum of p(1-p), which
-    # would treat one day's weather as two coin flips. A singleton cluster is p(1-p) exactly.
+    # buckets of one weather ladder) form one cluster, and cluster_stats turns those into the
+    # variance of the win count: one 0/1 draw per cluster rather than one per bet, which
+    # would treat one day's weather as two coin flips. It drops a cluster that P(1-P) leaves
+    # with no variance, and raises once too many of them are, so a nested ladder that does
+    # not belong in this path cannot quietly hand back a z — see S.DAY_CLUSTERED.
     clusters = {}
     for q in bets:
-        clusters.setdefault(S.outcome_cluster(q), []).append(q)
-    var = sum(min(1.0, sum(q["price"] for q in c)) * (1 - min(1.0, sum(q["price"] for q in c)))
-              for c in clusters.values())
-    n_eff = len(clusters)
-    z = (won - expected) / var ** 0.5 if var > 0 else 0.0
+        clusters.setdefault(S.outcome_cluster(q), []).append(
+            (q["price"], q["price"], q["status"] == "won"))
+    c = cluster_stats(clusters)
+    var = c["var"]
+    n_eff = c["outcomes"]
+    # `won` and `expected` above are the whole record, and stay that way for the hit rate and
+    # the money. The z is taken only over the clusters cluster_stats kept, so a contradictory
+    # one cannot put its excess wins in the numerator while contributing nothing below.
+    z_dropped = c["dropped"]
+    z = (c["won"] - c["expected"]) / var ** 0.5 if var > 0 else 0.0
     span_days = ((datetime.fromisoformat(bets[-1]["start"]) - datetime.fromisoformat(bets[0]["start"]))
                  .total_seconds() / 86400) if n else 0.0
     weeks = int(span_days // 7)
@@ -1960,8 +2058,10 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     clv_t = ((sum(clv) / len(clv)) / (clv_sd / len(clv) ** 0.5)) if clv_sd else None
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
                 n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
-                                     "market-day" if sport in S.DAY_CLUSTERED else "bet"),
-                z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, base_roi=base_roi, own_roi=own_roi, expected=expected,
+                                     "market-day" if sport in S.DAY_CLUSTERED else
+                                     "market-day" if n != n_bets else "bet"),
+                z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, z_dropped=z_dropped,
+                base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / money_stake) if money_stake else None,
                 clv=(sum(clv) / len(clv)) if clv else None, clv_n=len(clv),
                 clv_sd=clv_sd, clv_t=clv_t, clv_read=clv_read(len(clv), clv_t),

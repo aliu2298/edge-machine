@@ -3046,7 +3046,19 @@ ELIMINATED = {("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tenni
 # all land together, and the 22 state gas-price series move with one national price, so a
 # day of gas bets is ONE result, not 222 (2026-09-19: the first gas day would otherwise have
 # read "220-2, proven edge" off a single quiet night).
-DAY_CLUSTERED = ("commodities", "soccer_corners")
+#
+# CRYPTO joined on 2026-09-27, and it is the same market shape this comment already
+# describes. A Kalshi coin ladder is a set of NESTED thresholds, not exclusive buckets:
+# "$100 or above" and "$112 or above" both land on one SOL move. `spot` had eight rungs of
+# KXSOLD-26SEP1817 on record, every one a winner, and read as eight independent wins. The
+# effect was not merely to overcount n. outcome_cluster grouped those eight as MUTUALLY
+# EXCLUSIVE, their prices summed to 4.68, P clamped to 1.0, and P(1-P) came out at exactly
+# zero — so the day put its eight excess wins in the numerator and contributed NOTHING to
+# the denominator. 15 of `spot`'s 17 clusters were degenerate that way and the published
+# z read +10.40 where the honest figure on one-day-one-result is +0.24. Any nested ladder
+# belongs here, and cluster_stats in sandbox_track now refuses to produce a z for a record
+# that is mostly such clusters rather than quietly returning one.
+DAY_CLUSTERED = ("commodities", "crypto", "soccer_corners")
 
 
 def market_day(q):
