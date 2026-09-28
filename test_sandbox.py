@@ -2866,8 +2866,23 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["mma_fav_band|mma", "oddspedia|cricket", "olbg|boxing", "team1_form_l5|soccer_team1"],
+   ["mma_fav_band|mma", "oddspedia|cricket", "team1_form_l5|soccer_team1"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
+# OLBG boxing came off 2026-09-27 at 8-0. Pinned because the REASON is easy to lose and the
+# win record argues the other way: it tied the blind rule it is judged against, to the
+# decimal, by backing the favourite every time.
+ok("olbg|boxing" not in T.PAIR_OVERRIDES,
+   "OLBG boxing is out of Production despite going 8-0")
+_obsrc = open(_os.path.join(_os.path.dirname(_os.path.abspath(T.__file__)),
+                            "sandbox_track.py")).read()
+_obblk = _obsrc[_obsrc.index("PAIR_OVERRIDES = {"):_obsrc.index("\n}\n", _obsrc.index("PAIR_OVERRIDES = {"))]
+ok("OLBG boxing" in _obblk and "+17.4%" in _obblk and "favourite" in _obblk,
+   "and the removal records that the blind rule matched it exactly, so the tips added nothing")
+_ob = T.assess(json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(T.__file__)),
+                                            "data", "sandbox_ledger.json"))),
+               "olbg", sport="boxing", venues=T.TRADEABLE_VENUES)
+ok(_ob["n"] == 0 or not dict((k, p) for k, _l, p, _d in _ob["criteria"])["baseline"],
+   "the live record still fails the blind-rule criterion, which is why it came off")
 ok(not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a", market_id="combo3:x",
                         side_a="All 3 win", side_b="Any one loses")),
    "a basket with no legs is not publishable: the feed names the legs to ask a quote for, and "

@@ -225,7 +225,17 @@ PAIR_OVERRIDES = {
     # publish a lead today even if listed. It earns a hearing at 30 settled baskets like
     # anything else.
     "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
-    "olbg|boxing": dict(moved_on="2026-09-22", production_at=None),
+    #   OLBG boxing — listed 2026-09-22, OUT 2026-09-27, as asked. It went 8-0 on the US
+    #   exchanges (+17.4%, +16.3% after fees) and is still taken off, because the win record
+    #   is not the point: it backed the FAVOURITE in all nine bets, at prices from 0.64 to
+    #   0.95 and a mean of about 0.87, and backing the favourite blindly on those same
+    #   contests returned +17.4% too. Exactly the same number. A tipster that ties the blind
+    #   rule it is judged against has added nothing — the record is the favourite-longshot
+    #   bias, priced, and not the tips. Its closing prices say the same: -8c a bet over 6
+    #   closes, so the market moved against the picks while the 8-0 said otherwise. Five of
+    #   the nine were also struck on one day, 2026-09-26, so the span is thinner than the
+    #   count. The pair keeps its Sandbox record and goes on being measured; what it needs is
+    #   evidence it beats favourites, not more favourites that win.
 }
 
 

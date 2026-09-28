@@ -477,6 +477,48 @@
    "pair": "tennis_combo3|tennis_combo",
    "reason": "taken off the Production list by hand",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-09-28T02:59:44+00:00",
+   "evidence": {
+    "base_roi": 1.9232,
+    "clv": 0.1,
+    "clv_n": 9,
+    "n": 12,
+    "own_roi": 2.0333,
+    "roi": 2.0333,
+    "roi_fee": 1.9007,
+    "span_days": 12.1042,
+    "weeks": 1,
+    "z": 2.2155
+   },
+   "pair": "oddspedia|cricket",
+   "reason": "moved to Production by hand on 2026-09-27",
+   "to": "production"
+  },
+  {
+   "at": "2026-09-28T02:59:44+00:00",
+   "evidence": {
+    "base_roi": 1.9232,
+    "clv": 0.1,
+    "clv_n": 9,
+    "n": 12,
+    "own_roi": 2.0333,
+    "roi": 2.0333,
+    "roi_fee": 1.9007,
+    "span_days": 12.1042,
+    "weeks": 1,
+    "z": 2.2155
+   },
+   "pair": "oddspedia|cricket",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-09-28T02:59:44+00:00",
+   "pair": "olbg|boxing",
+   "reason": "taken off the Production list by hand",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -513,25 +555,29 @@
    "since": "2026-09-21T01:44:02+00:00",
    "stage": "sandbox"
   },
-  "olbg|boxing": {
-   "by_hand": "2026-09-22",
+  "oddspedia|cricket": {
+   "by_hand": "2026-09-27",
    "entry": {
-    "base_roi": 0.1176,
-    "clv": -0.21,
-    "clv_n": 2,
-    "n": 3,
-    "own_roi": 0.1176,
-    "roi": 0.1176,
-    "roi_fee": 0.1106,
-    "span_days": 1.3958,
-    "weeks": 0,
-    "z": 0.5934
+    "base_roi": 1.9232,
+    "clv": 0.1,
+    "clv_n": 9,
+    "n": 12,
+    "own_roi": 2.0333,
+    "roi": 2.0333,
+    "roi_fee": 1.9007,
+    "span_days": 12.1042,
+    "weeks": 1,
+    "z": 2.2155
    },
    "entry_since": null,
-   "promoted_at": "2026-09-22T16:20:08+00:00",
-   "ready_at": "2026-09-22T16:20:08+00:00",
-   "ready_since": "2026-09-22T16:20:08+00:00",
+   "promoted_at": "2026-09-28T02:59:44+00:00",
+   "ready_at": "2026-09-28T02:59:44+00:00",
+   "ready_since": "2026-09-28T02:59:44+00:00",
    "stage": "production"
+  },
+  "olbg|boxing": {
+   "since": "2026-09-28T02:59:44+00:00",
+   "stage": "sandbox"
   },
   "soccerpredictions|soccer": {
    "since": "2026-09-21T02:05:59+00:00",
@@ -578,5 +624,5 @@
    "stage": "sandbox"
   }
  },
- "updated": "2026-09-28T01:42:28+00:00"
+ "updated": "2026-09-28T02:59:44+00:00"
 }
