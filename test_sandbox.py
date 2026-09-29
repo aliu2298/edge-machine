@@ -3421,22 +3421,21 @@ ok("rules_texts" not in _agreed[0], "the rules text does not stay on the univers
 # The markets fixture carries the same sentence as the event fixture.
 for _m in _crmk["markets"]:
     if _m["event_ticker"] == _IND:
-        eq(S.kalshi_rules_start(_m["rules_primary"]), _IND_START,
-           "the markets fixture's rules time is the same 04:30Z")
+        ok(S._rules_support_start([_m["rules_primary"]], _IND_START),
+           "the markets fixture's rules sentence is the template for 04:30Z")
         break
 else:
     ok(False, "the markets fixture contains the India event")
 
-# Toss is still pre-match. The India milestone says "Match Scheduled - ...";
-# a toss delay on the same clocks must verify too.
+# Toss Pending is a pre-match status seen live, including Kalshi's bet-delay note.
 _toss_ms = _copy.deepcopy(_crms)
 _toss_ms[_IND][0]["details"] = dict(_toss_ms[_IND][0]["details"],
-                                    status="Toss Delayed due to bad weather")
+                                    status="Toss Pending   (Bet Delay:5 seconds)")
 _toss, _ = S.apply_kalshi_cricket_starts(
     [_crow(_IND, "2026-10-01T05:30:00+00:00")],
     milestones=_toss_ms, rules=_cr_rules_from_event(), now=_BEFORE)
 eq(_toss[0]["start_source"], "kalshi_milestone",
-   "a Toss status is still pre-match, so the agreed start stands")
+   "Toss Pending is a known pre-match status, so the agreed start stands")
 
 _off = _copy.deepcopy(_crms)
 _off[_IND][0]["start_date"] = "2026-10-01T05:00:00Z"
@@ -3563,8 +3562,39 @@ _rules_refused({_IND: [_AGREE + " originally scheduled for Oct 2, 2026 at 3:00 P
                "one text with two 'scheduled for' clauses stays unverified")
 _rules_refused({_IND: [_AGREE + " Now rescheduled to Oct 2, 2026 at 3:00 PM EDT."]},
                "one text with an agreeing clause and a 'rescheduled to' clause stays unverified")
-eq(S.kalshi_rules_start(_AGREE), _IND_START,
-   "the real fixture rules text parses to 04:30Z")
+# Whole-sentence allow-list. A second phrase the template does not spell refuses,
+# including clocks, dates and reschedule words the old scanner never recognised.
+for _extra, _why in (
+    ("First ball 0430 GMT.", "a '0430 GMT' clock stays unverified"),
+    ("Play now at 15.00 IST.", "a '15.00 IST' clock stays unverified"),
+    ("Play now at 1530 hrs IST.", "a '1530 hrs' clock stays unverified"),
+    ("Play now begins at noon IST.", "the word 'noon' stays unverified"),
+    ("Play now at 15h30 IST.", "a '15h30' clock stays unverified"),
+    ("Start: 2026-10-02T10:00Z.", "an ISO datetime stays unverified"),
+    ("Match day: Oct. 2, 2026.", "a 'Oct. 2, 2026' date stays unverified"),
+    ("The match is on 2nd October.", "a '2nd October' date stays unverified"),
+    ("The match is on 02.10.2026.", "a dotted numeric date stays unverified"),
+    ("The match is on 2026/10/02.", "a '2026/10/02' date stays unverified"),
+    ("The start has been pushed back.", "'pushed back' stays unverified"),
+    ("The start has been revised.", "'revised' stays unverified"),
+    ("The start has been changed.", "'changed' stays unverified"),
+    ("The start has been amended.", "'amended' stays unverified"),
+    ("The start has been shifted.", "'shifted' stays unverified"),
+    ("The start has a new time.", "'new time' stays unverified"),
+    ("The match has been post\u200bponed.", "a zero-width space in 'postponed' stays unverified"),
+    ("The match has been re\u2060scheduled.", "a word joiner in 'rescheduled' stays unverified"),
+    ("The match has been mo\ufeffved.", "a BOM in 'moved' stays unverified"),
+    ("Play now at 15\u223630 IST.", "a ratio colon stays unverified"),
+    ("Play now at 15\ua78930 IST.", "a modifier colon stays unverified"),
+    ("The match has been p\u043estponed.", "a Cyrillic letter in 'postponed' stays unverified"),
+    ("all markets will resolve to $0.50.", "an extra sentence with a digit stays unverified"),
+):
+    _beside(_extra, _why)
+_rules_refused({_IND: ["x" * 601]},
+               "a rules sentence longer than 600 characters stays unverified")
+_est_mismatch = _AGREE.replace("Oct 1, 2026 at 12:30 AM EDT", "Sep 30, 2026 at 11:30 PM EST")
+_rules_refused({_IND: [_est_mismatch]},
+               "EST on a September date is not the zone in force, so 04:30Z stays unverified")
 
 _LIVE = "KXT20MATCH-26SEP290800LIMPWAR"
 _live_rules = {_LIVE: "originally scheduled for Sep 29, 2026 at 8:00 AM EDT"}
@@ -3599,13 +3629,16 @@ _blank_out, _ = S.apply_kalshi_cricket_starts(
     milestones=_blank, rules=_cr_rules_from_event(), now=_BEFORE)
 eq(len(_blank_out), 1, "a milestone with no status is kept")
 eq(_blank_out[0].get("start_source"), None, "and it stays unverified")
-_lower = _copy.deepcopy(_crms)
-_lower[_IND][0]["details"] = dict(_lower[_IND][0]["details"], status="match scheduled")
-_lower_out, _ = S.apply_kalshi_cricket_starts(
-    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
-    milestones=_lower, rules=_cr_rules_from_event(), now=_BEFORE)
-eq(_lower_out[0].get("start_source"), "kalshi_milestone",
-   "pre-match is case-insensitive, so 'match scheduled' still verifies")
+for _held in ("Toss Delayed", "Toss Delayed due to bad weather",
+              "Match Scheduled (Postponed)", "Match Scheduled - Rain Delay",
+              "match scheduled", "Tossed"):
+    _held_ms = _copy.deepcopy(_crms)
+    _held_ms[_IND][0]["details"] = dict(_held_ms[_IND][0]["details"], status=_held)
+    _held_out, _held_st = S.apply_kalshi_cricket_starts(
+        [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+        milestones=_held_ms, rules=_cr_rules_from_event(), now=_BEFORE)
+    eq(_held_out, [], f"status {_held!r} is not an exact pre-match status, so the row is dropped")
+    eq(_held_st["dropped"], 1, f"and {_held!r} is counted as a drop")
 
 _NOV = "KXT20MATCH-26NOV020030SRIIND"
 _NOV_START = datetime(2026, 11, 2, 5, 30, tzinfo=timezone.utc)
@@ -3619,7 +3652,7 @@ _nov_ms = {_NOV: [dict(type="cricket_match", start_date="2026-11-02T05:30:00Z",
 _nov_out, _ = S.apply_kalshi_cricket_starts(
     [_crow(_NOV, "2026-11-02T06:30:00+00:00")],
     milestones=_nov_ms,
-    rules={_NOV: "originally scheduled for Nov 2, 2026 at 12:30 AM EST"},
+    rules={_NOV: _AGREE.replace("Oct 1, 2026 at 12:30 AM EDT", "Nov 2, 2026 at 12:30 AM EST")},
     now=datetime(2026, 10, 15, tzinfo=timezone.utc))
 eq(_nov_out[0]["start_source"], "kalshi_milestone", "the November row verifies")
 eq(datetime.fromisoformat(_nov_out[0]["start"]), _NOV_START,
@@ -3627,7 +3660,7 @@ eq(datetime.fromisoformat(_nov_out[0]["start"]), _NOV_START,
 _nov_bad, _ = S.apply_kalshi_cricket_starts(
     [_crow(_NOV, "2026-11-02T06:30:00+00:00")],
     milestones=_nov_ms,
-    rules={_NOV: "originally scheduled for Nov 2, 2026 at 12:30 AM EDT"},
+    rules={_NOV: _AGREE.replace("Oct 1, 2026 at 12:30 AM EDT", "Nov 2, 2026 at 12:30 AM EDT")},
     now=datetime(2026, 10, 15, tzinfo=timezone.utc))
 eq(_nov_bad[0].get("start_source"), None,
    "calling that November clock EDT does not agree, so the row stays unverified")

@@ -6733,8 +6733,9 @@ def apply_espn_starts(rows, fixtures=None, now=None):
 # Anything short of that stays an estimate, and the feed goes on refusing the bet.
 KALSHI_MILESTONES = "https://api.elections.kalshi.com/trade-api/v2/milestones"
 _EASTERN = "America/New_York"
-# Fixed offsets, not a label we then ignore. "12:30 AM EDT" on a November (EST)
-# date is 04:30Z, which will not match a milestone that says 05:30Z.
+# The label has to be the abbreviation America/New_York is actually on at that
+# wall-clock time. EST in September is not EDT, even when the arithmetic lands
+# on the same UTC instant.
 _EASTERN_OFFSETS = {"EDT": timedelta(hours=-4), "EST": timedelta(hours=-5)}
 _RULES_MONTHS = {
     "jan": 1, "january": 1, "feb": 2, "february": 2, "mar": 3, "march": 3,
@@ -6742,40 +6743,20 @@ _RULES_MONTHS = {
     "aug": 8, "august": 8, "sep": 9, "sept": 9, "september": 9, "oct": 10, "october": 10,
     "nov": 11, "november": 11, "dec": 12, "december": 12,
 }
-# Allow-list, not a keyword search. A claim is a month-first date, a 12-hour clock,
-# and an EDT or EST label. Anything else that looks like a time is a leftover.
+# Longer than any live rules_primary (the open book on 2026-09-29 peaked at 234).
+RULES_MAX_LEN = 600
 _RULES_MONTH = (
     r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|"
     r"aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
 )
-_RULES_CLAIM_RE = re.compile(
-    rf"\b(?P<mon>{_RULES_MONTH})\s+"
-    rf"(?P<dd>\d{{1,2}}),?\s+"
-    rf"(?P<year>\d{{4}})\s+"
-    rf"at\s+"
-    rf"(?P<hh>\d{{1,2}})(?::(?P<mm>\d{{2}}))?\s*"
-    rf"(?P<ap>[ap])\.?m\.?\s+"
-    rf"(?P<tz>edt|est)\b",
-    re.IGNORECASE)
-# Every clock and every date, in any order, with or without a zone. A token that
-# is not inside an allow-listed claim is a disagreement, even when another claim
-# in the same text agrees.
-_RULES_TOKEN_RE = re.compile(
-    rf"(?:"
-    rf"\b\d{{1,2}}:\d{{2}}\s*(?:[ap]\.?m\.?)?"
-    rf"|\b\d{{1,2}}\s*[ap]\.?m\.?"
-    rf"|\b{_RULES_MONTH}\s+\d{{1,2}}(?:st|nd|rd|th)?,?\s+\d{{4}}"
-    rf"|\b\d{{1,2}}(?:st|nd|rd|th)?\s+{_RULES_MONTH}\s+\d{{4}}"
-    rf"|\b\d{{4}}-\d{{1,2}}-\d{{1,2}}\b"
-    rf"|\b\d{{1,2}}/\d{{1,2}}/\d{{2,4}}\b"
-    rf")",
-    re.IGNORECASE)
-# A second wording of the start, after the text has been normalised. "re-scheduled"
-# has already lost its hyphen. These refuse the row even when the clock they name
-# happens to equal the milestone.
-_RULES_RESCHEDULE_RE = re.compile(
-    r"postpon|\bmoved\b|\bdelay(?:ed|s)?\b|reschedul|re\s+schedul|"
-    r"new start time|will now start|brought forward|put back|\bdeferred\b",
+# The whole sentence Kalshi publishes, and nothing else. The two free parts
+# may not contain a digit or a colon, so a competition named "T20" does not
+# match and is not given a looser pattern to make it match.
+_RULES_TEMPLATE_RE = re.compile(
+    rf"If (?P<who>[^\d:]{{1,120}}) wins the (?P<match>[^\d:]{{1,240}}) match "
+    rf"originally scheduled for (?P<mon>{_RULES_MONTH}) (?P<dd>\d{{1,2}}), "
+    rf"(?P<year>\d{{4}}) at (?P<hh>\d{{1,2}}):(?P<mm>\d{{2}}) "
+    rf"(?P<ap>AM|PM) (?P<tz>EDT|EST), then the market resolves to Yes\.",
     re.IGNORECASE)
 _TICKER_HHMM = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})(\d{4})(?:[^0-9]|$)")
 # Successes only. A failed fetch is not stored: caching [] would turn an outage
@@ -6806,27 +6787,32 @@ def kalshi_ticker_start(event_ticker):
 
 
 def _normalise_rules_text(text):
-    """NFKC, hyphens folded out, and every whitespace run collapsed to one space.
+    """NFKC, then every whitespace run collapsed to one space.
 
-    NBSP, newlines and double spaces become a single space, so "scheduled  for"
-    and "scheduled\\nfor" are the same sentence. "re-scheduled" becomes
-    "rescheduled".
+    NBSP and newlines become an ordinary space. Hyphens and colons are left
+    as they are: the template matches the sentence Kalshi publishes, and
+    stripping characters would hide a date the template is supposed to reject.
     """
     s = unicodedata.normalize("NFKC", str(text or ""))
-    s = re.sub(r"[\u00ad\u2010-\u2015\u2212-]", "", s)
     return re.sub(r"\s+", " ", s).strip()
 
 
-def _parse_rules_claim(m):
-    """UTC instant for one allow-listed claim, or None if the clock is impossible."""
+def _rules_instant(m):
+    """UTC instant for one template claim, or None if the zone label is wrong.
+
+    EDT or EST has to be the abbreviation America/New_York is on at that wall
+    time. "Sep 30, 2026 at 11:30 PM EST" is still EDT, so the label is refused
+    even though a fixed UTC-5 offset would land on the milestone.
+    """
     month = _RULES_MONTHS.get(m.group("mon").lower())
-    offset = _EASTERN_OFFSETS.get(m.group("tz").upper())
+    label = m.group("tz").upper()
+    offset = _EASTERN_OFFSETS.get(label)
     if month is None or offset is None:
         return None
-    hh, mm = int(m.group("hh")), int(m.group("mm") or 0)
+    hh, mm = int(m.group("hh")), int(m.group("mm"))
     if not (1 <= hh <= 12 and 0 <= mm <= 59):
         return None
-    if m.group("ap").upper() == "A":
+    if m.group("ap").upper() == "AM":
         hh = 0 if hh == 12 else hh
     else:
         hh = hh if hh == 12 else hh + 12
@@ -6834,66 +6820,62 @@ def _parse_rules_claim(m):
         local = datetime(int(m.group("year")), month, int(m.group("dd")), hh, mm)
     except ValueError:
         return None
-    # local = UTC + offset, and offset is negative, so UTC = local - offset.
-    return (local - offset).replace(tzinfo=timezone.utc)
+    zone = ZoneInfo(_EASTERN)
+    try:
+        aware = local.replace(tzinfo=zone)
+    except (ValueError, OverflowError):
+        return None
+    utc = aware.astimezone(timezone.utc)
+    back = utc.astimezone(zone)
+    if (back.year, back.month, back.day, back.hour, back.minute) != (
+            local.year, local.month, local.day, local.hour, local.minute):
+        return None
+    if aware.utcoffset() != offset or aware.tzname() != label:
+        return None
+    return utc.astimezone(timezone.utc)
 
 
-def kalshi_rules_start(text):
-    """UTC instant from a rules sentence, or None unless every clock in it agrees.
+def _rules_sentence(text, start):
+    """True when this one sentence is the template for `start`.
 
-    The text is normalised first. Every allow-listed date+time+zone claim is
-    read, not only the first, and every other time-like or date-like token has
-    to sit inside one of those claims. Two claims, a leftover "3:00 PM", a
-    24-hour clock, a day-first date, or a reschedule word ("postponed",
-    "moved", "re-scheduled", "will now start") returns None. EDT is UTC-4 and
-    EST is UTC-5, as fixed offsets.
+    None means the sentence is empty and can be ignored. False refuses the row:
+    a format character, anything outside printable ASCII, a sentence longer
+    than RULES_MAX_LEN, or text that is not the whole Kalshi template.
     """
-    norm = _normalise_rules_text(text)
-    if not norm or _RULES_RESCHEDULE_RE.search(norm):
+    raw = str(text or "")
+    if any(unicodedata.category(ch) == "Cf" for ch in raw):
+        return False
+    norm = _normalise_rules_text(raw)
+    if not norm:
         return None
-    parsed, spans = [], []
-    for m in _RULES_CLAIM_RE.finditer(norm):
-        instant = _parse_rules_claim(m)
-        if instant is None:
-            return None
-        parsed.append(instant)
-        spans.append(m.span())
-    for tok in _RULES_TOKEN_RE.finditer(norm):
-        a, b = tok.span()
-        if not any(gs <= a and b <= ge for gs, ge in spans):
-            return None
-    if not parsed or any(p != parsed[0] for p in parsed):
-        return None
-    return parsed[0]
+    if len(norm) > RULES_MAX_LEN:
+        return False
+    if any(ord(ch) < 32 or ord(ch) > 126 for ch in norm):
+        return False
+    m = _RULES_TEMPLATE_RE.fullmatch(norm)
+    if not m:
+        return False
+    instant = _rules_instant(m)
+    if instant is None or instant != start:
+        return False
+    return True
 
 
 def _rules_support_start(texts, start):
-    """True when the rules name `start` and no other clock, and say nothing else.
+    """True when every rules sentence is the template and at least one is present.
 
-    At least one allow-listed claim has to equal `start`. Every time-like token
-    in every sentence has to be part of a claim that equals `start`. A sentence
-    with no clock does not count as agreement. A reschedule word refuses the
-    lot, including when the clock it names is the milestone.
+    An empty sentence is ignored. Anything else — a second sentence, a digit in
+    rules_secondary, a reschedule phrase, a clock the template does not spell —
+    is a refusal. No sentence at all is not agreement.
     """
     agreed = False
     for text in texts:
-        norm = _normalise_rules_text(text)
-        if not norm:
+        verdict = _rules_sentence(text, start)
+        if verdict is None:
             continue
-        if _RULES_RESCHEDULE_RE.search(norm):
+        if verdict is not True:
             return False
-        spans = []
-        for m in _RULES_CLAIM_RE.finditer(norm):
-            instant = _parse_rules_claim(m)
-            if instant is None or instant != start:
-                return False
-            spans.append(m.span())
-        for tok in _RULES_TOKEN_RE.finditer(norm):
-            a, b = tok.span()
-            if not any(gs <= a and b <= ge for gs, ge in spans):
-                return False
-        if spans:
-            agreed = True
+        agreed = True
     return agreed
 
 
@@ -6938,15 +6920,35 @@ def _aware_utc(value):
     return dt.astimezone(timezone.utc)
 
 
-def _cricket_prematch(status):
-    """True when the status says the match has not started.
+# Exact strings seen on the open book, after the "(Bet Delay:N seconds)"
+# annotation is removed. "Toss Delayed" and "Match Scheduled (Postponed)" are
+# not in this set. A delay, postpone, abandon, or suspend word refuses too,
+# so a future status that merely starts with one of these words does not pass.
+_PREMATCH_STATUS = frozenset({
+    "Match Scheduled",
+    "Match Scheduled - Pre Match Service",
+    "Toss Pending",
+})
+_BET_DELAY_RE = re.compile(r"\s*\(Bet Delay:\d+ seconds\)\s*$")
+_STATUS_HOLD_RE = re.compile(r"delay|postpon|abandon|suspend", re.IGNORECASE)
 
-    'Match Scheduled' and 'Toss' count in any case, including a suffix
-    ('Match Scheduled - Pre Match Service', 'Toss Delayed'). Anything else —
-    Innings Break, Live, 'match in progress', Stumps, an unknown label — does not.
+
+def _cricket_status_key(status):
+    s = _BET_DELAY_RE.sub("", str(status or "").strip())
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _cricket_prematch(status):
+    """True only for a known pre-match status with no hold word in it.
+
+    'Match Scheduled', 'Match Scheduled - Pre Match Service', and 'Toss Pending'
+    count, including a trailing '(Bet Delay:N seconds)' annotation. 'Toss
+    Delayed', 'Match Scheduled (Postponed)', and any other wording do not.
     """
-    s = str(status or "").strip().lower()
-    return s.startswith("match scheduled") or s.startswith("toss")
+    s = _cricket_status_key(status)
+    if not s or _STATUS_HOLD_RE.search(s):
+        return False
+    return s in _PREMATCH_STATUS
 
 
 def _cricket_match_for(event, items):
@@ -7061,12 +7063,11 @@ def _verified_cricket_start(event, items, texts):
     """Milestone start if every cricket clock agrees and the match is pre-match, else None.
 
     The milestone instant must equal the ticker instant exactly, seconds included,
-    so 04:30:59Z is not 04:30:00Z. The rules must contain at least one allow-listed
-    date+time+zone claim equal to that instant, and every other time-like token
-    must be part of such a claim. No rules text is not enough. A second clause,
-    a leftover '3:00 PM' or '15:30', a day-first date, an ET/IST label, or a
-    reschedule word is a disagreement. The status, when present, has to be
-    pre-match; a missing status is not.
+    so 04:30:59Z is not 04:30:00Z. Every rules sentence must be Kalshi's whole
+    template for that instant, with the zone label America/New_York is actually
+    on. No rules text is not enough. Any other sentence is a disagreement. The
+    status, when present, has to be one of the known pre-match strings. A
+    missing status is not.
     """
     ms = _cricket_match_for(event, items)
     if ms is None:
@@ -7096,18 +7097,18 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
     Returns (rows, stats). start_source is "kalshi_milestone" only when all of
     these hold: exactly one cricket_match milestone whose primary_event_tickers
     is a list containing the event; its start_date parses as timezone-aware UTC
-    and equals the ticker's HHMM read in America/New_York, seconds and all; at
-    least one rules claim (date, 12-hour clock, and EDT or EST) parses to that
-    same instant; every other time-like token in the rules is part of such a
-    claim; and the text has no reschedule wording. No rules text is not a
-    verified start. A disagreement, a missing field, two milestones, or an HTTP
-    error leaves start_source unset.
+    and equals the ticker's HHMM read in America/New_York, seconds and all;
+    every rules sentence is Kalshi's template for that same instant, and the
+    EDT or EST label is the one America/New_York is on at that wall time. No
+    rules text is not a verified start. A disagreement, a missing field, two
+    milestones, or an HTTP error leaves start_source unset.
 
-    A milestone whose status is present and is not pre-match drops the row.
-    Pre-match means the status starts with "Match Scheduled" or "Toss", in any
-    case. Innings Break, Live, "match in progress", Stumps, Abandoned, and any
-    unknown label all drop, even when the start is still in the future. A
-    missing or blank status does not drop: the row stays unverified. A verified
+    A milestone whose status is present and is not an exact known pre-match
+    string drops the row. Those strings are "Match Scheduled", "Match Scheduled
+    - Pre Match Service", and "Toss Pending". A delay, postpone, abandon, or
+    suspend word drops it too, as does every unknown label, even when the start
+    is still in the future. A missing or blank status does not drop: the row
+    stays unverified. A verified
     start that has passed is dropped too. The verified start is the milestone instant
     itself. Pinnacle subtracts PINNACLE_START_MARGIN_MIN because a fight card
     walks out early; a T20 does the opposite and begins late, and this instant
