@@ -326,6 +326,10 @@ def load():
     else:
         d = {"meta": {"created": now_iso()}, "quotes": [], "coverage": {}}
     d["_archive"] = load_archive()
+    # Re-apply the city-day mark on every read. The constant is the rule, the
+    # rows keep their original result, and a second read under the same rule
+    # changes nothing. A different rule clears the old marks and writes new ones.
+    mark_climate_citydays(d)
     return d
 
 
@@ -1434,10 +1438,13 @@ def score(d, sport=None):
         rows = [q for q in d["quotes"] if q["source"] == name
                 and (sport is None or q["sport"] == sport)]
         bets = [q for q in rows if q["bet"]]
-        done = [q for q in bets if q["status"] in ("won", "lost")]
+        done = [q for q in bets if q["status"] in ("won", "lost") and not climate_excluded(q)]
         # A price payout is money. It is not a win or a loss, so it stays out of
         # the hit rate, and out of Brier below (that filter wants a side).
-        priced = [q for q in bets if q.get("status") == "settled" and q.get("result") == "price"]
+        # A repeat city-day mark is out of both, the way a void is: the row stays,
+        # its P/L does not.
+        priced = [q for q in bets if q.get("status") == "settled" and q.get("result") == "price"
+                  and not climate_excluded(q)]
         won = [q for q in done if q["status"] == "won"]
         staked = sum(q["stake"] for q in done) + sum(q["stake"] for q in priced)
         pnl = sum(q["pnl"] for q in done) + sum(q["pnl"] for q in priced)
@@ -1449,7 +1456,7 @@ def score(d, sport=None):
         # calibrate, so it gets no Brier column rather than a fabricated 0/1 stand-in.
         briered = [q for q in rows if q["status"] in ("won", "lost", "graded")
                    and q.get("result") in ("a", "b") and not q.get("untraded")
-                   and q.get("prob_a") is not None]
+                   and q.get("prob_a") is not None and not climate_excluded(q)]
         n_quotes, n_bets, n_done, n_won = len(rows), len(bets), len(done), len(won)
         brier_sum = sum((q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
                         for q in briered)
@@ -1469,7 +1476,8 @@ def score(d, sport=None):
         out[name] = dict(
             label=meta["label"], kind=meta["kind"], connected=meta["connected"],
             site=meta["site"], note=meta["note"],
-            quotes=n_quotes, open=len([q for q in rows if q["status"] == "open"]),
+            quotes=n_quotes, open=len([q for q in rows if q["status"] == "open"
+                                        and not climate_excluded(q)]),
             bets=n_bets, settled=n_done, won=n_won,
             hit=(n_won / n_done) if n_done else None,
             staked=staked, pnl=pnl,
@@ -1523,7 +1531,7 @@ def baselines(d, sport=None):
     """
     first = {}
     for q in d["quotes"]:
-        if q.get("status") == "void" or (sport and q["sport"] != sport):
+        if q.get("status") == "void" or climate_excluded(q) or (sport and q["sport"] != sport):
             continue
         if q.get("venue") == "kalshi_binary" or q.get("result") not in ("a", "b", "draw"):
             continue
@@ -1639,6 +1647,170 @@ def cluster_stats(clusters):
         outcomes=len(keep), dropped=len(dropped), n=sum(len(r) for r, _P in keep.values()))
 
 
+# Provisional, until the owner picks. One named switch for the whole scorer.
+#   first — earliest logged quote. Ties: lesser market_id, then lesser id.
+#   last  — latest quote logged strictly before that quote's start. Ties:
+#           lesser market_id, then lesser id. A quote logged at or after start
+#           is not a reading. If every quote on the city-day is past start,
+#           the city-day is not scored. start is the market start, not close_at.
+#   best  — lowest price paid for the side that was bet. Ties: earliest logged,
+#           then lesser market_id, then lesser id.
+# Collapse is per lane: nws and nws_fade are separate, one quote per city-day
+# event (outcome_cluster, for example KXHIGHCHI-26SEP26). The quote that is
+# not kept is marked excluded="nws_cityday", with a note naming the kept id
+# and this rule. The row stays. Its result, prices and P/L stay, so a later
+# rule is a re-run of mark_climate_citydays: old marks clear, new ones land.
+# Totals skip the mark the way they skip a void.
+CLIMATE_KEEP_RULE = "first"
+CLIMATE_KEEP_RULES = ("first", "last", "best")
+_CLIMATE_LANES = ("nws", "nws_fade")
+
+
+def _climate_lane(q):
+    return q.get("source") in _CLIMATE_LANES and q.get("sport") == "climate"
+
+
+def _climate_pick(qs, rule):
+    """The one non-void quote this city-day keeps under `rule`, or None.
+
+    A void is never the kept bet. It is already off the record, and choosing
+    it would mark the real quotes as the repeats.
+    """
+    if rule not in CLIMATE_KEEP_RULES:
+        raise ValueError(f"CLIMATE_KEEP_RULE must be one of {CLIMATE_KEEP_RULES}, not {rule!r}")
+    qs = [q for q in qs if q.get("status") != "void"]
+    if not qs:
+        return None
+    ident = lambda q: (str(q.get("market_id") or ""), str(q.get("id") or ""))
+    logged = lambda q: str(q.get("logged") or "")
+    if rule == "first":
+        return min(qs, key=lambda q: (logged(q),) + ident(q))
+    if rule == "last":
+        elig = [q for q in qs if not q.get("start") or logged(q) < str(q["start"])]
+        if not elig:
+            return None
+        latest = max(logged(q) for q in elig)
+        tied = [q for q in elig if logged(q) == latest]
+        return min(tied, key=ident)
+    # best: cheapest price on the side that was bet.
+    return min(qs, key=lambda q: (float(q["price"]) if q.get("price") is not None else 1.0,
+                                  logged(q)) + ident(q))
+
+
+def one_climate_reading(bets, rule=None):
+    """One temperature reading per city-day per lane (nws, nws_fade).
+
+    `rule` defaults to CLIMATE_KEEP_RULE. See that constant for first / last /
+    best. Any other source is left untouched, so a nested ladder and YES bets
+    on one city-day whose prices sum past 1 still raise DegenerateCluster.
+    """
+    rule = CLIMATE_KEEP_RULE if rule is None else rule
+    if not any(_climate_lane(q) for q in bets):
+        return list(bets)
+    groups = {}
+    for q in bets:
+        if _climate_lane(q):
+            groups.setdefault((q.get("source"), S.outcome_cluster(q)), []).append(q)
+    keep = set()
+    for qs in groups.values():
+        chosen = _climate_pick(qs, rule)
+        if chosen is not None:
+            keep.add(id(chosen))
+    return [q for q in bets if not _climate_lane(q) or id(q) in keep]
+
+
+CLIMATE_EXCLUDED = "nws_cityday"
+_CLIMATE_NOTE_PREFIX = "nws city-day: kept "
+
+
+def climate_excluded(q):
+    """True when this row is a repeat city-day quote left out of every total."""
+    return q.get("excluded") == CLIMATE_EXCLUDED
+
+
+def _climate_note(kept_id, rule):
+    return f"{_CLIMATE_NOTE_PREFIX}{kept_id} under {rule}"
+
+
+def _our_climate_note(note):
+    return isinstance(note, str) and note.startswith(_CLIMATE_NOTE_PREFIX)
+
+
+def _clear_climate_mark(q):
+    """Drop a mark this rule wrote. A note from anywhere else stays."""
+    changed = False
+    if q.get("excluded") == CLIMATE_EXCLUDED:
+        q.pop("excluded", None)
+        changed = True
+    if _our_climate_note(q.get("note")):
+        q.pop("note", None)
+        changed = True
+    return changed
+
+
+def _set_climate_mark(q, kept_id, rule):
+    """Mark one dropped row. Result, prices, status and P/L are not written."""
+    note = _climate_note(kept_id, rule)
+    changed = False
+    if q.get("excluded") != CLIMATE_EXCLUDED:
+        q["excluded"] = CLIMATE_EXCLUDED
+        changed = True
+    # A note this marker did not write is quote data. Leave it.
+    if q.get("note") and not _our_climate_note(q.get("note")):
+        return changed
+    if q.get("note") != note:
+        q["note"] = note
+        changed = True
+    return changed
+
+
+def mark_climate_citydays(d, rule=None):
+    """Mark repeat nws / nws_fade quotes on one city-day. Idempotent.
+
+    One bet per lane per event stays unmarked. The others get
+    excluded='nws_cityday' and a note naming the kept id and the rule.
+    Running again under the same rule changes nothing. Running under a
+    different rule clears the old marks and writes the new ones. A row that
+    is no longer a repeat loses the mark. Returns how many rows changed.
+    """
+    rule = CLIMATE_KEEP_RULE if rule is None else rule
+    if rule not in CLIMATE_KEEP_RULES:
+        raise ValueError(f"CLIMATE_KEEP_RULE must be one of {CLIMATE_KEEP_RULES}, not {rule!r}")
+    live = {id(q) for q in d.get("quotes") or []}
+    rows = [q for q in all_bets(d) if q.get("bet") and _climate_lane(q)]
+    grouped = {}
+    for q in rows:
+        grouped.setdefault((q.get("source"), S.outcome_cluster(q)), []).append(q)
+    seen, changed = set(), 0
+    for qs in grouped.values():
+        chosen = _climate_pick(qs, rule)
+        kept_id = chosen.get("id") if chosen is not None else "none"
+        for q in qs:
+            seen.add(id(q))
+            # A void is never the kept bet and never a marked repeat.
+            if q.get("status") == "void" or (chosen is not None and q is chosen):
+                moved = _clear_climate_mark(q)
+            else:
+                moved = _set_climate_mark(q, kept_id, rule)
+            if not moved:
+                continue
+            changed += 1
+            if id(q) not in live:
+                month = str(q.get("settled") or "")[:7]
+                if month:
+                    d.setdefault("_archive_dirty", set()).add(month)
+    for q in all_bets(d):
+        if id(q) in seen or not (climate_excluded(q) or _our_climate_note(q.get("note"))):
+            continue
+        if _clear_climate_mark(q):
+            changed += 1
+            if id(q) not in live:
+                month = str(q.get("settled") or "")[:7]
+                if month:
+                    d.setdefault("_archive_dirty", set()).add(month)
+    return changed
+
+
 def faded(d, name, sport=None, venues=None):
     """What the OTHER side of this pair's bets would have done — dict(n, won, expected, roi, z).
 
@@ -1666,7 +1838,7 @@ def faded(d, name, sport=None, venues=None):
         variance and understated the z — NWS reads +1.23 correctly counted, not +0.92.
     """
     bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
-            and q["status"] in ("won", "lost")
+            and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
             and q.get("price_draw") is None and q.get("pick") in ("a", "b")
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
@@ -1736,11 +1908,12 @@ def league_split(d, name, sport=None, venues=None):
     returned — so a league row reads exactly like a pair row, only thinner.
     """
     bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
-            and q["status"] in ("won", "lost")
+            and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
     priced = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
               and q.get("status") == "settled" and q.get("result") == "price"
+              and not climate_excluded(q)
               and (sport is None or q["sport"] == sport)
               and (venues is None or (q.get("venue") or "polymarket") in venues)]
     by = {}
@@ -1922,32 +2095,37 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     holds; "failing" when it is readable and not ahead of the price at all; else "watch".
     """
     bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
-                   and q["status"] in ("won", "lost")
+                   and q["status"] in ("won", "lost") and not climate_excluded(q)
                    and (sport is None or q["sport"] == sport)
                    and (since is None or q["logged"] >= since)
                    and (until is None or q["logged"] < until)
                    and (venues is None or (q.get("venue") or "polymarket") in venues)),
                   key=lambda q: q["start"])
+    # n_bets is every bet still on the record. A void is not, and neither is a
+    # repeat city-day quote: mark_climate_citydays has already set its flag.
     n_bets = len(bets)
-    # Day-clustering follows each bet's OWN sport, not the `sport` argument. The all-sport
-    # view passes sport=None, which is not in DAY_CLUSTERED, so before 2026-09-27 a source's
-    # combined row took the per-bet path and published exactly the z its own sport row was
-    # day-clustered to avoid. `spot` is single-sport, so its headline figure WAS that hole.
-    if bets:
-        clustered = [q for q in bets if q["sport"] in S.DAY_CLUSTERED]
-        if clustered:
-            rest = [q for q in bets if q["sport"] not in S.DAY_CLUSTERED]
-            bets = sorted(day_units(clustered) + rest, key=lambda q: q["start"])
-    n = len(bets)
-    won = sum(1 for q in bets if q["status"] == "won")
-    # Price payouts are in the money totals and out of n, won, and z.
     price_bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
                          and q.get("status") == "settled" and q.get("result") == "price"
+                         and not climate_excluded(q)
                          and (sport is None or q["sport"] == sport)
                          and (since is None or q["logged"] >= since)
                          and (until is None or q["logged"] < until)
                          and (venues is None or (q.get("venue") or "polymarket") in venues)),
                         key=lambda q: q.get("start") or "")
+    # Day-clustering follows each bet's OWN sport, not the `sport` argument. The all-sport
+    # view passes sport=None, which is not in DAY_CLUSTERED, so before 2026-09-27 a source's
+    # combined row took the per-bet path and published exactly the z its own sport row was
+    # day-clustered to avoid. `spot` is single-sport, so its headline figure WAS that hole.
+    day_collapsed = False
+    if bets:
+        clustered = [q for q in bets if q["sport"] in S.DAY_CLUSTERED]
+        if clustered:
+            day_collapsed = True
+            rest = [q for q in bets if q["sport"] not in S.DAY_CLUSTERED]
+            bets = sorted(day_units(clustered) + rest, key=lambda q: q["start"])
+    n = len(bets)
+    won = sum(1 for q in bets if q["status"] == "won")
+    # Price payouts are in the money totals and out of n, won, and z.
     pnl_wl = sum(q["pnl"] for q in bets)
     pnl = pnl_wl + sum(q["pnl"] for q in price_bets)
     money_stake = (n * STAKE) + sum(float(q.get("stake") or 0.0) for q in price_bets)
@@ -2097,8 +2275,8 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     clv_t = ((sum(clv) / len(clv)) / (clv_sd / len(clv) ** 0.5)) if clv_sd else None
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
                 n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
-                                     "market-day" if sport in S.DAY_CLUSTERED else
-                                     "market-day" if n != n_bets else "bet"),
+                                     "market-day" if sport in S.DAY_CLUSTERED or day_collapsed else
+                                     "bet"),
                 z=z, weeks=weeks, span_days=span_days, n_eff=n_eff, z_dropped=z_dropped,
                 base_roi=base_roi, own_roi=own_roi, expected=expected,
                 roi_fee=(pnl_fee / money_stake) if money_stake else None,
@@ -2622,17 +2800,18 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
         r["quotes"] += 1
         if q["bet"]:
             r["bets"] += 1
-        if q["status"] in ("won", "lost"):
+        if q["status"] in ("won", "lost") and not climate_excluded(q):
             r["settled"] += 1
             r["won"] += 1 if q["status"] == "won" else 0
             r["staked"] += q["stake"]
             r["pnl"] += q["pnl"]
-        elif q.get("bet") and q.get("result") == "price" and q.get("status") == "settled":
+        elif (q.get("bet") and q.get("result") == "price" and q.get("status") == "settled"
+              and not climate_excluded(q)):
             # The money stays in the lifetime total. The win count does not move.
             r["staked"] += q["stake"]
             r["pnl"] += q["pnl"]
         if (q.get("result") in ("a", "b") and not q.get("untraded")
-                and q.get("prob_a") is not None):
+                and q.get("prob_a") is not None and not climate_excluded(q)):
             r["brier_sum"] += (q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
             r["brier_n"] += 1
         rolled += 1
@@ -2681,6 +2860,12 @@ def main():
     grade(d)
     print(f"  ({time.time() - t2:.0f}s, run total {time.time() - t0:.0f}s)")
     prune(d)
+    # After grading and pruning, so a quote that settled this run is marked
+    # before it is saved, including one that just moved to the archive.
+    # Same rule, nothing to write. A changed rule clears and re-marks.
+    n_city = mark_climate_citydays(d)
+    if n_city:
+        print(f"  climate city-days: re-marked {n_city} quote(s) under {CLIMATE_KEEP_RULE}")
     save(d)
     st = load_stages()
     evaluate_stages(d, st)
