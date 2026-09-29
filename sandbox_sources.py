@@ -6749,11 +6749,15 @@ _RULES_MONTH = (
     r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|"
     r"aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
 )
-# The whole sentence Kalshi publishes, and nothing else. The two free parts
-# may not contain a digit or a colon, so a competition named "T20" does not
-# match and is not given a looser pattern to make it match.
+# The whole sentence Kalshi publishes, and nothing else. In the team and
+# competition names only, one whole word may be letters plus a 1- or 2-digit
+# run (T20, T20s, Pro20, T10). A token that starts with a digit, a run of 3 or
+# more digits, or digits next to ':' '.' '/' or '-' is not that word. The
+# scheduled-for slot is unchanged and is the only clock that can verify.
+_RULES_NAME_TOKEN = r"(?<![:./\-\d])[A-Za-z]+[0-9]{1,2}[A-Za-z]*(?![:./\-\d])"
+_RULES_FREE = rf"(?:[^\d:]|{_RULES_NAME_TOKEN})+"
 _RULES_TEMPLATE_RE = re.compile(
-    rf"If (?P<who>[^\d:]{{1,120}}) wins the (?P<match>[^\d:]{{1,240}}) match "
+    rf"If (?P<who>{_RULES_FREE}) wins the (?P<match>{_RULES_FREE}) match "
     rf"originally scheduled for (?P<mon>{_RULES_MONTH}) (?P<dd>\d{{1,2}}), "
     rf"(?P<year>\d{{4}}) at (?P<hh>\d{{1,2}}):(?P<mm>\d{{2}}) "
     rf"(?P<ap>AM|PM) (?P<tz>EDT|EST), then the market resolves to Yes\.",

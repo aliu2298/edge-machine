@@ -3596,6 +3596,35 @@ _est_mismatch = _AGREE.replace("Oct 1, 2026 at 12:30 AM EDT", "Sep 30, 2026 at 1
 _rules_refused({_IND: [_est_mismatch]},
                "EST on a September date is not the zone in force, so 04:30Z stays unverified")
 
+
+def _named(competition):
+    return _AGREE.replace("Asian Games Men", competition)
+
+
+for _comp in ("KCC T20 Summer League", "CSA Pro20 Cup", "Kerala Tour of Oman T20s"):
+    _named_out, _ = S.apply_kalshi_cricket_starts(
+        [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+        milestones=_crms, rules={_IND: [_named(_comp)]}, now=_BEFORE)
+    eq(_named_out[0]["start_source"], "kalshi_milestone",
+       f"a competition named {_comp!r} still fullmatches the template")
+    _stored = datetime.fromisoformat(_named_out[0]["start"])
+    eq(_stored, _IND_START, f"{_comp} does not change the stored start")
+    eq(_stored, S.kalshi_ticker_start(_IND),
+       f"the stored start for {_comp} equals the ticker")
+    _claim = S._RULES_TEMPLATE_RE.fullmatch(_named(_comp))
+    eq(_stored, S._rules_instant(_claim),
+       f"the stored start for {_comp} equals the template's scheduled time")
+for _bad_name, _why in (
+    ("GMT0430 League", "a 4-digit run after letters, GMT0430, stays unverified"),
+    ("T1530 IST League", "T1530, four digits after a letter, stays unverified"),
+    ("UTC04 League", None),
+):
+    if _why:
+        _rules_refused({_IND: [_named(_bad_name)]}, _why)
+_utc04 = _named("UTC04 League").replace("Oct 1, 2026 at 12:30 AM EDT", "Oct 2, 2026 at 9:00 AM EDT")
+_rules_refused({_IND: [_utc04]},
+               "UTC04 next to a disagreeing scheduled time stays unverified")
+
 _LIVE = "KXT20MATCH-26SEP290800LIMPWAR"
 _live_rules = {_LIVE: "originally scheduled for Sep 29, 2026 at 8:00 AM EDT"}
 _live_out, _live_st = S.apply_kalshi_cricket_starts(
