@@ -688,9 +688,8 @@ def _combo_outcome(q):
     pending = False
     for leg in legs:
         res = _leg_answer(leg)
-        settlement = S._price_result(res)
-        if settlement is not None:
-            product *= S.pmus_paid(leg.get("pick"), settlement)
+        if S._price_result(res) is not None:
+            product *= S.price_paid(leg.get("pick"), res)
             priced = True
             continue
         if res is None:

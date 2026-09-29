@@ -1295,7 +1295,7 @@ def _apply_result(q, res, stamp):
     """
     settlement = S._price_result(res)
     if settlement is not None:
-        paid = round(S.pmus_paid(q.get("pick"), settlement), 6)
+        paid = round(S.price_paid(q.get("pick"), res), 6)
         q["result"] = "price"
         q["settle_px"] = paid
         if not q.get("settled"):
@@ -1374,7 +1374,10 @@ def grade(d, verbose=True, now=None, mismatches=None):
     """Settle every open quote, then correct a settled one whose venue has revised.
 
     `mismatches` overrides the watch file (tests pass a set). None reads it.
-    A re-resolved None or void never replaces a stored side. Returns how many
+    A re-resolved None or void never replaces a stored side. A price payout
+    may replace a void that has no note and no city-day flag: that is the
+    venue paying a fair value, and the same correction a watched disagreement
+    applies. It does not replace a win or a loss. Returns how many
     open quotes settled this call; corrections are counted separately in the log.
     """
     now = now or datetime.now(timezone.utc)
@@ -1430,6 +1433,21 @@ def grade(d, verbose=True, now=None, mismatches=None):
         if id(q) in just_settled or q.get("status") not in _SETTLED:
             continue
         res = results.get((q.get("venue"), q.get("market_id")))
+        # A scalar/fair-value price may replace a void, or correct a stored price.
+        # It must not replace a win or a loss. A duplicate, a late log, a pre-gate
+        # void, or a city-day flag carries a note or a mark and stays as it is.
+        if S._price_result(res) is not None:
+            if q.get("note") or climate_excluded(q):
+                continue
+            if q.get("result") not in ("void", "price"):
+                continue
+            new_paid = round(S.price_paid(q.get("pick"), res), 6)
+            if (q.get("result") == "price" and q.get("settle_px") is not None
+                    and abs(float(q["settle_px"]) - new_paid) <= 1e-9):
+                continue
+            _apply_result(q, res, now_iso())
+            regraded += 1
+            continue
         # None, void, or any other non-side must not overwrite a stored win/loss.
         # A decisive side that merely repeats the stored result is not a correction.
         if res not in DECISIVE_RESULTS or res == q.get("result"):
