@@ -362,49 +362,70 @@ def _ct_when(kickoff):
 
 
 _BAD_KICKOFF = set()
+_KICKOFF_UNKNOWN = "kickoff unknown"
+
+
+def _clip_shown(value, limit=80):
+    """A log-safe slice of a raw kickoff. Newlines would break a workflow command."""
+    if not isinstance(value, str):
+        value = repr(value)
+    value = value.replace("\r", " ").replace("\n", " ")
+    if len(value) <= limit:
+        return value
+    return value[:limit] + "…"
+
+
+def _kickoff_known(lead):
+    """True when the kickoff parses. A naive timestamp is UTC, via fmt.chicago."""
+    raw = lead.get("kickoff")
+    if not isinstance(raw, str) or not raw:
+        return False
+    try:
+        fmt.chicago(raw)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return False
+    return True
 
 
 def _kickoff_key(lead):
-    """Sort key for a feed kickoff. Missing or non-text sorts as empty.
+    """Order a lead by its kickoff text. Every unreadable kickoff sorts last.
 
-    A string kickoff is returned unchanged, so a feed of real timestamps
-    sorts exactly as it did when the key was the raw field.
+    A readable kickoff is the raw string under a shared prefix, so a feed of
+    real timestamps sorts exactly as it did when the key was the raw field.
+    None, a missing key, and a garbage string share one key.
     """
     raw = lead.get("kickoff")
-    return raw if isinstance(raw, str) else ""
+    if isinstance(raw, str) and _kickoff_known(lead):
+        return (0, raw)
+    return (1, "")
 
 
 def _note_kickoff(lead):
     """Warn once when a lead's kickoff is missing or will not parse.
 
-    The lead stays on the page. A garbage string already renders as a dash;
-    None and a missing key do too.
+    The lead stays on the page, labeled kickoff unknown. It is not a lead
+    still to come and it does not set the next-lead tile.
     """
     missing = "kickoff" not in lead
     raw = None if missing else lead.get("kickoff")
-    if isinstance(raw, str) and raw:
-        try:
-            fmt.chicago(raw)
-            return
-        except (TypeError, ValueError, OverflowError, OSError):
-            pass
-    shown = "missing" if missing else repr(raw)
+    if _kickoff_known(lead):
+        return
+    shown = "missing" if missing else ("None" if raw is None else _clip_shown(raw))
     token = (lead.get("id") or lead.get("match"), shown)
     if token in _BAD_KICKOFF:
         return
     _BAD_KICKOFF.add(token)
-    print(f"warning: lead {lead.get('match')!r} has unreadable kickoff ({shown}); "
-          f"shown with a dash", file=sys.stderr)
+    print(f"::warning::lead {lead.get('match')!r} has unreadable kickoff ({shown}); "
+          f"shown as kickoff unknown", file=sys.stderr)
 
 
 def _pending_to_come(lead, now_str):
     """A pending lead still to show. An unreadable kickoff is not in the past."""
     if lead["status"] != "pending":
         return False
-    raw = lead.get("kickoff")
-    if not isinstance(raw, str):
+    if not _kickoff_known(lead):
         return True
-    return raw >= now_str
+    return lead.get("kickoff") >= now_str
 
 
 def page(d, st, blob, style, now=None):
@@ -427,11 +448,17 @@ def page(d, st, blob, style, now=None):
     for lead in leads:
         _note_kickoff(lead)
     now_str = now_dt.strftime("%Y-%m-%dT%H:%MZ")
-    upcoming = sorted((l for l in leads if _pending_to_come(l, now_str)),
-                      key=_kickoff_key)
+    pending = sorted((l for l in leads if _pending_to_come(l, now_str)), key=_kickoff_key)
+    # Unreadable kickoffs sort last. They stay on the page and out of the
+    # "still to come" count and the next-lead tile.
+    upcoming = [l for l in pending if _kickoff_known(l)]
+    unknown_up = [l for l in pending if not _kickoff_known(l)]
     landed = [l for l in leads if l["status"] in ("hit", "miss")]
-    settled = sorted((l for l in leads if l["status"] in ("hit", "miss", "price")),
-                     key=_kickoff_key, reverse=True)
+    settled_known = sorted(
+        (l for l in leads if l["status"] in ("hit", "miss", "price") and _kickoff_known(l)),
+        key=lambda l: l["kickoff"], reverse=True)
+    settled_unknown = [l for l in leads
+                       if l["status"] in ("hit", "miss", "price") and not _kickoff_known(l)]
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
     cards = []
@@ -482,12 +509,24 @@ def page(d, st, blob, style, now=None):
 <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
 <div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr>{rows}</table></div></details>""")
+    if unknown_up:
+        rows = "".join(
+            f"""<tr><td class="mut">{_KICKOFF_UNKNOWN}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+<td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
+<td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
+            for l in unknown_up)
+        days_html += (f"""<details class="fold"><summary>{_KICKOFF_UNKNOWN}
+<span class="mut sm">· {len(unknown_up)} lead{'s' if len(unknown_up) != 1 else ''}</span></summary>
+<div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Logged at</th></tr>{rows}</table></div></details>""")
     upcoming_html = days_html or '<div class="note">No leads still to come.</div>'
 
     # ---- how the recent ones landed ----
-    recent = settled[:25]
+    # The 25 newest readable kickoffs, then every settled lead whose kickoff
+    # cannot be read, so a missing kickoff cannot fall off the end of the list.
+    recent = settled_known[:25] + settled_unknown
     rec_rows = "".join(
-        f"""<tr><td class="mut">{esc(_ct_date(l.get('kickoff')))}</td><td>{esc(l['match'])}</td>
+        f"""<tr><td class="mut">{esc(_ct_date(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(l['match'])}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else ('paid' if l['status'] == 'price' else 'missed')}</span></td></tr>"""
         for l in recent)

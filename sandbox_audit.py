@@ -189,6 +189,15 @@ def check_bets(d, rep):
         if st != "void" and lg and sa and lg >= sa:
             rep.error("bets", f"{tag}: logged {q['logged'][:16]}, at or after its start {str(q['start'])[:16]}")
             bad += 1
+    # A start that does not parse used to skip the timing check silently.
+    # It is a warning, not an error: the P/L checks above still apply, and a
+    # missing clock must not fail the audit the way a wrong payout does.
+    unreadable = [q for q in qs if q.get("bet") and _dt(q.get("start")) is None]
+    if unreadable:
+        ids = ", ".join(str(q.get("id")) for q in unreadable[:8])
+        extra = f" (+{len(unreadable) - 8} more)" if len(unreadable) > 8 else ""
+        rep.warn("bets", f"{len(unreadable)} bet(s) with an unreadable start, "
+                         f"left out of the timing check: {ids}{extra}")
     if not bad and not dup:
         n = sum(1 for q in qs if q.get("bet"))
         rep.ok("bets", f"{len(qs):,} quotes, {n:,} bets: P/L, status, prices and timing all consistent")
