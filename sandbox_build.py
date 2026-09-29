@@ -400,7 +400,8 @@ def coverage_table(cov):
 
 def open_rows(d, limit=None):
     """Running bets, soonest first. One flat table: Contest, then Price."""
-    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]]
+    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
+            and not T.climate_excluded(q)]
     live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
     out = []
     for q in (live[:limit] if limit else live):
@@ -438,7 +439,8 @@ def _day_summary(qs):
 
 def settled_rows(d, limit=None):
     """Settled bets, newest first. One flat table: Contest, then P/L."""
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]]
+    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+            and not T.climate_excluded(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     out = []
     for q in (done[:limit] if limit else done):
@@ -452,48 +454,6 @@ def settled_rows(d, limit=None):
 {_price_cell(q.get('price'))}
 <td class="mut">{esc(_settled_day(q))}</td></tr>""")
     return "\n".join(out), len(done)
-
-
-def _folds(groups, head, cls_="grp-fold"):
-    """[(summary html, rows html)] -> one closed fold per group, each a full table."""
-    return "\n".join(f'<details class="{cls_}"><summary>{summ}</summary>'
-                     f'<div class="tbl"><table>{head}{rows}</table></div></details>'
-                     for summ, rows in groups)
-
-
-def open_folds(d):
-    """Running bets, one fold per sport, soonest first inside each."""
-    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
-            and not T.climate_excluded(q)]
-    live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
-    by = {}
-    for q in live:
-        by.setdefault(q["sport"], []).append(q)
-    groups = []
-    for sport, qs in by.items():
-        rows, _n = open_rows(dict(d, quotes=qs))
-        rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
-        groups.append((f'<b>{esc(S.SPORTS[sport])}</b> <span class="mut">· {len(qs)} running · '
-                       f'next {esc(qs[0]["date"])}</span>', rows))
-    return _folds(groups, LIVE_HEAD), len(live)
-
-
-def settled_folds(d):
-    """Settled bets, one fold per day they settled, newest first."""
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not T.climate_excluded(q)]
-    done.sort(key=lambda q: q.get("settled") or "", reverse=True)
-    by = {}
-    for q in done:
-        by.setdefault((q.get("settled") or "")[:10], []).append(q)
-    groups = []
-    for day, qs in by.items():
-        rows, _n = settled_rows(dict(d, quotes=qs))
-        rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
-        won, n, extra, pl = _day_summary(qs)
-        groups.append((f'<b>{esc(day)}</b> <span class="mut">· {won}/{n} won{extra} · </span>'
-                       f'<span class="{cls(pl)}">{money(pl)}</span>', rows))
-    return _folds(groups, HIST_HEAD), len(done)
 
 
 LIVE_HEAD = ('<tr><th>Contest</th><th class="num">Price</th><th>Sport</th>'
@@ -530,11 +490,13 @@ def _is_recent(q, today):
 def partition_settled(d, now):
     """(recent, older) settled bets. Recent is the last 7 Chicago dates through `now`.
 
-    Every settled bet is in exactly one of the two lists. A timestamp that cannot
-    be placed on the Chicago calendar is older, so it still appears on an archive page.
+    Every settled bet that still counts is in exactly one of the two lists. A
+    repeat city-day quote is in neither. A timestamp that cannot be placed on the
+    Chicago calendar is older, so it still appears on an archive page.
     """
     today = _chicago_today(now)
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]]
+    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+            and not T.climate_excluded(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
     for q in done:
@@ -1564,6 +1526,9 @@ def _sandbox_html(d, st, now_dt):
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
+    n_city = sum(1 for q in d["quotes"] if q.get("bet") and T.climate_excluded(q))
+    _city = (f" · {n_city} city-day repeat" if n_city == 1
+             else (f" · {n_city} city-day repeats" if n_city else ""))
     archive_links = _archive_links(groups, "./archive/")
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
@@ -1605,7 +1570,7 @@ def _sandbox_html(d, st, now_dt):
 
 <section id="recently-settled">
 <h2>Recently settled ({len(recent):,})</h2>
-<p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,}{f" · {n_void} void" if n_void else ""} settled on the record; older bets are in the archive.</p>
+<p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,}{f" · {n_void} void" if n_void else ""}{_city} settled on the record; older bets are in the archive.</p>
 {_tools("Search contests…", "Search recently settled bets") if recent else ""}
 {_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>

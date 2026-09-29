@@ -130,7 +130,7 @@ def _ledger_settled(now):
     today = fmt.chicago(now).date()
     recent, older = [], []
     for q in d["quotes"]:
-        if not q.get("bet") or q.get("status") not in HIST:
+        if not q.get("bet") or q.get("status") not in HIST or T.climate_excluded(q):
             continue
         try:
             day = fmt.chicago(q.get("settled")).date()
@@ -440,7 +440,7 @@ ok(len(_run_tables) == 1, "sandbox.html has one Running table")
 if _run_tables:
     _head_n = len(re.findall(r"<th\b", _run_tables[0]))
     _sports = {q["id"]: (q.get("sport") or "") for q in T.load()["quotes"]
-               if q.get("bet") and q.get("status") == "open"}
+               if q.get("bet") and q.get("status") == "open" and not T.climate_excluded(q)}
     _checked = 0
     for _row in _rows(_run_tables[0]):
         _cells = re.findall(r"<td\b([^>]*)>(.*?)</td>", _row, re.S)
