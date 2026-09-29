@@ -2084,6 +2084,98 @@ def placeable(q):
     return False
 
 
+_BAD_START_SEEN = set()
+_WARN_CLIP = 80
+
+
+def _clip_shown(value, limit=_WARN_CLIP):
+    """A log-safe slice of a raw field. A 200 KB start must not enter the log."""
+    if not isinstance(value, str):
+        value = repr(value)
+    value = value.replace("\r", " ").replace("\n", " ")
+    if len(value) <= limit:
+        return value
+    return value[:limit] + "…"
+
+
+def _start_instant(q):
+    """Aware UTC start, or None when `start` cannot be read.
+
+    A naive timestamp is UTC, the same reading production._kickoff uses.
+    An ISO-shaped string that is not a real instant (month 99, hour 99)
+    is None: the shape alone is not a time.
+    """
+    raw = q.get("start")
+    if not isinstance(raw, str) or not raw:
+        return None
+    try:
+        dt = datetime.fromisoformat(raw)
+    except (ValueError, TypeError, OverflowError, OSError):
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
+def _start_key(q):
+    """Order a bet by its start text. Every unreadable start sorts last, together.
+
+    A readable start is the raw string under a shared prefix, so a ledger of
+    real timestamps sorts exactly as it did when the key was the raw string.
+    None, a missing key, and a garbage string share one key.
+    """
+    raw = q.get("start")
+    if isinstance(raw, str) and _start_instant(q) is not None:
+        return (0, raw)
+    return (1, "")
+
+
+def _warn_unreadable_start(q):
+    if "start" not in q:
+        shown = "missing"
+    else:
+        raw = q.get("start")
+        shown = "None" if raw is None else _clip_shown(raw)
+    token = (q.get("id"), shown)
+    if token in _BAD_START_SEEN:
+        return
+    _BAD_START_SEEN.add(token)
+    # GitHub Actions reads ::warning:: from stderr as well as stdout.
+    print(f"::warning::{q.get('id')!r} has unreadable start ({shown}); "
+          f"left out of start-dependent checks", file=sys.stderr)
+
+
+def note_unreadable_start(q):
+    """Warn once when `start` is missing or will not parse. The bet is kept.
+
+    The check is a real parse, so an invalid date that only looks like a
+    timestamp warns too. A naive timestamp is UTC and is not a warning.
+    The row stays in the money totals; span and the halves split skip it.
+    """
+    if _start_instant(q) is not None:
+        return False
+    _warn_unreadable_start(q)
+    return True
+
+
+def _span_days(bets):
+    """Days from the first start to the last.
+
+    Callers pass bets whose starts read. Both ends are aware, so a naive
+    timestamp does not raise against an aware one. When both ends parse,
+    this is the same subtraction as reading them directly.
+    """
+    if len(bets) < 2:
+        return 0.0
+    first, last = _start_instant(bets[0]), _start_instant(bets[-1])
+    if first is None or last is None:
+        parsed = [dt for dt in (_start_instant(q) for q in bets) if dt is not None]
+        if len(parsed) < 2:
+            return 0.0
+        first, last = parsed[0], parsed[-1]
+    return (last - first).total_seconds() / 86400
+
+
 def day_units(bets):
     """Collapse bets into one flat bet per market-day (S.market_day): priced at the day's
     average price, paying the day's average P/L, won when that is positive. The unit a
@@ -2094,11 +2186,21 @@ def day_units(bets):
     out = []
     for key, qs in days.items():
         pnl = sum(q["pnl"] for q in qs) / len(qs)
-        out.append(dict(qs[0], id=key, market_id=key.replace("|", "_"),
+        readable = [q for q in qs if _start_instant(q) is not None]
+        for q in qs:
+            if _start_instant(q) is None:
+                note_unreadable_start(q)
+        # The representative is the earliest readable start, which is the rung
+        # base copies when every start reads. A bad start must not take its place.
+        readable.sort(key=lambda q: q["start"])
+        rep = readable[0] if readable else qs[0]
+        starts = [q["start"] for q in readable]
+        out.append(dict(rep, id=key, market_id=key.replace("|", "_"),
                         price=sum(q["price"] for q in qs) / len(qs), pnl=pnl, stake=STAKE,
                         status="won" if pnl > 0 else "lost", rungs=len(qs),
-                        start=min(q["start"] for q in qs), logged=min(q["logged"] for q in qs)))
-    return sorted(out, key=lambda q: q["start"])
+                        start=min(starts) if starts else "",
+                        logged=min(q["logged"] for q in qs)))
+    return sorted(out, key=_start_key)
 
 
 def clv_read(n, t):
@@ -2122,24 +2224,28 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     status: "unproven" under READ_FLOOR settled bets; "approved" when every criterion
     holds; "failing" when it is readable and not ahead of the price at all; else "watch".
     """
-    bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
-                   and q["status"] in ("won", "lost") and not climate_excluded(q)
-                   and (sport is None or q["sport"] == sport)
-                   and (since is None or q["logged"] >= since)
-                   and (until is None or q["logged"] < until)
-                   and (venues is None or (q.get("venue") or "polymarket") in venues)),
-                  key=lambda q: q["start"])
+    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+            and q["status"] in ("won", "lost") and not climate_excluded(q)
+            and (sport is None or q["sport"] == sport)
+            and (since is None or q["logged"] >= since)
+            and (until is None or q["logged"] < until)
+            and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    for q in bets:
+        note_unreadable_start(q)
+    bets = sorted(bets, key=_start_key)
     # n_bets is every bet still on the record. A void is not, and neither is a
     # repeat city-day quote: mark_climate_citydays has already set its flag.
     n_bets = len(bets)
-    price_bets = sorted((q for q in all_bets(d) if q["source"] == name and q.get("bet")
-                         and q.get("status") == "settled" and q.get("result") == "price"
-                         and not climate_excluded(q)
-                         and (sport is None or q["sport"] == sport)
-                         and (since is None or q["logged"] >= since)
-                         and (until is None or q["logged"] < until)
-                         and (venues is None or (q.get("venue") or "polymarket") in venues)),
-                        key=lambda q: q.get("start") or "")
+    price_bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+                  and q.get("status") == "settled" and q.get("result") == "price"
+                  and not climate_excluded(q)
+                  and (sport is None or q["sport"] == sport)
+                  and (since is None or q["logged"] >= since)
+                  and (until is None or q["logged"] < until)
+                  and (venues is None or (q.get("venue") or "polymarket") in venues)]
+    for q in price_bets:
+        note_unreadable_start(q)
+    price_bets = sorted(price_bets, key=_start_key)
     # Day-clustering follows each bet's OWN sport, not the `sport` argument. The all-sport
     # view passes sport=None, which is not in DAY_CLUSTERED, so before 2026-09-27 a source's
     # combined row took the per-bet path and published exactly the z its own sport row was
@@ -2150,7 +2256,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         if clustered:
             day_collapsed = True
             rest = [q for q in bets if q["sport"] not in S.DAY_CLUSTERED]
-            bets = sorted(day_units(clustered) + rest, key=lambda q: q["start"])
+            bets = sorted(day_units(clustered) + rest, key=_start_key)
     n = len(bets)
     won = sum(1 for q in bets if q["status"] == "won")
     # Price payouts are in the money totals and out of n, won, and z.
@@ -2177,8 +2283,11 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # one cannot put its excess wins in the numerator while contributing nothing below.
     z_dropped = c["dropped"]
     z = (c["won"] - c["expected"]) / var ** 0.5 if var > 0 else 0.0
-    span_days = ((datetime.fromisoformat(bets[-1]["start"]) - datetime.fromisoformat(bets[0]["start"]))
-                 .total_seconds() / 86400) if n else 0.0
+    # Halves and the day span read the clock. A row whose start will not parse
+    # stays in n, won, and P&L, and stays out of those two checks, so a lane
+    # whose starts all read is unchanged.
+    timed = [q for q in bets if _start_instant(q) is not None]
+    span_days = _span_days(timed)
     weeks = int(span_days // 7)
 
     # Against each blind rule on the contests where that rule has a bet, the source's own
@@ -2261,9 +2370,10 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
 
     top = max((q["pnl"] for q in bets if q["status"] == "won"), default=0.0)
     roi_wo_top = ((pnl_wl - top) / ((n - 1) * STAKE)) if n > 1 else None
-    half = n // 2
-    roi_h1 = (sum(q["pnl"] for q in bets[:half]) / (half * STAKE)) if half else None
-    roi_h2 = (sum(q["pnl"] for q in bets[half:]) / ((n - half) * STAKE)) if n - half else None
+    half_n = len(timed)
+    half = half_n // 2
+    roi_h1 = (sum(q["pnl"] for q in timed[:half]) / (half * STAKE)) if half else None
+    roi_h2 = (sum(q["pnl"] for q in timed[half:]) / ((half_n - half) * STAKE)) if half_n - half else None
 
     A = sport_rules(sport)["approval"]
     criteria = [

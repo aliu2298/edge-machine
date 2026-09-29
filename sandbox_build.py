@@ -437,10 +437,20 @@ def _day_summary(qs):
     return won, n, extra, pl
 
 
+def _cityday_repeat(q):
+    """A repeat city-day quote. A void is not one, even with a stale flag.
+
+    load() clears excluded='nws_cityday' on voids. A caller that skips load
+    can leave the flag in place. That row is still a void: it stays on the
+    settled pages and in the void count, and out of the city-day count.
+    """
+    return T.climate_excluded(q) and q.get("status") != "void"
+
+
 def settled_rows(d, limit=None):
     """Settled bets, newest first. One flat table: Contest, then P/L."""
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not T.climate_excluded(q)]
+            and not _cityday_repeat(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     out = []
     for q in (done[:limit] if limit else done):
@@ -510,12 +520,13 @@ def partition_settled(d, now):
     """(recent, older) settled bets. Recent is the last 7 Chicago dates through `now`.
 
     Every settled bet that still counts is in exactly one of the two lists. A
-    repeat city-day quote is in neither. A timestamp that cannot be placed on the
+    repeat city-day quote is in neither. A void is not a repeat, so a stale
+    city-day flag does not remove it. A timestamp that cannot be placed on the
     Chicago calendar is older, so it still appears on an archive page.
     """
     today = _chicago_today(now)
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not T.climate_excluded(q)]
+            and not _cityday_repeat(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
     for q in done:
@@ -1532,6 +1543,9 @@ def build(now=None, d=None, st=None):
 
 
 def _sandbox_html(d, st, now_dt):
+    for q in T.all_bets(d):
+        if q.get("bet") and q.get("status") in _HIST:
+            T.note_unreadable_start(q)
     scores = T.score(d)
     cov = d.get("coverage") or {}
     ou = (d.get("meta") or {}).get("odds_api") or {}
@@ -1545,7 +1559,9 @@ def _sandbox_html(d, st, now_dt):
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
-    n_city = sum(1 for q in d["quotes"] if q.get("bet") and T.climate_excluded(q))
+    # A stale city-day flag does not make a void a repeat. The void stays in
+    # this count and on the settled pages, and out of the city-day count.
+    n_city = sum(1 for q in d["quotes"] if q.get("bet") and _cityday_repeat(q))
     _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
              else (f" · {n_city} city-day repeats set aside" if n_city else ""))
     archive_links = _archive_links(groups, "./archive/")

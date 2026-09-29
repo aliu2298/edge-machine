@@ -28,7 +28,7 @@ data/production_leads.json is the machine-readable feed. It has the Leads ledger
 An empty feed is normal until the first pair arrives. This file only ever changes when the
 tracker runs (every 3h).
 """
-import datetime, html, json, os
+import datetime, html, json, os, sys
 
 import fmt
 import sandbox_sources as S
@@ -361,6 +361,73 @@ def _ct_when(kickoff):
         return PLACEHOLDER_DATE
 
 
+_BAD_KICKOFF = set()
+_KICKOFF_UNKNOWN = "kickoff unknown"
+
+
+def _clip_shown(value, limit=80):
+    """A log-safe slice of a raw kickoff. Newlines would break a workflow command."""
+    if not isinstance(value, str):
+        value = repr(value)
+    value = value.replace("\r", " ").replace("\n", " ")
+    if len(value) <= limit:
+        return value
+    return value[:limit] + "…"
+
+
+def _kickoff_known(lead):
+    """True when the kickoff parses. A naive timestamp is UTC, via fmt.chicago."""
+    raw = lead.get("kickoff")
+    if not isinstance(raw, str) or not raw:
+        return False
+    try:
+        fmt.chicago(raw)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return False
+    return True
+
+
+def _kickoff_key(lead):
+    """Order a lead by its kickoff text. Every unreadable kickoff sorts last.
+
+    A readable kickoff is the raw string under a shared prefix, so a feed of
+    real timestamps sorts exactly as it did when the key was the raw field.
+    None, a missing key, and a garbage string share one key.
+    """
+    raw = lead.get("kickoff")
+    if isinstance(raw, str) and _kickoff_known(lead):
+        return (0, raw)
+    return (1, "")
+
+
+def _note_kickoff(lead):
+    """Warn once when a lead's kickoff is missing or will not parse.
+
+    The lead stays on the page, labeled kickoff unknown. It is not a lead
+    still to come and it does not set the next-lead tile.
+    """
+    missing = "kickoff" not in lead
+    raw = None if missing else lead.get("kickoff")
+    if _kickoff_known(lead):
+        return
+    shown = "missing" if missing else ("None" if raw is None else _clip_shown(raw))
+    token = (lead.get("id") or lead.get("match"), shown)
+    if token in _BAD_KICKOFF:
+        return
+    _BAD_KICKOFF.add(token)
+    print(f"::warning::lead {lead.get('match')!r} has unreadable kickoff ({shown}); "
+          f"shown as kickoff unknown", file=sys.stderr)
+
+
+def _pending_to_come(lead, now_str):
+    """A pending lead still to show. An unreadable kickoff is not in the past."""
+    if lead["status"] != "pending":
+        return False
+    if not _kickoff_known(lead):
+        return True
+    return lead.get("kickoff") >= now_str
+
+
 def page(d, st, blob, style, now=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -378,12 +445,20 @@ def page(d, st, blob, style, now=None):
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: _tone(x, n, digits=1)
     leads = list(blob.get("leads", {}).values())
-    upcoming = sorted((l for l in leads if l["status"] == "pending"
-                       and l["kickoff"] >= now_dt.strftime("%Y-%m-%dT%H:%MZ")),
-                      key=lambda l: l["kickoff"])
+    for lead in leads:
+        _note_kickoff(lead)
+    now_str = now_dt.strftime("%Y-%m-%dT%H:%MZ")
+    pending = sorted((l for l in leads if _pending_to_come(l, now_str)), key=_kickoff_key)
+    # Unreadable kickoffs sort last. They stay on the page and out of the
+    # "still to come" count and the next-lead tile.
+    upcoming = [l for l in pending if _kickoff_known(l)]
+    unknown_up = [l for l in pending if not _kickoff_known(l)]
     landed = [l for l in leads if l["status"] in ("hit", "miss")]
-    settled = sorted((l for l in leads if l["status"] in ("hit", "miss", "price")),
-                     key=lambda l: l["kickoff"], reverse=True)
+    settled_known = sorted(
+        (l for l in leads if l["status"] in ("hit", "miss", "price") and _kickoff_known(l)),
+        key=lambda l: l["kickoff"], reverse=True)
+    settled_unknown = [l for l in leads
+                       if l["status"] in ("hit", "miss", "price") and not _kickoff_known(l)]
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
     cards = []
@@ -417,14 +492,14 @@ def page(d, st, blob, style, now=None):
     by_day = {}
     for l in upcoming:
         # A bad kickoff still gets a row. Dropping it would hide the lead.
-        by_day.setdefault(_chicago_day(l["kickoff"]), []).append(l)
+        by_day.setdefault(_chicago_day(l.get("kickoff")), []).append(l)
     days_html = ""
     known = sorted((day, ls) for day, ls in by_day.items() if day is not None)
     unknown = by_day.get(None)
     ordered = known + ([(None, unknown)] if unknown else [])
     for i, (day, ls) in enumerate(ordered):
         rows = "".join(
-            f"""<tr><td class="mut">{esc(_ct_clock(l['kickoff']))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+            f"""<tr><td class="mut">{esc(_ct_clock(l.get('kickoff')))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
 <td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
             for l in ls)
@@ -434,12 +509,24 @@ def page(d, st, blob, style, now=None):
 <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
 <div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr>{rows}</table></div></details>""")
+    if unknown_up:
+        rows = "".join(
+            f"""<tr><td class="mut">{_KICKOFF_UNKNOWN}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+<td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
+<td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
+            for l in unknown_up)
+        days_html += (f"""<details class="fold"><summary>{_KICKOFF_UNKNOWN}
+<span class="mut sm">· {len(unknown_up)} lead{'s' if len(unknown_up) != 1 else ''}</span></summary>
+<div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<th class="num">Logged at</th></tr>{rows}</table></div></details>""")
     upcoming_html = days_html or '<div class="note">No leads still to come.</div>'
 
     # ---- how the recent ones landed ----
-    recent = settled[:25]
+    # The 25 newest readable kickoffs, then every settled lead whose kickoff
+    # cannot be read, so a missing kickoff cannot fall off the end of the list.
+    recent = settled_known[:25] + settled_unknown
     rec_rows = "".join(
-        f"""<tr><td class="mut">{esc(_ct_date(l['kickoff']))}</td><td>{esc(l['match'])}</td>
+        f"""<tr><td class="mut">{esc(_ct_date(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(l['match'])}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else ('paid' if l['status'] == 'price' else 'missed')}</span></td></tr>"""
         for l in recent)
@@ -448,7 +535,7 @@ def page(d, st, blob, style, now=None):
 <th class="num">Result</th></tr>{rec_rows}</table></div>""" if rec_rows else
                    '<div class="note">Nothing has settled since these pairs were moved.</div>')
 
-    nxt = _ct_when(upcoming[0]["kickoff"]) if upcoming else "—"
+    nxt = _ct_when(upcoming[0].get("kickoff")) if upcoming else "—"
     held = blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
     # `style` used to be the Sandbox page's inline stylesheet. The shared site.css
     # replaced it. The argument stays so existing callers do not break.

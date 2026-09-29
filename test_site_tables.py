@@ -407,15 +407,15 @@ for _row in re.findall(r"<tr\b[^>]*>.*?</tr>", _prod, re.S):
         break
 _ph = getattr(production, "PLACEHOLDER_DATE", None)
 ok(_ph is not None, "production has a placeholder date for a bad kickoff")
-ok(_overflow_row and _ph is not None and ">" + _ph + "<" in _overflow_row,
-   "the out-of-range kickoff shows a placeholder date")
+ok(_overflow_row and "kickoff unknown" in _overflow_row,
+   "the out-of-range kickoff is labeled kickoff unknown")
 _bad_row = ""
 for _row in re.findall(r"<tr\b[^>]*>.*?</tr>", _prod, re.S):
     if "Bad Stamp v Placeholder" in _row:
         _bad_row = _row
         break
-ok(_bad_row and _ph is not None and _ph in _bad_row,
-   "the unparseable kickoff shows a placeholder date")
+ok(_bad_row and "kickoff unknown" in _bad_row,
+   "the unparseable kickoff is labeled kickoff unknown")
 _feed_raised = None
 try:
     production.build_feed(
