@@ -3693,7 +3693,6 @@ ok(S._rules_sentence(_long, _IND_START),
    "a 600-character template still verifies")
 ok(S._rules_sentence(_long + "C", _IND_START) is False,
    "601 characters stay unverified")
-import time as _time
 _tok100 = _with_match(" ".join(["ab1"] * 100))
 _fill = "ab1 "
 _head = "If India wins the India vs Sri Lanka men's professional "
@@ -3705,12 +3704,49 @@ _chars590 = _head + _fill * _n + ("x" * _rem) + _tail
 eq(len(_chars590), 590, "the ReDoS fixture is 590 characters")
 ok(len(_tok100) >= 251 and len(_chars590) >= 251,
    "both timing inputs are at least 251 characters")
-for _label, _text in ((f"100 ab1 tokens ({len(_tok100)} chars)", _tok100),
-                      ("590-char near-miss", _chars590)):
-    _t0 = _time.perf_counter()
-    S._rules_sentence(_text, _IND_START)
-    _dt = _time.perf_counter() - _t0
-    ok(_dt < 0.1, f"{_label} finishes in {_dt:.4f}s, under 0.1s")
+# The parser call runs in a child process. A backtracking hang is killed at
+# 10 seconds and recorded as a FAIL, instead of stalling CI.
+# Imported here: an earlier loop leaves the name _sp bound to a sport string.
+import subprocess as _timing_proc
+_timing_code = (
+    "import json, sys, time\n"
+    "sys.path.insert(0, sys.argv[1])\n"
+    "import sandbox_sources as S\n"
+    "from datetime import datetime, timezone\n"
+    "START = datetime(2026, 10, 1, 4, 30, tzinfo=timezone.utc)\n"
+    "data = json.load(sys.stdin)\n"
+    "failed = False\n"
+    "for label, text in data['cases']:\n"
+    "    t0 = time.perf_counter()\n"
+    "    S._rules_sentence(text, START)\n"
+    "    dt = time.perf_counter() - t0\n"
+    "    print(f'{dt:.6f}\\t{label}')\n"
+    "    if dt >= 0.1:\n"
+    "        failed = True\n"
+    "sys.exit(1 if failed else 0)\n"
+)
+_timing_cases = [
+    (f"100 ab1 tokens ({len(_tok100)} chars)", _tok100),
+    ("590-char near-miss", _chars590),
+]
+try:
+    _proc = _timing_proc.run(
+        [sys.executable, "-c", _timing_code, _os.path.dirname(_os.path.abspath(__file__))],
+        input=json.dumps({"cases": _timing_cases}),
+        timeout=10, capture_output=True, text=True,
+    )
+except _timing_proc.TimeoutExpired:
+    ok(False, "the ReDoS timing test hung past 10s and counts as a FAIL")
+else:
+    _seen = 0
+    for _line in _proc.stdout.splitlines():
+        _dt_s, _label = _line.split("\t", 1)
+        _dt = float(_dt_s)
+        _seen += 1
+        ok(_dt < 0.1, f"{_label} finishes in {_dt:.4f}s, under 0.1s")
+    ok(_seen == 2 and _proc.returncode == 0,
+       "the ReDoS timing subprocess exited cleanly"
+       + ("" if _proc.returncode == 0 else f": {_proc.stderr[-300:]}"))
 
 _LIVE = "KXT20MATCH-26SEP290800LIMPWAR"
 _live_rules = {_LIVE: "originally scheduled for Sep 29, 2026 at 8:00 AM EDT"}
