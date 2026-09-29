@@ -191,6 +191,19 @@ else:
     ok(_proc.returncode == 0,
        "the timing subprocess finished under 10s and refused oversized text before any scan")
 
+print("\n6. stems, time words, and spelled numbers that still verified")
+for word in ("postponement", "reschedule", "delay", "delays", "revised", "changed",
+             "shifted", "evening", "hours", "(Delay)"):
+    _unverified(_comp(f"Cup {word}"),
+                f"{word!r} in the competition stays unverified")
+_unverified(_comp("Cup fifteen hundred hours"),
+            "'fifteen hundred hours' in the competition stays unverified")
+for word in ("one", "two", "three", "four", "five", "six",
+             "seven", "eight", "nine", "ten", "eleven", "twelve",
+             "hundred", "thousand"):
+    _unverified(_comp(f"Cup {word}"),
+                f"the spelled number {word!r} in the competition stays unverified")
+
 print()
 if FAILS:
     print(f"FAILED: {len(FAILS)}")

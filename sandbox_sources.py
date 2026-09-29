@@ -6753,28 +6753,33 @@ RULES_MAX_LEN = 600
 # The winner has to be exactly A or exactly B, and A and B have to be different
 # teams: equal as written, or equal case-insensitively after NFKC, is not a match.
 # Names are split on spaces and checked token by token, so there is no nested
-# quantifier to backtrack. Each word is checked as written and again with hyphens
-# and apostrophes removed, so a deny-list word cannot hide inside 're-scheduled'
-# or "post'poned".
+# quantifier to backtrack. Each word is normalised (lowercased, hyphens and
+# apostrophes removed, parentheses and punctuation stripped) and refused when
+# it starts with a reschedule stem, or when the whole word is a time, a zone,
+# a spelled-out number, or a month. 're-scheduled' and "post'poned" therefore
+# meet the stem 'resched' / 'postpon', and '(Delay)' meets 'delay'.
 # Digits are allowed only as one of RULES_DIGIT_TOKENS. The open book on
 # 2026-09-29 also uses a parenthetical country tag, "Warriors (SA)", and no
-# '.' or '&', so those two stay refused.
+# '.' or '&', so those two stay refused. Stripping punctuation keeps the
+# digits, so Twenty20 does not become the number word 'twenty'.
 RULES_DIGIT_TOKENS = frozenset({
     "T10", "T10s", "T20", "T20s", "Pro20", "Pro40", "Twenty20",
 })
-RULES_SLOT_DENY = frozenset({
-    "postponed", "delayed", "rescheduled", "moved", "now", "until",
-    "tomorrow", "today", "start", "time",
-    "deferred", "brought", "forward", "put", "back", "pushed",
+# A normalised word is refused when it starts with one of these.
+_RULES_STEMS = (
+    "postpon", "resched", "delay", "defer", "revis", "chang", "shift",
+    "amend", "moved", "relocat", "suspend", "abandon", "cancel", "resum", "updat",
+)
+# Whole words, after the same normalisation. Zones sit with them. Month names
+# and the earlier exact denials (start, time, until, brought, forward, put,
+# back, pushed) stay refused: dropping them would verify a sentence this check
+# already turns down.
+_RULES_WHOLE_WORDS = frozenset({
+    "new", "now", "later", "earlier", "tonight", "tomorrow", "today", "yesterday",
+    "morning", "afternoon", "evening", "night", "noon", "midnight",
+    "hour", "hours", "hrs", "oclock", "am", "pm",
+    "until", "start", "time", "brought", "forward", "put", "back", "pushed",
 }) | frozenset(_RULES_MONTHS)
-# Times written as words. The scheduled-for slot is parsed on its own and still
-# requires the numeric 'H:MM AM|PM EDT|EST' label; these refuse the same words
-# when they show up in a name. 'a.m.' / 'p.m.' are not name tokens either.
-_RULES_CLOCK_WORDS = frozenset({
-    "noon", "midnight", "later", "tonight", "tomorrow",
-    "am", "pm", "a.m.", "p.m.", "a.m", "p.m",
-    "o'clock", "oclock",
-})
 # Zone abbreviations a start is written in, plus the same kind of label.
 # WEST is not listed: it is the word in West Indies, and a name stays a name.
 _RULES_ZONES = frozenset({
@@ -6788,6 +6793,7 @@ _RULES_ZONES = frozenset({
 _RULES_NUMBER_WORDS = frozenset({
     "one", "two", "three", "four", "five", "six",
     "seven", "eight", "nine", "ten", "eleven", "twelve",
+    "hundred", "thousand",
 })
 _RULES_CLOCK_TAILS = frozenset({
     "o'clock", "oclock", "am", "pm", "a.m.", "p.m.", "a.m", "p.m",
@@ -6868,40 +6874,40 @@ def _slot_core(tok):
     return tok
 
 
-def _word_forms(tok):
-    """The word as written, and with hyphens and apostrophes removed.
+def _normalise_slot_word(text):
+    """Lowercase, hyphens and apostrophes removed, parentheses and punctuation stripped.
 
-    Both are lowercased. 're-scheduled' and "post'poned" therefore meet the
-    deny list as 'rescheduled' and 'postponed'.
+    Digits stay. 're-scheduled' is 'rescheduled', '(Delay)' is 'delay',
+    'a.m.' is 'am', and 'Twenty20' stays 'twenty20'.
     """
-    core = _slot_core(tok)
-    written = core.lower()
-    pieces = [p.lower() for p in core.replace("'", "-").split("-") if p]
-    joined = written.replace("-", "").replace("'", "")
-    return written, pieces, joined
+    return "".join(ch for ch in str(text).lower() if ch.isalnum())
+
+
+def _word_refused(word):
+    """True when a normalised word is a stem, a whole time/zone/month word, or a number."""
+    if not word:
+        return False
+    if any(word.startswith(stem) for stem in _RULES_STEMS):
+        return True
+    return word in _RULES_WHOLE_WORDS or word in _RULES_ZONES or word in _RULES_NUMBER_WORDS
 
 
 def _token_denied(tok):
-    """True when the word is on the deny list, including a hyphen or apostrophe join."""
-    written, pieces, joined = _word_forms(tok)
-    if written in RULES_SLOT_DENY or joined in RULES_SLOT_DENY:
+    """True when the word, or a hyphen/apostrophe piece of it, is refused.
+
+    The joined form is what catches 're-scheduled' and "post'poned". The pieces
+    are checked too, so 'brought-forward' is still 'brought' and 'forward'.
+    """
+    core = _slot_core(tok)
+    if _word_refused(_normalise_slot_word(core)):
         return True
-    return any(piece in RULES_SLOT_DENY for piece in pieces)
+    pieces = [p for p in core.replace("'", "-").split("-") if p]
+    return any(_word_refused(_normalise_slot_word(p)) for p in pieces)
 
 
 def _token_clock(tok):
-    """True when the word is a time written out, AM/PM, or a time zone.
-
-    Checked as written and with hyphens and apostrophes removed, same as the
-    deny list. Periods are ignored only so 'a.m.' and 'p.m.' are 'am' and 'pm'.
-    """
-    written, pieces, joined = _word_forms(tok)
-    forms = {written, joined, joined.replace(".", "")}
-    forms.update(pieces)
-    forms.update(p.replace(".", "") for p in pieces)
-    if forms & _RULES_CLOCK_WORDS or forms & _RULES_ZONES:
-        return True
-    return "am" in forms or "pm" in forms
+    """True when the normalised word is a time written out, AM/PM, or a time zone."""
+    return _token_denied(tok)
 
 
 def _spelled_clock(toks):
@@ -7330,11 +7336,13 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
     every rules_primary sentence is Kalshi's template for that same instant.
     The winner is exactly one of the two sides around 'vs', the two sides are
     not the same team (as written, or case-insensitively after NFKC), and a
-    digit is allowed only as one of RULES_DIGIT_TOKENS. A name word is refused
-    when it is a reschedule word — including one joined by hyphens or
-    apostrophes, and including deferred, brought forward, put back, and
-    pushed — or a time written in words, an AM/PM mark, a time zone, or a
-    number from one to twelve followed by o'clock, AM, or PM. The 600
+    digit is allowed only as one of RULES_DIGIT_TOKENS. A name word is
+    normalised (lowercased, hyphens and apostrophes removed, parentheses and
+    punctuation stripped) and refused when it starts with a reschedule stem
+    (postpon, resched, delay, defer, revis, chang, shift, amend, moved,
+    relocat, suspend, abandon, cancel, resum, updat), or when the whole word
+    is a time word, AM/PM, a time zone, a month, or a spelled number from one
+    to twelve, hundred, or thousand. The 600
     character cap is the raw length of rules_primary, before NFKC or the
     Unicode category scan. rules_secondary is not
     collected. The EDT or EST label is the one America/New_York is on at that
