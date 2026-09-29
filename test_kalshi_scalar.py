@@ -329,6 +329,69 @@ eq((watched["status"], watched["result"], watched.get("settle_px"), watched["pnl
    "passing the basket in mismatches re-settles it however old it is")
 eq(watched["settled"], _prior, "the watched re-settle keeps the original settled time")
 
+print("\nA Polymarket US basket is not re-priced")
+
+
+def pmus_basket(hours_ago, **kw):
+    when = (datetime.now(timezone.utc) - timedelta(hours=hours_ago)).isoformat()
+    q = quote(id="pmcombo:81a09442cc", venue="combo",
+              market_id="pmcombo2:2026-09-26:81a09442cc", pick="a",
+              price=0.6168, price_a=0.6168, stake=100.0,
+              status="settled", result="price", settle_px=0.77, pnl=24.84,
+              settled=when,
+              legs=[{"market_id": "aec-itfme-clapie-jirciz-2026-09-26",
+                     "pick": "b", "venue": "polymarket_us"},
+                    {"market_id": "aec-wta-annsis-ginfei-2026-09-26",
+                     "pick": "a", "venue": "polymarket_us"}])
+    q.update(kw)
+    if q.get("settle_px") is None:
+        q.pop("settle_px", None)
+    return q
+
+
+def fake_pmus_legs(slug):
+    # The short leg pays 0.40. The other leg won, so the basket pays 0.40.
+    if "jirciz" in str(slug):
+        return ("price", 0.60)
+    return "a"
+
+
+def grade_pmus_basket(q, mismatches):
+    real = S.resolve_polymarket_us
+    S.resolve_polymarket_us = fake_pmus_legs
+    try:
+        T.grade({"quotes": [q], "meta": {}, "coverage": {}},
+                verbose=False, mismatches=mismatches)
+    finally:
+        S.resolve_polymarket_us = real
+    return q
+
+
+in_window = grade_pmus_basket(pmus_basket(12), set())
+eq((in_window["result"], in_window.get("settle_px"), in_window["pnl"]),
+   ("price", 0.77, 24.84),
+   "an in-window Polymarket US basket keeps 0.77 and is not re-priced to 0.40")
+
+watched_px = pmus_basket(100)
+grade_pmus_basket(watched_px, {("combo", watched_px["market_id"])})
+eq((watched_px["result"], watched_px.get("settle_px"), watched_px["pnl"]),
+   ("price", 0.77, 24.84),
+   "a watched Polymarket US basket keeps its settle_px")
+
+pmus_void_basket = grade_pmus_basket(
+    pmus_basket(12, status="void", result="void", pnl=0.0, settle_px=None), set())
+eq((pmus_void_basket["status"], pmus_void_basket["result"], pmus_void_basket["pnl"],
+    pmus_void_basket.get("settle_px")),
+   ("void", "void", 0.0, None),
+   "a note-free Polymarket US basket void stays void")
+
+watched_void = pmus_basket(100, status="void", result="void", pnl=0.0, settle_px=None)
+grade_pmus_basket(watched_void, {("combo", watched_void["market_id"])})
+eq((watched_void["status"], watched_void["result"], watched_void["pnl"],
+    watched_void.get("settle_px")),
+   ("void", "void", 0.0, None),
+   "a watched note-free Polymarket US basket void stays void")
+
 print("\nPolymarket US re-grade does not adopt the Kalshi price branch")
 
 
