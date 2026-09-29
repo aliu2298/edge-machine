@@ -466,6 +466,66 @@ ok(_narrow.count("vertical-align: top") >= 2,
    "under 640px every cell uses the same vertical alignment")
 
 
+print("\ntest_climate_excluded_rows_stay_off_the_pages")
+
+
+def _record_settled(quotes):
+    """Settled-on-record count: settled bets that honour the city-day flag, voids aside."""
+    n_hist = sum(1 for q in quotes if q.get("bet") and q.get("status") in HIST
+                 and not T.climate_excluded(q))
+    n_void = sum(1 for q in quotes if q.get("status") == "void" and q.get("bet"))
+    return n_hist - n_void
+
+
+def _shown_settled(page):
+    m = re.search(
+        r"([\d,]+)(?: · [\d,]+ void)?(?: · [\d,]+ city-day repeats?)? settled on the record",
+        page)
+    return int(m.group(1).replace(",", "")) if m else None
+
+
+def _flagged(qid, status, **extra):
+    row = {
+        "id": qid, "bet": True, "status": status, "excluded": T.CLIMATE_EXCLUDED,
+        "sport": "climate", "source": "nws", "pick": "a", "side_a": "City Repeat",
+        "side_b": "Other", "price": 0.4, "pnl": 50.0, "label": "City Repeat fixture",
+        "date": "2026-09-10", "venue": "kalshi", "market_id": qid,
+    }
+    row.update(extra)
+    return row
+
+
+_ledger = T.load()
+_flag_ids = ("fixture-cityday-open", "fixture-cityday-recent", "fixture-cityday-old")
+_fx_quotes = list(_ledger["quotes"]) + [
+    _flagged("fixture-cityday-open", "open", start="2026-09-28T18:00:00Z", pnl=None),
+    _flagged("fixture-cityday-recent", "won", settled="2026-09-26T18:00:00Z",
+             start="2026-09-26T17:00:00Z"),
+    _flagged("fixture-cityday-old", "won", settled="2026-09-10T18:00:00Z",
+             start="2026-09-10T17:00:00Z"),
+]
+_fx = dict(_ledger, quotes=_fx_quotes)
+_fx_st = T.load_stages()
+_fx_page = SB.label_cells(SB.build(now=NOW, d=_fx, st=_fx_st))
+_fx_archive = {name: SB.label_cells(page)
+               for name, page in SB.archive_documents(now=NOW, d=_fx, st=_fx_st).items()}
+_fx_running = _ids(_section(_fx_page, "running"))
+_fx_recent = _ids(_section(_fx_page, "recently-settled"))
+_fx_older = []
+for _name, _page in _fx_archive.items():
+    if _name != "archive/index.html":
+        _fx_older.extend(_ids(_page))
+for _fid in _flag_ids:
+    ok(_fid not in _fx_running and _fid not in _fx_recent and _fid not in _fx_older,
+       f"{_fid} is on none of Running, Recently settled, or an archive page")
+_want_record = _record_settled(_fx_quotes)
+_got_record = _shown_settled(_fx_page)
+eq(_got_record, _want_record,
+   "the settled-on-record count honours the city-day flag")
+ok(re.search(r"· \d[\d,]* city-day repeats?", _section(_fx_page, "recently-settled")),
+   "the city-day repeat label is shown beside the settled-on-record count")
+
+
 if FAILS:
     print(f"\n{len(FAILS)} FAILED")
     sys.exit(1)

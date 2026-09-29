@@ -29,7 +29,8 @@ WATCHES = [
 def status(d, w):
     """(settled bets since the watch's date, a plain-text report of both directions)."""
     bets = [q for q in T.all_bets(d) if q["source"] == w["source"] and q["sport"] == w["sport"]
-            and q.get("bet") and q["status"] in ("won", "lost") and q["logged"] >= w["since"]]
+            and q.get("bet") and q["status"] in ("won", "lost") and not T.climate_excluded(q)
+            and q["logged"] >= w["since"]]
     n = len(bets)
     if not n:
         return 0, ""

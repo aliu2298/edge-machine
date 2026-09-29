@@ -224,6 +224,7 @@ def check_records(d, st, rep):
                  else pair.get("since"))
         raw = [q for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
                and q.get("bet") and q["status"] in ("won", "lost")
+               and not T.climate_excluded(q)
                and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
                and (since is None or q["logged"] >= since)]
         a = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)
@@ -250,7 +251,8 @@ def check_records(d, st, rep):
                                  f"the page says {a.get('clv_read')}")
         n += 1
     shown = {(r["name"], r["sport"]) for r in rows}
-    settled = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")]
+    settled = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
+               and not T.climate_excluded(q)]
     in_sec = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
     outside = sum(1 for q in settled if (q["source"], q["sport"]) not in shown
                   or (q.get("venue") or "polymarket") not in T.TRADEABLE_VENUES)
