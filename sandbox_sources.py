@@ -2566,65 +2566,86 @@ _KALSHI_VOID_RESULTS = {"void", "voided", "cancelled", "canceled", "cancel"}
 def kalshi_explicit_void(market):
     """True when this Kalshi market payload is a cancel or void, not a scalar.
 
-    `expiration_value` of "No Result (50/50)" is a fair-value settlement at 0.5,
-    which is a price, so only an exact cancel word counts here. Rules text is
-    not read: it can mention a void without the market being one.
+    A status that says cancel or void is a cancel, including when the result
+    field says yes or no. A finalized yes or no is not one: classify_kalshi_market
+    returns that side before consulting expiration_value, and this function
+    does not treat an expiration word as a void once the result is yes or no.
+    "No Result (50/50)" is not a cancel word. Rules text is not read.
     """
     if not isinstance(market, dict):
         return False
     result = str(market.get("result") or "").strip().lower()
-    if result in _KALSHI_VOID_RESULTS:
-        return True
     status = str(market.get("status") or "").strip().lower()
+    # A cancel status is a cancel even when it is not in the final set, and
+    # even when result says yes or no. Checked first so that test is reachable.
     if any(w in status for w in ("cancel", "void")):
+        return True
+    if result in ("yes", "no"):
+        return False
+    if result in _KALSHI_VOID_RESULTS:
         return True
     exp = str(market.get("expiration_value") or "").strip().lower()
     return exp in _KALSHI_VOID_RESULTS
 
 
 def kalshi_settlement_dollars(market):
-    """YES/long settlement in dollars, or None when the payload has no number.
+    """YES/long settlement in dollars, or None when the payload has no usable number.
 
     The live field is `settlement_value_dollars`. An older body that only has
-    `settlement_value` in cents (above 1) is converted. A dollar already in
-    0..1 is kept.
+    `settlement_value` stores cents: 1 is one cent ($0.01) and 100 is $1.00.
+    NaN, an infinity, or a blank is not a number and does not fall through to
+    the other field.
     """
     if not isinstance(market, dict):
         return None
-    dollars = _num(market.get("settlement_value_dollars"))
-    if dollars is not None:
-        return dollars
-    raw = _num(market.get("settlement_value"))
+
+    def finite(x):
+        v = _num(x)
+        if v is None or not math.isfinite(v):
+            return None
+        return v
+
+    if market.get("settlement_value_dollars") not in (None, ""):
+        return finite(market.get("settlement_value_dollars"))
+    if market.get("settlement_value") in (None, ""):
+        return None
+    raw = finite(market.get("settlement_value"))
     if raw is None:
         return None
-    if raw > 1:
-        return raw / 100.0
-    return raw
+    return raw / 100.0
 
 
 def classify_kalshi_market(market):
     """'a', 'b', 'void', ('price', dollars), or None for one Kalshi market.
 
-    None means the market is not final. A yes or no is that side. A scalar
+    None means the market is not final and not a cancel. A finalized yes or no
+    is that side, including when expiration_value names a void. A scalar
     settlement uses the same bands as classify_polymarket_us: at or above 0.99
     is side A, at or below 0.01 is side B, and a number strictly between those
-    bands, including exactly 0.5, is ('price', dollars). An explicit cancel, or
-    a final market with no result and no in-between value, is void.
+    bands, including exactly 0.5, is ('price', dollars). Anything outside 0..1,
+    or a non-finite number, is void and pays nothing. An explicit cancel is
+    void. The cancel-status check runs before the final-set gate, because a
+    status such as "cancelled" is not in that set.
     """
     if not isinstance(market, dict):
         return None
-    if str(market.get("status") or "").lower() not in KALSHI_FINAL:
-        return None
+    status = str(market.get("status") or "").strip().lower()
+    result = str(market.get("result") or "").strip().lower()
+    # A clean winner beats an expiration word. Checked first so "void" in
+    # expiration_value cannot turn a finalized yes or no into a void.
+    if status in KALSHI_FINAL and result == "yes":
+        return "a"
+    if status in KALSHI_FINAL and result == "no":
+        return "b"
+    # Reachable for a cancel status: those words are not in KALSHI_FINAL, so
+    # returning None first used to skip this test entirely.
     if kalshi_explicit_void(market):
         return "void"
-    result = str(market.get("result") or "").strip().lower()
-    if result == "yes":
-        return "a"
-    if result == "no":
-        return "b"
+    if status not in KALSHI_FINAL:
+        return None
     if result == "scalar":
         st = kalshi_settlement_dollars(market)
-        if st is None:
+        if st is None or not math.isfinite(st) or st < 0.0 or st > 1.0:
             return "void"
         if 0.99 <= st <= 1.0:
             return "a"

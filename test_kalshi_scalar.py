@@ -192,6 +192,180 @@ cancelled = resolve_event("KXEPLGAME-26SEP06ARSCFC", [
 ])
 eq(cancelled, "void", "every side no, with no scalar value, stays a void")
 
+print("\nA bad settlement number never pays")
+
+
+def raw_market(**body):
+    body.setdefault("status", "finalized")
+    body.setdefault("result", "scalar")
+    return {"market": body}
+
+
+def stays_unpaid(payload, msg, **kw):
+    q = grade_one(payload, **kw)
+    eq((q["status"], q["result"], q["pnl"], q.get("settle_px")),
+       ("void", "void", 0.0, None), msg)
+
+
+stays_unpaid(raw_market(settlement_value_dollars="nan"),
+             "NaN settlement_value_dollars is a void and pays nothing")
+stays_unpaid(raw_market(settlement_value_dollars="inf"),
+             "an infinite settlement is a void and pays nothing")
+stays_unpaid(raw_market(settlement_value_dollars="-inf"),
+             "a negative infinity is a void and pays nothing")
+stays_unpaid(raw_market(settlement_value_dollars="-0.25"),
+             "a negative settlement is a void and pays nothing")
+stays_unpaid(raw_market(settlement_value_dollars="1.50"),
+             "a settlement above 1 is a void and pays nothing")
+stays_unpaid(raw_market(),
+             "a scalar with no settlement number is a void and pays nothing")
+stays_unpaid(raw_market(settlement_value_dollars="nan", settlement_value=26),
+             "a NaN dollar field does not fall through to the cents field")
+
+not_final = grade_one(raw_market(settlement_value_dollars="nan", status="active"))
+eq((not_final["status"], not_final["result"], not_final["pnl"]),
+   ("open", None, 0.0),
+   "a non-final market with a bad number stays unsettled")
+
+print("\nCents are cents, and a clean yes or no beats an expiration word")
+
+one_cent = grade_one(raw_market(settlement_value=1), id="cents:1", pick="a",
+                     price=0.40, price_a=0.40)
+eq((one_cent["status"], one_cent["result"], one_cent["pnl"], one_cent.get("settle_px")),
+   ("lost", "b", -100.0, None),
+   "settlement_value 1 is one cent, the clean NO side, not a $1 win")
+
+hundred = grade_one(raw_market(settlement_value=100), id="cents:100", pick="a",
+                    price=0.40, price_a=0.40)
+eq((hundred["status"], hundred["result"], hundred.get("settle_px")),
+   ("won", "a", None),
+   "settlement_value 100 is $1.00, the clean YES side")
+
+twenty_six = grade_one(raw_market(settlement_value=26), id="cents:26", pick="a",
+                       price=0.40, price_a=0.40)
+eq((twenty_six["status"], twenty_six["result"], twenty_six.get("settle_px")),
+   ("settled", "price", 0.26),
+   "settlement_value 26 is $0.26, a price")
+eq(twenty_six["pnl"], round(100.0 * (0.26 / 0.40 - 1.0), 2),
+   "the cents fallback pays that price, not 26 dollars")
+
+dollars_win = grade_one(raw_market(settlement_value_dollars="0.2600", settlement_value=1),
+                        id="dollars-over-cents", pick="a", price=0.40, price_a=0.40)
+eq(dollars_win.get("settle_px"), 0.26,
+   "settlement_value_dollars wins when both fields are present")
+
+yes_void_word = grade_one(market("yes", 1.0, expiration="void"), id="yes:exp-void",
+                          pick="a", price=0.40, price_a=0.40)
+eq((yes_void_word["status"], yes_void_word["result"], yes_void_word["pnl"]),
+   ("won", "a", round(100.0 * (1.0 / 0.40 - 1.0), 2)),
+   "a finalized yes stays a win when expiration_value is the word void")
+
+no_void_word = grade_one(market("no", 0.0, expiration="cancelled"), id="no:exp-cancel",
+                         pick="a", price=0.40, price_a=0.40)
+eq((no_void_word["status"], no_void_word["result"], no_void_word["pnl"]),
+   ("lost", "b", -100.0),
+   "a finalized no stays a loss when expiration_value is the word cancelled")
+
+cancel_status = grade_one(raw_market(result="", status="cancelled",
+                                     expiration_value=""),
+                          id="status:cancelled", pick="a", price=0.40)
+eq((cancel_status["status"], cancel_status["result"], cancel_status["pnl"],
+    cancel_status.get("settle_px")),
+   ("void", "void", 0.0, None),
+   "a cancelled status is a void, not left unsettled")
+
+print("\nA combo basket with a scalar leg is re-graded inside the window")
+
+
+def combo_quote(hours_ago):
+    when = (datetime.now(timezone.utc) - timedelta(hours=hours_ago)).isoformat()
+    return quote(id="combo:dimrin", venue="combo",
+                 market_id="combo2:2026-09-28:e4eec263a4", pick="a",
+                 price=0.6134, price_a=0.6134, stake=100.0,
+                 status="void", result="void", pnl=0.0, settled=when,
+                 legs=[{"market_id": "KXATPCHALLENGERMATCH-26SEP28DIMRIN",
+                        "pick": "a", "venue": "kalshi"},
+                       {"market_id": "KXATPCHALLENGERMATCH-26SEP28KYMTOR",
+                        "pick": "a", "venue": "kalshi"}])
+
+
+def fake_event(event_ticker):
+    ticker = str(event_ticker)
+    if ticker.endswith("DIMRIN"):
+        return ("price", 0.75)
+    if ticker.endswith("KYMTOR"):
+        return "a"
+    return "void"
+
+
+def grade_combo(q, mismatches):
+    real_event = S.resolve_kalshi
+    S.resolve_kalshi = fake_event
+    try:
+        T.grade({"quotes": [q], "meta": {}, "coverage": {}},
+                verbose=False, mismatches=mismatches)
+    finally:
+        S.resolve_kalshi = real_event
+    return q
+
+
+recent_combo = grade_combo(combo_quote(12), set())
+eq((recent_combo["status"], recent_combo["result"], recent_combo.get("settle_px")),
+   ("settled", "price", 0.75),
+   "a void basket inside 48h is re-graded when one leg paid 0.75 and the other won")
+eq(recent_combo["pnl"], round(100.0 * (0.75 / 0.6134 - 1.0), 2),
+   "the basket P/L is stake * (0.75 / entry - 1), about +22.27")
+
+old_combo = grade_combo(combo_quote(100), set())
+eq((old_combo["status"], old_combo["result"], old_combo["pnl"]),
+   ("void", "void", 0.0),
+   "the same basket older than 48h is left void by a plain grade()")
+
+watched = combo_quote(100)
+_prior = watched["settled"]
+grade_combo(watched, {("combo", watched["market_id"])})
+eq((watched["status"], watched["result"], watched.get("settle_px"), watched["pnl"]),
+   ("settled", "price", 0.75, round(100.0 * (0.75 / 0.6134 - 1.0), 2)),
+   "passing the basket in mismatches re-settles it however old it is")
+eq(watched["settled"], _prior, "the watched re-settle keeps the original settled time")
+
+print("\nPolymarket US re-grade does not adopt the Kalshi price branch")
+
+
+def pmus(slug):
+    return ("price", 0.42)
+
+
+_pmus_when = (datetime.now(timezone.utc) - timedelta(hours=12)).isoformat()
+pmus_void = quote(id="pmus:void", venue="polymarket_us", market_id="some-market",
+                  pick="a", price=0.50, price_a=0.50, status="void", result="void",
+                  pnl=0.0, settled=_pmus_when)
+pmus_price = quote(id="pmus:price", venue="polymarket_us", market_id="some-market",
+                   pick="a", price=0.50, price_a=0.50, status="settled", result="price",
+                   settle_px=0.30, pnl=round(100.0 * (0.30 / 0.50 - 1.0), 2),
+                   settled=_pmus_when)
+pmus_open = quote(id="pmus:open", venue="polymarket_us", market_id="some-market",
+                  pick="a", price=0.50, price_a=0.50, status="open", result=None,
+                  pnl=0.0, settled=None)
+real_pmus = S.resolve_polymarket_us
+S.resolve_polymarket_us = pmus
+try:
+    T.grade({"quotes": [pmus_void, pmus_price, pmus_open], "meta": {}, "coverage": {}},
+            verbose=False, mismatches=set())
+finally:
+    S.resolve_polymarket_us = real_pmus
+eq((pmus_void["status"], pmus_void["result"], pmus_void["pnl"], pmus_void.get("settle_px")),
+   ("void", "void", 0.0, None),
+   "a no-note Polymarket US void stays void when the venue now returns a price")
+eq((pmus_price["result"], pmus_price.get("settle_px"), pmus_price["pnl"]),
+   ("price", 0.30, round(100.0 * (0.30 / 0.50 - 1.0), 2)),
+   "an existing Polymarket US price row is not re-priced")
+eq((pmus_open["status"], pmus_open["result"], pmus_open.get("settle_px")),
+   ("settled", "price", 0.42),
+   "an open Polymarket US quote still settles at the price on the first pass")
+eq(pmus_open["pnl"], round(100.0 * (0.42 / 0.50 - 1.0), 2),
+   "that first pass pays stake * (settlement / entry - 1)")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all kalshi scalar tests passed'}")
 for f in FAILS:
     print("   -", f)
