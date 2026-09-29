@@ -3339,6 +3339,10 @@ ok("kalshi_milestone" in T.VERIFIED_STARTS and "espn" in T.VERIFIED_STARTS,
    "the gate grew by kalshi_milestone and did not drop the sources it already trusted")
 ok(T.placeable(_crq("kalshi", start_source="espn")),
    "and an ESPN-confirmed Kalshi cricket bet still passes")
+ok(not T.placeable(dict(_crq("kalshi", start_source="kalshi_milestone"), sport="tennis")),
+   "kalshi_milestone does not verify a tennis bet")
+ok(T.placeable(dict(_tnq, venue="kalshi", market_id="KXATPMATCH-X", start_source="tennisexplorer")),
+   "a tennisexplorer start still verifies a Kalshi tennis bet")
 ok(not T.placeable(_crq("polymarket")),
    "polymarket.com is not a tradeable venue, so its cricket never routes")
 
@@ -3478,22 +3482,74 @@ _two_out, _ = S.apply_kalshi_cricket_starts(
     milestones=_two, rules=_cr_rules_from_event(), now=_BEFORE)
 eq(_two_out[0].get("start_source"), None, "two cricket_match milestones stay unverified")
 
+_sup = _copy.deepcopy(_crms)
+_sup[_IND][0]["primary_event_tickers"] = "XX" + _IND + "YY"
+_sup_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_sup, rules=_cr_rules_from_event(), now=_BEFORE)
+eq(_sup_out[0].get("start_source"), None,
+   "a superset string is not a list of tickers, so the row stays unverified")
+
+_secs = _copy.deepcopy(_crms)
+_secs[_IND][0]["start_date"] = "2026-10-01T04:30:59Z"
+_secs_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_secs, rules=_cr_rules_from_event(), now=_BEFORE)
+eq(_secs_out[0].get("start_source"), None,
+   "04:30:59Z is not the ticker minute, so it is not a verified start")
+eq(_secs_out[0]["start"], "2026-10-01T05:30:00+00:00",
+   "and that later instant is not what gets stored")
+
+def _rules_refused(rules, why):
+    _out, _ = S.apply_kalshi_cricket_starts(
+        [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+        milestones=_crms, rules=rules, now=_BEFORE)
+    eq(_out[0].get("start_source"), None, why)
+
+_rules_refused({_IND: []}, "an empty rules list stays unverified")
+_rules_refused({}, "an event missing from the rules dict stays unverified")
+_saved_open = S._kalshi_open_cache
+S._kalshi_open_cache = {}
+try:
+    _rules_refused(None, "no rules text at all stays unverified")
+finally:
+    S._kalshi_open_cache = _saved_open
+_rules_refused({_IND: ["originally scheduled for Oct 1, 2026 at 3:30 PM ET"]},
+               "a disagreeing ET label stays unverified")
+_rules_refused({_IND: ["originally scheduled for Oct 1, 2026 at 3:30 PM IST"]},
+               "a disagreeing IST label stays unverified")
+_rules_refused({_IND: ["originally scheduled for 2 Oct 2026 at 3:30 PM EDT"]},
+               "a day-first rules date stays unverified")
+_rules_refused({_IND: ["originally scheduled for Oct 1, 2026 at 15:30 EDT"]},
+               "a 24-hour rules clock stays unverified")
+_rules_refused({_IND: ["rescheduled to Oct 2, 2026 at 9:00 AM EDT"]},
+               "a 'rescheduled to' sentence stays unverified")
+_rules_refused({_IND: ["originally scheduled for sometime next week"]},
+               "an unparseable 'scheduled for' sentence stays unverified")
+
 _LIVE = "KXT20MATCH-26SEP290800LIMPWAR"
 _live_rules = {_LIVE: "originally scheduled for Sep 29, 2026 at 8:00 AM EDT"}
-_live_out, _ = S.apply_kalshi_cricket_starts(
+_live_out, _live_st = S.apply_kalshi_cricket_starts(
     [_crow(_LIVE, "2026-09-29T13:00:00+00:00")],
     milestones=_crms, rules=_live_rules, now=datetime(2026, 9, 29, 11, tzinfo=timezone.utc))
-eq(len(_live_out), 1, "an in-progress match is not dropped for a start that has not passed")
-eq(_live_out[0].get("start_source"), None,
-   "Match in Progress stays unverified even when the clocks agree")
+eq(_live_out, [], "Match in Progress is dropped even though its start has not passed")
+eq(_live_st["dropped"], 1, "and the drop is counted")
 
 _CLOSED = "KXT20MATCH-26SEP300130DEHWARTEHTTN"
 _closed_rules = {_CLOSED: "originally scheduled for Sep 30, 2026 at 1:30 AM EDT"}
-_closed_out, _ = S.apply_kalshi_cricket_starts(
+_closed_out, _closed_st = S.apply_kalshi_cricket_starts(
     [_crow(_CLOSED, "2026-09-30T06:30:00+00:00")],
     milestones=_crms, rules=_closed_rules, now=_BEFORE)
-eq(_closed_out[0].get("start_source"), None,
-   "Event Closed stays unverified, including a match whose start is still in the future")
+eq(_closed_out, [], "Event Closed is dropped even when the start is still in the future")
+eq(_closed_st["dropped"], 1, "and that drop is counted too")
+
+_break = _copy.deepcopy(_crms)
+_break[_IND][0]["details"] = dict(_break[_IND][0]["details"], status="Innings Break")
+_break_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_break, rules=_cr_rules_from_event(), now=_BEFORE)
+eq(len(_break_out), 1, "a status that is not in progress or closed is not dropped")
+eq(_break_out[0].get("start_source"), None, "but it is not verified either")
 
 _NOV = "KXT20MATCH-26NOV020030SRIIND"
 _NOV_START = datetime(2026, 11, 2, 5, 30, tzinfo=timezone.utc)
@@ -3545,7 +3601,7 @@ S._get = _down
 _buf = _io.StringIO()
 try:
     with _redirect(_buf):
-        _outage, _ = S.apply_kalshi_cricket_starts(
+        _outage, _ost = S.apply_kalshi_cricket_starts(
             [_crow(_IND, "2026-10-01T05:30:00+00:00")], now=_BEFORE)
     with _redirect(_io.StringIO()):
         S.apply_kalshi_cricket_starts(
@@ -3554,8 +3610,58 @@ finally:
     S._get = _real_get
     S._kalshi_milestone_cache.clear()
 eq(_outage[0].get("start_source"), None, "an HTTP error leaves the row unverified")
+eq(_ost["feed"], False, "when every milestone fetch fails, the feed is not reported up")
 ok(_calls["n"] >= 2, "the failure is not cached, so the next row tries again")
 ok("kalshi milestones" in _buf.getvalue(), "and the outage is written to the run log")
+
+_circuit_calls = {"n": 0}
+
+
+def _circuit_down(url, **kw):
+    _circuit_calls["n"] += 1
+    raise RuntimeError("milestones down")
+
+
+S._kalshi_milestone_cache.clear()
+S._get = _circuit_down
+try:
+    with _redirect(_io.StringIO()):
+        _circ, _cst = S.apply_kalshi_cricket_starts(
+            [_crow(f"KXT20MATCH-26OCT01003{i}SRIIND", "2026-10-01T05:30:00+00:00")
+             for i in range(5)],
+            now=_BEFORE)
+finally:
+    S._get = _real_get
+    S._kalshi_milestone_cache.clear()
+eq(_circuit_calls["n"], S.KALSHI_MILESTONE_MAX_FAILS,
+   "milestone fetches stop after three consecutive failures")
+eq(_cst["feed"], False, "and that outage is not reported as a live feed")
+eq(all(r.get("start_source") is None for r in _circ), True,
+   "none of those rows is verified")
+
+_page_calls = []
+
+
+def _paged(url, **kw):
+    _page_calls.append(url)
+    if "cursor=" not in url:
+        return {"milestones": [_crms[_IND][0]], "cursor": "page-2"}
+    second = dict(_crms[_IND][0], id="on-page-2")
+    return {"milestones": [second], "cursor": ""}
+
+
+S._kalshi_milestone_cache.clear()
+S._get = _paged
+try:
+    _paged_out, _ = S.apply_kalshi_cricket_starts(
+        [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+        rules=_cr_rules_from_event(), now=_BEFORE)
+finally:
+    S._get = _real_get
+    S._kalshi_milestone_cache.clear()
+eq(len(_page_calls), 2, "a milestones cursor is followed onto the next page")
+eq(_paged_out[0].get("start_source"), None,
+   "a second cricket_match on page 2 leaves the row unverified")
 
 # The India market's expiration is start + 4h. The old 3h estimate is an hour late.
 _india_m = next(m for m in _crmk["markets"] if m["event_ticker"] == _IND)
@@ -3573,22 +3679,19 @@ eq(S.kalshi_listed_start("mlb", "KXMLBGAME-26OCT011830SDSF", _india_exp),
    _india_exp - timedelta(hours=3),
    "an MLB ticker that carries HHMM still uses expiration minus 3h")
 
-# Wired through fetch, with a date inside the horizon, and with expiration 30 minutes
-# earlier than start+4h so the estimate has to take the earlier of the two clocks.
-_utc_anchor = (datetime.now(timezone.utc) + timedelta(hours=36)).replace(
-    minute=0, second=0, microsecond=0)
-_local = _utc_anchor.astimezone(_ZI("America/New_York")).replace(second=0, microsecond=0)
-_ticker_utc = _local.astimezone(timezone.utc)
-_ctag = f"{_local:%y}{_local.strftime('%b').upper()}{_local:%d}{_local:%H%M}"
-_cev = f"KXT20MATCH-{_ctag}SRIIND"
-_cexp = (_ticker_utc + timedelta(hours=3, minutes=30)).replace(microsecond=0)
+# Wired through fetch on a fixed clock (2026-09-29 12:00Z). Expiration is 30 minutes
+# earlier than start+4h, so the estimate has to take the earlier of the two clocks.
+_fixed = datetime(2026, 9, 29, 12, tzinfo=timezone.utc)
+_ticker_utc = datetime(2026, 10, 1, 4, 30, tzinfo=timezone.utc)
+_cev = "KXT20MATCH-26OCT010030SRIIND"
+_cexp = _ticker_utc + timedelta(hours=3, minutes=30)
 _cexp_s = _cexp.strftime("%Y-%m-%dT%H:%M:%SZ")
 _cbook = [km("SRI", "Sri Lanka", bid="0.40", ask="0.42", event=_cev, exp=_cexp_s),
           km("IND", "India", bid="0.50", ask="0.52", event=_cev, exp=_cexp_s)]
 _real_open = S._kalshi_open
 S._kalshi_open = lambda series: _cbook if series == "KXT20MATCH" else []
 try:
-    _crows = S.fetch_kalshi_venue("cricket")
+    _crows = S.fetch_kalshi_venue("cricket", now=_fixed)
 finally:
     S._kalshi_open = _real_open
 eq(len(_crows), 1, "the future cricket fixture is listed")
@@ -3598,45 +3701,72 @@ eq(_cgot, _ticker_utc - timedelta(minutes=30),
    "it takes expiration-4h when that is earlier than the ticker")
 ok("rules_texts" in _crows[0], "fetch keeps the rules text for the milestone check")
 
-_stag = f"{(datetime.now(timezone.utc) + timedelta(days=1)):%y}" \
-    f"{(datetime.now(timezone.utc) + timedelta(days=1)).strftime('%b').upper()}" \
-    f"{(datetime.now(timezone.utc) + timedelta(days=1)):%d}"
-_sev = f"KXEPLGAME-{_stag}LEENEW"
-_sexp = (datetime.now(timezone.utc) + timedelta(hours=30)).replace(microsecond=0)
+_sev = "KXEPLGAME-26SEP30LEENEW"
+_sexp = datetime(2026, 9, 30, 18, tzinfo=timezone.utc)
 _sexp_s = _sexp.strftime("%Y-%m-%dT%H:%M:%SZ")
 _sbook = [km("LEE", "Leeds United", bid="0.39", ask="0.40", event=_sev, exp=_sexp_s),
           km("NEW", "Newcastle", bid="0.55", ask="0.57", event=_sev, exp=_sexp_s),
           km("TIE", "Tie", bid="0.27", ask="0.28", event=_sev, exp=_sexp_s)]
 S._kalshi_open = lambda series: _sbook if series == "KXEPLGAME" else []
 try:
-    _srows = S.fetch_kalshi_venue("soccer")
+    _srows = S.fetch_kalshi_venue("soccer", now=_fixed)
 finally:
     S._kalshi_open = _real_open
 eq(len(_srows), 1, "the soccer fixture is listed")
 eq(datetime.fromisoformat(_srows[0]["start"]), _sexp - timedelta(hours=3),
    "fetching soccer still stores expiration minus 3h")
 
-_mlb_local = _local
-_mev = (f"KXMLBGAME-{_mlb_local:%y}{_mlb_local.strftime('%b').upper()}"
-        f"{_mlb_local:%d}{_mlb_local:%H%M}SDSF")
-_mexp = _sexp
-_mbook = [km("SD", "San Diego", bid="0.40", ask="0.42", event=_mev, exp=_sexp_s),
-          km("SF", "San Francisco", bid="0.50", ask="0.52", event=_mev, exp=_sexp_s)]
+_mev = "KXMLBGAME-26SEP301830SDSF"
+_mexp = datetime(2026, 9, 30, 22, tzinfo=timezone.utc)
+_mexp_s = _mexp.strftime("%Y-%m-%dT%H:%M:%SZ")
+_mbook = [km("SD", "San Diego", bid="0.40", ask="0.42", event=_mev, exp=_mexp_s),
+          km("SF", "San Francisco", bid="0.50", ask="0.52", event=_mev, exp=_mexp_s)]
 S._kalshi_open = lambda series: _mbook if series == "KXMLBGAME" else []
 try:
-    _mrows = S.fetch_kalshi_venue("mlb")
+    _mrows = S.fetch_kalshi_venue("mlb", now=_fixed)
 finally:
     S._kalshi_open = _real_open
 eq(len(_mrows), 1, "the MLB fixture is listed")
 eq(datetime.fromisoformat(_mrows[0]["start"]), _mexp - timedelta(hours=3),
    "fetching MLB, whose ticker also carries HHMM, is unchanged")
 
-ok("apply_kalshi_cricket_starts" in _povsrc,
-   "the tracker applies the cricket milestone check to Kalshi cricket rows")
+# collect() itself, not a grep of the tracker source. One Kalshi cricket row goes in,
+# and the universe comes back with the milestone start.
+_saved_sports, _saved_pm, _saved_kv = S.SPORTS, S.fetch_polymarket_us, S.fetch_kalshi_venue
+_saved_apply = S.apply_kalshi_cricket_starts
+_apply_seen = []
+
+
+def _apply_fixed(rows, milestones=None, rules=None, now=None):
+    _apply_seen.append([r.get("market_id") for r in rows])
+    return _saved_apply(rows, milestones=milestones, rules=rules, now=now or _BEFORE)
+
+
+S.SPORTS = {"cricket": "Cricket"}
+S.fetch_polymarket_us = lambda sport, stats=None: []
+S.fetch_kalshi_venue = lambda sport, stats=None, now=None: [
+    dict(_crow(_IND, "2026-10-01T05:30:00+00:00"), rules_texts=_cr_rules_from_event()[_IND])]
+S.apply_kalshi_cricket_starts = _apply_fixed
+S._get = lambda url, **kw: {"milestones": _crms[_IND], "cursor": ""}
+S._kalshi_milestone_cache.clear()
+try:
+    _uni, _ = T.collect(verbose=False)
+finally:
+    S.SPORTS, S.fetch_polymarket_us, S.fetch_kalshi_venue = _saved_sports, _saved_pm, _saved_kv
+    S.apply_kalshi_cricket_starts = _saved_apply
+    S._get = _real_get
+    S._kalshi_milestone_cache.clear()
+eq(_apply_seen, [[_IND]], "collect passes the Kalshi cricket row to the milestone check")
+eq(_uni["cricket"][0]["start_source"], "kalshi_milestone",
+   "and the universe row comes back verified")
+eq(datetime.fromisoformat(_uni["cricket"][0]["start"]), _IND_START,
+   "at the milestone instant")
 ok(PR.start_verified(_crq("kalshi", start_source="kalshi_milestone")),
-   "production treats kalshi_milestone as a real start")
+   "production treats kalshi_milestone as a real start for cricket")
 ok(not PR.start_verified(_crq("kalshi")),
    "and still does not treat a Kalshi cricket estimate as one")
+ok(not PR.start_verified(dict(_crq("kalshi", start_source="kalshi_milestone"), sport="tennis")),
+   "production does not treat kalshi_milestone as verified outside cricket")
 
 ok(S.SOURCES["tt_band_55_60"].get("retired") and "tt_band_55_60" not in S.CHALLENGERS,
    "table tennis stays retired: a +0.4% fade on 78 is no better outlook, only noise")

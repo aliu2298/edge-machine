@@ -83,8 +83,11 @@ def start_verified(q):
         # Polymarket US publishes the contest's own start; a Kalshi row has one only once
         # something has confirmed it (the tennis schedule, an ESPN fixture, or, for
         # cricket, Kalshi's own milestone once it agrees with the ticker and the rules).
-        return (q.get("venue") == "polymarket_us"
-                or q.get("start_source") in T.VERIFIED_STARTS)
+        # kalshi_milestone is a cricket source. On any other sport it is not a start.
+        source = q.get("start_source")
+        verified = (source in T.VERIFIED_STARTS
+                    and (source != "kalshi_milestone" or q.get("sport") == "cricket"))
+        return q.get("venue") == "polymarket_us" or verified
     return q.get("start_source") == "espn"
 
 

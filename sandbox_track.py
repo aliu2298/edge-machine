@@ -2020,11 +2020,12 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 # fights, which carry their own start, reach the feed.
 # cricket since 2026-09-27, so oddspedia|cricket can publish. Kalshi still has no start
 # the feed will trust on sight. A cricket row is verified only when its cricket_match
-# milestone, the Eastern HHMM in the event ticker, and (when the rules text states one)
-# the scheduled time all agree, and details.status is still pre-match. That source is
-# "kalshi_milestone". A disagreement, a missing milestone, or any other status leaves
-# start_source unset and the feed refuses the bet — a T20 can begin well after the
-# listed time, and a wrong start is worse than no start. Polymarket US carries its own.
+# milestone, the Eastern HHMM in the event ticker, and a parseable rules time all
+# agree, and details.status is still pre-match. No rules text is not agreement. That
+# source is "kalshi_milestone". A disagreement, a missing milestone, or any other
+# status leaves start_source unset and the feed refuses the bet — a T20 can begin
+# well after the listed time, and a wrong start is worse than no start. Polymarket
+# US carries its own.
 ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # start_source values that mean a real start time, not the venue's estimate.
 # kalshi_milestone is cricket only, and only after the checks above agree.
@@ -2067,13 +2068,16 @@ def placeable(q):
         # market with two outcomes, so the second side is the No side of that same market;
         # Kalshi lists a market per side, so either is a plain Yes — but only once something
         # has confirmed when the contest starts. For cricket that confirmation is
-        # start_source "kalshi_milestone"; every other Kalshi sport still needs a verified
-        # start from outside Kalshi. An estimate is not enough.
+        # start_source "kalshi_milestone", and that source counts for cricket only.
+        # Every other Kalshi sport still needs a verified start from outside Kalshi.
+        # An estimate is not enough.
         if not (q.get("pick") in ("a", "b") and bool(q.get("market_id"))
                 and bool(q.get("side_a")) and bool(q.get("side_b"))):
             return False
-        return (q.get("venue") == "polymarket_us"
-                or (q.get("venue") == "kalshi" and q.get("start_source") in VERIFIED_STARTS))
+        source = q.get("start_source")
+        kalshi_ok = (source in VERIFIED_STARTS
+                     and (source != "kalshi_milestone" or q.get("sport") == "cricket"))
+        return q.get("venue") == "polymarket_us" or (q.get("venue") == "kalshi" and kalshi_ok)
     return False
 
 
