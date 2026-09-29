@@ -87,12 +87,27 @@ def start_verified(q):
     if q.get("venue") == "combo":
         # A basket inherits the verification of its WORST leg -- the builder already reduced
         # them to one -- because it cannot be bought once any single leg has started.
-        return q.get("start_source") in T.VERIFIED_STARTS
+        # kalshi_milestone is a cricket source. It counts on a basket only when every
+        # leg that carries it is cricket. A tennis basket, or a basket with no such
+        # leg, does not become verified by wearing that source.
+        source = q.get("start_source")
+        if source not in T.VERIFIED_STARTS:
+            return False
+        if source != "kalshi_milestone":
+            return True
+        carriers = [l for l in (q.get("legs") or [])
+                    if isinstance(l, dict)
+                    and l.get("start_source", "kalshi_milestone") == "kalshi_milestone"]
+        return bool(carriers) and all(l.get("sport") == "cricket" for l in carriers)
     if q.get("sport") in T.ROUTED_SPORTS:
         # Polymarket US publishes the contest's own start; a Kalshi row has one only once
-        # something else has confirmed it (the tennis schedule, an ESPN fixture).
-        return (q.get("venue") == "polymarket_us"
-                or q.get("start_source") in T.VERIFIED_STARTS)
+        # something has confirmed it (the tennis schedule, an ESPN fixture, or, for
+        # cricket, Kalshi's own milestone once it agrees with the ticker and the rules).
+        # kalshi_milestone is a cricket source. On any other sport it is not a start.
+        source = q.get("start_source")
+        verified = (source in T.VERIFIED_STARTS
+                    and (source != "kalshi_milestone" or q.get("sport") == "cricket"))
+        return q.get("venue") == "polymarket_us" or verified
     return q.get("start_source") == "espn"
 
 

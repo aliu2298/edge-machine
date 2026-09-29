@@ -31,6 +31,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -2464,14 +2465,18 @@ def kalshi_sides(event_ticker, markets):
     return out
 
 
-def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
+def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None, now=None):
     """Kalshi contests for one sport, as universe rows with Kalshi as the venue.
 
     The cap is generous on purpose. A Kalshi-venue row adds nothing to the ledger by
     itself — no self-quote is logged against it — so a wide universe costs nothing but
     matching time, while a narrow one silently discards every tip on a fixture it cut.
+
+    `now` is the horizon clock. The tracker leaves it unset; tests pass a fixed one.
     """
-    now = datetime.now(timezone.utc)
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
     first = now.strftime("%Y-%m-%d")
     last = (now + timedelta(days=horizon_days)).strftime("%Y-%m-%d")
     # Fetched concurrently. Soccer alone is 69 series, and one after another they took
@@ -2499,15 +2504,20 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
             continue
         listed += 1
 
-        # Kalshi publishes no kickoff time. Expected expiration sits two to three hours
-        # after the start, so three hours before it is a deliberately EARLY estimate:
-        # logging stops before the real kickoff, never after it.
+        # Kalshi publishes no kickoff. For every sport but cricket, expected expiration
+        # sits two to three hours after the start, so three hours before it is a
+        # deliberately EARLY estimate: logging stops before the real start, never after.
+        # Cricket's expiration is the scheduled start PLUS four hours, so that same
+        # subtraction lands an hour late. kalshi_listed_start uses the earlier of the
+        # ticker's Eastern clock and expiration minus four hours, and never the 3h figure.
         try:
             end = datetime.fromisoformat(
                 str(ms[0].get("expected_expiration_time")).replace("Z", "+00:00"))
         except (ValueError, TypeError):
+            end = None
+        start = kalshi_listed_start(sport, et, end)
+        if start is None:
             continue
-        start = end - timedelta(hours=3)
         # Fight cards: the 3h-early estimate lands hours before the later bouts, so a
         # passed estimate is kept while the market is open and re-timed from Pinnacle.
         early = (now - timedelta(hours=FIGHT_LOOKBACK_H) if sport in START_FROM_PINNACLE
@@ -2524,7 +2534,7 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
         if not prices.get("a") or not prices.get("b"):
             continue
 
-        rows.append(dict(
+        row = dict(
             sport=sport, venue="kalshi", market_id=et,
             label=f"{_kalshi_name(by_side['a'])} vs {_kalshi_name(by_side['b'])}",
             side_a=_kalshi_name(by_side["a"]), side_b=_kalshi_name(by_side["b"]),
@@ -2533,7 +2543,13 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
             tradeable=tradeable, untraded=not any(tradeable.values()),
             start=start.isoformat(), date=date, volume=0.0,
             url=f"https://kalshi.com/markets/{series.lower()}",
-        ))
+        )
+        # Cricket rules restate the scheduled start. Kept only so the milestone check
+        # can require that sentence to agree; apply_kalshi_cricket_starts strips it
+        # before the row joins the universe, and quotes never copy it.
+        if sport == "cricket":
+            row["rules_texts"] = [str(m["rules_primary"]) for m in ms if m.get("rules_primary")]
+        rows.append(row)
 
     rows.sort(key=lambda r: r["start"])
     if stats is not None:
@@ -6701,6 +6717,602 @@ def apply_espn_starts(rows, fixtures=None, now=None):
             continue
         kept.append(r)
     return kept, dict(matched=matched, dropped=len(rows) - len(kept), shifts=shifts, feed=True)
+
+
+# ---------------------------------------------------------------------------
+# Verified start times for Kalshi cricket
+# ---------------------------------------------------------------------------
+# Cricket expected_expiration_time is the scheduled start PLUS four hours, so the
+# three-hours-early estimate every other sport uses lands sixty minutes AFTER the
+# start. Three public clocks name the real start, and on the open book they agree
+# to the minute:
+#   the event ticker's HHMM, which is America/New_York (26OCT010030 = 00:30 ET)
+#   the rules sentence ("originally scheduled for Oct 1, 2026 at 12:30 AM EDT")
+#   a cricket_match milestone's start_date, from the milestones endpoint
+# A row is verified only when those still agree and the match is still pre-match.
+# Anything short of that stays an estimate, and the feed goes on refusing the bet.
+KALSHI_MILESTONES = "https://api.elections.kalshi.com/trade-api/v2/milestones"
+_EASTERN = "America/New_York"
+# The label has to be the abbreviation America/New_York is actually on at that
+# wall-clock time. EST in September is not EDT, even when the arithmetic lands
+# on the same UTC instant.
+_EASTERN_OFFSETS = {"EDT": timedelta(hours=-4), "EST": timedelta(hours=-5)}
+_RULES_MONTHS = {
+    "jan": 1, "january": 1, "feb": 2, "february": 2, "mar": 3, "march": 3,
+    "apr": 4, "april": 4, "may": 5, "jun": 6, "june": 6, "jul": 7, "july": 7,
+    "aug": 8, "august": 8, "sep": 9, "sept": 9, "september": 9, "oct": 10, "october": 10,
+    "nov": 11, "november": 11, "dec": 12, "december": 12,
+}
+# Longer than any live rules_primary (the open book on 2026-09-29 peaked at 234).
+RULES_MAX_LEN = 600
+# The whole sentence Kalshi publishes, and nothing else:
+#   If <A or B> wins the <A> vs <B> men's|women's professional <competition>
+#   cricket match originally scheduled for <Mon D, YYYY at H:MM AM|PM EDT|EST>,
+#   then the market resolves to Yes.
+# The winner has to be exactly A or exactly B. Names are split on spaces and
+# checked token by token, so there is no nested quantifier to backtrack.
+# Digits are allowed only as one of RULES_DIGIT_TOKENS. The open book on
+# 2026-09-29 also uses a parenthetical country tag, "Warriors (SA)", and no
+# '.' or '&', so those two stay refused.
+RULES_DIGIT_TOKENS = frozenset({
+    "T10", "T10s", "T20", "T20s", "Pro20", "Pro40", "Twenty20",
+})
+RULES_SLOT_DENY = frozenset({
+    "postponed", "delayed", "rescheduled", "moved", "now", "until",
+    "tomorrow", "today", "start", "time",
+}) | frozenset(_RULES_MONTHS)
+_RULES_PREFIX = "If "
+_RULES_WINS = " wins the "
+_RULES_VS = " vs "
+_RULES_GENDERS = (" men's professional ", " women's professional ")
+_RULES_SCHED = " cricket match originally scheduled for "
+_RULES_TAIL = ", then the market resolves to Yes."
+_TICKER_HHMM = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})(\d{4})(?:[^0-9]|$)")
+# Successes only. A failed fetch is not stored: caching [] would turn an outage
+# into "this event has no milestone" for the rest of the run.
+_kalshi_milestone_cache = {}
+
+
+def kalshi_ticker_start(event_ticker):
+    """Scheduled start encoded in a Kalshi ticker, as UTC, or None.
+
+    The four digits after the date are HHMM in America/New_York. zoneinfo applies
+    EDT or EST, including the 2026-11-01 fallback, so 00:30 ET is 04:30Z in October
+    and 05:30Z in November. A ticker with no HHMM, or an impossible clock, is None.
+    """
+    m = _TICKER_HHMM.search(str(event_ticker))
+    if not m or m.group(2) not in MONTHS:
+        return None
+    yy, mon, dd, hhmm = m.groups()
+    hh, mm = int(hhmm[:2]), int(hhmm[2:])
+    if hh > 23 or mm > 59:
+        return None
+    try:
+        local = datetime(2000 + int(yy), MONTHS[mon], int(dd), hh, mm,
+                         tzinfo=ZoneInfo(_EASTERN))
+    except (ValueError, OverflowError):
+        return None
+    return local.astimezone(timezone.utc)
+
+
+def _normalise_rules_text(text):
+    """NFKC, then every whitespace run collapsed to one space.
+
+    NBSP and newlines become an ordinary space. Hyphens and colons are left
+    as they are: the template matches the sentence Kalshi publishes, and
+    stripping characters would hide a date the template is supposed to reject.
+    """
+    s = unicodedata.normalize("NFKC", str(text or ""))
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _alpha_piece(piece):
+    """Letters, with an apostrophe only between two letters."""
+    if not piece or not piece.isascii() or not any(c.isalpha() for c in piece):
+        return False
+    for i, ch in enumerate(piece):
+        if ch.isalpha():
+            continue
+        if (ch != "'" or i == 0 or i + 1 == len(piece)
+                or not piece[i - 1].isalpha() or not piece[i + 1].isalpha()):
+            return False
+    return True
+
+
+def _plain_name_token(tok):
+    """A name word: letters and apostrophes, or those joined by a single hyphen."""
+    parts = tok.split("-")
+    return all(_alpha_piece(p) for p in parts)
+
+
+def _paren_token(tok):
+    """A parenthetical tag such as '(SA)'. Digits inside the parentheses are not a tag."""
+    return len(tok) >= 3 and tok[0] == "(" and tok[-1] == ")" and _alpha_piece(tok[1:-1])
+
+
+def _token_denied(tok):
+    core = tok[1:-1] if tok.startswith("(") and tok.endswith(")") else tok
+    return any(piece.lower() in RULES_SLOT_DENY
+               for piece in core.replace("'", "-").split("-") if piece)
+
+
+def _slot_ok(slot):
+    """True when every word is a name word, a '(Letters)' tag, or an approved digit token."""
+    if not slot:
+        return False
+    for tok in slot.split(" "):
+        if not tok:
+            return False
+        if tok in RULES_DIGIT_TOKENS or _paren_token(tok) or _plain_name_token(tok):
+            if _token_denied(tok):
+                return False
+            continue
+        return False
+    return True
+
+
+class _RulesClaim:
+    """One parsed template. `instant` is the scheduled-for time in UTC."""
+
+    def __init__(self, instant):
+        self.instant = instant
+
+
+def _scheduled_instant(when):
+    """UTC instant for the scheduled-for slot, or None if the zone label is wrong.
+
+    The slot is seven words, 'Oct 1, 2026 at 12:30 AM EDT'. EDT or EST has to be
+    the abbreviation America/New_York is on at that wall time. 'Sep 30, 2026 at
+    11:30 PM EST' is still EDT, so the label is refused even though a fixed
+    UTC-5 offset would land on the milestone.
+    """
+    parts = when.split(" ")
+    if len(parts) != 7:
+        return None
+    mon_s, day_s, year_s, at, hm, ap, label = parts
+    offset = _EASTERN_OFFSETS.get(label)
+    month = _RULES_MONTHS.get(mon_s.lower())
+    if at != "at" or ap not in ("AM", "PM") or offset is None or month is None:
+        return None
+    if not day_s.endswith(",") or not day_s[:-1].isdigit() or not 1 <= len(day_s[:-1]) <= 2:
+        return None
+    if len(year_s) != 4 or not year_s.isdigit():
+        return None
+    if hm.count(":") != 1:
+        return None
+    hh_s, mm_s = hm.split(":")
+    if not hh_s.isdigit() or not 1 <= len(hh_s) <= 2 or len(mm_s) != 2 or not mm_s.isdigit():
+        return None
+    hh, mm = int(hh_s), int(mm_s)
+    if not (1 <= hh <= 12 and 0 <= mm <= 59):
+        return None
+    if ap == "AM":
+        hh = 0 if hh == 12 else hh
+    else:
+        hh = hh if hh == 12 else hh + 12
+    try:
+        local = datetime(int(year_s), month, int(day_s[:-1]), hh, mm)
+    except ValueError:
+        return None
+    zone = ZoneInfo(_EASTERN)
+    try:
+        aware = local.replace(tzinfo=zone)
+    except (ValueError, OverflowError):
+        return None
+    utc = aware.astimezone(timezone.utc)
+    back = utc.astimezone(zone)
+    if (back.year, back.month, back.day, back.hour, back.minute) != (
+            local.year, local.month, local.day, local.hour, local.minute):
+        return None
+    if aware.utcoffset() != offset or aware.tzname() != label:
+        return None
+    return utc.astimezone(timezone.utc)
+
+
+def _parse_rules_claim(norm):
+    """The template claim, or None. Splits on fixed phrases; it does not backtrack."""
+    if not isinstance(norm, str) or not norm.startswith(_RULES_PREFIX) or not norm.endswith(_RULES_TAIL):
+        return None
+    body = norm[len(_RULES_PREFIX):-len(_RULES_TAIL)]
+    win_at = body.find(_RULES_WINS)
+    if win_at <= 0:
+        return None
+    winner = body[:win_at]
+    rest = body[win_at + len(_RULES_WINS):]
+    vs_at = rest.find(_RULES_VS)
+    if vs_at <= 0:
+        return None
+    side_a = rest[:vs_at]
+    rest = rest[vs_at + len(_RULES_VS):]
+    gender_at = None
+    gender_len = 0
+    for phrase in _RULES_GENDERS:
+        at = rest.find(phrase)
+        if at > 0 and (gender_at is None or at < gender_at):
+            gender_at, gender_len = at, len(phrase)
+    if gender_at is None:
+        return None
+    side_b = rest[:gender_at]
+    rest = rest[gender_at + gender_len:]
+    sched_at = rest.find(_RULES_SCHED)
+    if sched_at <= 0:
+        return None
+    competition = rest[:sched_at]
+    when = rest[sched_at + len(_RULES_SCHED):]
+    if winner not in (side_a, side_b):
+        return None
+    if not (_slot_ok(side_a) and _slot_ok(side_b) and _slot_ok(competition)):
+        return None
+    instant = _scheduled_instant(when)
+    if instant is None:
+        return None
+    return _RulesClaim(instant)
+
+
+class _RulesTemplate:
+    """fullmatch stand-in. The match is the parsed claim, never a backtracking regex."""
+
+    def fullmatch(self, text):
+        return _parse_rules_claim(text)
+
+
+_RULES_TEMPLATE_RE = _RulesTemplate()
+
+
+def _rules_instant(m):
+    """UTC instant of a parsed claim, or None."""
+    if isinstance(m, _RulesClaim):
+        return m.instant
+    return None
+
+
+def _rules_sentence(text, start):
+    """True when this one sentence is the template for `start`.
+
+    None means the sentence is empty and can be ignored. False refuses the row:
+    a format character, anything outside printable ASCII, a sentence longer
+    than RULES_MAX_LEN, or text that is not the whole Kalshi template.
+    """
+    raw = str(text or "")
+    if any(unicodedata.category(ch) == "Cf" for ch in raw):
+        return False
+    norm = _normalise_rules_text(raw)
+    if not norm:
+        return None
+    if len(norm) > RULES_MAX_LEN:
+        return False
+    if any(ord(ch) < 32 or ord(ch) > 126 for ch in norm):
+        return False
+    m = _RULES_TEMPLATE_RE.fullmatch(norm)
+    if not m:
+        return False
+    instant = _rules_instant(m)
+    if instant is None or instant != start:
+        return False
+    return True
+
+
+def _rules_support_start(texts, start):
+    """True when every rules sentence is the template and at least one is present.
+
+    An empty sentence is ignored. Anything else — a second sentence, a
+    reschedule phrase, or a clock the template does not spell — is a refusal.
+    Only rules_primary is collected; rules_secondary is not read. No sentence
+    at all is not agreement.
+    """
+    agreed = False
+    for text in texts:
+        verdict = _rules_sentence(text, start)
+        if verdict is None:
+            continue
+        if verdict is not True:
+            return False
+        agreed = True
+    return agreed
+
+
+def kalshi_listed_start(sport, event_ticker, expected_end):
+    """Unverified start stored for a Kalshi venue row.
+
+    Every sport but cricket keeps expected expiration minus three hours. Cricket's
+    expiration is four hours after the scheduled start, so that subtraction is an
+    hour late. Cricket takes the earlier of the ticker's Eastern start and
+    expiration minus four hours, and never the three-hour figure, so the logging
+    cutoff cannot sit after the scheduled start.
+    """
+    if sport != "cricket":
+        if expected_end is None:
+            return None
+        return expected_end - timedelta(hours=3)
+    cands = []
+    if expected_end is not None:
+        end = expected_end
+        if end.tzinfo is None:
+            end = end.replace(tzinfo=timezone.utc)
+        cands.append(end - timedelta(hours=4))
+    ticker = kalshi_ticker_start(event_ticker)
+    if ticker is not None:
+        cands.append(ticker)
+    return min(cands) if cands else None
+
+
+def _aware_utc(value):
+    """Parse `value` as timezone-aware UTC, or None.
+
+    A naive timestamp, or one with a non-zero offset, is not UTC and is refused.
+    Converting an offset into UTC would accept a clock we were told not to trust
+    unless it was already stated in UTC.
+    """
+    try:
+        dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    if dt.tzinfo is None or dt.utcoffset() != timedelta(0):
+        return None
+    return dt.astimezone(timezone.utc)
+
+
+# Exact strings seen on the open book, after the "(Bet Delay:N seconds)"
+# annotation is removed. "Toss Delayed" and "Match Scheduled (Postponed)" are
+# not in this set. A delay, postpone, abandon, or suspend word refuses too,
+# so a future status that merely starts with one of these words does not pass.
+_PREMATCH_STATUS = frozenset({
+    "Match Scheduled",
+    "Match Scheduled - Pre Match Service",
+    "Toss Pending",
+})
+_BET_DELAY_RE = re.compile(r"\s*\(Bet Delay:\d+ seconds\)\s*$")
+_STATUS_HOLD_RE = re.compile(r"delay|postpon|abandon|suspend", re.IGNORECASE)
+
+
+def _cricket_status_key(status):
+    s = _BET_DELAY_RE.sub("", str(status or "").strip())
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _cricket_prematch(status):
+    """True only for a known pre-match status with no hold word in it.
+
+    'Match Scheduled', 'Match Scheduled - Pre Match Service', and 'Toss Pending'
+    count, including a trailing '(Bet Delay:N seconds)' annotation. 'Toss
+    Delayed', 'Match Scheduled (Postponed)', and any other wording do not.
+    """
+    s = _cricket_status_key(status)
+    if not s or _STATUS_HOLD_RE.search(s):
+        return False
+    return s in _PREMATCH_STATUS
+
+
+def _cricket_match_for(event, items):
+    """The one cricket_match milestone that names `event`, or None.
+
+    Zero is a missing start. Two is an ambiguous one. A milestone counts only
+    when its type is cricket_match and primary_event_tickers is a list that
+    contains the event as an element. A string would match by substring, so a
+    string is not a list of tickers and does not count.
+    """
+    found = []
+    for it in items or []:
+        if not isinstance(it, dict) or it.get("type") != "cricket_match":
+            continue
+        primary = it.get("primary_event_tickers")
+        if not isinstance(primary, list):
+            continue
+        if any(item == event for item in primary):
+            found.append(it)
+    return found[0] if len(found) == 1 else None
+
+
+def _cricket_status_drop(event, items):
+    """True when the one milestone has a status and that status is not pre-match.
+
+    Pre-match means it starts with 'Match Scheduled' or 'Toss', in any case.
+    Every other label drops the row, including a start that is still in the
+    future. No milestone, a missing status, or a blank status does not drop:
+    that row stays unverified.
+    """
+    ms = _cricket_match_for(event, items)
+    if ms is None:
+        return False
+    details = ms.get("details") if isinstance(ms.get("details"), dict) else None
+    if not isinstance(details, dict) or "status" not in details:
+        return False
+    status = details.get("status")
+    if status is None or not str(status).strip():
+        return False
+    return not _cricket_prematch(status)
+
+
+# Stop asking after this many failures in a row. A dead milestones host must not
+# turn into one slow retry per open event.
+KALSHI_MILESTONE_MAX_FAILS = 3
+KALSHI_MILESTONE_PAGES = 10
+
+
+def _milestones_url(event_ticker, cursor=""):
+    url = (f"{KALSHI_MILESTONES}?related_event_ticker="
+           f"{urllib.parse.quote(str(event_ticker), safe='')}&limit=5")
+    if cursor:
+        url += "&cursor=" + urllib.parse.quote(str(cursor), safe="")
+    return url
+
+
+def fetch_kalshi_milestones(event_ticker):
+    """(milestones, error) for one event. A failure is not cached.
+
+    Pages follow `cursor` until it is empty, so a second cricket_match on page 2
+    is visible and the event stays unverified. A page that fails, or a cursor
+    that never ends, is an error and is not cached: a partial list would hide
+    the extra milestone.
+
+    venue_book.kalshi_series stores an empty set when its call fails, and the
+    rest of that run then behaves as if Kalshi listed nothing. A milestones
+    outage has to stay an outage: it is not stored, a later event still tries,
+    and the caller prints the error.
+    """
+    if event_ticker in _kalshi_milestone_cache:
+        return _kalshi_milestone_cache[event_ticker], None
+    out, cursor = [], ""
+    for _page in range(KALSHI_MILESTONE_PAGES):
+        try:
+            d = _get(_milestones_url(event_ticker, cursor), tries=2, timeout=20)
+        except RuntimeError as e:
+            return None, str(e)
+        ms = d.get("milestones") if isinstance(d, dict) else None
+        if not isinstance(ms, list):
+            return None, "response has no milestones list"
+        out.extend(ms)
+        cursor = str(d.get("cursor") or "")
+        if not cursor:
+            break
+    else:
+        if cursor:
+            return None, "milestones cursor not exhausted"
+    _kalshi_milestone_cache[event_ticker] = out
+    return out, None
+
+
+def _cricket_rules(event, row, rules):
+    """Rules sentences for one event: the argument, the row, or the open-market cache."""
+    if rules is not None:
+        raw = rules.get(event) if isinstance(rules, dict) else None
+    elif row.get("rules_texts"):
+        raw = row.get("rules_texts")
+    else:
+        raw = []
+        for series in KALSHI_VENUE_SERIES.get("cricket") or []:
+            for m in _kalshi_open_cache.get(series) or []:
+                if m.get("event_ticker") == event and m.get("rules_primary"):
+                    raw.append(m.get("rules_primary"))
+    if raw is None:
+        return []
+    if isinstance(raw, str):
+        return [raw]
+    return [str(x) for x in raw if x]
+
+
+def _verified_cricket_start(event, items, texts):
+    """Milestone start if every cricket clock agrees and the match is pre-match, else None.
+
+    The milestone instant must equal the ticker instant exactly, seconds included,
+    so 04:30:59Z is not 04:30:00Z. Every rules sentence must be Kalshi's whole
+    template for that instant, with the zone label America/New_York is actually
+    on. No rules text is not enough. Any other sentence is a disagreement. The
+    status, when present, has to be one of the known pre-match strings. A
+    missing status is not.
+    """
+    ms = _cricket_match_for(event, items)
+    if ms is None:
+        return None
+    start = _aware_utc(ms.get("start_date"))
+    ticker = kalshi_ticker_start(event)
+    if (start is None or ticker is None or start != ticker
+            or start.second != 0 or start.microsecond != 0):
+        return None
+    if not _rules_support_start(texts, start):
+        return None
+    details = ms.get("details") if isinstance(ms.get("details"), dict) else {}
+    if not _cricket_prematch(details.get("status")):
+        return None
+    return start
+
+
+def _emit_cricket(row, **kw):
+    out = dict(row, **kw)
+    out.pop("rules_texts", None)
+    return out
+
+
+def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
+    """Give Kalshi cricket rows a verified start when Kalshi's own clocks agree.
+
+    Returns (rows, stats). start_source is "kalshi_milestone" only when all of
+    these hold: exactly one cricket_match milestone whose primary_event_tickers
+    is a list containing the event; its start_date parses as timezone-aware UTC
+    and equals the ticker's HHMM read in America/New_York, seconds and all;
+    every rules_primary sentence is Kalshi's template for that same instant.
+    The winner is exactly one of the two sides around 'vs', and a digit is
+    allowed only as one of RULES_DIGIT_TOKENS. rules_secondary is not
+    collected. The EDT or EST label is the one America/New_York is on at that
+    wall time. No rules text is not a verified start. A disagreement, a
+    missing field, two milestones, or an HTTP error leaves start_source unset.
+
+    A milestone whose status is present and is not an exact known pre-match
+    string drops the row. Those strings are "Match Scheduled", "Match Scheduled
+    - Pre Match Service", and "Toss Pending". A delay, postpone, abandon, or
+    suspend word drops it too, as does every unknown label, even when the start
+    is still in the future. A missing or blank status does not drop: the row
+    stays unverified. A verified
+    start that has passed is dropped too. The verified start is the milestone instant
+    itself. Pinnacle subtracts PINNACLE_START_MARGIN_MIN because a fight card
+    walks out early; a T20 does the opposite and begins late, and this instant
+    is stored only once the clocks have already agreed. The row's previous
+    start — the unverified estimate — is kept as venue_start.
+
+    Fail-soft. A milestones outage is printed and does not cache an empty list,
+    does not raise, and does not change rows that are not Kalshi cricket.
+    stats["feed"] is False when every fetch failed. After
+    KALSHI_MILESTONE_MAX_FAILS consecutive failures the rest of the events are
+    not requested.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    feed = True
+    if milestones is None:
+        milestones = {}
+        events, seen = [], set()
+        for r in rows:
+            et = r.get("market_id")
+            if (r.get("venue") == "kalshi" and r.get("sport") == "cricket"
+                    and et and et not in seen):
+                seen.add(et)
+                events.append(et)
+        successes, fails = 0, 0
+        for et in events:
+            if fails >= KALSHI_MILESTONE_MAX_FAILS:
+                print(f"  ! kalshi milestones: stopped after {fails} consecutive failures")
+                break
+            ms, err = fetch_kalshi_milestones(et)
+            if err or ms is None:
+                fails += 1
+                print(f"  ! kalshi milestones {et}: {str(err or 'no milestones')[:80]}")
+                continue
+            fails = 0
+            successes += 1
+            milestones[et] = ms
+        if events and successes == 0:
+            feed = False
+    kept, matched, dropped = [], 0, 0
+    for r in rows:
+        if r.get("venue") != "kalshi" or r.get("sport") != "cricket":
+            kept.append(r)
+            continue
+        et = r.get("market_id")
+        if _cricket_status_drop(et, milestones.get(et)):
+            dropped += 1
+            continue
+        try:
+            est = datetime.fromisoformat(str(r.get("start")))
+        except (TypeError, ValueError):
+            kept.append(_emit_cricket(r))
+            continue
+        if est.tzinfo is None:
+            est = est.replace(tzinfo=timezone.utc)
+        verified = _verified_cricket_start(et, milestones.get(et), _cricket_rules(et, r, rules))
+        if verified is None:
+            kept.append(_emit_cricket(r))
+            continue
+        if verified <= now:
+            dropped += 1
+            continue
+        matched += 1
+        kept.append(_emit_cricket(
+            r, start=verified.isoformat(), date=verified.strftime("%Y-%m-%d"),
+            start_source="kalshi_milestone", venue_start=est.isoformat()))
+    unverified = sum(1 for r in kept if r.get("venue") == "kalshi" and r.get("sport") == "cricket"
+                     and r.get("start_source") != "kalshi_milestone")
+    return kept, dict(matched=matched, dropped=dropped, unverified=unverified, feed=feed)
 
 
 # Pinnacle is not in here: it is planned across every sport after these have run, so its
