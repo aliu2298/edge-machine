@@ -64,6 +64,12 @@ def _unverified(text, why):
     eq(out[0].get("start_source"), None, why)
 
 
+def _verified(text, why):
+    out, _ = S.apply_kalshi_cricket_starts(
+        [_row()], milestones=_ms, rules={IND: [text]}, now=BEFORE)
+    eq(out[0].get("start_source"), "kalshi_milestone", why)
+
+
 print("\n1. deny-list words joined by hyphens or apostrophes")
 for word in ("re-scheduled", "post'poned", "resched-uled", "Re-Scheduled", "POST'PONED",
              "de-layed", "deferred", "brought forward", "put back", "pushed",
@@ -203,6 +209,17 @@ for word in ("one", "two", "three", "four", "five", "six",
              "hundred", "thousand"):
     _unverified(_comp(f"Cup {word}"),
                 f"the spelled number {word!r} in the competition stays unverified")
+
+print("\n7. 'new' is a name; 'new time', 'new date' and 'new start' are not")
+_verified(_side_a("New Zealand"),
+          "New Zealand vs Sri Lanka still verifies")
+_verified(_comp("New South Wales"),
+          "a New South Wales competition still verifies")
+_verified(_side_a("Newcastle"),
+          "Newcastle vs Sri Lanka still verifies")
+for phrase in ("new time", "new date", "new start"):
+    _unverified(_comp(f"Cup {phrase}"),
+                f"{phrase!r} in the competition stays unverified")
 
 print()
 if FAILS:

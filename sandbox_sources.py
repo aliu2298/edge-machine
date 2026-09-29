@@ -6756,7 +6756,9 @@ RULES_MAX_LEN = 600
 # quantifier to backtrack. Each word is normalised (lowercased, hyphens and
 # apostrophes removed, parentheses and punctuation stripped) and refused when
 # it starts with a reschedule stem, or when the whole word is a time, a zone,
-# a spelled-out number, or a month. 're-scheduled' and "post'poned" therefore
+# a spelled-out number, or a month. The word 'new' is a name (New Zealand,
+# New South Wales, Newcastle). The phrases 'new time', 'new date' and
+# 'new start' are refused. 're-scheduled' and "post'poned" therefore
 # meet the stem 'resched' / 'postpon', and '(Delay)' meets 'delay'.
 # Digits are allowed only as one of RULES_DIGIT_TOKENS. The open book on
 # 2026-09-29 also uses a parenthetical country tag, "Warriors (SA)", and no
@@ -6775,11 +6777,17 @@ _RULES_STEMS = (
 # back, pushed) stay refused: dropping them would verify a sentence this check
 # already turns down.
 _RULES_WHOLE_WORDS = frozenset({
-    "new", "now", "later", "earlier", "tonight", "tomorrow", "today", "yesterday",
+    "now", "later", "earlier", "tonight", "tomorrow", "today", "yesterday",
     "morning", "afternoon", "evening", "night", "noon", "midnight",
     "hour", "hours", "hrs", "oclock", "am", "pm",
     "until", "start", "time", "brought", "forward", "put", "back", "pushed",
 }) | frozenset(_RULES_MONTHS)
+# Two-word phrases. 'new' alone is a name; these are not.
+_RULES_PHRASES = frozenset({
+    ("new", "time"),
+    ("new", "date"),
+    ("new", "start"),
+})
 # Zone abbreviations a start is written in, plus the same kind of label.
 # WEST is not listed: it is the word in West Indies, and a name stays a name.
 _RULES_ZONES = frozenset({
@@ -6923,6 +6931,29 @@ def _spelled_clock(toks):
     return False
 
 
+def _slot_norm_words(toks):
+    """Normalised words of a slot, hyphen pieces kept separate.
+
+    'New Zealand' is 'new', 'zealand'. 'new-date' is 'new', 'date', so the
+    phrase check sees the same pair a space would.
+    """
+    words = []
+    for tok in toks:
+        core = _slot_core(tok)
+        pieces = [p for p in core.replace("'", "-").split("-") if p]
+        if len(pieces) > 1:
+            words.extend(_normalise_slot_word(p) for p in pieces)
+        else:
+            words.append(_normalise_slot_word(core))
+    return [w for w in words if w]
+
+
+def _phrase_refused(toks):
+    """True when two neighbouring words are 'new time', 'new date', or 'new start'."""
+    words = _slot_norm_words(toks)
+    return any((left, right) in _RULES_PHRASES for left, right in zip(words, words[1:]))
+
+
 def _slot_ok(slot):
     """True when every word is a name word, a '(Letters)' tag, or an approved digit token."""
     if not slot:
@@ -6936,7 +6967,7 @@ def _slot_ok(slot):
         if tok in RULES_DIGIT_TOKENS or _paren_token(tok) or _plain_name_token(tok):
             continue
         return False
-    if _spelled_clock(toks):
+    if _spelled_clock(toks) or _phrase_refused(toks):
         return False
     return True
 
@@ -7342,7 +7373,9 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
     (postpon, resched, delay, defer, revis, chang, shift, amend, moved,
     relocat, suspend, abandon, cancel, resum, updat), or when the whole word
     is a time word, AM/PM, a time zone, a month, or a spelled number from one
-    to twelve, hundred, or thousand. The 600
+    to twelve, hundred, or thousand. The word 'new' is kept: New Zealand and
+    New South Wales are names. The phrases 'new time', 'new date' and
+    'new start' are refused. The 600
     character cap is the raw length of rules_primary, before NFKC or the
     Unicode category scan. rules_secondary is not
     collected. The EDT or EST label is the one America/New_York is on at that
