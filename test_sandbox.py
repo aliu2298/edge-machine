@@ -3602,7 +3602,7 @@ def _named(competition):
 
 
 for _comp in ("KCC T20 Summer League", "CSA Pro20 Cup", "Kerala Tour of Oman T20s",
-             "T10 Cup", "Twenty20 Cup"):
+             "T10 Cup", "T10s Cup", "Pro40 Cup", "Twenty20 Cup"):
     _named_out, _ = S.apply_kalshi_cricket_starts(
         [_crow(_IND, "2026-10-01T05:30:00+00:00")],
         milestones=_crms, rules={_IND: [_named(_comp)]}, now=_BEFORE)
@@ -3651,7 +3651,8 @@ for _clause in ("(rescheduled to Oct2 at9PM EDT)",
                 "(now T10)"):
     _rules_refused({_IND: [_with_match(_clause)]},
                    f"{_clause!r} in the competition stays unverified")
-for _tok in ("at10", "am10", "PM3", "Oct2", "Sep30", "h15", "UTC4", "GMT5", "EDT10", "IST3"):
+for _tok in ("at10", "am10", "PM3", "Oct2", "Sep30", "h15", "UTC4", "GMT5", "EDT10", "IST3",
+             "Pro30", "T20x"):
     _rules_refused({_IND: [_with_match(_tok)]},
                    f"the token {_tok!r} is not an approved name and stays unverified")
 _rules_refused({_IND: [_AGREE.replace("If India wins the", "If Pakistan wins the", 1)]},
@@ -3701,6 +3702,8 @@ _n = (590 - len(_head) - len(_tail)) // len(_fill)
 _rem = 590 - len(_head) - len(_tail) - _n * len(_fill)
 _chars590 = _head + _fill * _n + ("x" * _rem) + _tail
 eq(len(_chars590), 590, "the ReDoS fixture is 590 characters")
+ok(len(_tok100) >= 251 and len(_chars590) >= 251,
+   "both timing inputs are at least 251 characters")
 for _label, _text in ((f"100 ab1 tokens ({len(_tok100)} chars)", _tok100),
                       ("590-char near-miss", _chars590)):
     _t0 = _time.perf_counter()

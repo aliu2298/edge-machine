@@ -6754,7 +6754,9 @@ RULES_MAX_LEN = 600
 # Digits are allowed only as one of RULES_DIGIT_TOKENS. The open book on
 # 2026-09-29 also uses a parenthetical country tag, "Warriors (SA)", and no
 # '.' or '&', so those two stay refused.
-RULES_DIGIT_TOKENS = frozenset({"T10", "T20", "T20s", "Pro20", "Twenty20"})
+RULES_DIGIT_TOKENS = frozenset({
+    "T10", "T10s", "T20", "T20s", "Pro20", "Pro40", "Twenty20",
+})
 RULES_SLOT_DENY = frozenset({
     "postponed", "delayed", "rescheduled", "moved", "now", "until",
     "tomorrow", "today", "start", "time",
