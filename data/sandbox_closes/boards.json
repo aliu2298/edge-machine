@@ -45,31 +45,6 @@
    "lead_min": 27.1,
    "price": 0.99
   },
-  "corners_under:KXEPLCORNERS-26SEP19NFOCOV-10": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.52
-  },
-  "corners_under:KXEPLCORNERS-26SEP19NFOCOV-11": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.64
-  },
-  "corners_under:KXEPLCORNERS-26SEP19NFOCOV-8": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.3
-  },
-  "corners_under:KXEPLCORNERS-26SEP19NFOCOV-9": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.39
-  },
-  "corners_under:KXEPLTCORNERS-26SEP19NFOCOV-NFO6": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.5
-  },
   "corners_under:KXLALIGATCORNERS-26SEP20GETMCF-GET5": {
    "at": "2026-09-20T11:48:16+00:00",
    "lead_min": 11.7,
@@ -530,11 +505,6 @@
    "lead_min": 32.0,
    "price": 0.86
   },
-  "o15_form_l10:KXBUNDESLIGATOTAL-26SEP19VFBBVB-2": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.9
-  },
   "o15_form_l10:KXMLSTOTAL-26SEP19DALATX-2": {
    "at": "2026-09-19T23:33:10+00:00",
    "lead_min": 56.8,
@@ -554,11 +524,6 @@
    "at": "2026-09-26T23:54:23+00:00",
    "lead_min": 35.6,
    "price": 0.85
-  },
-  "o15_form_l10:KXSERIEATOTAL-26SEP19ROMINT-2": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.83
   },
   "o15_form_l10:KXUEFANLTOTAL-26SEP27LTUAZE-2": {
    "at": "2026-09-27T12:27:22+00:00",
@@ -735,6 +700,11 @@
    "lead_min": 43.6,
    "price": 0.6522
   },
+  "pm_combo2:pmcombo2:2026-09-29:75e6721cf5": {
+   "at": "2026-09-29T17:24:52+00:00",
+   "lead_min": 21.9,
+   "price": 0.5975
+  },
   "pm_combo3:pmcombo3:2026-09-24:3eaa6451de": {
    "at": "2026-09-24T17:33:03+00:00",
    "lead_min": 36.9,
@@ -774,11 +744,6 @@
    "at": "2026-09-20T20:09:06+00:00",
    "lead_min": 0.9,
    "price": 0.29
-  },
-  "polymarket:aec-atp-aletab-danmer-2026-09-19": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.47
   },
   "polymarket:aec-atp-liadra-quehal-2026-09-19": {
    "at": "2026-09-19T19:43:05+00:00",
@@ -855,11 +820,6 @@
    "lead_min": 32.0,
    "price": 0.6
   },
-  "scores24:KXSUPERLIGGAME-26SEP19TRAGAL": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 56.3,
-   "price": 0.46
-  },
   "scores24:aec-nfl-car-atl-2026-09-20": {
    "at": "2026-09-20T16:29:12+00:00",
    "lead_min": 30.8,
@@ -905,25 +865,10 @@
    "lead_min": 29.2,
    "price": 0.285
   },
-  "soccerpredictions:KXBUNDESLIGAGAME-26SEP19VFBBVB": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.4
-  },
   "soccerpredictions:KXCANPLGAME-26SEP20OTTSUP": {
    "at": "2026-09-20T15:27:59+00:00",
    "lead_min": 32.0,
    "price": 0.38
-  },
-  "soccerpredictions:KXCZEFLGAME-26SEP19FCSBAN": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.4
-  },
-  "soccerpredictions:KXEREDIVISIEGAME-26SEP19SPAHEE": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 41.3,
-   "price": 0.25
   },
   "soccerpredictions:KXISRNLGAME-26SEP24MHEKIR": {
    "at": "2026-09-24T15:57:58+00:00",
@@ -950,11 +895,6 @@
    "lead_min": 33.6,
    "price": 0.42
   },
-  "soccerpredictions:KXLALIGA2GAME-26SEP19CDEEIB": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.36
-  },
   "soccerpredictions:KXLALIGA2GAME-26SEP20SABOVI": {
    "at": "2026-09-20T11:48:16+00:00",
    "lead_min": 11.7,
@@ -964,11 +904,6 @@
    "at": "2026-09-26T21:34:42+00:00",
    "lead_min": 25.3,
    "price": 0.41
-  },
-  "soccerpredictions:KXSERIEAGAME-26SEP19ROMINT": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.28
   },
   "soccerpredictions:KXSUPERLIGGAME-26SEP20GOZRIZ": {
    "at": "2026-09-20T16:29:12+00:00",
@@ -984,11 +919,6 @@
    "at": "2026-09-20T11:48:16+00:00",
    "lead_min": 11.7,
    "price": 0.41
-  },
-  "team1_form_l5:KXBUNDESLIGATEAMTOTAL-26SEP19VFBBVB-BVB1": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.85
   },
   "team1_form_l5:KXLALIGATEAMTOTAL-26SEP20DEPRBB-RBB1": {
    "at": "2026-09-20T16:29:12+00:00",
@@ -1230,30 +1160,10 @@
    "lead_min": 9.0,
    "price": 0.81
   },
-  "tennis_fav_band:aec-atp-nickja-rigte-2026-09-19": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 27.9,
-   "price": 0.87
-  },
-  "tennis_fav_band:aec-atp-talgri-jarr-2026-09-19": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 37.9,
-   "price": 0.87
-  },
-  "tennis_fav_band:aec-atp-thitir-meralk-2026-09-19": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 6.3,
-   "price": 0.85
-  },
   "tennis_fav_band:aec-atpdb-halysmiedle-marozsrikl-2026-09-23": {
    "at": "2026-09-23T03:22:19+00:00",
    "lead_min": 37.7,
    "price": 0.75
-  },
-  "tennis_fav_band:aec-atpdb-luzmat-paulstrick-2026-09-19": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 56.3,
-   "price": 0.76
   },
   "tennis_fav_band:aec-itfme-aleand-darnic-2026-09-27": {
    "at": "2026-09-27T05:46:05+00:00",
@@ -1340,11 +1250,6 @@
    "lead_min": 8.5,
    "price": 0.76
   },
-  "tennis_fav_band:aec-itfme-pausan-livdam-2026-09-19": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 26.3,
-   "price": 0.89
-  },
   "tennis_fav_band:aec-itfme-pieric-stipaa-2026-09-23": {
    "at": "2026-09-23T05:10:58+00:00",
    "lead_min": 49.0,
@@ -1428,11 +1333,6 @@
   "tennis_fav_band:aec-itfwo-kansaw-remoha-2026-09-22": {
    "at": "2026-09-22T00:16:57+00:00",
    "lead_min": 43.0,
-   "price": 0.78
-  },
-  "tennis_fav_band:aec-itfwo-markubannsis-naibaisahyam-2026-09-19": {
-   "at": "2026-09-19T15:22:06+00:00",
-   "lead_min": 37.9,
    "price": 0.78
   },
   "tennis_fav_band:aec-itfwo-maycro-emmkam-2026-09-22": {
@@ -1560,6 +1460,11 @@
    "lead_min": 43.9,
    "price": 0.78
   },
+  "tennis_fav_band_3h:aec-itfme-eudgon-hoyroh-2026-09-29": {
+   "at": "2026-09-29T17:24:52+00:00",
+   "lead_min": 21.9,
+   "price": 0.75
+  },
   "tennis_fav_band_3h:aec-itfme-ilyign-ioasta-2026-09-27": {
    "at": "2026-09-26T23:54:23+00:00",
    "lead_min": 5.6,
@@ -1585,6 +1490,11 @@
    "lead_min": 34.0,
    "price": 0.78
   },
+  "tennis_fav_band_3h:aec-utr-denmin-aragal-2026-09-29": {
+   "at": "2026-09-29T17:24:52+00:00",
+   "lead_min": 35.1,
+   "price": 0.79
+  },
   "tennis_fav_band_3h:aec-wta-polley-wuszhe-2026-09-26": {
    "at": "2026-09-26T05:17:32+00:00",
    "lead_min": 2.5,
@@ -1594,11 +1504,6 @@
    "at": "2026-09-24T09:15:21+00:00",
    "lead_min": 14.6,
    "price": 0.79
-  },
-  "u35_low_scoring:KXLIGAPORTUGALTOTAL-26SEP19ALVRAV-4": {
-   "at": "2026-09-19T16:03:39+00:00",
-   "lead_min": 56.3,
-   "price": 0.73
   },
   "u35_low_scoring:KXLIGAPORTUGALTOTAL-26SEP20ESTCAS-4": {
    "at": "2026-09-20T16:29:12+00:00",
@@ -1626,5 +1531,5 @@
    "price": 0.86
   }
  },
- "updated": "2026-09-29T13:41:19+00:00"
+ "updated": "2026-09-29T17:24:52+00:00"
 }
