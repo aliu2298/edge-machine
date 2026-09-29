@@ -2558,11 +2558,119 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None, now=None):
     return rows[:cap] if cap else rows
 
 
+# Kalshi's public market `result` is yes, no, scalar, or empty. A cancel is not
+# a scalar: the result is blank or an explicit void word, and the status is final.
+_KALSHI_VOID_RESULTS = {"void", "voided", "cancelled", "canceled", "cancel"}
+
+
+def kalshi_explicit_void(market):
+    """True when this Kalshi market payload is a cancel or void, not a scalar.
+
+    A status that says cancel or void is a cancel, including when the result
+    field says yes or no. A finalized yes or no is not one: classify_kalshi_market
+    returns that side before consulting expiration_value, and this function
+    does not treat an expiration word as a void once the result is yes or no.
+    "No Result (50/50)" is not a cancel word. Rules text is not read.
+    """
+    if not isinstance(market, dict):
+        return False
+    result = str(market.get("result") or "").strip().lower()
+    status = str(market.get("status") or "").strip().lower()
+    # A cancel status is a cancel even when it is not in the final set, and
+    # even when result says yes or no. Checked first so that test is reachable.
+    if any(w in status for w in ("cancel", "void")):
+        return True
+    if result in ("yes", "no"):
+        return False
+    if result in _KALSHI_VOID_RESULTS:
+        return True
+    exp = str(market.get("expiration_value") or "").strip().lower()
+    return exp in _KALSHI_VOID_RESULTS
+
+
+def kalshi_settlement_dollars(market):
+    """YES/long settlement in dollars, or None when the payload has no usable number.
+
+    The live field is `settlement_value_dollars`. An older body that only has
+    `settlement_value` stores cents: 1 is one cent ($0.01) and 100 is $1.00.
+    NaN, an infinity, or a blank is not a number and does not fall through to
+    the other field.
+    """
+    if not isinstance(market, dict):
+        return None
+
+    def finite(x):
+        v = _num(x)
+        if v is None or not math.isfinite(v):
+            return None
+        return v
+
+    if market.get("settlement_value_dollars") not in (None, ""):
+        return finite(market.get("settlement_value_dollars"))
+    if market.get("settlement_value") in (None, ""):
+        return None
+    raw = finite(market.get("settlement_value"))
+    if raw is None:
+        return None
+    return raw / 100.0
+
+
+def classify_kalshi_market(market):
+    """'a', 'b', 'void', ('price', dollars), or None for one Kalshi market.
+
+    None means the market is not final and not a cancel. A finalized yes or no
+    is that side, including when expiration_value names a void. A scalar
+    settlement uses the same bands as classify_polymarket_us: at or above 0.99
+    is side A, at or below 0.01 is side B, and a number strictly between those
+    bands, including exactly 0.5, is ('price', dollars). Anything outside 0..1,
+    or a non-finite number, is void and pays nothing. An explicit cancel is
+    void. The cancel-status check runs before the final-set gate, because a
+    status such as "cancelled" is not in that set.
+    """
+    if not isinstance(market, dict):
+        return None
+    status = str(market.get("status") or "").strip().lower()
+    result = str(market.get("result") or "").strip().lower()
+    # A clean winner beats an expiration word. Checked first so "void" in
+    # expiration_value cannot turn a finalized yes or no into a void.
+    if status in KALSHI_FINAL and result == "yes":
+        return "a"
+    if status in KALSHI_FINAL and result == "no":
+        return "b"
+    # Reachable for a cancel status: those words are not in KALSHI_FINAL, so
+    # returning None first used to skip this test entirely.
+    if kalshi_explicit_void(market):
+        return "void"
+    if status not in KALSHI_FINAL:
+        return None
+    if result == "scalar":
+        st = kalshi_settlement_dollars(market)
+        if st is None or not math.isfinite(st) or st < 0.0 or st > 1.0:
+            return "void"
+        if 0.99 <= st <= 1.0:
+            return "a"
+        if 0.0 <= st <= 0.01:
+            return "b"
+        if 0.0 < st < 1.0:
+            return ("price", float(st))
+        return "void"
+    return "void"
+
+
 def resolve_kalshi(event_ticker):
-    """Settlement oracle for a Kalshi event: 'a', 'b', 'draw', 'void', or None if open.
+    """Settlement oracle for a Kalshi event.
+
+    'a', 'b', 'draw', 'void', ('price', side_a_settlement), or None if open.
+    A three-way scalar also carries each side's own contract value as a third
+    element, because the away side is not one minus the home side when a draw
+    was paid too.
 
     The winning side is read through kalshi_sides — the same mapping used when the bet
     was placed — so side A can never quietly change meaning between placing and settling.
+    A single finalized yes is that side. A scalar fair value on every market, strictly
+    between the clean 0 and 1 bands, is a price: side A is the long side, and a two-way
+    away side is paid one minus it. Anything else final (every side no, a blank result,
+    an explicit cancel) stays a void.
     """
     try:
         ms = _get(f"{KALSHI_API}?event_ticker={event_ticker}&limit=20",
@@ -2579,10 +2687,28 @@ def resolve_kalshi(event_ticker):
         if len(yes) != 1:
             return "void"
         return sides.get(_kalshi_code(yes[0])) or "void"
-    if all(str(m.get("status")).lower() in KALSHI_FINAL for m in ms):
-        # Everything final and nothing resolved yes: cancelled or voided. Refund it.
-        return "void"
-    return None
+    if not all(str(m.get("status")).lower() in KALSHI_FINAL for m in ms):
+        return None
+    kinds = [(m, classify_kalshi_market(m)) for m in ms]
+    if all(isinstance(kind, tuple) and kind[0] == "price" for _m, kind in kinds):
+        priced = {}
+        for m, kind in kinds:
+            side = sides.get(_kalshi_code(m))
+            if side is None:
+                return "void"
+            priced[side] = float(kind[1])
+        if "a" not in priced or "b" not in priced:
+            return "void"
+        # Two complementary contracts are one long number. A draw, or two
+        # sides that do not add to 1, keeps each contract's own value.
+        if "draw" not in priced and abs(priced["a"] + priced["b"] - 1.0) <= 1e-4:
+            return ("price", priced["a"])
+        return ("price", priced["a"], priced)
+    winners = [m for m, kind in kinds if kind == "a"]
+    if len(winners) == 1 and all(kind in ("a", "b") for _m, kind in kinds):
+        return sides.get(_kalshi_code(winners[0])) or "void"
+    # Everything final and nothing resolved to one winner: cancelled or voided.
+    return "void"
 
 
 # ---------------------------------------------------------------------------
@@ -4671,13 +4797,30 @@ def _resolve_leg(leg):
 
 
 def _price_result(res):
-    """The settlement number inside a ('price', number) answer, or None."""
-    if isinstance(res, tuple) and len(res) == 2 and res[0] == "price":
+    """The long-side settlement inside a ('price', number, ...) answer, or None."""
+    if isinstance(res, tuple) and len(res) >= 2 and res[0] == "price":
         try:
             return float(res[1])
         except (TypeError, ValueError):
             return None
     return None
+
+
+def price_paid(pick, res):
+    """What `pick` was paid on a ('price', settlement) answer.
+
+    The Polymarket US number, and a Kalshi binary's settlement_value, is the
+    long side. pmus_paid pays a yes/long buyer that number and a no/short buyer
+    one minus it. A Kalshi event that is not one complement carries each side's
+    own contract value; that side is the long buyer of its contract.
+    """
+    settlement = _price_result(res)
+    if settlement is None:
+        return None
+    book = res[2] if isinstance(res, tuple) and len(res) >= 3 and isinstance(res[2], dict) else None
+    if book is not None and pick in book:
+        return pmus_paid("a", book[pick])
+    return pmus_paid(pick, settlement)
 
 
 def resolve_combo(legs):
@@ -4697,9 +4840,8 @@ def resolve_combo(legs):
     pending = False
     for leg in legs:
         res = _resolve_leg(leg)
-        settlement = _price_result(res)
-        if settlement is not None:
-            product *= pmus_paid(leg.get("pick"), settlement)
+        if _price_result(res) is not None:
+            product *= price_paid(leg.get("pick"), res)
             priced = True
             continue
         if res is None:
@@ -5836,7 +5978,14 @@ def fetch_team2_form_l10(sport, universe=None, fixtures=None):
 
 
 def resolve_kalshi_market(ticker):
-    """Settle one yes/no market: 'a' (YES), 'b' (NO), 'void', or None while open."""
+    """Settle one yes/no market: 'a', 'b', 'void', ('price', settlement), or None.
+
+    A clean yes or no is that side. A scalar settlement strictly between the
+    clean 0 and 1 bands, including exactly 0.5, is the price the YES/long side
+    was paid — the same rule as Polymarket US. A no/short buyer is later paid
+    one minus that number. An explicit cancel, or a final market with no
+    result, stays void. Not final is None.
+    """
     try:
         d = _get(f"https://api.elections.kalshi.com/trade-api/v2/markets/{ticker}",
                  tries=2, timeout=20)
@@ -5845,10 +5994,7 @@ def resolve_kalshi_market(ticker):
     m = d.get("market") if isinstance(d, dict) else None
     if not m:
         return None
-    if str(m.get("status")).lower() not in KALSHI_FINAL:
-        return None
-    result = str(m.get("result")).lower()
-    return {"yes": "a", "no": "b"}.get(result, "void")
+    return classify_kalshi_market(m)
 
 
 def venue_price(q, closing=False):

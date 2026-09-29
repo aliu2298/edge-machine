@@ -1295,7 +1295,7 @@ def _apply_result(q, res, stamp):
     """
     settlement = S._price_result(res)
     if settlement is not None:
-        paid = round(S.pmus_paid(q.get("pick"), settlement), 6)
+        paid = round(S.price_paid(q.get("pick"), res), 6)
         q["result"] = "price"
         q["settle_px"] = paid
         if not q.get("settled"):
@@ -1370,12 +1370,37 @@ def _regrade_markets(quotes, now, watched, skip_ids):
     return out
 
 
+def _kalshi_price_regrade(q):
+    """True when a price re-grade is a Kalshi settlement.
+
+    A kalshi or kalshi_binary quote qualifies. A basket qualifies only when at
+    least one leg is one of those venues. A basket whose legs are all
+    Polymarket US does not: a later pass leaves its settle_px alone and does
+    not turn a note-free void into a price, which is how grade() treated it
+    before this branch. An open Polymarket US quote still settles at the price
+    on the first pass.
+    """
+    venue = q.get("venue")
+    if venue in ("kalshi", "kalshi_binary"):
+        return True
+    if venue != "combo":
+        return False
+    return any(leg.get("venue") in ("kalshi", "kalshi_binary")
+               for leg in (q.get("legs") or []))
+
+
 def grade(d, verbose=True, now=None, mismatches=None):
     """Settle every open quote, then correct a settled one whose venue has revised.
 
     `mismatches` overrides the watch file (tests pass a set). None reads it.
-    A re-resolved None or void never replaces a stored side. Returns how many
-    open quotes settled this call; corrections are counted separately in the log.
+    A market is re-read when a bet on it settled inside REGRADE_HOURS, or when
+    its (venue, market_id) is in that set. Anything older, and not listed, is
+    left as stored. A re-resolved None or void never replaces a stored side.
+    A Kalshi price, or a basket with a Kalshi leg, may replace a void that has
+    no note and no city-day flag. It does not replace a win or a loss. A
+    Polymarket US quote, and a basket whose legs are all Polymarket US, are
+    not re-priced. Returns how many open quotes settled this call; corrections
+    are counted separately in the log.
     """
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
@@ -1430,6 +1455,23 @@ def grade(d, verbose=True, now=None, mismatches=None):
         if id(q) in just_settled or q.get("status") not in _SETTLED:
             continue
         res = results.get((q.get("venue"), q.get("market_id")))
+        # A Kalshi scalar, or a basket with a Kalshi leg, may replace a void or
+        # correct a stored price. A Polymarket US quote, and a basket whose
+        # legs are all Polymarket US, fall through and are not re-priced. A
+        # duplicate, a late log, a pre-gate void, or a city-day flag carries a
+        # note or a mark and stays as it is. A win or a loss is not replaced.
+        if S._price_result(res) is not None and _kalshi_price_regrade(q):
+            if q.get("note") or climate_excluded(q):
+                continue
+            if q.get("result") not in ("void", "price"):
+                continue
+            new_paid = round(S.price_paid(q.get("pick"), res), 6)
+            if (q.get("result") == "price" and q.get("settle_px") is not None
+                    and abs(float(q["settle_px"]) - new_paid) <= 1e-9):
+                continue
+            _apply_result(q, res, now_iso())
+            regraded += 1
+            continue
         # None, void, or any other non-side must not overwrite a stored win/loss.
         # A decisive side that merely repeats the stored result is not a correction.
         if res not in DECISIVE_RESULTS or res == q.get("result"):
