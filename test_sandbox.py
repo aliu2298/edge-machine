@@ -3601,7 +3601,8 @@ def _named(competition):
     return _AGREE.replace("Asian Games Men", competition)
 
 
-for _comp in ("KCC T20 Summer League", "CSA Pro20 Cup", "Kerala Tour of Oman T20s"):
+for _comp in ("KCC T20 Summer League", "CSA Pro20 Cup", "Kerala Tour of Oman T20s",
+             "T10 Cup", "Twenty20 Cup"):
     _named_out, _ = S.apply_kalshi_cricket_starts(
         [_crow(_IND, "2026-10-01T05:30:00+00:00")],
         milestones=_crms, rules={_IND: [_named(_comp)]}, now=_BEFORE)
@@ -3624,6 +3625,88 @@ for _bad_name, _why in (
 _utc04 = _named("UTC04 League").replace("Oct 1, 2026 at 12:30 AM EDT", "Oct 2, 2026 at 9:00 AM EDT")
 _rules_refused({_IND: [_utc04]},
                "UTC04 next to a disagreeing scheduled time stays unverified")
+
+
+def _with_match(extra):
+    # Into the competition, before the fixed "cricket match".
+    return _AGREE.replace(" cricket match originally scheduled for",
+                          " " + extra + " cricket match originally scheduled for", 1)
+
+
+def _with_who(extra):
+    return _AGREE.replace(" wins the ", " " + extra + " wins the ", 1)
+
+
+_rules_refused({_IND: [_with_match("(postponed by two hours)")]},
+               "'(postponed by two hours)' in the competition stays unverified")
+_rules_refused({_IND: [_with_who(", in the match now delayed until tomorrow,")]},
+               "'now delayed until tomorrow' in the winner stays unverified")
+_rules_refused({_IND: [_AGREE.replace(
+    "If India wins the",
+    "If India wins the match. The match has been postponed by two hours. If India wins the",
+    1)]}, "an extra sentence in the winner stays unverified")
+for _clause in ("(rescheduled to Oct2 at9PM EDT)",
+                "(now Sep30 at11PM IST)",
+                "(start moved to h15 IST)",
+                "(now T10)"):
+    _rules_refused({_IND: [_with_match(_clause)]},
+                   f"{_clause!r} in the competition stays unverified")
+for _tok in ("at10", "am10", "PM3", "Oct2", "Sep30", "h15", "UTC4", "GMT5", "EDT10", "IST3"):
+    _rules_refused({_IND: [_with_match(_tok)]},
+                   f"the token {_tok!r} is not an approved name and stays unverified")
+_rules_refused({_IND: [_AGREE.replace("If India wins the", "If Pakistan wins the", 1)]},
+               "a winner that is neither side stays unverified")
+_sa = _AGREE.replace("If India wins the India vs",
+                     "If Warriors (SA) wins the Warriors (SA) vs")
+_sa_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_crms, rules={_IND: [_sa]}, now=_BEFORE)
+eq(_sa_out[0]["start_source"], "kalshi_milestone",
+   "a live parenthetical tag, Warriors (SA), still verifies")
+_wo = _AGREE.replace(" men's professional ", " women's professional ")
+_wo_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_crms, rules={_IND: [_wo]}, now=_BEFORE)
+eq(_wo_out[0]["start_source"], "kalshi_milestone",
+   "women's professional uses the same template")
+_hy = _AGREE.replace("If India wins the India vs", "If St-Kitts wins the St-Kitts vs")
+_hy_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_crms, rules={_IND: [_hy]}, now=_BEFORE)
+eq(_hy_out[0]["start_source"], "kalshi_milestone",
+   "a single hyphen between letters is part of a name")
+_rules_refused({_IND: [_AGREE.replace("If India wins the India vs",
+                                      "If St. Louis wins the St. Louis vs")]},
+               "a period in a name stays unverified")
+_rules_refused({_IND: [_AGREE.replace("Sri Lanka", "A&M")]},
+               "an ampersand in a name stays unverified")
+_rules_refused({_IND: [_AGREE.replace("If India wins the India vs",
+                                      "If St--Kitts wins the St--Kitts vs")]},
+               "a doubled hyphen stays unverified")
+_pad = 600 - len(_AGREE)
+_long = _AGREE.replace(" cricket match originally",
+                       " " + ("C" * (_pad - 1)) + " cricket match originally", 1)
+eq(len(_long), 600, "the length-cap fixture is 600 characters")
+ok(S._rules_sentence(_long, _IND_START),
+   "a 600-character template still verifies")
+ok(S._rules_sentence(_long + "C", _IND_START) is False,
+   "601 characters stay unverified")
+import time as _time
+_tok100 = _with_match(" ".join(["ab1"] * 100))
+_fill = "ab1 "
+_head = "If India wins the India vs Sri Lanka men's professional "
+_tail = (" cricket match originally scheduled for Oct 1, 2026 at 12:30 AM EDT, "
+         "then the market resolves to Yes.")
+_n = (590 - len(_head) - len(_tail)) // len(_fill)
+_rem = 590 - len(_head) - len(_tail) - _n * len(_fill)
+_chars590 = _head + _fill * _n + ("x" * _rem) + _tail
+eq(len(_chars590), 590, "the ReDoS fixture is 590 characters")
+for _label, _text in ((f"100 ab1 tokens ({len(_tok100)} chars)", _tok100),
+                      ("590-char near-miss", _chars590)):
+    _t0 = _time.perf_counter()
+    S._rules_sentence(_text, _IND_START)
+    _dt = _time.perf_counter() - _t0
+    ok(_dt < 0.1, f"{_label} finishes in {_dt:.4f}s, under 0.1s")
 
 _LIVE = "KXT20MATCH-26SEP290800LIMPWAR"
 _live_rules = {_LIVE: "originally scheduled for Sep 29, 2026 at 8:00 AM EDT"}

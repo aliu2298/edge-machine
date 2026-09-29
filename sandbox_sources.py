@@ -6745,23 +6745,26 @@ _RULES_MONTHS = {
 }
 # Longer than any live rules_primary (the open book on 2026-09-29 peaked at 234).
 RULES_MAX_LEN = 600
-_RULES_MONTH = (
-    r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|"
-    r"aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
-)
-# The whole sentence Kalshi publishes, and nothing else. In the team and
-# competition names only, one whole word may be letters plus a 1- or 2-digit
-# run (T20, T20s, Pro20, T10). A token that starts with a digit, a run of 3 or
-# more digits, or digits next to ':' '.' '/' or '-' is not that word. The
-# scheduled-for slot is unchanged and is the only clock that can verify.
-_RULES_NAME_TOKEN = r"(?<![:./\-\d])[A-Za-z]+[0-9]{1,2}[A-Za-z]*(?![:./\-\d])"
-_RULES_FREE = rf"(?:[^\d:]|{_RULES_NAME_TOKEN})+"
-_RULES_TEMPLATE_RE = re.compile(
-    rf"If (?P<who>{_RULES_FREE}) wins the (?P<match>{_RULES_FREE}) match "
-    rf"originally scheduled for (?P<mon>{_RULES_MONTH}) (?P<dd>\d{{1,2}}), "
-    rf"(?P<year>\d{{4}}) at (?P<hh>\d{{1,2}}):(?P<mm>\d{{2}}) "
-    rf"(?P<ap>AM|PM) (?P<tz>EDT|EST), then the market resolves to Yes\.",
-    re.IGNORECASE)
+# The whole sentence Kalshi publishes, and nothing else:
+#   If <A or B> wins the <A> vs <B> men's|women's professional <competition>
+#   cricket match originally scheduled for <Mon D, YYYY at H:MM AM|PM EDT|EST>,
+#   then the market resolves to Yes.
+# The winner has to be exactly A or exactly B. Names are split on spaces and
+# checked token by token, so there is no nested quantifier to backtrack.
+# Digits are allowed only as one of RULES_DIGIT_TOKENS. The open book on
+# 2026-09-29 also uses a parenthetical country tag, "Warriors (SA)", and no
+# '.' or '&', so those two stay refused.
+RULES_DIGIT_TOKENS = frozenset({"T10", "T20", "T20s", "Pro20", "Twenty20"})
+RULES_SLOT_DENY = frozenset({
+    "postponed", "delayed", "rescheduled", "moved", "now", "until",
+    "tomorrow", "today", "start", "time",
+}) | frozenset(_RULES_MONTHS)
+_RULES_PREFIX = "If "
+_RULES_WINS = " wins the "
+_RULES_VS = " vs "
+_RULES_GENDERS = (" men's professional ", " women's professional ")
+_RULES_SCHED = " cricket match originally scheduled for "
+_RULES_TAIL = ", then the market resolves to Yes."
 _TICKER_HHMM = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})(\d{4})(?:[^0-9]|$)")
 # Successes only. A failed fetch is not stored: caching [] would turn an outage
 # into "this event has no milestone" for the rest of the run.
@@ -6801,27 +6804,92 @@ def _normalise_rules_text(text):
     return re.sub(r"\s+", " ", s).strip()
 
 
-def _rules_instant(m):
-    """UTC instant for one template claim, or None if the zone label is wrong.
+def _alpha_piece(piece):
+    """Letters, with an apostrophe only between two letters."""
+    if not piece or not piece.isascii() or not any(c.isalpha() for c in piece):
+        return False
+    for i, ch in enumerate(piece):
+        if ch.isalpha():
+            continue
+        if (ch != "'" or i == 0 or i + 1 == len(piece)
+                or not piece[i - 1].isalpha() or not piece[i + 1].isalpha()):
+            return False
+    return True
 
-    EDT or EST has to be the abbreviation America/New_York is on at that wall
-    time. "Sep 30, 2026 at 11:30 PM EST" is still EDT, so the label is refused
-    even though a fixed UTC-5 offset would land on the milestone.
+
+def _plain_name_token(tok):
+    """A name word: letters and apostrophes, or those joined by a single hyphen."""
+    parts = tok.split("-")
+    return all(_alpha_piece(p) for p in parts)
+
+
+def _paren_token(tok):
+    """A parenthetical tag such as '(SA)'. Digits inside the parentheses are not a tag."""
+    return len(tok) >= 3 and tok[0] == "(" and tok[-1] == ")" and _alpha_piece(tok[1:-1])
+
+
+def _token_denied(tok):
+    core = tok[1:-1] if tok.startswith("(") and tok.endswith(")") else tok
+    return any(piece.lower() in RULES_SLOT_DENY
+               for piece in core.replace("'", "-").split("-") if piece)
+
+
+def _slot_ok(slot):
+    """True when every word is a name word, a '(Letters)' tag, or an approved digit token."""
+    if not slot:
+        return False
+    for tok in slot.split(" "):
+        if not tok:
+            return False
+        if tok in RULES_DIGIT_TOKENS or _paren_token(tok) or _plain_name_token(tok):
+            if _token_denied(tok):
+                return False
+            continue
+        return False
+    return True
+
+
+class _RulesClaim:
+    """One parsed template. `instant` is the scheduled-for time in UTC."""
+
+    def __init__(self, instant):
+        self.instant = instant
+
+
+def _scheduled_instant(when):
+    """UTC instant for the scheduled-for slot, or None if the zone label is wrong.
+
+    The slot is seven words, 'Oct 1, 2026 at 12:30 AM EDT'. EDT or EST has to be
+    the abbreviation America/New_York is on at that wall time. 'Sep 30, 2026 at
+    11:30 PM EST' is still EDT, so the label is refused even though a fixed
+    UTC-5 offset would land on the milestone.
     """
-    month = _RULES_MONTHS.get(m.group("mon").lower())
-    label = m.group("tz").upper()
-    offset = _EASTERN_OFFSETS.get(label)
-    if month is None or offset is None:
+    parts = when.split(" ")
+    if len(parts) != 7:
         return None
-    hh, mm = int(m.group("hh")), int(m.group("mm"))
+    mon_s, day_s, year_s, at, hm, ap, label = parts
+    offset = _EASTERN_OFFSETS.get(label)
+    month = _RULES_MONTHS.get(mon_s.lower())
+    if at != "at" or ap not in ("AM", "PM") or offset is None or month is None:
+        return None
+    if not day_s.endswith(",") or not day_s[:-1].isdigit() or not 1 <= len(day_s[:-1]) <= 2:
+        return None
+    if len(year_s) != 4 or not year_s.isdigit():
+        return None
+    if hm.count(":") != 1:
+        return None
+    hh_s, mm_s = hm.split(":")
+    if not hh_s.isdigit() or not 1 <= len(hh_s) <= 2 or len(mm_s) != 2 or not mm_s.isdigit():
+        return None
+    hh, mm = int(hh_s), int(mm_s)
     if not (1 <= hh <= 12 and 0 <= mm <= 59):
         return None
-    if m.group("ap").upper() == "AM":
+    if ap == "AM":
         hh = 0 if hh == 12 else hh
     else:
         hh = hh if hh == 12 else hh + 12
     try:
-        local = datetime(int(m.group("year")), month, int(m.group("dd")), hh, mm)
+        local = datetime(int(year_s), month, int(day_s[:-1]), hh, mm)
     except ValueError:
         return None
     zone = ZoneInfo(_EASTERN)
@@ -6837,6 +6905,63 @@ def _rules_instant(m):
     if aware.utcoffset() != offset or aware.tzname() != label:
         return None
     return utc.astimezone(timezone.utc)
+
+
+def _parse_rules_claim(norm):
+    """The template claim, or None. Splits on fixed phrases; it does not backtrack."""
+    if not isinstance(norm, str) or not norm.startswith(_RULES_PREFIX) or not norm.endswith(_RULES_TAIL):
+        return None
+    body = norm[len(_RULES_PREFIX):-len(_RULES_TAIL)]
+    win_at = body.find(_RULES_WINS)
+    if win_at <= 0:
+        return None
+    winner = body[:win_at]
+    rest = body[win_at + len(_RULES_WINS):]
+    vs_at = rest.find(_RULES_VS)
+    if vs_at <= 0:
+        return None
+    side_a = rest[:vs_at]
+    rest = rest[vs_at + len(_RULES_VS):]
+    gender_at = None
+    gender_len = 0
+    for phrase in _RULES_GENDERS:
+        at = rest.find(phrase)
+        if at > 0 and (gender_at is None or at < gender_at):
+            gender_at, gender_len = at, len(phrase)
+    if gender_at is None:
+        return None
+    side_b = rest[:gender_at]
+    rest = rest[gender_at + gender_len:]
+    sched_at = rest.find(_RULES_SCHED)
+    if sched_at <= 0:
+        return None
+    competition = rest[:sched_at]
+    when = rest[sched_at + len(_RULES_SCHED):]
+    if winner not in (side_a, side_b):
+        return None
+    if not (_slot_ok(side_a) and _slot_ok(side_b) and _slot_ok(competition)):
+        return None
+    instant = _scheduled_instant(when)
+    if instant is None:
+        return None
+    return _RulesClaim(instant)
+
+
+class _RulesTemplate:
+    """fullmatch stand-in. The match is the parsed claim, never a backtracking regex."""
+
+    def fullmatch(self, text):
+        return _parse_rules_claim(text)
+
+
+_RULES_TEMPLATE_RE = _RulesTemplate()
+
+
+def _rules_instant(m):
+    """UTC instant of a parsed claim, or None."""
+    if isinstance(m, _RulesClaim):
+        return m.instant
+    return None
 
 
 def _rules_sentence(text, start):
@@ -6868,9 +6993,10 @@ def _rules_sentence(text, start):
 def _rules_support_start(texts, start):
     """True when every rules sentence is the template and at least one is present.
 
-    An empty sentence is ignored. Anything else — a second sentence, a digit in
-    rules_secondary, a reschedule phrase, a clock the template does not spell —
-    is a refusal. No sentence at all is not agreement.
+    An empty sentence is ignored. Anything else — a second sentence, a
+    reschedule phrase, or a clock the template does not spell — is a refusal.
+    Only rules_primary is collected; rules_secondary is not read. No sentence
+    at all is not agreement.
     """
     agreed = False
     for text in texts:
@@ -7102,10 +7228,12 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
     these hold: exactly one cricket_match milestone whose primary_event_tickers
     is a list containing the event; its start_date parses as timezone-aware UTC
     and equals the ticker's HHMM read in America/New_York, seconds and all;
-    every rules sentence is Kalshi's template for that same instant, and the
-    EDT or EST label is the one America/New_York is on at that wall time. No
-    rules text is not a verified start. A disagreement, a missing field, two
-    milestones, or an HTTP error leaves start_source unset.
+    every rules_primary sentence is Kalshi's template for that same instant.
+    The winner is exactly one of the two sides around 'vs', and a digit is
+    allowed only as one of RULES_DIGIT_TOKENS. rules_secondary is not
+    collected. The EDT or EST label is the one America/New_York is on at that
+    wall time. No rules text is not a verified start. A disagreement, a
+    missing field, two milestones, or an HTTP error leaves start_source unset.
 
     A milestone whose status is present and is not an exact known pre-match
     string drops the row. Those strings are "Match Scheduled", "Match Scheduled
