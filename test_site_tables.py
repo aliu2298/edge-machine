@@ -479,7 +479,7 @@ def _record_settled(quotes):
 
 def _shown_settled(page):
     m = re.search(
-        r"([\d,]+)(?: · [\d,]+ void)?(?: · [\d,]+ city-day repeats?)? settled on the record",
+        r"([\d,]+)(?: · [\d,]+ void)?(?: · [\d,]+ city-day repeats? set aside)?; older bets are in the archive",
         page)
     return int(m.group(1).replace(",", "")) if m else None
 
@@ -522,8 +522,84 @@ _want_record = _record_settled(_fx_quotes)
 _got_record = _shown_settled(_fx_page)
 eq(_got_record, _want_record,
    "the settled-on-record count honours the city-day flag")
-ok(re.search(r"· \d[\d,]* city-day repeats?", _section(_fx_page, "recently-settled")),
-   "the city-day repeat label is shown beside the settled-on-record count")
+ok(re.search(r"· \d[\d,]* city-day repeats? set aside", _section(_fx_page, "recently-settled")),
+   "the city-day repeat label is shown as set aside beside the settled count")
+
+
+print("\ntest_headline_set_aside_and_bad_open_kickoff")
+
+
+def _headline_count(quotes):
+    """The settled · void · city-day segment, with every flagged bet in the last count."""
+    blob = {"quotes": quotes}
+    recent, older = SB.partition_settled(blob, NOW)
+    n_hist = len(recent) + len(older)
+    n_void = sum(1 for q in quotes if q.get("status") == "void" and q.get("bet"))
+    n_city = sum(1 for q in quotes if q.get("bet") and T.climate_excluded(q))
+    text = f"{n_hist - n_void:,}"
+    if n_void:
+        text += f" · {n_void} void"
+    if n_city == 1:
+        text += f" · {n_city} city-day repeat set aside"
+    elif n_city:
+        text += f" · {n_city} city-day repeats set aside"
+    return text
+
+
+_head_page = SB.label_cells(SB.build(now=NOW))
+_head_blurb = _section(_head_page, "recently-settled")
+_head_want = _headline_count(T.load()["quotes"])
+ok(_head_want in _head_blurb,
+   "the headline counts every city-day repeat as set aside")
+ok("city-day repeat settled" not in _head_blurb and "city-day repeats settled" not in _head_blurb,
+   "the headline does not say the city-day repeats settled")
+
+
+def _kickoff_quote(**extra):
+    q = {
+        "status": "open", "bet": True, "sport": "mlb",
+        "start": "2026-09-27T23:00:00+00:00", "pick": "a", "side_a": "Home",
+        "side_b": "Away", "price": 0.5, "edge": None,
+        "source": next(iter(__import__("sandbox_sources").SOURCES)),
+        "venue": "kalshi", "url": "https://example.com/kickoff",
+    }
+    q.update(extra)
+    return q
+
+
+_kick_html, _kick_n = SB.open_rows({"quotes": [
+    _kickoff_quote(id="good-date", date="2026-09-27", label="Good kickoff",
+                   market_id="GOODDATE"),
+    _kickoff_quote(id="none-date", date=None, label="None kickoff",
+                   market_id="NONEDATE"),
+    _kickoff_quote(id="garbage-date", date="not-a-date", label="Garbage kickoff",
+                   market_id="GARBAGE"),
+]})
+eq(_kick_n, 3, "a bad kickoff still leaves the open bet on the running table")
+
+
+def _row_for(html, label):
+    for row in re.findall(r"<tr\b[^>]*>.*?</tr>", html, re.S):
+        if label in row:
+            return row
+    return ""
+
+
+def _date_td(row):
+    cells = re.findall(r"<td\b([^>]*)>(.*?)</td>", row, re.S)
+    return cells[5] if len(cells) > 5 else ("", "")
+
+
+_good_attrs, _good_inner = _date_td(_row_for(_kick_html, "Good kickoff"))
+_none_attrs, _none_inner = _date_td(_row_for(_kick_html, "None kickoff"))
+_garbage_attrs, _garbage_inner = _date_td(_row_for(_kick_html, "Garbage kickoff"))
+ok("2026-09-27" in _good_inner and 'data-v="20260927"' in _good_attrs,
+   "a readable kickoff date is shown, with a numeric data-v")
+ok(_none_inner.strip() == "—" and 'data-v=""' in _none_attrs,
+   "an open bet with a None kickoff shows the placeholder dash and sorts last")
+ok(_garbage_inner.strip() == "—" and "not-a-date" not in _garbage_inner
+   and 'data-v=""' in _garbage_attrs,
+   "an open bet with a garbage kickoff shows the placeholder dash and sorts last")
 
 
 if FAILS:

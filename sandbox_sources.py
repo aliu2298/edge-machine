@@ -248,7 +248,7 @@ SOURCES = {
              "the rule's stated mechanism did not survive its own data. So it left Production "
              "the same day and starts again at zero; the old record stays on file under "
              "Reference. The closing prices were the warning all along — -0.85c a bet over 437 "
-             "closes, t -3.66, the market drifting away from its picks while the win record "
+             "closes, t −3.66, the market drifting away from its picks while the win record "
              "said otherwise. Judged against backing the favourite on every match over the same "
              "period, so it only counts if this band beats favourites in general."),
     "tennis_fav_band_3h": dict(

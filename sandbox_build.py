@@ -410,7 +410,7 @@ def open_rows(d, limit=None):
 <td>{esc(S.SPORTS.get(q['sport'], q['sport']))}</td>
 <td><b>{esc(_side(q))}</b></td>
 <td>{esc(_source_label(q))}</td>
-<td class="mut">{esc(q.get('date') or '')}</td>
+{_open_date_cell(q)}
 {_edge_cell(q.get('edge'))}</tr>""")
     return "\n".join(out), len(live)
 
@@ -472,6 +472,25 @@ def _settled_day(q):
         return fmt.chicago(q.get("settled")).date().isoformat()
     except (TypeError, ValueError, OverflowError, OSError):
         return "—"
+
+
+def _open_date_cell(q):
+    """Date on a running row. A missing or unreadable kickoff date is the same dash
+    the settled tables use. Its data-v is empty, which a numeric sort leaves last.
+    A readable calendar date is shown as stored.
+    """
+    raw = q.get("date")
+    text = raw.strip() if isinstance(raw, str) else ""
+    if not text:
+        return '<td class="mut" data-v="">—</td>'
+    try:
+        if len(text) == 10:
+            day = datetime.strptime(text, "%Y-%m-%d").date()
+        else:
+            day = fmt.chicago(text).date()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return '<td class="mut" data-v="">—</td>'
+    return f'<td class="mut" data-v="{day.strftime("%Y%m%d")}">{esc(text)}</td>'
 
 
 def _chicago_today(now):
@@ -1527,8 +1546,8 @@ def _sandbox_html(d, st, now_dt):
     n_hist = len(recent) + len(older)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
     n_city = sum(1 for q in d["quotes"] if q.get("bet") and T.climate_excluded(q))
-    _city = (f" · {n_city} city-day repeat" if n_city == 1
-             else (f" · {n_city} city-day repeats" if n_city else ""))
+    _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
+             else (f" · {n_city} city-day repeats set aside" if n_city else ""))
     archive_links = _archive_links(groups, "./archive/")
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
@@ -1570,7 +1589,7 @@ def _sandbox_html(d, st, now_dt):
 
 <section id="recently-settled">
 <h2>Recently settled ({len(recent):,})</h2>
-<p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,}{f" · {n_void} void" if n_void else ""}{_city} settled on the record; older bets are in the archive.</p>
+<p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,}{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
 {_tools("Search contests…", "Search recently settled bets") if recent else ""}
 {_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>
