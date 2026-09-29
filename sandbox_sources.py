@@ -31,6 +31,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -2499,15 +2500,20 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
             continue
         listed += 1
 
-        # Kalshi publishes no kickoff time. Expected expiration sits two to three hours
-        # after the start, so three hours before it is a deliberately EARLY estimate:
-        # logging stops before the real kickoff, never after it.
+        # Kalshi publishes no kickoff. For every sport but cricket, expected expiration
+        # sits two to three hours after the start, so three hours before it is a
+        # deliberately EARLY estimate: logging stops before the real start, never after.
+        # Cricket's expiration is the scheduled start PLUS four hours, so that same
+        # subtraction lands an hour late. kalshi_listed_start uses the earlier of the
+        # ticker's Eastern clock and expiration minus four hours, and never the 3h figure.
         try:
             end = datetime.fromisoformat(
                 str(ms[0].get("expected_expiration_time")).replace("Z", "+00:00"))
         except (ValueError, TypeError):
+            end = None
+        start = kalshi_listed_start(sport, et, end)
+        if start is None:
             continue
-        start = end - timedelta(hours=3)
         # Fight cards: the 3h-early estimate lands hours before the later bouts, so a
         # passed estimate is kept while the market is open and re-timed from Pinnacle.
         early = (now - timedelta(hours=FIGHT_LOOKBACK_H) if sport in START_FROM_PINNACLE
@@ -2524,7 +2530,7 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
         if not prices.get("a") or not prices.get("b"):
             continue
 
-        rows.append(dict(
+        row = dict(
             sport=sport, venue="kalshi", market_id=et,
             label=f"{_kalshi_name(by_side['a'])} vs {_kalshi_name(by_side['b'])}",
             side_a=_kalshi_name(by_side["a"]), side_b=_kalshi_name(by_side["b"]),
@@ -2533,7 +2539,13 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None):
             tradeable=tradeable, untraded=not any(tradeable.values()),
             start=start.isoformat(), date=date, volume=0.0,
             url=f"https://kalshi.com/markets/{series.lower()}",
-        ))
+        )
+        # Cricket rules restate the scheduled start. Kept only so the milestone check
+        # can require that sentence to agree; apply_kalshi_cricket_starts strips it
+        # before the row joins the universe, and quotes never copy it.
+        if sport == "cricket":
+            row["rules_texts"] = [str(m["rules_primary"]) for m in ms if m.get("rules_primary")]
+        rows.append(row)
 
     rows.sort(key=lambda r: r["start"])
     if stats is not None:
@@ -6701,6 +6713,299 @@ def apply_espn_starts(rows, fixtures=None, now=None):
             continue
         kept.append(r)
     return kept, dict(matched=matched, dropped=len(rows) - len(kept), shifts=shifts, feed=True)
+
+
+# ---------------------------------------------------------------------------
+# Verified start times for Kalshi cricket
+# ---------------------------------------------------------------------------
+# Cricket expected_expiration_time is the scheduled start PLUS four hours, so the
+# three-hours-early estimate every other sport uses lands sixty minutes AFTER the
+# start. Three public clocks name the real start, and on the open book they agree
+# to the minute:
+#   the event ticker's HHMM, which is America/New_York (26OCT010030 = 00:30 ET)
+#   the rules sentence ("originally scheduled for Oct 1, 2026 at 12:30 AM EDT")
+#   a cricket_match milestone's start_date, from the milestones endpoint
+# A row is verified only when those still agree and the match is still pre-match.
+# Anything short of that stays an estimate, and the feed goes on refusing the bet.
+KALSHI_MILESTONES = "https://api.elections.kalshi.com/trade-api/v2/milestones"
+_EASTERN = "America/New_York"
+# Fixed offsets, not a label we then ignore. "12:30 AM EDT" on a November (EST)
+# date is 04:30Z, which will not match a milestone that says 05:30Z.
+_EASTERN_OFFSETS = {"EDT": timedelta(hours=-4), "EST": timedelta(hours=-5)}
+_RULES_MONTHS = {
+    "jan": 1, "january": 1, "feb": 2, "february": 2, "mar": 3, "march": 3,
+    "apr": 4, "april": 4, "may": 5, "jun": 6, "june": 6, "jul": 7, "july": 7,
+    "aug": 8, "august": 8, "sep": 9, "sept": 9, "september": 9, "oct": 10, "october": 10,
+    "nov": 11, "november": 11, "dec": 12, "december": 12,
+}
+_RULES_START_RE = re.compile(
+    r"originally scheduled for\s+"
+    r"([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})\s+at\s+"
+    r"(\d{1,2}):(\d{2})\s*([AaPp][Mm])\s+([A-Za-z]{2,5})")
+_TICKER_HHMM = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})(\d{4})(?:[^0-9]|$)")
+# Successes only. A failed fetch is not stored: caching [] would turn an outage
+# into "this event has no milestone" for the rest of the run.
+_kalshi_milestone_cache = {}
+
+
+def kalshi_ticker_start(event_ticker):
+    """Scheduled start encoded in a Kalshi ticker, as UTC, or None.
+
+    The four digits after the date are HHMM in America/New_York. zoneinfo applies
+    EDT or EST, including the 2026-11-01 fallback, so 00:30 ET is 04:30Z in October
+    and 05:30Z in November. A ticker with no HHMM, or an impossible clock, is None.
+    """
+    m = _TICKER_HHMM.search(str(event_ticker))
+    if not m or m.group(2) not in MONTHS:
+        return None
+    yy, mon, dd, hhmm = m.groups()
+    hh, mm = int(hhmm[:2]), int(hhmm[2:])
+    if hh > 23 or mm > 59:
+        return None
+    try:
+        local = datetime(2000 + int(yy), MONTHS[mon], int(dd), hh, mm,
+                         tzinfo=ZoneInfo(_EASTERN))
+    except (ValueError, OverflowError):
+        return None
+    return local.astimezone(timezone.utc)
+
+
+def kalshi_rules_start(text):
+    """UTC instant from a Kalshi rules sentence, or None if it does not parse.
+
+    Recognises "originally scheduled for Oct 1, 2026 at 12:30 AM EDT". EDT is
+    UTC-4 and EST is UTC-5, as fixed offsets. A missing sentence, or one worded
+    differently, returns None: the caller treats that as not parseable, not as
+    a disagreement.
+    """
+    m = _RULES_START_RE.search(str(text or ""))
+    if not m:
+        return None
+    mon_s, dd, year, hh, mm, ap, tz = m.groups()
+    month = _RULES_MONTHS.get(mon_s.lower())
+    offset = _EASTERN_OFFSETS.get(tz.upper())
+    if month is None or offset is None:
+        return None
+    hh, mm = int(hh), int(mm)
+    if not (1 <= hh <= 12 and 0 <= mm <= 59):
+        return None
+    if ap.upper() == "AM":
+        hh = 0 if hh == 12 else hh
+    else:
+        hh = hh if hh == 12 else hh + 12
+    try:
+        local = datetime(int(year), month, int(dd), hh, mm)
+    except ValueError:
+        return None
+    # local = UTC + offset, and offset is negative, so UTC = local - offset.
+    return (local - offset).replace(tzinfo=timezone.utc)
+
+
+def kalshi_listed_start(sport, event_ticker, expected_end):
+    """Unverified start stored for a Kalshi venue row.
+
+    Every sport but cricket keeps expected expiration minus three hours. Cricket's
+    expiration is four hours after the scheduled start, so that subtraction is an
+    hour late. Cricket takes the earlier of the ticker's Eastern start and
+    expiration minus four hours, and never the three-hour figure, so the logging
+    cutoff cannot sit after the scheduled start.
+    """
+    if sport != "cricket":
+        if expected_end is None:
+            return None
+        return expected_end - timedelta(hours=3)
+    cands = []
+    if expected_end is not None:
+        end = expected_end
+        if end.tzinfo is None:
+            end = end.replace(tzinfo=timezone.utc)
+        cands.append(end - timedelta(hours=4))
+    ticker = kalshi_ticker_start(event_ticker)
+    if ticker is not None:
+        cands.append(ticker)
+    return min(cands) if cands else None
+
+
+def _same_minute(a, b):
+    a = a.astimezone(timezone.utc).replace(second=0, microsecond=0)
+    b = b.astimezone(timezone.utc).replace(second=0, microsecond=0)
+    return a == b
+
+
+def _aware_utc(value):
+    """Parse `value` as timezone-aware UTC, or None.
+
+    A naive timestamp, or one with a non-zero offset, is not UTC and is refused.
+    Converting an offset into UTC would accept a clock we were told not to trust
+    unless it was already stated in UTC.
+    """
+    try:
+        dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    if dt.tzinfo is None or dt.utcoffset() != timedelta(0):
+        return None
+    return dt.astimezone(timezone.utc)
+
+
+def _cricket_prematch(status):
+    s = str(status or "").strip()
+    return s.startswith("Match Scheduled") or s.startswith("Toss")
+
+
+def _cricket_match_for(event, items):
+    """The one cricket_match milestone that names `event`, or None.
+
+    Zero is a missing start. Two is an ambiguous one. A milestone counts only
+    when its type is cricket_match and primary_event_tickers contains the event.
+    """
+    found = []
+    for it in items or []:
+        if not isinstance(it, dict) or it.get("type") != "cricket_match":
+            continue
+        primary = it.get("primary_event_tickers") or []
+        if event in primary:
+            found.append(it)
+    return found[0] if len(found) == 1 else None
+
+
+def fetch_kalshi_milestones(event_ticker):
+    """(milestones, error) for one event. A failure is not cached.
+
+    venue_book.kalshi_series stores an empty set when its call fails, and the
+    rest of that run then behaves as if Kalshi listed nothing. A milestones
+    outage has to stay an outage: it is not stored, a later event still tries,
+    and the caller prints the error.
+    """
+    if event_ticker in _kalshi_milestone_cache:
+        return _kalshi_milestone_cache[event_ticker], None
+    url = (f"{KALSHI_MILESTONES}?related_event_ticker="
+           f"{urllib.parse.quote(str(event_ticker), safe='')}&limit=5")
+    try:
+        d = _get(url, tries=2, timeout=20)
+    except RuntimeError as e:
+        return None, str(e)
+    ms = d.get("milestones") if isinstance(d, dict) else None
+    if not isinstance(ms, list):
+        return None, "response has no milestones list"
+    _kalshi_milestone_cache[event_ticker] = ms
+    return ms, None
+
+
+def _cricket_rules(event, row, rules):
+    """Rules sentences for one event: the argument, the row, or the open-market cache."""
+    if rules is not None:
+        raw = rules.get(event) if isinstance(rules, dict) else None
+    elif row.get("rules_texts"):
+        raw = row.get("rules_texts")
+    else:
+        raw = []
+        for series in KALSHI_VENUE_SERIES.get("cricket") or []:
+            for m in _kalshi_open_cache.get(series) or []:
+                if m.get("event_ticker") == event and m.get("rules_primary"):
+                    raw.append(m.get("rules_primary"))
+    if raw is None:
+        return []
+    if isinstance(raw, str):
+        return [raw]
+    return [str(x) for x in raw if x]
+
+
+def _verified_cricket_start(event, items, texts):
+    """Milestone start if every cricket clock agrees and the match is pre-match, else None."""
+    ms = _cricket_match_for(event, items)
+    if ms is None:
+        return None
+    start = _aware_utc(ms.get("start_date"))
+    ticker = kalshi_ticker_start(event)
+    if start is None or ticker is None or not _same_minute(start, ticker):
+        return None
+    for text in texts:
+        parsed = kalshi_rules_start(text)
+        if parsed is not None and not _same_minute(parsed, start):
+            return None
+    details = ms.get("details") if isinstance(ms.get("details"), dict) else {}
+    if not _cricket_prematch(details.get("status")):
+        return None
+    return start
+
+
+def _emit_cricket(row, **kw):
+    out = dict(row, **kw)
+    out.pop("rules_texts", None)
+    return out
+
+
+def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
+    """Give Kalshi cricket rows a verified start when Kalshi's own clocks agree.
+
+    Returns (rows, stats). start_source is "kalshi_milestone" only when all of
+    these hold: exactly one cricket_match milestone whose primary_event_tickers
+    contains the event; its start_date parses as timezone-aware UTC; that instant
+    equals the ticker's HHMM read in America/New_York; every rules time that is
+    present and parseable equals it too; and details.status is still pre-match
+    (it starts with "Match Scheduled" or "Toss"). A disagreement, a missing
+    field, two milestones, an HTTP error, or any other status leaves start_source
+    unset, so the Production feed goes on refusing the bet.
+
+    The verified start is the milestone instant itself. Pinnacle subtracts
+    PINNACLE_START_MARGIN_MIN because a fight card walks out early; a T20 does
+    the opposite and begins late, and this instant is stored only once the
+    clocks have already agreed to the minute. Subtracting a margin would publish
+    a time none of those clocks shows. A verified start that has passed is
+    dropped. The row's previous start — the unverified estimate — is kept as
+    venue_start.
+
+    Fail-soft. A milestones outage is printed and does not cache an empty list,
+    does not raise, and does not change rows that are not Kalshi cricket.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    if milestones is None:
+        milestones = {}
+        events, seen = [], set()
+        for r in rows:
+            et = r.get("market_id")
+            if (r.get("venue") == "kalshi" and r.get("sport") == "cricket"
+                    and et and et not in seen):
+                seen.add(et)
+                events.append(et)
+        if events:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+                fetched = list(pool.map(fetch_kalshi_milestones, events))
+            for et, (ms, err) in zip(events, fetched):
+                if err or ms is None:
+                    print(f"  ! kalshi milestones {et}: {str(err or 'no milestones')[:80]}")
+                    continue
+                milestones[et] = ms
+    kept, matched, dropped = [], 0, 0
+    for r in rows:
+        if r.get("venue") != "kalshi" or r.get("sport") != "cricket":
+            kept.append(r)
+            continue
+        et = r.get("market_id")
+        try:
+            est = datetime.fromisoformat(str(r.get("start")))
+        except (TypeError, ValueError):
+            kept.append(_emit_cricket(r))
+            continue
+        if est.tzinfo is None:
+            est = est.replace(tzinfo=timezone.utc)
+        verified = _verified_cricket_start(et, milestones.get(et), _cricket_rules(et, r, rules))
+        if verified is None:
+            kept.append(_emit_cricket(r))
+            continue
+        if verified <= now:
+            dropped += 1
+            continue
+        matched += 1
+        kept.append(_emit_cricket(
+            r, start=verified.isoformat(), date=verified.strftime("%Y-%m-%d"),
+            start_source="kalshi_milestone", venue_start=est.isoformat()))
+    unverified = sum(1 for r in kept if r.get("venue") == "kalshi" and r.get("sport") == "cricket"
+                     and r.get("start_source") != "kalshi_milestone")
+    return kept, dict(matched=matched, dropped=dropped, unverified=unverified, feed=True)
 
 
 # Pinnacle is not in here: it is planned across every sport after these have run, so its

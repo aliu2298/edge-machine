@@ -202,8 +202,11 @@ PAIR_OVERRIDES = {
     # longshot hits, not a steady margin, and its P/L will be lumpy in a way none of the
     # soccer pairs are. cricket was added to ROUTED_SPORTS the same day so the feed can
     # express it at all; before that the feed refused every cricket bet and the listing
-    # would have been a label. Only Polymarket US cricket reaches the feed — no cricket start
-    # feed exists, so the Kalshi half is refused for want of a verified start.
+    # would have been a label. A Kalshi cricket bet reaches the feed only once its start
+    # is verified (start_source "kalshi_milestone"): the milestone, the ticker's Eastern
+    # time and any parseable rules time agree, and the match is still pre-match.
+    # Otherwise start_source stays unset and placeable() refuses it. Polymarket US
+    # cricket carries its own start and is unchanged.
     "oddspedia|cricket": dict(moved_on="2026-09-27", production_at=None),
     # 2026-09-28, as asked. LISTED BUT NOT ACTIONABLE, and that is a fact about the exchange
     # rather than a gap to be closed here, so it is written down instead of quietly retried:
@@ -720,6 +723,18 @@ def collect(verbose=True, combo_used=None):
             if verbose and tstats.get("feed"):
                 print(f"  Tennis        schedule: {tstats['matched']} of {len(extra) + tstats['dropped']} "
                       f"Kalshi starts verified, {tstats['dropped']} already under way")
+        if sport == "cricket" and extra:
+            # The estimate above is only a logging cutoff. A row is publishable once
+            # Kalshi's milestone, the ticker and the rules agree. See
+            # S.apply_kalshi_cricket_starts. An outage leaves the estimate in place.
+            try:
+                extra, ct = S.apply_kalshi_cricket_starts(extra)
+                if verbose and ct.get("feed"):
+                    print(f"  Cricket       milestones: {ct['matched']} of "
+                          f"{len(extra) + ct['dropped']} Kalshi starts verified, "
+                          f"{ct['dropped']} already under way, {ct['unverified']} unverified")
+            except Exception as e:
+                print(f"  ! kalshi cricket starts failed: {type(e).__name__}: {str(e)[:60]}")
         universe[sport] = pm + extra
         if sport == "soccer":
             # Kalshi has no kickoff time; ESPN does. See S.apply_espn_starts.
@@ -2003,13 +2018,17 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 # fight still needs a verified start (VERIFIED_STARTS) — Kalshi's own is an estimate, and a
 # bout can walk out well after its card begins — so until one exists only Polymarket US
 # fights, which carry their own start, reach the feed.
-# cricket since 2026-09-27, so oddspedia|cricket can publish, and the same limit applies for
-# the same reason: no cricket feed supplies a start, so all 26 of its bets carry
-# start_source=None and only the 7 on Polymarket US reach the feed. The 10 on Kalshi are
-# refused until a verified start exists — a T20 innings can begin well after the listed time.
+# cricket since 2026-09-27, so oddspedia|cricket can publish. Kalshi still has no start
+# the feed will trust on sight. A cricket row is verified only when its cricket_match
+# milestone, the Eastern HHMM in the event ticker, and (when the rules text states one)
+# the scheduled time all agree, and details.status is still pre-match. That source is
+# "kalshi_milestone". A disagreement, a missing milestone, or any other status leaves
+# start_source unset and the feed refuses the bet — a T20 can begin well after the
+# listed time, and a wrong start is worse than no start. Polymarket US carries its own.
 ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # start_source values that mean a real start time, not the venue's estimate.
-VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb")
+# kalshi_milestone is cricket only, and only after the checks above agree.
+VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
 
 FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_team1": {"kind": "team_gte", "n": 1},
@@ -2047,7 +2066,9 @@ def placeable(q):
         # it was priced on and which outcome to back. Polymarket US lists a match as ONE
         # market with two outcomes, so the second side is the No side of that same market;
         # Kalshi lists a market per side, so either is a plain Yes — but only once something
-        # has confirmed when the contest starts, since Kalshi publishes no start of its own.
+        # has confirmed when the contest starts. For cricket that confirmation is
+        # start_source "kalshi_milestone"; every other Kalshi sport still needs a verified
+        # start from outside Kalshi. An estimate is not enough.
         if not (q.get("pick") in ("a", "b") and bool(q.get("market_id"))
                 and bool(q.get("side_a")) and bool(q.get("side_b"))):
             return False
