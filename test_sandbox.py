@@ -3526,6 +3526,45 @@ _rules_refused({_IND: ["rescheduled to Oct 2, 2026 at 9:00 AM EDT"]},
                "a 'rescheduled to' sentence stays unverified")
 _rules_refused({_IND: ["originally scheduled for sometime next week"]},
                "an unparseable 'scheduled for' sentence stays unverified")
+# The fixture sentence is the one Kalshi actually publishes. It still verifies,
+# above. Everything below is a second clock or a reschedule wording next to it.
+_AGREE = _cr_rules_from_event()[_IND][0]
+
+
+def _beside(extra, why):
+    _rules_refused({_IND: [_AGREE, extra]}, why)
+
+
+_beside("originally scheduled for Oct 2, 2026 at 3:00 PM EDT",
+        "a second parseable 'scheduled for' clause stays unverified")
+_beside("rescheduled for Oct 2, 2026 at 9:00 AM EDT",
+        "an agreeing sentence plus 'rescheduled for' stays unverified")
+_beside("rescheduled to Oct 2, 2026 at 9:00 AM EDT",
+        "an agreeing sentence plus 'rescheduled to' stays unverified")
+_beside("The match has been postponed to Oct 2, 2026 at 9:00 AM EDT.",
+        "an agreeing sentence plus 'postponed to' stays unverified")
+_beside("The match was moved to Oct 2, 2026 at 9:00 AM EDT.",
+        "an agreeing sentence plus 'moved to' stays unverified")
+_beside("Play will now start at 3:00 PM IST on Oct 1, 2026.",
+        "an agreeing sentence plus 'will now start' stays unverified")
+_beside("New start time: Oct 1, 2026 at 06:00 AM EDT.",
+        "an agreeing sentence plus 'New start time' stays unverified")
+_beside("originally re-scheduled to Oct 2, 2026 at 9:00 AM EDT",
+        "an agreeing sentence plus 're-scheduled to' stays unverified")
+_beside("originally scheduled  for Oct 1, 2026 at 3:30 PM IST",
+        "a double space in 'scheduled  for' still counts the disagreeing clock")
+_beside("originally scheduled\nfor Oct 1, 2026 at 3:30 PM IST",
+        "a newline in 'scheduled for' still counts the disagreeing clock")
+_beside("originally scheduled\u00a0for Oct 1, 2026 at 3:30 PM IST",
+        "a non-breaking space in 'scheduled for' still counts the disagreeing clock")
+_rules_refused({_IND: [_AGREE + " The match has been rescheduled for Oct 2, 2026 at 3:00 PM EDT."]},
+               "one text with an agreeing clause and a 'rescheduled for' clause stays unverified")
+_rules_refused({_IND: [_AGREE + " originally scheduled for Oct 2, 2026 at 3:00 PM EDT"]},
+               "one text with two 'scheduled for' clauses stays unverified")
+_rules_refused({_IND: [_AGREE + " Now rescheduled to Oct 2, 2026 at 3:00 PM EDT."]},
+               "one text with an agreeing clause and a 'rescheduled to' clause stays unverified")
+eq(S.kalshi_rules_start(_AGREE), _IND_START,
+   "the real fixture rules text parses to 04:30Z")
 
 _LIVE = "KXT20MATCH-26SEP290800LIMPWAR"
 _live_rules = {_LIVE: "originally scheduled for Sep 29, 2026 at 8:00 AM EDT"}
@@ -3543,13 +3582,30 @@ _closed_out, _closed_st = S.apply_kalshi_cricket_starts(
 eq(_closed_out, [], "Event Closed is dropped even when the start is still in the future")
 eq(_closed_st["dropped"], 1, "and that drop is counted too")
 
-_break = _copy.deepcopy(_crms)
-_break[_IND][0]["details"] = dict(_break[_IND][0]["details"], status="Innings Break")
-_break_out, _ = S.apply_kalshi_cricket_starts(
+for _status in ("Innings Break", "Live", "match in progress", "Stumps", "Abandoned",
+                "Match Ended", "Event Closed", "Rain Delay"):
+    _other = _copy.deepcopy(_crms)
+    _other[_IND][0]["details"] = dict(_other[_IND][0]["details"], status=_status)
+    _other_out, _other_st = S.apply_kalshi_cricket_starts(
+        [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+        milestones=_other, rules=_cr_rules_from_event(), now=_BEFORE)
+    eq(_other_out, [], f"status {_status!r} is not pre-match, so the row is dropped")
+    eq(_other_st["dropped"], 1, f"and {_status!r} is counted as a drop")
+_blank = _copy.deepcopy(_crms)
+_blank[_IND][0]["details"] = dict(_blank[_IND][0]["details"])
+_blank[_IND][0]["details"].pop("status")
+_blank_out, _ = S.apply_kalshi_cricket_starts(
     [_crow(_IND, "2026-10-01T05:30:00+00:00")],
-    milestones=_break, rules=_cr_rules_from_event(), now=_BEFORE)
-eq(len(_break_out), 1, "a status that is not in progress or closed is not dropped")
-eq(_break_out[0].get("start_source"), None, "but it is not verified either")
+    milestones=_blank, rules=_cr_rules_from_event(), now=_BEFORE)
+eq(len(_blank_out), 1, "a milestone with no status is kept")
+eq(_blank_out[0].get("start_source"), None, "and it stays unverified")
+_lower = _copy.deepcopy(_crms)
+_lower[_IND][0]["details"] = dict(_lower[_IND][0]["details"], status="match scheduled")
+_lower_out, _ = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_lower, rules=_cr_rules_from_event(), now=_BEFORE)
+eq(_lower_out[0]["start_source"], "kalshi_milestone",
+   "pre-match is case-insensitive, so 'match scheduled' still verifies")
 
 _NOV = "KXT20MATCH-26NOV020030SRIIND"
 _NOV_START = datetime(2026, 11, 2, 5, 30, tzinfo=timezone.utc)
@@ -3767,6 +3823,16 @@ ok(not PR.start_verified(_crq("kalshi")),
    "and still does not treat a Kalshi cricket estimate as one")
 ok(not PR.start_verified(dict(_crq("kalshi", start_source="kalshi_milestone"), sport="tennis")),
    "production does not treat kalshi_milestone as verified outside cricket")
+ok(not PR.start_verified(dict(venue="combo", sport="tennis_combo",
+                              start_source="kalshi_milestone",
+                              legs=[dict(sport="tennis", start_source="kalshi_milestone",
+                                         market_id="KXATPMATCH-X")])),
+   "a basket leg carrying kalshi_milestone verifies only when that leg is cricket")
+ok(PR.start_verified(dict(venue="combo", sport="tennis_combo",
+                          start_source="kalshi_milestone",
+                          legs=[dict(sport="cricket", start_source="kalshi_milestone",
+                                     market_id="KXT20MATCH-X")])),
+   "a cricket leg carrying kalshi_milestone does verify the basket")
 
 ok(S.SOURCES["tt_band_55_60"].get("retired") and "tt_band_55_60" not in S.CHALLENGERS,
    "table tennis stays retired: a +0.4% fade on 78 is no better outlook, only noise")

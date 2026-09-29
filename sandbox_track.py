@@ -2020,12 +2020,14 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 # fights, which carry their own start, reach the feed.
 # cricket since 2026-09-27, so oddspedia|cricket can publish. Kalshi still has no start
 # the feed will trust on sight. A cricket row is verified only when its cricket_match
-# milestone, the Eastern HHMM in the event ticker, and a parseable rules time all
-# agree, and details.status is still pre-match. No rules text is not agreement. That
-# source is "kalshi_milestone". A disagreement, a missing milestone, or any other
-# status leaves start_source unset and the feed refuses the bet — a T20 can begin
-# well after the listed time, and a wrong start is worse than no start. Polymarket
-# US carries its own.
+# milestone, the Eastern HHMM in the event ticker, and the rules clocks all agree.
+# Every time in the rules has to be an allow-listed date+time+EDT/EST claim equal
+# to that instant. No rules text is not agreement. The status, when Kalshi states
+# one, has to start with "Match Scheduled" or "Toss" (any case); any other status
+# drops the row. A missing status leaves start_source unset. That source is
+# "kalshi_milestone". A disagreement or a missing milestone leaves start_source
+# unset and the feed refuses the bet — a T20 can begin well after the listed time,
+# and a wrong start is worse than no start. Polymarket US carries its own.
 ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # start_source values that mean a real start time, not the venue's estimate.
 # kalshi_milestone is cricket only, and only after the checks above agree.
