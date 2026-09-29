@@ -2334,7 +2334,8 @@ _flt_js = open(_os.path.join("public_site", "site.js")).read()
 ok('class="flt"' in _lsrc and "input.flt" in _flt_js, "running and settled lists carry a filter box")
 ok("def open_rows(d, limit=None)" in _lsrc and "def settled_rows(d, limit=None)" in _lsrc,
    "no bet is cut from the lists any more")
-ok('{n_hist - n_void:,}{f" · {n_void} void"' in _lsrc, "the settled heading counts won/lost apart from voids")
+ok('{n_hist - n_void:,} settled on the record{f" · {n_void} void"' in _lsrc,
+   "the settled heading counts won/lost apart from voids")
 
 # ---------------------------------------------------------------------------
 print("\na venue switch never quotes a contest twice")

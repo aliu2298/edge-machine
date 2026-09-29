@@ -7,6 +7,7 @@ They do not grade, settle, or rewrite a ledger.
 """
 import datetime
 import html as html_lib
+import json
 import os
 import re
 import shutil
@@ -479,7 +480,8 @@ def _record_settled(quotes):
 
 def _shown_settled(page):
     m = re.search(
-        r"([\d,]+)(?: · [\d,]+ void)?(?: · [\d,]+ city-day repeats? set aside)?; older bets are in the archive",
+        r"([\d,]+) settled on the record(?: · [\d,]+ void)?"
+        r"(?: · [\d,]+ city-day repeats? set aside)?; older bets are in the archive",
         page)
     return int(m.group(1).replace(",", "")) if m else None
 
@@ -530,13 +532,13 @@ print("\ntest_headline_set_aside_and_bad_open_kickoff")
 
 
 def _headline_count(quotes):
-    """The settled · void · city-day segment, with every flagged bet in the last count."""
+    """Settled on the record, then void, then every flagged bet set aside."""
     blob = {"quotes": quotes}
     recent, older = SB.partition_settled(blob, NOW)
     n_hist = len(recent) + len(older)
     n_void = sum(1 for q in quotes if q.get("status") == "void" and q.get("bet"))
     n_city = sum(1 for q in quotes if q.get("bet") and T.climate_excluded(q))
-    text = f"{n_hist - n_void:,}"
+    text = f"{n_hist - n_void:,} settled on the record"
     if n_void:
         text += f" · {n_void} void"
     if n_city == 1:
@@ -568,6 +570,8 @@ def _kickoff_quote(**extra):
 
 
 _kick_html, _kick_n = SB.open_rows({"quotes": [
+    _kickoff_quote(id="early-date", date="2026-09-01", label="Early kickoff",
+                   market_id="EARLYDATE"),
     _kickoff_quote(id="good-date", date="2026-09-27", label="Good kickoff",
                    market_id="GOODDATE"),
     _kickoff_quote(id="none-date", date=None, label="None kickoff",
@@ -575,7 +579,7 @@ _kick_html, _kick_n = SB.open_rows({"quotes": [
     _kickoff_quote(id="garbage-date", date="not-a-date", label="Garbage kickoff",
                    market_id="GARBAGE"),
 ]})
-eq(_kick_n, 3, "a bad kickoff still leaves the open bet on the running table")
+eq(_kick_n, 4, "a bad kickoff still leaves the open bet on the running table")
 
 
 def _row_for(html, label):
@@ -596,10 +600,58 @@ _garbage_attrs, _garbage_inner = _date_td(_row_for(_kick_html, "Garbage kickoff"
 ok("2026-09-27" in _good_inner and 'data-v="20260927"' in _good_attrs,
    "a readable kickoff date is shown, with a numeric data-v")
 ok(_none_inner.strip() == "—" and 'data-v=""' in _none_attrs,
-   "an open bet with a None kickoff shows the placeholder dash and sorts last")
+   "an open bet with a None kickoff shows the placeholder dash")
 ok(_garbage_inner.strip() == "—" and "not-a-date" not in _garbage_inner
    and 'data-v=""' in _garbage_attrs,
-   "an open bet with a garbage kickoff shows the placeholder dash and sorts last")
+   "an open bet with a garbage kickoff shows the placeholder dash")
+
+
+def _cell_data_v(attrs):
+    m = re.search(r'data-v="([^"]*)"', attrs)
+    return html_lib.unescape(m.group(1)) if m else None
+
+
+_sort_rows = []
+for _qid, _label in (("early-date", "Early kickoff"), ("good-date", "Good kickoff"),
+                     ("none-date", "None kickoff"), ("garbage-date", "Garbage kickoff")):
+    _attrs, _inner = _date_td(_row_for(_kick_html, _label))
+    _sort_rows.append({
+        "id": _qid,
+        "dataV": _cell_data_v(_attrs),
+        "text": re.sub(r"<[^>]+>", "", _inner).strip(),
+    })
+_sort_proc = subprocess.run(
+    ["node", "-e", r"""
+const tables = require("./public_site/tables.js");
+let raw = "";
+process.stdin.on("data", (chunk) => { raw += chunk; });
+process.stdin.on("end", () => {
+  const rows = JSON.parse(raw);
+  let numeric = false;
+  for (const row of rows) {
+    const value = row.dataV;
+    if (value == null || value === "") continue;
+    if (!/^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(String(value).trim())) { numeric = false; break; }
+    numeric = true;
+  }
+  const order = {};
+  for (const dir of ["asc", "desc"]) {
+    order[dir] = tables.sortRecords(rows, { numeric, direction: dir }).map((row) => row.id);
+  }
+  process.stdout.write(JSON.stringify({ numeric, order }));
+});
+"""],
+    input=json.dumps(_sort_rows),
+    capture_output=True, text=True, cwd=ROOT,
+)
+_sort = {}
+if _sort_proc.returncode == 0 and _sort_proc.stdout:
+    _sort = json.loads(_sort_proc.stdout)
+_bad_ids = {"none-date", "garbage-date"}
+for _dir in ("asc", "desc"):
+    _order = (_sort.get("order") or {}).get(_dir) or []
+    ok(_sort.get("numeric") is True and set(_order[-2:]) == _bad_ids,
+       f"a None or garbage kickoff sorts last when the date column is {_dir}")
 
 
 if FAILS:
