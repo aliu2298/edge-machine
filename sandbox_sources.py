@@ -6744,13 +6744,18 @@ _RULES_MONTHS = {
     "nov": 11, "november": 11, "dec": 12, "december": 12,
 }
 # Longer than any live rules_primary (the open book on 2026-09-29 peaked at 234).
+# Applied to the raw text, before NFKC or the Unicode category scan.
 RULES_MAX_LEN = 600
 # The whole sentence Kalshi publishes, and nothing else:
 #   If <A or B> wins the <A> vs <B> men's|women's professional <competition>
 #   cricket match originally scheduled for <Mon D, YYYY at H:MM AM|PM EDT|EST>,
 #   then the market resolves to Yes.
-# The winner has to be exactly A or exactly B. Names are split on spaces and
-# checked token by token, so there is no nested quantifier to backtrack.
+# The winner has to be exactly A or exactly B, and A and B have to be different
+# teams: equal as written, or equal case-insensitively after NFKC, is not a match.
+# Names are split on spaces and checked token by token, so there is no nested
+# quantifier to backtrack. Each word is checked as written and again with hyphens
+# and apostrophes removed, so a deny-list word cannot hide inside 're-scheduled'
+# or "post'poned".
 # Digits are allowed only as one of RULES_DIGIT_TOKENS. The open book on
 # 2026-09-29 also uses a parenthetical country tag, "Warriors (SA)", and no
 # '.' or '&', so those two stay refused.
@@ -6760,7 +6765,33 @@ RULES_DIGIT_TOKENS = frozenset({
 RULES_SLOT_DENY = frozenset({
     "postponed", "delayed", "rescheduled", "moved", "now", "until",
     "tomorrow", "today", "start", "time",
+    "deferred", "brought", "forward", "put", "back", "pushed",
 }) | frozenset(_RULES_MONTHS)
+# Times written as words. The scheduled-for slot is parsed on its own and still
+# requires the numeric 'H:MM AM|PM EDT|EST' label; these refuse the same words
+# when they show up in a name. 'a.m.' / 'p.m.' are not name tokens either.
+_RULES_CLOCK_WORDS = frozenset({
+    "noon", "midnight", "later", "tonight", "tomorrow",
+    "am", "pm", "a.m.", "p.m.", "a.m", "p.m",
+    "o'clock", "oclock",
+})
+# Zone abbreviations a start is written in, plus the same kind of label.
+# WEST is not listed: it is the word in West Indies, and a name stays a name.
+_RULES_ZONES = frozenset({
+    "edt", "est", "et", "pst", "pdt", "pt", "cst", "cdt", "ct", "mst", "mdt", "mt",
+    "akst", "akdt", "hst", "hast", "hadt", "ast", "adt",
+    "gmt", "utc", "bst", "wet", "cet", "cest", "eet", "eest",
+    "ist", "pkt", "slst", "slt", "npt", "bdt",
+    "aest", "aedt", "acst", "acdt", "awst", "nzst", "nzdt",
+    "sast", "wat", "gst", "sgt", "hkt", "jst", "kst", "ict",
+})
+_RULES_NUMBER_WORDS = frozenset({
+    "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten", "eleven", "twelve",
+})
+_RULES_CLOCK_TAILS = frozenset({
+    "o'clock", "oclock", "am", "pm", "a.m.", "p.m.", "a.m", "p.m",
+})
 _RULES_PREFIX = "If "
 _RULES_WINS = " wins the "
 _RULES_VS = " vs "
@@ -6830,25 +6861,86 @@ def _paren_token(tok):
     return len(tok) >= 3 and tok[0] == "(" and tok[-1] == ")" and _alpha_piece(tok[1:-1])
 
 
+def _slot_core(tok):
+    """The letters inside a parenthetical tag, or the word itself."""
+    if len(tok) >= 2 and tok.startswith("(") and tok.endswith(")"):
+        return tok[1:-1]
+    return tok
+
+
+def _word_forms(tok):
+    """The word as written, and with hyphens and apostrophes removed.
+
+    Both are lowercased. 're-scheduled' and "post'poned" therefore meet the
+    deny list as 'rescheduled' and 'postponed'.
+    """
+    core = _slot_core(tok)
+    written = core.lower()
+    pieces = [p.lower() for p in core.replace("'", "-").split("-") if p]
+    joined = written.replace("-", "").replace("'", "")
+    return written, pieces, joined
+
+
 def _token_denied(tok):
-    core = tok[1:-1] if tok.startswith("(") and tok.endswith(")") else tok
-    return any(piece.lower() in RULES_SLOT_DENY
-               for piece in core.replace("'", "-").split("-") if piece)
+    """True when the word is on the deny list, including a hyphen or apostrophe join."""
+    written, pieces, joined = _word_forms(tok)
+    if written in RULES_SLOT_DENY or joined in RULES_SLOT_DENY:
+        return True
+    return any(piece in RULES_SLOT_DENY for piece in pieces)
+
+
+def _token_clock(tok):
+    """True when the word is a time written out, AM/PM, or a time zone.
+
+    Checked as written and with hyphens and apostrophes removed, same as the
+    deny list. Periods are ignored only so 'a.m.' and 'p.m.' are 'am' and 'pm'.
+    """
+    written, pieces, joined = _word_forms(tok)
+    forms = {written, joined, joined.replace(".", "")}
+    forms.update(pieces)
+    forms.update(p.replace(".", "") for p in pieces)
+    if forms & _RULES_CLOCK_WORDS or forms & _RULES_ZONES:
+        return True
+    return "am" in forms or "pm" in forms
+
+
+def _spelled_clock(toks):
+    """True when a number from one to twelve is followed by o'clock, AM, or PM."""
+    flat = []
+    for tok in toks:
+        core = _slot_core(tok)
+        flat.extend(p.lower() for p in core.split("-") if p)
+    for left, right in zip(flat, flat[1:]):
+        tail = right.replace("'", "").replace(".", "")
+        if left in _RULES_NUMBER_WORDS and (right in _RULES_CLOCK_TAILS or tail in ("oclock", "am", "pm")):
+            return True
+    return False
 
 
 def _slot_ok(slot):
     """True when every word is a name word, a '(Letters)' tag, or an approved digit token."""
     if not slot:
         return False
-    for tok in slot.split(" "):
+    toks = slot.split(" ")
+    for tok in toks:
         if not tok:
             return False
+        if _token_denied(tok) or _token_clock(tok):
+            return False
         if tok in RULES_DIGIT_TOKENS or _paren_token(tok) or _plain_name_token(tok):
-            if _token_denied(tok):
-                return False
             continue
         return False
+    if _spelled_clock(toks):
+        return False
     return True
+
+
+def _same_team(a, b):
+    """True when the two sides are one team, as written or by case after NFKC."""
+    if a == b:
+        return True
+    return (unicodedata.normalize("NFKC", a).casefold()
+            == unicodedata.normalize("NFKC", b).casefold())
 
 
 class _RulesClaim:
@@ -6941,6 +7033,8 @@ def _parse_rules_claim(norm):
     when = rest[sched_at + len(_RULES_SCHED):]
     if winner not in (side_a, side_b):
         return None
+    if _same_team(side_a, side_b):
+        return None
     if not (_slot_ok(side_a) and _slot_ok(side_b) and _slot_ok(competition)):
         return None
     instant = _scheduled_instant(when)
@@ -6970,10 +7064,13 @@ def _rules_sentence(text, start):
     """True when this one sentence is the template for `start`.
 
     None means the sentence is empty and can be ignored. False refuses the row:
-    a format character, anything outside printable ASCII, a sentence longer
-    than RULES_MAX_LEN, or text that is not the whole Kalshi template.
+    a raw sentence longer than RULES_MAX_LEN (checked before NFKC or the
+    category scan), a format character, anything outside printable ASCII,
+    or text that is not the whole Kalshi template.
     """
     raw = str(text or "")
+    if len(raw) > RULES_MAX_LEN:
+        return False
     if any(unicodedata.category(ch) == "Cf" for ch in raw):
         return False
     norm = _normalise_rules_text(raw)
@@ -7231,8 +7328,15 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
     is a list containing the event; its start_date parses as timezone-aware UTC
     and equals the ticker's HHMM read in America/New_York, seconds and all;
     every rules_primary sentence is Kalshi's template for that same instant.
-    The winner is exactly one of the two sides around 'vs', and a digit is
-    allowed only as one of RULES_DIGIT_TOKENS. rules_secondary is not
+    The winner is exactly one of the two sides around 'vs', the two sides are
+    not the same team (as written, or case-insensitively after NFKC), and a
+    digit is allowed only as one of RULES_DIGIT_TOKENS. A name word is refused
+    when it is a reschedule word — including one joined by hyphens or
+    apostrophes, and including deferred, brought forward, put back, and
+    pushed — or a time written in words, an AM/PM mark, a time zone, or a
+    number from one to twelve followed by o'clock, AM, or PM. The 600
+    character cap is the raw length of rules_primary, before NFKC or the
+    Unicode category scan. rules_secondary is not
     collected. The EDT or EST label is the one America/New_York is on at that
     wall time. No rules text is not a verified start. A disagreement, a
     missing field, two milestones, or an HTTP error leaves start_source unset.
