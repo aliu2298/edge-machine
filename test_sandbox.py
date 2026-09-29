@@ -3604,7 +3604,7 @@ _lower[_IND][0]["details"] = dict(_lower[_IND][0]["details"], status="match sche
 _lower_out, _ = S.apply_kalshi_cricket_starts(
     [_crow(_IND, "2026-10-01T05:30:00+00:00")],
     milestones=_lower, rules=_cr_rules_from_event(), now=_BEFORE)
-eq(_lower_out[0]["start_source"], "kalshi_milestone",
+eq(_lower_out[0].get("start_source"), "kalshi_milestone",
    "pre-match is case-insensitive, so 'match scheduled' still verifies")
 
 _NOV = "KXT20MATCH-26NOV020030SRIIND"
