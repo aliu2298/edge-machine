@@ -7308,6 +7308,53 @@ _va = T.assess(_vd, "nws_fade", "climate")
 eq((_va["n"], _va["n_eff"], _va["z_dropped"]), (1, 1, 0),
    "the void is off the record and the marked repeat does not reach the guard")
 
+
+def _settled_citydays(d, source, sport="climate"):
+    """Settled city-days of one lane, counted from outcome clusters.
+
+    A second quote on the same city-day shares the cluster, so it is not
+    another day. Repeats are included here on purpose: the count is the
+    days on the record, not the rows assess() kept. It does not call
+    assess(), which is what this count is checked against.
+    """
+    return {S.outcome_cluster(q) for q in T.all_bets(d)
+            if q.get("source") == source and q.get("bet")
+            and q.get("status") in ("won", "lost")
+            and (sport is None or q.get("sport") == sport)}
+
+
+# The live check used to pin nws_fade at 15 settled city-days, which is
+# however many the ledger had when the test was written. A tracker run
+# moved it. This fixture has 22, and one of those days is logged twice, so
+# a count of quotes would be 23 and a hard-coded 15 is simply wrong.
+print("\na moved city-day count is not a hard-coded 15")
+_fx22 = []
+for _i in range(22):
+    _day = _i + 1
+    _won = _i % 3 != 0
+    _q = _fade_q(f"KXHIGHCHI-26SEP{_day:02d}-B68.5",
+                 f"2026-09-{_day:02d}T10:00:00+00:00",
+                 0.60, _won, 66.67 if _won else -100.0, 0.40)
+    _q["start"] = f"2026-09-{_day:02d}T23:59:00+00:00"
+    _fx22.append(_q)
+_rep = _fade_q("KXHIGHCHI-26SEP01-B66.5", "2026-09-01T16:00:00+00:00",
+               0.90, False, -100.0, 0.15)
+_rep["start"] = "2026-09-01T23:59:00+00:00"
+_fx22.append(_rep)
+_fx22d = {"quotes": _fx22, "meta": {}}
+eq(T.mark_climate_citydays(_fx22d), 1, "the later Sep 1 strike is the one repeat")
+_fx22_days = _settled_citydays(_fx22d, "nws_fade")
+eq(len(_fx22_days), 22, "the fixture has 22 settled nws_fade city-days")
+eq(len(_fx22), 23, "and 23 quotes: the extra strike is not a 23rd day")
+_fx22_a = T.assess(_fx22d, "nws_fade", "climate")
+_old15 = (len(_fx22_days) == 15 and
+          (_fx22_a["n"], _fx22_a["n_eff"], _fx22_a["z_dropped"], _fx22_a["unit"])
+          == (15, 15, 0, "bet"))
+ok(not _old15, "the old hard-code of 15 fails when nws_fade has 22 city-days")
+eq((_fx22_a["n"], _fx22_a["n_eff"], _fx22_a["z_dropped"], _fx22_a["unit"]),
+   (len(_fx22_days), len(_fx22_days), 0, "bet"),
+   "the derived check passes: every fixture city-day is scored, and none is dropped")
+
 _live = T.load()
 _live_ids = {q["id"] for q in _live["quotes"]}
 ok("nws_fade:KXHIGHCHI-26SEP26-B68.5" in _live_ids
@@ -7322,12 +7369,11 @@ try:
 except T.DegenerateCluster as _e:
     _live_raised = _e
 ok(_live_raised is None, "the current ledger assesses, and the page's pair list with it")
-_nf_days = {S.outcome_cluster(q) for q in T.all_bets(_live)
-            if q.get("source") == "nws_fade" and q.get("bet") and q["status"] in ("won", "lost")}
-eq(len(_nf_days), 15, "nws_fade has 15 settled city-days on this ledger")
+_nf_days = _settled_citydays(_live, "nws_fade")
+ok(_nf_days, "nws_fade has settled city-days on this ledger")
 eq((_live_nf["n"], _live_nf["n_eff"], _live_nf["z_dropped"], _live_nf["unit"]),
-   (15, 15, 0, "bet"),
-   "all 15 nws_fade city-days are scored, and none is degenerate or dropped")
+   (len(_nf_days), len(_nf_days), 0, "bet"),
+   "every settled nws_fade city-day is scored, and none is degenerate or dropped")
 eq(_live_ff["z_dropped"], 0, "the fade drops none of them either")
 eq(_live_nws["z_dropped"], 0, "nws repeat quotes are one reading too, so none of its clusters is dropped")
 eq({q["id"] for q in _live["quotes"]}, _live_ids, "scoring does not remove ledger rows")
