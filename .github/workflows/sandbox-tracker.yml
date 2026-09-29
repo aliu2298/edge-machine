@@ -149,6 +149,11 @@ jobs:
             if [ -f public_site/trading.html ]; then
               git add public_site/trading.html
             fi
+            # Weekly archive pages are rebuilt with the Sandbox. Skip the add
+            # when the directory is absent so an empty diff still exits 0.
+            if [ -d public_site/archive ]; then
+              git add public_site/archive
+            fi
           else
             # A failed build leaves public_site modified but unstaged. git pull
             # --rebase refuses to start with that dirt, the close job has usually

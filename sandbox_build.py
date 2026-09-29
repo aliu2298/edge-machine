@@ -82,7 +82,55 @@ def money(x):
 
 
 def cls(x):
-    return "pos" if (x or 0) > 0 else ("neg" if (x or 0) < 0 else "mut")
+    """Colour for a whole-dollar figure. A value that rounds to $0 is neutral."""
+    return fmt.tone(x, spec=",.0f", scale=1)
+
+
+def _pct_span(x, digits=1, thin=False):
+    """A percent with a colour class that follows the displayed digits."""
+    if x is None:
+        return '<span class="mut">—</span>'
+    klass = "mut" if thin else fmt.tone(x, spec=f".{digits}f", scale=100)
+    return f'<span class="{klass}">{pct(x, digits=digits, sign=True)}</span>'
+
+
+def _td_num(inner, digits, extra=""):
+    """A numeric cell. data-v is the displayed number, escaped, never the raw text."""
+    classes = "num" + (f" {extra}" if extra else "")
+    if digits is None:
+        return f'<td class="{classes}">{inner}</td>'
+    return f'<td class="{classes}" data-v="{esc(digits)}">{inner}</td>'
+
+
+def _price_cell(price):
+    return _td_num(fmt.cents(price), fmt.shown_cents_digits(price))
+
+
+def _money_cell(pnl):
+    extra = cls(pnl) if pnl is not None else ""
+    return _td_num(money(pnl), fmt.shown_digits(pnl, spec=",.0f", scale=1), extra)
+
+
+def _edge_cell(edge, digits=1):
+    if edge is None:
+        return '<td class="num"><span class="mut">pick</span></td>'
+    return _td_num(_pct_span(edge, digits), fmt.shown_digits(edge, spec=f".{digits}f", scale=100))
+
+
+def _row_id(q):
+    return f' data-id="{esc(q.get("id") or "")}"'
+
+
+def _side(q):
+    if q.get("pick") == "a":
+        return q.get("side_a")
+    if q.get("pick") == "b":
+        return q.get("side_b")
+    return "Draw"
+
+
+def _source_label(q):
+    return S.SOURCES[q["source"]]["label"].split(" (")[0]
 
 
 
@@ -172,13 +220,13 @@ def sport_matrix(d, keys=None):
                     cells.append(f'<td class="num mut">{("%d open" % pend) if pend else "—"}</td>')
                     continue
                 thin = s["settled"] < MIN_N
-                klass = "mut" if thin else cls(s["pnl"])
+                klass = "mut" if thin else fmt.tone(s["roi"], spec=".1f", scale=100)
                 tick = (' <span class="pos">✓</span>'
                         if T.assess(d, name, sport)["status"] == "approved" else "")
                 cells.append(f'<td class="num"><span class="{klass}">{pct(s["roi"], sign=True)}</span>'
                              f'{tick}<div class="sm mut">n={s["settled"]}</div></td>')
             tot = T.score(d)[name]  # lifetime, across every domain
-            tot_roi = (f'<span class="{cls(tot["pnl"]) if tot["settled"] >= MIN_N else "mut"}">'
+            tot_roi = (f'<span class="{fmt.tone(tot["roi"], ".1f", 100) if tot["settled"] >= MIN_N else "mut"}">'
                        f'{pct(tot["roi"], sign=True)}</span>' if tot["settled"]
                        else '<span class="mut">—</span>')
             out.append(f"""<tr><td><b>{esc(meta['label'])}</b></td>{''.join(cells)}
@@ -211,7 +259,7 @@ def leaderboard(scores, d):
         if not s["connected"]:
             continue
         thin = s["settled"] < MIN_N
-        roi = (f'<span class="{cls(s["roi"])}">{pct(s["roi"], sign=True)}</span>'
+        roi = (f'<span class="{fmt.tone(s["roi"], ".1f", 100)}">{pct(s["roi"], sign=True)}</span>'
                if s["roi"] is not None and not thin
                else f'<span class="mut">{pct(s["roi"], sign=True)}</span>')
         # The verdict IS the stamp: "profitable" on its own was a hot ROI with nothing
@@ -223,8 +271,9 @@ def leaderboard(scores, d):
         if a and a["base_roi"] is not None:
             gap = a["own_roi"] - a["base_roi"]
             kind = a["criteria"][2][3].split(" back the ")[-1]
-            vb_cell = (f'<span class="{cls(gap) if not thin else "mut"}">{"+" if gap >= 0 else ""}'
-                       f'{gap*100:.1f}pp</span><div class="sm mut">v back the {esc(kind)}</div>')
+            vb_cell = (f'<span class="{"mut" if thin else fmt.tone(gap, ".1f", 100)}">'
+                       f'{pct(gap, digits=1, sign=True).replace("%", "pp")}</span>'
+                       f'<div class="sm mut">v back the {esc(kind)}</div>')
         vp = vs_price(d, name)
         vp_cell = "—"
         if vp:
@@ -278,7 +327,7 @@ def baseline_table(d):
                 continue
             rows.append(f"""<tr><td>{esc(S.SPORTS[sport])}</td><td><b>{label}</b></td>
 <td class="num">{r['n']}</td><td class="num">{r['won']} v {r['expected']:.1f}</td>
-<td class="num"><span class="{cls(r['pnl']) if r['n'] >= MIN_N else 'mut'}">{pct(r['roi'], sign=True)}</span></td>
+<td class="num"><span class="{fmt.tone(r['roi'], '.1f', 100) if r['n'] >= MIN_N else 'mut'}">{pct(r['roi'], sign=True)}</span></td>
 <td class="num {cls(r['pnl'])}">{money(r['pnl'])}</td></tr>""")
     if not rows:
         return '<div class="note">No settled contests yet.</div>'
@@ -304,7 +353,7 @@ def pinnacle_table(d):
         rows.append(f"""<tr><td><b>{label}</b></td><td class="num">{len(qs)}</td>
 <td class="num">{len(bets)}</td><td class="num">{len(done)}</td>
 <td class="num">{f"{won} v {exp:.1f}" if done else "—"}</td>
-<td class="num"><span class="{cls(pnl) if len(done) + len(priced) >= MIN_N else 'mut'}">{pct(pnl / ((len(done) + len(priced)) * T.STAKE), sign=True) if done or priced else '—'}</span></td>
+<td class="num"><span class="{fmt.tone(pnl / ((len(done) + len(priced)) * T.STAKE), '.1f', 100) if (done or priced) and len(done) + len(priced) >= MIN_N else 'mut'}">{pct(pnl / ((len(done) + len(priced)) * T.STAKE), sign=True) if done or priced else '—'}</span></td>
 <td class="num mut">{f"{max(edges)*100:+.1f}pp" if edges else "—"}</td></tr>""")
     ou = (d.get("meta") or {}).get("odds_api") or {}
     spent = ", ".join(f"{x['key']} ({x['uncovered']} uncovered)" for x in ou.get("spent_on", [])) or "none"
@@ -350,25 +399,19 @@ def coverage_table(cov):
 
 
 def open_rows(d, limit=None):
-    """Running bets, grouped by sport and soonest first."""
+    """Running bets, soonest first. One flat table: Contest, then Price."""
     live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
             and not T.climate_excluded(q)]
-    live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
-    out, seen_sport = [], None
+    live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
+    out = []
     for q in (live[:limit] if limit else live):
-        if q["sport"] != seen_sport:
-            seen_sport = q["sport"]
-            n = sum(1 for x in live if x["sport"] == seen_sport)
-            out.append(f'<tr class="grp"><td colspan="7">{esc(S.SPORTS[seen_sport])} '
-                       f'· {n} running</td></tr>')
-        side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
-        out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
-<td>{esc(S.SPORTS[q['sport']])}</td>
-<td>{safe_href(S.market_url(q), S.display_label(q))}</td>
-<td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
-<td><b>{esc(side)}</b></td>
-<td class="num">{fmt.cents(q['price'])}</td>
-<td class="num pos">{pct(q['edge'], sign=True) if q.get('edge') is not None else '<span class="mut">pick</span>'}</td></tr>""")
+        out.append(f"""<tr{_row_id(q)}><td>{safe_href(S.market_url(q), S.display_label(q))}</td>
+{_price_cell(q.get('price'))}
+<td>{esc(S.SPORTS.get(q['sport'], q['sport']))}</td>
+<td><b>{esc(_side(q))}</b></td>
+<td>{esc(_source_label(q))}</td>
+{_open_date_cell(q)}
+{_edge_cell(q.get('edge'))}</tr>""")
     return "\n".join(out), len(live)
 
 
@@ -395,76 +438,134 @@ def _day_summary(qs):
 
 
 def settled_rows(d, limit=None):
-    """Settled bets, newest first, grouped by the day they settled."""
+    """Settled bets, newest first. One flat table: Contest, then P/L."""
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
             and not T.climate_excluded(q)]
-    done.sort(key=lambda q: q.get("settled") or "", reverse=True)
-    out, seen_day = [], None
+    done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
+    out = []
     for q in (done[:limit] if limit else done):
-        day = (q.get("settled") or "")[:10]
-        if day != seen_day:
-            seen_day = day
-            day_qs = [x for x in done if (x.get("settled") or "")[:10] == day]
-            won, n, extra, pl = _day_summary(day_qs)
-            out.append(f'<tr class="grp"><td colspan="8">{esc(day)} · {won}/{n} won{extra} · '
-                       f'{money(pl)}</td></tr>')
-        side = q["side_a"] if q["pick"] == "a" else (q["side_b"] if q["pick"] == "b" else "Draw")
         klass, label = _badge(q)
-        out.append(f"""<tr><td class="mut">{esc(q['date'])}</td>
-<td>{esc(S.SPORTS[q['sport']])}</td><td>{esc(S.display_label(q))}</td>
-<td>{esc(S.SOURCES[q['source']]['label'].split(' (')[0])}</td>
-<td>{esc(side)}</td><td class="num">{fmt.cents(q['price'])}</td>
-<td><span class="st {klass}">{label}</span></td>
-<td class="num {cls(q['pnl'])}">{money(q['pnl'])}</td></tr>""")
+        out.append(f"""<tr{_row_id(q)}><td>{esc(S.display_label(q))}</td>
+{_money_cell(q.get('pnl'))}
+<td>{esc(S.SPORTS.get(q['sport'], q['sport']))}</td>
+<td>{esc(_side(q))}</td>
+<td>{esc(_source_label(q))}</td>
+<td><span class="st {klass}">{esc(label)}</span></td>
+{_price_cell(q.get('price'))}
+<td class="mut">{esc(_settled_day(q))}</td></tr>""")
     return "\n".join(out), len(done)
 
 
-def _folds(groups, head, cls_="grp-fold"):
-    """[(summary html, rows html)] -> one closed fold per group, each a full table."""
-    return "\n".join(f'<details class="{cls_}"><summary>{summ}</summary>'
-                     f'<div class="tbl"><table>{head}{rows}</table></div></details>'
-                     for summ, rows in groups)
+LIVE_HEAD = ('<tr><th>Contest</th><th class="num">Price</th><th>Sport</th>'
+             '<th>Backing</th><th>Source</th><th>Date</th><th class="num">Edge</th></tr>')
+HIST_HEAD = ('<tr><th>Contest</th><th class="num">P/L</th><th>Sport</th><th>Backed</th>'
+             '<th>Source</th><th>Status</th><th class="num">Price</th><th>Settled</th></tr>')
 
 
-def open_folds(d):
-    """Running bets, one fold per sport, soonest first inside each."""
-    live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
-            and not T.climate_excluded(q)]
-    live.sort(key=lambda q: (list(S.SPORTS).index(q["sport"]), q["start"]))
-    by = {}
-    for q in live:
-        by.setdefault(q["sport"], []).append(q)
-    groups = []
-    for sport, qs in by.items():
-        rows, _n = open_rows(dict(d, quotes=qs))
-        rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
-        groups.append((f'<b>{esc(S.SPORTS[sport])}</b> <span class="mut">· {len(qs)} running · '
-                       f'next {esc(qs[0]["date"])}</span>', rows))
-    return _folds(groups, LIVE_HEAD), len(live)
+# Recently settled is this many America/Chicago calendar days, ending on the build date.
+RECENT_DAYS = 7
 
 
-def settled_folds(d):
-    """Settled bets, one fold per day they settled, newest first."""
+def _settled_day(q):
+    """Chicago calendar date the bet settled, or a placeholder if it cannot be read."""
+    try:
+        return fmt.chicago(q.get("settled")).date().isoformat()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return "—"
+
+
+def _open_date_cell(q):
+    """Date on a running row. A missing or unreadable kickoff date is the same dash
+    the settled tables use. Its data-v is empty, which a numeric sort leaves last.
+    A readable calendar date is shown as stored.
+    """
+    raw = q.get("date")
+    text = raw.strip() if isinstance(raw, str) else ""
+    if not text:
+        return '<td class="mut" data-v="">—</td>'
+    try:
+        if len(text) == 10:
+            day = datetime.strptime(text, "%Y-%m-%d").date()
+        else:
+            day = fmt.chicago(text).date()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return '<td class="mut" data-v="">—</td>'
+    return f'<td class="mut" data-v="{day.strftime("%Y%m%d")}">{esc(text)}</td>'
+
+
+def _chicago_today(now):
+    return fmt.chicago(now).date()
+
+
+def _is_recent(q, today):
+    """True when the settled Chicago date is one of the last RECENT_DAYS, including today."""
+    try:
+        day = fmt.chicago(q.get("settled")).date()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return False
+    return 0 <= (today - day).days < RECENT_DAYS
+
+
+def partition_settled(d, now):
+    """(recent, older) settled bets. Recent is the last 7 Chicago dates through `now`.
+
+    Every settled bet that still counts is in exactly one of the two lists. A
+    repeat city-day quote is in neither. A timestamp that cannot be placed on the
+    Chicago calendar is older, so it still appears on an archive page.
+    """
+    today = _chicago_today(now)
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
             and not T.climate_excluded(q)]
-    done.sort(key=lambda q: q.get("settled") or "", reverse=True)
-    by = {}
+    done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
+    recent, older = [], []
     for q in done:
-        by.setdefault((q.get("settled") or "")[:10], []).append(q)
-    groups = []
-    for day, qs in by.items():
-        rows, _n = settled_rows(dict(d, quotes=qs))
-        rows = re.sub(r'<tr class="grp">.*?</tr>', "", rows, flags=re.S)
-        won, n, extra, pl = _day_summary(qs)
-        groups.append((f'<b>{esc(day)}</b> <span class="mut">· {won}/{n} won{extra} · </span>'
-                       f'<span class="{cls(pl)}">{money(pl)}</span>', rows))
-    return _folds(groups, HIST_HEAD), len(done)
+        (recent if _is_recent(q, today) else older).append(q)
+    return recent, older
 
 
-LIVE_HEAD = ('<tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th>'
-             '<th>Backing</th><th class="num">Price</th><th class="num">Edge</th></tr>')
-HIST_HEAD = ('<tr><th>Date</th><th>Sport</th><th>Contest</th><th>Source</th><th>Backed</th>'
-             '<th class="num">Price</th><th></th><th class="num">P/L</th></tr>')
+def week_slug(q):
+    """ISO week of the Chicago settled date, 'YYYY-Www'. Undated if it will not parse."""
+    try:
+        day = fmt.chicago(q.get("settled")).date()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return "undated"
+    iso = day.isocalendar()
+    return f"{iso.year}-W{iso.week:02d}"
+
+
+def archive_groups(older):
+    """{slug: [quotes]} for bets that are not on the main page."""
+    groups = {}
+    for q in older:
+        groups.setdefault(week_slug(q), []).append(q)
+    return groups
+
+
+def _week_order(slugs):
+    dated = sorted((s for s in slugs if s != "undated"), reverse=True)
+    if "undated" in slugs:
+        dated.append("undated")
+    return dated
+
+
+def _tools(placeholder, label):
+    return (f'<div class="table-tools"><input class="flt" type="search" '
+            f'placeholder="{esc(placeholder)}" aria-label="{esc(label)}"></div>')
+
+
+def _sortable(head, rows):
+    return f'<div class="tbl"><table class="sortable">{head}{rows}</table></div>'
+
+
+def _archive_links(groups, prefix):
+    items = []
+    for slug in _week_order(groups):
+        n = len(groups[slug])
+        label = "Undated" if slug == "undated" else slug
+        items.append(
+            f'<li><a href="{esc(prefix + slug + ".html")}">{esc(label)}</a>'
+            f' <span class="mut">· {n:,} settled</span></li>')
+    return '<ul class="weeks">' + "".join(items) + "</ul>" if items else ""
 
 
 def collapse(rows_html, head, total, noun):
@@ -718,9 +819,11 @@ def close_cell(a):
     if not a or a.get("clv") is None or not a.get("clv_n"):
         return '<span class="mut">—</span>'
     read = a.get("clv_read")
-    tone = {"ahead": "pos", "behind": "neg"}.get(read, "mut")
+    # Colour follows the cents that are printed. "behind" does not paint 0.0¢ red.
+    tone = fmt.tone(a.get("clv"), spec=".1f", scale=100)
     t = a.get("clv_t")
-    bits = (f't {t:+.2f} · ' if t is not None else "") + f'{a["clv_n"]} close' + ("" if a["clv_n"] == 1 else "s")
+    stat = (fmt.tstat(t) + " · ") if t is not None else ""
+    bits = stat + f'{a["clv_n"]} close' + ("" if a["clv_n"] == 1 else "s")
     return (f'<span class="{tone}">{fmt.signed_cents(a["clv"])}</span>'
             f'<div class="sm mut">{bits}{" · " + read if read else ""}</div>')
 
@@ -788,7 +891,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     # checked against the row rather than taken on trust.
     vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins '
           f'· {rank_key(r):+.3f}/bet</div>' if a["n"] else "—")
-    roi = (f'<span class="{"mut" if thin else cls(a["roi_fee"])}">{pct(a["roi_fee"], sign=True)}</span>'
+    roi = (f'<span class="{"mut" if thin else fmt.tone(a["roi_fee"], ".1f", 100)}">{pct(a["roi_fee"], sign=True)}</span>'
            if a["n"] else "—")
     stage = (f'<span class="sig y">PRODUCTION</span><div class="sm mut">since {esc(r["moved"])}</div>'
              if r["prod"] else '<span class="mut sm">Sandbox</span>')
@@ -797,7 +900,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     # read floor, and a dash where there is no single other side (three-way contests).
     fd = r.get("fade") or {}
     fade = ('<span class="mut">—</span>' if not fd.get("n") or fd.get("roi") is None else
-            f'<span class="{"mut" if fd["n"] < MIN_N else cls(fd["roi"])}">{pct(fd["roi"], sign=True)}</span>'
+            f'<span class="{"mut" if fd["n"] < MIN_N else fmt.tone(fd["roi"], ".1f", 100)}">{pct(fd["roi"], sign=True)}</span>'
             f'<div class="sm mut">{fd["won"]} v {fd["expected"]:.1f} on {fd["n"]}'
             f'{" " + fd["unit"] + ("s" if fd["n"] != 1 else "") if fd.get("unit") else ""}</div>')
     sfx = _scope(r["sport"])
@@ -931,7 +1034,7 @@ LEAGUE_MIN = 3        # under three, a competition has nothing to show, not even
 def _cell(v, n, fade=False):
     """A percentage, greyed while the competition is too thin for the number to mean anything."""
     return ('<span class="mut">—</span>' if v is None else
-            f'<span class="{"mut" if n < EARLY_N else cls(v)}">{pct(v, sign=True)}</span>')
+            f'<span class="{"mut" if n < EARLY_N else fmt.tone(v, ".1f", 100)}">{pct(v, sign=True)}</span>')
 
 
 def _league_row(r, sp):
@@ -1036,8 +1139,8 @@ and the verdict column above goes on reading the whole record. A competition get
 _TH = re.compile(r"<th(\s[^>]*)?>(.*?)</th>", re.S)
 _TD = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 _DASH = re.compile(r"^(?:\s|—|-)*$")
-_TR = re.compile(r"<tr>.*?</tr>", re.S)
-_TABLE = re.compile(r"<table>(.*?)</table>", re.S)
+_TR = re.compile(r"<tr(\s[^>]*)?>.*?</tr>", re.S)
+_TABLE = re.compile(r"<table(\s[^>]*)?>(.*?)</table>", re.S)
 _ATTR_INT = re.compile(r"\b([A-Za-z]+)\s*=\s*\"(\d+)\"")
 
 
@@ -1165,7 +1268,8 @@ def label_cells(page):
     out, pos = [], 0
     for m in _TABLE.finditer(page):
         out.append(page[pos:m.start()])
-        body = m.group(1)
+        attrs = m.group(1) or ""
+        body = m.group(2)
         heads = _column_labels([rm.group(0) for rm in _header_rows(body)])
 
         def one_row(rm):
@@ -1191,7 +1295,7 @@ def label_cells(page):
             first, last = headers[0], headers[-1]
             body = (body[:first.start()] + "<thead>" + body[first.start():last.end()]
                     + "</thead><tbody>" + body[last.end():] + "</tbody>")
-        out.append("<table>" + body + "</table>")
+        out.append(f"<table{attrs}>" + body + "</table>")
         pos = m.end()
     out.append(page[pos:])
     return "".join(out)
@@ -1321,7 +1425,7 @@ def trading_rows(md):
         label, chip, _o = MT.VERDICTS[r["verdict"]]
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
                 if r["verdict"] in ("promising", "behind", "early") else "")
-        pc = lambda x: "—" if x is None else f'<span class="{cls(x)}">{fmt.pct(x, digits=2, sign=True)}</span>'
+        pc = lambda x: "—" if x is None else f'<span class="{fmt.tone(x, ".2f", 100)}">{fmt.pct(x, digits=2, sign=True)}</span>'
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
         # coin against cash, since set against its own asset it would show zero edge by design.
         vs = "v cash" if meta.get("bench") == "cash" else "v SPY"
@@ -1331,32 +1435,120 @@ def trading_rows(md):
 <td><span class="sig {chip}">{esc(label)}</span>{more}</td>
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
-<td class="num">{pc(r['mean'])}<div class="sm mut">{f"t {r['t']:+.2f}" if r['days'] > 1 else ''}</div></td>
-<td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{f" · t {r['edge_t']:+.2f}" if r['days'] > 1 else ''}</div></td>
+<td class="num">{pc(r['mean'])}<div class="sm mut">{fmt.tstat(r['t']) if r['days'] > 1 else ''}</div></td>
+<td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{(" · " + fmt.tstat(r['edge_t'])) if r['days'] > 1 else ''}</div></td>
 <td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}</td>
 <td class="num mut sm">{esc(r['last'][:10]) or '—'}</td></tr>
 <tr><td colspan="8" class="sm mut">Backtest before the lane went live ({esc(str((r.get('research_window') or ['', ''])[0]))} to
 {esc(str((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
 {r['research_days']} entry days, {r['research_trades']} trades,
-{'—' if r['research_edge'] is None else fmt.pct(r['research_edge'], digits=2, sign=True)} a day {vs}, t {r['research_t']:+.2f}.</td></tr>""")
+{'—' if r['research_edge'] is None else fmt.pct(r['research_edge'], digits=2, sign=True)} a day {vs}, {fmt.tstat(r['research_t'])}.</td></tr>""")
     return "\n".join(rows)
 
 
-def build():
-    d = T.load()
-    st = T.load_stages()
+def _as_now(now):
+    now_dt = now or datetime.now(timezone.utc)
+    if now_dt.tzinfo is None:
+        now_dt = now_dt.replace(tzinfo=timezone.utc)
+    return now_dt.astimezone(timezone.utc)
+
+
+_FOOT = "Read-only static export · rebuilt by GitHub Actions · research, not betting advice."
+
+
+def _archive_document(title, description, sections, body, now_dt):
+    return site_chrome.document(
+        title, description, "sandbox", sections,
+        site_chrome.stamp(now_dt), body,
+        script_src="./site.js", scripts=("./tables.js",),
+        prefix="../", tools=site_chrome.VIEW_BUTTON,
+    )
+
+
+def archive_index_html(groups, now_dt):
+    links = _archive_links(groups, "./")
+    body = f"""<h1>Archive</h1>
+<p class="lede">Settled bets older than the last {RECENT_DAYS} days in America/Chicago, one page per ISO week. Each bet is here or on the Sandbox, never both. Paper only.</p>
+<section id="weeks">
+<h2>Weeks</h2>
+{links or '<div class="note">Nothing archived.</div>'}
+</section>
+<p><a href="../sandbox.html#archive">Back to the Sandbox</a></p>
+<footer>{_FOOT}</footer>
+"""
+    return _archive_document(
+        "Edge Machine · Archive",
+        "Settled Sandbox bets by week.",
+        (("weeks", "Weeks"),),
+        body, now_dt,
+    )
+
+
+def archive_week_html(slug, rows, now_dt):
+    rows_html, n = settled_rows({"quotes": rows})
+    label = "Undated" if slug == "undated" else slug
+    noun = "bet" if n == 1 else "bets"
+    body = f"""<h1>Archive · {esc(label)}</h1>
+<p class="lede">{n:,} settled {noun}. Paper only. <a href="./index.html">All weeks</a> · <a href="../sandbox.html#recently-settled">Recently settled</a></p>
+{_tools("Search contests…", "Search this week") if n else ""}
+{_sortable(HIST_HEAD, rows_html) if n else '<div class="note">Nothing settled this week.</div>'}
+<footer>{_FOOT}</footer>
+"""
+    return _archive_document(
+        f"Edge Machine · {label}",
+        f"Sandbox bets settled in {label}.",
+        (),
+        body, now_dt,
+    )
+
+
+def render_pages(now=None, d=None, st=None):
+    """Sandbox HTML, the archive index, and {{week slug: week HTML}}.
+
+    Presentation only. `now` is the build time the 7-day window is measured from.
+    """
+    d = T.load() if d is None else d
+    st = T.load_stages() if st is None else st
+    now_dt = _as_now(now)
+    sandbox = _sandbox_html(d, st, now_dt)
+    recent, older = partition_settled(d, now_dt)
+    groups = archive_groups(older)
+    weeks = {slug: archive_week_html(slug, groups[slug], now_dt) for slug in _week_order(groups)}
+    return sandbox, archive_index_html(groups, now_dt), weeks
+
+
+def archive_documents(now=None, d=None, st=None):
+    """{{'archive/index.html': html, 'archive/YYYY-Www.html': html}}."""
+    _sandbox, index, weeks = render_pages(now, d=d, st=st)
+    out = {"archive/index.html": index}
+    for slug, html in weeks.items():
+        out[f"archive/{slug}.html"] = html
+    return out
+
+
+def build(now=None, d=None, st=None):
+    sandbox, _index, _weeks = render_pages(now, d=d, st=st)
+    return sandbox
+
+
+def _sandbox_html(d, st, now_dt):
     scores = T.score(d)
     cov = d.get("coverage") or {}
-    now_dt = datetime.now(timezone.utc)
     ou = (d.get("meta") or {}).get("odds_api") or {}
     odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} of "
                  f"{ou.get('allowance', '?')} allowed paid calls last run, "
                  f"{ou['remaining']} credits left until they reset on the 1st."
                  if ou.get("remaining") is not None else "")
-    live_html, n_live = open_folds(d)
-    hist_html, n_hist = settled_folds(d)
+    live_rows, n_live = open_rows(d)
+    recent, older = partition_settled(d, now_dt)
+    groups = archive_groups(older)
+    recent_rows, _n_recent = settled_rows({"quotes": recent})
+    n_hist = len(recent) + len(older)
     n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
     n_city = sum(1 for q in d["quotes"] if q.get("bet") and T.climate_excluded(q))
+    _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
+             else (f" · {n_city} city-day repeats set aside" if n_city else ""))
+    archive_links = _archive_links(groups, "./archive/")
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     # Counted over the pairs still running. Pooling every bet ever logged put this at 46%,
@@ -1388,6 +1580,26 @@ def build():
 </div>
 {feed_health(d)}
 
+<section id="running">
+<h2>Running ({n_live:,})</h2>
+<p class="sm mut">Bets still open. The price is the number next to the contest.</p>
+{_tools("Search contests…", "Search running bets") if n_live else ""}
+{_sortable(LIVE_HEAD, live_rows) if n_live else '<div class="note">No open bets.</div>'}
+</section>
+
+<section id="recently-settled">
+<h2>Recently settled ({len(recent):,})</h2>
+<p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,} settled on the record{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
+{_tools("Search contests…", "Search recently settled bets") if recent else ""}
+{_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
+</section>
+
+<section id="archive">
+<h2>Archive</h2>
+<p class="sm mut">One page per week. <a href="./archive/index.html">Archive index</a></p>
+{archive_links or '<div class="note">Nothing archived.</div>'}
+</section>
+
 <section id="summary">
 <details class="sec"><summary><h2>What the Sandbox says</h2></summary>
 <div class="note">{insights(shown)}</div></details>
@@ -1402,19 +1614,6 @@ def build():
 {reconcile(d, rows)}
 
 </details>
-</section>
-
-<section id="running">
-<details class="sec"><summary><h2>Running now ({n_live:,})</h2></summary>
-{('<input class="flt" type="search" data-for="live" placeholder="Filter running bets — team, source, sport…">' + '<div id="live">' + live_html + '</div>') if n_live else '<div class="note">No open bets.</div>'}
-</details>
-</section>
-
-<section id="settled">
-<details class="sec"><summary><h2>Settled ({n_hist - n_void:,}{f" · {n_void} void" if n_void else ""}{f" · {n_city} city-day repeat" if n_city == 1 else (f" · {n_city} city-day repeats" if n_city else "")})</h2></summary>
-{('<input class="flt" type="search" data-for="hist" placeholder="Filter settled bets — team, source, sport…">' + '<div id="hist">' + hist_html + '</div>') if n_hist else '<div class="note">Nothing settled yet.</div>'}
-</details>
-
 </section>
 
 <section id="reference">
@@ -1445,10 +1644,11 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
     sections = (
+        ("running", "Running"),
+        ("recently-settled", "Recently settled"),
+        ("archive", "Archive"),
         ("summary", "What it says"),
         ("by-sport", "By sport"),
-        ("running", "Running"),
-        ("settled", "Settled"),
         ("reference", "Reference"),
         ("method", "Method"),
     )
@@ -1460,6 +1660,7 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         site_chrome.stamp(now_dt),
         body,
         script_src="./site.js",
+        scripts=("./tables.js",),
         tools=site_chrome.VIEW_BUTTON,
     )
 
@@ -1524,22 +1725,36 @@ under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it doe
     )
 
 
+def _write(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        f.write(text)
+
+
 def main():
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    page = label_cells(build())
-    with open(OUT, "w") as f:
-        f.write(page)
+    now = datetime.now(timezone.utc)
+    sandbox, index, weeks = render_pages(now)
+    _write(OUT, label_cells(sandbox))
     print(f"wrote {OUT}")
     import production
     prod_out = os.path.join(os.path.dirname(OUT), "production.html")
-    with open(prod_out, "w") as f:
-        # Phone cards read data-l from each cell. The shared stylesheet does the layout.
-        f.write(label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), "")))
+    _write(prod_out, label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), "")))
     print(f"wrote {prod_out}")
     trade_out = os.path.join(os.path.dirname(OUT), "trading.html")
-    with open(trade_out, "w") as f:
-        f.write(label_cells(trading_page()))
+    _write(trade_out, label_cells(trading_page(now)))
     print(f"wrote {trade_out}")
+    archive_dir = os.path.join(os.path.dirname(OUT), "archive")
+    os.makedirs(archive_dir, exist_ok=True)
+    keep = {"index.html"}
+    _write(os.path.join(archive_dir, "index.html"), label_cells(index))
+    for slug, html in weeks.items():
+        name = slug + ".html"
+        keep.add(name)
+        _write(os.path.join(archive_dir, name), label_cells(html))
+    for name in os.listdir(archive_dir):
+        if name.endswith(".html") and name not in keep:
+            os.remove(os.path.join(archive_dir, name))
+    print(f"wrote {len(keep)} archive pages in {archive_dir}")
     return 0
 
 

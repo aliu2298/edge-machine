@@ -61,10 +61,19 @@ def route_label(pair):
 
 
 def _kickoff(q):
-    dt = datetime.datetime.fromisoformat(str(q["start"]))
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=datetime.timezone.utc)
-    return dt.astimezone(datetime.timezone.utc)
+    """UTC kickoff, or None when the timestamp cannot be parsed or converted.
+
+    An out-of-range instant (year 1 at midnight UTC, converted into a zone
+    behind UTC) raises OverflowError. A malformed string raises ValueError.
+    Callers show a placeholder or skip the quote; they do not crash.
+    """
+    try:
+        dt = datetime.datetime.fromisoformat(str(q["start"]))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=datetime.timezone.utc)
+        return dt.astimezone(datetime.timezone.utc)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
 
 
 def start_verified(q):
@@ -90,6 +99,8 @@ def start_verified(q):
 def lead_from_quote(q, pair_key, built):
     """One Sandbox bet as a feed lead."""
     ko = _kickoff(q)
+    if ko is None:
+        raise ValueError("kickoff is missing or out of range")
     label = S.SOURCES.get(q["source"], {}).get("label", q["source"]).split(" (")[0]
     date = ko.date().isoformat()
     if q.get("venue") == "combo":
@@ -220,7 +231,9 @@ def build_feed(d, st, now=None):
                 continue
             try:
                 ko = _kickoff(q)
-            except (KeyError, TypeError, ValueError):
+            except (KeyError, TypeError, ValueError, OverflowError, OSError):
+                continue
+            if ko is None:
                 continue
             # Published on the CONTEST, not on when the bet was written down. A pair moved
             # into Production has usually logged the next few days' fixtures already — under
@@ -285,32 +298,52 @@ def _day_label(day, today):
 EARLY_N = 10      # under this many settled bets an ROI is shown grey and marked too early
 
 
+def _tone(x, n, digits=1):
+    """Colour class for a percent, following the displayed digits.
+
+    No sample, or a value that rounds to 0 at `digits`, is neutral. -0.04%
+    shown as 0.0% is mut, not neg.
+    """
+    if not n or x is None:
+        return "mut"
+    return fmt.tone(x, spec=f".{digits}f", scale=100)
+
+
+# Shown when a kickoff cannot be parsed or converted. The row stays on the page.
+PLACEHOLDER_DATE = "—"
+
+
 def _chicago_day(value):
-    """America/Chicago calendar date. fmt.chicago uses zoneinfo, so CDT and CST both apply."""
-    return fmt.chicago(value).date()
+    """America/Chicago calendar date, or None if the instant cannot be converted.
+
+    fmt.chicago uses zoneinfo, so CDT and CST both apply. OverflowError is a
+    real outcome for an out-of-range timestamp, not a bad string.
+    """
+    try:
+        return fmt.chicago(value).date()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
 
 
 def _ct_date(kickoff):
     """YYYY-MM-DD of the kickoff on the Chicago calendar."""
-    try:
-        return _chicago_day(kickoff).isoformat()
-    except (TypeError, ValueError):
-        return str(kickoff)[:10]
+    day = _chicago_day(kickoff)
+    return day.isoformat() if day is not None else PLACEHOLDER_DATE
 
 
 def _ct_clock(kickoff):
     """The kickoff clock in CT."""
     try:
         return fmt.clock(kickoff)
-    except (ValueError, TypeError):
-        return str(kickoff)[11:16]
+    except (ValueError, TypeError, OverflowError, OSError):
+        return PLACEHOLDER_DATE
 
 
 def _ct_when(kickoff):
     try:
         return fmt.when(kickoff)
-    except (ValueError, TypeError):
-        return str(kickoff).replace("T", " ").rstrip("Z")
+    except (ValueError, TypeError, OverflowError, OSError):
+        return PLACEHOLDER_DATE
 
 
 def page(d, st, blob, style, now=None):
@@ -328,7 +361,7 @@ def page(d, st, blob, style, now=None):
     sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
     label = lambda key: f"{name(key)} · {sport_of(key)}"
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
-    tone = lambda x, n: "mut" if not n or x is None else ("pos" if x > 0 else "neg")
+    tone = lambda x, n: _tone(x, n, digits=1)
     leads = list(blob.get("leads", {}).values())
     upcoming = sorted((l for l in leads if l["status"] == "pending"
                        and l["kickoff"] >= now_dt.strftime("%Y-%m-%dT%H:%MZ")),
@@ -368,20 +401,21 @@ def page(d, st, blob, style, now=None):
     # ---- what is coming up, a table per day ----
     by_day = {}
     for l in upcoming:
-        try:
-            day = _chicago_day(l["kickoff"])
-        except (TypeError, ValueError):
-            continue
-        by_day.setdefault(day, []).append(l)
+        # A bad kickoff still gets a row. Dropping it would hide the lead.
+        by_day.setdefault(_chicago_day(l["kickoff"]), []).append(l)
     days_html = ""
-    for i, (day, ls) in enumerate(sorted(by_day.items())):
+    known = sorted((day, ls) for day, ls in by_day.items() if day is not None)
+    unknown = by_day.get(None)
+    ordered = known + ([(None, unknown)] if unknown else [])
+    for i, (day, ls) in enumerate(ordered):
         rows = "".join(
             f"""<tr><td class="mut">{esc(_ct_clock(l['kickoff']))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
 <td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
             for l in ls)
         # Each day folds; the soonest one starts open, since that is what a visitor came for.
-        days_html += (f"""<details class="fold"{' open' if i == 0 else ''}><summary>{esc(_day_label(day, today))}
+        label = PLACEHOLDER_DATE if day is None else _day_label(day, today)
+        days_html += (f"""<details class="fold"{' open' if i == 0 else ''}><summary>{esc(label)}
 <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
 <div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr>{rows}</table></div></details>""")
