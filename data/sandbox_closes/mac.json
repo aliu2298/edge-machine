@@ -830,6 +830,11 @@
    "lead_min": 8.9,
    "price": 0.545
   },
+  "espn_fpi:aec-mlb-bos-nyy-2026-09-30": {
+   "at": "2026-09-30T23:09:30+00:00",
+   "lead_min": 50.5,
+   "price": 0.555
+  },
   "espn_fpi:aec-mlb-chc-bos-2026-09-25": {
    "at": "2026-09-25T23:03:50+00:00",
    "lead_min": 6.2,
@@ -1335,16 +1340,6 @@
    "lead_min": 15.0,
    "price": 0.88
   },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP20CARFLA-FLA2": {
-   "at": "2026-09-20T22:59:08+00:00",
-   "lead_min": 0.9,
-   "price": 0.45
-  },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP20UTACOL-COL2": {
-   "at": "2026-09-20T22:59:08+00:00",
-   "lead_min": 0.9,
-   "price": 0.61
-  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP21BUFPIT-PIT2": {
    "at": "2026-09-21T22:50:04+00:00",
    "lead_min": 9.9,
@@ -1795,11 +1790,6 @@
    "lead_min": 14.9,
    "price": 0.61
   },
-  "oddspedia:aec-cplcr-aabf-jka-2026-09-20": {
-   "at": "2026-09-20T22:59:08+00:00",
-   "lead_min": 0.9,
-   "price": 0.56
-  },
   "olbg:KXUFCFIGHT-26SEP26DUMPER": {
    "at": "2026-09-26T23:16:28+00:00",
    "lead_min": 3.5,
@@ -1964,11 +1954,6 @@
    "at": "2026-09-28T18:40:18+00:00",
    "lead_min": 4.7,
    "price": 0.54
-  },
-  "pinnacle:aec-cplcr-aabf-jka-2026-09-20": {
-   "at": "2026-09-20T22:59:08+00:00",
-   "lead_min": 0.9,
-   "price": 0.45
   },
   "pinnacle:aec-odicr-eng-slr-2026-09-22": {
    "at": "2026-09-22T11:23:12+00:00",
@@ -2135,6 +2120,11 @@
    "lead_min": 9.7,
    "price": 0.6135
   },
+  "pm_combo2:pmcombo2:2026-10-01:1f9ac8df4d": {
+   "at": "2026-09-30T23:09:30+00:00",
+   "lead_min": 50.5,
+   "price": 0.6214
+  },
   "pm_combo3:pmcombo3:2026-09-24:3eaa6451de": {
    "at": "2026-09-24T18:01:17+00:00",
    "lead_min": 8.7,
@@ -2184,11 +2174,6 @@
    "at": "2026-09-27T18:51:58+00:00",
    "lead_min": 13.0,
    "price": 0.65
-  },
-  "polymarket:aec-cplcr-aabf-jka-2026-09-20": {
-   "at": "2026-09-20T22:59:08+00:00",
-   "lead_min": 0.9,
-   "price": 0.45
   },
   "polymarket:aec-mlb-az-col-2026-09-22": {
    "at": "2026-09-23T00:26:31+00:00",
@@ -4526,5 +4511,5 @@
    "price": 0.49
   }
  },
- "updated": "2026-09-30T21:38:48+00:00"
+ "updated": "2026-09-30T23:09:30+00:00"
 }
