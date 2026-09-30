@@ -59,12 +59,16 @@ jobs:
             echo "::warning::headless browser install failed — browser column degraded"
           fi
 
-      # Correctness gate, BEFORE anything is fetched or written. Every assertion in here
-      # covers a failure that is invisible on the finished page: a flipped probability, a
-      # price booked against the wrong game of a baseball series, a prop market mistaken
-      # for a moneyline. Strict on purpose — this one fails the run.
+      # Fixture checks only, BEFORE anything is fetched or written. Every assertion
+      # in here covers a failure that is invisible on the finished page: a flipped
+      # probability, a price booked against the wrong game of a baseball series, a
+      # prop market mistaken for a moneyline. Strict on purpose — this one fails
+      # the run, and it does not read the live ledger. Live ledger, archive, stage,
+      # feed, and close checks are the step after the commit. A DegenerateCluster
+      # on the ledger (2026-09-28, test_sandbox.py:3890) failed here and skipped
+      # grading for five runs. That check is not in this step anymore.
       - name: Logic tests
-        run: python3 test_sandbox.py
+        run: SANDBOX_TEST_GROUP=fixture python3 test_sandbox.py
 
       # Fetch every source, log new pre-match quotes, settle whatever has resolved.
       # A source going dark is an empty column inside the script (collect catches it)
@@ -209,14 +213,29 @@ jobs:
         if: steps.gate.outputs.deploy == 'true'
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
+      # After the ledger commit and the Pages deploy. A failure here turns the
+      # run red and is named again by the alert step below. It does not use
+      # always(): a fixture-test failure, a cancelled run, or a failed push
+      # skips it. The commit step has already finished by the time this runs.
+      - name: Live ledger checks
+        id: live
+        run: |
+          set +e
+          SANDBOX_TEST_GROUP=live python3 test_sandbox.py
+          rc=$?
+          echo "live_rc=$rc" >> "$GITHUB_OUTPUT"
+          exit "$rc"
+
       # The track and build steps stay green so the ledger can be committed. This
-      # step is what makes the job red, and what sends the mail.
+      # step is what makes the job red, and what sends the mail. It also reports
+      # a live-ledger check that failed after that commit.
       - name: Fail the job if the tracker or the page build failed
         if: always()
         env:
           TRACK_RC: ${{ steps.track.outputs.track_rc }}
           BUILD_RC: ${{ steps.build.outputs.build_rc }}
           GATE_FAIL: ${{ steps.gate.outputs.fail }}
+          LIVE_RC: ${{ steps.live.outputs.live_rc }}
         run: |
           set -euo pipefail
           code=0
@@ -237,6 +256,12 @@ jobs:
           # Reported even when a step already failed: a bad ledger is its own fault.
           if [ "${GATE_FAIL}" = "true" ]; then
             echo "::error::data/sandbox_ledger.json is missing or not valid JSON"
+            code=1
+          fi
+          # Empty when the live step was skipped. A real failure is its own red,
+          # and it cannot be what skipped the commit: that step is already done.
+          if [ -n "${LIVE_RC-}" ] && [ "$LIVE_RC" != "0" ]; then
+            echo "::error::Live ledger checks failed (test_sandbox.py exit ${LIVE_RC})"
             code=1
           fi
           exit "$code"

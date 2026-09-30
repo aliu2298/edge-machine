@@ -3,8 +3,15 @@
 Every test here exists because the behaviour it pins would otherwise fail SILENTLY —
 a source with a broken matcher and a source with no edge produce the identical board.
 Most of these are regressions from the first live runs, not hypotheticals.
+
+SANDBOX_TEST_GROUP selects which checks run:
+  all (default) — fixture checks, then the checks that read the live ledger
+  fixture — checks that do not read the live ledger, archive, stages, feed, or closes
+  live — only those live reads
+The tracker runs fixture before grading and live after the ledger commit.
 """
 
+import os
 import sys
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
@@ -44,6 +51,161 @@ def _without_pause(*names):
         yield
     finally:
         S.PAUSED_LANES = saved
+
+
+_GROUP = os.environ.get("SANDBOX_TEST_GROUP", "all").strip() or "all"
+if _GROUP not in ("all", "fixture", "live"):
+    print(f"SANDBOX_TEST_GROUP must be all, fixture, or live (got {_GROUP!r})")
+    sys.exit(2)
+
+
+def _finish():
+    print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
+    for f in FAILS:
+        print("   -", f)
+    sys.exit(1 if FAILS else 0)
+
+
+def _live_ledger_checks():
+    """Every assertion that reads the live ledger, its archive, stages, feed, or closes.
+
+    Kept out of the tracker's pre-grade step. A failure here must turn the run
+    red after the ledger has already been committed.
+    """
+    import json
+    import re
+    import production as PR
+    import sandbox_audit as AUD
+    import sandbox_build as SB
+    import sandbox_milestones as MS
+
+    print("\nlive ledger checks")
+
+    _ob = T.assess(json.load(open(os.path.join(os.path.dirname(os.path.abspath(T.__file__)),
+                                               "data", "sandbox_ledger.json"))),
+                   "olbg", sport="boxing", venues=T.TRADEABLE_VENUES)
+    ok(_ob["n"] == 0 or not dict((k, p) for k, _l, p, _d in _ob["criteria"])["baseline"],
+       "the live record still fails the blind-rule criterion, which is why it came off")
+
+    _html = PR.page(T.load(), T.load_stages(), PR.load_feed(), "<style></style>")
+    _text = re.sub(r"<[^>]+>", " ", _html)
+    _found = sorted({m.group(0).lower() for m in AUD.COPY_RE.finditer(_text)})
+    eq(_found, [], "the production copy gives nothing away")
+
+    ok(any(r["name"] == "cricket_consensus" for r in SB.pair_list(T.load(), T.load_stages())),
+       "and it is on the page from the day it is wired")
+
+    _st = T.load_stages()
+    for _k in ("tennis_fav_band|tennis", "tennis_combo2|tennis_combo"):
+        _e = (_st.get("pairs") or {}).get(_k) or {}
+        ok(_e.get("since") and _e.get("stage") == "sandbox",
+           f"{_k} counts from its reset, in the Sandbox")
+
+    print("\nledger history is unchanged by the pause")
+
+    def _lane_pnl(quotes):
+        acc = {}
+        for q in quotes:
+            if q.get("bet") and q.get("status") in ("won", "lost"):
+                k = (q.get("source"), q.get("sport"))
+                n, p = acc.get(k, (0, 0.0))
+                acc[k] = (n + 1, round(p + float(q.get("pnl") or 0), 2))
+        return acc
+
+    _probe_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()
+    _probe_day = _probe_at[:10]
+
+    def _prow(sport, mid, venue="polymarket_us", price_a=0.40, price_b=0.62):
+        return dict(market_id=mid, sport=sport, label="Alpha vs Beta", side_a="Alpha", side_b="Beta",
+                    price_a=price_a, price_b=price_b, mid_a=0.50, price_draw=None, untraded=False,
+                    tradeable={"a": True, "b": True}, start=_probe_at, date=_probe_day,
+                    volume=10.0, url="", venue=venue)
+
+    _led = json.load(open(T.LEDGER))
+    _before_ids = {q["id"]: (q.get("status"), q.get("pnl"), q.get("bet"), q.get("source"), q.get("sport"))
+                   for q in _led["quotes"]}
+    _before_pnl = _lane_pnl(_led["quotes"])
+    _saved_ch = S.CHALLENGERS
+    _saved_uni = S.UNIVERSE
+    S.CHALLENGERS = {"covers": lambda sp: [dict(market_id="ledger-probe", pick="a", a="Alpha", b="Beta",
+                                                date=_probe_day)],
+                     "nws": S.fetch_nws}
+    try:
+        T.publish(_led, {"mlb": [_prow("mlb", "ledger-probe")]}, {}, verbose=False)
+    finally:
+        S.CHALLENGERS = _saved_ch
+        S.UNIVERSE = _saved_uni
+    _after_ids = {q["id"]: (q.get("status"), q.get("pnl"), q.get("bet"), q.get("source"), q.get("sport"))
+                  for q in _led["quotes"] if q["id"] in _before_ids}
+    eq(_after_ids, _before_ids, "no row that was already in the ledger is rewritten")
+    eq(_lane_pnl(_led["quotes"]), _before_pnl,
+       "per-lane settled counts and P&L are identical after the pause logic runs")
+    ok(not any(q["id"] not in _before_ids and q.get("bet") and S.lane_paused(q["source"], q["sport"])
+               for q in _led["quotes"]),
+       "the run added no bet on a paused lane")
+
+    def _settled_citydays(d, source, sport="climate"):
+        return {S.outcome_cluster(q) for q in T.all_bets(d)
+                if q.get("source") == source and q.get("bet")
+                and q.get("status") in ("won", "lost")
+                and (sport is None or q.get("sport") == sport)}
+
+    # The 2026-09-28 tracker failure: assess() on the live ledger raised
+    # DegenerateCluster for KXHIGHCHI-26SEP26 (then test_sandbox.py:3890).
+    _live = T.load()
+    _live_ids = {q["id"] for q in _live["quotes"]}
+    ok("nws_fade:KXHIGHCHI-26SEP26-B68.5" in _live_ids
+       and "nws_fade:KXHIGHCHI-26SEP26-B66.5" in _live_ids,
+       "both Chicago quotes stay in the ledger")
+    _live_raised = None
+    try:
+        SB.pair_list(_live, T.load_stages())
+        _live_nf = T.assess(_live, "nws_fade", "climate")
+        _live_nws = T.assess(_live, "nws", "climate")
+        _live_ff = T.faded(_live, "nws_fade", "climate")
+    except T.DegenerateCluster as _e:
+        _live_raised = _e
+    ok(_live_raised is None, "the current ledger assesses, and the page's pair list with it")
+    _nf_days = _settled_citydays(_live, "nws_fade")
+    ok(_nf_days, "nws_fade has settled city-days on this ledger")
+    eq((_live_nf["n"], _live_nf["n_eff"], _live_nf["z_dropped"], _live_nf["unit"]),
+       (len(_nf_days), len(_nf_days), 0, "bet"),
+       "every settled nws_fade city-day is scored, and none is degenerate or dropped")
+    eq(_live_ff["z_dropped"], 0, "the fade drops none of them either")
+    eq(_live_nws["z_dropped"], 0, "nws repeat quotes are one reading too, so none of its clusters is dropped")
+    eq({q["id"] for q in _live["quotes"]}, _live_ids, "scoring does not remove ledger rows")
+    _live_head = T.score(_live, sport="climate")
+    for _lane_name, _lane_a in (("nws", _live_nws), ("nws_fade", _live_nf)):
+        _hs = _live_head[_lane_name]
+        eq((_hs["settled"], _hs["won"]), (_lane_a["n"], _lane_a["won"]),
+           f"{_lane_name}: the headline settled count matches the lane table")
+        close(_hs["pnl"], _lane_a["pnl"], f"{_lane_name}: the headline P&L matches the lane table")
+    _live_days = {}
+    for _q in _live["quotes"]:
+        if not (_q.get("bet") and _q.get("status") in ("won", "lost", "void", "settled")):
+            continue
+        _live_days.setdefault((_q.get("settled") or "")[:10], []).append(_q)
+    _day_pnl = 0.0
+    _day_n = 0
+    for _qs in _live_days.values():
+        _w, _n, _x, _pl = SB._day_summary(_qs)
+        _day_n += _n
+        _day_pnl += _pl
+    _board_n = sum(s["settled"] for s in T.score(_live).values())
+    _board_pnl = sum(s["pnl"] for s in T.score(_live).values())
+    eq(_day_n, _board_n, "day subtotals count the same settled bets as the headline")
+    close(_day_pnl, _board_pnl, "and the same P&L")
+    _ms_n, _ms_txt = MS.status(_live, MS.WATCHES[0])
+    _ms_bets = [q for q in T.all_bets(_live) if q["source"] == "nws" and q["sport"] == "climate"
+                and q.get("bet") and q["status"] in ("won", "lost") and not T.climate_excluded(q)
+                and q["logged"] >= MS.WATCHES[0]["since"]]
+    eq(_ms_n, len(_ms_bets), "the milestone counts the marked record, not the repeat quotes")
+    ok("after fees" in _ms_txt, "and it still reports the after-fees figure")
+
+
+if _GROUP == "live":
+    _live_ledger_checks()
+    _finish()
 
 
 # ---------------------------------------------------------------------------
@@ -2912,11 +3074,6 @@ _obsrc = open(_os.path.join(_os.path.dirname(_os.path.abspath(T.__file__)),
 _obblk = _obsrc[_obsrc.index("PAIR_OVERRIDES = {"):_obsrc.index("\n}\n", _obsrc.index("PAIR_OVERRIDES = {"))]
 ok("OLBG boxing" in _obblk and "+17.4%" in _obblk and "favourite" in _obblk,
    "and the removal records that the blind rule matched it exactly, so the tips added nothing")
-_ob = T.assess(json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(T.__file__)),
-                                            "data", "sandbox_ledger.json"))),
-               "olbg", sport="boxing", venues=T.TRADEABLE_VENUES)
-ok(_ob["n"] == 0 or not dict((k, p) for k, _l, p, _d in _ob["criteria"])["baseline"],
-   "the live record still fails the blind-rule criterion, which is why it came off")
 ok(not T.placeable(dict(sport="tennis_combo", venue="combo", pick="a", market_id="combo3:x",
                         side_a="All 3 win", side_b="Any one loses")),
    "a basket with no legs is not publishable: the feed names the legs to ask a quote for, and "
@@ -3257,8 +3414,7 @@ print("\nthe public pages never say what acts on them")
 import re as _re
 import sandbox_audit as _AUD
 _leaks = _AUD.COPY_RE
-_pages = {"production": PR.page(T.load(), T.load_stages(), PR.load_feed(), "<style></style>"),
-          "sandbox notes": " ".join(str(m.get("note", "")) + " " + str(m.get("label", "")) + " "
+_pages = {"sandbox notes": " ".join(str(m.get("note", "")) + " " + str(m.get("label", "")) + " "
                                     + str(m.get("retired", "")) for m in S.SOURCES.values())}
 for _name, _html in _pages.items():
     _text = _re.sub(r"<[^>]+>", " ", _html)
@@ -4568,8 +4724,6 @@ eq(T.consensus_probs("cricket_consensus", list(_cr.values()), _sp, _prior).get("
    "a source's bet already logged on the market counts as its side")
 ok("cricket_consensus" in S.SOURCES and "cricket_consensus" not in S.CHALLENGERS,
    "the consensus row reads the others' opinions; it has no feed of its own")
-ok(any(r["name"] == "cricket_consensus" for r in RANKB.pair_list(T.load(), T.load_stages())),
-   "and it is on the page from the day it is wired")
 
 _KO = datetime(2026, 9, 20, 18, 0, tzinfo=timezone.utc)
 
@@ -5014,11 +5168,6 @@ for _k in ("tennis_fav_band", "tennis_combo2", "tennis_combo3", "tennis_combo4")
        f"as a 0.77-0.81 one")
 ok("tennis_fav_band|tennis" not in T.PAIR_OVERRIDES,
    "and it is out of Production until a narrow-band record exists")
-_st = T.load_stages()
-for _k in ("tennis_fav_band|tennis", "tennis_combo2|tennis_combo"):
-    _e = (_st.get("pairs") or {}).get(_k) or {}
-    ok(_e.get("since") and _e.get("stage") == "sandbox",
-       f"{_k} counts from its reset, in the Sandbox")
 
 print("\nthe phone layout")
 
@@ -5387,6 +5536,91 @@ ok("Collect predictions and settle results failed" in _both.stdout
 _green = _bash(_fail_script, {"TRACK_RC": "0", "BUILD_RC": "0", "GATE_FAIL": "false"})
 eq(_green.returncode, 0, "a green run with a valid ledger does not fail here")
 ok("::error::" not in _green.stdout, "and it prints no error")
+_live_fail = _bash(_fail_script, {"TRACK_RC": "0", "BUILD_RC": "0", "GATE_FAIL": "false", "LIVE_RC": "1"})
+eq(_live_fail.returncode, 1, "a live-ledger check failure fails the job after a clean grade")
+ok("Live ledger checks failed" in _live_fail.stdout, "and the error names the live checks")
+
+
+def _workflow_steps(wf):
+    """Steps of the track job, in order: dict(name, if)."""
+    steps, current = [], None
+    for line in wf.splitlines():
+        if line.startswith("      - "):
+            if current:
+                steps.append(current)
+            rest = line[8:]
+            current = {"name": None, "if": None}
+            if rest.startswith("name:"):
+                current["name"] = rest.split(":", 1)[1].strip()
+            elif rest.startswith("if:"):
+                current["if"] = rest.split(":", 1)[1].strip()
+        elif current is not None and current["name"] is None and line.startswith("        name:"):
+            current["name"] = line.split(":", 1)[1].strip()
+        elif current is not None and line.startswith("        if:"):
+            current["if"] = line.split(":", 1)[1].strip()
+    if current:
+        steps.append(current)
+    return steps
+
+
+def _simulate_tracker(steps, fail_name, commit=True, deploy=True):
+    """GitHub's default: a step runs when earlier steps succeeded, unless its
+    if: says always(). A failed live check is `fail_name`."""
+    success = True
+    ran = []
+    for step in steps:
+        cond = step.get("if") or ""
+        name = step.get("name")
+        if "always()" in cond:
+            do = True
+        elif "failure()" in cond:
+            do = not success
+        else:
+            do = success
+        if do and "commit_data" in cond and not commit:
+            do = False
+        if do and "deploy ==" in cond and not deploy:
+            do = False
+        if not do:
+            continue
+        ran.append(name)
+        if name == fail_name:
+            success = False
+    return ran, success
+
+
+_steps = _workflow_steps(_tracker_wf)
+_names = [s["name"] for s in _steps]
+_logic_i = _names.index("Logic tests")
+_collect_i = _names.index("Collect predictions and settle results")
+_commit_i = _names.index("Commit and push if changed")
+_live_i = _names.index("Live ledger checks")
+_fail_i = _names.index("Fail the job if the tracker or the page build failed")
+ok(_logic_i < _collect_i < _commit_i < _live_i < _fail_i,
+   "fixture tests, then grading and the ledger commit, then live checks, then the alert")
+ok(_steps[_live_i]["if"] is None,
+   "live checks have no if: of their own, so a failure or a cancel skips them")
+_live_block = _tracker_wf.split("- name: Live ledger checks", 1)[-1].split("- name: Fail the job", 1)[0]
+ok("always()" not in _live_block and "continue-on-error" not in _live_block
+   and "SANDBOX_TEST_GROUP=live" in _live_block and 'exit "$rc"' in _live_block,
+   "the live step records its exit code and then fails, and it is not always() or continue-on-error")
+ok("SANDBOX_TEST_GROUP=fixture" in _step_script(_tracker_wf, "Logic tests")
+   or "SANDBOX_TEST_GROUP=fixture" in _tracker_wf.split("- name: Logic tests", 1)[1].split("\n      - ", 1)[0],
+   "the pre-grade step runs fixture checks only")
+_ran_live, _ok_live = _simulate_tracker(_steps, "Live ledger checks")
+ok("Collect predictions and settle results" in _ran_live and "Commit and push if changed" in _ran_live,
+   "a DegenerateCluster in the live-ledger check still grades and commits")
+ok("Live ledger checks" in _ran_live and not _ok_live,
+   "and that check runs and fails the job")
+ok(_ran_live.index("Collect predictions and settle results") < _ran_live.index("Commit and push if changed")
+   < _ran_live.index("Live ledger checks"),
+   "grading and the commit both finish before the live check fails")
+_ran_fix, _ok_fix = _simulate_tracker(_steps, "Logic tests")
+ok("Collect predictions and settle results" not in _ran_fix and "Commit and push if changed" not in _ran_fix
+   and not _ok_fix,
+   "a fixture-test failure still blocks grading and the commit")
+ok("Fail the job if the tracker or the page build failed" in _ran_fix,
+   "the alert step still runs when fixture tests stop the run")
 
 # The commit step, against a temp repo: public_site is half-written, another
 # tracked file is dirty, and origin/main has moved. The ledger must still land.
@@ -6144,42 +6378,6 @@ eq(T.retire_venue_duplicates(_td, verbose=False), 0,
    "duplicate protection does not void either lane when both logged the same match")
 ok(all(q["status"] == "open" for q in _td["quotes"] if q["source"].startswith("tennis_fav")),
    "both entries on the shared match stay open")
-
-
-print("\nledger history is unchanged by the pause")
-
-def _lane_pnl(quotes):
-    acc = {}
-    for q in quotes:
-        if q.get("bet") and q.get("status") in ("won", "lost"):
-            k = (q.get("source"), q.get("sport"))
-            n, p = acc.get(k, (0, 0.0))
-            acc[k] = (n + 1, round(p + float(q.get("pnl") or 0), 2))
-    return acc
-
-
-_led = json.load(open(T.LEDGER))
-_before_ids = {q["id"]: (q.get("status"), q.get("pnl"), q.get("bet"), q.get("source"), q.get("sport"))
-               for q in _led["quotes"]}
-_before_pnl = _lane_pnl(_led["quotes"])
-_saved_ch = S.CHALLENGERS
-_saved_uni = S.UNIVERSE
-S.CHALLENGERS = {"covers": lambda sp: [dict(market_id="ledger-probe", pick="a", a="Alpha", b="Beta",
-                                            date=_probe_day)],
-                 "nws": S.fetch_nws}
-try:
-    T.publish(_led, {"mlb": [_prow("mlb", "ledger-probe")]}, {}, verbose=False)
-finally:
-    S.CHALLENGERS = _saved_ch
-    S.UNIVERSE = _saved_uni
-_after_ids = {q["id"]: (q.get("status"), q.get("pnl"), q.get("bet"), q.get("source"), q.get("sport"))
-              for q in _led["quotes"] if q["id"] in _before_ids}
-eq(_after_ids, _before_ids, "no row that was already in the ledger is rewritten")
-eq(_lane_pnl(_led["quotes"]), _before_pnl,
-   "per-lane settled counts and P&L are identical after the pause logic runs")
-ok(not any(q["id"] not in _before_ids and q.get("bet") and S.lane_paused(q["source"], q["sport"])
-           for q in _led["quotes"]),
-   "the run added no bet on a paused lane")
 
 
 # ---------------------------------------------------------------------------
@@ -7355,58 +7553,6 @@ eq((_fx22_a["n"], _fx22_a["n_eff"], _fx22_a["z_dropped"], _fx22_a["unit"]),
    (len(_fx22_days), len(_fx22_days), 0, "bet"),
    "the derived check passes: every fixture city-day is scored, and none is dropped")
 
-_live = T.load()
-_live_ids = {q["id"] for q in _live["quotes"]}
-ok("nws_fade:KXHIGHCHI-26SEP26-B68.5" in _live_ids
-   and "nws_fade:KXHIGHCHI-26SEP26-B66.5" in _live_ids,
-   "both Chicago quotes stay in the ledger")
-_live_raised = None
-try:
-    _live_rows = SB.pair_list(_live, T.load_stages())
-    _live_nf = T.assess(_live, "nws_fade", "climate")
-    _live_nws = T.assess(_live, "nws", "climate")
-    _live_ff = T.faded(_live, "nws_fade", "climate")
-except T.DegenerateCluster as _e:
-    _live_raised = _e
-ok(_live_raised is None, "the current ledger assesses, and the page's pair list with it")
-_nf_days = _settled_citydays(_live, "nws_fade")
-ok(_nf_days, "nws_fade has settled city-days on this ledger")
-eq((_live_nf["n"], _live_nf["n_eff"], _live_nf["z_dropped"], _live_nf["unit"]),
-   (len(_nf_days), len(_nf_days), 0, "bet"),
-   "every settled nws_fade city-day is scored, and none is degenerate or dropped")
-eq(_live_ff["z_dropped"], 0, "the fade drops none of them either")
-eq(_live_nws["z_dropped"], 0, "nws repeat quotes are one reading too, so none of its clusters is dropped")
-eq({q["id"] for q in _live["quotes"]}, _live_ids, "scoring does not remove ledger rows")
-_live_head = T.score(_live, sport="climate")
-for _lane_name, _lane_a in (("nws", _live_nws), ("nws_fade", _live_nf)):
-    _hs = _live_head[_lane_name]
-    eq((_hs["settled"], _hs["won"]), (_lane_a["n"], _lane_a["won"]),
-       f"{_lane_name}: the headline settled count matches the lane table")
-    close(_hs["pnl"], _lane_a["pnl"], f"{_lane_name}: the headline P&L matches the lane table")
-_live_days = {}
-for _q in _live["quotes"]:
-    if not (_q.get("bet") and _q.get("status") in ("won", "lost", "void", "settled")):
-        continue
-    _live_days.setdefault((_q.get("settled") or "")[:10], []).append(_q)
-_day_pnl = 0.0
-_day_n = 0
-for _qs in _live_days.values():
-    _w, _n, _x, _pl = SB._day_summary(_qs)
-    _day_n += _n
-    _day_pnl += _pl
-_board_n = sum(s["settled"] for s in T.score(_live).values())
-_board_pnl = sum(s["pnl"] for s in T.score(_live).values())
-eq(_day_n, _board_n, "day subtotals count the same settled bets as the headline")
-close(_day_pnl, _board_pnl, "and the same P&L")
-import sandbox_milestones as _MS
-_ms_n, _ms_txt = _MS.status(_live, _MS.WATCHES[0])
-_ms_bets = [q for q in T.all_bets(_live) if q["source"] == "nws" and q["sport"] == "climate"
-            and q.get("bet") and q["status"] in ("won", "lost") and not T.climate_excluded(q)
-            and q["logged"] >= _MS.WATCHES[0]["since"]]
-eq(_ms_n, len(_ms_bets), "the milestone counts the marked record, not the repeat quotes")
-ok("after fees" in _ms_txt, "and it still reports the after-fees figure")
-
-print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all sandbox tests passed'}")
-for f in FAILS:
-    print("   -", f)
-sys.exit(1 if FAILS else 0)
+if _GROUP != "fixture":
+    _live_ledger_checks()
+_finish()
