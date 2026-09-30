@@ -1034,7 +1034,6 @@ PAUSED_LANES = {
     "pm_combo4": None,
     "nhl_dog_pl": None,
     "gas_nochange": None,
-    "oddspedia": None,
     # NFL only. MLB stays.
     "espn_fpi": {"sports": frozenset({"nfl"})},
 }
