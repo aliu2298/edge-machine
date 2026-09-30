@@ -10,7 +10,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import fmt
 import sandbox_sources as S
@@ -1495,13 +1495,87 @@ def archive_index_html(groups, now_dt):
     )
 
 
-def archive_week_html(slug, rows, now_dt):
+_MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+
+def _ct_phrase(value):
+    """5:15 PM CT Sep 28. The clock is America/Chicago, including the date."""
+    local = fmt.chicago(value)
+    return f"{fmt.clock(value)} {_MONTHS[local.month - 1]} {local.day}"
+
+
+def _outage_days(o):
+    start = fmt.chicago(o["start"])
+    end = fmt.chicago(o["end"])
+    if end < start:
+        start, end = end, start
+    return start.date(), end.date()
+
+
+def outage_sentence(o):
+    """The plain-English line for one outage. Times come from the record.
+
+    A later outage with the same shape — nothing logged, nothing back-filled —
+    gets the same sentence. One that did log, or was back-filled, does not claim
+    the counts are a hole.
+    """
+    span = f"from {_ct_phrase(o['start'])} to {_ct_phrase(o['end'])}"
+    if o.get("logged") is False and o.get("backfilled") is False:
+        return (f"No quotes were logged {span} because of a tracker failure. "
+                "Counts for those days are lower for that reason, not because of fewer opportunities.")
+    if o.get("backfilled") is True:
+        return ""
+    return (f"The tracker failed {span}. "
+            "Counts for those days are lower for that reason, not because of fewer opportunities.")
+
+
+def outage_notes(d, day_lo=None, day_hi=None):
+    """Note HTML for outages whose Chicago dates overlap [day_lo, day_hi].
+
+    day_lo and day_hi both None means the counts cover the whole record, which
+    is what a lane total does. Empty when nothing overlaps, so a page with no
+    outage in range is unchanged. The trailing newline is part of the note, so
+    dropping the note puts the surrounding markup back where it was.
+    """
+    if not d:
+        return ""
+    bits = []
+    for o in (d.get("meta") or {}).get("outages") or []:
+        if not isinstance(o, dict) or not o.get("start") or not o.get("end"):
+            continue
+        if day_lo is not None and day_hi is not None:
+            a, b = _outage_days(o)
+            if a > day_hi or b < day_lo:
+                continue
+        text = outage_sentence(o)
+        if text:
+            bits.append(f'<div class="note">{esc(text)}</div>')
+    if not bits:
+        return ""
+    return "\n".join(bits) + "\n"
+
+
+def _week_bounds(slug):
+    """(Monday, Sunday) for an ISO week slug, or None for the undated bucket."""
+    if not slug or slug == "undated":
+        return None
+    try:
+        monday = datetime.strptime(slug + "-1", "%G-W%V-%u").date()
+    except ValueError:
+        return None
+    return monday, monday + timedelta(days=6)
+
+
+def archive_week_html(slug, rows, now_dt, d=None):
     rows_html, n = settled_rows({"quotes": rows})
     label = "Undated" if slug == "undated" else slug
     noun = "bet" if n == 1 else "bets"
+    bounds = _week_bounds(slug)
+    note = outage_notes(d, *bounds) if d is not None and bounds else ""
     body = f"""<h1>Archive · {esc(label)}</h1>
 <p class="lede">{n:,} settled {noun}. Paper only. <a href="./index.html">All weeks</a> · <a href="../sandbox.html#recently-settled">Recently settled</a></p>
-{_tools("Search contests…", "Search this week") if n else ""}
+{note}{_tools("Search contests…", "Search this week") if n else ""}
 {_sortable(HIST_HEAD, rows_html) if n else '<div class="note">Nothing settled this week.</div>'}
 <footer>{_FOOT}</footer>
 """
@@ -1524,7 +1598,7 @@ def render_pages(now=None, d=None, st=None):
     sandbox = _sandbox_html(d, st, now_dt)
     recent, older = partition_settled(d, now_dt)
     groups = archive_groups(older)
-    weeks = {slug: archive_week_html(slug, groups[slug], now_dt) for slug in _week_order(groups)}
+    weeks = {slug: archive_week_html(slug, groups[slug], now_dt, d) for slug in _week_order(groups)}
     return sandbox, archive_index_html(groups, now_dt), weeks
 
 
@@ -1564,6 +1638,10 @@ def _sandbox_html(d, st, now_dt):
     n_city = sum(1 for q in d["quotes"] if q.get("bet") and _cityday_repeat(q))
     _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
              else (f" · {n_city} city-day repeats set aside" if n_city else ""))
+    today = _chicago_today(now_dt)
+    recent_note = outage_notes(d, today - timedelta(days=RECENT_DAYS - 1), today)
+    # Lane tables add up every quote ever logged, so they cover any recorded outage.
+    lane_note = outage_notes(d)
     archive_links = _archive_links(groups, "./archive/")
     n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
@@ -1606,7 +1684,7 @@ def _sandbox_html(d, st, now_dt):
 <section id="recently-settled">
 <h2>Recently settled ({len(recent):,})</h2>
 <p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,} settled on the record{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
-{_tools("Search contests…", "Search recently settled bets") if recent else ""}
+{recent_note}{_tools("Search contests…", "Search recently settled bets") if recent else ""}
 {_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>
 
@@ -1625,7 +1703,7 @@ def _sandbox_html(d, st, now_dt):
 <details class="sec" open><summary><h2>Every rule and tipster, by sport</h2></summary>
 <div class="folds-ctl"><button type="button" data-fold="sport" data-open="1">Open all</button><button type="button" data-fold="sport" data-open="0">Close all</button></div>
 {legend()}
-{sport_sections(d, shown)}
+{lane_note}{sport_sections(d, shown)}
 {eliminated_section(rows)}
 {reconcile(d, rows)}
 

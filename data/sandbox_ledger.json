@@ -223,6 +223,23 @@
    ],
    "used": 323
   },
+  "outages": [
+   {
+    "backfilled": false,
+    "cause": "Five tracker runs failed at the pre-grade Logic tests with DegenerateCluster at test_sandbox.py:3890, so collect, settle, and logging were skipped.",
+    "end": "2026-09-29T15:48:58Z",
+    "logged": false,
+    "note": "Nothing was logged and nothing was back-filled.",
+    "runs": [
+     "36502541397",
+     "36519115131",
+     "36537615454",
+     "36542201298",
+     "36565274933"
+    ],
+    "start": "2026-09-28T22:15:10Z"
+   }
+  ],
   "runs": 211,
   "updated": "2026-09-30T02:07:27+00:00"
  },
