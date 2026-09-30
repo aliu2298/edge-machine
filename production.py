@@ -428,6 +428,23 @@ def _pending_to_come(lead, now_str):
     return lead.get("kickoff") >= now_str
 
 
+def _without_weather(d):
+    """Page copy. Stored quotes stay in the ledger file."""
+    if not d:
+        return d
+    out = dict(d)
+    if d.get("quotes"):
+        out["quotes"] = [q for q in d["quotes"] if not S.weather_row(q)]
+    if d.get("_archive"):
+        out["_archive"] = [q for q in d["_archive"] if not S.weather_row(q)]
+    return out
+
+
+def _weather_pair(key):
+    source, _, sport = str(key).partition("|")
+    return source in S.REMOVED_SOURCES or sport in S.REMOVED_SPORTS
+
+
 def page(d, st, blob, style, now=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -438,13 +455,15 @@ def page(d, st, blob, style, now=None):
     """
     now_dt = now or datetime.datetime.now(datetime.timezone.utc)
     today = _chicago_day(now_dt)
-    pairs = production_pairs(st)
+    d = _without_weather(d)
+    pairs = {k: v for k, v in production_pairs(st).items() if not _weather_pair(k)}
     name = lambda key: S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]
     sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
     label = lambda key: f"{name(key)} · {sport_of(key)}"
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: _tone(x, n, digits=1)
-    leads = list(blob.get("leads", {}).values())
+    leads = [l for l in blob.get("leads", {}).values()
+             if not S.weather_row(l) and not _weather_pair(l.get("pair") or "")]
     for lead in leads:
         _note_kickoff(lead)
     now_str = now_dt.strftime("%Y-%m-%dT%H:%MZ")

@@ -18,6 +18,7 @@ from datetime import timezone
 import fmt
 import production
 import sandbox_build as SB
+import sandbox_sources as S
 import sandbox_track as T
 import site_root
 
@@ -131,7 +132,8 @@ def _ledger_settled(now):
     today = fmt.chicago(now).date()
     recent, older = [], []
     for q in d["quotes"]:
-        if not q.get("bet") or q.get("status") not in HIST or T.climate_excluded(q):
+        if (not q.get("bet") or q.get("status") not in HIST or T.climate_excluded(q)
+                or S.weather_row(q)):
             continue
         try:
             day = fmt.chicago(q.get("settled")).date()
@@ -441,7 +443,8 @@ ok(len(_run_tables) == 1, "sandbox.html has one Running table")
 if _run_tables:
     _head_n = len(re.findall(r"<th\b", _run_tables[0]))
     _sports = {q["id"]: (q.get("sport") or "") for q in T.load()["quotes"]
-               if q.get("bet") and q.get("status") == "open" and not T.climate_excluded(q)}
+               if q.get("bet") and q.get("status") == "open"
+               and not T.climate_excluded(q) and not S.weather_row(q)}
     _checked = 0
     for _row in _rows(_run_tables[0]):
         _cells = re.findall(r"<td\b([^>]*)>(.*?)</td>", _row, re.S)
@@ -471,10 +474,11 @@ print("\ntest_climate_excluded_rows_stay_off_the_pages")
 
 
 def _record_settled(quotes):
-    """Settled-on-record count: settled bets that honour the city-day flag, voids aside."""
-    n_hist = sum(1 for q in quotes if q.get("bet") and q.get("status") in HIST
+    """Settled-on-record count with weather left out, voids aside."""
+    visible = [q for q in quotes if not S.weather_row(q)]
+    n_hist = sum(1 for q in visible if q.get("bet") and q.get("status") in HIST
                  and not T.climate_excluded(q))
-    n_void = sum(1 for q in quotes if q.get("status") == "void" and q.get("bet"))
+    n_void = sum(1 for q in visible if q.get("status") == "void" and q.get("bet"))
     return n_hist - n_void
 
 
@@ -523,21 +527,25 @@ for _fid in _flag_ids:
 _want_record = _record_settled(_fx_quotes)
 _got_record = _shown_settled(_fx_page)
 eq(_got_record, _want_record,
-   "the settled-on-record count honours the city-day flag")
-ok(re.search(r"· \d[\d,]* city-day repeats? set aside", _section(_fx_page, "recently-settled")),
-   "the city-day repeat label is shown as set aside beside the settled count")
+   "the settled-on-record count leaves weather out")
+ok("city-day" not in _section(_fx_page, "recently-settled"),
+   "weather is hidden, so the headline does not count city-day repeats")
+ok("National Weather Service" not in _fx_page and "KXHIGH" not in _fx_page,
+   "the fixture's weather rows are not rendered")
 
 
 print("\ntest_headline_set_aside_and_bad_open_kickoff")
 
 
 def _headline_count(quotes):
-    """Settled on the record, then void, then every flagged bet set aside."""
-    blob = {"quotes": quotes}
+    """Settled on the record, then void. Weather is not on the page."""
+    visible = [q for q in quotes if not S.weather_row(q)]
+    blob = {"quotes": visible}
     recent, older = SB.partition_settled(blob, NOW)
     n_hist = len(recent) + len(older)
-    n_void = sum(1 for q in quotes if q.get("status") == "void" and q.get("bet"))
-    n_city = sum(1 for q in quotes if q.get("bet") and T.climate_excluded(q))
+    n_void = sum(1 for q in visible if q.get("status") == "void" and q.get("bet"))
+    n_city = sum(1 for q in visible if q.get("bet") and T.climate_excluded(q)
+                 and q.get("status") != "void")
     text = f"{n_hist - n_void:,} settled on the record"
     if n_void:
         text += f" · {n_void} void"
@@ -552,9 +560,9 @@ _head_page = SB.label_cells(SB.build(now=NOW))
 _head_blurb = _section(_head_page, "recently-settled")
 _head_want = _headline_count(T.load()["quotes"])
 ok(_head_want in _head_blurb,
-   "the headline counts every city-day repeat as set aside")
-ok("city-day repeat settled" not in _head_blurb and "city-day repeats settled" not in _head_blurb,
-   "the headline does not say the city-day repeats settled")
+   "the headline counts settled and void with weather left out")
+ok("city-day" not in _head_blurb,
+   "the headline does not count city-day repeats once weather is off the page")
 
 
 def _kickoff_quote(**extra):

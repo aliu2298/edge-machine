@@ -572,6 +572,11 @@ def collect(verbose=True, combo_used=None):
     goals = nhl = None
     for sport in S.SPORTS:
         t0 = time.time()
+        # Weather markets are not fetched. Climate is the Kalshi temperature
+        # ladder; leaving it out of the universe means that read never runs.
+        if sport in S.REMOVED_SPORTS:
+            universe[sport] = []
+            continue
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
         # used to take the whole run down with it — no grading, nothing saved — when the
         # right outcome is one empty sport and everything else carrying on.
