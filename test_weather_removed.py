@@ -9,9 +9,11 @@ import copy
 import os
 import re
 import sys
+import tempfile
 from datetime import datetime, timedelta, timezone
 
 import production
+import sandbox_audit as A
 import sandbox_build as SB
 import sandbox_close as SC
 import sandbox_sources as S
@@ -233,6 +235,206 @@ def main():
        "grade() does not resolve a weather market")
     ok(("polymarket_us", other["market_id"]) in resolved,
        "grade() still resolves the non-weather market")
+
+    print("\naudit does not ask or flag a frozen weather row")
+    audit_now = datetime(2026, 10, 3, 0, 0, tzinfo=timezone.utc)
+    audit_start = (audit_now - timedelta(days=3)).isoformat()
+    graded_at = (audit_now - timedelta(hours=1)).isoformat()
+    final_at = audit_now - timedelta(hours=5)
+
+    def _audit_open(qid, source, sport, market):
+        return dict(id=qid, source=source, sport=sport, venue="kalshi_binary",
+                    market_id=market, bet=True, pick="a", price=0.40, price_a=0.40,
+                    price_b=0.62, stake=100.0, status="open", result=None, pnl=0.0,
+                    settled=None, start=audit_start,
+                    logged="2026-09-27T12:00:00+00:00")
+
+    weather_open = _audit_open("nws_fade:KXHIGHNY-26SEP29-B71.5", "nws_fade", "climate",
+                               "KXHIGHNY-26SEP29-B71.5")
+    plain_open = _audit_open("covers:stale-mlb", "covers", "mlb", "probe-stale-mlb")
+    asked = []
+
+    def _ask(mid):
+        asked.append(mid)
+        return "b"
+
+    def _final(q):
+        asked.append(("final", q.get("market_id")))
+        return final_at
+
+    saved_resolvers = (S.resolve_kalshi_market, S.resolve_kalshi, S.resolve_polymarket,
+                       S.resolve_polymarket_us, S.resolve_combo, A._final_at, S._get)
+    S.resolve_kalshi_market = _ask
+    S.resolve_kalshi = _ask
+    S.resolve_polymarket = _ask
+    S.resolve_polymarket_us = _ask
+    S.resolve_combo = lambda legs: _ask("combo")
+    A._final_at = _final
+    S._get = lambda *a, **k: {}
+    try:
+        stale_rep = A.Report()
+        A.check_stale({"quotes": [weather_open, plain_open],
+                       "meta": {"updated": graded_at}}, stale_rep, True, now=audit_now)
+    finally:
+        (S.resolve_kalshi_market, S.resolve_kalshi, S.resolve_polymarket,
+         S.resolve_polymarket_us, S.resolve_combo, A._final_at, S._get) = saved_resolvers
+    stale_text = " ".join(m for _c, m in stale_rep.errors + stale_rep.warnings)
+    ok(weather_open["market_id"] not in asked and ("final", weather_open["market_id"]) not in asked,
+       "a stale open weather bet is not resolved")
+    ok(weather_open["id"] not in stale_text and "KXHIGH" not in stale_text,
+       "a stale open weather bet is not an error or a warning")
+    ok(any(plain_open["id"] in m for _c, m in stale_rep.errors),
+       "a non-weather bet open 3 days is still flagged")
+    ok(plain_open["market_id"] in asked,
+       "the non-weather stale bet is still resolved")
+
+    def _settled_row(qid, source, sport, market):
+        return dict(id=qid, source=source, sport=sport, venue="kalshi_binary",
+                    market_id=market, bet=True, pick="a", price=0.40, price_a=0.40,
+                    price_b=0.62, stake=100.0, status="won", result="a",
+                    pnl=round(100.0 * (1.0 / 0.40 - 1.0), 2),
+                    start="2026-09-20T19:00:00+00:00",
+                    logged="2026-09-19T12:00:00+00:00",
+                    settled="2026-09-21T19:00:00+00:00")
+
+    weather_settled = _settled_row("nws:KXHIGHNY-26SEP20-B70.5", "nws", "climate",
+                                   "KXHIGHNY-26SEP20-B70.5")
+    plain_settled = _settled_row("espn_fpi:probe-settle", "espn_fpi", "mlb", "probe-settle")
+    settle_calls = []
+
+    def _settle(mid):
+        settle_calls.append(mid)
+        return "a"
+
+    fd, watch_path = tempfile.mkstemp(prefix="settle-", suffix=".json")
+    os.close(fd)
+    os.remove(watch_path)
+    S.resolve_kalshi_market = _settle
+    try:
+        settle_rep = A.Report()
+        A.check_settlement({"quotes": [weather_settled, plain_settled], "meta": {}},
+                           settle_rep, 25, path=watch_path)
+    finally:
+        S.resolve_kalshi_market = saved_resolvers[0]
+        try:
+            os.remove(watch_path)
+        except OSError:
+            pass
+    ok(weather_settled["market_id"] not in settle_calls,
+       "check_settlement does not sample a settled weather row")
+    ok(plain_settled["market_id"] in settle_calls,
+       "check_settlement still samples a settled non-weather row")
+    settle_text = " ".join(m for _c, m in settle_rep.errors + settle_rep.warnings)
+    ok("KXHIGH" not in settle_text and weather_settled["id"] not in settle_text,
+       "a sampled settlement check does not warn about the weather row")
+
+    fd, watch_path = tempfile.mkstemp(prefix="settle-", suffix=".json")
+    os.close(fd)
+    T.save_settlement_watch([{"venue": "kalshi_binary", "market_id": weather_settled["market_id"],
+                              "stored": "a", "venue_result": "b",
+                              "quote_id": weather_settled["id"]}], watch_path)
+    watched_calls = []
+
+    def _watched(mid):
+        watched_calls.append(mid)
+        return "b"
+
+    S.resolve_kalshi_market = _watched
+    try:
+        watch_rep = A.Report()
+        A.check_settlement({"quotes": [weather_settled], "meta": {}},
+                           watch_rep, 0, path=watch_path)
+    finally:
+        S.resolve_kalshi_market = saved_resolvers[0]
+        try:
+            os.remove(watch_path)
+        except OSError:
+            pass
+    watch_text = " ".join(m for _c, m in watch_rep.errors + watch_rep.warnings)
+    ok(watched_calls == [], "a remembered weather mismatch is not re-resolved")
+    ok("KXHIGH" not in watch_text and weather_settled["id"] not in watch_text,
+       "a remembered weather mismatch is not a warning")
+
+    def _fight(qid, **kw):
+        q = dict(id=qid, source="mma_fav_band", sport="mma",
+                 side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
+                 start="2026-09-26T23:00:00+00:00", date="2026-09-26",
+                 logged="2026-09-22T00:41:36+00:00", venue="kalshi",
+                 market_id="KXUFCFIGHT-26SEP26DEMJAU",
+                 bet=True, pick="a", price=0.60, price_a=0.60, price_b=0.42,
+                 stake=100.0, result="a", status="won",
+                 pnl=round(100.0 * (1.0 / 0.60 - 1.0), 2),
+                 settled="2026-09-27T00:00:00+00:00")
+        q.update(kw)
+        return q
+
+    weather_kept = _fight("nws:kept", source="nws")
+    weather_later = _fight("nws:later", source="nws",
+                           id="nws:aec-ufc-vandem-yazjau-2026-09-26",
+                           market_id="aec-ufc-vandem-yazjau-2026-09-26",
+                           venue="polymarket_us",
+                           start="2026-09-26T18:30:00+00:00",
+                           logged="2026-09-22T21:47:04+00:00")
+    plain_kept = _fight("mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU")
+    plain_later = _fight("mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26",
+                         market_id="aec-ufc-vandem-yazjau-2026-09-26",
+                         venue="polymarket_us",
+                         start="2026-09-26T18:30:00+00:00",
+                         logged="2026-09-22T21:47:04+00:00")
+    dup_weather = A.Report()
+    A.check_duplicates({"quotes": [weather_kept, weather_later]}, dup_weather)
+    dup_plain = A.Report()
+    A.check_duplicates({"quotes": [plain_kept, plain_later]}, dup_plain)
+    ok(not dup_weather.errors and not dup_weather.warnings,
+       "a settled weather pair on two venues is not flagged")
+    ok(any("duplicates" == c for c, _m in dup_plain.errors),
+       "a settled non-weather pair on two venues is still flagged")
+
+    def _mentions_weather(msg):
+        low = msg.lower()
+        return ("nws" in low or "kxhigh" in low or "climate" in low
+                or "national weather service" in low)
+
+    ledger = T.load()
+
+    def _ledger_stale(when):
+        hits = []
+        saved = (S.resolve_kalshi_market, S.resolve_kalshi, S.resolve_polymarket,
+                 S.resolve_polymarket_us, S.resolve_combo, A._final_at, S._get)
+        calls = []
+
+        def _rec(mid):
+            calls.append(mid)
+            return "b"
+
+        S.resolve_kalshi_market = _rec
+        S.resolve_kalshi = _rec
+        S.resolve_polymarket = _rec
+        S.resolve_polymarket_us = _rec
+        S.resolve_combo = lambda legs: _rec("combo")
+        def _no_network(*_a, **_k):
+            raise RuntimeError("no network")
+
+        A._final_at = lambda q: datetime(2020, 1, 1, tzinfo=timezone.utc)
+        S._get = _no_network
+        try:
+            rep = A.Report()
+            A.check_stale(ledger, rep, True, now=when)
+        finally:
+            (S.resolve_kalshi_market, S.resolve_kalshi, S.resolve_polymarket,
+             S.resolve_polymarket_us, S.resolve_combo, A._final_at, S._get) = saved
+        flagged = [m for _c, m in rep.errors + rep.warnings if _mentions_weather(m)]
+        weather_calls = [m for m in calls if isinstance(m, str) and "KXHIGH" in m.upper()]
+        return rep, flagged, weather_calls
+
+    for label, when in (("10/3", datetime(2026, 10, 3, tzinfo=timezone.utc)),
+                        ("10/5", datetime(2026, 10, 5, tzinfo=timezone.utc))):
+        rep, flagged, weather_calls = _ledger_stale(when)
+        ok(not flagged and not weather_calls,
+           f"ledger weather rows are not errors or warnings at {label}"
+           + (f" — {flagged[:2]} {weather_calls[:2]}" if flagged or weather_calls else ""))
+        ok(any(c == "stale" for c, _m in rep.errors),
+           f"a non-weather stale bet on the ledger is still flagged at {label}")
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'weather removal passed'}")
     for item in FAILS:

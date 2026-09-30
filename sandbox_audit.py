@@ -24,7 +24,8 @@ Checks, each an ERROR (fails the run) unless marked:
   combos      every basket holds the legs its name says.
   settlement  a sample of settled bets asked of the venue again; the stored result must match.
               A mismatch is remembered and re-asked every run until it does, so a later
-              sample that misses the row cannot turn the check green.
+              sample that misses the row cannot turn the check green. Frozen weather rows
+              are not sampled and not re-resolved.
   fresh       the ledger was graded recently. Two missed tracker runs is an ERROR: nothing is
               being settled, so every other check here is reading a record that stopped.
   stale       a bet open two days past its start. An ERROR only if the venue went final BEFORE
@@ -34,7 +35,8 @@ Checks, each an ERROR (fails the run) unless marked:
               between 0 and 1, including exactly 0.5, is a price payout once the market is
               final — not a void and not a review flag. This check reads the settlement and
               the market status itself, so a resolver that voids that price cannot turn the
-              warning into a pass or into a win. Kalshi took
+              warning into a pass or into a win. Frozen weather rows are left out of the
+              stale list, so they are not asked and not flagged. Kalshi took
               2.4 days to settle WTI on 2026-09-18 and finalised it eight minutes after a
               grading run — a check that could not tell those apart called a healthy grader broken.
   copy        no public file uses the phrases the public pages are kept free of.
@@ -209,7 +211,10 @@ def check_duplicates(d, rep):
     Both copies pay, so the P/L counts twice. Voiding the later copy is what clears it.
     The matcher is the tracker's own, including the wider window for a Kalshi placeholder.
     """
-    pairs = T.settled_cross_venue_dups(T.all_bets(d))
+    # Frozen weather rows are not flagged. Dropping them cannot change a non-weather
+    # pair: the matcher groups by (source, sport).
+    pairs = T.settled_cross_venue_dups(
+        [q for q in T.all_bets(d) if not S.weather_row(q)])
     for later, kept in pairs:
         rep.error("duplicates",
                   f"{later.get('id')} repeats {kept.get('id')} "
@@ -450,6 +455,9 @@ def check_settlement(d, rep, sample, path=None):
     by = collections.defaultdict(list)
     by_key = collections.defaultdict(list)
     for q in d["quotes"]:
+        # Frozen weather rows are not sampled and not re-resolved.
+        if S.weather_row(q):
+            continue
         key = (q.get("venue"), q.get("market_id"))
         if q.get("status") in _WATCH_STATUSES and q.get("result") in _WATCH_RESULTS and q.get("market_id"):
             by_key[key].append(q)
@@ -536,6 +544,12 @@ def check_settlement(d, rep, sample, path=None):
             hold(key, row, r)
     for key in watched:
         if key not in rep_for:
+            # A watch entry whose ledger rows are all frozen weather is not a missing quote
+            # and is not asked again.
+            rows = [q for q in d["quotes"]
+                    if (q.get("venue"), q.get("market_id")) == key]
+            if rows and all(S.weather_row(q) for q in rows):
+                continue
             rep.warn("settlement", f"{key[1]}: remembered mismatch has no settled quote left in the ledger")
     T.save_settlement_watch(list(still.values()), path)
 
@@ -727,6 +741,7 @@ def check_stale(d, rep, network, now=None):
     now = now or datetime.now(timezone.utc)
     graded = _dt((d.get("meta") or {}).get("updated"))
     stale = [q for q in d["quotes"] if q.get("bet") and q["status"] == "open"
+             and not S.weather_row(q)
              and (_dt(q.get("start")) or now) < now - timedelta(hours=STALE_H)]
     if not stale:
         rep.ok("stale", f"no bet open {STALE_H}h past its start")
