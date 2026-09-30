@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-30T01:16:37+00:00",
+ "board_built_at": "2026-09-30T02:07:28+00:00",
  "leads": {
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
@@ -111,6 +111,35 @@
    "source": "team1_form_l5",
    "sport": "soccer_team1",
    "status": "miss"
+  },
+  "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule": {
+   "away": "Camila Reynoso",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-29",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Aieza Bertolso to win",
+   "home": "Aieza Bertolso",
+   "id": "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-29T23:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Aieza Bertolso v Camila Reynoso",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-dwcs-aieber-camrey-2026-09-29",
+    "outcome": "Aieza Bertolso",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-aieber-camrey-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -120,10 +149,10 @@
    "promoted_at": "2026-09-22T16:20:08+00:00",
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": 0.015,
-   "sandbox_n": 2,
-   "sandbox_roi": -1.0,
-   "sandbox_roi_fee": -1.0
+   "sandbox_clv": 0.0333,
+   "sandbox_n": 3,
+   "sandbox_roi": -0.5885,
+   "sandbox_roi_fee": -0.5931
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -162,5 +191,5 @@
  "stage": "production",
  "unlisted_skipped": 7,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-30T01:16:37+00:00"
+ "updated_at": "2026-09-30T02:07:28+00:00"
 }
