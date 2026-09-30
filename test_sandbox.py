@@ -3337,10 +3337,13 @@ eq(S.outcome_cluster(dict(venue="kalshi_binary", sport="commodities",
 # price in any other domain is a quote only. Without this the rule logs opinions it never
 # scores, which is how it behaved when first registered.
 _cd = {"quotes": [], "meta": {}}
+# publish refuses a quote once the market has started. The start stays ahead of
+# the run so this still measures the commodity band, not the clock.
+_cwhen = (datetime.now(timezone.utc) + timedelta(hours=6)).replace(microsecond=0)
 _crow = dict(sport="commodities", venue="kalshi_binary", market_id="KXWTI-26SEP30-T90",
              label="Above $90", side_a="Yes", side_b="No", price_a=0.98, price_b=0.03,
              mid_a=0.98, tradeable={"a": True, "b": True}, untraded=False,
-             start="2026-09-30T21:00:00+00:00", date="2026-09-30", volume=0.0,
+             start=_cwhen.isoformat(), date=_cwhen.date().isoformat(), volume=0.0,
              url="https://kalshi.com/markets/kxwti")
 # The far-tail rule retired on 2026-09-21, but the band it relied on is still how the domain
 # works, so a stand-in picker drives the same row through publish().
@@ -7114,9 +7117,15 @@ try:
     T.publish(_dpub2, {"mma": [_pub_row]}, {}, verbose=False)
 finally:
     S.CHALLENGERS = _saved_ch_dup
-eq([q["id"] for q in _dpub2["quotes"] if q["source"] == "mma_fav_band"],
-   ["mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU"],
-   "publish will not log the Polymarket US copy of a fight already bet on Kalshi")
+_mma_pub = [q for q in _dpub2["quotes"] if q["source"] == "mma_fav_band"]
+eq(sorted(q["id"] for q in _mma_pub),
+   ["mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU",
+    "mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26"],
+   "an open Kalshi MMA bet is replaced once when Polymarket US lists the fight")
+_retired_pub = next(q for q in _mma_pub if q["venue"] == "kalshi")
+eq((_retired_pub["status"], _retired_pub["bet"], _retired_pub["note"]),
+   ("void", False, "kalshi_unplaceable"),
+   "that Kalshi entry is retired as unplaceable and is no longer a bet")
 
 print("\nvoid the later venue copy, once, and leave price rows and settled times alone")
 import importlib.util as _ilu2
