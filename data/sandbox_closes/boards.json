@@ -670,6 +670,11 @@
    "lead_min": 21.9,
    "price": 0.5975
   },
+  "pm_combo2:pmcombo2:2026-09-30:9fd15437fa": {
+   "at": "2026-09-30T05:52:59+00:00",
+   "lead_min": 7.0,
+   "price": 0.6293
+  },
   "pm_combo3:pmcombo3:2026-09-24:3eaa6451de": {
    "at": "2026-09-24T17:33:03+00:00",
    "lead_min": 36.9,
@@ -1160,11 +1165,6 @@
    "lead_min": 34.2,
    "price": 0.78
   },
-  "tennis_fav_band:aec-itfme-jasgla-adikot-2026-09-20": {
-   "at": "2026-09-20T05:25:31+00:00",
-   "lead_min": 34.5,
-   "price": 0.84
-  },
   "tennis_fav_band:aec-itfme-jorhas-milhur-2026-09-22": {
    "at": "2026-09-22T05:26:06+00:00",
    "lead_min": 33.9,
@@ -1285,11 +1285,6 @@
    "lead_min": 11.7,
    "price": 0.76
   },
-  "tennis_fav_band:aec-itfwo-murwu-yekkru-2026-09-20": {
-   "at": "2026-09-20T03:04:56+00:00",
-   "lead_min": 3.8,
-   "price": 0.88
-  },
   "tennis_fav_band:aec-itfwo-naghan-mankaw-2026-09-22": {
    "at": "2026-09-22T00:16:57+00:00",
    "lead_min": 43.0,
@@ -1350,11 +1345,6 @@
    "lead_min": 7.6,
    "price": 0.8
   },
-  "tennis_fav_band:aec-wta-joagar-vikmor-2026-09-20": {
-   "at": "2026-09-20T05:25:31+00:00",
-   "lead_min": 4.5,
-   "price": 0.8
-  },
   "tennis_fav_band:aec-wta-krisid-meiguo-2026-09-26": {
    "at": "2026-09-27T03:24:47+00:00",
    "lead_min": 45.2,
@@ -1400,10 +1390,25 @@
    "lead_min": 5.6,
    "price": 0.8
   },
+  "tennis_fav_band_3h:aec-itfme-rohmeh-kayari-2026-09-30": {
+   "at": "2026-09-30T05:52:59+00:00",
+   "lead_min": 7.0,
+   "price": 0.79
+  },
   "tennis_fav_band_3h:aec-itfme-shaliu-lleric-2026-09-27": {
    "at": "2026-09-27T05:46:05+00:00",
    "lead_min": 22.6,
    "price": 0.8
+  },
+  "tennis_fav_band_3h:aec-itfme-shiima-zanste-2026-09-30": {
+   "at": "2026-09-30T05:52:59+00:00",
+   "lead_min": 45.7,
+   "price": 0.8
+  },
+  "tennis_fav_band_3h:aec-itfme-xinche-donkim-2026-09-30": {
+   "at": "2026-09-30T05:52:59+00:00",
+   "lead_min": 42.8,
+   "price": 0.79
   },
   "tennis_fav_band_3h:aec-itfwo-rikkik-aimar-2026-09-28": {
    "at": "2026-09-27T23:58:58+00:00",
@@ -1476,5 +1481,5 @@
    "price": 0.48
   }
  },
- "updated": "2026-09-30T02:10:01+00:00"
+ "updated": "2026-09-30T05:52:59+00:00"
 }
