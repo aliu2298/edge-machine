@@ -28,6 +28,9 @@ def due(d, now, window_min=CLOSE_WINDOW_MIN):
     """Open bets whose deadline is still ahead but inside the window."""
     out = []
     for q in d["quotes"]:
+        # Stored weather rows are frozen. A closing price is not fetched for them.
+        if S.weather_row(q):
+            continue
         if q.get("status") != "open" or not q.get("bet") or not q.get("pick"):
             continue
         dl = T.close_deadline(q)

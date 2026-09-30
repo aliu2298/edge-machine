@@ -6086,9 +6086,18 @@ for _name, _sport in (
         ("olbg", "boxing"), ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
         ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),
-        ("nhl_rest_edge", "nhl_rest"), ("nws_fade", "climate"), ("o15_ranked", "soccer_o15"),
+        ("nhl_rest_edge", "nhl_rest"), ("o15_ranked", "soccer_o15"),
         ("pin_totals", "soccer_o25"), ("btts_market", "soccer_btts")):
     ok(not S.lane_paused(_name, _sport), f"{_name}/{_sport} is not paused")
+ok(S.lane_paused("nws_fade", "climate") and S.source_fully_paused("nws_fade"),
+   "weather is removed, so nws_fade logs no new entry even though it is not on the pause list")
+_saved_pause = dict(S.PAUSED_LANES)
+S.PAUSED_LANES = {k: v for k, v in S.PAUSED_LANES.items() if k != "nws"}
+try:
+    ok(S.lane_paused("nws", "climate") and S.source_fully_paused("nws"),
+       "deleting the nws pause line does not resume weather")
+finally:
+    S.PAUSED_LANES = _saved_pause
 
 _saved_pause = dict(S.PAUSED_LANES)
 S.PAUSED_LANES = {k: v for k, v in S.PAUSED_LANES.items() if k != "covers"}
@@ -6235,11 +6244,15 @@ try:
 finally:
     S.resolve_polymarket_us = _real_us
 for _q in _open:
+    if S.weather_row(_q):
+        eq((_q["status"], _q["pnl"]), ("open", 0.0),
+           f"{_q['source']} / {_q['sport']} stays frozen; weather is not graded")
+        continue
     eq((_q["status"], _q["pnl"]), ("won", round(T.STAKE * (1 / 0.40 - 1), 2)),
        f"{_q['source']} / {_q['sport']} still settles an entry that was already open")
 
 
-print("\nnws_fade: the other side, same stake, fixed read point")
+print("\nnws_fade: the other side, same stake, fixed read point; the tracker does not log it")
 
 eq(S.NWS_FADE_READ_N, 100, "the read point is 100 settled independent outcomes")
 ok(str(S.NWS_FADE_READ_N) in S.SOURCES["nws_fade"]["note"]
@@ -6276,6 +6289,7 @@ eq((_fade[0]["market_id"], _fade[0]["pick"]), (_follow[0]["market_id"], "b"),
    "nws_fade takes the other side of that same bucket")
 _forecast_n = {"n": 0}
 _slot_n = {"n": 0}
+_fade_n = {"n": 0}
 _real_fc = S._nws_forecast_picks
 
 
@@ -6289,36 +6303,34 @@ def _nws_slot(domain):
     return S.fetch_nws(domain)
 
 
+def _fade_slot(domain):
+    _fade_n["n"] += 1
+    return S.fetch_nws_fade(domain)
+
+
 _saved_ch = S.CHALLENGERS
 S._nws_forecast_picks = _count_fc
-S.CHALLENGERS = {"nws": _nws_slot, "nws_fade": S.fetch_nws_fade}
+S.CHALLENGERS = {"nws": _nws_slot, "nws_fade": _fade_slot}
 S.nws_highs = lambda lat, lon: {"2026-09-12": 78.0}
+_nd = {"quotes": [], "meta": {}, "coverage": {}}
+_nd_on = {"quotes": [], "meta": {}, "coverage": {}}
 try:
-    _nd = {"quotes": [], "meta": {}, "coverage": {}}
     T.publish(_nd, {"climate": _nws_rows}, {}, verbose=False)
-    eq(_slot_n["n"], 0, "the paused follow lane's fetcher is not called")
-    eq(_forecast_n["n"], 1, "the NWS forecast is fetched once per run and shared with nws_fade")
-    _forecast_n["n"] = 0
+    eq((_slot_n["n"], _fade_n["n"], _forecast_n["n"]), (0, 0, 0),
+       "neither weather fetcher runs, so the NWS forecast is not read")
     with _without_pause("nws"):
-        _nd_on = {"quotes": [], "meta": {}, "coverage": {}}
         T.publish(_nd_on, {"climate": _nws_rows}, {}, verbose=False)
-    eq((_forecast_n["n"], _slot_n["n"]), (1, 1),
-       "with the follow lane back on, the forecast is still fetched once and both lanes read it")
+    eq((_slot_n["n"], _fade_n["n"], _forecast_n["n"]), (0, 0, 0),
+       "taking nws off the pause list still does not fetch weather")
 finally:
     S._nws_forecast_picks = _real_fc
     S.nws_highs = _real_highs
     S.CHALLENGERS = _saved_ch
     S.clear_nws_run()
-_nq = {q["source"]: q for q in _nd["quotes"]}
-ok("nws" not in _nq, "the paused follow lane logs nothing")
-eq((_nq["nws_fade"]["source"], _nq["nws_fade"]["pick"], _nq["nws_fade"]["bet"], _nq["nws_fade"]["stake"]),
-   ("nws_fade", "b", True, T.STAKE),
-   "nws_fade logs the other side under source nws_fade, at the same flat stake")
-close(_nq["nws_fade"]["price"], 0.66, "the price is the other side's ask")
-_on = {q["source"]: q for q in _nd_on["quotes"]}
-eq((_on["nws"]["pick"], _on["nws_fade"]["pick"]), ("a", "b"),
-   "re-enabled, the follow lane and the fade log opposite sides of the shared forecast")
-ok(S.lane_paused("nws", "climate"), "the share check put nws back on the pause list")
+eq(_nd["quotes"], [], "neither weather lane logs a quote")
+eq(_nd_on["quotes"], [], "taking nws off the pause list still logs no weather bet")
+ok(S.lane_paused("nws", "climate") and S.lane_paused("nws_fade", "climate"),
+   "both weather lanes stay unable to log")
 
 
 print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged lane")

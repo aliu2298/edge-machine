@@ -160,6 +160,8 @@ def feed_health(d):
     for name, meta in S.SOURCES.items():
         if not meta["connected"] or name == "polymarket_us":
             continue
+        if name in S.REMOVED_SOURCES:
+            continue
         # A rule reads data we already hold; zero picks means no match qualified, not a dead feed.
         if meta.get("kind") == "Rule":
             continue
@@ -302,7 +304,7 @@ def approval_table(d, scores):
     rows = []
     order = {"approved": 0, "watch": 1, "failing": 2, "unproven": 3}
     judged = [(name, T.assess(d, name)) for name, s in scores.items()
-              if s["connected"] and s["bets"]]
+              if s["connected"] and s["bets"] and name not in S.REMOVED_SOURCES]
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
@@ -376,11 +378,14 @@ are skipped ({ou.get('stale', 0)} last run). Last run's paid calls: {esc(spent)}
 
 def coverage_table(cov):
     """Sport x source grid of what each feed actually returned on the last run."""
-    names = [n for n, m in S.SOURCES.items() if m["connected"]]
+    names = [n for n, m in S.SOURCES.items()
+             if m["connected"] and n not in S.REMOVED_SOURCES]
     head = "".join(f'<th class="num">{esc(S.SOURCES[n]["label"].split(" (")[0])}</th>'
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
+        if sport in S.REMOVED_SPORTS:
+            continue
         cells = []
         for n in names:
             v = (cov.get(sport) or {}).get(n)
@@ -401,7 +406,7 @@ def coverage_table(cov):
 def open_rows(d, limit=None):
     """Running bets, soonest first. One flat table: Contest, then Price."""
     live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
-            and not T.climate_excluded(q)]
+            and not T.climate_excluded(q) and not S.weather_row(q)]
     live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
     out = []
     for q in (live[:limit] if limit else live):
@@ -450,7 +455,7 @@ def _cityday_repeat(q):
 def settled_rows(d, limit=None):
     """Settled bets, newest first. One flat table: Contest, then P/L."""
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not _cityday_repeat(q)]
+            and not _cityday_repeat(q) and not S.weather_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     out = []
     for q in (done[:limit] if limit else done):
@@ -526,7 +531,7 @@ def partition_settled(d, now):
     """
     today = _chicago_today(now)
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not _cityday_repeat(q)]
+            and not _cityday_repeat(q) and not S.weather_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
     for q in done:
@@ -703,6 +708,8 @@ def pair_list(d, st, include_retired=True):
     """
     out = []
     for name, meta in S.SOURCES.items():
+        if name in S.REMOVED_SOURCES:
+            continue
         if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             continue
         sports = list(meta["sports"]) if meta["connected"] else []
@@ -710,6 +717,8 @@ def pair_list(d, st, include_retired=True):
             {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
             **({sp: meta["retired"] for sp in meta["sports"]} if not meta["connected"] and meta.get("retired") else {}))
         for sport in sports + [sp for sp in gone if sp not in sports]:
+            if sport in S.REMOVED_SPORTS:
+                continue
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
             # reviewed before its first qualifying match; other pairs appear once they bet.
@@ -1006,7 +1015,7 @@ def reconcile(d, rows):
     bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
     from a verdict — so the page says so in numbers rather than leaving a gap to find."""
     bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
-            and not T.climate_excluded(q)]
+            and not T.climate_excluded(q) and not S.weather_row(q)]
     shown = {(r["name"], r["sport"]) for r in rows}
     in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
     venue = base = before = other = 0
@@ -1587,12 +1596,35 @@ def archive_week_html(slug, rows, now_dt, d=None):
     )
 
 
+def hide_removed(d):
+    """A page copy with weather quotes, coverage, and feed status left out.
+
+    The ledger file is not written. Stored rows stay where they are.
+    """
+    if not d:
+        return d
+    out = dict(d)
+    out["quotes"] = [q for q in d.get("quotes") or [] if not S.weather_row(q)]
+    if "_archive" in d:
+        out["_archive"] = [q for q in d.get("_archive") or [] if not S.weather_row(q)]
+    cov = d.get("coverage")
+    if cov:
+        out["coverage"] = {
+            sp: {name: n for name, n in (cells or {}).items() if name not in S.REMOVED_SOURCES}
+            for sp, cells in cov.items() if sp not in S.REMOVED_SPORTS}
+    status = d.get("feed_status")
+    if status:
+        out["feed_status"] = {k: v for k, v in status.items() if k not in S.REMOVED_SOURCES}
+    return out
+
+
 def render_pages(now=None, d=None, st=None):
     """Sandbox HTML, the archive index, and {{week slug: week HTML}}.
 
     Presentation only. `now` is the build time the 7-day window is measured from.
+    Weather rows stay in the ledger and are left out of every page.
     """
-    d = T.load() if d is None else d
+    d = hide_removed(T.load() if d is None else d)
     st = T.load_stages() if st is None else st
     now_dt = _as_now(now)
     sandbox = _sandbox_html(d, st, now_dt)
@@ -1632,10 +1664,13 @@ def _sandbox_html(d, st, now_dt):
     groups = archive_groups(older)
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)
-    n_void = sum(1 for q in d["quotes"] if q["status"] == "void" and q["bet"])
+    n_void = sum(1 for q in d["quotes"]
+                 if q["status"] == "void" and q["bet"] and not S.weather_row(q))
     # A stale city-day flag does not make a void a repeat. The void stays in
     # this count and on the settled pages, and out of the city-day count.
-    n_city = sum(1 for q in d["quotes"] if q.get("bet") and _cityday_repeat(q))
+    # Weather is not on the page, so its repeats are not in this count.
+    n_city = sum(1 for q in d["quotes"]
+                 if q.get("bet") and _cityday_repeat(q) and not S.weather_row(q))
     _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
              else (f" · {n_city} city-day repeats set aside" if n_city else ""))
     today = _chicago_today(now_dt)

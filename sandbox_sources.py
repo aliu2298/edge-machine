@@ -1013,7 +1013,8 @@ PAUSED_LANES = {
     "polymarket": None,
     "draftkings": None,
     "mlb_fade_streak": None,
-    # The follow direction. The other side is nws_fade, which is not paused.
+    # The follow direction. Weather is removed below; this line stays so the
+    # pause list still names nws.
     "nws": None,
     # Already retired. Kept here so reconnecting it does not resume it.
     "tt_band_55_60": None,
@@ -1041,16 +1042,30 @@ PAUSED_LANES = {
 # Every NFL entry, from any lane, including a source that is not listed above.
 PAUSED_SPORTS = frozenset({"nfl"})
 
+# Weather is off the board. Stored rows stay in the ledger files. No run fetches
+# a weather market or logs a new weather bet, and no page renders one, including
+# past rows. Deleting the nws line above does not resume this.
+REMOVED_SOURCES = frozenset({"nws", "nws_fade"})
+REMOVED_SPORTS = frozenset({"climate"})
+
 _NOT_PAUSED = object()
+
+
+def weather_row(q):
+    """True for a stored weather quote. The row stays in the file."""
+    return q.get("source") in REMOVED_SOURCES or q.get("sport") in REMOVED_SPORTS
 
 
 def lane_paused(source, sport):
     """True when (source, sport) must not log a new entry.
 
     Open entries already in the ledger are not this function's business: grade()
-    settles them whether or not the lane is paused. Re-enable by editing
-    PAUSED_LANES or PAUSED_SPORTS — see those.
+    settles them whether or not the lane is paused. Re-enable a pause by editing
+    PAUSED_LANES or PAUSED_SPORTS — see those. Weather is not a pause: removing
+    it from those sets does not resume a fetch or a bet.
     """
+    if source in REMOVED_SOURCES or sport in REMOVED_SPORTS:
+        return True
     if sport in PAUSED_SPORTS:
         return True
     spec = PAUSED_LANES.get(source, _NOT_PAUSED)
