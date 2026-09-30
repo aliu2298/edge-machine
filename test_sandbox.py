@@ -6244,6 +6244,10 @@ try:
 finally:
     S.resolve_polymarket_us = _real_us
 for _q in _open:
+    if S.weather_row(_q):
+        eq((_q["status"], _q["pnl"]), ("open", 0.0),
+           f"{_q['source']} / {_q['sport']} stays frozen; weather is not graded")
+        continue
     eq((_q["status"], _q["pnl"]), ("won", round(T.STAKE * (1 / 0.40 - 1), 2)),
        f"{_q['source']} / {_q['sport']} still settles an entry that was already open")
 
