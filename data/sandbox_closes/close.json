@@ -130,26 +130,6 @@
    "lead_min": 11.3,
    "price": 0.99
   },
-  "covers:KXNFLGAME-26SEP20JACDEN": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 20.6,
-   "price": 0.57
-  },
-  "covers:KXNFLGAME-26SEP20LVLAC": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 20.6,
-   "price": 0.74
-  },
-  "covers:KXNFLGAME-26SEP20MIASF": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 40.6,
-   "price": 0.9
-  },
-  "covers:KXNFLGAME-26SEP20WASDAL": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 40.6,
-   "price": 0.66
-  },
   "covers:KXNFLGAME-26SEP27ARISF": {
    "at": "2026-09-27T22:32:56+00:00",
    "lead_min": 32.1,
@@ -270,26 +250,6 @@
    "lead_min": 55.8,
    "price": 0.35
   },
-  "draftkings:aec-nfl-mia-sf-2026-09-20": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 40.6,
-   "price": 0.105
-  },
-  "espn_fpi:KXMLBGAME-26SEP201607MINLAA": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 22.6,
-   "price": 0.49
-  },
-  "espn_fpi:KXMLBGAME-26SEP201610NYYAZ": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 25.6,
-   "price": 0.48
-  },
-  "espn_fpi:KXMLBGAME-26SEP201610SFLAD": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 25.6,
-   "price": 0.29
-  },
   "espn_fpi:KXMLBGAME-26SEP201920MILBAL": {
    "at": "2026-09-20T22:24:11+00:00",
    "lead_min": 55.8,
@@ -299,11 +259,6 @@
    "at": "2026-09-26T23:52:46+00:00",
    "lead_min": 47.2,
    "price": 0.55
-  },
-  "espn_fpi:aec-mlb-ath-cle-2026-09-20": {
-   "at": "2026-09-20T17:39:31+00:00",
-   "lead_min": 0.5,
-   "price": 0.69
   },
   "espn_fpi:aec-mlb-bos-nyy-2026-09-29": {
    "at": "2026-09-29T23:11:19+00:00",
@@ -329,6 +284,11 @@
    "at": "2026-09-23T22:15:25+00:00",
    "lead_min": 54.6,
    "price": 0.565
+  },
+  "espn_fpi:aec-mlb-cws-hou-2026-09-30": {
+   "at": "2026-09-30T20:46:59+00:00",
+   "lead_min": 13.0,
+   "price": 0.415
   },
   "espn_fpi:aec-mlb-mil-phi-2026-09-23": {
    "at": "2026-09-23T22:15:25+00:00",
@@ -375,11 +335,6 @@
    "lead_min": 36.0,
    "price": 0.415
   },
-  "espn_fpi:aec-mlb-wsh-stl-2026-09-20": {
-   "at": "2026-09-20T17:39:31+00:00",
-   "lead_min": 35.5,
-   "price": 0.545
-  },
   "espn_fpi:aec-nfl-ari-sf-2026-09-27": {
    "at": "2026-09-27T19:16:25+00:00",
    "lead_min": 48.6,
@@ -390,30 +345,15 @@
    "lead_min": 49.0,
    "price": 0.31
   },
-  "espn_fpi:aec-nfl-jax-den-2026-09-20": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 20.6,
-   "price": 0.435
-  },
   "espn_fpi:aec-nfl-nyg-lar-2026-09-21": {
    "at": "2026-09-22T00:03:47+00:00",
    "lead_min": 11.2,
    "price": 0.29
   },
-  "espn_fpi:aec-nfl-sea-ari-2026-09-20": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 40.6,
-   "price": 0.35
-  },
   "kalshi:aec-mlb-az-sd-2026-09-26": {
    "at": "2026-09-26T23:52:46+00:00",
    "lead_min": 47.2,
    "price": 0.545
-  },
-  "kalshi:aec-mlb-chc-cin-2026-09-20": {
-   "at": "2026-09-20T17:39:31+00:00",
-   "lead_min": 0.5,
-   "price": 0.4
   },
   "kalshi:aec-mlb-nym-wsh-2026-09-25": {
    "at": "2026-09-25T21:49:07+00:00",
@@ -434,11 +374,6 @@
    "at": "2026-09-20T22:24:11+00:00",
    "lead_min": 35.8,
    "price": 0.45
-  },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP20SJANA-ANA2": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 15.6,
-   "price": 0.5
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP20UTACOL-COL2": {
    "at": "2026-09-20T22:24:11+00:00",
@@ -685,16 +620,6 @@
    "lead_min": 21.3,
    "price": 0.3725
   },
-  "polymarket:KXMLBGAME-26SEP201610NYYAZ": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 25.6,
-   "price": 0.48
-  },
-  "polymarket:KXMLBGAME-26SEP201610SFLAD": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 25.6,
-   "price": 0.29
-  },
   "polymarket:aec-cplcr-aabf-jka-2026-09-20": {
    "at": "2026-09-20T22:24:11+00:00",
    "lead_min": 35.8,
@@ -745,11 +670,6 @@
    "lead_min": 37.2,
    "price": 0.61
   },
-  "scores24:aec-nfl-sea-ari-2026-09-20": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 40.6,
-   "price": 0.655
-  },
   "soccerpredictions:KXAPFDDHGAME-26SEP28LIBOLI": {
    "at": "2026-09-28T21:22:11+00:00",
    "lead_min": 37.8,
@@ -759,11 +679,6 @@
    "at": "2026-09-26T18:34:15+00:00",
    "lead_min": 55.7,
    "price": 0.42
-  },
-  "soccerpredictions:KXECULPGAME-26SEP20CUEMUR": {
-   "at": "2026-09-20T19:44:21+00:00",
-   "lead_min": 15.6,
-   "price": 0.39
   },
   "soccerpredictions:KXLIGAEXPGAME-26SEP26TLACAN": {
    "at": "2026-09-26T21:32:54+00:00",
@@ -1045,11 +960,6 @@
    "lead_min": 51.3,
    "price": 0.78
   },
-  "tennis_fav_band:aec-itfme-vicben-leonsan-2026-09-20": {
-   "at": "2026-09-20T17:39:31+00:00",
-   "lead_min": 13.3,
-   "price": 0.8
-  },
   "tennis_fav_band:aec-itfme-yuqson-matshe-2026-09-28": {
    "at": "2026-09-28T01:10:14+00:00",
    "lead_min": 49.8,
@@ -1221,5 +1131,5 @@
    "price": 0.93
   }
  },
- "updated": "2026-09-30T15:53:25+00:00"
+ "updated": "2026-09-30T20:46:59+00:00"
 }
