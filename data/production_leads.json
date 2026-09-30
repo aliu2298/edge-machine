@@ -1,64 +1,6 @@
 {
- "board_built_at": "2026-09-29T21:29:15+00:00",
+ "board_built_at": "2026-09-30T01:16:37+00:00",
  "leads": {
-  "2026-09-22|Norbert Novenyi Jr.|Theo Haig|Norbert Novenyi Jr. to win \u00b7 MMA favourite-band rule": {
-   "away": "Theo Haig",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-22",
-   "edge_at_log": null,
-   "first_seen": "2026-09-21",
-   "headline": "Norbert Novenyi Jr. to win",
-   "home": "Norbert Novenyi Jr.",
-   "id": "2026-09-22|Norbert Novenyi Jr.|Theo Haig|Norbert Novenyi Jr. to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-22T21:30Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Norbert Novenyi Jr. v Theo Haig",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.79,
-   "route": {
-    "market": "aec-dwcs-nornov-thehai-2026-09-22",
-    "outcome": "Norbert Novenyi Jr.",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-nornov-thehai-2026-09-22",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "hit"
-  },
-  "2026-09-23|Marcos Degli|Paris Moran|Marcos Degli to win \u00b7 MMA favourite-band rule": {
-   "away": "Paris Moran",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-23",
-   "edge_at_log": null,
-   "first_seen": "2026-09-21",
-   "headline": "Marcos Degli to win",
-   "home": "Marcos Degli",
-   "id": "2026-09-23|Marcos Degli|Paris Moran|Marcos Degli to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-23T00:00Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Marcos Degli v Paris Moran",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.76,
-   "route": {
-    "market": "aec-dwcs-mardeg-parmor-2026-09-22",
-    "outcome": "Marcos Degli",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-mardeg-parmor-2026-09-22",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "hit"
-  },
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
    "bet": {
@@ -169,99 +111,6 @@
    "source": "team1_form_l5",
    "sport": "soccer_team1",
    "status": "miss"
-  },
-  "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule": {
-   "away": "Camila Reynoso",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-29",
-   "edge_at_log": null,
-   "first_seen": "2026-09-28",
-   "headline": "Aieza Bertolso to win",
-   "home": "Aieza Bertolso",
-   "id": "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-29T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-09-29",
-   "last_seen_at": "2026-09-29T21:29:15+00:00",
-   "league": "MMA",
-   "match": "Aieza Bertolso v Camila Reynoso",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.81,
-   "route": {
-    "market": "aec-dwcs-aieber-camrey-2026-09-29",
-    "outcome": "Aieza Bertolso",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-aieber-camrey-2026-09-29",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
-  },
-  "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule": {
-   "away": "Zaurbek Sabanov",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-30",
-   "edge_at_log": null,
-   "first_seen": "2026-09-28",
-   "headline": "Zaurbek Sabanov to win",
-   "home": "Adama Diop",
-   "id": "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-30T00:30Z",
-   "lane": "production",
-   "last_seen": "2026-09-29",
-   "last_seen_at": "2026-09-29T21:29:15+00:00",
-   "league": "MMA",
-   "match": "Adama Diop v Zaurbek Sabanov",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.81,
-   "route": {
-    "market": "aec-dwcs-adadio-zausab-2026-09-29",
-    "outcome": "Zaurbek Sabanov",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-adadio-zausab-2026-09-29",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
-  },
-  "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule": {
-   "away": "George Staines",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-30",
-   "edge_at_log": null,
-   "first_seen": "2026-09-28",
-   "headline": "George Staines to win",
-   "home": "Loai Abushaar",
-   "id": "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-30T00:25Z",
-   "lane": "production",
-   "last_seen": "2026-09-29",
-   "last_seen_at": "2026-09-29T21:29:15+00:00",
-   "league": "MMA",
-   "match": "Loai Abushaar v George Staines",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.76,
-   "route": {
-    "market": "aec-dwcs-loaabu-geosta-2026-09-29",
-    "outcome": "George Staines",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-loaabu-geosta-2026-09-29",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -313,5 +162,5 @@
  "stage": "production",
  "unlisted_skipped": 7,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-29T21:29:15+00:00"
+ "updated_at": "2026-09-30T01:16:37+00:00"
 }
