@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-09-30T02:07:28+00:00",
+ "board_built_at": "2026-09-30T05:39:46+00:00",
  "leads": {
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
@@ -140,6 +140,64 @@
    "source": "mma_fav_band",
    "sport": "mma",
    "status": "hit"
+  },
+  "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule": {
+   "away": "Zaurbek Sabanov",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-30",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Zaurbek Sabanov to win",
+   "home": "Adama Diop",
+   "id": "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-30T00:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Adama Diop v Zaurbek Sabanov",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-dwcs-adadio-zausab-2026-09-29",
+    "outcome": "Zaurbek Sabanov",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-adadio-zausab-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "miss"
+  },
+  "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule": {
+   "away": "George Staines",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-30",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "George Staines to win",
+   "home": "Loai Abushaar",
+   "id": "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-30T00:25Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Loai Abushaar v George Staines",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.76,
+   "route": {
+    "market": "aec-dwcs-loaabu-geosta-2026-09-29",
+    "outcome": "George Staines",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-loaabu-geosta-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -149,10 +207,10 @@
    "promoted_at": "2026-09-22T16:20:08+00:00",
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": 0.0333,
-   "sandbox_n": 3,
-   "sandbox_roi": -0.5885,
-   "sandbox_roi_fee": -0.5931
+   "sandbox_clv": -0.008,
+   "sandbox_n": 5,
+   "sandbox_roi": -0.4899,
+   "sandbox_roi_fee": -0.4964
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -191,5 +249,5 @@
  "stage": "production",
  "unlisted_skipped": 7,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-09-30T02:07:28+00:00"
+ "updated_at": "2026-09-30T05:39:46+00:00"
 }
