@@ -32,3 +32,57 @@ assert.strictEqual(tables.filterRecords(rows, "   ").length, 2, "a blank query k
 assert.strictEqual(tables.filterRecords(rows, "nope").length, 0);
 
 console.log("ok: \u2212$100 sorts below +$6, and the text filter keeps the matching row");
+
+// Phone cards and the row filter share one predicate. Boston + MLB keeps the
+// Boston row and drops the tennis combo. paintRow hides a card with
+// display:none !important, because the card layout's display:block beats
+// the hidden attribute on its own.
+var boston = { haystack: "Boston Red Sox MLB", text: "Boston Red Sox MLB" };
+var tennis = {
+  haystack: "2-leg tennis combo: Denis Shapovalov + Kimberly Birrell Tennis · Combos",
+  text: "2-leg tennis combo: Denis Shapovalov + Kimberly Birrell Tennis · Combos",
+};
+assert.strictEqual(
+  tables.passesFilters(boston, "Boston", [{ text: "MLB", value: "MLB" }]),
+  true,
+  "Boston + MLB matches the Boston row");
+assert.strictEqual(
+  tables.passesFilters(tennis, "Boston", [{ text: "Tennis · Combos", value: "MLB" }]),
+  false,
+  "Boston + MLB does not match the tennis combo");
+assert.strictEqual(
+  tables.passesFilters(tennis, "shapovalov", [{ text: "Tennis · Combos", value: "" }]),
+  true,
+  "a blank sport select does not filter the row out");
+assert.strictEqual(
+  tables.passesFilters(boston, "Boston", [{ text: "MLB", value: "Tennis · Combos" }]),
+  false,
+  "a sport select has to match the sport cell");
+assert.strictEqual(tables.passesFilters(boston, "", []), true, "no query and no selects keeps the row");
+
+function fakeRow() {
+  var props = {};
+  return {
+    hidden: false,
+    style: {
+      setProperty: function (name, value, priority) {
+        props[name] = priority ? value + " !" + priority : value;
+      },
+      removeProperty: function (name) { delete props[name]; },
+    },
+    props: props,
+  };
+}
+var hiddenRow = fakeRow();
+tables.paintRow(hiddenRow, false);
+assert.strictEqual(hiddenRow.hidden, true, "a filtered row is hidden");
+assert.strictEqual(hiddenRow.props.display, "none !important",
+  "a filtered card is display:none !important so the card layout cannot show it");
+var shownRow = fakeRow();
+shownRow.hidden = true;
+shownRow.props.display = "none !important";
+tables.paintRow(shownRow, true);
+assert.strictEqual(shownRow.hidden, false);
+assert.strictEqual(shownRow.props.display, undefined, "a row that passes clears the inline display");
+
+console.log("ok: Boston + MLB matches the row and the card, and the tennis combo does not");
