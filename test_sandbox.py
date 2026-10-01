@@ -3055,8 +3055,9 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["mma_fav_band|mma", "oddspedia|cricket", "pm_combo4|tennis_pmcombo",
-    "team1_form_l5|soccer_team1"],
+   ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
+    "pm_combo4|tennis_pmcombo", "team1_form_l5|soccer_team1",
+    "team1_form_l5|soccer_team1_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 # pm_combo4 listed 2026-09-28 as asked, and NOT executable: Polymarket US has no parlay API.
 # Both ends must stay honest about that, so neither drifts into emitting an actionable lead.
@@ -4268,10 +4269,115 @@ for _src in ("o15_form_l10", "team1_form_l5", "team2_form_l10", "u35_low_scoring
     _base = S.SOURCES[_src]["sports"][0]
     eq(S.SOURCES[_src]["sports"], [_base, _base + "_cup", _base + "_intl"], f"{_src} runs as league, Cups and Internationals pairs")
 eq(S.SPORTS["soccer_o15_intl"], "Soccer · Over 1.5 · Internationals", "twins are labelled for review under Soccer")
-ok(not any(k.endswith(("_cup", "|soccer_o15_intl")) or "_cup" in k or "_intl" in k for k in T.PAIR_OVERRIDES),
-   "no cup or international pair is in Production")
+ok(not any("_cup" in k for k in T.PAIR_OVERRIDES), "no cup pair is in Production")
+ok("team1_form_l5|soccer_team1_intl" in T.PAIR_OVERRIDES
+   and "o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES,
+   "the two internationals pairs moved by hand are on the list")
+ok("o15_form_l10|soccer_o15_intl" not in T.PAIR_OVERRIDES
+   and "u35_low_scoring|soccer_u35_intl" not in T.PAIR_OVERRIDES
+   and "team1_form_l5|soccer_team1_cup" not in T.PAIR_OVERRIDES,
+   "the over-1.5 form twin, under 3.5, and the cup twin stay off it")
 ok(not T.placeable(dict(_crows["soccer_o15_cup"][0], pick="a", bet=True)),
-   "and the Production feed could not publish one if it were")
+   "and the Production feed could not publish a cup market if it were")
+
+# Internationals in Production (2026-10-01). Fixed clock, no wall time.
+_INTL_NOW = datetime(2026, 10, 1, 12, tzinfo=timezone.utc)
+_intl_ko = "2026-10-02T18:00:00+00:00"
+
+
+def _intl_q(source, sport, mid, **extra):
+    q = dict(id=f"{source}:{mid}", source=source, sport=sport, market_id=mid, bet=True,
+             pick="a", price=0.8, price_a=0.8, price_b=0.22, status="open", result=None,
+             pnl=0.0, stake=100.0, start=_intl_ko, logged="2026-10-01T08:00:00+00:00",
+             label="x", side_a="Yes", side_b="No", venue="kalshi_binary",
+             league="UEFA Nations League", espn_home="Kazakhstan", espn_away="Moldova",
+             start_source="espn", team="Kazakhstan")
+    q.update(extra)
+    return q
+
+
+eq(S.quote_league(dict(venue="kalshi_binary", sport="soccer_team1_intl", league="UEFA Nations League")),
+   "UEFA Nations League", "a Nations League goals row maps to UEFA Nations League")
+eq(S.quote_league(dict(venue="kalshi_binary", sport="soccer_o15_intl", league="International Friendly")),
+   "International Friendly", "an international friendly goals row maps to International Friendly")
+eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXUEFANLGAME-26OCT02KAZMDA-KAZ")),
+   "UEFA Nations League", "the Nations League match ticker maps to the same league")
+eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXINTLFRIENDLYGAME-26OCT01UZBSYR-UZB")),
+   "International Friendly", "the friendly match ticker maps to the same league")
+eq(S.quote_league(dict(venue="kalshi_binary", sport="soccer_o15_cup", league="EFL Cup")), None,
+   "a cup competition still has no Production league")
+eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXEFLCUPGAME-26SEP15X")), None,
+   "a cup match ticker still does not")
+
+_st_intl = {"pairs": {}, "events": []}
+T.evaluate_stages({"quotes": []}, _st_intl, now=_INTL_NOW, verbose=False)
+# .get so a pre-fix tree, which never writes these keys, fails the assertion
+# instead of raising KeyError before the message is printed.
+_team1_stage = _st_intl["pairs"].get("team1_form_l5|soccer_team1_intl") or {}
+eq(_team1_stage.get("stage"), "production",
+   "team1_form_l5|soccer_team1_intl qualifies for Production")
+ok(_team1_stage.get("ready_at"), "and it is ready from that run")
+_o15_stage = _st_intl["pairs"].get("o15_ranked|soccer_o15_intl") or {}
+eq(_o15_stage.get("stage"), "production",
+   "o15_ranked|soccer_o15_intl qualifies for Production")
+ok("team1_form_l5|soccer_team1_cup" not in _st_intl["pairs"], "the cup twin is not moved with it")
+ok("o15_form_l10|soccer_o15_intl" not in _st_intl["pairs"], "o15_form_l10|soccer_o15_intl is not moved")
+ok("u35_low_scoring|soccer_u35_intl" not in _st_intl["pairs"], "under 3.5 internationals is not moved")
+ok("team1_form_l5|soccer_team1_other" not in _st_intl["pairs"], "an unknown sport suffix is not moved")
+
+ok(T.placeable(_intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")),
+   "Yes on a Nations League team-goals market can be published")
+ok(T.placeable(_intl_q("o15_ranked", "soccer_o15_intl", "KXUEFANLTOTAL-26OCT02POLROU-2",
+                       team=None, league="International Friendly")),
+   "Yes on a friendly over-1.5 market can be published")
+ok(not T.placeable(_intl_q("team1_form_l5", "soccer_team1_cup", "KXEFLCUPTEAMTOTAL-26OCT02X-A1",
+                           league="EFL Cup")),
+   "a _cup team-goals market still cannot")
+ok(not T.placeable(_intl_q("team1_form_l5", "soccer_team1_other", "KXUEFANLTEAMTOTAL-26OCT02X-A1")),
+   "an unknown sport suffix still cannot")
+ok(not T.placeable(_intl_q("u35_low_scoring", "soccer_u35_intl", "KXUEFANLTOTAL-26OCT02KAZMDA-4",
+                           pick="b", team=None)),
+   "No on an internationals total still cannot")
+ok("soccer_team1_cup" not in T.FEED_BETS and "soccer_o15_cup" not in T.FEED_BETS
+   and "soccer_u35_intl" not in T.FEED_BETS and "soccer_team1_other" not in T.FEED_BETS,
+   "the feed names the two internationals sports and no other suffix")
+
+_verified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")
+_unverified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02X-B1",
+                      start_source=None)
+_cup_bet = _intl_q("team1_form_l5", "soccer_team1_cup", "KXEFLCUPTEAMTOTAL-26OCT02X-A1", league="EFL Cup")
+_other = _intl_q("team1_form_l5", "soccer_team1_other", "KXUEFANLTEAMTOTAL-26OCT02Y-A1")
+_o15 = _intl_q("o15_ranked", "soccer_o15_intl", "KXINTLFRIENDLYTOTAL-26OCT01UZBSYR-2",
+               team=None, league="International Friendly", espn_home="Uzbekistan", espn_away="Syria")
+_form = _intl_q("o15_form_l10", "soccer_o15_intl", "KXUEFANLTOTAL-26OCT04PORNOR-2", team=None)
+ok(PR.start_verified(_verified), "an internationals bet with an ESPN start is verified")
+ok(not PR.start_verified(_unverified), "an unverified internationals fixture is refused")
+ok(not PR.start_verified(dict(_verified, start_source="kalshi")),
+   "Kalshi's own estimate is still not a verified start")
+_fd_intl = PR.build_feed({"quotes": [_verified, _unverified, _cup_bet, _other, _o15, _form]},
+                         _st_intl, now=_INTL_NOW)
+_intl_ids = sorted(l.get("sandbox_quote") for l in _fd_intl["leads"].values()
+                   if l.get("pair") in ("team1_form_l5|soccer_team1_intl", "o15_ranked|soccer_o15_intl"))
+eq(_intl_ids, ["o15_ranked:KXINTLFRIENDLYTOTAL-26OCT01UZBSYR-2",
+               "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1"],
+   "only the verified internationals bets from the two pairs are published")
+eq(_fd_intl.get("unverified_kickoff_skipped"), 1, "the unverified internationals fixture is held back")
+_lead = next((l for l in _fd_intl["leads"].values()
+              if str(l.get("sandbox_quote") or "").startswith("team1_form_l5:")), None)
+ok(_lead is not None and "model_prob" not in _lead, "a rule lane does not carry model_prob")
+eq(None if _lead is None else _lead.get("bet"),
+   {"kind": "team_gte", "n": 1, "team": "Kazakhstan"},
+   "the team-goals lead keeps the feed's own bet")
+eq(None if _lead is None else (_lead.get("pair"), _lead.get("status"),
+                               _lead.get("price_at_log"), _lead.get("kickoff")),
+   ("team1_form_l5|soccer_team1_intl", "pending", 0.8, "2026-10-02T18:00Z"),
+   "and the lead keeps pair, status, price and kickoff")
+_o15_lead = next((l for l in _fd_intl["leads"].values()
+                  if l.get("pair") == "o15_ranked|soccer_o15_intl"), None)
+eq(None if _o15_lead is None else _o15_lead.get("bet"),
+   {"kind": "total_gte", "n": 2}, "the over-1.5 lead is total_gte 2")
+eq(None if _o15_lead is None else _o15_lead.get("league"),
+   "International Friendly", "and it names the friendly")
 _twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_form_l10"],
              a=dict(n=0, won=0, expected=0, z=0, roi_fee=None), open=2, last="", prod=False, moved="", v="waiting")
 eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")

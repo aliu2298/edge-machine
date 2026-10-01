@@ -195,6 +195,10 @@ PAIR_OVERRIDES = {
     # asked. No pair belongs in Production on a sample that small because its sibling once looked good.
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
     "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
+    # 2026-10-01, as asked. The internationals twin, named as its own pair. The
+    # league pair above does not cover it, and neither does any other suffix:
+    # the cup twin is not listed. Same checks as the league pair.
+    "team1_form_l5|soccer_team1_intl": dict(moved_on="2026-10-01", production_at=None),
     # 2026-09-27, as asked, and before the 50-bet stamp. 12 settled on the US exchanges at
     # +203% (z +2.22), clearing every criterion except the sample. Stated plainly because the
     # ROI is not what it looks like: +214pp of it is TWO longshots landing, a 0.07 at +1328
@@ -243,6 +247,11 @@ PAIR_OVERRIDES = {
     # publish a lead today even if listed. It earns a hearing at 30 settled baskets like
     # anything else.
     "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
+    # 2026-10-01, as asked. Over 1.5 on the day's top-2 mismatches, internationals
+    # only, on Kalshi's over-1.5 Yes. The form-window twin (o15_form_l10) is not
+    # listed, and neither is any cup twin. Under 3.5 is not listed either: those
+    # bets are the No side of the over-3.5 market, and this feed publishes Yes.
+    "o15_ranked|soccer_o15_intl": dict(moved_on="2026-10-01", production_at=None),
     #   OLBG boxing — listed 2026-09-22, OUT 2026-09-27, as asked. It went 8-0 on the US
     #   exchanges (+17.4%, +16.3% after fees) and is still taken off, because the win record
     #   is not the point: it backed the FAVOURITE in all nine bets, at prices from 0.64 to
@@ -2239,8 +2248,12 @@ ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # kalshi_milestone is cricket only, and only after the checks above agree.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
 
+# Each sport is named here. A _cup twin, soccer_u35_intl, and every other
+# suffix are absent on purpose: membership is this dict, not a stripped suffix.
 FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
+             "soccer_o15_intl": {"kind": "total_gte", "n": 2},
              "soccer_team1": {"kind": "team_gte", "n": 1},
+             "soccer_team1_intl": {"kind": "team_gte", "n": 1},
              "soccer_team2": {"kind": "team_gte", "n": 2}}
 
 
