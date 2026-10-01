@@ -256,14 +256,13 @@ SOURCES = {
         label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
         connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
         note="PAPER TEST, registered 2026-09-25, before it logged anything. The same selection "
-             "as tennis_fav_band — the player priced 0.77-0.81 — and only when the entry is "
-             "within 3 hours of the scheduled start. tennis_fav_band is unchanged and keeps "
-             "logging every in-band match, including ones more than 3 hours out, so the two "
-             "records can be compared. A match that qualifies for both is logged by both. "
-             "That overlap is the comparison: duplicate protection is per source, so one "
-             "lane's quote cannot block or void the other. Why the window: closing-line "
-             "value on the band was about -1.2c on entries 3 or more hours before the start, "
-             "and about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees)."),
+             "as the retired favourite-band rule — the player priced 0.77-0.81 — and only when "
+             "the entry is within 3 hours of the scheduled start. The wider rule is off the "
+             "board. This lane keeps the 3-hour window and logs on its own: duplicate "
+             "protection is per source, so another lane's quote cannot block or void this one. "
+             "Why the window: closing-line value on the band was about -1.2c on entries 3 or "
+             "more hours before the start, and about -0.3c on entries inside 3 hours "
+             "(in-band n=90, +11.8% after fees)."),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
@@ -1042,30 +1041,50 @@ PAUSED_LANES = {
 # Every NFL entry, from any lane, including a source that is not listed above.
 PAUSED_SPORTS = frozenset({"nfl"})
 
-# Weather is off the board. Stored rows stay in the ledger files. No run fetches
-# a weather market or logs a new weather bet, and no page renders one, including
-# past rows. Deleting the nws line above does not resume this.
-REMOVED_SOURCES = frozenset({"nws", "nws_fade"})
+# Weather, and the tip lanes taken off the board with it. Stored rows stay in the
+# ledger files. No run logs a new bet on one of them, and no page renders one,
+# including past rows. Deleting a pause line above does not resume a removed lane.
+# A sport-scoped pair is removed only for that sport: ESPN FPI NFL stays, and so
+# do Polymarket US tennis, MMA, cricket and boxing, and Kalshi outside MLB.
+REMOVED_SOURCES = frozenset({
+    "nws", "nws_fade",
+    "cmd_tail", "gas_nochange", "draftkings", "scores24", "covers",
+    "nhl_dog_pl", "tt_band_55_60", "tennis_fav_band", "pinnacle",
+    "sportsgambler", "soccerpredictions",
+})
 REMOVED_SPORTS = frozenset({"climate"})
+REMOVED_LANES = frozenset({
+    ("espn_fpi", "mlb"),
+    ("polymarket_us", "table_tennis"),
+    ("polymarket_us", "mlb"),
+    ("polymarket", "table_tennis"),
+    ("polymarket", "mlb"),
+    ("kalshi", "mlb"),
+})
+# Venue listings for a sport whose every pick lane is gone. MLB stays: the
+# fade-the-streak rule still reads those prices. Table tennis has no kept reader.
+REMOVED_VENUE_SPORTS = frozenset({"table_tennis"})
 
 _NOT_PAUSED = object()
 
 
-def weather_row(q):
-    """True for a stored weather quote. The row stays in the file."""
-    return q.get("source") in REMOVED_SOURCES or q.get("sport") in REMOVED_SPORTS
-
-
-def lane_paused(source, sport):
-    """True when (source, sport) must not log a new entry.
-
-    Open entries already in the ledger are not this function's business: grade()
-    settles them whether or not the lane is paused. Re-enable a pause by editing
-    PAUSED_LANES or PAUSED_SPORTS — see those. Weather is not a pause: removing
-    it from those sets does not resume a fetch or a bet.
-    """
+def lane_removed(source, sport=None):
+    """True when this lane is off the board. The stored row stays in the file."""
     if source in REMOVED_SOURCES or sport in REMOVED_SPORTS:
         return True
+    return sport is not None and (source, sport) in REMOVED_LANES
+
+
+def weather_row(q):
+    """True for a stored row that pages, grading, and pricing leave alone.
+
+    The name is the weather gate. Tip lanes removed the same way use it too.
+    """
+    return lane_removed(q.get("source"), q.get("sport"))
+
+
+def _paused_ignoring_removal(source, sport):
+    """Pause from PAUSED_LANES and PAUSED_SPORTS, ignoring lanes taken off the board."""
     if sport in PAUSED_SPORTS:
         return True
     spec = PAUSED_LANES.get(source, _NOT_PAUSED)
@@ -1078,12 +1097,45 @@ def lane_paused(source, sport):
     return sport in (spec.get("sports") or ())
 
 
+def _fully_paused_ignoring_removal(source):
+    sports = (SOURCES.get(source) or {}).get("sports") or ()
+    if not sports:
+        return _paused_ignoring_removal(source, None)
+    return all(_paused_ignoring_removal(source, sp) for sp in sports)
+
+
+def lane_paused(source, sport):
+    """True when (source, sport) must not log a new entry.
+
+    Open entries already in the ledger are not this function's business: grade()
+    settles them whether or not the lane is paused. Re-enable a pause by editing
+    PAUSED_LANES or PAUSED_SPORTS — see those. A removed lane is not a pause:
+    deleting its line does not resume a fetch or a bet.
+    """
+    if lane_removed(source, sport):
+        return True
+    return _paused_ignoring_removal(source, sport)
+
+
 def source_fully_paused(source):
     """True when no sport this source logs may take a new entry."""
     sports = (SOURCES.get(source) or {}).get("sports") or ()
     if not sports:
         return lane_paused(source, None)
     return all(lane_paused(source, sp) for sp in sports)
+
+
+def fetch_skipped(source, sport):
+    """True when this (source, sport) must not be fetched.
+
+    A removed lane is never fetched. A source the pause list already silences on
+    every sport it logs is not fetched either. Removal does not by itself skip a
+    sport the pause list still allows: ESPN FPI NFL stays fetched while its MLB
+    lane does not.
+    """
+    if lane_removed(source, sport):
+        return True
+    return _fully_paused_ignoring_removal(source)
 
 
 # ---------------------------------------------------------------------------

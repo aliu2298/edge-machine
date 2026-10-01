@@ -151,9 +151,11 @@ def main():
     logged = {"quotes": [], "meta": {}, "coverage": {}}
     logged_on = {"quotes": [], "meta": {}, "coverage": {}}
     try:
-        T.publish(logged, {"climate": [_climate_row()], "mlb": [_mlb_row()]}, {}, verbose=False)
+        T.publish(logged, {"climate": [_climate_row()], "mlb": [_mlb_row()],
+                           "nfl": [_mlb_row()]}, {}, verbose=False)
         S.PAUSED_LANES = {k: v for k, v in saved_lanes.items() if k != "nws"}
-        T.publish(logged_on, {"climate": [_climate_row()], "mlb": [_mlb_row()]}, {}, verbose=False)
+        T.publish(logged_on, {"climate": [_climate_row()], "mlb": [_mlb_row()],
+                              "nfl": [_mlb_row()]}, {}, verbose=False)
     finally:
         S.PAUSED_LANES = saved_lanes
         S.CHALLENGERS = saved_ch
@@ -161,7 +163,8 @@ def main():
         S.clear_nws_run()
     weather_calls = [c for c in calls if c[0] in ("nws", "nws_fade") or c[1] == "climate"]
     eq(weather_calls, [], "no weather source is fetched")
-    ok(("espn_fpi", "mlb") in calls, "a non-weather lane is still fetched")
+    ok(("espn_fpi", "nfl") in calls and ("espn_fpi", "mlb") not in calls,
+       "ESPN FPI NFL is still fetched and its MLB lane is not")
     eq(_weather_quote(logged["quotes"]), [], "the run logs no weather bet")
     eq(_weather_quote(logged_on["quotes"]), [],
        "taking nws off the pause list still logs no weather bet")
@@ -181,11 +184,11 @@ def main():
                       market_id="KXHIGHNY-26SEP30-B70.5")
     by_sport = _open(id="covers:climate", source="covers", sport="climate",
                      market_id="KXHIGHCHI-26SEP30-B68.5")
-    plain = _open(id="covers:mlb", source="covers", sport="mlb", market_id="probe-mlb")
+    plain = _open(id="olbg:boxing", source="olbg", sport="boxing", market_id="probe-box")
     due_ids = [q["id"] for q in SC.due({"quotes": [by_source, by_sport, plain]}, window)]
     ok("nws_fade:open" not in due_ids and "covers:climate" not in due_ids,
        "due() returns no weather rows")
-    ok("covers:mlb" in due_ids, "due() still returns a non-weather row in the window")
+    ok("olbg:boxing" in due_ids, "due() still returns a non-weather row in the window")
     fetched_ids = []
 
     def _price(q):
@@ -193,7 +196,7 @@ def main():
         return 0.5
 
     SC.run({"quotes": [by_source, by_sport, plain]}, {"closes": {}}, now=window, price=_price)
-    ok(fetched_ids == ["covers:mlb"], "a closing price is fetched only for the non-weather row")
+    ok(fetched_ids == ["olbg:boxing"], "a closing price is fetched only for the non-weather row")
 
     past = "2026-09-28T12:00:00+00:00"
     weather = dict(id="nws:KXHIGHNY-26SEP28-B70.5", source="nws", sport="climate",
@@ -202,7 +205,7 @@ def main():
                    price_a=0.40, price_b=0.62, side_a="Yes", side_b="No",
                    start=past, logged="2026-09-27T12:00:00+00:00",
                    pnl=0.0, result=None, settled=None)
-    other = dict(id="espn_fpi:probe-mlb", source="espn_fpi", sport="mlb",
+    other = dict(id="espn_fpi:probe-nfl", source="espn_fpi", sport="nfl",
                  venue="polymarket_us", market_id="probe-mlb",
                  status="open", bet=True, pick="a", price=0.40, stake=100.0,
                  price_a=0.40, price_b=0.62, side_a="Alpha", side_b="Beta",
@@ -251,7 +254,7 @@ def main():
 
     weather_open = _audit_open("nws_fade:KXHIGHNY-26SEP29-B71.5", "nws_fade", "climate",
                                "KXHIGHNY-26SEP29-B71.5")
-    plain_open = _audit_open("covers:stale-mlb", "covers", "mlb", "probe-stale-mlb")
+    plain_open = _audit_open("olbg:stale-boxing", "olbg", "boxing", "probe-stale-boxing")
     asked = []
 
     def _ask(mid):
@@ -299,7 +302,7 @@ def main():
 
     weather_settled = _settled_row("nws:KXHIGHNY-26SEP20-B70.5", "nws", "climate",
                                    "KXHIGHNY-26SEP20-B70.5")
-    plain_settled = _settled_row("espn_fpi:probe-settle", "espn_fpi", "mlb", "probe-settle")
+    plain_settled = _settled_row("espn_fpi:probe-settle", "espn_fpi", "nfl", "probe-settle")
     settle_calls = []
 
     def _settle(mid):

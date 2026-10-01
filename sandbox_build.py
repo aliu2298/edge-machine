@@ -384,12 +384,12 @@ def coverage_table(cov):
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
-        if sport in S.REMOVED_SPORTS:
+        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
             continue
         cells = []
         for n in names:
             v = (cov.get(sport) or {}).get(n)
-            if sport not in S.SOURCES[n]["sports"]:
+            if sport not in S.SOURCES[n]["sports"] or (n, sport) in S.REMOVED_LANES:
                 cells.append('<td class="num mut">n/a</td>')
             elif v is None:
                 cells.append('<td class="num neg">—</td>')
@@ -615,7 +615,7 @@ def collapse(rows_html, head, total, noun):
 def unconnected_rows(d=None):
     out = []
     for name, m in S.SOURCES.items():
-        if m["connected"]:
+        if m["connected"] or name in S.REMOVED_SOURCES:
             continue
         rec = ""
         if m.get("retired") and d is not None:
@@ -629,6 +629,8 @@ def unconnected_rows(d=None):
     # A source can lose one sport and keep the others: that pair is retired on its own.
     for name, m in S.SOURCES.items():
         for sport, reason in (m.get("retired_sports") or {}).items():
+            if S.lane_removed(name, sport):
+                continue
             rec = ""
             if d is not None:
                 n = sum(1 for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
@@ -717,7 +719,7 @@ def pair_list(d, st, include_retired=True):
             {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
             **({sp: meta["retired"] for sp in meta["sports"]} if not meta["connected"] and meta.get("retired") else {}))
         for sport in sports + [sp for sp in gone if sp not in sports]:
-            if sport in S.REMOVED_SPORTS:
+            if S.lane_removed(name, sport):
                 continue
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
@@ -804,9 +806,13 @@ def insights(rows, now=None):
             f'{pct(r["removed"]["a"]["roi_fee"], sign=True)} after fees' for r in gone)
             + ". Back in the Sandbox, counting again.")
     recent = []
-    for m in S.SOURCES.values():
+    for name, m in S.SOURCES.items():
+        if name in S.REMOVED_SOURCES:
+            continue
         items = ([(None, m["retired"])] if m.get("retired") else []) + list((m.get("retired_sports") or {}).items())
         for sport, why in items:
+            if sport and S.lane_removed(name, sport):
+                continue
             try:
                 when = datetime.strptime(str(why)[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
             except ValueError:
@@ -1597,9 +1603,10 @@ def archive_week_html(slug, rows, now_dt, d=None):
 
 
 def hide_removed(d):
-    """A page copy with weather quotes, coverage, and feed status left out.
+    """A page copy with removed quotes, coverage, and feed status left out.
 
-    The ledger file is not written. Stored rows stay where they are.
+    The ledger file is not written. Stored rows stay where they are. Weather
+    and the tip lanes use the same gate.
     """
     if not d:
         return d
@@ -1610,8 +1617,10 @@ def hide_removed(d):
     cov = d.get("coverage")
     if cov:
         out["coverage"] = {
-            sp: {name: n for name, n in (cells or {}).items() if name not in S.REMOVED_SOURCES}
-            for sp, cells in cov.items() if sp not in S.REMOVED_SPORTS}
+            sp: {name: n for name, n in (cells or {}).items()
+                 if not S.lane_removed(name, sp)}
+            for sp, cells in cov.items()
+            if sp not in S.REMOVED_SPORTS and sp not in S.REMOVED_VENUE_SPORTS}
     status = d.get("feed_status")
     if status:
         out["feed_status"] = {k: v for k, v in status.items() if k not in S.REMOVED_SOURCES}
@@ -1678,7 +1687,8 @@ def _sandbox_html(d, st, now_dt):
     # Lane tables add up every quote ever logged, so they cover any recorded outage.
     lane_note = outage_notes(d)
     archive_links = _archive_links(groups, "./archive/")
-    n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
+    n_unconnected = sum(1 for name, m in S.SOURCES.items()
+                        if not m["connected"] and name not in S.REMOVED_SOURCES)
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     # Counted over the pairs still running. Pooling every bet ever logged put this at 46%,
     # but 952 of the misses were one retired rule that quoted hundreds of ladder rungs a day
@@ -1756,7 +1766,7 @@ wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
 {approval_table(d, scores)}</details>
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
-<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>
+{"" if "pinnacle" in S.REMOVED_SOURCES else f'<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>'}
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
 <details class="ref" id="method"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability

@@ -304,7 +304,7 @@ def test_audit_warns_on_unreadable_start():
 def test_flagged_void_one_bucket():
     print("\nflagged void is in one headline bucket")
     void = dict(id="v1", bet=True, status="void", result=None, pnl=0.0, price=0.5,
-                stake=100.0, source="scores24", sport="tennis", pick="a", side_a="Home",
+                stake=100.0, source="olbg", sport="boxing", pick="a", side_a="Home",
                 label="Flagged void", market_id="m-void", venue="polymarket",
                 logged="2026-09-01T00:00:00+00:00", start="2026-09-02T00:00:00+00:00",
                 settled="2026-09-03T00:00:00+00:00",

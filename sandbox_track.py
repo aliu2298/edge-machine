@@ -574,7 +574,9 @@ def collect(verbose=True, combo_used=None):
         t0 = time.time()
         # Weather markets are not fetched. Climate is the Kalshi temperature
         # ladder; leaving it out of the universe means that read never runs.
-        if sport in S.REMOVED_SPORTS:
+        # Table tennis venue listings are the same: no kept lane reads them.
+        # MLB listings stay, because the fade-the-streak rule still prices them.
+        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
             universe[sport] = []
             continue
         # Each venue, for each sport, fails on its own. A dropped connection fetching NFL
@@ -1024,11 +1026,11 @@ def publish(d, universe, coverage, verbose=True, now=None):
         for name, fetch in S.CHALLENGERS.items():
             if sport not in S.SOURCES[name]["sports"]:
                 continue
-            # A fully paused source logs no sport, so the fetch would be a network
-            # call with nothing to enter. A partial pause still fetches: scores24
-            # soccer and espn_fpi MLB are logged from that same pass, and the
-            # paused sports of those lanes are read in it too.
-            if S.source_fully_paused(name):
+            # A removed lane is not fetched. A source the pause list silences on
+            # every sport is not fetched either. A partial pause still fetches:
+            # OLBG boxing is logged from that same pass. ESPN FPI NFL is fetched;
+            # its MLB lane is not.
+            if S.fetch_skipped(name, sport):
                 continue
             t0 = time.time()
             try:

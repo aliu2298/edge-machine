@@ -35,15 +35,14 @@ def eq(got, want, why):
 def _publish(d, universe, now=None):
     """publish with only the band fetchers, so a unit test never hits the network.
 
-    tennis_fav_band is retired (connected=False), so it is not in CHALLENGERS.
-    The tennis case still has to call the real fetcher, which reads the universe
-    and does not touch the network. `now` pins the clock when a case must not
-    read the wall clock.
+    The wide favourite-band rule is off the board. The tennis case calls the
+    3-hour lane, which reads the universe and does not touch the network.
+    `now` pins the clock when a case must not read the wall clock.
     """
     saved_ch, saved_uni = S.CHALLENGERS, S.UNIVERSE
     S.CHALLENGERS = {
         "mma_fav_band": S.fetch_tennis_fav_band,
-        "tennis_fav_band": S.fetch_tennis_fav_band,
+        "tennis_fav_band_3h": S.fetch_tennis_fav_band_3h,
     }
     try:
         return T.publish(d, universe, {}, verbose=False, now=now)
@@ -222,26 +221,29 @@ def main():
     eq(_bets(late, "mma_fav_band"), [started], "no Polymarket US entry is logged after the start")
 
     print("\nother rules are unchanged, and another retirement still blocks")
+    # Inside the 3-hour window the kept tennis lane still uses. The wide rule is off the board.
+    near = (datetime.now(timezone.utc) + timedelta(hours=1)).replace(microsecond=0)
     t_k = _row("KXWTAMATCH-26OCT03ALPHBE", "kalshi", "Alex Alpha", "Blake Beta",
-               0.78, 0.24, soon, sport="tennis")
+               0.78, 0.24, near, sport="tennis")
     t_p = _row("aec-wta-alpha-beta-2026-10-03", "polymarket_us", "Alex Alpha", "Blake Beta",
-               0.79, 0.23, soon, sport="tennis")
+               0.79, 0.23, near, sport="tennis")
     tennis = {"quotes": [], "meta": {}, "coverage": {}}
     _publish(tennis, {"tennis": [t_k, t_p]})
-    tennis_bets = _bets(tennis, "tennis_fav_band")
+    tennis_bets = _bets(tennis, "tennis_fav_band_3h")
     eq([(q["venue"], q["market_id"]) for q in tennis_bets], [("kalshi", t_k["market_id"])],
-       "tennis still books the first venue, which is Kalshi when it is listed first")
-    held = dict(id="tennis_fav_band:KXWTAMATCH-26OCT03HELD", source="tennis_fav_band",
+       "the 3-hour favourite band still books the first venue, which is Kalshi when it is listed first")
+    ok(not _bets(tennis, "tennis_fav_band"), "the wide favourite-band rule logs nothing")
+    held = dict(id="tennis_fav_band_3h:KXWTAMATCH-26OCT03HELD", source="tennis_fav_band_3h",
                 sport="tennis", venue="kalshi", market_id="KXWTAMATCH-26OCT03HELD",
                 status="open", bet=True, pick="a", price=0.78, price_a=0.78, price_b=0.24,
                 stake=100.0, pnl=0.0, side_a="Cara Cole", side_b="Dana Dale",
-                start=soon.isoformat(), date=soon.date().isoformat(),
+                start=near.isoformat(), date=near.date().isoformat(),
                 logged="2026-09-29T12:00:00+00:00")
     dup_row = _row("aec-wta-cole-dale-2026-10-03", "polymarket_us", "Cara Cole", "Dana Dale",
-                   0.78, 0.24, soon, sport="tennis")
+                   0.78, 0.24, near, sport="tennis")
     dup = {"quotes": [held], "meta": {}, "coverage": {}}
     _publish(dup, {"tennis": [dup_row]})
-    eq([q["id"] for q in dup["quotes"] if q.get("source") == "tennis_fav_band"],
+    eq([q["id"] for q in dup["quotes"] if q.get("source") == "tennis_fav_band_3h"],
        [held["id"]], "a non-MMA duplicate is still blocked")
     other = _open_kalshi("KXUFCFIGHT-26OCT03PINPUL", "Damian Pinas", "Andrey Pulyaev", soon, price=0.81)
     other["status"] = "void"
@@ -301,7 +303,7 @@ def main():
         ok(("polymarket_us", replacement["market_id"]) in resolved,
            "grade() still resolves the Polymarket US market")
 
-    planted = dict(id="espn_fpi:probe-mlb", source="espn_fpi", sport="mlb", venue="kalshi",
+    planted = dict(id="espn_fpi:probe-mlb", source="espn_fpi", sport="nfl", venue="kalshi",
                    market_id="probe-mlb", bet=True, pick="a", price=0.60, price_a=0.60,
                    price_b=0.42, stake=100.0, result="a", status="won",
                    pnl=round(100.0 * (1.0 / 0.60 - 1.0), 2),

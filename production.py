@@ -442,7 +442,7 @@ def _without_weather(d):
 
 def _weather_pair(key):
     source, _, sport = str(key).partition("|")
-    return source in S.REMOVED_SOURCES or sport in S.REMOVED_SPORTS
+    return S.lane_removed(source, sport)
 
 
 def page(d, st, blob, style, now=None):

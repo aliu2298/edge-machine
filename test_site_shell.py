@@ -246,7 +246,7 @@ except ImportError as exc:
     ok(False, f"sandbox_build imports ({exc})")
 
 if SB is not None:
-    source = next(k for k, m in S.SOURCES.items() if "mlb" in m.get("sports", []))
+    source = "mlb_fade_streak"
     quote = dict(
         status="open", bet=True, sport="mlb", start="2026-09-27T23:00:00+00:00",
         pick="a", side_a="Home", side_b="Away", date="2026-09-27",
