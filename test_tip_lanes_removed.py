@@ -114,6 +114,29 @@ def _scoped_hit(html):
     return None
 
 
+def _no_removed_band_name(pages):
+    """Built HTML and the JS those pages load. tennis_fav_band_3h may stay."""
+    bare = re.compile(r"tennis_fav_band(?!_3h)")
+    named = dict(pages)
+    for js in ("site.js", "tables.js", "root.js"):
+        with open(os.path.join(ROOT, "public_site", js), encoding="utf-8") as f:
+            named[js] = f.read()
+    rule = ("Back the player priced 0.77-0.81, only when the entry is within "
+            "3 hours of the scheduled start.")
+    note = S.SOURCES["tennis_fav_band_3h"]["note"]
+    ok(rule in note, "the 3-hour note states the rule on its own")
+    ok(bare.search(note) is None, "the 3-hour note does not name tennis_fav_band")
+    ok(rule in html_lib.unescape(pages["sandbox.html"]),
+       "the sandbox page prints that note")
+    for name, html in sorted(named.items()):
+        m = bare.search(html)
+        if m:
+            snippet = html[max(0, m.start() - 80):m.end() + 80].replace("\n", " ")
+            ok(False, f"{name} names tennis_fav_band — {snippet}")
+        else:
+            ok(True, f"{name} does not name tennis_fav_band")
+
+
 def _row(sport, mid, venue="polymarket_us"):
     start = (NOW + timedelta(days=1)).isoformat()
     return dict(market_id=mid, sport=sport, label="Alpha vs Beta", side_a="Alpha",
@@ -136,8 +159,8 @@ def main():
     ok(len(pages) > 4, "sandbox, production, trading, index, and the archive are built")
     ok(any(name.startswith("archive/") and name != "archive/index.html" for name in pages),
        "every archive week is built")
-    # The 3-hour lane's registered note names the retired rule. That sentence
-    # was written once and stays. Everywhere else, the id is a removed lane.
+    # The 3-hour note is checked on its own, below, and may not name the
+    # removed lane. Stripping it here keeps that check from counting twice.
     registered = S.SOURCES["tennis_fav_band_3h"]["note"]
     for name, html in sorted(pages.items()):
         text = html_lib.unescape(html).replace(registered, "")
@@ -155,6 +178,9 @@ def main():
     ok("Pinnacle" in sandbox, "the kept Pinnacle wording stays")
     ok("favourite band" in sandbox.lower() or "favourite-band" in sandbox,
        "the favourite-band wording of the kept lanes stays")
+
+    print("\nthe removed favourite-band lane is not named on a built page")
+    _no_removed_band_name(pages)
 
     print("\nshared band code and the reference fetches stay")
     eq(S.fav_band("tennis"), (0.77, 0.81), "fav_band still answers for tennis")

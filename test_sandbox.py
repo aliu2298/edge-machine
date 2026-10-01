@@ -6463,16 +6463,12 @@ print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged la
 
 eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is 3 hours, fixed with the lane")
 eq(S.SOURCES["tennis_fav_band_3h"]["note"],
-   "PAPER TEST, registered 2026-09-25, before it logged anything. The same selection "
-   "as tennis_fav_band — the player priced 0.77-0.81 — and only when the entry is "
-   "within 3 hours of the scheduled start. tennis_fav_band is unchanged and keeps "
-   "logging every in-band match, including ones more than 3 hours out, so the two "
-   "records can be compared. A match that qualifies for both is logged by both. "
-   "That overlap is the comparison: duplicate protection is per source, so one "
-   "lane's quote cannot block or void the other. Why the window: closing-line "
-   "value on the band was about -1.2c on entries 3 or more hours before the start, "
-   "and about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees).",
-   "the 3-hour lane's note is the text it was registered with")
+   "PAPER TEST, registered 2026-09-25, before it logged anything. Back the "
+   "player priced 0.77-0.81, only when the entry is within 3 hours of the "
+   "scheduled start. Why the window: closing-line value on the band was about "
+   "-1.2c on entries 3 or more hours before the start, and about -0.3c on "
+   "entries inside 3 hours (in-band n=90, +11.8% after fees).",
+   "the 3-hour note states the rule and does not name another lane")
 _tnow = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
 
 
