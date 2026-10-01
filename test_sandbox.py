@@ -4297,10 +4297,14 @@ eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXEFLCUPGAME-2
 
 _st_intl = {"pairs": {}, "events": []}
 T.evaluate_stages({"quotes": []}, _st_intl, now=_INTL_NOW, verbose=False)
-eq(_st_intl["pairs"]["team1_form_l5|soccer_team1_intl"]["stage"], "production",
+# .get so a pre-fix tree, which never writes these keys, fails the assertion
+# instead of raising KeyError before the message is printed.
+_team1_stage = _st_intl["pairs"].get("team1_form_l5|soccer_team1_intl") or {}
+eq(_team1_stage.get("stage"), "production",
    "team1_form_l5|soccer_team1_intl qualifies for Production")
-ok(_st_intl["pairs"]["team1_form_l5|soccer_team1_intl"].get("ready_at"), "and it is ready from that run")
-eq(_st_intl["pairs"]["o15_ranked|soccer_o15_intl"]["stage"], "production",
+ok(_team1_stage.get("ready_at"), "and it is ready from that run")
+_o15_stage = _st_intl["pairs"].get("o15_ranked|soccer_o15_intl") or {}
+eq(_o15_stage.get("stage"), "production",
    "o15_ranked|soccer_o15_intl qualifies for Production")
 ok("team1_form_l5|soccer_team1_cup" not in _st_intl["pairs"], "the cup twin is not moved with it")
 ok("o15_form_l10|soccer_o15_intl" not in _st_intl["pairs"], "o15_form_l10|soccer_o15_intl is not moved")
@@ -4338,22 +4342,28 @@ ok(not PR.start_verified(dict(_verified, start_source="kalshi")),
    "Kalshi's own estimate is still not a verified start")
 _fd_intl = PR.build_feed({"quotes": [_verified, _unverified, _cup_bet, _other, _o15, _form]},
                          _st_intl, now=_INTL_NOW)
-_intl_ids = sorted(l["sandbox_quote"] for l in _fd_intl["leads"].values()
-                   if l["pair"] in ("team1_form_l5|soccer_team1_intl", "o15_ranked|soccer_o15_intl"))
+_intl_ids = sorted(l.get("sandbox_quote") for l in _fd_intl["leads"].values()
+                   if l.get("pair") in ("team1_form_l5|soccer_team1_intl", "o15_ranked|soccer_o15_intl"))
 eq(_intl_ids, ["o15_ranked:KXINTLFRIENDLYTOTAL-26OCT01UZBSYR-2",
                "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1"],
    "only the verified internationals bets from the two pairs are published")
-eq(_fd_intl["unverified_kickoff_skipped"], 1, "the unverified internationals fixture is held back")
-_lead = next(l for l in _fd_intl["leads"].values() if l["sandbox_quote"].startswith("team1_form_l5:"))
-ok("model_prob" not in _lead, "a rule lane does not carry model_prob")
-eq(_lead["bet"], {"kind": "team_gte", "n": 1, "team": "Kazakhstan"},
+eq(_fd_intl.get("unverified_kickoff_skipped"), 1, "the unverified internationals fixture is held back")
+_lead = next((l for l in _fd_intl["leads"].values()
+              if str(l.get("sandbox_quote") or "").startswith("team1_form_l5:")), None)
+ok(_lead is not None and "model_prob" not in _lead, "a rule lane does not carry model_prob")
+eq(None if _lead is None else _lead.get("bet"),
+   {"kind": "team_gte", "n": 1, "team": "Kazakhstan"},
    "the team-goals lead keeps the feed's own bet")
-eq((_lead["pair"], _lead["status"], _lead["price_at_log"], _lead["kickoff"]),
+eq(None if _lead is None else (_lead.get("pair"), _lead.get("status"),
+                               _lead.get("price_at_log"), _lead.get("kickoff")),
    ("team1_form_l5|soccer_team1_intl", "pending", 0.8, "2026-10-02T18:00Z"),
    "and the lead keeps pair, status, price and kickoff")
-_o15_lead = next(l for l in _fd_intl["leads"].values() if l["pair"] == "o15_ranked|soccer_o15_intl")
-eq(_o15_lead["bet"], {"kind": "total_gte", "n": 2}, "the over-1.5 lead is total_gte 2")
-eq(_o15_lead["league"], "International Friendly", "and it names the friendly")
+_o15_lead = next((l for l in _fd_intl["leads"].values()
+                  if l.get("pair") == "o15_ranked|soccer_o15_intl"), None)
+eq(None if _o15_lead is None else _o15_lead.get("bet"),
+   {"kind": "total_gte", "n": 2}, "the over-1.5 lead is total_gte 2")
+eq(None if _o15_lead is None else _o15_lead.get("league"),
+   "International Friendly", "and it names the friendly")
 _twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_form_l10"],
              a=dict(n=0, won=0, expected=0, z=0, roi_fee=None), open=2, last="", prod=False, moved="", v="waiting")
 eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")
