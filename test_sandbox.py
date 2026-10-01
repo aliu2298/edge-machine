@@ -53,6 +53,25 @@ def _without_pause(*names):
         S.PAUSED_LANES = saved
 
 
+@contextmanager
+def _with_pinnacle_active():
+    """Let the match-winner lane log for one check, then put both gates back.
+
+    pinnacle is removed and paused. Deleting only the pause line leaves
+    source_fully_paused true. This lifts both, and only for the credit-split
+    contrast. It must not leave the lane able to log.
+    """
+    saved_pause = dict(S.PAUSED_LANES)
+    saved_removed = S.REMOVED_SOURCES
+    S.PAUSED_LANES = {k: v for k, v in saved_pause.items() if k != "pinnacle"}
+    S.REMOVED_SOURCES = frozenset(x for x in saved_removed if x != "pinnacle")
+    try:
+        yield
+    finally:
+        S.PAUSED_LANES = saved_pause
+        S.REMOVED_SOURCES = saved_removed
+
+
 _GROUP = os.environ.get("SANDBOX_TEST_GROUP", "all").strip() or "all"
 if _GROUP not in ("all", "fixture", "live"):
     print(f"SANDBOX_TEST_GROUP must be all, fixture, or live (got {_GROUP!r})")
@@ -3966,6 +3985,28 @@ for _held in ("Toss Delayed", "Toss Delayed due to bad weather",
     eq(_held_out, [], f"status {_held!r} is not an exact pre-match status, so the row is dropped")
     eq(_held_st["dropped"], 1, f"and {_held!r} is counted as a drop")
 
+# "Match Scheduled - Includes In Venue Scoring" is not a known pre-match status,
+# so the row is dropped. That drop is for the status. The start has not passed,
+# and the log used to call every drop "already under way".
+_venue_ms = _copy.deepcopy(_crms)
+_venue_ms[_IND][0]["details"] = dict(
+    _venue_ms[_IND][0]["details"],
+    status="Match Scheduled - Includes In Venue Scoring")
+_venue_out, _venue_st = S.apply_kalshi_cricket_starts(
+    [_crow(_IND, "2026-10-01T05:30:00+00:00")],
+    milestones=_venue_ms, rules=_cr_rules_from_event(), now=_BEFORE)
+eq(_venue_out, [],
+   "Match Scheduled - Includes In Venue Scoring is not a known pre-match status, so the row is dropped")
+eq(_venue_st.get("dropped"), 1, "and it is still counted in the combined drop total")
+eq(_venue_st.get("dropped_status"), 1, "the drop is for status")
+eq(_venue_st.get("dropped_started"), 0, "the start has not passed, so it is not already under way")
+_venue_label = (T.cricket_verified_log(_venue_st, len(_venue_out))
+                if hasattr(T, "cricket_verified_log") else None)
+eq(_venue_label,
+   "  Cricket       milestones: 0 of 1 Kalshi starts verified, "
+   "1 dropped for status, 0 already under way, 0 unverified",
+   "the log names a status drop and does not call it already under way")
+
 _NOV = "KXT20MATCH-26NOV020030SRIIND"
 _NOV_START = datetime(2026, 11, 2, 5, 30, tzinfo=timezone.utc)
 eq(S.kalshi_ticker_start(_NOV), _NOV_START,
@@ -4000,6 +4041,14 @@ _gone, _gst = S.apply_kalshi_cricket_starts(
 eq([r["venue"] for r in _gone], ["polymarket_us"],
    "a verified start that has passed drops the Kalshi row and leaves Polymarket alone")
 eq(_gst["dropped"], 1, "the drop is counted")
+eq(_gst.get("dropped_started"), 1, "a verified start that has passed is already under way")
+eq(_gst.get("dropped_status"), 0, "and that drop is not a status drop")
+_started_label = (T.cricket_verified_log(_gst, len(_gone))
+                  if hasattr(T, "cricket_verified_log") else None)
+eq(_started_label,
+   "  Cricket       milestones: 0 of 2 Kalshi starts verified, "
+   "0 dropped for status, 1 already under way, 0 unverified",
+   "the log names a start that has passed as already under way")
 eq(_gone[0].get("start_source"), None, "the Polymarket row is not given a Kalshi source")
 
 # A milestones outage is printed, not cached as an empty success, and not fatal.
@@ -4880,6 +4929,13 @@ _half["bookmakers"][0]["markets"][0]["outcomes"] = [dict(name="Over", price=1.9,
 eq(S.pinnacle_total_prob(_half, 2.5), None, "one side of a two-way market cannot be de-vigged")
 ok(S.PIN_TOTALS_POINT == 2.5 and S.SOURCES["pin_totals"]["sports"] == ["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
    "the lane is wired to the over-2.5 market only")
+_pin_note = S.SOURCES["pin_totals"]["note"]
+ok("at most half its paced credits" not in _pin_note,
+   "the lane note no longer says every run takes at most half the paced credits")
+ok("fully paused" in _pin_note and "whole paced allowance" in _pin_note,
+   "the note says a fully paused match-winner lane leaves this lane the whole allowance")
+ok("half" in _pin_note and "one league key" in _pin_note,
+   "the half-split and the one-key cap are still stated")
 ok("soccer_o25" in S.SOURCES["goals_market"]["sports"],
    "and the over-2.5 market has its own never-betting baseline, so the rule on it has a population")
 eq(S.SPORTS["soccer_o25"], "Soccer · Over 2.5", "the market is named on the page")
@@ -4889,7 +4945,8 @@ eq(S.SPORTS["soccer_o25"], "Soccer · Over 2.5", "the market is named on the pag
 _pin_calls = []
 
 
-def _pin_stub(allowance, remaining=200, upd=None, point=2.5):
+def _pin_stub(allowance, remaining=200, upd=None, point=2.5, teams=("Arsenal", "Chelsea"),
+             totals=True):
     _pin_calls.clear()
     S.ODDS_USAGE.clear()
     S.ODDS_USAGE.update(allowance=allowance, remaining=remaining)
@@ -4900,11 +4957,13 @@ def _pin_stub(allowance, remaining=200, upd=None, point=2.5):
 
     def _get(path, params):
         _pin_calls.append(path)
-        return [dict(home_team="Arsenal", away_team="Chelsea",
-                     bookmakers=[dict(key="pinnacle", last_update=upd, markets=[dict(
-                         key="totals", last_update=upd,
-                         outcomes=[dict(name="Over", price=1.90, point=point),
-                                   dict(name="Under", price=1.95, point=point)])])])], {}
+        markets = []
+        if totals and point is not None:
+            markets = [dict(key="totals", last_update=upd,
+                            outcomes=[dict(name="Over", price=1.90, point=point),
+                                      dict(name="Under", price=1.95, point=point)])]
+        return [dict(home_team=teams[0], away_team=teams[1],
+                     bookmakers=[dict(key="pinnacle", last_update=upd, markets=markets)])], {}
     S._odds_get = _get
     try:
         uni = {"soccer_o25": [_o25row(home="Arsenal", away="Chelsea")]}
@@ -4913,15 +4972,56 @@ def _pin_stub(allowance, remaining=200, upd=None, point=2.5):
         S._odds_key, S.pinnacle_events, S._odds_get = real
 
 
-eq(_pin_stub(allowance=1), {}, "on a one-credit run this lane takes nothing: the older match-winner lane keeps it")
-eq(len(_pin_calls), 0, "and makes no paid call at all")
+def _totals_empty():
+    """Empty-reason counts on the latest totals_on entry, or {} when none was written."""
+    entries = S.ODDS_USAGE.get("totals_on") or []
+    if not entries:
+        return {}
+    return entries[-1].get("empty") or {}
+
+
+# The match-winner lane is fully paused, so the half of a one-credit allowance
+# that used to be held for it is not held for anyone. The paused case fails
+# while plan_pinnacle_totals still halves that allowance: it makes no call.
+# An empty row fails the same way while nothing records why it was empty.
+ok(S.source_fully_paused("pinnacle"),
+   "the live match-winner lane is fully paused, so this lane may spend the run's allowance")
+_paused = _pin_stub(allowance=1)
+eq(len(_pin_calls), 1,
+   "with that lane paused, a one-credit run makes exactly one paid call")
+eq([q["market_id"] for q in _paused.get("soccer_o25", [])], ["m1"],
+   "and returns the Kalshi market it priced")
+with _with_pinnacle_active():
+    ok(not S.source_fully_paused("pinnacle"),
+       "the contrast case has the match-winner lane active")
+    eq(_pin_stub(allowance=1), {},
+       "while that lane is active, a one-credit run still leaves this lane nothing")
+    eq(len(_pin_calls), 0, "and it makes no paid call")
+ok(S.source_fully_paused("pinnacle"),
+   "the contrast case does not leave the match-winner lane active")
 _got = _pin_stub(allowance=2)
 eq(len(_pin_calls), 1, "on a two-credit run it buys exactly one league key, never more")
 eq([q["market_id"] for q in _got.get("soccer_o25", [])], ["m1"], "and prices the Kalshi market it matched")
 ok(abs(_got["soccer_o25"][0]["prob_a"] - 0.5065) < 0.001, "at the de-vigged over probability")
+eq(_totals_empty().get("other_point"), 0,
+   "a 2.5 quote is not counted as a different point")
+eq(_pin_stub(allowance=2, point=2.75), {}, "a 2.75 line is not a quote on the 2.5 market")
+eq(_totals_empty().get("other_point"), 1,
+   "a main total on 2.75 is counted as a different point, not dropped in silence")
+eq(_totals_empty().get("points"), [2.75], "and the points seen on that row are listed")
+eq((S.ODDS_USAGE.get("totals_on") or [{}])[-1].get("rows"),
+   [dict(market_id="m1", empty="other_point", points=[2.75])],
+   "the listed row itself records that reason")
 eq(_pin_stub(allowance=2, point=3.0), {}, "a Pinnacle line on another total is not a quote on this one")
 eq(_pin_stub(allowance=2, upd="2026-09-20T12:00:00Z"), {},
    "a line Pinnacle set six hours ago is stale, not a disagreement")
+eq(_totals_empty().get("stale"), 1, "and that empty row is counted as stale")
+eq(_pin_stub(allowance=2, teams=("Tottenham", "Brighton")), {},
+   "an odds payload with no matching event is not a quote")
+eq(_totals_empty().get("no_event"), 1, "and that row is counted as no matching event")
+eq(_pin_stub(allowance=2, totals=False), {},
+   "a matched event with no totals market is not a quote")
+eq(_totals_empty().get("no_totals"), 1, "and that row is counted as no Pinnacle totals market")
 eq(_pin_stub(allowance=2, remaining=5), {}, "and nothing is bought once the credit reserve is reached")
 
 print("\nthe congestion under-2.5 rule")
