@@ -9,6 +9,7 @@
     var go = function () {
       api.enhance(document);
       api.syncHeaderOffset(document);
+      api.containWideTables(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
     else go();
@@ -60,6 +61,31 @@
     return records.filter(function (record) { return matchesText(record, query); });
   }
 
+  // The same predicate the row filter uses: the search text, then each
+  // column select. An empty select value keeps the row. A card is shown
+  // only when its row passes.
+  function passesFilters(record, query, filters) {
+    if (!matchesText(record, query)) return false;
+    var list = filters || [];
+    for (var i = 0; i < list.length; i++) {
+      var item = list[i] || {};
+      if (!item.value) continue;
+      if (String(item.text == null ? "" : item.text) !== String(item.value)) return false;
+    }
+    return true;
+  }
+
+  // Phone cards set display:block on every tr, which beats the hidden
+  // attribute. important wins that fight, so a hidden row stays hidden.
+  function paintRow(row, shown) {
+    row.hidden = !shown;
+    if (row.style) {
+      if (shown) row.style.removeProperty("display");
+      else row.style.setProperty("display", "none", "important");
+    }
+    return row;
+  }
+
   function cellText(cell) {
     return (cell && cell.textContent ? cell.textContent : "").replace(/\s+/g, " ").trim();
   }
@@ -106,6 +132,45 @@
       view.addEventListener("resize", apply);
     }
     if (view) view.addEventListener("load", apply);
+  }
+
+  // A table wider than the viewport used to stretch the page. Only those
+  // cards scroll sideways. A table that fits stays overflow:visible so its
+  // header can stick to the page. Closed sections have no size yet; the
+  // toggle listener measures them when they open.
+  function containWideTables(doc) {
+    var view = doc.defaultView;
+    function measure() {
+      var boxes = doc.querySelectorAll(".tbl");
+      Array.prototype.forEach.call(boxes, function (box) {
+        box.classList.remove("scroll-x");
+      });
+      var vw = doc.documentElement.clientWidth;
+      Array.prototype.forEach.call(boxes, function (box) {
+        var table = box.querySelector("table");
+        if (!table) return;
+        var rect = table.getBoundingClientRect();
+        if (!(rect.width > 0)) return;
+        var limit = box.clientWidth;
+        if ((limit > 0 && rect.width > limit + 1) || rect.right > vw + 1) {
+          box.classList.add("scroll-x");
+        }
+      });
+      if (doc.documentElement.scrollWidth > vw + 1) {
+        Array.prototype.forEach.call(boxes, function (box) {
+          var table = box.querySelector("table");
+          if (!table) return;
+          var rect = table.getBoundingClientRect();
+          if (rect.right > vw + 1 || rect.width > vw - 32) box.classList.add("scroll-x");
+        });
+      }
+    }
+    measure();
+    if (view) view.addEventListener("resize", measure);
+    doc.addEventListener("toggle", function (event) {
+      var target = event.target;
+      if (target && String(target.tagName).toLowerCase() === "details") measure();
+    }, true);
   }
 
   function enhance(doc) {
@@ -205,12 +270,11 @@
       var shown = 0;
       rows.forEach(function (row) {
         var record = { haystack: row.textContent || "", text: row.textContent || "" };
-        var ok = matchesText(record, query);
-        for (var i = 0; i < selects.length && ok; i++) {
-          var want = selects[i].select.value;
-          if (want && cellText(row.cells[selects[i].index]) !== want) ok = false;
-        }
-        row.hidden = !ok;
+        var filters = selects.map(function (item) {
+          return { text: cellText(row.cells[item.index]), value: item.select.value };
+        });
+        var ok = passesFilters(record, query, filters);
+        paintRow(row, ok);
         if (ok) shown += 1;
       });
       count.textContent = shown + " of " + rows.length + " rows";
@@ -226,5 +290,8 @@
     matchesText: matchesText,
     enhance: enhance,
     syncHeaderOffset: syncHeaderOffset,
+    passesFilters: passesFilters,
+    paintRow: paintRow,
+    containWideTables: containWideTables,
   };
 });

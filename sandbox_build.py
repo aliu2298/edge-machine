@@ -934,9 +934,13 @@ def _row(r, rank=None, provisional=False, in_market=False):
     rk = ('<span class="mut">—</span>' if rank is None else
           f'<span class="{"mut" if provisional else "rank"}">{rank}</span>'
           + ('<div class="sm mut">early</div>' if provisional else ''))
+    # A lone market family (Commodities, after weather left) used to print the
+    # sport name under the rule. The subtitle is the kind — Rule — the same
+    # word the folded market sections already use.
+    subline = meta["kind"] if (in_market or r["sport"] in MARKET_KEYS) else sub
     return f"""<tr><td class="num">{rk}</td>
 <td><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
-<div class="sm mut">{esc(sub if not in_market else meta['kind'])}</div>{gone}</td>
+<div class="sm mut">{esc(subline)}</div>{gone}</td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{close_cell(a)}</td>
