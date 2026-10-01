@@ -106,6 +106,10 @@ def document(title, description, active, sections, stamp_html, body,
     for src in scripts or ():
         if src not in srcs:
             srcs.append(src)
+    # Sticky column headers read --hdr-h from tables.js. Pages that already
+    # pass the script keep their order; the rest gain it.
+    if "./tables.js" not in srcs:
+        srcs.append("./tables.js")
     script = "".join(
         f'\n<script src="{esc(_href(src, prefix))}"></script>' for src in srcs)
     extra = f"\n{extra_head}" if extra_head else ""

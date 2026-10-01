@@ -92,7 +92,12 @@ def test_a_evening_cdt_lands_under_today():
     ok("8:00 PM CT" in coming, "(a) the evening row still shows 8:00 PM CT")
     ok("updated 2026-09-27 18:00 UTC" in html,
        "(a) the hidden UTC updated stamp is unchanged")
-    ok("<script" not in html.lower(), "(a) the page still has no script")
+    # tables.js only measures the sticky header. It must not be an inline script,
+    # and it must be the only script on the page.
+    _scripts = re.findall(r"<script\b([^>]*)>(.*?)</script>", html, re.I | re.S)
+    ok(len(_scripts) == 1 and 'src="./tables.js"' in _scripts[0][0]
+       and not _scripts[0][1].strip(),
+       "(a) the only script is same-origin tables.js, with no inline body")
 
 
 def test_b_after_dst_cst_evening_is_nov_2():
