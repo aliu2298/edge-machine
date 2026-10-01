@@ -416,9 +416,9 @@
    "price": 0.88
   },
   "o15_ranked:KXUEFANLTOTAL-26OCT01MLTGIB-2": {
-   "at": "2026-10-01T17:53:10+00:00",
-   "lead_min": 51.8,
-   "price": 0.73
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 10.6,
+   "price": 0.74
   },
   "o15_ranked:KXUEFANLTOTAL-26SEP26ISLEST-2": {
    "at": "2026-09-26T15:21:19+00:00",
@@ -521,19 +521,19 @@
    "price": 0.89
   },
   "p05_unbeaten:KXUEFANLGAME-26OCT01GERSRB-SRB": {
-   "at": "2026-10-01T17:53:10+00:00",
-   "lead_min": 51.8,
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 10.6,
    "price": 0.95
   },
   "p05_unbeaten:KXUEFANLGAME-26OCT01GRENED-GRE": {
-   "at": "2026-10-01T17:53:10+00:00",
-   "lead_min": 51.8,
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 10.6,
    "price": 0.7
   },
   "p05_unbeaten:KXUEFANLGAME-26OCT01WALNOR-WAL": {
-   "at": "2026-10-01T17:53:10+00:00",
-   "lead_min": 51.8,
-   "price": 0.88
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 10.6,
+   "price": 0.89
   },
   "p05_unbeaten:KXUEFANLGAME-26SEP28SWEPOL-SWE": {
    "at": "2026-09-28T18:04:39+00:00",
@@ -710,14 +710,24 @@
    "lead_min": 38.7,
    "price": 0.41
   },
+  "spot:KXSOLD-26OCT0117-T116.9999": {
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 30.6,
+   "price": 0.95
+  },
+  "spot:KXSOLD-26OCT0117-T117.9999": {
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 30.6,
+   "price": 0.73
+  },
   "spot:KXSOLD-26SEP2917-T116.9999": {
    "at": "2026-09-29T18:15:22+00:00",
    "lead_min": 49.6,
    "price": 0.94
   },
   "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT01WALNOR-NOR1": {
-   "at": "2026-10-01T17:53:10+00:00",
-   "lead_min": 51.8,
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 10.6,
    "price": 0.92
   },
   "team1_form_l5:KXUEFANLTEAMTOTAL-26SEP29CZEENG-ENG1": {
@@ -726,9 +736,9 @@
    "price": 0.93
   },
   "team2_ranked:KXUEFANLTEAMTOTAL-26OCT01MLTGIB-MLT2": {
-   "at": "2026-10-01T17:53:10+00:00",
-   "lead_min": 51.8,
-   "price": 0.63
+   "at": "2026-10-01T18:34:22+00:00",
+   "lead_min": 10.6,
+   "price": 0.65
   },
   "team2_ranked:KXUEFANLTEAMTOTAL-26SEP26BULLUX-BUL2": {
    "at": "2026-09-26T15:21:19+00:00",
@@ -1256,5 +1266,5 @@
    "price": 0.48
   }
  },
- "updated": "2026-10-01T17:53:10+00:00"
+ "updated": "2026-10-01T18:34:22+00:00"
 }
