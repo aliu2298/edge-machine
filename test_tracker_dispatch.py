@@ -336,6 +336,17 @@ def _indent(line):
     return len(line) - len(line.lstrip(" "))
 
 
+def _outputs_key(lines, i):
+    """True when lines[i] is the job outputs: `run:` alias, not a step script."""
+    indent = _indent(lines[i])
+    for k in range(i - 1, -1, -1):
+        if not lines[k].strip():
+            continue
+        if _indent(lines[k]) < indent:
+            return lines[k].strip().startswith("outputs:")
+    return False
+
+
 def _run_scripts(text):
     lines = text.splitlines()
     found = []
@@ -343,12 +354,15 @@ def _run_scripts(text):
     while i < len(lines):
         stripped = lines[i].lstrip(" ")
         indent = _indent(lines[i])
-        if not stripped.startswith("run:"):
+        if not stripped.startswith("run:") or _outputs_key(lines, i):
             i += 1
             continue
         name = ""
         for k in range(i - 1, -1, -1):
             prev = lines[k].strip()
+            # Steps are `- name: ...`; a bare `name:` is accepted too.
+            if prev.startswith("- "):
+                prev = prev[2:].strip()
             if prev.startswith("name:") and _indent(lines[k]) <= indent:
                 name = prev.split(":", 1)[1].strip().strip("'\"")
                 break
@@ -477,7 +491,9 @@ _dispatch_step = ""
 if _dispatch_scripts:
     _name = _dispatch_scripts[0][0]
     _at = _watch.find(f"name: {_name}")
-    _dispatch_step = _watch[_at:_watch.find("\n      - ", _at + 1)] if _at >= 0 else ""
+    if _at >= 0:
+        _nxt = _watch.find("\n      - ", _at + 1)
+        _dispatch_step = _watch[_at:] if _nxt < 0 else _watch[_at:_nxt]
 ok("!cancelled()" in _dispatch_step,
    "the 7h alarm failing does not skip the dispatch")
 ok("EVENT_NAME:" in _dispatch_step and "github.event_name" in _dispatch_step,
