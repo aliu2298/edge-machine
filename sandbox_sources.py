@@ -3115,6 +3115,10 @@ KALSHI_GAME_LEAGUES = {
     "KXEREDIVISIEGAME": "Eredivisie", "KXLIGAPORTUGALGAME": "Primeira Liga",
     "KXSAUDIPLGAME": "Saudi Pro League", "KXSCOTTISHPREMGAME": "Scottish Premiership",
     "KXBRASILEIROGAME": "Brasileirão",
+    # Internationals, named outright (2026-10-01). The goals rows carry these
+    # league strings; the GAME tickers are the same competitions' match markets.
+    "KXUEFANLGAME": "UEFA Nations League",
+    "KXINTLFRIENDLYGAME": "International Friendly",
 }
 
 
@@ -3452,7 +3456,8 @@ SCOPE_NOTE = {
              "record from the league rule; not in Production."),
     "_intl": ("INTERNATIONALS PAIR — the same rule applied only to national teams ({}). Form is a "
               "national team's internationals over two years, friendlies included, 90-minute "
-              "results only. A separate record from the league rule; not in Production."),
+              "results only. A separate record from the league rule. Team scores 1+ and the "
+              "over-1.5 top-2 mismatches are in Production; every other internationals pair is not."),
 }
 BTTS_SPORTS = ("soccer_btts", "soccer_btts_cup", "soccer_btts_intl")
 
