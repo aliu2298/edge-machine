@@ -1,11 +1,15 @@
 // Sort and filter for tables marked class="sortable".
 // Same origin, no dependencies. With script off, the table is still the full table.
 // Numeric order reads data-v only. Display text such as "−$100" is never parsed.
+// Also measures header.site and writes --hdr-h so sticky table headers sit flush under it.
 (function (root, factory) {
   var api = factory();
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document !== "undefined") {
-    var go = function () { api.enhance(document); };
+    var go = function () {
+      api.enhance(document);
+      api.syncHeaderOffset(document);
+    };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
     else go();
   }
@@ -83,6 +87,25 @@
       any = true;
     }
     return any;
+  }
+
+  function syncHeaderOffset(doc) {
+    var header = doc.querySelector("header.site");
+    if (!header) return;
+    var root = doc.documentElement;
+    var view = doc.defaultView;
+    function apply() {
+      var box = header.getBoundingClientRect();
+      if (!(box.height > 0)) return;
+      root.style.setProperty("--hdr-h", box.height + "px");
+    }
+    apply();
+    if (view && typeof view.ResizeObserver === "function") {
+      new view.ResizeObserver(apply).observe(header);
+    } else if (view) {
+      view.addEventListener("resize", apply);
+    }
+    if (view) view.addEventListener("load", apply);
   }
 
   function enhance(doc) {
@@ -202,5 +225,6 @@
     filterRecords: filterRecords,
     matchesText: matchesText,
     enhance: enhance,
+    syncHeaderOffset: syncHeaderOffset,
   };
 });
