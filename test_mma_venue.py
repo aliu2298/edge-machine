@@ -32,12 +32,13 @@ def eq(got, want, why):
     ok(got == want, why if got == want else f"{why} — got {got!r}, want {want!r}")
 
 
-def _publish(d, universe):
+def _publish(d, universe, now=None):
     """publish with only the band fetchers, so a unit test never hits the network.
 
     tennis_fav_band is retired (connected=False), so it is not in CHALLENGERS.
     The tennis case still has to call the real fetcher, which reads the universe
-    and does not touch the network.
+    and does not touch the network. `now` pins the clock when a case must not
+    read the wall clock.
     """
     saved_ch, saved_uni = S.CHALLENGERS, S.UNIVERSE
     S.CHALLENGERS = {
@@ -45,7 +46,7 @@ def _publish(d, universe):
         "tennis_fav_band": S.fetch_tennis_fav_band,
     }
     try:
-        return T.publish(d, universe, {}, verbose=False)
+        return T.publish(d, universe, {}, verbose=False, now=now)
     finally:
         S.CHALLENGERS = saved_ch
         S.UNIVERSE = saved_uni
@@ -144,8 +145,9 @@ def main():
         eq(live[0]["price"], 0.86, "the replacement uses the live Polymarket US price")
         eq(live[0]["price"] != 0.88, True, "the Kalshi price is not reused")
         logged_at = datetime.fromisoformat(live[0]["logged"])
-        ok(t0 <= logged_at <= t1, "logged_at is the time of this run")
-        eq(stuck["settled"], live[0]["logged"], "the retirement and the new entry share this run's clock")
+        retired_at = datetime.fromisoformat(stuck["settled"])
+        ok(t0 <= logged_at <= t1, "logged_at is the time this row was logged")
+        ok(t0 <= retired_at <= t1, "the retirement is stamped during this run")
         eq(live[0]["logged"] != "2026-09-29T15:48:21+00:00", True, "the old Kalshi log time is not reused")
     _publish(moved, {"mma": [pmus]})
     eq(len([q for q in moved["quotes"] if q.get("source") == "mma_fav_band"]), 2,
@@ -153,6 +155,61 @@ def main():
     eq(len([q for q in moved["quotes"] if q.get("source") == "mma_fav_band" and q.get("bet")
             and q.get("status") == "open"]), 1,
        "one fight never has two live entries")
+
+    print("\nPolymarket US has already started: the Kalshi bet stays")
+    # Kalshi's own start is a placeholder hours later. Retirement looks at the
+    # Polymarket US start, so a fight already under way is not voided.
+    when = datetime(2026, 10, 3, 21, 0, tzinfo=timezone.utc)
+    k_start = datetime(2026, 10, 4, 0, 0, tzinfo=timezone.utc)
+    p_start = datetime(2026, 10, 3, 20, 30, tzinfo=timezone.utc)
+    underway = _open_kalshi("KXUFCFIGHT-26OCT03WINARM", "Anthony Wint", "Lucas Armand",
+                            k_start, price=0.82)
+    underway_before = copy.deepcopy(underway)
+    underway_pm = _row("aec-ufc-antwin-lucarm-2026-10-03", "polymarket_us",
+                       "Anthony Wint", "Lucas Armand", 0.83, 0.19, p_start)
+    underway_book = {"quotes": [underway], "meta": {}, "coverage": {}}
+    _publish(underway_book, {"mma": [underway_pm]}, now=when)
+    eq(underway, underway_before,
+       "an open Kalshi bet stays when Polymarket US has already started")
+    eq([q for q in underway_book["quotes"]
+        if q.get("source") == "mma_fav_band" and q.get("venue") == "polymarket_us"],
+       [], "no Polymarket US entry is logged for a fight that has started there")
+
+    print("\na contest that starts during the fetch is not logged")
+    # publish() used to stamp every quote with the clock from the start of the
+    # run. A fetch that outlasts a start then logged the bet with `logged`
+    # before the start, and retire_late did not void it.
+    t_fetch = datetime.now(timezone.utc).replace(microsecond=0)
+    mid_start = t_fetch + timedelta(seconds=30)
+    clock = {"t": t_fetch}
+
+    def _fake_clock():
+        return clock["t"]
+
+    def _advance(sport):
+        clock["t"] = mid_start + timedelta(seconds=5)
+        return [dict(market_id="KXUFCFIGHT-MIDFETCH", pick="a")]
+
+    mid_row = _row("KXUFCFIGHT-MIDFETCH", "polymarket_us", "Mid Fetch", "Late Start",
+                   0.82, 0.20, mid_start)
+    mid_book = {"quotes": [], "meta": {}, "coverage": {}}
+    saved_ch, saved_uni = S.CHALLENGERS, S.UNIVERSE
+    saved_clock = getattr(T, "_clock", None)
+    S.CHALLENGERS = {"mma_fav_band": _advance}
+    if saved_clock is not None:
+        T._clock = _fake_clock
+    try:
+        T.publish(mid_book, {"mma": [mid_row]}, {}, verbose=False)
+    finally:
+        if saved_clock is not None:
+            T._clock = saved_clock
+        S.CHALLENGERS = saved_ch
+        S.UNIVERSE = saved_uni
+    eq(_bets(mid_book, "mma_fav_band"), [],
+       "a contest that starts during the fetch is not logged")
+    T.retire_late(mid_book, verbose=False)
+    eq(_bets(mid_book, "mma_fav_band"), [],
+       "retire_late is not left to clean up a back-dated log")
 
     print("\nafter the fight starts, nothing switches")
     started = _open_kalshi("KXUFCFIGHT-26OCT03WINARM", "Anthony Wint", "Lucas Armand", past)
@@ -290,74 +347,88 @@ def main():
     ok(not prod_rep.errors, "the production check stays clean"
        + ("" if not prod_rep.errors else f" — {prod_rep.errors[:2]}"))
 
-    print("\nsimulated publish of the four Oct 3 fights")
-    now = datetime.now(timezone.utc)
-    st = T.load_stages()
-    before = copy.deepcopy(T.load())
-    # Drop the archive copy load() attaches; publish and the page read quotes.
-    before.pop("_archive", None)
-    after = copy.deepcopy(before)
-    pre = _page(before, st, now)
-    fights = [q for q in before["quotes"]
-              if q.get("source") == "mma_fav_band" and q.get("status") == "open"
-              and q.get("venue") == "kalshi" and q.get("bet")]
+    print("\nfrozen ledger: Smith stays, the other three move")
+    # Built in the test. No ledger file and no wall clock. Smith is 0.90 on
+    # Polymarket US, outside the band, so that Kalshi bet stays open.
+    frozen_now = datetime(2026, 10, 1, 12, 0, tzinfo=timezone.utc)
+    frozen_st = {"pairs": {"mma_fav_band|mma": {
+        "stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
+        "promoted_at": "2026-09-01T00:00:00+00:00", "by_hand": "2026-09-01"}}}
+
+    def _settled(mid, side_a, side_b, start, price, status):
+        pnl = (-100.0 if status == "lost"
+               else round(100.0 * (1.0 / price - 1.0), 2))
+        return dict(id=f"mma_fav_band:{mid}", source="mma_fav_band", sport="mma",
+                    venue="kalshi", market_id=mid, status=status, bet=True, pick="a",
+                    price=price, price_a=price, price_b=round(1.02 - price, 2),
+                    stake=100.0, pnl=pnl, side_a=side_a, side_b=side_b,
+                    start=start.isoformat(), date=start.date().isoformat(),
+                    logged="2026-09-26T18:00:00+00:00",
+                    settled="2026-09-27T04:00:00+00:00",
+                    start_source="venue", result="a" if status == "won" else "b")
+
+    card = [
+        ("KXUFCFIGHT-26OCT03SMIWHI", "Jacobe Smith", "Bruce Whitehead",
+         datetime(2026, 10, 3, 22, 20, tzinfo=timezone.utc), 0.88, "a",
+         "aec-ufc-jacsmi-bruwhi-2026-10-03", 0.90, 0.12),
+        ("KXUFCFIGHT-26OCT03WINARM", "Anthony Wint", "Lucas Armand",
+         datetime(2026, 10, 4, 0, 0, tzinfo=timezone.utc), 0.82, "a",
+         "aec-ufc-antwin-lucarm-2026-10-03", 0.83, 0.19),
+        ("KXUFCFIGHT-26OCT03PINPUL", "Damian Pinas", "Andrey Pulyaev",
+         datetime(2026, 10, 4, 0, 40, tzinfo=timezone.utc), 0.81, "a",
+         "aec-ufc-dampin-andpul-2026-10-03", 0.81, 0.21),
+        ("KXUFCFIGHT-26OCT03FIGTAL", "Deiveson Figueiredo", "Payton Talbott",
+         datetime(2026, 10, 4, 3, 0, tzinfo=timezone.utc), 0.82, "b",
+         "aec-ufc-deifig-paytal-2026-10-03", 0.19, 0.83),
+    ]
+    before = {"quotes": [
+        _settled("KXUFCFIGHT-26SEP26DEMJAU", "Vanessa Demopoulos", "Yazmin Jauregui",
+                 datetime(2026, 9, 26, 23, 0, tzinfo=timezone.utc), 0.80, "won"),
+        _settled("KXUFCFIGHT-26SEP26HIENAK", "Brady Hiestand", "Rinya Nakamura",
+                 datetime(2026, 9, 27, 3, 0, tzinfo=timezone.utc), 0.82, "lost"),
+        _settled("KXUFCFIGHT-26SEP27CASHEI", "Cory Sandhagen", "Heinisch",
+                 datetime(2026, 9, 27, 5, 0, tzinfo=timezone.utc), 0.81, "lost"),
+    ], "meta": {}, "coverage": {}}
     listings = []
-    live_px = {
-        "KXUFCFIGHT-26OCT03SMIWHI": (0.86, 0.16, "a"),
-        "KXUFCFIGHT-26OCT03WINARM": (0.79, 0.23, "a"),
-        "KXUFCFIGHT-26OCT03PINPUL": (0.84, 0.18, "a"),
-        "KXUFCFIGHT-26OCT03FIGTAL": (0.19, 0.83, "b"),
-    }
-    for q in fights:
-        if q["market_id"] not in live_px:
-            continue
-        pa, pb, _side = live_px[q["market_id"]]
-        start = datetime.fromisoformat(q["start"])
-        slug = "aec-ufc-" + q["market_id"].split("-", 1)[-1].lower()
-        listings.append(_row(slug, "polymarket_us", q["side_a"], q["side_b"], pa, pb, start))
-    _publish(after, {"mma": listings})
-    post = _page(after, st, now)
-    retired_ids = [q["id"] for q in after["quotes"] if q.get("note") == NOTE]
+    for mid, a, b, start, px, pick, slug, pa, pb in card:
+        before["quotes"].append(_open_kalshi(mid, a, b, start, price=px, pick=pick))
+        listings.append(_row(slug, "polymarket_us", a, b, pa, pb, start))
+    after = copy.deepcopy(before)
+    pre = _page(before, frozen_st, frozen_now)
+    _publish(after, {"mma": listings}, now=frozen_now)
+    post = _page(after, frozen_st, frozen_now)
+    retired_ids = sorted(q["id"] for q in after["quotes"] if q.get("note") == NOTE)
     added = [q for q in after["quotes"] if q.get("source") == "mma_fav_band" and q.get("bet")
-             and q.get("venue") == "polymarket_us" and q.get("status") == "open"
-             and q["id"] not in {x["id"] for x in before["quotes"]}]
-    print(f"  before  settled {pre['settled']:,} · void {pre['void']} · "
+             and q.get("venue") == "polymarket_us" and q.get("status") == "open"]
+    smith = next(q for q in after["quotes"] if q["id"] == "mma_fav_band:KXUFCFIGHT-26OCT03SMIWHI")
+    print(f"  before  settled {pre['settled']} · void {pre['void']} · "
           f"bets running {pre['running']} · no edge {pre['noedge']} · held back {pre['held']}")
-    print(f"  after   settled {post['settled']:,} · void {post['void']} · "
+    print(f"  after   settled {post['settled']} · void {post['void']} · "
           f"bets running {post['running']} · no edge {post['noedge']} · held back {post['held']}")
-    print(f"  retired {len(retired_ids)}:")
-    for q in after["quotes"]:
-        if q.get("note") != NOTE:
-            continue
-        print(f"    {q['id']}  price {q.get('price')}  settled {q.get('settled')}  bet {q.get('bet')}")
-    print(f"  added {len(added)}:")
-    for q in added:
-        print(f"    {q['id']}  {q.get('side_a')} vs {q.get('side_b')}  "
-              f"pick {q.get('pick')} @ {q.get('price')}  logged {q.get('logged')}")
-    eq(sorted(retired_ids), [
+    eq(retired_ids, [
         "mma_fav_band:KXUFCFIGHT-26OCT03FIGTAL",
         "mma_fav_band:KXUFCFIGHT-26OCT03PINPUL",
-        "mma_fav_band:KXUFCFIGHT-26OCT03SMIWHI",
         "mma_fav_band:KXUFCFIGHT-26OCT03WINARM",
-    ], "the four open Oct 3 Kalshi picks are retired")
+    ], "the three in-band Kalshi picks are retired")
+    eq((smith["status"], smith["bet"], smith.get("note"), smith["price"]),
+       ("open", True, None, 0.88),
+       "Smith stays on Kalshi when Polymarket US is 0.90, outside the band")
     eq(sorted((q["market_id"], q["pick"], q["price"]) for q in added), [
-        ("aec-ufc-26oct03figtal", "b", 0.83),
-        ("aec-ufc-26oct03pinpul", "a", 0.84),
-        ("aec-ufc-26oct03smiwhi", "a", 0.86),
-        ("aec-ufc-26oct03winarm", "a", 0.79),
-    ], "four Polymarket US entries are logged at the stubbed live prices")
-    eq(pre["held"], 7, "Production held back 7 bets before the run")
-    eq(post["held"], 3, "the four open picks leave held-back; the three settled Kalshi fights stay")
+        ("aec-ufc-antwin-lucarm-2026-10-03", "a", 0.83),
+        ("aec-ufc-dampin-andpul-2026-10-03", "a", 0.81),
+        ("aec-ufc-deifig-paytal-2026-10-03", "b", 0.83),
+    ], "three Polymarket US entries are logged at the in-band asks")
+    eq(pre["held"], 7, "the frozen card holds back 7 Kalshi bets")
+    eq(post["held"], 4, "Smith and the three settled Kalshi fights stay held back")
     eq((post["settled"], post["void"], post["running"], post["noedge"]),
        (pre["settled"], pre["void"], pre["running"], pre["noedge"]),
        "settled, void, bets running and no edge are unchanged")
     rep = A.Report()
     A.check_bets(after, rep)
     A.check_duplicates(after, rep)
-    A.check_stale(after, rep, False, now=now)
-    A.check_records(after, st, rep)
-    A.check_production(after, st, rep)
-    ok(not rep.errors, "the offline audit is clean after the simulated publish"
+    A.check_stale(after, rep, False, now=frozen_now)
+    A.check_records(after, frozen_st, rep)
+    ok(not rep.errors, "the frozen ledger audits clean"
        + ("" if not rep.errors else f" — {rep.errors[:3]}"))
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'mma venue passed'}")
