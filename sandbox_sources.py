@@ -256,13 +256,14 @@ SOURCES = {
         label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
         connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
         note="PAPER TEST, registered 2026-09-25, before it logged anything. The same selection "
-             "as the retired favourite-band rule — the player priced 0.77-0.81 — and only when "
-             "the entry is within 3 hours of the scheduled start. The wider rule is off the "
-             "board. This lane keeps the 3-hour window and logs on its own: duplicate "
-             "protection is per source, so another lane's quote cannot block or void this one. "
-             "Why the window: closing-line value on the band was about -1.2c on entries 3 or "
-             "more hours before the start, and about -0.3c on entries inside 3 hours "
-             "(in-band n=90, +11.8% after fees)."),
+             "as tennis_fav_band — the player priced 0.77-0.81 — and only when the entry is "
+             "within 3 hours of the scheduled start. tennis_fav_band is unchanged and keeps "
+             "logging every in-band match, including ones more than 3 hours out, so the two "
+             "records can be compared. A match that qualifies for both is logged by both. "
+             "That overlap is the comparison: duplicate protection is per source, so one "
+             "lane's quote cannot block or void the other. Why the window: closing-line "
+             "value on the band was about -1.2c on entries 3 or more hours before the start, "
+             "and about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees)."),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
@@ -1078,8 +1079,10 @@ def lane_removed(source, sport=None):
 def removed_row(q):
     """True for a stored row that pages, grading, and pricing leave alone.
 
-    The row stays in the ledger. A baseline still reads it. Hiding the lane
-    only stops the row rendering and stops a new bet.
+    The row stays in the ledger. A kept lane's own baseline still reads it
+    when that lane is assessed on the full ledger. A stamp, a blind baseline,
+    and any other cross-lane total read the filtered copy, so this row counts
+    in none of them. Hiding the lane also stops a new bet.
     """
     return lane_removed(q.get("source"), q.get("sport"))
 

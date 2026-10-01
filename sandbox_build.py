@@ -186,6 +186,9 @@ def feed_health(d):
 def sport_matrix(d, keys=None):
     """Source x sport: ROI where there is enough settled to say, sample size always shown.
 
+    `d` is the filtered page copy. This is a cross-lane total, so a removed
+    lane's bets are not a cell.
+
     This is the board's answer to the actual question. A single blended ROI per source
     hides the thing that matters — a tipster can be strong at one sport and hopeless at
     another — and rows are grouped by kind because tipsters, models and markets are
@@ -255,6 +258,11 @@ def vs_price(d, name, sport=None):
 
 
 def leaderboard(scores, d):
+    """One row per source. `d` and `scores` are the filtered page copy.
+
+    A removed lane's bets are not in this total, even when the source still
+    has a kept sport.
+    """
     rows = []
     for name, s in sorted(scores.items(),
                           key=lambda kv: (kv[1]["connected"], kv[1]["settled"]), reverse=True):
@@ -298,7 +306,11 @@ def leaderboard(scores, d):
 
 
 def approval_table(d, scores):
-    """Every betting source against every criterion, so a stamp can be checked, not trusted."""
+    """Every betting source against every criterion, so a stamp can be checked, not trusted.
+
+    `d` is the filtered page copy. A source that also had a removed sport is
+    judged on the sports still on the board.
+    """
     head = "".join(f'<th>{esc(label)}</th>' for _k, label, _p, _d in
                    T.assess(d, "__none__")["criteria"])
     rows = []
@@ -318,7 +330,12 @@ def approval_table(d, scores):
 
 
 def baseline_table(d):
-    """The blind strategies, per sport — the bar every source's choices have to clear."""
+    """The blind strategies, per sport — the bar every source's choices have to clear.
+
+    `d` is the filtered page copy. A contest that only a removed lane quoted
+    is not a row here. A kept lane's own baseline is a different number, read
+    from the full ledger on that lane's row.
+    """
     rows = []
     for sport in SPORT_KEYS:
         b = T.baselines(d, sport)
@@ -1663,15 +1680,19 @@ def build(now=None, d=None, st=None):
 def _sandbox_html(d, st, now_dt, full=None):
     """`d` is the page copy. `full` is the unfiltered ledger.
 
-    Lane tables, counts and headlines read `d`. Baseline, comparison and
-    verdict read `full` — the ledger the tracker assesses — so a hidden row
-    still counts in a kept lane's baseline and nowhere on the page.
+    Each lane's own baseline, comparison and verdict read `full`, the ledger
+    the tracker assesses. Stamp of approval, blind baselines, and every other
+    cross-lane total — a leaderboard, a source-by-sport cell, a by-sport or
+    by-competition total — read `d`. A removed lane's bets stay in a kept
+    lane's baseline and count nowhere visible.
     """
     full = d if full is None else full
     for q in T.all_bets(d):
         if q.get("bet") and q.get("status") in _HIST:
             T.note_unreadable_start(q)
-    scores = T.score(full)
+    # Cross-lane totals. `scores` feeds the stamp; the blind-baseline table
+    # and the by-sport sections below take `d` the same way.
+    scores = T.score(d)
     cov = d.get("coverage") or {}
     ou = (d.get("meta") or {}).get("odds_api") or {}
     odds_line = (f" Pinnacle prices come through The Odds API: {ou.get('calls', 0)} of "
@@ -1704,6 +1725,8 @@ def _sandbox_html(d, st, now_dt, full=None):
     # but 952 of the misses were one retired rule that quoted hundreds of ladder rungs a day
     # and can never improve — a number dragged down by history says nothing about whether the
     # snapshots are working now.
+    # Per-lane rows. The baseline, comparison and verdict on each one read
+    # `full`; the sport sections then total those rows, which are kept lanes.
     rows = pair_list(full, st)
     live = {(r["name"], r["sport"]) for r in rows if r["v"] != "retired"}
     leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"]
@@ -1773,8 +1796,8 @@ def _sandbox_html(d, st, now_dt, full=None):
 ({T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}, no day span, in high-volume sports),
 wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind rule on the same contests,
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
-{approval_table(full, scores)}</details>
-<details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(full)}</details>
+{approval_table(d, scores)}</details>
+<details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 {"" if "pinnacle" in S.REMOVED_SOURCES else f'<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>'}
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
 <details class="ref" id="method"><summary>Method</summary><div class="note">

@@ -136,8 +136,11 @@ def main():
     ok(len(pages) > 4, "sandbox, production, trading, index, and the archive are built")
     ok(any(name.startswith("archive/") and name != "archive/index.html" for name in pages),
        "every archive week is built")
+    # The 3-hour lane's registered note names the retired rule. That sentence
+    # was written once and stays. Everywhere else, the id is a removed lane.
+    registered = S.SOURCES["tennis_fav_band_3h"]["note"]
     for name, html in sorted(pages.items()):
-        text = html_lib.unescape(html)
+        text = html_lib.unescape(html).replace(registered, "")
         hit = _full_hit(text)
         ok(hit is None, f"{name} has no removed lane" + (f" ({hit})" if hit else ""))
         scoped = _scoped_hit(text)
@@ -343,6 +346,9 @@ def main():
     print("\nkept-lane numbers do not move when a removed row is hidden")
     _kept_lane_numbers()
 
+    print("\naggregate tables ignore removed-lane bets")
+    _aggregates_ignore_removed_rows()
+
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'tip-lane removal passed'}")
     for item in FAILS:
         print(f"  - {item}")
@@ -428,13 +434,146 @@ def _kept_lane_numbers():
            f"hiding the removed row would move {name}|{sport}'s baseline "
            f"({filtered['base_roi']} vs {tracker['base_roi']})")
     html = SB.build(now=NOW, d=raw, st=st)
+    shown = SB.hide_removed(raw)
     for name in ("mma_fav_band", "tennis_fav_band_3h"):
         full = T.assess(raw, name)["criteria"][2][3]
-        gone = T.assess(SB.hide_removed(raw), name)["criteria"][2][3]
-        ok(full in html, f"the page shows {name}'s full-ledger baseline ({full})")
-        ok(gone not in html, f"the page does not show the filtered baseline ({gone})")
+        gone = T.assess(shown, name)["criteria"][2][3]
+        ok(full not in html,
+           f"the stamp does not show {name}'s full-ledger baseline ({full})")
+        ok(gone in html, f"the stamp shows the filtered baseline ({gone})")
+        lane = page_rows[(name, S.SOURCES[name]["sports"][0])]
+        eq(lane["a"]["base_roi"], T.assess(raw, name, lane["sport"],
+                                           venues=T.TRADEABLE_VENUES)["base_roi"],
+           f"{name}'s row still reads the full-ledger baseline")
     ok("2 settled on the record" in html, "the headline counts the kept bets only")
     ok(">1</b><span>bets running</span>" in html, "the running count leaves the removed bet out")
+
+
+def _built_pages(d, st):
+    """Every page render_pages and the other builders emit for one ledger."""
+    sandbox, index, weeks = SB.render_pages(NOW, d=d, st=st)
+    blob = {"leads": {}, "unlisted_skipped": 0, "unverified_kickoff_skipped": 0}
+    out = {
+        "sandbox.html": sandbox,
+        "archive/index.html": index,
+        "production.html": production.page(d, st, blob, "", now=NOW),
+        "trading.html": SB.trading_page(NOW),
+        "index.html": site_root.root_stub(NOW),
+    }
+    out.update({f"archive/{slug}.html": html for slug, html in weeks.items()})
+    return out
+
+
+def _region(html, start, end):
+    i = html.find(start)
+    if i < 0:
+        return None
+    j = html.find(end, i + len(start))
+    return html[i:j if j >= 0 else None]
+
+
+def _aggregates_ignore_removed_rows():
+    """Removed-lane bets move no aggregate, and still move a kept lane's baseline.
+
+    The stamp, the blind baselines, the by-sport section, a leaderboard and a
+    source-by-sport matrix are cross-lane totals. Injecting removed-lane bets
+    into the full ledger leaves every one of them, on every built page, equal
+    to the ledger with those bets absent. The kept lane's own baseline does
+    not: that number is read from the full ledger.
+    """
+    kept = [
+        _bet("mma_fav_band", "mma", "mma-own", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
+        _bet("kalshi", "tennis", "kalshi-ten", 0.55, 80.0, "2026-09-20T12:00:00+00:00"),
+        _bet("espn_fpi", "nfl", "fpi-nfl", 0.60, -100.0, "2026-09-20T12:00:00+00:00",
+             pick="b", status="lost", result="b"),
+        _bet("polymarket", "nfl", "pm-nfl", 0.45, 120.0, "2026-09-20T12:00:00+00:00"),
+    ]
+    # Logged first on the kept contest, so it is the favourite the lane is judged
+    # against. A removed quote on another contest of the same sport replaces it
+    # when the baseline reads the full ledger.
+    population = [
+        dict(_bet("mma_fav_band", "mma", "mma-own", 0.80, 25.0, "2026-09-20T11:00:00+00:00"),
+             bet=False, pick=None, price=None, stake=0.0, pnl=0.0, status="graded"),
+    ]
+    removed = [
+        _bet("kalshi", "mlb", "kalshi-mlb", 0.40, 150.0, "2026-09-18T12:00:00+00:00"),
+        _bet("espn_fpi", "mlb", "fpi-mlb", 0.52, 90.0, "2026-09-18T12:00:00+00:00"),
+        _bet("polymarket", "mlb", "pm-mlb", 0.48, -100.0, "2026-09-18T12:00:00+00:00",
+             pick="b", status="lost", result="b"),
+        _bet("polymarket", "table_tennis", "pm-tt", 0.57, 70.0, "2026-09-18T12:00:00+00:00"),
+        _bet("polymarket_us", "table_tennis", "pmus-tt", 0.62, -100.0,
+             "2026-09-18T12:00:00+00:00", pick="b", status="lost", result="b"),
+        _bet("polymarket_us", "mlb", "pmus-mlb", 0.44, 120.0, "2026-09-18T12:00:00+00:00"),
+        _bet("pinnacle", "mma", "pin-mma", 0.70, -100.0, "2026-09-19T12:00:00+00:00",
+             pick="b", status="lost", result="b"),
+        _bet("scores24", "soccer", "s24-soc", 0.46, 110.0, "2026-09-18T12:00:00+00:00"),
+        _bet("soccerpredictions", "soccer", "sp-soc", 0.41, -100.0,
+             "2026-09-18T12:00:00+00:00", pick="b", status="lost", result="b"),
+    ]
+    for i in range(3):
+        removed.append(_bet("tt_band_55_60", "table_tennis", f"tt-{i}", 0.58, 70.0,
+                            "2026-09-17T12:00:00+00:00"))
+    clean = {"quotes": kept + population, "meta": {}, "coverage": {}}
+    dirty = {"quotes": kept + population + removed, "meta": {}, "coverage": {}}
+    st = {"pairs": {"mma_fav_band|mma": {
+        "stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
+        "by_hand": "2026-09-01"}}, "events": []}
+    ok(all(S.removed_row(q) for q in removed), "every injected bet is a removed lane")
+    ok(T.score(dirty)["kalshi"]["bets"] > T.score(clean)["kalshi"]["bets"],
+       "the injected Kalshi MLB bets would raise Kalshi's stamp count")
+    ok(T.score(dirty)["espn_fpi"]["bets"] > T.score(clean)["espn_fpi"]["bets"],
+       "the injected ESPN FPI MLB bets would raise that stamp count")
+    ok(T.score(dirty)["polymarket"]["bets"] > T.score(clean)["polymarket"]["bets"],
+       "the injected Polymarket bets would raise that stamp count")
+    ok(SB.baseline_table(dirty) != SB.baseline_table(clean),
+       "the injected contests would change the blind baselines")
+    ok(">Table Tennis<" in SB.baseline_table(dirty)
+       and ">Table Tennis<" not in SB.baseline_table(clean),
+       "table tennis is a blind-baseline row only on the full ledger")
+    ok(">Soccer<" in SB.baseline_table(dirty) and ">Soccer<" not in SB.baseline_table(clean),
+       "soccer is a blind-baseline row only on the full ledger")
+    ok(SB.leaderboard(T.score(dirty), dirty) != SB.leaderboard(T.score(clean), clean),
+       "a leaderboard on the full ledger would count the removed bets")
+    ok(SB.sport_matrix(dirty) != SB.sport_matrix(clean),
+       "a source-by-sport matrix on the full ledger would count the removed bets")
+    shown = SB.hide_removed(dirty)
+    eq(SB.approval_table(shown, T.score(shown)), SB.approval_table(clean, T.score(clean)),
+       "the stamp built from the filtered rows matches the ledger without them")
+    eq(SB.baseline_table(shown), SB.baseline_table(clean),
+       "the blind baselines built from the filtered rows match")
+    eq(SB.leaderboard(T.score(shown), shown), SB.leaderboard(T.score(clean), clean),
+       "a leaderboard built from the filtered rows matches")
+    eq(SB.sport_matrix(shown), SB.sport_matrix(clean),
+       "a source-by-sport matrix built from the filtered rows matches")
+    full_base = T.assess(dirty, "mma_fav_band", "mma", venues=T.TRADEABLE_VENUES)["base_roi"]
+    kept_base = T.assess(clean, "mma_fav_band", "mma", venues=T.TRADEABLE_VENUES)["base_roi"]
+    ok(full_base != kept_base,
+       f"the kept lane's baseline moves when the removed contest is in the ledger "
+       f"({full_base} vs {kept_base})")
+    row = next(r for r in SB.pair_list(dirty, st)
+               if r["name"] == "mma_fav_band" and r["sport"] == "mma")
+    eq(row["a"]["base_roi"], full_base, "the built row reads that full-ledger baseline")
+    eq(row["v"], SB.verdict(row["a"]), "the built row's verdict is that full-ledger assess")
+    pages_dirty = _built_pages(dirty, st)
+    pages_clean = _built_pages(clean, st)
+    eq(set(pages_dirty), set(pages_clean), "injecting removed bets builds the same pages")
+    for name in sorted(pages_dirty):
+        eq(pages_dirty[name], pages_clean[name],
+           f"{name} is unchanged when removed-lane bets are in the ledger")
+    sandbox = pages_dirty["sandbox.html"]
+    for start, end, title in (
+            ("Stamp of approval", "Blind baselines", "stamp of approval"),
+            ("Blind baselines", "Feed coverage", "blind baselines"),
+            ('id="by-sport"', 'id="reference"', "by-sport totals"),
+    ):
+        got = _region(sandbox, start, end)
+        want = _region(pages_clean["sandbox.html"], start, end)
+        ok(got is not None and got == want, f"the {title} table is unchanged")
+    ok(">Table Tennis<" not in sandbox, "the page has no table-tennis baseline row")
+    ok(SB.approval_table(dirty, T.score(dirty)) not in sandbox,
+       "the page does not show the full-ledger stamp")
+    ok(SB.baseline_table(dirty) not in sandbox,
+       "the page does not show the full-ledger blind baselines")
 
 
 # (source, sport) pairs the spy must not record. Built once so the filter stays readable.
