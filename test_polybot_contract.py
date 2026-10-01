@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Contract for the two lead files the trading bot reads raw from main.
+"""Contract for the two lead files read raw from main.
 
 data/production_leads.json and data/streak_leads.json must stay at those paths
-and keep parsing. The production feed must keep the shape the bot already
-reads: a `leads` dict keyed by lead id, a parseable `updated_at`, and on every
+and keep parsing. The production feed must keep the shape a reader already
+expects: a `leads` dict keyed by lead id, a parseable `updated_at`, and on every
 lead the fields kickoff, price_at_log, pair, status and bet.
 
 A model lane is whatever production.lead_from_quote decides, the gate that
