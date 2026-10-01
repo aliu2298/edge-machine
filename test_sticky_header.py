@@ -13,8 +13,20 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SHA = subprocess.check_output(
-    ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+
+
+def _head_sha():
+    """HEAD when this tree is a git checkout, otherwise a stable label."""
+    try:
+        out = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
+    except (OSError, subprocess.CalledProcessError):
+        return "unknown"
+    return out or "unknown"
+
+
+SHA = _head_sha()
 
 # The four long tables from the report: two on Sandbox, Pairs, Stock rules.
 TABLES = (
@@ -138,6 +150,7 @@ def browser_checks():
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
+        print("::warning::Playwright is not installed; browser checks in test_sticky_header.py were not run")
         print("  skipped: playwright is not installed; browser check not run")
         return
     httpd = _serve()
