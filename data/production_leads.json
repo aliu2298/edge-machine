@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-01T01:10:25+00:00",
+ "board_built_at": "2026-10-01T02:09:18+00:00",
  "leads": {
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
@@ -198,6 +198,130 @@
    "source": "mma_fav_band",
    "sport": "mma",
    "status": "hit"
+  },
+  "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule": {
+   "away": "Lucas Armand",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Anthony Wint to win",
+   "home": "Anthony Wint",
+   "id": "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T20:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T02:09:18+00:00",
+   "league": "MMA",
+   "match": "Anthony Wint v Lucas Armand",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.82,
+   "route": {
+    "market": "aec-ufc-antwin-lucarm-2026-10-03",
+    "outcome": "Anthony Wint",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-antwin-lucarm-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
+  },
+  "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule": {
+   "away": "Andrey Pulyaev",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Damian Pinas to win",
+   "home": "Damian Pinas",
+   "id": "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T02:09:18+00:00",
+   "league": "MMA",
+   "match": "Damian Pinas v Andrey Pulyaev",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-ufc-dampin-andpul-2026-10-03",
+    "outcome": "Damian Pinas",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-dampin-andpul-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
+  },
+  "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule": {
+   "away": "Bruce Whitehead",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Jacobe Smith to win",
+   "home": "Jacobe Smith",
+   "id": "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T02:09:18+00:00",
+   "league": "MMA",
+   "match": "Jacobe Smith v Bruce Whitehead",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.88,
+   "route": {
+    "market": "aec-ufc-jacsmi-bruwhi-2026-10-03",
+    "outcome": "Jacobe Smith",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-jacsmi-bruwhi-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
+  },
+  "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule": {
+   "away": "Payton Talbott",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-04",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Payton Talbott to win",
+   "home": "Deiveson Figueiredo",
+   "id": "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-04T01:15Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T02:09:18+00:00",
+   "league": "MMA",
+   "match": "Deiveson Figueiredo v Payton Talbott",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.84,
+   "route": {
+    "market": "aec-ufc-deifig-paytal-2026-10-03",
+    "outcome": "Payton Talbott",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-deifig-paytal-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -247,7 +371,7 @@
   }
  },
  "stage": "production",
- "unlisted_skipped": 7,
+ "unlisted_skipped": 4,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-01T01:10:25+00:00"
+ "updated_at": "2026-10-01T02:09:18+00:00"
 }
