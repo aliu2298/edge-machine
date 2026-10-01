@@ -1,7 +1,9 @@
 /* Edge Machine public site. Dark only: no light theme, no toggle. System fonts. */
 :root {
   color-scheme: dark;
-  --sticky-top: 104px;
+  /* Fallback until tables.js measures header.site. 104px is the no-JS stand-in. */
+  --hdr-h: 104px;
+  --sticky-top: var(--hdr-h);
   --bg: #0b0c0f;
   --card: #16181d;
   --raised: #1f2229;
@@ -81,14 +83,11 @@ header.site {
 .brand:hover { text-decoration: none; color: var(--fg); }
 nav.main, nav.toc {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: visible;
+  min-width: 0;
 }
-nav.main::-webkit-scrollbar, nav.toc::-webkit-scrollbar { display: none; }
-nav.main { min-width: 0; }
 nav.main a {
   color: var(--mut);
   font-size: 14px;
@@ -189,7 +188,29 @@ h2 {
   overflow: visible;
   margin-bottom: 16px;
 }
+/* tables.js adds this only when the table is wider than the card. The page
+   itself never grows a horizontal scrollbar. A wide card cannot also stick
+   its header to the viewport, so the header row sits at the top of the card. */
+@media (min-width: 641px) {
+  .tbl.scroll-x {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tbl.scroll-x thead { top: 0; }
+}
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
+/* The whole header row sticks flush under the site header. tables.js sets --hdr-h
+   from the measured header, which is shorter or taller per page and when the
+   sub-nav wraps. */
+thead {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 2;
+  background: var(--raised);
+}
 th {
   text-align: left;
   font-size: 13px;
@@ -205,8 +226,24 @@ th {
   top: var(--sticky-top);
   z-index: 2;
 }
+/* A second header row must stay under the first. Cells stick sideways only.
+   The collapsed border between those rows is a 1px crack; the shadow covers it
+   so a body row cannot show through while the header is stuck. */
+@media (min-width: 641px) {
+  thead th { top: auto; }
+  thead tr:not(:last-child) th { box-shadow: 0 1px 0 var(--raised); }
+  .tbl thead tr:not(:last-child) th:first-child {
+    box-shadow: 1px 0 0 var(--line), 0 1px 0 var(--raised);
+  }
+}
 th.grp { text-align: center; border-bottom: 1px solid var(--line); }
 td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+td[data-l="Date"],
+td[data-l="Settled"],
+td[data-l="Last"] { white-space: nowrap; }
+/* Phone cards set every tr to display:block, which beats the hidden attribute.
+   A filtered-out row stays hidden in the table and in the cards. */
+tr[hidden] { display: none !important; }
 tr:last-child td { border-bottom: none; }
 tbody tr:hover td { background: var(--raised); }
 .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
@@ -482,6 +519,8 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 
 @media (max-width: 640px) {
   :root { --sticky-top: 0px; }
+  /* Phone tables scroll inside the card. Leave the header row where it was. */
+  thead { position: static; top: auto; z-index: auto; }
   .topbar { padding: 0 16px; gap: 10px; }
   .stamp { display: none; }
   nav.toc { padding: 0 16px 8px; gap: 14px; }
