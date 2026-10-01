@@ -7452,6 +7452,51 @@ eq(_ca_all["unit"], "market-day", "and the all-sport row says it is counting mar
 ok(_ca_all["z"] < 2,
    "one coin-day cannot read as a proven edge, however many rungs it held")
 
+# ---------------------------------------------------------------------------
+# Day-clustered scoring, fixed 2026-10-01. Two defects, both of which published a wrong
+# number for cmd_tail at the same time: roi +0.28% beside roi_fee -15.28%, and z -4.81 on
+# a record whose money was flat.
+# ---------------------------------------------------------------------------
+print("\nday-clustered lanes are scored on money")
+
+def _rung(i, won, price=0.98, day="2026-09-21", strike=0):
+    return dict(id=f"r{i}", source="dc", sport="commodities", bet=True, venue="kalshi_binary",
+                market_id=f"KXWTI-{day.replace('-','')}-T{90+strike}", date=day, pick="b", price=price,
+                price_a=round(1-price, 2), price_b=price, price_draw=None,
+                result="b" if won else "a", status="won" if won else "lost",
+                pnl=round(100*(1/price-1), 2) if won else -100.0, stake=100.0,
+                start=f"{day}T18:00:00+00:00", logged=f"{day}T09:00:00+00:00")
+
+# A day of 20 rungs that loses ONE: the day's average P/L is negative, but it is nowhere
+# near a whole stake lost -- 19 rungs still paid.
+_lossday = [_rung(i, i != 0, strike=i) for i in range(20)]
+_u = T.day_units(_lossday)
+eq(len(_u), 1, "twenty rungs of one market-day collapse to one unit")
+ok(_u[0]["status"] == "lost", "the day is marked lost when its average P/L is negative")
+ok(-10.0 < _u[0]["pnl"] < 0,
+   "and the day's P/L is the AVERAGE of its rungs, a few dollars, not the whole stake")
+ok("pnl_fee" in _u[0], "the collapsed day carries its own fee-adjusted P/L")
+ok(-12.0 < _u[0]["pnl_fee"] < 0,
+   "fees are charged per rung and then averaged: a losing day is not charged a whole stake")
+ok(_u[0]["pnl_fee"] < _u[0]["pnl"],
+   "and the fee makes the day slightly worse, never catastrophically so")
+ok(T.pnl_after_fee(_u[0]) == -100.0,
+   "pnl_after_fee on the collapsed row WOULD charge the full stake — the bug now routed around")
+
+# Significance for a day-clustered lane is a t on money, not a binomial on day-wins.
+_days = []
+for dnum in range(6):
+    day = f"2026-09-{21+dnum:02d}"
+    _days += [_rung(f"{dnum}_{i}", i != 0 or dnum % 3, day=day, strike=i) for i in range(20)]
+_dd = {"quotes": _days}
+_da = T.assess(_dd, "dc", "commodities")
+eq(_da["unit"], "market-day", "a commodities record is counted in market-days")
+eq(_da["n"], 6, "six market-days")
+ok(abs(_da["z"]) < 2.0,
+   "a near-break-even day-clustered record does not read as significant: z is the money t, "
+   "not day-wins against the rung price")
+close(_da["roi_fee"], _da["roi"], "and roi_fee sits beside roi rather than 50pp away", tol=0.05)
+
 ok("crypto" in S.DAY_CLUSTERED,
    "crypto is judged per market-day: a coin ladder's rungs are nested, not exclusive")
 ok("commodities" in S.DAY_CLUSTERED and "soccer_corners" in S.DAY_CLUSTERED,
@@ -7472,7 +7517,7 @@ ok(S.market_day({"market_id": "KXSOLD-26SEP1817-T99.9999", "date": "2026-09-18"}
 # first / last / best. The others leave n, wins, P&L, money ROI, z, and the
 # fade. The ledger rows stay.
 print("\none climate reading per city-day")
-eq(T.CLIMATE_KEEP_RULE, "first", "the provisional keep-rule is the earliest logged quote")
+eq(T.CLIMATE_KEEP_RULE, "last", "the keep-rule scores the reading the forecaster stood behind")
 eq(T.CLIMATE_KEEP_RULES, ("first", "last", "best"),
    "the switch is first, last (latest before start), and best (lowest price)")
 
@@ -7489,39 +7534,46 @@ _chi = [
     _fade_q("KXHIGHCHI-26SEP26-B68.5", "2026-09-25T22:19:14+00:00", 0.67, False, -100.0, 0.34),
     _fade_q("KXHIGHCHI-26SEP26-B66.5", "2026-09-26T16:47:54+00:00", 0.90, True, 11.11, 0.15),
 ]
+# Everything below follows CLIMATE_KEEP_RULE rather than hard-coding a side of it, so the
+# block tests the mechanism and not today's setting.
 _chi_kept = T.one_climate_reading(_chi)
-eq([q["id"] for q in _chi_kept], ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
-   "the earliest Chicago quote is the one kept")
+eq(len(_chi_kept), 1, "one Chicago quote is kept")
+_KEPT = _chi_kept[0]
+_DROP = [q for q in _chi if q["id"] != _KEPT["id"]][0]
+eq(_KEPT["id"], "nws_fade:KXHIGHCHI-26SEP26-B66.5",
+   "under 'last' that is the later reading, logged before the start")
 _chi_d = {"quotes": _chi, "meta": {}}
 eq(T.mark_climate_citydays(_chi_d), 1, "the later Chicago quote is marked and the earlier one is not")
 eq(T.mark_climate_citydays(_chi_d), 0, "marking again under the same rule changes nothing")
-_chi_drop = _chi[1]
+_chi_drop = _DROP
 eq(_chi_drop.get("excluded"), "nws_cityday", "the dropped row carries excluded=nws_cityday")
-ok("nws_fade:KXHIGHCHI-26SEP26-B68.5" in _chi_drop.get("note", "") and "under first" in _chi_drop["note"],
+ok(_KEPT["id"] in _chi_drop.get("note", "") and f"under {T.CLIMATE_KEEP_RULE}" in _chi_drop["note"],
    "the note names the kept id and the rule")
 eq((_chi_drop["status"], _chi_drop["result"], _chi_drop["pnl"], _chi_drop["price"]),
-   ("won", "b", 11.11, 0.90), "the mark leaves the result, the price and the P/L")
-ok("excluded" not in _chi[0] and "note" not in _chi[0], "the kept row is not marked")
+   ("lost", "a", -100.0, 0.67), "the mark leaves the result, the price and the P/L")
+ok("excluded" not in _KEPT and "note" not in _KEPT, "the kept row is not marked")
 _chi_a = T.assess(_chi_d, "nws_fade", "climate")
 _chi_days = {S.outcome_cluster(q) for q in _chi
              if q.get("status") in ("won", "lost") and not T.climate_excluded(q)}
-eq((_chi_a["n"], _chi_a["won"], _chi_a["unit"], _chi_a["z_dropped"]), (1, 0, "bet", 0),
-   "the Chicago pair scores as the lost 0.67 quote, and does not raise")
+eq((_chi_a["n"], _chi_a["won"], _chi_a["unit"], _chi_a["z_dropped"]),
+   (1, 1 if _KEPT["status"] == "won" else 0, "bet", 0),
+   "the Chicago pair scores as the kept quote alone, and does not raise")
 eq(_chi_a["n_eff"], len(_chi_days),
    "with keep-first applied, n_eff equals the number of city-days")
-close(_chi_a["pnl"], -100.0, "the later win's P&L is not in the record")
-close(_chi_a["expected"], 0.67, "nor is its price")
-close(_chi_a["roi"], -1.0, "money ROI is that one stake")
+close(_chi_a["pnl"], _KEPT["pnl"], "only the kept quote's P&L is in the record")
+close(_chi_a["expected"], _KEPT["price"], "and only its price")
+close(_chi_a["roi"], _KEPT["pnl"] / 100.0, "money ROI is that one stake")
 _chi_head = T.score(_chi_d, sport="climate")["nws_fade"]
 eq((_chi_head["settled"], _chi_head["won"]), (_chi_a["n"], _chi_a["won"]),
    "the headline settled count matches the lane table")
 close(_chi_head["pnl"], _chi_a["pnl"], "and the headline P&L matches the lane P&L")
 _day_won, _day_n, _day_extra, _day_pl = SB._day_summary(_chi)
-eq((_day_won, _day_n), (0, 1), "the day subtotal counts the kept quote, not the marked repeat")
-close(_day_pl, -100.0, "and it does not add the marked quote's P&L")
+eq((_day_won, _day_n), (1 if _KEPT["status"] == "won" else 0, 1),
+   "the day subtotal counts the kept quote, not the marked repeat")
+close(_day_pl, _KEPT["pnl"], "and it does not add the marked quote's P&L")
 _chi_f = T.faded(_chi_d, "nws_fade", "climate")
 eq((_chi_f["n"], _chi_f["z_dropped"]), (1, 0), "the fade drops the later quote too")
-close(_chi_f["expected"], 0.34, "and fades the earliest quote's other side")
+close(_chi_f["expected"], _KEPT["price_a"], "and fades the kept quote's other side")
 # Same logged time: the lesser market_id wins the tie.
 _tie = [
     _fade_q("KXHIGHCHI-26SEP26-B68.5", "2026-09-25T22:19:14+00:00", 0.67, False, -100.0, 0.34),
@@ -7557,8 +7609,9 @@ _yes_nws = [dict(q, source="nws", id=q["id"].replace("nws_fade", "nws"), pick="a
 _ynd = {"quotes": _yes_nws, "meta": {}}
 T.mark_climate_citydays(_ynd)
 _yn = T.assess(_ynd, "nws", "climate")
-eq((_yn["n"], _yn["expected"], _yn["z_dropped"]), (1, 0.70, 0),
-   "two nws YES quotes on one city-day keep the earliest and do not raise")
+_yn_keep = T.one_climate_reading([dict(q) for q in _yes_nws])[0]
+eq((_yn["n"], _yn["expected"], _yn["z_dropped"]), (1, _yn_keep["price"], 0),
+   "two nws YES quotes on one city-day are one reading and do not raise")
 # last: the latest quote still logged before that quote's start. best: the
 # cheapest price on the side that was bet. A quote logged after start is not
 # a "last" reading.
@@ -7571,30 +7624,41 @@ eq([q["id"] for q in T.one_climate_reading(_chi, rule="best")],
 _saved_rule = T.CLIMATE_KEEP_RULE
 _kept_fields = ("status", "result", "pnl", "price", "price_a", "price_b", "pick", "logged", "market_id")
 _before_switch = [{k: q.get(k) for k in _kept_fields} for q in _chi]
+# Switch to a rule that DIFFERS from the live one, so the re-mark is a real change rather
+# than a no-op. "first" keeps the earlier Chicago quote where "last" keeps the later.
+_other_rule = "first" if T.CLIMATE_KEEP_RULE != "first" else "last"
 try:
-    T.CLIMATE_KEEP_RULE = "last"
+    T.CLIMATE_KEEP_RULE = _other_rule
     eq(T.mark_climate_citydays(_chi_d), 2, "a new rule clears the old mark and writes the other")
-    eq(_chi[0].get("excluded"), "nws_cityday", "last marks the earlier Chicago quote")
-    ok("nws_fade:KXHIGHCHI-26SEP26-B66.5" in _chi[0].get("note", "") and "under last" in _chi[0]["note"],
-       "the new note names the quote last keeps, and the rule")
-    ok("excluded" not in _chi[1] and not str(_chi[1].get("note") or "").startswith("nws city-day:"),
-       "last clears the mark on the quote it keeps")
+    _o_keep = T.one_climate_reading([dict(q) for q in _chi])[0]
+    _o_drop = [q for q in _chi if q["id"] != _o_keep["id"]][0]
+    eq(_o_drop.get("excluded"), "nws_cityday", "the new rule marks the quote it does not keep")
+    ok(_o_keep["id"] in _o_drop.get("note", "") and f"under {_other_rule}" in _o_drop["note"],
+       "the new note names the quote the new rule keeps, and the rule")
+    _o_live = [q for q in _chi if q["id"] == _o_keep["id"]][0]
+    ok("excluded" not in _o_live and not str(_o_live.get("note") or "").startswith("nws city-day:"),
+       "and clears the mark on the quote it does keep")
     eq([{k: q.get(k) for k in _kept_fields} for q in _chi], _before_switch,
        "switching rules does not touch the result, the prices or the P/L")
     eq(T.mark_climate_citydays(_chi_d), 0, "the new rule is idempotent too")
     _last_a = T.assess(_chi_d, "nws_fade", "climate")
-    eq((_last_a["n"], _last_a["won"], _last_a["expected"]), (1, 1, 0.90),
-       "assess follows the mark: last scores the 0.90 quote")
+    eq((_last_a["n"], _last_a["won"], _last_a["expected"]),
+       (1, 1 if _o_keep["status"] == "won" else 0, _o_keep["price"]),
+       "assess follows the mark: the new rule scores its own kept quote")
     _head_last = T.score(_chi_d, sport="climate")["nws_fade"]
     eq((_head_last["settled"], _head_last["won"]), (_last_a["n"], _last_a["won"]),
-       "under last, the headline count matches the lane")
+       "under the new rule, the headline count matches the lane")
     close(_head_last["pnl"], _last_a["pnl"], "and the headline P&L matches the lane")
 finally:
     T.CLIMATE_KEEP_RULE = _saved_rule
     T.mark_climate_citydays(_chi_d)
-eq(T.CLIMATE_KEEP_RULE, "first", "the keep-rule is put back")
-eq(_chi[1].get("excluded"), "nws_cityday", "putting the rule back re-marks the later quote")
-ok("excluded" not in _chi[0], "and clears the earlier one")
+eq(T.CLIMATE_KEEP_RULE, _saved_rule, "the keep-rule is put back to whatever it was set to")
+_restored = T.one_climate_reading([dict(q) for q in _chi])
+_restored_id = _restored[0]["id"] if _restored else None
+ok(all(q.get("excluded") == "nws_cityday" for q in _chi if q["id"] != _restored_id),
+   "putting the rule back re-marks every quote it does not keep")
+ok(not any(q.get("excluded") for q in _chi if q["id"] == _restored_id),
+   "and clears the one it does keep")
 _late = [
     _fade_q("KXHIGHCHI-26SEP27-B69.5", "2026-09-26T16:00:00+00:00", 0.70, False, -100.0, 0.30),
     _fade_q("KXHIGHCHI-26SEP27-B67.5", "2026-09-27T02:00:00+00:00", 0.20, True, 400.0, 0.80),
@@ -7641,14 +7705,21 @@ for _q in _chi:
     _c.pop("excluded", None)
     _c.pop("note", None)
     _vqs.append(_c)
-eq([q["id"] for q in T.one_climate_reading(_vqs)],
-   ["nws_fade:KXHIGHCHI-26SEP26-B68.5"],
-   "a void is never the kept bet; the earliest real quote is")
+# CLIMATE_KEEP_RULE became "last" on 2026-10-01: the kept reading is the forecast the
+# forecaster stood behind at the event, not the one it had already revised away. These
+# assertions follow the rule rather than hard-coding a side of it.
+_keep_id = T.one_climate_reading([dict(q) for q in _vqs if q.get("status") != "void"])[0]["id"]
+eq([q["id"] for q in T.one_climate_reading(_vqs)], [_keep_id],
+   "a void is never the kept bet; the quote the keep rule names is")
+ok(_keep_id != _void["id"], "and the void is not what the rule picked")
 _vd = {"quotes": _vqs, "meta": {}}
 T.mark_climate_citydays(_vd)
 ok("excluded" not in _void, "the void is not marked as a city-day repeat")
-ok("excluded" not in _vqs[1], "the earliest real quote stays unmarked")
-eq(_vqs[2].get("excluded"), "nws_cityday", "the later real quote is the one marked")
+_kept = [q for q in _vqs[1:] if q["id"] == _keep_id]
+_other = [q for q in _vqs[1:] if q["id"] != _keep_id]
+ok(_kept and "excluded" not in _kept[0], "the quote the rule keeps stays unmarked")
+ok(_other and all(q.get("excluded") == "nws_cityday" for q in _other),
+   "and every other real quote on that city-day is marked the repeat")
 _va = T.assess(_vd, "nws_fade", "climate")
 eq((_va["n"], _va["n_eff"], _va["z_dropped"]), (1, 1, 0),
    "the void is off the record and the marked repeat does not reach the guard")

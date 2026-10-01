@@ -744,7 +744,15 @@ SOURCES = {
     "bund_o35": dict(
         label="Bundesliga over 3.5, every match", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_u35"], baseline="population",
-        note="Pre-registered 2026-09-26, before it logged anything. Back OVER 3.5 GOALS on "
+        note="WINDOW, stated because it differs from the rest: this lane is specified on FOUR "
+             "seasons (2022/23-2025/26), not the three every other league lane here uses. That "
+             "is not an oversight and the two are not interchangeable — the finding IS the "
+             "four-season window. The regime shift it rests on runs 2.88 to 3.13 to 3.19 goals "
+             "across three eras, and the 540-cell correction it survives was computed over "
+             "those 1,224 matches. Re-cutting it to three seasons would be a NEW test on a "
+             "smaller sample, not a tidy-up, and it could fail. It has not been re-derived on "
+             "three seasons; until it is, read this lane as a four-season claim. "
+             "Pre-registered 2026-09-26, before it logged anything. Back OVER 3.5 GOALS on "
              "every Kalshi Bundesliga match, skipping only a board holding more than 6%. "
              "NOTHING is selected — no band, no form, no model — which is the whole point: "
              "this is the only finding in a 540-cell study that survives its own correction, "

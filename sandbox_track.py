@@ -1890,7 +1890,18 @@ def cluster_stats(clusters):
 # and this rule. The row stays. Its result, prices and P/L stay, so a later
 # rule is a re-run of mark_climate_citydays: old marks clear, new ones land.
 # Totals skip the mark the way they skip a void.
-CLIMATE_KEEP_RULE = "first"
+# Set to "last" on 2026-10-01, no longer provisional. A city-day's repeat quotes are not one
+# bet re-priced: all 29 of them are DIFFERENT buckets, because the forecast moved (Austin
+# 2026-09-12 read 103-104 in the morning and 101-102 that evening). So the rule chooses which
+# FORECAST to score, not which price, and only one bucket can land. "first" scores the reading
+# the forecaster had already revised away, which measures staleness; "last" scores the one it
+# stood behind at the event, which is how a forecaster is normally judged. It moves nws from
+# -27.8% to -1.5% and the verdict does not change under any of the three — it is behind the
+# price in all of them. NOTE the lanes each pick their kept quote independently, so nws and
+# nws_fade can land on different buckets of one city-day (2 of their 8 shared days). That is
+# correct per lane — each is scored on what it actually bet — but it means a lane-v-lane
+# comparison on a single city-day is not always like for like.
+CLIMATE_KEEP_RULE = "last"
 CLIMATE_KEEP_RULES = ("first", "last", "best")
 _CLIMATE_LANES = ("nws", "nws_fade")
 
@@ -2404,6 +2415,13 @@ def day_units(bets):
     out = []
     for key, qs in days.items():
         pnl = sum(q["pnl"] for q in qs) / len(qs)
+        # Fees are charged per RUNG and then averaged, exactly as pnl is. Taking
+        # pnl_after_fee of the collapsed row instead would charge a losing day the whole
+        # stake: pnl_after_fee returns -STAKE for a loss, which is right for one bet and
+        # wrong for a day whose rungs mostly won. KXWTI|20260921 lost $11.17 over 23 rungs,
+        # not $100, and charging three such days $100 each is what published cmd_tail at
+        # roi +0.28% and roi_fee -15.28% at the same time.
+        pnl_fee = sum(pnl_after_fee(q) for q in qs) / len(qs)
         readable = [q for q in qs if _start_instant(q) is not None]
         for q in qs:
             if _start_instant(q) is None:
@@ -2414,7 +2432,8 @@ def day_units(bets):
         rep = readable[0] if readable else qs[0]
         starts = [q["start"] for q in readable]
         out.append(dict(rep, id=key, market_id=key.replace("|", "_"),
-                        price=sum(q["price"] for q in qs) / len(qs), pnl=pnl, stake=STAKE,
+                        price=sum(q["price"] for q in qs) / len(qs), pnl=pnl,
+                        pnl_fee=pnl_fee, stake=STAKE,
                         status="won" if pnl > 0 else "lost", rungs=len(qs),
                         start=min(starts) if starts else "",
                         logged=min(q["logged"] for q in qs)))
@@ -2496,11 +2515,33 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     c = cluster_stats(clusters)
     var = c["var"]
     n_eff = c["outcomes"]
+    # A COLLAPSED DAY is not a 0/1 draw at the rung price, and scoring it as one is what read
+    # cmd_tail at z -4.81 while its money was flat. day_units marks a day "won" when its
+    # AVERAGE P/L is positive, which needs nearly every rung to land: on a 213-rung gas day
+    # at most 3-4 rungs may lose and 3.8 are expected, so the day is close to a coin flip —
+    # not the 98.2% event its average rung price implies. Comparing 15 day-wins against the
+    # summed rung prices (17.7) is comparing two different things.
+    #
+    # So a day-clustered record is judged on MONEY. A fairly priced bet returns zero in
+    # expectation — p·S·(1/p − 1) + (1−p)·(−S) = 0 — so the day's expected return is zero
+    # whatever the rungs' correlation, which is the part no binomial model can get right
+    # (a coin ladder's rungs move together, 22 state gas series do not). The statistic is the
+    # mean day return over its own standard error, and the dispersion across days carries the
+    # correlation without assuming it. cmd_tail reads t +0.34, which is its +0.28%.
+    day_t = None
+    if day_collapsed or sport in S.DAY_CLUSTERED:
+        rets = [q["pnl"] / STAKE for q in bets]
+        if len(rets) > 1:
+            mean_r = sum(rets) / len(rets)
+            sd = (sum((x - mean_r) ** 2 for x in rets) / (len(rets) - 1)) ** 0.5
+            day_t = (mean_r / (sd / len(rets) ** 0.5)) if sd else 0.0
     # `won` and `expected` above are the whole record, and stay that way for the hit rate and
     # the money. The z is taken only over the clusters cluster_stats kept, so a contradictory
     # one cannot put its excess wins in the numerator while contributing nothing below.
     z_dropped = c["dropped"]
     z = (c["won"] - c["expected"]) / var ** 0.5 if var > 0 else 0.0
+    if day_t is not None:
+        z = day_t                      # money, not day-wins — see above
     # Halves and the day span read the clock. A row whose start will not parse
     # stays in n, won, and P&L, and stays out of those two checks, so a lane
     # whose starts all read is unchanged.
@@ -2622,8 +2663,19 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         status = "failing"
     else:
         status = "watch"
-    pnl_fee = sum(pnl_after_fee(q) for q in bets) + sum(pnl_after_fee(q) for q in price_bets)
-    clv = [q["close_price"] - q["price"] for q in bets if fresh_close(q)]
+    # A collapsed day carries its own pnl_fee, feed per rung before averaging. Falling back
+    # to pnl_after_fee on the collapsed row would charge a losing day the whole stake.
+    pnl_fee = (sum(q["pnl_fee"] if "pnl_fee" in q else pnl_after_fee(q) for q in bets)
+               + sum(pnl_after_fee(q) for q in price_bets))
+    # CLIMATE CARRIES NO READABLE CLV. Its close_price is captured near the event, by which
+    # time the temperature is largely settled, so the close tracks the RESULT rather than the
+    # price: bought 0.21 closed 0.06 lost, bought 0.34 closed 0.53 won. Both nws and nws_fade
+    # read -26c to -30c a bet on a book whose median hold is 1.00% — the tightest here — and
+    # both sides of a 1% book cannot be 26c worse than fair. It was being published as
+    # "t -4.40 · 7 closes", which restates that the bets lost and reads as if it were evidence
+    # about the entry price. No CLV is reported for climate rather than a misleading one.
+    clv = ([] if sport == "climate"
+           else [q["close_price"] - q["price"] for q in bets if fresh_close(q)])
     # The spread of the moves, not just their average: a mean of +1c means one thing when the
     # moves are all +1c and another when they run from -20c to +22c. t is that mean over its
     # own standard error, which is what makes CLV readable long before the win record is.
