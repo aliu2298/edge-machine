@@ -555,6 +555,78 @@
    "pair": "pm_combo4|tennis_pmcombo",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-01T16:20:16+00:00",
+   "evidence": {
+    "base_roi": 0.0014,
+    "clv": 0.018,
+    "clv_n": 10,
+    "n": 10,
+    "own_roi": 0.327,
+    "roi": 0.327,
+    "roi_fee": 0.3045,
+    "span_days": 6.8021,
+    "weeks": 0,
+    "z": 1.8049
+   },
+   "pair": "o15_ranked|soccer_o15_intl",
+   "reason": "moved to Production by hand on 2026-10-01",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-01T16:20:16+00:00",
+   "evidence": {
+    "base_roi": 0.0014,
+    "clv": 0.018,
+    "clv_n": 10,
+    "n": 10,
+    "own_roi": 0.327,
+    "roi": 0.327,
+    "roi_fee": 0.3045,
+    "span_days": 6.8021,
+    "weeks": 0,
+    "z": 1.8049
+   },
+   "pair": "o15_ranked|soccer_o15_intl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-01T16:20:16+00:00",
+   "evidence": {
+    "base_roi": -0.1532,
+    "clv": 0.002,
+    "clv_n": 5,
+    "n": 5,
+    "own_roi": 0.2095,
+    "roi": 0.2095,
+    "roi_fee": 0.1951,
+    "span_days": 5.0,
+    "weeks": 0,
+    "z": 1.0172
+   },
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "reason": "moved to Production by hand on 2026-10-01",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-01T16:20:16+00:00",
+   "evidence": {
+    "base_roi": -0.1532,
+    "clv": 0.002,
+    "clv_n": 5,
+    "n": 5,
+    "own_roi": 0.2095,
+    "roi": 0.2095,
+    "roi_fee": 0.1951,
+    "span_days": 5.0,
+    "weeks": 0,
+    "z": 1.0172
+   },
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -590,6 +662,26 @@
   "o15_form_l10|soccer_o15": {
    "since": "2026-09-21T01:44:02+00:00",
    "stage": "sandbox"
+  },
+  "o15_ranked|soccer_o15_intl": {
+   "by_hand": "2026-10-01",
+   "entry": {
+    "base_roi": 0.0014,
+    "clv": 0.018,
+    "clv_n": 10,
+    "n": 10,
+    "own_roi": 0.327,
+    "roi": 0.327,
+    "roi_fee": 0.3045,
+    "span_days": 6.8021,
+    "weeks": 0,
+    "z": 1.8049
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-01T16:20:16+00:00",
+   "ready_at": "2026-10-01T16:20:16+00:00",
+   "ready_since": "2026-10-01T16:20:16+00:00",
+   "stage": "production"
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -659,6 +751,26 @@
    "ready_since": "2026-09-18T00:51:24+00:00",
    "stage": "production"
   },
+  "team1_form_l5|soccer_team1_intl": {
+   "by_hand": "2026-10-01",
+   "entry": {
+    "base_roi": -0.1532,
+    "clv": 0.002,
+    "clv_n": 5,
+    "n": 5,
+    "own_roi": 0.2095,
+    "roi": 0.2095,
+    "roi_fee": 0.1951,
+    "span_days": 5.0,
+    "weeks": 0,
+    "z": 1.0172
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-01T16:20:16+00:00",
+   "ready_at": "2026-10-01T16:20:16+00:00",
+   "ready_since": "2026-10-01T16:20:16+00:00",
+   "stage": "production"
+  },
   "tennis_combo2|tennis_combo": {
    "reset": "2026-09-24: band narrowed again to 0.77-0.81; the 0.75-0.80 record is on file but counts toward nothing here \u2014 a 0.77-0.81 contract is not a 0.75-0.80 one",
    "since": "2026-09-24T13:16:04+00:00",
@@ -680,5 +792,5 @@
    "stage": "sandbox"
   }
  },
- "updated": "2026-10-01T12:37:30+00:00"
+ "updated": "2026-10-01T16:20:16+00:00"
 }

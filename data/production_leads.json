@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-01T12:37:30+00:00",
+ "board_built_at": "2026-10-01T16:20:16+00:00",
  "leads": {
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
@@ -199,6 +199,108 @@
    "sport": "mma",
    "status": "hit"
   },
+  "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Gibraltar",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-01",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Over 1.5 goals",
+   "home": "Malta",
+   "id": "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-01T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
+   "league": "UEFA Nations League",
+   "match": "Malta v Gibraltar",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.73,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT01MLTGIB-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "pending"
+  },
+  "2026-10-01|Wales|Norway|Norway to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Norway",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Norway"
+   },
+   "date": "2026-10-01",
+   "edge_at_log": null,
+   "first_seen": "2026-09-29",
+   "headline": "Norway to score 1+",
+   "home": "Wales",
+   "id": "2026-10-01|Wales|Norway|Norway to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-01T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
+   "league": "UEFA Nations League",
+   "match": "Wales v Norway",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.91,
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT01WALNOR-NOR1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "pending"
+  },
+  "2026-10-02|Kazakhstan|Moldova|Kazakhstan to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Moldova",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Kazakhstan"
+   },
+   "date": "2026-10-02",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Kazakhstan to score 1+",
+   "home": "Kazakhstan",
+   "id": "2026-10-02|Kazakhstan|Moldova|Kazakhstan to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-02T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
+   "league": "UEFA Nations League",
+   "match": "Kazakhstan v Moldova",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.83,
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "pending"
+  },
+  "2026-10-02|Poland|Romania|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Romania",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-02",
+   "edge_at_log": null,
+   "first_seen": "2026-09-30",
+   "headline": "Over 1.5 goals",
+   "home": "Poland",
+   "id": "2026-10-02|Poland|Romania|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-02T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
+   "league": "UEFA Nations League",
+   "match": "Poland v Romania",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.78,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT02POLROU-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "pending"
+  },
   "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule": {
    "away": "Lucas Armand",
    "bet": {
@@ -214,7 +316,7 @@
    "kickoff": "2026-10-03T20:30Z",
    "lane": "production",
    "last_seen": "2026-10-01",
-   "last_seen_at": "2026-10-01T12:37:30+00:00",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
    "league": "MMA",
    "match": "Anthony Wint v Lucas Armand",
    "pair": "mma_fav_band|mma",
@@ -245,7 +347,7 @@
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-01",
-   "last_seen_at": "2026-10-01T12:37:30+00:00",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
    "league": "MMA",
    "match": "Damian Pinas v Andrey Pulyaev",
    "pair": "mma_fav_band|mma",
@@ -259,6 +361,31 @@
    "sandbox_quote": "mma_fav_band:aec-ufc-dampin-andpul-2026-10-03",
    "source": "mma_fav_band",
    "sport": "mma",
+   "status": "pending"
+  },
+  "2026-10-03|Iceland|Bulgaria|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Bulgaria",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-09-30",
+   "headline": "Over 1.5 goals",
+   "home": "Iceland",
+   "id": "2026-10-03|Iceland|Bulgaria|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-03T16:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-01",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
+   "league": "UEFA Nations League",
+   "match": "Iceland v Bulgaria",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.75,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT03ISLBUL-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
    "status": "pending"
   },
   "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule": {
@@ -276,7 +403,7 @@
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-01",
-   "last_seen_at": "2026-10-01T12:37:30+00:00",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
    "league": "MMA",
    "match": "Jacobe Smith v Bruce Whitehead",
    "pair": "mma_fav_band|mma",
@@ -307,7 +434,7 @@
    "kickoff": "2026-10-03T22:15Z",
    "lane": "production",
    "last_seen": "2026-10-01",
-   "last_seen_at": "2026-10-01T12:37:30+00:00",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
    "league": "MMA",
    "match": "Marcus McGhee v Anthony Romero",
    "pair": "mma_fav_band|mma",
@@ -338,7 +465,7 @@
    "kickoff": "2026-10-04T01:15Z",
    "lane": "production",
    "last_seen": "2026-10-01",
-   "last_seen_at": "2026-10-01T12:37:30+00:00",
+   "last_seen_at": "2026-10-01T16:20:16+00:00",
    "league": "MMA",
    "match": "Deiveson Figueiredo v Payton Talbott",
    "pair": "mma_fav_band|mma",
@@ -366,6 +493,17 @@
    "sandbox_n": 5,
    "sandbox_roi": -0.4899,
    "sandbox_roi_fee": -0.4964
+  },
+  "o15_ranked|soccer_o15_intl": {
+   "by_hand": "2026-10-01",
+   "entered_at": "2026-10-01T16:20:16+00:00",
+   "promoted_at": "2026-10-01T16:20:16+00:00",
+   "ready_at": "2026-10-01T16:20:16+00:00",
+   "route": "moved by hand on 2026-10-01",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -399,10 +537,21 @@
    "sandbox_n": 8,
    "sandbox_roi": -0.1304,
    "sandbox_roi_fee": -0.1387
+  },
+  "team1_form_l5|soccer_team1_intl": {
+   "by_hand": "2026-10-01",
+   "entered_at": "2026-10-01T16:20:16+00:00",
+   "promoted_at": "2026-10-01T16:20:16+00:00",
+   "ready_at": "2026-10-01T16:20:16+00:00",
+   "route": "moved by hand on 2026-10-01",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
   }
  },
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-01T12:37:30+00:00"
+ "updated_at": "2026-10-01T16:20:16+00:00"
 }
