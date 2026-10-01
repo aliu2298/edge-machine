@@ -186,6 +186,9 @@ def feed_health(d):
 def sport_matrix(d, keys=None):
     """Source x sport: ROI where there is enough settled to say, sample size always shown.
 
+    `d` is the filtered page copy. This is a cross-lane total, so a removed
+    lane's bets are not a cell.
+
     This is the board's answer to the actual question. A single blended ROI per source
     hides the thing that matters — a tipster can be strong at one sport and hopeless at
     another — and rows are grouped by kind because tipsters, models and markets are
@@ -255,6 +258,11 @@ def vs_price(d, name, sport=None):
 
 
 def leaderboard(scores, d):
+    """One row per source. `d` and `scores` are the filtered page copy.
+
+    A removed lane's bets are not in this total, even when the source still
+    has a kept sport.
+    """
     rows = []
     for name, s in sorted(scores.items(),
                           key=lambda kv: (kv[1]["connected"], kv[1]["settled"]), reverse=True):
@@ -297,13 +305,38 @@ def leaderboard(scores, d):
     return "\n".join(rows)
 
 
-def approval_table(d, scores):
-    """Every betting source against every criterion, so a stamp can be checked, not trusted."""
+def stamp_ledger(full, name):
+    """The full ledger minus this source's own removed rows.
+
+    A kept source has none, so its stamp row is the number main shows. Another
+    source's removed rows stay, which is what keeps that baseline on main's
+    number. This source's removed lanes and sports do not count in its row.
+    """
+    def drop(q):
+        return q.get("source") == name and S.removed_row(q)
+
+    out = dict(full)
+    out["quotes"] = [q for q in (full.get("quotes") or []) if not drop(q)]
+    if "_archive" in full:
+        out["_archive"] = [q for q in (full.get("_archive") or []) if not drop(q)]
+    return out
+
+
+def approval_table(d, scores, full=None):
+    """Every betting source against every criterion, so a stamp can be checked, not trusted.
+
+    `scores` decides who has a row, from the filtered page copy. Each row is
+    judged on `full` minus that source's own removed rows. A kept source has
+    none, so its numbers are main's. A source that also had a removed sport
+    is judged without those bets.
+    """
+    full = d if full is None else full
     head = "".join(f'<th>{esc(label)}</th>' for _k, label, _p, _d in
                    T.assess(d, "__none__")["criteria"])
     rows = []
     order = {"approved": 0, "watch": 1, "failing": 2, "unproven": 3}
-    judged = [(name, T.assess(d, name)) for name, s in scores.items()
+    judged = [(name, T.assess(stamp_ledger(full, name), name))
+              for name, s in scores.items()
               if s["connected"] and s["bets"] and name not in S.REMOVED_SOURCES]
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
@@ -318,7 +351,12 @@ def approval_table(d, scores):
 
 
 def baseline_table(d):
-    """The blind strategies, per sport — the bar every source's choices have to clear."""
+    """The blind strategies, per sport — the bar every source's choices have to clear.
+
+    `d` is the filtered page copy. A contest that only a removed lane quoted
+    is not a row here. A kept lane's own baseline is a different number, read
+    from the full ledger on that lane's row.
+    """
     rows = []
     for sport in SPORT_KEYS:
         b = T.baselines(d, sport)
@@ -384,12 +422,12 @@ def coverage_table(cov):
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
-        if sport in S.REMOVED_SPORTS:
+        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
             continue
         cells = []
         for n in names:
             v = (cov.get(sport) or {}).get(n)
-            if sport not in S.SOURCES[n]["sports"]:
+            if sport not in S.SOURCES[n]["sports"] or (n, sport) in S.REMOVED_LANES:
                 cells.append('<td class="num mut">n/a</td>')
             elif v is None:
                 cells.append('<td class="num neg">—</td>')
@@ -406,7 +444,7 @@ def coverage_table(cov):
 def open_rows(d, limit=None):
     """Running bets, soonest first. One flat table: Contest, then Price."""
     live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
-            and not T.climate_excluded(q) and not S.weather_row(q)]
+            and not T.climate_excluded(q) and not S.removed_row(q)]
     live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
     out = []
     for q in (live[:limit] if limit else live):
@@ -455,7 +493,7 @@ def _cityday_repeat(q):
 def settled_rows(d, limit=None):
     """Settled bets, newest first. One flat table: Contest, then P/L."""
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not _cityday_repeat(q) and not S.weather_row(q)]
+            and not _cityday_repeat(q) and not S.removed_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     out = []
     for q in (done[:limit] if limit else done):
@@ -531,7 +569,7 @@ def partition_settled(d, now):
     """
     today = _chicago_today(now)
     done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
-            and not _cityday_repeat(q) and not S.weather_row(q)]
+            and not _cityday_repeat(q) and not S.removed_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
     for q in done:
@@ -615,7 +653,7 @@ def collapse(rows_html, head, total, noun):
 def unconnected_rows(d=None):
     out = []
     for name, m in S.SOURCES.items():
-        if m["connected"]:
+        if m["connected"] or name in S.REMOVED_SOURCES:
             continue
         rec = ""
         if m.get("retired") and d is not None:
@@ -629,6 +667,8 @@ def unconnected_rows(d=None):
     # A source can lose one sport and keep the others: that pair is retired on its own.
     for name, m in S.SOURCES.items():
         for sport, reason in (m.get("retired_sports") or {}).items():
+            if S.lane_removed(name, sport):
+                continue
             rec = ""
             if d is not None:
                 n = sum(1 for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
@@ -717,7 +757,7 @@ def pair_list(d, st, include_retired=True):
             {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
             **({sp: meta["retired"] for sp in meta["sports"]} if not meta["connected"] and meta.get("retired") else {}))
         for sport in sports + [sp for sp in gone if sp not in sports]:
-            if sport in S.REMOVED_SPORTS:
+            if S.lane_removed(name, sport):
                 continue
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
@@ -804,9 +844,13 @@ def insights(rows, now=None):
             f'{pct(r["removed"]["a"]["roi_fee"], sign=True)} after fees' for r in gone)
             + ". Back in the Sandbox, counting again.")
     recent = []
-    for m in S.SOURCES.values():
+    for name, m in S.SOURCES.items():
+        if name in S.REMOVED_SOURCES:
+            continue
         items = ([(None, m["retired"])] if m.get("retired") else []) + list((m.get("retired_sports") or {}).items())
         for sport, why in items:
+            if sport and S.lane_removed(name, sport):
+                continue
             try:
                 when = datetime.strptime(str(why)[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
             except ValueError:
@@ -1019,7 +1063,7 @@ def reconcile(d, rows):
     bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
     from a verdict — so the page says so in numbers rather than leaving a gap to find."""
     bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
-            and not T.climate_excluded(q) and not S.weather_row(q)]
+            and not T.climate_excluded(q) and not S.removed_row(q)]
     shown = {(r["name"], r["sport"]) for r in rows}
     in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
     venue = base = before = other = 0
@@ -1601,21 +1645,24 @@ def archive_week_html(slug, rows, now_dt, d=None):
 
 
 def hide_removed(d):
-    """A page copy with weather quotes, coverage, and feed status left out.
+    """A page copy with removed quotes, coverage, and feed status left out.
 
-    The ledger file is not written. Stored rows stay where they are.
+    The ledger file is not written. Stored rows stay where they are. Weather
+    and the tip lanes use the same gate.
     """
     if not d:
         return d
     out = dict(d)
-    out["quotes"] = [q for q in d.get("quotes") or [] if not S.weather_row(q)]
+    out["quotes"] = [q for q in d.get("quotes") or [] if not S.removed_row(q)]
     if "_archive" in d:
-        out["_archive"] = [q for q in d.get("_archive") or [] if not S.weather_row(q)]
+        out["_archive"] = [q for q in d.get("_archive") or [] if not S.removed_row(q)]
     cov = d.get("coverage")
     if cov:
         out["coverage"] = {
-            sp: {name: n for name, n in (cells or {}).items() if name not in S.REMOVED_SOURCES}
-            for sp, cells in cov.items() if sp not in S.REMOVED_SPORTS}
+            sp: {name: n for name, n in (cells or {}).items()
+                 if not S.lane_removed(name, sp)}
+            for sp, cells in cov.items()
+            if sp not in S.REMOVED_SPORTS and sp not in S.REMOVED_VENUE_SPORTS}
     status = d.get("feed_status")
     if status:
         out["feed_status"] = {k: v for k, v in status.items() if k not in S.REMOVED_SOURCES}
@@ -1626,15 +1673,19 @@ def render_pages(now=None, d=None, st=None):
     """Sandbox HTML, the archive index, and {{week slug: week HTML}}.
 
     Presentation only. `now` is the build time the 7-day window is measured from.
-    Weather rows stay in the ledger and are left out of every page.
+    Removed rows stay in the ledger. Headlines, counts and the bet tables use a
+    copy without them. Baseline, comparison and verdict keep the full ledger,
+    so hiding a lane does not move a kept lane's numbers. Each stamp row uses
+    that ledger minus only the source being judged.
     """
-    d = hide_removed(T.load() if d is None else d)
+    raw = T.load() if d is None else d
+    shown = hide_removed(raw)
     st = T.load_stages() if st is None else st
     now_dt = _as_now(now)
-    sandbox = _sandbox_html(d, st, now_dt)
-    recent, older = partition_settled(d, now_dt)
+    sandbox = _sandbox_html(shown, st, now_dt, full=raw)
+    recent, older = partition_settled(shown, now_dt)
     groups = archive_groups(older)
-    weeks = {slug: archive_week_html(slug, groups[slug], now_dt, d) for slug in _week_order(groups)}
+    weeks = {slug: archive_week_html(slug, groups[slug], now_dt, shown) for slug in _week_order(groups)}
     return sandbox, archive_index_html(groups, now_dt), weeks
 
 
@@ -1652,10 +1703,23 @@ def build(now=None, d=None, st=None):
     return sandbox
 
 
-def _sandbox_html(d, st, now_dt):
+def _sandbox_html(d, st, now_dt, full=None):
+    """`d` is the page copy. `full` is the unfiltered ledger.
+
+    Each lane's own baseline, comparison and verdict read `full`, the ledger
+    the tracker assesses. Each stamp row reads `full` minus that source's own
+    removed rows, so a kept source matches the unfiltered number and its own
+    removed sport does not count. Blind baselines and every other cross-lane
+    total — a leaderboard, a source-by-sport cell, a by-sport or
+    by-competition total — read `d`.
+    """
+    full = d if full is None else full
     for q in T.all_bets(d):
         if q.get("bet") and q.get("status") in _HIST:
             T.note_unreadable_start(q)
+    # `scores` decides which stamp rows exist. Each row is judged on `full`
+    # minus that source's own removed rows. The blind-baseline table and the
+    # by-sport sections below take `d`.
     scores = T.score(d)
     cov = d.get("coverage") or {}
     ou = (d.get("meta") or {}).get("odds_api") or {}
@@ -1669,12 +1733,12 @@ def _sandbox_html(d, st, now_dt):
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)
     n_void = sum(1 for q in d["quotes"]
-                 if q["status"] == "void" and q["bet"] and not S.weather_row(q))
+                 if q["status"] == "void" and q["bet"] and not S.removed_row(q))
     # A stale city-day flag does not make a void a repeat. The void stays in
     # this count and on the settled pages, and out of the city-day count.
     # Weather is not on the page, so its repeats are not in this count.
     n_city = sum(1 for q in d["quotes"]
-                 if q.get("bet") and _cityday_repeat(q) and not S.weather_row(q))
+                 if q.get("bet") and _cityday_repeat(q) and not S.removed_row(q))
     _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
              else (f" · {n_city} city-day repeats set aside" if n_city else ""))
     today = _chicago_today(now_dt)
@@ -1682,21 +1746,23 @@ def _sandbox_html(d, st, now_dt):
     # Lane tables add up every quote ever logged, so they cover any recorded outage.
     lane_note = outage_notes(d)
     archive_links = _archive_links(groups, "./archive/")
-    n_unconnected = sum(1 for m in S.SOURCES.values() if not m["connected"])
+    n_unconnected = sum(1 for name, m in S.SOURCES.items()
+                        if not m["connected"] and name not in S.REMOVED_SOURCES)
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     # Counted over the pairs still running. Pooling every bet ever logged put this at 46%,
     # but 952 of the misses were one retired rule that quoted hundreds of ladder rungs a day
     # and can never improve — a number dragged down by history says nothing about whether the
     # snapshots are working now.
-    live = {(r["name"], r["sport"]) for r in pair_list(d, st) if r["v"] != "retired"}
+    # Per-lane rows. The baseline, comparison and verdict on each one read
+    # `full`; the sport sections then total those rows, which are kept lanes.
+    rows = pair_list(full, st)
+    live = {(r["name"], r["sport"]) for r in rows if r["v"] != "retired"}
     leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"]
                                if q.get("bet") and (q["source"], q["sport"]) in live)
                    if x is not None and x >= 0)
     close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
                   f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} "
                   f"on the pairs still running).") if leads else ""
-
-    rows = pair_list(d, st)
     # Eliminated pairs leave the sport sections and the insights, but NOT the reconciliation:
     # every settled bet still has to be accounted for, out of sight or not.
     shown = [r for r in rows if not eliminated(r)]
@@ -1758,9 +1824,9 @@ def _sandbox_html(d, st, now_dt):
 ({T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}, no day span, in high-volume sports),
 wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind rule on the same contests,
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
-{approval_table(d, scores)}</details>
+{approval_table(d, scores, full=full)}</details>
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
-<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>
+{"" if "pinnacle" in S.REMOVED_SOURCES else f'<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>'}
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
 <details class="ref" id="method"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability

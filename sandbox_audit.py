@@ -214,7 +214,7 @@ def check_duplicates(d, rep):
     # Frozen weather rows are not flagged. Dropping them cannot change a non-weather
     # pair: the matcher groups by (source, sport).
     pairs = T.settled_cross_venue_dups(
-        [q for q in T.all_bets(d) if not S.weather_row(q)])
+        [q for q in T.all_bets(d) if not S.removed_row(q)])
     for later, kept in pairs:
         rep.error("duplicates",
                   f"{later.get('id')} repeats {kept.get('id')} "
@@ -456,7 +456,7 @@ def check_settlement(d, rep, sample, path=None):
     by_key = collections.defaultdict(list)
     for q in d["quotes"]:
         # Frozen weather rows are not sampled and not re-resolved.
-        if S.weather_row(q):
+        if S.removed_row(q):
             continue
         key = (q.get("venue"), q.get("market_id"))
         if q.get("status") in _WATCH_STATUSES and q.get("result") in _WATCH_RESULTS and q.get("market_id"):
@@ -548,7 +548,7 @@ def check_settlement(d, rep, sample, path=None):
             # and is not asked again.
             rows = [q for q in d["quotes"]
                     if (q.get("venue"), q.get("market_id")) == key]
-            if rows and all(S.weather_row(q) for q in rows):
+            if rows and all(S.removed_row(q) for q in rows):
                 continue
             rep.warn("settlement", f"{key[1]}: remembered mismatch has no settled quote left in the ledger")
     T.save_settlement_watch(list(still.values()), path)
@@ -741,7 +741,7 @@ def check_stale(d, rep, network, now=None):
     now = now or datetime.now(timezone.utc)
     graded = _dt((d.get("meta") or {}).get("updated"))
     stale = [q for q in d["quotes"] if q.get("bet") and q["status"] == "open"
-             and not S.weather_row(q)
+             and not S.removed_row(q)
              and (_dt(q.get("start")) or now) < now - timedelta(hours=STALE_H)]
     if not stale:
         rep.ok("stale", f"no bet open {STALE_H}h past its start")

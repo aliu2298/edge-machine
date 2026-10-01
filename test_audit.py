@@ -252,7 +252,7 @@ try:
        "silence leaves the market on the watch list")
 
     _fixed = bet(0, market_id="stuck", id="src:stuck", won=False)
-    _self = dict(id="self:stuck", source="polymarket_us", sport="mlb", market_id="stuck",
+    _self = dict(id="self:stuck", source="polymarket_us", sport="tennis", market_id="stuck",
                  venue="kalshi", bet=False, status="graded", result="a", pnl=0.0)
     S.resolve_kalshi = lambda mid: "b" if mid == "stuck" else "a"
     r, watched = settlement([_fixed, _self] + _others, 0, prior=_prior)
@@ -374,45 +374,49 @@ ok(errs(run(A.check_duplicates, [_kept, _later]), "duplicates"),
 _voided = dict(_later, status="void", pnl=0.0, note="dup of mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU")
 ok(not run(A.check_duplicates, [_kept, _voided]).errors,
    "voiding the later copy clears the flag")
-_dh1 = bet(3, id="espn_fpi:aec-mlb-tb-nyy-2026-09-22-dh1",
+_dh1 = bet(3, id="mlb_fade_streak:aec-mlb-tb-nyy-2026-09-22-dh1",
+           source="mlb_fade_streak",
            market_id="aec-mlb-tb-nyy-2026-09-22-dh1", venue="polymarket_us",
            side_a="Tampa Bay Rays", side_b="New York Yankees",
            start="2026-09-22T17:05:00+00:00", logged="2026-09-22T12:00:00+00:00")
-_dh2 = bet(4, id="espn_fpi:KXMLBGAME-26SEP22TBNYY", market_id="KXMLBGAME-26SEP22TBNYY",
+_dh2 = bet(4, id="mlb_fade_streak:KXMLBGAME-26SEP22TBNYY", source="mlb_fade_streak",
+           market_id="KXMLBGAME-26SEP22TBNYY",
            venue="kalshi", side_a="Tampa Bay Rays", side_b="New York Yankees",
            start="2026-09-22T23:05:00+00:00", logged="2026-09-22T12:30:00+00:00",
            date="2026-09-22")
 ok(not run(A.check_duplicates, [_dh1, _dh2]).errors,
    "a doubleheader on two venues is not flagged")
-_series = bet(5, id="espn_fpi:aec-mlb-tb-nyy-2026-09-23",
+_series = bet(5, id="mlb_fade_streak:aec-mlb-tb-nyy-2026-09-23",
+              source="mlb_fade_streak",
               market_id="aec-mlb-tb-nyy-2026-09-23", venue="polymarket_us",
               side_a="Tampa Bay Rays", side_b="New York Yankees",
               start="2026-09-23T23:10:00+00:00", logged="2026-09-23T15:00:00+00:00",
               date="2026-09-23")
-_series_k = bet(6, id="espn_fpi:KXMLBGAME-26SEP22TBNYY2", market_id="KXMLBGAME-26SEP22TBNYY2",
+_series_k = bet(6, id="mlb_fade_streak:KXMLBGAME-26SEP22TBNYY2", source="mlb_fade_streak",
+                market_id="KXMLBGAME-26SEP22TBNYY2",
                 venue="kalshi", side_a="Tampa Bay Rays", side_b="New York Yankees",
                 start="2026-09-23T07:10:00+00:00", logged="2026-09-22T18:00:00+00:00",
                 date="2026-09-22")
 ok(not run(A.check_duplicates, [_series, _series_k]).errors,
    "the next game of a series is not flagged when a Kalshi start sits 8h off")
-_tt1 = bet(7, sport="table_tennis", source="tt_band_55_60",
+_tt1 = bet(7, sport="table_tennis", source="nhl_rest_edge",
            id="tt:1", market_id="aec-setkameua-rak-pes-2026-09-14", venue="polymarket_us",
            side_a="Rak Serhii", side_b="Pesternikov Denys",
            start="2026-09-14T00:30:00+00:00", logged="2026-09-13T21:16:00+00:00")
-_tt2 = bet(8, sport="table_tennis", source="tt_band_55_60",
+_tt2 = bet(8, sport="table_tennis", source="nhl_rest_edge",
            id="tt:2", market_id="KXTT-26SEP14RAKPES", venue="kalshi",
            side_a="Rak Serhii", side_b="Pesternikov Denys",
            start="2026-09-14T01:05:00+00:00", logged="2026-09-13T22:00:00+00:00")
 ok(not run(A.check_duplicates, [_tt1, _tt2]).errors,
    "a table-tennis rematch 35 minutes later is not flagged")
-_lee_k = bet(9, sport="tennis", source="tennis_fav_band",
-             id="tennis_fav_band:KXWTAMATCH-26SEP18HONLEE",
+_lee_k = bet(9, sport="tennis", source="tennis_fav_band_3h",
+             id="tennis_fav_band_3h:KXWTAMATCH-26SEP18HONLEE",
              market_id="KXWTAMATCH-26SEP18HONLEE", venue="kalshi",
              side_a="Mai Hontama", side_b="Eunhye Lee (b. 2000)",
              start="2026-09-19T03:10:00+00:00", date="2026-09-18",
              logged="2026-09-18T16:54:51+00:00", won=False)
-_lee_p = bet(10, sport="tennis", source="tennis_fav_band",
-             id="tennis_fav_band:aec-wta-maihon-eunlee-2026-09-18",
+_lee_p = bet(10, sport="tennis", source="tennis_fav_band_3h",
+             id="tennis_fav_band_3h:aec-wta-maihon-eunlee-2026-09-18",
              market_id="aec-wta-maihon-eunlee-2026-09-18", venue="polymarket_us",
              side_a="Mai Hontama", side_b="Eun-Hye Lee",
              start="2026-09-19T03:30:00+00:00", date="2026-09-19",

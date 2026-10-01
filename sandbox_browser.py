@@ -1,6 +1,6 @@
 """Headless-browser fetch, isolated behind one function.
 
-Scores24 sits behind Cloudflare, which 403s every plain request — any user-agent, any
+Oddspedia sits behind Cloudflare, which 403s every plain request — any user-agent, any
 header set, from this machine and from GitHub's runners alike. It is not a header
 problem and no amount of curl tuning solves it: the check wants a real browser engine.
 So this module drives one.

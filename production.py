@@ -237,11 +237,20 @@ def build_feed(d, st, now=None):
     """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage registry."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     built = now.replace(microsecond=0).isoformat()
-    pairs = production_pairs(st)
+    # A removed lane never reaches the feed, even if a stage file still names it.
+    # Hiding the page is not enough: this file is what a follower reads.
+    pairs = {}
+    for key, pair in production_pairs(st).items():
+        source, _, sport = str(key).partition("|")
+        if S.lane_removed(source, sport):
+            continue
+        pairs[key] = pair
     leads, skipped, unverified = {}, 0, 0
     for key, pair in pairs.items():
         source, sport = key.split("|", 1)
         for q in T.all_bets(d):
+            if S.lane_removed(q.get("source"), q.get("sport")):
+                continue
             # The pair key is the whole match. team1_form_l5|soccer_team1_intl is
             # its own pair; a _cup sport, or any other suffix, does not satisfy it.
             if q["source"] != source or q["sport"] != sport or not q.get("bet"):
@@ -436,15 +445,15 @@ def _without_weather(d):
         return d
     out = dict(d)
     if d.get("quotes"):
-        out["quotes"] = [q for q in d["quotes"] if not S.weather_row(q)]
+        out["quotes"] = [q for q in d["quotes"] if not S.removed_row(q)]
     if d.get("_archive"):
-        out["_archive"] = [q for q in d["_archive"] if not S.weather_row(q)]
+        out["_archive"] = [q for q in d["_archive"] if not S.removed_row(q)]
     return out
 
 
 def _weather_pair(key):
     source, _, sport = str(key).partition("|")
-    return source in S.REMOVED_SOURCES or sport in S.REMOVED_SPORTS
+    return S.lane_removed(source, sport)
 
 
 def page(d, st, blob, style, now=None):
@@ -457,6 +466,10 @@ def page(d, st, blob, style, now=None):
     """
     now_dt = now or datetime.datetime.now(datetime.timezone.utc)
     today = _chicago_day(now_dt)
+    # Headlines and the lead list use the page copy. The record on each card
+    # is assessed on the unfiltered ledger, the same one the tracker reads,
+    # so a hidden row cannot move a kept pair's numbers.
+    raw = d
     d = _without_weather(d)
     pairs = {k: v for k, v in production_pairs(st).items() if not _weather_pair(k)}
     name = lambda key: S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]
@@ -465,7 +478,7 @@ def page(d, st, blob, style, now=None):
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: _tone(x, n, digits=1)
     leads = [l for l in blob.get("leads", {}).values()
-             if not S.weather_row(l) and not _weather_pair(l.get("pair") or "")]
+             if not S.removed_row(l) and not _weather_pair(l.get("pair") or "")]
     for lead in leads:
         _note_kickoff(lead)
     now_str = now_dt.strftime("%Y-%m-%dT%H:%MZ")
@@ -488,8 +501,8 @@ def page(d, st, blob, style, now=None):
         since = entered_at(pair)
         # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
         # never show two different records for one rule.
-        whole = T.assess(d, source, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
-        live = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+        whole = T.assess(raw, source, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
+        live = T.assess(raw, source, sport, since=since, venues=T.TRADEABLE_VENUES)
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)
         clv = fmt.signed_cents(whole["clv"])

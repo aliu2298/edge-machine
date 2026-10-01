@@ -43,10 +43,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      # The ONLY dependency in this pipeline, and only this workflow has it. Scores24
+      # The ONLY dependency in this pipeline, and only this workflow has it. Oddspedia
       # sits behind Cloudflare, which 403s every plain request from any user-agent and
       # from the runner as readily as from a laptop — it wants a real browser engine.
-      # Chromium's --dump-dom was tried first and is not usable: on a live scores page
+      # Chromium's --dump-dom was tried first and is not usable: on a live page
       # it never reaches the idle state that ends the dump, so it simply hangs.
       #
       # Everything else stays stdlib. sandbox_browser.py degrades to "this source

@@ -196,11 +196,17 @@ def written_fixture():
     """
     pick = _quote("mma_fav_band", "mma", "aec-fixture-pick", "b", 0.80,
                   "2026-10-03T22:00:00+00:00")
-    model = _quote("espn_fpi", "mlb", "aec-fixture-model", "a", 0.55,
+    # NFL stays on the board, so this is still a model lane the writer emits.
+    # MLB is the same source with the lane removed: it must not reach the feed.
+    model = _quote("espn_fpi", "nfl", "aec-fixture-model", "a", 0.55,
                    "2026-10-03T23:00:00+00:00", prob_a=0.62, edge=0.07)
+    removed = _quote("espn_fpi", "mlb", "aec-fixture-removed", "a", 0.55,
+                     "2026-10-03T23:30:00+00:00", prob_a=0.62, edge=0.07)
     stages = {"pairs": {
         "mma_fav_band|mma": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
                              "by_hand": "2026-09-01"},
+        "espn_fpi|nfl": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
+                         "by_hand": "2026-09-01"},
         "espn_fpi|mlb": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
                          "by_hand": "2026-09-01"},
     }}
@@ -218,7 +224,7 @@ def written_fixture():
 
     builtins.open = refuse_data
     try:
-        blob = production.build_feed({"quotes": [pick, model]}, stages, now=FIXED_NOW)
+        blob = production.build_feed({"quotes": [pick, model, removed]}, stages, now=FIXED_NOW)
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "production_leads.json")
             production.save_feed(blob, path)
@@ -277,6 +283,11 @@ def test_builder_writes_both_lanes():
                    if on_model_lane(quotes[lead["sandbox_quote"]], lead["pair"])]
     ok(all("model_prob" in lead and unit_interval(lead["model_prob"]) for lead in model_leads),
        "each model-lane lead has model_prob in (0, 1)")
+    ok(all(lead.get("pair") != "espn_fpi|mlb" and lead.get("sport") != "mlb"
+           for lead in written["leads"].values()),
+       "a removed lane does not reach the feed")
+    ok("espn_fpi|mlb" not in written.get("pairs", {}),
+       "a removed Production pair is left out of the feed")
     return written, quotes
 
 
