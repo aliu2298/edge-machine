@@ -4232,6 +4232,59 @@ ok(_gas_raised is not None,
    "a nested ladder NOT named in DAY_CLUSTERED raises rather than reporting a z: this is the "
    "guard that would have caught spot's +10.40")
 
+# A collapsed day is one result whose P/L is the mean of its rungs. The fee has to be
+# taken on each rung and then averaged. Charging the collapsed unit the full stake on a
+# loss, or a win at the average price, is a different bet.
+print("\nday-clustered lanes fee each rung, then average")
+_fee_lose = []
+for _i in range(23):
+    _won = _i < 20
+    _px = 0.98
+    _fee_lose.append(dict(
+        id=f"fee:{_i}", source="fee_day", sport="commodities", bet=True,
+        venue="kalshi_binary", market_id=f"KXWTI-26SEP2114-T{60 + _i}",
+        date="2026-09-21", price=_px, pick="b",
+        status="won" if _won else "lost",
+        pnl=(T.STAKE * (1 / _px - 1)) if _won else -T.STAKE,
+        stake=T.STAKE, start="2026-09-21T18:00:00+00:00",
+        logged="2026-09-21T12:00:00+00:00"))
+_fee_raw = sum(q["pnl"] for q in _fee_lose) / len(_fee_lose)
+_fee_each = sum(T.pnl_after_fee(q) for q in _fee_lose) / len(_fee_lose)
+_fee_a = T.assess({"quotes": _fee_lose}, "fee_day", "commodities")
+eq(round(_fee_raw, 4), -11.2689, "23 rungs, 20 won and 3 lost at 0.98, mean -11.2689")
+eq(_fee_a["won"], 0, "that mean is a loss, so the unit is lost")
+eq(round(_fee_each, 4), -11.3913, "each win fees to +1.90; the rung mean is -11.3913")
+eq(round(_fee_a["roi_fee"] * T.STAKE, 4), -11.3913,
+   "assess fees the rungs and then averages; the unit P/L is -11.3913")
+ok(round(_fee_a["roi_fee"] * T.STAKE, 2) != -T.STAKE,
+   "a lost day is not charged the full stake")
+eq((_fee_a["n"], _fee_a["won"]), (1, 0), "n and won stay one lost market-day")
+close(_fee_a["roi"], _fee_raw / T.STAKE, "pre-fee roi stays the mean rung P/L")
+close(_fee_a["expected"], 0.98, "expected stays the unit price")
+close(_fee_a["z"], (0 - 0.98) / (0.98 * 0.02) ** 0.5,
+      "one market-day: the money t falls back to the unit-price z")
+_fee_win = []
+for _i, _won in enumerate((True, False)):
+    _px = 0.40
+    _fee_win.append(dict(
+        id=f"feew:{_i}", source="fee_day", sport="commodities", bet=True,
+        venue="kalshi_binary", market_id=f"KXWTI-26SEP2214-T{70 + _i}",
+        date="2026-09-22", price=_px, pick="b",
+        status="won" if _won else "lost",
+        pnl=(T.STAKE * (1 / _px - 1)) if _won else -T.STAKE,
+        stake=T.STAKE, start="2026-09-22T18:00:00+00:00",
+        logged="2026-09-22T12:00:00+00:00"))
+_fee_w = T.assess({"quotes": _fee_win}, "fee_day", "commodities")
+eq(round(_fee_w["roi_fee"] * T.STAKE, 2), 19.96,
+   "two rungs at 0.40, one won and one lost, fee to +19.96")
+ok(round(_fee_w["roi_fee"] * T.STAKE, 2) != 139.92,
+   "that day is not paid as one win at the average price")
+eq((_fee_w["n"], _fee_w["won"]), (1, 1), "n and won stay one won market-day")
+close(_fee_w["roi"], 0.25, "pre-fee roi stays +25 on the stake")
+close(_fee_w["expected"], 0.40, "expected stays 0.40")
+close(_fee_w["z"], (1 - 0.40) / (0.40 * 0.60) ** 0.5,
+      "one market-day: the money t falls back to the unit-price z")
+
 # A pair taken out of Production keeps the record it was removed on in view.
 _rq = [dict(id=f"sp{i}", source="olbg", sport="boxing", bet=True, venue="kalshi",
             market_id=f"K{i}", pick="a", price=0.4, status="won" if i % 5 < 2 else "lost",
