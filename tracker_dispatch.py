@@ -2,8 +2,8 @@
 """Whether the hourly watchdog should start sandbox-tracker.yml.
 
 GitHub's scheduler drops slots of that workflow (cron 11 2-23/3) and starts
-others late. data/production_leads.json is a live dependency: an external bot
-drops it once updated_at is more than 8h old, so a missed slot cannot wait
+others late. data/production_leads.json is read outside this repo, and that
+reader drops it once updated_at is more than 8h old, so a missed slot cannot wait
 for the next cron. backup-refresh.yml's watch job (cron 53 * * * *) calls
 decide() and, when it says so, dispatches one run on main.
 
