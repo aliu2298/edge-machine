@@ -1080,9 +1080,11 @@ def removed_row(q):
     """True for a stored row that pages, grading, and pricing leave alone.
 
     The row stays in the ledger. A kept lane's own baseline still reads it
-    when that lane is assessed on the full ledger. A stamp, a blind baseline,
-    and any other cross-lane total read the filtered copy, so this row counts
-    in none of them. Hiding the lane also stops a new bet.
+    when that lane is assessed on the full ledger. Another source's stamp row
+    reads it too, because that row is the full ledger minus only the source
+    being judged. A blind baseline and every other cross-lane total read the
+    filtered copy, so this row counts in none of those. Hiding the lane also
+    stops a new bet.
     """
     return lane_removed(q.get("source"), q.get("sport"))
 

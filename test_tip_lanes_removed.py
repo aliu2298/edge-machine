@@ -375,12 +375,28 @@ def _figures(a, verdict):
                 clv=a["clv"], baseline=a["base_roi"], verdict=verdict)
 
 
+def _source_kept(name):
+    """True when this source has no removed lane and no removed sport."""
+    if name in S.REMOVED_SOURCES:
+        return False
+    sports = (S.SOURCES.get(name) or {}).get("sports") or []
+    return not any(S.lane_removed(name, sport) for sport in sports)
+
+
+def _stamp_numbers(a):
+    """The stamp cells: status, sample, and each criterion's pass and detail."""
+    return (a["status"], a["n"], a["base_roi"], a["own_roi"],
+            tuple((key, passed, detail) for key, _label, passed, detail in a["criteria"]))
+
+
 def _kept_lane_numbers():
     """Every number on a kept lane's built row matches the unfiltered ledger.
 
     A removed row logged first on another contest of the same sport moves the
-    favourite baseline when the page assesses the filtered copy. The page must
-    not do that. Headlines still count only the rows they render.
+    favourite baseline when the page assesses the filtered copy. The lane row
+    must not do that, and neither must the stamp: a kept source is judged on
+    the full ledger, which is main's number. Headlines still count only the
+    rows they render.
     """
     kept = [
         _bet("mma_fav_band", "mma", "mma-own", 0.50, 100.0, "2026-09-20T12:00:00+00:00",
@@ -435,12 +451,25 @@ def _kept_lane_numbers():
            f"({filtered['base_roi']} vs {tracker['base_roi']})")
     html = SB.build(now=NOW, d=raw, st=st)
     shown = SB.hide_removed(raw)
-    for name in ("mma_fav_band", "tennis_fav_band_3h"):
-        full = T.assess(raw, name)["criteria"][2][3]
+    scores = T.score(shown)
+    stamp = SB.approval_table(shown, scores, full=raw)
+    ok(stamp in html, "the stamp judges each source on the full ledger minus its own removed rows")
+    ok(SB.approval_table(shown, scores) not in html,
+       "the stamp is not the ledger with every removed lane dropped")
+    kept_on_stamp = [name for name, s in scores.items()
+                     if s["connected"] and s["bets"] and _source_kept(name)]
+    ok(set(kept_on_stamp) == {"mma_fav_band", "tennis_fav_band_3h"},
+       "the fixture's stamp rows are the two kept bands")
+    for name in kept_on_stamp:
+        main = T.assess(raw, name)
+        judged = T.assess(SB.stamp_ledger(raw, name), name)
+        eq(_stamp_numbers(judged), _stamp_numbers(main),
+           f"{name}'s stamp numbers equal main's")
         gone = T.assess(shown, name)["criteria"][2][3]
-        ok(full not in html,
-           f"the stamp does not show {name}'s full-ledger baseline ({full})")
-        ok(gone in html, f"the stamp shows the filtered baseline ({gone})")
+        ok(main["criteria"][2][3] in stamp,
+           f"the stamp shows {name}'s full-ledger baseline ({main['criteria'][2][3]})")
+        ok(gone not in stamp,
+           f"the stamp does not show {name}'s filtered baseline ({gone})")
         lane = page_rows[(name, S.SOURCES[name]["sports"][0])]
         eq(lane["a"]["base_roi"], T.assess(raw, name, lane["sport"],
                                            venues=T.TRADEABLE_VENUES)["base_roi"],
@@ -472,14 +501,23 @@ def _region(html, start, end):
     return html[i:j if j >= 0 else None]
 
 
-def _aggregates_ignore_removed_rows():
-    """Removed-lane bets move no aggregate, and still move a kept lane's baseline.
+def _strip_stamp(html):
+    """The page with the stamp table removed, so the other aggregates can be compared."""
+    start = html.find("Stamp of approval")
+    end = html.find("Blind baselines")
+    if start < 0 or end < 0:
+        return html
+    return html[:start] + html[end:]
 
-    The stamp, the blind baselines, the by-sport section, a leaderboard and a
-    source-by-sport matrix are cross-lane totals. Injecting removed-lane bets
-    into the full ledger leaves every one of them, on every built page, equal
-    to the ledger with those bets absent. The kept lane's own baseline does
-    not: that number is read from the full ledger.
+
+def _aggregates_ignore_removed_rows():
+    """Removed-lane bets move no filtered aggregate, and a kept stamp matches main.
+
+    Blind baselines, the by-sport section, a leaderboard and a source-by-sport
+    matrix stay on the filtered rows. Injecting removed-lane bets leaves every
+    one of them unchanged. A kept source's stamp does not: it is judged on the
+    full ledger, so it equals main, and another source's removed contest moves
+    that baseline. A source's own removed bets still do not count in its row.
     """
     kept = [
         _bet("mma_fav_band", "mma", "mma-own", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
@@ -537,8 +575,34 @@ def _aggregates_ignore_removed_rows():
     ok(SB.sport_matrix(dirty) != SB.sport_matrix(clean),
        "a source-by-sport matrix on the full ledger would count the removed bets")
     shown = SB.hide_removed(dirty)
-    eq(SB.approval_table(shown, T.score(shown)), SB.approval_table(clean, T.score(clean)),
-       "the stamp built from the filtered rows matches the ledger without them")
+    page_stamp = SB.approval_table(shown, T.score(shown), full=dirty)
+    ok(page_stamp != SB.approval_table(shown, T.score(shown)),
+       "judging the stamp on the full ledger is not the filtered table")
+    kept_on_stamp = [name for name, s in T.score(shown).items()
+                     if s["connected"] and s["bets"] and _source_kept(name)]
+    ok("mma_fav_band" in kept_on_stamp, "the kept MMA band is a stamp row")
+    for name in kept_on_stamp:
+        main = T.assess(dirty, name)
+        judged = T.assess(SB.stamp_ledger(dirty, name), name)
+        eq(_stamp_numbers(judged), _stamp_numbers(main),
+           f"{name}'s stamp numbers equal main's")
+        ok(main["criteria"][2][3] in page_stamp,
+           f"the stamp shows {name}'s full-ledger baseline")
+        filtered = T.assess(clean, name)["criteria"][2][3]
+        ok(filtered not in page_stamp,
+           f"the stamp does not show {name}'s filtered baseline ({filtered})")
+    for name in ("kalshi", "espn_fpi", "polymarket"):
+        own = T.assess(SB.stamp_ledger(dirty, name), name)
+        full_a = T.assess(dirty, name)
+        clean_a = T.assess(clean, name)
+        eq(_stamp_numbers(own), _stamp_numbers(clean_a),
+           f"{name}'s stamp ignores its own removed bets")
+        ok(own["n"] < full_a["n"],
+           f"{name}'s removed bets would raise its stamp count ({own['n']} vs {full_a['n']})")
+        ok(own["criteria"][0][3] in page_stamp,
+           f"the stamp shows {name}'s count without its removed bets")
+        ok(full_a["criteria"][0][3] not in page_stamp,
+           f"the stamp does not show {name}'s full-ledger count")
     eq(SB.baseline_table(shown), SB.baseline_table(clean),
        "the blind baselines built from the filtered rows match")
     eq(SB.leaderboard(T.score(shown), shown), SB.leaderboard(T.score(clean), clean),
@@ -557,21 +621,26 @@ def _aggregates_ignore_removed_rows():
     pages_dirty = _built_pages(dirty, st)
     pages_clean = _built_pages(clean, st)
     eq(set(pages_dirty), set(pages_clean), "injecting removed bets builds the same pages")
-    for name in sorted(pages_dirty):
-        eq(pages_dirty[name], pages_clean[name],
-           f"{name} is unchanged when removed-lane bets are in the ledger")
     sandbox = pages_dirty["sandbox.html"]
+    ok(page_stamp in sandbox, "the built page shows that stamp")
+    for name in sorted(pages_dirty):
+        got, want = pages_dirty[name], pages_clean[name]
+        if name == "sandbox.html":
+            got, want = _strip_stamp(got), _strip_stamp(want)
+        eq(got, want, f"{name} aggregates are unchanged when removed-lane bets are in the ledger")
     for start, end, title in (
-            ("Stamp of approval", "Blind baselines", "stamp of approval"),
             ("Blind baselines", "Feed coverage", "blind baselines"),
             ('id="by-sport"', 'id="reference"', "by-sport totals"),
     ):
         got = _region(sandbox, start, end)
         want = _region(pages_clean["sandbox.html"], start, end)
         ok(got is not None and got == want, f"the {title} table is unchanged")
+    ok(_region(sandbox, "Stamp of approval", "Blind baselines")
+       != _region(pages_clean["sandbox.html"], "Stamp of approval", "Blind baselines"),
+       "the stamp moves to main's number when another source's removed contest is in the ledger")
     ok(">Table Tennis<" not in sandbox, "the page has no table-tennis baseline row")
     ok(SB.approval_table(dirty, T.score(dirty)) not in sandbox,
-       "the page does not show the full-ledger stamp")
+       "the page does not show a stamp that counts a source's own removed lanes")
     ok(SB.baseline_table(dirty) not in sandbox,
        "the page does not show the full-ledger blind baselines")
 
