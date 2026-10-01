@@ -7117,9 +7117,15 @@ try:
     T.publish(_dpub2, {"mma": [_pub_row]}, {}, verbose=False)
 finally:
     S.CHALLENGERS = _saved_ch_dup
-eq([q["id"] for q in _dpub2["quotes"] if q["source"] == "mma_fav_band"],
-   ["mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU"],
-   "publish will not log the Polymarket US copy of a fight already bet on Kalshi")
+_mma_pub = [q for q in _dpub2["quotes"] if q["source"] == "mma_fav_band"]
+eq(sorted(q["id"] for q in _mma_pub),
+   ["mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU",
+    "mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26"],
+   "an open Kalshi MMA bet is replaced once when Polymarket US lists the fight")
+_retired_pub = next(q for q in _mma_pub if q["venue"] == "kalshi")
+eq((_retired_pub["status"], _retired_pub["bet"], _retired_pub["note"]),
+   ("void", False, "kalshi_unplaceable"),
+   "that Kalshi entry is retired as unplaceable and is no longer a bet")
 
 print("\nvoid the later venue copy, once, and leave price rows and settled times alone")
 import importlib.util as _ilu2

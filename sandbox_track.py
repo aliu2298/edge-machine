@@ -843,15 +843,145 @@ def pinnacle_retired(d, n=None):
     return {sp for sp, (cnt, bet) in seen.items() if cnt >= n and not bet}
 
 
-def publish(d, universe, coverage, verbose=True):
+def _listed_pmus(row):
+    """True when `row` is a Polymarket US quote a follower could trade."""
+    if row.get("venue") != "polymarket_us" or row.get("untraded"):
+        return False
+    for side in ("a", "b"):
+        if row.get(f"price_{side}") is None:
+            continue
+        if (row.get("tradeable") or {}).get(side, True):
+            return True
+    return False
+
+
+def _band_side(row, sport):
+    """The side whose ask sits in this sport's favourite band, when that side is tradeable."""
+    lo, hi = S.fav_band(sport)
+    if row.get("price_draw") is not None:
+        return None
+    for side in ("a", "b"):
+        price = row.get(f"price_{side}")
+        if price is None or not (lo <= float(price) < hi):
+            continue
+        if not (row.get("tradeable") or {}).get(side, True):
+            continue
+        return side
+    return None
+
+
+def _pmus_for_fight(rows, quote):
+    """The tradeable Polymarket US row for `quote`'s fight, or None."""
+    sport = quote.get("sport")
+    for row in rows:
+        if not _listed_pmus(row):
+            continue
+        other = row if row.get("sport") else dict(row, sport=sport)
+        if _same_contest_quote(quote, other):
+            return row
+    return None
+
+
+def _clock():
+    """Wall clock. A test may replace this so time can pass during a fetch."""
+    return datetime.now(timezone.utc)
+
+
+def _as_utc(now):
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    return now
+
+
+def _replacement_ready(row, now):
+    """True when this Polymarket US row can be logged as the favourite-band bet.
+
+    Listed, priced inside the band, and not started. An out-of-band ask, or a
+    fight Polymarket US has already started, is not a replacement.
+    """
+    if row.get("venue") != "polymarket_us" or row.get("untraded"):
+        return False
+    if _band_side(row, row.get("sport") or "mma") is None:
+        return False
+    return not _started(row, now)
+
+
+def _prior_blocks(name, prior_q, row, now):
+    """Does an existing quote stop a new one on the same contest?
+
+    A Kalshi MMA bet retired as unplaceable blocks every further entry except the
+    one Polymarket US replacement. An open Kalshi bet blocks too, unless this row
+    is the replacement that will be logged in the same pass. Any other quote,
+    including any other retirement, still blocks. Two live entries on one fight
+    never both pass.
+    """
+    if name == "mma_fav_band" and row.get("venue") == "polymarket_us":
+        if prior_q.get("note") == KALSHI_UNPLACEABLE:
+            return False
+        if (prior_q.get("venue") == "kalshi" and prior_q.get("status") == "open"
+                and prior_q.get("bet") and not _started(prior_q, now)
+                and _replacement_ready(row, now)):
+            return False
+    return True
+
+
+def _retire_replaced_kalshi(d, row, stamp, now):
+    """Retire the open Kalshi bet this Polymarket US row is replacing.
+
+    Called only once that replacement is about to be logged. A fight Polymarket
+    US has already started, an ask outside the band, or a paused lane leaves the
+    Kalshi row untouched. `stamp` is the publish-start clock, not the log time.
+    """
+    if S.lane_paused("mma_fav_band", "mma") or not _replacement_ready(row, now):
+        return 0
+    probe = dict(row, sport=row.get("sport") or "mma")
+    n = 0
+    for q in d.get("quotes") or []:
+        if (q.get("source") != "mma_fav_band" or q.get("sport") != "mma"
+                or q.get("venue") != "kalshi" or q.get("status") != "open"
+                or not q.get("bet")):
+            continue
+        if _started(q, now) or not _same_contest_quote(q, probe):
+            continue
+        q["status"] = "void"
+        q["bet"] = False
+        q["stake"] = 0.0
+        q["pnl"] = 0.0
+        q["result"] = None
+        q["note"] = KALSHI_UNPLACEABLE
+        q["settled"] = stamp
+        n += 1
+    return n
+
+
+def publish(d, universe, coverage, verbose=True, now=None):
     """Log one quote per (source, market) for every source with an opinion."""
+    # Retirement uses one clock, taken as publish begins. Each new quote is
+    # checked and stamped at the moment it is logged. A fetch that runs past a
+    # start must not log that contest against the earlier clock, and must not
+    # back-date `logged` so retire_late misses it. A caller that passes `now`
+    # pins both, so a frozen test does not read the wall clock.
+    pinned = now is not None
+    opened = _as_utc(now) if pinned else _clock()
+    retire_stamp = opened.replace(microsecond=0).isoformat()
+
+    def log_now():
+        if pinned:
+            return opened
+        return _as_utc(_clock())
+
     seen = {q["id"] for q in d["quotes"]}
     # What each source has already said, by contest — so a contest listed under a new market
     # id (a venue switch, or the same game on two exchanges) is never quoted twice.
+    # Voids do not block, except an MMA favourite-band retirement: that one still
+    # blocks a second bet, unless it is the Kalshi row this run just marked unplaceable
+    # and the new row is its Polymarket US replacement.
     prior = {}
     for q in d["quotes"]:
-        if q.get("status") != "void":
-            prior.setdefault((q["source"], q["sport"]), []).append(q)
+        if q.get("status") == "void" and not (
+                q.get("source") == "mma_fav_band" and q.get("sport") == "mma"):
+            continue
+        prior.setdefault((q["source"], q["sport"]), []).append(q)
     added = 0
     # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
     # prices — a page that can never be scored is not worth a polite second of waiting.
@@ -976,13 +1106,22 @@ def publish(d, universe, coverage, verbose=True):
                 if qid in seen:
                     continue
                 r = by_id[mid]
+                # mma_fav_band only. Polymarket US is the venue when it lists the fight.
+                # Kalshi is used only when it does not. Every other rule keeps the
+                # universe order it had: first row logged, the other blocked as the
+                # same contest.
+                if (name == "mma_fav_band" and r.get("venue") != "polymarket_us"
+                        and _pmus_for_fight(by_id.values(), dict(r, sport=sport))):
+                    continue
                 probe = dict(sport=sport, start=r["start"], side_a=r["side_a"], side_b=r["side_b"],
                              market_id=mid, venue=r.get("venue", "polymarket"))
                 # Per source, on purpose. tennis_fav_band and tennis_fav_band_3h
                 # may both log one match, and nws_fade may log the market nws would
                 # have logged. That overlap is the comparison. Neither quote is a
                 # duplicate of the other, and neither can void the other.
-                if any(_same_contest_quote(p, probe) for p in prior.get((name, sport), ())):
+                at = log_now()
+                if any(_same_contest_quote(p, probe) and _prior_blocks(name, p, r, at)
+                       for p in prior.get((name, sport), ())):
                     continue
                 # A rule registered as one bet a day gets one bet a day, even when two runs
                 # fall inside its window and prices have moved it onto a different strike.
@@ -994,7 +1133,7 @@ def publish(d, universe, coverage, verbose=True):
                 # past its start to absorb clock skew, and that window let a tip on Al
                 # Wahda v Sharjah be logged 74 seconds after kickoff — it won, +$178. A
                 # quote logged once play has begun is not a prediction.
-                if _started(r, datetime.now(timezone.utc)):
+                if _started(r, at):
                     continue
                 # No book, no quote — for ANY source, not just the market's own. A quote
                 # is logged once and never revised, so logging a tip against a placeholder
@@ -1035,11 +1174,16 @@ def publish(d, universe, coverage, verbose=True):
                 lo, hi = price_band(sport)
                 bet = bool(pick and has_edge and not r["untraded"] and tradeable
                            and price is not None and lo <= price <= hi)
+                # Retire the Kalshi row only in the same pass that logs its
+                # Polymarket US replacement. The retired time is the clock from
+                # the start of publish; `logged` on the new row is `at`.
+                if name == "mma_fav_band" and bet and r.get("venue") == "polymarket_us":
+                    _retire_replaced_kalshi(d, dict(r, sport=sport), retire_stamp, at)
                 d["quotes"].append(dict(
                     id=qid, source=name, sport=sport, market_id=mid,
                     label=r["label"], side_a=r["side_a"], side_b=r["side_b"],
                     url=r["url"], date=r["date"], start=r["start"],
-                    logged=now_iso(),
+                    logged=at.replace(microsecond=0).isoformat(),
                     prob_a=round(prob_a, 4) if prob_a is not None else None,
                     price_a=round(r["price_a"], 4), price_b=round(r["price_b"], 4),
                     price_draw=(round(r["price_draw"], 4)
@@ -1158,7 +1302,8 @@ def apply_closes(d, closes):
     by_id = {q["id"]: q for q in d["quotes"]}
     for qid, c in (closes.get("closes") or {}).items():
         q = by_id.get(qid)
-        if not q or not q.get("bet") or c.get("price") is None or S.weather_row(q):
+        if (not q or not q.get("bet") or c.get("price") is None or S.weather_row(q)
+                or q.get("note") == KALSHI_UNPLACEABLE):
             continue
         if q.get("close_at") and str(q["close_at"]) >= str(c["at"]):
             continue
@@ -1185,7 +1330,7 @@ def snap_closing(d, universe, now=None):
     rows = {r["market_id"]: r for rs in universe.values() for r in rs}
     n = 0
     for q in d["quotes"]:
-        if S.weather_row(q):
+        if S.weather_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
             continue
         if q["status"] != "open" or not q.get("bet") or not q.get("pick"):
             continue
@@ -1352,6 +1497,8 @@ def _regrade_markets(quotes, now, watched, skip_ids):
     for q in quotes:
         if id(q) in skip_ids or q.get("status") not in _SETTLED:
             continue
+        if q.get("note") == KALSHI_UNPLACEABLE:
+            continue
         if q.get("venue") == "espn" or not q.get("market_id"):
             continue
         if q.get("result") not in _STORED_RESULTS:
@@ -1422,7 +1569,9 @@ def grade(d, verbose=True, now=None, mismatches=None):
         if q["status"] != "open":
             continue
         # Weather stays as stored: no settlement read, no status or price change.
-        if S.weather_row(q):
+        # A Kalshi MMA bet retired as unplaceable is not graded, even if a later
+        # edit put it back to open.
+        if S.weather_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
             continue
         if q.get("venue") == "espn":
             # Soccer was priced on ESPN + DraftKings until that venue was retired for
@@ -1463,7 +1612,8 @@ def grade(d, verbose=True, now=None, mismatches=None):
         if key not in results:
             results[key] = _resolve_market(q)
     for q in d["quotes"]:
-        if S.weather_row(q) or id(q) in just_settled or q.get("status") not in _SETTLED:
+        if (S.weather_row(q) or q.get("note") == KALSHI_UNPLACEABLE
+                or id(q) in just_settled or q.get("status") not in _SETTLED):
             continue
         res = results.get((q.get("venue"), q.get("market_id")))
         # A Kalshi scalar, or a basket with a Kalshi leg, may replace a void or
@@ -2698,6 +2848,10 @@ PLACEHOLDER_H = 12
 SAME_DAY_REPLAY = frozenset({"mlb", "table_tennis"})
 DUPLICATE_SINCE = "2026-09-13T21:00:00+00:00"   # the venue switch; settled history is not rewritten
 DUPLICATE_NOTE = "duplicate: this source already had a quote on this contest on another venue"
+# An open MMA favourite-band bet booked on Kalshi cannot be published: Kalshi has no
+# verified start for a fight. When Polymarket US lists that fight before the start,
+# the Kalshi row is retired with this note and one fresh Polymarket US entry replaces it.
+KALSHI_UNPLACEABLE = "kalshi_unplaceable"
 _KX_DATE = re.compile(r"-(\d{2})(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(\d{2})")
 _ISO_DATE = re.compile(r"(20\d{2}-\d{2}-\d{2})")
 _GAME_TAG = re.compile(r"-(dh\d+|g\d+)$", re.I)

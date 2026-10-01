@@ -29,7 +29,7 @@ def due(d, now, window_min=CLOSE_WINDOW_MIN):
     out = []
     for q in d["quotes"]:
         # Stored weather rows are frozen. A closing price is not fetched for them.
-        if S.weather_row(q):
+        if S.weather_row(q) or q.get("note") == T.KALSHI_UNPLACEABLE:
             continue
         if q.get("status") != "open" or not q.get("bet") or not q.get("pick"):
             continue
