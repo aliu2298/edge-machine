@@ -81,7 +81,7 @@ def _page(d, st, now):
     _rows, n_live = SB.open_rows(d)
     recent, older = SB.partition_settled(d, now)
     n_void = sum(1 for q in d["quotes"]
-                 if q.get("status") == "void" and q.get("bet") and not S.weather_row(q))
+                 if q.get("status") == "void" and q.get("bet") and not S.removed_row(q))
     n_settled = (len(recent) + len(older)) - n_void
     rows = SB.pair_list(d, st)
     noedge = sum(1 for r in rows if r["v"] == "noedge" and not r.get("gone"))

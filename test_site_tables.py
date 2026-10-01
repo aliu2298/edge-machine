@@ -133,7 +133,7 @@ def _ledger_settled(now):
     recent, older = [], []
     for q in d["quotes"]:
         if (not q.get("bet") or q.get("status") not in HIST or T.climate_excluded(q)
-                or S.weather_row(q)):
+                or S.removed_row(q)):
             continue
         try:
             day = fmt.chicago(q.get("settled")).date()
@@ -444,7 +444,7 @@ if _run_tables:
     _head_n = len(re.findall(r"<th\b", _run_tables[0]))
     _sports = {q["id"]: (q.get("sport") or "") for q in T.load()["quotes"]
                if q.get("bet") and q.get("status") == "open"
-               and not T.climate_excluded(q) and not S.weather_row(q)}
+               and not T.climate_excluded(q) and not S.removed_row(q)}
     _checked = 0
     for _row in _rows(_run_tables[0]):
         _cells = re.findall(r"<td\b([^>]*)>(.*?)</td>", _row, re.S)
@@ -475,7 +475,7 @@ print("\ntest_climate_excluded_rows_stay_off_the_pages")
 
 def _record_settled(quotes):
     """Settled-on-record count with weather left out, voids aside."""
-    visible = [q for q in quotes if not S.weather_row(q)]
+    visible = [q for q in quotes if not S.removed_row(q)]
     n_hist = sum(1 for q in visible if q.get("bet") and q.get("status") in HIST
                  and not T.climate_excluded(q))
     n_void = sum(1 for q in visible if q.get("status") == "void" and q.get("bet"))
@@ -539,7 +539,7 @@ print("\ntest_headline_set_aside_and_bad_open_kickoff")
 
 def _headline_count(quotes):
     """Settled on the record, then void. Weather is not on the page."""
-    visible = [q for q in quotes if not S.weather_row(q)]
+    visible = [q for q in quotes if not S.removed_row(q)]
     blob = {"quotes": visible}
     recent, older = SB.partition_settled(blob, NOW)
     n_hist = len(recent) + len(older)

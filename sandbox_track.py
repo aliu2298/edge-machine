@@ -1304,7 +1304,7 @@ def apply_closes(d, closes):
     by_id = {q["id"]: q for q in d["quotes"]}
     for qid, c in (closes.get("closes") or {}).items():
         q = by_id.get(qid)
-        if (not q or not q.get("bet") or c.get("price") is None or S.weather_row(q)
+        if (not q or not q.get("bet") or c.get("price") is None or S.removed_row(q)
                 or q.get("note") == KALSHI_UNPLACEABLE):
             continue
         if q.get("close_at") and str(q["close_at"]) >= str(c["at"]):
@@ -1332,7 +1332,7 @@ def snap_closing(d, universe, now=None):
     rows = {r["market_id"]: r for rs in universe.values() for r in rs}
     n = 0
     for q in d["quotes"]:
-        if S.weather_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
+        if S.removed_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
             continue
         if q["status"] != "open" or not q.get("bet") or not q.get("pick"):
             continue
@@ -1573,7 +1573,7 @@ def grade(d, verbose=True, now=None, mismatches=None):
         # Weather stays as stored: no settlement read, no status or price change.
         # A Kalshi MMA bet retired as unplaceable is not graded, even if a later
         # edit put it back to open.
-        if S.weather_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
+        if S.removed_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
             continue
         if q.get("venue") == "espn":
             # Soccer was priced on ESPN + DraftKings until that venue was retired for
@@ -1608,13 +1608,13 @@ def grade(d, verbose=True, now=None, mismatches=None):
 
     regraded = 0
     results = {}
-    for q in _regrade_markets([q for q in d["quotes"] if not S.weather_row(q)],
+    for q in _regrade_markets([q for q in d["quotes"] if not S.removed_row(q)],
                               now, watched, just_settled):
         key = (q.get("venue"), q.get("market_id"))
         if key not in results:
             results[key] = _resolve_market(q)
     for q in d["quotes"]:
-        if (S.weather_row(q) or q.get("note") == KALSHI_UNPLACEABLE
+        if (S.removed_row(q) or q.get("note") == KALSHI_UNPLACEABLE
                 or id(q) in just_settled or q.get("status") not in _SETTLED):
             continue
         res = results.get((q.get("venue"), q.get("market_id")))
@@ -2822,7 +2822,7 @@ def retire_late(d, verbose=True):
     """
     voided = 0
     for q in d["quotes"]:
-        if S.weather_row(q) or q.get("status") == "void":
+        if S.removed_row(q) or q.get("status") == "void":
             continue
         try:
             late = (datetime.fromisoformat(q["logged"]) >= datetime.fromisoformat(q["start"]))
@@ -3035,7 +3035,7 @@ def retire_venue_duplicates(d, verbose=True):
     """
     by = {}
     for q in sorted(d["quotes"], key=lambda q: q.get("logged") or ""):
-        if S.weather_row(q) or q.get("status") == "void":
+        if S.removed_row(q) or q.get("status") == "void":
             continue
         pool = by.setdefault((q["source"], q["sport"]), [])
         if (q.get("status") == "open" and (q.get("logged") or "") >= DUPLICATE_SINCE
@@ -3066,7 +3066,7 @@ def retire_pre_gate(d, now=None, verbose=True):
     now = now or datetime.now(timezone.utc)
     keep, removed, voided = [], 0, 0
     for q in d["quotes"]:
-        if S.weather_row(q):
+        if S.removed_row(q):
             keep.append(q)
             continue
         pre_gate = (q.get("venue", "polymarket") == "polymarket"
@@ -3130,7 +3130,7 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
         d.setdefault("_archive_dirty", set()).add(str(row["settled"])[:7])
 
     for q in d["quotes"]:
-        if S.weather_row(q):
+        if S.removed_row(q):
             keep.append(q)
             continue
         horizon = cutoff if q.get("bet") else price_cutoff

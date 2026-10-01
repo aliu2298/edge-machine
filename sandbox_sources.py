@@ -1075,12 +1075,16 @@ def lane_removed(source, sport=None):
     return sport is not None and (source, sport) in REMOVED_LANES
 
 
-def weather_row(q):
+def removed_row(q):
     """True for a stored row that pages, grading, and pricing leave alone.
 
-    The name is the weather gate. Tip lanes removed the same way use it too.
+    The row stays in the ledger. A baseline still reads it. Hiding the lane
+    only stops the row rendering and stops a new bet.
     """
     return lane_removed(q.get("source"), q.get("sport"))
+
+
+weather_row = removed_row
 
 
 def _paused_ignoring_removal(source, sport):
@@ -2813,8 +2817,15 @@ def _browser_pages():
     # the interstitial, so whichever of its pages goes last tends to be lost — and its
     # soccer tips are the ones worth protecting, since soccer is where tipsters actually
     # publish. Scores24 is far more tolerant and goes at the back of the queue.
-    jobs = ([(ODDSPEDIA_URL.format(slug=s), B.TIPS_JS) for s in ODDSPEDIA_SLUG.values()]
-            + [(SCORES24_URL.format(slug=s), B.ROW_JS) for s in SCORES24_SLUG.values()])
+    # A page whose lane is off the board is not requested. Oddspedia cricket used to
+    # drag every Scores24 listing into the same session, so a removed source still loaded.
+    jobs = []
+    for sport, slug in ODDSPEDIA_SLUG.items():
+        if not lane_removed("oddspedia", sport):
+            jobs.append((ODDSPEDIA_URL.format(slug=slug), B.TIPS_JS))
+    for sport, slug in SCORES24_SLUG.items():
+        if not lane_removed("scores24", sport):
+            jobs.append((SCORES24_URL.format(slug=slug), B.ROW_JS))
     _browser_cache = B.fetch_rows(jobs, pace_ms=6000)
     return _browser_cache
 

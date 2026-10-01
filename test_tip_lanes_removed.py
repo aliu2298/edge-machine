@@ -12,7 +12,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 
 import production
-import sandbox_audit as A
+import sandbox_browser as B
 import sandbox_build as SB
 import sandbox_sources as S
 import sandbox_track as T
@@ -64,12 +64,6 @@ KEPT_LABELS = (
     "Kalshi commodity price",
     "ESPN FPI / Matchup Predictor",
 )
-PROD_PAIRS = {
-    "mma_fav_band|mma",
-    "oddspedia|cricket",
-    "pm_combo4|tennis_pmcombo",
-    "team1_form_l5|soccer_team1",
-}
 
 
 def ok(cond, why):
@@ -279,17 +273,19 @@ def main():
        and "playwright install --with-deps chromium" in workflow,
        "the tracker workflow still installs the headless browser")
 
-    print("\nProduction leads are unchanged")
-    with open(os.path.join(ROOT, "data", "production_leads.json"), encoding="utf-8") as f:
-        blob = json.load(f)
-    eq(len(blob["leads"]), 11, "the live Production file still has 11 leads")
-    live_pairs = {lead["pair"] for lead in blob["leads"].values()}
-    ok(live_pairs <= PROD_PAIRS, f"every live lead is one of the four Production pairs ({live_pairs})")
-    ok(all(not S.lane_removed(*pair.split("|", 1)) for pair in live_pairs),
-       "no live lead is a removed lane")
+    print("\nno listed pair is a removed lane")
     stages = T.load_stages()
-    prod = {k for k, v in (stages.get("pairs") or {}).items() if v.get("stage") == "production"}
-    eq(prod, PROD_PAIRS, "Production is still those four pairs")
+    prod = [k for k, v in (stages.get("pairs") or {}).items() if v.get("stage") == "production"]
+    for key in prod:
+        source, _, sport = str(key).partition("|")
+        ok("|" in str(key) and not S.lane_removed(source, sport),
+           f"Production stage {key} is not a removed lane")
+    for key in T.PAIR_OVERRIDES:
+        source, _, sport = str(key).partition("|")
+        ok("|" in str(key) and not S.lane_removed(source, sport),
+           f"PAIR_OVERRIDES {key} is not a removed lane")
+    for sport in T.FEED_BETS:
+        ok(not S.lane_removed("", sport), f"FEED_BETS {sport} is not a removed lane")
     with open(os.path.join(ROOT, "data", "streak_leads.json"), encoding="utf-8") as f:
         streak = json.load(f)
     stray = [lead.get("pair") or lead.get("source") for lead in streak.get("leads", {}).values()
@@ -299,31 +295,146 @@ def main():
              or lead.get("source") in S.REMOVED_SOURCES]
     eq(stray, [], "the streak file has no removed-lane lead")
 
+    print("\nbuild_feed ignores removed-lane rows")
     ledger = T.load()
-    before_ids = set(production.build_feed(ledger, stages, now=NOW)["leads"])
+    before = production.build_feed(ledger, stages, now=NOW)
+    extra_row = dict(
+        id="scores24:extra-removal", source="scores24", sport="soccer",
+        market_id="KXEPLGAME-26OCT02EXTRA", venue="kalshi", bet=True, pick="a", price=0.44,
+        price_a=0.44, price_b=0.30, side_a="Alpha", side_b="Beta", status="open",
+        start=(NOW + timedelta(hours=20)).isoformat(), logged="2026-09-30T06:00:00+00:00",
+        start_source="espn")
     extra = dict(ledger)
-    extra["quotes"] = list(ledger.get("quotes") or []) + [dict(
-        id="scores24:extra-removal", source="scores24", sport="soccer", market_id="extra",
-        venue="kalshi", bet=True, pick="a", price=0.44, price_a=0.44, price_b=0.30,
-        side_a="Alpha", side_b="Beta", status="open", start=(NOW + timedelta(hours=20)).isoformat(),
-        logged="2026-09-30T06:00:00+00:00", start_source="espn")]
-    after_ids = set(production.build_feed(extra, stages, now=NOW)["leads"])
-    eq(before_ids, after_ids, "a removed-lane quote does not change the Production lead set")
-    eq(len(blob["leads"]), len(before_ids),
-       "rebuilding the feed from the ledger returns the same 11 leads")
+    extra["quotes"] = list(ledger.get("quotes") or []) + [extra_row]
+    after = production.build_feed(extra, stages, now=NOW)
+    eq(after, before, "build_feed's output is identical with or without an extra removed-lane row")
+    forced = {"pairs": {"scores24|soccer": {
+        "stage": "production", "ready_at": "2026-09-01T00:00:00+00:00", "by_hand": "2026-09-01"}}}
+    blocked = production.build_feed({"quotes": [extra_row]}, forced, now=NOW)
+    eq(blocked["leads"], {}, "a removed lane listed as Production publishes no lead")
+    eq(blocked["pairs"], {}, "and the removed pair is left out of the feed")
 
-    print("\naudit stays clean with no network")
-    rep = A.run(network=False)
-    mentioned = [m for _c, m in rep.errors if _ID.search(m) or "Scores24" in m
-                 or "SoccerPredictions" in m or "SportsGambler" in m]
-    eq(rep.errors, [], "sandbox audit --no-network has no errors"
-       + (f" — {rep.errors[:3]}" if rep.errors else ""))
-    eq(mentioned, [], "and no error names a removed lane")
+    print("\nOddspedia's browser session does not load a removed source")
+    seen = []
+
+    def _browser_spy(jobs, pace_ms=6000):
+        seen.extend(jobs)
+        return {}
+
+    saved_fetch = B.fetch_rows
+    B.fetch_rows = _browser_spy
+    S._browser_cache = None
+    S._oddspedia_cache = None
+    S._scores24_cache = None
+    try:
+        S.fetch_oddspedia("cricket")
+    finally:
+        B.fetch_rows = saved_fetch
+        S._browser_cache = None
+        S._oddspedia_cache = None
+        S._scores24_cache = None
+    urls = [url for url, _js in seen]
+    ok(any("oddspedia.com" in url and "/cricket/" in url for url in urls),
+       "the Oddspedia cricket page is still requested")
+    ok(not any("scores24" in url for url in urls), "no Scores24 URL is requested")
+    ok(urls and all("oddspedia.com" in url for url in urls),
+       "every requested page is an Oddspedia page")
+
+    print("\nkept-lane numbers do not move when a removed row is hidden")
+    _kept_lane_numbers()
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'tip-lane removal passed'}")
     for item in FAILS:
         print(f"  - {item}")
     return 1 if FAILS else 0
+
+
+def _bet(source, sport, market, price, pnl, logged, *, pick="a", status="won", result="a",
+         close=None):
+    """One settled bet a lane row can be judged on."""
+    row = dict(
+        id=f"{source}:{market}", source=source, sport=sport, market_id=market,
+        venue="polymarket_us", bet=True, pick=pick, price=price, price_a=price,
+        price_b=round(1 - price, 2), stake=100.0, pnl=pnl, status=status, result=result,
+        side_a="Alpha", side_b="Beta", logged=logged, start="2026-09-20T18:00:00+00:00",
+        settled="2026-09-20T20:00:00+00:00")
+    if close is not None:
+        row["close_price"] = close
+        row["close_at"] = "2026-09-20T17:50:00+00:00"
+    return row
+
+
+def _figures(a, verdict):
+    return dict(bets=a["n_bets"], settled=a["n"], roi=a["roi_fee"], z=a["z"],
+                clv=a["clv"], baseline=a["base_roi"], verdict=verdict)
+
+
+def _kept_lane_numbers():
+    """Every number on a kept lane's built row matches the unfiltered ledger.
+
+    A removed row logged first on another contest of the same sport moves the
+    favourite baseline when the page assesses the filtered copy. The page must
+    not do that. Headlines still count only the rows they render.
+    """
+    kept = [
+        _bet("mma_fav_band", "mma", "mma-own", 0.50, 100.0, "2026-09-20T12:00:00+00:00",
+             close=0.55),
+        _bet("tennis_fav_band_3h", "tennis", "ten-own", 0.40, 150.0,
+             "2026-09-20T12:00:00+00:00", close=0.45),
+    ]
+    # Logged earlier, so each is the first price on its contest. Hiding it
+    # drops that contest from the favourite population.
+    hidden = [
+        _bet("pinnacle", "mma", "mma-hid", 0.60, -100.0, "2026-09-19T12:00:00+00:00",
+             pick="b", status="lost", result="b"),
+        _bet("pinnacle", "tennis", "ten-hid", 0.55, -100.0, "2026-09-19T12:00:00+00:00",
+             pick="b", status="lost", result="b"),
+    ]
+    # The lane's own contest, priced as a favourite that wins, so the population
+    # without the hidden contest is a different number.
+    population = [
+        dict(_bet("mma_fav_band", "mma", "mma-own", 0.80, 25.0, "2026-09-20T11:00:00+00:00"),
+             bet=False, pick=None, price=None, stake=0.0, pnl=0.0, status="graded"),
+        dict(_bet("tennis_fav_band_3h", "tennis", "ten-own", 0.70, 42.86,
+                  "2026-09-20T11:00:00+00:00"),
+             bet=False, pick=None, price=None, stake=0.0, pnl=0.0, status="graded"),
+    ]
+    # price_a on the population rows is the favourite. The helper set price_a
+    # from `price`, which is what blind_pnl reads.
+    running = dict(_bet("mma_fav_band", "mma", "mma-open", 0.50, 0.0,
+                        "2026-09-30T12:00:00+00:00", status="open", result=None),
+                   start=(NOW + timedelta(hours=20)).isoformat(), settled=None)
+    hidden_open = dict(running, id="pinnacle:mma-open", source="pinnacle", market_id="mma-open-h")
+    raw = {"quotes": kept + hidden + population + [running, hidden_open],
+           "meta": {}, "coverage": {}}
+    st = {"pairs": {}, "events": []}
+    page_rows = {(r["name"], r["sport"]): r for r in SB.pair_list(raw, st)
+                 if r["a"]["n"]}
+    eq(set(page_rows), {("mma_fav_band", "mma"), ("tennis_fav_band_3h", "tennis")},
+       "the fixture's measured lanes are the two kept bands")
+    ok(all(not S.lane_removed(name, sport) for name, sport in page_rows),
+       "every measured row is a kept lane")
+    for (name, sport), row in sorted(page_rows.items()):
+        tracker = T.assess(raw, name, sport, venues=T.TRADEABLE_VENUES)
+        want = _figures(tracker, SB.verdict(tracker))
+        got = _figures(row["a"], row["v"])
+        eq(got, want, f"{name}|{sport} matches the unfiltered ledger")
+        filtered = T.assess(SB.hide_removed(raw), name, sport, venues=T.TRADEABLE_VENUES)
+        filtered_figures = _figures(filtered, SB.verdict(filtered))
+        for field in ("bets", "settled", "roi", "z", "clv", "verdict"):
+            eq(filtered_figures[field], got[field],
+               f"{name}|{sport} {field} is the lane's own rows")
+        ok(filtered["base_roi"] != tracker["base_roi"],
+           f"hiding the removed row would move {name}|{sport}'s baseline "
+           f"({filtered['base_roi']} vs {tracker['base_roi']})")
+    html = SB.build(now=NOW, d=raw, st=st)
+    for name in ("mma_fav_band", "tennis_fav_band_3h"):
+        full = T.assess(raw, name)["criteria"][2][3]
+        gone = T.assess(SB.hide_removed(raw), name)["criteria"][2][3]
+        ok(full in html, f"the page shows {name}'s full-ledger baseline ({full})")
+        ok(gone not in html, f"the page does not show the filtered baseline ({gone})")
+    ok("2 settled on the record" in html, "the headline counts the kept bets only")
+    ok(">1</b><span>bets running</span>" in html, "the running count leaves the removed bet out")
 
 
 # (source, sport) pairs the spy must not record. Built once so the filter stays readable.

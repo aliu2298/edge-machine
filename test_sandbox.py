@@ -2555,12 +2555,12 @@ print("\nProduction: pairs that hold the ready gate, published as a feed")
 import production as PR
 _pnow = datetime(2026, 10, 1, 12, tzinfo=timezone.utc)
 _ready = "2026-09-30T00:00:00+00:00"
-_pst = {"pairs": {"soccerpredictions|soccer": dict(stage="production", by_hand="2026-09-20",
+_pst = {"pairs": {"mls_away_band|soccer": dict(stage="production", by_hand="2026-09-20",
                                                   promoted_at="2026-09-20T00:00:00+00:00", ready_at=_ready),
                   "espn_fpi|mlb": dict(stage="production", promoted_at="2026-09-20T00:00:00+00:00"),
                   "covers|soccer": dict(stage="sandbox", since="2026-09-01T00:00:00+00:00")}, "events": []}
 def _pq(i, **kw):
-    base = dict(id=f"soccerpredictions:KXEPLGAME-26OCT02LEENEW{i}", source="soccerpredictions", sport="soccer",
+    base = dict(id=f"mls_away_band:KXEPLGAME-26OCT02LEENEW{i}", source="mls_away_band", sport="soccer",
                 market_id=f"KXEPLGAME-26OCT02LEENEW{i}", venue="kalshi", bet=True, pick="a", price=0.44, edge=None,
                 side_a="Leeds United", side_b="Newcastle", status="open", start_source="espn",
                 start=(_pnow + timedelta(hours=20 + i)).isoformat(), logged="2026-09-30T06:00:00+00:00")
@@ -2583,7 +2583,7 @@ _pd = {"quotes": [
     _pq(10, start_source=None),                                        # Kalshi-estimated kickoff
 ]}
 _feed = PR.build_feed(_pd, _pst, now=_pnow)
-eq(sorted(_feed["pairs"]), ["soccerpredictions|soccer"], "only a pair in Production and trading is in the feed")
+eq(sorted(_feed["pairs"]), ["mls_away_band|soccer"], "only a pair in Production and trading is in the feed")
 _fl = sorted(_feed["leads"].values(), key=lambda l: l["sandbox_quote"])
 eq([l["sandbox_quote"][-1] for l in _fl], ["1", "2", "3", "7"],
    "published: open routable bets on contests since entry, and recent settled ones; nothing else")
@@ -2591,7 +2591,7 @@ eq(_feed["unlisted_skipped"], 1, "the unmapped league is held back and counted")
 _l3 = next(l for l in _fl if l["sandbox_quote"].endswith("3"))
 eq((_l3["bet"], _l3["headline"]), ({"kind": "match_result", "side": "draw"}, "Draw"), "a draw tip is published as a draw")
 eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
-eq(sorted(_feed["pairs"]["soccerpredictions|soccer"]),
+eq(sorted(_feed["pairs"]["mls_away_band|soccer"]),
    ["by_hand", "entered_at", "promoted_at", "ready_at", "route", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
    "each pair carries the Sandbox's own record since ready, to compare real fills with")
 _l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
@@ -2608,10 +2608,19 @@ ok(_l1["id"].startswith(_l1["date"] + "|Leeds United|Newcastle|"),
 _empty = PR.build_feed({"quotes": []}, {"pairs": {}}, now=_pnow)
 eq((_empty["leads"], _empty["pairs"]), ({}, {}), "with nothing in Production the feed is empty, not missing")
 _html = PR.page(_pd, _pst, _feed, "<style></style>", now=_pnow)
-ok("SoccerPredictions.ai" not in _html and "Leeds United to win" not in _html,
-   "a removed lane is left off the Production page, including leads the feed still holds")
-ok("Coming up" in _html and "No leads still to come." in _html,
-   "with only removed lanes in the fixture, the page shows no leads to come")
+ok("MLS away side priced 0.20-0.25" in _html and "Leeds United to win" in _html,
+   "a kept lane's lead is on the Production page")
+ok("Coming up" in _html and "No leads still to come." not in _html,
+   "the kept lane's open leads are listed as still to come")
+_stale_lead = dict(id="stale-removed", pair="soccerpredictions|soccer",
+                   source="soccerpredictions", sport="soccer", status="pending",
+                   kickoff=(_pnow + timedelta(hours=20)).strftime("%Y-%m-%dT%H:%MZ"),
+                   match="Old v Tip", headline="Old to win", price_at_log=0.44,
+                   bet={"kind": "match_result", "side": "home"}, home="Old", away="Tip")
+_stale = dict(_feed, leads=dict(_feed["leads"], stale=_stale_lead))
+_html_stale = PR.page(_pd, _pst, _stale, "<style></style>", now=_pnow)
+ok("Old to win" not in _html_stale and "SoccerPredictions.ai" not in _html_stale,
+   "a removed-lane lead left in the feed file is not rendered")
 ok('href="./production.html">Production</a>' in open("streaks_build.py").read(), "every board links Production")
 
 # ---------------------------------------------------------------------------
@@ -6255,7 +6264,7 @@ try:
 finally:
     S.resolve_polymarket_us = _real_us
 for _q in _open:
-    if S.weather_row(_q):
+    if S.removed_row(_q):
         eq((_q["status"], _q["pnl"]), ("open", 0.0),
            f"{_q['source']} / {_q['sport']} stays frozen; weather is not graded")
         continue
