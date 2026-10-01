@@ -3940,6 +3940,31 @@ def band_picks(sport, band, universe=None):
     return out
 
 
+# ---- The BUILD rule ---------------------------------------------------------------------------------
+# A league band is registered on a held-out split: two seasons in, the latest season held
+# out. Each of those blocks is a sub-period. The price bar is BUILD_Z, the 2.0 the lane
+# notes already use (ere_o15, turkey_o25_dog). What that rule did not have is a sample
+# floor. A sub-period of 20 or 30 matches with a large edge was allowed to pass. A
+# sub-period with fewer than BUILD_MIN_SUBPERIOD_MATCHES matches does not pass, whatever
+# its z. The lanes already logged are not retired here; this is the gate for a pass.
+BUILD_Z = 2.0
+BUILD_MIN_SUBPERIOD_MATCHES = 60
+
+
+def subperiod_passes(n, z):
+    """True when one sub-period counts as a BUILD pass.
+
+    `z` is signed in the claim's direction. The z bar and the match floor both have to hold.
+    """
+    return n >= BUILD_MIN_SUBPERIOD_MATCHES and z >= BUILD_Z
+
+
+def build_passes(subperiods):
+    """True when every sub-period passes. One thin or weak block fails the band."""
+    rows = list(subperiods)
+    return bool(rows) and all(subperiod_passes(n, z) for n, z in rows)
+
+
 # ---------------------------------------------------------------------------
 # The Eredivisie draw band — pre-registered 2026-09-26
 # ---------------------------------------------------------------------------
