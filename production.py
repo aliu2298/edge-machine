@@ -242,6 +242,8 @@ def build_feed(d, st, now=None):
     for key, pair in pairs.items():
         source, sport = key.split("|", 1)
         for q in T.all_bets(d):
+            # The pair key is the whole match. team1_form_l5|soccer_team1_intl is
+            # its own pair; a _cup sport, or any other suffix, does not satisfy it.
             if q["source"] != source or q["sport"] != sport or not q.get("bet"):
                 continue
             try:
