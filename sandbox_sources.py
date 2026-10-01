@@ -3960,9 +3960,13 @@ def subperiod_passes(n, z):
 
 
 def build_passes(subperiods):
-    """True when every sub-period passes. One thin or weak block fails the band."""
+    """True when at least two sub-periods each pass.
+
+    A single block is not a held-out split, however many matches it holds.
+    One thin or weak block fails the band.
+    """
     rows = list(subperiods)
-    return bool(rows) and all(subperiod_passes(n, z) for n, z in rows)
+    return len(rows) >= 2 and all(subperiod_passes(n, z) for n, z in rows)
 
 
 # ---------------------------------------------------------------------------

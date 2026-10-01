@@ -6975,6 +6975,8 @@ eq(S.build_passes([(180, 2.4), (60, S.BUILD_Z)]), True,
 eq(S.build_passes([(180, 2.4), (59, 4.0)]), False,
    "a band whose held-out sub-period is 59 matches does not pass BUILD")
 eq(S.build_passes([]), False, "no sub-period is not a pass")
+eq(S.build_passes([(500, 3.0)]), False,
+   "one sub-period does not pass BUILD, even at 500 matches and z 3.0")
 
 # ---------------------------------------------------------------------------
 # MLS 1X2 — two lanes on disjoint fixtures, pre-registered 2026-09-27
