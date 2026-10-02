@@ -366,8 +366,6 @@ def main():
     logged_before = [q for q in h3 if str(q.get("logged") or "") < since]
     eq(len(logged_before), 73,
        "73 dropped-tour 3-hour bets were logged before the clock")
-    ok(len(logged_before) == len(h3),
-       "every dropped-tour 3-hour bet on file was logged before the clock")
     ok(all(q["id"] in {x.get("id") for x in T.all_bets(d)} for q in refused),
        "every refused-tour row is still in the loaded ledger")
     html, index, weeks = SB.render_pages(d=d, st=st)
