@@ -7068,6 +7068,29 @@ ok("37 matches" in _kn,
    "and flags that the held-out season rests on a small sample")
 
 # ---------------------------------------------------------------------------
+# BUILD: a sub-period under 60 matches cannot pass
+# ---------------------------------------------------------------------------
+# The price bar stays BUILD_Z. The new gate is the match floor. A held-out block of 25
+# matches used to clear on a strong edge; it must not.
+eq(S.BUILD_Z, 2.0, "the BUILD price bar stays 2.0")
+eq(S.BUILD_MIN_SUBPERIOD_MATCHES, 60, "a sub-period needs 60 matches")
+eq(S.subperiod_passes(25, 4.0), False,
+   "a held-out sub-period of 25 matches with a strong edge does not pass")
+eq(S.subperiod_passes(60, S.BUILD_Z), True, "60 matches at the z bar can pass")
+eq(S.subperiod_passes(59, 4.0), False, "59 matches cannot pass")
+eq(S.subperiod_passes(60, S.BUILD_Z - 0.01), False,
+   "60 matches under the z bar still cannot pass")
+eq(S.build_passes([(180, 2.4), (25, 4.0)]), False,
+   "a band whose held-out sub-period is 25 matches does not pass BUILD")
+eq(S.build_passes([(180, 2.4), (60, S.BUILD_Z)]), True,
+   "both sub-periods at the floor can pass")
+eq(S.build_passes([(180, 2.4), (59, 4.0)]), False,
+   "a band whose held-out sub-period is 59 matches does not pass BUILD")
+eq(S.build_passes([]), False, "no sub-period is not a pass")
+eq(S.build_passes([(500, 3.0)]), False,
+   "one sub-period does not pass BUILD, even at 500 matches and z 3.0")
+
+# ---------------------------------------------------------------------------
 # MLS 1X2 — two lanes on disjoint fixtures, pre-registered 2026-09-27
 # ---------------------------------------------------------------------------
 def _mg(code, home, away, pa, pdr, pb, trade=True, untraded=False):
