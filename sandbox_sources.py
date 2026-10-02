@@ -4624,6 +4624,65 @@ MLS_FADE_HOME_MAX_ASK = 0.66
 MLS_MAX_HOLD = 0.06
 
 
+# ESPN display name -> Kalshi yes_sub_title, for all 30 current MLS clubs.
+# The +0.5 row carries the ESPN name. The three-way board carries the Kalshi
+# name. The lookup is exact: a name that is not a key does not match a longer
+# one, and an unknown name matches nothing. Kalshi spellings are yes_sub_title
+# on series KXMLSGAME. D.C. United, LA Galaxy, New England Revolution, Seattle
+# Sounders FC, and Columbus are not ledger sides; their Kalshi spellings are
+# the titles on the public markets API.
+MLS_ESPN_TO_KALSHI = {
+    "Atlanta United FC": "Atlanta",
+    "Austin FC": "Austin",
+    "Charlotte FC": "Charlotte",
+    "Chicago Fire FC": "Chicago Fire",
+    "FC Cincinnati": "Cincinnati",
+    "Colorado Rapids": "Colorado",
+    "Columbus Crew": "Columbus",
+    "FC Dallas": "Dallas",
+    "D.C. United": "DC United",
+    "Houston Dynamo FC": "Houston",
+    "Inter Miami CF": "Miami",
+    "LA Galaxy": "Los Angeles G",
+    "LAFC": "Los Angeles F",
+    "Minnesota United FC": "Minnesota",
+    "CF Montréal": "Montreal",
+    "Nashville SC": "Nashville",
+    "New England Revolution": "New England",
+    "New York City FC": "New York City",
+    "Red Bull New York": "New York RB",
+    "Orlando City SC": "Orlando",
+    "Philadelphia Union": "Philadelphia",
+    "Portland Timbers": "Portland",
+    "Real Salt Lake": "Salt Lake",
+    "San Diego FC": "San Diego FC",
+    "San Jose Earthquakes": "San Jose",
+    "Seattle Sounders FC": "Seattle",
+    "Sporting Kansas City": "Kansas City",
+    "St. Louis CITY SC": "Saint Louis",
+    "Toronto FC": "Toronto",
+    "Vancouver Whitecaps": "Vancouver",
+}
+_MLS_KALSHI_NAMES = frozenset(MLS_ESPN_TO_KALSHI.values())
+
+
+def mls_same_club(opponent, home):
+    """Whether a +0.5 opponent is the three-way home club.
+
+    `opponent` is the ESPN name on the goals row, `home` is Kalshi's side A.
+    A stored ESPN name matches only its own Kalshi spelling. A stored Kalshi
+    spelling matches only itself, so a row that already carries the board's
+    name still joins. Anything else does not match.
+    """
+    if not opponent or not home:
+        return False
+    other, side = str(opponent), str(home)
+    mapped = MLS_ESPN_TO_KALSHI.get(other)
+    if mapped is not None:
+        return mapped == side
+    return other == side and other in _MLS_KALSHI_NAMES
+
+
 def mls_board(universe=None):
     """{fixture code: (home name, de-vigged home prob, de-vigged away prob)} off the MLS board."""
     out = {}
@@ -4676,8 +4735,10 @@ def fetch_mls_fade_home(sport, universe=None):
     """Buy the NO on the HOME side's own +0.5 market when the board prices it 0.40-0.45.
 
     On a +0.5 row `opponent` is the side whose win price_a gives, so the row to fade is the
-    one whose opponent IS the home team from the three-way board. The No there is
-    away-or-draw, which is the bet — Kalshi lists no double-chance contract.
+    one whose opponent IS the home team from the three-way board. Those two strings
+    are different vocabularies: the goals row carries the ESPN name and the board
+    carries Kalshi's. mls_same_club joins them. The No there is away-or-draw, which
+    is the bet — Kalshi lists no double-chance contract.
     """
     if sport != "soccer_p05":
         return []
@@ -4701,7 +4762,7 @@ def fetch_mls_fade_home(sport, universe=None):
         if not seen:
             continue
         home, ph, _pa = seen
-        if not home or str(r.get("opponent")) != str(home):
+        if not mls_same_club(r.get("opponent"), home):
             continue
         if not (MLS_FADE_HOME_BAND[0] <= ph < MLS_FADE_HOME_BAND[1]):
             continue
