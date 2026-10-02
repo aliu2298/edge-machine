@@ -135,6 +135,20 @@ def _source_label(q):
 
 
 
+def _coverage_signal(cell):
+    """The count feed_health can test, or None when the cell is not a signal.
+
+    An int is the shape stored before offered-row counts. A dict uses the picks.
+    An empty offer returns None, so an empty board does not mark the feed dark.
+    A bare int 0 is unchanged, so a stored ledger still flags the way it did.
+    """
+    if isinstance(cell, dict):
+        if int(cell.get("offered") or 0) == 0:
+            return None
+        return int(cell.get("picked") or 0)
+    return cell
+
+
 def feed_health(d):
     """Name any connected source whose feed could not be READ on the last run.
 
@@ -171,7 +185,7 @@ def feed_health(d):
                 reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
                 dark.append(f"{meta['label']} ({reason})")
             continue
-        counts = [(cov.get(sp) or {}).get(name) for sp in meta["sports"]]
+        counts = [_coverage_signal((cov.get(sp) or {}).get(name)) for sp in meta["sports"]]
         seen = [c for c in counts if c is not None]
         if seen and not any(seen):
             dark.append(meta["label"])
@@ -429,6 +443,11 @@ def coverage_table(cov):
             v = (cov.get(sport) or {}).get(n)
             if sport not in S.SOURCES[n]["sports"] or (n, sport) in S.REMOVED_LANES:
                 cells.append('<td class="num mut">n/a</td>')
+            elif isinstance(v, dict) and "offered" in v:
+                picked = int(v.get("picked") or 0)
+                offered = int(v.get("offered") or 0)
+                cls = "neg" if picked == 0 else "pos"
+                cells.append(f'<td class="num {cls}">{picked:,} of {offered:,}</td>')
             elif v is None:
                 cells.append('<td class="num neg">—</td>')
             elif v == 0:
@@ -1827,7 +1846,8 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 {approval_table(d, scores, full=full)}</details>
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 {"" if "pinnacle" in S.REMOVED_SOURCES else f'<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>'}
-<details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
+<details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}
+<div class="note">A cell of the form k of n is quotes matched out of the board rows that lane examined: the right series, before its own band. 0 of 0 means nothing was offered. 0 of n means rows were offered and none qualified. A bare number is a count from a run that stored no denominator.</div></details>
 <details class="ref" id="method"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
 and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue

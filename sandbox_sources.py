@@ -2991,6 +2991,35 @@ _sportsgambler_cache = None
 
 # Set by the tracker before publishing: {sport: universe rows}. None when run standalone.
 UNIVERSE = None
+# Rows a lane examined on this run, keyed (source, sport). A lane calls
+# begin_examined, then note_examined once per row that passed its series and
+# venue check and has not yet reached its band. take_examined is how publish
+# reads that count. A lane that never begins leaves no entry, and publish
+# falls back to the pool it matched against.
+_EXAMINED = {}
+
+
+def begin_examined(name, sport):
+    """Start this lane's offered-row count at zero for one sport."""
+    _EXAMINED[(name, sport)] = 0
+
+
+def note_examined(name, sport):
+    """One row of the right series and venue, before this lane's band."""
+    key = (name, sport)
+    _EXAMINED[key] = _EXAMINED.get(key, 0) + 1
+
+
+def take_examined(name, sport):
+    """The count from the fetch that just ran, or None if that lane did not report one."""
+    return _EXAMINED.pop((name, sport), None)
+
+
+def reset_examined():
+    """Drop counts left by an earlier fetch so the next publish starts clean."""
+    _EXAMINED.clear()
+
+
 SG_SLUG_RE = re.compile(r"/football/(.+?)-vs-(.+?)-prediction")
 
 
@@ -3994,11 +4023,13 @@ def devig_draw(r):
 def ere_draw_picks(universe=None):
     """Back the Tie on every Kalshi Eredivisie match whose de-vigged draw sits in the band."""
     out = []
+    begin_examined("ere_draw", "soccer")
     for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
         if r.get("venue") != "kalshi":
             continue
         if not str(r.get("market_id") or "").startswith(ERE_DRAW_SERIES):
             continue
+        note_examined("ere_draw", "soccer")
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("draw", True):
             continue
@@ -4089,11 +4120,13 @@ def ere_o15_picks(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     dogs = ere_o15_dogs(uni)
     out = []
+    begin_examined("ere_o15", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(ERE_O15_TOTAL):
             continue
+        note_examined("ere_o15", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4178,14 +4211,18 @@ BUND_O35_FAV_MAX_ASK = 0.41
 BUND_O35_MAX_HOLD = 0.06
 
 
-def _bund_o35_rows(sport, universe):
+def _bund_o35_rows(sport, universe, lane=None):
     """The Kalshi Bundesliga over-3.5 rows, gated on liquidity and book width."""
+    if lane:
+        begin_examined(lane, sport)
     out = []
     for r in (universe or {}).get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(BUND_O35_TOTAL):
             continue
+        if lane:
+            note_examined(lane, sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4221,7 +4258,8 @@ def fetch_bund_o35(sport, universe=None):
     if sport != "soccer_u35":
         return []
     uni = universe if universe is not None else (UNIVERSE or {})
-    return [dict(market_id=r["market_id"], pick="a") for r in _bund_o35_rows(sport, uni)]
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in _bund_o35_rows(sport, uni, lane="bund_o35")]
 
 
 # ---------------------------------------------------------------------------
@@ -4289,14 +4327,18 @@ def liga_fav_dog(universe=None):
     return out
 
 
-def _liga_rows(sport, universe, series, side):
+def _liga_rows(sport, universe, series, side, lane=None):
     """La Liga rows on one Kalshi series, gated on liquidity and book width."""
+    if lane:
+        begin_examined(lane, sport)
     out = []
     for r in (universe or {}).get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(series):
             continue
+        if lane:
+            note_examined(lane, sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get(side, True):
             continue
@@ -4438,11 +4480,13 @@ def fetch_mls_away_band(sport, universe=None):
         return []
     uni = universe if universe is not None else (UNIVERSE or {})
     out = []
+    begin_examined("mls_away_band", "soccer")
     for r in uni.get("soccer") or []:
         if r.get("venue") != "kalshi":
             continue
         if not str(r.get("market_id") or "").startswith(MLS_GAME):
             continue
+        note_examined("mls_away_band", "soccer")
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
             continue
@@ -4472,11 +4516,13 @@ def fetch_mls_fade_home(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     board = mls_board(uni)
     out = []
+    begin_examined("mls_fade_home", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(MLS_GAME):
             continue
+        note_examined("mls_fade_home", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
             continue
@@ -4510,11 +4556,13 @@ def fetch_turkey_btts_dog(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     dogs = turkey_o25_dogs(uni)
     out = []
+    begin_examined("turkey_btts_dog", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(TURKEY_BTTS):
             continue
+        note_examined("turkey_btts_dog", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4537,11 +4585,13 @@ def fetch_turkey_o25_dog(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     dogs = turkey_o25_dogs(uni)
     out = []
+    begin_examined("turkey_o25_dog", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(TURKEY_TOTAL):
             continue
+        note_examined("turkey_o25_dog", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4564,7 +4614,7 @@ def fetch_liga_btts_even(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     board = liga_fav_dog(uni)
     out = []
-    for r in _liga_rows(sport, uni, LIGA_BTTS, "a"):
+    for r in _liga_rows(sport, uni, LIGA_BTTS, "a", lane="liga_btts_even"):
         pf = (board.get(_ere_code(r.get("market_id"))) or (None, None))[0]
         if pf is None or not (LIGA_BTTS_FAV_BAND[0] <= pf < LIGA_BTTS_FAV_BAND[1]):
             continue
@@ -4585,7 +4635,7 @@ def fetch_liga_u15_dog(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     board = liga_fav_dog(uni)
     out = []
-    for r in _liga_rows(sport, uni, LIGA_TOTAL, "b"):
+    for r in _liga_rows(sport, uni, LIGA_TOTAL, "b", lane="liga_u15_dog"):
         pd_ = (board.get(_ere_code(r.get("market_id"))) or (None, None))[1]
         if pd_ is None or pd_ >= LIGA_U15_DOG_MAX:
             continue
@@ -4607,7 +4657,7 @@ def fetch_bund_o35_fav(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     favs = bund_o35_favs(uni)
     out = []
-    for r in _bund_o35_rows(sport, uni):
+    for r in _bund_o35_rows(sport, uni, lane="bund_o35_fav"):
         p = favs.get(_ere_code(r.get("market_id")))
         if p is None or not (BUND_O35_FAV_BAND[0] <= p < BUND_O35_FAV_BAND[1]):
             continue
