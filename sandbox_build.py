@@ -1042,9 +1042,18 @@ def eliminated(r):
     return (r["name"], r["sport"]) in S.ELIMINATED
 
 
+def _eliminated_visible(r):
+    """True when an eliminated pair is drawn.
+
+    A removed lane stays off every page, including this list. Weather is in
+    S.ELIMINATED and in the removed set, so it does not come back here.
+    """
+    return eliminated(r) and not S.lane_removed(r["name"], r.get("sport"))
+
+
 def eliminated_section(rows):
     """The eliminated pairs, in one collapsed list below the sports: out of sight, on record."""
-    gone = sorted((r for r in rows if eliminated(r)), key=lambda r: -r["a"]["n"])
+    gone = sorted((r for r in rows if _eliminated_visible(r)), key=lambda r: -r["a"]["n"])
     if not gone:
         return ""
     n_bets = sum(r["a"]["n"] for r in gone)
