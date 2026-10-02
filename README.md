@@ -95,6 +95,7 @@ on as a backup. Nothing is entered by hand.
 | `sandbox_close.py` | Closing prices for bets about to start, one shard per writer. |
 | `production.py` | Production pairs, `data/production_leads.json` and the Production page. |
 | `health.py`, `verify_coverage.py` | Warn-only guardrails: freshness, stuck leads, feed and league coverage. |
+| `lane_preflight.py` | Kalshi pre-flight for the ten league lanes. Public API, no key. Own workflow. |
 | `test_streaks.py`, `test_book.py`, `test_today.py`, `test_sandbox.py` | Logic tests; the workflows refuse to publish when they fail. |
 | `scripts/local_closes.sh` | The server's 15-minute closing-price job (from a dedicated clone). |
 | `app.py`, `web/` | Optional local tracker UI (read-only). |
@@ -105,6 +106,7 @@ on as a backup. Nothing is entered by hand.
 python3 streaks_build.py && python3 book_track.py && python3 fire_track.py \
   && python3 record_build.py && python3 today_build.py      # the boards, in workflow order
 python3 sandbox_track.py && python3 sandbox_build.py         # the Sandbox, QA and Production
+python3 lane_preflight.py                                    # ten league lanes, public Kalshi
 ```
 
 Generated pages under `public_site/` are rebuilt by the workflows; commit code, not pages, or a
