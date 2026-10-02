@@ -1033,9 +1033,11 @@ SOURCES = {
              "failed — 57 soccer quotes, not one reaching 3pp, which is why soccer is retired "
              "from paid match-winner calls — and totals are a different market with a "
              "different book. Only the 2.5 line, because it is the one both venues quote "
-             "without paying for alternates. Lines over an hour old are dropped, and a run "
-             "buys at most one league key and at most half its paced credits, so the older "
-             "match-winner lane keeps its share and the month's budget does not shorten."),
+             "without paying for alternates. Lines over an hour old are dropped. A run buys "
+             "at most one league key. While the match-winner lane is still logging, this lane "
+             "takes at most half the run's paced credits, so that lane keeps its share. While "
+             "the match-winner lane is fully paused, it spends nothing, and this lane may use "
+             "the whole paced allowance. Either way the month's budget does not shorten."),
 }
 
 
@@ -4106,6 +4108,35 @@ def band_picks(sport, band, universe=None):
     return out
 
 
+# ---- The BUILD rule ---------------------------------------------------------------------------------
+# A league band is registered on a held-out split: two seasons in, the latest season held
+# out. Each of those blocks is a sub-period. The price bar is BUILD_Z, the 2.0 the lane
+# notes already use (ere_o15, turkey_o25_dog). What that rule did not have is a sample
+# floor. A sub-period of 20 or 30 matches with a large edge was allowed to pass. A
+# sub-period with fewer than BUILD_MIN_SUBPERIOD_MATCHES matches does not pass, whatever
+# its z. The lanes already logged are not retired here; this is the gate for a pass.
+BUILD_Z = 2.0
+BUILD_MIN_SUBPERIOD_MATCHES = 60
+
+
+def subperiod_passes(n, z):
+    """True when one sub-period counts as a BUILD pass.
+
+    `z` is signed in the claim's direction. The z bar and the match floor both have to hold.
+    """
+    return n >= BUILD_MIN_SUBPERIOD_MATCHES and z >= BUILD_Z
+
+
+def build_passes(subperiods):
+    """True when at least two sub-periods each pass.
+
+    A single block is not a held-out split, however many matches it holds.
+    One thin or weak block fails the band.
+    """
+    rows = list(subperiods)
+    return len(rows) >= 2 and all(subperiod_passes(n, z) for n, z in rows)
+
+
 # ---------------------------------------------------------------------------
 # The Eredivisie draw band — pre-registered 2026-09-26
 # ---------------------------------------------------------------------------
@@ -6924,7 +6955,7 @@ def fetch_pinnacle(sport):
 # already quote the same number — which is also the line where a match is least decided in
 # advance, and therefore where a real disagreement has the most room to show.
 PIN_TOTALS_POINT = 2.5
-PIN_TOTALS_MAX_CALLS = 1       # per run, and only out of what the h2h pass leaves unspent
+PIN_TOTALS_MAX_CALLS = 1       # one league key per run; the allowance split is below
 
 
 def pinnacle_total_prob(event, point):
@@ -6961,13 +6992,79 @@ def pinnacle_total_prob(event, point):
     return None
 
 
+def _pinnacle_totals_gap(event, point):
+    """Why `event` has no de-viggable Pinnacle total at `point`, or None when it does.
+
+    ("no_totals", []) when Pinnacle has no totals market, or a totals market that
+    does not carry both sides of `point`. ("other_point", [points...]) when the
+    main total is some other number. The points are listed in the order the
+    response gives them, each once. Only the first totals market is read, which
+    is the same market pinnacle_total_prob prices or refuses.
+    """
+    target = float(point)
+    found = False
+    points = []
+    over = under = False
+    for bk in event.get("bookmakers") or []:
+        if bk.get("key") != "pinnacle":
+            continue
+        for mk in bk.get("markets") or []:
+            if mk.get("key") != "totals":
+                continue
+            found = True
+            for o in mk.get("outcomes") or []:
+                try:
+                    p = float(o.get("point"))
+                except (TypeError, ValueError):
+                    continue
+                if p not in points:
+                    points.append(p)
+                if p != target:
+                    continue
+                name = str(o.get("name")).lower()
+                if name == "over" and o.get("price"):
+                    over = True
+                elif name == "under" and o.get("price"):
+                    under = True
+            break
+        if found:
+            break
+    if over and under:
+        return None
+    if found and points and all(p != target for p in points):
+        return ("other_point", points)
+    return ("no_totals", points if found else [])
+
+
+def _pin_totals_note(entry, market_id, why, points=None):
+    """Count one listed row on this totals_on entry that produced no quote."""
+    entry["empty"][why] = entry["empty"].get(why, 0) + 1
+    row = dict(market_id=market_id, empty=why)
+    if why == "other_point":
+        seen = entry["empty"].setdefault("points", [])
+        listed = []
+        for p in points or []:
+            if p not in seen:
+                seen.append(p)
+            if p not in listed:
+                listed.append(p)
+        row["points"] = listed
+    entry["rows"].append(row)
+
+
 def plan_pinnacle_totals(universe, now=None):
     """Pinnacle's main goal total for the fixtures Kalshi lists an over-2.5 market on.
 
-    Spends only what the h2h pass leaves of the run's paced allowance, and at most
-    PIN_TOTALS_MAX_CALLS, so adding this lane cannot shorten the month's credits. The event
-    list that picks WHICH key to buy is free and already cached by pinnacle_events().
+    At most PIN_TOTALS_MAX_CALLS. While the match-winner lane can still log, that
+    is also at most half the run's paced allowance, so this lane cannot take the
+    credit that lane was about to spend. Once that lane is fully paused it spends
+    nothing, and this lane may use the whole allowance. The event list that picks
+    WHICH key to buy is free and already cached by pinnacle_events().
     Returns {sport: [{market_id, prob_a}]}.
+
+    Each paid key is recorded on ODDS_USAGE["totals_on"]. Every listed row that
+    comes back empty says why: no_event, no_totals, other_point (with the points
+    seen), or stale. A quarter line is not priced. It is counted.
     """
     now = now or datetime.now(timezone.utc)
     out = {}
@@ -6983,12 +7080,18 @@ def plan_pinnacle_totals(universe, now=None):
         return out
     if "allowance" not in ODDS_USAGE:
         ODDS_USAGE["allowance"] = odds_allowance(ODDS_USAGE.get("remaining"), now)
-    # Half the run's allowance at most, and never more than one call. This lane is fetched
-    # with the other challengers, which is BEFORE the match-winner pass plans its spending —
-    # so without a cap a new test would quietly take the credits an established lane was
-    # already using. On a one-credit run the integer halving gives this lane nothing and the
-    # older one keeps it, which is the right way round.
-    left = min(PIN_TOTALS_MAX_CALLS, ODDS_USAGE["allowance"] // 2)
+    # At most one call. This lane is fetched with the other challengers, BEFORE the
+    # match-winner pass plans its spending. While that lane can still log, this one
+    # takes at most half the run's paced allowance, so it cannot spend the credit the
+    # older lane was about to use. On a one-credit run that halving leaves this lane
+    # nothing. Once the match-winner lane is fully paused it spends nothing, and the
+    # saved half would sit unused until the allowance climbs back to 2, so this lane
+    # may use the whole paced allowance. The one-call cap stays either way.
+    if source_fully_paused("pinnacle"):
+        share = ODDS_USAGE["allowance"]
+    else:
+        share = ODDS_USAGE["allowance"] // 2
+    left = min(PIN_TOTALS_MAX_CALLS, share)
     if left <= 0:
         return out
 
@@ -7014,30 +7117,42 @@ def plan_pinnacle_totals(universe, now=None):
             _mark("pinnacle", False, str(e))
             continue
         ODDS_USAGE["calls"] = ODDS_USAGE.get("calls", 0) + 1
-        ODDS_USAGE.setdefault("totals_on", []).append(dict(key=key, listed=len(want)))
+        entry = dict(key=key, listed=len(want),
+                     empty=dict(no_event=0, no_totals=0, other_point=0, stale=0, points=[]),
+                     rows=[])
+        ODDS_USAGE.setdefault("totals_on", []).append(entry)
         _odds_note_usage(headers)
         for sp, r, _ev in want:
+            matched = None
             for e2 in odds:
                 if pair_match(r["espn_home"], r["espn_away"], e2.get("home_team", ""),
                               e2.get("away_team", ""), sport="soccer")[0] <= 0:
                     continue
-                # A line Pinnacle has already moved on is not a disagreement with Kalshi,
-                # it is a stale number; the h2h lane drops those for the same reason.
-                _p, upd = pinnacle_line(e2)
-                stamp = next((m.get("last_update") for bk in e2.get("bookmakers") or []
-                              if bk.get("key") == "pinnacle"
-                              for m in bk.get("markets") or [] if m.get("key") == "totals"), None)
-                try:
-                    upd = datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) if stamp else upd
-                except ValueError:
-                    pass
-                if upd is not None and (now - upd).total_seconds() > PINNACLE_MAX_AGE_MIN * 60:
-                    ODDS_USAGE["stale"] = ODDS_USAGE.get("stale", 0) + 1
-                    break
-                prob = pinnacle_total_prob(e2, PIN_TOTALS_POINT)
-                if prob is not None:
-                    out.setdefault(sp, []).append(dict(market_id=r["market_id"], prob_a=prob))
+                matched = e2
                 break
+            if matched is None:
+                _pin_totals_note(entry, r.get("market_id"), "no_event")
+                continue
+            # A line Pinnacle has already moved on is not a disagreement with Kalshi,
+            # it is a stale number; the h2h lane drops those for the same reason.
+            _p, upd = pinnacle_line(matched)
+            stamp = next((m.get("last_update") for bk in matched.get("bookmakers") or []
+                          if bk.get("key") == "pinnacle"
+                          for m in bk.get("markets") or [] if m.get("key") == "totals"), None)
+            try:
+                upd = datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) if stamp else upd
+            except ValueError:
+                pass
+            if upd is not None and (now - upd).total_seconds() > PINNACLE_MAX_AGE_MIN * 60:
+                ODDS_USAGE["stale"] = ODDS_USAGE.get("stale", 0) + 1
+                _pin_totals_note(entry, r.get("market_id"), "stale")
+                continue
+            prob = pinnacle_total_prob(matched, PIN_TOTALS_POINT)
+            if prob is not None:
+                out.setdefault(sp, []).append(dict(market_id=r["market_id"], prob_a=prob))
+                continue
+            why, pts = _pinnacle_totals_gap(matched, PIN_TOTALS_POINT) or ("no_totals", [])
+            _pin_totals_note(entry, r.get("market_id"), why, pts)
     return out
 
 
@@ -7878,7 +7993,10 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
     suspend word drops it too, as does every unknown label, even when the start
     is still in the future. A missing or blank status does not drop: the row
     stays unverified. A verified
-    start that has passed is dropped too. The verified start is the milestone instant
+    start that has passed is dropped too. Those are different decisions:
+    stats["dropped"] counts both, stats["dropped_status"] is the status drop,
+    and stats["dropped_started"] is the start that has passed. The log names
+    them separately. The verified start is the milestone instant
     itself. Pinnacle subtracts PINNACLE_START_MARGIN_MIN because a fight card
     walks out early; a T20 does the opposite and begins late, and this instant
     is stored only once the clocks have already agreed. The row's previous
@@ -7918,14 +8036,15 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
             milestones[et] = ms
         if events and successes == 0:
             feed = False
-    kept, matched, dropped = [], 0, 0
+    kept, matched = [], 0
+    dropped_status = dropped_started = 0
     for r in rows:
         if r.get("venue") != "kalshi" or r.get("sport") != "cricket":
             kept.append(r)
             continue
         et = r.get("market_id")
         if _cricket_status_drop(et, milestones.get(et)):
-            dropped += 1
+            dropped_status += 1
             continue
         try:
             est = datetime.fromisoformat(str(r.get("start")))
@@ -7939,7 +8058,7 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
             kept.append(_emit_cricket(r))
             continue
         if verified <= now:
-            dropped += 1
+            dropped_started += 1
             continue
         matched += 1
         kept.append(_emit_cricket(
@@ -7947,7 +8066,9 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
             start_source="kalshi_milestone", venue_start=est.isoformat()))
     unverified = sum(1 for r in kept if r.get("venue") == "kalshi" and r.get("sport") == "cricket"
                      and r.get("start_source") != "kalshi_milestone")
-    return kept, dict(matched=matched, dropped=dropped, unverified=unverified, feed=feed)
+    return kept, dict(matched=matched, dropped=dropped_status + dropped_started,
+                      dropped_status=dropped_status, dropped_started=dropped_started,
+                      unverified=unverified, feed=feed)
 
 
 # Pinnacle is not in here: it is planned across every sport after these have run, so its
