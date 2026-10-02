@@ -2463,6 +2463,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     """
     bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
             and q["status"] in ("won", "lost") and not climate_excluded(q)
+            and not S.tennis_refused_row(q)
             and (sport is None or q["sport"] == sport)
             and (since is None or q["logged"] >= since)
             and (until is None or q["logged"] < until)
@@ -2476,6 +2477,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     price_bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
                   and q.get("status") == "settled" and q.get("result") == "price"
                   and not climate_excluded(q)
+                  and not S.tennis_refused_row(q)
                   and (sport is None or q["sport"] == sport)
                   and (since is None or q["logged"] >= since)
                   and (until is None or q["logged"] < until)

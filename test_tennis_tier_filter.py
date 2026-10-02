@@ -121,6 +121,55 @@ def _figures(rows):
                 fade_z=(fw - fexp) / math.sqrt(fvar))
 
 
+RESET_LANES = frozenset({
+    "tennis_fav_band_3h", "tennis_combo2", "tennis_combo3", "tennis_combo4",
+    "pm_combo2", "pm_combo3",
+})
+
+
+def _leg_kept(leg):
+    if isinstance(leg, dict):
+        tier = leg.get("tier")
+        if tier:
+            return tier in KEEP
+        return S.tennis_tier(leg.get("market_id")) in KEEP
+    return S.tennis_tier(leg) in KEEP
+
+
+def _refused_tour(q):
+    """A reset-lane bet on a tour outside the keep set. pm_combo4 is not one."""
+    if q.get("source") not in RESET_LANES:
+        return False
+    legs = q.get("legs") or []
+    if legs:
+        return any(not _leg_kept(leg) for leg in legs)
+    tier = q.get("tier") or S.tennis_tier(q.get("market_id"))
+    return tier not in KEEP
+
+
+def _quote(source, mid, logged, tier=None):
+    return dict(id=f"{source}:{mid}", source=source, sport="tennis", bet=True,
+                venue="kalshi", market_id=mid, pick="a", price=0.78, price_a=0.78,
+                price_b=0.24, status="won", pnl=28.0, stake=100.0, result="a",
+                logged=logged, start=logged, settled=logged, tier=tier)
+
+
+def _reset_fixture():
+    clock = "2026-10-02T05:00:00+00:00"
+    after = "2026-10-02T06:00:00+00:00"
+    before = "2026-10-01T12:00:00+00:00"
+    return {"quotes": [
+        _quote("tennis_fav_band_3h", "aec-atp-new-bb-2026-10-02", after, "atp"),
+        _quote("tennis_fav_band_3h", "aec-wta-new-bb-2026-10-02", after, "wta"),
+        _quote("tennis_fav_band_3h", "aec-atp-old-bb-2026-10-01", before, "atp"),
+    ], "meta": {}, "_clock": clock}
+
+
+def _reset_stages():
+    return {"pairs": {"tennis_fav_band_3h|tennis": {
+        "stage": "sandbox", "since": "2026-10-02T05:00:00+00:00"}}}
+
+
 def main():
     print("\nkept tours are an exact set, not a prefix")
     eq(getattr(S, "TENNIS_FAV_KEEP", None), KEEP,
@@ -235,18 +284,96 @@ def main():
         "pm_combo4|tennis_pmcombo", "team1_form_l5|soccer_team1",
         "team1_form_l5|soccer_team1_intl"],
        "the Production list is unchanged")
-    shown = {(r["name"], r["v"], r["a"]["n"]) for r in SB.pair_list(d, st)}
+    rows = SB.pair_list(d, st)
+    shown = {(r["name"], r["v"], r["a"]["n"]) for r in rows}
+    by_name = {r["name"]: r for r in rows}
     ok(("tennis_fav_band_3h", "waiting", 0) in shown,
        "the 3-hour lane still renders, waiting, with none of the old bets in its record")
     ok(("tennis_combo2", "waiting", 0) in shown and ("pm_combo2", "waiting", 0) in shown,
        "the two-leg lanes still render, waiting")
-    ok(not any(name == "pm_combo3" for name, _v, _n in shown),
-       "pm_combo3 has no open bet after the clock, so it is not listed")
+    ok(("pm_combo3", "waiting", 0) in shown,
+       "pm_combo3 renders as Waiting with no bets in the record")
+    ok(by_name.get("pm_combo3", {}).get("open") == 0,
+       "pm_combo3 has no open bet and still stays on the page")
+    # The same rule lists the two Kalshi baskets that were already empty under
+    # the September band clock. They are not removed lanes.
+    ok(("tennis_combo3", "waiting", 0) in shown and ("tennis_combo4", "waiting", 0) in shown,
+       "tennis_combo3 and tennis_combo4 render as Waiting with no bets yet")
+    counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED]
+    eq(len(counted), 45,
+       "[records] counts pm_combo3 plus the two already-empty Kalshi baskets")
     ok(not any(name in ("nws", "nws_fade", "covers") for name, _v, _n in shown),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
            for q in T.all_bets(d) if q.get("status") in ("won", "lost")),
        "dropped-tour bets are still on file")
+
+    print("\ndropped-tour bets leave every rendered table and stay in the data")
+    refused = [q for q in T.all_bets(d) if _refused_tour(q)]
+    h3 = [q for q in refused if q.get("source") == "tennis_fav_band_3h"]
+    eq(sum(1 for q in h3 if q.get("status") in ("won", "lost")), 65,
+       "65 settled 3-hour bets are on dropped tours")
+    eq(sum(1 for q in h3 if q.get("status") == "open"), 7,
+       "7 open 3-hour bets are on dropped tours")
+    ok(all(q["id"] in {x.get("id") for x in T.all_bets(d)} for q in refused),
+       "every refused-tour row is still in the loaded ledger")
+    html, index, weeks = SB.render_pages(d=d, st=st)
+    blob = "\n".join([html, index, *weeks.values()])
+    leaked = [q["id"] for q in refused if f'data-id="{q["id"]}"' in blob]
+    ok(not leaked, "no refused-tour bet is a row on the sandbox page or an archive page"
+       + (f" — {len(leaked)} rows, first {leaked[0]}" if leaked else ""))
+    kept_open = [q for q in T.all_bets(d)
+                 if q.get("source") == "tennis_fav_band_3h" and q.get("status") == "open"
+                 and not _refused_tour(q)]
+    eq([q["id"] for q in kept_open],
+       ["tennis_fav_band_3h:aec-atp-alemol-karkha-2026-10-01"],
+       "the one open kept-tour 3-hour bet stays a rendered row")
+    ok(f'data-id="{kept_open[0]["id"]}"' in html,
+       "that kept-tour open bet is on the sandbox page")
+    p4 = [q for q in T.all_bets(d)
+          if q.get("source") == "pm_combo4" and q.get("status") in ("won", "lost")]
+    eq(len(p4), 4, "pm_combo4's four settled baskets are still the record")
+    ok(all(f'data-id="{q["id"]}"' in blob for q in p4),
+       "pm_combo4's baskets stay on the rendered page")
+    ok(all(not _refused_tour(q) for q in p4),
+       "pm_combo4 is not treated as a reset lane")
+    judge = T.assess(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
+    eq((judge["won"], judge["n"] - judge["won"]), (2, 2),
+       "pm_combo4 is still 2-2 on its whole record")
+    eq((by_name.get("tennis_fav_band_3h") or {}).get("fade", {}).get("n"), 0,
+       "the 3-hour If-faded cell is the empty post-reset set")
+    eq((by_name.get("pm_combo2") or {}).get("open"), 0,
+       "pm_combo2's open baskets are refused tours, so the open column is empty")
+    ok(("pm_combo2", "waiting", 0) in shown,
+       "pm_combo2 still renders as Waiting once those open baskets leave the table")
+    whole_fade = T.faded(d, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
+    ok(whole_fade["n"] > 0,
+       "T.faded() on the 3-hour lane, called the way every other lane is, still reads the whole book")
+    other = T.faded(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
+    eq(other["n"], 4, "T.faded() on pm_combo4 is still its four baskets")
+
+    print("\na post-reset kept bet counts, and a dropped tour does not")
+    fx = _reset_fixture()
+    fx_rows = {r["name"]: r for r in SB.pair_list(fx, _reset_stages())}
+    fx_lane = fx_rows.get("tennis_fav_band_3h") or {"a": {}, "fade": {}}
+    eq((fx_lane["a"].get("n"), fx_lane["a"].get("won")),
+       (1, 1), "only the post-reset kept-tour bet is in the 3-hour record")
+    eq(fx_lane.get("fade", {}).get("n"), 1,
+       "If faded on that lane is the same one bet")
+    eq(T.faded(fx, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)["n"], 3,
+       "T.faded() itself still counts the dropped tour and the pre-reset bet")
+    fx_html, fx_index, fx_weeks = SB.render_pages(d=fx, st=_reset_stages())
+    fx_blob = "\n".join([fx_html, fx_index, *fx_weeks.values()])
+    ok('data-id="tennis_fav_band_3h:aec-atp-new-bb-2026-10-02"' in fx_blob,
+       "the post-reset kept bet is rendered")
+    ok('data-id="tennis_fav_band_3h:aec-wta-new-bb-2026-10-02"' not in fx_blob,
+       "the post-reset dropped tour is not rendered")
+    ok('data-id="tennis_fav_band_3h:aec-atp-old-bb-2026-10-01"' in fx_blob,
+       "a pre-reset kept-tour bet stays in the settled table and out of the record")
+    label = "Tennis 3-leg combo on Polymarket US"
+    table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
+    ok(any("Waiting for results" in part for part in table_rows),
+       "the sandbox page shows pm_combo3 as Waiting for results")
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'tennis tier filter passed'}")
     for item in FAILS:

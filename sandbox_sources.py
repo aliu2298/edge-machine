@@ -3998,6 +3998,43 @@ def tennis_fav_kept(market_id):
     return tennis_tier(market_id) in TENNIS_FAV_KEEP
 
 
+# Lanes whose page record restarted at TENNIS_FAV_KEEP_SINCE. pm_combo4 is
+# not in this set: it stays in Production, paused, on the record already on
+# file, and that record is not rewritten here.
+TENNIS_FAV_RESET = frozenset({
+    "tennis_fav_band_3h",
+    "tennis_combo2", "tennis_combo3", "tennis_combo4",
+    "pm_combo2", "pm_combo3",
+})
+
+
+def _tennis_leg_kept(leg):
+    if isinstance(leg, dict):
+        tier = leg.get("tier")
+        if tier:
+            return tier in TENNIS_FAV_KEEP
+        return tennis_fav_kept(leg.get("market_id"))
+    return tennis_fav_kept(leg)
+
+
+def tennis_refused_row(q):
+    """A reset-lane bet on a tour the keep set refuses.
+
+    The row stays in the ledger. Pages, records, and verdicts leave it out.
+    A basket is refused when any leg is. pm_combo4 is not a reset lane, so
+    its four baskets stay on the page and in its record.
+    """
+    if not isinstance(q, dict) or q.get("source") not in TENNIS_FAV_RESET:
+        return False
+    legs = q.get("legs") or []
+    if legs:
+        return any(not _tennis_leg_kept(leg) for leg in legs)
+    tier = q.get("tier")
+    if tier:
+        return tier not in TENNIS_FAV_KEEP
+    return not tennis_fav_kept(q.get("market_id"))
+
+
 def fav_band(sport):
     """The favourite band this sport backs. See BAND_BY_SPORT."""
     return BAND_BY_SPORT.get(str(sport).split("_")[0], FAV_BAND)
