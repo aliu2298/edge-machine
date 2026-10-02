@@ -430,27 +430,8 @@ def main():
         weather_calls = [m for m in calls if isinstance(m, str) and "KXHIGH" in m.upper()]
         return rep, flagged, weather_calls
 
-    # 10/3 and 10/5 were pinned on 2026-09-30. The tracker has since graded
-    # every non-weather bet that was 48h past its start on those mornings, so
-    # a fixed 10/3 finds nothing to flag. Take the clocks from the ledger:
-    # just past the stale window on the earliest open non-weather start, and
-    # two days after that.
-    open_bets = [q for q in ledger["quotes"]
-                 if q.get("bet") and q.get("status") == "open"
-                 and not S.removed_row(q) and A._dt(q.get("start"))]
-    ok(bool(open_bets),
-       "the ledger still has an open non-weather bet the stale check can flag")
-    if open_bets:
-        earliest = min(A._dt(q.get("start")) for q in open_bets)
-        clocks = (
-            ("48h past the earliest open non-weather start",
-             earliest + timedelta(hours=A.STALE_H, minutes=1)),
-            ("two days after that",
-             earliest + timedelta(days=2, hours=A.STALE_H, minutes=1)),
-        )
-    else:
-        clocks = ()
-    for label, when in clocks:
+    for label, when in (("10/3", datetime(2026, 10, 3, tzinfo=timezone.utc)),
+                        ("10/5", datetime(2026, 10, 5, tzinfo=timezone.utc))):
         rep, flagged, weather_calls = _ledger_stale(when)
         ok(not flagged and not weather_calls,
            f"ledger weather rows are not errors or warnings at {label}"

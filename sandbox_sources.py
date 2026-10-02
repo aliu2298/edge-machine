@@ -4593,14 +4593,13 @@ MLS_FADE_HOME_MAX_ASK = 0.66
 MLS_MAX_HOLD = 0.06
 
 
-# ESPN display name -> Kalshi yes_sub_title. 26 of the 30 current MLS clubs.
+# ESPN display name -> Kalshi yes_sub_title, for all 30 current MLS clubs.
 # The +0.5 row carries the ESPN name. The three-way board carries the Kalshi
 # name. The lookup is exact: a name that is not a key does not match a longer
-# one, and an unknown name matches nothing. Four clubs are absent because the
-# Kalshi spelling is not in a stored board, close, or ledger side: D.C. United,
-# LA Galaxy, New England Revolution, Seattle Sounders FC. Their home games
-# fail closed until that spelling is stored. "Columbus" is the board name this
-# join was given; it is not itself a ledger side.
+# one, and an unknown name matches nothing. Kalshi spellings are yes_sub_title
+# on series KXMLSGAME. D.C. United, LA Galaxy, New England Revolution, Seattle
+# Sounders FC, and Columbus are not ledger sides; their Kalshi spellings are
+# the titles on the public markets API.
 MLS_ESPN_TO_KALSHI = {
     "Atlanta United FC": "Atlanta",
     "Austin FC": "Austin",
@@ -4610,12 +4609,15 @@ MLS_ESPN_TO_KALSHI = {
     "Colorado Rapids": "Colorado",
     "Columbus Crew": "Columbus",
     "FC Dallas": "Dallas",
+    "D.C. United": "DC United",
     "Houston Dynamo FC": "Houston",
     "Inter Miami CF": "Miami",
+    "LA Galaxy": "Los Angeles G",
     "LAFC": "Los Angeles F",
     "Minnesota United FC": "Minnesota",
     "CF Montréal": "Montreal",
     "Nashville SC": "Nashville",
+    "New England Revolution": "New England",
     "New York City FC": "New York City",
     "Red Bull New York": "New York RB",
     "Orlando City SC": "Orlando",
@@ -4624,6 +4626,7 @@ MLS_ESPN_TO_KALSHI = {
     "Real Salt Lake": "Salt Lake",
     "San Diego FC": "San Diego FC",
     "San Jose Earthquakes": "San Jose",
+    "Seattle Sounders FC": "Seattle",
     "Sporting Kansas City": "Kansas City",
     "St. Louis CITY SC": "Saint Louis",
     "Toronto FC": "Toronto",

@@ -16,9 +16,10 @@ import sandbox_sources as S
 
 FAILS = []
 
-# ESPN display name, Kalshi yes_sub_title. Both spellings are in the repo
-# except Kalshi "Columbus", which is the board name this fix was given.
-# Sources are listed in the PR body.
+# ESPN display name, Kalshi yes_sub_title. Hard-coded. No network.
+# Kalshi spellings in NOT_A_LEDGER_SIDE are yes_sub_title values from Kalshi's
+# public markets API, not side_a/side_b on a stored KXMLSGAME ledger row.
+# The PR body records the fetch.
 PAIRS = (
     ("Atlanta United FC", "Atlanta"),
     ("Austin FC", "Austin"),
@@ -28,12 +29,15 @@ PAIRS = (
     ("Colorado Rapids", "Colorado"),
     ("Columbus Crew", "Columbus"),
     ("FC Dallas", "Dallas"),
+    ("D.C. United", "DC United"),
     ("Houston Dynamo FC", "Houston"),
     ("Inter Miami CF", "Miami"),
+    ("LA Galaxy", "Los Angeles G"),
     ("LAFC", "Los Angeles F"),
     ("Minnesota United FC", "Minnesota"),
     ("CF Montréal", "Montreal"),
     ("Nashville SC", "Nashville"),
+    ("New England Revolution", "New England"),
     ("New York City FC", "New York City"),
     ("Red Bull New York", "New York RB"),
     ("Orlando City SC", "Orlando"),
@@ -42,24 +46,25 @@ PAIRS = (
     ("Real Salt Lake", "Salt Lake"),
     ("San Diego FC", "San Diego FC"),
     ("San Jose Earthquakes", "San Jose"),
+    ("Seattle Sounders FC", "Seattle"),
     ("Sporting Kansas City", "Kansas City"),
     ("St. Louis CITY SC", "Saint Louis"),
     ("Toronto FC", "Toronto"),
     ("Vancouver Whitecaps", "Vancouver"),
 )
 
-# ESPN name is in stored ESPN data. The Kalshi display name is not in a
-# stored board, close, or ledger side, so it is not in the map.
-UNVERIFIED_ESPN = (
-    "D.C. United",
-    "LA Galaxy",
-    "New England Revolution",
-    "Seattle Sounders FC",
-)
+NOT_A_LEDGER_SIDE = frozenset({
+    "Columbus",
+    "DC United",
+    "Los Angeles G",
+    "New England",
+    "Seattle",
+})
 
 # (espn opponent, kalshi home) that must not join. Real names only.
 LOOKALIKES = (
     ("LA Galaxy", "Los Angeles F"),
+    ("LAFC", "Los Angeles G"),
     ("LAFC", "LA Galaxy"),
     ("New York City FC", "New York RB"),
     ("Red Bull New York", "New York City"),
@@ -135,15 +140,14 @@ def main():
     clubs = {n for n in espn if n not in ("Arsenal", "Liga MX All-Stars", "MLS All-Stars")}
     eq(len(clubs), 30, "stored ESPN seasons list 30 current MLS clubs")
     mapped = {e for e, _k in PAIRS}
-    eq(mapped | set(UNVERIFIED_ESPN), clubs,
-       "every current club is either mapped or listed unverified")
-    eq(len(PAIRS), 26, "26 clubs have both spellings")
+    eq(mapped, clubs, "every current club is mapped")
+    eq(len(PAIRS), 30, "all 30 clubs have both spellings")
     ok(len({k for _e, k in PAIRS}) == len(PAIRS),
        "no two clubs share a Kalshi spelling")
 
     for espn_name, kalshi_name in PAIRS:
         ok(espn_name in espn, f"ESPN spelling {espn_name!r} is in data/espn_seasons.json")
-        if kalshi_name != "Columbus":
+        if kalshi_name not in NOT_A_LEDGER_SIDE:
             ok(kalshi_name in kalshi,
                f"Kalshi spelling {kalshi_name!r} is a KXMLSGAME side in the ledger")
         code = "26OCT04" + "".join(ch for ch in kalshi_name if ch.isalnum())[:8]
@@ -160,8 +164,6 @@ def main():
        "an unknown name does not join a real Kalshi row")
     eq(_picked("26OCT04SELF", "Not A Club", "Not A Club"), [],
        "an unknown name does not match even itself")
-    for espn_name in UNVERIFIED_ESPN:
-        ok(espn_name in espn, f"unverified club {espn_name!r} is still an ESPN name in the seasons file")
 
     print("\nColumbus lane")
     # In band: 0.43 / 1.02 = 0.4216. No ask 0.60 is under the 0.66 ceiling.
