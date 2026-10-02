@@ -482,43 +482,213 @@ def _step_script(wf, name):
     return "\n".join(lines) + "\n"
 
 
-def test_tracker_runs_preflight_before_collect():
-    print("\ntracker workflow")
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        ".github", "workflows", "sandbox-tracker.yml")
-    wf = open(path, encoding="utf-8").read()
-    pre = _step_script(wf, "Lane pre-flight")
-    ok("python3 lane_preflight.py" in pre, "the tracker runs python3 lane_preflight.py")
-    ok("set +e" in pre and 'echo "preflight_rc=$?"' in pre,
-       "the step records the exit code and does not stop the ledger commit")
-    ok("exit 0" not in pre and "|| true" not in pre and "|| echo" not in pre,
-       "the step does not swallow the script's result")
-    ok("secrets" not in pre, "the pre-flight step does not read a secret")
-    ok(wf.find("- name: Logic tests") < wf.find("python3 lane_preflight.py")
-       < wf.find("python3 sandbox_track.py"),
-       "pre-flight sits after the logic tests and before collect")
-    fail = _step_script(wf, "Fail the job if the tracker or the page build failed")
-    ok("steps.preflight.outputs.preflight_rc" in wf,
-       "the closing step reads the pre-flight exit code")
-    ok("PREFLIGHT_RC" in fail and "Lane pre-flight failed" in fail,
-       "the closing step fails the job when the pre-flight exited non-zero")
+def test_preflight_is_its_own_workflow():
+    print("\npre-flight workflow, not the tracker")
+    root = os.path.dirname(os.path.abspath(__file__))
+    wf_dir = os.path.join(root, ".github", "workflows")
+    tracker = open(os.path.join(wf_dir, "sandbox-tracker.yml"), encoding="utf-8").read()
+    path = os.path.join(wf_dir, "lane-preflight.yml")
+    ok(os.path.isfile(path), "lane-preflight.yml is its own workflow")
+    wf = open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
+    ok("python3 lane_preflight.py" in wf, "the new workflow runs python3 lane_preflight.py")
+    ok("timeout-minutes: 5" in wf, "the job is bounded at 5 minutes")
+    ok("contents: read" in wf and "contents: write" not in wf,
+       "the workflow is contents: read")
+    ok("persist-credentials: false" in wf, "checkout does not persist credentials")
+    ok('cron: "26 */3 * * *"' in wf, "the cron is :26, clear of the tracker and the boards")
+    ok("workflow_dispatch:" in wf, "it can be run by hand")
+    ok("actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" in wf
+       and "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97" in wf,
+       "checkout and setup-python use the repo's pinned SHAs")
+    ok(bool(wf) and "secrets" not in wf and "set +e" not in wf
+       and "continue-on-error" not in wf and "|| true" not in wf and "exit 0" not in wf,
+       "a non-zero pre-flight fails this job, and the step reads no secret")
+    ok("lane_preflight" not in tracker and "PREFLIGHT" not in tracker
+       and "preflight" not in tracker,
+       "the tracker workflow does not run the pre-flight")
+    fail = _step_script(tracker, "Fail the job if the tracker or the page build failed")
     ran = subprocess.run(["bash", "-c", fail], capture_output=True, text=True, env={
         **os.environ,
         "TRACK_RC": "0", "BUILD_RC": "0", "GATE_FAIL": "false", "LIVE_RC": "0",
         "PREFLIGHT_RC": "1",
     })
-    ok(ran.returncode != 0 and "Lane pre-flight failed" in ran.stdout,
-       "a non-zero pre-flight code fails the job and names the step")
-    quiet = subprocess.run(["bash", "-c", fail], capture_output=True, text=True, env={
-        **os.environ,
-        "TRACK_RC": "0", "BUILD_RC": "0", "GATE_FAIL": "false",
-    })
-    ok(quiet.returncode == 0 and "Lane pre-flight" not in quiet.stdout,
-       "an unset pre-flight code does not fail a run the step never reached")
+    ok(ran.returncode == 0 and "Lane pre-flight" not in ran.stdout
+       and "preflight" not in ran.stdout.lower(),
+       "a pre-flight failure does not fail the tracker job")
     horizon = inspect.signature(S.fetch_kalshi_venue).parameters["horizon_days"].default
     ok(horizon == inspect.signature(S.fetch_kalshi_goals).parameters["horizon_days"].default
        == inspect.signature(S.fetch_kalshi_btts).parameters["horizon_days"].default,
        "the three board fetches share one horizon")
+
+
+def test_kalshi_title_cannot_inject_a_workflow_command():
+    _need()
+    print("\nworkflow command injection")
+    book = _Book()
+    book.set(S.ERE_O15_TOTAL, title="Legit\n::add-mask::x")
+    _results, text, _code = _run(book)
+    lines = text.splitlines()
+    ok(not any(line.startswith("::add-mask::") for line in lines),
+       "a newline in a Kalshi title cannot start ::add-mask::")
+    encoded = [line for line in lines if "%0A::add-mask::x" in line or "%0A%3A%3Aadd-mask" in line]
+    ok(bool(encoded) and all("\n" not in line and "\r" not in line for line in encoded),
+       "the newline is percent-encoded on one annotation line")
+    ok(any(line.startswith("::warning::") or line.startswith("::warning ") for line in encoded),
+       "that line is the warning for the lane")
+    if not hasattr(P, "workflow_command"):
+        ok(False, "property values on a workflow command are percent-encoded")
+        return
+    cmd = P.workflow_command("warning", "100%", title="Legit\n::add-mask::x,y")
+    ok("\n" not in cmd and "\r" not in cmd, "the command is a single line")
+    ok("title=Legit%0A%3A%3Aadd-mask%3A%3Ax%2Cy" in cmd,
+       "a property encodes newline, colon and comma")
+    ok(cmd.endswith("::100%25"), "percent in the message is encoded first")
+    ok("%0A" in cmd and "%250A" not in cmd and "%253A" not in cmd,
+       "an encoded newline is not percent-encoded a second time")
+
+
+def test_bad_payload_is_could_not_check():
+    _need()
+    print("\nbad payload")
+    book = _Book()
+    book.set(S.ERE_O15_TOTAL, events=["x"])
+    try:
+        results, _text, code = _run(book)
+        row = _one(results, "ere_o15", S.ERE_O15_TOTAL, "total")
+        eq(row["state"], "could not check", "a non-dict event is could not check")
+        eq(row["level"], "error", "an unreadable book fails the run")
+        ok(code != 0, "it exits non-zero")
+        ok(row["state"] != "never seen", "it is not never seen")
+    except Exception as exc:
+        ok(False, f"a non-dict event is could not check, not {type(exc).__name__}")
+    book2 = _Book()
+    book2.set(S.LIGA_BTTS, status=(200, ["not", "an", "object"]))
+    results2, _text2, _code2 = _run(book2)
+    row2 = _one(results2, "liga_btts_even", S.LIGA_BTTS, "btts")
+    eq(row2["state"], "could not check", "JSON that is not an object is could not check")
+    import http.client
+    raised = []
+
+    def boom(_url):
+        raise http.client.IncompleteRead(b"partial")
+
+    try:
+        got = P.evaluate(boom, now=NOW, attempts=1, pause=0)
+    except Exception as exc:
+        raised.append(type(exc).__name__)
+        got = []
+    ok(not raised and got and all(r["state"] == "could not check" for r in got),
+       "http.client.HTTPException is could not check, not a traceback")
+
+
+def test_retries_429_and_5xx():
+    _need()
+    print("\nretry 429 and 5xx")
+    book = _Book()
+    hits = {}
+
+    def get(url):
+        hits[url] = hits.get(url, 0) + 1
+        path = url.split("?", 1)[0]
+        if hits[url] == 1 and path.rstrip("/").endswith("/series/" + S.ERE_DRAW_SERIES):
+            return 429, {}
+        if hits[url] == 1 and path.rstrip("/").endswith("/series/" + S.TURKEY_BTTS):
+            return 503, {"error": "unavailable"}
+        return book(url)
+
+    results = P.evaluate(get, now=NOW, attempts=3, pause=0)
+    draw = _one(results, "ere_draw", S.ERE_DRAW_SERIES, "three_way")
+    eq(draw["state"], "exists but no open markets", "a 429 then a 200 is the book")
+    btts = _one(results, "turkey_btts_dog", S.TURKEY_BTTS, "btts")
+    eq(btts["state"], "exists but no open markets", "a 503 is retried")
+    draw_url = next(u for u in hits if u.rstrip("/").endswith("/series/" + S.ERE_DRAW_SERIES))
+    eq(hits[draw_url], 2, "the 429 series is fetched a second time")
+    # A 404 is the never-seen verdict. Retrying it would hide a renamed ticker.
+    misses = {"n": 0}
+
+    def once(url):
+        if "/series/" in url.split("?", 1)[0] and url.rstrip("/").endswith(S.ERE_DRAW_SERIES):
+            misses["n"] += 1
+        return book(url)
+
+    book.set(S.ERE_DRAW_SERIES, status=(404, {"error": {"code": "not_found"}}))
+    P.evaluate(once, now=NOW, attempts=3, pause=0)
+    eq(misses["n"], 1, "a 404 is not retried")
+    pause = inspect.signature(P.evaluate).parameters["pause"].default
+    tries = inspect.signature(P.evaluate).parameters["attempts"].default
+    ok(pause <= 1 and tries <= 4, "the backoff stays inside the 5-minute job")
+
+
+def test_open_event_without_markets_counts_as_one():
+    _need()
+    print("\nopen event with no nested markets")
+    book = _Book()
+    book.set(S.ERE_O15_TOTAL, events=[{
+        "event_ticker": f"{S.ERE_O15_TOTAL}-26OCT04HOMWAY",
+        "title": "Homeside vs Awayside",
+        "markets": [],
+    }])
+    results, text, code = _run(book)
+    row = _one(results, "ere_o15", S.ERE_O15_TOTAL, "total")
+    eq(row["state"], "listed but not on the board",
+       "an open event shell is not an empty book")
+    ok("1" in row["detail"] and "no nested" in row["detail"],
+       "the shell counts as 1")
+    eq(row["level"], "warning", "legs that are not listed yet do not fail the run")
+    eq(code, 0, "the run stays green")
+    ok("::error::" not in text, "a shell prints no error")
+
+
+def test_body_cap_redirect_and_summary():
+    _need()
+    print("\nbody cap, redirect, step summary")
+    if not hasattr(P, "read_capped") or not hasattr(P, "kalshi_https"):
+        ok(False, "responses are capped and redirects must stay on the Kalshi host")
+        return
+    chunks = [b"a" * 100, b"b" * 100]
+
+    class _Stream:
+        def read(self, _n):
+            return chunks.pop(0) if chunks else b""
+
+    eq(P.read_capped(_Stream(), limit=250), b"a" * 100 + b"b" * 100,
+       "a small body is kept")
+    chunks2 = [b"z" * 80, b"z" * 80]
+
+    class _Big:
+        def read(self, _n):
+            return chunks2.pop(0) if chunks2 else b""
+
+    try:
+        P.read_capped(_Big(), limit=100)
+        ok(False, "a body over the cap is refused")
+    except P.ProbeError:
+        ok(True, "a body over the cap is refused")
+    ok(P.kalshi_https("https://api.elections.kalshi.com/trade-api/v2/series/X"),
+       "the Kalshi host over HTTPS is allowed")
+    ok(not P.kalshi_https("https://evil.example/series/X"),
+       "another host is not allowed")
+    ok(not P.kalshi_https("http://api.elections.kalshi.com/trade-api/v2/series/X"),
+       "plain HTTP is not allowed")
+    if not hasattr(P, "summary_text") or not hasattr(P, "write_step_summary"):
+        ok(False, "the full result list is written to the step summary")
+        return
+    book = _Book()
+    results = P.evaluate(book, now=NOW, attempts=1)
+    summary = P.summary_text(results, NOW)
+    for row in results:
+        flat = P.format_result(row).replace("\r", " ").replace("\n", " ")
+        ok(flat in summary, f"the summary lists {row['lane']} {row['series']}")
+    path = "/tmp/lane-preflight-summary.md"
+    os.environ["GITHUB_STEP_SUMMARY"] = path
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+        P.write_step_summary(summary)
+        got = open(path, encoding="utf-8").read()
+    finally:
+        os.environ.pop("GITHUB_STEP_SUMMARY", None)
+    eq(got, summary, "GITHUB_STEP_SUMMARY receives every lane")
 
 
 TESTS = (
@@ -533,7 +703,12 @@ TESTS = (
     test_call_count_stays_small,
     test_btts_leagues_cover_the_five_fragments,
     test_totals_and_btts_fetch_pick_up_relisted_series,
-    test_tracker_runs_preflight_before_collect,
+    test_preflight_is_its_own_workflow,
+    test_kalshi_title_cannot_inject_a_workflow_command,
+    test_bad_payload_is_could_not_check,
+    test_retries_429_and_5xx,
+    test_open_event_without_markets_counts_as_one,
+    test_body_cap_redirect_and_summary,
 )
 
 for _t in TESTS:

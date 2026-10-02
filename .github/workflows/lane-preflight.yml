@@ -1,0 +1,35 @@
+name: Lane pre-flight
+
+# The ten league lanes, on their own schedule. A renamed series, a Kalshi
+# outage, or a 429 fails this job and nothing else. backup-refresh.yml
+# judges sandbox-tracker.yml by its last successful run, so this check
+# stays out of that job: a red pre-flight must not look like a dead tracker.
+# Public API only. No key. The script writes the full list to the step summary.
+
+on:
+  schedule:
+    # Every 3h at :26 UTC, clear of the tracker (:11) and the boards (:41).
+    - cron: "26 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Lane pre-flight
+        run: python3 lane_preflight.py

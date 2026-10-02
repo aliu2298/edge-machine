@@ -95,7 +95,7 @@ on as a backup. Nothing is entered by hand.
 | `sandbox_close.py` | Closing prices for bets about to start, one shard per writer. |
 | `production.py` | Production pairs, `data/production_leads.json` and the Production page. |
 | `health.py`, `verify_coverage.py` | Warn-only guardrails: freshness, stuck leads, feed and league coverage. |
-| `lane_preflight.py` | Kalshi pre-flight for the ten league lanes. Public API, no key. |
+| `lane_preflight.py` | Kalshi pre-flight for the ten league lanes. Public API, no key. Own workflow. |
 | `test_streaks.py`, `test_book.py`, `test_today.py`, `test_sandbox.py` | Logic tests; the workflows refuse to publish when they fail. |
 | `scripts/local_closes.sh` | The server's 15-minute closing-price job (from a dedicated clone). |
 | `app.py`, `web/` | Optional local tracker UI (read-only). |

@@ -33,10 +33,17 @@ and puts kickoff at noon UTC on the ticker date, then asks the real fetch
 whether it would keep the row. Noon is early enough that a ticker date
 inside the horizon is not rejected for the hour we guessed.
 
+A Kalshi title is percent-encoded before it is printed on a ::warning:: or
+::error:: line, so a newline in that title cannot emit its own workflow
+command. The same list is written to GITHUB_STEP_SUMMARY when that file is
+set, because GitHub shows only ten annotations on a step.
+
 Usage:  python3 lane_preflight.py
 """
+import http.client
 import inspect
 import json
+import os
 import sys
 import time
 import urllib.error
@@ -63,6 +70,13 @@ _LOOKBACK_DAYS = 7
 # _kalshi_open pages this many times. The events fetch the goals board uses
 # does not: it reads one page. Match each board.
 _MARKET_PAGES = 10
+_HOST = "api.elections.kalshi.com"
+_MAX_BODY = 8 * 1024 * 1024
+_TIMEOUT = 30
+# 429 and 5xx are retried this many times. The pause is capped so a burst
+# of them stays well inside the 5-minute job.
+_RETRY_ATTEMPTS = 3
+_RETRY_PAUSE = 0.5
 
 _API = S.KALSHI_API.rsplit("/", 1)[0]
 
@@ -126,32 +140,98 @@ def _events_url(ticker):
             f"&with_nested_markets=true")
 
 
+def kalshi_https(url):
+    """True only for https://api.elections.kalshi.com."""
+    parsed = urllib.parse.urlparse(url)
+    return parsed.scheme == "https" and (parsed.hostname or "") == _HOST
+
+
+class _StayOnKalshi(urllib.request.HTTPRedirectHandler):
+    """Redirects stay on the Kalshi host. Anywhere else is a probe error."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not kalshi_https(newurl):
+            raise ProbeError("refusing a redirect off the Kalshi host")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+_OPENER = urllib.request.build_opener(_StayOnKalshi)
+
+
+def read_capped(resp, limit=_MAX_BODY):
+    """Response bytes, or ProbeError once `limit` is passed."""
+    chunks, total = [], 0
+    while True:
+        block = resp.read(65536)
+        if not block:
+            break
+        total += len(block)
+        if total > limit:
+            raise ProbeError(f"response larger than {limit} bytes")
+        chunks.append(block)
+    return b"".join(chunks)
+
+
+def _json_object(raw):
+    if not raw:
+        return {}
+    try:
+        body = json.loads(raw.decode("utf-8"))
+    except (UnicodeError, ValueError) as exc:
+        raise ProbeError(str(exc)) from exc
+    if not isinstance(body, dict):
+        raise ProbeError("Kalshi JSON was not an object")
+    return body
+
+
 def live_get(url):
     """(status, json) from Kalshi's public API. Raises ProbeError on transport."""
+    if not kalshi_https(url):
+        raise ProbeError("refusing a request that is not the Kalshi host")
     req = urllib.request.Request(url, headers={"User-Agent": S.UA, "Accept": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return resp.status, json.load(resp)
+        with _OPENER.open(req, timeout=_TIMEOUT) as resp:
+            return resp.status, _json_object(read_capped(resp))
     except urllib.error.HTTPError as exc:
-        raw = exc.read()
         try:
-            body = json.loads(raw.decode("utf-8")) if raw else {}
-        except ValueError:
+            raw = read_capped(exc)
+        except ProbeError:
+            raise
+        except (http.client.HTTPException, OSError, UnicodeError, ValueError) as inner:
+            raise ProbeError(str(inner)) from inner
+        try:
+            body = _json_object(raw)
+        except ProbeError:
             body = {}
         return exc.code, body
-    except (OSError, json.JSONDecodeError, UnicodeError) as exc:
+    except ProbeError:
+        raise
+    except (http.client.HTTPException, OSError, UnicodeError, ValueError) as exc:
         raise ProbeError(str(exc)) from exc
 
 
+def _retryable(status):
+    return status == 429 or (isinstance(status, int) and status >= 500)
+
+
 def _call(get, url, attempts, pause):
-    last = None
-    for i in range(max(1, attempts)):
+    last = ProbeError(f"no response for {url}")
+    tries = max(1, attempts)
+    gap = min(float(pause or 0), 1.0)
+    for i in range(tries):
         try:
-            return get(url)
+            status, body = get(url)
         except ProbeError as exc:
             last = exc
-            if i + 1 < attempts and pause:
-                time.sleep(pause)
+        except http.client.HTTPException as exc:
+            last = ProbeError(str(exc))
+        else:
+            if _retryable(status):
+                last = ProbeError(f"HTTP {status}")
+            else:
+                return status, body
+        if i + 1 < tries and gap:
+            time.sleep(gap)
     raise last
 
 
@@ -209,16 +289,42 @@ def _wired(series, kind):
     return any(series == f"KX{frag}{suffix}" for frag in S.BTTS_LEAGUES)
 
 
+def _objects(items, what):
+    """A list of dicts, or ProbeError. None is an empty list."""
+    if items is None:
+        return []
+    if not isinstance(items, list):
+        raise ProbeError(f"{what} was not a list")
+    for item in items:
+        if not isinstance(item, dict):
+            raise ProbeError(f"{what} contained a non-object")
+    return items
+
+
 def _count_open(kind, info):
     if kind == "three_way":
-        return len(info.get("markets") or [])
+        return len(_objects(info.get("markets") or [], "markets"))
     n = 0
-    for ev in info.get("events") or []:
-        markets = ev.get("markets") or []
-        # An open event with no nested legs still counts: the events call
-        # asked for status=open.
+    for ev in _objects(info.get("events") or [], "events"):
+        raw = ev.get("markets")
+        markets = _objects(raw, "nested markets") if raw else []
+        # An open event with no nested legs still counts as 1. The events
+        # call asked for status=open, and the legs are often listed later.
         n += len(markets) if markets else 1
     return n
+
+
+def _shell_only(kind, info):
+    """True when every open event has no nested markets."""
+    if kind == "three_way":
+        return False
+    events = info.get("events") or []
+    if not events:
+        return False
+    for ev in events:
+        if not isinstance(ev, dict) or ev.get("markets"):
+            return False
+    return True
 
 
 def _fixtures_from(events):
@@ -290,7 +396,11 @@ def _judge(lane, series, kind, info, now):
     if side_error:
         return _result(lane, series, kind, "could not check", "error",
                        f"Kalshi request failed ({side_error})")
-    n = _count_open(kind, info)
+    try:
+        n = _count_open(kind, info)
+    except ProbeError as exc:
+        return _result(lane, series, kind, "could not check", "error",
+                       f"Kalshi response was not usable ({exc})")
     title = info.get("title") or ""
     known = "Kalshi knows the series" + (f" ({title})" if title else "")
     if n == 0:
@@ -298,6 +408,10 @@ def _judge(lane, series, kind, info, now):
     if not _wired(series, kind):
         return _result(lane, series, kind, "listed but not on the board", "error",
                        f"the {sport} board's fetch does not request this series")
+    if _shell_only(kind, info):
+        noun = "event" if n == 1 else "events"
+        return _result(lane, series, kind, "listed but not on the board", "warning",
+                       f"{n} open {noun}, no nested markets")
     horizon = BOARD_HORIZON[kind]
     on = _on_board(series, kind, sport, info, now, horizon)
     if on:
@@ -312,7 +426,30 @@ def _judge(lane, series, kind, info, now):
                    f"the {sport} board drops every open market")
 
 
-def evaluate(get, now=None, attempts=2, pause=0.4):
+def encode_workflow(text, for_property=False):
+    """Percent-encode workflow-command data. % first, then CR and LF.
+
+    Property values also encode ':' and ',' so a title cannot close the
+    property list or start the message early.
+    """
+    out = str(text).replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+    if for_property:
+        out = out.replace(":", "%3A").replace(",", "%2C")
+    return out
+
+
+def workflow_command(level, message, **properties):
+    """One ::level:: line. Kalshi text cannot break out of it."""
+    head = f"::{level}"
+    if properties:
+        bits = [encode_workflow(key, for_property=True) + "="
+                + encode_workflow(value, for_property=True)
+                for key, value in properties.items()]
+        head += " " + ",".join(bits)
+    return head + "::" + encode_workflow(message)
+
+
+def evaluate(get, now=None, attempts=_RETRY_ATTEMPTS, pause=_RETRY_PAUSE):
     """One result per lane series. `get` is live_get or a stub of the same shape."""
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
@@ -335,18 +472,20 @@ def format_result(row):
 
 def render(results, now):
     """(text, exit code). Never-seen, an unreadable open book, and a failed
-    request are exit 1. An empty book and a window miss are warnings."""
+    request are exit 1. An empty book, a window miss, and an event that is
+    open before its legs are listed are warnings."""
     stamp = now.strftime("%Y-%m-%dT%H:%MZ")
     lines = [f"{stamp} lane pre-flight"]
     failed = []
     for row in results:
-        line = format_result(row)
-        lines.append(line)
+        raw = format_result(row)
+        safe = encode_workflow(raw)
+        lines.append(safe)
         if row["level"] == "error":
-            lines.append("::error::" + line)
-            failed.append(line)
+            lines.append(workflow_command("error", raw))
+            failed.append(safe)
         elif row["level"] == "warning":
-            lines.append("::warning::" + line)
+            lines.append(workflow_command("warning", raw))
     if failed:
         lines.append(f"FAILED: {len(failed)} lane series")
         for line in failed:
@@ -356,10 +495,36 @@ def render(results, now):
     return "\n".join(lines) + "\n", 0
 
 
+def summary_text(results, now):
+    """The full list, one lane a line. The step log only shows ten annotations."""
+    stamp = now.strftime("%Y-%m-%dT%H:%MZ")
+    lines = [f"### Lane pre-flight {stamp}", ""]
+    for row in results:
+        flat = format_result(row).replace("\r", " ").replace("\n", " ")
+        lines.append("- " + flat)
+    failed = [row for row in results if row["level"] == "error"]
+    lines.append("")
+    if failed:
+        lines.append(f"FAILED: {len(failed)} lane series")
+    else:
+        lines.append(f"ok: {len(results)} lane series")
+    return "\n".join(lines) + "\n"
+
+
+def write_step_summary(text):
+    path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(text)
+
+
 def main():
     now = datetime.now(timezone.utc)
-    text, code = render(evaluate(live_get, now=now), now)
+    results = evaluate(live_get, now=now)
+    text, code = render(results, now)
     sys.stdout.write(text)
+    write_step_summary(summary_text(results, now))
     return code
 
 
