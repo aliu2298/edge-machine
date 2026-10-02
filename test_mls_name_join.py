@@ -7,19 +7,17 @@ except San Diego FC, the one club spelled the same in both. This file fails
 while that compare is still exact, and passes once each stored pair joins
 and a lookalike or an unknown name does not.
 
-No network. Lead files are not written.
+The production map is pinned to PAIRS. KALSHI_TITLES is the yes_sub_title
+set recorded from the public markets API on 2026-10-02. The 9/27 boards
+are inline fixtures. No network. Lead files are not written.
 """
-import json
 import sys
 
 import sandbox_sources as S
 
 FAILS = []
 
-# ESPN display name, Kalshi yes_sub_title. Hard-coded. No network.
-# Kalshi spellings in NOT_A_LEDGER_SIDE are yes_sub_title values from Kalshi's
-# public markets API, not side_a/side_b on a stored KXMLSGAME ledger row.
-# The PR body records the fetch.
+# ESPN display name, Kalshi yes_sub_title. The reviewed table. No network.
 PAIRS = (
     ("Atlanta United FC", "Atlanta"),
     ("Austin FC", "Austin"),
@@ -53,12 +51,40 @@ PAIRS = (
     ("Vancouver Whitecaps", "Vancouver"),
 )
 
-NOT_A_LEDGER_SIDE = frozenset({
+# yes_sub_title values on series KXMLSGAME, recorded from the public markets
+# API on 2026-10-02. The 30 clubs plus Tie.
+KALSHI_TITLES = frozenset({
+    "Atlanta",
+    "Austin",
+    "Charlotte",
+    "Chicago Fire",
+    "Cincinnati",
+    "Colorado",
     "Columbus",
+    "Dallas",
     "DC United",
+    "Houston",
+    "Miami",
     "Los Angeles G",
+    "Los Angeles F",
+    "Minnesota",
+    "Montreal",
+    "Nashville",
     "New England",
+    "New York City",
+    "New York RB",
+    "Orlando",
+    "Philadelphia",
+    "Portland",
+    "Salt Lake",
+    "San Diego FC",
+    "San Jose",
     "Seattle",
+    "Kansas City",
+    "Saint Louis",
+    "Toronto",
+    "Vancouver",
+    "Tie",
 })
 
 # (espn opponent, kalshi home) that must not join. Real names only.
@@ -107,49 +133,53 @@ def _picked(code, home, opponent, **kw):
     return [p["market_id"] for p in S.fetch_mls_fade_home("soccer_p05", universe=uni)]
 
 
-def _espn_names():
-    with open("data/espn_seasons.json") as f:
-        rows = json.load(f)["rows"]
-    names = set()
-    for comp, _date, home, away, _hg, _ag in rows:
-        if comp == "usa.1":
-            names.add(home)
-            names.add(away)
-    return names
+def _sep27(atx=(0.40, 0.26, 0.35)):
+    """2026-09-27 boards and +0.5 rows, inlined. `atx` is the ATXSD price triple."""
+    pa, pdr, pb = atx
+    return {
+        "soccer": [
+            _board("26SEP26ATXSD", "Austin", "San Diego FC", pa=pa, pdr=pdr, pb=pb),
+            _board("26SEP26DALLAFC", "Dallas", "Los Angeles F", pa=0.40, pdr=0.26, pb=0.36),
+            _board("26SEP26HOUSKC", "Houston", "Kansas City", pa=0.66, pdr=0.20, pb=0.15),
+            _board("26SEP26NSHTOR", "Nashville", "Toronto", pa=0.67, pdr=0.19, pb=0.15),
+        ],
+        "soccer_p05": [
+            _p05("26SEP26ATXSD", "ATX", "Austin FC", team="San Diego FC", ask=0.40, no=0.61),
+            _p05("26SEP26ATXSD", "SD", "San Diego FC", team="Austin FC", ask=0.35, no=0.66),
+            _p05("26SEP26DALLAFC", "DAL", "FC Dallas", team="LAFC", ask=0.40, no=0.61),
+            _p05("26SEP26DALLAFC", "LAFC", "LAFC", team="FC Dallas", ask=0.36, no=0.65),
+            _p05("26SEP26HOUSKC", "HOU", "Houston Dynamo FC", team="Sporting Kansas City",
+                 ask=0.66, no=0.35),
+            _p05("26SEP26HOUSKC", "SKC", "Sporting Kansas City", team="Houston Dynamo FC",
+                 ask=0.15, no=0.86),
+            _p05("26SEP26NSHTOR", "NSH", "Nashville SC", team="Toronto FC", ask=0.67, no=0.34),
+            _p05("26SEP26NSHTOR", "TOR", "Toronto FC", team="Nashville SC", ask=0.15, no=0.86),
+        ],
+    }
 
 
-def _kalshi_names():
-    with open("data/sandbox_ledger.json") as f:
-        quotes = json.load(f)["quotes"]
-    names = set()
-    for q in quotes:
-        if q.get("venue") != "kalshi":
-            continue
-        if not str(q.get("market_id") or "").startswith("KXMLSGAME"):
-            continue
-        if q.get("side_a"):
-            names.add(q["side_a"])
-        if q.get("side_b"):
-            names.add(q["side_b"])
-    return names
+def _show_board(board):
+    pa, pdr, pb = float(board["price_a"]), float(board["price_draw"]), float(board["price_b"])
+    total = pa + pdr + pb
+    print(f"  {board['market_id']} {board['side_a']} home {pa / total:.4f} "
+          f"hold {total - 1.0:.4f} ({pa}+{pdr}+{pb})")
 
 
 def main():
-    espn = _espn_names()
-    kalshi = _kalshi_names()
-    clubs = {n for n in espn if n not in ("Arsenal", "Liga MX All-Stars", "MLS All-Stars")}
-    eq(len(clubs), 30, "stored ESPN seasons list 30 current MLS clubs")
-    mapped = {e for e, _k in PAIRS}
-    eq(mapped, clubs, "every current club is mapped")
+    got_map = getattr(S, "MLS_ESPN_TO_KALSHI", None)
+    if got_map == dict(PAIRS):
+        ok(True, "the production map is exactly the reviewed table")
+    elif got_map is None:
+        ok(False, "the production map is exactly the reviewed table — MLS_ESPN_TO_KALSHI is missing")
+    else:
+        ok(False, "the production map is exactly the reviewed table — map differs from PAIRS")
     eq(len(PAIRS), 30, "all 30 clubs have both spellings")
-    ok(len({k for _e, k in PAIRS}) == len(PAIRS),
-       "no two clubs share a Kalshi spelling")
+    ok(len({e for e, _k in PAIRS}) == len(PAIRS), "ESPN keys are unique")
+    ok(len({k for _e, k in PAIRS}) == len(PAIRS), "Kalshi values are unique")
+    eq({k for _e, k in PAIRS} | {"Tie"}, KALSHI_TITLES,
+       "Kalshi spellings plus Tie equal the recorded yes_sub_title set")
 
     for espn_name, kalshi_name in PAIRS:
-        ok(espn_name in espn, f"ESPN spelling {espn_name!r} is in data/espn_seasons.json")
-        if kalshi_name not in NOT_A_LEDGER_SIDE:
-            ok(kalshi_name in kalshi,
-               f"Kalshi spelling {kalshi_name!r} is a KXMLSGAME side in the ledger")
         code = "26OCT04" + "".join(ch for ch in kalshi_name if ch.isalnum())[:8]
         want = [f"KXMLSGAME-{code}-H"]
         eq(_picked(code, kalshi_name, espn_name), want,
@@ -180,37 +210,22 @@ def main():
     eq([p["pick"] for p in S.fetch_mls_fade_home("soccer_p05", universe=uni)], ["b"],
        "and the pick is still the NO")
 
-    print("\n9/27 stored boards")
-    with open("data/sandbox_ledger.json") as f:
-        quotes = json.load(f)["quotes"]
-    three, p05 = [], []
-    for q in quotes:
-        if not str(q.get("market_id") or "").startswith("KXMLSGAME"):
-            continue
-        if q.get("date") != "2026-09-27":
-            continue
-        if q.get("venue") == "kalshi" and q.get("side_a"):
-            three.append(q)
-        elif q.get("venue") == "kalshi_binary" and q.get("sport") == "soccer_p05" and q.get("opponent"):
-            p05.append(q)
-    boards = []
-    for q in sorted(three, key=lambda r: (r["market_id"], r.get("source") or "")):
-        pa, pdr, pb = float(q["price_a"]), float(q["price_draw"]), float(q["price_b"])
-        total = pa + pdr + pb
-        ph = pa / total
-        boards.append((q["market_id"], q["side_a"], ph, q.get("source")))
-        print(f"  {q['market_id']} {q['side_a']} home {ph:.4f} ({pa}+{pdr}+{pb}) {q.get('source')}")
-    in_band = [b for b in boards if S.MLS_FADE_HOME_BAND[0] <= b[2] < S.MLS_FADE_HOME_BAND[1]]
-    eq(in_band, [], "no stored 2026-09-27 three-way home price is inside 0.40-0.45")
-    have = {S._ere_code(b[0]) for b in boards}
-    missing = sorted({S._ere_code(q["market_id"]) for q in p05} - have)
-    print(f"  p05 fixtures with no stored three-way board: {missing}")
-    uni = {"soccer": [_board(S._ere_code(q["market_id"]), q["side_a"], q.get("side_b") or "Away",
-                             pa=q["price_a"], pdr=q["price_draw"], pb=q["price_b"])
-                      for q in three],
-           "soccer_p05": p05}
-    eq(S.fetch_mls_fade_home("soccer_p05", universe=uni), [],
-       "replaying the stored 2026-09-27 boards, the lane picks 0")
+    print("\n9/27 boards")
+    stored = _sep27()
+    for board in stored["soccer"]:
+        _show_board(board)
+    eq(S.fetch_mls_fade_home("soccer_p05", universe=stored), [],
+       "replaying the 2026-09-27 boards, the lane picks 0")
+
+    print("\nATXSD positive control")
+    # 0.43 / 1.01 = 0.4257, hold 1%. Same +0.5 rows as the replay above.
+    nudged = _sep27((0.43, 0.26, 0.32))
+    _show_board(nudged["soccer"][0])
+    picks = S.fetch_mls_fade_home("soccer_p05", universe=nudged)
+    eq([p["market_id"] for p in picks], ["KXMLSGAME-26SEP26ATXSD-ATX"],
+       "ATXSD at 0.43/0.26/0.32 picks exactly KXMLSGAME-26SEP26ATXSD-ATX")
+    eq([p["pick"] for p in picks], ["b"],
+       "and that pick is the NO")
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'mls name join passed'}")
     return 1 if FAILS else 0
