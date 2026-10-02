@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-02T20:30:48+00:00",
+ "board_built_at": "2026-10-02T21:21:34+00:00",
  "leads": {
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
@@ -299,6 +299,29 @@
    "sport": "cricket",
    "status": "hit"
   },
+  "2026-10-02|Poland|Romania|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Romania",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-02",
+   "edge_at_log": null,
+   "first_seen": "2026-09-30",
+   "headline": "Over 1.5 goals",
+   "home": "Poland",
+   "id": "2026-10-02|Poland|Romania|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-02T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Poland v Romania",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.78,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT02POLROU-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "hit"
+  },
   "2026-10-02|Titans (SA)|Knights|Titans (SA) to win \u00b7 Oddspedia community tips": {
    "away": "Knights",
    "bet": {
@@ -343,7 +366,7 @@
    "kickoff": "2026-10-03T20:30Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "MMA",
    "match": "Anthony Wint v Lucas Armand",
    "pair": "mma_fav_band|mma",
@@ -374,7 +397,7 @@
    "kickoff": "2026-10-03T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "Cricket",
    "match": "Bangladesh v Sri Lanka",
    "pair": "oddspedia|cricket",
@@ -405,7 +428,7 @@
    "kickoff": "2026-10-03T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "International Friendly",
    "match": "Canada v Peru",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -430,7 +453,7 @@
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "MMA",
    "match": "Damian Pinas v Andrey Pulyaev",
    "pair": "mma_fav_band|mma",
@@ -461,7 +484,7 @@
    "kickoff": "2026-10-03T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "UEFA Nations League",
    "match": "Iceland v Bulgaria",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -486,7 +509,7 @@
    "kickoff": "2026-10-03T04:30Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "Cricket",
    "match": "India v Pakistan",
    "pair": "oddspedia|cricket",
@@ -517,7 +540,7 @@
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "MMA",
    "match": "Jacobe Smith v Bruce Whitehead",
    "pair": "mma_fav_band|mma",
@@ -548,7 +571,7 @@
    "kickoff": "2026-10-03T22:15Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "MMA",
    "match": "Marcus McGhee v Anthony Romero",
    "pair": "mma_fav_band|mma",
@@ -579,7 +602,7 @@
    "kickoff": "2026-10-03T01:00Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "MMA",
    "match": "Shamil Erdogan v Paul Elliott",
    "pair": "mma_fav_band|mma",
@@ -610,7 +633,7 @@
    "kickoff": "2026-10-04T01:15Z",
    "lane": "production",
    "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T20:30:48+00:00",
+   "last_seen_at": "2026-10-02T21:21:34+00:00",
    "league": "MMA",
    "match": "Deiveson Figueiredo v Payton Talbott",
    "pair": "mma_fav_band|mma",
@@ -698,5 +721,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-02T20:30:48+00:00"
+ "updated_at": "2026-10-02T21:21:34+00:00"
 }
