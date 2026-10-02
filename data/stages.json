@@ -707,6 +707,16 @@
    "since": "2026-09-28T02:59:44+00:00",
    "stage": "sandbox"
   },
+  "pm_combo2|tennis_pmcombo": {
+   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
+   "since": "2026-10-02T05:00:00+00:00",
+   "stage": "sandbox"
+  },
+  "pm_combo3|tennis_pmcombo": {
+   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
+   "since": "2026-10-02T05:00:00+00:00",
+   "stage": "sandbox"
+  },
   "pm_combo4|tennis_pmcombo": {
    "by_hand": "2026-09-28",
    "entry": {
@@ -771,16 +781,6 @@
    "ready_since": "2026-10-01T16:20:16+00:00",
    "stage": "production"
   },
-  "pm_combo2|tennis_pmcombo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
-   "stage": "sandbox"
-  },
-  "pm_combo3|tennis_pmcombo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
-   "stage": "sandbox"
-  },
   "tennis_combo2|tennis_combo": {
    "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
    "since": "2026-10-02T05:00:00+00:00",
@@ -807,5 +807,5 @@
    "stage": "sandbox"
   }
  },
- "updated": "2026-10-02T15:48:08+00:00"
+ "updated": "2026-10-02T16:40:54+00:00"
 }
