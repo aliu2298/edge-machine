@@ -150,13 +150,19 @@ SOURCES = {
         note="Closing-ish moneyline, de-vigged to a fair probability. A sportsbook line "
              "is the hardest public number to beat, so this is the ceiling."),
     "covers": dict(
-        label="Covers / OddsShark computer picks", kind="Tipster site", connected=True,
+        label="Covers / OddsShark computer picks", kind="Tipster site", connected=False,
+        retired="2026-10-01: MLB is eliminated. On the whole record, 105 settled, +0.7% "
+                "gross, -1.8% after fees, fade -5.4%, behind the blind favourite at +0.7% "
+                "v +3.4%. NFL is retired on its own record and is not eliminated: 35 settled, "
+                "-13.0% after fees over a 17-day span, blind -11.0% v +5.6%, fade +11.0%, "
+                "so the other side did not lose.",
         site="covers.com", sports=["nfl", "mlb"],
         note="A published computer pick per game, free and dated. It states a projected "
              "SCORE rather than a probability, so it is backed at the market price with "
              "no edge filter and gets no Brier column — a pick cannot be calibrated. MLB was "
              "retired 2026-09-18 (8 won v 9.4 priced on 16, z -0.73) and RE-OPENED 2026-09-21 "
-             "to measure its fade forward (+8.0% on 24, z +0.49). Sandbox only."),
+             "to measure its fade forward (+8.0% on 24, z +0.49). That measurement is closed "
+             "by the retirement above."),
     "cricket_consensus": dict(
         label="Cricket consensus (Oddspedia and Polymarket agree)", kind="Rule", connected=True,
         site="edge-machine", sports=["cricket"],
@@ -180,7 +186,10 @@ SOURCES = {
              "the headless browser. Tips carry no date, so each is resolved to the "
              "soonest fixture between those two sides."),
     "nws": dict(
-        label="National Weather Service", kind="Forecaster", connected=True,
+        label="National Weather Service", kind="Forecaster", connected=False,
+        retired="2026-10-01: eliminated. 77 city-days, -5.6% after fees, fade -1.2%, "
+                "blind -1.5% v +3.1% backing the underdog. Behind the price under every "
+                "CLIMATE_KEEP_RULE: first -27.8%, last -1.5%, best -21.0%.",
         site="weather.gov", sports=["climate"],
         note="The public forecast for each city, against Kalshi's temperature buckets for "
              "the same city and day. The one non-sport domain with a genuinely "
@@ -191,7 +200,10 @@ SOURCES = {
              "35 independent outcomes, z +1.23 — the strongest fade among the retired pairs "
              "once its buckets are counted as the single draws they are."),
     "nws_fade": dict(
-        label="National Weather Service, the other side", kind="Rule", connected=True,
+        label="National Weather Service, the other side", kind="Rule", connected=False,
+        retired="2026-10-01: eliminated. 22 settled, -10.9% after fees, 15 won v 15.2 "
+                "priced, and the fade loses on the current rule. Behind the price under "
+                "every CLIMATE_KEEP_RULE: first -4.3%, last -9.4%, best -15.6%.",
         site="edge-machine", sports=["climate"],
         note="PAPER TEST, registered 2026-09-25, before it logged anything. Takes the other "
              "side of each pick the NWS lane would make, on the same market, at the same flat "
@@ -525,7 +537,10 @@ SOURCES = {
              "against backing the favourite on every listed game."),
     "nhl_dog_pl": dict(
         label="NHL underdog +1.5 (observation, not a candidate)", kind="Rule",
-        connected=True, site="edge-machine", sports=["nhl_pl"], baseline="population",
+        connected=False,
+        retired="2026-10-01: eliminated. 38 settled, -5.8% after fees, fade -12.6%, "
+                "and the blind comparison has no comparable contests. Both directions lose.",
+        site="edge-machine", sports=["nhl_pl"], baseline="population",
         note="Logged 2026-09-17 to settle one question, not because it is expected to pay. Backing "
              "the underdog +1.5 (No on the favourite winning by over 1.5) returned +15.7% across "
              "October and November 2025, when Kalshi's NHL spread market was weeks old, and then "
@@ -1048,7 +1063,10 @@ PAUSED_SPORTS = frozenset({"nfl"})
 
 # Weather, and the tip lanes taken off the board with it. Stored rows stay in the
 # ledger files. No run logs a new bet on one of them, and no page renders one,
-# including past rows. Deleting a pause line above does not resume a removed lane.
+# including past rows, the eliminated list, and notes. Deleting a pause line
+# above does not resume a removed lane. covers and nhl_dog_pl stay here: they
+# are retired, and the pairs that lose both ways are eliminated, and a removed
+# lane still never renders.
 # A sport-scoped pair is removed only for that sport: ESPN FPI NFL stays, and so
 # do Polymarket US tennis, MMA, cricket and boxing, and Kalshi outside MLB.
 REMOVED_SOURCES = frozenset({
@@ -3288,7 +3306,14 @@ def outcome_cluster(q):
 # is paid whichever way you face. A retired pair still sits in its sport; an eliminated one is
 # moved out of the sport sections entirely, into its own collapsed list at the bottom. Its
 # bets stay on record and in the page's reconciliation — out of sight, never out of the count.
-ELIMINATED = {("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb")}
+ELIMINATED = {
+    ("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb"),
+    # 2026-10-01. covers NFL is retired and is not in this set: its fade made money.
+    # covers, nhl_dog_pl, nws, and nws_fade stay in REMOVED_SOURCES. The eliminated
+    # list skips every removed source, so none of these four pairs is drawn.
+    ("covers", "mlb"), ("nhl_dog_pl", "nhl_pl"),
+    ("nws", "climate"), ("nws_fade", "climate"),
+}
 
 
 # Sports judged per MARKET-DAY rather than per bet. A commodity ladder's "above $X" rungs

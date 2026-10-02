@@ -1925,7 +1925,9 @@ def _chooser(n, week_span, source="covers", sport="mlb", start_i=0, logged=None,
 
 
 _old_sources = S.SOURCES
-S.SOURCES = {"covers": dict(_old_sources["covers"], sports=["mlb", "nfl", "soccer"]),
+# The live covers source is retired. This block is about the stage machine, so the
+# fixture source is connected for the length of the test and then put back.
+S.SOURCES = {"covers": dict(_old_sources["covers"], connected=True, sports=["mlb", "nfl", "soccer"]),
              "polymarket": _old_sources["polymarket"]}
 try:
     eq(T.QA_ENTRY["min_bets"] < T.APPROVAL["min_bets"] and T.QA_ENTRY["z_min"] < T.APPROVAL["z_min"], True,
@@ -3449,13 +3451,20 @@ ok("Scores24" not in _ur, "a removed source is not listed as retired history")
 # RE-OPENED 2026-09-21: retired pairs whose FADE looked better than the rule go back to
 # logging, so the fade can be judged forward instead of frozen on the sample that retired
 # them. Scores24 MLB stays retired: its fade loses too (-2.8%), so it fails both ways.
-for _src in ("kalshi", "covers"):
-    ok("mlb" in S.SOURCES[_src]["sports"] and "mlb" not in (S.SOURCES[_src].get("retired_sports") or {}),
-       f"{_src} MLB is re-opened to measure its fade")
-    ok("RE-OPENED 2026-09-21" in S.SOURCES[_src]["note"], f"and {_src}'s note records why")
-for _src, _sp in (("mlb_fade_streak", "mlb"), ("nws", "climate")):
-    ok(_src in S.CHALLENGERS and not S.SOURCES[_src].get("retired") and _sp in S.SOURCES[_src]["sports"],
-       f"{_src} is reconnected")
+ok("mlb" in S.SOURCES["kalshi"]["sports"] and "mlb" not in (S.SOURCES["kalshi"].get("retired_sports") or {}),
+   "kalshi MLB is re-opened to measure its fade")
+ok("RE-OPENED 2026-09-21" in S.SOURCES["kalshi"]["note"], "and kalshi's note records why")
+ok(not S.SOURCES["covers"]["connected"] and "covers" not in S.CHALLENGERS
+   and ("covers", "mlb") in S.ELIMINATED and ("covers", "nfl") not in S.ELIMINATED,
+   "covers MLB is eliminated and covers NFL is retired, not eliminated")
+ok("mlb" in S.SOURCES["covers"]["sports"] and "nfl" in S.SOURCES["covers"]["sports"],
+   "both covers sports stay on the record")
+ok("mlb_fade_streak" in S.CHALLENGERS and not S.SOURCES["mlb_fade_streak"].get("retired")
+   and "mlb" in S.SOURCES["mlb_fade_streak"]["sports"],
+   "mlb_fade_streak is reconnected")
+ok(S.SOURCES["nws"].get("retired") and not S.SOURCES["nws"]["connected"]
+   and "nws" not in S.CHALLENGERS and ("nws", "climate") in S.ELIMINATED,
+   "nws is eliminated and no longer picks")
 # tennis_fav_band retired 2026-09-27: 70 bets since the Sep 24 reset, 55 won v 55.0 priced.
 _tfb = S.SOURCES["tennis_fav_band"]
 ok(_tfb.get("retired") and not _tfb["connected"] and "tennis_fav_band" not in S.CHALLENGERS,
@@ -4739,26 +4748,40 @@ ok(abs(_cf["z"]) < 3,
    "so a single quiet day can never print a huge z the way 438 independent rungs did")
 
 print("\npairs that fail in every direction are eliminated, out of sight")
-_ELIM = {("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb")}
-eq(S.ELIMINATED, _ELIM, "the four pairs that failed both ways are the eliminated set")
-for _s, _sp in sorted(_ELIM):
+_ELIM_SPORT = {("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb")}
+_ELIM_SOURCE = {("covers", "mlb"), ("nhl_dog_pl", "nhl_pl"), ("nws", "climate"), ("nws_fade", "climate")}
+eq(S.ELIMINATED, _ELIM_SPORT | _ELIM_SOURCE, "the pairs that failed both ways are the eliminated set")
+for _s, _sp in sorted(_ELIM_SPORT):
     ok(_sp not in S.SOURCES[_s]["sports"] and _sp in (S.SOURCES[_s].get("retired_sports") or {}),
        f"{_s} {_sp} logs nothing new")
     ok("Eliminated 2026-09-21" in S.SOURCES[_s]["retired_sports"][_sp], f"and its reason says eliminated, and why")
+for _s, _sp in sorted(_ELIM_SOURCE):
+    ok(not S.SOURCES[_s]["connected"] and _sp in S.SOURCES[_s]["sports"]
+       and S.SOURCES[_s].get("retired") and _s not in S.CHALLENGERS,
+       f"{_s} {_sp} is retired at the source and logs nothing new")
+    ok("2026-10-01" in S.SOURCES[_s]["retired"], f"and {_s} says when it was eliminated")
 ok("table_tennis" in S.SOURCES["polymarket"]["sports"] and "nfl" in S.SOURCES["draftkings"]["sports"]
    and "soccer" in S.SOURCES["scores24"]["sports"],
    "each source keeps its OTHER sports: only the failing pair goes")
+ok(("covers", "nfl") not in S.ELIMINATED and "nfl" in S.SOURCES["covers"]["sports"],
+   "covers NFL is retired on its own record and is not eliminated")
 
-_er = [_rk("keep", 60, 36, 34.0), dict(_rk("gone", 40, 18, 20.0, v="retired"), name="draftkings", sport="mlb")]
+_er = [_rk("keep", 60, 36, 34.0), dict(_rk("gone", 40, 18, 20.0, v="retired"), name="polymarket", sport="tennis")]
 ok(RANKB.eliminated(_er[1]) and not RANKB.eliminated(_er[0]), "eliminated() picks out only the listed pairs")
 _es = RANKB.eliminated_section(_er)
 ok("<b>Eliminated</b>" in _es and "failed in every direction" in _es, "they get their own collapsed list")
 ok('<details class="sport">' in _es and " open" not in _es.split(">")[0], "which is closed by default: out of sight")
 eq(RANKB.eliminated_section([_er[0]]), "", "and the list is not drawn at all when nothing is eliminated")
-# the three other both-ways failures were NOT eliminated -- they stay in their sports
-for _s, _sp in (("p05_unbeaten", "soccer_p05"), ("team2_form_l10", "soccer_team2"), ("nhl_dog_pl", "nhl_pl")):
+for _hidden_name, _hidden_sport in (("nws", "climate"), ("nws_fade", "climate"),
+                                    ("covers", "mlb"), ("nhl_dog_pl", "nhl_pl")):
+    eq(RANKB.eliminated_section([dict(_er[1], name=_hidden_name, sport=_hidden_sport)]), "",
+       f"a removed source is not drawn, even though {_hidden_name} is eliminated")
+# the other both-ways failures that were kept in their sports stay there
+for _s, _sp in (("p05_unbeaten", "soccer_p05"), ("team2_form_l10", "soccer_team2")):
     ok((_s, _sp) not in S.ELIMINATED and _sp in S.SOURCES[_s]["sports"],
        f"{_s} also failed both ways but stays in its sport, as asked")
+ok(("nhl_dog_pl", "nhl_pl") in S.ELIMINATED and not S.SOURCES["nhl_dog_pl"]["connected"],
+   "nhl_dog_pl is eliminated: both directions lose")
 
 print("\ncup mismatch over 1.5: a heavy favourite in a cup tie")
 
@@ -6438,9 +6461,10 @@ ok(str(S.NWS_FADE_READ_N) in S.SOURCES["nws_fade"]["note"]
    and "independent" in S.SOURCES["nws_fade"]["note"]
    and "Do not retune" in S.SOURCES["nws_fade"]["note"],
    "the source note states the read point and that nothing is tuned before it")
-ok("nws_fade" in S.CHALLENGERS and S.SOURCES["nws_fade"]["connected"]
+ok("nws_fade" not in S.CHALLENGERS and not S.SOURCES["nws_fade"]["connected"]
+   and S.SOURCES["nws_fade"].get("retired") and ("nws_fade", "climate") in S.ELIMINATED
    and "climate" in S.SOURCES["nws_fade"]["sports"],
-   "nws_fade is wired, on climate, under its own source")
+   "nws_fade is eliminated, on climate, and no longer picks")
 _nws_rows = [dict(sport="climate", venue="kalshi_binary", market_id=f"KXHIGHNY-26SEP12-{t}",
                   series="KXHIGHNY", date="2026-09-12", market=_m, price_a=p, price_b=round(1 - p, 2),
                   side_a="Yes", side_b="No", label="bucket", untraded=False,
