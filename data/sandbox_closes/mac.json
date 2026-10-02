@@ -205,11 +205,6 @@
    "lead_min": 4.9,
    "price": 0.595
   },
-  "covers:aec-mlb-tb-nyy-2026-09-22-dh2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 8.9,
-   "price": 0.54
-  },
   "covers:aec-mlb-tb-nyy-2026-09-23": {
    "at": "2026-09-23T23:03:32+00:00",
    "lead_min": 1.5,
@@ -540,11 +535,6 @@
    "lead_min": 4.9,
    "price": 0.41
   },
-  "espn_fpi:aec-mlb-tb-nyy-2026-09-22-dh2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 8.9,
-   "price": 0.54
-  },
   "espn_fpi:aec-mlb-tb-nyy-2026-09-24": {
    "at": "2026-09-24T23:04:39+00:00",
    "lead_min": 0.3,
@@ -685,11 +675,6 @@
    "lead_min": 4.4,
    "price": 0.33
   },
-  "kalshi:aec-mlb-tb-nyy-2026-09-22-dh2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 8.9,
-   "price": 0.54
-  },
   "kalshi:aec-mlb-tex-min-2026-09-26": {
    "at": "2026-09-26T20:00:31+00:00",
    "lead_min": 9.5,
@@ -755,16 +740,6 @@
    "lead_min": 15.0,
    "price": 0.88
   },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP22CBJBUF-BUF2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.51
-  },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP22DETPIT-PIT2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.61
-  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP22EDMWPG-EDM2": {
    "at": "2026-09-22T23:56:26+00:00",
    "lead_min": 3.6,
@@ -774,21 +749,6 @@
    "at": "2026-09-22T23:56:26+00:00",
    "lead_min": 3.6,
    "price": 0.72
-  },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP22FLACAR-FLA2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.52
-  },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP22NYINYR-NYR2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.69
-  },
-  "nhl_dog_pl:KXNHLSPREAD-26SEP22PHIBOS-BOS2": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.54
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP22TBNSH-NSH2": {
    "at": "2026-09-22T23:56:26+00:00",
@@ -899,11 +859,6 @@
    "at": "2026-10-02T22:23:54+00:00",
    "lead_min": 6.1,
    "price": 0.55
-  },
-  "nhl_rest_edge:KXNHLGAME-26SEP22PHIBOS": {
-   "at": "2026-09-22T22:56:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.7
   },
   "nhl_rest_edge:KXNHLGAME-26SEP23LAANA": {
    "at": "2026-09-24T01:50:28+00:00",
@@ -1215,6 +1170,11 @@
    "lead_min": 14.9,
    "price": 0.61
   },
+  "oddspedia:aec-t20icr-ban-slr-2026-10-03-ban-slr": {
+   "at": "2026-10-02T23:09:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.35
+  },
   "olbg:KXBOXING-26OCT02SMITHJOHN": {
    "at": "2026-10-02T20:52:49+00:00",
    "lead_min": 7.2,
@@ -1236,9 +1196,9 @@
    "price": 0.92
   },
   "olbg:aec-boxing-jusshi-kevcas-2026-10-02": {
-   "at": "2026-10-02T22:54:14+00:00",
-   "lead_min": 35.8,
-   "price": 0.96
+   "at": "2026-10-02T23:09:18+00:00",
+   "lead_min": 20.7,
+   "price": 0.99
   },
   "olbg:aec-boxing-lewric-ivatro-2026-09-26": {
    "at": "2026-09-26T14:28:08+00:00",
@@ -3496,5 +3456,5 @@
    "price": 0.49
   }
  },
- "updated": "2026-10-02T22:54:14+00:00"
+ "updated": "2026-10-02T23:09:18+00:00"
 }
