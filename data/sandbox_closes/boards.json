@@ -75,11 +75,6 @@
    "lead_min": 50.5,
    "price": 0.62
   },
-  "covers:aec-mlb-tor-bal-2026-09-22": {
-   "at": "2026-09-22T21:39:34+00:00",
-   "lead_min": 55.4,
-   "price": 0.52
-  },
   "covers:aec-mlb-wsh-det-2026-09-23": {
    "at": "2026-09-23T16:45:52+00:00",
    "lead_min": 24.1,
@@ -180,11 +175,6 @@
    "lead_min": 37.0,
    "price": 0.41
   },
-  "espn_fpi:aec-mlb-tor-bal-2026-09-22": {
-   "at": "2026-09-22T21:39:34+00:00",
-   "lead_min": 55.4,
-   "price": 0.52
-  },
   "espn_fpi:aec-mlb-tor-bal-2026-09-23": {
    "at": "2026-09-23T21:47:31+00:00",
    "lead_min": 47.5,
@@ -273,11 +263,6 @@
   "mma_fav_band:aec-dwcs-mardeg-parmor-2026-09-22": {
    "at": "2026-09-22T23:51:27+00:00",
    "lead_min": 8.5,
-   "price": 0.8
-  },
-  "mma_fav_band:aec-dwcs-nornov-thehai-2026-09-22": {
-   "at": "2026-09-22T21:01:10+00:00",
-   "lead_min": 28.8,
    "price": 0.8
   },
   "nhl_dog_pl:KXNHLSPREAD-26SEP22EDMWPG-EDM2": {
@@ -420,6 +405,11 @@
    "lead_min": 9.7,
    "price": 0.15
   },
+  "oddspedia:aec-t20icr-ban-slr-2026-10-03-ban-slr": {
+   "at": "2026-10-02T23:47:42+00:00",
+   "lead_min": 12.3,
+   "price": 0.35
+  },
   "olbg:KXBOXING-26OCT02SMITHJOHN": {
    "at": "2026-10-02T20:07:42+00:00",
    "lead_min": 52.3,
@@ -435,11 +425,6 @@
    "lead_min": 28.7,
    "price": 0.93
   },
-  "olbg:aec-dwcs-emiqui-dampiw-2026-09-22": {
-   "at": "2026-09-22T21:01:10+00:00",
-   "lead_min": 28.8,
-   "price": 0.56
-  },
   "olbg:aec-dwcs-jadort-alvdas-2026-09-22": {
    "at": "2026-09-22T23:51:27+00:00",
    "lead_min": 38.5,
@@ -448,11 +433,6 @@
   "olbg:aec-dwcs-mardeg-parmor-2026-09-22": {
    "at": "2026-09-22T23:51:27+00:00",
    "lead_min": 8.5,
-   "price": 0.8
-  },
-  "olbg:aec-dwcs-nornov-thehai-2026-09-22": {
-   "at": "2026-09-22T21:01:10+00:00",
-   "lead_min": 28.8,
    "price": 0.8
   },
   "p05_unbeaten:KXINTLFRIENDLYGAME-26SEP24JPNURU-URU": {
@@ -635,11 +615,6 @@
    "lead_min": 50.5,
    "price": 0.62
   },
-  "polymarket:aec-mlb-tor-bal-2026-09-22": {
-   "at": "2026-09-22T21:39:34+00:00",
-   "lead_min": 55.4,
-   "price": 0.52
-  },
   "polymarket:aec-mlb-tor-bal-2026-09-23": {
    "at": "2026-09-23T21:47:31+00:00",
    "lead_min": 47.5,
@@ -809,11 +784,6 @@
    "at": "2026-09-23T17:28:00+00:00",
    "lead_min": 32.0,
    "price": 0.4857
-  },
-  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP22HANMAR": {
-   "at": "2026-09-22T21:01:10+00:00",
-   "lead_min": 28.8,
-   "price": 0.77
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23KICDEL": {
    "at": "2026-09-23T17:28:00+00:00",
@@ -1136,5 +1106,5 @@
    "price": 0.48
   }
  },
- "updated": "2026-10-02T20:07:42+00:00"
+ "updated": "2026-10-02T23:47:42+00:00"
 }
