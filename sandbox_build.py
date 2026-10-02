@@ -342,7 +342,7 @@ def approval_table(d, scores, full=None):
         if not (s["connected"] and name not in S.REMOVED_SOURCES
                 and (s["bets"] or name in S.TENNIS_FAV_RESET)):
             continue
-        since = S.TENNIS_FAV_KEEP_SINCE if name in S.TENNIS_FAV_RESET else None
+        since = S.tour_clock_since(source=name)
         judged.append((name, T.assess(stamp_ledger(full, name), name, since=since)))
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
@@ -706,7 +706,7 @@ def pair_status(d, st, name, sport):
     if not a["n"]:
         # A tour-clock reset with nothing counted yet stays Waiting. Dropping
         # the row would hide the lane for having no entries.
-        reset_empty = pair.get("since") == getattr(S, "TENNIS_FAV_KEEP_SINCE", None)
+        reset_empty = S.tour_clock_since(since=pair.get("since")) is not None
         group = "waiting" if open_n or reset_empty else None
     elif a["n"] >= MIN_N:
         group = "working" if (a["roi"] or 0) > 0 and a["z"] > 0 else "failing"
@@ -757,12 +757,12 @@ def _fade_book(d, pair):
     only bets logged at or after the clock, and only on a kept tour, so the
     If-faded cell is that set and T.faded() itself is not retargeted.
     """
-    since = pair.get("since")
-    if since != getattr(S, "TENNIS_FAV_KEEP_SINCE", None):
+    clock = S.tour_clock_since(since=pair.get("since"))
+    if clock is None:
         return d
 
     def keep(q):
-        return str(q.get("logged") or "") >= since and not S.tennis_refused_row(q)
+        return str(q.get("logged") or "") >= clock and not S.tennis_refused_row(q)
     out = dict(d)
     out["quotes"] = [q for q in (d.get("quotes") or []) if keep(q)]
     if d.get("_archive"):

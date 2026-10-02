@@ -4008,6 +4008,21 @@ TENNIS_FAV_RESET = frozenset({
 })
 
 
+def tour_clock_since(since=None, source=None):
+    """The tour clock when a lane's record restarted there, or None.
+
+    A source in TENNIS_FAV_RESET is on that clock even when the caller has
+    no stage row. Any other source is on it only when its own since is that
+    instant. Waiting, If-faded, and the stamp share this so the three cannot
+    drift apart.
+    """
+    if source in TENNIS_FAV_RESET:
+        return TENNIS_FAV_KEEP_SINCE
+    if since == TENNIS_FAV_KEEP_SINCE:
+        return TENNIS_FAV_KEEP_SINCE
+    return None
+
+
 def _tour_outside_keep(market_id, tier=None):
     """True when this is a tennis tour the keep set refuses.
 

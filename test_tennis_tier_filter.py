@@ -70,19 +70,76 @@ def _legs(venue, ids):
                        for i, mid in enumerate(ids)]}
 
 
+def _settled_before_clock(q):
+    """True when this row was settled before the tour clock.
+
+    A missing stamp is not before the clock. A Z suffix is the same instant
+    as +00:00, so a grade written that way cannot re-enter the frozen record.
+    """
+    text = str(q.get("settled") or "").replace("Z", "+00:00")
+    return bool(text) and text < S.TENNIS_FAV_KEEP_SINCE
+
+
 def _contests(d):
-    """One row per contest. A parent-lane bet wins the overlap with the 3-hour lane."""
+    """One row per contest settled before the tour clock.
+
+    A parent-lane bet wins the overlap with the 3-hour lane. A bet the
+    tracker grades after the clock stays out, so the looked-at record does
+    not move when an open row settles.
+    """
     raw = [q for q in T.all_bets(d)
            if q.get("source") in ("tennis_fav_band", "tennis_fav_band_3h")
-           and q.get("bet") and q.get("status") in ("won", "lost")]
+           and q.get("bet") and q.get("status") in ("won", "lost")
+           and _settled_before_clock(q)]
     by = collections.defaultdict(list)
     for q in raw:
         by[q["market_id"]].append(q)
     out = []
     for vs in by.values():
-        parent = [q for q in vs if q["source"] == "tennis_fav_band"]
-        out.append(parent[0] if parent else vs[0])
+        parent = next((q for q in vs if q.get("source") == "tennis_fav_band"), None)
+        chosen = parent if parent is not None else next(iter(vs), None)
+        if chosen is not None:
+            out.append(chosen)
     return out, len(raw) - len(out)
+
+
+def _lane_sport(name):
+    return next(iter((S.SOURCES.get(name) or {}).get("sports") or []), None)
+
+
+def _kept_settled_since(d, name, sport, since):
+    """Kept-tour bets on this lane that the page record counts from the clock."""
+    return [q for q in T.all_bets(d)
+            if q.get("source") == name and q.get("sport") == sport
+            and q.get("bet") and q.get("status") in ("won", "lost")
+            and not T.climate_excluded(q) and not S.tennis_refused_row(q)
+            and str(q.get("logged") or "") >= since
+            and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES]
+
+
+def _kept_open(d, name, sport):
+    """Kept-tour open bets the page's open column counts. Quotes only."""
+    return [q for q in (d.get("quotes") or [])
+            if q.get("source") == name and q.get("sport") == sport
+            and q.get("bet") and q.get("status") == "open"
+            and not T.climate_excluded(q) and not S.tennis_refused_row(q)]
+
+
+def _fade_count(d, name, sport, since):
+    """Bets If-faded would count once the book is cut to the clock."""
+    n = 0
+    for q in _kept_settled_since(d, name, sport, since):
+        if q.get("price_draw") is not None or q.get("pick") not in ("a", "b"):
+            continue
+        other = "b" if q.get("pick") == "a" else "a"
+        if q.get("price_" + other):
+            n += 1
+    return n
+
+
+def _leg_market(leg):
+    row = leg if isinstance(leg, dict) else next(iter(leg), None)
+    return row.get("market_id") if isinstance(row, dict) else None
 
 
 def _tier(q):
@@ -215,13 +272,12 @@ def main():
         ok("ATP, WTA Doubles, or UTR" in S.SOURCES[name]["note"],
            f"{name} says which tours a leg may come from")
     kalshi_ids = ["KXATPMATCH-A", "KXATPCHALLENGERMATCH-B", "KXWTAMATCH-C", "KXITFMATCH-D"]
-    kalshi = [leg[0]["market_id"]
-              for legs in S.combo_legs_by_day(_legs("kalshi", kalshi_ids)).values() for leg in legs]
+    kalshi = [mid for legs in S.combo_legs_by_day(_legs("kalshi", kalshi_ids)).values()
+              for leg in legs if (mid := _leg_market(leg))]
     eq(kalshi, ["KXATPMATCH-A"], "a Kalshi basket refuses Challenger, WTA, and ITF legs")
     pm_ids = [_slug(t) for t in ("atp", "atpdb", "atpcq", "wta", "wtadb", "utr", "lavercup")]
-    pm = sorted(leg[0]["market_id"]
-                for legs in S.pm_combo_legs_by_day(_legs("polymarket_us", pm_ids)).values()
-                for leg in legs)
+    pm = sorted(mid for legs in S.pm_combo_legs_by_day(_legs("polymarket_us", pm_ids)).values()
+                for leg in legs if (mid := _leg_market(leg)))
     eq(pm, sorted([_slug("atp"), _slug("wtadb"), _slug("utr")]),
        "a Polymarket basket refuses Doubles, qualifying, WTA, and Laver Cup")
     mixed = _legs("kalshi", ["KXATPMATCH-A", "KXATPMATCH-B", "KXATPCHALLENGERMATCH-C"])
@@ -294,24 +350,11 @@ def main():
         "team1_form_l5|soccer_team1_intl"],
        "the Production list is unchanged")
     rows = SB.pair_list(d, st)
-    shown = {(r["name"], r["v"], r["a"]["n"]) for r in rows}
     by_name = {r["name"]: r for r in rows}
-    ok(("tennis_fav_band_3h", "waiting", 0) in shown,
-       "the 3-hour lane still renders, waiting, with none of the old bets in its record")
-    ok(("tennis_combo2", "waiting", 0) in shown and ("pm_combo2", "waiting", 0) in shown,
-       "the two-leg lanes still render, waiting")
-    ok(("pm_combo3", "waiting", 0) in shown,
-       "pm_combo3 renders as Waiting with no bets in the record")
-    ok(by_name.get("pm_combo3", {}).get("open") == 0,
-       "pm_combo3 has no open bet and still stays on the page")
-    # The same rule lists the two Kalshi baskets that were already empty under
-    # the September band clock. They are not removed lanes.
-    ok(("tennis_combo3", "waiting", 0) in shown and ("tennis_combo4", "waiting", 0) in shown,
-       "tennis_combo3 and tennis_combo4 render as Waiting with no bets yet")
     counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED]
     eq(len(counted), 45,
        "[records] counts pm_combo3 plus the two already-empty Kalshi baskets")
-    ok(not any(name in ("nws", "nws_fade", "covers") for name, _v, _n in shown),
+    ok(not any(r["name"] in ("nws", "nws_fade", "covers") for r in rows),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
            for q in T.all_bets(d) if q.get("status") in ("won", "lost")),
@@ -320,25 +363,38 @@ def main():
     print("\ndropped-tour bets leave every rendered table and stay in the data")
     refused = [q for q in T.all_bets(d) if _refused_tour(q)]
     h3 = [q for q in refused if q.get("source") == "tennis_fav_band_3h"]
-    eq(sum(1 for q in h3 if q.get("status") in ("won", "lost")), 65,
-       "65 settled 3-hour bets are on dropped tours")
-    eq(sum(1 for q in h3 if q.get("status") == "open"), 7,
-       "7 open 3-hour bets are on dropped tours")
+    logged_before = [q for q in h3 if str(q.get("logged") or "") < since]
+    eq(len(logged_before), 73,
+       "73 dropped-tour 3-hour bets were logged before the clock")
+    ok(len(logged_before) == len(h3),
+       "every dropped-tour 3-hour bet on file was logged before the clock")
     ok(all(q["id"] in {x.get("id") for x in T.all_bets(d)} for q in refused),
        "every refused-tour row is still in the loaded ledger")
     html, index, weeks = SB.render_pages(d=d, st=st)
     blob = "\n".join([html, index, *weeks.values()])
     leaked = [q["id"] for q in refused if f'data-id="{q["id"]}"' in blob]
+    first_leaked = next(iter(leaked), None)
     ok(not leaked, "no refused-tour bet is a row on the sandbox page or an archive page"
-       + (f" — {len(leaked)} rows, first {leaked[0]}" if leaked else ""))
-    kept_open = [q for q in T.all_bets(d)
-                 if q.get("source") == "tennis_fav_band_3h" and q.get("status") == "open"
-                 and not _refused_tour(q)]
-    eq([q["id"] for q in kept_open],
-       ["tennis_fav_band_3h:aec-atp-alemol-karkha-2026-10-01"],
-       "the one open kept-tour 3-hour bet stays a rendered row")
-    ok(f'data-id="{kept_open[0]["id"]}"' in html,
-       "that kept-tour open bet is on the sandbox page")
+       + (f" — {len(leaked)} rows, first {first_leaked}" if first_leaked else ""))
+    for name in ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3",
+                 "tennis_combo4", "pm_combo2", "pm_combo3"):
+        sport = _lane_sport(name)
+        row = by_name.get(name) or {}
+        ok(bool(row), f"{name} still renders")
+        want_n = len(_kept_settled_since(d, name, sport, since))
+        eq((row.get("a") or {}).get("n"), want_n,
+           f"{name}'s record n is its kept-tour bets settled since the clock")
+        opens = _kept_open(d, name, sport)
+        eq(row.get("open"), len(opens),
+           f"{name}'s open column is its kept-tour open bets")
+        if want_n == 0:
+            eq(row.get("v"), "waiting",
+               f"{name} with nothing settled since the clock is Waiting")
+        eq((row.get("fade") or {}).get("n"), _fade_count(d, name, sport, since),
+           f"{name}'s If-faded n is the kept-tour bets settled since the clock")
+        for q in opens:
+            ok(f'data-id="{q["id"]}"' in html,
+               f"kept-tour open bet {q['id']} is on the sandbox page")
     p4 = [q for q in T.all_bets(d)
           if q.get("source") == "pm_combo4" and q.get("status") in ("won", "lost")]
     eq(len(p4), 4, "pm_combo4's four settled baskets are still the record")
@@ -349,17 +405,17 @@ def main():
     judge = T.assess(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
     eq((judge["won"], judge["n"] - judge["won"]), (2, 2),
        "pm_combo4 is still 2-2 on its whole record")
-    eq((by_name.get("tennis_fav_band_3h") or {}).get("fade", {}).get("n"), 0,
-       "the 3-hour If-faded cell is the empty post-reset set")
-    eq((by_name.get("pm_combo2") or {}).get("open"), 0,
-       "pm_combo2's open baskets are refused tours, so the open column is empty")
-    ok(("pm_combo2", "waiting", 0) in shown,
-       "pm_combo2 still renders as Waiting once those open baskets leave the table")
     whole_fade = T.faded(d, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
     ok(whole_fade["n"] > 0,
        "T.faded() on the 3-hour lane, called the way every other lane is, still reads the whole book")
     other = T.faded(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
     eq(other["n"], 4, "T.faded() on pm_combo4 is still its four baskets")
+    label = "Tennis 3-leg combo on Polymarket US"
+    table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
+    ok(bool(table_rows), "pm_combo3 is on the sandbox page")
+    if ((by_name.get("pm_combo3") or {}).get("a") or {}).get("n") == 0:
+        ok(any("Waiting for results" in part for part in table_rows),
+           "an empty pm_combo3 record renders as Waiting for results")
 
     print("\na post-reset kept bet counts, and a dropped tour does not")
     fx = _reset_fixture()
@@ -379,22 +435,21 @@ def main():
        "the post-reset dropped tour is not rendered")
     ok('data-id="tennis_fav_band_3h:aec-atp-old-bb-2026-10-01"' in fx_blob,
        "a pre-reset kept-tour bet stays in the settled table and out of the record")
-    label = "Tennis 3-leg combo on Polymarket US"
-    table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
-    ok(any("Waiting for results" in part for part in table_rows),
-       "the sandbox page shows pm_combo3 as Waiting for results")
 
     print("\nthe stamp counts a reset lane only from the tour clock")
     page = SB.hide_refused_tours(SB.hide_removed(d))
     stamp = SB.approval_table(page, T.score(page), full=d)
-    empty = "0 bets over 0 days"
     for name in ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3",
                  "tennis_combo4", "pm_combo2", "pm_combo3"):
+        judged = T.assess(SB.stamp_ledger(d, name), name, since=since)
+        sample = next((c[3] for c in judged["criteria"] if c[0] == "sample"), None)
         row = _stamp_row(stamp, S.SOURCES[name]["label"])
-        ok(bool(row) and empty in row and "NO READ" in row,
-           f"{name}'s stamp is the empty record since the tour clock")
-    h3 = _stamp_row(stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
-    ok("20 bets" not in h3 and "18 won" not in h3 and "+14.3%" not in h3,
+        ok(bool(row) and sample is not None and sample in row,
+           f"{name}'s stamp sample is its record since the tour clock")
+        if judged["status"] == "unproven":
+            ok("NO READ" in row, f"{name}'s stamp is still NO READ")
+    h3_row = _stamp_row(stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
+    ok("20 bets" not in h3_row and "18 won" not in h3_row and "+14.3%" not in h3_row,
        "the 3-hour stamp does not carry the pre-clock kept-tour record")
     combo2 = _stamp_row(stamp, S.SOURCES["pm_combo2"]["label"])
     ok("+58.1%" not in combo2 and "3 bets over 2 days" not in combo2,
@@ -403,13 +458,24 @@ def main():
     ok("4 bets over 1 day" in kept4 and "2 won v 1.6 priced" in kept4,
        "pm_combo4's stamp is still its whole record")
     other = T.assess(SB.stamp_ledger(d, "mma_fav_band"), "mma_fav_band")
-    ok(other["criteria"][0][3] in _stamp_row(stamp, S.SOURCES["mma_fav_band"]["label"]),
+    sample = next((c[3] for c in other["criteria"] if c[0] == "sample"), None)
+    ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["mma_fav_band"]["label"]),
        "a lane off the tour clock still shows its whole record on the stamp")
     fx_page = SB.hide_refused_tours(fx)
     fx_stamp = SB.approval_table(fx_page, T.score(fx_page), full=fx)
     fx_row = _stamp_row(fx_stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
     ok("1 bets over 0 days" in fx_row and "1 won v 0.8 priced" in fx_row,
        "the stamp counts the post-reset kept bet and not the pre-reset one")
+
+    print("\nthe audit leaves a refused row out of a reset lane's recount")
+    import sandbox_audit as A
+    rep = A.Report()
+    A.check_records(_reset_fixture(), _reset_stages(), rep)
+    record_errs = [msg for check, msg in rep.errors if check == "records"]
+    first_err = next(iter(record_errs), None)
+    ok(not record_errs,
+       "check_records matches the page when a post-clock bet is a refused tour"
+       + (f" — {first_err}" if first_err else ""))
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'tennis tier filter passed'}")
     for item in FAILS:
