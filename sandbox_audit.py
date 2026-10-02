@@ -239,6 +239,7 @@ def check_records(d, st, rep):
         raw = [q for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
                and q.get("bet") and q["status"] in ("won", "lost")
                and not T.climate_excluded(q)
+               and not S.tennis_refused_row(q)
                and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES
                and (since is None or q["logged"] >= since)]
         a = T.assess(d, name, sport, since=since, venues=T.TRADEABLE_VENUES)

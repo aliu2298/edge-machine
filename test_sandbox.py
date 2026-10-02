@@ -4517,6 +4517,9 @@ print("\ntennis combos: baskets of the favourite-band legs")
 
 
 def _leg(mid, start, pa, pb=None, day="2026-09-21", traded=("a", "b")):
+    # A legal leg is ATP. The short names stay in the label; the id has to be a
+    # kept tour or the basket builder, correctly, refuses it.
+    mid = mid if str(mid).startswith("KXATPMATCH-") else f"KXATPMATCH-{mid}"
     return dict(sport="tennis", venue="kalshi", market_id=mid, label=mid,
                 side_a=f"{mid} A", side_b=f"{mid} B", price_a=pa,
                 price_b=pb if pb is not None else round(1 - pa, 2), mid_a=pa,
@@ -4539,9 +4542,9 @@ _c2s = [r for r in _rows if r["market_id"].startswith("combo2:2026-09-21:")]
 _c3s = [r for r in _rows if r["market_id"].startswith("combo3:2026-09-21:")]
 eq((len(_c2s), len(_c3s)), (1, 1), "three eligible legs make one 2-leg basket (one leg left over) and one 3-leg")
 _c2, _c3 = _c2s[0], _c3s[0]
-eq([l["market_id"] for l in _c2["legs"]], ["T1", "T2"],
+eq([l["market_id"] for l in _c2["legs"]], ["KXATPMATCH-T1", "KXATPMATCH-T2"],
    "the legs are taken in start-time order, never the nicest priced")
-eq([l["market_id"] for l in _c3["legs"]], ["T1", "T2", "T3"],
+eq([l["market_id"] for l in _c3["legs"]], ["KXATPMATCH-T1", "KXATPMATCH-T2", "KXATPMATCH-T3"],
    "and the three-leg basket cuts the same order")
 close(_c2["price_a"], round(0.77 * 0.80 * (1 + S.COMBO_MARKUP[2]), 4),
       "the two-leg price is the product of the legs plus the measured RFQ markup")
@@ -4557,7 +4560,8 @@ eq([r["market_id"].split(":")[0] for r in S.tennis_combo_rows({"tennis": _tu["te
 _untraded = [dict(_leg("T1", "2026-09-21T10:00:00+00:00", 0.77), untraded=True),
              _leg("T2", "2026-09-21T12:00:00+00:00", 0.80),
              _leg("T3", "2026-09-21T14:00:00+00:00", 0.79)]
-eq([l["market_id"] for l in S.tennis_combo_rows({"tennis": _untraded})[0]["legs"]], ["T2", "T3"],
+eq([l["market_id"] for l in S.tennis_combo_rows({"tennis": _untraded})[0]["legs"]],
+   ["KXATPMATCH-T2", "KXATPMATCH-T3"],
    "a leg with no book is never put in a basket")
 eq([q["market_id"] for q in S.fetch_tennis_combo2("tennis_combo", {"tennis_combo": _rows})],
    [_c2["market_id"]], "the two-leg source buys two-leg baskets and nothing else")
@@ -4576,12 +4580,16 @@ eq((len(_d2), len(_d3)), (3, 2), "seven legs: three 2-leg baskets and two 3-leg,
 for _grp, _nm in ((_d2, "2-leg"), (_d3, "3-leg")):
     _all = [l["market_id"] for r in _grp for l in r["legs"]]
     eq(len(_all), len(set(_all)), f"no match appears in two {_nm} baskets: each basket is independent")
-eq([[l["market_id"] for l in r["legs"]] for r in _d2], [["D0", "D1"], ["D2", "D3"], ["D4", "D5"]],
+eq([[l["market_id"] for l in r["legs"]] for r in _d2],
+   [["KXATPMATCH-D0", "KXATPMATCH-D1"], ["KXATPMATCH-D2", "KXATPMATCH-D3"],
+    ["KXATPMATCH-D4", "KXATPMATCH-D5"]],
    "baskets are consecutive in start order, so none is picked after the fact")
 # A later run: D0-D3 are already in logged 2-leg baskets. They are skipped, never reused.
-_later = S.tennis_combo_rows(_day, used={2: {"D0", "D1", "D2", "D3"}})
+_later = S.tennis_combo_rows(_day, used={2: {"KXATPMATCH-D0", "KXATPMATCH-D1",
+                                            "KXATPMATCH-D2", "KXATPMATCH-D3"}})
 eq([[l["market_id"] for l in r["legs"]] for r in _later if r["market_id"].startswith("combo2:")],
-   [["D4", "D5"]], "a leg already in a logged basket is skipped, so no leg is ever counted twice")
+   [["KXATPMATCH-D4", "KXATPMATCH-D5"]],
+   "a leg already in a logged basket is skipped, so no leg is ever counted twice")
 eq(len([r for r in _later if r["market_id"].startswith("combo3:")]), 2,
    "and 'used' is per size: the 3-leg lane still cuts its own baskets from the same legs")
 # The same legs are the same basket whichever run builds it, so it is logged once.
@@ -4903,7 +4911,9 @@ ok(not any(_re2.match(_drop, x) for x in ("KXAAAGASD", "KXWTI", "KXGOLDD", "KXNA
 print("\nfour-leg combos and the cricket consensus row")
 _d4 = [r for r in S.tennis_combo_rows(_day) if r["market_id"].startswith("combo4:")]
 eq(len(_d4), 1, "seven legs make one 4-leg basket, the three left over wait for more")
-eq([l["market_id"] for l in _d4[0]["legs"]], ["D0", "D1", "D2", "D3"], "cut in start order like the others")
+eq([l["market_id"] for l in _d4[0]["legs"]],
+   ["KXATPMATCH-D0", "KXATPMATCH-D1", "KXATPMATCH-D2", "KXATPMATCH-D3"],
+   "cut in start order like the others")
 close(_d4[0]["price_a"], round(0.78 ** 4 * (1 + S.COMBO_MARKUP[4]), 4),
       "priced at the product of the legs plus the MEASURED 4-leg markup")
 eq([q["market_id"] for q in S.fetch_tennis_combo4("tennis_combo", {"tennis_combo": _d4})],
@@ -5273,15 +5283,15 @@ print("\nthe Polymarket US basket lane")
 # Built 2026-09-24 because the legs are there and were not on Kalshi: after the band
 # narrowed, the tennis rule picked 15 of 15 on Polymarket US while the Kalshi basket lane
 # built nothing at all. The two lanes are deliberately identical except for the venue.
-_pml = {"tennis": [dict(_cleg("pm-a", "2026-09-25T10:00:00+00:00", 0.79, "Draper"),
+_pml = {"tennis": [dict(_cleg("aec-atp-pm-a-2026-09-25", "2026-09-25T10:00:00+00:00", 0.79, "Draper"),
                         venue="polymarket_us"),
-                   dict(_cleg("pm-b", "2026-09-25T12:00:00+00:00", 0.79, "Rune"),
+                   dict(_cleg("aec-atp-pm-b-2026-09-25", "2026-09-25T12:00:00+00:00", 0.79, "Rune"),
                         venue="polymarket_us"),
-                   dict(_cleg("pm-c", "2026-09-25T14:00:00+00:00", 0.78, "Fritz"),
+                   dict(_cleg("aec-atp-pm-c-2026-09-25", "2026-09-25T14:00:00+00:00", 0.78, "Fritz"),
                         venue="polymarket_us")]}
 _mix = {"tennis": _pml["tennis"] + _cu["tennis"]}
 eq(sorted(l[0]["market_id"] for v in S.pm_combo_legs_by_day(_mix).values() for l in v),
-   ["pm-a", "pm-b", "pm-c"],
+   ["aec-atp-pm-a-2026-09-25", "aec-atp-pm-b-2026-09-25", "aec-atp-pm-c-2026-09-25"],
    "the Polymarket pool takes only Polymarket legs, as the Kalshi pool takes only Kalshi ones "
    "— the two venues never mix into one basket, because a basket is bought at ONE venue")
 eq(S.pm_combo_legs_by_day(_cu), {}, "and a Kalshi-only universe builds no Polymarket pool")
@@ -5311,7 +5321,8 @@ eq(sorted(T.COMBO_SPORTS), ["tennis_combo", "tennis_pmcombo"],
    "both lanes are known to combo_used_legs — a lane missing from it does not fail loudly, "
    "it silently re-logs the same basket every three hours")
 _pu = T.combo_used_legs({"quotes": [dict(sport="tennis_pmcombo", legs=_p3["legs"])]})
-eq({k: sorted(v) for k, v in _pu.items()}, {3: ["pm-a", "pm-b", "pm-c"]},
+eq({k: sorted(v) for k, v in _pu.items()},
+   {3: ["aec-atp-pm-a-2026-09-25", "aec-atp-pm-b-2026-09-25", "aec-atp-pm-c-2026-09-25"]},
    "so a Polymarket basket's legs are marked used")
 eq([r["market_id"].split(":")[0] for r in S.pm_tennis_combo_rows(_pml, used=_pu)], ["pmcombo2"],
    "and the next run does not cut them into the same basket again")
@@ -6540,12 +6551,32 @@ print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged la
 
 eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is 3 hours, fixed with the lane")
 eq(S.SOURCES["tennis_fav_band_3h"]["note"],
-   "PAPER TEST, registered 2026-09-25, before it logged anything. Back the "
-   "player priced 0.77-0.81, only when the entry is within 3 hours of the "
-   "scheduled start. Why the window: closing-line value on the band was about "
-   "-1.2c on entries 3 or more hours before the start, and about -0.3c on "
-   "entries inside 3 hours (in-band n=90, +11.8% after fees).",
-   "the 3-hour note states the rule and does not name another lane")
+   "PAPER TEST, registered 2026-09-25. Back the player priced 0.77-0.81, "
+   "only when the entry is within 3 hours of the scheduled start. The tour "
+   "has to be ATP, WTA Doubles, or UTR. The price band stays 0.77-0.81 "
+   "and the window stays 3 hours. Why the window: closing-line value on the "
+   "band was about -1.2c on entries 3 or more hours before the start, and "
+   "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
+   "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
+   "logged (27 that the parent lane and this lane both bet, counted once). "
+   "On the 18 days those contests cover, that was 36.0 contests a day, and "
+   "the kept tours were 4.3. Kept: ATP, WTA Doubles, UTR, 78 contests, "
+   "z +2.76 before fees. That z is a selected-group z. It is not a "
+   "significance test and must not be quoted as one. The clock starts "
+   "2026-10-02T05:00:00Z. Those 648 contests are the reason for looking, "
+   "not evidence, and they count toward nothing here. No mechanism is "
+   "claimed. ATP is the deepest field here and UTR the shallowest, with "
+   "four flatter tours between them, and the idea that a deeper field "
+   "prices better does not survive UTR. WTA Doubles rests on 9 contests, "
+   "ROI +12.0% after fees: a direction, not a result, and the first of the "
+   "three to be readable or to fail. A flat $100 stake on the opposite "
+   "side at its own price, after fees, returned -60.6% on those 9, -24.1% "
+   "on the whole band (z -2.88 on the fade prices before fees) and -68.7% "
+   "on the kept set (z -3.06 on the fade prices before fees). The units of "
+   "P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and the "
+   "z on the side that was backed are before fees: one contract, pay the "
+   "price, receive 1.",
+   "the 3-hour note states the window, the band, and the tour cut")
 _tnow = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
 
 
@@ -6558,26 +6589,27 @@ def _trow(mid, price, start):
 
 
 _tuni = {"tennis": [
-    _trow("in", 0.78, _tnow + timedelta(hours=2)),
-    _trow("exact", 0.78, _tnow + timedelta(hours=3)),
-    _trow("over", 0.78, _tnow + timedelta(hours=3, seconds=1)),
-    _trow("low", 0.76, _tnow + timedelta(hours=1)),
-    _trow("high", 0.81, _tnow + timedelta(hours=1)),
-    _trow("past", 0.78, _tnow - timedelta(minutes=1)),
+    _trow("aec-atp-in-x-2026-09-25", 0.78, _tnow + timedelta(hours=2)),
+    _trow("aec-atp-exact-x-2026-09-25", 0.78, _tnow + timedelta(hours=3)),
+    _trow("aec-atp-over-x-2026-09-25", 0.78, _tnow + timedelta(hours=3, seconds=1)),
+    _trow("aec-atp-low-x-2026-09-25", 0.76, _tnow + timedelta(hours=1)),
+    _trow("aec-atp-high-x-2026-09-25", 0.81, _tnow + timedelta(hours=1)),
+    _trow("aec-atp-past-x-2026-09-25", 0.78, _tnow - timedelta(minutes=1)),
 ]}
 eq(sorted(q["market_id"] for q in S.fetch_tennis_fav_band_3h("tennis", _tuni, now=_tnow)),
-   ["exact", "in"],
+   ["aec-atp-exact-x-2026-09-25", "aec-atp-in-x-2026-09-25"],
    "only in-band matches strictly inside the 3-hour window, including one that starts in exactly 3 hours")
 eq(sorted(q["market_id"] for q in S.fetch_tennis_fav_band("tennis", _tuni)),
-   ["exact", "in", "over", "past"],
+   ["aec-atp-exact-x-2026-09-25", "aec-atp-in-x-2026-09-25",
+    "aec-atp-over-x-2026-09-25", "aec-atp-past-x-2026-09-25"],
    "tennis_fav_band is unchanged: the same band, with no clock on it")
-ok("over" not in [q["market_id"] for q in S.fetch_tennis_fav_band_3h("tennis", _tuni, now=_tnow)],
+ok("aec-atp-over-x-2026-09-25" not in [q["market_id"] for q in S.fetch_tennis_fav_band_3h("tennis", _tuni, now=_tnow)],
    "a match more than 3 hours out is not logged by the 3-hour lane")
 
 _live = datetime.now(timezone.utc)
 _live_rows = [
-    _trow("near", 0.78, _live + timedelta(hours=2)),
-    _trow("far", 0.78, _live + timedelta(hours=6)),
+    _trow("aec-atp-near-x-2026-09-25", 0.78, _live + timedelta(hours=2)),
+    _trow("aec-atp-far-x-2026-09-25", 0.78, _live + timedelta(hours=6)),
 ]
 _saved_ch = S.CHALLENGERS
 S.CHALLENGERS = {"tennis_fav_band": S.fetch_tennis_fav_band,
@@ -6588,10 +6620,13 @@ try:
 finally:
     S.CHALLENGERS = _saved_ch
 _ts = {(q["source"], q["market_id"]): q for q in _td["quotes"] if q["source"].startswith("tennis_fav")}
-ok(("tennis_fav_band", "near") not in _ts and ("tennis_fav_band", "far") not in _ts,
+ok(("tennis_fav_band", "aec-atp-near-x-2026-09-25") not in _ts
+   and ("tennis_fav_band", "aec-atp-far-x-2026-09-25") not in _ts,
    "the removed favourite-band lane logs nothing")
-eq(_ts[("tennis_fav_band_3h", "near")]["bet"], True, "the 3-hour lane still logs the match inside the window")
-ok(("tennis_fav_band_3h", "far") not in _ts, "the 3-hour lane does not log the one six hours out")
+eq(_ts[("tennis_fav_band_3h", "aec-atp-near-x-2026-09-25")]["bet"], True,
+   "the 3-hour lane still logs the match inside the window")
+ok(("tennis_fav_band_3h", "aec-atp-far-x-2026-09-25") not in _ts,
+   "the 3-hour lane does not log the one six hours out")
 eq(T.retire_venue_duplicates(_td, verbose=False), 0,
    "the 3-hour lane's own quote is not voided")
 ok(all(q["status"] == "open" for q in _td["quotes"] if q["source"] == "tennis_fav_band_3h"),
