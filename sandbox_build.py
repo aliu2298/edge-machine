@@ -337,7 +337,8 @@ def approval_table(d, scores, full=None):
     order = {"approved": 0, "watch": 1, "failing": 2, "unproven": 3}
     judged = [(name, T.assess(stamp_ledger(full, name), name))
               for name, s in scores.items()
-              if s["connected"] and s["bets"] and name not in S.REMOVED_SOURCES]
+              if s["connected"] and name not in S.REMOVED_SOURCES
+              and (s["bets"] or name in S.TENNIS_FAV_RESET)]
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'

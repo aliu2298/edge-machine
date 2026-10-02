@@ -4008,13 +4008,25 @@ TENNIS_FAV_RESET = frozenset({
 })
 
 
+def _tour_outside_keep(market_id, tier=None):
+    """True when this is a tennis tour the keep set refuses.
+
+    An id that is not a tennis market is not a refused tour. The stage
+    fixtures on tennis_fav_band_3h use plain ids, and those bets still count.
+    """
+    if tier:
+        return tier not in TENNIS_FAV_KEEP
+    mid = str(market_id or "")
+    parsed = tennis_tier(mid)
+    if parsed is not None:
+        return parsed not in TENNIS_FAV_KEEP
+    return mid.startswith("aec-") or mid.startswith("KX")
+
+
 def _tennis_leg_kept(leg):
     if isinstance(leg, dict):
-        tier = leg.get("tier")
-        if tier:
-            return tier in TENNIS_FAV_KEEP
-        return tennis_fav_kept(leg.get("market_id"))
-    return tennis_fav_kept(leg)
+        return not _tour_outside_keep(leg.get("market_id"), leg.get("tier"))
+    return not _tour_outside_keep(leg)
 
 
 def tennis_refused_row(q):
@@ -4029,10 +4041,7 @@ def tennis_refused_row(q):
     legs = q.get("legs") or []
     if legs:
         return any(not _tennis_leg_kept(leg) for leg in legs)
-    tier = q.get("tier")
-    if tier:
-        return tier not in TENNIS_FAV_KEEP
-    return not tennis_fav_kept(q.get("market_id"))
+    return _tour_outside_keep(q.get("market_id"), q.get("tier"))
 
 
 def fav_band(sport):
