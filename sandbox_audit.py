@@ -74,6 +74,11 @@ FRESH_ERR_H = 6.5                # two missed runs: the grader has stopped
 PNL_TOL = 0.011                  # stored P/L is rounded to the cent
 PRICE_TOL = 0.0051               # a logged price and its side's ask may differ by rounding
 
+# The first tracker run on the code that applies the tour filter
+# (run 37035009388, started 2026-10-02T16:35:51Z). Refused-tour bets logged
+# earlier are the old tracker and are expected on the ledger.
+NEW_CODE_SINCE = "2026-10-02T16:35:51Z"
+
 # The phrases the public pages must never contain. Stored encoded so that this file, which is
 # itself public, does not print them in the clear.
 _COPY = base64.b64decode(
@@ -827,6 +832,14 @@ def emit(rep):
                     f.write(f"| {mark} | {c} | {m.replace('|', '/')} |\n")
             for c, m in rep.skipped:
                 f.write(f"| skipped | {c} | {m.replace('|', '/')} |\n")
+
+
+def refused_tour_rows(d, since=None):
+    """Refused-tour bets in a filtered lane logged at or after the cutoff.
+
+    Not implemented on this revision: returns no rows.
+    """
+    return []
 
 
 def run(network=True, sample=25):
