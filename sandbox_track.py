@@ -568,6 +568,24 @@ def combo_used_legs(d):
     return used
 
 
+def cricket_verified_log(stats, kept):
+    """One line for the Kalshi cricket verified-start log.
+
+    `dropped` mixes two decisions. A status that is not a known pre-match
+    string is not a start that has already passed, and the line names each.
+    `kept` is how many rows remain after the call, so kept + dropped is the
+    number that went in.
+    """
+    status_n = int(stats.get("dropped_status") or 0)
+    started_n = int(stats.get("dropped_started") or 0)
+    matched = int(stats.get("matched") or 0)
+    dropped = int(stats.get("dropped") or 0)
+    unverified = int(stats.get("unverified") or 0)
+    return (f"  Cricket       milestones: {matched} of {kept + dropped} "
+            f"Kalshi starts verified, {status_n} dropped for status, "
+            f"{started_n} already under way, {unverified} unverified")
+
+
 def collect(verbose=True, combo_used=None):
     """Fetch the universe for every sport. Returns (universe_by_sport, coverage).
 
@@ -746,9 +764,7 @@ def collect(verbose=True, combo_used=None):
             try:
                 extra, ct = S.apply_kalshi_cricket_starts(extra)
                 if verbose and ct.get("feed"):
-                    print(f"  Cricket       milestones: {ct['matched']} of "
-                          f"{len(extra) + ct['dropped']} Kalshi starts verified, "
-                          f"{ct['dropped']} already under way, {ct['unverified']} unverified")
+                    print(cricket_verified_log(ct, len(extra)))
             except Exception as e:
                 print(f"  ! kalshi cricket starts failed: {type(e).__name__}: {str(e)[:60]}")
         universe[sport] = pm + extra
