@@ -3,9 +3,6 @@
 
 Fails while a removed lane is still fetched, bet, or rendered. Passes once
 those lanes are hidden. Stored ledger rows are not deleted. No network.
-
-covers and nhl_dog_pl are not in this hidden set. They are retired, and the
-pairs that lose both ways are drawn in the eliminated list.
 """
 import html as html_lib
 import json
@@ -32,6 +29,8 @@ FULL = {
     "gas_nochange": ("AAA gasoline no-change rule",),
     "draftkings": ("DraftKings",),
     "scores24": ("Scores24",),
+    "covers": ("Covers / OddsShark computer picks",),
+    "nhl_dog_pl": ("NHL underdog +1.5",),
     "tt_band_55_60": ("Table tennis 0.55-0.60 band",),
     "tennis_fav_band": ("Tennis favourite-band rule",),
     "pinnacle": ("Pinnacle (via The Odds API)",),
@@ -48,7 +47,7 @@ SCOPED = (
     ("kalshi", "MLB", "Kalshi"),
 )
 _ID = re.compile(
-    r"\b(?:cmd_tail|gas_nochange|draftkings|scores24|"
+    r"\b(?:cmd_tail|gas_nochange|draftkings|scores24|covers|nhl_dog_pl|"
     r"tt_band_55_60|tennis_fav_band|pinnacle|sportsgambler|soccerpredictions)\b")
 _TR = re.compile(r"<tr\b.*?</tr>", re.S)
 KEPT_LABELS = (

@@ -1063,16 +1063,16 @@ PAUSED_SPORTS = frozenset({"nfl"})
 
 # Weather, and the tip lanes taken off the board with it. Stored rows stay in the
 # ledger files. No run logs a new bet on one of them, and no page renders one,
-# including past rows and the eliminated list. Deleting a pause line above does
-# not resume a removed lane. covers and nhl_dog_pl are not in this set: they are
-# retired, and the pairs that lose both ways are eliminated, so their records
-# stay on the page.
+# including past rows, the eliminated list, and notes. Deleting a pause line
+# above does not resume a removed lane. covers and nhl_dog_pl stay here: they
+# are retired, and the pairs that lose both ways are eliminated, and a removed
+# lane still never renders.
 # A sport-scoped pair is removed only for that sport: ESPN FPI NFL stays, and so
 # do Polymarket US tennis, MMA, cricket and boxing, and Kalshi outside MLB.
 REMOVED_SOURCES = frozenset({
     "nws", "nws_fade",
-    "cmd_tail", "gas_nochange", "draftkings", "scores24",
-    "tt_band_55_60", "tennis_fav_band", "pinnacle",
+    "cmd_tail", "gas_nochange", "draftkings", "scores24", "covers",
+    "nhl_dog_pl", "tt_band_55_60", "tennis_fav_band", "pinnacle",
     "sportsgambler", "soccerpredictions",
 })
 REMOVED_SPORTS = frozenset({"climate"})
@@ -3309,9 +3309,9 @@ def outcome_cluster(q):
 ELIMINATED = {
     ("scores24", "mlb"), ("scores24", "tennis"), ("polymarket", "tennis"), ("draftkings", "mlb"),
     # 2026-10-01. covers NFL is retired and is not in this set: its fade made money.
+    # covers, nhl_dog_pl, nws, and nws_fade stay in REMOVED_SOURCES. The eliminated
+    # list skips every removed source, so none of these four pairs is drawn.
     ("covers", "mlb"), ("nhl_dog_pl", "nhl_pl"),
-    # Weather stays in REMOVED_SOURCES, so these two are not drawn. The eliminated
-    # list skips a removed lane.
     ("nws", "climate"), ("nws_fade", "climate"),
 }
 

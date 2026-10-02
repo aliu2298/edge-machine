@@ -1045,8 +1045,9 @@ def eliminated(r):
 def _eliminated_visible(r):
     """True when an eliminated pair is drawn.
 
-    A removed lane stays off every page, including this list. Weather is in
-    S.ELIMINATED and in the removed set, so it does not come back here.
+    Every removed source stays off this list, not only weather. covers, the
+    NHL puck line, and both weather lanes are in S.ELIMINATED and in the
+    removed set, so none of them comes back here.
     """
     return eliminated(r) and not S.lane_removed(r["name"], r.get("sport"))
 

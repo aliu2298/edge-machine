@@ -4772,9 +4772,10 @@ _es = RANKB.eliminated_section(_er)
 ok("<b>Eliminated</b>" in _es and "failed in every direction" in _es, "they get their own collapsed list")
 ok('<details class="sport">' in _es and " open" not in _es.split(">")[0], "which is closed by default: out of sight")
 eq(RANKB.eliminated_section([_er[0]]), "", "and the list is not drawn at all when nothing is eliminated")
-_weather_row = dict(_er[1], name="nws", sport="climate")
-eq(RANKB.eliminated_section([_weather_row]), "",
-   "a removed weather lane is not drawn, even though the pair is eliminated")
+for _hidden_name, _hidden_sport in (("nws", "climate"), ("nws_fade", "climate"),
+                                    ("covers", "mlb"), ("nhl_dog_pl", "nhl_pl")):
+    eq(RANKB.eliminated_section([dict(_er[1], name=_hidden_name, sport=_hidden_sport)]), "",
+       f"a removed source is not drawn, even though {_hidden_name} is eliminated")
 # the other both-ways failures that were kept in their sports stay there
 for _s, _sp in (("p05_unbeaten", "soccer_p05"), ("team2_form_l10", "soccer_team2")):
     ok((_s, _sp) not in S.ELIMINATED and _sp in S.SOURCES[_s]["sports"],
@@ -6301,11 +6302,8 @@ finally:
 _saved_pause = dict(S.PAUSED_LANES)
 S.PAUSED_LANES = {k: v for k, v in S.PAUSED_LANES.items() if k != "covers"}
 try:
-    ok(not S.lane_paused("covers", "mlb"),
-       "covers is not a removed lane, so deleting its pause line clears MLB")
-    ok(S.lane_paused("covers", "nfl"), "NFL stays paused on every lane")
-    ok(not S.SOURCES["covers"]["connected"] and "covers" not in S.CHALLENGERS,
-       "covers still does not pick: it is retired")
+    ok(S.lane_paused("covers", "mlb") and S.source_fully_paused("covers"),
+       "deleting the covers line does not resume a removed lane")
 finally:
     S.PAUSED_LANES = _saved_pause
 ok(S.lane_paused("covers", "mlb"), "that check does not leave covers re-enabled")
