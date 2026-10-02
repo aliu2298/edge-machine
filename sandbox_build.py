@@ -135,6 +135,20 @@ def _source_label(q):
 
 
 
+def _coverage_signal(cell):
+    """The count feed_health can test, or None when the cell is not a signal.
+
+    An int is the shape stored before offered-row counts. A dict uses the picks.
+    An empty offer returns None, so an empty board does not mark the feed dark.
+    A bare int 0 is unchanged, so a stored ledger still flags the way it did.
+    """
+    if isinstance(cell, dict):
+        if int(cell.get("offered") or 0) == 0:
+            return None
+        return int(cell.get("picked") or 0)
+    return cell
+
+
 def feed_health(d):
     """Name any connected source whose feed could not be READ on the last run.
 
@@ -171,7 +185,7 @@ def feed_health(d):
                 reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
                 dark.append(f"{meta['label']} ({reason})")
             continue
-        counts = [(cov.get(sp) or {}).get(name) for sp in meta["sports"]]
+        counts = [_coverage_signal((cov.get(sp) or {}).get(name)) for sp in meta["sports"]]
         seen = [c for c in counts if c is not None]
         if seen and not any(seen):
             dark.append(meta["label"])
@@ -328,16 +342,22 @@ def approval_table(d, scores, full=None):
     `scores` decides who has a row, from the filtered page copy. Each row is
     judged on `full` minus that source's own removed rows. A kept source has
     none, so its numbers are main's. A source that also had a removed sport
-    is judged without those bets.
+    is judged without those bets. A reset lane is judged only on bets logged
+    since the tour clock, so a kept-tour bet from before that clock is not
+    its stamp. pm_combo4 is not a reset lane, and neither is any other source.
     """
     full = d if full is None else full
     head = "".join(f'<th>{esc(label)}</th>' for _k, label, _p, _d in
                    T.assess(d, "__none__")["criteria"])
     rows = []
     order = {"approved": 0, "watch": 1, "failing": 2, "unproven": 3}
-    judged = [(name, T.assess(stamp_ledger(full, name), name))
-              for name, s in scores.items()
-              if s["connected"] and s["bets"] and name not in S.REMOVED_SOURCES]
+    judged = []
+    for name, s in scores.items():
+        if not (s["connected"] and name not in S.REMOVED_SOURCES
+                and (s["bets"] or name in S.TENNIS_FAV_RESET)):
+            continue
+        since = S.tour_clock_since(source=name)
+        judged.append((name, T.assess(stamp_ledger(full, name), name, since=since)))
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
@@ -429,6 +449,11 @@ def coverage_table(cov):
             v = (cov.get(sport) or {}).get(n)
             if sport not in S.SOURCES[n]["sports"] or (n, sport) in S.REMOVED_LANES:
                 cells.append('<td class="num mut">n/a</td>')
+            elif isinstance(v, dict) and "offered" in v:
+                picked = int(v.get("picked") or 0)
+                offered = int(v.get("offered") or 0)
+                cls = "neg" if picked == 0 else "pos"
+                cells.append(f'<td class="num {cls}">{picked:,} of {offered:,}</td>')
             elif v is None:
                 cells.append('<td class="num neg">—</td>')
             elif v == 0:
@@ -693,11 +718,15 @@ def pair_status(d, st, name, sport):
     whole = T.assess(d, name, sport, since=since)
     a = dict(a, whole_n=whole["n"], whole_roi=whole["roi"])
     qa = a
-    mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")]
+    mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")
+            and not S.tennis_refused_row(q)]
     open_n = sum(1 for q in mine if q["status"] == "open" and not T.climate_excluded(q))
     last = max((str(q.get("logged") or "") for q in mine), default="")
     if not a["n"]:
-        group = "waiting" if open_n else None
+        # A tour-clock reset with nothing counted yet stays Waiting. Dropping
+        # the row would hide the lane for having no entries.
+        reset_empty = S.tour_clock_since(since=pair.get("since")) is not None
+        group = "waiting" if open_n or reset_empty else None
     elif a["n"] >= MIN_N:
         group = "working" if (a["roi"] or 0) > 0 and a["z"] > 0 else "failing"
     else:
@@ -740,6 +769,26 @@ def family(sport):
     return "Markets" if sport in MARKET_KEYS else S.SPORTS.get(sport, sport).split(" · ")[0]
 
 
+def _fade_book(d, pair):
+    """The book T.faded() reads for one pair.
+
+    Other lanes pass the ledger through unchanged. A tour-clock reset passes
+    only bets logged at or after the clock, and only on a kept tour, so the
+    If-faded cell is that set and T.faded() itself is not retargeted.
+    """
+    clock = S.tour_clock_since(since=pair.get("since"))
+    if clock is None:
+        return d
+
+    def keep(q):
+        return str(q.get("logged") or "") >= clock and not S.tennis_refused_row(q)
+    out = dict(d)
+    out["quotes"] = [q for q in (d.get("quotes") or []) if keep(q)]
+    if d.get("_archive"):
+        out["_archive"] = [q for q in d["_archive"] if keep(q)]
+    return out
+
+
 def pair_list(d, st, include_retired=True):
     """Every (source, sport) pair that has bet, with its record and verdict.
 
@@ -779,7 +828,7 @@ def pair_list(d, st, include_retired=True):
             if sport in gone:
                 v = "retired"
             out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
-                            fade=T.faded(d, name, sport, venues=T.TRADEABLE_VENUES),
+                            fade=T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES),
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
                             removed=removed, v=v))
@@ -1042,9 +1091,19 @@ def eliminated(r):
     return (r["name"], r["sport"]) in S.ELIMINATED
 
 
+def _eliminated_visible(r):
+    """True when an eliminated pair is drawn.
+
+    Every removed source stays off this list, not only weather. covers, the
+    NHL puck line, and both weather lanes are in S.ELIMINATED and in the
+    removed set, so none of them comes back here.
+    """
+    return eliminated(r) and not S.lane_removed(r["name"], r.get("sport"))
+
+
 def eliminated_section(rows):
     """The eliminated pairs, in one collapsed list below the sports: out of sight, on record."""
-    gone = sorted((r for r in rows if eliminated(r)), key=lambda r: -r["a"]["n"])
+    gone = sorted((r for r in rows if _eliminated_visible(r)), key=lambda r: -r["a"]["n"])
     if not gone:
         return ""
     n_bets = sum(r["a"]["n"] for r in gone)
@@ -1644,6 +1703,21 @@ def archive_week_html(slug, rows, now_dt, d=None):
     )
 
 
+def hide_refused_tours(d):
+    """A page copy with reset-lane bets on a refused tour left out.
+
+    The ledger file is not written. Stored rows stay where they are.
+    pm_combo4 is not a reset lane, so its baskets stay in this copy.
+    """
+    if not d:
+        return d
+    out = dict(d)
+    out["quotes"] = [q for q in (d.get("quotes") or []) if not S.tennis_refused_row(q)]
+    if "_archive" in d:
+        out["_archive"] = [q for q in (d.get("_archive") or []) if not S.tennis_refused_row(q)]
+    return out
+
+
 def hide_removed(d):
     """A page copy with removed quotes, coverage, and feed status left out.
 
@@ -1679,7 +1753,7 @@ def render_pages(now=None, d=None, st=None):
     that ledger minus only the source being judged.
     """
     raw = T.load() if d is None else d
-    shown = hide_removed(raw)
+    shown = hide_refused_tours(hide_removed(raw))
     st = T.load_stages() if st is None else st
     now_dt = _as_now(now)
     sandbox = _sandbox_html(shown, st, now_dt, full=raw)
@@ -1709,7 +1783,8 @@ def _sandbox_html(d, st, now_dt, full=None):
     Each lane's own baseline, comparison and verdict read `full`, the ledger
     the tracker assesses. Each stamp row reads `full` minus that source's own
     removed rows, so a kept source matches the unfiltered number and its own
-    removed sport does not count. Blind baselines and every other cross-lane
+    removed sport does not count. A reset lane's stamp is only the bets logged
+    since the tour clock. Blind baselines and every other cross-lane
     total — a leaderboard, a source-by-sport cell, a by-sport or
     by-competition total — read `d`.
     """
@@ -1827,7 +1902,8 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 {approval_table(d, scores, full=full)}</details>
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 {"" if "pinnacle" in S.REMOVED_SOURCES else f'<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>'}
-<details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}</details>
+<details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}
+<div class="note">A cell of the form k of n is quotes matched out of the board rows that lane examined: the right series, before its own band. 0 of 0 means nothing was offered. 0 of n means rows were offered and none qualified. A bare number is a count from a run that stored no denominator.</div></details>
 <details class="ref" id="method"><summary>Method</summary><div class="note">
 Tipsters and rules name a side and are backed every time; models, books and exchanges state a probability
 and are backed only on a {int(T.EDGE_MIN*100)}pp disagreement with the price. <b>Polymarket US</b> is the venue

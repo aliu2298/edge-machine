@@ -223,9 +223,9 @@ def main():
     print("\nother rules are unchanged, and another retirement still blocks")
     # Inside the 3-hour window the kept tennis lane still uses. The wide rule is off the board.
     near = (datetime.now(timezone.utc) + timedelta(hours=1)).replace(microsecond=0)
-    t_k = _row("KXWTAMATCH-26OCT03ALPHBE", "kalshi", "Alex Alpha", "Blake Beta",
+    t_k = _row("KXATPMATCH-26OCT03ALPHBE", "kalshi", "Alex Alpha", "Blake Beta",
                0.78, 0.24, near, sport="tennis")
-    t_p = _row("aec-wta-alpha-beta-2026-10-03", "polymarket_us", "Alex Alpha", "Blake Beta",
+    t_p = _row("aec-atp-alpha-beta-2026-10-03", "polymarket_us", "Alex Alpha", "Blake Beta",
                0.79, 0.23, near, sport="tennis")
     tennis = {"quotes": [], "meta": {}, "coverage": {}}
     _publish(tennis, {"tennis": [t_k, t_p]})
@@ -233,13 +233,13 @@ def main():
     eq([(q["venue"], q["market_id"]) for q in tennis_bets], [("kalshi", t_k["market_id"])],
        "the 3-hour favourite band still books the first venue, which is Kalshi when it is listed first")
     ok(not _bets(tennis, "tennis_fav_band"), "the wide favourite-band rule logs nothing")
-    held = dict(id="tennis_fav_band_3h:KXWTAMATCH-26OCT03HELD", source="tennis_fav_band_3h",
-                sport="tennis", venue="kalshi", market_id="KXWTAMATCH-26OCT03HELD",
+    held = dict(id="tennis_fav_band_3h:KXATPMATCH-26OCT03HELD", source="tennis_fav_band_3h",
+                sport="tennis", venue="kalshi", market_id="KXATPMATCH-26OCT03HELD",
                 status="open", bet=True, pick="a", price=0.78, price_a=0.78, price_b=0.24,
                 stake=100.0, pnl=0.0, side_a="Cara Cole", side_b="Dana Dale",
                 start=near.isoformat(), date=near.date().isoformat(),
                 logged="2026-09-29T12:00:00+00:00")
-    dup_row = _row("aec-wta-cole-dale-2026-10-03", "polymarket_us", "Cara Cole", "Dana Dale",
+    dup_row = _row("aec-atp-cole-dale-2026-10-03", "polymarket_us", "Cara Cole", "Dana Dale",
                    0.78, 0.24, near, sport="tennis")
     dup = {"quotes": [held], "meta": {}, "coverage": {}}
     _publish(dup, {"tennis": [dup_row]})

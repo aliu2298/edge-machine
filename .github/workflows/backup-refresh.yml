@@ -32,6 +32,14 @@ name: Backup refresh (watchdog)
 # one pending run and a newer one replaces it, so an hourly job inside the group could
 # silently cancel a queued primary or tracker run. Only `takeover` joins the group, and only
 # when it actually runs. `watch` also snapshots Sandbox closing prices every hour.
+#
+# The tracker's own cron is every 3h and GitHub drops slots. When the last
+# successful sandbox-tracker.yml run is more than 3.5h old and no run of that
+# workflow is unfinished (queued, in_progress, pending, waiting, requested),
+# watch dispatches one workflow_dispatch on main. The dispatch stays in this
+# job, outside the boards' group: a newer pending run would cancel one that
+# is already queued. The 7h failure alarm is unchanged. A failed or unreadable
+# run history is not stale and does not dispatch.
 
 on:
   schedule:
@@ -63,6 +71,13 @@ jobs:
   watch:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Job token, not the workflow token. actions: write is only here, so this
+    # job can dispatch the tracker. contents: write is the closing-price push.
+    # A job permissions block replaces the workflow set, so pages and id-token
+    # are not granted here.
+    permissions:
+      contents: write
+      actions: write
     outputs:
       run: ${{ steps.check.outputs.run }}
       tracker_fail: ${{ steps.check.outputs.tracker_fail }}
@@ -83,7 +98,7 @@ jobs:
           # --- 1. when did the primary last SUCCEED? ---
           # A failed API call is not "no runs". Treating it as empty used to take over.
           if ! LAST=$(gh api \
-            "/repos/${{ github.repository }}/actions/workflows/refresh-boards.yml/runs?status=success&per_page=1" \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/refresh-boards.yml/runs?status=success&per_page=1" \
             --jq '.workflow_runs[0].created_at // empty'); then
             echo "::error::GitHub API failed reading refresh-boards.yml run history"
             exit 1
@@ -106,7 +121,7 @@ jobs:
           TRACKER_FAIL=false
           TRACKER_DETAIL=""
           if ! TLAST=$(gh api \
-            "/repos/${{ github.repository }}/actions/workflows/sandbox-tracker.yml/runs?status=success&per_page=1" \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/sandbox-tracker.yml/runs?status=success&per_page=1" \
             --jq '.workflow_runs[0].created_at // empty'); then
             echo "::error::GitHub API failed reading sandbox-tracker.yml run history"
             exit 1
@@ -222,6 +237,43 @@ jobs:
               print(f"::error::{msg}", file=sys.stderr)
               code = 1
           sys.exit(code)
+          PY
+
+      # tracker_dispatch.decide is what the unit tests exercise. More than
+      # 3.5h since the last success, and no unfinished run, starts exactly
+      # one sandbox-tracker.yml on main. !cancelled() so a red snapshot or
+      # the 7h alarm does not skip this. Values enter only through env.
+      - name: Dispatch the tracker when it is overdue
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import os
+          import sys
+          from datetime import datetime, timezone
+          from tracker_dispatch import HistoryError, decide, fetch_history, start_tracker
+
+          try:
+              last, statuses = fetch_history(os.environ.get("GITHUB_REPOSITORY", ""))
+              should, message = decide(
+                  last,
+                  statuses,
+                  datetime.now(timezone.utc),
+                  os.environ.get("EVENT_NAME", ""),
+              )
+          except HistoryError as exc:
+              print(f"::error::{exc}", file=sys.stderr)
+              sys.exit(1)
+          if should:
+              try:
+                  start_tracker()
+              except HistoryError as exc:
+                  print(f"::error::{exc}", file=sys.stderr)
+                  sys.exit(1)
+          print(message)
           PY
 
   takeover:
