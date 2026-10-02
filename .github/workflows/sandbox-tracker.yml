@@ -70,6 +70,22 @@ jobs:
       - name: Logic tests
         run: SANDBOX_TEST_GROUP=fixture python3 test_sandbox.py
 
+      # Ahead of every matchday: the tracker cron is every 3h, and this step
+      # is on that cron. lane_preflight.py reads the ten league lanes' own
+      # series constants and asks Kalshi's public API (no key, no secret)
+      # whether each series is listed, quiet, or a ticker Kalshi has never
+      # seen. "Never seen", and open markets the lane's board does not read,
+      # exit non-zero. An empty book is a warning: goals markets list 38-95h
+      # before kickoff. The step itself stays green, same as the collect step
+      # below — a red step here would skip the commit, and a pre-match quote
+      # cannot be recreated. The closing step turns the job red.
+      - name: Lane pre-flight
+        id: preflight
+        run: |
+          set +e
+          python3 lane_preflight.py
+          echo "preflight_rc=$?" >> "$GITHUB_OUTPUT"
+
       # Fetch every source, log new pre-match quotes, settle whatever has resolved.
       # A source going dark is an empty column inside the script (collect catches it)
       # and grading still runs. A crash, or a production feed that cannot be rebuilt,
@@ -236,6 +252,7 @@ jobs:
           BUILD_RC: ${{ steps.build.outputs.build_rc }}
           GATE_FAIL: ${{ steps.gate.outputs.fail }}
           LIVE_RC: ${{ steps.live.outputs.live_rc }}
+          PREFLIGHT_RC: ${{ steps.preflight.outputs.preflight_rc }}
         run: |
           set -euo pipefail
           code=0
@@ -262,6 +279,12 @@ jobs:
           # and it cannot be what skipped the commit: that step is already done.
           if [ -n "${LIVE_RC-}" ] && [ "$LIVE_RC" != "0" ]; then
             echo "::error::Live ledger checks failed (test_sandbox.py exit ${LIVE_RC})"
+            code=1
+          fi
+          # Empty when the pre-flight was skipped (the logic tests stopped the
+          # run). A recorded non-zero is its own red, after the ledger commit.
+          if [ -n "${PREFLIGHT_RC-}" ] && [ "$PREFLIGHT_RC" != "0" ]; then
+            echo "::error::Lane pre-flight failed (lane_preflight.py exit ${PREFLIGHT_RC})"
             code=1
           fi
           exit "$code"
