@@ -398,10 +398,23 @@ def main():
         return ("nws" in low or "kxhigh" in low or "climate" in low
                 or "national weather service" in low)
 
-    ledger = T.load()
+    # Read once. Each check below deep-copies this and never writes the file.
+    live = T.load()
+    # Not a weather lane, and not an id already stored on the ledger.
+    stale_id = "olbg:fixture-stale-boxing"
 
     def _ledger_stale(when):
-        hits = []
+        ledger = copy.deepcopy({"quotes": live["quotes"], "meta": dict(live.get("meta") or {})})
+        # The stubs report a venue final of 2020-01-01. A graded time after that,
+        # pinned on the copy, is what turns this open bet into a stale error.
+        ledger["meta"]["updated"] = "2026-09-01T00:00:00+00:00"
+        start = when - timedelta(hours=A.STALE_H + 72)
+        ledger["quotes"].append(dict(
+            id=stale_id, source="olbg", sport="boxing", venue="kalshi_binary",
+            market_id="probe-fixture-stale-boxing", bet=True, pick="a",
+            price=0.40, price_a=0.40, price_b=0.62, stake=100.0, status="open",
+            result=None, pnl=0.0, settled=None, start=start.isoformat(),
+            logged=(start - timedelta(hours=1)).isoformat()))
         saved = (S.resolve_kalshi_market, S.resolve_kalshi, S.resolve_polymarket,
                  S.resolve_polymarket_us, S.resolve_combo, A._final_at, S._get)
         calls = []
@@ -436,7 +449,7 @@ def main():
         ok(not flagged and not weather_calls,
            f"ledger weather rows are not errors or warnings at {label}"
            + (f" — {flagged[:2]} {weather_calls[:2]}" if flagged or weather_calls else ""))
-        ok(any(c == "stale" for c, _m in rep.errors),
+        eq(sum(1 for c, m in rep.errors if c == "stale" and stale_id in m), 1,
            f"a non-weather stale bet on the ledger is still flagged at {label}")
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'weather removal passed'}")
