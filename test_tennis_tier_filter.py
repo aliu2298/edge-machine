@@ -170,6 +170,15 @@ def _reset_stages():
         "stage": "sandbox", "since": "2026-10-02T05:00:00+00:00"}}}
 
 
+def _stamp_row(table, label):
+    needle = f"<b>{label}</b>"
+    for part in table.split("<tr>"):
+        head = part.split("</tr>", 1)[0]
+        if needle in head:
+            return head
+    return ""
+
+
 def main():
     print("\nkept tours are an exact set, not a prefix")
     eq(getattr(S, "TENNIS_FAV_KEEP", None), KEEP,
@@ -374,6 +383,33 @@ def main():
     table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
     ok(any("Waiting for results" in part for part in table_rows),
        "the sandbox page shows pm_combo3 as Waiting for results")
+
+    print("\nthe stamp counts a reset lane only from the tour clock")
+    page = SB.hide_refused_tours(SB.hide_removed(d))
+    stamp = SB.approval_table(page, T.score(page), full=d)
+    empty = "0 bets over 0 days"
+    for name in ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3",
+                 "tennis_combo4", "pm_combo2", "pm_combo3"):
+        row = _stamp_row(stamp, S.SOURCES[name]["label"])
+        ok(bool(row) and empty in row and "NO READ" in row,
+           f"{name}'s stamp is the empty record since the tour clock")
+    h3 = _stamp_row(stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
+    ok("20 bets" not in h3 and "18 won" not in h3 and "+14.3%" not in h3,
+       "the 3-hour stamp does not carry the pre-clock kept-tour record")
+    combo2 = _stamp_row(stamp, S.SOURCES["pm_combo2"]["label"])
+    ok("+58.1%" not in combo2 and "3 bets over 2 days" not in combo2,
+       "pm_combo2's stamp does not carry the pre-clock +58.1% on 3")
+    kept4 = _stamp_row(stamp, S.SOURCES["pm_combo4"]["label"])
+    ok("4 bets over 1 day" in kept4 and "2 won v 1.6 priced" in kept4,
+       "pm_combo4's stamp is still its whole record")
+    other = T.assess(SB.stamp_ledger(d, "mma_fav_band"), "mma_fav_band")
+    ok(other["criteria"][0][3] in _stamp_row(stamp, S.SOURCES["mma_fav_band"]["label"]),
+       "a lane off the tour clock still shows its whole record on the stamp")
+    fx_page = SB.hide_refused_tours(fx)
+    fx_stamp = SB.approval_table(fx_page, T.score(fx_page), full=fx)
+    fx_row = _stamp_row(fx_stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
+    ok("1 bets over 0 days" in fx_row and "1 won v 0.8 priced" in fx_row,
+       "the stamp counts the post-reset kept bet and not the pre-reset one")
 
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'tennis tier filter passed'}")
     for item in FAILS:

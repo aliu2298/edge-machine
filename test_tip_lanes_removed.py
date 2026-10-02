@@ -491,6 +491,16 @@ def _kept_lane_numbers():
         judged = T.assess(SB.stamp_ledger(raw, name), name)
         eq(_stamp_numbers(judged), _stamp_numbers(main),
            f"{name}'s stamp numbers equal main's")
+        if name in S.TENNIS_FAV_RESET:
+            # The fixture's bet is before the tour clock. The stamp shows the
+            # empty post-clock record, not this pre-clock kept-tour bet.
+            row = next(part for part in stamp.split("<tr>")
+                       if S.SOURCES[name]["label"] in part)
+            ok("0 bets over 0 days" in row,
+               f"{name}'s stamp is the empty record since the tour clock")
+            ok(main["criteria"][0][3] not in row,
+               f"{name}'s pre-clock sample is not its stamp cell")
+            continue
         gone = T.assess(shown, name)["criteria"][2][3]
         ok(main["criteria"][2][3] in stamp,
            f"the stamp shows {name}'s full-ledger baseline ({main['criteria'][2][3]})")

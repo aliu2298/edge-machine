@@ -328,17 +328,22 @@ def approval_table(d, scores, full=None):
     `scores` decides who has a row, from the filtered page copy. Each row is
     judged on `full` minus that source's own removed rows. A kept source has
     none, so its numbers are main's. A source that also had a removed sport
-    is judged without those bets.
+    is judged without those bets. A reset lane is judged only on bets logged
+    since the tour clock, so a kept-tour bet from before that clock is not
+    its stamp. pm_combo4 is not a reset lane, and neither is any other source.
     """
     full = d if full is None else full
     head = "".join(f'<th>{esc(label)}</th>' for _k, label, _p, _d in
                    T.assess(d, "__none__")["criteria"])
     rows = []
     order = {"approved": 0, "watch": 1, "failing": 2, "unproven": 3}
-    judged = [(name, T.assess(stamp_ledger(full, name), name))
-              for name, s in scores.items()
-              if s["connected"] and name not in S.REMOVED_SOURCES
-              and (s["bets"] or name in S.TENNIS_FAV_RESET)]
+    judged = []
+    for name, s in scores.items():
+        if not (s["connected"] and name not in S.REMOVED_SOURCES
+                and (s["bets"] or name in S.TENNIS_FAV_RESET)):
+            continue
+        since = S.TENNIS_FAV_KEEP_SINCE if name in S.TENNIS_FAV_RESET else None
+        judged.append((name, T.assess(stamp_ledger(full, name), name, since=since)))
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
@@ -1759,7 +1764,8 @@ def _sandbox_html(d, st, now_dt, full=None):
     Each lane's own baseline, comparison and verdict read `full`, the ledger
     the tracker assesses. Each stamp row reads `full` minus that source's own
     removed rows, so a kept source matches the unfiltered number and its own
-    removed sport does not count. Blind baselines and every other cross-lane
+    removed sport does not count. A reset lane's stamp is only the bets logged
+    since the tour clock. Blind baselines and every other cross-lane
     total — a leaderboard, a source-by-sport cell, a by-sport or
     by-competition total — read `d`.
     """
