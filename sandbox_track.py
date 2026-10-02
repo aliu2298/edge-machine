@@ -998,6 +998,7 @@ def publish(d, universe, coverage, verbose=True, now=None):
     # prices — a page that can never be scored is not worth a polite second of waiting.
     S.UNIVERSE = universe
     S.FEED_STATUS.clear()
+    S.reset_examined()
     # nws and nws_fade share one forecast read. Cleared here so a previous run's
     # picks cannot be reused, and again on the way out.
     S.clear_nws_run()
@@ -1012,6 +1013,14 @@ def publish(d, universe, coverage, verbose=True, now=None):
 
     for sport, rows in universe.items():
         if not rows:
+            # Nothing on the board. Record 0 of 0 for each lane that would have
+            # read this sport, so an empty offer is distinct from a missing cell.
+            for name in S.CHALLENGERS:
+                if sport not in S.SOURCES[name]["sports"]:
+                    continue
+                if S.fetch_skipped(name, sport):
+                    continue
+                coverage.setdefault(sport, {})[name] = {"picked": 0, "offered": 0}
             continue
         by_id = {r["market_id"]: r for r in rows}
 
@@ -1057,7 +1066,12 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 pool = [r for r in pool if r.get("venue", "polymarket") != "polymarket"]
             matched = match_quotes(pool, quotes)
             source_probs[name] = matched
-            coverage.setdefault(sport, {})[name] = len(matched)
+            # A lane that counted its own series reports that count, including
+            # zero. Any other source was offered the pool match_quotes saw.
+            offered = S.take_examined(name, sport)
+            if offered is None:
+                offered = len(pool)
+            coverage.setdefault(sport, {})[name] = {"picked": len(matched), "offered": int(offered)}
             if name in covering:
                 covered.setdefault(sport, set()).update(matched)
             if verbose:
@@ -1085,7 +1099,8 @@ def publish(d, universe, coverage, verbose=True, now=None):
         by_id, source_probs = per_sport[sport]
         matched = match_quotes(universe[sport], quotes)
         source_probs["pinnacle"] = matched
-        coverage.setdefault(sport, {})["pinnacle"] = len(matched)
+        coverage.setdefault(sport, {})["pinnacle"] = {
+            "picked": len(matched), "offered": len(universe.get(sport) or [])}
         if verbose:
             unc = sum(1 for mid in matched if mid not in (covered.get(sport) or set()))
             print(f"  {S.SPORTS[sport]:<13} pinnacle: {len(quotes)} quotes -> {len(matched)} "
@@ -1101,7 +1116,8 @@ def publish(d, universe, coverage, verbose=True, now=None):
         if cfg["sport"] in per_sport and (S.SOURCES.get(name) or {}).get("connected"):
             by_id, source_probs = per_sport[cfg["sport"]]
             source_probs[name] = consensus_probs(name, list(by_id.values()), source_probs, prior)
-            coverage.setdefault(cfg["sport"], {})[name] = len(source_probs[name])
+            coverage.setdefault(cfg["sport"], {})[name] = {
+                "picked": len(source_probs[name]), "offered": len(by_id)}
 
     for sport, (by_id, source_probs) in per_sport.items():
         for name, probs in source_probs.items():
@@ -2463,6 +2479,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     """
     bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
             and q["status"] in ("won", "lost") and not climate_excluded(q)
+            and not S.tennis_refused_row(q)
             and (sport is None or q["sport"] == sport)
             and (since is None or q["logged"] >= since)
             and (until is None or q["logged"] < until)
@@ -2476,6 +2493,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     price_bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
                   and q.get("status") == "settled" and q.get("result") == "price"
                   and not climate_excluded(q)
+                  and not S.tennis_refused_row(q)
                   and (sport is None or q["sport"] == sport)
                   and (since is None or q["logged"] >= since)
                   and (until is None or q["logged"] < until)

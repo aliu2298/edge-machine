@@ -267,15 +267,38 @@ SOURCES = {
     "tennis_fav_band_3h": dict(
         label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
         connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
-        note="PAPER TEST, registered 2026-09-25, before it logged anything. Back the "
-             "player priced 0.77-0.81, only when the entry is within 3 hours of the "
-             "scheduled start. Why the window: closing-line value on the band was about "
-             "-1.2c on entries 3 or more hours before the start, and about -0.3c on "
-             "entries inside 3 hours (in-band n=90, +11.8% after fees)."),
+        note="PAPER TEST, registered 2026-09-25. Back the player priced 0.77-0.81, "
+             "only when the entry is within 3 hours of the scheduled start. The tour "
+             "has to be ATP, WTA Doubles, or UTR. The price band stays 0.77-0.81 "
+             "and the window stays 3 hours. Why the window: closing-line value on the "
+             "band was about -1.2c on entries 3 or more hours before the start, and "
+             "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
+             "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
+             "logged (27 that the parent lane and this lane both bet, counted once). "
+             "On the 18 days those contests cover, that was 36.0 contests a day, and "
+             "the kept tours were 4.3. Kept: ATP, WTA Doubles, UTR, 78 contests, "
+             "z +2.76 before fees. That z is a selected-group z. It is not a "
+             "significance test and must not be quoted as one. The clock starts "
+             "2026-10-02T05:00:00Z. Those 648 contests are the reason for looking, "
+             "not evidence, and they count toward nothing here. No mechanism is "
+             "claimed. ATP is the deepest field here and UTR the shallowest, with "
+             "four flatter tours between them, and the idea that a deeper field "
+             "prices better does not survive UTR. WTA Doubles rests on 9 contests, "
+             "ROI +12.0% after fees: a direction, not a result, and the first of the "
+             "three to be readable or to fail. A flat $100 stake on the opposite "
+             "side at its own price, after fees, returned -60.6% on those 9, -24.1% "
+             "on the whole band (z -2.88 on the fade prices before fees) and -68.7% "
+             "on the kept set (z -3.06 on the fade prices before fees). The units of "
+             "P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and the "
+             "z on the side that was backed are before fees: one contract, pay the "
+             "price, receive 1."),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
+        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+             "the same tours tennis_fav_band_3h keeps. A basket logged before "
+             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
+             "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
              "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts "
              "toward nothing here and stays on file under Reference — a basket of narrow legs "
              "is a different contract. Cut each day's "
@@ -292,7 +315,10 @@ SOURCES = {
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
+        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+             "the same tours tennis_fav_band_3h keeps. A basket logged before "
+             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
+             "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
              "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts "
              "toward nothing here and stays on file under Reference — a basket of narrow legs "
              "is a different contract. Cut each day's "
@@ -309,7 +335,10 @@ SOURCES = {
     "tennis_combo4": dict(
         label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
+        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+             "the same tours tennis_fav_band_3h keeps. A basket logged before "
+             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
+             "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
              "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts toward "
              "nothing here and stays on file under Reference. The same construction as the "
              "2- and 3-leg rules at four legs: each day's favourite-band legs, in start-time order, "
@@ -323,7 +352,10 @@ SOURCES = {
     "pm_combo2": dict(
         label="Tennis 2-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut "
+        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+             "the same tours tennis_fav_band_3h keeps. A basket logged before "
+             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
+             "PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut "
              "from Polymarket US legs instead. Built because that is where the legs are: after "
              "the 2026-09-23 band narrowing the tennis rule picked 15 of 15 on Polymarket US, "
              "and the Kalshi basket lane went to zero for want of in-band Kalshi legs. In the "
@@ -341,7 +373,10 @@ SOURCES = {
     "pm_combo3": dict(
         label="Tennis 3-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's "
+        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+             "the same tours tennis_fav_band_3h keeps. A basket logged before "
+             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
+             "PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's "
              "in-band Polymarket US legs in start-time order, cut into consecutive baskets of "
              "three, each bought as ONE combo contract paying only if all three win. Its "
              "3-leg markup is NOT measured: it is extrapolated from the single 2-leg reading "
@@ -351,7 +386,10 @@ SOURCES = {
     "pm_combo4": dict(
         label="Tennis 4-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and "
+        note="FROM 2026-10-02 a new basket keeps a leg only when its tour is ATP, WTA "
+             "Doubles, or UTR, the same tours tennis_fav_band_3h keeps. The Production "
+             "record already on file is the judged record. "
+             "PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and "
              "unmeasured markup as the 3-leg rule. Four legs compound both the edge and the "
              "error hardest, so this is the rung that answers soonest whether the leg edge is "
              "real -- in either direction."),
@@ -3009,6 +3047,35 @@ _sportsgambler_cache = None
 
 # Set by the tracker before publishing: {sport: universe rows}. None when run standalone.
 UNIVERSE = None
+# Rows a lane examined on this run, keyed (source, sport). A lane calls
+# begin_examined, then note_examined once per row that passed its series and
+# venue check and has not yet reached its band. take_examined is how publish
+# reads that count. A lane that never begins leaves no entry, and publish
+# falls back to the pool it matched against.
+_EXAMINED = {}
+
+
+def begin_examined(name, sport):
+    """Start this lane's offered-row count at zero for one sport."""
+    _EXAMINED[(name, sport)] = 0
+
+
+def note_examined(name, sport):
+    """One row of the right series and venue, before this lane's band."""
+    key = (name, sport)
+    _EXAMINED[key] = _EXAMINED.get(key, 0) + 1
+
+
+def take_examined(name, sport):
+    """The count from the fetch that just ran, or None if that lane did not report one."""
+    return _EXAMINED.pop((name, sport), None)
+
+
+def reset_examined():
+    """Drop counts left by an earlier fetch so the next publish starts clean."""
+    _EXAMINED.clear()
+
+
 SG_SLUG_RE = re.compile(r"/football/(.+?)-vs-(.+?)-prediction")
 
 
@@ -3917,12 +3984,11 @@ BAND_BY_SPORT = {"tennis": (0.77, 0.81)}
 # it onto the quote, so the record could not be split by tour without re-parsing ids after the
 # fact. Stamped here so it accumulates from today.
 #
-# It is deliberately NOT a rule yet. The pre-registered hypothesis, fixed now and read later:
-# a favourite in a SHALLOWER field is more dominant than the same price in a deeper one, so
-# lower tiers should beat higher ones at equal price. Today's record is directionally right
-# and nowhere near readable -- ITF men +4.30% on 185, WTA -3.87% on 55 -- and flatly
-# contradicted by ATP at +23.99% on 27 bets with zero losses, which is what luck looks like.
-# Four weeks of stamped rows decides it; fitting a tier rule to 27 bets would not.
+# The shallow-field hypothesis was the reason the tier was stamped, and it is not the
+# rule. A favourite in a shallower field was supposed to beat the same price in a deeper
+# one. That does not survive UTR, the shallowest field in the set, and TENNIS_FAV_KEEP
+# does not claim it. The keep set is the tours chosen by looking at the record already
+# on file; the note on tennis_fav_band_3h says the clock starts over because of that.
 TENNIS_TIERS = {"atp": "ATP", "wta": "WTA", "atpch": "ATP Challenger", "atpcq": "ATP Ch. Qual",
                 "itfme": "ITF Men", "itfwo": "ITF Women", "atpdb": "ATP Doubles",
                 "wtadb": "WTA Doubles", "utr": "UTR"}
@@ -3945,6 +4011,81 @@ def tennis_tier(market_id):
         if m.startswith(pre):
             return tier
     return None
+
+
+# Favourite-band selection from 2026-10-02. Membership is the tier tennis_tier
+# returns, never a prefix of the id: ATP does not keep ATP Doubles, the
+# Challenger, or Challenger qualifying. The tours were chosen by looking at the
+# record already on file. The tennis_fav_band_3h note says what that does and
+# does not mean. TENNIS_FAV_KEEP_SINCE is after every bet already logged.
+TENNIS_FAV_KEEP = frozenset({"atp", "wtadb", "utr"})
+TENNIS_FAV_KEEP_SINCE = "2026-10-02T05:00:00+00:00"
+
+
+def tennis_fav_kept(market_id):
+    """True only when tennis_tier(market_id) is a member of TENNIS_FAV_KEEP."""
+    return tennis_tier(market_id) in TENNIS_FAV_KEEP
+
+
+# Lanes whose page record restarted at TENNIS_FAV_KEEP_SINCE. pm_combo4 is
+# not in this set: it stays in Production, paused, on the record already on
+# file, and that record is not rewritten here.
+TENNIS_FAV_RESET = frozenset({
+    "tennis_fav_band_3h",
+    "tennis_combo2", "tennis_combo3", "tennis_combo4",
+    "pm_combo2", "pm_combo3",
+})
+
+
+def tour_clock_since(since=None, source=None):
+    """The tour clock when a lane's record restarted there, or None.
+
+    A source in TENNIS_FAV_RESET is on that clock even when the caller has
+    no stage row. Any other source is on it only when its own since is that
+    instant. Waiting, If-faded, and the stamp share this so the three cannot
+    drift apart.
+    """
+    if source in TENNIS_FAV_RESET:
+        return TENNIS_FAV_KEEP_SINCE
+    if since == TENNIS_FAV_KEEP_SINCE:
+        return TENNIS_FAV_KEEP_SINCE
+    return None
+
+
+def _tour_outside_keep(market_id, tier=None):
+    """True when this is a tennis tour the keep set refuses.
+
+    An id that is not a tennis market is not a refused tour. The stage
+    fixtures on tennis_fav_band_3h use plain ids, and those bets still count.
+    """
+    if tier:
+        return tier not in TENNIS_FAV_KEEP
+    mid = str(market_id or "")
+    parsed = tennis_tier(mid)
+    if parsed is not None:
+        return parsed not in TENNIS_FAV_KEEP
+    return mid.startswith("aec-") or mid.startswith("KX")
+
+
+def _tennis_leg_kept(leg):
+    if isinstance(leg, dict):
+        return not _tour_outside_keep(leg.get("market_id"), leg.get("tier"))
+    return not _tour_outside_keep(leg)
+
+
+def tennis_refused_row(q):
+    """A reset-lane bet on a tour the keep set refuses.
+
+    The row stays in the ledger. Pages, records, and verdicts leave it out.
+    A basket is refused when any leg is. pm_combo4 is not a reset lane, so
+    its four baskets stay on the page and in its record.
+    """
+    if not isinstance(q, dict) or q.get("source") not in TENNIS_FAV_RESET:
+        return False
+    legs = q.get("legs") or []
+    if legs:
+        return any(not _tennis_leg_kept(leg) for leg in legs)
+    return _tour_outside_keep(q.get("market_id"), q.get("tier"))
 
 
 def fav_band(sport):
@@ -4019,11 +4160,13 @@ def devig_draw(r):
 def ere_draw_picks(universe=None):
     """Back the Tie on every Kalshi Eredivisie match whose de-vigged draw sits in the band."""
     out = []
+    begin_examined("ere_draw", "soccer")
     for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
         if r.get("venue") != "kalshi":
             continue
         if not str(r.get("market_id") or "").startswith(ERE_DRAW_SERIES):
             continue
+        note_examined("ere_draw", "soccer")
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("draw", True):
             continue
@@ -4114,11 +4257,13 @@ def ere_o15_picks(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     dogs = ere_o15_dogs(uni)
     out = []
+    begin_examined("ere_o15", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(ERE_O15_TOTAL):
             continue
+        note_examined("ere_o15", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4203,14 +4348,18 @@ BUND_O35_FAV_MAX_ASK = 0.41
 BUND_O35_MAX_HOLD = 0.06
 
 
-def _bund_o35_rows(sport, universe):
+def _bund_o35_rows(sport, universe, lane=None):
     """The Kalshi Bundesliga over-3.5 rows, gated on liquidity and book width."""
+    if lane:
+        begin_examined(lane, sport)
     out = []
     for r in (universe or {}).get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(BUND_O35_TOTAL):
             continue
+        if lane:
+            note_examined(lane, sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4246,7 +4395,8 @@ def fetch_bund_o35(sport, universe=None):
     if sport != "soccer_u35":
         return []
     uni = universe if universe is not None else (UNIVERSE or {})
-    return [dict(market_id=r["market_id"], pick="a") for r in _bund_o35_rows(sport, uni)]
+    return [dict(market_id=r["market_id"], pick="a")
+            for r in _bund_o35_rows(sport, uni, lane="bund_o35")]
 
 
 # ---------------------------------------------------------------------------
@@ -4314,14 +4464,18 @@ def liga_fav_dog(universe=None):
     return out
 
 
-def _liga_rows(sport, universe, series, side):
+def _liga_rows(sport, universe, series, side, lane=None):
     """La Liga rows on one Kalshi series, gated on liquidity and book width."""
+    if lane:
+        begin_examined(lane, sport)
     out = []
     for r in (universe or {}).get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(series):
             continue
+        if lane:
+            note_examined(lane, sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get(side, True):
             continue
@@ -4519,11 +4673,13 @@ def fetch_mls_away_band(sport, universe=None):
         return []
     uni = universe if universe is not None else (UNIVERSE or {})
     out = []
+    begin_examined("mls_away_band", "soccer")
     for r in uni.get("soccer") or []:
         if r.get("venue") != "kalshi":
             continue
         if not str(r.get("market_id") or "").startswith(MLS_GAME):
             continue
+        note_examined("mls_away_band", "soccer")
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
             continue
@@ -4555,11 +4711,13 @@ def fetch_mls_fade_home(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     board = mls_board(uni)
     out = []
+    begin_examined("mls_fade_home", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(MLS_GAME):
             continue
+        note_examined("mls_fade_home", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
             continue
@@ -4593,11 +4751,13 @@ def fetch_turkey_btts_dog(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     dogs = turkey_o25_dogs(uni)
     out = []
+    begin_examined("turkey_btts_dog", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(TURKEY_BTTS):
             continue
+        note_examined("turkey_btts_dog", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4620,11 +4780,13 @@ def fetch_turkey_o25_dog(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     dogs = turkey_o25_dogs(uni)
     out = []
+    begin_examined("turkey_o25_dog", sport)
     for r in uni.get(sport) or []:
         if r.get("venue") != "kalshi_binary":
             continue
         if not str(r.get("market_id") or "").startswith(TURKEY_TOTAL):
             continue
+        note_examined("turkey_o25_dog", sport)
         # Default True, as every other reader of this field does.
         if r.get("untraded") or not (r.get("tradeable") or {}).get("a", True):
             continue
@@ -4647,7 +4809,7 @@ def fetch_liga_btts_even(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     board = liga_fav_dog(uni)
     out = []
-    for r in _liga_rows(sport, uni, LIGA_BTTS, "a"):
+    for r in _liga_rows(sport, uni, LIGA_BTTS, "a", lane="liga_btts_even"):
         pf = (board.get(_ere_code(r.get("market_id"))) or (None, None))[0]
         if pf is None or not (LIGA_BTTS_FAV_BAND[0] <= pf < LIGA_BTTS_FAV_BAND[1]):
             continue
@@ -4668,7 +4830,7 @@ def fetch_liga_u15_dog(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     board = liga_fav_dog(uni)
     out = []
-    for r in _liga_rows(sport, uni, LIGA_TOTAL, "b"):
+    for r in _liga_rows(sport, uni, LIGA_TOTAL, "b", lane="liga_u15_dog"):
         pd_ = (board.get(_ere_code(r.get("market_id"))) or (None, None))[1]
         if pd_ is None or pd_ >= LIGA_U15_DOG_MAX:
             continue
@@ -4690,7 +4852,7 @@ def fetch_bund_o35_fav(sport, universe=None):
     uni = universe if universe is not None else (UNIVERSE or {})
     favs = bund_o35_favs(uni)
     out = []
-    for r in _bund_o35_rows(sport, uni):
+    for r in _bund_o35_rows(sport, uni, lane="bund_o35_fav"):
         p = favs.get(_ere_code(r.get("market_id")))
         if p is None or not (BUND_O35_FAV_BAND[0] <= p < BUND_O35_FAV_BAND[1]):
             continue
@@ -4777,7 +4939,7 @@ PM_COMBO_MEASURED = {2: True, 3: False, 4: False}
 
 def pm_combo_legs_by_day(universe=None):
     """{date: [(row, side, price)]} — basket legs on POLYMARKET US, the mirror of
-    combo_legs_by_day. Same band, same one-leg-per-match rule, the other venue."""
+    combo_legs_by_day. Same band, same tours, same one-leg-per-match rule."""
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
     lo, hi = fav_band("tennis")
     by_day = {}
@@ -4785,6 +4947,8 @@ def pm_combo_legs_by_day(universe=None):
         if r.get("venue") != "polymarket_us":
             continue
         if r.get("untraded") or r.get("price_draw") is not None:
+            continue
+        if not tennis_fav_kept(r.get("market_id")):
             continue
         for side in ("a", "b"):
             p = r.get(f"price_{side}")
@@ -4815,7 +4979,8 @@ def combo_legs_by_day(universe=None):
 
     The band is the tennis rule's own -- the legs ARE its picks -- so it moves with it. A
     basket of 0.75-0.80 legs is not the same contract as one of 0.75-0.90 legs, which is why
-    narrowing the band resets these records too.
+    narrowing the band resets these records too. From TENNIS_FAV_KEEP_SINCE a leg also has
+    to be one of TENNIS_FAV_KEEP, the same tours tennis_fav_band_3h keeps.
     """
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
     lo, hi = fav_band("tennis")
@@ -4824,6 +4989,8 @@ def combo_legs_by_day(universe=None):
         if r.get("venue") != "kalshi":
             continue
         if r.get("untraded") or r.get("price_draw") is not None:
+            continue
+        if not tennis_fav_kept(r.get("market_id")):
             continue
         for side in ("a", "b"):
             p = r.get(f"price_{side}")
@@ -5147,10 +5314,10 @@ TENNIS_FAV_3H = timedelta(hours=3)
 
 
 def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
-    """tennis_fav_band's band, only when the start is within TENNIS_FAV_3H.
+    """The 0.77-0.81 band, inside TENNIS_FAV_3H, on a tour in TENNIS_FAV_KEEP.
 
-    tennis_fav_band itself is not filtered. A match inside the window is returned
-    here AND there; publish logs both, under two sources. See that source's note.
+    The band and the window are unchanged. tennis_fav_band itself is not filtered.
+    A kept match inside the window is returned here and there; publish logs both.
     """
     if sport != "tennis":
         return []
@@ -5167,7 +5334,7 @@ def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
         if start.tzinfo is None:
             start = start.replace(tzinfo=timezone.utc)
         lead = start - now
-        if timedelta(0) < lead <= TENNIS_FAV_3H:
+        if timedelta(0) < lead <= TENNIS_FAV_3H and tennis_fav_kept(r.get("market_id")):
             near.append(r)
     return band_picks(sport, fav_band("tennis"), {sport: near})
 
