@@ -215,6 +215,11 @@
    "lead_min": 49.1,
    "price": 0.44
   },
+  "mma_fav_band:aec-ufc-antwin-lucarm-2026-10-03": {
+   "at": "2026-10-03T19:33:09+00:00",
+   "lead_min": 56.8,
+   "price": 0.82
+  },
   "nhl_dog_pl:KXNHLSPREAD-26SEP23LAANA-ANA2": {
    "at": "2026-09-24T01:41:21+00:00",
    "lead_min": 18.6,
@@ -289,11 +294,6 @@
    "at": "2026-09-30T06:03:07+00:00",
    "lead_min": 56.9,
    "price": 0.01
-  },
-  "o15_cup_mismatch:KXKNVBCUPTOTAL-26SEP23IJSGEM-2": {
-   "at": "2026-09-23T17:30:26+00:00",
-   "lead_min": 29.6,
-   "price": 0.86
   },
   "o15_form_l10:KXMLSTOTAL-26SEP26SEAMIN-2": {
    "at": "2026-09-26T23:56:53+00:00",
@@ -575,26 +575,6 @@
    "lead_min": 28.1,
    "price": 0.34
   },
-  "tennis_combo2:combo2:2026-09-23:7faf1d3a4c": {
-   "at": "2026-09-23T17:30:26+00:00",
-   "lead_min": 29.6,
-   "price": 0.6134
-  },
-  "tennis_combo3:combo3:2026-09-23:b3476984f5": {
-   "at": "2026-09-23T17:30:26+00:00",
-   "lead_min": 29.6,
-   "price": 0.4857
-  },
-  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23KICDEL": {
-   "at": "2026-09-23T17:30:26+00:00",
-   "lead_min": 29.6,
-   "price": 0.79
-  },
-  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23NEUMAR": {
-   "at": "2026-09-23T17:30:26+00:00",
-   "lead_min": 29.6,
-   "price": 0.77
-  },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP28DONSAK": {
    "at": "2026-09-28T08:58:59+00:00",
    "lead_min": 11.0,
@@ -644,11 +624,6 @@
    "at": "2026-09-25T08:12:43+00:00",
    "lead_min": 26.1,
    "price": 0.78
-  },
-  "tennis_fav_band:aec-itfme-manjun-luimig-2026-09-23": {
-   "at": "2026-09-23T17:30:26+00:00",
-   "lead_min": 37.3,
-   "price": 0.76
   },
   "tennis_fav_band:aec-itfme-piefel-karibr-2026-09-24": {
    "at": "2026-09-24T06:48:25+00:00",
@@ -796,5 +771,5 @@
    "price": 0.86
   }
  },
- "updated": "2026-10-03T16:48:37+00:00"
+ "updated": "2026-10-03T19:33:09+00:00"
 }
