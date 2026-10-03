@@ -761,11 +761,20 @@ def collect(verbose=True, combo_used=None):
         except Exception as e:
             print(f"  ! kalshi/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
             ks = []
+        if sport == "tennis":
+            # Before the dedupe. The tour book is the open Kalshi markets,
+            # which apply_pm_atp_tours reads from the cache, not the rows
+            # whose estimated start has already been dropped. A Challenger
+            # that Polymarket also lists would otherwise leave the universe
+            # as the Polymarket row alone, and the atp slug would be the
+            # only tour signal left.
+            S.apply_pm_atp_tours(pm, ks)
         extra = [k for k in ks if not any(_same_contest(k, p) for p in pm)]
         if sport == "tennis" and extra:
             # Kalshi publishes no start for a tennis match, only an estimate; the schedule
-            # confirms it. Unverified rows stay in the universe and are still judged — they
-            # simply never reach the Production feed. See S.apply_tennis_starts.
+            # confirms it. Unverified rows stay in the universe. tennis_fav_band_3h does
+            # not treat the estimate as inside its window. They never reach the
+            # Production feed. See S.apply_tennis_starts.
             extra, tstats = S.apply_tennis_starts(extra)
             if verbose and tstats.get("feed"):
                 print(f"  Tennis        schedule: {tstats['matched']} of {len(extra) + tstats['dropped']} "
@@ -1246,6 +1255,7 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 # the start of publish; `logged` on the new row is `at`.
                 if name == "mma_fav_band" and bet and r.get("venue") == "polymarket_us":
                     _retire_replaced_kalshi(d, dict(r, sport=sport), retire_stamp, at)
+                _tier = (S.tennis_logged_tier(r, mid) if str(sport).startswith("tennis") else None)
                 d["quotes"].append(dict(
                     id=qid, source=name, sport=sport, market_id=mid,
                     label=r["label"], side_a=r["side_a"], side_b=r["side_b"],
@@ -1271,13 +1281,11 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     # can settle it later. Stored on the quote rather than looked up again,
                     # so the basket is judged on exactly the legs it was bought with.
                     **({"legs": r["legs"]} if r.get("legs") else {}),
-                    # Tennis: which tour, stamped from the market id at log time. The id has
-                    # always said it, but nothing carried it onto the quote, so the record
-                    # could not be split by tier without re-parsing ids afterwards. Not a
-                    # rule -- the pre-registered question it will answer is whether a
-                    # favourite in a shallower field beats the same price in a deeper one.
-                    **({"tier": S.tennis_tier(mid)}
-                       if str(sport).startswith("tennis") and S.tennis_tier(mid) else {}),
+                    # Tennis: which tour. An atp-league Polymarket row carries the
+                    # resolved tour, not the slug. Unknown stays unstamped rather
+                    # than being written down as ATP.
+                    **({"tier": _tier} if _tier else {}),
+                    **({"tour": r.get("tour")} if r.get("tour") in S.TENNIS_TIERS else {}),
                     # Pinnacle only: was this a contest nothing else had covered? That is
                     # the Pinnacle-versus-venue rule's own lane, reported separately.
                     uncovered=(mid not in (covered.get(sport) or set())
