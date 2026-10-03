@@ -2558,28 +2558,161 @@ KALSHI_MAX_SPREAD = 0.10
 KALSHI_FINAL = {"finalized", "settled", "determined"}
 
 _kalshi_open_cache = {}
+# Last successful non-empty open book, per series, for this run only. A later
+# 429 or an empty body does not replace it. Tour confirmation may read it.
+# The venue list may not: a failed fetch is not a set of markets to bet.
+_kalshi_tour_good = {}
+# series -> {"status": "ok"|"empty"|"failed", "http": int}. "ok" is a non-empty
+# 200. "empty" and "failed" are not a listing of who plays.
+_kalshi_open_fetch = {}
+# Three tries, then stop. The sleeps between them stay under two seconds so a
+# refused series cannot eat the tracker's run.
+_KALSHI_OPEN_ATTEMPTS = 3
+_KALSHI_OPEN_BACKOFF_S = (0.4, 0.8)
 
 
-def _kalshi_open(series):
-    """Every open market in one Kalshi series, cursor-paginated, cached per run."""
-    if series in _kalshi_open_cache:
-        return _kalshi_open_cache[series]
-    out, cursor = [], ""
-    for _ in range(10):
+def _kalshi_http(url, timeout=30):
+    """(http_status, json object) for one Kalshi GET.
+
+    Status 0 is a transport failure. A 429 body is not a market list: curl's
+    fallback used to return that body with no status, and the caller read it
+    as an empty book.
+    """
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=timeout) as f:
+            body = json.load(f)
+            return getattr(f, "status", 200), body if isinstance(body, dict) else {}
+    except urllib.error.HTTPError as e:
+        raw = b""
+        try:
+            raw = e.read() or b""
+        except Exception:
+            raw = b""
+        try:
+            body = json.loads(raw.decode()) if raw else {}
+        except (UnicodeError, ValueError):
+            body = {}
+        return e.code, body if isinstance(body, dict) else {}
+    except (OSError, http.client.HTTPException, ValueError):
+        pass
+    try:
+        out = subprocess.run(
+            ["curl", "-sS", "-w", "\n%{http_code}", "--max-time", str(timeout), "-A", UA, url],
+            capture_output=True, text=True, timeout=timeout + 10)
+        text = out.stdout or ""
+        body, _, code_s = text.rpartition("\n")
+        try:
+            code = int(code_s.strip() or "0")
+        except ValueError:
+            code = 0
+        try:
+            payload = json.loads(body) if body.strip() else {}
+        except ValueError:
+            payload = {}
+        return code, payload if isinstance(payload, dict) else {}
+    except Exception:
+        return 0, {}
+
+
+def _kalshi_open_attempt(url):
+    """One page, retried on 429, 5xx, and transport failure. Other 4xx are final."""
+    http, payload = 0, {}
+    for i in range(_KALSHI_OPEN_ATTEMPTS):
+        http, payload = _kalshi_http(url, timeout=30)
+        markets = payload.get("markets") if isinstance(payload, dict) else None
+        if http == 200 and isinstance(markets, list):
+            return http, payload
+        if http == 200 or (http and http != 429 and http < 500):
+            return http, payload
+        if i + 1 >= _KALSHI_OPEN_ATTEMPTS:
+            break
+        time.sleep(_KALSHI_OPEN_BACKOFF_S[min(i, len(_KALSHI_OPEN_BACKOFF_S) - 1)])
+    return http, payload
+
+
+def _kalshi_fetch_open(series):
+    """(markets or None, http, 'ok'|'empty'|'failed').
+
+    'ok' is a finished non-empty book. 'empty' is HTTP 200 with no markets.
+    Anything else, including a 429 body, is 'failed'. None markets means failed.
+    """
+    out, cursor, last_http = [], "", 0
+    for _page in range(10):
         url = f"{KALSHI_API}?limit=200&status=open&series_ticker={series}"
         if cursor:
             url += f"&cursor={cursor}"
-        try:
-            d = _get(url, tries=2, timeout=30)
-        except RuntimeError:
+        http, payload = _kalshi_open_attempt(url)
+        last_http = http
+        markets = payload.get("markets") if isinstance(payload, dict) else None
+        if http != 200 or not isinstance(markets, list):
+            return None, last_http, "failed"
+        out.extend(markets)
+        cursor = payload.get("cursor") or ""
+        if not cursor or not markets:
             break
-        batch = d.get("markets") or []
-        out += batch
-        cursor = d.get("cursor") or ""
-        if not cursor or not batch:
-            break
-    _kalshi_open_cache[series] = out
-    return out
+    if not out:
+        return [], last_http, "empty"
+    return out, last_http, "ok"
+
+
+def _kalshi_open(series):
+    """Open markets in one series for the venue list, cached per run.
+
+    A failed or empty fetch is not cached as a good book and is not returned
+    as markets. The last good book stays in `_kalshi_tour_good` for tour
+    confirmation only.
+    """
+    state = _kalshi_open_fetch.get(series)
+    if state is not None:
+        if state.get("status") == "ok":
+            return list(_kalshi_open_cache.get(series) or [])
+        return []
+    if series in _kalshi_open_cache:
+        markets = list(_kalshi_open_cache.get(series) or [])
+        if markets:
+            _kalshi_tour_good[series] = markets
+            _kalshi_open_fetch[series] = {"status": "ok", "http": 200}
+        return markets
+    markets, http, kind = _kalshi_fetch_open(series)
+    if kind == "ok":
+        _kalshi_open_cache[series] = markets
+        _kalshi_tour_good[series] = list(markets)
+        _kalshi_open_fetch[series] = {"status": "ok", "http": http}
+        return list(markets)
+    if kind == "empty":
+        print(f"  kalshi: {series} open markets came back empty: HTTP {http}")
+        _kalshi_open_fetch[series] = {"status": "empty", "http": http}
+        _kalshi_open_cache[series] = []
+        return []
+    print(f"  kalshi: {series} open markets fetch failed: HTTP {http}")
+    _kalshi_open_fetch[series] = {"status": "failed", "http": http}
+    return []
+
+
+def kalshi_tour_fetch():
+    """'ok', 'empty', 'failed', or 'unfetched' for the ATP and Challenger books.
+
+    'failed' and 'empty' are not a listing. They do not mean the match is a
+    Challenger, and they do not mean Kalshi has no such match. A series with
+    a last good book still counts as 'ok'.
+    """
+    seen = []
+    for series, _tier in _TOUR_SERIES:
+        if _kalshi_tour_good.get(series):
+            seen.append("ok")
+            continue
+        state = _kalshi_open_fetch.get(series)
+        if not state:
+            continue
+        seen.append(state.get("status"))
+    if not seen:
+        return "unfetched"
+    if "failed" in seen:
+        return "failed"
+    if "empty" in seen:
+        return "empty"
+    return "ok"
 
 
 def _num(x):
@@ -4079,11 +4212,40 @@ def tennis_fav_kept(market_id):
     return tennis_tier(market_id) in TENNIS_FAV_KEEP
 
 
+def _calendar_day(value):
+    """YYYY-MM-DD as a date, or None when it cannot be read."""
+    if value is None or value == "":
+        return None
+    text = str(value)[:10]
+    try:
+        return datetime.strptime(text, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def _tour_days_ok(left, right, slack=1):
+    """True when both dates read and are at most `slack` days apart.
+
+    The slack is the one the venue dedupe uses. A missing date is not a
+    match: a shared given name must not confirm a tour across a gap.
+    """
+    a, b = _calendar_day(left), _calendar_day(right)
+    if a is None or b is None:
+        return False
+    return abs((a - b).days) <= slack
+
+
+def _listing_day(market_id, fallback=None):
+    """The Kalshi ticker date, or the row's own date when the ticker has none."""
+    listed = kalshi_date(market_id, fallback)
+    return listed or None
+
+
 def _kalshi_tour_listings(rows):
-    """(tier, side_a, side_b) for Kalshi ATP and Challenger rows.
+    """(tier, side_a, side_b, date) for Kalshi ATP and Challenger rows.
 
     The series is the tour. KXATPCHALLENGERMATCH is checked as its own prefix
-    so it cannot be read as ATP.
+    so it cannot be read as ATP. The date is the ticker date.
     """
     out = []
     for r in rows or []:
@@ -4098,18 +4260,61 @@ def _kalshi_tour_listings(rows):
             continue
         a, b = r.get("side_a"), r.get("side_b")
         if a and b:
-            out.append((tier, a, b))
+            out.append((tier, a, b, _listing_day(mid, r.get("date") or r.get("start"))))
     return out
 
 
-def match_pm_atp_tour(side_a, side_b, listings):
+# Open markets in these two series are the tour book. Read from the cache
+# fetch_kalshi_venue already filled. Do not call _kalshi_open here: that
+# would be another request, and a 429 would then look like an empty tour.
+_TOUR_SERIES = (("KXATPMATCH", "atp"), ("KXATPCHALLENGERMATCH", "atpch"))
+
+
+def _open_tour_listings():
+    """(tier, side_a, side_b, date) from the last good open ATP and Challenger book.
+
+    The good book is the open markets from before the start-estimate filter.
+    Kalshi's estimate runs early, so a market can leave the venue list while
+    it is still the right tour. A failed or empty fetch is not a book. This
+    only reads the per-run cache. It does not fetch.
+    """
+    out = []
+    for series, tier in _TOUR_SERIES:
+        markets = _kalshi_tour_good.get(series)
+        if not markets:
+            continue
+        events = {}
+        for m in markets:
+            if not isinstance(m, dict) or not m.get("event_ticker"):
+                continue
+            events.setdefault(m.get("event_ticker"), []).append(m)
+        for et, ms in events.items():
+            sides = kalshi_sides(et, ms)
+            by_side = {sides[_kalshi_code(m)]: m for m in ms if _kalshi_code(m) in sides}
+            a, b = by_side.get("a"), by_side.get("b")
+            if not a or not b:
+                continue
+            na, nb = _kalshi_name(a), _kalshi_name(b)
+            if not na or not nb:
+                continue
+            out.append((tier, na, nb, _listing_day(et)))
+    return out
+
+
+def match_pm_atp_tour(side_a, side_b, listings, on=None):
     """'atp', 'atpch', or None for one Polymarket US atp-league match.
 
-    None is unknown: no listing named both players, or ATP and Challenger
-    both did. Unknown is not ATP.
+    None is unknown: no listing named both players on a date within a day,
+    or ATP and Challenger both did. Unknown is not ATP. `on` is the
+    Polymarket row's date. A listing with no date, or more than a day away,
+    does not count.
     """
     hits = set()
-    for tier, a, b in listings or []:
+    for item in listings or []:
+        tier, a, b = item[0], item[1], item[2]
+        listed = item[3] if len(item) > 3 else None
+        if not _tour_days_ok(on, listed):
+            continue
         score, _flip = pair_match(side_a, side_b, a, b, sport="tennis")
         if score > 0:
             hits.add(tier)
@@ -4120,20 +4325,40 @@ def match_pm_atp_tour(side_a, side_b, listings):
     return None
 
 
+def _pm_match_day(row):
+    """The date the cross-match compares. The row's date, else its start."""
+    return row.get("date") or day(row.get("start"))
+
+
 def apply_pm_atp_tours(rows, listings_rows):
     """Stamp `tour` on Polymarket US rows that came from the atp league.
 
     The league slug is not the tour: Challenger matches are filed there too.
-    A row already stamped, including 'unknown', is left as it is, so a later
-    pass over a deduped universe cannot wipe a Kalshi cross-match.
+    Listings are the Kalshi rows passed in, plus the last good open ATP and
+    Challenger book in this run's cache. That book is what remains after the
+    start-estimate filter has dropped a row, and it is used only to confirm
+    a tour. A failed or empty series fetch is not a listing: it does not
+    say Challenger, and it does not say the players are absent. With no good
+    book the tour is unknown, and unknown is not ATP. A row already stamped,
+    including 'unknown', is left as it is, so a later pass over a deduped
+    universe cannot wipe a Kalshi cross-match.
     """
-    listings = _kalshi_tour_listings(listings_rows)
+    # 'failed' or 'empty' means a series was asked and did not return a book.
+    # Do not read names off that answer. A last good book keeps the status
+    # at 'ok' inside kalshi_tour_fetch, so this is not that case.
+    blocked = kalshi_tour_fetch() in ("failed", "empty")
+    listings = [] if blocked else (
+        _kalshi_tour_listings(listings_rows) + _open_tour_listings())
     for r in rows or []:
         if not isinstance(r, dict) or r.get("pm_league") != "atp":
             continue
         if r.get("tour") in TENNIS_TIERS or r.get("tour") == "unknown":
             continue
-        tour = match_pm_atp_tour(r.get("side_a"), r.get("side_b"), listings)
+        if blocked:
+            r["tour"] = "unknown"
+            continue
+        tour = match_pm_atp_tour(r.get("side_a"), r.get("side_b"), listings,
+                                 on=_pm_match_day(r))
         r["tour"] = tour if tour else "unknown"
 
 

@@ -762,9 +762,12 @@ def collect(verbose=True, combo_used=None):
             print(f"  ! kalshi/{sport} failed: {type(e).__name__}: {str(e)[:70]}")
             ks = []
         if sport == "tennis":
-            # Before the dedupe. A Challenger that Polymarket also lists would
-            # otherwise leave the universe as the Polymarket row alone, and the
-            # atp slug would be the only tour signal left.
+            # Before the dedupe. The tour book is the open Kalshi markets,
+            # which apply_pm_atp_tours reads from the cache, not the rows
+            # whose estimated start has already been dropped. A Challenger
+            # that Polymarket also lists would otherwise leave the universe
+            # as the Polymarket row alone, and the atp slug would be the
+            # only tour signal left.
             S.apply_pm_atp_tours(pm, ks)
         extra = [k for k in ks if not any(_same_contest(k, p) for p in pm)]
         if sport == "tennis" and extra:
