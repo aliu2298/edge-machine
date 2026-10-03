@@ -386,6 +386,46 @@ def _clip_shown(value, limit=80):
     return value[:limit] + "…"
 
 
+# A Production pair is GREEN or RED. Green means everything it has logged lately reached
+# the feed and it is still publishing. Red means a fault, and a fault here is the dangerous
+# kind: it is SILENT. A bet the feed cannot express is simply dropped -- no error, no row, no
+# trace on the page -- which is how mma_fav_band ran for weeks with seven of twenty-one bets
+# unreachable and cricket with nineteen of thirty, both unnoticed until someone went looking.
+#
+# Red fires on three faults, each of which would otherwise pass unseen:
+#   dropped  a bet logged inside HEALTH_WINDOW_DAYS that placeable() refuses. The pair had an
+#            opinion and nothing downstream could act on it.
+#   dark     no leads in the feed AND nothing logged in the window. Not merely quiet: quiet
+#            with nothing to show for it.
+#   unwired  the pair is listed in Production but missing from the feed's own pairs map, so
+#            the two halves disagree about what is live.
+# A pair that is merely WAITING -- publishing leads, declining on price, between fixtures --
+# is green. A light that cries wolf is a light that gets ignored, so quiet alone is not a
+# fault; the Since-Production cell already says how quiet.
+HEALTH_WINDOW_DAYS = 7
+
+
+def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_WINDOW_DAYS):
+    """(state, reason) for one Production pair: "ok" or "bad", and why.
+
+    `bets` is every bet the pair has logged, `lead_count` how many leads it has in the feed,
+    `feed_pairs` the feed's own pairs map. Pure: it takes what it needs rather than reading
+    files, so the faults can be tested without a ledger.
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    cut = (now - datetime.timedelta(days=window_days)).isoformat()
+    if feed_pairs is not None and key not in feed_pairs:
+        return "bad", "listed in Production but missing from the feed"
+    recent = [q for q in bets if str(q.get("logged") or "") >= cut]
+    dropped = [q for q in recent if not T.placeable(q)]
+    if dropped:
+        return "bad", (f"{len(dropped)} of {len(recent)} recent bets cannot be published "
+                       f"— the feed drops them silently")
+    if not lead_count and not recent:
+        return "bad", f"no leads and nothing logged in {window_days}d"
+    return "ok", ("publishing" if lead_count else "nothing to publish yet")
+
+
 def _days_since(when, now=None):
     """Whole days from `when` to now, or None when `when` is unreadable.
 
@@ -548,6 +588,8 @@ def page(d, st, blob, style, now=None):
         reach_n = sum(1 for q in all_bets if T.placeable(q))
         reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
         reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
+        state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None))
+        light = ("<b class=\"pos\">\u25cf</b>" if state == "ok" else "<b class=\"neg\">\u25cf</b>")
         idle_days = _days_since(since)
         if live["n"]:
             since_note = f"{live['n']} settled"
@@ -566,11 +608,12 @@ def page(d, st, blob, style, now=None):
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
 <td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
+<td class="num">{light}<div class="sm mut">{esc(why)}</div></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>
 <tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
-<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
 <tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
 {''.join(cards)}</table></div>""" if cards else
         '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '

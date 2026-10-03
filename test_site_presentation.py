@@ -82,13 +82,15 @@ _PROD_ROW = (
     "<td class=\"num\">-8.0\u00a2<div class=\"sm mut\">v the close</div></td>"
     "<td class=\"num\">4\u20130<div class=\"sm mut\">4 settled</div></td>"
     "<td class=\"num\"><span class=\"mut\">+11.1%</span><div class=\"sm mut\">too early</div></td>"
+    "<td class=\"num\"><b class=\"pos\">\u25cf</b><div class=\"sm mut\">publishing</div></td>"
     "<td class=\"num\"><span class=\"neg\">11 of 30</span><div class=\"sm mut\">reachable</div></td>"
     "<td class=\"num\"><b>0</b></td>"
     "</tr>"
 )
 # "Reaches the feed" added 2026-10-03: a pair can be promoted on a record only partly
 # visible downstream, and until this column existed nothing on the page said which.
-_WANT = ["Pair", "Bets", "ROI", "CLV", "Record", "ROI", "Reaches the feed", "Leads to come"]
+_WANT = ["Pair", "Bets", "ROI", "CLV", "Record", "ROI", "Live", "Reaches the feed",
+         "Leads to come"]
 
 
 print("\nproduction phone labels")
