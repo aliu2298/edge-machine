@@ -190,11 +190,6 @@
    "lead_min": 6.2,
    "price": 0.62
   },
-  "covers:aec-mlb-wsh-det-2026-09-23": {
-   "at": "2026-09-23T17:00:47+00:00",
-   "lead_min": 9.2,
-   "price": 0.62
-  },
   "covers:aec-nfl-atl-gb-2026-09-24": {
    "at": "2026-09-25T00:05:16+00:00",
    "lead_min": 9.7,
@@ -489,11 +484,6 @@
    "at": "2026-09-23T22:33:22+00:00",
    "lead_min": 1.6,
    "price": 0.48
-  },
-  "espn_fpi:aec-mlb-wsh-det-2026-09-23": {
-   "at": "2026-09-23T17:00:47+00:00",
-   "lead_min": 9.2,
-   "price": 0.385
   },
   "espn_fpi:aec-nfl-ari-sf-2026-09-27": {
    "at": "2026-09-27T19:52:25+00:00",
@@ -895,6 +885,11 @@
    "lead_min": 11.4,
    "price": 0.72
   },
+  "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT03CANPER-2": {
+   "at": "2026-10-03T17:04:24+00:00",
+   "lead_min": 55.6,
+   "price": 0.74
+  },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26SEP25INDPAN-2": {
    "at": "2026-09-25T13:58:28+00:00",
    "lead_min": 1.5,
@@ -964,6 +959,11 @@
    "at": "2026-10-01T13:48:37+00:00",
    "lead_min": 11.4,
    "price": 0.55
+  },
+  "o25_congestion:KXINTLFRIENDLYTOTAL-26OCT03CANPER-3": {
+   "at": "2026-10-03T17:04:24+00:00",
+   "lead_min": 55.6,
+   "price": 0.52
   },
   "o25_congestion:KXINTLFRIENDLYTOTAL-26OCT03RUSNAM-3": {
    "at": "2026-10-03T14:48:08+00:00",
@@ -1066,8 +1066,8 @@
    "price": 0.63
   },
   "olbg:KXBOXING-26OCT03ALHAMBMESSAO": {
-   "at": "2026-10-03T16:49:09+00:00",
-   "lead_min": 40.8,
+   "at": "2026-10-03T17:04:24+00:00",
+   "lead_min": 25.6,
    "price": 0.71
   },
   "olbg:KXUFCFIGHT-26SEP26DUMPER": {
@@ -1105,6 +1105,11 @@
    "lead_min": 36.5,
    "price": 0.93
   },
+  "olbg:aec-boxing-seabru-hamudd-2026-10-03": {
+   "at": "2026-10-03T17:04:24+00:00",
+   "lead_min": 25.6,
+   "price": 0.91
+  },
   "olbg:aec-ufc-brahie-rinnak-2026-09-26": {
    "at": "2026-09-26T18:14:57+00:00",
    "lead_min": 15.0,
@@ -1134,6 +1139,11 @@
    "at": "2026-09-26T18:14:57+00:00",
    "lead_min": 15.0,
    "price": 0.88
+  },
+  "p05_unbeaten:KXINTLFRIENDLYGAME-26OCT03CANPER-PER": {
+   "at": "2026-10-03T17:04:24+00:00",
+   "lead_min": 55.6,
+   "price": 0.86
   },
   "p05_unbeaten:KXINTLFRIENDLYGAME-26SEP24JPNURU-URU": {
    "at": "2026-09-24T09:55:50+00:00",
@@ -2915,6 +2925,11 @@
    "lead_min": 12.6,
    "price": 0.78
   },
+  "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT03CANPER-4": {
+   "at": "2026-10-03T17:04:24+00:00",
+   "lead_min": 55.6,
+   "price": 0.75
+  },
   "u35_low_scoring:KXINTLFRIENDLYTOTAL-26SEP24PSENZL-4": {
    "at": "2026-09-24T09:25:27+00:00",
    "lead_min": 4.5,
@@ -3006,5 +3021,5 @@
    "price": 0.49
   }
  },
- "updated": "2026-10-03T16:49:09+00:00"
+ "updated": "2026-10-03T17:04:24+00:00"
 }
