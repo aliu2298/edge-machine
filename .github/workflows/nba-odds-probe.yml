@@ -1,0 +1,82 @@
+# Last season's NBA team-total and PRA prices, pulled by hand.
+#
+# Manual dispatch only, and deliberately so. Every historical call costs 10 credits per
+# region per market against a 500-credit monthly tier that the Pinnacle lane already paces
+# itself inside, so this must never run on a schedule: a cron at four runs a day would eat
+# the month's budget before anything read the result.
+#
+# ODDS_API_KEY is a repository secret. GitHub masks it in logs and never passes it to a
+# workflow triggered from a fork, and nba_odds_probe calls it through the adapter in
+# sandbox_sources that reports failures by status code alone, never by URL.
+#
+#   mode=probe  10 credits. Settles whether the free tier serves historical odds at all --
+#               the pricing table and the historical-data page contradict each other.
+#   mode=pull   20 credits a game. Writes data/nba_probe/ and commits it.
+name: NBA odds probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe (10 credits) or pull (20 credits per game)"
+        type: choice
+        options: [probe, pull]
+        default: probe
+      date:
+        description: "Slate date YYYY-MM-DD (default: a 9-game night last season)"
+        default: "2026-01-17"
+      games:
+        description: "Games to pull, when mode=pull"
+        default: "10"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nba-odds-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Read the snapshots
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          set -o pipefail
+          if [ "${{ inputs.mode }}" = "probe" ]; then
+            python3 nba_odds_probe.py --probe --date "${{ inputs.date }}" \
+              | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            python3 nba_odds_probe.py --pull "${{ inputs.games }}" \
+              --date "${{ inputs.date }}" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # Only the probe's own output. Nothing else in the repo is touched, so a failed pull
+      # cannot leave a half-written slate committed as if it were complete.
+      - name: Commit what was read
+        if: ${{ inputs.mode == 'pull' }}
+        run: |
+          git config user.name "aliu2298"
+          git config user.email "aliu2298@users.noreply.github.com"
+          git add -A data/nba_probe || true
+          if git diff --cached --quiet; then
+            echo "nothing new to commit" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git commit -m "NBA ${{ inputs.date }} team totals and PRA, read by hand
+
+          Historical snapshots from The Odds API, each game priced at its own tip-off
+          minus 30 minutes. Neither Kalshi nor Polymarket US holds any NBA price
+          history, so this is the only route to last season's lines.
+
+          Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+          git pull --rebase origin main
+          git push origin HEAD:main
