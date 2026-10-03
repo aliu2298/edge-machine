@@ -7112,8 +7112,10 @@ ok("+5.95" in _tn and "REAL prices" in _tn,
    "and records that this is the one lane measured against real prices, with its ROI")
 ok("does NOT clear" in _tn and "4.16" in _tn,
    "and states plainly that the verified version does not clear the permutation bar")
-ok("COVERAGE RISK" in _tn,
-   "and warns that Kalshi may never list Turkish totals, in which case the lane logs nothing")
+ok("COVERAGE, CORRECTED 2026-10-03" in _tn and "384 KXSUPERLIGTOTAL" in _tn
+   and "our omission" in _tn and "UNANSWERED" in _tn,
+   "and corrects the old claim that Kalshi never listed Turkish totals: it listed and settled "
+   "them, we asked six days late, so an empty record answers nothing")
 
 # ---------------------------------------------------------------------------
 # Turkey BTTS in heavy mismatches — pre-registered 2026-09-27, beside turkey_o25_dog
@@ -7163,8 +7165,10 @@ ok("z +3.51" in _kn and "z +4.59" in _kn,
    "the note pins BTTS on both windows, including the cell that cleared the permutation bar")
 ok("2.03" in _kn and "0.504" in _kn and "0.517" in _kn,
    "and records the three live boards that verified the model's price level to 1.3 points")
-ok("COVERAGE RISK" in _kn,
-   "and warns Kalshi may never list a Turkish BTTS market, in which case the lane logs nothing")
+ok("COVERAGE, CORRECTED 2026-10-03" in _kn and "54 KXSUPERLIGBTTS" in _kn
+   and "our omission" in _kn and "UNANSWERED" in _kn,
+   "and corrects the old claim that no Turkish BTTS market was ever seen: 54 settled, the last "
+   "six days before we asked, so an empty record answers nothing")
 ok("37 matches" in _kn,
    "and flags that the held-out season rests on a small sample")
 

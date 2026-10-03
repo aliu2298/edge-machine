@@ -679,11 +679,19 @@ SOURCES = {
              "a mean 0.504 implied against the model's 0.517. The benchmark was right to "
              "within 1.3 points, which removes the objection. At those prices and the band's "
              "66.4% the bet returns about +32.6% (+35%, +20%, +43% on the three), against "
-             "+12.0% for over 2.5 on the same boards. COVERAGE RISK: KXSUPERLIGBTTS exists as "
-             "a Kalshi series but no market from it has ever been seen, because Turkey was "
-             "missing from BTTS_LEAGUES until 2026-09-26. If Kalshi lists none, this lane "
-             "logs nothing, which is itself the answer. ~1.4 bets a matchweek. Judged against "
-             "backing BTTS on every match of this market."),
+             "+12.0% for over 2.5 on the same boards. COVERAGE, CORRECTED 2026-10-03. This "
+             "note used to say KXSUPERLIGBTTS exists as a series but no market from it has "
+             "ever been seen, and that if Kalshi lists none the empty record is itself the "
+             "answer. Both halves were wrong, and the error flattered the lane. Kalshi has "
+             "settled 54 KXSUPERLIGBTTS markets, the last closing 2026-09-20: the series was "
+             "listed all along, and Turkey was missing from BTTS_LEAGUES until 2026-09-26 \u2014 "
+             "six days AFTER that close \u2014 so the board never asked. The empty record is our "
+             "omission, not Kalshi\u2019s absence, and it answers nothing. What is true today "
+             "is narrower: Turkey has no open market of any shape, while Bundesliga, La Liga, "
+             "Eredivisie and the Premier League all have next-matchday boards open. Until a "
+             "Turkish board is both listed and requested, read this lane as UNANSWERED. "
+             "~1.4 bets a matchweek. Judged against backing BTTS on every match of this "
+             "market."),
     "turkey_o25_dog": dict(
         label="Turkey over 2.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
         connected=True, site="edge-machine", sports=["soccer_o25"], baseline="population",
@@ -704,12 +712,19 @@ SOURCES = {
              "version at z +4.40 is the only cell of 1,424 that clears the permutation bar of "
              "4.16, but BTTS has no real price so that figure is model-implied; the over-2.5 "
              "version has a real price and reaches z +3.03, which does NOT clear. The cell "
-             "that clears is modelled, the cell that is verified does not clear. COVERAGE "
-             "RISK, stated up front: Kalshi publishes KXSUPERLIGTOTAL as a series but has "
-             "never listed a market we have seen, because Turkey was missing from "
-             "BTTS_LEAGUES until today and we never asked. If Kalshi lists no Turkish totals "
-             "this lane logs nothing, which is itself the answer. ~1 bet a matchweek, so the "
-             "30-bet floor is far off. Judged against backing the over on every match of this "
+             "that clears is modelled, the cell that is verified does not clear. COVERAGE, "
+             "CORRECTED 2026-10-03. This note used to say Kalshi publishes KXSUPERLIGTOTAL "
+             "but has never listed a market we have seen, and that an empty record is itself "
+             "the answer. Both halves were wrong. Kalshi has settled 384 KXSUPERLIGTOTAL "
+             "markets and 162 KXSUPERLIGGAME boards, the last of each closing 2026-09-20; "
+             "Turkey was missing from BTTS_LEAGUES until 2026-09-26, six days AFTER that "
+             "close, so the board never asked. The empty record is our omission, not "
+             "Kalshi\u2019s absence, and it answers nothing. What is true today is narrower: "
+             "Turkey has no open market of any shape, while Bundesliga, La Liga, Eredivisie "
+             "and the Premier League all have next-matchday boards open. Until a Turkish "
+             "board is both listed and requested, read this lane as UNANSWERED. ~1 bet a "
+             "matchweek, so the 30-bet floor is far off. Judged against backing the over on "
+             "every match of this "
              "market. RE-MEASURED 2026-09-26 on the last three seasons, the window this "
              "project now uses. The effect is LARGER and the sample smaller: 143 matches, "
              "76.2% against a 66.6% market fair price — +7.4pp, ROI +6.76% at the average "
@@ -3594,6 +3609,11 @@ BTTS_LEAGUES = {                 # Kalshi fragment -> board league name (ESPN fo
     # totals week to week is still unknown: the Nations League series existed for months
     # without ever listing a goals market (see CUP_FRAGS below), and this may be the same.
     # Adding the fragment is how we find out, and it costs nothing if the answer is no.
+    # ANSWERED 2026-10-03, and not the way that expected: Kalshi had already listed and
+    # settled 384 KXSUPERLIGTOTAL and 54 KXSUPERLIGBTTS markets, the last closing
+    # 2026-09-20 — six days BEFORE this fragment was added. Nothing Turkish has been open
+    # since, while four other leagues have next-matchday boards up, so the open question is
+    # now whether Kalshi RE-lists Turkey, not whether it ever did.
     "SUPERLIG": "Turkish Super Lig",
 }
 # CUPS and INTERNATIONALS (2026-09-19). The same six form rules, applied to cup ties and to
