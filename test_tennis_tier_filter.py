@@ -352,8 +352,9 @@ def main():
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
     counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED]
-    eq(len(counted), 45,
-       "[records] counts pm_combo3 plus the two already-empty Kalshi baskets")
+    eq(len(counted), 55,
+       "[records] counts pm_combo3, the two already-empty Kalshi baskets, "
+       "and the ten BUILD lanes shown with no bets")
     ok(not any(r["name"] in ("nws", "nws_fade", "covers") for r in rows),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
