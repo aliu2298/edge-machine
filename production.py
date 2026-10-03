@@ -386,6 +386,23 @@ def _clip_shown(value, limit=80):
     return value[:limit] + "…"
 
 
+def _days_since(when, now=None):
+    """Whole days from `when` to now, or None when `when` is unreadable.
+
+    Used only to say how long a Production pair has gone without logging a bet.
+    """
+    if not when:
+        return None
+    try:
+        t = datetime.datetime.fromisoformat(str(when).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=datetime.timezone.utc)
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    return max(0, int((now - t).total_seconds() // 86400))
+
+
 def _kickoff_known(lead):
     """True when the kickoff parses. A naive timestamp is UTC, via fmt.chicago."""
     raw = lead.get("kickoff")
@@ -506,12 +523,30 @@ def page(d, st, blob, style, now=None):
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)
         clv = fmt.signed_cents(whole["clv"])
+        # WHY the Since-Production record is empty, which "none yet" alone hid. Three pairs
+        # read "— none yet" at once and they meant three different things: one had two bets
+        # running and nothing settled, one had logged nothing in two days, and one cannot be
+        # executed at all. A pair idling is a thing to act on; a pair waiting is not, and the
+        # column has to tell them apart.
+        open_since = sum(1 for q in T.all_bets(raw)
+                         if q.get("source") == source and q.get("sport") == sport
+                         and q.get("bet") and q.get("status") == "open"
+                         and str(q.get("logged") or "") >= str(since or ""))
+        idle_days = _days_since(since)
+        if live["n"]:
+            since_note = f"{live['n']} settled"
+        elif open_since:
+            since_note = f"{open_since} running"
+        elif idle_days is not None:
+            since_note = f"nothing in {idle_days}d"
+        else:
+            since_note = "none yet"
         cards.append(f"""<tr>
 <td><b>{esc(name(key))}</b><div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{f"{live['n']} settled" if live['n'] else 'none yet'}</div></td>
+<td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>
