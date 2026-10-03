@@ -770,6 +770,17 @@ def collect(verbose=True, combo_used=None):
             if verbose and tstats.get("feed"):
                 print(f"  Tennis        schedule: {tstats['matched']} of {len(extra) + tstats['dropped']} "
                       f"Kalshi starts verified, {tstats['dropped']} already under way")
+        if sport == "mma" and extra:
+            # Kalshi publishes no kickoff for a fight, only an estimate, so a Kalshi MMA row
+            # is unpublishable until its own milestone agrees. See S.apply_kalshi_mma_starts.
+            # An outage leaves the estimate in place and the rows simply stay unverified.
+            try:
+                extra, mstats = S.apply_kalshi_mma_starts(extra)
+                if verbose and mstats.get("feed"):
+                    print(f"  MMA           schedule: {mstats['matched']} Kalshi starts verified, "
+                          f"{mstats['unverified']} unverified, {mstats['dropped']} already under way")
+            except Exception as e:
+                print(f"  ! kalshi mma starts failed: {type(e).__name__}: {str(e)[:60]}")
         if sport == "cricket" and extra:
             # The estimate above is only a logging cutoff. A row is publishable once
             # Kalshi's milestone, the ticker and the rules agree. See
@@ -2301,7 +2312,7 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 # is worse than no start. Polymarket US carries its own.
 ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # start_source values that mean a real start time, not the venue's estimate.
-# kalshi_milestone is cricket only, and only after the checks above agree.
+# kalshi_milestone is cricket and MMA only, each after its own checker agrees.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
 
 # Each sport is named here. A _cup twin, soccer_u35_intl, and every other
@@ -2352,8 +2363,13 @@ def placeable(q):
                 and bool(q.get("side_a")) and bool(q.get("side_b"))):
             return False
         source = q.get("start_source")
+        # kalshi_milestone counts for cricket and MMA, each verified by its own checker and
+        # each for its own reason. Cricket takes the milestone instant neat because a T20
+        # begins late; MMA subtracts PINNACLE_START_MARGIN_MIN because a fight card walks out
+        # early. Every other Kalshi sport still needs a start from outside Kalshi.
         kalshi_ok = (source in VERIFIED_STARTS
-                     and (source != "kalshi_milestone" or q.get("sport") == "cricket"))
+                     and (source != "kalshi_milestone"
+                          or q.get("sport") in ("cricket", "mma")))
         return q.get("venue") == "polymarket_us" or (q.get("venue") == "kalshi" and kalshi_ok)
     return False
 

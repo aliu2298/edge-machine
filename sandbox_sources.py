@@ -8091,6 +8091,117 @@ def apply_kalshi_cricket_starts(rows, milestones=None, rules=None, now=None):
                       unverified=unverified, feed=feed)
 
 
+# A Kalshi MMA milestone is STRUCTURED where cricket's is prose, so this is shorter than
+# apply_kalshi_cricket_starts and deliberately no looser. Surveyed across every live UFC
+# event on 2026-10-03: exactly one "mma_match" milestone each, every one carrying a
+# start_date, and details.status "not_started" on all of them. Anything outside that shape
+# leaves the row unverified rather than guessing.
+MMA_MILESTONE_TYPE = "mma_match"
+# The only pre-match status Kalshi has been seen to publish for a fight. An exact match is
+# required, as in cricket: an unknown label is not a green light, even when the start is
+# still ahead. A missing or blank status does not drop the row, it just leaves it unverified.
+MMA_OK_STATUS = ("not_started",)
+
+
+def _verified_mma_start(event_ticker, milestones):
+    """The instant a Kalshi MMA fight starts, or None when the milestone does not agree.
+
+    None unless: exactly one mma_match milestone exists for the event, it names that event
+    in primary_event_tickers, its start_date parses as a timezone-aware UTC instant, and
+    details.status is exactly a member of MMA_OK_STATUS. Two milestones is ambiguity, not a
+    tie to be broken.
+
+    PINNACLE_START_MARGIN_MIN is subtracted for the reason the constant already exists: a
+    fight card walks out EARLY. Cricket runs the other way and takes its milestone neat,
+    because a T20 begins late. Taking the listed instant here would publish a fight that may
+    already be under way, which is the failure the verified-start rule exists to prevent.
+    """
+    rows = [m for m in (milestones or []) if m.get("type") == MMA_MILESTONE_TYPE]
+    if len(rows) != 1:
+        return None
+    m = rows[0]
+    tickers = m.get("primary_event_tickers")
+    if not isinstance(tickers, list) or event_ticker not in tickers:
+        return None
+    status = (m.get("details") or {}).get("status")
+    if status is None or str(status).strip() == "" or status not in MMA_OK_STATUS:
+        return None
+    try:
+        start = datetime.fromisoformat(str(m.get("start_date") or "").replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    if start.tzinfo is None:
+        start = start.replace(tzinfo=timezone.utc)
+    return start.astimezone(timezone.utc) - timedelta(minutes=PINNACLE_START_MARGIN_MIN)
+
+
+def apply_kalshi_mma_starts(rows, milestones=None, now=None):
+    """Give Kalshi MMA rows a verified start when Kalshi's own milestone agrees.
+
+    Returns (rows, stats), the same shape apply_kalshi_cricket_starts returns. A row keeps
+    its unverified estimate as venue_start. A verified start already in the past is dropped,
+    counted separately from a status drop, exactly as cricket counts them.
+
+    Fail-soft: a milestones outage is printed, caches nothing, raises nothing, and leaves
+    every row unverified rather than unpublishable-by-accident. Rows that are not Kalshi MMA
+    are returned untouched.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    feed = True
+    mine = lambda r: r.get("venue") == "kalshi" and r.get("sport") == "mma"
+    if milestones is None:
+        milestones = {}
+        events, seen = [], set()
+        for r in rows:
+            et = r.get("market_id")
+            if mine(r) and et and et not in seen:
+                seen.add(et)
+                events.append(et)
+        successes, fails = 0, 0
+        for et in events:
+            if fails >= KALSHI_MILESTONE_MAX_FAILS:
+                print(f"  ! kalshi mma milestones: stopped after {fails} consecutive failures")
+                break
+            ms, err = fetch_kalshi_milestones(et)
+            if err or ms is None:
+                fails += 1
+                print(f"  ! kalshi mma milestones {et}: {str(err or 'no milestones')[:80]}")
+                continue
+            fails = 0
+            successes += 1
+            milestones[et] = ms
+        if events and successes == 0:
+            feed = False
+    kept, matched, dropped_started = [], 0, 0
+    for r in rows:
+        if not mine(r):
+            kept.append(r)
+            continue
+        et = r.get("market_id")
+        verified = _verified_mma_start(et, milestones.get(et))
+        if verified is None:
+            kept.append(r)
+            continue
+        try:
+            est = datetime.fromisoformat(str(r.get("start")))
+        except (TypeError, ValueError):
+            kept.append(r)
+            continue
+        if est.tzinfo is None:
+            est = est.replace(tzinfo=timezone.utc)
+        if verified <= now:
+            dropped_started += 1
+            continue
+        matched += 1
+        kept.append(dict(r, start=verified.isoformat(), date=verified.strftime("%Y-%m-%d"),
+                         start_source="kalshi_milestone", venue_start=est.isoformat()))
+    unverified = sum(1 for r in kept if mine(r) and r.get("start_source") != "kalshi_milestone")
+    return kept, dict(matched=matched, dropped=dropped_started,
+                      dropped_started=dropped_started, unverified=unverified, feed=feed)
+
+
 # Pinnacle is not in here: it is planned across every sport after these have run, so its
 # credits go to the contests none of them cover (plan_pinnacle, called from publish).
 CHALLENGERS = {
