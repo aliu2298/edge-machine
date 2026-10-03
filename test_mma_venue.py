@@ -225,6 +225,7 @@ def main():
     near = (datetime.now(timezone.utc) + timedelta(hours=1)).replace(microsecond=0)
     t_k = _row("KXATPMATCH-26OCT03ALPHBE", "kalshi", "Alex Alpha", "Blake Beta",
                0.78, 0.24, near, sport="tennis")
+    t_k["start_source"] = "tennisexplorer"
     t_p = _row("aec-atp-alpha-beta-2026-10-03", "polymarket_us", "Alex Alpha", "Blake Beta",
                0.79, 0.23, near, sport="tennis")
     tennis = {"quotes": [], "meta": {}, "coverage": {}}

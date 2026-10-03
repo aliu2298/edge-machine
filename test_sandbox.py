@@ -6676,7 +6676,11 @@ eq(S.SOURCES["tennis_fav_band_3h"]["note"],
    "on the kept set (z -3.06 on the fade prices before fees). The units of "
    "P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and the "
    "z on the side that was backed are before fees: one contract, pay the "
-   "price, receive 1.",
+   "price, receive 1. A Polymarket US match filed under the atp league is "
+   "ATP only when Kalshi's ATP series lists the same two players. A "
+   "Challenger listing, or no listing, is not ATP. A Kalshi start is "
+   "inside the 3-hour window only when Tennis Explorer has confirmed "
+   "it; an estimate is unknown and is not a bet.",
    "the 3-hour note states the window, the band, and the tour cut")
 _tnow = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
 

@@ -291,7 +291,11 @@ SOURCES = {
              "on the kept set (z -3.06 on the fade prices before fees). The units of "
              "P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and the "
              "z on the side that was backed are before fees: one contract, pay the "
-             "price, receive 1."),
+             "price, receive 1. A Polymarket US match filed under the atp league is "
+             "ATP only when Kalshi's ATP series lists the same two players. A "
+             "Challenger listing, or no listing, is not ATP. A Kalshi start is "
+             "inside the 3-hour window only when Tennis Explorer has confirmed "
+             "it; an estimate is unknown and is not a bet."),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
@@ -1969,7 +1973,7 @@ def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
                 continue
             listed += 1
             tradeable, ask_a, ask_b, spread, mid_a = pmus_book(m)
-            rows.append(dict(
+            row = dict(
                 sport=sport, venue="polymarket_us", market_id=str(m.get("slug")),
                 label=f"{outs[0]} vs {outs[1]}", side_a=str(outs[0]), side_b=str(outs[1]),
                 price_a=ask_a if ask_a is not None else 0.5,
@@ -1977,7 +1981,13 @@ def fetch_polymarket_us(sport, horizon_days=4, cap=MAX_PER_SPORT, stats=None):
                 mid_a=mid_a if mid_a is not None else 0.5, spread=spread, liquidity=None,
                 start=wdt.isoformat(), date=wdt.strftime("%Y-%m-%d"), volume=0.0,
                 untraded=not tradeable, url=f"https://polymarket.us/event/{ev.get('slug')}",
-            ))
+            )
+            # The atp league is not the tour. Challenger matches are filed there.
+            # apply_pm_atp_tours resolves them against Kalshi; until then the
+            # row is not ATP.
+            if sport == "tennis":
+                row["pm_league"] = slug
+            rows.append(row)
     rows.sort(key=lambda r: (r["untraded"], r["start"]))
     if stats is not None:
         stats["listed"] = listed
@@ -4069,6 +4079,90 @@ def tennis_fav_kept(market_id):
     return tennis_tier(market_id) in TENNIS_FAV_KEEP
 
 
+def _kalshi_tour_listings(rows):
+    """(tier, side_a, side_b) for Kalshi ATP and Challenger rows.
+
+    The series is the tour. KXATPCHALLENGERMATCH is checked as its own prefix
+    so it cannot be read as ATP.
+    """
+    out = []
+    for r in rows or []:
+        if not isinstance(r, dict):
+            continue
+        mid = str(r.get("market_id") or "")
+        if mid.startswith("KXATPCHALLENGERMATCH"):
+            tier = "atpch"
+        elif mid.startswith("KXATPMATCH"):
+            tier = "atp"
+        else:
+            continue
+        a, b = r.get("side_a"), r.get("side_b")
+        if a and b:
+            out.append((tier, a, b))
+    return out
+
+
+def match_pm_atp_tour(side_a, side_b, listings):
+    """'atp', 'atpch', or None for one Polymarket US atp-league match.
+
+    None is unknown: no listing named both players, or ATP and Challenger
+    both did. Unknown is not ATP.
+    """
+    hits = set()
+    for tier, a, b in listings or []:
+        score, _flip = pair_match(side_a, side_b, a, b, sport="tennis")
+        if score > 0:
+            hits.add(tier)
+    if hits == {"atp"}:
+        return "atp"
+    if hits == {"atpch"}:
+        return "atpch"
+    return None
+
+
+def apply_pm_atp_tours(rows, listings_rows):
+    """Stamp `tour` on Polymarket US rows that came from the atp league.
+
+    The league slug is not the tour: Challenger matches are filed there too.
+    A row already stamped, including 'unknown', is left as it is, so a later
+    pass over a deduped universe cannot wipe a Kalshi cross-match.
+    """
+    listings = _kalshi_tour_listings(listings_rows)
+    for r in rows or []:
+        if not isinstance(r, dict) or r.get("pm_league") != "atp":
+            continue
+        if r.get("tour") in TENNIS_TIERS or r.get("tour") == "unknown":
+            continue
+        tour = match_pm_atp_tour(r.get("side_a"), r.get("side_b"), listings)
+        r["tour"] = tour if tour else "unknown"
+
+
+def tennis_row_kept(row):
+    """True when this universe row is on a tour the favourite band keeps.
+
+    A Polymarket US row from the atp league is kept only when the cross-match
+    resolved it as ATP. Challenger and unknown are not kept. Every other id
+    uses tennis_tier, so a Kalshi series and a WTA Doubles or UTR slug are
+    unchanged.
+    """
+    if isinstance(row, dict) and row.get("pm_league") == "atp":
+        return row.get("tour") in TENNIS_FAV_KEEP
+    mid = row.get("market_id") if isinstance(row, dict) else row
+    return tennis_fav_kept(mid)
+
+
+def tennis_logged_tier(row, market_id):
+    """The tour to stamp on a new quote.
+
+    An atp-league Polymarket row keeps the resolved tour, or nothing when
+    that tour is unknown. The slug is not stamped as ATP in that case.
+    """
+    if isinstance(row, dict) and row.get("pm_league") == "atp":
+        tour = row.get("tour")
+        return tour if tour in TENNIS_TIERS else None
+    return tennis_tier(market_id)
+
+
 # Lanes whose page record restarted at TENNIS_FAV_KEEP_SINCE. pm_combo4 is
 # not in this set: it stays in Production, paused, on the record already on
 # file, and that record is not rewritten here.
@@ -4109,9 +4203,31 @@ def _tour_outside_keep(market_id, tier=None):
     return mid.startswith("aec-") or mid.startswith("KX")
 
 
-def _tennis_leg_kept(leg):
+def _pm_atp_unconfirmed(market_id, venue, tour, logged):
+    """A post-reset Polymarket atp slug that was not resolved as a kept tour.
+
+    The slug is not confirmation. `tour` is, when it names a kept tour.
+    A row logged before the reset clock keeps the slug reading, so the
+    looked-at record does not move. The row itself is not deleted.
+    """
+    mid = str(market_id or "")
+    if tennis_tier(mid) != "atp" or not mid.startswith("aec-"):
+        return False
+    if str(venue or "") != "polymarket_us":
+        return False
+    if str(logged or "") < TENNIS_FAV_KEEP_SINCE:
+        return False
+    return tour not in TENNIS_FAV_KEEP
+
+
+def _tennis_leg_kept(leg, logged=None):
     if isinstance(leg, dict):
-        return not _tour_outside_keep(leg.get("market_id"), leg.get("tier"))
+        if _pm_atp_unconfirmed(leg.get("market_id"), leg.get("venue"), leg.get("tour"), logged):
+            return False
+        tier = leg.get("tier")
+        if not tier and leg.get("tour") in TENNIS_TIERS:
+            tier = leg.get("tour")
+        return not _tour_outside_keep(leg.get("market_id"), tier)
     return not _tour_outside_keep(leg)
 
 
@@ -4119,14 +4235,18 @@ def tennis_refused_row(q):
     """A reset-lane bet on a tour the keep set refuses.
 
     The row stays in the ledger. Pages, records, and verdicts leave it out.
-    A basket is refused when any leg is. pm_combo4 is not a reset lane, so
-    its four baskets stay on the page and in its record.
+    A basket is refused when any leg is. A post-reset Polymarket leg whose
+    atp slug was not confirmed as ATP is refused the same way. pm_combo4 is
+    not a reset lane, so its four baskets stay on the page and in its record.
     """
     if not isinstance(q, dict) or q.get("source") not in TENNIS_FAV_RESET:
         return False
+    logged = q.get("logged")
     legs = q.get("legs") or []
     if legs:
-        return any(not _tennis_leg_kept(leg) for leg in legs)
+        return any(not _tennis_leg_kept(leg, logged) for leg in legs)
+    if _pm_atp_unconfirmed(q.get("market_id"), q.get("venue"), q.get("tour"), logged):
+        return True
     return _tour_outside_keep(q.get("market_id"), q.get("tier"))
 
 
@@ -5013,8 +5133,13 @@ PM_COMBO_MEASURED = {2: True, 3: False, 4: False}
 
 def pm_combo_legs_by_day(universe=None):
     """{date: [(row, side, price)]} — basket legs on POLYMARKET US, the mirror of
-    combo_legs_by_day. Same band, same tours, same one-leg-per-match rule."""
+    combo_legs_by_day. Same band, same tours, same one-leg-per-match rule.
+
+    An atp-league row is a leg only when Kalshi's ATP series names the same
+    players. A Challenger cross-match, or no cross-match, is not a leg.
+    """
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
+    apply_pm_atp_tours(rows, rows)
     lo, hi = fav_band("tennis")
     by_day = {}
     for r in rows:
@@ -5022,7 +5147,14 @@ def pm_combo_legs_by_day(universe=None):
             continue
         if r.get("untraded") or r.get("price_draw") is not None:
             continue
-        if not tennis_fav_kept(r.get("market_id")):
+        if not tennis_row_kept(r):
+            if r.get("pm_league") == "atp":
+                for side in ("a", "b"):
+                    p = r.get(f"price_{side}")
+                    if p is not None and lo <= p < hi and (r.get("tradeable") or {}).get(side, True):
+                        print(f"  pm_combo: skip {r.get('market_id')}: "
+                              f"tour {r.get('tour') or 'unknown'}, not ATP")
+                        break
             continue
         for side in ("a", "b"):
             p = r.get(f"price_{side}")
@@ -5147,11 +5279,7 @@ def _basket_rows(by_day, used, markup, sport, prefix, url):
                     # The leg's own NAME travels with it. A basket is bought by naming its
                     # legs to the venue, and "KXATPMATCH-26SEP24MARBOL yes" is not something
                     # a reader can check against the match they think they are backing.
-                    legs=[dict(market_id=r["market_id"], pick=sd,
-                               venue=r.get("venue", "polymarket"),
-                               name=str(r["side_a"] if sd == "a" else r["side_b"]),
-                               start=str(r["start"]))
-                          for r, sd, _ in pick],
+                    legs=[_combo_leg(r, sd) for r, sd, _ in pick],
                 ))
     return out
 
@@ -5387,11 +5515,85 @@ def fetch_tennis_fav_band(sport, universe=None):
 TENNIS_FAV_3H = timedelta(hours=3)
 
 
+def _combo_leg(row, side):
+    """One basket leg. `tour` travels with it when the resolver stamped one."""
+    leg = dict(market_id=row["market_id"], pick=side,
+               venue=row.get("venue", "polymarket"),
+               name=str(row["side_a"] if side == "a" else row["side_b"]),
+               start=str(row["start"]))
+    if row.get("tour") in TENNIS_TIERS or row.get("tour") == "unknown":
+        leg["tour"] = row["tour"]
+    return leg
+
+
+def _tennis_start(row):
+    """Aware UTC start, or None when the field cannot be read."""
+    try:
+        start = datetime.fromisoformat(str(row.get("start")))
+    except (TypeError, ValueError, AttributeError):
+        return None
+    if start.tzinfo is None:
+        start = start.replace(tzinfo=timezone.utc)
+    return start
+
+
+def tennis_start_verified(row):
+    """True when this row's start is a real start, not Kalshi's estimate.
+
+    Polymarket US publishes the match start. A Kalshi tennis row has one only
+    after Tennis Explorer has confirmed it. Anything else is not verified.
+    """
+    if not isinstance(row, dict) or not row.get("start"):
+        return False
+    if row.get("venue") in ("polymarket_us", "polymarket"):
+        return True
+    return row.get("start_source") == "tennisexplorer"
+
+
+def tennis_start_window(row, now):
+    """'in', 'out', or 'unknown'.
+
+    'in' is a verified start strictly after `now` and at most TENNIS_FAV_3H
+    ahead. An unverified start is 'unknown', including when Kalshi's estimate
+    sits inside that window. A missing or unreadable start is 'unknown'.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    if not tennis_start_verified(row):
+        return "unknown"
+    start = _tennis_start(row)
+    if start is None:
+        return "unknown"
+    lead = start - now
+    if timedelta(0) < lead <= TENNIS_FAV_3H:
+        return "in"
+    return "out"
+
+
+def _estimate_in_window(row, now):
+    """True when the stored clock sits inside the 3-hour window.
+
+    This does not verify the clock. It only decides whether a skip is worth
+    logging: an estimate hours away is not the mis-timed entry.
+    """
+    start = _tennis_start(row)
+    if start is None:
+        return False
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    lead = start - now
+    return timedelta(0) < lead <= TENNIS_FAV_3H
+
+
 def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
     """The 0.77-0.81 band, inside TENNIS_FAV_3H, on a tour in TENNIS_FAV_KEEP.
 
-    The band and the window are unchanged. tennis_fav_band itself is not filtered.
-    A kept match inside the window is returned here and there; publish logs both.
+    The band and the window are unchanged. A Kalshi start counts only when
+    Tennis Explorer has confirmed it; otherwise the window is unknown and the
+    bet is skipped. A Polymarket US atp-league row counts as ATP only when
+    Kalshi's ATP series lists the same players. tennis_fav_band itself is
+    not filtered.
     """
     if sport != "tennis":
         return []
@@ -5399,17 +5601,24 @@ def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
     uni = universe if universe is not None else (UNIVERSE or {})
+    rows = list(uni.get(sport) or [])
+    apply_pm_atp_tours(rows, rows)
     near = []
-    for r in uni.get(sport) or []:
-        try:
-            start = datetime.fromisoformat(str(r.get("start")))
-        except (TypeError, ValueError):
+    for r in rows:
+        window = tennis_start_window(r, now)
+        if window == "unknown":
+            if tennis_row_kept(r) and _estimate_in_window(r, now):
+                print(f"  tennis_fav_band_3h: skip {r.get('market_id')}: "
+                      f"unverified start, window unknown")
             continue
-        if start.tzinfo is None:
-            start = start.replace(tzinfo=timezone.utc)
-        lead = start - now
-        if timedelta(0) < lead <= TENNIS_FAV_3H and tennis_fav_kept(r.get("market_id")):
-            near.append(r)
+        if window != "in":
+            continue
+        if not tennis_row_kept(r):
+            if r.get("pm_league") == "atp":
+                print(f"  tennis_fav_band_3h: skip {r.get('market_id')}: "
+                      f"tour {r.get('tour') or 'unknown'}, not ATP")
+            continue
+        near.append(r)
     return band_picks(sport, fav_band("tennis"), {sport: near})
 
 

@@ -51,8 +51,10 @@ def _slug(tier):
 def _picks():
     start = NOW + timedelta(hours=2)
     rows = [_row(_slug(t), 0.78, start, "polymarket_us") for t in ("atp", "wtadb", "utr") + DROPPED]
+    kept_kalshi = _row("KXATPMATCH-26OCT02OK", 0.78, start, "kalshi")
+    kept_kalshi["start_source"] = "tennisexplorer"
     rows += [
-        _row("KXATPMATCH-26OCT02OK", 0.78, start, "kalshi"),
+        kept_kalshi,
         _row("KXATPCHALLENGERMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row("KXWTAMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row("KXITFMATCH-26OCT02NO", 0.78, start, "kalshi"),
