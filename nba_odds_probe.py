@@ -152,11 +152,21 @@ def main():
     if a.probe:
         ok, left, note = probe(listing_at)
         print(f"historical access: {'YES' if ok else 'NO'} — {note}")
+        if left is None:
+            # A refusal returns no usage header, so the balance is read from the free
+            # /v4/sports endpoint instead. This matters: the point of a 10-credit probe is
+            # to spend little, and the run should be able to show that it did.
+            try:
+                _, h = S._odds_get("/sports", {})
+                left = _remaining(h)
+            except RuntimeError:
+                left = None
         if left is not None:
             print(f"credits remaining: {left}")
         if not ok:
-            print("the free tier does not serve historical odds; the 20K plan at $30/mo is "
-                  "the cheapest that does")
+            print("the free tier does not serve historical odds. A 401 is refused at auth, "
+                  "before billing, so this cost nothing. The 20K plan at $30/mo is the "
+                  "cheapest that serves it.")
         return 0 if ok else 1
 
     if a.pull <= 0:
