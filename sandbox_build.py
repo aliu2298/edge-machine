@@ -748,12 +748,20 @@ VERDICTS = {                     # key -> (label, chip class, sort order)
     "removed":   ("Removed from Production", "x", 5),
     "nobets":    ("No qualifying match yet", "n", 7),
     "retired":   ("Retired", "x", 8),
+    "build_fail": ("Fails BUILD", "x", 5),
 }
 EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
 
 
 def verdict(a):
-    """proven / working / no edge at MIN_N+ settled; promising / behind from EARLY_N; early below."""
+    """proven / working / no edge at MIN_N+ settled; promising / behind from EARLY_N; early below.
+
+    When the row carries BUILD sub-periods, a fail is build_passes and nothing else.
+    A row without them is the live record, unchanged.
+    """
+    blocks = a.get("build_subperiods")
+    if blocks is not None and not S.build_passes(blocks):
+        return "build_fail"
     if not a["n"]:
         return "waiting"
     if a["n"] < EARLY_N:
