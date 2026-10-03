@@ -4019,9 +4019,29 @@ def tennis_tier(market_id):
 # returns, never a prefix of the id: ATP does not keep ATP Doubles, the
 # Challenger, or Challenger qualifying. The tours were chosen by looking at the
 # record already on file. The tennis_fav_band_3h note says what that does and
-# does not mean. TENNIS_FAV_KEEP_SINCE is after every bet already logged.
+# does not mean.
+#
+# TENNIS_FAV_KEEP_SINCE is the moment the filter REACHED MAIN, not the moment it
+# was written. It was first set to 05:00, which was 11.5h too early: the commits
+# were authored 05:31-07:14 but sat on a branch, and the narrowed selection only
+# ran from the 16:34 merge. Two bets logged in that gap -- an ATP win at 12:05 and
+# a UTR loss at 15:47 -- were on kept tours and so passed the tour filter, but the
+# OLD unnarrowed rule had chosen them. They opened the fresh record at -35.9%
+# before the new rule had placed anything of its own. A reset has to begin where
+# the behaviour changed, or the first thing the new record shows is the old rule.
 TENNIS_FAV_KEEP = frozenset({"atp", "wtadb", "utr"})
-TENNIS_FAV_KEEP_SINCE = "2026-10-02T05:00:00+00:00"
+TENNIS_FAV_KEEP_SINCE = "2026-10-02T16:34:37+00:00"
+
+# TWO INSTANTS, deliberately separate, because conflating them moved the evidence.
+#   TENNIS_FAV_KEEP_SINCE     when the narrowed rule STARTED RUNNING (the merge).
+#                             The lane's record restarts here.
+#   TENNIS_FAV_EVIDENCE_BEFORE  the record that was LOOKED AT when the tours were
+#                             chosen. A fixed historical fact: 648 contests, ATP
+#                             +6.35, kept-set z +2.76, the figures the note quotes.
+# They were one constant at first, so moving the reset forward silently dragged 14
+# more contests into the "looked-at" record and every quoted figure drifted. The
+# evidence cannot move when the reset is corrected; it is what was on the table.
+TENNIS_FAV_EVIDENCE_BEFORE = "2026-10-02T05:00:00+00:00"
 
 
 def tennis_fav_kept(market_id):

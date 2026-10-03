@@ -10,6 +10,7 @@ Fails on main: a dropped tour inside the window is still picked, and a
 dropped-tour leg still enters a basket. No network.
 """
 import collections
+import json
 import math
 from datetime import datetime, timedelta, timezone
 
@@ -77,7 +78,9 @@ def _settled_before_clock(q):
     as +00:00, so a grade written that way cannot re-enter the frozen record.
     """
     text = str(q.get("settled") or "").replace("Z", "+00:00")
-    return bool(text) and text < S.TENNIS_FAV_KEEP_SINCE
+    # The LOOKED-AT record, which is historical and fixed. Not the reset clock:
+    # the reset moved to the merge and this must not move with it.
+    return bool(text) and text < S.TENNIS_FAV_EVIDENCE_BEFORE
 
 
 def _contests(d):
@@ -212,8 +215,10 @@ def _quote(source, mid, logged, tier=None):
 
 
 def _reset_fixture():
-    clock = "2026-10-02T05:00:00+00:00"
-    after = "2026-10-02T06:00:00+00:00"
+    # Derived from the constant, never a literal hour: the clock moved once already
+    # (05:00 -> the 16:34 merge) and a fixture pinned to the old hour hid that.
+    clock = S.TENNIS_FAV_KEEP_SINCE
+    after = "2026-10-02T17:00:00+00:00"
     before = "2026-10-01T12:00:00+00:00"
     return {"quotes": [
         _quote("tennis_fav_band_3h", "aec-atp-new-bb-2026-10-02", after, "atp"),
@@ -224,7 +229,7 @@ def _reset_fixture():
 
 def _reset_stages():
     return {"pairs": {"tennis_fav_band_3h|tennis": {
-        "stage": "sandbox", "since": "2026-10-02T05:00:00+00:00"}}}
+        "stage": "sandbox", "since": S.TENNIS_FAV_KEEP_SINCE}}}
 
 
 def _stamp_row(table, label):
@@ -333,7 +338,17 @@ def main():
     print("\nthe page record restarts; the ledger rows stay")
     st = T.load_stages()
     since = getattr(S, "TENNIS_FAV_KEEP_SINCE", None)
-    eq(since, "2026-10-02T05:00:00+00:00", "the clock is a fixed instant after every logged bet")
+    # The clock is the moment the filter REACHED MAIN, not the moment it was written.
+    # It was first set to 05:00 while the commits sat on a branch until the 16:34 merge,
+    # so two bets the OLD unnarrowed rule had chosen opened the fresh record at -35.9%.
+    # A reset begins where the behaviour changed.
+    eq(since, "2026-10-02T16:34:37+00:00",
+       "the clock is the merge that put the narrowed selection on main")
+    ok(all(str(q.get("logged") or "") < since
+           for q in T.all_bets(json.load(open(T.LEDGER)))
+           if q.get("source") == "tennis_fav_band_3h" and q.get("bet")
+           and not S.tennis_fav_kept(q.get("market_id"))),
+       "no bet on a refused tour was logged after the clock")
     for key in ("tennis_fav_band_3h|tennis", "tennis_combo2|tennis_combo",
                 "tennis_combo3|tennis_combo", "tennis_combo4|tennis_combo",
                 "pm_combo2|tennis_pmcombo", "pm_combo3|tennis_pmcombo"):
@@ -364,8 +379,12 @@ def main():
     refused = [q for q in T.all_bets(d) if _refused_tour(q)]
     h3 = [q for q in refused if q.get("source") == "tennis_fav_band_3h"]
     logged_before = [q for q in h3 if str(q.get("logged") or "") < since]
-    eq(len(logged_before), 73,
-       "73 dropped-tour 3-hour bets were logged before the clock")
+    # The count is whatever it is; what must hold is that EVERY refused-tour bet
+    # predates the clock. One logged after it would mean the filter is not gating.
+    eq(len(logged_before), len(h3),
+       f"all {len(h3)} dropped-tour 3-hour bets were logged before the clock")
+    ok(not [q for q in h3 if str(q.get("logged") or "") >= since],
+       "and none was logged after it — a refused tour after the clock means the filter is not gating")
     ok(all(q["id"] in {x.get("id") for x in T.all_bets(d)} for q in refused),
        "every refused-tour row is still in the loaded ledger")
     html, index, weeks = SB.render_pages(d=d, st=st)
