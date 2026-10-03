@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Last season's NBA team-total and PRA prices, from The Odds API's historical snapshots.
 
-WHY THIS EXISTS. Neither venue the bot can reach holds any NBA price history. Every NBA
+WHY THIS EXISTS. Neither venue this project can reach holds any NBA price history. Every NBA
 market Kalshi serves is `active` and closes this month; asked for the window Oct 2025 to
 Jul 2026 it returns nothing on the game, team-total and PRA series alike, and the two
 markets wanted here -- KXNBATEAMTOTAL and KXNBAPRA -- hold no markets at all. Polymarket US
