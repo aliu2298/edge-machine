@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-03T05:36:05+00:00",
+ "board_built_at": "2026-10-03T08:04:49+00:00",
  "leads": {
   "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
    "away": "Rinya Nakamura",
@@ -366,7 +366,7 @@
    "kickoff": "2026-10-03T20:30Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "MMA",
    "match": "Anthony Wint v Lucas Armand",
    "pair": "mma_fav_band|mma",
@@ -381,6 +381,35 @@
    "source": "mma_fav_band",
    "sport": "mma",
    "status": "pending"
+  },
+  "2026-10-03|Bangladesh|Sri Lanka|Sri Lanka to win \u00b7 Oddspedia community tips": {
+   "away": "Sri Lanka",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-02",
+   "headline": "Sri Lanka to win",
+   "home": "Bangladesh",
+   "id": "2026-10-03|Bangladesh|Sri Lanka|Sri Lanka to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-03T00:00Z",
+   "lane": "production",
+   "league": "Cricket",
+   "match": "Bangladesh v Sri Lanka",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.33,
+   "route": {
+    "market": "aec-t20icr-ban-slr-2026-10-03-ban-slr",
+    "outcome": "Sri Lanka",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "oddspedia:aec-t20icr-ban-slr-2026-10-03-ban-slr",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "hit"
   },
   "2026-10-03|Canada|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Peru",
@@ -397,7 +426,7 @@
    "kickoff": "2026-10-03T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "International Friendly",
    "match": "Canada v Peru",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -422,7 +451,7 @@
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "MMA",
    "match": "Damian Pinas v Andrey Pulyaev",
    "pair": "mma_fav_band|mma",
@@ -453,7 +482,7 @@
    "kickoff": "2026-10-03T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "UEFA Nations League",
    "match": "Iceland v Bulgaria",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -478,7 +507,7 @@
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "MMA",
    "match": "Jacobe Smith v Bruce Whitehead",
    "pair": "mma_fav_band|mma",
@@ -509,7 +538,7 @@
    "kickoff": "2026-10-03T22:15Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "MMA",
    "match": "Marcus McGhee v Anthony Romero",
    "pair": "mma_fav_band|mma",
@@ -524,6 +553,35 @@
    "source": "mma_fav_band",
    "sport": "mma",
    "status": "pending"
+  },
+  "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule": {
+   "away": "Paul Elliott",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Shamil Erdogan to win",
+   "home": "Shamil Erdogan",
+   "id": "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T01:00Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Shamil Erdogan v Paul Elliott",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.77,
+   "route": {
+    "market": "aec-one-shaerd-pauell-2026-10-02-shaerd-pauell",
+    "outcome": "Shamil Erdogan",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-one-shaerd-pauell-2026-10-02-shaerd-pauell",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
   },
   "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule": {
    "away": "Payton Talbott",
@@ -540,7 +598,7 @@
    "kickoff": "2026-10-04T01:15Z",
    "lane": "production",
    "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T05:36:05+00:00",
+   "last_seen_at": "2026-10-03T08:04:49+00:00",
    "league": "MMA",
    "match": "Deiveson Figueiredo v Payton Talbott",
    "pair": "mma_fav_band|mma",
@@ -565,9 +623,9 @@
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
    "sandbox_clv": -0.008,
-   "sandbox_n": 5,
-   "sandbox_roi": -0.4899,
-   "sandbox_roi_fee": -0.4964
+   "sandbox_n": 6,
+   "sandbox_roi": -0.3585,
+   "sandbox_roi_fee": -0.3669
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -586,10 +644,10 @@
    "promoted_at": "2026-09-28T02:59:44+00:00",
    "ready_at": "2026-09-28T02:59:44+00:00",
    "route": "moved by hand on 2026-09-27",
-   "sandbox_clv": 0.04,
-   "sandbox_n": 2,
-   "sandbox_roi": 1.0556,
-   "sandbox_roi_fee": 0.9844
+   "sandbox_clv": 0.0333,
+   "sandbox_n": 3,
+   "sandbox_roi": 1.3805,
+   "sandbox_roi_fee": 1.294
   },
   "pm_combo4|tennis_pmcombo": {
    "by_hand": "2026-09-28",
@@ -628,5 +686,5 @@
  "stage": "production",
  "unlisted_skipped": 3,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-03T05:36:05+00:00"
+ "updated_at": "2026-10-03T08:04:49+00:00"
 }
