@@ -69,5 +69,25 @@ ok(note(0, 0, 2, 2) != note(0, 0, 0, 2),
 ok(note(0, 0, 0, 5) != "—", "an idle pair is never a bare dash")
 eq(T.PRICE_CEIL, 0.95, "the ceiling those two picks were refused by")
 
+print("\nthe reachable column: does this pair actually reach the feed?")
+
+
+def reach(all_n, ok_n):
+    """The same branch production.py uses for the Reaches-the-feed cell."""
+    if not all_n:
+        return "\u2014", ""
+    return f"{ok_n} of {all_n}", ("" if ok_n == all_n else "neg")
+
+
+eq(reach(18, 18), ("18 of 18", ""), "a pair the feed can fully express is not flagged")
+eq(reach(30, 11), ("11 of 30", "neg"), "a pair that leaks is flagged")
+eq(reach(21, 14), ("14 of 21", "neg"), "and so is a partial leak")
+eq(reach(0, 0), ("\u2014", ""), "a pair with no bets shows a dash, not 0 of 0")
+ok(reach(30, 11)[1] == "neg" and reach(18, 18)[1] == "",
+   "the flag is the whole point: cricket was promoted on 30 bets of which 11 were "
+   "reachable, and nothing on the page said so")
+ok(reach(30, 30)[0] != reach(30, 11)[0],
+   "a full pair and a leaking pair never render the same")
+
 print(f"\n{len(FAILS)} FAILED" if FAILS else "\nall passed")
 sys.exit(1 if FAILS else 0)

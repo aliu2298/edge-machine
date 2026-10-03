@@ -538,6 +538,16 @@ def page(d, st, blob, style, now=None):
         # which is the rule working, not idling. A lane declining on price has an opinion;
         # a lane seeing no board has none, and the column must not call them the same thing.
         priced_out = sum(1 for q in mine_since if not q.get("bet"))
+        # REACHABLE: of this pair's bets, how many the feed could ever publish. A pair can be
+        # promoted on a record only partly visible downstream -- cricket was moved on +142.8%
+        # across 30 bets of which 11 were reachable, and those 11 return +270% while the other
+        # 19 return +2.5%. Two lanes under one name. Nothing on this page said so, so it had
+        # to be dug out. The gate still judges the whole record; this only shows the gap.
+        all_bets = [q for q in T.all_bets(raw)
+                    if q.get("source") == source and q.get("sport") == sport and q.get("bet")]
+        reach_n = sum(1 for q in all_bets if T.placeable(q))
+        reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
+        reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
         idle_days = _days_since(since)
         if live["n"]:
             since_note = f"{live['n']} settled"
@@ -556,10 +566,11 @@ def page(d, st, blob, style, now=None):
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
 <td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
+<td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>
 <tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
-<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
 <tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
 {''.join(cards)}</table></div>""" if cards else
         '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
