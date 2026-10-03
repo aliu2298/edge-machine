@@ -815,11 +815,6 @@
    "lead_min": 2.0,
    "price": 0.01
   },
-  "o15_cup_mismatch:KXKNVBCUPTOTAL-26SEP23IJSGEM-2": {
-   "at": "2026-09-23T17:46:00+00:00",
-   "lead_min": 14.0,
-   "price": 0.86
-  },
   "o15_form_l10:KXMLSTOTAL-26SEP23SEARSL-2": {
    "at": "2026-09-24T01:20:08+00:00",
    "lead_min": 9.9,
@@ -886,9 +881,9 @@
    "price": 0.72
   },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT03CANPER-2": {
-   "at": "2026-10-03T17:34:43+00:00",
-   "lead_min": 25.3,
-   "price": 0.73
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 10.2,
+   "price": 0.74
   },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26SEP25INDPAN-2": {
    "at": "2026-09-25T13:58:28+00:00",
@@ -961,8 +956,8 @@
    "price": 0.55
   },
   "o25_congestion:KXINTLFRIENDLYTOTAL-26OCT03CANPER-3": {
-   "at": "2026-10-03T17:34:43+00:00",
-   "lead_min": 25.3,
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 10.2,
    "price": 0.53
   },
   "o25_congestion:KXINTLFRIENDLYTOTAL-26OCT03RUSNAM-3": {
@@ -1071,8 +1066,8 @@
    "price": 0.72
   },
   "olbg:KXBOXING-26OCT03JRBIACHO": {
-   "at": "2026-10-03T17:34:43+00:00",
-   "lead_min": 55.3,
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 40.2,
    "price": 0.58
   },
   "olbg:KXUFCFIGHT-26SEP26DUMPER": {
@@ -1091,8 +1086,8 @@
    "price": 0.92
   },
   "olbg:aec-boxing-ibrsul-sonhar-2026-10-03": {
-   "at": "2026-10-03T17:34:43+00:00",
-   "lead_min": 55.3,
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 40.2,
    "price": 0.92
   },
   "olbg:aec-boxing-jusshi-kevcas-2026-10-02": {
@@ -1151,9 +1146,9 @@
    "price": 0.88
   },
   "p05_unbeaten:KXINTLFRIENDLYGAME-26OCT03CANPER-PER": {
-   "at": "2026-10-03T17:34:43+00:00",
-   "lead_min": 25.3,
-   "price": 0.86
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 10.2,
+   "price": 0.85
   },
   "p05_unbeaten:KXINTLFRIENDLYGAME-26SEP24JPNURU-URU": {
    "at": "2026-09-24T09:55:50+00:00",
@@ -1224,6 +1219,11 @@
    "at": "2026-10-02T18:36:20+00:00",
    "lead_min": 8.7,
    "price": 0.7
+  },
+  "p05_unbeaten:KXUEFANLGAME-26OCT03SUISLO-SLO": {
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 55.2,
+   "price": 0.92
   },
   "p05_unbeaten:KXUEFANLGAME-26SEP24PORWAL-WAL": {
    "at": "2026-09-24T18:31:28+00:00",
@@ -1900,6 +1900,11 @@
    "lead_min": 11.3,
    "price": 0.28
   },
+  "team2_ranked:KXUEFANLTEAMTOTAL-26OCT03MKDSCO-SCO2": {
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 55.2,
+   "price": 0.49
+  },
   "team2_ranked:KXUEFANLTEAMTOTAL-26SEP24LIELTU-LTU2": {
    "at": "2026-09-24T18:31:28+00:00",
    "lead_min": 13.5,
@@ -1974,11 +1979,6 @@
    "at": "2026-09-24T02:50:54+00:00",
    "lead_min": 9.1,
    "price": 0.6857
-  },
-  "tennis_combo2:combo2:2026-09-23:7faf1d3a4c": {
-   "at": "2026-09-23T17:46:00+00:00",
-   "lead_min": 14.0,
-   "price": 0.6134
   },
   "tennis_combo2:combo2:2026-09-24:afa177aa70": {
    "at": "2026-09-24T03:51:38+00:00",
@@ -2084,21 +2084,6 @@
    "at": "2026-10-02T02:57:26+00:00",
    "lead_min": 2.6,
    "price": 0.6367
-  },
-  "tennis_combo3:combo3:2026-09-23:b3476984f5": {
-   "at": "2026-09-23T17:46:00+00:00",
-   "lead_min": 14.0,
-   "price": 0.4857
-  },
-  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23KICDEL": {
-   "at": "2026-09-23T17:46:00+00:00",
-   "lead_min": 14.0,
-   "price": 0.79
-  },
-  "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP23NEUMAR": {
-   "at": "2026-09-23T17:46:00+00:00",
-   "lead_min": 14.0,
-   "price": 0.77
   },
   "tennis_fav_band:KXATPCHALLENGERMATCH-26SEP27AVEBAS": {
    "at": "2026-09-27T21:23:35+00:00",
@@ -2931,9 +2916,9 @@
    "price": 0.78
   },
   "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT03CANPER-4": {
-   "at": "2026-10-03T17:34:43+00:00",
-   "lead_min": 25.3,
-   "price": 0.74
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 10.2,
+   "price": 0.75
   },
   "u35_low_scoring:KXINTLFRIENDLYTOTAL-26SEP24PSENZL-4": {
    "at": "2026-09-24T09:25:27+00:00",
@@ -2974,6 +2959,11 @@
    "at": "2026-10-03T15:48:40+00:00",
    "lead_min": 11.3,
    "price": 0.85
+  },
+  "u35_low_scoring:KXUEFANLTOTAL-26OCT03MKDSCO-4": {
+   "at": "2026-10-03T17:49:47+00:00",
+   "lead_min": 55.2,
+   "price": 0.81
   },
   "u35_low_scoring:KXUEFANLTOTAL-26SEP24ANDMLT-4": {
    "at": "2026-09-24T15:59:55+00:00",
@@ -3026,5 +3016,5 @@
    "price": 0.49
   }
  },
- "updated": "2026-10-03T17:34:43+00:00"
+ "updated": "2026-10-03T17:49:47+00:00"
 }
