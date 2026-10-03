@@ -355,15 +355,17 @@ def main():
         pair = (st.get("pairs") or {}).get(key) or {}
         eq((pair.get("stage"), pair.get("since")), ("sandbox", since),
            f"{key} counts from the tour cut, in the Sandbox")
+    # pm_combo4 left Production on 2026-10-03 (no parlay API to act on), but it is still
+    # NOT on the tour clock: its record stays whole, which is what this asserts.
     prod = (st.get("pairs") or {}).get("pm_combo4|tennis_pmcombo") or {}
-    eq(prod.get("stage"), "production", "pm_combo4 stays in Production")
-    ok(prod.get("entry_since") is None and "since" not in prod,
-       "pm_combo4's judged record is still its whole record")
+    ok("pm_combo4" not in S.TENNIS_FAV_RESET,
+       "pm_combo4 is off the tour clock, so its record is not restarted by the tour cut")
+    ok(prod.get("since") != S.TENNIS_FAV_KEEP_SINCE,
+       "and it does not carry the tour-cut clock")
     eq(sorted(T.PAIR_OVERRIDES),
        ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-        "pm_combo4|tennis_pmcombo", "team1_form_l5|soccer_team1",
-        "team1_form_l5|soccer_team1_intl"],
-       "the Production list is unchanged")
+        "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl"],
+       "the Production list no longer carries pm_combo4")
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
     counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED]

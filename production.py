@@ -528,15 +528,23 @@ def page(d, st, blob, style, now=None):
         # running and nothing settled, one had logged nothing in two days, and one cannot be
         # executed at all. A pair idling is a thing to act on; a pair waiting is not, and the
         # column has to tell them apart.
-        open_since = sum(1 for q in T.all_bets(raw)
-                         if q.get("source") == source and q.get("sport") == sport
-                         and q.get("bet") and q.get("status") == "open"
-                         and str(q.get("logged") or "") >= str(since or ""))
+        mine_since = [q for q in (raw.get("quotes") or [])
+                      if q.get("source") == source and q.get("sport") == sport
+                      and str(q.get("logged") or "") >= str(since or "")]
+        open_since = sum(1 for q in mine_since if q.get("bet") and q.get("status") == "open")
+        # PICKED BUT NOT BACKED is its own state, and the first version of this cell missed
+        # it. team1_form_l5 on the internationals read "nothing in 2d" while it had picked
+        # Spain to score at 0.99 and the Netherlands at 0.97 -- both refused by PRICE_CEIL,
+        # which is the rule working, not idling. A lane declining on price has an opinion;
+        # a lane seeing no board has none, and the column must not call them the same thing.
+        priced_out = sum(1 for q in mine_since if not q.get("bet"))
         idle_days = _days_since(since)
         if live["n"]:
             since_note = f"{live['n']} settled"
         elif open_since:
             since_note = f"{open_since} running"
+        elif priced_out:
+            since_note = f"{priced_out} priced out"
         elif idle_days is not None:
             since_note = f"nothing in {idle_days}d"
         else:

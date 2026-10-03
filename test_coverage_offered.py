@@ -89,8 +89,7 @@ def main():
        "MLS bands, ceilings, hold and series are unchanged")
     eq(sorted(T.PAIR_OVERRIDES),
        ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-        "pm_combo4|tennis_pmcombo", "team1_form_l5|soccer_team1",
-        "team1_form_l5|soccer_team1_intl"],
+        "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl"],
        "PAIR_OVERRIDES is unchanged")
 
     print("\n0 of 0 — nothing offered")

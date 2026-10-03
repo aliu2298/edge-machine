@@ -627,6 +627,12 @@
    "pair": "team1_form_l5|soccer_team1_intl",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-03T18:56:04+00:00",
+   "pair": "pm_combo4|tennis_pmcombo",
+   "reason": "taken off the Production list by hand",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -704,6 +710,7 @@
    "stage": "production"
   },
   "olbg|boxing": {
+   "demoted_at": "2026-09-28T02:59:44+00:00",
    "since": "2026-09-28T02:59:44+00:00",
    "stage": "sandbox"
   },
@@ -718,24 +725,9 @@
    "stage": "sandbox"
   },
   "pm_combo4|tennis_pmcombo": {
-   "by_hand": "2026-09-28",
-   "entry": {
-    "base_roi": 0.1153,
-    "clv": -0.0135,
-    "clv_n": 4,
-    "n": 4,
-    "own_roi": 0.2473,
-    "roi": 0.2473,
-    "roi_fee": 0.1972,
-    "span_days": 1.0833,
-    "weeks": 0,
-    "z": 0.4526
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-28T17:01:21+00:00",
-   "ready_at": "2026-09-28T17:01:21+00:00",
-   "ready_since": "2026-09-28T17:01:21+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-03T18:56:04+00:00",
+   "since": "2026-10-03T18:56:04+00:00",
+   "stage": "sandbox"
   },
   "soccerpredictions|soccer": {
    "since": "2026-09-21T02:05:59+00:00",
@@ -807,5 +799,5 @@
    "stage": "sandbox"
   }
  },
- "updated": "2026-10-03T17:59:18+00:00"
+ "updated": "2026-10-03T18:56:04+00:00"
 }

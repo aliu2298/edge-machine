@@ -821,7 +821,16 @@ def pair_list(d, st, include_retired=True):
             # reviewed before its first qualifying match; other pairs appear once they bet.
             # A consensus row is listed from the day it is wired too: it only ever bets where
             # two sources agree, so it can sit empty for days and should be visible meanwhile.
-            if group is None and not _scope(sport) and name not in T.CONSENSUS:
+            # A pair whose stage row carries a RESET has an empty window by construction --
+            # the reset is why -- so skipping it for having no bets deletes the row entirely
+            # and takes the record it was removed on with it. pm_combo4 left Production on
+            # 2026-10-03 with no ongoing volume and disappeared from the page outright, while
+            # olbg|boxing survived its own removal only because boxing kept betting. The
+            # "removed" branch below exists for exactly this and never got the chance to run.
+            reset_row = bool(pair.get("since")) and bool(
+                T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
+            if (group is None and not _scope(sport)
+                    and name not in T.CONSENSUS and not reset_row):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Waiting for results") and hides the record it was removed on.
@@ -831,7 +840,10 @@ def pair_list(d, st, include_retired=True):
                                a=T.assess(d, name, sport, until=pair["demoted_at"],
                                           venues=T.TRADEABLE_VENUES))
             v = verdict(a) if group is not None else "nobets"
-            if removed and v in ("waiting", "early"):
+            # "nobets" included: a removed pair with no volume since the removal has an empty
+            # window by construction, and reading it as a source that has never bet is the
+            # same erasure as dropping the row. pm_combo4 has four settled baskets.
+            if removed and v in ("waiting", "early", "nobets"):
                 v = "removed"
             if sport in gone:
                 v = "retired"

@@ -3077,12 +3077,13 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
    ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-    "pm_combo4|tennis_pmcombo", "team1_form_l5|soccer_team1",
-    "team1_form_l5|soccer_team1_intl"],
+    "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
-# pm_combo4 listed 2026-09-28 as asked, and NOT executable: Polymarket US has no parlay API.
-# Both ends must stay honest about that, so neither drifts into emitting an actionable lead.
-ok("pm_combo4|tennis_pmcombo" in T.PAIR_OVERRIDES, "pm_combo4 is listed in Production")
+# pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
+# API, so in five days as a Production pair it published zero leads and never could. The
+# refusal below is why, and it must keep holding or the pair could be relisted as a label.
+ok("pm_combo4|tennis_pmcombo" not in T.PAIR_OVERRIDES,
+   "pm_combo4 is out of Production: nothing can act on a Polymarket US basket")
 _pmq = dict(id="pmc:1", source="pm_combo4", sport="tennis_pmcombo", bet=True, venue="combo",
             pick="a", market_id="pmcombo4:x", price=0.401, side_a="All 4 win",
             side_b="Any one loses", status="won", pnl=149.5, stake=100.0,

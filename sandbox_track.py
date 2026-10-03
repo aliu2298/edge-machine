@@ -226,7 +226,20 @@ PAIR_OVERRIDES = {
     # A basket that could actually be acted on has to be the KALSHI twin: Kalshi does publish
     # multivariate_event_collections, KXMVECROSSCATEGORY-R is live, and tennis_combo2 already
     # clears placeable() on 7 leads. What is missing there is downstream, not an exchange.
-    "pm_combo4|tennis_pmcombo": dict(moved_on="2026-09-28", production_at=None),
+    #   pm_combo4 — listed 2026-09-28, OUT 2026-10-03. Not on its record: on the fact that
+    #   nothing can act on it. Polymarket US publishes no parlay API — its official SDK takes
+    #   a single marketSlug per order and holds no reference to a parlay, combo or basket
+    #   anywhere in the package, and the gateway serves no such endpoint. The exchange's own
+    #   site has a combo builder, which is why the lane can be PRICED, but no reachable
+    #   interface places one. Downstream agreed and said so: placeable() refused every
+    #   basket whose legs are not Kalshi markets, so in five days as a Production pair it
+    #   published zero leads and its Since-Production cell read "nothing in 5d" with no
+    #   prospect of ever reading anything else. A pair that cannot be acted on is a label,
+    #   and the page should not carry one. Its 4-basket Sandbox record stays on file.
+    #   If a basket is ever to be traded it has to be the KALSHI twin: Kalshi does publish
+    #   multivariate_event_collections, KXMVECROSSCATEGORY-R is live, and tennis_combo2
+    #   already clears placeable(). What is missing there is downstream support, not an
+    #   exchange.
     # 2026-09-22, as asked — without waiting for 30 settled. Both are ahead of the price on
     # records too small to read: the MMA favourite band 4-0 (4 won v 3.2 priced, +23.4% after
     # fees, z +1.00), OLBG's boxing tips 3-0 (3 won v 2.7 priced, +11.1%, z +0.59). The
@@ -2861,7 +2874,12 @@ def evaluate_stages(d, st, now=None, verbose=True):
                 pair = dict(pair, stage="production")
                 if not ov:
                     # Taken off the list by hand: back to the Sandbox, still measured.
-                    pair = dict(stage="sandbox", since=now_s)
+                    # demoted_at rides along so the page can still show the record it was
+                    # removed ON. Without it the pair's window restarts empty and reads as a
+                    # brand-new source, and sandbox_build's "removed" branch -- written for
+                    # exactly this -- never fires. Only the automatic net was setting it, so
+                    # every by-hand removal (olbg|boxing, pm_combo4) lost its history.
+                    pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
                     changes.append(dict(pair=key, to="sandbox", at=now_s,
                                         reason="taken off the Production list by hand"))
                     st["pairs"][key] = pair
