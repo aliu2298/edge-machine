@@ -748,6 +748,7 @@ VERDICTS = {                     # key -> (label, chip class, sort order)
     "removed":   ("Removed from Production", "x", 5),
     "nobets":    ("No qualifying match yet", "n", 7),
     "retired":   ("Retired", "x", 8),
+    "build_fail": ("Fails BUILD", "x", 5),
 }
 EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
 
@@ -813,7 +814,10 @@ def pair_list(d, st, include_retired=True):
             # reviewed before its first qualifying match; other pairs appear once they bet.
             # A consensus row is listed from the day it is wired too: it only ever bets where
             # two sources agree, so it can sit empty for days and should be visible meanwhile.
-            if group is None and not _scope(sport) and name not in T.CONSENSUS:
+            # A BUILD lane stays on the page with no entries, and stays on it
+            # when the floor fails. Hiding either case is the bug.
+            if (group is None and not _scope(sport) and name not in T.CONSENSUS
+                    and name not in S.BUILD_BANDS):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Waiting for results") and hides the record it was removed on.
@@ -823,6 +827,13 @@ def pair_list(d, st, include_retired=True):
                                a=T.assess(d, name, sport, until=pair["demoted_at"],
                                           venues=T.TRADEABLE_VENUES))
             v = verdict(a) if group is not None else "nobets"
+            # No settled bets: the row word is the research verdict. A fail
+            # shows the fail. A pass with nothing logged yet waits.
+            if name in S.BUILD_BANDS and not a["n"] and sport not in gone:
+                if not S.display_build_passes((n, z) for _lab, n, z in S.BUILD_BANDS[name]):
+                    v = "build_fail"
+                elif v == "nobets":
+                    v = "waiting"
             if removed and v in ("waiting", "early"):
                 v = "removed"
             if sport in gone:
@@ -1031,10 +1042,17 @@ def _row(r, rank=None, provisional=False, in_market=False):
     # sport name under the rule. The subtitle is the kind — Rule — the same
     # word the folded market sections already use.
     subline = meta["kind"] if (in_market or r["sport"] in MARKET_KEYS) else sub
+    # The live-record word stays. A BUILD lane that already has settled bets
+    # still prints the research verdict beside it, from the same helper.
+    build_more = ""
+    if r["v"] != "build_fail":
+        word = lane_build_word(r["name"])
+        if word:
+            build_more = f'<div class="sm mut">BUILD: {esc(word)}</div>'
     return f"""<tr><td class="num">{rk}</td>
 <td><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
 <div class="sm mut">{esc(subline)}</div>{gone}</td>
-<td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
+<td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}{build_more}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{close_cell(a)}</td>
 <td class="num">{fade}</td>
@@ -1055,7 +1073,7 @@ def definitions(rs):
         if not note:
             continue
         key = r["meta"]["label"].split(" (")[0]
-        seen.setdefault(key, [note, set(), r["meta"]["kind"], []])
+        seen.setdefault(key, [note, set(), r["meta"]["kind"], [], r["name"]])
         sfx = _scope(r["sport"])
         seen[key][1].add(S.SCOPE_LABEL[sfx] if sfx else "League")
         # Why a pair was retired belongs with its definition, not in the row: it is the last
@@ -1065,7 +1083,7 @@ def definitions(rs):
     if not seen:
         return ""
     items = []
-    for name, (note, scopes, kind, why) in sorted(seen.items()):
+    for name, (note, scopes, kind, why, source) in sorted(seen.items()):
         where = ", ".join(sorted(scopes, key=lambda x: ("League", "Cups", "Internationals").index(x)
                                  if x in ("League", "Cups", "Internationals") else 9))
         # A cup or international twin is a SEPARATE record on a different set of competitions,
@@ -1076,9 +1094,11 @@ def definitions(rs):
             for sfx, lab in S.SCOPE_LABEL.items() if lab in scopes)
         retired = "".join(f'<div class="sm"><b>Retired.</b> <span class="mut">{esc(w)}</span></div>'
                           for w in why)
+        word = lane_build_word(source)
+        build_line = (f'<div class="sm"><b>BUILD.</b> {esc(word)}.</div>' if word else "")
         items.append(f'<div class="def"><b>{esc(name)}</b>'
                      f'<span class="mut sm"> · {esc(kind)} · {esc(where)}</span>'
-                     f'{extra}{retired}<div class="sm mut">{esc(note)}</div></div>')
+                     f'{extra}{retired}{build_line}<div class="sm mut">{esc(note)}</div></div>')
     return (f'<details class="sport"><summary><b>How each rule is defined</b>'
             f'<span class="mut"> · {len(items)} of them, as registered</span></summary>'
             f'<div class="note sm">What each one backs, where the claim came from, and what was '
@@ -1453,7 +1473,11 @@ answers it sooner: a win record carries the outcome's own noise, so near an even
 edge needs thousands of settled bets to reach z 2, while the same closing prices read in tens.
 Called <b>ahead</b> or <b>behind</b> at t {T.CLV_T:g} over {T.CLV_MIN_N}+ fresh closes;
 <b>level</b> is a real answer, not a missing one. Beating the close is not the same as making
-money, and nothing is promoted or retired on it alone. Production is entered by hand.</div>
+money, and nothing is promoted or retired on it alone. Production is entered by hand.
+A league band also shows a <b>BUILD</b> verdict, read by the same rule as the tables
+below it: at least two sub-periods, each with at least {S.BUILD_MIN_SUBPERIOD_MATCHES}
+matches and z at least {S.BUILD_Z:.1f}. A band that fails that, or that has no settled
+bets yet, stays in the list with the failing or waiting word.</div>
 </details>"""
 
 
@@ -1510,6 +1534,107 @@ def market_folds(d, rs, fam):
 BY_LEAGUE = ("Soccer",)
 
 
+def _fmt_build_n(n):
+    return "not published" if n is None else str(int(n))
+
+
+def _fmt_build_z(z):
+    return "not published" if z is None else f"{z:+.2f}"
+
+
+def _build_sig(word):
+    chip = "y" if word in ("pass", "BUILD pass") else "x"
+    return f'<span class="sig {chip}">{esc(word)}</span>'
+
+
+def lane_build_word(name):
+    """The band word for one registered lane, or None when it is not a BUILD lane."""
+    blocks = S.BUILD_BANDS.get(name)
+    if not blocks:
+        return None
+    ok = S.display_build_passes((n, z) for _lab, n, z in blocks)
+    return "BUILD pass" if ok else "Fails BUILD"
+
+
+def build_lane_bits(label, blocks):
+    """Band table and matrix for one lane.
+
+    Cell words come from display_subperiod_passes. The band word comes from
+    display_build_passes. Nothing else decides pass or fail.
+    """
+    blocks = list(blocks)
+    band_rows = []
+    for lab, n, z in blocks:
+        word = "pass" if S.display_subperiod_passes(n, z) else "fail"
+        band_rows.append(
+            f"<tr><td>{esc(label)}</td><td>{esc(str(lab))}</td>"
+            f"<td class=\"num\">{esc(_fmt_build_n(n))}</td>"
+            f"<td class=\"num\">{esc(_fmt_build_z(z))}</td>"
+            f"<td>{_build_sig(word)}</td></tr>")
+    band_word = ("BUILD pass" if S.display_build_passes((n, z) for _lab, n, z in blocks)
+                 else "Fails BUILD")
+    band_rows.append(
+        f"<tr><td>{esc(label)}</td><td>band</td>"
+        f"<td class=\"num\">—</td><td class=\"num\">—</td>"
+        f"<td>{_build_sig(band_word)}</td></tr>")
+    band = (
+        "<div class=\"tbl\"><table>"
+        "<tr><th>Lane</th><th>Sub-period</th><th class=\"num\">Matches</th>"
+        "<th class=\"num\">z</th><th>Verdict</th></tr>"
+        + "".join(band_rows) + "</table></div>")
+    cells = []
+    for i in range(2):
+        if i >= len(blocks):
+            cells.append("<td>—</td>")
+            continue
+        lab, n, z = blocks[i]
+        word = "pass" if S.display_subperiod_passes(n, z) else "fail"
+        cells.append(
+            f"<td>{esc(str(lab))}<div class=\"sm mut\">{esc(_fmt_build_n(n))} · "
+            f"{esc(_fmt_build_z(z))}</div>{_build_sig(word)}</td>")
+    matrix = (
+        "<div class=\"tbl\"><table>"
+        "<tr><th>Lane</th><th>Block 1</th><th>Block 2</th><th>Band</th></tr>"
+        f"<tr><td><b>{esc(label)}</b></td>{''.join(cells)}"
+        f"<td>{_build_sig(band_word)}</td></tr></table></div>")
+    return {"band": band, "matrix": matrix}
+
+
+def build_research(rows):
+    """The BUILD band table and the lane-by-block matrix for the lanes in `rows`.
+
+    A removed lane is not here. A lane that fails the floor is here.
+    """
+    order = list(S.BUILD_BANDS)
+    seen = set()
+    lanes = []
+    for r in rows:
+        name = r["name"]
+        if name in seen or name not in S.BUILD_BANDS:
+            continue
+        if S.lane_removed(name, r.get("sport")):
+            continue
+        seen.add(name)
+        lanes.append(r)
+    if not lanes:
+        return ""
+    lanes.sort(key=lambda r: order.index(r["name"]))
+    bands, matrices = [], []
+    for r in lanes:
+        label = r["meta"]["label"].split(" (")[0]
+        bits = build_lane_bits(label, S.BUILD_BANDS[r["name"]])
+        bands.append(bits["band"])
+        matrices.append(bits["matrix"])
+    return f"""<details class="sport"><summary><b>BUILD</b>
+<span class="mut"> · held-out split · {S.BUILD_MIN_SUBPERIOD_MATCHES}-match floor</span></summary>
+<div class="note sm">Each cell is one sub-period. Pass means at least {S.BUILD_MIN_SUBPERIOD_MATCHES}
+matches and z at least {S.BUILD_Z:.1f}, in the direction of the claim. The band passes only when
+at least two sub-periods do. A figure the note does not publish is marked not published and
+does not pass. A lane that fails stays listed.</div>
+{''.join(bands)}
+{''.join(matrices)}</details>"""
+
+
 def sport_sections(d, rows):
     """One folding section per sport: Production and the strongest records first."""
     fams = {}
@@ -1533,6 +1658,7 @@ def sport_sections(d, rows):
         out.append(f"""<details class="sport"><summary><b>{esc(f)}</b>
 <span class="mut"> · {esc(' · '.join(bits))}</span></summary>
 {market_folds(d, rs, f) if len({_base_sport(r["sport"]) for r in rs}) > 1 else '<div class="tbl"><table>' + SPORT_HEAD + ''.join(_row(r, rk, prov) for rk, prov, r in ranked) + '</table></div>'}
+{build_research(rs)}
 {league_panel(d, rs) if f in BY_LEAGUE else ''}
 {definitions(rs)}</details>""")
     return "\n".join(out)
