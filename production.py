@@ -60,20 +60,44 @@ def route_label(pair):
     return f"moved by hand on {pair['by_hand']}" if pair.get("by_hand") else "moved by hand"
 
 
-def _kickoff(q):
-    """UTC kickoff, or None when the timestamp cannot be parsed or converted.
+def _one_instant(value):
+    """One timestamp as a UTC instant, or None when it cannot be parsed or converted.
 
     An out-of-range instant (year 1 at midnight UTC, converted into a zone
     behind UTC) raises OverflowError. A malformed string raises ValueError.
     Callers show a placeholder or skip the quote; they do not crash.
     """
     try:
-        dt = datetime.datetime.fromisoformat(str(q["start"]))
+        dt = datetime.datetime.fromisoformat(str(value))
         if dt.tzinfo is None:
             dt = dt.replace(tzinfo=datetime.timezone.utc)
         return dt.astimezone(datetime.timezone.utc)
     except (TypeError, ValueError, OverflowError, OSError):
         return None
+
+
+def _kickoff(q):
+    """The EARLIEST credible UTC start for this bet, or None when none parses.
+
+    A row can carry two times that do not agree. `start` is the one a source may have
+    adjusted — Pinnacle re-times a fight from the card — and `venue_start` is the route
+    venue's own time for this contest. On 2026-10-03 ten open bets disagreed, four of
+    them with `start` LATER than the venue's: Pinnacle put a UFC bout at the card's
+    23:30Z while Polymarket US listed that bout at 21:30Z, and a boxing row was three
+    hours late. Publishing the later time is the dangerous direction, because a consumer
+    measures its own cutoff backwards from this field: at 30 minutes before 23:30Z the
+    feed still called that pick open for ninety minutes after the fight had begun, and
+    Polymarket US keeps a fight market trading throughout. Only a price ceiling stood
+    between the feed and a bet placed on a result already half known.
+
+    So the feed takes the EARLIER of the two, always. Being early costs a bet that was
+    never placed; being late buys into a contest whose outcome is partly settled, and
+    that is not a risk a paper record can price. `start` alone is used when it is the
+    only one that parses, which is the common case.
+    """
+    cands = [t for t in (_one_instant(q.get("start")), _one_instant(q.get("venue_start")))
+             if t is not None]
+    return min(cands) if cands else None
 
 
 def start_verified(q):
