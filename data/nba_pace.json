@@ -1,0 +1,4464 @@
+{
+ "built": "2026-10-04T05:14:50+00:00",
+ "games": [
+  {
+   "act_ft": 234,
+   "act_h1": 131,
+   "act_q1": 64,
+   "away": "MIA",
+   "completed": true,
+   "day": "2026-10-03",
+   "err_ft": -4.1,
+   "err_h1": 13.5,
+   "err_q1": 7.0,
+   "home": "TOR",
+   "id": "401902644",
+   "roll_away_D": 123.8,
+   "roll_away_O": 128.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 238.1,
+   "roll_exp_h1": 117.5,
+   "roll_exp_q1": 57.0,
+   "roll_home_D": 107.4,
+   "roll_home_O": 116.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 2,
+   "seed_away_D": 123.8,
+   "seed_away_O": 128.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 238.1,
+   "seed_exp_h1": 117.5,
+   "seed_exp_q1": 57.0,
+   "seed_home_D": 107.4,
+   "seed_home_O": 116.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 2,
+   "start": "2026-10-03T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "UTAH",
+   "completed": false,
+   "day": "2026-10-04",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "DEN",
+   "id": "401914127",
+   "roll_away_D": 134.8,
+   "roll_away_O": 121.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 255.6,
+   "roll_exp_h1": 125.4,
+   "roll_exp_q1": 64.3,
+   "roll_home_D": 122.0,
+   "roll_home_O": 132.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 4,
+   "seed_away_D": 134.8,
+   "seed_away_O": 121.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 255.6,
+   "seed_exp_h1": 125.4,
+   "seed_exp_q1": 64.3,
+   "seed_home_D": 122.0,
+   "seed_home_O": 132.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 4,
+   "start": "2026-10-04T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "GS",
+   "completed": false,
+   "day": "2026-10-04",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "LAC",
+   "id": "401918010",
+   "roll_away_D": 116.0,
+   "roll_away_O": 111.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 227.9,
+   "roll_exp_h1": 112.3,
+   "roll_exp_q1": 57.3,
+   "roll_home_D": 113.2,
+   "roll_home_O": 115.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 0,
+   "seed_away_D": 116.0,
+   "seed_away_O": 111.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 227.9,
+   "seed_exp_h1": 112.3,
+   "seed_exp_q1": 57.3,
+   "seed_home_D": 113.2,
+   "seed_home_O": 115.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 0,
+   "start": "2026-10-04T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MEM",
+   "completed": false,
+   "day": "2026-10-05",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "ATL",
+   "id": "401898388",
+   "roll_away_D": 137.6,
+   "roll_away_O": 112.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 243.5,
+   "roll_exp_h1": 123.0,
+   "roll_exp_q1": 60.1,
+   "roll_home_D": 116.4,
+   "roll_home_O": 120.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 2,
+   "seed_away_D": 137.6,
+   "seed_away_O": 112.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 243.5,
+   "seed_exp_h1": 123.0,
+   "seed_exp_q1": 60.1,
+   "seed_home_D": 116.4,
+   "seed_home_O": 120.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 2,
+   "start": "2026-10-05T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "PHX",
+   "completed": false,
+   "day": "2026-10-05",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "DET",
+   "id": "401908947",
+   "roll_away_D": 108.0,
+   "roll_away_O": 109.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 224.4,
+   "roll_exp_h1": 123.5,
+   "roll_exp_q1": 61.9,
+   "roll_home_D": 109.6,
+   "roll_home_O": 122.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 1,
+   "seed_away_D": 108.0,
+   "seed_away_O": 109.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 224.4,
+   "seed_exp_h1": 123.5,
+   "seed_exp_q1": 61.9,
+   "seed_home_D": 109.6,
+   "seed_home_O": 122.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 1,
+   "start": "2026-10-05T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "NY",
+   "completed": false,
+   "day": "2026-10-05",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "PHI",
+   "id": "401914101",
+   "roll_away_D": 102.4,
+   "roll_away_O": 112.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 214.8,
+   "roll_exp_h1": 113.0,
+   "roll_exp_q1": 55.9,
+   "roll_home_D": 108.8,
+   "roll_home_O": 105.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 0,
+   "seed_away_D": 102.4,
+   "seed_away_O": 112.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 214.8,
+   "seed_exp_h1": 113.0,
+   "seed_exp_q1": 55.9,
+   "seed_home_D": 108.8,
+   "seed_home_O": 105.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 0,
+   "start": "2026-10-05T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MIN",
+   "completed": false,
+   "day": "2026-10-05",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MIL",
+   "id": "401914102",
+   "roll_away_D": 123.2,
+   "roll_away_O": 124.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 238.1,
+   "roll_exp_h1": 120.3,
+   "roll_exp_q1": 60.6,
+   "roll_home_D": 116.4,
+   "roll_home_O": 112.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 2,
+   "seed_away_D": 123.2,
+   "seed_away_O": 124.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 238.1,
+   "seed_exp_h1": 120.3,
+   "seed_exp_q1": 60.6,
+   "seed_home_D": 116.4,
+   "seed_home_O": 112.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 2,
+   "start": "2026-10-06T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "LAL",
+   "completed": false,
+   "day": "2026-10-05",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "SAC",
+   "id": "401898716",
+   "roll_away_D": 108.0,
+   "roll_away_O": 113.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 227.2,
+   "roll_exp_h1": 117.2,
+   "roll_exp_q1": 59.5,
+   "roll_home_D": 120.2,
+   "roll_home_O": 113.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 1,
+   "seed_away_D": 108.0,
+   "seed_away_O": 113.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 227.2,
+   "seed_exp_h1": 117.2,
+   "seed_exp_q1": 59.5,
+   "seed_home_D": 120.2,
+   "seed_home_O": 113.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 1,
+   "start": "2026-10-06T02:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "BKN",
+   "completed": false,
+   "day": "2026-10-06",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "CHA",
+   "id": "401901820",
+   "roll_away_D": 117.8,
+   "roll_away_O": 104.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 221.5,
+   "roll_exp_h1": 114.0,
+   "roll_exp_q1": 56.2,
+   "roll_home_D": 108.6,
+   "roll_home_O": 112.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 1,
+   "seed_away_D": 117.8,
+   "seed_away_O": 104.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 221.5,
+   "seed_exp_h1": 114.0,
+   "seed_exp_q1": 56.2,
+   "seed_home_D": 108.6,
+   "seed_home_O": 112.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 1,
+   "start": "2026-10-06T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "NO",
+   "completed": false,
+   "day": "2026-10-06",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "OKC",
+   "id": "401898389",
+   "roll_away_D": 128.4,
+   "roll_away_O": 124.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 244.0,
+   "roll_exp_h1": 121.9,
+   "roll_exp_q1": 59.3,
+   "roll_home_D": 114.0,
+   "roll_home_O": 121.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 3,
+   "seed_away_D": 128.4,
+   "seed_away_O": 124.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 244.0,
+   "seed_exp_h1": 121.9,
+   "seed_exp_q1": 59.3,
+   "seed_home_D": 114.0,
+   "seed_home_O": 121.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 3,
+   "start": "2026-10-07T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "DEN",
+   "completed": false,
+   "day": "2026-10-06",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "UTAH",
+   "id": "401914128",
+   "roll_away_D": 122.0,
+   "roll_away_O": 132.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 255.6,
+   "roll_exp_h1": 125.4,
+   "roll_exp_q1": 64.3,
+   "roll_home_D": 134.8,
+   "roll_home_O": 121.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 4,
+   "seed_away_D": 122.0,
+   "seed_away_O": 132.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 255.6,
+   "seed_exp_h1": 125.4,
+   "seed_exp_q1": 64.3,
+   "seed_home_D": 134.8,
+   "seed_home_O": 121.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 4,
+   "start": "2026-10-07T01:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "LAL",
+   "completed": false,
+   "day": "2026-10-06",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "GS",
+   "id": "401898390",
+   "roll_away_D": 108.0,
+   "roll_away_O": 113.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 224.3,
+   "roll_exp_h1": 109.7,
+   "roll_exp_q1": 56.3,
+   "roll_home_D": 116.0,
+   "roll_home_O": 111.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 0,
+   "seed_away_D": 108.0,
+   "seed_away_O": 113.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 224.3,
+   "seed_exp_h1": 109.7,
+   "seed_exp_q1": 56.3,
+   "seed_home_D": 116.0,
+   "seed_home_O": 111.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 0,
+   "start": "2026-10-07T02:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MIN",
+   "completed": false,
+   "day": "2026-10-07",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "IND",
+   "id": "401914123",
+   "roll_away_D": 123.2,
+   "roll_away_O": 124.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 235.9,
+   "roll_exp_h1": 120.3,
+   "roll_exp_q1": 59.6,
+   "roll_home_D": 114.6,
+   "roll_home_O": 110.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 2,
+   "seed_away_D": 123.2,
+   "seed_away_O": 124.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 235.9,
+   "seed_exp_h1": 120.3,
+   "seed_exp_q1": 59.6,
+   "seed_home_D": 114.6,
+   "seed_home_O": 110.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 2,
+   "start": "2026-10-07T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "ORL",
+   "completed": false,
+   "day": "2026-10-07",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MEM",
+   "id": "401898391",
+   "roll_away_D": 110.2,
+   "roll_away_O": 120.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 240.3,
+   "roll_exp_h1": 120.9,
+   "roll_exp_q1": 59.4,
+   "roll_home_D": 137.6,
+   "roll_home_O": 112.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 2,
+   "seed_away_D": 110.2,
+   "seed_away_O": 120.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 240.3,
+   "seed_exp_h1": 120.9,
+   "seed_exp_q1": 59.4,
+   "seed_home_D": 137.6,
+   "seed_home_O": 112.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 2,
+   "start": "2026-10-08T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MIL",
+   "completed": false,
+   "day": "2026-10-07",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "OKC",
+   "id": "401908620",
+   "roll_away_D": 116.4,
+   "roll_away_O": 112.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 232.2,
+   "roll_exp_h1": 117.3,
+   "roll_exp_q1": 59.7,
+   "roll_home_D": 114.0,
+   "roll_home_O": 121.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 1,
+   "seed_away_D": 116.4,
+   "seed_away_O": 112.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 232.2,
+   "seed_exp_h1": 117.3,
+   "seed_exp_q1": 59.7,
+   "seed_home_D": 114.0,
+   "seed_home_O": 121.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 1,
+   "start": "2026-10-08T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "PHX",
+   "completed": false,
+   "day": "2026-10-07",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "CHI",
+   "id": "401908939",
+   "roll_away_D": 108.0,
+   "roll_away_O": 109.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 227.6,
+   "roll_exp_h1": 114.9,
+   "roll_exp_q1": 59.8,
+   "roll_home_D": 120.4,
+   "roll_home_O": 117.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 2,
+   "seed_away_D": 108.0,
+   "seed_away_O": 109.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 227.6,
+   "seed_exp_h1": 114.9,
+   "seed_exp_q1": 59.8,
+   "seed_home_D": 120.4,
+   "seed_home_O": 117.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 2,
+   "start": "2026-10-08T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "GS",
+   "completed": false,
+   "day": "2026-10-07",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "POR",
+   "id": "401914129",
+   "roll_away_D": 116.0,
+   "roll_away_O": 111.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 228.8,
+   "roll_exp_h1": 115.6,
+   "roll_exp_q1": 58.0,
+   "roll_home_D": 112.4,
+   "roll_home_O": 117.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 1,
+   "seed_away_D": 116.0,
+   "seed_away_O": 111.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 228.8,
+   "seed_exp_h1": 115.6,
+   "seed_exp_q1": 58.0,
+   "seed_home_D": 112.4,
+   "seed_home_O": 117.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 1,
+   "start": "2026-10-08T02:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "BOS",
+   "completed": false,
+   "day": "2026-10-08",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "CLE",
+   "id": "401898392",
+   "roll_away_D": 108.2,
+   "roll_away_O": 118.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 233.6,
+   "roll_exp_h1": 117.0,
+   "roll_exp_q1": 57.4,
+   "roll_home_D": 118.2,
+   "roll_home_O": 122.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 3,
+   "seed_away_D": 108.2,
+   "seed_away_O": 118.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 233.6,
+   "seed_exp_h1": 117.0,
+   "seed_exp_q1": 57.4,
+   "seed_home_D": 118.2,
+   "seed_home_O": 122.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 3,
+   "start": "2026-10-08T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "NO",
+   "completed": false,
+   "day": "2026-10-08",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MIA",
+   "id": "401898393",
+   "roll_away_D": 128.4,
+   "roll_away_O": 124.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 247.2,
+   "roll_exp_h1": 124.8,
+   "roll_exp_q1": 58.8,
+   "roll_home_D": 117.6,
+   "roll_home_O": 124.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 4,
+   "seed_away_D": 128.4,
+   "seed_away_O": 124.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 252.6,
+   "seed_exp_h1": 125.1,
+   "seed_exp_q1": 59.2,
+   "seed_home_D": 123.8,
+   "seed_home_O": 128.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 4,
+   "start": "2026-10-08T23:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "PHI",
+   "completed": false,
+   "day": "2026-10-08",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "BKN",
+   "id": "401901823",
+   "roll_away_D": 108.8,
+   "roll_away_O": 105.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 218.1,
+   "roll_exp_h1": 116.2,
+   "roll_exp_q1": 57.7,
+   "roll_home_D": 117.8,
+   "roll_home_O": 104.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O-D+",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 1,
+   "seed_away_D": 108.8,
+   "seed_away_O": 105.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 218.1,
+   "seed_exp_h1": 116.2,
+   "seed_exp_q1": 57.7,
+   "seed_home_D": 117.8,
+   "seed_home_O": 104.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O-D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 1,
+   "start": "2026-10-08T23:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "WSH",
+   "completed": false,
+   "day": "2026-10-08",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "NY",
+   "id": "401906508",
+   "roll_away_D": 127.8,
+   "roll_away_O": 111.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 227.0,
+   "roll_exp_h1": 108.7,
+   "roll_exp_q1": 55.6,
+   "roll_home_D": 102.4,
+   "roll_home_O": 112.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 1,
+   "seed_away_D": 127.8,
+   "seed_away_O": 111.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 227.0,
+   "seed_exp_h1": 108.7,
+   "seed_exp_q1": 55.6,
+   "seed_home_D": 102.4,
+   "seed_home_O": 112.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 1,
+   "start": "2026-10-08T23:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "ATL",
+   "completed": false,
+   "day": "2026-10-08",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "SA",
+   "id": "401898394",
+   "roll_away_D": 116.4,
+   "roll_away_O": 120.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 239.0,
+   "roll_exp_h1": 122.8,
+   "roll_exp_q1": 61.6,
+   "roll_home_D": 117.4,
+   "roll_home_O": 123.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 3,
+   "seed_away_D": 116.4,
+   "seed_away_O": 120.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 239.0,
+   "seed_exp_h1": 122.8,
+   "seed_exp_q1": 61.6,
+   "seed_home_D": 117.4,
+   "seed_home_O": 123.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 3,
+   "start": "2026-10-09T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "SAC",
+   "completed": false,
+   "day": "2026-10-08",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "LAL",
+   "id": "401898717",
+   "roll_away_D": 120.2,
+   "roll_away_O": 113.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 227.2,
+   "roll_exp_h1": 117.2,
+   "roll_exp_q1": 59.5,
+   "roll_home_D": 108.0,
+   "roll_home_O": 113.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 1,
+   "seed_away_D": 120.2,
+   "seed_away_O": 113.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 227.2,
+   "seed_exp_h1": 117.2,
+   "seed_exp_q1": 59.5,
+   "seed_home_D": 108.0,
+   "seed_home_O": 113.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 1,
+   "start": "2026-10-09T02:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "HOU",
+   "completed": false,
+   "day": "2026-10-09",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "DAL",
+   "id": "401898395",
+   "roll_away_D": 112.0,
+   "roll_away_O": 122.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 240.9,
+   "roll_exp_h1": 123.2,
+   "roll_exp_q1": 64.7,
+   "roll_home_D": 124.6,
+   "roll_home_O": 122.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 3,
+   "seed_away_D": 112.0,
+   "seed_away_O": 122.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 240.9,
+   "seed_exp_h1": 123.2,
+   "seed_exp_q1": 64.7,
+   "seed_home_D": 124.6,
+   "seed_home_O": 122.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 3,
+   "start": "2026-10-09T12:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MEM",
+   "completed": false,
+   "day": "2026-10-09",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "CHI",
+   "id": "401908940",
+   "roll_away_D": 137.6,
+   "roll_away_O": 112.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 244.1,
+   "roll_exp_h1": 120.5,
+   "roll_exp_q1": 61.5,
+   "roll_home_D": 120.4,
+   "roll_home_O": 117.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 3,
+   "seed_away_D": 137.6,
+   "seed_away_O": 112.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 244.1,
+   "seed_exp_h1": 120.5,
+   "seed_exp_q1": 61.5,
+   "seed_home_D": 120.4,
+   "seed_home_O": 117.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 3,
+   "start": "2026-10-10T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "LAC",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "TOR",
+   "id": "401902645",
+   "roll_away_D": 113.2,
+   "roll_away_O": 115.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 227.8,
+   "roll_exp_h1": 116.3,
+   "roll_exp_q1": 58.7,
+   "roll_home_D": 110.2,
+   "roll_home_O": 117.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 0,
+   "seed_away_D": 113.2,
+   "seed_away_O": 115.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 226.0,
+   "seed_exp_h1": 113.2,
+   "seed_exp_q1": 57.5,
+   "seed_home_D": 107.4,
+   "seed_home_O": 116.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 0,
+   "start": "2026-10-10T22:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "ATL",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "IND",
+   "id": "401898396",
+   "roll_away_D": 116.4,
+   "roll_away_O": 120.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 230.8,
+   "roll_exp_h1": 118.5,
+   "roll_exp_q1": 57.8,
+   "roll_home_D": 114.6,
+   "roll_home_O": 110.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 1,
+   "seed_away_D": 116.4,
+   "seed_away_O": 120.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 230.8,
+   "seed_exp_h1": 118.5,
+   "seed_exp_q1": 57.8,
+   "seed_home_D": 114.6,
+   "seed_home_O": 110.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 1,
+   "start": "2026-10-10T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "DET",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "WSH",
+   "id": "401906510",
+   "roll_away_D": 109.6,
+   "roll_away_O": 122.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 235.3,
+   "roll_exp_h1": 122.7,
+   "roll_exp_q1": 61.7,
+   "roll_home_D": 127.8,
+   "roll_home_O": 111.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 2,
+   "seed_away_D": 109.6,
+   "seed_away_O": 122.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 235.3,
+   "seed_exp_h1": 122.7,
+   "seed_exp_q1": 61.7,
+   "seed_home_D": 127.8,
+   "seed_home_O": 111.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 2,
+   "start": "2026-10-10T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MIN",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MIA",
+   "id": "401898397",
+   "roll_away_D": 123.2,
+   "roll_away_O": 124.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 244.5,
+   "roll_exp_h1": 124.1,
+   "roll_exp_q1": 60.4,
+   "roll_home_D": 117.6,
+   "roll_home_O": 124.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 4,
+   "seed_away_D": 123.2,
+   "seed_away_O": 124.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 249.9,
+   "seed_exp_h1": 124.4,
+   "seed_exp_q1": 60.8,
+   "seed_home_D": 123.8,
+   "seed_home_O": 128.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 4,
+   "start": "2026-10-11T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "PHI",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "BOS",
+   "id": "401898398",
+   "roll_away_D": 108.8,
+   "roll_away_O": 105.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 220.4,
+   "roll_exp_h1": 117.5,
+   "roll_exp_q1": 57.0,
+   "roll_home_D": 108.2,
+   "roll_home_O": 118.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 1,
+   "seed_away_D": 108.8,
+   "seed_away_O": 105.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 220.4,
+   "seed_exp_h1": 117.5,
+   "seed_exp_q1": 57.0,
+   "seed_home_D": 108.2,
+   "seed_home_O": 118.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 1,
+   "start": "2026-10-11T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "SAC",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "GS",
+   "id": "401898399",
+   "roll_away_D": 120.2,
+   "roll_away_O": 113.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 230.3,
+   "roll_exp_h1": 116.1,
+   "roll_exp_q1": 57.0,
+   "roll_home_D": 116.0,
+   "roll_home_O": 111.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 1,
+   "seed_away_D": 120.2,
+   "seed_away_O": 113.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 230.3,
+   "seed_exp_h1": 116.1,
+   "seed_exp_q1": 57.0,
+   "seed_home_D": 116.0,
+   "seed_home_O": 111.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 1,
+   "start": "2026-10-11T00:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "SA",
+   "completed": false,
+   "day": "2026-10-10",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "PHX",
+   "id": "401898720",
+   "roll_away_D": 117.4,
+   "roll_away_O": 123.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 229.0,
+   "roll_exp_h1": 119.6,
+   "roll_exp_q1": 61.8,
+   "roll_home_D": 108.0,
+   "roll_home_O": 109.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 2,
+   "seed_away_D": 117.4,
+   "seed_away_O": 123.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 229.0,
+   "seed_exp_h1": 119.6,
+   "seed_exp_q1": 61.8,
+   "seed_home_D": 108.0,
+   "seed_home_O": 109.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 2,
+   "start": "2026-10-11T02:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "DAL",
+   "completed": false,
+   "day": "2026-10-11",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "HOU",
+   "id": "401898400",
+   "roll_away_D": 124.6,
+   "roll_away_O": 122.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 240.9,
+   "roll_exp_h1": 123.2,
+   "roll_exp_q1": 64.7,
+   "roll_home_D": 112.0,
+   "roll_home_O": 122.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 3,
+   "seed_away_D": 124.6,
+   "seed_away_O": 122.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 240.9,
+   "seed_exp_h1": 123.2,
+   "seed_exp_q1": 64.7,
+   "seed_home_D": 112.0,
+   "seed_home_O": 122.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 3,
+   "start": "2026-10-11T10:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "ORL",
+   "completed": false,
+   "day": "2026-10-11",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "CLE",
+   "id": "401898401",
+   "roll_away_D": 110.2,
+   "roll_away_O": 120.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 235.7,
+   "roll_exp_h1": 118.3,
+   "roll_exp_q1": 58.2,
+   "roll_home_D": 118.2,
+   "roll_home_O": 122.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 3,
+   "seed_away_D": 110.2,
+   "seed_away_O": 120.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 235.7,
+   "seed_exp_h1": 118.3,
+   "seed_exp_q1": 58.2,
+   "seed_home_D": 118.2,
+   "seed_home_O": 122.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 3,
+   "start": "2026-10-11T22:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MIL",
+   "completed": false,
+   "day": "2026-10-11",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "CHA",
+   "id": "401901821",
+   "roll_away_D": 116.4,
+   "roll_away_O": 112.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 225.1,
+   "roll_exp_h1": 116.6,
+   "roll_exp_q1": 57.6,
+   "roll_home_D": 108.6,
+   "roll_home_O": 112.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 0,
+   "seed_away_D": 116.4,
+   "seed_away_O": 112.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 225.1,
+   "seed_exp_h1": 116.6,
+   "seed_exp_q1": 57.6,
+   "seed_home_D": 108.6,
+   "seed_home_O": 112.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 0,
+   "start": "2026-10-11T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "CHI",
+   "completed": false,
+   "day": "2026-10-11",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "DEN",
+   "id": "401908941",
+   "roll_away_D": 120.4,
+   "roll_away_O": 117.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 246.5,
+   "roll_exp_h1": 122.1,
+   "roll_exp_q1": 65.2,
+   "roll_home_D": 122.0,
+   "roll_home_O": 132.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 4,
+   "seed_away_D": 120.4,
+   "seed_away_O": 117.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 246.5,
+   "seed_exp_h1": 122.1,
+   "seed_exp_q1": 65.2,
+   "seed_home_D": 122.0,
+   "seed_home_O": 132.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 4,
+   "start": "2026-10-12T01:00Z"
+  },
+  {
+   "away": "LON",
+   "completed": false,
+   "day": "2026-10-12",
+   "home": "POR",
+   "id": "401914130",
+   "skipped": "non-NBA opponent: LON",
+   "start": "2026-10-12T20:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "OKC",
+   "completed": false,
+   "day": "2026-10-12",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "ATL",
+   "id": "401898402",
+   "roll_away_D": 114.0,
+   "roll_away_O": 121.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 236.2,
+   "roll_exp_h1": 119.4,
+   "roll_exp_q1": 59.1,
+   "roll_home_D": 116.4,
+   "roll_home_O": 120.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 2,
+   "seed_away_D": 114.0,
+   "seed_away_O": 121.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 236.2,
+   "seed_exp_h1": 119.4,
+   "seed_exp_q1": 59.1,
+   "seed_home_D": 116.4,
+   "seed_home_O": 120.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 2,
+   "start": "2026-10-12T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "BKN",
+   "completed": false,
+   "day": "2026-10-12",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "WSH",
+   "id": "401901824",
+   "roll_away_D": 117.8,
+   "roll_away_O": 104.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 230.3,
+   "roll_exp_h1": 111.9,
+   "roll_exp_q1": 57.4,
+   "roll_home_D": 127.8,
+   "roll_home_O": 111.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O-D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 2,
+   "seed_away_D": 117.8,
+   "seed_away_O": 104.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 230.3,
+   "seed_exp_h1": 111.9,
+   "seed_exp_q1": 57.4,
+   "seed_home_D": 127.8,
+   "seed_home_O": 111.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O-D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 2,
+   "start": "2026-10-12T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "MIN",
+   "completed": false,
+   "day": "2026-10-12",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "NY",
+   "id": "401914124",
+   "roll_away_D": 123.2,
+   "roll_away_O": 124.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 231.2,
+   "roll_exp_h1": 114.5,
+   "roll_exp_q1": 57.4,
+   "roll_home_D": 102.4,
+   "roll_home_O": 112.8,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 2,
+   "seed_away_D": 123.2,
+   "seed_away_O": 124.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 231.2,
+   "seed_exp_h1": 114.5,
+   "seed_exp_q1": 57.4,
+   "seed_home_D": 102.4,
+   "seed_home_O": 112.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 2,
+   "start": "2026-10-12T23:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "SA",
+   "completed": false,
+   "day": "2026-10-12",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "UTAH",
+   "id": "401898721",
+   "roll_away_D": 117.4,
+   "roll_away_O": 123.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 248.7,
+   "roll_exp_h1": 123.6,
+   "roll_exp_q1": 62.1,
+   "roll_home_D": 134.8,
+   "roll_home_O": 121.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 4,
+   "seed_away_D": 117.4,
+   "seed_away_O": 123.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 248.7,
+   "seed_exp_h1": 123.6,
+   "seed_exp_q1": 62.1,
+   "seed_home_D": 134.8,
+   "seed_home_O": 121.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 4,
+   "start": "2026-10-13T01:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "CLE",
+   "completed": false,
+   "day": "2026-10-13",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "ORL",
+   "id": "401898403",
+   "roll_away_D": 118.2,
+   "roll_away_O": 122.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 235.7,
+   "roll_exp_h1": 118.3,
+   "roll_exp_q1": 58.2,
+   "roll_home_D": 110.2,
+   "roll_home_O": 120.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 3,
+   "seed_away_D": 118.2,
+   "seed_away_O": 122.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 235.7,
+   "seed_exp_h1": 118.3,
+   "seed_exp_q1": 58.2,
+   "seed_home_D": 110.2,
+   "seed_home_O": 120.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 3,
+   "start": "2026-10-13T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "NY",
+   "completed": false,
+   "day": "2026-10-13",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "TOR",
+   "id": "401908944",
+   "roll_away_D": 102.4,
+   "roll_away_O": 112.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 221.2,
+   "roll_exp_h1": 110.7,
+   "roll_exp_q1": 54.8,
+   "roll_home_D": 110.2,
+   "roll_home_O": 117.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 0,
+   "seed_away_D": 102.4,
+   "seed_away_O": 112.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 219.4,
+   "seed_exp_h1": 107.6,
+   "seed_exp_q1": 53.6,
+   "seed_home_D": 107.4,
+   "seed_home_O": 116.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 0,
+   "start": "2026-10-13T23:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "IND",
+   "completed": false,
+   "day": "2026-10-13",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "OKC",
+   "id": "401908621",
+   "roll_away_D": 114.6,
+   "roll_away_O": 110.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 230.0,
+   "roll_exp_h1": 117.3,
+   "roll_exp_q1": 58.7,
+   "roll_home_D": 114.0,
+   "roll_home_O": 121.4,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O+D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 1,
+   "seed_away_D": 114.6,
+   "seed_away_O": 110.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 230.0,
+   "seed_exp_h1": 117.3,
+   "seed_exp_q1": 58.7,
+   "seed_home_D": 114.0,
+   "seed_home_O": 121.4,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O+D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 1,
+   "start": "2026-10-14T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "GS",
+   "completed": false,
+   "day": "2026-10-13",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "LAL",
+   "id": "401898718",
+   "roll_away_D": 116.0,
+   "roll_away_O": 111.4,
+   "roll_away_n": 5,
+   "roll_exp_ft": 224.3,
+   "roll_exp_h1": 109.7,
+   "roll_exp_q1": 56.3,
+   "roll_home_D": 108.0,
+   "roll_home_O": 113.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 0,
+   "seed_away_D": 116.0,
+   "seed_away_O": 111.4,
+   "seed_away_n": 5,
+   "seed_exp_ft": 224.3,
+   "seed_exp_h1": 109.7,
+   "seed_exp_q1": 56.3,
+   "seed_home_D": 108.0,
+   "seed_home_O": 113.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O-D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 0,
+   "start": "2026-10-14T02:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "POR",
+   "completed": false,
+   "day": "2026-10-13",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "SAC",
+   "id": "401901826",
+   "roll_away_D": 112.4,
+   "roll_away_O": 117.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 231.7,
+   "roll_exp_h1": 123.1,
+   "roll_exp_q1": 61.2,
+   "roll_home_D": 120.2,
+   "roll_home_O": 113.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D+",
+   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_q1": "O-D+",
+   "roll_pluses": 2,
+   "seed_away_D": 112.4,
+   "seed_away_O": 117.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 231.7,
+   "seed_exp_h1": 123.1,
+   "seed_exp_q1": 61.2,
+   "seed_home_D": 120.2,
+   "seed_home_O": 113.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D+",
+   "seed_lab_home_h1": "O-D+",
+   "seed_lab_home_q1": "O-D+",
+   "seed_pluses": 2,
+   "start": "2026-10-14T02:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "BKN",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MIA",
+   "id": "401898404",
+   "roll_away_D": 117.8,
+   "roll_away_O": 104.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 231.8,
+   "roll_exp_h1": 117.6,
+   "roll_exp_q1": 57.8,
+   "roll_home_D": 117.6,
+   "roll_home_O": 124.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D+",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 3,
+   "seed_away_D": 117.8,
+   "seed_away_O": 104.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 237.2,
+   "seed_exp_h1": 117.9,
+   "seed_exp_q1": 58.2,
+   "seed_home_D": 123.8,
+   "seed_home_O": 128.8,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 3,
+   "start": "2026-10-14T23:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "CHA",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "BOS",
+   "id": "401898405",
+   "roll_away_D": 108.6,
+   "roll_away_O": 112.6,
+   "roll_away_n": 5,
+   "roll_exp_ft": 223.8,
+   "roll_exp_h1": 115.3,
+   "roll_exp_q1": 55.5,
+   "roll_home_D": 108.2,
+   "roll_home_O": 118.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O-D-",
+   "roll_pluses": 1,
+   "seed_away_D": 108.6,
+   "seed_away_O": 112.6,
+   "seed_away_n": 5,
+   "seed_exp_ft": 223.8,
+   "seed_exp_h1": 115.3,
+   "seed_exp_q1": 55.5,
+   "seed_home_D": 108.2,
+   "seed_home_O": 118.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O-D-",
+   "seed_pluses": 1,
+   "start": "2026-10-14T23:30Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "PHX",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "SA",
+   "id": "401898722",
+   "roll_away_D": 108.0,
+   "roll_away_O": 109.0,
+   "roll_away_n": 5,
+   "roll_exp_ft": 229.0,
+   "roll_exp_h1": 119.6,
+   "roll_exp_q1": 61.8,
+   "roll_home_D": 117.4,
+   "roll_home_O": 123.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_h1": "O+D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 2,
+   "seed_away_D": 108.0,
+   "seed_away_O": 109.0,
+   "seed_away_n": 5,
+   "seed_exp_ft": 229.0,
+   "seed_exp_h1": 119.6,
+   "seed_exp_q1": 61.8,
+   "seed_home_D": 117.4,
+   "seed_home_O": 123.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O-D-",
+   "seed_lab_away_h1": "O+D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 2,
+   "start": "2026-10-15T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "NO",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "DAL",
+   "id": "401901825",
+   "roll_away_D": 128.4,
+   "roll_away_O": 124.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 249.9,
+   "roll_exp_h1": 125.9,
+   "roll_exp_q1": 63.3,
+   "roll_home_D": 124.6,
+   "roll_home_O": 122.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D+",
+   "roll_lab_away_q1": "O-D+",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 4,
+   "seed_away_D": 128.4,
+   "seed_away_O": 124.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 249.9,
+   "seed_exp_h1": 125.9,
+   "seed_exp_q1": 63.3,
+   "seed_home_D": 124.6,
+   "seed_home_O": 122.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D+",
+   "seed_lab_away_q1": "O-D+",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 4,
+   "start": "2026-10-15T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "CHI",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MIL",
+   "id": "401908942",
+   "roll_away_D": 120.4,
+   "roll_away_O": 117.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 233.6,
+   "roll_exp_h1": 116.0,
+   "roll_exp_q1": 60.2,
+   "roll_home_D": 116.4,
+   "roll_home_O": 112.6,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O-D-",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D-",
+   "roll_pluses": 2,
+   "seed_away_D": 120.4,
+   "seed_away_O": 117.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 233.6,
+   "seed_exp_h1": 116.0,
+   "seed_exp_q1": 60.2,
+   "seed_home_D": 116.4,
+   "seed_home_O": 112.6,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O-D-",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D-",
+   "seed_pluses": 2,
+   "start": "2026-10-15T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "DET",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "MIN",
+   "id": "401914125",
+   "roll_away_D": 109.6,
+   "roll_away_O": 122.2,
+   "roll_away_n": 5,
+   "roll_exp_ft": 239.5,
+   "roll_exp_h1": 128.5,
+   "roll_exp_q1": 63.5,
+   "roll_home_D": 123.2,
+   "roll_home_O": 124.0,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D-",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D-",
+   "roll_lab_home_ft": "O+D+",
+   "roll_lab_home_h1": "O+D+",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 3,
+   "seed_away_D": 109.6,
+   "seed_away_O": 122.2,
+   "seed_away_n": 5,
+   "seed_exp_ft": 239.5,
+   "seed_exp_h1": 128.5,
+   "seed_exp_q1": 63.5,
+   "seed_home_D": 123.2,
+   "seed_home_O": 124.0,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D-",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D-",
+   "seed_lab_home_ft": "O+D+",
+   "seed_lab_home_h1": "O+D+",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 3,
+   "start": "2026-10-15T00:00Z"
+  },
+  {
+   "act_ft": null,
+   "act_h1": null,
+   "act_q1": null,
+   "away": "DEN",
+   "completed": false,
+   "day": "2026-10-14",
+   "err_ft": null,
+   "err_h1": null,
+   "err_q1": null,
+   "home": "LAC",
+   "id": "401918011",
+   "roll_away_D": 122.0,
+   "roll_away_O": 132.8,
+   "roll_away_n": 5,
+   "roll_exp_ft": 241.6,
+   "roll_exp_h1": 122.3,
+   "roll_exp_q1": 65.1,
+   "roll_home_D": 113.2,
+   "roll_home_O": 115.2,
+   "roll_home_n": 5,
+   "roll_lab_away_ft": "O+D+",
+   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_q1": "O+D+",
+   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_h1": "O-D-",
+   "roll_lab_home_q1": "O+D+",
+   "roll_pluses": 2,
+   "seed_away_D": 122.0,
+   "seed_away_O": 132.8,
+   "seed_away_n": 5,
+   "seed_exp_ft": 241.6,
+   "seed_exp_h1": 122.3,
+   "seed_exp_q1": 65.1,
+   "seed_home_D": 113.2,
+   "seed_home_O": 115.2,
+   "seed_home_n": 5,
+   "seed_lab_away_ft": "O+D+",
+   "seed_lab_away_h1": "O+D+",
+   "seed_lab_away_q1": "O+D+",
+   "seed_lab_home_ft": "O-D-",
+   "seed_lab_home_h1": "O-D-",
+   "seed_lab_home_q1": "O+D+",
+   "seed_pluses": 2,
+   "start": "2026-10-15T02:30Z"
+  }
+ ],
+ "label_flips": {},
+ "periods": [
+  "q1",
+  "h1",
+  "ft"
+ ],
+ "seed": {
+  "games": 151,
+  "season": 2026,
+  "span": [
+   "2026-03-25",
+   "2026-04-12"
+  ],
+  "teams": {
+   "ATL": {
+    "ft": [
+     [
+      141,
+      107
+     ],
+     [
+      105,
+      108
+     ],
+     [
+      116,
+      122
+     ],
+     [
+      124,
+      102
+     ],
+     [
+      117,
+      143
+     ]
+    ],
+    "h1": [
+     [
+      71,
+      55
+     ],
+     [
+      57,
+      53
+     ],
+     [
+      67,
+      60
+     ],
+     [
+      61,
+      48
+     ],
+     [
+      61,
+      70
+     ]
+    ],
+    "q1": [
+     [
+      35,
+      25
+     ],
+     [
+      31,
+      32
+     ],
+     [
+      29,
+      33
+     ],
+     [
+      27,
+      22
+     ],
+     [
+      24,
+      33
+     ]
+    ]
+   },
+   "BKN": {
+    "ft": [
+     [
+      121,
+      115
+     ],
+     [
+      96,
+      90
+     ],
+     [
+      94,
+      123
+     ],
+     [
+      108,
+      125
+     ],
+     [
+      101,
+      136
+     ]
+    ],
+    "h1": [
+     [
+      59,
+      54
+     ],
+     [
+      49,
+      43
+     ],
+     [
+      37,
+      63
+     ],
+     [
+      54,
+      66
+     ],
+     [
+      61,
+      70
+     ]
+    ],
+    "q1": [
+     [
+      35,
+      23
+     ],
+     [
+      30,
+      29
+     ],
+     [
+      14,
+      31
+     ],
+     [
+      24,
+      38
+     ],
+     [
+      27,
+      32
+     ]
+    ]
+   },
+   "BOS": {
+    "ft": [
+     [
+      115,
+      101
+     ],
+     [
+      113,
+      102
+     ],
+     [
+      106,
+      112
+     ],
+     [
+      144,
+      118
+     ],
+     [
+      113,
+      108
+     ]
+    ],
+    "h1": [
+     [
+      54,
+      46
+     ],
+     [
+      55,
+      61
+     ],
+     [
+      53,
+      54
+     ],
+     [
+      82,
+      51
+     ],
+     [
+      52,
+      61
+     ]
+    ],
+    "q1": [
+     [
+      26,
+      26
+     ],
+     [
+      20,
+      31
+     ],
+     [
+      29,
+      26
+     ],
+     [
+      44,
+      25
+     ],
+     [
+      20,
+      29
+     ]
+    ]
+   },
+   "CHA": {
+    "ft": [
+     [
+      129,
+      108
+     ],
+     [
+      122,
+      108
+     ],
+     [
+      102,
+      113
+     ],
+     [
+      100,
+      118
+     ],
+     [
+      110,
+      96
+     ]
+    ],
+    "h1": [
+     [
+      69,
+      50
+     ],
+     [
+      55,
+      60
+     ],
+     [
+      61,
+      55
+     ],
+     [
+      65,
+      68
+     ],
+     [
+      57,
+      44
+     ]
+    ],
+    "q1": [
+     [
+      38,
+      24
+     ],
+     [
+      29,
+      21
+     ],
+     [
+      31,
+      20
+     ],
+     [
+      30,
+      36
+     ],
+     [
+      30,
+      20
+     ]
+    ]
+   },
+   "CHI": {
+    "ft": [
+     [
+      110,
+      120
+     ],
+     [
+      129,
+      98
+     ],
+     [
+      119,
+      108
+     ],
+     [
+      103,
+      127
+     ],
+     [
+      128,
+      149
+     ]
+    ],
+    "h1": [
+     [
+      56,
+      63
+     ],
+     [
+      66,
+      37
+     ],
+     [
+      52,
+      51
+     ],
+     [
+      53,
+      64
+     ],
+     [
+      56,
+      80
+     ]
+    ],
+    "q1": [
+     [
+      30,
+      30
+     ],
+     [
+      38,
+      18
+     ],
+     [
+      32,
+      24
+     ],
+     [
+      26,
+      28
+     ],
+     [
+      34,
+      45
+     ]
+    ]
+   },
+   "CLE": {
+    "ft": [
+     [
+      117,
+      108
+     ],
+     [
+      142,
+      126
+     ],
+     [
+      122,
+      116
+     ],
+     [
+      102,
+      124
+     ],
+     [
+      130,
+      117
+     ]
+    ],
+    "h1": [
+     [
+      55,
+      58
+     ],
+     [
+      68,
+      64
+     ],
+     [
+      60,
+      67
+     ],
+     [
+      48,
+      61
+     ],
+     [
+      65,
+      55
+     ]
+    ],
+    "q1": [
+     [
+      31,
+      32
+     ],
+     [
+      24,
+      36
+     ],
+     [
+      33,
+      29
+     ],
+     [
+      22,
+      27
+     ],
+     [
+      43,
+      21
+     ]
+    ]
+   },
+   "DAL": {
+    "ft": [
+     [
+      134,
+      128
+     ],
+     [
+      103,
+      116
+     ],
+     [
+      107,
+      112
+     ],
+     [
+      120,
+      139
+     ],
+     [
+      149,
+      128
+     ]
+    ],
+    "h1": [
+     [
+      67,
+      61
+     ],
+     [
+      55,
+      65
+     ],
+     [
+      53,
+      61
+     ],
+     [
+      65,
+      68
+     ],
+     [
+      80,
+      56
+     ]
+    ],
+    "q1": [
+     [
+      41,
+      30
+     ],
+     [
+      26,
+      39
+     ],
+     [
+      29,
+      33
+     ],
+     [
+      26,
+      37
+     ],
+     [
+      45,
+      34
+     ]
+    ]
+   },
+   "DEN": {
+    "ft": [
+     [
+      136,
+      134
+     ],
+     [
+      137,
+      132
+     ],
+     [
+      136,
+      119
+     ],
+     [
+      127,
+      107
+     ],
+     [
+      128,
+      118
+     ]
+    ],
+    "h1": [
+     [
+      65,
+      72
+     ],
+     [
+      58,
+      72
+     ],
+     [
+      68,
+      72
+     ],
+     [
+      59,
+      51
+     ],
+     [
+      70,
+      56
+     ]
+    ],
+    "q1": [
+     [
+      36,
+      43
+     ],
+     [
+      31,
+      35
+     ],
+     [
+      37,
+      33
+     ],
+     [
+      34,
+      27
+     ],
+     [
+      37,
+      34
+     ]
+    ]
+   },
+   "DET": {
+    "ft": [
+     [
+      116,
+      93
+     ],
+     [
+      107,
+      123
+     ],
+     [
+      137,
+      111
+     ],
+     [
+      118,
+      100
+     ],
+     [
+      133,
+      121
+     ]
+    ],
+    "h1": [
+     [
+      71,
+      60
+     ],
+     [
+      55,
+      69
+     ],
+     [
+      75,
+      57
+     ],
+     [
+      68,
+      65
+     ],
+     [
+      81,
+      63
+     ]
+    ],
+    "q1": [
+     [
+      41,
+      31
+     ],
+     [
+      28,
+      30
+     ],
+     [
+      34,
+      28
+     ],
+     [
+      36,
+      30
+     ],
+     [
+      41,
+      27
+     ]
+    ]
+   },
+   "GS": {
+    "ft": [
+     [
+      116,
+      117
+     ],
+     [
+      110,
+      105
+     ],
+     [
+      103,
+      119
+     ],
+     [
+      118,
+      124
+     ],
+     [
+      110,
+      115
+     ]
+    ],
+    "h1": [
+     [
+      53,
+      55
+     ],
+     [
+      66,
+      53
+     ],
+     [
+      49,
+      53
+     ],
+     [
+      51,
+      63
+     ],
+     [
+      48,
+      52
+     ]
+    ],
+    "q1": [
+     [
+      31,
+      26
+     ],
+     [
+      25,
+      26
+     ],
+     [
+      23,
+      28
+     ],
+     [
+      27,
+      32
+     ],
+     [
+      26,
+      25
+     ]
+    ]
+   },
+   "HOU": {
+    "ft": [
+     [
+      117,
+      116
+     ],
+     [
+      119,
+      105
+     ],
+     [
+      113,
+      102
+     ],
+     [
+      132,
+      136
+     ],
+     [
+      132,
+      101
+     ]
+    ],
+    "h1": [
+     [
+      55,
+      53
+     ],
+     [
+      54,
+      57
+     ],
+     [
+      73,
+      56
+     ],
+     [
+      73,
+      69
+     ],
+     [
+      66,
+      45
+     ]
+    ],
+    "q1": [
+     [
+      26,
+      31
+     ],
+     [
+      21,
+      37
+     ],
+     [
+      35,
+      26
+     ],
+     [
+      36,
+      37
+     ],
+     [
+      32,
+      26
+     ]
+    ]
+   },
+   "IND": {
+    "ft": [
+     [
+      108,
+      117
+     ],
+     [
+      104,
+      124
+     ],
+     [
+      123,
+      94
+     ],
+     [
+      94,
+      105
+     ],
+     [
+      121,
+      133
+     ]
+    ],
+    "h1": [
+     [
+      58,
+      55
+     ],
+     [
+      53,
+      63
+     ],
+     [
+      63,
+      37
+     ],
+     [
+      51,
+      58
+     ],
+     [
+      63,
+      81
+     ]
+    ],
+    "q1": [
+     [
+      32,
+      31
+     ],
+     [
+      27,
+      35
+     ],
+     [
+      31,
+      14
+     ],
+     [
+      21,
+      28
+     ],
+     [
+      27,
+      41
+     ]
+    ]
+   },
+   "LAC": {
+    "ft": [
+     [
+      138,
+      109
+     ],
+     [
+      116,
+      103
+     ],
+     [
+      110,
+      128
+     ],
+     [
+      97,
+      116
+     ],
+     [
+      115,
+      110
+     ]
+    ],
+    "h1": [
+     [
+      71,
+      59
+     ],
+     [
+      65,
+      55
+     ],
+     [
+      49,
+      69
+     ],
+     [
+      51,
+      61
+     ],
+     [
+      52,
+      48
+     ]
+    ],
+    "q1": [
+     [
+      42,
+      32
+     ],
+     [
+      39,
+      26
+     ],
+     [
+      23,
+      34
+     ],
+     [
+      24,
+      33
+     ],
+     [
+      25,
+      26
+     ]
+    ]
+   },
+   "LAL": {
+    "ft": [
+     [
+      128,
+      134
+     ],
+     [
+      87,
+      123
+     ],
+     [
+      119,
+      103
+     ],
+     [
+      101,
+      73
+     ],
+     [
+      131,
+      107
+     ]
+    ],
+    "h1": [
+     [
+      61,
+      67
+     ],
+     [
+      47,
+      65
+     ],
+     [
+      53,
+      49
+     ],
+     [
+      57,
+      48
+     ],
+     [
+      62,
+      45
+     ]
+    ],
+    "q1": [
+     [
+      30,
+      41
+     ],
+     [
+      27,
+      34
+     ],
+     [
+      28,
+      23
+     ],
+     [
+      33,
+      24
+     ],
+     [
+      32,
+      22
+     ]
+    ]
+   },
+   "MEM": {
+    "ft": [
+     [
+      115,
+      131
+     ],
+     [
+      126,
+      142
+     ],
+     [
+      119,
+      136
+     ],
+     [
+      101,
+      147
+     ],
+     [
+      101,
+      132
+     ]
+    ],
+    "h1": [
+     [
+      56,
+      62
+     ],
+     [
+      64,
+      68
+     ],
+     [
+      72,
+      68
+     ],
+     [
+      52,
+      74
+     ],
+     [
+      45,
+      66
+     ]
+    ],
+    "q1": [
+     [
+      25,
+      34
+     ],
+     [
+      36,
+      24
+     ],
+     [
+      33,
+      37
+     ],
+     [
+      30,
+      33
+     ],
+     [
+      26,
+      32
+     ]
+    ]
+   },
+   "MIA": {
+    "ft": [
+     [
+      152,
+      136
+     ],
+     [
+      95,
+      121
+     ],
+     [
+      114,
+      128
+     ],
+     [
+      140,
+      117
+     ],
+     [
+      143,
+      117
+     ]
+    ],
+    "h1": [
+     [
+      77,
+      57
+     ],
+     [
+      51,
+      64
+     ],
+     [
+      50,
+      69
+     ],
+     [
+      72,
+      52
+     ],
+     [
+      70,
+      61
+     ]
+    ],
+    "q1": [
+     [
+      36,
+      32
+     ],
+     [
+      27,
+      32
+     ],
+     [
+      26,
+      32
+     ],
+     [
+      34,
+      23
+     ],
+     [
+      33,
+      24
+     ]
+    ]
+   },
+   "MIL": {
+    "ft": [
+     [
+      131,
+      115
+     ],
+     [
+      90,
+      96
+     ],
+     [
+      111,
+      137
+     ],
+     [
+      125,
+      108
+     ],
+     [
+      106,
+      126
+     ]
+    ],
+    "h1": [
+     [
+      62,
+      56
+     ],
+     [
+      43,
+      49
+     ],
+     [
+      57,
+      75
+     ],
+     [
+      66,
+      54
+     ],
+     [
+      62,
+      58
+     ]
+    ],
+    "q1": [
+     [
+      34,
+      25
+     ],
+     [
+      29,
+      30
+     ],
+     [
+      28,
+      34
+     ],
+     [
+      38,
+      24
+     ],
+     [
+      26,
+      29
+     ]
+    ]
+   },
+   "MIN": {
+    "ft": [
+     [
+      108,
+      122
+     ],
+     [
+      124,
+      104
+     ],
+     [
+      120,
+      132
+     ],
+     [
+      136,
+      132
+     ],
+     [
+      132,
+      126
+     ]
+    ],
+    "h1": [
+     [
+      60,
+      55
+     ],
+     [
+      63,
+      53
+     ],
+     [
+      53,
+      63
+     ],
+     [
+      69,
+      73
+     ],
+     [
+      73,
+      59
+     ]
+    ],
+    "q1": [
+     [
+      21,
+      29
+     ],
+     [
+      35,
+      27
+     ],
+     [
+      32,
+      34
+     ],
+     [
+      37,
+      36
+     ],
+     [
+      34,
+      24
+     ]
+    ]
+   },
+   "NO": {
+    "ft": [
+     [
+      113,
+      117
+     ],
+     [
+      108,
+      112
+     ],
+     [
+      156,
+      137
+     ],
+     [
+      118,
+      144
+     ],
+     [
+      126,
+      132
+     ]
+    ],
+    "h1": [
+     [
+      66,
+      55
+     ],
+     [
+      60,
+      52
+     ],
+     [
+      61,
+      69
+     ],
+     [
+      51,
+      82
+     ],
+     [
+      59,
+      73
+     ]
+    ],
+    "q1": [
+     [
+      30,
+      21
+     ],
+     [
+      28,
+      29
+     ],
+     [
+      24,
+      34
+     ],
+     [
+      25,
+      44
+     ],
+     [
+      24,
+      34
+     ]
+    ]
+   },
+   "NY": {
+    "ft": [
+     [
+      136,
+      96
+     ],
+     [
+      108,
+      105
+     ],
+     [
+      112,
+      106
+     ],
+     [
+      112,
+      95
+     ],
+     [
+      96,
+      110
+     ]
+    ],
+    "h1": [
+     [
+      78,
+      41
+     ],
+     [
+      53,
+      57
+     ],
+     [
+      54,
+      53
+     ],
+     [
+      51,
+      36
+     ],
+     [
+      44,
+      57
+     ]
+    ],
+    "q1": [
+     [
+      38,
+      16
+     ],
+     [
+      32,
+      31
+     ],
+     [
+      26,
+      29
+     ],
+     [
+      22,
+      21
+     ],
+     [
+      20,
+      30
+     ]
+    ]
+   },
+   "OKC": {
+    "ft": [
+     [
+      146,
+      111
+     ],
+     [
+      123,
+      87
+     ],
+     [
+      128,
+      110
+     ],
+     [
+      107,
+      127
+     ],
+     [
+      103,
+      135
+     ]
+    ],
+    "h1": [
+     [
+      75,
+      54
+     ],
+     [
+      65,
+      47
+     ],
+     [
+      69,
+      49
+     ],
+     [
+      51,
+      59
+     ],
+     [
+      52,
+      70
+     ]
+    ],
+    "q1": [
+     [
+      40,
+      25
+     ],
+     [
+      34,
+      27
+     ],
+     [
+      34,
+      23
+     ],
+     [
+      27,
+      34
+     ],
+     [
+      19,
+      37
+     ]
+    ]
+   },
+   "ORL": {
+    "ft": [
+     [
+      112,
+      108
+     ],
+     [
+      123,
+      107
+     ],
+     [
+      132,
+      120
+     ],
+     [
+      127,
+      103
+     ],
+     [
+      108,
+      113
+     ]
+    ],
+    "h1": [
+     [
+      52,
+      60
+     ],
+     [
+      69,
+      55
+     ],
+     [
+      63,
+      53
+     ],
+     [
+      64,
+      53
+     ],
+     [
+      61,
+      52
+     ]
+    ],
+    "q1": [
+     [
+      29,
+      28
+     ],
+     [
+      30,
+      28
+     ],
+     [
+      34,
+      32
+     ],
+     [
+      28,
+      26
+     ],
+     [
+      29,
+      20
+     ]
+    ]
+   },
+   "PHI": {
+    "ft": [
+     [
+      93,
+      116
+     ],
+     [
+      102,
+      115
+     ],
+     [
+      102,
+      113
+     ],
+     [
+      105,
+      94
+     ],
+     [
+      126,
+      106
+     ]
+    ],
+    "h1": [
+     [
+      60,
+      71
+     ],
+     [
+      55,
+      62
+     ],
+     [
+      56,
+      73
+     ],
+     [
+      58,
+      51
+     ],
+     [
+      58,
+      62
+     ]
+    ],
+    "q1": [
+     [
+      31,
+      41
+     ],
+     [
+      28,
+      29
+     ],
+     [
+      26,
+      35
+     ],
+     [
+      28,
+      21
+     ],
+     [
+      29,
+      26
+     ]
+    ]
+   },
+   "PHX": {
+    "ft": [
+     [
+      120,
+      110
+     ],
+     [
+      105,
+      119
+     ],
+     [
+      112,
+      107
+     ],
+     [
+      73,
+      101
+     ],
+     [
+      135,
+      103
+     ]
+    ],
+    "h1": [
+     [
+      63,
+      56
+     ],
+     [
+      57,
+      54
+     ],
+     [
+      61,
+      53
+     ],
+     [
+      48,
+      57
+     ],
+     [
+      70,
+      52
+     ]
+    ],
+    "q1": [
+     [
+      30,
+      30
+     ],
+     [
+      37,
+      21
+     ],
+     [
+      33,
+      29
+     ],
+     [
+      24,
+      33
+     ],
+     [
+      37,
+      19
+     ]
+    ]
+   },
+   "POR": {
+    "ft": [
+     [
+      118,
+      106
+     ],
+     [
+      132,
+      137
+     ],
+     [
+      101,
+      112
+     ],
+     [
+      116,
+      97
+     ],
+     [
+      122,
+      110
+     ]
+    ],
+    "h1": [
+     [
+      60,
+      65
+     ],
+     [
+      72,
+      58
+     ],
+     [
+      51,
+      61
+     ],
+     [
+      61,
+      51
+     ],
+     [
+      77,
+      57
+     ]
+    ],
+    "q1": [
+     [
+      35,
+      32
+     ],
+     [
+      35,
+      31
+     ],
+     [
+      23,
+      32
+     ],
+     [
+      33,
+      24
+     ],
+     [
+      33,
+      33
+     ]
+    ]
+   },
+   "SA": {
+    "ft": [
+     [
+      134,
+      136
+     ],
+     [
+      115,
+      102
+     ],
+     [
+      112,
+      101
+     ],
+     [
+      139,
+      120
+     ],
+     [
+      118,
+      128
+     ]
+    ],
+    "h1": [
+     [
+      72,
+      65
+     ],
+     [
+      62,
+      55
+     ],
+     [
+      61,
+      51
+     ],
+     [
+      68,
+      65
+     ],
+     [
+      56,
+      70
+     ]
+    ],
+    "q1": [
+     [
+      43,
+      36
+     ],
+     [
+      29,
+      28
+     ],
+     [
+      32,
+      23
+     ],
+     [
+      37,
+      26
+     ],
+     [
+      34,
+      37
+     ]
+    ]
+   },
+   "SAC": {
+    "ft": [
+     [
+      117,
+      113
+     ],
+     [
+      109,
+      138
+     ],
+     [
+      105,
+      110
+     ],
+     [
+      124,
+      118
+     ],
+     [
+      110,
+      122
+     ]
+    ],
+    "h1": [
+     [
+      55,
+      66
+     ],
+     [
+      59,
+      71
+     ],
+     [
+      53,
+      66
+     ],
+     [
+      63,
+      51
+     ],
+     [
+      57,
+      77
+     ]
+    ],
+    "q1": [
+     [
+      21,
+      30
+     ],
+     [
+      32,
+      42
+     ],
+     [
+      26,
+      25
+     ],
+     [
+      32,
+      27
+     ],
+     [
+      33,
+      33
+     ]
+    ]
+   },
+   "TOR": {
+    "ft": [
+     [
+      101,
+      115
+     ],
+     [
+      121,
+      95
+     ],
+     [
+      128,
+      114
+     ],
+     [
+      95,
+      112
+     ],
+     [
+      136,
+      101
+     ]
+    ],
+    "h1": [
+     [
+      46,
+      54
+     ],
+     [
+      64,
+      51
+     ],
+     [
+      69,
+      50
+     ],
+     [
+      36,
+      51
+     ],
+     [
+      70,
+      61
+     ]
+    ],
+    "q1": [
+     [
+      26,
+      26
+     ],
+     [
+      32,
+      27
+     ],
+     [
+      32,
+      26
+     ],
+     [
+      21,
+      22
+     ],
+     [
+      32,
+      27
+     ]
+    ]
+   },
+   "UTAH": {
+    "ft": [
+     [
+      106,
+      140
+     ],
+     [
+      111,
+      146
+     ],
+     [
+      137,
+      156
+     ],
+     [
+      147,
+      101
+     ],
+     [
+      107,
+      131
+     ]
+    ],
+    "h1": [
+     [
+      50,
+      69
+     ],
+     [
+      54,
+      75
+     ],
+     [
+      69,
+      61
+     ],
+     [
+      74,
+      52
+     ],
+     [
+      45,
+      62
+     ]
+    ],
+    "q1": [
+     [
+      22,
+      34
+     ],
+     [
+      25,
+      40
+     ],
+     [
+      34,
+      24
+     ],
+     [
+      33,
+      30
+     ],
+     [
+      22,
+      32
+     ]
+    ]
+   },
+   "WSH": {
+    "ft": [
+     [
+      115,
+      121
+     ],
+     [
+      98,
+      129
+     ],
+     [
+      108,
+      119
+     ],
+     [
+      117,
+      140
+     ],
+     [
+      117,
+      130
+     ]
+    ],
+    "h1": [
+     [
+      54,
+      59
+     ],
+     [
+      37,
+      66
+     ],
+     [
+      51,
+      52
+     ],
+     [
+      52,
+      72
+     ],
+     [
+      55,
+      65
+     ]
+    ],
+    "q1": [
+     [
+      23,
+      35
+     ],
+     [
+      18,
+      38
+     ],
+     [
+      24,
+      32
+     ],
+     [
+      23,
+      34
+     ],
+     [
+      21,
+      43
+     ]
+    ]
+   }
+  }
+ },
+ "skipped": 1,
+ "window": 5
+}
