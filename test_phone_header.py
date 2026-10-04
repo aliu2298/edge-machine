@@ -371,71 +371,138 @@ def _near(got, want, tol=1.0):
         return False
 
 
-OUTLINE = r"""
+FOCUS_SNAP = r"""
 () => {
-  const nav = document.querySelector("nav.main");
-  const a = document.activeElement;
-  if (!nav || !a || a.tagName !== "A" || !nav.contains(a)) {
-    return { ok: false, reason: "focus is not a main-nav pill" };
+  const pad = 0.5;
+  function ring(el, clip) {
+    const rect = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    const width = parseFloat(cs.outlineWidth) || 0;
+    const offset = parseFloat(cs.outlineOffset) || 0;
+    const shown = cs.outlineStyle !== "none" && width > 0;
+    const extra = shown ? width + offset : 0;
+    const box = {
+      top: rect.top - extra,
+      bottom: rect.bottom + extra,
+      left: rect.left - extra,
+      right: rect.right + extra,
+    };
+    const outlineInside = shown
+      && box.top >= clip.top - pad && box.bottom <= clip.bottom + pad
+      && box.left >= clip.left - pad && box.right <= clip.right + pad;
+    return { rect, box, shown, offset, outlineInside };
   }
-  const pill = a.getBoundingClientRect();
-  const clip = nav.getBoundingClientRect();
-  const cs = getComputedStyle(a);
-  const width = parseFloat(cs.outlineWidth) || 0;
-  const offset = parseFloat(cs.outlineOffset) || 0;
-  const shown = cs.outlineStyle !== "none" && width > 0;
-  const extra = shown ? width + offset : 0;
-  const box = {
-    top: pill.top - extra,
-    bottom: pill.bottom + extra,
-    left: pill.left - extra,
-    right: pill.right + extra,
-  };
-  const pad = 1;
-  const inside = shown
-    && box.top >= clip.top - pad && box.bottom <= clip.bottom + pad
-    && box.left >= clip.left - pad && box.right <= clip.right + pad;
-  return {
-    ok: inside,
-    text: (a.textContent || "").trim(),
-    offset: offset,
-    width: width,
-    style: cs.outlineStyle,
-    top: box.top,
-    bottom: box.bottom,
-    left: box.left,
-    right: box.right,
-    navTop: clip.top,
-    navBottom: clip.bottom,
-    navLeft: clip.left,
-    navRight: clip.right,
-  };
+  function insets(scroller) {
+    const fade = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-fade")) || 22;
+    const overflow = scroller.scrollWidth > scroller.clientWidth + 1;
+    return {
+      left: overflow && scroller.scrollLeft > 2 ? fade : 0,
+      right: overflow && scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 2 ? fade : 0,
+    };
+  }
+  const a = document.activeElement;
+  if (!a) return { kind: "none" };
+  const main = document.querySelector("nav.main");
+  const toc = document.querySelector("nav.toc");
+  const crumbs = document.querySelector("nav.crumbs");
+  const toggle = document.querySelector(".view-toggle");
+  if (main && a.tagName === "A" && main.contains(a)) {
+    const links = [...main.querySelectorAll("a")];
+    const clip = main.getBoundingClientRect();
+    const r = ring(a, clip);
+    const side = insets(main);
+    const visLeft = clip.left + side.left;
+    const visRight = clip.right - side.right;
+    const clear = r.rect.width > 1 && r.rect.height > 1
+      && r.rect.left >= visLeft - pad && r.rect.right <= visRight + pad
+      && r.rect.top >= clip.top - pad && r.rect.bottom <= clip.bottom + pad;
+    return {
+      kind: "pill", text: a.textContent.trim(), index: links.indexOf(a), count: links.length,
+      clear: clear, outlineInside: r.outlineInside, offset: r.offset,
+      left: r.rect.left, right: r.rect.right, visLeft: visLeft, visRight: visRight,
+      boxTop: r.box.top, boxBottom: r.box.bottom, clipTop: clip.top, clipBottom: clip.bottom,
+    };
+  }
+  const chipNav = toc && a.tagName === "A" && toc.contains(a) ? toc
+    : crumbs && a.tagName === "A" && crumbs.contains(a) ? crumbs : null;
+  if (chipNav) {
+    const clip = chipNav.getBoundingClientRect();
+    const r = ring(a, clip);
+    const side = insets(chipNav);
+    const visLeft = clip.left + side.left;
+    const visRight = clip.right - side.right;
+    const clear = r.rect.width > 1
+      && r.rect.left >= visLeft - pad && r.rect.right <= visRight + pad
+      && r.rect.top >= clip.top - pad && r.rect.bottom <= clip.bottom + pad;
+    return {
+      kind: "chip", text: a.textContent.trim(),
+      clear: clear, outlineInside: r.outlineInside, offset: r.offset,
+      left: r.rect.left, right: r.rect.right, visLeft: visLeft, visRight: visRight,
+      boxTop: r.box.top, boxBottom: r.box.bottom, clipTop: clip.top, clipBottom: clip.bottom,
+    };
+  }
+  if (toggle && a.tagName === "BUTTON" && toggle.contains(a)) {
+    const clip = toggle.getBoundingClientRect();
+    const r = ring(a, clip);
+    return {
+      kind: "toggle", text: a.textContent.trim(),
+      outlineInside: r.outlineInside, shown: r.shown, offset: r.offset,
+      boxTop: r.box.top, boxBottom: r.box.bottom, boxLeft: r.box.left, boxRight: r.box.right,
+      clipTop: clip.top, clipBottom: clip.bottom, clipLeft: clip.left, clipRight: clip.right,
+    };
+  }
+  return { kind: "other" };
+}
+"""
+
+ANCHOR = r"""
+() => {
+  const bar = document.querySelector(".topbar");
+  const sections = [...document.querySelectorAll("main section[id]")];
+  if (!bar || !sections.length) return { skip: true };
+  const doc = document.documentElement;
+  const pad = parseFloat(getComputedStyle(doc).scrollPaddingTop) || 0;
+  const maxScroll = doc.scrollHeight - window.innerHeight;
+  window.scrollTo(0, 0);
+  for (const sec of sections) {
+    const margin = parseFloat(getComputedStyle(sec).scrollMarginTop) || 0;
+    const absTop = sec.getBoundingClientRect().top + window.scrollY;
+    const desired = absTop - pad - margin;
+    if (desired > maxScroll + 1 || desired < 8) continue;
+    sec.scrollIntoView({ block: "start" });
+    const gap = sec.getBoundingClientRect().top - bar.getBoundingClientRect().bottom;
+    return { skip: false, id: sec.id, gap: gap, margin: margin, pad: pad };
+  }
+  return { skip: true };
 }
 """
 
 
-def _tab_to_visible_pill(page):
-    """Walk the keyboard tab order onto a main-nav pill that is inside the scroller."""
+def _keyboard_focus(page, expect_toggle):
+    """Tab from the skip link through every main-nav pill, chip, and toggle segment."""
     page.evaluate("""() => {
+      window.scrollTo(0, 0);
       const skip = document.querySelector("a.skip");
       if (skip) skip.focus();
     }""")
-    for _ in range(16):
+    pills, chips, toggles = [], [], []
+    seen = set()
+    for _ in range(64):
         page.keyboard.press("Tab")
-        state = page.evaluate("""() => {
-          const nav = document.querySelector("nav.main");
-          const a = document.activeElement;
-          if (!nav || !a || a.tagName !== "A" || !nav.contains(a)) return "outside";
-          const pill = a.getBoundingClientRect();
-          const clip = nav.getBoundingClientRect();
-          const inView = pill.width > 1
-            && pill.left >= clip.left - 1 && pill.right <= clip.right + 1
-            && pill.top >= clip.top - 1 && pill.bottom <= clip.bottom + 1;
-          return inView ? "ready" : "clipped";
-        }""")
-        if state == "ready":
-            return True
-    return False
+        info = page.evaluate(FOCUS_SNAP)
+        kind = info.get("kind")
+        if kind == "pill" and info.get("index") not in seen:
+            seen.add(info.get("index"))
+            pills.append(info)
+        elif kind == "chip":
+            chips.append(info)
+        elif kind == "toggle":
+            toggles.append(info)
+        elif len(pills) >= 8 and not expect_toggle:
+            break
+        if len(pills) >= 8 and expect_toggle and len(toggles) >= 2:
+            break
+    return pills, chips, toggles
 
 
 def browser_checks():
@@ -473,21 +540,40 @@ def browser_checks():
                     label = f"{path} @{width}"
                     saved_nav = page.evaluate(
                         "() => { const n = document.querySelector('nav.main'); return n ? n.scrollLeft : 0; }")
-                    reached = _tab_to_visible_pill(page)
-                    ring = page.evaluate(OUTLINE) if reached else {"ok": False, "reason": "no pill"}
+                    pills, chips, toggles = _keyboard_focus(page, _has_toggle(path))
                     page.evaluate("""(x) => {
                       const nav = document.querySelector('nav.main');
                       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
                       if (nav) nav.scrollLeft = x;
+                      window.scrollTo(0, 0);
                     }""", saved_nav)
-                    if ring.get("ok"):
-                        ok(True, f"{label}: focused pill outline sits inside nav.main")
-                    else:
-                        detail = ring.get("reason") or (
-                            f"{ring.get('text', '')!r} offset {ring.get('offset')}px "
-                            f"box {ring.get('top', 0):.1f}..{ring.get('bottom', 0):.1f} "
-                            f"vs nav {ring.get('navTop', 0):.1f}..{ring.get('navBottom', 0):.1f}")
-                        ok(False, f"{label}: focused pill outline sits inside nav.main ({detail})")
+                    ok(len(pills) == 8,
+                       f"{label}: tabbed through all 8 main-nav pills (got {len(pills)}: "
+                       + ", ".join(p.get("text", "") for p in pills) + ")")
+                    for pill in pills:
+                        ok(pill["clear"] and pill["outlineInside"],
+                           f"{label}: pill {pill['text']!r} is clear of the fades and its outline "
+                           f"is inside the nav (left {pill['left']:.0f}..{pill['right']:.0f} vs "
+                           f"{pill['visLeft']:.0f}..{pill['visRight']:.0f}, outline "
+                           f"{pill['boxTop']:.1f}..{pill['boxBottom']:.1f} vs "
+                           f"{pill['clipTop']:.1f}..{pill['clipBottom']:.1f}, offset {pill['offset']}px)")
+                    for chip in chips:
+                        ok(chip["clear"] and chip["outlineInside"],
+                           f"{label}: chip {chip['text']!r} is clear of the fades and its outline "
+                           f"is inside the row (left {chip['left']:.0f}..{chip['right']:.0f} vs "
+                           f"{chip['visLeft']:.0f}..{chip['visRight']:.0f}, outline "
+                           f"{chip['boxTop']:.1f}..{chip['boxBottom']:.1f} vs "
+                           f"{chip['clipTop']:.1f}..{chip['clipBottom']:.1f}, offset {chip['offset']}px)")
+                    if _has_toggle(path):
+                        names = [t.get("text") for t in toggles]
+                        ok(names[:2] == ["Cards", "Table"],
+                           f"{label}: tabbed to both toggle segments ({names})")
+                        for seg in toggles[:2]:
+                            ok(seg.get("shown") and seg.get("outlineInside"),
+                               f"{label}: toggle {seg.get('text')!r} outline sits inside .view-toggle "
+                               f"(offset {seg.get('offset')}px box {seg.get('boxTop', 0):.1f}.."
+                               f"{seg.get('boxBottom', 0):.1f} vs {seg.get('clipTop', 0):.1f}.."
+                               f"{seg.get('clipBottom', 0):.1f})")
                     got = page.evaluate(MEASURE)
                     h = got["stuckHeight"]
                     print(f"    {label}: stuck {h:.1f}px top {got['stuckTop']:.1f} "
@@ -578,6 +664,12 @@ def browser_checks():
                         ok(toggle is None,
                            f"{label}: no view toggle"
                            + ("" if toggle is None else " (one was rendered)"))
+                    landed = page.evaluate(ANCHOR)
+                    if not landed.get("skip"):
+                        gap = landed["gap"]
+                        ok(8 <= gap <= 12,
+                           f"{label}: #{landed['id']} lands {gap:.1f}px under the bar "
+                           f"(scroll-padding {landed['pad']}px, scroll-margin {landed['margin']}px)")
                 page.close()
                 context.close()
             browser.close()

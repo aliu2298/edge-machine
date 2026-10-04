@@ -37,23 +37,25 @@
           bar.classList.toggle("nav-fade", narrowNav.matches && pastRight());
           bar.classList.toggle("nav-fade-left", narrowNav.matches && pastLeft());
         }
+        // Same reveal as site.js. Chrome leaves a partly visible pill where it
+        // is. Instant scroll, so prefers-reduced-motion is not animated.
+        function reveal(el) {
+          if (!narrowNav.matches || !el) return;
+          var fade = fadeWidth();
+          var navRect = bar.getBoundingClientRect();
+          var aRect = el.getBoundingClientRect();
+          var delta = 0;
+          if (aRect.left < navRect.left + fade - 0.5) delta = aRect.left - navRect.left - fade;
+          else if (aRect.right > navRect.right - fade + 0.5) delta = aRect.right - (navRect.right - fade);
+          if (delta) bar.scrollLeft += delta;
+        }
         function place() {
           if (!narrowNav.matches) {
             bar.classList.remove("nav-fade");
             bar.classList.remove("nav-fade-left");
             return;
           }
-          if (followCurrent) {
-            var current = bar.querySelector('[aria-current="page"]');
-            if (current) {
-              var fade = fadeWidth();
-              var navRect = bar.getBoundingClientRect();
-              var aRect = current.getBoundingClientRect();
-              var limit = navRect.right - fade;
-              if (aRect.left < navRect.left - 0.5) bar.scrollLeft += aRect.left - navRect.left - fade;
-              else if (aRect.right > limit + 0.5) bar.scrollLeft += aRect.right - limit;
-            }
-          }
+          if (followCurrent) reveal(bar.querySelector('[aria-current="page"]'));
           paint();
         }
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
@@ -63,6 +65,12 @@
         bar.addEventListener("scroll", function () {
           paint();
         }, { passive: true });
+        bar.addEventListener("focusin", function (ev) {
+          var el = ev.target;
+          if (!el || el.tagName !== "A" || !bar.contains(el)) return;
+          reveal(el);
+          paint();
+        });
       };
       armNav(document.querySelector("nav.main"), true);
       armNav(document.querySelector("nav.toc"), false);
