@@ -239,6 +239,17 @@ eq(T.scan_hours({"BTC/USD": _hb["BTC/USD"][:3]}, {"trades": [], "meta": {}}, res
 eq(T.scan_hours(_hb, {"trades": [], "meta": {}}, research_before="2026-09-26"), 0,
    "and nothing from before the rule's own start")
 
+print("\nan unadjusted corporate action voids the trade")
+_vb = [dict(t=f"2026-09-{d:02d}T04:00:00Z", o=o, h=o, l=c, c=c, v=1)
+       for d, o, c in ((28, 78.2, 77.8), (29, 77.0, 77.8), (30, 77.8, 77.7), (31, 14.0, 12.6))]
+_vd = {"trades": [dict(id="sw_rsi2_pullback|X|2026-09-25", rule="sw_rsi2_pullback", lane="swing",
+                       symbol="X", signal_day="2026-09-25", entry_day="2026-09-28", entry=78.2,
+                       status="open", exit=None, exit_day=None, ret_gross=None, ret_net=None,
+                       bench_ret=None, bars_held=None)], "meta": {}}
+eq(T.grade({"X": _vb}, _vd), 0, "a spin-off gap is not graded as a loss")
+eq(_vd["trades"][0]["status"], "void", "it is marked void")
+eq(T.assess(_vd, "sw_rsi2_pullback")["open"], 0, "and leaves the record entirely")
+
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all market tests passed'}")
 for f in FAILS:
     print("   -", f)

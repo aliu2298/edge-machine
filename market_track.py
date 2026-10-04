@@ -40,6 +40,7 @@ STAKE = 1000.0          # notional per trade, so P/L reads in dollars as well as
 READ_FLOOR = 30         # entry days before a record is read at all
 EARLY_N = 10            # below this, not even a lean is shown
 BENCH = "SPY"
+VOID_GAP = 2.0           # an overnight move past 2x either way is a corporate action, not a price
 
 
 # --------------------------------------------------------------------------- indicators
@@ -657,6 +658,14 @@ def grade(bars_by_symbol, d, rules=None):
         if not rule:
             continue
         after = bars[idx + 1:]
+        # An overnight gap past VOID_GAP with no split adjustment is a corporate action the
+        # feed did not adjust (CTVA's spin-off, 2026-10-01), not a price move: void, never grade.
+        held = bars[idx:]
+        gap = next((b for p, b in zip(held, held[1:])
+                    if not 1 / VOID_GAP < b["o"] / p["c"] < VOID_GAP), None)
+        if gap is not None:
+            t.update(status="void", void_reason=f"unadjusted corporate action ({_day(gap)})")
+            continue
         k = rule["exit"](after, dict(hist=bars[:idx + 1]))
         if k is None or k + 1 >= len(after):
             continue                                  # still open, or no open to leave at yet
