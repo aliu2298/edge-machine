@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-04T11:09:14+00:00",
+ "board_built_at": "2026-10-04T14:41:07+00:00",
  "leads": {
   "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Gibraltar",
@@ -272,7 +272,7 @@
    "kickoff": "2026-10-04T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "Cricket",
    "match": "CSA Emerging v Western Province",
    "pair": "oddspedia|cricket",
@@ -303,7 +303,7 @@
    "kickoff": "2026-10-04T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "Cricket",
    "match": "Lions v Warriors (SA)",
    "pair": "oddspedia|cricket",
@@ -317,6 +317,31 @@
    "sandbox_quote": "oddspedia:KXT20MATCH-26OCT041200LIOWAR",
    "source": "oddspedia",
    "sport": "cricket",
+   "status": "pending"
+  },
+  "2026-10-04|Malta|Andorra|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Andorra",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-04",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Over 1.5 goals",
+   "home": "Malta",
+   "id": "2026-10-04|Malta|Andorra|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-04T16:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-04",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
+   "league": "UEFA Nations League",
+   "match": "Malta v Andorra",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.61,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT04MLTAND-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
    "status": "pending"
   },
   "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
@@ -334,7 +359,7 @@
    "kickoff": "2026-10-05T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "UEFA Nations League",
    "match": "Montenegro v Armenia",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -359,7 +384,7 @@
    "kickoff": "2026-10-05T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "UEFA Nations League",
    "match": "Northern Ireland v Georgia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -373,6 +398,63 @@
    "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT05NIRGEO-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
+  "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "San Marino",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Albania",
+   "id": "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-04",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
+   "league": "UEFA Nations League",
+   "match": "Albania v San Marino",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.37,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT06ALBSMR-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06ALBSMR-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
+  "2026-10-06|Kazakhstan|Faroe Islands|Faroe Islands to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Faroe Islands",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Faroe Islands"
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Faroe Islands to score 1+",
+   "home": "Kazakhstan",
+   "id": "2026-10-06|Kazakhstan|Faroe Islands|Faroe Islands to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-06T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-04",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
+   "league": "UEFA Nations League",
+   "match": "Kazakhstan v Faroe Islands",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.67,
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT06KAZFRO-FRO1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
    "status": "pending"
   },
   "2026-10-06|Kazakhstan|Faroe Islands|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
@@ -390,7 +472,7 @@
    "kickoff": "2026-10-06T14:00Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "UEFA Nations League",
    "match": "Kazakhstan v Faroe Islands",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -402,6 +484,37 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06KAZFRO-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
+  "2026-10-06|Luxembourg|Bulgaria|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Bulgaria",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Luxembourg",
+   "id": "2026-10-06|Luxembourg|Bulgaria|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-04",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
+   "league": "UEFA Nations League",
+   "match": "Luxembourg v Bulgaria",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.82,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT06LUXBUL-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06LUXBUL-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35_intl",
    "status": "pending"
@@ -421,7 +534,7 @@
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "UEFA Nations League",
    "match": "Moldova v Slovakia",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -446,7 +559,7 @@
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-04",
-   "last_seen_at": "2026-10-04T11:09:14+00:00",
+   "last_seen_at": "2026-10-04T14:41:07+00:00",
    "league": "UEFA Nations League",
    "match": "Scotland v Slovenia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -523,5 +636,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-04T11:09:14+00:00"
+ "updated_at": "2026-10-04T14:41:07+00:00"
 }
