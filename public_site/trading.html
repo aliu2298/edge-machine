@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine · Trading</title>
-<meta name="description" content="Stock and crypto rules under test, judged per entry day at real prices.">
+<meta name="description" content="Stock and ETF rules under test, judged per entry day at real prices.">
 <link rel="stylesheet" href="./site.css">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
@@ -15,13 +15,13 @@
 <div class="topbar">
 <a class="brand" href="./sandbox.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html" aria-current="page">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-04T20:15:00Z">Updated Oct 4, 3:15 PM CT</time><span class="sr-only">updated 2026-10-04 20:15 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-04T23:05:56Z">Updated Oct 4, 6:05 PM CT</time><span class="sr-only">updated 2026-10-04 23:05 UTC</span></p>
 </div>
 
 </header>
 <main id="content" class="wrap">
 <h1>Trading</h1>
-<p class="lede">Stock and crypto rules under test, judged per entry day. Paper only.</p>
+<p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>0</b><span>working (30+ days)</span></div>
 <div class="tile"><b>0</b><span>promising</span></div>
@@ -31,7 +31,7 @@
 </div>
 <div class="note">These rules are scanned and graded on the machine that holds the market data keys, and the record below is what it published. This page is built elsewhere and only renders it, so it does not reach the market itself.</div>
 <section id="rules">
-<h2>Stock rules under test</h2>
+<h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table><thead><tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th><th class="num">Trades</th><th class="num">Mean per day</th><th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr></thead><tbody><tr><td data-l="Rule"><details class="src"><summary><b>RSI(2) pullback in an uptrend</b>
 <div class="sm mut">Swing · sw_rsi2_pullback</div></summary>
 <div class="sm mut">Pre-registered 2026-09-19 (Connors&#x27; published RSI-2 rule, thresholds unchanged). Buy the next open when a stock closes above its 200-day average, below its 5-day average, with a 2-period RSI under 5. Leave at the open after the first close back above the 5-day average, or after 10 sessions, whichever comes first. The oldest published mean-reversion rule there is, which is the point: if a rule this well known still pays after costs, the Sandbox will show it; if it does not, that is the answer for every variant of it.</div></details></td>
