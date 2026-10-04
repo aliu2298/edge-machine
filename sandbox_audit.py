@@ -205,15 +205,26 @@ def check_bets(d, rep):
         rep.ok("bets", f"{len(qs):,} quotes, {n:,} bets: P/L, status, prices and timing all consistent")
 
 
+def _frozen_weather(q):
+    """A weather row left on the ledger. Duplicate checks do not flag it.
+
+    nws and nws_fade are weather even when the row's sport is not climate.
+    """
+    return q.get("source") in ("nws", "nws_fade") or q.get("sport") == "climate"
+
+
 def check_duplicates(d, rep):
     """Flag a settled bet that repeats an earlier one on the same contest, another venue.
 
     Both copies pay, so the P/L counts twice. Voiding the later copy is what clears it.
     The matcher is the tracker's own, including the wider window for a Kalshi placeholder.
-    A removed lane is checked too. A duplicate there is a warning, not an error, so
-    the check does not call that case clean.
+    Frozen weather rows are not flagged. The matcher groups by (source, sport), so
+    dropping them cannot hide or create a pair on any other lane. Every other removed
+    lane is checked. A duplicate there is a warning, not an error, so the check does
+    not call that case clean.
     """
-    pairs = T.settled_cross_venue_dups(list(T.all_bets(d)))
+    pairs = T.settled_cross_venue_dups(
+        [q for q in T.all_bets(d) if not _frozen_weather(q)])
     live, gone = [], []
     for later, kept in pairs:
         if S.removed_row(later) and S.removed_row(kept):
