@@ -1213,8 +1213,8 @@ def _fully_paused_ignoring_removal(source):
 def lane_paused(source, sport):
     """True when (source, sport) must not log a new entry.
 
-    Open entries already in the ledger are not this function's business: grade()
-    settles them whether or not the lane is paused. Re-enable a pause by editing
+    Open bets on a paused lane still grade. Open bets on a removed lane do
+    not: grade() skips a removed row. Re-enable a pause by editing
     PAUSED_LANES or PAUSED_SPORTS — see those. A removed lane is not a pause:
     deleting its line does not resume a fetch or a bet.
     """

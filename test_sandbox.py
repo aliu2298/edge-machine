@@ -117,9 +117,9 @@ def _day_vs_headline(d):
 def _repeated_settled_ids(d):
     """Settled-bet ids that appear twice across the ledger and the archive.
 
-    score() would count a row still in the ledger and again via retired, while
-    all_bets() would count the ledger copy and the archive copy. Either way the
-    bet is in the record twice.
+    all_bets() counts the ledger copy and the archive copy. score() does not
+    count a live id again through retired. save() writes the ledger before
+    the archive, so a crash between those writes is not this doubled id.
     """
     seen = set()
     repeated = []
@@ -2416,8 +2416,9 @@ _dn3, _day_pl3, _bn3, _bp3 = _day_vs_headline(_roll_dup)
 ok(_dn3 != _bn3, "a duplicated archive bet no longer matches the headline")
 eq(_repeated_settled_ids(_roll_dup), ["kalshi:roll-won"], "and that repeated id is the won bet")
 
-# Left in the ledger as well as the archive, the two sums still agree: each side
-# counts the bet twice. The id check is what keeps that from passing.
+# The same id is in the ledger and the archive. all_bets() sees it twice,
+# which is what the check below asserts. score() counts the live row once
+# and takes the overlap back out of retired, so the two sums do not agree.
 _roll_both = _roll_copy.deepcopy(_roll)
 _roll_both["quotes"].append(dict(next(q for q in _roll_both["_archive"]
                                       if q.get("id") == "kalshi:roll-won")))
