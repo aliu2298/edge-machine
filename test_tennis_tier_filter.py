@@ -10,6 +10,7 @@ Fails on main: a dropped tour inside the window is still picked, and a
 dropped-tour leg still enters a basket. No network.
 """
 import collections
+import hashlib
 import json
 import math
 import os
@@ -59,13 +60,12 @@ def _picks():
         _row("KXATPCHALLENGERMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row("KXWTAMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row("KXITFMATCH-26OCT02NO", 0.78, start, "kalshi"),
-        _row(_slug("atp"), 0.78, NOW + timedelta(hours=4), "polymarket_us"),
+        _row("aec-atp-late-bb-2026-10-02", 0.78, NOW + timedelta(hours=4), "polymarket_us"),
         _row("aec-atp-low-bb-2026-10-02", 0.69, start, "polymarket_us"),
         _row("aec-atp-edge-bb-2026-10-02", 0.70, start, "polymarket_us"),
+        _row("aec-atp-inside-bb-2026-10-02", 0.84, start, "polymarket_us"),
         _row("aec-atp-high-bb-2026-10-02", 0.85, start, "polymarket_us"),
     ]
-    # The second ATP slug above collides with the kept one. Give the late one its own id.
-    rows[-4] = _row("aec-atp-late-bb-2026-10-02", 0.78, NOW + timedelta(hours=4), "polymarket_us")
     return S.fetch_tennis_fav_band_3h("tennis", {"tennis": rows}, now=NOW)
 
 
@@ -306,6 +306,10 @@ def _rounded(fig):
             round(fig["fade_z"], 2))
 
 
+def _fixture_path(name):
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", name)
+
+
 def _frozen_looked_at():
     """The looked-at contests the note's figures were read from.
 
@@ -313,10 +317,22 @@ def _frozen_looked_at():
     row or a void on the live ledger does not move this file, so the note's
     maths stay pinned to these contests.
     """
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        "fixtures", "tennis_fav_looked_at.json")
-    with open(path) as fh:
+    with open(_fixture_path("tennis_fav_looked_at.json")) as fh:
         return json.load(fh)
+
+
+def _frozen_overlaps():
+    """The 27 parent/3-hour overlaps the note counted, before the later void.
+
+    One row per contest cannot reproduce that count. This list is the contests
+    the note named, frozen beside the looked-at snapshot.
+    """
+    with open(_fixture_path("tennis_fav_overlaps.json")) as fh:
+        return json.load(fh)
+
+
+# The looked-at snapshot's bytes. A one-cent edit of any row changes this.
+LOOKED_AT_SHA256 = "e63dfb75a55379ea99e987975cb241317144a944d22ed38ebc3355a81a66ef1f"
 
 
 def _check_frozen_note(rows):
@@ -336,34 +352,59 @@ def _check_frozen_note(rows):
        (6.35, 2.33, 15.5), "frozen ATP: unit +6.35, z +2.33, ROI +15.5% after fees")
     eq((wta["n"], round(wta["roi"] * 100, 1), round(wta["fade"] * 100, 1)),
        (9, 12.0, -60.6), "frozen WTA Doubles: 9 contests, +12.0% after fees, fade -60.6%")
+    utr = _figures(by["utr"])
+    eq(len(kept), 78, "frozen kept set is 78 contests")
+    eq(round(utr["unit"], 2), 2.45, "frozen UTR unit +2.45 before fees")
+    eq(round(wta["unit"], 2), 0.96, "frozen WTA Doubles unit +0.96 before fees")
     eq((round(keep_f["z"], 2), round(keep_f["fade"] * 100, 1), round(keep_f["fade_z"], 2)),
        (2.76, -68.7, -3.06), "frozen kept set: z +2.76 before fees, fade -68.7% / z -3.06")
+    eq((round(whole["unit"], 2), round(whole["z"], 2), round(whole["roi"] * 100, 1)),
+       (18.49, 1.85, 2.4), "frozen whole band: unit, z, and ROI")
     eq((round(whole["fade"] * 100, 1), round(whole["fade_z"], 2)),
        (-24.1, -2.88), "frozen whole-band fade -24.1% / z -2.88")
+    digest = hashlib.sha256(open(_fixture_path("tennis_fav_looked_at.json"), "rb").read()).hexdigest()
+    eq(digest, LOOKED_AT_SHA256, "a one-cent edit of the looked-at snapshot changes its sha256")
     days = {q["date"] for q in rows}
     span = (datetime.fromisoformat(max(days)) - datetime.fromisoformat(min(days))).days + 1
     eq((round(len(rows) / span, 1), round(len(kept) / span, 1)),
        (36.0, 4.3), "frozen record: 36.0 contests a day, 4.3 on the kept tours")
 
 
-def _check_note_quotes(note, rows):
-    """The 3-hour note quotes this frozen record. The live ledger is not read."""
+def _check_note_quotes(note, rows, overlap_ids):
+    """The published note quotes these frozen figures, in the note's own format.
+
+    The live ledger is not read. ATP's backed-side z is pinned on the snapshot;
+    the note does not print that z.
+    """
     by = collections.defaultdict(list)
     for q in rows:
         by[_tier(q)].append(q)
     kept = [q for q in rows if _tier(q) in KEEP]
     atp = _figures(by["atp"])
+    utr = _figures(by["utr"])
     wta = _figures(by["wtadb"])
     keep_f = _figures(kept)
     whole = _figures(rows)
+    _rate, span = _per_day(rows)
+    kept_rate = round(len(kept) / span, 1)
     phrases = (
-        f"ATP {atp['unit']:+.2f}",
+        f"{len(rows)} distinct contests",
+        f"logged ({len(overlap_ids)} that the parent lane and this lane both bet, counted once)",
+        f"On the {span} days",
+        f"{_rate:.1f} contests a day",
+        f"the kept tours were {kept_rate:.1f}",
+        f"{len(kept)} contests",
         f"z {keep_f['z']:+.2f} before fees",
         f"{wta['n']} contests",
-        f"{wta['roi'] * 100:+.1f}%",
+        f"ROI {wta['roi'] * 100:+.1f}%",
         f"{wta['fade'] * 100:.1f}%",
+        f"{whole['fade'] * 100:.1f}%",
         f"z {whole['fade_z']:+.2f} on the fade prices before fees",
+        f"{keep_f['fade'] * 100:.1f}%",
         f"z {keep_f['fade_z']:+.2f} on the fade prices before fees",
+        f"ATP {atp['unit']:+.2f}",
+        f"UTR {utr['unit']:+.2f}",
+        f"WTA Doubles {wta['unit']:+.2f}",
     )
     for phrase in phrases:
         ok(phrase in note, f"the 3-hour note quotes the frozen record: {phrase}")
@@ -497,8 +538,8 @@ def main():
     print("\nthe 3-hour lane picks only the kept tours, inside the same window and band")
     got = sorted(q["market_id"] for q in _picks())
     eq(got, sorted([_slug("atp"), _slug("wtadb"), _slug("utr"), "KXATPMATCH-26OCT02OK",
-                    "aec-atp-edge-bb-2026-10-02"]),
-       "ATP, WTA Doubles, UTR, a Kalshi ATP match, and an ask at 0.70; nothing else")
+                    "aec-atp-edge-bb-2026-10-02", "aec-atp-inside-bb-2026-10-02"]),
+       "0.70 and 0.84 are picked; 0.69 and 0.85 are not")
     ok(_slug("atpdb") not in got and _slug("atpcq") not in got,
        "ATP Doubles and Challenger qualifying are refused inside the window")
 
@@ -548,7 +589,7 @@ def main():
     _check_looked_at(d)
     frozen = _frozen_looked_at()
     _check_frozen_note(frozen)
-    _check_note_quotes(note, frozen)
+    _check_note_quotes(note, frozen, _frozen_overlaps())
 
     print("\nthe page record restarts; the ledger rows stay")
     st = T.load_stages()
@@ -586,9 +627,10 @@ def main():
        "the Production list no longer carries pm_combo4")
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
-    counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED]
-    eq(len(counted), 40,
-       "[records] drops the five lanes taken off the board on 2026-10-04")
+    counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED
+               and not S.lane_removed(r["name"], r["sport"])]
+    eq(len(counted), len(rows) - sum(r["sport"] in S.DAY_CLUSTERED for r in rows),
+       "the record count is the rendered pairs with the day-clustered sports left out")
     ok(not any(r["name"] in ("nws", "nws_fade", "covers") for r in rows),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
@@ -634,19 +676,20 @@ def main():
                f"kept-tour open bet {q['id']} is on the sandbox page")
     p4 = [q for q in T.all_bets(d)
           if q.get("source") == "pm_combo4" and q.get("status") in ("won", "lost")]
-    eq(len(p4), 4, "pm_combo4's four settled baskets are still the record")
+    judge = T.assess(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
+    won4 = sum(q.get("status") == "won" for q in p4)
+    eq(len(p4), judge["n"], "pm_combo4's settled baskets are the record assess counts")
+    eq(won4, judge["won"], "pm_combo4's wins are those baskets")
+    eq(len(p4) - won4, judge["n"] - judge["won"], "pm_combo4's losses are the rest of that record")
     ok(all(f'data-id="{q["id"]}"' in blob for q in p4),
        "pm_combo4's baskets stay on the rendered page")
     ok(all(not _refused_tour(q) for q in p4),
        "pm_combo4 is not treated as a reset lane")
-    judge = T.assess(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
-    eq((judge["won"], judge["n"] - judge["won"]), (2, 2),
-       "pm_combo4 is still 2-2 on its whole record")
     whole_fade = T.faded(d, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
     ok(whole_fade["n"] > 0,
        "T.faded() on the 3-hour lane, called the way every other lane is, still reads the whole book")
     other = T.faded(d, "pm_combo4", "tennis_pmcombo", venues=T.TRADEABLE_VENUES)
-    eq(other["n"], 4, "T.faded() on pm_combo4 is still its four baskets")
+    eq(other["n"], len(p4), "T.faded() on pm_combo4 counts those same baskets")
     label = "Tennis 3-leg combo on Polymarket US"
     table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
     ok(bool(table_rows), "pm_combo3 is on the sandbox page")
@@ -692,8 +735,11 @@ def main():
     ok("+58.1%" not in combo2 and "3 bets over 2 days" not in combo2,
        "pm_combo2's stamp does not carry the pre-clock +58.1% on 3")
     kept4 = _stamp_row(stamp, S.SOURCES["pm_combo4"]["label"])
-    ok("4 bets over 1 day" in kept4 and "2 won v 1.6 priced" in kept4,
-       "pm_combo4's stamp is still its whole record")
+    span4 = judge["span_days"]
+    day4 = "day" if round(span4) == 1 else "days"
+    ok(f"{judge['n']} bets over {span4:.0f} {day4}" in kept4
+       and f"{judge['won']} won v {judge['expected']:.1f} priced" in kept4,
+       "pm_combo4's stamp quotes the record assess reads")
     other = T.assess(SB.stamp_ledger(d, "oddspedia"), "oddspedia")
     sample = next((c[3] for c in other["criteria"] if c[0] == "sample"), None)
     ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["oddspedia"]["label"]),
