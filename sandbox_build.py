@@ -2008,7 +2008,7 @@ def trading_page(now=None):
                   'the market data keys, and the record below is what it published. This page is '
                   'built elsewhere and only renders it, so it does not reach the market itself.</div>')
     body = f"""<h1>Trading</h1>
-<p class="lede">Stock and crypto rules under test, judged per entry day. Paper only.</p>
+<p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
 <div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
@@ -2018,7 +2018,7 @@ def trading_page(now=None):
 </div>
 {trade_note}
 <section id="rules">
-<h2>Stock rules under test</h2>
+<h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
@@ -2031,7 +2031,7 @@ under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it doe
 """
     return site_chrome.document(
         "Edge Machine · Trading",
-        "Stock and crypto rules under test, judged per entry day at real prices.",
+        "Stock and ETF rules under test, judged per entry day at real prices.",
         "trading",
         (("rules", "Rules"),),
         site_chrome.stamp(now_dt),
