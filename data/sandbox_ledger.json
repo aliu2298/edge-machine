@@ -12,10 +12,10 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 240,
-    "picked": 240
+    "offered": 210,
+    "picked": 210
    },
-   "kalshi_venue": 240
+   "kalshi_venue": 210
   },
   "cricket": {
    "cricket_consensus": {
@@ -42,13 +42,13 @@
    "kalshi_venue": 0
   },
   "finance": {
-   "kalshi_venue": 46
+   "kalshi_venue": 30
   },
   "mlb": {
    "kalshi_venue": 0,
    "polymarket_us": 8,
    "polymarket_us_listed": 8,
-   "polymarket_us_priced": 8
+   "polymarket_us_priced": 7
   },
   "mma": {
    "kalshi_venue": 0,
@@ -89,7 +89,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 32,
+   "kalshi_venue": 51,
    "mls_away_band": {
     "offered": 1,
     "picked": 0
@@ -391,11 +391,11 @@
   "tennis": {
    "kalshi_venue": 63,
    "polymarket_us": 40,
-   "polymarket_us_listed": 411,
-   "polymarket_us_priced": 225,
+   "polymarket_us_listed": 426,
+   "polymarket_us_priced": 238,
    "tennis_fav_band_3h": {
     "offered": 103,
-    "picked": 0
+    "picked": 2
    }
   },
   "tennis_combo": {
@@ -418,15 +418,15 @@
  "feed_status": {
   "oddspedia": "ok",
   "olbg": "ok",
-  "pinnacle": "down: HTTP 429 on /sports/soccer_uefa_europa_conference_league/events"
+  "pinnacle": "down: HTTP 429 on /sports/soccer_russia_premier_league/events"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "odds_api": {
    "allowance": 1,
-   "at": "2026-10-04T06:20:36+00:00",
+   "at": "2026-10-04T06:35:53+00:00",
    "calls": 1,
-   "remaining": 487,
+   "remaining": 486,
    "totals_on": [
     {
      "empty": {
@@ -521,7 +521,7 @@
      ]
     }
    ],
-   "used": 13
+   "used": 14
   },
   "outages": [
    {
@@ -540,8 +540,8 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 248,
-  "updated": "2026-10-04T06:21:52+00:00"
+  "runs": 249,
+  "updated": "2026-10-04T06:37:13+00:00"
  },
  "quotes": [
   {
@@ -256865,7 +256865,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.79,
    "date": "2026-10-04",
    "edge": null,
@@ -256905,7 +256905,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.73,
    "date": "2026-10-04",
    "edge": null,
@@ -256945,7 +256945,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.96,
    "date": "2026-10-04",
    "edge": null,
@@ -256985,7 +256985,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.76,
    "date": "2026-10-04",
    "edge": null,
@@ -262612,7 +262612,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.55,
    "date": "2026-10-04",
    "edge": null,
@@ -280752,7 +280752,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.6,
    "date": "2026-10-05",
    "edge": null,
@@ -292102,7 +292102,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.34,
    "date": "2026-10-04",
    "edge": null,
@@ -297394,7 +297394,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.45,
    "date": "2026-10-04",
    "edge": null,
@@ -297434,7 +297434,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.82,
    "date": "2026-10-04",
    "edge": null,
@@ -297690,7 +297690,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.83,
    "date": "2026-10-05",
    "edge": null,
@@ -298108,7 +298108,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.85,
    "date": "2026-10-05",
    "edge": null,
@@ -298148,7 +298148,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.95,
    "date": "2026-10-06",
    "edge": null,
@@ -299644,7 +299644,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.89,
    "date": "2026-10-06",
    "edge": null,
@@ -300633,7 +300633,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.52,
    "date": "2026-10-06",
    "edge": null,
@@ -301801,7 +301801,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.61,
    "date": "2026-10-06",
    "edge": null,
@@ -302974,7 +302974,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.8,
    "date": "2026-10-06",
    "edge": null,
@@ -303156,7 +303156,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.83,
    "date": "2026-10-06",
    "edge": null,
@@ -306731,7 +306731,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.79,
    "date": "2026-10-05",
    "edge": null,
@@ -306805,8 +306805,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
-   "close_price": 0.36,
+   "close_at": "2026-10-04T06:35:53+00:00",
+   "close_price": 0.35,
    "date": "2026-10-06",
    "edge": null,
    "espn_away": "Spain",
@@ -306843,7 +306843,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.32,
    "date": "2026-10-06",
    "edge": null,
@@ -309653,8 +309653,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
-   "close_price": 0.89,
+   "close_at": "2026-10-04T06:35:53+00:00",
+   "close_price": 0.9,
    "date": "2026-10-04",
    "edge": null,
    "id": "spot:KXSOLD-26OCT0417-T118.9999",
@@ -310694,8 +310694,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
-   "close_price": 0.69,
+   "close_at": "2026-10-04T06:35:53+00:00",
+   "close_price": 0.75,
    "date": "2026-10-04",
    "edge": null,
    "id": "spot:KXSOLD-26OCT0417-T119.9999",
@@ -311081,7 +311081,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.81,
    "date": "2026-10-06",
    "edge": null,
@@ -312071,7 +312071,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.43,
    "date": "2026-10-04",
    "edge": null,
@@ -312106,7 +312106,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-04T06:20:36+00:00",
+   "close_at": "2026-10-04T06:35:53+00:00",
    "close_price": 0.39,
    "date": "2026-10-04",
    "edge": null,
@@ -312550,6 +312550,112 @@
    "url": "https://polymarket.us/event/itfme-xiuye-lialiu-2026-10-04",
    "venue": "polymarket_us",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-04",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-jorhas-carros-2026-10-04",
+   "label": "Jordan Hasson vs Carlo Rosellini",
+   "liquidity": null,
+   "logged": "2026-10-04T06:35:53+00:00",
+   "market_id": "aec-itfme-jorhas-carros-2026-10-04",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.8,
+   "price_b": 0.21,
+   "price_draw": null,
+   "prob_a": 0.795,
+   "result": null,
+   "settled": null,
+   "side_a": "Jordan Hasson",
+   "side_b": "Carlo Rosellini",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-10-04T07:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-jorhas-carros-2026-10-04",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": true,
+   "close_at": "2026-10-04T06:35:53+00:00",
+   "close_price": 0.73,
+   "date": "2026-10-04",
+   "edge": null,
+   "id": "tennis_fav_band_3h:KXATPMATCH-26OCT04LEHVAL",
+   "label": "Jiri Lehecka vs Adolfo Daniel Vallejo",
+   "liquidity": null,
+   "logged": "2026-10-04T06:35:53+00:00",
+   "market_id": "KXATPMATCH-26OCT04LEHVAL",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.73,
+   "price_a": 0.73,
+   "price_b": 0.29,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Jiri Lehecka",
+   "side_b": "Adolfo Daniel Vallejo",
+   "source": "tennis_fav_band_3h",
+   "sport": "tennis",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-10-04T08:30:00+00:00",
+   "start_source": "tennisexplorer",
+   "status": "open",
+   "tier": "atp",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxatpmatch",
+   "venue": "kalshi",
+   "venue_start": "2026-10-04T08:10:00+00:00"
+  },
+  {
+   "bet": true,
+   "close_at": "2026-10-04T06:35:53+00:00",
+   "close_price": 0.72,
+   "date": "2026-10-04",
+   "edge": null,
+   "id": "tennis_fav_band_3h:KXATPMATCH-26OCT04MEDCER",
+   "label": "Daniil Medvedev vs Francisco Cerundolo",
+   "liquidity": null,
+   "logged": "2026-10-04T06:35:53+00:00",
+   "market_id": "KXATPMATCH-26OCT04MEDCER",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.72,
+   "price_a": 0.72,
+   "price_b": 0.29,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Daniil Medvedev",
+   "side_b": "Francisco Cerundolo",
+   "source": "tennis_fav_band_3h",
+   "sport": "tennis",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-10-04T08:30:00+00:00",
+   "start_source": "tennisexplorer",
+   "status": "open",
+   "tier": "atp",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxatpmatch",
+   "venue": "kalshi",
+   "venue_start": "2026-10-04T08:30:00+00:00"
   }
  ],
  "retired": {
