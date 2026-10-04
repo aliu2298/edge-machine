@@ -259,6 +259,8 @@ RULES = {
              "known still pays after costs, the Sandbox will show it; if it does not, that is "
              "the answer for every variant of it."),
     "sw_52w_breakout": dict(
+        retired="2026-10-04: removed by choice — "
+                "2 entry days, -5.85% a day v SPY; backtest -2.42% (t -3.81)",
         lane="swing", label="52-week breakout on volume", signal=_sw_breakout, exit=_sw_breakout_exit,
         note="Pre-registered 2026-09-19. Buy the next open when a stock closes at its highest "
              "close of the last 252 sessions on volume at least 1.5x its 50-day average. Leave at "
@@ -273,6 +275,8 @@ RULES = {
              "own open that day. Hold 5 sessions, then leave at the open. Tests whether the "
              "crowd overreacts to a single bad headline in a name the market otherwise likes."),
     "sw_ma_cross_rsi": dict(
+        retired="2026-10-04: removed by choice — "
+                "1 entry day, -5.53% a day v SPY",
         lane="swing", label="10/100 MA cross with an RSI filter", signal=_sw_ma_cross,
         exit=_sw_ma_cross_exit,
         note="The swing-trader project's own strategy (~/Swing trader, June 2026), registered "
@@ -341,6 +345,8 @@ RULES = {
              "open, stop at the range low, leave at the close. On its first live day the two-way "
              "rule's trades were 13 long and 5 short, so this measures the part that is tradable."),
     "dt_intraday_mom": dict(
+        retired="2026-10-04: removed by choice — "
+                "5 entry days, -0.19% a day v cash",
         lane="day", label="Market intraday momentum (last half-hour)", signal=None, exit=None,
         universe="etf", bench="cash", live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22 from Gao, Han, Li and Zhou (Journal of Financial "
@@ -359,6 +365,8 @@ RULES = {
              "the close. VWAP is the most-watched intraday level there is, which is exactly why "
              "it is worth measuring rather than assuming."),
     "cr_trend20": dict(
+        retired="2026-10-04: removed by choice — "
+                "no trade yet in 8 sessions",
         lane="crypto", label="Crypto trend: close crosses above its 20-day average",
         signal=_cr_trend, exit=_cr_trend_exit, universe="crypto", bench="cash",
         cost_bps=M.CRYPTO_COST_BPS_PER_SIDE, live_from=LIVE_2026_09_23,
@@ -369,6 +377,8 @@ RULES = {
              "0.25% a side; the stricter comparison, simply holding the coin, is noted beside it "
              "because any long-biased rule looks good in a rising market."),
     "cr_btc_2200": dict(
+        retired="2026-10-04: removed by choice — "
+                "9 entry days, -0.37% a day v cash",
         lane="crypto", label="BTC 22:00-00:00 UTC seasonality", signal=None, exit=None,
         universe=["BTC/USD"], bench="cash", cost_bps=M.CRYPTO_COST_BPS_PER_SIDE,
         live_from=LIVE_2026_09_23,
