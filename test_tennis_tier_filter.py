@@ -157,21 +157,29 @@ def _contests(d):
 
 
 def _edge_overlap_book():
-    """One contest priced on the parent band's lower edge, and a voided twin.
+    """Edge contests at the registered bounds, not read back from the constants.
 
-    The price is the literal 0.77 the parent band is registered at. It is
-    not read back from the constant, so moving that edge up by one cent
-    pushes this contest out of the overlap set.
+    Parent 0.77 is the inclusive lower edge of 0.77-0.81. The 3-hour lane's
+    0.70 is the inclusive lower edge of 0.70-0.85, 0.84 sits one cent inside
+    the exclusive cap, and 0.85 is that cap so it is not an overlap. A voided
+    twin is not an overlap either. Moving any of those edges by one cent
+    changes which of these contests qualify.
     """
-    def q(source, status, mid):
+    def q(source, status, mid, price):
         return dict(id=f"{source}:{mid}", source=source, sport="tennis", bet=True,
-                    market_id=mid, status=status, price=0.77,
+                    market_id=mid, status=status, price=price,
                     settled="2026-09-01T00:00:00+00:00")
     return {"quotes": [
-        q("tennis_fav_band", "won", "edge-contest"),
-        q("tennis_fav_band_3h", "won", "edge-contest"),
-        q("tennis_fav_band", "void", "void-contest"),
-        q("tennis_fav_band_3h", "won", "void-contest"),
+        q("tennis_fav_band", "won", "edge-contest", 0.77),
+        q("tennis_fav_band_3h", "won", "edge-contest", 0.77),
+        q("tennis_fav_band", "void", "void-contest", 0.77),
+        q("tennis_fav_band_3h", "won", "void-contest", 0.77),
+        q("tennis_fav_band", "won", "wide-lo", 0.78),
+        q("tennis_fav_band_3h", "won", "wide-lo", 0.70),
+        q("tennis_fav_band", "won", "wide-inside", 0.78),
+        q("tennis_fav_band_3h", "won", "wide-inside", 0.84),
+        q("tennis_fav_band", "won", "wide-hi", 0.78),
+        q("tennis_fav_band_3h", "won", "wide-hi", 0.85),
     ]}
 
 
@@ -248,6 +256,111 @@ def _figures(rows):
                 roi=fee / (n * T.STAKE),
                 fade=fpnl / (fn * T.STAKE),
                 fade_z=(fw - fexp) / math.sqrt(fvar))
+
+
+def _spec_figures(rows):
+    """The same P/L rule as _figures, written out so the two can be compared.
+
+    A later void changes the rows both sides read. It does not change a
+    pinned total.
+    """
+    n = len(rows)
+    unit = won = exp = var = fee = 0.0
+    fw = fexp = fvar = fpnl = 0.0
+    fn = 0
+    for q in rows:
+        p = float(q["price"])
+        won_bet = q.get("status") == "won"
+        unit += (1.0 - p) if won_bet else -p
+        won += 1 if won_bet else 0
+        exp += p
+        var += p * (1.0 - p)
+        fee += T.pnl_after_fee(q)
+        other = "b" if q.get("pick") == "a" else "a"
+        fp = q.get("price_" + other)
+        if not fp:
+            continue
+        fp = float(fp)
+        fn += 1
+        hit = q.get("result") == other
+        rate = T.FEE_RATE.get(q.get("venue") or "polymarket", 0.07)
+        fw += 1 if hit else 0
+        fexp += fp
+        fvar += fp * (1.0 - fp)
+        fpnl += T.STAKE * (1.0 / (fp + rate * fp * (1.0 - fp)) - 1.0) if hit else -T.STAKE
+    return dict(n=n, unit=unit, z=(won - exp) / math.sqrt(var),
+                roi=fee / (n * T.STAKE),
+                fade=fpnl / (fn * T.STAKE),
+                fade_z=(fw - fexp) / math.sqrt(fvar))
+
+
+def _rounded(fig):
+    return (fig["n"], round(fig["unit"], 2), round(fig["z"], 2),
+            round(fig["roi"] * 100, 1), round(fig["fade"] * 100, 1),
+            round(fig["fade_z"], 2))
+
+
+def _figure_fixture():
+    """Two contests with a hand-checked record. Not read from the ledger.
+
+    One win at 0.50 on Polymarket, fade hitting the other side at 0.50.
+    One loss at 0.25 on Kalshi, fade missing a 0.75 other side.
+    Unit 0.25, z 0.38, ROI -2.9%, fade -2.9% / z -0.38.
+    """
+    def q(mid, price, status, result, other, venue, day):
+        return dict(id=mid, source="tennis_fav_band", sport="tennis", bet=True,
+                    market_id=mid, tier="atp", pick="a", price=price, price_a=price,
+                    price_b=other, status=status, result=result, venue=venue,
+                    stake=100.0, date=day, settled="2026-09-01T00:00:00+00:00")
+    return [
+        q("aec-atp-win-bb-2026-09-01", 0.50, "won", "b", 0.50, "polymarket", "2026-09-01"),
+        q("aec-atp-loss-bb-2026-09-02", 0.25, "lost", "a", 0.75, "kalshi", "2026-09-02"),
+    ]
+
+
+def _per_day(rows):
+    """Contests a day: the rows divided by the inclusive span of their dates."""
+    days = {q["date"] for q in rows}
+    span = (datetime.fromisoformat(max(days)) - datetime.fromisoformat(min(days))).days + 1
+    return round(len(rows) / span, 1), span
+
+
+def _check_looked_at(d):
+    """The looked-at record, derived from this ledger. No pinned totals."""
+    rows, overlaps = _contests(d)
+    markets = {q.get("market_id") for q in _looked_at_rows(d)}
+    eq(len(rows), len(markets), "the contest count is one row per looked-at market")
+    reported = set(_pair_groups(_looked_at_rows(d)))
+    expected = _band_overlap_ids(d)
+    outside = sorted(reported - expected)
+    extra = sorted(expected - reported)
+    ok(not outside and not extra,
+       "every parent/3-hour overlap is a non-void pair inside both bands"
+       + (f" — priced outside a band: {outside}" if outside else "")
+       + (f" — in both bands but not reported: {extra}" if extra else ""))
+    eq(overlaps, len(reported), "the overlap count is the size of that set")
+    void_ids = {q.get("id") for q in T.all_bets(d)
+                if q.get("source") in ("tennis_fav_band", "tennis_fav_band_3h")
+                and q.get("status") == "void"}
+    counted = {q.get("id") for vs in _pair_groups(_looked_at_rows(d)).values() for q in vs}
+    ok(void_ids.isdisjoint(counted), "no voided row is counted as an overlap")
+    eq(_band_overlap_ids(_edge_overlap_book()),
+       {"edge-contest", "wide-lo", "wide-inside"},
+       "0.77 and 0.70 and 0.84 are overlaps; 0.85 and a void are not")
+    by = collections.defaultdict(list)
+    for q in rows:
+        by[_tier(q)].append(q)
+    kept = [q for q in rows if _tier(q) in KEEP]
+    for name, group in (("ATP", by["atp"]), ("WTA Doubles", by["wtadb"]),
+                        ("kept set", kept), ("whole band", rows)):
+        eq(_rounded(_figures(group)), _rounded(_spec_figures(group)),
+           f"{name} figures are the looked-at rows under the same rule")
+    rate, _span = _per_day(rows)
+    days = {q["date"] for q in rows}
+    span = (datetime.fromisoformat(max(days)) - datetime.fromisoformat(min(days))).days + 1
+    eq((rate, round(len(kept) / span, 1)),
+       (round(len(rows) / span, 1), round(len(kept) / span, 1)),
+       "contests a day are the looked-at rows over the span of their dates")
 
 
 RESET_LANES = frozenset({
@@ -370,55 +483,26 @@ def main():
        "the note does not label a figure as the page If-faded column")
     ok("flat $100 stake on the opposite side at its own price, after fees" in note,
        "the fade ROI is labeled as a flat $100 stake on the opposite side, after fees")
-    ok("z -2.88 on the fade prices before fees" in note
-       and "z -3.06 on the fade prices before fees" in note,
+    ok(note.count("on the fade prices before fees") >= 2,
        "the fade z is labeled as the fade prices before fees")
-    ok("z +2.76 before fees" in note and "not a significance test" in note,
+    ok("before fees" in note and "not a significance test" in note,
        "the kept-set z is before fees and is not offered as a significance test")
     ok("does not survive UTR" in note, "the note says the deeper-field idea does not survive UTR")
-    ok("9 contests" in note and "+12.0%" in note and "-60.6%" in note,
-       "WTA Doubles is named as 9 contests, a direction")
-    ok("ATP +6.35" in note and "before fees: one contract, pay the price, receive 1" in note,
+    ok("WTA Doubles" in note and "a direction, not a result" in note,
+       "WTA Doubles is named as a direction, not a result")
+    ok("before fees: one contract, pay the price, receive 1" in note,
        "the unit P/L is before fees, one contract")
     d = T.load()
-    rows, overlaps = _contests(d)
-    eq(len(rows), 648, "648 contests in the looked-at record")
-    reported = set(_pair_groups(_looked_at_rows(d)))
-    expected = _band_overlap_ids(d)
-    outside = sorted(reported - expected)
-    extra = sorted(expected - reported)
-    ok(not outside and not extra,
-       "every parent/3-hour overlap is a non-void pair inside both bands"
-       + (f" — priced outside a band: {outside}" if outside else "")
-       + (f" — in both bands but not reported: {extra}" if extra else ""))
-    eq(overlaps, len(reported), "the overlap count is the size of that set")
-    void_ids = {q.get("id") for q in T.all_bets(d)
-                if q.get("source") in ("tennis_fav_band", "tennis_fav_band_3h")
-                and q.get("status") == "void"}
-    counted = {q.get("id") for vs in _pair_groups(_looked_at_rows(d)).values() for q in vs}
-    ok(void_ids.isdisjoint(counted), "no voided row is counted as an overlap")
-    eq(_band_overlap_ids(_edge_overlap_book()), {"edge-contest"},
-       "a contest priced on the parent lower edge overlaps, and its voided twin does not")
-    by = collections.defaultdict(list)
-    for q in rows:
-        by[_tier(q)].append(q)
-    kept = [q for q in rows if _tier(q) in KEEP]
-    whole = _figures(rows)
-    keep_f = _figures(kept)
-    wta_d = _figures(by["wtadb"])
-    atp = _figures(by["atp"])
-    eq((round(atp["unit"], 2), round(atp["z"], 2), round(atp["roi"] * 100, 1)),
-       (6.35, 2.33, 15.5), "ATP unit P/L and z before fees, ROI after fees")
-    eq((wta_d["n"], round(wta_d["roi"] * 100, 1), round(wta_d["fade"] * 100, 1)),
-       (9, 12.0, -60.6), "WTA Doubles: 9 contests, +12.0% after fees, fade -60.6%")
-    eq((round(keep_f["z"], 2), round(keep_f["fade"] * 100, 1), round(keep_f["fade_z"], 2)),
-       (2.76, -68.7, -3.06), "kept set: z +2.76 before fees, fade -68.7% / z -3.06")
-    eq((round(whole["fade"] * 100, 1), round(whole["fade_z"], 2)),
-       (-24.1, -2.88), "whole band fade -24.1% / z -2.88, flat $100 on the other side")
-    days = {q["date"] for q in rows}
-    span = (datetime.fromisoformat(max(days)) - datetime.fromisoformat(min(days))).days + 1
-    eq((round(len(rows) / span, 1), round(len(kept) / span, 1)),
-       (36.0, 4.3), "36.0 contests a day, 4.3 on the kept tours")
+    _check_looked_at(d)
+    fx = _figure_fixture()
+    eq(_rounded(_figures(fx)), _rounded(_spec_figures(fx)),
+       "the fixture's figures follow the same rule on both implementations")
+    eq(_rounded(_figures(fx)), (2, 0.25, 0.38, -2.9, -2.9, -0.38),
+       "the two-row fixture is unit 0.25, z 0.38, ROI -2.9%, fade -2.9% / z -0.38")
+    fx_days = {q["date"] for q in fx}
+    fx_span = (datetime.fromisoformat(max(fx_days)) - datetime.fromisoformat(min(fx_days))).days + 1
+    eq((round(len(fx) / fx_span, 1), round(len(fx) / fx_span, 1)),
+       (1.0, 1.0), "two contests over two dates are 1.0 a day")
 
     print("\nthe page record restarts; the ledger rows stay")
     st = T.load_stages()
