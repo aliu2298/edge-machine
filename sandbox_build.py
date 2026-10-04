@@ -1997,7 +1997,7 @@ def trading_page(now=None):
                   'the market data keys, and the record below is what it published. This page is '
                   'built elsewhere and only renders it, so it does not reach the market itself.</div>')
     body = f"""<h1>Trading</h1>
-<p class="lede">Stock and crypto rules under test, judged per entry day. Paper only.</p>
+<p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
 <div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
@@ -2020,7 +2020,7 @@ under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it doe
 """
     return site_chrome.document(
         "Edge Machine · Trading",
-        "Stock and crypto rules under test, judged per entry day at real prices.",
+        "Stock and ETF rules under test, judged per entry day at real prices.",
         "trading",
         (("rules", "Rules"),),
         site_chrome.stamp(now_dt),
