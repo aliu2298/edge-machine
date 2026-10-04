@@ -304,6 +304,78 @@ def _dedup():
     ok(html.count('data-id="dup"') == 1, "the week page lists that id once")
 
 
+def _same_start():
+    """Two rungs share a start. One is live, one is already archived.
+
+    day_units keeps the first of those rungs as the day's representative.
+    The representative, and the cells that copy it, have to be the same
+    after the live rung moves into the archive.
+    """
+    print("\nsame-start rungs")
+    start = "2026-09-10T17:00:00+00:00"
+    close_at = "2026-09-10T16:30:00+00:00"
+    early = _bet(
+        id="corners-early", source="corners_under", sport="soccer_corners",
+        venue="polymarket_us", status="won", price=0.55, pnl=81.82,
+        logged="2026-09-09T12:00:00+00:00", settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="KXCORNERS-MATCH1-2",
+        close_price=0.40, close_at=close_at)
+    late = _bet(
+        id="corners-late", source="corners_under", sport="soccer_corners",
+        venue="polymarket_us", status="won", price=0.45, pnl=122.22,
+        logged="2026-09-09T18:00:00+00:00", settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="KXCORNERS-MATCH1-4",
+        close_price=0.80, close_at=close_at)
+    spot_early = _bet(
+        id="spot-early", source="spot", sport="crypto", venue="polymarket_us",
+        status="won", pick="a", result="a", price=0.80, pnl=25.0,
+        price_a=0.80, price_b=0.20, date="2026-09-10",
+        logged="2026-09-09T12:00:00+00:00", settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="BTCD-26SEP10-T1")
+    spot_late = _bet(
+        id="spot-late", source="spot", sport="crypto", venue="polymarket_us",
+        status="won", pick="b", result="b", price=0.70, pnl=42.86,
+        price_a=0.30, price_b=0.70, date="2026-09-10",
+        logged="2026-09-09T18:00:00+00:00", settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="BTCD-26SEP10-T2")
+    # The earlier rung is already archived. The later one is still live.
+    d = {
+        "quotes": [late, spot_late],
+        "_archive": [early, spot_early],
+        "meta": {}, "coverage": {}, "retired": {},
+    }
+
+    def cells(book):
+        corners = T.assess(book, "corners_under", "soccer_corners",
+                           venues=T.TRADEABLE_VENUES)
+        spot = T.assess(book, "spot", "crypto")
+        base = next(detail for key, _label, _ok, detail in spot["criteria"]
+                    if key == "baseline")
+        return (round(corners["clv"], 4) if corners["clv"] is not None else None,
+                corners["clv_n"], SB.close_cell(corners), base)
+
+    before = cells(d)
+    after = cells(_rollup(d, voids=True))
+    # Earliest logged rung: close 0.40 against the day's average price 0.50.
+    eq(before[0], -0.1, "the corners representative is the earlier rung")
+    eq(before[1], 1, "the two rungs are one close")
+    ok("back the favourite" in before[3], "the spot line names back the favourite")
+    ok("+25.0%" in before[3], "the favourite line uses the earlier rung's prices")
+    eq(after, before, "CLV cell and back-the-favourite line survive the roll-up")
+
+    print("\narchive id dedupe in per-sport score")
+    first = _bet(id="twice", status="won", pnl=10.0, stake=100.0,
+                 logged="2026-09-01T12:00:00+00:00", settled="2026-09-02T12:00:00+00:00",
+                 start="2026-09-02T17:00:00+00:00", market_id="m-twice-a")
+    second = _bet(id="twice", status="won", pnl=99.0, stake=100.0,
+                  logged="2026-09-01T13:00:00+00:00", settled="2026-09-02T12:00:00+00:00",
+                  start="2026-09-02T17:00:00+00:00", market_id="m-twice-b")
+    scored = T.score({"quotes": [], "_archive": [first, second], "retired": {}}, "nfl")
+    row = scored["espn_fpi"]
+    eq(row["settled"], 1, "two archived copies of one id count once")
+    eq(round(row["pnl"], 2), 10.0, "the first archived copy is the one that counts")
+
+
 def main():
     original = _ledger()
     before = _snapshot(original, ST)
@@ -325,6 +397,7 @@ def main():
     eq(weeks, before["weeks"], "weekly pages are unchanged after evaluate_stages")
 
     _dedup()
+    _same_start()
 
     print()
     if FAILS:

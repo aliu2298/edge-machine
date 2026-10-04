@@ -370,13 +370,37 @@ def all_bets(d):
     return d["quotes"] + (d.get("_archive") or [])
 
 
-def bet_rows(d):
-    """Live quotes plus archived bets, one row per id. The live quote wins.
+# One built list per loaded ledger. hide_removed, hide_refused_tours and a
+# roll-up each hand back a new dict with new quotes and archive lists, so they
+# miss. A build asks for this about 1,650 times; rebuilding it each time walks
+# every live row and every archived row again.
+_BET_ROWS_CACHE = {}
+_BET_ROWS_MAX = 48
 
-    Compact price rows in the archive are not bets. all_bets() still returns
-    those, because a baseline population reads them. A row with no id is kept:
-    there is nothing to dedupe it against.
+
+def bet_rows(d):
+    """Live quotes plus archived bets, one row per id, sorted by (logged, id).
+
+    The live quote wins a duplicate id. Within the archive the first copy
+    wins. Compact price rows are not bets. all_bets() still returns those,
+    because a baseline population reads them. A row with no id is kept: there
+    is nothing to dedupe it against.
+
+    The order does not depend on which list a row sits in. day_units keeps the
+    first same-start rung, so a rung that moves into the archive stays the
+    representative it was while it was live. The result is cached for this
+    d's quotes and archive lists.
     """
+    quotes = d["quotes"]
+    archive = d.get("_archive")
+    token = (id(quotes), id(archive) if isinstance(archive, list) else 0,
+             len(quotes), len(archive) if archive else 0)
+    key = id(d)
+    hit = _BET_ROWS_CACHE.get(key)
+    if hit is not None and hit[0] == token:
+        _BET_ROWS_CACHE.pop(key)
+        _BET_ROWS_CACHE[key] = hit
+        return hit[1]
     seen = set()
     out = []
     for q in all_bets(d):
@@ -388,6 +412,12 @@ def bet_rows(d):
                 continue
             seen.add(i)
         out.append(q)
+    out.sort(key=lambda q: (str(q.get("logged") or ""), str(q.get("id") or "")))
+    if len(_BET_ROWS_CACHE) >= _BET_ROWS_MAX:
+        _BET_ROWS_CACHE.pop(next(iter(_BET_ROWS_CACHE)))
+    # Pin the lists so a collected ledger cannot have its ids reused under a
+    # later dict that happens to share this key.
+    _BET_ROWS_CACHE[key] = (token, out, quotes, archive)
     return out
 
 
@@ -1789,8 +1819,12 @@ def score(d, sport=None):
             if not q.get("bet") or q.get("sport") != sport:
                 continue
             i = q.get("id")
+            # The same id can sit in the archive twice. The first copy wins,
+            # which is the rule bet_rows uses. The live quote already won above.
             if i is not None and i in seen:
                 continue
+            if i is not None:
+                seen.add(i)
             extra.append(q)
     out = {}
     for name, meta in S.SOURCES.items():
