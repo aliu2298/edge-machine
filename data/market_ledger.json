@@ -1,7 +1,7 @@
 {
  "meta": {
   "live_from": "2026-09-19",
-  "updated": "2026-10-02T20:11:58+00:00"
+  "updated": "2026-10-04T06:30:36+00:00"
  },
  "research": {
   "cr_btc_2200": {
@@ -5462,8 +5462,9 @@
    "ret_net": null,
    "rule": "sw_rsi2_pullback",
    "signal_day": "2026-09-25",
-   "status": "open",
-   "symbol": "CTVA"
+   "status": "void",
+   "symbol": "CTVA",
+   "void_reason": "unadjusted corporate action (2026-10-01)"
   },
   {
    "bars_held": null,
