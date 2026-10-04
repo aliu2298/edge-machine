@@ -3,8 +3,9 @@
 
 Fails on the wrapping header (main at the base of this change): the stuck bar
 is several rows tall, the view toggle sits inside it, a one-link section nav
-is rendered, and archive pages have no breadcrumb. Playwright is optional.
-Without it the static checks still run, and CI prints a ::warning::.
+is rendered, and archive pages have no breadcrumb. Playwright is optional
+locally. Without it the static checks still run. CI sets REQUIRE_BROWSER=1,
+and then a missing Playwright fails this test.
 """
 import datetime
 import os
@@ -644,11 +645,9 @@ def _height_keeps_scroll(page, label, width, height):
 
 def browser_checks():
     print("\nbrowser")
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        print("::warning::Playwright is not installed; browser checks in test_phone_header.py were not run")
-        print("  skipped: playwright is not installed; browser check not run")
+    from require_browser import require_browser
+    sync_playwright = require_browser("test_phone_header.py")
+    if sync_playwright is None:
         return
     httpd = _serve()
     base = f"http://127.0.0.1:{httpd.server_address[1]}"
