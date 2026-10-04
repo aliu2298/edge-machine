@@ -17,6 +17,8 @@
   --warn: #f5c26b;
   --font: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --r: 14px;
+  /* Width of the phone nav's edge fade. site.js and tables.js read this. */
+  --nav-fade: 22px;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 108px; }
@@ -561,6 +563,9 @@ html[data-view="cards"] td[data-l="#"] > .sm { flex: 0 0 auto; text-align: left;
 html[data-view="cards"] td, html[data-view="cards"] th { position: static; left: auto; box-shadow: none; }
 
 @media (max-width: 640px) {
+  /* The stuck bar is about 61px. Land anchors just under it. Desktop stays 108px. */
+  html { scroll-padding-top: 72px; }
+  section { scroll-margin-top: 72px; }
   :root { --sticky-top: 0px; }
   /* Phone tables scroll inside the card. Leave the header row where it was. */
   thead { position: static; top: auto; z-index: auto; }
@@ -600,8 +605,16 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   nav.main::after { content: ""; flex: 0 0 12px; }
   nav.main::-webkit-scrollbar { display: none; height: 0; }
   nav.main.nav-fade, nav.toc.nav-fade {
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+  }
+  nav.main.nav-fade-left, nav.toc.nav-fade-left {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+    mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+  }
+  nav.main.nav-fade.nav-fade-left, nav.toc.nav-fade.nav-fade-left {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
   }
   nav.main a {
     min-height: 44px;
@@ -610,6 +623,8 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     display: inline-flex;
     align-items: center;
   }
+  /* The pill fills the scroller. An outset ring is clipped by overflow-y:hidden. */
+  nav.main a:focus-visible { outline-offset: -3px; }
   nav.toc, nav.crumbs {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -635,8 +650,15 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     border: 1px solid var(--line);
     color: var(--mut);
   }
-  nav.crumbs { align-items: center; gap: 2px; }
-  nav.crumbs a { padding: 0 6px; }
+  nav.crumbs { align-items: center; gap: 0; }
+  nav.crumbs a { padding: 0 4px; }
+  nav.crumbs .sep { padding: 0 8px; }
+  nav.crumbs .here {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+  }
   .wrap { padding: 24px 16px 60px; }
   h1 { font-size: 30px; }
   .lede, .sub { font-size: 16px; }

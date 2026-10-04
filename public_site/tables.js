@@ -19,36 +19,49 @@
     if (!root.EdgeNav) {
       root.EdgeNav = true;
       var narrowNav = root.matchMedia ? root.matchMedia("(max-width:640px)") : null;
+      var fadeWidth = function () {
+        var raw = getComputedStyle(document.documentElement).getPropertyValue("--nav-fade");
+        var n = parseFloat(raw);
+        return n > 0 ? n : 22;
+      };
       var armNav = function (bar, followCurrent) {
         if (!bar || !narrowNav) return;
-        function overflow() {
+        function pastRight() {
           return bar.scrollWidth > bar.clientWidth + 1
             && bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 2;
+        }
+        function pastLeft() {
+          return bar.scrollLeft > 2;
+        }
+        function paint() {
+          bar.classList.toggle("nav-fade", narrowNav.matches && pastRight());
+          bar.classList.toggle("nav-fade-left", narrowNav.matches && pastLeft());
         }
         function place() {
           if (!narrowNav.matches) {
             bar.classList.remove("nav-fade");
+            bar.classList.remove("nav-fade-left");
             return;
           }
           if (followCurrent) {
             var current = bar.querySelector('[aria-current="page"]');
             if (current) {
-              var fade = 18;
+              var fade = fadeWidth();
               var navRect = bar.getBoundingClientRect();
               var aRect = current.getBoundingClientRect();
               var limit = navRect.right - fade;
-              if (aRect.left < navRect.left - 0.5) bar.scrollLeft += aRect.left - navRect.left - 4;
+              if (aRect.left < navRect.left - 0.5) bar.scrollLeft += aRect.left - navRect.left - fade;
               else if (aRect.right > limit + 0.5) bar.scrollLeft += aRect.right - limit;
             }
           }
-          bar.classList.toggle("nav-fade", overflow());
+          paint();
         }
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
         else place();
         root.addEventListener("load", place);
         root.addEventListener("resize", place);
         bar.addEventListener("scroll", function () {
-          if (narrowNav.matches) bar.classList.toggle("nav-fade", overflow());
+          paint();
         }, { passive: true });
       };
       armNav(document.querySelector("nav.main"), true);

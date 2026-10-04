@@ -88,7 +88,7 @@ def toc(sections):
 def breadcrumb(parts):
     """A short trail. `parts` is (label, href or None); the last item is not a link.
 
-    No aria-current here. The main nav already marks exactly one page.
+    The current crumb carries aria-current. nav.main still marks exactly one page.
     """
     if not parts:
         return ""
@@ -99,7 +99,7 @@ def breadcrumb(parts):
         if href:
             bits.append(f'<a href="{esc(href)}">{esc(label)}</a>')
         else:
-            bits.append(f'<span class="here">{esc(label)}</span>')
+            bits.append(f'<span class="here" aria-current="page">{esc(label)}</span>')
     return f'<nav class="crumbs" aria-label="Breadcrumb">{"".join(bits)}</nav>'
 
 

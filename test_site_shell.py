@@ -69,12 +69,13 @@ def _check_page(name, html, current):
        f"{name} has a skip-to-content link")
     for href in _NAV_HREFS:
         ok(href in html, f"{name} nav includes {href}")
-    currents = re.findall(r'aria-current="page"', html)
-    eq(len(currents), 1, f"{name} has exactly one aria-current")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
     # The eight links are the same set, in the same order, on every page.
+    # aria-current on a breadcrumb is separate; the main nav marks one page.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
+    currents = re.findall(r'aria-current="page"', nav.group(0) if nav else "")
+    eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
         eq(labels, _NAV_LABELS, f"{name} nav labels")

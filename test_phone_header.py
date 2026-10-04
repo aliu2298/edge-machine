@@ -112,6 +112,10 @@ ok(one == "" and empty == "", "toc() renders nothing when it has fewer than 2 li
 ok(isinstance(two, str) and two.count("<a ") == 2 and 'class="toc"' in two,
    "toc() still renders two or more links")
 
+_phone_css = _read("public_site/site.css").split("@media (max-width: 640px)", 1)[-1]
+ok("nav.main a:focus-visible" in _phone_css and "outline-offset: -3px" in _phone_css,
+   "phone nav pills inset the focus ring so the nav clip does not cut it")
+
 try:
     trail = site_chrome.header(
         "sandbox", (), "stamp", prefix="../",
@@ -120,8 +124,11 @@ except TypeError as exc:
     trail = f"header() raised {exc}"
 ok('class="crumbs"' in trail and "Sandbox" in trail and "Archive" in trail and "W39" in trail,
    "header() can render a Sandbox › Archive › W39 breadcrumb")
-ok(trail.count('aria-current="page"') == 1,
-   "a breadcrumb does not add a second aria-current=page")
+_trail_nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', trail, re.S)
+ok(_trail_nav is not None and _trail_nav.group(0).count('aria-current="page"') == 1,
+   "nav.main has exactly one aria-current=page")
+ok('class="here" aria-current="page"' in trail,
+   "the breadcrumb current item is aria-current=page")
 
 src = _read("sandbox_build.py")
 section = re.search(
@@ -161,8 +168,9 @@ for path in _published():
     ok(header != "", f"{path} has a site header")
     ok('id="vw"' not in header and "Phone view" not in header and "view-toggle" not in header,
        f"{path} header does not contain the view toggle")
-    ok(len(re.findall(r'aria-current="page"', html)) == 1,
-       f"{path} has exactly one aria-current=page")
+    _main = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
+    ok(_main is not None and _main.group(0).count('aria-current="page"') == 1,
+       f"{path} nav.main has exactly one aria-current=page")
     toc = _toc(html)
     if not _expects_toc(path):
         ok(toc is None, f"{path} does not render nav.toc")
@@ -175,6 +183,8 @@ for path in _published():
     if path.startswith("archive/"):
         ok('class="crumbs"' in html and ">Sandbox<" in html and ">Archive<" in html,
            f"{path} shows the archive breadcrumb")
+        ok('class="here" aria-current="page"' in html,
+           f"{path} breadcrumb current item is aria-current=page")
         if re.fullmatch(r"archive/20\d\d-W\d\d\.html", path):
             week = path.rsplit("-", 1)[-1].replace(".html", "")
             ok(f">{week}<" in html, f"{path} breadcrumb names {week}")
@@ -342,7 +352,8 @@ async () => {
     tocCount: toc ? toc.querySelectorAll("a").length : 0,
     tocMethod: toc ? [...toc.querySelectorAll("a")].some((a) => a.textContent.trim() === "Method") : false,
     crumb: crumbs ? crumbs.textContent.replace(/\s+/g, " ").trim() : "",
-    currents: document.querySelectorAll('[aria-current="page"]').length,
+    currents: document.querySelectorAll('nav.main [aria-current="page"]').length,
+    crumbCurrent: document.querySelectorAll('nav.crumbs [aria-current="page"]').length,
     navHeights: heights("nav.main a"),
     tocHeights: heights("nav.toc a"),
     crumbHeights: heights("nav.crumbs a"),
@@ -358,6 +369,73 @@ def _near(got, want, tol=1.0):
         return abs(float(str(got).removesuffix("px")) - want) <= tol
     except (TypeError, ValueError):
         return False
+
+
+OUTLINE = r"""
+() => {
+  const nav = document.querySelector("nav.main");
+  const a = document.activeElement;
+  if (!nav || !a || a.tagName !== "A" || !nav.contains(a)) {
+    return { ok: false, reason: "focus is not a main-nav pill" };
+  }
+  const pill = a.getBoundingClientRect();
+  const clip = nav.getBoundingClientRect();
+  const cs = getComputedStyle(a);
+  const width = parseFloat(cs.outlineWidth) || 0;
+  const offset = parseFloat(cs.outlineOffset) || 0;
+  const shown = cs.outlineStyle !== "none" && width > 0;
+  const extra = shown ? width + offset : 0;
+  const box = {
+    top: pill.top - extra,
+    bottom: pill.bottom + extra,
+    left: pill.left - extra,
+    right: pill.right + extra,
+  };
+  const pad = 1;
+  const inside = shown
+    && box.top >= clip.top - pad && box.bottom <= clip.bottom + pad
+    && box.left >= clip.left - pad && box.right <= clip.right + pad;
+  return {
+    ok: inside,
+    text: (a.textContent || "").trim(),
+    offset: offset,
+    width: width,
+    style: cs.outlineStyle,
+    top: box.top,
+    bottom: box.bottom,
+    left: box.left,
+    right: box.right,
+    navTop: clip.top,
+    navBottom: clip.bottom,
+    navLeft: clip.left,
+    navRight: clip.right,
+  };
+}
+"""
+
+
+def _tab_to_visible_pill(page):
+    """Walk the keyboard tab order onto a main-nav pill that is inside the scroller."""
+    page.evaluate("""() => {
+      const skip = document.querySelector("a.skip");
+      if (skip) skip.focus();
+    }""")
+    for _ in range(16):
+        page.keyboard.press("Tab")
+        state = page.evaluate("""() => {
+          const nav = document.querySelector("nav.main");
+          const a = document.activeElement;
+          if (!nav || !a || a.tagName !== "A" || !nav.contains(a)) return "outside";
+          const pill = a.getBoundingClientRect();
+          const clip = nav.getBoundingClientRect();
+          const inView = pill.width > 1
+            && pill.left >= clip.left - 1 && pill.right <= clip.right + 1
+            && pill.top >= clip.top - 1 && pill.bottom <= clip.bottom + 1;
+          return inView ? "ready" : "clipped";
+        }""")
+        if state == "ready":
+            return True
+    return False
 
 
 def browser_checks():
@@ -392,8 +470,25 @@ def browser_checks():
                     if path == "index.html" and "sandbox.html" in page.url:
                         ok(False, f"{path} @{width}: index stub stayed on the stub (went to {page.url})")
                         continue
-                    got = page.evaluate(MEASURE)
                     label = f"{path} @{width}"
+                    saved_nav = page.evaluate(
+                        "() => { const n = document.querySelector('nav.main'); return n ? n.scrollLeft : 0; }")
+                    reached = _tab_to_visible_pill(page)
+                    ring = page.evaluate(OUTLINE) if reached else {"ok": False, "reason": "no pill"}
+                    page.evaluate("""(x) => {
+                      const nav = document.querySelector('nav.main');
+                      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+                      if (nav) nav.scrollLeft = x;
+                    }""", saved_nav)
+                    if ring.get("ok"):
+                        ok(True, f"{label}: focused pill outline sits inside nav.main")
+                    else:
+                        detail = ring.get("reason") or (
+                            f"{ring.get('text', '')!r} offset {ring.get('offset')}px "
+                            f"box {ring.get('top', 0):.1f}..{ring.get('bottom', 0):.1f} "
+                            f"vs nav {ring.get('navTop', 0):.1f}..{ring.get('navBottom', 0):.1f}")
+                        ok(False, f"{label}: focused pill outline sits inside nav.main ({detail})")
+                    got = page.evaluate(MEASURE)
                     h = got["stuckHeight"]
                     print(f"    {label}: stuck {h:.1f}px top {got['stuckTop']:.1f} "
                           f"--hdr-h {got['hdr']} row {got['rowSpread']} "
@@ -418,7 +513,7 @@ def browser_checks():
                        f"{label}: the page does not scroll sideways "
                        f"(scrollX {got['scrollX']})")
                     ok(got["currents"] == 1,
-                       f"{label}: exactly one aria-current=page ({got['currents']})")
+                       f"{label}: nav.main has exactly one aria-current=page ({got['currents']})")
                     short = [a for a in got["navHeights"] if a["height"] < 44]
                     ok(not short, f"{label}: main-nav pills are at least 44px tall"
                        + ("" if not short else f" ({short[0]})"))
@@ -434,6 +529,9 @@ def browser_checks():
                     if path.startswith("archive/"):
                         ok("Sandbox" in got["crumb"] and "Archive" in got["crumb"],
                            f"{label}: breadcrumb is {got['crumb']!r}")
+                        ok(got["crumbCurrent"] == 1,
+                           f"{label}: breadcrumb current item is aria-current=page "
+                           f"({got['crumbCurrent']})")
                         short = [a for a in got["crumbHeights"] if a["height"] < 44]
                         ok(got["crumbHeights"] and not short,
                            f"{label}: breadcrumb links are at least 44px tall"

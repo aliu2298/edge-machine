@@ -38,40 +38,55 @@
 })();
 
 // On a phone the main nav is one sideways row. Bring the current page's pill
-// into view, and fade the right edge only while more links sit past it.
+// into view, and fade an edge while more links sit past it. The fade width is
+// --nav-fade, the same length the mask uses.
 (function () {
   var narrow = window.matchMedia("(max-width:640px)");
 
+  function fadeWidth() {
+    var raw = getComputedStyle(document.documentElement).getPropertyValue("--nav-fade");
+    var n = parseFloat(raw);
+    return n > 0 ? n : 22;
+  }
+
   function arm(bar, followCurrent) {
     if (!bar) return;
-    function overflow() {
+    function pastRight() {
       return bar.scrollWidth > bar.clientWidth + 1
         && bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 2;
+    }
+    function pastLeft() {
+      return bar.scrollLeft > 2;
+    }
+    function paint() {
+      bar.classList.toggle("nav-fade", narrow.matches && pastRight());
+      bar.classList.toggle("nav-fade-left", narrow.matches && pastLeft());
     }
     function place() {
       if (!narrow.matches) {
         bar.classList.remove("nav-fade");
+        bar.classList.remove("nav-fade-left");
         return;
       }
       if (followCurrent) {
         var current = bar.querySelector('[aria-current="page"]');
         if (current) {
-          var fade = 18;
+          var fade = fadeWidth();
           var navRect = bar.getBoundingClientRect();
           var aRect = current.getBoundingClientRect();
           var limit = navRect.right - fade;
-          if (aRect.left < navRect.left - 0.5) bar.scrollLeft += aRect.left - navRect.left - 4;
+          if (aRect.left < navRect.left - 0.5) bar.scrollLeft += aRect.left - navRect.left - fade;
           else if (aRect.right > limit + 0.5) bar.scrollLeft += aRect.right - limit;
         }
       }
-      bar.classList.toggle("nav-fade", overflow());
+      paint();
     }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
     else place();
     window.addEventListener("load", place);
     window.addEventListener("resize", place);
     bar.addEventListener("scroll", function () {
-      if (narrow.matches) bar.classList.toggle("nav-fade", overflow());
+      paint();
     }, { passive: true });
   }
 
