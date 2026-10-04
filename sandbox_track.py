@@ -344,13 +344,15 @@ def now_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-# SETTLED BETS ARE NEVER THROWN AWAY. prune() keeps the ledger small by folding old rows
-# into per-source totals, but the stamp and QA are judged on individual bets per sport — a
-# rolled-up total cannot say which sport a win was in, at what price, or against which blind
-# rule. So every settled BET leaving the ledger is copied, whole, into a month file here
-# (keyed by the month it settled, so old months never change again and git stores each
-# once). assess() reads the ledger and the archive together. Non-bet quotes are still only
-# rolled up: nothing is judged on them.
+# Every bet leaving the ledger, void included, is archived whole. prune() keeps the
+# ledger small by folding old rows into per-source totals, but the stamp and QA are
+# judged on individual bets per sport — a rolled-up total cannot say which sport a
+# win was in, at what price, or against which blind rule. The whole row goes into a
+# month file here (keyed by the month it settled, so old months never change again
+# and git stores each once). assess() reads the ledger and the archive together.
+# Price-only rows get a compact copy only for an a/b/draw result, for Baseline rows,
+# and for one row per contest otherwise. The rest (e.g. result "price", or a contest
+# already covered) are rolled up by design because nothing reads them.
 ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandbox_archive")
 
 
@@ -3380,9 +3382,9 @@ COMPACT_FIELDS = ("id", "source", "sport", "market_id", "venue", "logged", "star
 
 
 def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS):
-    """Fold long-settled quotes into per-source totals and drop the rows — settled BETS are
-    first copied whole into the monthly archive (ARCHIVE_DIR), so nothing judged is lost.
+    """Fold long-settled quotes into per-source totals and drop the rows.
 
+    Every bet leaving the ledger, void included, is archived whole (ARCHIVE_DIR).
     The ledger is rewritten and committed four times a day, so every row kept is a row
     re-stored in git forever. Left alone this grows by roughly a megabyte a week. Old
     rows are therefore rolled up rather than deleted: the lifetime record survives in
@@ -3390,9 +3392,10 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
 
     Price-only rows (bet=False: the venues' own prices, Baselines, models below the edge) are
     three quarters of the ledger and are folded after `price_days` (2026-09-15) instead of
-    `retain_days`. Their Brier sample survives in the totals, and a COMPACT copy (the fields a
-    population baseline reads) goes to the archive — for every Baseline row, and for one row
-    per contest otherwise — so a rule's population is still judged over its whole record.
+    `retain_days`. Their Brier sample survives in the totals. Price-only rows get a compact
+    copy only for an a/b/draw result, for Baseline rows, and for one row per contest
+    otherwise. The rest (e.g. result "price", or a contest already covered) are rolled up
+    by design because nothing reads them.
     """
     now = datetime.now(timezone.utc)
     cutoff = (now - timedelta(days=retain_days)).isoformat()
@@ -3415,8 +3418,7 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
         if q["status"] == "open" or not q.get("settled") or q["settled"] >= horizon:
             keep.append(q)
             continue
-        if q.get("bet") and (q["status"] in ("won", "lost")
-                             or (q.get("status") == "settled" and q.get("result") == "price")):
+        if q.get("bet"):
             if q["id"] not in archived:
                 to_archive(q)
         elif (not q.get("bet") and q.get("result") in ("a", "b", "draw") and q.get("price_a") is not None
