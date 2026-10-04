@@ -92,6 +92,19 @@ def _counts(trades, rule):
     return rows, closed, opened
 
 
+def _board_tiles(trades):
+    """Closed and open tiles: the sum of lanes that are not in the removed set.
+
+    Read from the ledger the page renders, so a later close on a lane still
+    on the board moves the page and this expectation together.
+    """
+    kept = [t for t in trades
+            if t.get("rule") not in set(EIGHT) and not t.get("research")]
+    closed = sum(1 for t in kept if t.get("status") == "closed")
+    opened = sum(1 for t in kept if t.get("status") == "open")
+    return closed, opened
+
+
 print("\nthe eight retired rules are the removed set")
 removed = getattr(MT, "REMOVED_RULES", None)
 ok(removed is not None and set(removed) == set(EIGHT),
@@ -181,8 +194,9 @@ for name, html in pages.items():
     ok(hit is None, f"{name} does not show a removed trading rule" + (f" ({hit})" if hit else ""))
 trading = pages["trading.html"]
 ok(MT.RULES[KEPT]["label"] in trading, "a rule still on the board is on the trading page")
-ok('<div class="tile"><b>143</b><span>trades logged</span></div>' in trading
-   and '<div class="tile"><b>139</b><span>open now</span></div>' in trading,
+logged, opened = _board_tiles(snapshot)
+ok(f'<div class="tile"><b>{logged:,}</b><span>trades logged</span></div>' in trading
+   and f'<div class="tile"><b>{opened:,}</b><span>open now</span></div>' in trading,
    "the trading headline counts only the rules still on the board")
 
 saved_rules = MT.RULES
