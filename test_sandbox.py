@@ -6652,10 +6652,15 @@ print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged la
 
 eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is 3 hours, fixed with the lane")
 eq(S.SOURCES["tennis_fav_band_3h"]["note"],
-   "PAPER TEST, registered 2026-09-25. Back the player priced 0.77-0.81, "
+   "PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, "
    "only when the entry is within 3 hours of the scheduled start. The tour "
-   "has to be ATP, WTA Doubles, or UTR. The price band stays 0.77-0.81 "
-   "and the window stays 3 hours. Why the window: closing-line value on the "
+   "has to be ATP, WTA Doubles, or UTR. BAND WIDENED 2026-10-04 from "
+   "0.77-0.81 to 0.70-0.85: the lane is tour-specific, the narrow band was "
+   "cut on every tour's record, and on the kept tours it left about one "
+   "contest a day. Nothing was logged on the kept tours between the "
+   "2026-10-02 tour clock and the widening, so the record from that clock is "
+   "the wide band only and is not reset again. The basket lanes keep "
+   "0.77-0.81 legs. The window stays 3 hours. Why the window: closing-line value on the "
    "band was about -1.2c on entries 3 or more hours before the start, and "
    "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
    "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
@@ -6697,8 +6702,8 @@ _tuni = {"tennis": [
     _trow("aec-atp-in-x-2026-09-25", 0.78, _tnow + timedelta(hours=2)),
     _trow("aec-atp-exact-x-2026-09-25", 0.78, _tnow + timedelta(hours=3)),
     _trow("aec-atp-over-x-2026-09-25", 0.78, _tnow + timedelta(hours=3, seconds=1)),
-    _trow("aec-atp-low-x-2026-09-25", 0.76, _tnow + timedelta(hours=1)),
-    _trow("aec-atp-high-x-2026-09-25", 0.81, _tnow + timedelta(hours=1)),
+    _trow("aec-atp-low-x-2026-09-25", 0.69, _tnow + timedelta(hours=1)),
+    _trow("aec-atp-high-x-2026-09-25", 0.85, _tnow + timedelta(hours=1)),
     _trow("aec-atp-past-x-2026-09-25", 0.78, _tnow - timedelta(minutes=1)),
 ]}
 eq(sorted(q["market_id"] for q in S.fetch_tennis_fav_band_3h("tennis", _tuni, now=_tnow)),

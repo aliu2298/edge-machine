@@ -121,7 +121,7 @@ def _no_removed_band_name(pages):
     for js in ("site.js", "tables.js", "root.js"):
         with open(os.path.join(ROOT, "public_site", js), encoding="utf-8") as f:
             named[js] = f.read()
-    rule = ("Back the player priced 0.77-0.81, only when the entry is within "
+    rule = ("Back the player priced 0.70-0.85, only when the entry is within "
             "3 hours of the scheduled start.")
     note = S.SOURCES["tennis_fav_band_3h"]["note"]
     ok(rule in note, "the 3-hour note states the rule on its own")

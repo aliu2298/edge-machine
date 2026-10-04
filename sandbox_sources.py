@@ -267,10 +267,15 @@ SOURCES = {
     "tennis_fav_band_3h": dict(
         label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
         connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
-        note="PAPER TEST, registered 2026-09-25. Back the player priced 0.77-0.81, "
+        note="PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, "
              "only when the entry is within 3 hours of the scheduled start. The tour "
-             "has to be ATP, WTA Doubles, or UTR. The price band stays 0.77-0.81 "
-             "and the window stays 3 hours. Why the window: closing-line value on the "
+             "has to be ATP, WTA Doubles, or UTR. BAND WIDENED 2026-10-04 from "
+             "0.77-0.81 to 0.70-0.85: the lane is tour-specific, the narrow band was "
+             "cut on every tour's record, and on the kept tours it left about one "
+             "contest a day. Nothing was logged on the kept tours between the "
+             "2026-10-02 tour clock and the widening, so the record from that clock is "
+             "the wide band only and is not reset again. The basket lanes keep "
+             "0.77-0.81 legs. The window stays 3 hours. Why the window: closing-line value on the "
              "band was about -1.2c on entries 3 or more hours before the start, and "
              "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
              "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
@@ -5739,6 +5744,16 @@ def fetch_tennis_fav_band(sport, universe=None):
 # The comparison window for tennis_fav_band_3h. Fixed 2026-09-25 with the lane.
 TENNIS_FAV_3H = timedelta(hours=3)
 
+# The 3-hour lane's own price band, widened 2026-10-04 from the shared 0.77-0.81 to
+# 0.70-0.85 (lower bound inclusive, upper exclusive, as band_picks reads every band).
+# The lane is tour-specific, and the shared band was cut on every tour's record, so it
+# is not this lane's evidence. On the kept tours 0.77-0.81 left about one contest a day
+# before the window. The record is not reset again: nothing was logged between
+# TENNIS_FAV_KEEP_SINCE and this change, so the record from that clock is this band only.
+# BAND_BY_SPORT["tennis"] is unchanged, so the six basket lanes still cut 0.77-0.81 legs.
+TENNIS_3H_BAND = (0.70, 0.85)
+TENNIS_3H_BAND_SINCE = "2026-10-04"
+
 
 def _combo_leg(row, side):
     """One basket leg. `tour` travels with it when the resolver stamped one."""
@@ -5812,9 +5827,9 @@ def _estimate_in_window(row, now):
 
 
 def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
-    """The 0.77-0.81 band, inside TENNIS_FAV_3H, on a tour in TENNIS_FAV_KEEP.
+    """TENNIS_3H_BAND, inside TENNIS_FAV_3H, on a tour in TENNIS_FAV_KEEP.
 
-    The band and the window are unchanged. A Kalshi start counts only when
+    The window is unchanged. A Kalshi start counts only when
     Tennis Explorer has confirmed it; otherwise the window is unknown and the
     bet is skipped. A Polymarket US atp-league row counts as ATP only when
     Kalshi's ATP series lists the same players. tennis_fav_band itself is
@@ -5844,7 +5859,7 @@ def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
                       f"tour {r.get('tour') or 'unknown'}, not ATP")
             continue
         near.append(r)
-    return band_picks(sport, fav_band("tennis"), {sport: near})
+    return band_picks(sport, TENNIS_3H_BAND, {sport: near})
 
 
 def fetch_tt_band(sport, universe=None):

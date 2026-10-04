@@ -99,6 +99,15 @@ def _drop_series(series):
 def main():
     print("\nthe band and the window are unchanged")
     eq(S.BAND_BY_SPORT["tennis"], (0.77, 0.81), "the price band is still 0.77-0.81")
+    eq(S.TENNIS_3H_BAND, (0.70, 0.85), "the 3-hour lane backs 0.70-0.85 from 2026-10-04")
+    edge = [_row(f"aec-atp-p{int(p * 100)}-bb-2026-10-04", "polymarket_us", "A", "B")
+            for p in (0.69, 0.70, 0.84, 0.85)]
+    for r, p in zip(edge, (0.69, 0.70, 0.84, 0.85)):
+        r["price_a"], r["price_b"], r["pm_league"], r["tour"] = p, round(1.02 - p, 2), "atp", "atp"
+    got = sorted(q["market_id"] for q in S.fetch_tennis_fav_band_3h(
+        "tennis", {"tennis": edge}, now=NOW))
+    eq(got, ["aec-atp-p70-bb-2026-10-04", "aec-atp-p84-bb-2026-10-04"],
+       "0.70 and 0.84 are in the 3-hour band; 0.69 and 0.85 are not")
     eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is still 3 hours")
     eq(S.TENNIS_FAV_KEEP, frozenset({"atp", "wtadb", "utr"}),
        "the keep set is still ATP, WTA Doubles, and UTR")

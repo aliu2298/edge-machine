@@ -3,8 +3,8 @@
 
 tennis_fav_band_3h and every basket lane that cuts legs from that band
 refuse every other tour, including ATP Doubles and ATP Challenger qualifying,
-which share the letters "atp" and must not match by prefix. The price band
-stays 0.77-0.81 and the window stays 3 hours.
+which share the letters "atp" and must not match by prefix. The 3-hour lane
+backs 0.70-0.85 from 2026-10-04, the baskets 0.77-0.81; the window stays 3 hours.
 
 Fails on main: a dropped tour inside the window is still picked, and a
 dropped-tour leg still enters a basket. No network.
@@ -59,8 +59,8 @@ def _picks():
         _row("KXWTAMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row("KXITFMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row(_slug("atp"), 0.78, NOW + timedelta(hours=4), "polymarket_us"),
-        _row("aec-atp-low-bb-2026-10-02", 0.76, start, "polymarket_us"),
-        _row("aec-atp-high-bb-2026-10-02", 0.81, start, "polymarket_us"),
+        _row("aec-atp-low-bb-2026-10-02", 0.69, start, "polymarket_us"),
+        _row("aec-atp-high-bb-2026-10-02", 0.85, start, "polymarket_us"),
     ]
     # The second ATP slug above collides with the kept one. Give the late one its own id.
     rows[-3] = _row("aec-atp-late-bb-2026-10-02", 0.78, NOW + timedelta(hours=4), "polymarket_us")
