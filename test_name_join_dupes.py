@@ -187,6 +187,18 @@ def test_pinned_medvedev_voids_only_the_later_copy():
     eq(T.void_listed_settled_dups(lane, verbose=False), 0, "a different lane is not voided")
     eq(lane["quotes"][1]["status"], "won", "the other lane's copy stays a win")
 
+    pinned_pick = _medvedev_book()
+    pinned_pick["quotes"][1]["pick"] = "b"
+    eq(T.void_listed_settled_dups(pinned_pick, verbose=False), 0,
+       "a different pick is not voided on the pinned pair")
+    eq(pinned_pick["quotes"][1]["status"], "won", "that pinned copy stays a win")
+
+    matcher_pick = _book()
+    matcher_pick["quotes"][1]["pick"] = "b"
+    eq(T.void_listed_settled_dups(matcher_pick, verbose=False), 0,
+       "a different pick is not voided on the matcher pair")
+    eq(matcher_pick["quotes"][1]["status"], "lost", "that matcher copy stays a loss")
+
     open_later = _medvedev_book()
     open_later["quotes"][1]["status"] = "open"
     eq(T.void_listed_settled_dups(open_later, verbose=False), 0,
