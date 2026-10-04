@@ -29,7 +29,56 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # actions/cache writes its entry only when the job succeeds. The test job is
+  # red on the tennis overlap pin, so the browser download is saved here and
+  # the test job restores it.
+  browsers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Restore pip cache
+        id: pip-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Restore Playwright browser cache
+        id: browser-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-ms-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Playwright and Chromium
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install "playwright==${PLAYWRIGHT_VERSION}"
+          python -m playwright install chromium
+          python -m playwright --version
+
+      - name: Save pip cache
+        if: steps.pip-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Save Playwright browser cache
+        if: steps.browser-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-ms-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
   test:
+    needs: browsers
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -44,20 +93,23 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Cache pip
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - name: Restore pip cache
+        id: pip-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - name: Restore Playwright browser cache
+        id: browser-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-ms-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
       # channel="chrome" uses the Google Chrome already on the runner.
-      # Chromium here is the Playwright browser build plus its system libraries.
+      # --with-deps installs the shared libraries on this runner. The browser
+      # bytes come from the cache restored above.
       - name: Install Playwright and Chromium
         shell: bash
         run: |
