@@ -13,6 +13,92 @@
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
     else go();
+    // Pages that do not load site.js (Production, Trading, NBA, the index stub)
+    // still need the active phone pill scrolled into view. site.js arms this
+    // first when it is on the page; this is the same behaviour for the rest.
+    if (!root.EdgeNav) {
+      root.EdgeNav = true;
+      var narrowNav = root.matchMedia ? root.matchMedia("(max-width:640px)") : null;
+      var fadeWidth = function () {
+        var raw = getComputedStyle(document.documentElement).getPropertyValue("--nav-fade");
+        var n = parseFloat(raw);
+        return n > 0 ? n : 22;
+      };
+      var armNav = function (bar, followCurrent) {
+        if (!bar || !narrowNav) return;
+        function pastRight() {
+          return bar.scrollWidth > bar.clientWidth + 1
+            && bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 2;
+        }
+        function pastLeft() {
+          return bar.scrollLeft > 2;
+        }
+        function paint() {
+          bar.classList.toggle("nav-fade", narrowNav.matches && pastRight());
+          bar.classList.toggle("nav-fade-left", narrowNav.matches && pastLeft());
+        }
+        function ringOutset(el) {
+          try {
+            var cs = getComputedStyle(el);
+            var width = parseFloat(cs.outlineWidth) || 0;
+            var offset = parseFloat(cs.outlineOffset) || 0;
+            if (!width || cs.outlineStyle === "none") return 0;
+            var extra = width + offset;
+            return extra > 0 ? extra : 0;
+          } catch (e) {
+            return 0;
+          }
+        }
+        // Same reveal as site.js. Keyboard focus only. Instant scroll.
+        function reveal(el) {
+          if (!narrowNav.matches || !el) return;
+          var fade = fadeWidth() + ringOutset(el);
+          var navRect = bar.getBoundingClientRect();
+          var aRect = el.getBoundingClientRect();
+          var delta = 0;
+          if (aRect.left < navRect.left + fade - 0.5) delta = aRect.left - navRect.left - fade;
+          else if (aRect.right > navRect.right - fade + 0.5) delta = aRect.right - (navRect.right - fade);
+          if (delta) bar.scrollLeft += delta;
+        }
+        var placedWidth = -1;
+        function place() {
+          placedWidth = root.innerWidth;
+          if (!narrowNav.matches) {
+            bar.classList.remove("nav-fade");
+            bar.classList.remove("nav-fade-left");
+            return;
+          }
+          if (followCurrent) reveal(bar.querySelector('[aria-current="page"]'));
+          paint();
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
+        else place();
+        root.addEventListener("load", place);
+        root.addEventListener("resize", function () {
+          if (root.innerWidth === placedWidth) {
+            paint();
+            return;
+          }
+          place();
+        });
+        bar.addEventListener("scroll", function () {
+          paint();
+        }, { passive: true });
+        bar.addEventListener("focusin", function (ev) {
+          var el = ev.target;
+          if (!el || el.tagName !== "A" || !bar.contains(el)) return;
+          try {
+            if (el.matches && !el.matches(":focus-visible")) return;
+          } catch (e) {
+            return;
+          }
+          reveal(el);
+          paint();
+        });
+      };
+      armNav(document.querySelector("nav.main"), true);
+      armNav(document.querySelector("nav.toc"), false);
+    }
   }
   root.EdgeTables = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
@@ -120,14 +206,34 @@
     if (!header) return;
     var root = doc.documentElement;
     var view = doc.defaultView;
+    // Desktop sticks the whole header. On a phone only the top bar sticks and
+    // the section nav scrolls away, so the offset follows that bar.
+    function stuck() {
+      var topbar = header.querySelector(".topbar");
+      if (view && view.getComputedStyle) {
+        // On a phone the header box is removed so the bar can stick to the
+        // page. Measuring the header then returns an empty box.
+        if (view.getComputedStyle(header).display === "contents") return topbar || header;
+        var headPos = view.getComputedStyle(header).position;
+        if (headPos === "sticky" || headPos === "fixed") return header;
+        if (topbar) {
+          var barPos = view.getComputedStyle(topbar).position;
+          if (barPos === "sticky" || barPos === "fixed") return topbar;
+        }
+      }
+      return header;
+    }
     function apply() {
-      var box = header.getBoundingClientRect();
+      var box = stuck().getBoundingClientRect();
       if (!(box.height > 0)) return;
       root.style.setProperty("--hdr-h", box.height + "px");
     }
     apply();
     if (view && typeof view.ResizeObserver === "function") {
-      new view.ResizeObserver(apply).observe(header);
+      var watch = new view.ResizeObserver(apply);
+      watch.observe(header);
+      var topbar = header.querySelector(".topbar");
+      if (topbar) watch.observe(topbar);
     } else if (view) {
       view.addEventListener("resize", apply);
     }
