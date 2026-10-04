@@ -1,30 +1,6 @@
 {
- "board_built_at": "2026-10-03T22:54:18+00:00",
+ "board_built_at": "2026-10-04T02:26:46+00:00",
  "leads": {
-  "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "New England Revolution",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "New England Revolution"
-   },
-   "date": "2026-09-27",
-   "edge_at_log": null,
-   "first_seen": "2026-09-25",
-   "headline": "New England Revolution to score 1+",
-   "home": "Real Salt Lake",
-   "id": "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-27T01:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Real Salt Lake v New England Revolution",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.8,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP26RSLNE-NE1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "miss"
-  },
   "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule": {
    "away": "Camila Reynoso",
    "bet": {
@@ -359,8 +335,6 @@
    "id": "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule",
    "kickoff": "2026-10-03T23:30Z",
    "lane": "production",
-   "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T22:54:18+00:00",
    "league": "MMA",
    "match": "Damian Pinas v Andrey Pulyaev",
    "pair": "mma_fav_band|mma",
@@ -374,7 +348,7 @@
    "sandbox_quote": "mma_fav_band:aec-ufc-dampin-andpul-2026-10-03",
    "source": "mma_fav_band",
    "sport": "mma",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-03|Iceland|Bulgaria|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Bulgaria",
@@ -428,6 +402,64 @@
    "sport": "cricket",
    "status": "miss"
   },
+  "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule": {
+   "away": "Bruce Whitehead",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Jacobe Smith to win",
+   "home": "Jacobe Smith",
+   "id": "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T21:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Jacobe Smith v Bruce Whitehead",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.88,
+   "route": {
+    "market": "aec-ufc-jacsmi-bruwhi-2026-10-03",
+    "outcome": "Jacobe Smith",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-jacsmi-bruwhi-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
+  "2026-10-03|Marcus McGhee|Anthony Romero|Marcus McGhee to win \u00b7 MMA favourite-band rule": {
+   "away": "Anthony Romero",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Marcus McGhee to win",
+   "home": "Marcus McGhee",
+   "id": "2026-10-03|Marcus McGhee|Anthony Romero|Marcus McGhee to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T22:15Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Marcus McGhee v Anthony Romero",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "aec-ufc-marmcg-antrom-2026-10-03",
+    "outcome": "Marcus McGhee",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-marmcg-antrom-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
   "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule": {
    "away": "Paul Elliott",
    "bet": {
@@ -457,37 +489,6 @@
    "sport": "mma",
    "status": "hit"
   },
-  "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule": {
-   "away": "Payton Talbott",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-04",
-   "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Payton Talbott to win",
-   "home": "Deiveson Figueiredo",
-   "id": "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-04T01:15Z",
-   "lane": "production",
-   "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T22:54:18+00:00",
-   "league": "MMA",
-   "match": "Deiveson Figueiredo v Payton Talbott",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.84,
-   "route": {
-    "market": "aec-ufc-deifig-paytal-2026-10-03",
-    "outcome": "Payton Talbott",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-ufc-deifig-paytal-2026-10-03",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
-  },
   "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Armenia",
    "bet": {
@@ -502,8 +503,8 @@
    "id": "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-05T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T22:54:18+00:00",
+   "last_seen": "2026-10-04",
+   "last_seen_at": "2026-10-04T02:26:46+00:00",
    "league": "UEFA Nations League",
    "match": "Montenegro v Armenia",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -527,8 +528,8 @@
    "id": "2026-10-06|Moldova|Slovakia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-03",
-   "last_seen_at": "2026-10-03T22:54:18+00:00",
+   "last_seen": "2026-10-04",
+   "last_seen_at": "2026-10-04T02:26:46+00:00",
    "league": "UEFA Nations League",
    "match": "Moldova v Slovakia",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -546,10 +547,10 @@
    "promoted_at": "2026-09-22T16:20:08+00:00",
    "ready_at": "2026-09-22T16:20:08+00:00",
    "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": -0.0067,
-   "sandbox_n": 7,
-   "sandbox_roi": -0.2759,
-   "sandbox_roi_fee": -0.285
+   "sandbox_clv": 0.0012,
+   "sandbox_n": 10,
+   "sandbox_roi": -0.131,
+   "sandbox_roi_fee": -0.1411
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -597,7 +598,7 @@
   }
  },
  "stage": "production",
- "unlisted_skipped": 2,
+ "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-03T22:54:18+00:00"
+ "updated_at": "2026-10-04T02:26:46+00:00"
 }
