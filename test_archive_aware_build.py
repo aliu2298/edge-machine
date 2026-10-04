@@ -458,11 +458,12 @@ def _both_places():
 
     save() writes the ledger before the archive, so a crash between those
     writes leaves the row in retired and not in the archive file. It does
-    not leave a duplicate. This fixture is the other case: the same id in
-    both lists, as from a bad merge or a doubled archive file. All-sport
-    score() must not count it again. The live row wins. The reach cell
-    reads bet_rows(), so that id is counted once there too. all_bets()
-    stays the raw list, so a repeated id is still visible to the day check.
+    not leave a duplicate. This fixture is an id in both lists, as from a
+    bad merge, not a doubled archive file (that repeats the id inside the
+    archive only). All-sport score() must not count this id again. The live
+    row wins. The reach cell reads bet_rows(), so that id is counted once
+    there too. all_bets() stays the raw list, so a repeated id is still
+    visible to the day check.
     """
     print("\nrow in the ledger and the archive")
     live = _bet(id="both", status="won", pnl=80.0, stake=100.0, edge=0.05,

@@ -619,12 +619,14 @@ def page(d, st, blob, style, now=None):
         # across 30 bets of which 11 were reachable, and those 11 return +270% while the other
         # 19 return +2.5%. Two lanes under one name. Nothing on this page said so, so it had
         # to be dug out. The gate still judges the whole record; this only shows the gap.
-        # bet_rows, not all_bets: the same id can sit in both the ledger and the
-        # archive, for example from a bad merge or a doubled archive file. Count
-        # it once, and keep the live row. save() writes the ledger before the
-        # archive, so a crash between those writes leaves the row in retired and
-        # not in the archive file. It does not leave a duplicate. all_bets stays
-        # the raw list everywhere else (the feed, the day check, the audit).
+        # bet_rows, not all_bets. Two cases are counted once. An id in both the
+        # live ledger and the archive, for example from a bad merge, keeps the
+        # live row. An id repeated inside the archive, for example a doubled
+        # archive file, keeps the first archive copy. save() writes the ledger
+        # before the archive, so a crash between those writes leaves the row in
+        # retired and not in the archive file. It does not leave a duplicate.
+        # all_bets stays the raw list everywhere else (the feed, the day check,
+        # the audit).
         all_bets = [q for q in T.bet_rows(raw)
                     if q.get("source") == source and q.get("sport") == sport and q.get("bet")]
         reach_n = sum(1 for q in all_bets if T.placeable(q))
