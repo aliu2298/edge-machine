@@ -210,16 +210,25 @@ def check_duplicates(d, rep):
 
     Both copies pay, so the P/L counts twice. Voiding the later copy is what clears it.
     The matcher is the tracker's own, including the wider window for a Kalshi placeholder.
+    A removed lane is checked too. A duplicate there is a warning, not an error, so
+    the check does not call that case clean.
     """
-    # Frozen weather rows are not flagged. Dropping them cannot change a non-weather
-    # pair: the matcher groups by (source, sport).
-    pairs = T.settled_cross_venue_dups(
-        [q for q in T.all_bets(d) if not S.removed_row(q)])
+    pairs = T.settled_cross_venue_dups(list(T.all_bets(d)))
+    live, gone = [], []
     for later, kept in pairs:
+        if S.removed_row(later) and S.removed_row(kept):
+            gone.append((later, kept))
+        else:
+            live.append((later, kept))
+    for later, kept in live:
         rep.error("duplicates",
                   f"{later.get('id')} repeats {kept.get('id')} "
                   f"({later.get('source')}, {later.get('status')}, P/L {later.get('pnl')})")
-    if not pairs:
+    for later, kept in gone:
+        rep.warn("duplicates",
+                 f"{later.get('id')} repeats {kept.get('id')} "
+                 f"({later.get('source')}, {later.get('status')}, P/L {later.get('pnl')})")
+    if not live and not gone:
         rep.ok("duplicates", "no settled bet repeats an earlier one on the same contest")
 
 

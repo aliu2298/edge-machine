@@ -1401,6 +1401,11 @@ def _name_text(name):
     return _BRACKETED.sub(" ", _fold(name))
 
 
+def _joined(name):
+    """A name with accents, asides, spaces and punctuation removed: "Alateng Heili" -> "alatengheili"."""
+    return re.sub(r"[^a-z0-9]", "", _name_text(name))
+
+
 @functools.lru_cache(maxsize=50000)
 def tokens(name):
     """Lowercase alphanumeric tokens of a team or player name, minus filler.
@@ -1606,6 +1611,11 @@ def _score(a, b, sport):
         return 1.0 if ca == cb else 0.0
     s = sim(a, b)
     if s == 0 and sport in ("boxing", "mma"):
+        # John Castaneda vs Alatengheili and vs Alateng Heili are one fighter.
+        # A space is not a second name. Tennis and team sports do not use this.
+        joined_a, joined_b = _joined(a), _joined(b)
+        if joined_a and joined_b and joined_a == joined_b:
+            return 1.0
         # Fighters' names are transliterated, and every feed does it differently: Kalshi
         # and Polymarket write "Mikaelian", OLBG "Mikaeljan", for the same Armenian
         # fighter. A long word spelled almost identically is the same name. Scored below
