@@ -442,7 +442,11 @@ def coverage_table(cov):
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
-        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
+        # MLB leaves with the venue list. NHL · Rest leaves with its lane.
+        # Every other sport stays, including one whose only lane is already
+        # gone (NHL · Puck line) and one no source lists (Economics, Finance,
+        # Politics, Elections).
+        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS or sport == "nhl_rest":
             continue
         cells = []
         for n in names:

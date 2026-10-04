@@ -1144,6 +1144,9 @@ REMOVED_SOURCES = frozenset({
     "cmd_tail", "gas_nochange", "draftkings", "scores24", "covers",
     "nhl_dog_pl", "tt_band_55_60", "tennis_fav_band", "pinnacle",
     "sportsgambler", "soccerpredictions",
+    # 2026-10-04, removed by Olu. Off every page. olbg is boxing and MMA only,
+    # and none of these four feeds a lane that stays.
+    "olbg", "mma_fav_band", "mlb_fade_streak", "nhl_rest_edge",
 })
 REMOVED_SPORTS = frozenset({"climate"})
 REMOVED_LANES = frozenset({
@@ -1154,9 +1157,11 @@ REMOVED_LANES = frozenset({
     ("polymarket", "mlb"),
     ("kalshi", "mlb"),
 })
-# Venue listings for a sport whose every pick lane is gone. MLB stays: the
-# fade-the-streak rule still reads those prices. Table tennis has no kept reader.
-REMOVED_VENUE_SPORTS = frozenset({"table_tennis"})
+# Venue listings for a sport whose every pick lane is gone. Table tennis has
+# no kept reader. MLB joined it on 2026-10-04: the fade-the-streak rule was
+# the last source that read those prices. Kalshi, ESPN FPI, Polymarket and
+# Polymarket US were already off MLB.
+REMOVED_VENUE_SPORTS = frozenset({"table_tennis", "mlb"})
 
 _NOT_PAUSED = object()
 

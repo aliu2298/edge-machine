@@ -355,7 +355,7 @@ if _git:
 
 print("\nduplicates: a settled cross-venue pair is an error; a doubleheader is not")
 def _fight(i, **kw):
-    q = bet(i, sport="mma", source="mma_fav_band",
+    q = bet(i, sport="cricket", source="oddspedia",
             side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
             start="2026-09-26T23:00:00+00:00", date="2026-09-26",
             logged="2026-09-22T00:41:36+00:00", venue="kalshi",

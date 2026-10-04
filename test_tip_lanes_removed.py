@@ -4,6 +4,7 @@
 Fails while a removed lane is still fetched, bet, or rendered. Passes once
 those lanes are hidden. Stored ledger rows are not deleted. No network.
 """
+import copy
 import html as html_lib
 import json
 import os
@@ -11,12 +12,16 @@ import re
 import sys
 from datetime import datetime, timedelta, timezone
 
+import cricket_build
 import production
+import sandbox_audit as A
 import sandbox_browser as B
 import sandbox_build as SB
 import sandbox_sources as S
 import sandbox_track as T
 import site_root
+import soccer_build
+import tennis_build
 
 FAILS = []
 NOW = datetime(2026, 10, 1, 12, 0, tzinfo=timezone.utc)
@@ -36,6 +41,10 @@ FULL = {
     "pinnacle": ("Pinnacle (via The Odds API)",),
     "sportsgambler": ("SportsGambler",),
     "soccerpredictions": ("SoccerPredictions.ai",),
+    "olbg": ("OLBG community tips",),
+    "mma_fav_band": ("MMA favourite-band rule (priced 0.75-0.90)",),
+    "mlb_fade_streak": ("MLB fade-the-streak rule (cold team v hot team, last 10)",),
+    "nhl_rest_edge": ("NHL rest rule (rested home team v a visitor on a back-to-back)",),
 }
 # Sport-scoped. The source id and the short label stay on the sports that remain.
 SCOPED = (
@@ -48,10 +57,10 @@ SCOPED = (
 )
 _ID = re.compile(
     r"\b(?:cmd_tail|gas_nochange|draftkings|scores24|covers|nhl_dog_pl|"
-    r"tt_band_55_60|tennis_fav_band|pinnacle|sportsgambler|soccerpredictions)\b")
+    r"tt_band_55_60|tennis_fav_band|pinnacle|sportsgambler|soccerpredictions|"
+    r"olbg|mma_fav_band|mlb_fade_streak|nhl_rest_edge)\b")
 _TR = re.compile(r"<tr\b.*?</tr>", re.S)
 KEPT_LABELS = (
-    "MMA favourite-band rule",
     "Tennis favourite band, entered within 3 hours of the start",
     "Pinnacle's goal total v Kalshi's",
     "Tennis 2-leg combo (favourite-band legs)",
@@ -76,6 +85,15 @@ def eq(got, want, why):
     ok(got == want, why if got == want else f"{why} — got {got!r}, want {want!r}")
 
 
+def _sport_tabs(d=None, st=None):
+    """Soccer, tennis and cricket, built in memory. Nothing is written."""
+    return {
+        "soccer.html": soccer_build.build(d=d, st=st, now=NOW),
+        "tennis.html": tennis_build.build(d=d, st=st, now=NOW),
+        "cricket.html": cricket_build.build(d=d, st=st, now=NOW),
+    }
+
+
 def _pages():
     sandbox, index, weeks = SB.render_pages(NOW)
     out = {
@@ -90,6 +108,7 @@ def _pages():
     with open(root, encoding="utf-8") as f:
         out["public_site/index.html"] = f.read()
     out.update({f"archive/{slug}.html": html for slug, html in weeks.items()})
+    out.update(_sport_tabs())
     return out
 
 
@@ -171,13 +190,30 @@ def main():
            + (f" ({scoped})" if scoped else ""))
 
     sandbox = html_lib.unescape(pages["sandbox.html"])
+    print("\nempty sport sections leave the page, header included")
+    titles = re.findall(r'<details class="sport"><summary><b>([^<]+)</b>', sandbox)
+    for name in ("MLB", "NHL", "Boxing", "MMA"):
+        ok(name not in titles, f"no {name} section header")
+    for name in ("Soccer", "Tennis", "Cricket"):
+        ok(name in titles, f"{name} section stays")
+    ok("<b>MLB</b>" not in sandbox and "<b>NHL · Rest</b>" not in sandbox,
+       "MLB and NHL · Rest leave coverage")
+    for label in ("NHL · Puck line", "Economics", "Finance", "Politics", "Elections",
+                  "Boxing", "MMA"):
+        ok(f"<b>{label}</b>" in sandbox, f"{label} stays in coverage")
+    # Main's coverage loop, plus the one explicit hide. Every other sport
+    # header is still a row, in the same order.
+    got_cov = re.findall(r"<tr><td><b>([^<]+)</b>", SB.coverage_table({}))
+    want_cov = [label for sport, label in S.SPORTS.items()
+                if sport not in S.REMOVED_SPORTS and sport not in S.REMOVED_VENUE_SPORTS
+                and sport != "nhl_rest"]
+    eq(got_cov, want_cov, "coverage rows are main's rows, minus MLB and NHL · Rest")
     for label in KEPT_LABELS:
         ok(label in sandbox, f"sandbox still shows {label}")
-    ok("ESPN FPI / Matchup Predictor" in sandbox and ">NFL<" in sandbox,
-       "ESPN FPI NFL stays on the sandbox page")
     ok("Pinnacle" in sandbox, "the kept Pinnacle wording stays")
     ok("favourite band" in sandbox.lower() or "favourite-band" in sandbox,
        "the favourite-band wording of the kept lanes stays")
+    _nfl_section_stays()
 
     print("\nthe removed favourite-band lane is not named on a built page")
     _no_removed_band_name(pages)
@@ -190,14 +226,19 @@ def main():
     ok(callable(S.combo_legs_by_day) and callable(S.pm_combo_legs_by_day),
        "both combo leg builders stay")
     for name in ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3", "tennis_combo4",
-                 "pm_combo2", "pm_combo3", "pm_combo4", "pin_totals", "mma_fav_band",
+                 "pm_combo2", "pm_combo3", "pm_combo4", "pin_totals",
                  "oddspedia", "cmd_market"):
         ok(name not in S.REMOVED_SOURCES and not S.lane_removed(name, S.SOURCES[name]["sports"][0]),
            f"{name} is not a removed lane")
+    for name in ("olbg", "mma_fav_band", "mlb_fade_streak", "nhl_rest_edge"):
+        ok(name in S.REMOVED_SOURCES and S.lane_removed(name, S.SOURCES[name]["sports"][0]),
+           f"{name} is off the board")
     ok(not S.lane_paused("tennis_fav_band_3h", "tennis")
-       and not S.lane_paused("pin_totals", "soccer_o25")
-       and not S.lane_paused("mma_fav_band", "mma"),
-       "the 3-hour band, pin totals, and the MMA band may still log")
+       and not S.lane_paused("pin_totals", "soccer_o25"),
+       "the 3-hour band and pin totals may still log")
+    ok(S.lane_paused("mma_fav_band", "mma") and S.lane_paused("olbg", "boxing")
+       and S.lane_paused("mlb_fade_streak", "mlb") and S.lane_paused("nhl_rest_edge", "nhl_rest"),
+       "the five removed lanes log nothing new")
     ok(S.lane_paused("tennis_combo3", "tennis_combo")
        and S.lane_paused("pm_combo4", "tennis_pmcombo")
        and not S.lane_removed("tennis_combo3", "tennis_combo")
@@ -254,7 +295,7 @@ def main():
     ok("soccerpredictions" not in S.PAUSED_LANES and S.lane_paused("soccerpredictions", "soccer"),
        "soccerpredictions was not on the pause list, and removal still stops it")
 
-    print("\ntable tennis venue listings stop; MLB listings stay")
+    print("\ntable tennis and MLB venue listings stop")
     fetched_sports = []
     saved_sports = S.SPORTS
     saved_pm = S.fetch_polymarket_us
@@ -286,11 +327,13 @@ def main():
        and ("kalshi", "table_tennis") not in fetched_sports,
        "table tennis venue listings are not fetched")
     eq(universe_out.get("table_tennis"), [], "table tennis contributes no markets")
-    for sport in ("mlb", "tennis", "mma", "cricket", "boxing"):
+    ok(("polymarket_us", "mlb") not in fetched_sports
+       and ("kalshi", "mlb") not in fetched_sports,
+       "MLB venue listings are not fetched")
+    eq(universe_out.get("mlb"), [], "MLB contributes no markets")
+    for sport in ("tennis", "mma", "cricket", "boxing"):
         ok(("polymarket_us", sport) in fetched_sports,
            f"Polymarket US {sport} listings are still fetched")
-    ok(("kalshi", "mlb") in fetched_sports,
-       "Kalshi MLB listings stay, for the fade-the-streak rule")
 
     print("\nPlaywright stays for Oddspedia")
     ok(os.path.isfile(os.path.join(ROOT, "sandbox_browser.py")),
@@ -303,12 +346,33 @@ def main():
        "the tracker workflow still installs the headless browser")
 
     print("\nno listed pair is a removed lane")
+    # The committed stages file may still name a removed lane. The next tracker
+    # run is what takes it off: evaluate_stages demotes a Production pair that
+    # is not on PAIR_OVERRIDES. This check is that run, in memory.
     stages = T.load_stages()
-    prod = [k for k, v in (stages.get("pairs") or {}).items() if v.get("stage") == "production"]
+    staged = copy.deepcopy(stages)
+    clock = datetime(2026, 10, 4, 12, tzinfo=timezone.utc)
+    T.evaluate_stages(T.load(), staged, now=clock, verbose=False)
+    still = [k for k, v in (stages.get("pairs") or {}).items()
+             if v.get("stage") == "production"
+             and S.lane_removed(*str(k).split("|", 1))]
+    demoted = [k for k in still
+               if (staged.get("pairs") or {}).get(k, {}).get("stage") != "production"]
+    eq(sorted(demoted), sorted(still),
+       "evaluate_stages demotes every removed lane the file still stages as Production")
+    prod = [k for k, v in (staged.get("pairs") or {}).items() if v.get("stage") == "production"]
     for key in prod:
         source, _, sport = str(key).partition("|")
         ok("|" in str(key) and not S.lane_removed(source, sport),
            f"Production stage {key} is not a removed lane")
+    rep = A.Report()
+    A.check_production(T.load(), stages, rep)
+    ok(not any("mma_fav_band" in m for _c, m in rep.errors),
+       "the audit does not error while mma_fav_band waits for the next tracker run")
+    if still:
+        ok(any("awaiting the next tracker run" in m and "mma_fav_band|mma" in m
+               for _c, m in rep.warnings),
+           "the audit warns that the next tracker run demotes mma_fav_band|mma")
     for key in T.PAIR_OVERRIDES:
         source, _, sport = str(key).partition("|")
         ok("|" in str(key) and not S.lane_removed(source, sport),
@@ -424,6 +488,17 @@ def _kept_lane_numbers():
     the full ledger, which is main's number. Headlines still count only the
     rows they render.
     """
+    # The real lane is off the board. This fixture still needs a kept
+    # favourite-population row, so it lifts that one source for the check only.
+    saved_removed = S.REMOVED_SOURCES
+    S.REMOVED_SOURCES = frozenset(n for n in saved_removed if n != "mma_fav_band")
+    try:
+        _kept_lane_numbers_body()
+    finally:
+        S.REMOVED_SOURCES = saved_removed
+
+
+def _kept_lane_numbers_body():
     kept = [
         _bet("mma_fav_band", "mma", "mma-own", 0.50, 100.0, "2026-09-20T12:00:00+00:00",
              close=0.55),
@@ -529,6 +604,30 @@ def _built_pages(d, st):
     return out
 
 
+def _nfl_section_stays():
+    """NFL last logged on 2026-09-25, so the live page may have no NFL section.
+
+    One kept ESPN FPI NFL bet still opens the section. The sports whose only
+    lanes were removed do not, even when those lanes have settled bets.
+    """
+    bets = [
+        _bet("espn_fpi", "nfl", "nfl-kept", 0.55, 80.0, "2026-09-20T12:00:00+00:00"),
+        _bet("mlb_fade_streak", "mlb", "mlb-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
+        _bet("nhl_rest_edge", "nhl_rest", "nhl-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
+        _bet("olbg", "boxing", "box-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
+        _bet("olbg", "mma", "mma-olbg", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
+        _bet("mma_fav_band", "mma", "mma-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
+    ]
+    raw = {"quotes": bets, "meta": {}, "coverage": {}}
+    st = {"pairs": {}, "events": []}
+    html = html_lib.unescape(SB.build(now=NOW, d=raw, st=st))
+    titles = re.findall(r'<details class="sport"><summary><b>([^<]+)</b>', html)
+    ok("NFL" in titles, "a kept ESPN FPI NFL bet still opens an NFL section")
+    ok("ESPN FPI / Matchup Predictor" in html, "that section names ESPN FPI")
+    for name in ("MLB", "NHL", "Boxing", "MMA"):
+        ok(name not in titles, f"the fixture has no {name} section")
+
+
 def _region(html, start, end):
     i = html.find(start)
     if i < 0:
@@ -547,6 +646,21 @@ def _strip_stamp(html):
 
 
 def _aggregates_ignore_removed_rows():
+    """Removed-lane bets move no filtered aggregate, and a kept stamp matches main.
+
+    The MMA band is lifted out of REMOVED_SOURCES for this fixture only, so the
+    check still has a kept favourite-population row. The pages above already
+    showed it off the board.
+    """
+    saved_removed = S.REMOVED_SOURCES
+    S.REMOVED_SOURCES = frozenset(n for n in saved_removed if n != "mma_fav_band")
+    try:
+        _aggregates_ignore_removed_rows_body()
+    finally:
+        S.REMOVED_SOURCES = saved_removed
+
+
+def _aggregates_ignore_removed_rows_body():
     """Removed-lane bets move no filtered aggregate, and a kept stamp matches main.
 
     Blind baselines, the by-sport section, a leaderboard and a source-by-sport

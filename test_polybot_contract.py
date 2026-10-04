@@ -194,7 +194,9 @@ def written_fixture():
 
     The ledger is built here. Nothing in this path opens data/.
     """
-    pick = _quote("mma_fav_band", "mma", "aec-fixture-pick", "b", 0.80,
+    # MMA favourite-band left the board on 2026-10-04. Oddspedia cricket is a
+    # pick lane that stays, so the writer still has one of each kind to emit.
+    pick = _quote("oddspedia", "cricket", "aec-fixture-pick", "b", 0.80,
                   "2026-10-03T22:00:00+00:00")
     # NFL stays on the board, so this is still a model lane the writer emits.
     # MLB is the same source with the lane removed: it must not reach the feed.
@@ -203,8 +205,8 @@ def written_fixture():
     removed = _quote("espn_fpi", "mlb", "aec-fixture-removed", "a", 0.55,
                      "2026-10-03T23:30:00+00:00", prob_a=0.62, edge=0.07)
     stages = {"pairs": {
-        "mma_fav_band|mma": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
-                             "by_hand": "2026-09-01"},
+        "oddspedia|cricket": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
+                              "by_hand": "2026-09-01"},
         "espn_fpi|nfl": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",
                          "by_hand": "2026-09-01"},
         "espn_fpi|mlb": {"stage": "production", "ready_at": "2026-09-01T00:00:00+00:00",

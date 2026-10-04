@@ -293,8 +293,21 @@ def check_production(d, st, rep):
     # still being published. On the list but NOT in Production is not: it is either waiting
     # for the next tracker run to promote it, or the demotion net took it out, which is that
     # net doing its job (ESPN MLB, 2026-09-21).
-    if prod - listed:
-        rep.error("production", f"in Production but off the hand-kept list: {sorted(prod - listed)}")
+    # A removed lane is the other waiting case. build_feed already leaves it out, and
+    # evaluate_stages demotes it on the next tracker run because it is off the list.
+    # The stages file may still say Production until that run. That is not a pair
+    # still being published.
+    awaiting = set()
+    for key in prod:
+        source, _, sport = str(key).partition("|")
+        if sport and S.lane_removed(source, sport):
+            awaiting.add(key)
+    if awaiting:
+        rep.warn("production", "removed lanes still staged Production, awaiting the next "
+                               f"tracker run: {sorted(awaiting)}")
+    if (prod - awaiting) - listed:
+        rep.error("production", "in Production but off the hand-kept list: "
+                                f"{sorted((prod - awaiting) - listed)}")
     if listed - prod:
         rep.warn("production", f"on the hand-kept list, not in Production: {sorted(listed - prod)} — "
                                f"awaiting the next tracker run, or demoted by the net")
@@ -314,8 +327,12 @@ def check_production(d, st, rep):
         rep.error("production", f"an open lead belongs to {l.get('pair')}, which is not in Production: "
                                 f"{l.get('headline')} {str(l.get('kickoff'))[:16]}")
     if not any(c == "production" for c, _ in rep.errors):
-        rep.ok("production", f"stages, hand-kept list and feed agree on {len(prod)} pairs; "
-                             f"every open lead belongs to one of them")
+        waiting = (f"; {sorted(awaiting)} still staged until the next tracker run"
+                   if awaiting else "")
+        rep.ok("production",
+               f"the hand-kept list matches the {len(prod - awaiting)} Production pairs still "
+               f"on the board; the feed matches the stages file{waiting}; "
+               f"every open lead belongs to a Production pair")
 
 
 def _venue_settlement(q):
