@@ -370,6 +370,27 @@ def all_bets(d):
     return d["quotes"] + (d.get("_archive") or [])
 
 
+def bet_rows(d):
+    """Live quotes plus archived bets, one row per id. The live quote wins.
+
+    Compact price rows in the archive are not bets. all_bets() still returns
+    those, because a baseline population reads them. A row with no id is kept:
+    there is nothing to dedupe it against.
+    """
+    seen = set()
+    out = []
+    for q in all_bets(d):
+        if not q.get("bet"):
+            continue
+        i = q.get("id")
+        if i is not None:
+            if i in seen:
+                continue
+            seen.add(i)
+        out.append(q)
+    return out
+
+
 def load():
     if os.path.exists(LEDGER):
         with open(LEDGER) as f:
@@ -1753,11 +1774,30 @@ def grade(d, verbose=True, now=None, mismatches=None):
 # ---------------------------------------------------------------------------
 
 def score(d, sport=None):
-    """Per-source table over the ledger. ROI from bets, Brier from every graded quote."""
+    """Per-source table over the ledger. ROI from bets, Brier from every graded quote.
+
+    A single-sport view adds archived bets the ledger no longer holds. The
+    roll-up total is not kept per sport, so those bets would otherwise vanish
+    from this view. The all-sport view does not add them: `retired` already
+    holds the lifetime totals, and adding the archive on top would count the
+    same bets twice.
+    """
+    extra = []
+    if sport is not None:
+        seen = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
+        for q in d.get("_archive") or []:
+            if not q.get("bet") or q.get("sport") != sport:
+                continue
+            i = q.get("id")
+            if i is not None and i in seen:
+                continue
+            extra.append(q)
     out = {}
     for name, meta in S.SOURCES.items():
         rows = [q for q in d["quotes"] if q["source"] == name
                 and (sport is None or q["sport"] == sport)]
+        if extra:
+            rows.extend(q for q in extra if q["source"] == name)
         bets = [q for q in rows if q["bet"]]
         done = [q for q in bets if q["status"] in ("won", "lost") and not climate_excluded(q)]
         # A price payout is money. It is not a win or a loss, so it stays out of
@@ -1849,9 +1889,23 @@ def baselines(d, sport=None):
     Each contest counted ONCE, priced at its earliest quote — the first moment any source
     looked at it, before the start. Void and late quotes are ignored.
     Returns {kind: dict(n, won, pnl, roi, expected)}.
+
+    Archived bets are scanned after the live quotes, and only when that id is
+    not already in the ledger. Compact price rows are not bets, so they stay
+    out: the table on current data is the live quotes alone. A logged-time tie
+    keeps the live quote.
     """
+    seen = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
+    scan = list(d["quotes"])
+    for q in d.get("_archive") or []:
+        if not q.get("bet"):
+            continue
+        i = q.get("id")
+        if i is not None and i in seen:
+            continue
+        scan.append(q)
     first = {}
-    for q in d["quotes"]:
+    for q in scan:
         if q.get("status") == "void" or climate_excluded(q) or (sport and q["sport"] != sport):
             continue
         if q.get("venue") == "kalshi_binary" or q.get("result") not in ("a", "b", "draw"):
@@ -2169,7 +2223,7 @@ def faded(d, name, sport=None, venues=None):
         covariance is NEGATIVE, so counting the buckets as independent overstated the
         variance and understated the z — NWS reads +1.23 correctly counted, not +0.92.
     """
-    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
             and q.get("price_draw") is None and q.get("pick") in ("a", "b")
@@ -2239,11 +2293,11 @@ def league_split(d, name, sport=None, venues=None):
     implied, return after fees, and what backing the other side of those same bets would have
     returned — so a league row reads exactly like a pair row, only thinner.
     """
-    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
-    priced = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    priced = [q for q in bet_rows(d) if q["source"] == name
               and q.get("status") == "settled" and q.get("result") == "price"
               and not climate_excluded(q)
               and (sport is None or q["sport"] == sport)
@@ -2579,7 +2633,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     status: "unproven" under READ_FLOOR settled bets; "approved" when every criterion
     holds; "failing" when it is readable and not ahead of the price at all; else "watch".
     """
-    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and not S.tennis_refused_row(q)
             and (sport is None or q["sport"] == sport)
@@ -2592,7 +2646,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # n_bets is every bet still on the record. A void is not, and neither is a
     # repeat city-day quote: mark_climate_citydays has already set its flag.
     n_bets = len(bets)
-    price_bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    price_bets = [q for q in bet_rows(d) if q["source"] == name
                   and q.get("status") == "settled" and q.get("result") == "price"
                   and not climate_excluded(q)
                   and not S.tennis_refused_row(q)

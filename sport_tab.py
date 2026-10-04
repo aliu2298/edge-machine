@@ -30,13 +30,19 @@ def esc(x):
 
 
 def idle_lanes(prefix, d, skip=()):
-    """Connected lanes in this sport with no quote in the ledger, so no Sandbox row.
+    """Connected lanes in this sport with no quote and no archived bet, so no Sandbox row.
 
     `prefix` is the sport-key prefix ("soccer", "tennis", "cricket"). Table tennis
     does not use the tennis prefix. A lane the Sandbox already lists, and a lane
-    taken off the board, are not idle.
+    taken off the board, are not idle. A compact price row is not a bet, so it
+    does not take a lane off this list.
     """
     seen = {q.get("source") for q in d.get("quotes", [])}
+    # A lane whose only bets have been rolled into the archive has fired.
+    # Compact price rows are not bets and do not count as a firing.
+    for q in d.get("_archive") or []:
+        if q.get("bet"):
+            seen.add(q.get("source"))
     skipped = set(skip)
     out = []
     for name, meta in S.SOURCES.items():
