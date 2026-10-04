@@ -76,8 +76,9 @@ jobs:
             echo "=== $f ==="
             log="$(mktemp)"
             python3 "$f" | tee "$log"
-            # A test that still warns and returns 0 (the phone-header copy on
-            # #55, until it reads REQUIRE_BROWSER) must not leave CI green.
+            # Every current browser test uses require_browser(), which already
+            # exits 1 under REQUIRE_BROWSER=1. This stays as a guard for a
+            # future test that copies the old warn-and-return skip and exits 0.
             if grep -F "Playwright is not installed; browser checks" "$log"; then
               echo "::error::$f skipped its browser checks"
               exit 1
