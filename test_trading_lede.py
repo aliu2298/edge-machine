@@ -8,6 +8,7 @@ and nothing is written.
 import datetime
 import sys
 
+import market_track as MT
 import sandbox_build as SB
 
 FAILS = []
@@ -15,6 +16,7 @@ NOW = datetime.datetime(2026, 10, 4, 12, tzinfo=datetime.timezone.utc)
 OLD = "Stock and crypto rules under test"
 LEDE = "Stock and ETF rules under test, judged per entry day. Paper only."
 META = "Stock and ETF rules under test, judged per entry day at real prices."
+HEADING = "Stock and ETF rules under test"
 
 
 def ok(cond, why):
@@ -30,6 +32,9 @@ def main():
     ok(f'<p class="lede">{LEDE}</p>' in html, "the lede names stock and ETF rules")
     ok(f'<meta name="description" content="{META}">' in html,
        "the meta description names stock and ETF rules")
+    ok(f"<h2>{HEADING}</h2>" in html, "the section heading names stock and ETF rules")
+    ok(all(MT.rule_removed(n) for n, r in MT.RULES.items() if r.get("lane") == "crypto"),
+       "no crypto rule renders")
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'trading lede passed'}")
     for item in FAILS:
         print("  -", item)

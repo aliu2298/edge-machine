@@ -2007,7 +2007,7 @@ def trading_page(now=None):
 </div>
 {trade_note}
 <section id="rules">
-<h2>Stock rules under test</h2>
+<h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
