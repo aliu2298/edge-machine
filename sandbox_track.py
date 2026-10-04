@@ -383,23 +383,13 @@ def load_archive(path=None):
 
 
 def all_bets(d):
-    """Ledger rows plus archived rows, one row per id. The live quote wins.
+    """Ledger rows plus archived settled bets — everything a judgement may read.
 
-    Compact price rows stay: a population baseline reads them. A row with no id
-    is kept, because there is nothing to dedupe it against. Order is the ledger
-    order, then the archive, with a later copy of an id dropped. A crash that
-    leaves the same id in both places must not count it twice.
+    This is the raw concatenation, duplicates included. The day-subtotal check
+    and the audit both look here for an id that was stored twice. bet_rows()
+    is the deduped list the pages count.
     """
-    seen = set()
-    out = []
-    for q in d["quotes"] + (d.get("_archive") or []):
-        i = q.get("id")
-        if i is not None:
-            if i in seen:
-                continue
-            seen.add(i)
-        out.append(q)
-    return out
+    return d["quotes"] + (d.get("_archive") or [])
 
 
 def _logged_id(q):

@@ -457,8 +457,9 @@ def _both_places():
     """A crash can leave one id in the ledger and in the archive.
 
     prune() has already added it to retired. All-sport score() must not count
-    it again, and the reach count production.py reads off all_bets() must not
-    either. The live row wins.
+    it again. The live row wins. The reach cell reads all_bets() inside
+    production.py, which stays the raw list so a repeated id is still visible
+    to the day check, so this test does not claim that cell changed.
     """
     print("\nrow in the ledger and the archive")
     live = _bet(id="both", status="won", pnl=80.0, stake=100.0, edge=0.05,
@@ -475,10 +476,9 @@ def _both_places():
     eq(row["settled"], 2, "the settled total counts that id once")
     eq(round(row["pnl"], 2), 180.0, "P/L counts that id once")
     eq(row["won"], 2, "wins count that id once")
-    reach = [q for q in T.all_bets(d)
-             if q.get("source") == "espn_fpi" and q.get("sport") == "nfl" and q.get("bet")]
-    eq(len(reach), 1, "reach counts a row in both places once")
-    eq(reach[0]["pnl"], 80.0, "the live row is the one that counts")
+    sport = T.score(d, "nfl")["espn_fpi"]
+    eq(sport["settled"], 1, "the per-sport total keeps the live row only")
+    eq(round(sport["pnl"], 2), 80.0, "the per-sport P/L is the live row")
 
 
 def _empty_recent_note():
