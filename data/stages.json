@@ -712,9 +712,24 @@
    "stage": "sandbox"
   },
   "mma_fav_band|mma": {
-   "demoted_at": "2026-10-04T07:10:00+00:00",
-   "since": "2026-10-04T07:10:00+00:00",
-   "stage": "sandbox"
+   "by_hand": "2026-09-22",
+   "entry": {
+    "base_roi": -0.1737,
+    "clv": -0.2167,
+    "clv_n": 3,
+    "n": 4,
+    "own_roi": 0.2517,
+    "roi": 0.2517,
+    "roi_fee": 0.2343,
+    "span_days": 4.1181,
+    "weeks": 0,
+    "z": 1.0027
+   },
+   "entry_since": null,
+   "promoted_at": "2026-09-22T16:20:08+00:00",
+   "ready_at": "2026-09-22T16:20:08+00:00",
+   "ready_since": "2026-09-22T16:20:08+00:00",
+   "stage": "production"
   },
   "o15_form_l10|soccer_o15": {
    "since": "2026-09-21T01:44:02+00:00",

@@ -1,6 +1,93 @@
 {
  "board_built_at": "2026-10-04T07:40:29+00:00",
  "leads": {
+  "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule": {
+   "away": "Camila Reynoso",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-09-29",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Aieza Bertolso to win",
+   "home": "Aieza Bertolso",
+   "id": "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-29T23:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Aieza Bertolso v Camila Reynoso",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-dwcs-aieber-camrey-2026-09-29",
+    "outcome": "Aieza Bertolso",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-aieber-camrey-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
+  "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule": {
+   "away": "Zaurbek Sabanov",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-30",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "Zaurbek Sabanov to win",
+   "home": "Adama Diop",
+   "id": "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-30T00:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Adama Diop v Zaurbek Sabanov",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-dwcs-adadio-zausab-2026-09-29",
+    "outcome": "Zaurbek Sabanov",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-adadio-zausab-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "miss"
+  },
+  "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule": {
+   "away": "George Staines",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-09-30",
+   "edge_at_log": null,
+   "first_seen": "2026-09-28",
+   "headline": "George Staines to win",
+   "home": "Loai Abushaar",
+   "id": "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-09-30T00:25Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Loai Abushaar v George Staines",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.76,
+   "route": {
+    "market": "aec-dwcs-loaabu-geosta-2026-09-29",
+    "outcome": "George Staines",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-dwcs-loaabu-geosta-2026-09-29",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
   "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Gibraltar",
    "bet": {
@@ -153,6 +240,35 @@
    "sport": "cricket",
    "status": "hit"
   },
+  "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule": {
+   "away": "Lucas Armand",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Anthony Wint to win",
+   "home": "Anthony Wint",
+   "id": "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T20:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Anthony Wint v Lucas Armand",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.82,
+   "route": {
+    "market": "aec-ufc-antwin-lucarm-2026-10-03",
+    "outcome": "Anthony Wint",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-antwin-lucarm-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
   "2026-10-03|Bangladesh|Sri Lanka|Sri Lanka to win \u00b7 Oddspedia community tips": {
    "away": "Sri Lanka",
    "bet": {
@@ -203,6 +319,35 @@
    "sandbox_quote": "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT03CANPER-2",
    "source": "o15_ranked",
    "sport": "soccer_o15_intl",
+   "status": "hit"
+  },
+  "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule": {
+   "away": "Andrey Pulyaev",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Damian Pinas to win",
+   "home": "Damian Pinas",
+   "id": "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T23:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Damian Pinas v Andrey Pulyaev",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "aec-ufc-dampin-andpul-2026-10-03",
+    "outcome": "Damian Pinas",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-dampin-andpul-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
    "status": "hit"
   },
   "2026-10-03|Iceland|Bulgaria|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
@@ -257,6 +402,93 @@
    "sport": "cricket",
    "status": "miss"
   },
+  "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule": {
+   "away": "Bruce Whitehead",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Jacobe Smith to win",
+   "home": "Jacobe Smith",
+   "id": "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T21:30Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Jacobe Smith v Bruce Whitehead",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.88,
+   "route": {
+    "market": "aec-ufc-jacsmi-bruwhi-2026-10-03",
+    "outcome": "Jacobe Smith",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-jacsmi-bruwhi-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
+  "2026-10-03|Marcus McGhee|Anthony Romero|Marcus McGhee to win \u00b7 MMA favourite-band rule": {
+   "away": "Anthony Romero",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Marcus McGhee to win",
+   "home": "Marcus McGhee",
+   "id": "2026-10-03|Marcus McGhee|Anthony Romero|Marcus McGhee to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T22:15Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Marcus McGhee v Anthony Romero",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "aec-ufc-marmcg-antrom-2026-10-03",
+    "outcome": "Marcus McGhee",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-marmcg-antrom-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
+  "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule": {
+   "away": "Paul Elliott",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-03",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Shamil Erdogan to win",
+   "home": "Shamil Erdogan",
+   "id": "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-03T01:00Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Shamil Erdogan v Paul Elliott",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.77,
+   "route": {
+    "market": "aec-one-shaerd-pauell-2026-10-02-shaerd-pauell",
+    "outcome": "Shamil Erdogan",
+    "outcome_side": "yes",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-one-shaerd-pauell-2026-10-02-shaerd-pauell",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
+  },
   "2026-10-04|CSA Emerging|Western Province|CSA Emerging to win \u00b7 Oddspedia community tips": {
    "away": "Western Province",
    "bet": {
@@ -287,6 +519,35 @@
    "source": "oddspedia",
    "sport": "cricket",
    "status": "pending"
+  },
+  "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule": {
+   "away": "Payton Talbott",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-04",
+   "edge_at_log": null,
+   "first_seen": "2026-10-01",
+   "headline": "Payton Talbott to win",
+   "home": "Deiveson Figueiredo",
+   "id": "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule",
+   "kickoff": "2026-10-04T01:15Z",
+   "lane": "production",
+   "league": "MMA",
+   "match": "Deiveson Figueiredo v Payton Talbott",
+   "pair": "mma_fav_band|mma",
+   "price_at_log": 0.84,
+   "route": {
+    "market": "aec-ufc-deifig-paytal-2026-10-03",
+    "outcome": "Payton Talbott",
+    "outcome_side": "no",
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "mma_fav_band:aec-ufc-deifig-paytal-2026-10-03",
+   "source": "mma_fav_band",
+   "sport": "mma",
+   "status": "hit"
   },
   "2026-10-04|Lions|Warriors (SA)|Warriors (SA) to win \u00b7 Oddspedia community tips": {
    "away": "Warriors (SA)",
@@ -464,6 +725,17 @@
   }
  },
  "pairs": {
+  "mma_fav_band|mma": {
+   "by_hand": "2026-09-22",
+   "entered_at": "2026-09-22T16:20:08+00:00",
+   "promoted_at": "2026-09-22T16:20:08+00:00",
+   "ready_at": "2026-09-22T16:20:08+00:00",
+   "route": "moved by hand on 2026-09-22",
+   "sandbox_clv": 0.0033,
+   "sandbox_n": 11,
+   "sandbox_roi": -0.1018,
+   "sandbox_roi_fee": -0.1119
+  },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
    "entered_at": "2026-10-01T16:20:16+00:00",
