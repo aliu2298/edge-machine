@@ -263,7 +263,7 @@ def vs_price(d, name, sport=None):
     winners a source should have had by luck alone. Beating the price is the whole test;
     a hot ROI on heavy favourites is not an edge.
     """
-    rows = [q for q in d["quotes"] if q["source"] == name and q["bet"]
+    rows = [q for q in T.bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not T.climate_excluded(q)
             and (sport is None or q["sport"] == sport)]
     if not rows:
@@ -521,7 +521,7 @@ def _cityday_repeat(q):
 
 def settled_rows(d, limit=None):
     """Settled bets, newest first. One flat table: Contest, then P/L."""
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+    done = [q for q in T.bet_rows(d) if q["status"] in _HIST and q["bet"]
             and not _cityday_repeat(q) and not S.removed_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     out = []
@@ -591,13 +591,16 @@ def _is_recent(q, today):
 def partition_settled(d, now):
     """(recent, older) settled bets. Recent is the last 7 Chicago dates through `now`.
 
-    Every settled bet that still counts is in exactly one of the two lists. A
-    repeat city-day quote is in neither. A void is not a repeat, so a stale
-    city-day flag does not remove it. A timestamp that cannot be placed on the
-    Chicago calendar is older, so it still appears on an archive page.
+    Every settled bet that still counts is in exactly one of the two lists. The
+    list is the live quotes plus archived bets (one row per id; compact price
+    rows are not bets). A repeat city-day quote is in neither. A void is not a
+    repeat, so a stale city-day flag does not remove it. A timestamp that cannot
+    be placed on the Chicago calendar is older, so it still appears on an archive
+    page. Removed rows are left out. Refused tours and eliminated pairs are
+    filtered by the caller, the same way they were before the archive was read.
     """
     today = _chicago_today(now)
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+    done = [q for q in T.bet_rows(d) if q["status"] in _HIST and q["bet"]
             and not _cityday_repeat(q) and not S.removed_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
@@ -686,7 +689,7 @@ def unconnected_rows(d=None):
             continue
         rec = ""
         if m.get("retired") and d is not None:
-            n = sum(1 for q in T.all_bets(d) if q["source"] == name and q.get("bet")
+            n = sum(1 for q in T.bet_rows(d) if q["source"] == name
                     and q["status"] in ("won", "lost") and not T.climate_excluded(q))
             rec = f'<div class="sm">{n} settled bets kept on record</div>'
         why = (f'<b class="neg">Retired</b> {esc(m["retired"])}' if m.get("retired") else esc(m["note"]))
@@ -700,8 +703,8 @@ def unconnected_rows(d=None):
                 continue
             rec = ""
             if d is not None:
-                n = sum(1 for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
-                        and q.get("bet") and q["status"] in ("won", "lost")
+                n = sum(1 for q in T.bet_rows(d) if q["source"] == name and q["sport"] == sport
+                        and q["status"] in ("won", "lost")
                         and not T.climate_excluded(q))
                 rec = f'<div class="sm">{n} settled bets kept on record</div>'
             out.append(f"""<tr><td><b>{esc(m['label'].split(' (')[0])} · {esc(S.SPORTS.get(sport, sport))}</b>
@@ -722,7 +725,7 @@ def pair_status(d, st, name, sport):
     whole = T.assess(d, name, sport, since=since)
     a = dict(a, whole_n=whole["n"], whole_roi=whole["roi"])
     qa = a
-    mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")
+    mine = [q for q in T.bet_rows(d) if q["source"] == name and q["sport"] == sport
             and not S.tennis_refused_row(q)]
     open_n = sum(1 for q in mine if q["status"] == "open" and not T.climate_excluded(q))
     last = max((str(q.get("logged") or "") for q in mine), default="")
@@ -1145,7 +1148,7 @@ def reconcile(d, rows):
     """Where every settled bet is. The sections judge a subset on purpose — a retired venue's
     bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
     from a verdict — so the page says so in numbers rather than leaving a gap to find."""
-    bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
+    bets = [q for q in T.bet_rows(d) if q["status"] in ("won", "lost")
             and not T.climate_excluded(q) and not S.removed_row(q)]
     shown = {(r["name"], r["sport"]) for r in rows}
     in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
@@ -1832,13 +1835,13 @@ def _sandbox_html(d, st, now_dt, full=None):
     groups = archive_groups(older)
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)
-    n_void = sum(1 for q in d["quotes"]
-                 if q["status"] == "void" and q["bet"] and not S.removed_row(q))
+    n_void = sum(1 for q in T.bet_rows(d)
+                 if q["status"] == "void" and not S.removed_row(q))
     # A stale city-day flag does not make a void a repeat. The void stays in
     # this count and on the settled pages, and out of the city-day count.
     # Weather is not on the page, so its repeats are not in this count.
-    n_city = sum(1 for q in d["quotes"]
-                 if q.get("bet") and _cityday_repeat(q) and not S.removed_row(q))
+    n_city = sum(1 for q in T.bet_rows(d)
+                 if _cityday_repeat(q) and not S.removed_row(q))
     _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
              else (f" · {n_city} city-day repeats set aside" if n_city else ""))
     today = _chicago_today(now_dt)
@@ -1857,8 +1860,8 @@ def _sandbox_html(d, st, now_dt, full=None):
     # `full`; the sport sections then total those rows, which are kept lanes.
     rows = pair_list(full, st)
     live = {(r["name"], r["sport"]) for r in rows if r["v"] != "retired"}
-    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"]
-                               if q.get("bet") and (q["source"], q["sport"]) in live)
+    leads = sorted(x for x in (T.close_lead_min(q) for q in T.bet_rows(d)
+                               if (q["source"], q["sport"]) in live)
                    if x is not None and x >= 0)
     close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
                   f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} "
@@ -1890,7 +1893,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 <h2>Recently settled ({len(recent):,})</h2>
 <p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,} settled on the record{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
 {recent_note}{_tools("Search contests…", "Search recently settled bets") if recent else ""}
-{_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
+{_sortable(HIST_HEAD, recent_rows) if recent else f'<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>
 
 <section id="archive">

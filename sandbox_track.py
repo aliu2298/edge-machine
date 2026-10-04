@@ -383,8 +383,74 @@ def load_archive(path=None):
 
 
 def all_bets(d):
-    """Ledger rows plus archived settled bets — everything a judgement may read."""
+    """Ledger rows plus archived settled bets — everything a judgement may read.
+
+    This is the raw concatenation, duplicates included. The day-subtotal check
+    and the audit both look here for an id that was stored twice. bet_rows()
+    is the deduped list the pages count.
+    """
     return d["quotes"] + (d.get("_archive") or [])
+
+
+def _logged_id(q):
+    """Sort key that does not depend on which list a row sits in.
+
+    logged alone is not enough. Two Corners rungs can share a logged time, and
+    a stable sort would then keep whichever list held the row. id breaks that
+    tie the same way before and after a roll-up.
+    """
+    return (str(q.get("logged") or ""), str(q.get("id") or ""))
+
+
+# One built list per loaded ledger. hide_removed, hide_refused_tours and a
+# roll-up each hand back a new dict with new quotes and archive lists, so they
+# miss. A build asks for this about 1,650 times; rebuilding it each time walks
+# every live row and every archived row again.
+_BET_ROWS_CACHE = {}
+_BET_ROWS_MAX = 48
+
+
+def bet_rows(d):
+    """Live quotes plus archived bets, one row per id, sorted by (logged, id).
+
+    The live quote wins a duplicate id. Within the archive the first copy
+    wins. Compact price rows are not bets. all_bets() still returns those,
+    because a baseline population reads them. A row with no id is kept: there
+    is nothing to dedupe it against.
+
+    The order does not depend on which list a row sits in. day_units keeps the
+    first same-start rung, so a rung that moves into the archive stays the
+    representative it was while it was live. The result is cached for this
+    d's quotes and archive lists.
+    """
+    quotes = d["quotes"]
+    archive = d.get("_archive")
+    token = (id(quotes), id(archive) if isinstance(archive, list) else 0,
+             len(quotes), len(archive) if archive else 0)
+    key = id(d)
+    hit = _BET_ROWS_CACHE.get(key)
+    if hit is not None and hit[0] == token:
+        _BET_ROWS_CACHE.pop(key)
+        _BET_ROWS_CACHE[key] = hit
+        return hit[1]
+    seen = set()
+    out = []
+    for q in all_bets(d):
+        if not q.get("bet"):
+            continue
+        i = q.get("id")
+        if i is not None:
+            if i in seen:
+                continue
+            seen.add(i)
+        out.append(q)
+    out.sort(key=_logged_id)
+    if len(_BET_ROWS_CACHE) >= _BET_ROWS_MAX:
+        _BET_ROWS_CACHE.pop(next(iter(_BET_ROWS_CACHE)))
+    # Pin the lists so a collected ledger cannot have its ids reused under a
+    # later dict that happens to share this key.
+    _BET_ROWS_CACHE[key] = (token, out, quotes, archive)
+    return out
 
 
 def load():
@@ -1769,12 +1835,98 @@ def grade(d, verbose=True, now=None, mismatches=None):
 # Score
 # ---------------------------------------------------------------------------
 
+def _folded_totals(q):
+    """The retired totals prune() adds when it folds this one row."""
+    quotes, bets, settled, won = 1, 0, 0, 0
+    staked = pnl = brier_sum = 0.0
+    brier_n = 0
+    if q.get("bet"):
+        bets = 1
+    if q.get("status") in ("won", "lost") and not climate_excluded(q):
+        settled = 1
+        won = 1 if q.get("status") == "won" else 0
+        staked = q.get("stake") or 0.0
+        pnl = q.get("pnl") or 0.0
+    elif (q.get("bet") and q.get("result") == "price" and q.get("status") == "settled"
+          and not climate_excluded(q)):
+        staked = q.get("stake") or 0.0
+        pnl = q.get("pnl") or 0.0
+    if (q.get("result") in ("a", "b") and not q.get("untraded")
+            and q.get("prob_a") is not None and not climate_excluded(q)):
+        brier_sum = (q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
+        brier_n = 1
+    return dict(quotes=quotes, bets=bets, settled=settled, won=won,
+                staked=staked, pnl=pnl, brier_sum=brier_sum, brier_n=brier_n)
+
+
+def _still_live_folded(d):
+    """Per source, what retired already counted for an id that is still live.
+
+    The archive copy is the row prune() folded. The live quote wins, so those
+    totals are taken back out and the quote is counted on its own.
+    """
+    live = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
+    seen = set()
+    acc = {}
+    for q in d.get("_archive") or []:
+        i = q.get("id")
+        if i is None or i not in live or i in seen:
+            continue
+        seen.add(i)
+        piece = _folded_totals(q)
+        bucket = acc.setdefault(q.get("source"), dict(
+            quotes=0, bets=0, settled=0, won=0, staked=0.0, pnl=0.0,
+            brier_sum=0.0, brier_n=0))
+        for k in bucket:
+            bucket[k] += piece[k]
+    return acc
+
+
 def score(d, sport=None):
-    """Per-source table over the ledger. ROI from bets, Brier from every graded quote."""
+    """Per-source table over the ledger. ROI from bets, Brier from every graded quote.
+
+    A single-sport view adds archived bets the ledger no longer holds. The
+    roll-up total is not kept per sport, so those bets would otherwise vanish
+    from this view. The all-sport view does not add them: `retired` already
+    holds the lifetime totals, and adding the archive on top would count the
+    same bets twice. An id that is still in the ledger is not counted again
+    through `retired`: the live row wins.
+    """
+    still_live = _still_live_folded(d) if sport is None else {}
+    # Edges are not stored on retired. The archive row still has one, so the
+    # all-sport average does not move when a bet rolls up.
+    archived_for_edge = {}
+    if sport is None:
+        seen_edge = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
+        for q in d.get("_archive") or []:
+            if not q.get("bet"):
+                continue
+            i = q.get("id")
+            if i is not None and i in seen_edge:
+                continue
+            if i is not None:
+                seen_edge.add(i)
+            archived_for_edge.setdefault(q.get("source"), []).append(q)
+    extra = []
+    if sport is not None:
+        seen = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
+        for q in d.get("_archive") or []:
+            if not q.get("bet") or q.get("sport") != sport:
+                continue
+            i = q.get("id")
+            # The same id can sit in the archive twice. The first copy wins,
+            # which is the rule bet_rows uses. The live quote already won above.
+            if i is not None and i in seen:
+                continue
+            if i is not None:
+                seen.add(i)
+            extra.append(q)
     out = {}
     for name, meta in S.SOURCES.items():
         rows = [q for q in d["quotes"] if q["source"] == name
                 and (sport is None or q["sport"] == sport)]
+        if extra:
+            rows.extend(q for q in extra if q["source"] == name)
         bets = [q for q in rows if q["bet"]]
         done = [q for q in bets if q["status"] in ("won", "lost") and not climate_excluded(q)]
         # A price payout is money. It is not a win or a loss, so it stays out of
@@ -1806,11 +1958,28 @@ def score(d, sport=None):
         if sport is None:
             r = (d.get("retired") or {}).get(name)
             if r:
-                n_quotes += r["quotes"]; n_bets += r["bets"]
-                n_done += r["settled"]; n_won += r["won"]
-                staked += r["staked"]; pnl += r["pnl"]
-                brier_sum += r["brier_sum"]; brier_n += r["brier_n"]
+                piece = still_live.get(name) or {}
+                # Take the overlap back out only when retired is large enough
+                # to hold it. An archive row that was never folded is not in
+                # these totals, and pulling it out would shrink a different bet.
+                holds = (not piece or (
+                    r["quotes"] >= piece["quotes"] and r["bets"] >= piece["bets"]
+                    and r["settled"] >= piece["settled"] and r["won"] >= piece["won"]
+                    and r["staked"] + 1e-6 >= piece["staked"]
+                    and r["brier_n"] >= piece["brier_n"]))
+                if not holds:
+                    piece = {}
+                n_quotes += r["quotes"] - piece.get("quotes", 0)
+                n_bets += r["bets"] - piece.get("bets", 0)
+                n_done += r["settled"] - piece.get("settled", 0)
+                n_won += r["won"] - piece.get("won", 0)
+                staked += r["staked"] - piece.get("staked", 0.0)
+                pnl += r["pnl"] - piece.get("pnl", 0.0)
+                brier_sum += r["brier_sum"] - piece.get("brier_sum", 0.0)
+                brier_n += r["brier_n"] - piece.get("brier_n", 0)
 
+        edge_rows = bets + archived_for_edge.get(name, [])
+        edges = [q["edge"] for q in edge_rows if q.get("edge") is not None]
         out[name] = dict(
             label=meta["label"], kind=meta["kind"], connected=meta["connected"],
             site=meta["site"], note=meta["note"],
@@ -1821,9 +1990,7 @@ def score(d, sport=None):
             staked=staked, pnl=pnl,
             roi=(pnl / staked) if staked else None,
             brier=(brier_sum / brier_n) if brier_n else None, brier_n=brier_n,
-            avg_edge=(sum(q["edge"] for q in bets if q.get("edge") is not None)
-                      / max(1, sum(1 for q in bets if q.get("edge") is not None))
-                      if any(q.get("edge") is not None for q in bets) else None),
+            avg_edge=(sum(edges) / len(edges)) if edges else None,
         )
     return out
 
@@ -1866,9 +2033,23 @@ def baselines(d, sport=None):
     Each contest counted ONCE, priced at its earliest quote — the first moment any source
     looked at it, before the start. Void and late quotes are ignored.
     Returns {kind: dict(n, won, pnl, roi, expected)}.
+
+    Archived bets are scanned after the live quotes, and only when that id is
+    not already in the ledger. Compact price rows are not bets, so they stay
+    out: the table on current data is the live quotes alone. A logged-time tie
+    keeps the live quote.
     """
+    seen = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
+    scan = list(d["quotes"])
+    for q in d.get("_archive") or []:
+        if not q.get("bet"):
+            continue
+        i = q.get("id")
+        if i is not None and i in seen:
+            continue
+        scan.append(q)
     first = {}
-    for q in d["quotes"]:
+    for q in scan:
         if q.get("status") == "void" or climate_excluded(q) or (sport and q["sport"] != sport):
             continue
         if q.get("venue") == "kalshi_binary" or q.get("result") not in ("a", "b", "draw"):
@@ -2186,7 +2367,7 @@ def faded(d, name, sport=None, venues=None):
         covariance is NEGATIVE, so counting the buckets as independent overstated the
         variance and understated the z — NWS reads +1.23 correctly counted, not +0.92.
     """
-    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
             and q.get("price_draw") is None and q.get("pick") in ("a", "b")
@@ -2256,11 +2437,11 @@ def league_split(d, name, sport=None, venues=None):
     implied, return after fees, and what backing the other side of those same bets would have
     returned — so a league row reads exactly like a pair row, only thinner.
     """
-    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
-    priced = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    priced = [q for q in bet_rows(d) if q["source"] == name
               and q.get("status") == "settled" and q.get("result") == "price"
               and not climate_excluded(q)
               and (sport is None or q["sport"] == sport)
@@ -2596,7 +2777,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     status: "unproven" under READ_FLOOR settled bets; "approved" when every criterion
     holds; "failing" when it is readable and not ahead of the price at all; else "watch".
     """
-    bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and not S.tennis_refused_row(q)
             and (sport is None or q["sport"] == sport)
@@ -2609,7 +2790,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # n_bets is every bet still on the record. A void is not, and neither is a
     # repeat city-day quote: mark_climate_citydays has already set its flag.
     n_bets = len(bets)
-    price_bets = [q for q in all_bets(d) if q["source"] == name and q.get("bet")
+    price_bets = [q for q in bet_rows(d) if q["source"] == name
                   and q.get("status") == "settled" and q.get("result") == "price"
                   and not climate_excluded(q)
                   and not S.tennis_refused_row(q)
@@ -2726,7 +2907,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         seen_c, fav = set(), []
         # The FIRST price logged for each contest, whether that row is still in the ledger or was
         # folded into the archive — so pruning never changes which price a contest is judged at.
-        for q in sorted(all_bets(d), key=lambda q: str(q.get("logged") or "")):
+        for q in sorted(all_bets(d), key=_logged_id):
             if (q["sport"] not in {b["sport"] for b in bets} or q.get("result") not in ("a", "b")
                     or q["market_id"] in seen_c or (since is not None and q["logged"] < since)
                     or (venues is not None and (q.get("venue") or "polymarket") not in venues)):
@@ -2746,7 +2927,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # and the only one with enough contests to read.
     if (S.SOURCES.get(name) or {}).get("baseline") == "draw_population" and bets:
         seen_c, drawn = set(), []
-        for q in sorted(all_bets(d), key=lambda q: str(q.get("logged") or "")):
+        for q in sorted(all_bets(d), key=_logged_id):
             if (q["sport"] not in {b["sport"] for b in bets}
                     or q.get("result") not in ("a", "b", "draw")
                     or q.get("price_draw") is None
