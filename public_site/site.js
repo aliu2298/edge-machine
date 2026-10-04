@@ -62,11 +62,25 @@
       bar.classList.toggle("nav-fade", narrow.matches && pastRight());
       bar.classList.toggle("nav-fade-left", narrow.matches && pastLeft());
     }
-    // Chrome does not scroll a partly visible link on focus. Pull the pill
-    // clear of both fades. The move is instant, so reduced motion is honoured.
+    // The outset ring (3px outline + 2px offset) hangs past a chip. Main-nav
+    // pills inset theirs, so this is 0 there.
+    function ringOutset(el) {
+      try {
+        var cs = getComputedStyle(el);
+        var width = parseFloat(cs.outlineWidth) || 0;
+        var offset = parseFloat(cs.outlineOffset) || 0;
+        if (!width || cs.outlineStyle === "none") return 0;
+        var extra = width + offset;
+        return extra > 0 ? extra : 0;
+      } catch (e) {
+        return 0;
+      }
+    }
+    // Chrome does not scroll a partly visible link on keyboard focus. Pull it
+    // clear of both fades and its own ring. Instant, so reduced motion is not animated.
     function reveal(el) {
       if (!narrow.matches || !el) return;
-      var fade = fadeWidth();
+      var fade = fadeWidth() + ringOutset(el);
       var navRect = bar.getBoundingClientRect();
       var aRect = el.getBoundingClientRect();
       var delta = 0;
@@ -74,7 +88,9 @@
       else if (aRect.right > navRect.right - fade + 0.5) delta = aRect.right - (navRect.right - fade);
       if (delta) bar.scrollLeft += delta;
     }
+    var placedWidth = -1;
     function place() {
+      placedWidth = window.innerWidth;
       if (!narrow.matches) {
         bar.classList.remove("nav-fade");
         bar.classList.remove("nav-fade-left");
@@ -86,13 +102,28 @@
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
     else place();
     window.addEventListener("load", place);
-    window.addEventListener("resize", place);
+    // The mobile URL bar changes height only. Re-place when the width changes.
+    window.addEventListener("resize", function () {
+      if (window.innerWidth === placedWidth) {
+        paint();
+        return;
+      }
+      place();
+    });
     bar.addEventListener("scroll", function () {
       paint();
     }, { passive: true });
     bar.addEventListener("focusin", function (ev) {
       var el = ev.target;
       if (!el || el.tagName !== "A" || !bar.contains(el)) return;
+      // Pointerdown focuses the link before the click. Scrolling then moves
+      // the pill out from under the finger. Only a keyboard focus shows
+      // :focus-visible. Without that selector, leave the row where it is.
+      try {
+        if (el.matches && !el.matches(":focus-visible")) return;
+      } catch (e) {
+        return;
+      }
       reveal(el);
       paint();
     });

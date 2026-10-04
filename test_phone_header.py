@@ -387,10 +387,13 @@ FOCUS_SNAP = r"""
       left: rect.left - extra,
       right: rect.right + extra,
     };
-    const outlineInside = shown
+    return { rect, box, shown, offset };
+  }
+  function outlineClears(r, clip, visLeft, visRight) {
+    const box = r.box;
+    return r.shown
       && box.top >= clip.top - pad && box.bottom <= clip.bottom + pad
-      && box.left >= clip.left - pad && box.right <= clip.right + pad;
-    return { rect, box, shown, offset, outlineInside };
+      && box.left >= visLeft - pad && box.right <= visRight + pad;
   }
   function insets(scroller) {
     const fade = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-fade")) || 22;
@@ -418,9 +421,10 @@ FOCUS_SNAP = r"""
       && r.rect.top >= clip.top - pad && r.rect.bottom <= clip.bottom + pad;
     return {
       kind: "pill", text: a.textContent.trim(), index: links.indexOf(a), count: links.length,
-      clear: clear, outlineInside: r.outlineInside, offset: r.offset,
+      clear: clear, outlineInside: outlineClears(r, clip, visLeft, visRight), offset: r.offset,
       left: r.rect.left, right: r.rect.right, visLeft: visLeft, visRight: visRight,
-      boxTop: r.box.top, boxBottom: r.box.bottom, clipTop: clip.top, clipBottom: clip.bottom,
+      boxTop: r.box.top, boxBottom: r.box.bottom, boxLeft: r.box.left, boxRight: r.box.right,
+      clipTop: clip.top, clipBottom: clip.bottom,
     };
   }
   const chipNav = toc && a.tagName === "A" && toc.contains(a) ? toc
@@ -436,9 +440,10 @@ FOCUS_SNAP = r"""
       && r.rect.top >= clip.top - pad && r.rect.bottom <= clip.bottom + pad;
     return {
       kind: "chip", text: a.textContent.trim(),
-      clear: clear, outlineInside: r.outlineInside, offset: r.offset,
+      clear: clear, outlineInside: outlineClears(r, clip, visLeft, visRight), offset: r.offset,
       left: r.rect.left, right: r.rect.right, visLeft: visLeft, visRight: visRight,
-      boxTop: r.box.top, boxBottom: r.box.bottom, clipTop: clip.top, clipBottom: clip.bottom,
+      boxTop: r.box.top, boxBottom: r.box.bottom, boxLeft: r.box.left, boxRight: r.box.right,
+      clipTop: clip.top, clipBottom: clip.bottom,
     };
   }
   if (toggle && a.tagName === "BUTTON" && toggle.contains(a)) {
@@ -446,7 +451,7 @@ FOCUS_SNAP = r"""
     const r = ring(a, clip);
     return {
       kind: "toggle", text: a.textContent.trim(),
-      outlineInside: r.outlineInside, shown: r.shown, offset: r.offset,
+      outlineInside: outlineClears(r, clip, clip.left, clip.right), shown: r.shown, offset: r.offset,
       boxTop: r.box.top, boxBottom: r.box.bottom, boxLeft: r.box.left, boxRight: r.box.right,
       clipTop: clip.top, clipBottom: clip.bottom, clipLeft: clip.left, clipRight: clip.right,
     };
@@ -503,6 +508,109 @@ def _keyboard_focus(page, expect_toggle):
         if len(pills) >= 8 and expect_toggle and len(toggles) >= 2:
             break
     return pills, chips, toggles
+
+
+def _arm_press_probe(page):
+    page.evaluate("""() => {
+      if (window.__pressArmed) return;
+      window.__pressArmed = true;
+      document.addEventListener("click", (ev) => {
+        const nav = document.querySelector("nav.main");
+        const node = ev.target && ev.target.nodeType === 1 ? ev.target : ev.target && ev.target.parentElement;
+        const a = node && node.closest ? node.closest("a") : null;
+        const pill = a && nav && nav.contains(a) ? a : null;
+        window.__press = {
+          text: pill ? (pill.textContent || "").trim() : "",
+          href: pill ? pill.getAttribute("href") : "",
+        };
+        ev.preventDefault();
+      }, true);
+    }""")
+
+
+def _pointer_sweep(page, label):
+    """Tap and click the visible centre of every pill, at the start and partway along."""
+    _arm_press_probe(page)
+    spots = page.evaluate("""() => {
+      const nav = document.querySelector("nav.main");
+      const max = Math.max(0, nav.scrollWidth - nav.clientWidth);
+      const part = Math.round(max * 0.45);
+      const spots = [{ name: "start", left: 0 }];
+      if (part > 8) spots.push({ name: "partway", left: part });
+      return spots;
+    }""")
+    for spot in spots:
+        indexes = page.evaluate("""(left) => {
+          const nav = document.querySelector("nav.main");
+          nav.scrollLeft = left;
+          const clip = nav.getBoundingClientRect();
+          const out = [];
+          nav.querySelectorAll("a").forEach((a, index) => {
+            const r = a.getBoundingClientRect();
+            const L = Math.max(r.left, clip.left);
+            const R = Math.min(r.right, clip.right);
+            const T = Math.max(r.top, clip.top);
+            const B = Math.min(r.bottom, clip.bottom);
+            if (R - L >= 2 && B - T >= 2) out.push(index);
+          });
+          return out;
+        }""", spot["left"])
+        for kind in ("tap", "click"):
+            for index in indexes:
+                point = page.evaluate("""(spec) => {
+                  const nav = document.querySelector("nav.main");
+                  const active = document.activeElement;
+                  if (active && active !== document.body && active.blur) active.blur();
+                  nav.scrollLeft = spec.left;
+                  window.__press = null;
+                  const a = nav.querySelectorAll("a")[spec.index];
+                  if (!a) return { skip: true };
+                  const clip = nav.getBoundingClientRect();
+                  const r = a.getBoundingClientRect();
+                  const L = Math.max(r.left, clip.left);
+                  const R = Math.min(r.right, clip.right);
+                  const T = Math.max(r.top, clip.top);
+                  const B = Math.min(r.bottom, clip.bottom);
+                  if (R - L < 2 || B - T < 2) return { skip: true };
+                  return {
+                    skip: false,
+                    text: (a.textContent || "").trim(),
+                    href: a.getAttribute("href") || "",
+                    x: (L + R) / 2,
+                    y: (T + B) / 2,
+                  };
+                }""", {"left": spot["left"], "index": index})
+                if not point or point.get("skip"):
+                    continue
+                if kind == "tap":
+                    page.touchscreen.tap(point["x"], point["y"])
+                else:
+                    page.mouse.click(point["x"], point["y"])
+                hit = page.evaluate("() => window.__press") or {}
+                same = hit.get("text") == point["text"] and hit.get("href") == point["href"]
+                detail = "" if same else f" (hit {hit.get('text')!r} {hit.get('href')!r})"
+                ok(same,
+                   f"{label}: {kind} {spot['name']} on {point['text']!r} lands on that pill{detail}")
+
+
+def _height_keeps_scroll(page, label, width, height):
+    """A height-only resize, like the mobile URL bar, must not jump the nav."""
+    before = page.evaluate("""() => {
+      const nav = document.querySelector("nav.main");
+      const active = document.activeElement;
+      if (active && active !== document.body && active.blur) active.blur();
+      const max = Math.max(0, nav.scrollWidth - nav.clientWidth);
+      nav.scrollLeft = Math.round(max * 0.45);
+      return nav.scrollLeft;
+    }""")
+    try:
+        page.set_viewport_size({"width": width, "height": height + 90})
+        page.wait_for_timeout(40)
+        after = page.evaluate("() => document.querySelector('nav.main').scrollLeft")
+    finally:
+        page.set_viewport_size({"width": width, "height": height})
+    ok(abs(after - before) <= 1,
+       f"{label}: a height-only resize keeps a manual nav scroll ({before:.0f}px -> {after:.0f}px)")
 
 
 def browser_checks():
@@ -562,8 +670,16 @@ def browser_checks():
                            f"{label}: chip {chip['text']!r} is clear of the fades and its outline "
                            f"is inside the row (left {chip['left']:.0f}..{chip['right']:.0f} vs "
                            f"{chip['visLeft']:.0f}..{chip['visRight']:.0f}, outline "
-                           f"{chip['boxTop']:.1f}..{chip['boxBottom']:.1f} vs "
-                           f"{chip['clipTop']:.1f}..{chip['clipBottom']:.1f}, offset {chip['offset']}px)")
+                           f"{chip.get('boxLeft', 0):.1f}..{chip.get('boxRight', 0):.1f} vs fade "
+                           f"{chip['visLeft']:.1f}..{chip['visRight']:.1f}, offset {chip['offset']}px)")
+                    _pointer_sweep(page, label)
+                    _height_keeps_scroll(page, label, width, height)
+                    page.evaluate("""(x) => {
+                      const nav = document.querySelector('nav.main');
+                      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+                      if (nav) nav.scrollLeft = x;
+                      window.scrollTo(0, 0);
+                    }""", saved_nav)
                     if _has_toggle(path):
                         names = [t.get("text") for t in toggles]
                         ok(names[:2] == ["Cards", "Table"],

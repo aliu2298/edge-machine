@@ -37,11 +37,22 @@
           bar.classList.toggle("nav-fade", narrowNav.matches && pastRight());
           bar.classList.toggle("nav-fade-left", narrowNav.matches && pastLeft());
         }
-        // Same reveal as site.js. Chrome leaves a partly visible pill where it
-        // is. Instant scroll, so prefers-reduced-motion is not animated.
+        function ringOutset(el) {
+          try {
+            var cs = getComputedStyle(el);
+            var width = parseFloat(cs.outlineWidth) || 0;
+            var offset = parseFloat(cs.outlineOffset) || 0;
+            if (!width || cs.outlineStyle === "none") return 0;
+            var extra = width + offset;
+            return extra > 0 ? extra : 0;
+          } catch (e) {
+            return 0;
+          }
+        }
+        // Same reveal as site.js. Keyboard focus only. Instant scroll.
         function reveal(el) {
           if (!narrowNav.matches || !el) return;
-          var fade = fadeWidth();
+          var fade = fadeWidth() + ringOutset(el);
           var navRect = bar.getBoundingClientRect();
           var aRect = el.getBoundingClientRect();
           var delta = 0;
@@ -49,7 +60,9 @@
           else if (aRect.right > navRect.right - fade + 0.5) delta = aRect.right - (navRect.right - fade);
           if (delta) bar.scrollLeft += delta;
         }
+        var placedWidth = -1;
         function place() {
+          placedWidth = root.innerWidth;
           if (!narrowNav.matches) {
             bar.classList.remove("nav-fade");
             bar.classList.remove("nav-fade-left");
@@ -61,13 +74,24 @@
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
         else place();
         root.addEventListener("load", place);
-        root.addEventListener("resize", place);
+        root.addEventListener("resize", function () {
+          if (root.innerWidth === placedWidth) {
+            paint();
+            return;
+          }
+          place();
+        });
         bar.addEventListener("scroll", function () {
           paint();
         }, { passive: true });
         bar.addEventListener("focusin", function (ev) {
           var el = ev.target;
           if (!el || el.tagName !== "A" || !bar.contains(el)) return;
+          try {
+            if (el.matches && !el.matches(":focus-visible")) return;
+          } catch (e) {
+            return;
+          }
           reveal(el);
           paint();
         });
