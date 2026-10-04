@@ -951,6 +951,10 @@ def _push_rejected(script, mode="reject"):
             "GIT_COMMITTER_EMAIL": "t@example.com",
             "GIT_TERMINAL_PROMPT": "0",
             "COMMIT_SITE": "true",
+            # Always set by the runner, so a step that writes to it under `set -u` is
+            # ordinary Actions and not a defect. Unset here, `>> "$GITHUB_STEP_SUMMARY"`
+            # aborted the step before any push and read as a broken empty-diff branch.
+            "GITHUB_STEP_SUMMARY": os.path.join(tmp, "step-summary.md"),
             "GIT_CONFIG_COUNT": "3",
             "GIT_CONFIG_KEY_0": "protocol.file.allow",
             "GIT_CONFIG_VALUE_0": "always",
@@ -984,6 +988,21 @@ def _push_rejected(script, mode="reject"):
             "public_site/sandbox.html": "old\n",
             "public_site/production.html": "old\n",
         }
+        # Whatever paths THIS step stages must exist in the fixture, or `git add` exits
+        # 128 and `set -e` kills the step before any push — which reads as "the step does
+        # not handle an empty diff" when the step is fine and the fixture is simply short
+        # a file. The list above is kept for the paths that need specific contents; every
+        # other staged path is created here, so a new workflow cannot fail this guard by
+        # existing. Added 2026-10-04 after nba-pace.yml did exactly that.
+        added = _added_paths(_dedent_run(script))
+        for rel in added:
+            # A staged path may be a DIRECTORY (sandbox-tracker stages
+            # data/sandbox_archive), which the list above already populates with a file
+            # inside it. Creating a file at that same path would clash, so skip anything
+            # the fixture already covers as a directory.
+            if any(k == rel or k.startswith(rel.rstrip("/") + "/") for k in files):
+                continue
+            files[rel] = '{"v":0}\n' if rel.endswith(".json") else "old\n"
         for rel, text in files.items():
             dest = os.path.join(local, rel)
             os.makedirs(os.path.dirname(dest), exist_ok=True)
@@ -993,7 +1012,6 @@ def _push_rejected(script, mode="reject"):
         git(local, "commit", "-m", "base")
         git(local, "remote", "add", "origin", origin)
         git(local, "push", "origin", "main")
-        added = _added_paths(_dedent_run(script))
         if mode == "conflict":
             # A second clone lands a different copy of the same paths on
             # origin/main before the step runs, so a later rebase conflicts.

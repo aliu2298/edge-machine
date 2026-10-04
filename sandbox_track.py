@@ -262,9 +262,34 @@ PAIR_OVERRIDES = {
     "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
     # 2026-10-01, as asked. Over 1.5 on the day's top-2 mismatches, internationals
     # only, on Kalshi's over-1.5 Yes. The form-window twin (o15_form_l10) is not
-    # listed, and neither is any cup twin. Under 3.5 is not listed either: those
-    # bets are the No side of the over-3.5 market, and this feed publishes Yes.
+    # listed, and neither is any cup twin. Under 3.5 was not listed on 2026-10-01
+    # because those bets are the No side of the over-3.5 market and the feed could
+    # only say Yes; that is no longer true — see u35_low_scoring below.
     "o15_ranked|soccer_o15_intl": dict(moved_on="2026-10-01", production_at=None),
+    # 2026-10-04, as asked. Under 3.5 goals, internationals only. 18 settled, 17 won
+    # against 14.19 priced: +21.4% (+19.6% after fees), z +1.66 over 9.4 days, and it
+    # beats its blind rule — backing the under on every Kalshi match returned +2.7% on
+    # the same contests, so the rule's part is about +18.7pp. Its closing prices agree,
+    # unusually for this Sandbox: +1.17c a bet over 18 closes (t +1.38), beating the
+    # close on 12 of 18. Small and one week old, listed on the owner's call.
+    #
+    # THE FEED HAD TO LEARN A NEW SIDE FOR IT, and that is the honest reason this lane
+    # sat unpublished for ten days with the best internationals record in the Sandbox:
+    # all 21 of its bets had routed=0, not because anything judged them, but because
+    # soccer_u35_intl was not in FEED_BETS and placeable() asked every goals bet for a
+    # Yes. An under is the No side of the over-3.5 contract (ticker suffix -4), so
+    # FEED_SIDE now carries the side per kind and the lead names its exact contract.
+    #
+    # WHAT DOWNSTREAM STILL CANNOT DO WITH IT, stated here rather than discovered later:
+    # the execution layer refuses total_lte at BOTH venues today, cleanly and by design.
+    # Polymarket US has the market but does not expose an Under price in its verified
+    # fields (mapping.NEEDS_SIDE), and the Kalshi reader takes only yes_ask/yes_bid, so
+    # covers() finds no series suffix for the kind. Each refuses with a named reason and
+    # neither approximates, which is the right failure. The lead is therefore publishable
+    # and can be taken by hand — Kalshi sells the No on that contract — and the execution
+    # layer will skip it until a No-side price is wired in. That change is downstream and
+    # is not made here.
+    "u35_low_scoring|soccer_u35_intl": dict(moved_on="2026-10-04", production_at=None),
     #   OLBG boxing — listed 2026-09-22, OUT 2026-09-27, as asked. It went 8-0 on the US
     #   exchanges (+17.4%, +16.3% after fees) and is still taken off, because the win record
     #   is not the point: it backed the FAVOURITE in all nine bets, at prices from 0.64 to
@@ -2323,20 +2348,39 @@ ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # kalshi_milestone is cricket and MMA only, each after its own checker agrees.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
 
-# Each sport is named here. A _cup twin, soccer_u35_intl, and every other
-# suffix are absent on purpose: membership is this dict, not a stripped suffix.
+# Each sport is named here. A _cup twin and every other suffix are absent on purpose:
+# membership is this dict, not a stripped suffix.
+#
+# THE SIDE IS PART OF THE KIND, which is why soccer_u35_intl could not simply be added.
+# total_gte and team_gte are Yes contracts: the rule buys the thing the market is named
+# after. total_lte is the UNDER, and Kalshi lists no under contract -- it is the No side of
+# the very same over market, so the quote's pick is "b" and FEED_SIDE below says so once,
+# here, rather than at each place that reads a bet. Added 2026-10-04 with
+# u35_low_scoring|soccer_u35_intl, which had logged 18 settled bets that nothing could
+# publish because the feed knew only how to say Yes.
 FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_o15_intl": {"kind": "total_gte", "n": 2},
              "soccer_team1": {"kind": "team_gte", "n": 1},
              "soccer_team1_intl": {"kind": "team_gte", "n": 1},
-             "soccer_team2": {"kind": "team_gte", "n": 2}}
+             "soccer_team2": {"kind": "team_gte", "n": 2},
+             "soccer_u35_intl": {"kind": "total_lte", "n": 3}}
+
+# Which side of the named market each kind buys, as the Sandbox records a pick.
+FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b"}
+
+
+def feed_pick(sport):
+    """The only pick the feed can publish for `sport`, or None when it carries no bet."""
+    bet = FEED_BETS.get(sport)
+    return FEED_SIDE[bet["kind"]] if bet else None
 
 
 def placeable(q):
     """Is this bet one the Production feed can publish as a standard claim? Today: a soccer
     result (home, away or draw) on a Kalshi GAME market in a mapped league
-    (S.KALSHI_GAME_LEAGUES), or Yes on a soccer goals market (FEED_BETS) in
-    one of those leagues. Nothing else — no tennis, MLB, NFL, cricket, table tennis, fights,
+    (S.KALSHI_GAME_LEAGUES), or a soccer goals market (FEED_BETS) in one of those leagues,
+    on the one side that kind names (FEED_SIDE -- Yes for an over or a team total, No for
+    an under, since Kalshi lists no under contract). Nothing else — no tennis, MLB, NFL, cricket, table tennis, fights,
     BTTS, weather or crypto yet. A "production-ready" pair whose bets the feed cannot express
     is a label, not a result anyone can follow."""
     if q.get("sport") == "soccer":
@@ -2344,7 +2388,9 @@ def placeable(q):
         return (q.get("pick") in ("a", "b", "draw") and q.get("venue") == "kalshi"
                 and S.quote_league(q) is not None)
     if q.get("sport") in FEED_BETS:
-        return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"
+        # The side is fixed by the kind (FEED_SIDE), not chosen per bet: an over market's
+        # Yes and its No are two different claims, and only one of them is the rule's.
+        return (q.get("pick") == feed_pick(q["sport"]) and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
                 and (FEED_BETS[q["sport"]]["kind"] != "team_gte" or bool(q.get("team"))))
     # A basket. It is publishable because the feed can say exactly what to ask for -- the

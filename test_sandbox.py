@@ -2836,6 +2836,26 @@ eq(T.placeable(_tq), True, "Yes on a team-goals market in a mapped league is pub
 eq(T.placeable(dict(_tq, pick="b")), False, "No is not")
 eq(T.placeable(dict(_tq, league="Allsvenskan")), False, "nor an unmapped league")
 
+# The side is fixed by the KIND, not by the sport (FEED_SIDE, 2026-10-04). An under is the
+# No side of the over-3.5 contract, so soccer_u35_intl is the one goals lane whose Yes is
+# refused and whose No is published -- the exact reverse of the team-goals lane above.
+print("\nunder 3.5 internationals: the No side is the publishable one")
+eq((T.feed_pick("soccer_u35_intl"), T.feed_pick("soccer_team1"), T.feed_pick("nope")),
+   ("b", "a", None), "feed_pick reads the side off the kind")
+_uq = dict(_tq, sport="soccer_u35_intl", pick="b", team=None,
+           market_id="KXUEFANLTOTAL-26SEP24ANDMLT-4", league="UEFA Nations League")
+eq(T.placeable(_uq), True, "No on the over-3.5 market is publishable")
+eq(T.placeable(dict(_uq, pick="a")), False, "Yes on it is not -- that is the over, a different bet")
+eq(T.placeable(dict(_uq, espn_home=None)), False, "and it still needs its fixture")
+_ulead = PR.lead_from_quote(dict(_uq, id="u:1", status="open", logged="2026-10-03T06:00:00+00:00",
+                                 start="2026-10-05T18:00:00+00:00", price=0.78),
+                            "u35_low_scoring|soccer_u35_intl", "2026-10-04T06:00:00+00:00")
+eq(_ulead["headline"], "Under 3.5 goals", "the lead says under, not over")
+eq(_ulead["bet"], {"kind": "total_lte", "n": 3}, "and claims 3 goals or fewer")
+eq((_ulead["route"]["venue"], _ulead["route"]["market"], _ulead["route"]["outcome_side"]),
+   ("kalshi", "KXUEFANLTOTAL-26SEP24ANDMLT-4", "no"),
+   "naming the exact contract and the side, since no under contract exists")
+
 # fast track: probation -> cleared / failed, and Production publishes it from the first bet
 def _ftq(i, won, price=0.8, logged="2026-09-14T06:00:00+00:00"):
     return dict(id=f"team1_form_l5:M{i}", source="team1_form_l5", sport="soccer_team1", market_id=f"KXEPLTEAMTOTAL-26SEP{15+i%10}X-A{i}",
@@ -3077,7 +3097,8 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
    ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-    "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl"],
+    "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+    "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
@@ -4383,12 +4404,12 @@ for _src in ("o15_form_l10", "team1_form_l5", "team2_form_l10", "u35_low_scoring
 eq(S.SPORTS["soccer_o15_intl"], "Soccer · Over 1.5 · Internationals", "twins are labelled for review under Soccer")
 ok(not any("_cup" in k for k in T.PAIR_OVERRIDES), "no cup pair is in Production")
 ok("team1_form_l5|soccer_team1_intl" in T.PAIR_OVERRIDES
-   and "o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES,
-   "the two internationals pairs moved by hand are on the list")
+   and "o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
+   and "u35_low_scoring|soccer_u35_intl" in T.PAIR_OVERRIDES,
+   "the three internationals pairs moved by hand are on the list")
 ok("o15_form_l10|soccer_o15_intl" not in T.PAIR_OVERRIDES
-   and "u35_low_scoring|soccer_u35_intl" not in T.PAIR_OVERRIDES
    and "team1_form_l5|soccer_team1_cup" not in T.PAIR_OVERRIDES,
-   "the over-1.5 form twin, under 3.5, and the cup twin stay off it")
+   "the over-1.5 form twin and the cup twin stay off it")
 ok(not T.placeable(dict(_crows["soccer_o15_cup"][0], pick="a", bet=True)),
    "and the Production feed could not publish a cup market if it were")
 
@@ -4434,7 +4455,11 @@ eq(_o15_stage.get("stage"), "production",
    "o15_ranked|soccer_o15_intl qualifies for Production")
 ok("team1_form_l5|soccer_team1_cup" not in _st_intl["pairs"], "the cup twin is not moved with it")
 ok("o15_form_l10|soccer_o15_intl" not in _st_intl["pairs"], "o15_form_l10|soccer_o15_intl is not moved")
-ok("u35_low_scoring|soccer_u35_intl" not in _st_intl["pairs"], "under 3.5 internationals is not moved")
+_u35_stage = _st_intl["pairs"].get("u35_low_scoring|soccer_u35_intl") or {}
+eq(_u35_stage.get("stage"), "production",
+   "u35_low_scoring|soccer_u35_intl qualifies for Production (2026-10-04)")
+ok("u35_low_scoring|soccer_u35_cup" not in _st_intl["pairs"],
+   "its cup twin is not moved with it")
 ok("team1_form_l5|soccer_team1_other" not in _st_intl["pairs"], "an unknown sport suffix is not moved")
 
 ok(T.placeable(_intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")),
@@ -4447,12 +4472,22 @@ ok(not T.placeable(_intl_q("team1_form_l5", "soccer_team1_cup", "KXEFLCUPTEAMTOT
    "a _cup team-goals market still cannot")
 ok(not T.placeable(_intl_q("team1_form_l5", "soccer_team1_other", "KXUEFANLTEAMTOTAL-26OCT02X-A1")),
    "an unknown sport suffix still cannot")
+# Under 3.5 reverses the side, and that is the whole reason this lane could not be
+# published before 2026-10-04: Kalshi lists no under contract, so the rule's bet is the
+# NO on the same over-3.5 ticker (suffix -4). FEED_SIDE holds that per kind.
+ok(T.placeable(_intl_q("u35_low_scoring", "soccer_u35_intl", "KXUEFANLTOTAL-26OCT02KAZMDA-4",
+                       pick="b", team=None)),
+   "No on an internationals over-3.5 total can now be published")
 ok(not T.placeable(_intl_q("u35_low_scoring", "soccer_u35_intl", "KXUEFANLTOTAL-26OCT02KAZMDA-4",
-                           pick="b", team=None)),
-   "No on an internationals total still cannot")
+                           pick="a", team=None)),
+   "and its Yes cannot -- that is the over, which no rule here claims")
+ok(not T.placeable(_intl_q("u35_low_scoring", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT02X-4",
+                           pick="b", team=None, league="Bundesliga")),
+   "the LEAGUE under-3.5 twin is still not in the feed -- only the internationals pair moved")
 ok("soccer_team1_cup" not in T.FEED_BETS and "soccer_o15_cup" not in T.FEED_BETS
-   and "soccer_u35_intl" not in T.FEED_BETS and "soccer_team1_other" not in T.FEED_BETS,
-   "the feed names the two internationals sports and no other suffix")
+   and "soccer_u35" not in T.FEED_BETS and "soccer_u35_cup" not in T.FEED_BETS
+   and "soccer_team1_other" not in T.FEED_BETS,
+   "the feed names the three internationals sports and no other suffix")
 
 _verified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")
 _unverified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02X-B1",

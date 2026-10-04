@@ -153,8 +153,11 @@ def lead_from_quote(q, pair_key, built):
         if bet["kind"] == "team_gte":
             bet["team"] = q["team"]
             headline = f"{q['team']} to score {bet['n']}+"
+        elif bet["kind"] == "total_lte":
+            # total_lte n means n goals or fewer, i.e. under (n + 0.5).
+            headline = f"Under {bet['n'] + 0.5:g} goals"
         else:
-            headline = "Over 1.5 goals"
+            headline = f"Over {bet['n'] - 0.5:g} goals"
     elif True:
         home, away = q["side_a"], q["side_b"]
         side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]
@@ -176,6 +179,15 @@ def lead_from_quote(q, pair_key, built):
                  "legs": [{"market": l["market_id"], "name": l.get("name"),
                            "side": "yes" if l["pick"] == "a" else "no",
                            "starts": str(l.get("start"))[:16]} for l in (q.get("legs") or [])]}
+    elif q["sport"] in T.FEED_BETS and bet["kind"] == "total_lte":
+        # An under is the No side of the over market, and Kalshi lists one contract per
+        # STRIKE inside the totals event -- the -4 ticker is over 3.5, the -3 over 2.5.
+        # So the lead names the exact contract it was priced on and says which side to
+        # take, rather than leaving a follower to pick a strike and then invert it. Every
+        # other FEED_BETS lane is a plain Yes on a market its headline fully identifies,
+        # and keeps no route.
+        route = {"venue": "kalshi", "market": q["market_id"],
+                 "outcome": headline, "outcome_side": "no"}
     elif q["sport"] in T.ROUTED_SPORTS:
         # Kalshi lists a market per player inside one event, so backing either player is a
         # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,

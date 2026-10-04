@@ -368,7 +368,8 @@ def main():
        "and it does not carry the tour-cut clock")
     eq(sorted(T.PAIR_OVERRIDES),
        ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-        "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl"],
+        "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+        "u35_low_scoring|soccer_u35_intl"],
        "the Production list no longer carries pm_combo4")
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
