@@ -1,7 +1,8 @@
 """The shared header for every published page.
 
-Sandbox, Production, Trading, and the site root all call header(). Exactly one
-link carries aria-current. Method points at the method section on the Sandbox.
+Sandbox, Production, Trading, NBA, Soccer, Tennis, Cricket, and the site root
+all call header(). Exactly one link carries aria-current. Method points at the
+method section on the Sandbox.
 """
 import html
 
@@ -13,6 +14,8 @@ PAGES = (
     ("trading", "Trading", "./trading.html"),
     ("nba", "NBA", "./nba.html"),
     ("soccer", "Soccer", "./soccer.html"),
+    ("tennis", "Tennis", "./tennis.html"),
+    ("cricket", "Cricket", "./cricket.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 
@@ -53,7 +56,7 @@ REFERRER = '<meta name="referrer" content="no-referrer">'
 
 
 def nav(active, prefix="./"):
-    """The four links, with aria-current on exactly one."""
+    """One link per page, with aria-current on exactly one."""
     parts = []
     current = 0
     for key, label, href in PAGES:

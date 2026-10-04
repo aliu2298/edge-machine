@@ -31,14 +31,21 @@ _NAV_HREFS = (
     'href="./sandbox.html"',
     'href="./production.html"',
     'href="./trading.html"',
+    'href="./nba.html"',
+    'href="./soccer.html"',
+    'href="./tennis.html"',
+    'href="./cricket.html"',
     'href="./sandbox.html#method"',
 )
+_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
     "trading": 'href="./trading.html" aria-current="page"',
     "nba": 'href="./nba.html" aria-current="page"',
     "soccer": 'href="./soccer.html" aria-current="page"',
+    "tennis": 'href="./tennis.html" aria-current="page"',
+    "cricket": 'href="./cricket.html" aria-current="page"',
     "index": 'href="./sandbox.html" aria-current="page"',
 }
 
@@ -65,13 +72,12 @@ def _check_page(name, html, current):
     currents = re.findall(r'aria-current="page"', html)
     eq(len(currents), 1, f"{name} has exactly one aria-current")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
-    # The six links are the same set, in the same order, on every page.
+    # The eight links are the same set, in the same order, on every page.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Method"],
-           f"{name} nav labels")
+        eq(labels, _NAV_LABELS, f"{name} nav labels")
 
 
 def _nba(now):
@@ -90,6 +96,18 @@ def _soccer(now):
     return soccer_build.build({"quotes": []}, {"pairs": {}}, now=now)
 
 
+def _tennis(now):
+    """The Tennis page off an empty ledger, so the shell is checked without live data."""
+    import tennis_build
+    return tennis_build.build({"quotes": []}, {"pairs": {}}, now=now)
+
+
+def _cricket(now):
+    """The Cricket page off an empty ledger, so the shell is checked without live data."""
+    import cricket_build
+    return cricket_build.build({"quotes": []}, {"pairs": {}}, now=now)
+
+
 def _pages():
     """Each published page, even when a later one cannot be built yet."""
     import sandbox_build as SB
@@ -105,6 +123,8 @@ def _pages():
         ("trading.html", "trading", lambda: SB.trading_page(now)),
         ("nba.html", "nba", lambda: _nba(now)),
         ("soccer.html", "soccer", lambda: _soccer(now)),
+        ("tennis.html", "tennis", lambda: _tennis(now)),
+        ("cricket.html", "cricket", lambda: _cricket(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:
@@ -298,6 +318,155 @@ if SB is not None:
     ok("href=" not in hostile_html.split("Home v Away")[0][-80:] or "javascript:" not in hostile_html,
        "javascript: contest url is not an href")
     ok("javascript:" not in hostile_html, "javascript: is not written into the row")
+
+
+# ---------------------------------------------------------------------------
+print("\nsport tabs match the Sandbox")
+
+
+def _lane_metrics(rows):
+    """The numbers a sport tab must not recompute: record, P/L, ROI, counts, verdict."""
+    out = []
+    for r in rows:
+        a = r["a"]
+        roi = a.get("roi_fee")
+        out.append((
+            r["name"], r["sport"], r["v"], bool(r.get("prod")), r.get("open"),
+            a.get("n"), a.get("won"),
+            None if a.get("expected") is None else round(a["expected"], 4),
+            None if roi is None else round(roi, 6),
+            None if a.get("pnl") is None else round(a["pnl"], 2),
+        ))
+    return out
+
+
+def _sport_fixture():
+    """A ledger with real Tennis and Cricket lanes, plus lanes that must stay off those tabs."""
+    import sandbox_sources as S
+    start = datetime.datetime(2026, 10, 4, 18, tzinfo=timezone.utc)
+
+    def q(i, source, sport, won=True, price=0.55, status=None, bet=True):
+        when = start + timedelta(hours=i)
+        status = status or ("won" if won else "lost")
+        row = dict(
+            id=f"{source}:{sport}:{i}:{status}",
+            source=source, sport=sport, bet=bet, status=status,
+            pick="a", price=price,
+            result=("a" if won else "b") if status in ("won", "lost") else None,
+            venue="polymarket_us",
+            pnl=(round(100 * (1 / price - 1), 2) if won else -100.0) if status in ("won", "lost") else None,
+            start=when.isoformat(),
+            logged=(when - timedelta(hours=1)).isoformat(),
+            price_a=price, price_b=round(1 - price, 2),
+            label="Home v Away",
+            market_id=f"m-{source}-{sport}-{i}",
+        )
+        return row
+
+    quotes = []
+    for i in range(12):
+        quotes.append(q(i, "oddspedia", "cricket", True, 0.40))
+    for i in range(4):
+        quotes.append(q(20 + i, "oddspedia", "cricket", False, 0.40))
+    for i in range(3):
+        quotes.append(q(i, "polymarket", "cricket", True, 0.25))
+    quotes.append(q(9, "polymarket", "cricket", False, 0.25))
+    quotes.append(q(1, "tennis_fav_band_3h", "tennis", status="open"))
+    for i in range(6):
+        quotes.append(q(i, "tennis_combo2", "tennis_combo", i % 2 == 0, 0.62))
+    for i in range(4):
+        quotes.append(q(i, "pm_combo2", "tennis_pmcombo", True, 0.70))
+    # Removed, eliminated, or a different family. None of these belong on the two tabs.
+    quotes.append(q(1, "tennis_fav_band", "tennis", True, 0.78))
+    quotes.append(q(1, "olbg", "mma", True, 0.60))
+    quotes.append(q(1, "olbg", "boxing", True, 0.60))
+    quotes.append(q(1, "mlb_fade_streak", "mlb", False, 0.45))
+    quotes.append(q(1, "nhl_rest_edge", "nhl_rest", True, 0.55))
+    quotes.append(q(1, "tt_band_55_60", "table_tennis", True, 0.58))
+    quotes.append(q(1, "polymarket_us", "table_tennis", bet=False, status="open"))
+    quotes.append(q(2, "polymarket_us", "tennis", bet=False, status="open"))
+    quotes.append(q(3, "polymarket_us", "cricket", bet=False, status="open"))
+    st = {"pairs": {
+        "oddspedia|cricket": {"stage": "production", "by_hand": "2026-09-27",
+                              "since": "2026-09-01T00:00:00+00:00"},
+        "tennis_fav_band_3h|tennis": {"stage": "sandbox", "since": S.TENNIS_FAV_KEEP_SINCE},
+        "tennis_combo2|tennis_combo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE},
+        "tennis_combo3|tennis_combo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE},
+        "tennis_combo4|tennis_combo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE},
+        "pm_combo2|tennis_pmcombo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE},
+        "pm_combo3|tennis_pmcombo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE},
+        "pm_combo4|tennis_pmcombo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE},
+    }}
+    cov = {
+        "tennis": {"polymarket_us": 40, "polymarket_us_listed": 435, "polymarket_us_priced": 267},
+        "cricket": {"polymarket_us": 10, "polymarket_us_listed": 11, "polymarket_us_priced": 9},
+        "table_tennis": {"polymarket_us": 99, "polymarket_us_listed": 98, "polymarket_us_priced": 97},
+    }
+    return {"quotes": quotes, "coverage": cov}, st
+
+
+def _check_sport_tab(family, html, d, st):
+    import sandbox_build as B
+    rows = [r for r in B.pair_list(d, st)
+            if B.family(r["sport"]) == family and not B.eliminated(r)]
+    section = B.sport_sections(d, rows)
+    ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
+    ok(section in html, f"{family} tab lanes are the Sandbox sport_sections for that family")
+    lanes = re.search(r'<section id="lanes">(.*?)</section>', html, re.S)
+    ok(lanes is not None, f"{family} tab has a lanes section")
+    if lanes and section:
+        eq(canonical_values(lanes.group(1)), canonical_values(section),
+           f"{family} tab lane numbers equal the Sandbox section")
+    got = _lane_metrics(rows)
+    print(f"  {family} lanes {got}")
+    ok(got, f"{family} fixture has lanes to compare")
+    # Same pairs the Sandbox lists for this family. The section HTML above is
+    # that list rendered, so a rewritten number cannot match.
+    again = _lane_metrics([r for r in B.pair_list(d, st)
+                           if B.family(r["sport"]) == family and not B.eliminated(r)])
+    eq(got, again, f"{family} metrics are pair_list's own record")
+    if any(prod for _n, _s, _v, prod, _o, _n2, _w, _e, _r, _p in got):
+        ok("PRODUCTION" in html, f"{family} shows a Production lane the way the Sandbox does")
+    return got
+
+
+try:
+    import tennis_build
+    import cricket_build
+    import soccer_build
+except ImportError as exc:
+    tennis_build = cricket_build = soccer_build = None
+    ok(False, f"tennis and cricket tabs import ({exc})")
+
+if tennis_build is not None and SB is not None:
+    _fx, _fx_st = _sport_fixture()
+    _now = datetime.datetime(2026, 10, 4, 18, tzinfo=timezone.utc)
+    _ten = tennis_build.build(_fx, _fx_st, _now)
+    _cri = cricket_build.build(_fx, _fx_st, _now)
+    _soc = soccer_build.build(_fx, _fx_st, _now)
+    _check_sport_tab("Tennis", _ten, _fx, _fx_st)
+    _check_sport_tab("Cricket", _cri, _fx, _fx_st)
+    _check_sport_tab("Soccer", _soc, _fx, _fx_st)
+    ok("Kalshi status" in _soc, "soccer still shows the Kalshi pre-flight column")
+    ok("Kalshi status" not in _ten and "Kalshi status" not in _cri,
+       "tennis and cricket hide the Kalshi pre-flight column")
+    ok('id="listing"' in _ten and "435" in _ten and "267" in _ten,
+       "tennis shows the Polymarket US listing counts")
+    ok('id="listing"' in _cri and ">10<" in _cri,
+       "cricket shows the Polymarket US listing count")
+    ok("99" not in _ten and "99" not in _cri and "Table Tennis" not in _ten and "Table Tennis" not in _cri,
+       "table tennis stays off the Tennis and Cricket tabs")
+    ok("within 3 hours of the scheduled start" in _ten and "Challenger" in _ten
+       and "Tennis Explorer" in _ten and "TENNIS_COMBO_BAND_SINCE" in _ten,
+       "tennis keeps the 3-hour note, the tour check, and the combo clocks")
+    ok("PRODUCTION" in _cri and "Oddspedia community tips" in _cri
+       and "Cricket consensus" in _cri,
+       "cricket shows the Production lane and the consensus lane")
+    for _label in ("Tennis favourite-band rule", "OLBG community tips",
+                   "MMA favourite-band rule", "MLB fade-the-streak rule", "NHL rest rule"):
+        ok(_label not in _ten and _label not in _cri,
+           f"removed lane {_label} is not on Tennis or Cricket")
+    ok("tennis_fav_band_3h" in _ten, "the kept 3-hour lane is named")
 
 
 if FAILS:

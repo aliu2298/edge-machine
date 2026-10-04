@@ -2054,6 +2054,22 @@ def main():
         print(f"wrote {soccer_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::soccer page not rebuilt ({type(exc).__name__}: {exc})")
+    # Tennis and Cricket read the same ledger. Each failure stays on its own page.
+    # The Kalshi pre-flight file is soccer-specific, so neither page reads it.
+    try:
+        import tennis_build
+        tennis_out = os.path.join(os.path.dirname(OUT), "tennis.html")
+        _write(tennis_out, label_cells(tennis_build.build(now=now)))
+        print(f"wrote {tennis_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::tennis page not rebuilt ({type(exc).__name__}: {exc})")
+    try:
+        import cricket_build
+        cricket_out = os.path.join(os.path.dirname(OUT), "cricket.html")
+        _write(cricket_out, label_cells(cricket_build.build(now=now)))
+        print(f"wrote {cricket_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::cricket page not rebuilt ({type(exc).__name__}: {exc})")
     archive_dir = os.path.join(os.path.dirname(OUT), "archive")
     os.makedirs(archive_dir, exist_ok=True)
     keep = {"index.html"}
