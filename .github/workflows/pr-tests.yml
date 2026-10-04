@@ -4,6 +4,11 @@ name: PR tests
 # Read-only: contents: read, no secrets, no push, no artifact upload, no Pages
 # deploy. The scheduled audit on main is a different workflow and still
 # contacts the venues.
+#
+# Browser checks import playwright.sync_api and launch channel="chrome",
+# the Google Chrome already on the runner. The Python package is enough;
+# Playwright's Chromium build is not what those tests start. REQUIRE_BROWSER=1
+# makes a missing Playwright a failure. Without the flag, a local run still warns.
 
 on:
   pull_request:
@@ -12,6 +17,11 @@ on:
 
 permissions:
   contents: read
+
+env:
+  REQUIRE_BROWSER: "1"
+  # Current release of the package the tests import. They do not pin one.
+  PLAYWRIGHT_VERSION: "1.63.0"
 
 # A new push to the same PR replaces the run already in progress.
 concurrency:
@@ -34,7 +44,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Stdlib only, same interpreter as sandbox-audit.yml and sandbox-tracker.yml.
+      # The Python version is part of the key so a wheel built for one
+      # interpreter is not restored for another. A green job saves the cache.
+      - name: Cache pip
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-playwright-${{ env.PLAYWRIGHT_VERSION }}-py3.12
+
+      # channel="chrome" drives the Google Chrome printed below. No Chromium
+      # download: the tests never launch Playwright's bundled browser.
+      - name: Install Playwright
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install "playwright==${PLAYWRIGHT_VERSION}"
+          python -m playwright --version
+          google-chrome --version
+
       - name: Run every root test
         shell: bash
         run: |
@@ -47,7 +74,16 @@ jobs:
           fi
           for f in "${tests[@]}"; do
             echo "=== $f ==="
-            python3 "$f"
+            log="$(mktemp)"
+            python3 "$f" | tee "$log"
+            # Every current browser test uses require_browser(), which already
+            # exits 1 under REQUIRE_BROWSER=1. This stays as a guard for a
+            # future test that copies the old warn-and-return skip and exits 0.
+            if grep -F "Playwright is not installed; browser checks" "$log"; then
+              echo "::error::$f skipped its browser checks"
+              exit 1
+            fi
+            rm -f "$log"
           done
 
       # Node is preinstalled on the GitHub-hosted runner. No setup action:
