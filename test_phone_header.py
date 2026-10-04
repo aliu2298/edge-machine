@@ -161,6 +161,35 @@ ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in wee
 ok('class="toc"' not in trade_html, "Trading does not render a one-link Rules nav")
 ok('class="toc"' not in root_html, "the index stub does not render a one-link Sandbox nav")
 
+# The site root's visible time is Central Time, the same form site_root.py writes.
+# A raw ISO instant or a +00:00 offset in that stamp is the broken regeneration.
+_STAMP_TEXT = re.compile(
+    r"Updated (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) "
+    r"\d{1,2}, \d{1,2}:\d{2} (?:AM|PM) CT")
+_RAW_ISO = re.compile(
+    r"\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?")
+
+
+def _visible_html(fragment):
+    return re.sub(r"<[^>]+>", "", fragment or "").strip()
+
+
+print("\nindex stamp")
+_index = _read("public_site/index.html")
+_stamp_el = re.search(r'<p class="stamp">(.*?)</p>', _index, re.S)
+_lede_el = re.search(r'<p class="lede">(.*?)</p>', _index, re.S)
+_stamp_text = _visible_html(_stamp_el.group(1) if _stamp_el else "")
+_lede_text = _visible_html(_lede_el.group(1) if _lede_el else "")
+ok(_STAMP_TEXT.fullmatch(_stamp_text) is not None,
+   f"index.html stamp is 'Updated Mon D, H:MM AM/PM CT' (got {_stamp_text!r})")
+ok(_STAMP_TEXT.fullmatch(_lede_text) is not None,
+   f"index.html lede uses that same stamp (got {_lede_text!r})")
+_raw_hits = _RAW_ISO.findall(_index)
+_attr_ok = re.findall(r'datetime="(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)"', _index)
+ok("+00:00" not in _index and set(_raw_hits) <= set(_attr_ok),
+   "index.html stamp contains no +00:00 or raw ISO datetime "
+   f"(+00:00={'yes' if '+00:00' in _index else 'no'}, raw={_raw_hits})")
+
 print("\npublished pages")
 for path in _published():
     html = _read(os.path.join("public_site", path))
