@@ -3452,12 +3452,20 @@ def retire_venue_duplicates(d, verbose=True):
     return voided
 
 
-# The Kalshi copy of John Castaneda vs Alateng Heili repeats the earlier
-# Polymarket US copy (Alatengheili). The map is the row to void -> the row
-# that stands. Medvedev v Royer is not here.
+# The map is the row to void -> the row that stands.
+# Castaneda: the earlier Polymarket US row stands. pair_match has to agree.
+# Medvedev v Royer: Kalshi was logged first (2026-09-24T07:39:55Z, +28.21)
+# and the Polymarket US copy later (2026-09-26T06:43:41Z, +26.58). The starts
+# are 26.8h apart, so this one is pinned instead of matched.
 SETTLED_DUP_VOIDS = {
     "mma_fav_band:KXUFCFIGHT-26SEP26CASHEI": "mma_fav_band:aec-ufc-johcas-alaten-2026-09-26",
+    "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23": "tennis_fav_band:KXATPMATCH-26SEP25MEDROY",
 }
+# Pinned void ids skip pair_match. Same lane, same side_a and side_b, both
+# settled won or lost bets. The contest window is not widened for them.
+SETTLED_DUP_PINNED = frozenset({
+    "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23",
+})
 
 
 def _ledger_row(d, row_id):
@@ -3488,13 +3496,23 @@ def _unroll_voided_archive(d, q, old_status, old_pnl):
         r["brier_n"] = r.get("brier_n", 0) - 1
 
 
+def _pinned_same_side(later, kept):
+    """True when both rows name the same competitor on side_a and on side_b."""
+    return (later.get("side_a") == kept.get("side_a")
+            and later.get("side_b") == kept.get("side_b")
+            and later.get("side_a") not in (None, "")
+            and later.get("side_b") not in (None, ""))
+
+
 def void_listed_settled_dups(d, verbose=True):
     """Void the rows named in SETTLED_DUP_VOIDS when they are the same contest.
 
     Both rows have to be in the ledger, in the same lane, and settled won or
-    lost bets, and pair_match has to agree. The settled time stays. The note
-    is 'dup of <kept id>'. A row already voided is left alone, so a second
-    call changes nothing.
+    lost bets. A Castaneda entry also needs pair_match to agree. A pinned
+    entry (Medvedev v Royer) needs the same side_a and side_b instead, because
+    its starts are outside the contest window. The settled time stays. The
+    note is 'dup of <kept id>'. A row already voided is left alone, so a
+    second call changes nothing.
     """
     n = 0
     for void_id, kept_id in SETTLED_DUP_VOIDS.items():
@@ -3508,11 +3526,15 @@ def void_listed_settled_dups(d, verbose=True):
             continue
         if later.get("status") not in ("won", "lost") or kept.get("status") not in ("won", "lost"):
             continue
-        score, _flip = S.pair_match(later.get("side_a"), later.get("side_b"),
-                                    kept.get("side_a"), kept.get("side_b"),
-                                    sport=later.get("sport"))
-        if not score:
-            continue
+        if void_id in SETTLED_DUP_PINNED:
+            if not _pinned_same_side(later, kept):
+                continue
+        else:
+            score, _flip = S.pair_match(later.get("side_a"), later.get("side_b"),
+                                        kept.get("side_a"), kept.get("side_b"),
+                                        sport=later.get("sport"))
+            if not score:
+                continue
         old_status, old_pnl = later.get("status"), later.get("pnl")
         settled = later.get("settled")
         later["status"] = "void"
