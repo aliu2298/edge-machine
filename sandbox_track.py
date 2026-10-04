@@ -357,13 +357,28 @@ ARCHIVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "
 
 
 def load_archive(path=None):
+    """Month files of settled bets copied out of the ledger.
+
+    A file that is not a JSON list fails with that file's name. Skipping it
+    would drop a month of bets out of every judgement that reads the archive.
+    """
     path = path or ARCHIVE_DIR
     out = []
     if os.path.isdir(path):
         for fn in sorted(os.listdir(path)):
-            if fn.endswith(".json"):
-                with open(os.path.join(path, fn)) as f:
-                    out += json.load(f)
+            if not fn.endswith(".json"):
+                continue
+            fp = os.path.join(path, fn)
+            try:
+                with open(fp) as f:
+                    rows = json.load(f)
+            except (OSError, json.JSONDecodeError, UnicodeDecodeError) as e:
+                raise RuntimeError(f"malformed archive file {fn}: {e}") from e
+            if not isinstance(rows, list):
+                raise RuntimeError(
+                    f"malformed archive file {fn}: expected a list of bets, "
+                    f"got {type(rows).__name__}")
+            out += rows
     return out
 
 
@@ -3417,6 +3432,17 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
         horizon = cutoff if q.get("bet") else price_cutoff
         if q["status"] == "open" or not q.get("settled") or q["settled"] >= horizon:
             keep.append(q)
+            continue
+        # A row with no id cannot be archived or folded up: the archive is keyed
+        # by id, and dropping the row would lose it. This has to run before the
+        # bet branch. A void older than the horizon is a bet, and that branch
+        # reads q["id"].
+        if not q.get("id"):
+            keep.append(q)
+            # GitHub Actions reads ::warning:: from stderr as well as stdout.
+            print(f"::warning::row with no id kept in the ledger"
+                  f" ({q.get('source') or '?'}/{q.get('market_id') or '?'})",
+                  file=sys.stderr)
             continue
         if q.get("bet"):
             if q["id"] not in archived:

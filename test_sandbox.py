@@ -85,6 +85,57 @@ def _finish():
     sys.exit(1 if FAILS else 0)
 
 
+def _day_vs_headline(d):
+    """Settled count and P/L behind the day subtotals, against score().
+
+    score() counts ledger quotes plus the retired roll-up. prune() copies each
+    rolled-up settled bet into the archive and adds the same count and P/L to
+    retired, so those totals are the archived bets, not a second population.
+    The day side reads both through all_bets() (quotes + archive, the rows
+    load_archive() put on the ledger). Adding retired again would count every
+    rolled-up bet twice. A bet missing from the archive, or copied twice, no
+    longer matches the headline.
+    """
+    import sandbox_build as _SB
+    days = {}
+    for q in T.all_bets(d):
+        if not (q.get("bet") and q.get("status") in ("won", "lost", "void", "settled")):
+            continue
+        days.setdefault((q.get("settled") or "")[:10], []).append(q)
+    day_n = 0
+    day_pnl = 0.0
+    for qs in days.values():
+        _w, n, _x, pl = _SB._day_summary(qs)
+        day_n += n
+        day_pnl += pl
+    board = T.score(d)
+    board_n = sum(s["settled"] for s in board.values())
+    board_pnl = sum(s["pnl"] for s in board.values())
+    return day_n, day_pnl, board_n, board_pnl
+
+
+def _repeated_settled_ids(d):
+    """Settled-bet ids that appear twice across the ledger and the archive.
+
+    score() would count a row still in the ledger and again via retired, while
+    all_bets() would count the ledger copy and the archive copy. Either way the
+    bet is in the record twice.
+    """
+    seen = set()
+    repeated = []
+    for q in T.all_bets(d):
+        if not (q.get("bet") and q.get("status") in ("won", "lost", "void", "settled")):
+            continue
+        i = q.get("id")
+        if not i:
+            continue
+        if i in seen:
+            repeated.append(i)
+        else:
+            seen.add(i)
+    return repeated
+
+
 def _live_ledger_checks():
     """Every assertion that reads the live ledger, its archive, stages, feed, or closes.
 
@@ -199,21 +250,11 @@ def _live_ledger_checks():
         eq((_hs["settled"], _hs["won"]), (_lane_a["n"], _lane_a["won"]),
            f"{_lane_name}: the headline settled count matches the lane table")
         close(_hs["pnl"], _lane_a["pnl"], f"{_lane_name}: the headline P&L matches the lane table")
-    _live_days = {}
-    for _q in _live["quotes"]:
-        if not (_q.get("bet") and _q.get("status") in ("won", "lost", "void", "settled")):
-            continue
-        _live_days.setdefault((_q.get("settled") or "")[:10], []).append(_q)
-    _day_pnl = 0.0
-    _day_n = 0
-    for _qs in _live_days.values():
-        _w, _n, _x, _pl = SB._day_summary(_qs)
-        _day_n += _n
-        _day_pnl += _pl
-    _board_n = sum(s["settled"] for s in T.score(_live).values())
-    _board_pnl = sum(s["pnl"] for s in T.score(_live).values())
+    _day_n, _day_pnl, _board_n, _board_pnl = _day_vs_headline(_live)
     eq(_day_n, _board_n, "day subtotals count the same settled bets as the headline")
     close(_day_pnl, _board_pnl, "and the same P&L")
+    eq(_repeated_settled_ids(_live), [],
+       "no settled bet is in the ledger and the archive, or twice in either")
     _ms_n, _ms_txt = MS.status(_live, MS.WATCHES[0])
     _ms_bets = [q for q in T.all_bets(_live) if q["source"] == "nws" and q["sport"] == "climate"
                 and q.get("bet") and q["status"] in ("won", "lost") and not T.climate_excluded(q)
@@ -2327,6 +2368,151 @@ T.prune(_dp, verbose=False)
 eq(len(_dp["quotes"]), 0, "a price-only row settled 10 days ago is rolled up")
 ok(not any(x.get("id") == "price:only" for x in _dp.get("_archive") or []), "it is not archived")
 eq(_dp["retired"]["polymarket_us"]["quotes"], _q_before + 1, "and adds +1 to retired[source][quotes]")
+
+# ---------------------------------------------------------------------------
+print("\nday subtotals follow a settled bet through the roll-up")
+# ---------------------------------------------------------------------------
+# The oldest won/lost bet, once it is 45 days settled, is copied to the archive
+# and folded into retired. score() still counts it. The day side has to read
+# that same bet, and it has to miss it when the archive copy is gone or repeated.
+_roll_old = (datetime.now(timezone.utc) - timedelta(days=60)).isoformat()
+_roll_new = datetime.now(timezone.utc).isoformat()
+
+
+def _roll_bet(i, status, pnl, settled):
+    return quote(id=f"kalshi:roll-{i}", market_id=f"roll-{i}", sport="tennis",
+                 status=status, pnl=pnl, result="a" if status == "won" else "b",
+                 settled=settled, bet=True)
+
+
+_roll = {"quotes": [
+    _roll_bet("won", "won", 150.0, _roll_old),
+    _roll_bet("lost", "lost", -100.0, _roll_old),
+    _roll_bet("fresh", "won", 150.0, _roll_new),
+], "meta": {}, "coverage": {}, "_archive": []}
+eq(T.prune(_roll, verbose=False), 2, "the two 60-day bets roll up and the fresh one stays")
+eq(sorted(q["id"] for q in _roll["quotes"]), ["kalshi:roll-fresh"],
+   "the rolled bets leave the ledger")
+eq(sorted(q["id"] for q in _roll["_archive"] if q.get("bet")),
+   ["kalshi:roll-lost", "kalshi:roll-won"], "and the archive keeps both")
+_dn, _day_pl, _bn, _bp = _day_vs_headline(_roll)
+eq(_dn, _bn, "day subtotals count the same settled bets as the headline")
+close(_day_pl, _bp, "and the same P&L")
+eq(_bn, 3, "the headline still counts the bets the roll-up folded into retired")
+eq(_repeated_settled_ids(_roll), [], "the roll-up does not leave a bet in both places")
+
+import copy as _roll_copy
+_roll_drop = _roll_copy.deepcopy(_roll)
+_roll_drop["_archive"] = [q for q in _roll_drop["_archive"] if q.get("id") != "kalshi:roll-won"]
+_dn2, _day_pl2, _bn2, _bp2 = _day_vs_headline(_roll_drop)
+ok(_dn2 != _bn2, "a bet removed from the archive no longer matches the headline")
+eq((_dn2, _bn2), (2, 3), "the day side loses it and the headline still has the retired total")
+ok(abs(_day_pl2 - _bp2) >= 1e-6, "and the P&L no longer matches either")
+
+_roll_dup = _roll_copy.deepcopy(_roll)
+_roll_dup["_archive"].append(dict(next(q for q in _roll_dup["_archive"]
+                                       if q.get("id") == "kalshi:roll-won")))
+_dn3, _day_pl3, _bn3, _bp3 = _day_vs_headline(_roll_dup)
+ok(_dn3 != _bn3, "a duplicated archive bet no longer matches the headline")
+eq(_repeated_settled_ids(_roll_dup), ["kalshi:roll-won"], "and that repeated id is the won bet")
+
+# Left in the ledger as well as the archive, the two sums still agree: each side
+# counts the bet twice. The id check is what keeps that from passing.
+_roll_both = _roll_copy.deepcopy(_roll)
+_roll_both["quotes"].append(dict(next(q for q in _roll_both["_archive"]
+                                      if q.get("id") == "kalshi:roll-won")))
+eq(_repeated_settled_ids(_roll_both), ["kalshi:roll-won"],
+   "a bet in the ledger and the archive is still a double count")
+
+# ---------------------------------------------------------------------------
+print("\na malformed archive file names itself")
+# ---------------------------------------------------------------------------
+_bad_arch = _tf.mkdtemp()
+with open(_os.path.join(_bad_arch, "2026-08.json"), "w") as _bf:
+    json.dump([{"id": "kalshi:kept", "bet": True}], _bf)
+with open(_os.path.join(_bad_arch, "2026-09.json"), "w") as _bf:
+    _bf.write("{")
+_arch_err = None
+try:
+    T.load_archive(_bad_arch)
+except Exception as _e:
+    _arch_err = _e
+ok(type(_arch_err) is RuntimeError and "2026-09.json" in str(_arch_err),
+   "a malformed month file fails with its name, not a bare JSON traceback")
+_bad_shape = _tf.mkdtemp()
+with open(_os.path.join(_bad_shape, "2026-08.json"), "w") as _bf:
+    _bf.write('{"month": "2026-08"}')
+_shape_err = None
+try:
+    T.load_archive(_bad_shape)
+except Exception as _e:
+    _shape_err = _e
+ok(type(_shape_err) is RuntimeError and "2026-08.json" in str(_shape_err),
+   "a month file that is not a list of bets fails with its name too")
+_saved_arch, _saved_led2 = T.ARCHIVE_DIR, T.LEDGER
+T.ARCHIVE_DIR = _bad_arch
+T.LEDGER = _os.path.join(_bad_arch, "missing-ledger.json")
+try:
+    _load_err = None
+    try:
+        T.load()
+    except Exception as _e:
+        _load_err = _e
+    ok(type(_load_err) is RuntimeError and "2026-09.json" in str(_load_err),
+       "load() fails on that file and names it")
+finally:
+    T.ARCHIVE_DIR, T.LEDGER = _saved_arch, _saved_led2
+
+# ---------------------------------------------------------------------------
+print("\nprune keeps a row with no id")
+# ---------------------------------------------------------------------------
+_no_key = quote(sport="tennis", market_id="noid", status="won", pnl=150.0, result="a",
+                settled=_roll_old, bet=True)
+_no_key.pop("id")
+_none_id = quote(id=None, sport="tennis", market_id="noneid", status="lost", pnl=-100.0,
+                 result="b", settled=_roll_old, bet=True)
+_has_id = quote(id="kalshi:has-id", sport="tennis", market_id="hasid", status="won",
+                pnl=150.0, result="a", settled=_roll_old, bet=True)
+_pn = {"quotes": [_no_key, _none_id, _has_id], "meta": {}, "_archive": []}
+import io as _id_io
+from contextlib import redirect_stderr as _id_redirect
+_id_buf = _id_io.StringIO()
+_id_err = None
+try:
+    with _id_redirect(_id_buf):
+        T.prune(_pn, verbose=False)
+except Exception as _e:
+    _id_err = _e
+ok(_id_err is None, "a row with no id does not crash prune")
+eq(sorted(q.get("market_id") for q in _pn["quotes"]), ["noid", "noneid"],
+   "both id-less rows stay in the ledger")
+ok(any(q.get("id") == "kalshi:has-id" for q in _pn.get("_archive") or []),
+   "a row that has an id still rolls into the archive")
+eq(_pn["retired"]["kalshi"]["settled"], 1, "the id-less rows are not folded into retired")
+_id_warn = _id_buf.getvalue()
+eq(_id_warn.count("::warning::"), 2, "each kept row is a GitHub warning annotation")
+ok(_id_warn.count("no id") == 2, "and the annotation names the missing id")
+
+# A void past the horizon is archived whole, and that branch reads q["id"].
+# An id-less void has to be kept before that read, not dropped and not raised.
+_void_noid = quote(source="u35_low_scoring", sport="soccer_u35_intl", market_id="voidnoid",
+                   status="void", result=None, pnl=0.0, settled=_roll_old, bet=True)
+_void_noid.pop("id")
+_pv = {"quotes": [_void_noid], "meta": {}, "_archive": []}
+_void_buf = _id_io.StringIO()
+_void_err = None
+try:
+    with _id_redirect(_void_buf):
+        T.prune(_pv, verbose=False)
+except Exception as _e:
+    _void_err = _e
+ok(_void_err is None, "an id-less void older than 45 days does not crash prune")
+eq([q.get("market_id") for q in _pv["quotes"]], ["voidnoid"],
+   "that void stays in the ledger")
+ok(not any(q.get("market_id") == "voidnoid" for q in _pv.get("_archive") or []),
+   "and it is not dropped into the archive")
+ok("::warning::" in _void_buf.getvalue() and "no id" in _void_buf.getvalue(),
+   "keeping it is a GitHub warning annotation")
 
 # ---------------------------------------------------------------------------
 print("\nPolymarket US is the venue")
