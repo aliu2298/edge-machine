@@ -638,7 +638,7 @@ def collect(verbose=True, combo_used=None):
             if verbose:
                 why = ""
                 if not rows:
-                    lo, hi = S.fav_band("tennis")
+                    lo, hi = S.TENNIS_3H_BAND
                     best = max((len(v) for v in legs.values()), default=0)
                     why = (f" -- {n_legs} in-band Polymarket US legs ({lo:.2f}-{hi:.2f}), most "
                            f"on any one day {best}, smallest basket needs {min(S.COMBO_LEGS)}")
@@ -665,7 +665,7 @@ def collect(verbose=True, combo_used=None):
             if verbose:
                 why = ""
                 if not rows:
-                    lo, hi = S.fav_band("tennis")
+                    lo, hi = S.TENNIS_3H_BAND
                     best = max((len(v) for v in legs.values()), default=0)
                     why = (f" -- {n_legs} in-band Kalshi legs ({lo:.2f}-{hi:.2f}), most on any "
                            f"one day {best}, and the smallest basket needs {min(S.COMBO_LEGS)}")

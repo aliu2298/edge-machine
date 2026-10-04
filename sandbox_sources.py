@@ -304,7 +304,8 @@ SOURCES = {
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
+             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
              "the same tours tennis_fav_band_3h keeps. A basket logged before "
              "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
              "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
@@ -324,7 +325,8 @@ SOURCES = {
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
+             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
              "the same tours tennis_fav_band_3h keeps. A basket logged before "
              "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
              "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
@@ -344,7 +346,8 @@ SOURCES = {
     "tennis_combo4": dict(
         label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
+             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
              "the same tours tennis_fav_band_3h keeps. A basket logged before "
              "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
              "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
@@ -361,7 +364,8 @@ SOURCES = {
     "pm_combo2": dict(
         label="Tennis 2-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
+             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
              "the same tours tennis_fav_band_3h keeps. A basket logged before "
              "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
              "PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut "
@@ -382,7 +386,8 @@ SOURCES = {
     "pm_combo3": dict(
         label="Tennis 3-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
+        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
+             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
              "the same tours tennis_fav_band_3h keeps. A basket logged before "
              "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
              "PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's "
@@ -395,7 +400,8 @@ SOURCES = {
     "pm_combo4": dict(
         label="Tennis 4-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="FROM 2026-10-02 a new basket keeps a leg only when its tour is ATP, WTA "
+        note="WIDENED 2026-10-04: new legs are priced 0.70-0.85, the band tennis_fav_band_3h backs. It has logged no basket since it left Production on 2026-10-03, so no record mixes the two bands. "
+             "FROM 2026-10-02 a new basket keeps a leg only when its tour is ATP, WTA "
              "Doubles, or UTR, the same tours tennis_fav_band_3h keeps. The Production "
              "record already on file is the judged record. "
              "PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and "
@@ -4411,6 +4417,8 @@ def tour_clock_since(since=None, source=None):
     instant. Waiting, If-faded, and the stamp share this so the three cannot
     drift apart.
     """
+    if source in TENNIS_COMBO_RESET or since == TENNIS_COMBO_BAND_SINCE:
+        return TENNIS_COMBO_BAND_SINCE
     if source in TENNIS_FAV_RESET:
         return TENNIS_FAV_KEEP_SINCE
     if since == TENNIS_FAV_KEEP_SINCE:
@@ -5370,7 +5378,7 @@ def pm_combo_legs_by_day(universe=None):
     """
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
     apply_pm_atp_tours(rows, rows)
-    lo, hi = fav_band("tennis")
+    lo, hi = TENNIS_3H_BAND
     by_day = {}
     for r in rows:
         if r.get("venue") != "polymarket_us":
@@ -5419,7 +5427,7 @@ def combo_legs_by_day(universe=None):
     to be one of TENNIS_FAV_KEEP, the same tours tennis_fav_band_3h keeps.
     """
     rows = (universe if universe is not None else (UNIVERSE or {})).get("tennis") or []
-    lo, hi = fav_band("tennis")
+    lo, hi = TENNIS_3H_BAND
     by_day = {}
     for r in rows:
         if r.get("venue") != "kalshi":
@@ -5753,6 +5761,17 @@ TENNIS_FAV_3H = timedelta(hours=3)
 # BAND_BY_SPORT["tennis"] is unchanged, so the six basket lanes still cut 0.77-0.81 legs.
 TENNIS_3H_BAND = (0.70, 0.85)
 TENNIS_3H_BAND_SINCE = "2026-10-04"
+
+# The basket lanes cut their legs from TENNIS_3H_BAND too, from TENNIS_COMBO_BAND_SINCE.
+# Unlike the 3-hour lane they DO reset: pm_combo2 logged a 0.77-0.81 basket after
+# TENNIS_FAV_KEEP_SINCE, and a basket of wide legs is a different contract, so the five
+# lanes on that clock restart here. pm_combo4 keeps its own clock (it left Production
+# on 2026-10-03 and has logged nothing since). The tour filter still reads
+# TENNIS_FAV_KEEP_SINCE; only the record restarts.
+TENNIS_COMBO_BAND_SINCE = "2026-10-04T07:30:00+00:00"
+TENNIS_COMBO_RESET = frozenset({
+    "tennis_combo2", "tennis_combo3", "tennis_combo4", "pm_combo2", "pm_combo3",
+})
 
 
 def _combo_leg(row, side):

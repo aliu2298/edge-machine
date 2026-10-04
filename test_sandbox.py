@@ -4577,15 +4577,15 @@ def _leg(mid, start, pa, pb=None, day="2026-09-21", traded=("a", "b")):
                 url="u", tradeable={k: True for k in traded})
 
 
-# Legs priced inside the band the rule backs. Narrowed again to 0.77-0.81 on 2026-09-24, so
-# 0.75 and 0.85 are no longer legs — the fixture moves WITH the rule, which is the point of a
+# Legs priced inside the band the rule backs. Widened to 0.70-0.85 on 2026-10-04, so 0.69
+# and 0.85 are not legs — the fixture moves WITH the rule, which is the point of a
 # fixture: it has to be legal picks, or it tests the builder against bets nothing would make.
 _tu = {"tennis": [
     _leg("T3", "2026-09-21T14:00:00+00:00", 0.79),
     _leg("T1", "2026-09-21T10:00:00+00:00", 0.77),
     _leg("T2", "2026-09-21T12:00:00+00:00", 0.80),
-    _leg("TL", "2026-09-21T09:00:00+00:00", 0.75),          # under the band since 2026-09-24
-    _leg("TH", "2026-09-21T08:00:00+00:00", 0.85),          # over it, since 2026-09-23
+    _leg("TL", "2026-09-21T09:00:00+00:00", 0.69),          # under the band (0.70 from 2026-10-04)
+    _leg("TH", "2026-09-21T08:00:00+00:00", 0.85),          # at the exclusive top, so out
 ]}
 _rows = S.tennis_combo_rows(_tu)
 _c2s = [r for r in _rows if r["market_id"].startswith("combo2:2026-09-21:")]

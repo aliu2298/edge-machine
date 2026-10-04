@@ -355,8 +355,10 @@ def main():
                 "tennis_combo3|tennis_combo", "tennis_combo4|tennis_combo",
                 "pm_combo2|tennis_pmcombo", "pm_combo3|tennis_pmcombo"):
         pair = (st.get("pairs") or {}).get(key) or {}
-        eq((pair.get("stage"), pair.get("since")), ("sandbox", since),
-           f"{key} counts from the tour cut, in the Sandbox")
+        # The baskets restarted again when their legs widened to 0.70-0.85.
+        want = since if key.startswith("tennis_fav_band_3h") else S.TENNIS_COMBO_BAND_SINCE
+        eq((pair.get("stage"), pair.get("since")), ("sandbox", want),
+           f"{key} counts from its latest reset, in the Sandbox")
     # pm_combo4 left Production on 2026-10-03 (no parlay API to act on), but it is still
     # NOT on the tour clock: its record stays whole, which is what this asserts.
     prod = (st.get("pairs") or {}).get("pm_combo4|tennis_pmcombo") or {}
