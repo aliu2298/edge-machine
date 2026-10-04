@@ -35,13 +35,19 @@ if [ -d /opt/homebrew/bin ]; then
 fi
 
 # fetch, pull, and push. -q, and stdio discarded, so a remote URL cannot reach the journal.
+# The exit code is logged; the remote output is not.
 git_remote() {
-  local cmd=$1
+  local cmd=$1 status=0
   shift
-  git "$cmd" -q "$@" >/dev/null 2>&1
+  git "$cmd" -q "$@" >/dev/null 2>&1 || status=$?
+  if [ "$status" -ne 0 ]; then
+    echo "${cmd} failed (git exit ${status})"
+    return "$status"
+  fi
 }
 
-LEDGER_CONFLICT_MSG="refusing: rebase of the ledger commit onto origin/main conflicted. Recover by hand without force-pushing: if a rebase is still in progress run git rebase --abort, then either git reset --hard origin/main to drop the leftover ledger commit or rebase it yourself."
+HAND_RECOVERY="Recover by hand without force-pushing: if a rebase is still in progress run git rebase --abort, then either git reset --hard origin/main to drop the leftover ledger commit or rebase it yourself."
+LEDGER_CONFLICT_MSG="refusing: rebase of the ledger commit onto origin/main conflicted. ${HAND_RECOVERY}"
 
 main() {
   local source script guard
@@ -69,7 +75,7 @@ sync_origin() {
     exit 1
   fi
   if rebase_or_merge; then
-    echo "refusing: a rebase or merge is in progress"
+    echo "refusing: a rebase or merge is in progress. ${HAND_RECOVERY}"
     exit 1
   fi
   local branch
@@ -84,6 +90,12 @@ sync_origin() {
       exit 1
     fi
     echo "checked out main"
+  fi
+  # A dirty tracked tree is refused before leftover-ledger recovery. Recovery
+  # rebases, and a dirty tree makes that rebase fail closed as "local commits".
+  if tracked_dirty; then
+    echo "refusing: tracked tree is dirty"
+    exit 1
   fi
   local ahead recover_status
   ahead=$(git rev-list --count origin/main..HEAD)
@@ -109,10 +121,6 @@ sync_origin() {
     fi
     echo "recovered the leftover ledger commit"
   fi
-  if tracked_dirty; then
-    echo "refusing: tracked tree is dirty"
-    exit 1
-  fi
   if ! git_remote pull --no-rebase --ff-only origin main; then
     echo "refusing: git pull --ff-only origin main failed"
     exit 1
@@ -134,6 +142,7 @@ verify_reexec() {
   upstream=$(git rev-parse origin/main)
   if [ "$head" != "$upstream" ] || [ "$head" != "$guard" ]; then
     echo "refusing: HEAD ${head} != origin/main ${upstream} or != re-exec SHA ${guard}"
+    echo "MARKET_DAILY_REEXEC is internal and must not be set in the service environment"
     exit 1
   fi
 }

@@ -262,6 +262,72 @@ def case_other_branch_dirty():
         repo.close()
 
 
+def case_dirty_plus_leftover():
+    print("dirty tree with a leftover ledger commit")
+    repo = Repo()
+    try:
+        write(os.path.join(repo.clone, "data", "market_ledger.json"),
+              '{"meta": {"marker": "leftover"}, "trades": []}\n')
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "leftover ledger")
+        path = os.path.join(repo.clone, "market_track.py")
+        with open(path, "a", encoding="utf-8") as handle:
+            handle.write("\n# local edit\n")
+        before = open(path, encoding="utf-8").read()
+        proc = repo.run()
+        text = combined(proc)
+        if "tracked tree is dirty" not in text:
+            print_failure(proc)
+        ok(proc.returncode != 0, f"a dirty tree with a leftover commit exits non-zero ({proc.returncode})")
+        ok("tracked tree is dirty" in text, "the log names the dirty tree, not the leftover commit")
+        ok("local commit(s) not on origin/main" not in text,
+           "the log does not blame the leftover commit")
+        eq(repo.stub_lines(), [], "the stub did not run")
+        eq(open(path, encoding="utf-8").read(), before, "the local edit was not discarded")
+        log = git(repo.origin, "log", "--format=%s", "main").stdout
+        ok("leftover ledger" not in log, "the leftover ledger commit was not pushed")
+    finally:
+        repo.close()
+
+
+def case_rebase_already_in_progress():
+    print("rebase already in progress names the hand recovery")
+    repo = Repo()
+    try:
+        write(os.path.join(repo.clone, "data", "market_ledger.json"),
+              '{"meta": {"marker": "origin"}, "trades": []}\n')
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "origin ledger")
+        git(repo.clone, "push", "origin", "main")
+        git(repo.clone, "reset", "--hard", "HEAD~1")
+        write(os.path.join(repo.clone, "data", "market_ledger.json"),
+              '{"meta": {"marker": "local"}, "trades": []}\n')
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "local ledger")
+        started = git(repo.clone, "-c", "rebase.autoStash=false", "rebase", "--no-autostash",
+                      "origin/main", check=False)
+        rebase_dir = git(repo.clone, "rev-parse", "--git-path", "rebase-merge").stdout.strip()
+        if not os.path.isabs(rebase_dir):
+            rebase_dir = os.path.join(repo.clone, rebase_dir)
+        if not os.path.isdir(rebase_dir):
+            raise RuntimeError(f"rebase did not stop in progress\n{started.stdout}{started.stderr}")
+        proc = repo.run()
+        text = combined(proc)
+        if "git rebase --abort" not in text:
+            print_failure(proc)
+        ok(proc.returncode != 0, f"a rebase already in progress exits non-zero ({proc.returncode})")
+        ok("rebase or merge is in progress" in text, "the log names the rebase")
+        ok("git rebase --abort" in text and "git reset --hard origin/main" in text
+           and "without force-pushing" in text,
+           "the log says how to recover from the leftover rebase without force-pushing")
+        eq(repo.stub_lines(), [], "the stub did not run")
+        ok(os.path.isdir(rebase_dir), "the in-progress rebase was left for hand recovery")
+        eq(repo.origin_ledger()["meta"].get("marker"), "origin",
+           "the in-progress rebase was not force-pushed")
+    finally:
+        repo.close()
+
+
 def case_dirty_tracked():
     print("tracked dirty market_track.py")
     repo = Repo()
@@ -373,6 +439,8 @@ def case_fetch_fails():
         text = combined(proc)
         ok(proc.returncode != 0, f"a failed fetch exits non-zero ({proc.returncode})")
         ok("git fetch origin main failed" in text, "the log names the failed fetch")
+        ok("fetch failed (git exit " in text, "the log names the git exit code")
+        ok("missing.git" not in text, "a failed fetch does not echo the remote URL")
         eq(repo.stub_lines(), [], "the stub did not run")
     finally:
         repo.close()
@@ -475,6 +543,8 @@ def case_stale_reexec():
         ok(proc.returncode != 0, f"a stale re-exec SHA exits non-zero ({proc.returncode})")
         eq(repo.stub_lines(), [], "a stale re-exec SHA did not grade")
         ok("re-exec SHA" in text, "the log names the stale re-exec SHA")
+        ok("must not be set in the service environment" in text,
+           "the log says MARKET_DAILY_REEXEC must not be set in the service")
     finally:
         repo.close()
 
@@ -630,6 +700,8 @@ def main():
     case_clean_main()
     case_other_branch_clean()
     case_other_branch_dirty()
+    case_dirty_plus_leftover()
+    case_rebase_already_in_progress()
     case_dirty_tracked()
     case_local_commit()
     case_origin_ahead()
