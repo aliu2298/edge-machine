@@ -14,6 +14,7 @@ import hashlib
 import json
 import math
 import os
+import re
 from datetime import datetime, timedelta, timezone
 
 import sandbox_build as SB
@@ -318,6 +319,10 @@ def _frozen_looked_at():
     each overlap is stored after that, so the overlap rule can be run again
     without the live ledger. A later tracker row or a void does not move this
     file.
+
+    Medvedev v Royer (aec-atp-danmed-valroy-2026-09-23): the first stored row
+    is the 3-hour copy. The parent row stored after it is the pre-void 'won',
+    not the void written on the live ledger later.
     """
     with open(_fixture_path("tennis_fav_looked_at.json")) as fh:
         return json.load(fh)
@@ -350,9 +355,12 @@ def _frozen_overlaps():
         return json.load(fh)
 
 
-# The looked-at snapshot's bytes. A one-cent edit of any row changes this.
+# Both pins are sha256 of the fixture's bytes. Each file is exactly
+# json.dumps(obj, indent=2) + "\n". After an edit, rewrite it that way and
+# print the new digest; a one-cent change that skips this step fails the pin:
+#   python3 -c "import json,hashlib,pathlib; p=pathlib.Path('fixtures/tennis_fav_looked_at.json'); obj=json.loads(p.read_text()); raw=(json.dumps(obj, indent=2)+'\n').encode(); p.write_bytes(raw); print(hashlib.sha256(raw).hexdigest())"
+# The overlap list is the same command with fixtures/tennis_fav_overlaps.json.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
-# The overlap id list's bytes. Swapping, dropping, or adding an id changes this.
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
 
 
@@ -414,11 +422,23 @@ def _check_overlap_ids(rows, overlap_ids):
     eq(digest, OVERLAPS_SHA256, "an edit of the overlap id list changes its sha256")
 
 
-def _check_note_quotes(note, rows, overlap_ids):
-    """The published note quotes these frozen figures, in the note's own format.
+def _has_phrase(note, phrase):
+    """True when phrase occurs as its own tokens.
 
-    The live ledger is not read. ATP's backed-side z is pinned on the snapshot;
-    the note does not print that z.
+    A bare substring is not enough: '9 contests' is inside '19 contests', and
+    '-24.1%' is still present after it trades places with '-68.7%'. The
+    character before and after the phrase must not be a word character, so a
+    longer number does not count.
+    """
+    return re.search(r"(?<!\w)" + re.escape(phrase) + r"(?!\w)", note) is not None
+
+
+def _check_note_quotes(note, rows, overlap_ids):
+    """The published note quotes these frozen figures, each in its own words.
+
+    The numbers come from the frozen snapshot. The words around them are the
+    note's. ATP's backed-side z is pinned on the snapshot; the note does not
+    print that z.
     """
     by = collections.defaultdict(list)
     for q in rows:
@@ -432,26 +452,19 @@ def _check_note_quotes(note, rows, overlap_ids):
     _rate, span = _per_day(rows)
     kept_rate = round(len(kept) / span, 1)
     phrases = (
-        f"{len(rows)} distinct contests",
-        f"logged ({len(overlap_ids)} that the parent lane and this lane both bet, counted once)",
-        f"On the {span} days",
-        f"{_rate:.1f} contests a day",
+        f"{len(rows)} distinct contests already logged ({len(overlap_ids)} that the parent lane and this lane both bet, counted once)",
+        f"On the {span} days those contests cover, that was {_rate:.1f} contests a day",
         f"the kept tours were {kept_rate:.1f}",
-        f"{len(kept)} contests",
-        f"z {keep_f['z']:+.2f} before fees",
-        f"{wta['n']} contests",
-        f"ROI {wta['roi'] * 100:+.1f}%",
-        f"{wta['fade'] * 100:.1f}%",
-        f"{whole['fade'] * 100:.1f}%",
-        f"z {whole['fade_z']:+.2f} on the fade prices before fees",
-        f"{keep_f['fade'] * 100:.1f}%",
-        f"z {keep_f['fade_z']:+.2f} on the fade prices before fees",
-        f"ATP {atp['unit']:+.2f}",
-        f"UTR {utr['unit']:+.2f}",
-        f"WTA Doubles {wta['unit']:+.2f}",
+        f"{len(kept)} contests, z {keep_f['z']:+.2f} before fees",
+        f"WTA Doubles rests on {wta['n']} contests",
+        f"ROI {wta['roi'] * 100:+.1f}% after fees",
+        f"{wta['fade'] * 100:.1f}% on those {wta['n']}",
+        f"{whole['fade'] * 100:.1f}% on the whole band (z {whole['fade_z']:+.2f}",
+        f"{keep_f['fade'] * 100:.1f}% on the kept set (z {keep_f['fade_z']:+.2f}",
+        f"ATP {atp['unit']:+.2f}, UTR {utr['unit']:+.2f}, WTA Doubles {wta['unit']:+.2f}",
     )
     for phrase in phrases:
-        ok(phrase in note, f"the 3-hour note quotes the frozen record: {phrase}")
+        ok(_has_phrase(note, phrase), f"the 3-hour note quotes the frozen record: {phrase}")
 
 
 def _per_day(rows):
@@ -559,11 +572,47 @@ def _stamp_row(table, label):
     return ""
 
 
+def _wired_pairs(d, st, include_retired=True):
+    """The source|sport pairs the listing rule renders, from the wiring.
+
+    Walks SOURCES with the same keep-or-skip rule pair_list uses: removed
+    lanes stay off, a baseline does not render, and a pair appears once it
+    has bet, is a cup or international twin, is a consensus row, or carries
+    a reset that still has a record. pair_list itself is not called, so a
+    later edit that drops one rendered pair fails here. A pair added to the
+    wiring is expected without a new literal.
+    """
+    out = set()
+    for name, meta in S.SOURCES.items():
+        if name in S.REMOVED_SOURCES:
+            continue
+        if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
+            continue
+        sports = list(meta["sports"]) if meta["connected"] else []
+        gone = {} if not include_retired else dict(
+            {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
+            **({sp: meta["retired"] for sp in meta["sports"]}
+               if not meta["connected"] and meta.get("retired") else {}))
+        for sport in sports + [sp for sp in gone if sp not in sports]:
+            if S.lane_removed(name, sport):
+                continue
+            group, _a, _qa, _open_n, _last, pair = SB.pair_status(d, st, name, sport)
+            reset_row = bool(pair.get("since")) and bool(
+                T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
+            scope = next((x for x in S.SCOPE_LABEL if str(sport).endswith(x)), "")
+            if (group is None and not scope
+                    and name not in T.CONSENSUS and not reset_row):
+                continue
+            out.add(f"{name}|{sport}")
+    return out
+
+
 def main():
     print("\nkept tours are an exact set, not a prefix")
     eq(getattr(S, "TENNIS_FAV_KEEP", None), KEEP,
        "the keep set is exactly ATP, WTA Doubles, and UTR")
     eq(S.BAND_BY_SPORT["tennis"], (0.77, 0.81), "the price band is still 0.77-0.81")
+    eq(S.TENNIS_3H_BAND, (0.70, 0.85), "the 3-hour band is still 0.70-0.85")
     eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is still 3 hours")
     eq(S.tennis_tier("aec-atpdb-aa-bb-2026-10-02"), "atpdb", "ATP Doubles resolves as atpdb")
     eq(S.tennis_tier("aec-atpcq-aa-bb-2026-10-02"), "atpcq", "Challenger qualifying resolves as atpcq")
@@ -674,10 +723,14 @@ def main():
        "the Production list no longer carries pm_combo4")
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
-    counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED
-               and not S.lane_removed(r["name"], r["sport"])]
-    eq(len(counted), len(rows) - sum(r["sport"] in S.DAY_CLUSTERED for r in rows),
-       "the record count is the rendered pairs with the day-clustered sports left out")
+    rendered = {f"{r['name']}|{r['sport']}" for r in rows}
+    wired = _wired_pairs(d, st)
+    missing = sorted(wired - rendered)
+    extra = sorted(rendered - wired)
+    eq(rendered, wired,
+       "the rendered pairs are the wired pairs, by name"
+       + (f" — dropped: {missing}" if missing else "")
+       + (f" — not wired: {extra}" if extra else ""))
     ok(not any(r["name"] in ("nws", "nws_fade", "covers") for r in rows),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
