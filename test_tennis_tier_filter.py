@@ -85,6 +85,57 @@ def _settled_before_clock(q):
     return bool(text) and text < S.TENNIS_FAV_EVIDENCE_BEFORE
 
 
+def _looked_at_rows(d):
+    """Won or lost bets on the two tennis bands, settled before the tour clock.
+
+    A void is not in this list. A settlement after the clock is not either,
+    so a new grade does not move the looked-at record.
+    """
+    return [q for q in T.all_bets(d)
+            if q.get("source") in ("tennis_fav_band", "tennis_fav_band_3h")
+            and q.get("bet") and q.get("status") in ("won", "lost")
+            and _settled_before_clock(q)]
+
+
+def _in_band(price, band):
+    """The same cut band_picks uses: lower bound inclusive, upper exclusive."""
+    try:
+        p = float(price)
+    except (TypeError, ValueError):
+        return False
+    return band[0] <= p < band[1]
+
+
+def _pair_groups(rows):
+    """Market ids that have a looked-at bet on both the parent lane and the 3-hour lane."""
+    by = collections.defaultdict(list)
+    for q in rows:
+        by[q.get("market_id")].append(q)
+    both = {"tennis_fav_band", "tennis_fav_band_3h"}
+    return {mid: vs for mid, vs in by.items()
+            if mid and both <= {q.get("source") for q in vs}}
+
+
+def _band_overlap_ids(d):
+    """Contests with a non-void looked-at bet in each lane, inside that lane's band.
+
+    Read from the ledger with the band constants, not from a pinned total.
+    A void, an archive roll-up, or a settlement after the clock leaves this
+    set and the reported pairs together. Moving a band edge by one cent
+    drops a row priced on the old edge from this set only.
+    """
+    parent = S.fav_band("tennis")
+    wide = S.TENNIS_3H_BAND
+    out = set()
+    for mid, vs in _pair_groups(_looked_at_rows(d)).items():
+        parents = [q for q in vs if q.get("source") == "tennis_fav_band"]
+        wides = [q for q in vs if q.get("source") == "tennis_fav_band_3h"]
+        if (all(_in_band(q.get("price"), parent) for q in parents)
+                and all(_in_band(q.get("price"), wide) for q in wides)):
+            out.add(mid)
+    return out
+
+
 def _contests(d):
     """One row per contest settled before the tour clock.
 
@@ -92,10 +143,7 @@ def _contests(d):
     tracker grades after the clock stays out, so the looked-at record does
     not move when an open row settles.
     """
-    raw = [q for q in T.all_bets(d)
-           if q.get("source") in ("tennis_fav_band", "tennis_fav_band_3h")
-           and q.get("bet") and q.get("status") in ("won", "lost")
-           and _settled_before_clock(q)]
+    raw = _looked_at_rows(d)
     by = collections.defaultdict(list)
     for q in raw:
         by[q["market_id"]].append(q)
@@ -106,6 +154,25 @@ def _contests(d):
         if chosen is not None:
             out.append(chosen)
     return out, len(raw) - len(out)
+
+
+def _edge_overlap_book():
+    """One contest priced on the parent band's lower edge, and a voided twin.
+
+    The price is the literal 0.77 the parent band is registered at. It is
+    not read back from the constant, so moving that edge up by one cent
+    pushes this contest out of the overlap set.
+    """
+    def q(source, status, mid):
+        return dict(id=f"{source}:{mid}", source=source, sport="tennis", bet=True,
+                    market_id=mid, status=status, price=0.77,
+                    settled="2026-09-01T00:00:00+00:00")
+    return {"quotes": [
+        q("tennis_fav_band", "won", "edge-contest"),
+        q("tennis_fav_band_3h", "won", "edge-contest"),
+        q("tennis_fav_band", "void", "void-contest"),
+        q("tennis_fav_band_3h", "won", "void-contest"),
+    ]}
 
 
 def _lane_sport(name):
@@ -315,7 +382,23 @@ def main():
        "the unit P/L is before fees, one contract")
     d = T.load()
     rows, overlaps = _contests(d)
-    eq((len(rows), overlaps), (648, 27), "648 contests, 27 parent/3-hour overlaps")
+    eq(len(rows), 648, "648 contests in the looked-at record")
+    reported = set(_pair_groups(_looked_at_rows(d)))
+    expected = _band_overlap_ids(d)
+    outside = sorted(reported - expected)
+    extra = sorted(expected - reported)
+    ok(not outside and not extra,
+       "every parent/3-hour overlap is a non-void pair inside both bands"
+       + (f" — priced outside a band: {outside}" if outside else "")
+       + (f" — in both bands but not reported: {extra}" if extra else ""))
+    eq(overlaps, len(reported), "the overlap count is the size of that set")
+    void_ids = {q.get("id") for q in T.all_bets(d)
+                if q.get("source") in ("tennis_fav_band", "tennis_fav_band_3h")
+                and q.get("status") == "void"}
+    counted = {q.get("id") for vs in _pair_groups(_looked_at_rows(d)).values() for q in vs}
+    ok(void_ids.isdisjoint(counted), "no voided row is counted as an overlap")
+    eq(_band_overlap_ids(_edge_overlap_book()), {"edge-contest"},
+       "a contest priced on the parent lower edge overlaps, and its voided twin does not")
     by = collections.defaultdict(list)
     for q in rows:
         by[_tier(q)].append(q)
