@@ -13,6 +13,47 @@
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
     else go();
+    // Pages that do not load site.js (Production, Trading, NBA, the index stub)
+    // still need the active phone pill scrolled into view. site.js arms this
+    // first when it is on the page; this is the same behaviour for the rest.
+    if (!root.EdgeNav) {
+      root.EdgeNav = true;
+      var narrowNav = root.matchMedia ? root.matchMedia("(max-width:640px)") : null;
+      var armNav = function (bar, followCurrent) {
+        if (!bar || !narrowNav) return;
+        function overflow() {
+          return bar.scrollWidth > bar.clientWidth + 1
+            && bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 2;
+        }
+        function place() {
+          if (!narrowNav.matches) {
+            bar.classList.remove("nav-fade");
+            return;
+          }
+          if (followCurrent) {
+            var current = bar.querySelector('[aria-current="page"]');
+            if (current) {
+              var fade = 18;
+              var navRect = bar.getBoundingClientRect();
+              var aRect = current.getBoundingClientRect();
+              var limit = navRect.right - fade;
+              if (aRect.left < navRect.left - 0.5) bar.scrollLeft += aRect.left - navRect.left - 4;
+              else if (aRect.right > limit + 0.5) bar.scrollLeft += aRect.right - limit;
+            }
+          }
+          bar.classList.toggle("nav-fade", overflow());
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
+        else place();
+        root.addEventListener("load", place);
+        root.addEventListener("resize", place);
+        bar.addEventListener("scroll", function () {
+          if (narrowNav.matches) bar.classList.toggle("nav-fade", overflow());
+        }, { passive: true });
+      };
+      armNav(document.querySelector("nav.main"), true);
+      armNav(document.querySelector("nav.toc"), false);
+    }
   }
   root.EdgeTables = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
@@ -120,14 +161,34 @@
     if (!header) return;
     var root = doc.documentElement;
     var view = doc.defaultView;
+    // Desktop sticks the whole header. On a phone only the top bar sticks and
+    // the section nav scrolls away, so the offset follows that bar.
+    function stuck() {
+      var topbar = header.querySelector(".topbar");
+      if (view && view.getComputedStyle) {
+        // On a phone the header box is removed so the bar can stick to the
+        // page. Measuring the header then returns an empty box.
+        if (view.getComputedStyle(header).display === "contents") return topbar || header;
+        var headPos = view.getComputedStyle(header).position;
+        if (headPos === "sticky" || headPos === "fixed") return header;
+        if (topbar) {
+          var barPos = view.getComputedStyle(topbar).position;
+          if (barPos === "sticky" || barPos === "fixed") return topbar;
+        }
+      }
+      return header;
+    }
     function apply() {
-      var box = header.getBoundingClientRect();
+      var box = stuck().getBoundingClientRect();
       if (!(box.height > 0)) return;
       root.style.setProperty("--hdr-h", box.height + "px");
     }
     apply();
     if (view && typeof view.ResizeObserver === "function") {
-      new view.ResizeObserver(apply).observe(header);
+      var watch = new view.ResizeObserver(apply);
+      watch.observe(header);
+      var topbar = header.querySelector(".topbar");
+      if (topbar) watch.observe(topbar);
     } else if (view) {
       view.addEventListener("resize", apply);
     }

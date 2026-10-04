@@ -634,8 +634,10 @@ def _week_order(slugs):
     return dated
 
 
-def _tools(placeholder, label):
-    return (f'<div class="table-tools"><input class="flt" type="search" '
+def _tools(placeholder, label, view=False):
+    """Search box, and on the first card-capable table the Cards | Table control."""
+    toggle = site_chrome.VIEW_TOGGLE if view else ""
+    return (f'<div class="table-tools">{toggle}<input class="flt" type="search" '
             f'placeholder="{esc(placeholder)}" aria-label="{esc(label)}"></div>')
 
 
@@ -1611,12 +1613,20 @@ def _as_now(now):
 _FOOT = "Read-only static export · rebuilt by GitHub Actions · research, not betting advice."
 
 
-def _archive_document(title, description, sections, body, now_dt):
+def _week_crumb(slug):
+    """2026-W39 -> W39. The archive trail uses the short week name."""
+    if slug == "undated":
+        return "Undated"
+    match = re.fullmatch(r"\d{4}-(W\d{2})", slug or "")
+    return match.group(1) if match else (slug or "")
+
+
+def _archive_document(title, description, sections, body, now_dt, crumb):
     return site_chrome.document(
         title, description, "sandbox", sections,
         site_chrome.stamp(now_dt), body,
         script_src="./site.js", scripts=("./tables.js",),
-        prefix="../", tools=site_chrome.VIEW_BUTTON,
+        prefix="../", crumb=crumb,
     )
 
 
@@ -1636,6 +1646,7 @@ def archive_index_html(groups, now_dt):
         "Settled Sandbox bets by week.",
         (("weeks", "Weeks"),),
         body, now_dt,
+        (("Sandbox", "../sandbox.html"), ("Archive", None)),
     )
 
 
@@ -1719,7 +1730,7 @@ def archive_week_html(slug, rows, now_dt, d=None):
     note = outage_notes(d, *bounds) if d is not None and bounds else ""
     body = f"""<h1>Archive · {esc(label)}</h1>
 <p class="lede">{n:,} settled {noun}. Paper only. <a href="./index.html">All weeks</a> · <a href="../sandbox.html#recently-settled">Recently settled</a></p>
-{note}{_tools("Search contests…", "Search this week") if n else ""}
+{note}{_tools("Search contests…", "Search this week", view=True) if n else ""}
 {_sortable(HIST_HEAD, rows_html) if n else '<div class="note">Nothing settled this week.</div>'}
 <footer>{_FOOT}</footer>
 """
@@ -1728,6 +1739,8 @@ def archive_week_html(slug, rows, now_dt, d=None):
         f"Sandbox bets settled in {label}.",
         (),
         body, now_dt,
+        (("Sandbox", "../sandbox.html"), ("Archive", "./index.html"),
+         (_week_crumb(slug), None)),
     )
 
 
@@ -1885,14 +1898,14 @@ def _sandbox_html(d, st, now_dt, full=None):
 <section id="running">
 <h2>Running ({n_live:,})</h2>
 <p class="sm mut">Bets still open. The price is the number next to the contest.</p>
-{_tools("Search contests…", "Search running bets") if n_live else ""}
+{_tools("Search contests…", "Search running bets", view=True) if n_live else ""}
 {_sortable(LIVE_HEAD, live_rows) if n_live else '<div class="note">No open bets.</div>'}
 </section>
 
 <section id="recently-settled">
 <h2>Recently settled ({len(recent):,})</h2>
 <p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,} settled on the record{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
-{recent_note}{_tools("Search contests…", "Search recently settled bets") if recent else ""}
+{recent_note}{_tools("Search contests…", "Search recently settled bets", view=not n_live) if recent else ""}
 {_sortable(HIST_HEAD, recent_rows) if recent else f'<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>
 
@@ -1953,7 +1966,6 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         ("summary", "What it says"),
         ("by-sport", "By sport"),
         ("reference", "Reference"),
-        ("method", "Method"),
     )
     return site_chrome.document(
         "Sandbox Tracker",
@@ -1964,7 +1976,6 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         body,
         script_src="./site.js",
         scripts=("./tables.js",),
-        tools=site_chrome.VIEW_BUTTON,
     )
 
 
