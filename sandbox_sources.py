@@ -5768,7 +5768,10 @@ TENNIS_3H_BAND_SINCE = "2026-10-04"
 # lanes on that clock restart here. pm_combo4 keeps its own clock (it left Production
 # on 2026-10-03 and has logged nothing since). The tour filter still reads
 # TENNIS_FAV_KEEP_SINCE; only the record restarts.
-TENNIS_COMBO_BAND_SINCE = "2026-10-04T07:30:00+00:00"
+# The moment the wide-leg code reached main (9173481b). First set to 07:30, a guess at
+# the deploy; the first run on the new code logged a wide-leg basket at 07:01 that the
+# guess would have thrown away.
+TENNIS_COMBO_BAND_SINCE = "2026-10-04T06:46:57+00:00"
 TENNIS_COMBO_RESET = frozenset({
     "tennis_combo2", "tennis_combo3", "tennis_combo4", "pm_combo2", "pm_combo3",
 })
