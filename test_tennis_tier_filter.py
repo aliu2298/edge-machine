@@ -311,28 +311,49 @@ def _fixture_path(name):
 
 
 def _frozen_looked_at():
-    """The looked-at contests the note's figures were read from.
+    """The looked-at bets the note's figures and the overlap rule read.
 
-    A checked-in snapshot under fixtures/, not under data/. A later tracker
-    row or a void on the live ledger does not move this file, so the note's
-    maths stay pinned to these contests.
+    A checked-in snapshot under fixtures/, not under data/. The first row of
+    each contest is the one the note's figures use. The other lane's bet on
+    each overlap is stored after that, so the overlap rule can be run again
+    without the live ledger. A later tracker row or a void does not move this
+    file.
     """
     with open(_fixture_path("tennis_fav_looked_at.json")) as fh:
         return json.load(fh)
 
 
-def _frozen_overlaps():
-    """The 27 parent/3-hour overlaps the note counted, before the later void.
+def _contest_rows(rows):
+    """One row per contest: the first stored row of that market.
 
-    One row per contest cannot reproduce that count. This list is the contests
-    the note named, frozen beside the looked-at snapshot.
+    A twin of the other lane, appended later in the snapshot, does not replace
+    it and does not enter the published figures.
+    """
+    out = []
+    seen = set()
+    for q in rows:
+        mid = q.get("market_id")
+        if not mid or mid in seen:
+            continue
+        seen.add(mid)
+        out.append(q)
+    return out
+
+
+def _frozen_overlaps():
+    """The overlap ids the note counted, frozen beside the looked-at snapshot.
+
+    Checked against the overlap rule on that snapshot, not against the length
+    of this list.
     """
     with open(_fixture_path("tennis_fav_overlaps.json")) as fh:
         return json.load(fh)
 
 
 # The looked-at snapshot's bytes. A one-cent edit of any row changes this.
-LOOKED_AT_SHA256 = "e63dfb75a55379ea99e987975cb241317144a944d22ed38ebc3355a81a66ef1f"
+LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
+# The overlap id list's bytes. Swapping, dropping, or adding an id changes this.
+OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
 
 
 def _check_frozen_note(rows):
@@ -368,6 +389,29 @@ def _check_frozen_note(rows):
     span = (datetime.fromisoformat(max(days)) - datetime.fromisoformat(min(days))).days + 1
     eq((round(len(rows) / span, 1), round(len(kept) / span, 1)),
        (36.0, 4.3), "frozen record: 36.0 contests a day, 4.3 on the kept tours")
+
+
+def _check_overlap_ids(rows, overlap_ids):
+    """The overlap fixture's ids, recomputed from the looked-at snapshot.
+
+    The set is the overlap rule on those rows, every id is one of those
+    contests, and the file's sha256 is pinned. A swapped, dropped, or added
+    id fails the set, and a bogus id also fails membership.
+    """
+    recomputed = _band_overlap_ids({"quotes": rows})
+    got = set(overlap_ids)
+    extra = sorted(got - recomputed)
+    missing = sorted(recomputed - got)
+    eq(got, recomputed,
+       "the overlap ids are the overlap rule on the looked-at snapshot"
+       + (f" — not an overlap: {extra}" if extra else "")
+       + (f" — missing: {missing}" if missing else ""))
+    markets = {q.get("market_id") for q in rows}
+    outside = sorted(i for i in got if i not in markets)
+    ok(not outside, "every overlap id is in the looked-at snapshot"
+       + (f" — {outside}" if outside else ""))
+    digest = hashlib.sha256(open(_fixture_path("tennis_fav_overlaps.json"), "rb").read()).hexdigest()
+    eq(digest, OVERLAPS_SHA256, "an edit of the overlap id list changes its sha256")
 
 
 def _check_note_quotes(note, rows, overlap_ids):
@@ -587,9 +631,12 @@ def main():
        "the unit P/L is before fees, one contract")
     d = T.load()
     _check_looked_at(d)
-    frozen = _frozen_looked_at()
+    raw = _frozen_looked_at()
+    frozen = _contest_rows(raw)
+    overlaps = _frozen_overlaps()
     _check_frozen_note(frozen)
-    _check_note_quotes(note, frozen, _frozen_overlaps())
+    _check_note_quotes(note, frozen, overlaps)
+    _check_overlap_ids(raw, overlaps)
 
     print("\nthe page record restarts; the ledger rows stay")
     st = T.load_stages()
