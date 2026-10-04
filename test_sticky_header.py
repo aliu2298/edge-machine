@@ -150,7 +150,12 @@ def browser_checks():
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        print("::warning::Playwright is not installed; browser checks in test_sticky_header.py were not run")
+        message = "Playwright is not installed; browser checks in test_sticky_header.py were not run"
+        # CI sets REQUIRE_BROWSER=1. A local run without it still skips.
+        if os.environ.get("REQUIRE_BROWSER") == "1":
+            print(f"::error::{message}")
+            sys.exit(1)
+        print(f"::warning::{message}")
         print("  skipped: playwright is not installed; browser check not run")
         return
     httpd = _serve()
