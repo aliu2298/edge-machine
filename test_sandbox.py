@@ -2291,6 +2291,44 @@ finally:
     T.LEDGER = _saved_ledger
 
 # ---------------------------------------------------------------------------
+print("\nvoid bets are archived whole, not lost")
+# ---------------------------------------------------------------------------
+# A void leaves the ledger with no win and no loss. It is still a bet, so the
+# row is archived whole rather than disappearing into the totals.
+_void_at = (datetime.now(timezone.utc) - timedelta(days=60)).isoformat()
+_void_none = quote(id="void:none", source="mlb_fade_streak", sport="mlb", status="void",
+                    result=None, settled=_void_at, pnl=0.0, bet=True)
+_void_b = quote(id="void:b", source="mlb_fade_streak", sport="mlb", market_id="voidb",
+                status="void", result="b", settled=_void_at, pnl=0.0, bet=True)
+_dv = {"quotes": [_void_none, _void_b], "_archive": []}
+_bets_before = sum(1 for q in T.all_bets(_dv) if q.get("bet"))
+T.prune(_dv, verbose=False)
+_void_rows = {x["id"]: x for x in _dv["_archive"] if x["id"] in ("void:none", "void:b")}
+ok(set(_void_rows) == {"void:none", "void:b"}, "both void ids are in the archive")
+ok(len(_void_rows) == 2 and all(not x.get("compact") and x.get("bet") is True for x in _void_rows.values()),
+   "both are full rows (not compact, bet true)")
+eq(sum(1 for q in T.all_bets(_dv) if q.get("bet")), _bets_before,
+   "the bet count from all_bets is the same before and after")
+_n_void_arch = len(_dv["_archive"])
+T.prune(_dv, verbose=False)
+eq(len(_dv["_archive"]), _n_void_arch, "a second prune adds no duplicates")
+
+# ---------------------------------------------------------------------------
+print("\nprice-only result price is rolled up, not archived")
+# ---------------------------------------------------------------------------
+# A price-only row whose result is "price" is not an a/b/draw outcome, so it
+# is rolled up and not archived.
+_price_at = (datetime.now(timezone.utc) - timedelta(days=10)).isoformat()
+_price_row = quote(id="price:only", source="olbg", sport="soccer", bet=False, status="settled",
+                    result="price", settled=_price_at, stake=0.0, pnl=0.0, pick=None)
+_dp = {"quotes": [_price_row], "_archive": []}
+_q_before = _dp.get("retired", {}).get("olbg", {}).get("quotes", 0)
+T.prune(_dp, verbose=False)
+eq(len(_dp["quotes"]), 0, "a price-only row settled 10 days ago is rolled up")
+ok(not any(x.get("id") == "price:only" for x in _dp.get("_archive") or []), "it is not archived")
+eq(_dp["retired"]["olbg"]["quotes"], _q_before + 1, "and adds +1 to retired[source][quotes]")
+
+# ---------------------------------------------------------------------------
 print("\nPolymarket US is the venue")
 # ---------------------------------------------------------------------------
 _now_us = datetime.now(timezone.utc)
