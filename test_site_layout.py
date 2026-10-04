@@ -373,16 +373,9 @@ def _clipped(got):
 
 def browser_checks():
     print("\nbrowser")
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        message = "Playwright is not installed; browser checks in test_site_layout.py were not run"
-        # CI sets REQUIRE_BROWSER=1. A local run without it still skips.
-        if os.environ.get("REQUIRE_BROWSER") == "1":
-            print(f"::error::{message}")
-            sys.exit(1)
-        print(f"::warning::{message}")
-        print("  skipped: playwright is not installed; browser check not run")
+    from require_browser import require_browser
+    sync_playwright = require_browser("test_site_layout.py")
+    if sync_playwright is None:
         return
     fx_dir = tempfile.mkdtemp(prefix="layout-fx-")
     with open(os.path.join(fx_dir, "layout.html"), "w", encoding="utf-8") as fh:
