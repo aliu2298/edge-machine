@@ -61,10 +61,11 @@ def _picks():
         _row("KXITFMATCH-26OCT02NO", 0.78, start, "kalshi"),
         _row(_slug("atp"), 0.78, NOW + timedelta(hours=4), "polymarket_us"),
         _row("aec-atp-low-bb-2026-10-02", 0.69, start, "polymarket_us"),
+        _row("aec-atp-edge-bb-2026-10-02", 0.70, start, "polymarket_us"),
         _row("aec-atp-high-bb-2026-10-02", 0.85, start, "polymarket_us"),
     ]
     # The second ATP slug above collides with the kept one. Give the late one its own id.
-    rows[-3] = _row("aec-atp-late-bb-2026-10-02", 0.78, NOW + timedelta(hours=4), "polymarket_us")
+    rows[-4] = _row("aec-atp-late-bb-2026-10-02", 0.78, NOW + timedelta(hours=4), "polymarket_us")
     return S.fetch_tennis_fav_band_3h("tennis", {"tennis": rows}, now=NOW)
 
 
@@ -160,11 +161,13 @@ def _contests(d):
 def _edge_overlap_book():
     """Edge contests at the registered bounds, not read back from the constants.
 
-    Parent 0.77 is the inclusive lower edge of 0.77-0.81. The 3-hour lane's
-    0.70 is the inclusive lower edge of 0.70-0.85, 0.84 sits one cent inside
-    the exclusive cap, and 0.85 is that cap so it is not an overlap. A voided
-    twin is not an overlap either. Moving any of those edges by one cent
-    changes which of these contests qualify.
+    Parent 0.77 is the inclusive lower edge of 0.77-0.81. A parent at 0.76
+    with a 3-hour copy at 0.78 is not an overlap: the child price is inside
+    the wide band and the parent is not. The 3-hour lane's 0.70 is the
+    inclusive lower edge of 0.70-0.85, 0.84 sits one cent inside the exclusive
+    cap, and 0.85 is that cap so it is not an overlap. A voided twin is not
+    an overlap either. Moving any of those edges by one cent changes which
+    of these contests qualify.
     """
     def q(source, status, mid, price):
         return dict(id=f"{source}:{mid}", source=source, sport="tennis", bet=True,
@@ -181,6 +184,8 @@ def _edge_overlap_book():
         q("tennis_fav_band_3h", "won", "wide-inside", 0.84),
         q("tennis_fav_band", "won", "wide-hi", 0.78),
         q("tennis_fav_band_3h", "won", "wide-hi", 0.85),
+        q("tennis_fav_band", "won", "parent-below", 0.76),
+        q("tennis_fav_band_3h", "won", "parent-below", 0.78),
     ]}
 
 
@@ -341,6 +346,29 @@ def _check_frozen_note(rows):
        (36.0, 4.3), "frozen record: 36.0 contests a day, 4.3 on the kept tours")
 
 
+def _check_note_quotes(note, rows):
+    """The 3-hour note quotes this frozen record. The live ledger is not read."""
+    by = collections.defaultdict(list)
+    for q in rows:
+        by[_tier(q)].append(q)
+    kept = [q for q in rows if _tier(q) in KEEP]
+    atp = _figures(by["atp"])
+    wta = _figures(by["wtadb"])
+    keep_f = _figures(kept)
+    whole = _figures(rows)
+    phrases = (
+        f"ATP {atp['unit']:+.2f}",
+        f"z {keep_f['z']:+.2f} before fees",
+        f"{wta['n']} contests",
+        f"{wta['roi'] * 100:+.1f}%",
+        f"{wta['fade'] * 100:.1f}%",
+        f"z {whole['fade_z']:+.2f} on the fade prices before fees",
+        f"z {keep_f['fade_z']:+.2f} on the fade prices before fees",
+    )
+    for phrase in phrases:
+        ok(phrase in note, f"the 3-hour note quotes the frozen record: {phrase}")
+
+
 def _per_day(rows):
     """Contests a day: the rows divided by the inclusive span of their dates."""
     days = {q["date"] for q in rows}
@@ -369,7 +397,7 @@ def _check_looked_at(d):
     ok(void_ids.isdisjoint(counted), "no voided row is counted as an overlap")
     eq(_band_overlap_ids(_edge_overlap_book()),
        {"edge-contest", "wide-lo", "wide-inside"},
-       "0.77 and 0.70 and 0.84 are overlaps; 0.85 and a void are not")
+       "0.77 and 0.70 and 0.84 are overlaps; 0.85, a void, and a parent at 0.76 are not")
     by = collections.defaultdict(list)
     for q in rows:
         by[_tier(q)].append(q)
@@ -468,8 +496,9 @@ def main():
 
     print("\nthe 3-hour lane picks only the kept tours, inside the same window and band")
     got = sorted(q["market_id"] for q in _picks())
-    eq(got, sorted([_slug("atp"), _slug("wtadb"), _slug("utr"), "KXATPMATCH-26OCT02OK"]),
-       "ATP, WTA Doubles, UTR, and a Kalshi ATP match; nothing else")
+    eq(got, sorted([_slug("atp"), _slug("wtadb"), _slug("utr"), "KXATPMATCH-26OCT02OK",
+                    "aec-atp-edge-bb-2026-10-02"]),
+       "ATP, WTA Doubles, UTR, a Kalshi ATP match, and an ask at 0.70; nothing else")
     ok(_slug("atpdb") not in got and _slug("atpcq") not in got,
        "ATP Doubles and Challenger qualifying are refused inside the window")
 
@@ -517,7 +546,9 @@ def main():
        "the unit P/L is before fees, one contract")
     d = T.load()
     _check_looked_at(d)
-    _check_frozen_note(_frozen_looked_at())
+    frozen = _frozen_looked_at()
+    _check_frozen_note(frozen)
+    _check_note_quotes(note, frozen)
 
     print("\nthe page record restarts; the ledger rows stay")
     st = T.load_stages()
