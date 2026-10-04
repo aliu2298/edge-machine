@@ -153,6 +153,18 @@ jobs:
             if [ -f public_site/trading.html ]; then
               git add public_site/trading.html
             fi
+            # soccer.html, tennis.html and cricket.html are rebuilt with the
+            # other pages. Skip each add when the page is absent so an empty
+            # diff still exits 0.
+            if [ -f public_site/soccer.html ]; then
+              git add public_site/soccer.html
+            fi
+            if [ -f public_site/tennis.html ]; then
+              git add public_site/tennis.html
+            fi
+            if [ -f public_site/cricket.html ]; then
+              git add public_site/cricket.html
+            fi
             # Weekly archive pages are rebuilt with the Sandbox. Skip the add
             # when the directory is absent so an empty diff still exits 0.
             if [ -d public_site/archive ]; then
