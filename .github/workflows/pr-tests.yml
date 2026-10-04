@@ -44,6 +44,8 @@ jobs:
         with:
           python-version: "3.12"
 
+      # The Python version is part of the key so a wheel built for one
+      # interpreter is not restored for another. A green job saves the cache.
       - name: Cache pip
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
