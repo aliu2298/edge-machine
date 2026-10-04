@@ -37,6 +37,7 @@ _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
     "trading": 'href="./trading.html" aria-current="page"',
+    "nba": 'href="./nba.html" aria-current="page"',
     "index": 'href="./sandbox.html" aria-current="page"',
 }
 
@@ -63,13 +64,23 @@ def _check_page(name, html, current):
     currents = re.findall(r'aria-current="page"', html)
     eq(len(currents), 1, f"{name} has exactly one aria-current")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
-    # The four links are the same set, in the same order, on every page.
+    # The five links are the same set, in the same order, on every page.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, ["Sandbox", "Production", "Trading", "Method"],
+        eq(labels, ["Sandbox", "Production", "Trading", "NBA", "Method"],
            f"{name} nav labels")
+
+
+def _nba(now):
+    """The NBA page off a minimal blob, so the shell is checked without live data."""
+    import nba_pace_build
+    return nba_pace_build.build(
+        {"window": 5, "periods": ["q1", "h1", "ft"], "games": [], "label_flips": {},
+         "skipped": 0, "seed": {"span": ["2026-03-25", "2026-04-12"], "games": 0,
+                                "teams": {}}},
+        now=now)
 
 
 def _pages():
@@ -85,6 +96,7 @@ def _pages():
         ("production.html", "production", lambda: production.page(
             {"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=now)),
         ("trading.html", "trading", lambda: SB.trading_page(now)),
+        ("nba.html", "nba", lambda: _nba(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:

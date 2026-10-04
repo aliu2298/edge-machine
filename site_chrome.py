@@ -11,6 +11,7 @@ PAGES = (
     ("sandbox", "Sandbox", "./sandbox.html"),
     ("production", "Production", "./production.html"),
     ("trading", "Trading", "./trading.html"),
+    ("nba", "NBA", "./nba.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 
