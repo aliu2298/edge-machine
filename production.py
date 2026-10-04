@@ -619,7 +619,10 @@ def page(d, st, blob, style, now=None):
         # across 30 bets of which 11 were reachable, and those 11 return +270% while the other
         # 19 return +2.5%. Two lanes under one name. Nothing on this page said so, so it had
         # to be dug out. The gate still judges the whole record; this only shows the gap.
-        all_bets = [q for q in T.all_bets(raw)
+        # bet_rows, not all_bets: a crash can leave the same id in the ledger and the
+        # archive. Count it once, and keep the live row. all_bets stays the raw list
+        # everywhere else (the feed, the day check, the audit).
+        all_bets = [q for q in T.bet_rows(raw)
                     if q.get("source") == source and q.get("sport") == sport and q.get("bet")]
         reach_n = sum(1 for q in all_bets if T.placeable(q))
         reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
