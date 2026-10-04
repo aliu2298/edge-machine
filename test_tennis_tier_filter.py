@@ -367,15 +367,15 @@ def main():
     ok(prod.get("since") != S.TENNIS_FAV_KEEP_SINCE,
        "and it does not carry the tour-cut clock")
     eq(sorted(T.PAIR_OVERRIDES),
-       ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
+       ["o15_ranked|soccer_o15_intl", "oddspedia|cricket",
         "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
         "u35_low_scoring|soccer_u35_intl"],
        "the Production list no longer carries pm_combo4")
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
     counted = [r for r in rows if r["sport"] not in S.DAY_CLUSTERED]
-    eq(len(counted), 45,
-       "[records] counts pm_combo3 plus the two already-empty Kalshi baskets")
+    eq(len(counted), 40,
+       "[records] drops the five lanes taken off the board on 2026-10-04")
     ok(not any(r["name"] in ("nws", "nws_fade", "covers") for r in rows),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
@@ -481,9 +481,9 @@ def main():
     kept4 = _stamp_row(stamp, S.SOURCES["pm_combo4"]["label"])
     ok("4 bets over 1 day" in kept4 and "2 won v 1.6 priced" in kept4,
        "pm_combo4's stamp is still its whole record")
-    other = T.assess(SB.stamp_ledger(d, "mma_fav_band"), "mma_fav_band")
+    other = T.assess(SB.stamp_ledger(d, "oddspedia"), "oddspedia")
     sample = next((c[3] for c in other["criteria"] if c[0] == "sample"), None)
-    ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["mma_fav_band"]["label"]),
+    ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["oddspedia"]["label"]),
        "a lane off the tour clock still shows its whole record on the stamp")
     fx_page = SB.hide_refused_tours(fx)
     fx_stamp = SB.approval_table(fx_page, T.score(fx_page), full=fx)

@@ -354,7 +354,7 @@ else:
 _edge_html, _n = SB.open_rows({"quotes": [{
     "id": "colour", "status": "open", "bet": True, "sport": "mlb",
     "start": "2026-09-27T23:00:00+00:00", "pick": "a", "side_a": "Home", "side_b": "Away",
-    "date": "2026-09-27", "price": 0.5, "edge": -0.0004, "source": "mlb_fade_streak",
+    "date": "2026-09-27", "price": 0.5, "edge": -0.0004, "source": "team2_form_l10",
     "label": "Home v Away",
     "venue": "kalshi", "market_id": "COLOUR", "url": "https://example.com/c",
 }]})
@@ -573,7 +573,7 @@ def _kickoff_quote(**extra):
         "status": "open", "bet": True, "sport": "mlb",
         "start": "2026-09-27T23:00:00+00:00", "pick": "a", "side_a": "Home",
         "side_b": "Away", "price": 0.5, "edge": None,
-        "source": "mlb_fade_streak",
+        "source": "team2_form_l10",
         "venue": "kalshi", "url": "https://example.com/kickoff",
     }
     q.update(extra)

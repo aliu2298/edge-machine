@@ -259,7 +259,11 @@ PAIR_OVERRIDES = {
     # placeable() rightly refuses a basket whose legs are not Kalshi markets, so it could not
     # publish a lead today even if listed. It earns a hearing at 30 settled baskets like
     # anything else.
-    "mma_fav_band|mma": dict(moved_on="2026-09-22", production_at=None),
+    #   mma_fav_band — listed 2026-09-22, OUT 2026-10-04, removed by Olu. Off every
+    #   page, with olbg (boxing and MMA), mlb_fade_streak and nhl_rest_edge. Not a
+    #   record call: the lane is taken off the board. The Kalshi-to-Polymarket-US
+    #   replacement below stays in place and does not fire, because a removed lane
+    #   logs nothing new. The Sandbox rows stay in the ledger.
     # 2026-10-01, as asked. Over 1.5 on the day's top-2 mismatches, internationals
     # only, on Kalshi's over-1.5 Yes. The form-window twin (o15_form_l10) is not
     # listed, and neither is any cup twin. Under 3.5 was not listed on 2026-10-01
@@ -639,8 +643,7 @@ def collect(verbose=True, combo_used=None):
         t0 = time.time()
         # Weather markets are not fetched. Climate is the Kalshi temperature
         # ladder; leaving it out of the universe means that read never runs.
-        # Table tennis venue listings are the same: no kept lane reads them.
-        # MLB listings stay, because the fade-the-streak rule still prices them.
+        # Table tennis and MLB venue listings are the same: no kept lane reads them.
         if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
             universe[sport] = []
             continue

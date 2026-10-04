@@ -91,6 +91,18 @@ def _page(d, st, now):
 
 
 def main():
+    saved_removed = S.REMOVED_SOURCES
+    # Off the board as of 2026-10-04. These cases are the guarded
+    # Kalshi-to-Polymarket-US replacement, so they lift the source for the
+    # run and put it back. The live tracker does not log the lane.
+    S.REMOVED_SOURCES = frozenset(n for n in saved_removed if n != "mma_fav_band")
+    try:
+        return _cases()
+    finally:
+        S.REMOVED_SOURCES = saved_removed
+
+
+def _cases():
     soon = datetime.now(timezone.utc) + timedelta(days=2)
     soon = soon.replace(microsecond=0)
     past = datetime.now(timezone.utc) - timedelta(hours=3)

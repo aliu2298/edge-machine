@@ -184,11 +184,12 @@ def main():
                       market_id="KXHIGHNY-26SEP30-B70.5")
     by_sport = _open(id="covers:climate", source="covers", sport="climate",
                      market_id="KXHIGHCHI-26SEP30-B68.5")
-    plain = _open(id="olbg:boxing", source="olbg", sport="boxing", market_id="probe-box")
+    plain = _open(id="team2:probe", source="team2_form_l10", sport="soccer_team2",
+                  market_id="probe-team2")
     due_ids = [q["id"] for q in SC.due({"quotes": [by_source, by_sport, plain]}, window)]
     ok("nws_fade:open" not in due_ids and "covers:climate" not in due_ids,
        "due() returns no weather rows")
-    ok("olbg:boxing" in due_ids, "due() still returns a non-weather row in the window")
+    ok("team2:probe" in due_ids, "due() still returns a non-weather row in the window")
     fetched_ids = []
 
     def _price(q):
@@ -196,7 +197,7 @@ def main():
         return 0.5
 
     SC.run({"quotes": [by_source, by_sport, plain]}, {"closes": {}}, now=window, price=_price)
-    ok(fetched_ids == ["olbg:boxing"], "a closing price is fetched only for the non-weather row")
+    ok(fetched_ids == ["team2:probe"], "a closing price is fetched only for the non-weather row")
 
     past = "2026-09-28T12:00:00+00:00"
     weather = dict(id="nws:KXHIGHNY-26SEP28-B70.5", source="nws", sport="climate",
@@ -254,7 +255,7 @@ def main():
 
     weather_open = _audit_open("nws_fade:KXHIGHNY-26SEP29-B71.5", "nws_fade", "climate",
                                "KXHIGHNY-26SEP29-B71.5")
-    plain_open = _audit_open("olbg:stale-boxing", "olbg", "boxing", "probe-stale-boxing")
+    plain_open = _audit_open("team2:stale", "team2_form_l10", "soccer_team2", "probe-stale-team2")
     asked = []
 
     def _ask(mid):
@@ -359,7 +360,7 @@ def main():
        "a remembered weather mismatch is not a warning")
 
     def _fight(qid, **kw):
-        q = dict(id=qid, source="mma_fav_band", sport="mma",
+        q = dict(id=qid, source="oddspedia", sport="cricket",
                  side_a="Vanessa Demopoulos", side_b="Yazmin Jauregui",
                  start="2026-09-26T23:00:00+00:00", date="2026-09-26",
                  logged="2026-09-22T00:41:36+00:00", venue="kalshi",
@@ -401,7 +402,7 @@ def main():
     # Read once. Each check below deep-copies this and never writes the file.
     live = T.load()
     # Not a weather lane, and not an id already stored on the ledger.
-    stale_id = "olbg:fixture-stale-boxing"
+    stale_id = "team2:fixture-stale"
 
     def _ledger_stale(when):
         ledger = copy.deepcopy({"quotes": live["quotes"], "meta": dict(live.get("meta") or {})})
@@ -410,8 +411,8 @@ def main():
         ledger["meta"]["updated"] = "2026-09-01T00:00:00+00:00"
         start = when - timedelta(hours=A.STALE_H + 72)
         ledger["quotes"].append(dict(
-            id=stale_id, source="olbg", sport="boxing", venue="kalshi_binary",
-            market_id="probe-fixture-stale-boxing", bet=True, pick="a",
+            id=stale_id, source="team2_form_l10", sport="soccer_team2", venue="kalshi_binary",
+            market_id="probe-fixture-stale-team2", bet=True, pick="a",
             price=0.40, price_a=0.40, price_b=0.62, stake=100.0, status="open",
             result=None, pnl=0.0, settled=None, start=start.isoformat(),
             logged=(start - timedelta(hours=1)).isoformat()))

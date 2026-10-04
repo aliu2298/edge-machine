@@ -88,7 +88,7 @@ def main():
        ((0.20, 0.25), 0.26, (0.40, 0.45), 0.66, 0.06, "KXMLSGAME"),
        "MLS bands, ceilings, hold and series are unchanged")
     eq(sorted(T.PAIR_OVERRIDES),
-       ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
+       ["o15_ranked|soccer_o15_intl", "oddspedia|cricket",
         "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
         "u35_low_scoring|soccer_u35_intl"],
        "PAIR_OVERRIDES is unchanged")
@@ -259,26 +259,24 @@ def main():
        "a paused pinnacle lane still logs nothing")
 
     print("\nreaders")
-    dark = BUILD.feed_health({"coverage": {"boxing": {"olbg": 0}, "mma": {"olbg": 0}}, "quotes": []})
-    ok("Feed check" in dark and "OLBG" in dark,
+    dark = BUILD.feed_health({"coverage": {"cricket": {"oddspedia": 0}}, "quotes": []})
+    ok("Feed check" in dark and "Oddspedia" in dark,
        "a stored int 0 across every sport is still a dark feed")
     empty_offer = BUILD.feed_health({"coverage": {
-        "boxing": {"olbg": {"picked": 0, "offered": 0}},
-        "mma": {"olbg": {"picked": 0, "offered": 0}},
+        "cricket": {"oddspedia": {"picked": 0, "offered": 0}},
     }, "quotes": []})
     eq(empty_offer, "", "0 of 0 is nothing offered, not a dark feed")
     missed = BUILD.feed_health({"coverage": {
-        "boxing": {"olbg": {"picked": 0, "offered": 4}},
-        "mma": {"olbg": {"picked": 0, "offered": 2}},
+        "cricket": {"oddspedia": {"picked": 0, "offered": 4}},
     }, "quotes": []})
-    ok("Feed check" in missed and "OLBG" in missed,
+    ok("Feed check" in missed and "Oddspedia" in missed,
        "0 of n, with n above zero, is still a dark feed for a tipster")
     try:
         html = BUILD.coverage_table({
             "soccer": {"ere_draw": {"picked": 4, "offered": 19},
                        "nws": {"picked": 7, "offered": 8}},
-            "boxing": {"olbg": 12},
-            "mma": {"olbg": 0},
+            "tennis": {"polymarket_us": 12},
+            "boxing": {"polymarket_us": 0},
         })
     except (TypeError, ValueError) as e:
         ok(False, f"the coverage table renders a denominator cell — {type(e).__name__}: {e}")

@@ -370,6 +370,23 @@ def approval_table(d, scores, full=None):
 {''.join(rows)}</table></div>"""
 
 
+def sport_has_lane(sport):
+    """True when some source still on the board logs this sport.
+
+    A removed source, or a source removed on this sport only, does not count.
+    An empty sport has no section and no coverage header.
+    """
+    if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
+        return False
+    for name, meta in S.SOURCES.items():
+        if sport not in (meta.get("sports") or ()):
+            continue
+        if S.lane_removed(name, sport):
+            continue
+        return True
+    return False
+
+
 def baseline_table(d):
     """The blind strategies, per sport — the bar every source's choices have to clear.
 
@@ -442,7 +459,7 @@ def coverage_table(cov):
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
-        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
+        if not sport_has_lane(sport):
             continue
         cells = []
         for n in names:

@@ -159,7 +159,7 @@ print("\nsafe hrefs")
 
 def _quote(url, label, price, start, **extra):
     q = dict(status="open", bet=True, sport="boxing", start=start, date="2026-09-27",
-             pick="a", side_a="Alpha", side_b="Beta", source="olbg", venue="other",
+             pick="a", side_a="Alpha", side_b="Beta", source="team2_form_l10", venue="other",
              market_id="plain", url=url, label=label, price=price, edge=None)
     q.update(extra)
     return q

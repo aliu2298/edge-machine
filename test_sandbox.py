@@ -385,7 +385,7 @@ S.resolve_polymarket = S_resolve
 print("\nregrade: a settled result follows the venue when it flips")
 # ---------------------------------------------------------------------------
 def _settled_pm(**kw):
-    q = quote(sport="boxing", venue="polymarket_us", market_id="m", id="olbg:m", source="olbg",
+    q = quote(sport="boxing", venue="polymarket_us", market_id="m", id="team2:m", source="team2_form_l10",
               pick="b", price=0.46, price_a=0.56, price_b=0.46, prob_a=0.5079,
               status="lost", result="a", pnl=-100.0,
               settled=(datetime.now(timezone.utc) - timedelta(hours=12)).isoformat())
@@ -647,6 +647,10 @@ row_tip = dict(market_id="t3", sport="boxing", label="Garcia vs Benn", side_a="R
                date="2026-09-14", volume=500.0, url="")
 d = {"quotes": [], "meta": {}, "coverage": {}}
 saved = S.CHALLENGERS
+saved_removed = S.REMOVED_SOURCES
+# OLBG is off the board. This case is the bare-pick rule, so the source is
+# lifted for the log and the settlement, then put back.
+S.REMOVED_SOURCES = frozenset(n for n in saved_removed if n != "olbg")
 S.CHALLENGERS = {"olbg": lambda sp: [dict(a="Ryan Garcia", b="Conor Benn", pick="a", date="2026-09-14")]}
 T.publish(d, {"boxing": [row_tip]}, {}, verbose=False)
 S.CHALLENGERS = saved
@@ -664,6 +668,7 @@ S.resolve_polymarket = lambda mid: "a"
 tips[0]["start"] = (datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
 T.grade(d, verbose=False)
 S.resolve_polymarket = S_resolve
+S.REMOVED_SOURCES = saved_removed
 eq(tips[0]["status"], "won", "a tipster's winning pick settles as won")
 close(tips[0]["pnl"], round(100.0 * (1 / 0.35 - 1), 2),
       "and pays at the price it was backed at")
@@ -996,14 +1001,15 @@ healthy = {"coverage": {"cricket": {"oddspedia": 4}, "boxing": {"olbg": 12},
 eq(BUILD.feed_health(healthy), "", "no warning when every source reported something")
 
 # One quiet sport is an empty fixture list, not a broken feed.
-quiet = {"coverage": {"boxing": {"olbg": 0}, "mma": {"olbg": 3}}, "quotes": []}
+# OLBG left the board on 2026-10-04, so this uses ESPN FPI, which still covers two sports.
+quiet = {"coverage": {"nfl": {"espn_fpi": 3}, "mlb": {"espn_fpi": 0}}, "quotes": []}
 eq(BUILD.feed_health(quiet), "",
    "a source quiet in ONE sport is not flagged — a card can be empty on a Tuesday")
 
 # Dark everywhere is the real failure and must be loud.
-dark = {"coverage": {"boxing": {"olbg": 0}, "mma": {"olbg": 0}}, "quotes": []}
+dark = {"coverage": {"nfl": {"espn_fpi": 0}, "mlb": {"espn_fpi": 0}}, "quotes": []}
 out = BUILD.feed_health(dark)
-ok("Feed check" in out and "OLBG" in out,
+ok("Feed check" in out and "ESPN FPI" in out,
    "a source empty across every sport it covers IS flagged as a broken feed")
 
 # A source never asked about must not be reported as dark.
@@ -1048,7 +1054,7 @@ print("\nretired venue")
 real_pm_ = S.resolve_polymarket
 called_ = []
 S.resolve_polymarket = lambda mid: called_.append(mid) or "a"
-d = {"quotes": [quote(id="olbg:espn:ger.1:1", source="olbg", sport="boxing",
+d = {"quotes": [quote(id="team2:espn:ger.1:1", source="team2_form_l10", sport="soccer_team2",
                       venue="espn", market_id="espn:ger.1:1", pick="a", price=0.6)],
      "meta": {}, "coverage": {}}
 T.grade(d, verbose=False)
@@ -1296,6 +1302,9 @@ eq(_stats["priced"], 1, "the coverage count reports priced books under the gate"
 # publish: nothing at all is logged against an unpriced row — tipsters included — and the
 # market's own quote is its midpoint, not its ask.
 _saved_ch = S.CHALLENGERS
+_saved_removed_tip = S.REMOVED_SOURCES
+# The ask-price rule. OLBG is off the board, so this call lifts it and puts it back.
+S.REMOVED_SOURCES = frozenset(n for n in _saved_removed_tip if n != "olbg")
 S.CHALLENGERS = {"olbg": lambda sp: [dict(a="Vlad Panin", b="Dakota Linger", pick="a", date=_start[:10]),
                                      dict(a="Ryan Garcia", b="Conor Benn", pick="a", date=_start[:10])]}
 for _r in _rows:
@@ -1305,6 +1314,7 @@ try:
     T.publish(d, {"boxing": _rows}, {}, verbose=False)
 finally:
     S.CHALLENGERS = _saved_ch
+    S.REMOVED_SOURCES = _saved_removed_tip
 _logged = {(q["source"], q["market_id"]): q for q in d["quotes"]}
 ok(not any(mid == "thin" for _s, mid in _logged),
    "no source is logged against the placeholder book, so it can be quoted later at a real price")
@@ -1506,9 +1516,9 @@ ok(T._started(dict(start=_n.replace(tzinfo=None).isoformat()), _n + timedelta(se
 _ledger = {"quotes": [
     dict(id="late", source="mls_away_band", sport="soccer", status="won", pnl=177.78, bet=True,
          logged="2026-09-11T16:16:14+00:00", start="2026-09-11T16:15:00+00:00", settled="x"),
-    dict(id="edge", source="olbg", sport="boxing", status="open", pnl=0.0, bet=True,
+    dict(id="edge", source="team2_form_l10", sport="soccer_team2", status="open", pnl=0.0, bet=True,
          logged="2026-09-11T16:15:00+00:00", start="2026-09-11T16:15:00+00:00"),
-    dict(id="fine", source="olbg", sport="boxing", status="lost", pnl=-100.0, bet=True,
+    dict(id="fine", source="team2_form_l10", sport="soccer_team2", status="lost", pnl=-100.0, bet=True,
          logged="2026-09-11T06:00:00+00:00", start="2026-09-11T16:15:00+00:00", settled="x"),
 ]}
 eq(T.retire_late(_ledger, verbose=False), 2, "a late win and a quote logged AT the start are voided")
@@ -2072,7 +2082,7 @@ _row = dict(market_id="cl1", sport="mlb", venue="kalshi", label="A vs B", side_a
             price_a=0.40, price_b=0.62, price_draw=None, tradeable={"a": True, "b": True},
             untraded=False, start=(_n0 + timedelta(hours=5)).isoformat(), date=_n0.strftime("%Y-%m-%d"),
             volume=0.0, url="")
-_q = dict(id="covers:cl1", source="mlb_fade_streak", sport="mlb", market_id="cl1", venue="kalshi", pick="a",
+_q = dict(id="covers:cl1", source="team2_form_l10", sport="mlb", market_id="cl1", venue="kalshi", pick="a",
           price=0.40, bet=True, status="open", start=_row["start"])
 d = {"quotes": [dict(_q)]}
 eq(T.snap_closing(d, {"mlb": [dict(_row, price_a=0.44)]}, now=_n0), 1, "an open bet takes the venue's current price")
@@ -2095,7 +2105,7 @@ eq(d3["quotes"][0]["close_price"], 0.29, "a draw bet closes on the draw price")
 _ac = T.assess({"quotes": [dict(_q, status="won", result="a", pnl=150.0, logged=_n0.isoformat(),
                                 start=(_n0 + timedelta(hours=5)).isoformat(), price_a=0.40, price_b=0.62,
                                 close_price=0.47,
-                                close_at=(_n0 + timedelta(hours=5, minutes=-20)).isoformat())]}, "mlb_fade_streak")
+                                close_at=(_n0 + timedelta(hours=5, minutes=-20)).isoformat())]}, "team2_form_l10")
 close(_ac["clv"], 0.07, "CLV is close minus price: bought at 0.40, closed at 0.47", tol=1e-9)
 eq(_ac["clv_beat"], 1.0, "and it beat the close")
 
@@ -2132,7 +2142,7 @@ print("\nclosing prices near the deadline")
 # ---------------------------------------------------------------------------
 import sandbox_close as SC
 _c0 = datetime(2026, 9, 13, 12, 0, tzinfo=timezone.utc)
-_cq = lambda **kw: dict(dict(id="covers:c1", source="mlb_fade_streak", sport="mlb", market_id="c1", venue="polymarket",
+_cq = lambda **kw: dict(dict(id="covers:c1", source="team2_form_l10", sport="mlb", market_id="c1", venue="polymarket",
                              pick="a", price=0.40, bet=True, status="open",
                              start=(_c0 + timedelta(minutes=20)).isoformat()), **kw)
 eq(T.close_deadline(_cq()), _c0 + timedelta(minutes=20), "a contest's deadline is its start")
@@ -2197,7 +2207,7 @@ ok(not T.fresh_close(_cq(close_price=0.41, close_at=(_c0 - timedelta(hours=5)).i
    "a snapshot five hours out does not")
 _early = dict(_cq(status="won", result="a", pnl=150.0, logged=_c0.isoformat(), price_a=0.40, price_b=0.62),
               close_price=0.50, close_at=(_c0 - timedelta(hours=5)).isoformat())
-eq(T.assess({"quotes": [_early]}, "mlb_fade_streak")["clv"], None, "so an early snapshot is never scored as closing-line value")
+eq(T.assess({"quotes": [_early]}, "team2_form_l10")["clv"], None, "so an early snapshot is never scored as closing-line value")
 _bq = _cq(venue="kalshi_binary", sport="climate", start=(_c0 + timedelta(hours=_lh, minutes=30)).isoformat())
 eq(T.snap_closing({"quotes": [_bq]}, {"climate": [dict(market_id="c1", venue="kalshi_binary", price_a=0.9, price_b=0.1,
                                                      untraded=False, tradeable={"a": True, "b": True},
@@ -2251,19 +2261,19 @@ print("\nsettled bets are archived, not lost")
 import tempfile as _tf, json
 _old_set = (datetime.now(timezone.utc) - timedelta(days=60)).isoformat()
 _arch_bets = [dict(_sb(i, i % 10 < 6, "a", 0.40, i // 10), id=f"covers:ar{i}", market_id=f"ar{i}",
-                   source="mlb_fade_streak", settled=_old_set, stake=100.0) for i in range(40)]
+                   source="team2_form_l10", settled=_old_set, stake=100.0) for i in range(40)]
 _nonbet = dict(_arch_bets[0], id="polymarket:nb", source="polymarket", sport="tennis",
                bet=False, status="graded", prob_a=0.4)
 _da = {"quotes": [dict(q) for q in _arch_bets] + [_nonbet], "_archive": []}
-_before = T.assess(_da, "mlb_fade_streak", "mlb")["n"]
+_before = T.assess(_da, "team2_form_l10", "mlb")["n"]
 T.prune(_da, verbose=False)
 eq(len(_da["quotes"]), 0, "old settled rows leave the ledger")
 eq(len(_da["_archive"]), 41, "every settled bet goes to the archive, plus a compact copy of the price-only row")
 _cmp = next(x for x in _da["_archive"] if x.get("compact"))
 ok(_cmp["bet"] is False and "prob_a" not in _cmp and _cmp["result"] == _nonbet["result"],
    "the compact copy keeps only what a population baseline reads")
-eq(T.assess(_da, "mlb_fade_streak", "mlb")["n"], _before, "judgement reads the archive, so nothing is lost")
-eq(_da["retired"]["mlb_fade_streak"]["settled"], 40, "the rolled-up totals still count them")
+eq(T.assess(_da, "team2_form_l10", "mlb")["n"], _before, "judgement reads the archive, so nothing is lost")
+eq(_da["retired"]["team2_form_l10"]["settled"], 40, "the rolled-up totals still count them")
 T.prune(_da, verbose=False)
 eq(len(_da["_archive"]), 41, "pruning again never duplicates")
 _tmpd = _tf.mkdtemp()
@@ -2527,14 +2537,14 @@ ok('{n_hist - n_void:,} settled on the record{f" · {n_void} void"' in _lsrc,
 print("\na venue switch never quotes a contest twice")
 # ---------------------------------------------------------------------------
 _t9 = "2026-09-14T23:10:00+00:00"
-_old = dict(id="olbg:4287261", source="olbg", sport="boxing", market_id="4287261", venue="polymarket",
+_old = dict(id="olbg:4287261", source="team2_form_l10", sport="soccer_team2", market_id="4287261", venue="polymarket",
             side_a="San Diego Padres", side_b="San Francisco Giants", start=_t9, logged="2026-09-13T12:00:00+00:00",
             status="open", bet=True, pick="a", price=0.55, pnl=0.0)
 _new = dict(_old, id="olbg:aec-box-sd-sf-2026-09-14", market_id="aec-box-sd-sf-2026-09-14",
             venue="polymarket_us", logged="2026-09-13T21:16:00+00:00", price=0.57)
 _dh = dict(_new, id="olbg:aec-box-sd-sf-2026-09-14-g2", market_id="aec-box-sd-sf-2026-09-14-g2",
            start="2026-09-15T03:40:00+00:00")
-_other = dict(_new, id="mma_fav_band:aec-box-sd-sf-2026-09-14", source="mma_fav_band", sport="mma")
+_other = dict(_new, id="mma_fav_band:aec-box-sd-sf-2026-09-14", source="oddspedia", sport="cricket")
 _ddup = {"quotes": [dict(_old), dict(_new), dict(_dh), dict(_other)]}
 eq(T.retire_venue_duplicates(_ddup, verbose=False), 1, "one duplicate found")
 _st9 = {q["id"]: q["status"] for q in _ddup["quotes"]}
@@ -2546,10 +2556,10 @@ eq(T.retire_venue_duplicates(_ddup, verbose=False), 1, "idempotent")
 _settled_dup = {"quotes": [dict(_old), dict(_new, status="won", logged="2026-09-13T12:30:00+00:00")]}
 T.retire_venue_duplicates(_settled_dup, verbose=False)
 eq(_settled_dup["quotes"][1]["status"], "won", "settled history from before the switch is never rewritten")
-_tt = [dict(_old, sport="table_tennis", source="nhl_rest_edge", venue="polymarket_us", id="p:1", market_id="1",
+_tt = [dict(_old, sport="table_tennis", source="team2_form_l10", venue="polymarket_us", id="p:1", market_id="1",
             side_a="Rak Serhii", side_b="Pesternikov Denys", start="2026-09-14T00:30:00+00:00",
             logged="2026-09-13T21:16:00+00:00", bet=False),
-       dict(_old, sport="table_tennis", source="nhl_rest_edge", venue="polymarket_us", id="p:2", market_id="2",
+       dict(_old, sport="table_tennis", source="team2_form_l10", venue="polymarket_us", id="p:2", market_id="2",
             side_a="Rak Serhii", side_b="Pesternikov Denys", start="2026-09-14T01:05:00+00:00",
             logged="2026-09-13T21:16:00+00:00", bet=False)]
 eq(T.retire_venue_duplicates({"quotes": _tt}, verbose=False), 0,
@@ -2560,6 +2570,8 @@ _up_row = dict(market_id="aec-box-sd-sf-2026-09-14", venue="polymarket_us", spor
                date="2026-09-14", volume=0.0, url="")
 _prev = dict(_old, start=_up_row["start"], source="olbg", sport="boxing")
 _saved_ch3 = S.CHALLENGERS
+_saved_removed_dup = S.REMOVED_SOURCES
+S.REMOVED_SOURCES = frozenset(n for n in _saved_removed_dup if n != "olbg")
 S.CHALLENGERS = {"olbg": lambda sp: [dict(a="San Diego Padres", b="San Francisco Giants", pick="a",
                                           date="2026-09-14")]}
 try:
@@ -2567,6 +2579,7 @@ try:
     T.publish(_dpub, {"boxing": [_up_row]}, {}, verbose=False)
 finally:
     S.CHALLENGERS = _saved_ch3
+    S.REMOVED_SOURCES = _saved_removed_dup
 eq([q["id"] for q in _dpub["quotes"] if q["source"] == "olbg"], ["olbg:4287261"],
    "publish refuses a source's second quote on a contest it already priced elsewhere")
 
@@ -2956,11 +2969,11 @@ def _pq2(src, sport, i, won, price=0.5):
                 start=f"2026-08-{1 + i % 28:02d}T18:00:00+00:00", logged=f"2026-08-{1 + i % 28:02d}T10:00:00+00:00")
 _pd = {"quotes": [_pq2("mls_away_band", "soccer", i, i % 3 != 0) for i in range(36)]  # 24/36 at 0.5: working
                 + [_pq2("espn_fpi", "nfl", i, i % 3 == 0) for i in range(33)]    # 11/33: not working
-                + [_pq2("olbg", "boxing", i, i % 2 == 0) for i in range(5)]}     # too early
+                + [_pq2("corners_under", "soccer_corners", i, i % 2 == 0) for i in range(5)]}  # too early
 _pl = {(r["name"], r["sport"]): r["v"] for r in SB.pair_list(_pd, {"pairs": {}})}
 eq((_pl[("mls_away_band", "soccer")], _pl[("espn_fpi", "nfl")]), ("proven", "noedge"),
    "24/36 at 0.50 is a proven edge (z > 2); 11/33 has no edge")
-eq(_pl[("olbg", "boxing")], "early", "five bets is too early for any verdict, whichever way it leans")
+eq(_pl[("corners_under", "soccer_corners")], "early", "five bets is too early for any verdict, whichever way it leans")
 _secs = SB.sport_sections(_pd, SB.pair_list(_pd, {"pairs": {}}))
 ok("<b>Soccer</b>" in _secs and "<b>NFL</b>" in _secs and "MLS away side" in _secs,
    "one section per sport, naming each source")
@@ -3015,11 +3028,11 @@ def _pr(i, src, days, bet=False, market=None, result="a"):
                 status=("won" if result == "b" else "lost") if bet else "graded", pnl=(42.0 if result == "b" else -100.0) if bet else 0.0,
                 stake=100.0 if bet else 0.0, settled=st, logged=st, start=st, prob_a=0.3 if not bet else None)
 _d7 = {"quotes": [_pr(1, "goals_market", 10), _pr(2, "goals_market", 3), _pr(3, "u35_low_scoring", 10, bet=True, market="m1", result="b"),
-                  _pr(4, "olbg", 10, market="m1"), _pr(5, "olbg", 10, market="m9")], "_archive": []}
+                  _pr(4, "oddspedia", 10, market="m1"), _pr(5, "oddspedia", 10, market="m9")], "_archive": []}
 T.prune(_d7, verbose=False)
 eq(sorted(q["id"] for q in _d7["quotes"]), ["goals_market:2", "u35_low_scoring:3"],
    "a price-only row folds after 7 days; a bet stays for the full 45")
-eq(sorted(x["id"] for x in _d7["_archive"]), ["goals_market:1", "olbg:5"],
+eq(sorted(x["id"] for x in _d7["_archive"]), ["goals_market:1", "oddspedia:5"],
    "compact copies: every Baseline row, and one row per contest not already covered")
 _ap7 = T.assess(_d7, "u35_low_scoring", "soccer_u35")
 ok(any("every match" in det for _k, _l, _p, det in _ap7["criteria"]), "the rule's population still reads the folded baseline rows")
@@ -3096,7 +3109,7 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["mma_fav_band|mma", "o15_ranked|soccer_o15_intl", "oddspedia|cricket",
+   ["o15_ranked|soccer_o15_intl", "oddspedia|cricket",
     "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
     "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
@@ -3512,12 +3525,12 @@ ok(_tfb.get("retired") and not _tfb["connected"] and "tennis_fav_band" not in S.
    "tennis_fav_band is retired and no longer picks")
 ok("55.0 priced" in _tfb["retired"] and "22" in _tfb["retired"],
    "and its note records both the flat out-of-sample read and the 22-bet repeat cut")
-# It shares fetch_tennis_fav_band with mma_fav_band, which is IN PRODUCTION: retiring the
-# tennis lane must not touch it, and the two bands are different numbers.
+# It shares fetch_tennis_fav_band with mma_fav_band. The MMA lane left the board on
+# 2026-10-04; the shared fetcher stays, and the two bands stay different numbers.
 ok(S.SOURCES["mma_fav_band"]["connected"] and "mma_fav_band" in S.CHALLENGERS,
-   "mma_fav_band keeps running on the shared fetcher")
-ok("mma_fav_band|mma" in T.PAIR_OVERRIDES,
-   "and it is still the Production pair it was before")
+   "mma_fav_band's fetcher stays registered")
+ok("mma_fav_band" in S.REMOVED_SOURCES and "mma_fav_band|mma" not in T.PAIR_OVERRIDES,
+   "mma_fav_band is off the board and out of Production, removed by Olu 2026-10-04")
 eq((S.fav_band("mma"), S.fav_band("tennis")), ((0.75, 0.90), (0.77, 0.81)),
    "the two sports keep their own bands")
 # The legs live on elsewhere, which the retirement note says outright.
@@ -4366,16 +4379,17 @@ close(_fee_w["z"], (1 - 0.40) / (0.40 * 0.60) ** 0.5,
       "one market-day: the money t falls back to the unit-price z")
 
 # A pair taken out of Production keeps the record it was removed on in view.
-_rq = [dict(id=f"sp{i}", source="olbg", sport="boxing", bet=True, venue="kalshi",
+# team2 stays on the board. olbg left it on 2026-10-04, so it no longer has a row.
+_rq = [dict(id=f"sp{i}", source="team2_form_l10", sport="soccer_team2", bet=True, venue="kalshi",
             market_id=f"K{i}", pick="a", price=0.4, status="won" if i % 5 < 2 else "lost",
             pnl=150.0 if i % 5 < 2 else -100.0, stake=100.0, result="a",
             start=f"2026-09-{10 + i % 8:02d}T18:00:00+00:00", logged=f"2026-09-{10 + i % 8:02d}T10:00:00+00:00")
        for i in range(40)]
 _rq.append(dict(_rq[0], id="sp-open", status="open", logged="2026-09-19T10:00:00+00:00",
                 start="2026-09-19T18:00:00+00:00"))
-_rst = {"pairs": {"olbg|boxing": {"stage": "sandbox", "since": "2026-09-18T21:30:00+00:00",
-                                  "demoted_at": "2026-09-18T21:30:00+00:00"}}}
-_rr = [r for r in SB.pair_list({"quotes": _rq}, _rst) if r["name"] == "olbg"][0]
+_rst = {"pairs": {"team2_form_l10|soccer_team2": {"stage": "sandbox", "since": "2026-09-18T21:30:00+00:00",
+                                                  "demoted_at": "2026-09-18T21:30:00+00:00"}}}
+_rr = [r for r in SB.pair_list({"quotes": _rq}, _rst) if r["name"] == "team2_form_l10"][0]
 eq((_rr["v"], _rr["removed"]["a"]["n"], _rr["removed"]["at"]), ("removed", 40, "2026-09-18"),
    "a removed pair shows as removed, with the 40 bets it was removed on, not as waiting")
 ok("Removed 2026-09-18 on 16 won" in SB._row(_rr), "and its row says what it was removed on")
@@ -6412,8 +6426,11 @@ ok(S.lane_paused("covers", "mlb") and S.lane_paused("kalshi", "mlb") and S.lane_
 ok(S.lane_paused("scores24", "soccer") and S.lane_paused("scores24", "nfl")
    and S.lane_paused("scores24", "mlb"),
    "scores24 is removed, so every sport of it stays unable to log")
-ok(S.lane_paused("olbg", "mma") and not S.lane_paused("olbg", "boxing"),
-   "OLBG MMA is paused and OLBG boxing is not")
+ok(S.lane_paused("olbg", "mma") and S.lane_paused("olbg", "boxing"),
+   "OLBG is off the board, so boxing and MMA both log nothing new")
+ok(S.lane_paused("mma_fav_band", "mma") and S.lane_paused("mlb_fade_streak", "mlb")
+   and S.lane_paused("nhl_rest_edge", "nhl_rest"),
+   "the favourite-band, fade-the-streak and rest lanes log nothing new")
 ok(S.lane_paused("espn_fpi", "nfl") and S.lane_paused("espn_fpi", "mlb"),
    "ESPN FPI NFL stays paused and ESPN FPI MLB is removed")
 ok(S.lane_paused("tennis_combo3", "tennis_combo") and S.lane_paused("tennis_combo4", "tennis_combo")
@@ -6425,14 +6442,15 @@ ok(S.lane_paused("polymarket_us", "nfl") and not S.lane_paused("polymarket_us", 
    "NFL is paused on a source that is not otherwise paused")
 ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
    and S.source_fully_paused("scores24") and S.source_fully_paused("espn_fpi")
-   and not S.source_fully_paused("olbg"),
-   "a removed source logs no sport; a partial pause still logs its other sports")
+   and S.source_fully_paused("olbg")
+   and not S.source_fully_paused("polymarket_us"),
+   "a removed source logs no sport; Polymarket US still logs the sports it keeps")
 for _name, _sport in (
-        ("tennis_fav_band_3h", "tennis"), ("spot", "crypto"), ("mma_fav_band", "mma"),
-        ("olbg", "boxing"), ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
+        ("tennis_fav_band_3h", "tennis"), ("spot", "crypto"),
+        ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
         ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),
-        ("nhl_rest_edge", "nhl_rest"), ("o15_ranked", "soccer_o15"),
+        ("o15_ranked", "soccer_o15"),
         ("pin_totals", "soccer_o25"), ("btts_market", "soccer_btts"),
         ("oddspedia", "cricket"), ("cmd_market", "commodities")):
     ok(not S.lane_paused(_name, _sport), f"{_name}/{_sport} is not paused")
@@ -6559,8 +6577,8 @@ finally:
 _kb = {(q["source"], q["sport"]): q for q in _kd["quotes"]}
 ok(("scores24", "soccer") not in _kb and ("scores24", "nfl") not in _kb,
    "scores24 enters on neither sport")
-eq(_kb[("olbg", "boxing")]["bet"], True, "OLBG boxing still enters")
-ok(("olbg", "mma") not in _kb, "OLBG MMA does not")
+ok(("olbg", "boxing") not in _kb and ("olbg", "mma") not in _kb,
+   "OLBG enters on neither sport")
 ok(("espn_fpi", "mlb") not in _kb, "ESPN FPI MLB does not enter")
 ok(("espn_fpi", "nfl") not in _kb, "ESPN FPI NFL does not")
 ok(("soccerpredictions", "soccer") not in _kb and ("soccerpredictions", "nfl") not in _kb,
@@ -7485,9 +7503,11 @@ _cric_open = {"quotes": [
 ]}
 eq(T.retire_venue_duplicates(_cric_open, verbose=False), 0,
    "retiring duplicates leaves both cricket matches open")
-_open_kx = dict(_kx, id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", status="open", bet=True,
+_open_kx = dict(_kx, id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", source="oddspedia",
+                status="open", bet=True,
                 logged="2026-09-22T00:41:36+00:00", pick="b", price=0.87, pnl=0.0)
-_open_pm = dict(_pm, id="mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26", status="open", bet=True,
+_open_pm = dict(_pm, id="mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26", source="oddspedia",
+                status="open", bet=True,
                 logged="2026-09-22T21:47:04+00:00", pick="b", price=0.87, pnl=0.0)
 _odh = {"quotes": [dict(_open_kx), dict(_open_pm)]}
 eq(T.retire_venue_duplicates(_odh, verbose=False), 1, "the later copy of the placeholder fight is voided")
@@ -7495,12 +7515,12 @@ eq(_odh["quotes"][0]["status"], "open", "the earlier quote stands")
 eq((_odh["quotes"][1]["status"], _odh["quotes"][1]["note"]),
    ("void", T.DUPLICATE_NOTE), "the re-quote on the other venue is the duplicate")
 _dh_open = {"quotes": [
-    dict(id="espn_fpi:dh1", source="espn_fpi", sport="mlb", status="open", bet=True,
+    dict(id="espn_fpi:dh1", source="espn_fpi", sport="nfl", status="open", bet=True,
          market_id="aec-mlb-tb-nyy-2026-09-22-dh1", venue="polymarket_us",
          side_a="Tampa Bay Rays", side_b="New York Yankees",
          start="2026-09-22T17:05:00+00:00", date="2026-09-22",
          logged="2026-09-22T12:00:00+00:00"),
-    dict(id="espn_fpi:dh2", source="espn_fpi", sport="mlb", status="open", bet=True,
+    dict(id="espn_fpi:dh2", source="espn_fpi", sport="nfl", status="open", bet=True,
          market_id="aec-mlb-tb-nyy-2026-09-22-dh2", venue="kalshi",
          side_a="Tampa Bay Rays", side_b="New York Yankees",
          start="2026-09-22T23:05:00+00:00", date="2026-09-22",
@@ -7520,6 +7540,10 @@ _pub_prev = dict(id="mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU", source="mma_fav_ban
                  start=(_soon + timedelta(hours=6)).isoformat(), date=_soon.date().isoformat(),
                  logged="2026-09-22T00:41:36+00:00")
 _saved_ch_dup = S.CHALLENGERS
+_saved_removed_mma = S.REMOVED_SOURCES
+# The Kalshi-to-Polymarket-US replacement. The lane is off the board, so this
+# call lifts it and puts it back. The live tracker does not.
+S.REMOVED_SOURCES = frozenset(n for n in _saved_removed_mma if n != "mma_fav_band")
 S.CHALLENGERS = {"mma_fav_band": lambda sp: [dict(a="Vanessa Demopoulos", b="Yazmin Jauregui",
                                                   prob_a=0.95, date=_soon.date().isoformat())]}
 try:
@@ -7527,6 +7551,7 @@ try:
     T.publish(_dpub2, {"mma": [_pub_row]}, {}, verbose=False)
 finally:
     S.CHALLENGERS = _saved_ch_dup
+    S.REMOVED_SOURCES = _saved_removed_mma
 _mma_pub = [q for q in _dpub2["quotes"] if q["source"] == "mma_fav_band"]
 eq(sorted(q["id"] for q in _mma_pub),
    ["mma_fav_band:KXUFCFIGHT-26SEP26DEMJAU",
