@@ -625,8 +625,9 @@ def code_sha():
 
     The daily runner passes MARKET_CODE_SHA from `git rev-parse HEAD` before it
     commits the ledger, so the recorded SHA is the code that ran and not the
-    ledger commit that follows. A direct run reads that same rev-parse. Empty
-    when neither is available; save() then leaves an existing meta.code_sha alone.
+    ledger commit that follows. A direct run reads that same rev-parse. When
+    neither is available the stamp is the string "unknown", which replaces any
+    previous meta.code_sha.
     """
     stamped = os.environ.get("MARKET_CODE_SHA", "").strip()
     if stamped:
@@ -637,17 +638,16 @@ def code_sha():
             capture_output=True, text=True, timeout=10, check=False,
         )
     except (OSError, subprocess.SubprocessError):
-        return ""
+        return "unknown"
     if out.returncode != 0:
-        return ""
-    return out.stdout.strip()
+        return "unknown"
+    sha = out.stdout.strip()
+    return sha or "unknown"
 
 
 def save(d):
     d["meta"]["updated"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
-    sha = code_sha()
-    if sha:
-        d["meta"]["code_sha"] = sha
+    d["meta"]["code_sha"] = code_sha()
     os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
     tmp = LEDGER + ".tmp"
     with open(tmp, "w") as f:

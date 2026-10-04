@@ -114,11 +114,13 @@ class Repo:
     def close(self):
         self.tmp.cleanup()
 
-    def run(self):
+    def run(self, extra_env=None):
         env = os.environ.copy()
         for key in ("MARKET_DAILY_REEXEC", "MARKET_CODE_SHA", "GIT_DIR",
                     "GIT_WORK_TREE", "GIT_INDEX_FILE"):
             env.pop(key, None)
+        if extra_env:
+            env.update(extra_env)
         env["GIT_TERMINAL_PROMPT"] = "0"
         return subprocess.run(
             ["bash", os.path.join(self.clone, "scripts", "market_daily.sh")],
@@ -167,11 +169,26 @@ def case_static():
        "homebrew is prepended only when that directory exists")
     ok("set -euo pipefail" in text, "the script sets -euo pipefail")
     ok("--autostash" not in text, "the script does not autostash")
-    ok("git pull --no-rebase --ff-only origin main" in text,
+    ok("pull --no-rebase --ff-only origin main" in text,
        "the update is a fast-forward pull of origin/main")
     ok("MARKET_DAILY_REEXEC" in text and 'main "$@"' in text and text.rstrip().endswith("exit"),
        "the body is a function, re-exec'd once, then exit")
     ok("MARKET_CODE_SHA" in text, "the code SHA is passed into market_track")
+    ok("git_remote()" in text and ">/dev/null" in text and '"$cmd" -q' in text,
+       "fetch, pull, and push are quiet and discard output")
+    invoked = [
+        line.strip() for line in text.splitlines()
+        if line.strip().startswith("git ") and not line.strip().startswith("git_remote")
+        and not line.strip().startswith("git -c") and not line.strip().startswith("git rebase")
+        and not line.strip().startswith("git rev-parse") and not line.strip().startswith("git diff")
+        and not line.strip().startswith("git checkout") and not line.strip().startswith("git commit")
+        and not line.strip().startswith("git add") and not line.strip().startswith("git reset")
+    ]
+    ok(not any(line.startswith("git fetch") or line.startswith("git pull") or line.startswith("git push")
+               for line in invoked),
+       "fetch, pull, and push are only reached through the quiet wrapper")
+    ok("git push --force" not in text and "push -f" not in text,
+       "the script does not force-push")
 
 
 def case_clean_main():
@@ -414,9 +431,139 @@ exit 0
         repo.close()
 
 
+def _ahead_with_new_stub(repo, rewind_tracking=False):
+    new_stub = STUB.replace(
+        'os.environ.get("STUB_MARKER", "ran")',
+        'os.environ.get("STUB_MARKER", "ran-new")',
+        1,
+    )
+    write(os.path.join(repo.clone, "market_track.py"), new_stub)
+    git(repo.clone, "add", "--", "market_track.py")
+    git(repo.clone, "commit", "-m", "new stub")
+    git(repo.clone, "push", "origin", "main")
+    git(repo.clone, "reset", "--hard", "HEAD~1")
+    old = repo.head()
+    if rewind_tracking:
+        # push moved refs/remotes/origin/main. The stale-guard bug is the
+        # checkout whose local origin/main was never refreshed, so HEAD still
+        # matches that ref while the bare origin is ahead.
+        git(repo.clone, "update-ref", "refs/remotes/origin/main", old)
+    return old
+
+
+def case_stale_reexec():
+    print("stale MARKET_DAILY_REEXEC does not grade old code")
+    repo = Repo()
+    try:
+        _ahead_with_new_stub(repo, rewind_tracking=True)
+        proc = repo.run(extra_env={"MARKET_DAILY_REEXEC": "1"})
+        graded_old = proc.returncode == 0 and repo.stub_lines() == ["ran"]
+        if graded_old or (proc.returncode != 0 and repo.stub_lines() != ["ran-new"]):
+            print_failure(proc)
+        ok(not graded_old, "a stale MARKET_DAILY_REEXEC=1 did not grade the old code and succeed")
+        ok(proc.returncode != 0 or repo.stub_lines() == ["ran-new"],
+           "a stale 1 refused or fast-forwarded onto the new stub")
+    finally:
+        repo.close()
+    repo = Repo()
+    try:
+        old = _ahead_with_new_stub(repo, rewind_tracking=True)
+        proc = repo.run(extra_env={"MARKET_DAILY_REEXEC": old})
+        text = combined(proc)
+        if not (proc.returncode != 0 and repo.stub_lines() == []):
+            print_failure(proc)
+        ok(proc.returncode != 0, f"a stale re-exec SHA exits non-zero ({proc.returncode})")
+        eq(repo.stub_lines(), [], "a stale re-exec SHA did not grade")
+        ok("re-exec SHA" in text, "the log names the stale re-exec SHA")
+    finally:
+        repo.close()
+
+
+def case_recover_ledger_commit():
+    print("leftover ledger commit is recovered")
+    repo = Repo()
+    try:
+        write(os.path.join(repo.clone, "data", "market_ledger.json"),
+              '{"meta": {"marker": "leftover"}, "trades": []}\n')
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "leftover ledger")
+        proc = repo.run()
+        text = combined(proc)
+        if proc.returncode != 0:
+            print_failure(proc)
+        eq(proc.returncode, 0, "a leftover ledger commit exits 0")
+        eq(repo.stub_lines(), ["ran"], "the run continued and graded")
+        log = git(repo.origin, "log", "--format=%s", "main").stdout
+        ok("leftover ledger" in log, "the leftover ledger commit was pushed")
+        ok("recovered the leftover ledger commit" in text, "the log says the leftover was recovered")
+    finally:
+        repo.close()
+
+
+def case_conflicting_leftover():
+    print("conflicting leftover ledger commit refuses")
+    repo = Repo()
+    try:
+        write(os.path.join(repo.clone, "data", "market_ledger.json"),
+              '{"meta": {"marker": "origin"}, "trades": []}\n')
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "origin ledger")
+        git(repo.clone, "push", "origin", "main")
+        git(repo.clone, "reset", "--hard", "HEAD~1")
+        write(os.path.join(repo.clone, "data", "market_ledger.json"),
+              '{"meta": {"marker": "local"}, "trades": []}\n')
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "local ledger")
+        proc = repo.run()
+        text = combined(proc)
+        ok(proc.returncode != 0, f"a conflicting leftover exits non-zero ({proc.returncode})")
+        ok("conflicted" in text and "git reset --hard origin/main" in text
+           and "without force-pushing" in text,
+           "the log says how to recover from the conflict without force-pushing")
+        eq(repo.stub_lines(), [], "the stub did not run")
+        ok(not os.path.isdir(os.path.join(repo.clone, ".git", "rebase-merge")),
+           "a conflicted rebase was aborted")
+        ok(not os.path.isdir(os.path.join(repo.clone, ".git", "rebase-apply")),
+           "no rebase-apply directory was left behind")
+        eq(repo.origin_ledger()["meta"].get("marker"), "origin",
+           "the conflicting commit was not force-pushed")
+    finally:
+        repo.close()
+
+
+def case_remote_url_quiet():
+    print("remote URL stays out of the log")
+    repo = Repo()
+    try:
+        url = git(repo.clone, "remote", "get-url", "origin").stdout.strip()
+        proc = repo.run()
+        text = combined(proc)
+        if proc.returncode != 0:
+            print_failure(proc)
+        eq(proc.returncode, 0, "a clean run still exits 0 with quiet remotes")
+        ok(url not in text, "the remote URL is not in the log")
+    finally:
+        repo.close()
+
+
+def _load_market_track():
+    path = os.environ.get("MARKET_TRACK_FILE")
+    if not path:
+        import market_track as MT
+        return MT
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("market_track_under_test", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    # The copy may live outside the repo. Grade against this checkout.
+    if hasattr(mod, "ROOT"):
+        mod.ROOT = ROOT
+    return mod
+
+
 def case_save_stamps_sha():
     print("market_track.save stamps code_sha with the ledger")
-    import market_track as MT
+    MT = _load_market_track()
     trade = {
         "id": "frozen-sample",
         "rule": "sw_rsi2_pullback",
@@ -449,6 +596,16 @@ def case_save_stamps_sha():
             ).stdout.strip()
             eq(fallback["meta"].get("code_sha"), head,
                "save without the env var reads git rev-parse HEAD")
+            os.environ["GIT_DIR"] = os.path.join(tmp.name, "missing-git")
+            MT.save({"trades": [dict(trade)], "meta": {
+                "code_sha": "stale-sha", "live_from": "2026-09-19"}})
+            unknown = json.loads(open(path, encoding="utf-8").read())
+            eq(unknown["meta"].get("code_sha"), "unknown",
+               "a missing SHA overwrites a stale code_sha with unknown")
+            eq(unknown["meta"].get("live_from"), "2026-09-19",
+               "unknown does not drop the other meta")
+            eq(unknown["trades"], [trade], "unknown does not change the trades")
+            os.environ.pop("GIT_DIR", None)
             removed = {
                 "cr_btc_2200", "dt_intraday_mom", "sw_52w_breakout", "sw_ma_cross_rsi",
                 "cr_trend20", "dt_orb30", "dt_orb30_long", "dt_vwap_reclaim",
@@ -456,6 +613,7 @@ def case_save_stamps_sha():
             eq(MT.REMOVED_RULES, removed, "REMOVED_RULES is unchanged")
         finally:
             MT.LEDGER = previous
+            os.environ.pop("GIT_DIR", None)
             if saved is None:
                 os.environ.pop("MARKET_CODE_SHA", None)
             else:
@@ -479,13 +637,11 @@ def main():
     case_fetch_fails()
     case_merge_in_progress()
     case_push_retry()
-    # The stamp check imports the repo's market_track. Skip it when the test is
-    # pointed at another script, so a before/after of main's runner stays offline
-    # and does not depend on this branch's Python.
-    if os.environ.get("MARKET_DAILY_SCRIPT"):
-        print("market_track.save stamp skipped (MARKET_DAILY_SCRIPT is set)")
-    else:
-        case_save_stamps_sha()
+    case_stale_reexec()
+    case_recover_ledger_commit()
+    case_conflicting_leftover()
+    case_remote_url_quiet()
+    case_save_stamps_sha()
     print()
     if FAILS:
         print(f"FAILED: {len(FAILS)}")

@@ -17,8 +17,10 @@
 #
 # Bash reads a script as it runs. A pull that replaces this file mid-run can execute a mix of
 # the old bytes and the new ones. The body is one function, called on the last line, so this
-# process parses the whole file before fetch or pull. After the fast-forward it execs the
-# pulled file once (MARKET_DAILY_REEXEC=1). That second process only verifies and runs.
+# process parses the whole file before the update. After the fast-forward it execs the pulled
+# file once, with MARKET_DAILY_REEXEC set to the verified HEAD. That second process only
+# fetches (no pull) and runs when HEAD is still that SHA and still origin/main. Any other
+# value, including 1 or empty, is a fresh start.
 #
 # Untracked files are ignored. The VPS holds logs, editor leftovers, and the ledger's atomic
 # temp file, and none of those are the code under test. A tracked change is refused: the run
@@ -32,13 +34,26 @@ if [ -d /opt/homebrew/bin ]; then
   export PATH
 fi
 
+# fetch, pull, and push. -q, and stdio discarded, so a remote URL cannot reach the journal.
+git_remote() {
+  local cmd=$1
+  shift
+  git "$cmd" -q "$@" >/dev/null 2>&1
+}
+
+LEDGER_CONFLICT_MSG="refusing: rebase of the ledger commit onto origin/main conflicted. Recover by hand without force-pushing: if a rebase is still in progress run git rebase --abort, then either git reset --hard origin/main to drop the leftover ledger commit or rebase it yourself."
+
 main() {
-  local source script
+  local source script guard
   source=${BASH_SOURCE[0]}
   script=$(cd "$(dirname "$source")" && pwd)/$(basename "$source")
   cd "$(dirname "$script")/.."
 
-  if [ "${MARKET_DAILY_REEXEC:-}" != "1" ]; then
+  guard=${MARKET_DAILY_REEXEC:-}
+  # Only a full SHA is a re-exec guard. 1, empty, or anything else starts over.
+  if [[ "$guard" =~ ^[0-9a-f]{40}$ ]]; then
+    verify_reexec "$guard"
+  else
     sync_origin "$script" "$@"
   fi
   verify_checkout
@@ -49,7 +64,7 @@ sync_origin() {
   local script=$1
   shift
   echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) market daily ==="
-  if ! git fetch origin main; then
+  if ! git_remote fetch origin main; then
     echo "refusing: git fetch origin main failed"
     exit 1
   fi
@@ -70,23 +85,57 @@ sync_origin() {
     fi
     echo "checked out main"
   fi
-  local ahead
+  local ahead recover_status
   ahead=$(git rev-list --count origin/main..HEAD)
   if [ "$ahead" != "0" ]; then
-    echo "refusing: ${ahead} local commit(s) not on origin/main"
+    if ! ahead_is_ledger_only; then
+      echo "refusing: ${ahead} local commit(s) not on origin/main"
+      exit 1
+    fi
+    echo "recovering ${ahead} ledger commit(s) left off origin/main"
+    recover_status=0
+    rebase_ledger_only || recover_status=$?
+    if [ "$recover_status" -ne 0 ]; then
+      if [ "$recover_status" -eq 2 ]; then
+        echo "$LEDGER_CONFLICT_MSG"
+      else
+        echo "refusing: ${ahead} local commit(s) not on origin/main"
+      fi
+      exit 1
+    fi
+    if ! git_remote push origin main; then
+      echo "refusing: could not push the recovered ledger commit"
+      exit 1
+    fi
+    echo "recovered the leftover ledger commit"
+  fi
+  if tracked_dirty; then
+    echo "refusing: tracked tree is dirty"
     exit 1
   fi
-  # A tracked edit that does not overlap the incoming commit would otherwise
-  # survive the fast-forward. Pull first, then the re-exec'd copy refuses to run.
-  if ! git pull --no-rebase --ff-only origin main; then
-    if tracked_dirty; then
-      echo "refusing: tracked tree is dirty"
-    fi
+  if ! git_remote pull --no-rebase --ff-only origin main; then
     echo "refusing: git pull --ff-only origin main failed"
     exit 1
   fi
-  export MARKET_DAILY_REEXEC=1
+  export MARKET_DAILY_REEXEC
+  MARKET_DAILY_REEXEC=$(git rev-parse HEAD)
   exec bash "$script" "$@"
+}
+
+verify_reexec() {
+  local guard=$1
+  echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) market daily (re-exec) ==="
+  if ! git_remote fetch origin main; then
+    echo "refusing: git fetch origin main failed"
+    exit 1
+  fi
+  local head upstream
+  head=$(git rev-parse HEAD)
+  upstream=$(git rev-parse origin/main)
+  if [ "$head" != "$upstream" ] || [ "$head" != "$guard" ]; then
+    echo "refusing: HEAD ${head} != origin/main ${upstream} or != re-exec SHA ${guard}"
+    exit 1
+  fi
 }
 
 verify_checkout() {
@@ -147,7 +196,7 @@ publish_ledger() {
     echo "refusing: ledger commit failed"
     exit 1
   fi
-  local attempt branch
+  local attempt branch recover_status
   for attempt in 1 2 3; do
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [ "$branch" != "main" ]; then
@@ -158,13 +207,19 @@ publish_ledger() {
       echo "refusing: would push a commit that is not only ledger data"
       exit 1
     fi
-    if git push origin main; then
+    if git_remote push origin main; then
       echo "published on attempt ${attempt}"
       exit 0
     fi
     echo "push rejected — rebasing ledger commit onto origin/main (attempt ${attempt})"
-    if ! rebase_ledger_only; then
-      echo "refusing: retry would rebase or push more than the ledger data files"
+    recover_status=0
+    rebase_ledger_only || recover_status=$?
+    if [ "$recover_status" -ne 0 ]; then
+      if [ "$recover_status" -eq 2 ]; then
+        echo "$LEDGER_CONFLICT_MSG"
+      else
+        echo "refusing: retry would rebase or push more than the ledger data files"
+      fi
       exit 1
     fi
   done
@@ -173,11 +228,18 @@ publish_ledger() {
 }
 
 rebase_or_merge() {
-  [ -d "$(git rev-parse --git-path rebase-merge)" ] && return 0
-  [ -d "$(git rev-parse --git-path rebase-apply)" ] && return 0
-  [ -f "$(git rev-parse --git-path MERGE_HEAD)" ] && return 0
-  [ -f "$(git rev-parse --git-path CHERRY_PICK_HEAD)" ] && return 0
-  [ -f "$(git rev-parse --git-path REVERT_HEAD)" ] && return 0
+  local path
+  # A failing rev-parse is treated as in progress: fail closed, do not run.
+  path=$(git rev-parse --git-path rebase-merge 2>/dev/null) || return 0
+  [ -d "$path" ] && return 0
+  path=$(git rev-parse --git-path rebase-apply 2>/dev/null) || return 0
+  [ -d "$path" ] && return 0
+  path=$(git rev-parse --git-path MERGE_HEAD 2>/dev/null) || return 0
+  [ -f "$path" ] && return 0
+  path=$(git rev-parse --git-path CHERRY_PICK_HEAD 2>/dev/null) || return 0
+  [ -f "$path" ] && return 0
+  path=$(git rev-parse --git-path REVERT_HEAD 2>/dev/null) || return 0
+  [ -f "$path" ] && return 0
   return 1
 }
 
@@ -246,7 +308,7 @@ ahead_is_ledger_only() {
 }
 
 rebase_ledger_only() {
-  if ! git fetch origin main; then
+  if ! git_remote fetch origin main; then
     echo "refusing: git fetch origin main failed during push retry"
     return 1
   fi
@@ -254,14 +316,20 @@ rebase_ledger_only() {
     return 1
   fi
   if ! git -c rebase.autoStash=false rebase --no-autostash origin/main; then
-    git rebase --abort || true
-    echo "refusing: rebase of the ledger commit onto origin/main failed"
+    local path in_rebase=0
+    path=$(git rev-parse --git-path rebase-merge 2>/dev/null) || path=""
+    [ -n "$path" ] && [ -d "$path" ] && in_rebase=1
+    path=$(git rev-parse --git-path rebase-apply 2>/dev/null) || path=""
+    [ -n "$path" ] && [ -d "$path" ] && in_rebase=1
+    if [ "$in_rebase" -eq 1 ]; then
+      git rebase --abort >/dev/null 2>&1 || true
+      return 2
+    fi
     return 1
   fi
   if rebase_or_merge; then
-    git rebase --abort || true
-    echo "refusing: rebase left a rebase or merge in progress"
-    return 1
+    git rebase --abort >/dev/null 2>&1 || true
+    return 2
   fi
   ahead_is_ledger_only
 }
