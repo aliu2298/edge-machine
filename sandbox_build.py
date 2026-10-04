@@ -2038,6 +2038,21 @@ def main():
     trade_out = os.path.join(os.path.dirname(OUT), "trading.html")
     _write(trade_out, label_cells(trading_page(now)))
     print(f"wrote {trade_out}")
+    # Soccer rides the same rebuild because it reads the same ledger. A failure here must
+    # not cost the Sandbox and Production pages that already rendered above.
+    #
+    # No Kalshi call happens here. lane-preflight.yml is deliberately `contents: read` with
+    # no credentials, and a separate test asserts this job does not run the pre-flight at
+    # all, because backup-refresh judges the tracker by its last success and a red
+    # pre-flight must not read as a dead tracker. The Soccer page therefore renders the
+    # pre-flight file only when one exists, and says how old it is.
+    try:
+        import soccer_build
+        soccer_out = os.path.join(os.path.dirname(OUT), "soccer.html")
+        _write(soccer_out, label_cells(soccer_build.build(now=now)))
+        print(f"wrote {soccer_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::soccer page not rebuilt ({type(exc).__name__}: {exc})")
     archive_dir = os.path.join(os.path.dirname(OUT), "archive")
     os.makedirs(archive_dir, exist_ok=True)
     keep = {"index.html"}

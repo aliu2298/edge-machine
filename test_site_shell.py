@@ -38,6 +38,7 @@ _CURRENT = {
     "production": 'href="./production.html" aria-current="page"',
     "trading": 'href="./trading.html" aria-current="page"',
     "nba": 'href="./nba.html" aria-current="page"',
+    "soccer": 'href="./soccer.html" aria-current="page"',
     "index": 'href="./sandbox.html" aria-current="page"',
 }
 
@@ -64,12 +65,12 @@ def _check_page(name, html, current):
     currents = re.findall(r'aria-current="page"', html)
     eq(len(currents), 1, f"{name} has exactly one aria-current")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
-    # The five links are the same set, in the same order, on every page.
+    # The six links are the same set, in the same order, on every page.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, ["Sandbox", "Production", "Trading", "NBA", "Method"],
+        eq(labels, ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Method"],
            f"{name} nav labels")
 
 
@@ -81,6 +82,12 @@ def _nba(now):
          "skipped": 0, "seed": {"span": ["2026-03-25", "2026-04-12"], "games": 0,
                                 "teams": {}}},
         now=now)
+
+
+def _soccer(now):
+    """The Soccer page off an empty ledger, so the shell is checked without live data."""
+    import soccer_build
+    return soccer_build.build({"quotes": []}, {"pairs": {}}, now=now)
 
 
 def _pages():
@@ -97,6 +104,7 @@ def _pages():
             {"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=now)),
         ("trading.html", "trading", lambda: SB.trading_page(now)),
         ("nba.html", "nba", lambda: _nba(now)),
+        ("soccer.html", "soccer", lambda: _soccer(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:
