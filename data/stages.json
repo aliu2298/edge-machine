@@ -663,6 +663,42 @@
    "pair": "pm_combo3|tennis_pmcombo",
    "reason": "legs widened to 0.70-0.85 by hand; record restarts",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T07:03:02+00:00",
+   "evidence": {
+    "base_roi": 0.0274,
+    "clv": 0.0117,
+    "clv_n": 18,
+    "n": 18,
+    "own_roi": 0.2143,
+    "roi": 0.2143,
+    "roi_fee": 0.1957,
+    "span_days": 9.3854,
+    "weeks": 1,
+    "z": 1.6573
+   },
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "reason": "moved to Production by hand on 2026-10-04",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-04T07:03:02+00:00",
+   "evidence": {
+    "base_roi": 0.0274,
+    "clv": 0.0117,
+    "clv_n": 18,
+    "n": 18,
+    "own_roi": 0.2143,
+    "roi": 0.2143,
+    "roi_fee": 0.1957,
+    "span_days": 9.3854,
+    "weeks": 1,
+    "z": 1.6573
+   },
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -827,7 +863,27 @@
    "reset": "2026-09-24: band narrowed again to 0.77-0.81; the 0.75-0.80 record is on file but counts toward nothing here \u2014 a 0.77-0.81 contract is not a 0.75-0.80 one",
    "since": "2026-09-24T13:16:04+00:00",
    "stage": "sandbox"
+  },
+  "u35_low_scoring|soccer_u35_intl": {
+   "by_hand": "2026-10-04",
+   "entry": {
+    "base_roi": 0.0274,
+    "clv": 0.0117,
+    "clv_n": 18,
+    "n": 18,
+    "own_roi": 0.2143,
+    "roi": 0.2143,
+    "roi_fee": 0.1957,
+    "span_days": 9.3854,
+    "weeks": 1,
+    "z": 1.6573
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-04T07:03:02+00:00",
+   "ready_at": "2026-10-04T07:03:02+00:00",
+   "ready_since": "2026-10-04T07:03:02+00:00",
+   "stage": "production"
   }
  },
- "updated": "2026-10-04T06:37:13+00:00"
+ "updated": "2026-10-04T07:03:02+00:00"
 }
