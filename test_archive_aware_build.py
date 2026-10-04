@@ -376,6 +376,143 @@ def _same_start():
     eq(round(row["pnl"], 2), 10.0, "the first archived copy is the one that counts")
 
 
+def _logged_id_tie():
+    """Same logged time. id is the tiebreak, and it has to win in every merge.
+
+    logged alone keeps whichever list the row sits in. That is enough for Spot,
+    whose rungs were logged at different times, and not enough for Corners.
+    The favourite-population scan inside assess() merges the archive on its
+    own, so the same key has to be used there too.
+    """
+    print("\nsame logged time, id breaks the tie")
+    start = "2026-09-10T17:00:00+00:00"
+    logged = "2026-09-09T12:00:00+00:00"
+    close_at = "2026-09-10T16:30:00+00:00"
+    # Lower id, already archived. Higher id, still live, listed first.
+    low = _bet(
+        id="corners-a", source="corners_under", sport="soccer_corners",
+        venue="polymarket_us", status="won", price=0.55, pnl=81.82,
+        logged=logged, settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="KXCORNERS-MATCH1-2",
+        close_price=0.40, close_at=close_at)
+    high = _bet(
+        id="corners-b", source="corners_under", sport="soccer_corners",
+        venue="polymarket_us", status="won", price=0.45, pnl=122.22,
+        logged=logged, settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="KXCORNERS-MATCH1-4",
+        close_price=0.80, close_at=close_at)
+    d = {
+        "quotes": [high],
+        "_archive": [low],
+        "meta": {}, "coverage": {}, "retired": {},
+    }
+    corners = T.assess(d, "corners_under", "soccer_corners", venues=T.TRADEABLE_VENUES)
+    after = T.assess(_rollup(d, voids=True), "corners_under", "soccer_corners",
+                     venues=T.TRADEABLE_VENUES)
+    # Average price 0.50, and the lower id's close is 0.40.
+    eq(round(corners["clv"], 4) if corners["clv"] is not None else None, -0.1,
+       "the corners representative is the lower id, not the live row")
+    eq((after["clv"], after["clv_n"]), (corners["clv"], corners["clv_n"]),
+       "the corners representative survives the roll-up when logged times match")
+
+    # Favourite on every match. The lower id is the 0.60 favourite; the live
+    # row is the 0.80. Logged alone keeps the live row until it is archived.
+    rule = _bet(
+        id="rule-1", source="mls_away_band", sport="soccer",
+        venue="polymarket_us", status="won", price=0.50, pnl=100.0,
+        price_a=0.50, price_b=0.50, result="a",
+        logged="2026-09-08T12:00:00+00:00", settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="RULE-1")
+    pop_low = _bet(
+        id="a-pop", source="polymarket_us", sport="soccer",
+        venue="polymarket_us", status="won", price=0.60, pnl=66.67,
+        price_a=0.60, price_b=0.40, result="a",
+        logged=logged, settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="POP-1")
+    pop_high = _bet(
+        id="b-pop", source="polymarket_us", sport="soccer",
+        venue="polymarket_us", status="won", price=0.80, pnl=25.0,
+        price_a=0.80, price_b=0.20, result="a",
+        logged=logged, settled="2026-09-10T20:00:00+00:00",
+        start=start, market_id="POP-1")
+    book = {
+        "quotes": [pop_high, rule],
+        "_archive": [pop_low],
+        "meta": {}, "coverage": {}, "retired": {},
+    }
+
+    def baseline(rows):
+        got = T.assess(rows, "mls_away_band", "soccer")
+        return next(detail for key, _label, _ok, detail in got["criteria"]
+                    if key == "baseline")
+
+    before_line = baseline(book)
+    after_line = baseline(_rollup(book, voids=True))
+    ok("+83.3%" in before_line, "the population price is the lower id")
+    ok("+62.5%" not in before_line, "the live row does not win a logged-time tie")
+    eq(after_line, before_line, "the population price survives the roll-up")
+
+
+def _both_places():
+    """A crash can leave one id in the ledger and in the archive.
+
+    prune() has already added it to retired. All-sport score() must not count
+    it again, and the reach count production.py reads off all_bets() must not
+    either. The live row wins.
+    """
+    print("\nrow in the ledger and the archive")
+    live = _bet(id="both", status="won", pnl=80.0, stake=100.0, edge=0.05,
+                prob_a=0.60, result="a",
+                logged="2026-09-01T12:00:00+00:00", settled="2026-09-02T12:00:00+00:00",
+                start="2026-09-02T17:00:00+00:00", market_id="m-both")
+    archived = copy.deepcopy(live)
+    # retired holds this bet and one earlier bet that is not a row anywhere.
+    retired = {"espn_fpi": dict(quotes=2, bets=2, settled=2, won=2,
+                                staked=200.0, pnl=180.0, brier_sum=0.25, brier_n=2)}
+    d = {"quotes": [live], "_archive": [archived], "retired": retired}
+    row = T.score(d)["espn_fpi"]
+    eq(row["bets"], 2, "a duplicated id is not in the live count and retired")
+    eq(row["settled"], 2, "the settled total counts that id once")
+    eq(round(row["pnl"], 2), 180.0, "P/L counts that id once")
+    eq(row["won"], 2, "wins count that id once")
+    reach = [q for q in T.all_bets(d)
+             if q.get("source") == "espn_fpi" and q.get("sport") == "nfl" and q.get("bet")]
+    eq(len(reach), 1, "reach counts a row in both places once")
+    eq(reach[0]["pnl"], 80.0, "the live row is the one that counts")
+
+
+def _empty_recent_note():
+    """The empty recent list must name 7 days, not the placeholder."""
+    print("\nempty recent note")
+    old = _bet(id="old-only", status="won",
+               logged="2026-08-01T12:00:00+00:00", settled="2026-08-02T12:00:00+00:00",
+               start="2026-08-02T17:00:00+00:00", market_id="m-old-only")
+    d = {"quotes": [old], "_archive": [], "meta": {}, "coverage": {}, "retired": {}}
+    html, _index, _weeks = SB.render_pages(now=NOW, d=d, st={"pairs": {}, "events": []})
+    ok("Nothing settled in the last 7 days." in html,
+       "an empty recent list says 7 days")
+    ok("Nothing settled in the last {RECENT_DAYS} days." not in html,
+       "the empty recent list does not print the placeholder")
+
+
+def _avg_edge_stable():
+    """All-sport avg_edge keeps an archived bet's edge. It is not on the page."""
+    print("\navg_edge across a roll-up")
+    a = _bet(id="edge-a", status="won", edge=0.10,
+             logged="2026-09-01T12:00:00+00:00", settled="2026-09-02T12:00:00+00:00",
+             start="2026-09-02T17:00:00+00:00", market_id="m-edge-a")
+    b = _bet(id="edge-b", status="won", edge=0.30,
+             logged="2026-09-03T12:00:00+00:00", settled="2026-09-04T12:00:00+00:00",
+             start="2026-09-04T17:00:00+00:00", market_id="m-edge-b")
+    d = {"quotes": [a, b], "_archive": [], "meta": {}, "coverage": {}, "retired": {}}
+    before = T.score(d)["espn_fpi"]["avg_edge"]
+    after = T.score(_rollup(d, voids=True))["espn_fpi"]["avg_edge"]
+    eq(round(before, 6), 0.2, "the two edges average 0.20")
+    eq(None if after is None else round(after, 6),
+       None if before is None else round(before, 6),
+       "avg_edge is the same after the bets roll up")
+
+
 def main():
     original = _ledger()
     before = _snapshot(original, ST)
@@ -398,6 +535,10 @@ def main():
 
     _dedup()
     _same_start()
+    _logged_id_tie()
+    _both_places()
+    _empty_recent_note()
+    _avg_edge_stable()
 
     print()
     if FAILS:

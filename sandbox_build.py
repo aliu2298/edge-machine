@@ -1893,7 +1893,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 <h2>Recently settled ({len(recent):,})</h2>
 <p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,} settled on the record{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
 {recent_note}{_tools("Search contests…", "Search recently settled bets") if recent else ""}
-{_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
+{_sortable(HIST_HEAD, recent_rows) if recent else f'<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>
 
 <section id="archive">
