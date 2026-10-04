@@ -12,6 +12,7 @@ dropped-tour leg still enters a basket. No network.
 import collections
 import json
 import math
+import os
 from datetime import datetime, timedelta, timezone
 
 import sandbox_build as SB
@@ -300,22 +301,44 @@ def _rounded(fig):
             round(fig["fade_z"], 2))
 
 
-def _figure_fixture():
-    """Two contests with a hand-checked record. Not read from the ledger.
+def _frozen_looked_at():
+    """The looked-at contests the note's figures were read from.
 
-    One win at 0.50 on Polymarket, fade hitting the other side at 0.50.
-    One loss at 0.25 on Kalshi, fade missing a 0.75 other side.
-    Unit 0.25, z 0.38, ROI -2.9%, fade -2.9% / z -0.38.
+    A checked-in snapshot under fixtures/, not under data/. A later tracker
+    row or a void on the live ledger does not move this file, so the note's
+    maths stay pinned to these contests.
     """
-    def q(mid, price, status, result, other, venue, day):
-        return dict(id=mid, source="tennis_fav_band", sport="tennis", bet=True,
-                    market_id=mid, tier="atp", pick="a", price=price, price_a=price,
-                    price_b=other, status=status, result=result, venue=venue,
-                    stake=100.0, date=day, settled="2026-09-01T00:00:00+00:00")
-    return [
-        q("aec-atp-win-bb-2026-09-01", 0.50, "won", "b", 0.50, "polymarket", "2026-09-01"),
-        q("aec-atp-loss-bb-2026-09-02", 0.25, "lost", "a", 0.75, "kalshi", "2026-09-02"),
-    ]
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "fixtures", "tennis_fav_looked_at.json")
+    with open(path) as fh:
+        return json.load(fh)
+
+
+def _check_frozen_note(rows):
+    """The published note figures, asserted only against the frozen snapshot."""
+    by = collections.defaultdict(list)
+    for q in rows:
+        by[_tier(q)].append(q)
+    kept = [q for q in rows if _tier(q) in KEEP]
+    atp = _figures(by["atp"])
+    wta = _figures(by["wtadb"])
+    keep_f = _figures(kept)
+    whole = _figures(rows)
+    eq(_rounded(_figures(rows)), _rounded(_spec_figures(rows)),
+       "the frozen snapshot follows the same rule on both implementations")
+    eq(len(rows), 648, "the frozen looked-at record is 648 contests")
+    eq((round(atp["unit"], 2), round(atp["z"], 2), round(atp["roi"] * 100, 1)),
+       (6.35, 2.33, 15.5), "frozen ATP: unit +6.35, z +2.33, ROI +15.5% after fees")
+    eq((wta["n"], round(wta["roi"] * 100, 1), round(wta["fade"] * 100, 1)),
+       (9, 12.0, -60.6), "frozen WTA Doubles: 9 contests, +12.0% after fees, fade -60.6%")
+    eq((round(keep_f["z"], 2), round(keep_f["fade"] * 100, 1), round(keep_f["fade_z"], 2)),
+       (2.76, -68.7, -3.06), "frozen kept set: z +2.76 before fees, fade -68.7% / z -3.06")
+    eq((round(whole["fade"] * 100, 1), round(whole["fade_z"], 2)),
+       (-24.1, -2.88), "frozen whole-band fade -24.1% / z -2.88")
+    days = {q["date"] for q in rows}
+    span = (datetime.fromisoformat(max(days)) - datetime.fromisoformat(min(days))).days + 1
+    eq((round(len(rows) / span, 1), round(len(kept) / span, 1)),
+       (36.0, 4.3), "frozen record: 36.0 contests a day, 4.3 on the kept tours")
 
 
 def _per_day(rows):
@@ -494,15 +517,7 @@ def main():
        "the unit P/L is before fees, one contract")
     d = T.load()
     _check_looked_at(d)
-    fx = _figure_fixture()
-    eq(_rounded(_figures(fx)), _rounded(_spec_figures(fx)),
-       "the fixture's figures follow the same rule on both implementations")
-    eq(_rounded(_figures(fx)), (2, 0.25, 0.38, -2.9, -2.9, -0.38),
-       "the two-row fixture is unit 0.25, z 0.38, ROI -2.9%, fade -2.9% / z -0.38")
-    fx_days = {q["date"] for q in fx}
-    fx_span = (datetime.fromisoformat(max(fx_days)) - datetime.fromisoformat(min(fx_days))).days + 1
-    eq((round(len(fx) / fx_span, 1), round(len(fx) / fx_span, 1)),
-       (1.0, 1.0), "two contests over two dates are 1.0 a day")
+    _check_frozen_note(_frozen_looked_at())
 
     print("\nthe page record restarts; the ledger rows stay")
     st = T.load_stages()
