@@ -3452,6 +3452,107 @@ def retire_venue_duplicates(d, verbose=True):
     return voided
 
 
+# The map is the row to void -> the row that stands.
+# Castaneda: the earlier Polymarket US row stands. pair_match has to agree.
+# Medvedev v Royer: Kalshi was logged first (2026-09-24T07:39:55Z, +28.21)
+# and the Polymarket US copy later (2026-09-26T06:43:41Z, +26.58). The starts
+# are 26.8h apart, so this one is pinned instead of matched.
+SETTLED_DUP_VOIDS = {
+    "mma_fav_band:KXUFCFIGHT-26SEP26CASHEI": "mma_fav_band:aec-ufc-johcas-alaten-2026-09-26",
+    "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23": "tennis_fav_band:KXATPMATCH-26SEP25MEDROY",
+}
+# Pinned void ids skip pair_match. Same lane, same side_a and side_b, same
+# pick, both settled won or lost bets. The contest window is not widened.
+SETTLED_DUP_PINNED = frozenset({
+    "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23",
+})
+
+
+def _ledger_row(d, row_id):
+    """The quote with this id, or the archived copy when the quote has rolled up."""
+    for q in d.get("quotes") or []:
+        if q.get("id") == row_id:
+            return q, False
+    for q in d.get("_archive") or []:
+        if q.get("id") == row_id:
+            return q, True
+    return None, False
+
+
+def _unroll_voided_archive(d, q, old_status, old_pnl):
+    """A pruned bet was folded into retired. Voiding it takes that P/L back out."""
+    r = (d.get("retired") or {}).get(q.get("source"))
+    if not r:
+        return
+    r["settled"] = r.get("settled", 0) - 1
+    if old_status == "won":
+        r["won"] = r.get("won", 0) - 1
+    r["staked"] = round(r.get("staked", 0.0) - float(q.get("stake") or 0.0), 2)
+    r["pnl"] = round(r.get("pnl", 0.0) - float(old_pnl or 0.0), 2)
+    if (q.get("result") in ("a", "b") and not q.get("untraded")
+            and q.get("prob_a") is not None):
+        term = (q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
+        r["brier_sum"] = r.get("brier_sum", 0.0) - term
+        r["brier_n"] = r.get("brier_n", 0) - 1
+
+
+def _pinned_same_side(later, kept):
+    """True when both rows name the same competitors and bet the same side."""
+    return (later.get("side_a") == kept.get("side_a")
+            and later.get("side_b") == kept.get("side_b")
+            and later.get("side_a") not in (None, "")
+            and later.get("side_b") not in (None, "")
+            and later.get("pick") == kept.get("pick"))
+
+
+def void_listed_settled_dups(d, verbose=True):
+    """Void the rows named in SETTLED_DUP_VOIDS when they are the same contest.
+
+    Both rows have to be in the ledger, in the same lane, betting the same
+    pick, and settled won or lost. A Castaneda entry also needs pair_match to
+    agree. A pinned entry (Medvedev v Royer) needs the same side_a and side_b
+    instead, because its starts are outside the contest window. The settled
+    time stays. The note is 'dup of <kept id>'. A row already voided is left
+    alone, so a second call changes nothing.
+    """
+    n = 0
+    for void_id, kept_id in SETTLED_DUP_VOIDS.items():
+        later, later_archived = _ledger_row(d, void_id)
+        kept, _kept_archived = _ledger_row(d, kept_id)
+        if later is None or kept is None:
+            continue
+        if (later.get("source"), later.get("sport")) != (kept.get("source"), kept.get("sport")):
+            continue
+        if not later.get("bet") or not kept.get("bet"):
+            continue
+        if later.get("status") not in ("won", "lost") or kept.get("status") not in ("won", "lost"):
+            continue
+        if void_id in SETTLED_DUP_PINNED:
+            if not _pinned_same_side(later, kept):
+                continue
+        else:
+            score, _flip = S.pair_match(later.get("side_a"), later.get("side_b"),
+                                        kept.get("side_a"), kept.get("side_b"),
+                                        sport=later.get("sport"))
+            if not score or later.get("pick") != kept.get("pick"):
+                continue
+        old_status, old_pnl = later.get("status"), later.get("pnl")
+        settled = later.get("settled")
+        later["status"] = "void"
+        later["pnl"] = 0.0
+        later["note"] = f"dup of {kept_id}"
+        later["settled"] = settled
+        if later_archived:
+            _unroll_voided_archive(d, later, old_status, old_pnl)
+            month = str(settled or "")[:7]
+            if month:
+                d.setdefault("_archive_dirty", set()).add(month)
+        n += 1
+    if verbose and n:
+        print(f"  settled duplicates: voided {n}")
+    return n
+
+
 def retire_pre_gate(d, now=None, verbose=True):
     """One rule, applied blind to outcomes, for quotes logged before the book gate.
 
@@ -3609,6 +3710,7 @@ def main():
     retire_pre_gate(d)
     retire_late(d)
     retire_venue_duplicates(d)
+    void_listed_settled_dups(d)
     # Stage timings are printed so a slow run in CI names its own culprit. The first
     # run with soccer on Kalshi took 14.6 minutes against 3 before it, with only 25s of
     # CPU — all of it waiting on the network, and no log line said where.
