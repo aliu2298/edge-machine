@@ -276,13 +276,31 @@ CARDS = r"""
 NAV = r"""
 () => {
   const vw = document.documentElement.clientWidth;
-  const links = [...document.querySelectorAll("nav.main a, nav.toc a, #vw")];
+  const links = [...document.querySelectorAll("nav.main a, nav.toc a, nav.crumbs a, #vw")];
+  function scroller(el) {
+    let n = el.parentElement;
+    while (n && n !== document.documentElement) {
+      const ox = getComputedStyle(n).overflowX;
+      if ((ox === "auto" || ox === "scroll" || ox === "hidden")
+          && n.scrollWidth > n.clientWidth + 1) {
+        const r = n.getBoundingClientRect();
+        return { left: r.left, right: r.right };
+      }
+      n = n.parentElement;
+    }
+    return null;
+  }
   return {
     vw: vw,
     scrollWidth: document.documentElement.scrollWidth,
     links: links.map((a) => {
       const r = a.getBoundingClientRect();
-      return { text: a.textContent.trim(), left: r.left, right: r.right };
+      return {
+        text: a.textContent.trim(),
+        left: r.left,
+        right: r.right,
+        scroller: scroller(a),
+      };
     }),
   };
 }
@@ -365,19 +383,23 @@ LABELS = r"""
 
 
 def _clipped(got):
-    return [
-        a for a in got["links"]
-        if a["left"] < -1 or a["right"] > got["vw"] + 1
-    ]
+    """A link past the viewport is fine when it lives in a scroller that does not."""
+    bad = []
+    for a in got["links"]:
+        if a["left"] >= -1 and a["right"] <= got["vw"] + 1:
+            continue
+        box = a.get("scroller")
+        if box and box["left"] >= -1 and box["right"] <= got["vw"] + 1:
+            continue
+        bad.append(a)
+    return bad
 
 
 def browser_checks():
     print("\nbrowser")
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        print("::warning::Playwright is not installed; browser checks in test_site_layout.py were not run")
-        print("  skipped: playwright is not installed; browser check not run")
+    from require_browser import require_browser
+    sync_playwright = require_browser("test_site_layout.py")
+    if sync_playwright is None:
         return
     fx_dir = tempfile.mkdtemp(prefix="layout-fx-")
     with open(os.path.join(fx_dir, "layout.html"), "w", encoding="utf-8") as fh:

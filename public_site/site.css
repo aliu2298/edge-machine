@@ -17,6 +17,8 @@
   --warn: #f5c26b;
   --font: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --r: 14px;
+  /* Width of the phone nav's edge fade. site.js and tables.js read this. */
+  --nav-fade: 22px;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 108px; }
@@ -123,6 +125,51 @@ nav.toc a:hover { color: var(--fg); }
   flex: 0 0 auto;
 }
 .vw:hover { color: var(--fg); }
+/* Cards | Table. A fixed-width control, not a nav pill. */
+.view-toggle {
+  display: inline-flex;
+  flex: 0 0 148px;
+  width: 148px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.view-toggle button {
+  flex: 1 1 50%;
+  margin: 0;
+  min-height: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--mut);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.view-toggle button + button { box-shadow: inset 1px 0 0 var(--line); }
+.view-toggle button[aria-pressed="true"] { background: var(--raised); color: var(--fg); }
+.view-toggle button:hover { color: var(--fg); }
+/* The control clips overflow. An outset ring is cut off; draw it inside the segment. */
+.view-toggle button:focus-visible { outline-offset: -3px; position: relative; z-index: 1; }
+nav.crumbs {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 24px 10px;
+  font-size: 13px;
+  color: var(--mut);
+}
+nav.crumbs a { color: var(--mut); font-weight: 500; text-decoration: none; }
+nav.crumbs a:hover { color: var(--fg); text-decoration: none; }
+nav.crumbs .here { color: var(--fg); font-weight: 600; }
+nav.crumbs .sep { color: var(--mut); }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 40px 24px 80px; }
 h1 {
   font-size: 40px;
@@ -518,12 +565,103 @@ html[data-view="cards"] td[data-l="#"] > .sm { flex: 0 0 auto; text-align: left;
 html[data-view="cards"] td, html[data-view="cards"] th { position: static; left: auto; box-shadow: none; }
 
 @media (max-width: 640px) {
+  /* The stuck bar is about 61px. scroll-padding alone lands a target ~11px under it.
+     A section scroll-margin would stack on top of that. Desktop stays 108px. */
+  html { scroll-padding-top: 72px; }
+  section { scroll-margin-top: 0; }
   :root { --sticky-top: 0px; }
   /* Phone tables scroll inside the card. Leave the header row where it was. */
   thead { position: static; top: auto; z-index: auto; }
-  .topbar { padding: 0 16px; gap: 10px; }
+  /* The section nav and the breadcrumb scroll away. Only the top bar sticks,
+     one row, about 60px: 8px padding, a 44px pill, 8px padding, the border. */
+  /* display:contents lets the top bar stick for the whole page. A sticky
+     child cannot travel outside its parent, and the header is only as tall
+     as the bar plus the section nav. */
+  header.site {
+    display: contents;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(11, 12, 15, .92);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 16px;
+    gap: 10px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .brand { flex: 0 0 auto; font-size: 16px; line-height: 44px; }
   .stamp { display: none; }
-  nav.toc { padding: 0 16px 8px; gap: 14px; }
+  nav.main {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  nav.main::after { content: ""; flex: 0 0 12px; }
+  nav.main::-webkit-scrollbar { display: none; height: 0; }
+  nav.main.nav-fade, nav.toc.nav-fade {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+  }
+  nav.main.nav-fade-left, nav.toc.nav-fade-left {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+    mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+  }
+  nav.main.nav-fade.nav-fade-left, nav.toc.nav-fade.nav-fade-left {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+  }
+  nav.main a {
+    min-height: 44px;
+    height: 44px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+  }
+  /* The pill fills the scroller. An outset ring is clipped by overflow-y:hidden. */
+  nav.main a:focus-visible { outline-offset: -3px; }
+  nav.toc, nav.crumbs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    min-width: 0;
+    gap: 8px;
+    padding: 8px 16px 8px;
+  }
+  nav.toc::-webkit-scrollbar, nav.crumbs::-webkit-scrollbar { display: none; height: 0; }
+  nav.toc a, nav.crumbs a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+  }
+  nav.toc a {
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--mut);
+  }
+  nav.crumbs { align-items: center; gap: 0; }
+  nav.crumbs a { padding: 0 4px; }
+  nav.crumbs .sep { padding: 0 8px; }
+  nav.crumbs .here {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+  }
   .wrap { padding: 24px 16px 60px; }
   h1 { font-size: 30px; }
   .lede, .sub { font-size: 16px; }
