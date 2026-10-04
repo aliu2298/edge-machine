@@ -1571,7 +1571,8 @@ def trading_rows(md):
         meta = MT.RULES[r["rule"]]
         label, chip, _o = MT.VERDICTS[r["verdict"]]
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
-                if r["verdict"] in ("promising", "behind", "early") else "")
+                if r["verdict"] in ("promising", "behind", "early") else
+                f'<div class="sm mut">{esc(meta["retired"])}</div>' if r["verdict"] == "retired" else "")
         pc = lambda x: "—" if x is None else f'<span class="{fmt.tone(x, ".2f", 100)}">{fmt.pct(x, digits=2, sign=True)}</span>'
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
         # coin against cash, since set against its own asset it would show zero edge by design.

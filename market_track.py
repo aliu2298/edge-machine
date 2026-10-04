@@ -320,6 +320,8 @@ RULES = {
              "the window itself. The question is only whether the overnight premium beats 10bp "
              "of round-trip cost a night — a hard bar at this frequency."),
     "dt_orb30": dict(
+        retired="2026-10-04: over 50 closed trades and behind SPY — "
+                "10 entry days, 158 trades, -0.27% a day v SPY",
         lane="day", label="Opening-range breakout (30 min)", signal=None, exit=None,
         note="Pre-registered 2026-09-19. On the 20 most liquid names only: take the first "
              "5-minute close beyond the first 30 minutes' range, enter at the next bar's open, "
@@ -329,6 +331,8 @@ RULES = {
              "after them; this lane asks whether US equities, with an actual opening auction, "
              "behave differently."),
     "dt_orb30_long": dict(
+        retired="2026-10-04: over 50 closed trades and behind SPY — "
+                "8 entry days, 56 trades, -0.22% a day v SPY",
         lane="day", label="Opening-range breakout, long only", signal=None, exit=None,
         live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22: the opening-range breakout a cash account can actually "
@@ -346,6 +350,8 @@ RULES = {
              "ten other ETFs; the 2024 'Beat the Market' paper builds a full intraday momentum "
              "system on the same effect. Judged against cash, after 5bp a side."),
     "dt_vwap_reclaim": dict(
+        retired="2026-10-04: over 50 closed trades and behind SPY — "
+                "10 entry days, 153 trades, -0.22% a day v SPY",
         lane="day", label="VWAP reclaim", signal=None, exit=None,
         note="Pre-registered 2026-09-19. Long only, same 20 names: after a stock has traded "
              "below the session VWAP, take the first 5-minute close back above it from 14:00 UTC, "
@@ -373,6 +379,8 @@ RULES = {
              "against an edge that was a few basis points a night. If it survives that, it is "
              "real; the expectation is that it does not."),
 }
+# A retired rule logs no new trades; its record stays on the page under "Retired".
+ACTIVE = {k: v for k, v in RULES.items() if not v.get("retired")}
 
 
 # --------------------------------------------------------------------------- the day lane
@@ -693,6 +701,7 @@ VERDICTS = {                       # key -> (label, chip class, order)
     "early":     ("Too early", "n", 4),
     "noedge":    ("No edge", "x", 5),
     "waiting":   ("Waiting for trades", "n", 6),
+    "retired":   ("Retired", "x", 7),
 }
 
 
@@ -726,6 +735,8 @@ def assess(d, rule):
         v = ("proven" if ahead and edge_t >= 2 else "working") if ahead else "noedge"
     else:
         v = "promising" if (edge or 0) > 0 and (mean or 0) > 0 else "behind"
+    if (RULES.get(rule) or {}).get("retired"):
+        v = "retired"
     r = (d.get("research") or {}).get(rule) or {}
     return dict(rule=rule, days=n, trades=len(ts), open=len(op), verdict=v,
                 research_days=r.get("days", 0), research_trades=r.get("trades", 0),
@@ -753,12 +764,13 @@ def main():
     bars.update(M.crypto_bars(M.CRYPTO, "1Day", start=start))
     print(f"bars for {len(bars)} symbols")
     live_from = d["meta"].setdefault("live_from", datetime.date.today().isoformat())
-    added = scan(bars, d, research_before=live_from)
+    added = scan(bars, d, rules=ACTIVE, research_before=live_from)
     closed = grade(bars, d)
     recent = (datetime.date.today() - datetime.timedelta(days=30)).isoformat()
     intraday = M.bars(sorted(set(DAY_UNIVERSE + [BENCH] + M.ETFS)), "5Min", start=recent)
-    added += scan_day(intraday, d, research_before=live_from)
-    added += scan_hours(M.crypto_bars(["BTC/USD"], "1Hour", start=recent), d, research_before=live_from)
+    added += scan_day(intraday, d, rules=ACTIVE, research_before=live_from)
+    added += scan_hours(M.crypto_bars(["BTC/USD"], "1Hour", start=recent), d, rules=ACTIVE,
+                         research_before=live_from)
     save(d)
     print(f"logged {added} new trade(s), closed {closed}")
     for r in report(d):
