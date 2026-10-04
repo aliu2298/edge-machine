@@ -405,9 +405,10 @@ def _logged_id(q):
 # One built list per loaded ledger. hide_removed, hide_refused_tours and a
 # roll-up each hand back a new dict with new quotes and archive lists, so they
 # miss. A build asks for this about 1,650 times; rebuilding it each time walks
-# every live row and every archived row again. The token is the list object
-# and its length. It assumes a row is not flipped in place without an append:
-# that leaves the token unchanged, and the cached list is returned as built.
+# every live row and every archived row again. The token covers both lists'
+# ids and both lengths. Any in-place edit that keeps the length the same
+# makes the cache stale, not only a flip: the token does not change, and
+# the cached list is returned as built.
 _BET_ROWS_CACHE = {}
 _BET_ROWS_MAX = 48
 
@@ -507,8 +508,9 @@ def save(d, archive_dir=None):
     archive = d.pop("_archive", None)
     try:
         # Ledger first, archive second. A crash between them leaves the row
-        # in retired and not yet in the archive file. It does not leave the
-        # id in both lists.
+        # in retired and not in the archive file. That archive copy is lost:
+        # the next prune() cannot re-archive a row that has left the ledger.
+        # It does not leave the id in both lists.
         atomic_write_json(LEDGER, d, prefix=".ledger-")
         if dirty and archive is not None:
             save_archive(archive, dirty, archive_dir)
@@ -1870,7 +1872,9 @@ def _still_live_folded(d):
     The archive copy is the row prune() folded. The live quote wins, so those
     totals are taken back out and the quote is counted on its own. save()
     writes the ledger before the archive, so a crash between those writes
-    leaves the row in retired and not yet in the archive file.
+    leaves the row in retired and not in the archive file. That archive
+    copy is lost: the next prune() cannot re-archive a row that has left
+    the ledger.
     """
     live = {q.get("id") for q in d["quotes"] if q.get("id") is not None}
     seen = set()
