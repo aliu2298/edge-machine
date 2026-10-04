@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""A crash duplicate is counted once in the Production reach cell.
+"""An id stored in both the ledger and the archive is counted once.
 
-A row can sit in the live ledger and in the archive at once, when a run dies
-between those two writes. The reach cell must count that id once, and the
+A bad merge or a doubled archive file can leave that id in both lists.
+The reach cell must count that id once, and the
 live copy wins. The feed still walks all_bets(), so its skipped-bet count
 is not part of this fix.
 
@@ -118,7 +118,7 @@ def main():
     html = production.page(d, st, blob, "", now=NOW)
     cell = _cell(html)
     eq(cell, '<span class="neg">13 of 32</span><div class="sm mut">reachable</div>',
-       "the reach cell counts the crash duplicate once")
+       "An id stored in both the ledger and the archive (a bad merge or a doubled archive file) is counted once")
     ok("13 of 34" not in html, "the inflated 13 of 34 is not on the page")
 
     print("\nthe feed's own skipped-bet count still sees both copies")
