@@ -2088,6 +2088,16 @@ def main():
         print(f"wrote {cricket_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::cricket page not rebuilt ({type(exc).__name__}: {exc})")
+    # Crypto is the one domain page whose record is counted in MARKET-DAYS rather than
+    # bets, because its coins move together. The page exists to say so where the record is
+    # read; the Sandbox shows both pairs inside the folding Markets section.
+    try:
+        import crypto_build
+        crypto_out = os.path.join(os.path.dirname(OUT), "crypto.html")
+        _write(crypto_out, label_cells(crypto_build.build(now=now)))
+        print(f"wrote {crypto_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::crypto page not rebuilt ({type(exc).__name__}: {exc})")
     archive_dir = os.path.join(os.path.dirname(OUT), "archive")
     os.makedirs(archive_dir, exist_ok=True)
     keep = {"index.html"}

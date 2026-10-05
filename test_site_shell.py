@@ -37,7 +37,8 @@ _NAV_HREFS = (
     'href="./cricket.html"',
     'href="./sandbox.html#method"',
 )
-_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Method"]
+_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket",
+               "Crypto", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
@@ -46,6 +47,7 @@ _CURRENT = {
     "soccer": 'href="./soccer.html" aria-current="page"',
     "tennis": 'href="./tennis.html" aria-current="page"',
     "cricket": 'href="./cricket.html" aria-current="page"',
+    "crypto": 'href="./crypto.html" aria-current="page"',
     "index": 'href="./sandbox.html" aria-current="page"',
 }
 
@@ -109,6 +111,12 @@ def _cricket(now):
     return cricket_build.build({"quotes": []}, {"pairs": {}}, now=now)
 
 
+def _crypto(now):
+    """The Crypto page off an empty ledger, so the shell is checked without live data."""
+    import crypto_build
+    return crypto_build.build({"quotes": []}, {"pairs": {}}, now=now)
+
+
 def _pages():
     """Each published page, even when a later one cannot be built yet."""
     import sandbox_build as SB
@@ -126,6 +134,7 @@ def _pages():
         ("soccer.html", "soccer", lambda: _soccer(now)),
         ("tennis.html", "tennis", lambda: _tennis(now)),
         ("cricket.html", "cricket", lambda: _cricket(now)),
+        ("crypto.html", "crypto", lambda: _crypto(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:

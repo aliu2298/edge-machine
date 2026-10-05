@@ -89,8 +89,14 @@ def main():
        "both weather pairs are eliminated and all four sources stay off every page")
     for key in ("covers|mlb", "covers|nfl", "nhl_dog_pl|nhl_pl", "nws|climate", "nws_fade|climate"):
         ok(key not in T.PAIR_OVERRIDES, f"{key} is not a Production pair")
-    ok(S.SOURCES["spot"]["connected"] and "spot" not in S.REMOVED_SOURCES,
-       "spot stays connected")
+    # spot was RETIRED 2026-10-05, not eliminated: its question was answered (flat over
+    # 26 market-days, z -0.07) and a flat null hypothesis has no fade to keep open. It
+    # stays OFF the removed list on purpose, so its two open bets still grade and its
+    # record stays readable on the page.
+    ok(not S.SOURCES["spot"]["connected"] and S.SOURCES["spot"].get("retired"),
+       "spot is retired with its finding recorded")
+    ok("spot" not in S.REMOVED_SOURCES and not S.lane_removed("spot", "crypto"),
+       "and retired, not eliminated -- so grading and its record continue")
     ok("scores24" in S.REMOVED_SOURCES and "sportsgambler" in S.REMOVED_SOURCES
        and "soccerpredictions" in S.REMOVED_SOURCES,
        "scores24, sportsgambler, and soccerpredictions stay off the board")

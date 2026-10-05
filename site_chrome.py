@@ -16,6 +16,7 @@ PAGES = (
     ("soccer", "Soccer", "./soccer.html"),
     ("tennis", "Tennis", "./tennis.html"),
     ("cricket", "Cricket", "./cricket.html"),
+    ("crypto", "Crypto", "./crypto.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 
