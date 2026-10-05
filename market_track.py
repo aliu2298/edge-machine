@@ -27,6 +27,7 @@ import json
 import math
 import os
 import statistics
+import subprocess
 from zoneinfo import ZoneInfo
 
 import market_sources as M
@@ -619,12 +620,40 @@ def load():
     return d
 
 
+def code_sha():
+    """The checkout this run graded against, stamped into the ledger with the trades.
+
+    The daily runner passes MARKET_CODE_SHA from `git rev-parse HEAD` before it
+    commits the ledger, so the recorded SHA is the code that ran and not the
+    ledger commit that follows. A direct run reads that same rev-parse. When
+    neither is available the stamp is the string "unknown", which replaces any
+    previous meta.code_sha.
+    """
+    stamped = os.environ.get("MARKET_CODE_SHA", "").strip()
+    if stamped:
+        return stamped
+    try:
+        out = subprocess.run(
+            ["git", "-C", ROOT, "rev-parse", "HEAD"],
+            capture_output=True, text=True, timeout=10, check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+    if out.returncode != 0:
+        return "unknown"
+    sha = out.stdout.strip()
+    return sha or "unknown"
+
+
 def save(d):
     d["meta"]["updated"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    d["meta"]["code_sha"] = code_sha()
     os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
     tmp = LEDGER + ".tmp"
     with open(tmp, "w") as f:
         json.dump(d, f, indent=1, sort_keys=True)
+        f.flush()
+        os.fsync(f.fileno())
     os.replace(tmp, LEDGER)
 
 
