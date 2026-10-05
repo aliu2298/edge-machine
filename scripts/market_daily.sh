@@ -115,6 +115,9 @@ sync_origin() {
       fi
       exit 1
     fi
+    if ! ledger_files_are_pushable; then
+      exit 1
+    fi
     if ! git_remote push origin main; then
       echo "refusing: could not push the recovered ledger commit"
       exit 1
@@ -216,6 +219,9 @@ publish_ledger() {
       echo "refusing: would push a commit that is not only ledger data"
       exit 1
     fi
+    if ! ledger_files_are_pushable; then
+      exit 1
+    fi
     if git_remote push origin main; then
       echo "published on attempt ${attempt}"
       exit 0
@@ -286,6 +292,90 @@ staged_only_ledger() {
     esac
   done <<< "$names"
   [ "$any" = 1 ]
+}
+
+# Commits ahead of origin/main may be pushed only when each one adds or
+# modifies a ledger path as a regular file, and that path is still a
+# non-symlink regular file of JSON in the working tree.
+ledger_files_are_pushable() {
+  local commits c raw line meta path oldmode newmode status seen="" f
+  commits=$(git rev-list origin/main..HEAD) || {
+    echo "refusing: could not list commits ahead of origin/main"
+    return 1
+  }
+  if [ -z "$commits" ]; then
+    echo "refusing: nothing to push on top of origin/main"
+    return 1
+  fi
+  while IFS= read -r c; do
+    [ -z "$c" ] && continue
+    raw=$(git diff-tree --raw --no-commit-id --no-renames -r "$c") || {
+      echo "refusing: git diff-tree failed for ${c}"
+      return 1
+    }
+    if [ -z "$raw" ]; then
+      echo "refusing: commit ${c} does not touch the ledger data files"
+      return 1
+    fi
+    while IFS= read -r line; do
+      [ -z "$line" ] && continue
+      meta=${line%%$'\t'*}
+      path=${line#*$'\t'}
+      # :oldmode newmode oldsha newsha status
+      read -r oldmode newmode _ _ status <<< "${meta#:}"
+      case "$path" in
+        data/market_ledger.json|data/sp500.json) ;;
+        *)
+          echo "refusing: commit ${c} touches ${path}, not only ledger data"
+          return 1
+          ;;
+      esac
+      case "$newmode" in
+        120000)
+          echo "refusing: commit ${c} sets ${path} to mode 120000, a symlink"
+          return 1
+          ;;
+        100644|100755) ;;
+        *)
+          echo "refusing: commit ${c} sets ${path} to mode ${newmode}, not a regular file"
+          return 1
+          ;;
+      esac
+      case "$status" in
+        A|M) ;;
+        *)
+          echo "refusing: commit ${c} ${status} ${path}; only a normal-file add or modify may be pushed"
+          return 1
+          ;;
+      esac
+      case "$oldmode" in
+        000000|100644|100755) ;;
+        *)
+          echo "refusing: commit ${c} changes ${path} from mode ${oldmode}, not a regular file"
+          return 1
+          ;;
+      esac
+      case " ${seen} " in
+        *" ${path} "*) ;;
+        *) seen="${seen} ${path}" ;;
+      esac
+    done <<< "$raw"
+  done <<< "$commits"
+  for f in $seen; do
+    if [ -L "$f" ]; then
+      echo "refusing: ${f} is a symlink"
+      return 1
+    fi
+    if [ ! -f "$f" ]; then
+      echo "refusing: ${f} is not a regular file in the working tree"
+      return 1
+    fi
+    if ! python3 -c 'import json,sys; json.load(open(sys.argv[1], encoding="utf-8"))' "$f"; then
+      echo "refusing: ${f} is not valid JSON"
+      return 1
+    fi
+  done
+  return 0
 }
 
 ahead_is_ledger_only() {

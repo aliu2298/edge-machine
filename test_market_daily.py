@@ -570,6 +570,45 @@ def case_recover_ledger_commit():
         repo.close()
 
 
+def case_leftover_not_regular_json():
+    print("leftover symlink or invalid JSON is not pushed")
+    repo = Repo()
+    try:
+        path = os.path.join(repo.clone, "data", "market_ledger.json")
+        os.remove(path)
+        os.symlink("sp500.json", path)
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "leftover symlink")
+        proc = repo.run()
+        text = combined(proc)
+        log = git(repo.origin, "log", "--format=%s", "main").stdout
+        if proc.returncode == 0 or "leftover symlink" in log:
+            print_failure(proc)
+        ok(proc.returncode != 0, f"a leftover symlink exits non-zero ({proc.returncode})")
+        ok("symlink" in text or "120000" in text,
+           "the log names the symlink")
+        eq(repo.stub_lines(), [], "the stub did not run")
+        ok("leftover symlink" not in log, "the symlink commit was not pushed")
+    finally:
+        repo.close()
+    repo = Repo()
+    try:
+        write(os.path.join(repo.clone, "data", "market_ledger.json"), "{not json\n")
+        git(repo.clone, "add", "--", "data/market_ledger.json")
+        git(repo.clone, "commit", "-m", "leftover bad json")
+        proc = repo.run()
+        text = combined(proc)
+        log = git(repo.origin, "log", "--format=%s", "main").stdout
+        if proc.returncode == 0 or "leftover bad json" in log:
+            print_failure(proc)
+        ok(proc.returncode != 0, f"a leftover of invalid JSON exits non-zero ({proc.returncode})")
+        ok("not valid JSON" in text, "the log names the invalid JSON")
+        eq(repo.stub_lines(), [], "the stub did not run on invalid JSON")
+        ok("leftover bad json" not in log, "the invalid JSON commit was not pushed")
+    finally:
+        repo.close()
+
+
 def case_conflicting_leftover():
     print("conflicting leftover ledger commit refuses")
     repo = Repo()
@@ -711,6 +750,7 @@ def main():
     case_push_retry()
     case_stale_reexec()
     case_recover_ledger_commit()
+    case_leftover_not_regular_json()
     case_conflicting_leftover()
     case_remote_url_quiet()
     case_save_stamps_sha()
