@@ -7457,7 +7457,11 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # remains: (remaining - reserve) / runs left until the reset, where runs left assumes the
 # four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
 # day late in case it lands on the 1st in a timezone behind UTC.
-ODDS_RUNS_PER_DAY = 8          # = the tracker's cron (every 3h); pacing divides by it
+# 9 since 2026-10-05: the three-hourly cron plus the 18:11Z run added for crypto_fav_band,
+# whose window the three-hourly cadence straddles without landing in. This MUST match the
+# number of scheduled tracker runs or pacing divides the remaining credits by too few runs
+# and overspends.
+ODDS_RUNS_PER_DAY = 9          # = the tracker's cron (every 3h, plus 18:11Z)
 # Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
 # sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
 # with the venue by the betting edge, that sport's venue already prices like Pinnacle and a
