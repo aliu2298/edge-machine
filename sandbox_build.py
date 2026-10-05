@@ -370,15 +370,49 @@ def approval_table(d, scores, full=None):
 {''.join(rows)}</table></div>"""
 
 
+# Sports whose blind-baseline row comes off the Sandbox, decided by hand on 2026-10-05.
+#
+# A blind strategy is the bar a CHOICE has to clear. The five lanes taken off on
+# 2026-10-04 were the last choosers in boxing and MMA, but their baseline rows went on
+# rendering, because the VENUES still cover those sports and the contests stay in the
+# ledger. What was left read as a lane in its own right -- "MMA, back the favourite,
+# +20.8%, +$436" on a research page -- when it is the favourite-longshot bias, already
+# priced, with nothing being tested against it. That is the exact misreading that
+# eliminated the OLBG boxing pair, which tied its blind rule to the decimal.
+#
+# A HAND-KEPT LIST, not a rule derived from the registry or the ledger, because every
+# general version of this was wrong. Keying on source KIND keeps boxing, since
+# polymarket_us is a "Prediction market" and reads as a lane. Keying on the LEDGER drops
+# bare soccer, whose only choosers are two MLS bands and a draw band that have never
+# fired -- connected and waiting for Kalshi to list a market, not gone, and nothing in
+# the ledger can tell WAITING from GONE. A registry rule then also takes table tennis,
+# MLB and NHL Rest, which is a wider change than was asked for and contradicts the
+# deliberate choices already pinned in test_tip_lanes_removed: boxing and MMA keep their
+# venue sweep and their coverage row, like NHL Puck line, and table tennis keeps a
+# baseline row whenever the full ledger holds its contests.
+#
+# So this is a judgement call written down as one. Records stay on file either way, and a
+# sport comes off this list the day a chooser is registered in it again.
+BASELINE_HIDDEN = ("boxing", "mma")
+
+
+def judges_nothing(sport):
+    """True when this sport's blind baseline has nothing left to judge (BASELINE_HIDDEN)."""
+    return sport in BASELINE_HIDDEN
+
+
 def baseline_table(d):
     """The blind strategies, per sport — the bar every source's choices have to clear.
 
     `d` is the filtered page copy. A contest that only a removed lane quoted
-    is not a row here. A kept lane's own baseline is a different number, read
+    is not a row here, and neither is a sport with no kept rule to judge
+    (judges_nothing). A kept lane's own baseline is a different number, read
     from the full ledger on that lane's row.
     """
     rows = []
     for sport in SPORT_KEYS:
+        if judges_nothing(sport):
+            continue
         b = T.baselines(d, sport)
         for kind, label in (("favourite", "Back the favourite"),
                             ("underdog", "Back the underdog"), ("draw", "Back every draw")):
@@ -442,10 +476,11 @@ def coverage_table(cov):
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
-        # MLB leaves with the venue list. NHL · Rest leaves with its lane.
-        # Every other sport stays, including one whose only lane is already
-        # gone (NHL · Puck line) and one no source lists (Economics, Finance,
-        # Politics, Elections).
+        # A sport leaves this table when its venue listings stop being swept:
+        # table tennis and MLB, then boxing, MMA and NHL · Rest on 2026-10-05 with
+        # the five lanes taken off the day before. Every other sport stays,
+        # including one whose only lane is already gone (NHL · Puck line) and the
+        # ones no source lists (Economics, Finance, Politics, Elections).
         if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS or sport == "nhl_rest":
             continue
         cells = []
@@ -2088,6 +2123,16 @@ def main():
         print(f"wrote {cricket_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::cricket page not rebuilt ({type(exc).__name__}: {exc})")
+    # Crypto is the one domain page whose record is counted in MARKET-DAYS rather than
+    # bets, because its coins move together. The page exists to say so where the record is
+    # read; the Sandbox shows both pairs inside the folding Markets section.
+    try:
+        import crypto_build
+        crypto_out = os.path.join(os.path.dirname(OUT), "crypto.html")
+        _write(crypto_out, label_cells(crypto_build.build(now=now)))
+        print(f"wrote {crypto_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::crypto page not rebuilt ({type(exc).__name__}: {exc})")
     archive_dir = os.path.join(os.path.dirname(OUT), "archive")
     os.makedirs(archive_dir, exist_ok=True)
     keep = {"index.html"}

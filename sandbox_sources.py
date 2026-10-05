@@ -59,6 +59,7 @@ SPORTS = {
     "nhl_pl":       "NHL · Puck line",
     "climate":      "Climate",
     "crypto":       "Crypto",
+    "crypto_fav":   "Crypto · Favourite band",
     "economics":    "Economics",
     "commodities":  "Commodities",
     "finance":      "Finance",
@@ -979,12 +980,63 @@ SOURCES = {
              "match); this rule +9.7% on 60 matches (t 0.78), +29.6% at a 10c edge (29 matches, "
              "t 1.62). A lead, not proof. Judged PER MATCH: every rung it buys in one match is one "
              "result."),
+    "crypto_fav_band": dict(
+        label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
+        connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population",
+        note="PRE-REGISTERED 2026-10-05, before it logged anything, and registered "
+             "expecting to find nothing. Back the YES on a Kalshi coin-directional rung "
+             "priced 0.70-0.80 inclusive, entered 2-3.5 hours before the 17:00 ET "
+             "(21:00Z) close, so the bet is held about three hours and settles the same "
+             "afternoon. ONE bet per coin per close, the LOWEST-priced rung in band — a "
+             "ladder offers several at once (BTC offered 0.73 and 0.80 on 2026-10-05, HYPE "
+             "offered fourteen), so the choice is fixed in advance instead of after seeing "
+             "results. One per coin because rungs are NESTED, not exclusive: '$84,750 or "
+             "above' and '$84,500 or above' settle on one move, and counting both is the "
+             "defect that once inflated the spot baseline to z +10.40 against a true "
+             "+0.24. FIVE coins are live (BTC, ETH, SOL, XRP, HYPE); four more are listed "
+             "with no open event. WHAT IT MUST BEAT: the effective price at mid-band is "
+             "0.7632 after the taker fee, so the band has to beat its own price by about "
+             "1.3pp just to break even, which is roughly the whole size of the "
+             "favourite-longshot bias anywhere this Sandbox has measured it — and the one "
+             "direct prior is against it, the spot baseline's own 0.70-0.80 cell running "
+             "-1.9pp at z -0.17 on 10 bets over 8 days. AN OUTCOME IS A DAY, NOT A BET: "
+             "across 90 days of daily closes the five coins' returns correlate +0.757 on "
+             "average, agree in sign 77.8% of the time, and all five move together on "
+             "54.4% of days, so a day holds 1.24 independent draws and not five. Judged "
+             "against backing every in-band rung in the window, so the lane only counts "
+             "if picking the lowest beats the band itself. Read at 30 independent "
+             "outcomes, about six weeks. A rung also needs a two-sided quote, a spread of "
+             "3c or less and 25 contracts on the ask: HYPE quoted one price on fourteen "
+             "consecutive strikes, which is a stale book, not a signal."),
     "spot": dict(
-        label="Spot price (no-change baseline)", kind="Baseline", connected=True,
+        label="Spot price (no-change baseline)", kind="Baseline", connected=False,
+        retired="2026-10-05: ANSWERED, which is why it is retired rather than eliminated. "
+                "It was built to decide whether connecting a crypto forecaster was worth "
+                "it, and over 22 days (2026-09-12 to 10-04) it came back exactly flat: 26 "
+                "market-days, 15 won v 14.44 priced, -0.91% (-3.62% after fees), z -0.07, "
+                "against -1.30% for its blind rule. It beat the closing price on 50.0% of "
+                "16 fresh closes — the definition of noise — and routed 0 of its bets, so "
+                "it was never publishable. The answer is that Kalshi's coin buckets are "
+                "efficiently priced, so nothing subtler is worth adding ON A FORECAST. "
+                "There is no fade to keep open: a flat null hypothesis has no other side "
+                "to take, which is the whole difference between this and an elimination. "
+                "TWO THINGS ABOUT ITS RECORD, both stated rather than buried. Its series "
+                "map was WRONG for its entire life — Kalshi had renamed the directional "
+                "series and only KXSOLD and KXHYPED ever resolved — so 89 of 97 bets were "
+                "SOL and 8 were XRP, and it never saw BTC or ETH at all. And `cap` kept "
+                "ladders whole at 60, so exactly ONE crypto ladder entered the universe "
+                "per run. Neither changes the verdict (both bugs are now fixed, and the "
+                "surviving record is flat), but it was a Solana lane, not a crypto one. "
+                "Its successor asks a DIFFERENT question and is not a retune of this one: "
+                "crypto_fav_band tests whether the PRICE is biased in the 0.70-0.80 band "
+                "over a three-hour hold, not whether a forecast beats it.",
         site="coingecko.com", sports=["crypto"],
         note="Today's price carried forward, backing whichever bucket it already sits in. "
              "Not really a forecast — the null hypothesis. A crypto source that cannot "
-             "beat assuming nothing changes is not worth connecting."),
+             "beat assuming nothing changes is not worth connecting. Of a day's rungs it "
+             "took the one nearest a coin flip, which is also why it could never test the "
+             "favourite band: by construction it refused to generate a sub-0.50 bet."),
     "sportsgambler": dict(
         label="SportsGambler", kind="Tipster site", connected=False, retired='2026-09-15: 20 won v 21.2 priced on 43 settled (z -0.36, -7.0%). Its match tips add nothing over the price.',
         site="sportsgambler.com", sports=["soccer"],
@@ -1161,6 +1213,12 @@ REMOVED_LANES = frozenset({
 # no kept reader. MLB joined it on 2026-10-04: the fade-the-streak rule was
 # the last source that read those prices. Kalshi, ESPN FPI, Polymarket and
 # Polymarket US were already off MLB.
+#
+# `crypto` IS NOT HERE YET, deliberately. spot retired 2026-10-05 and was its only lane,
+# so collect() now spends a Kalshi read a run on a domain nothing bets. Adding it stops
+# that fetch -- but spot still had two open SOL bets closing 2026-10-05 17:00 ET when it
+# was retired, and cutting a lane's venue read is how an open bet gets stranded. Add
+# `crypto` here once those two have settled. `crypto_fav` is its own domain and unaffected.
 REMOVED_VENUE_SPORTS = frozenset({"table_tennis", "mlb"})
 
 _NOT_PAUSED = object()
@@ -3585,12 +3643,22 @@ ELIMINATED = {
 # z read +10.40 where the honest figure on one-day-one-result is +0.24. Any nested ladder
 # belongs here, and cluster_stats in sandbox_track now refuses to produce a z for a record
 # that is mostly such clusters rather than quietly returning one.
-DAY_CLUSTERED = ("commodities", "crypto", "soccer_corners")
+DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "soccer_corners")
 
 
 def market_day(q):
     """'KXAAAGASD|20260919' — every state's gas series on one day share a key."""
     series = str(q.get("market_id") or "").split("-")[0]
+    if q.get("sport") == "crypto_fav":
+        # EVERY COIN ON ONE DAY IS ONE OUTCOME, and that is measured rather than assumed.
+        # Keying per series would be wrong here in the direction that makes a dead lane
+        # look alive. On 90 days of CoinGecko daily closes for the five live series the
+        # mean pairwise return correlation is +0.757, the mean sign agreement is 77.8%,
+        # and on 54.4% of days ALL FIVE move the same way. With k=5 that is a variance
+        # inflation of 4.03, so a day holds 1.24 independent draws, not 5, and a
+        # per-series key would overstate z by 2.01x. A day of "or above" rungs wins or
+        # loses together because the coins do, so the day is the unit.
+        return f"CRYPTOFAV|{str(q.get('date') or '').replace('-', '')}"
     if q.get("sport") == "soccer_corners":
         # Every total- and team-corner rung of one match is one result (per MATCH, not per day).
         code = (str(q.get("market_id") or "").split("-") + ["", ""])[1]
@@ -3599,10 +3667,30 @@ def market_day(q):
     return f"{fam}|{str(q.get('date') or '').replace('-', '')}"
 
 
-# Kalshi daily coin series -> CoinGecko id.
-COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
-         "KXLINKD": "chainlink", "KXXRP": "ripple", "KXXLM": "stellar",
-         "KXZECD": "zcash", "KXNEAR": "near", "KXHYPED": "hyperliquid"}
+# Kalshi coin series -> CoinGecko id.
+#
+# CORRECTED 2026-10-05, and the correction is the explanation for the whole of `spot`'s
+# history. Kalshi moved its crypto DIRECTIONAL markets from daily to HOURLY series and
+# renamed most of them; this map was never updated. Checked against /series?category=Crypto
+# and /events on 2026-10-05: BTCD, ETHD, KXLINKD and KXXLM have ZERO open events (the live
+# tickers are KXBTCD, KXETHD, KXLINKD-as-dark, KXXLMD), and KXXRP is the RANGE series, not
+# the directional one (KXXRPD). Of the nine names below only KXSOLD and KXHYPED ever
+# resolved to anything, which is why 22 days of `spot` logged SOL and XRP and no other coin.
+#
+# `spot`'s population therefore WIDENS at this commit, from two coins to five. That is a
+# real break in its record and is stated rather than hidden: a lane measured on SOL alone
+# is not the lane measured on five coins. `spot` is flat either way (26 market-days, z
+# -0.07) and is slated for retirement, so the fix is taken rather than deferred to protect
+# a record that is already being retired.
+COINS = {"KXBTCD": "bitcoin", "KXETHD": "ethereum", "KXSOLD": "solana",
+         "KXXRPD": "ripple", "KXHYPED": "hyperliquid"}
+# Listed in the catalogue, no open event on 2026-10-05. Held here rather than in COINS so
+# that re-checking them is a one-line move and not a rediscovery. Merged into the
+# series->coin lookup only, so a stored row on an old ticker still resolves its coin.
+COINS_DARK = {"KXZECD": "zcash", "KXNEARD": "near", "KXXLMD": "stellar",
+              "KXLINKD": "chainlink", "BTCD": "bitcoin", "ETHD": "ethereum",
+              "KXXRP": "ripple", "KXXLM": "stellar", "KXNEAR": "near"}
+COIN_OF_SERIES = dict(COINS_DARK, **COINS)
 
 # Where a forecaster exists, the series are named explicitly rather than taken from the
 # category. Selecting a whole category and then capping by soonest expiry starved the
@@ -3612,6 +3700,15 @@ COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
 KALSHI_BINARY = {
     "climate":     dict(series=list(NWS_CITIES), lead_h=12, cap=80),
     "crypto":      dict(series=list(COINS), lead_h=2, cap=60),
+    # The favourite-band lane's own domain (2026-10-05). It cannot share `crypto` above:
+    # that cap is 60 and ladders are kept WHOLE, so with BTC alone listing 80 rungs the
+    # first ladder exhausts the allowance and exactly ONE crypto ladder entered the
+    # universe per run. `ladders_per_series` is how the commodity ladders fixed the same
+    # bug. Four ladders per series because the band is read 2-3.5h before a 21:00Z close
+    # and these series are now HOURLY: at 18:00Z the 19:00, 20:00 and 21:00 closes are all
+    # nearer than the one this lane wants, so taking fewer would hide it. The lane then
+    # keeps only the 21:00Z expiry itself.
+    "crypto_fav":  dict(series=list(COINS), lead_h=2, cap=1200, ladders_per_series=4),
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
     # Seven commodity ladders a day (WTI, Brent, gold, silver, copper, natural gas, retail
     # gasoline), each 20-65 strikes: take the soonest ladder of each, not 80 of the first.
@@ -7115,13 +7212,124 @@ def spot_price(coin):
     return _spot_cache[coin]
 
 
+# ---------------------------------------------------------------------------
+# Crypto favourite band — registered 2026-10-05, before it logged anything
+# ---------------------------------------------------------------------------
+#
+# Back the YES on a Kalshi coin-directional rung priced 0.70-0.80, entered 2-3.5 hours
+# before the 17:00 ET (21:00Z) close, so the bet is held about three hours and settles the
+# same afternoon. One bet per series per close, the LOWEST-priced rung in band.
+#
+# WHY THE LOWEST RUNG. A directional ladder offers several in-band rungs at once -- on
+# 2026-10-05 BTC offered 0.73 and 0.80, HYPE offered fourteen -- and "the Yes priced
+# 0.70-0.80" does not pick between them. Choosing after seeing results would be a free
+# parameter, so it is fixed here: the lowest ask in band, which is the rung furthest from
+# certainty and so the one with the most room for a favourite-longshot edge to exist.
+#
+# WHY ONE PER SERIES. "$84,750 or above" and "$84,500 or above" are NESTED, not exclusive:
+# one move settles both. Taking two rungs of one coin is one bet counted twice, which is
+# exactly the defect that inflated `spot` to z +10.40 against a true +0.24. One rung per
+# series makes nesting impossible by construction rather than by a later guard.
+#
+# WHAT IT HAS TO BEAT. At Kalshi's taker fee the effective price at mid-band is 0.7632, so
+# the band must beat its own price by about 1.3pp to break even -- roughly the entire size
+# of the favourite-longshot bias wherever this Sandbox has measured it. The only direct
+# prior is discouraging: `spot`'s own 0.70-0.80 cell ran 7 won v 7.19 priced over 10 bets
+# on 8 days, -1.9pp at z -0.17. That cell was incidental rather than chosen and the
+# three-hour hold is a different bet, which is why this is worth measuring -- but it is
+# registered expecting nothing, not expecting a winner.
+#
+# Judged against backing every in-band rung in the window (favourite_population), so the
+# lane only counts if picking the lowest beats the band itself. Read at 30 independent
+# outcomes, and an outcome is a DAY across all coins (see market_day) -- about six weeks.
+CRYPTO_FAV_BAND = (0.70, 0.80)          # BOTH ends inclusive, unlike band_picks
+# The close is 17:00 EASTERN, and that must be matched in Eastern rather than in UTC.
+# Written first as "hour == 21" from the observed 21:05Z expiry, which is correct only until
+# 2026-11-01: after the DST change 17:00 ET is 22:00Z, and an hour-21 test would have
+# refused every bet from that day on, silently and for ever. Nothing would have failed --
+# the lane would simply have stopped logging, which is the worst shape a bug can take here.
+CRYPTO_FAV_CLOSE_ET = 17                # the 17:00 ET daily close, verified 2026-10-05
+CRYPTO_FAV_TZ = ZoneInfo("America/New_York")
+CRYPTO_FAV_MIN_H = 2.0                  # no earlier than this before the close
+CRYPTO_FAV_MAX_H = 3.5                  # and no later
+# Liquidity floor. HYPE quoted the SAME 0.70 ask on fourteen consecutive strikes on
+# 2026-10-05, which is a wide or stale book rather than fourteen prices. Without a floor
+# that one coin would supply most of the lane's volume and the least of its information.
+CRYPTO_FAV_MAX_SPREAD = 0.03
+CRYPTO_FAV_MIN_ASK_SIZE = 25
+
+
+def _crypto_fav_liquid(row):
+    """Is this rung tight and deep enough to be a real price? (ok, why)."""
+    if not (row.get("tradeable") or {}).get("a"):
+        return False, "yes side not tradeable"
+    m = row.get("market") or {}
+    bid, ask = _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars"))
+    if bid is None or ask is None:
+        return False, "no two-sided quote"
+    # Tolerance, not decoration: Kalshi prices sit on a 1c grid and 0.75 - 0.72 is
+    # 0.030000000000000027 in binary floating point, so a bare > rejected an exactly
+    # 3c spread -- the boundary the floor is meant to ALLOW.
+    if ask - bid > CRYPTO_FAV_MAX_SPREAD + 1e-9:
+        return False, f"spread {ask - bid:.2f} over {CRYPTO_FAV_MAX_SPREAD:.2f}"
+    size = _num(m.get("yes_ask_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_ask_size"))
+    if size is not None and size < CRYPTO_FAV_MIN_ASK_SIZE:
+        return False, f"ask size {size:g} under {CRYPTO_FAV_MIN_ASK_SIZE}"
+    return True, ""
+
+
+def fetch_crypto_fav_band(sport, universe=None, now=None):
+    """The lowest in-band Yes per coin, 2-3.5h before the 21:00Z close."""
+    if sport != "crypto_fav":
+        return []
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    lo, hi = CRYPTO_FAV_BAND
+    best, skipped = {}, {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        try:
+            exp = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            continue
+        if exp.tzinfo is None:
+            exp = exp.replace(tzinfo=timezone.utc)
+        # The 17:00 ET close only. These series are hourly now, and an hourly rung is a
+        # different contract with a different hold -- it is not this lane's bet. Compared
+        # in Eastern, so the DST change moves the test with the exchange.
+        if exp.astimezone(CRYPTO_FAV_TZ).hour != CRYPTO_FAV_CLOSE_ET:
+            continue
+        hours = (exp - now).total_seconds() / 3600.0
+        if not (CRYPTO_FAV_MIN_H <= hours <= CRYPTO_FAV_MAX_H):
+            continue
+        price = r.get("price_a")
+        if price is None or not (lo <= price <= hi) or r.get("price_draw") is not None:
+            continue
+        ok, why = _crypto_fav_liquid(r)
+        if not ok:
+            skipped.setdefault(r.get("series"), why)
+            continue
+        cur = best.get(r.get("series"))
+        if cur is None or price < cur["price_a"]:
+            best[r.get("series")] = r
+    for series, why in sorted(skipped.items()):
+        if series not in best:
+            print(f"  crypto_fav_band: skip {series}: {why}")
+    return [dict(market_id=r["market_id"], pick="a",
+                 detail=f"lowest in band {r['price_a']:.2f}, "
+                        f"{(datetime.fromisoformat(str(r['start']).replace('Z', '+00:00')) - now).total_seconds() / 3600:.1f}h to close")
+            for r in sorted(best.values(), key=lambda x: x["market_id"])]
+
+
 def fetch_spot(domain):
     """Back the bucket today's spot price already sits in."""
     if domain != "crypto":
         return []
     groups = {}
     for r in (UNIVERSE or {}).get("crypto") or []:
-        coin = COINS.get(r.get("series"))
+        coin = COIN_OF_SERIES.get(r.get("series"))
         price = spot_price(coin) if coin else None
         if price is None or not in_range(price, r["market"]):
             continue
@@ -7256,7 +7464,13 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # remains: (remaining - reserve) / runs left until the reset, where runs left assumes the
 # four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
 # day late in case it lands on the 1st in a timezone behind UTC.
-ODDS_RUNS_PER_DAY = 8          # = the tracker's cron (every 3h); pacing divides by it
+# 10 since 2026-10-05: nine cron slots (every 3h, plus the 18:11Z one) and one daily
+# workflow_dispatch from this Mac's launchd timer for crypto_fav_band's window. This MUST be
+# at least the number of runs a day or pacing divides the remaining credits by too few runs
+# and overspends. It is deliberately the SCHEDULED count and not the observed one: GitHub
+# actually delivers about 4.2 cron runs a day here, so the real figure is lower and erring
+# high only underspends, which is the safe direction for a monthly credit budget.
+ODDS_RUNS_PER_DAY = 10         # 9 cron slots + 1 launchd dispatch
 # Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
 # sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
 # with the venue by the betting edge, that sport's venue already prices like Pinnacle and a
@@ -8732,6 +8946,7 @@ CHALLENGERS = {
     "o15_cup_mismatch": fetch_o15_cup_mismatch,
     "o15_ranked": fetch_o15_ranked,
     "team2_ranked": fetch_team2_ranked,
+    "crypto_fav_band": fetch_crypto_fav_band,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "mls_away_band": fetch_mls_away_band,

@@ -6671,7 +6671,7 @@ ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
    and not S.source_fully_paused("polymarket_us"),
    "a removed source logs no sport; Polymarket US still logs the sports it keeps")
 for _name, _sport in (
-        ("tennis_fav_band_3h", "tennis"), ("spot", "crypto"),
+        ("tennis_fav_band_3h", "tennis"), ("crypto_fav_band", "crypto_fav"),
         ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
         ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),

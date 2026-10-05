@@ -14,6 +14,17 @@ on:
     # before kickoff and missed any tip published between runs for an early start.
     # sandbox_sources.ODDS_RUNS_PER_DAY must match this cadence, or credit pacing overspends.
     - cron: "11 2-23/3 * * *"
+    # A NINTH run, 2026-10-05, for crypto_fav_band and nothing else. That lane reads the
+    # Kalshi coin ladders 2-3.5h before their 21:05Z close, and the three-hourly cadence
+    # straddles the window without ever landing in it: 17:11 is 3.90h out (too early) and
+    # 20:11 is 0.90h (too late), so the lane could not have fired once. 18:11 is 2.90h out.
+    #
+    # It is 30 minutes from the boards at 18:41 rather than the usual ninety. That is
+    # acceptable and not an oversight: the shared group is cancel-in-progress: false, so an
+    # overlap QUEUES rather than cancelling, and a 90-minute clearance is impossible inside
+    # a 90-minute window that already contains a boards run. The cost is a possible short
+    # queue for the 18:41 boards refresh; the alternative was a lane that never fires.
+    - cron: "11 18 * * *"
   workflow_dispatch:
 
 permissions:

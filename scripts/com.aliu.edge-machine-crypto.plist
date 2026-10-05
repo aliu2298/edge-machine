@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Dispatch the tracker from this Mac at 13:15 LOCAL, inside crypto_fav_band's window.
+
+  13:15 local Central is permanently 2.83h before Kalshi's 17:00 Eastern close, because
+  Central and Eastern shift on the same date: 18:15Z under CDT, 19:15Z under CST. launchd
+  StartCalendarInterval is local time, which is what makes that work -- a UTC slot would
+  have fallen out of the window at the November DST change.
+
+  It runs scripts/local_crypto_window.sh from the SAME dedicated clone the closes job keeps
+  current (~/edge-machine-closes), never the working copy. The script re-checks the window
+  against the repo's own constants and refuses outside it, so a fire at load or after a late
+  wake costs nothing.
+
+  Install (once):
+    cp ~/edge-machine-closes/scripts/com.aliu.edge-machine-crypto.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.aliu.edge-machine-crypto.plist
+  Check:
+    launchctl print gui/$(id -u)/com.aliu.edge-machine-crypto | head -20
+    tail /tmp/edge-machine-crypto.log
+  Stop:
+    launchctl bootout gui/$(id -u)/com.aliu.edge-machine-crypto
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.aliu.edge-machine-crypto</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>exec "$HOME/edge-machine-closes/scripts/local_crypto_window.sh"</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>13</integer>
+    <key>Minute</key><integer>15</integer>
+  </dict>
+  <!-- Not RunAtLoad: this must not fire a tracker run every time the Mac boots. If the Mac
+       is asleep at 13:15 launchd runs it on wake, and the script's own window check decides
+       whether that is still useful. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>StandardOutPath</key><string>/tmp/edge-machine-crypto.log</string>
+  <key>StandardErrorPath</key><string>/tmp/edge-machine-crypto.log</string>
+</dict>
+</plist>
