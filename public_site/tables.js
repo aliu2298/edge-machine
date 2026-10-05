@@ -303,7 +303,9 @@
       card.addEventListener("click", function (ev) {
         var target = ev.target;
         if (target && target.closest && target.closest("a")) return;
+        var kbd = document.activeElement && document.activeElement.classList && document.activeElement.classList.contains("rule-flip");
         paint(!card.classList.contains("is-flipped"));
+        if (kbd) { var btn = card.querySelector(card.classList.contains("is-flipped") ? ".rule-back .rule-flip" : ".rule-front .rule-flip"); if (btn) btn.focus(); }
       });
     });
   }
