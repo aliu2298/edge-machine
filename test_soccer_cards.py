@@ -305,14 +305,14 @@ btts_pos = html.find('data-sport="soccer_btts"')
 ok(0 < btts_pos < corners_pos < active_end,
    "a pick in, but outside 48 hours, is active and below the nearer games")
 
-print("\nother sports stay tables")
+print("\ncricket stays a table")
 ten = tennis_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
-for name, page in (("tennis", ten), ("cricket", cri)):
-    ok("rule-card" not in page and "rule-grid" not in page and "rule-flip" not in page,
-       f"{name} does not use the soccer card markup")
-    ok('id="lanes"' in page and "<table" in page,
-       f"{name} lanes are still a table")
+ok("rule-card" not in cri and "rule-grid" not in cri and "rule-flip" not in cri,
+   "cricket does not use the rule card markup")
+ok('id="lanes"' in cri and "<table" in cri, "cricket lanes are still a table")
+ok("rule-card" not in ten and "rule-grid" not in ten,
+   "a ledger with no tennis lanes does not paint tennis cards")
 
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
 js = open(os.path.join(ROOT, "public_site", "tables.js"), encoding="utf-8").read()
@@ -324,10 +324,8 @@ ok("function wireRuleCards" in js and "is-flipped" in js,
 published = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
 ok('class="rule-card"' in published and 'class="rule-grid"' in published,
    "public_site/soccer.html is the card page")
-ten_file = open(os.path.join(ROOT, "public_site", "tennis.html"), encoding="utf-8").read()
 cri_file = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
-ok("rule-card" not in ten_file and "rule-card" not in cri_file,
-   "published tennis and cricket pages have no soccer card")
+ok("rule-card" not in cri_file, "published cricket page has no rule card")
 
 if FAILS:
     print(f"\nSHA {SHA} FAILED {len(FAILS)}")
