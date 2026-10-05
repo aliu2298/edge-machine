@@ -44,12 +44,12 @@ def eq(got, want, msg):
 
 
 def _quote(i, source, sport, status, start, label, price=0.55,
-          url="https://kalshi.com/markets/example", venue="kalshi"):
+          url="https://kalshi.com/markets/example", venue="kalshi", bet=True):
     when = start if isinstance(start, datetime.datetime) else NOW + timedelta(hours=start)
     won = status == "won"
     return dict(
         id=f"{source}:{sport}:{i}:{status}:{label}",
-        source=source, sport=sport, bet=True, status=status,
+        source=source, sport=sport, bet=bet, status=status,
         pick="b", price=price,
         result=("a" if won else "b") if status in ("won", "lost") else None,
         venue=venue,
@@ -113,6 +113,22 @@ def _fixture():
         url="javascript:alert(1)",
         venue="polymarket_us",
     ))
+    # A record, no open bet, and a fixture the tracker already logged without a
+    # stake. 36h is inside the 48h cutoff and outside a 24h one. 12h is inside
+    # both, so a window that skips the next day would miss it.
+    quotes += _settled("team1_form_l5", "soccer_team1", n=4, won=3, price=0.62)
+    quotes.append(_quote(
+        500, "team1_form_l5", "soccer_team1", "open", 36,
+        "Window Side v Keeper", bet=False))
+    quotes += _settled("team2_ranked", "soccer_team2", n=4, won=2, price=0.58)
+    quotes.append(_quote(
+        501, "team2_ranked", "soccer_team2", "open", 12,
+        "Soon Side v Tonight", bet=False))
+    # Same shape, kickoff past 48 hours. Not an open bet, so it stays inactive.
+    quotes += _settled("team1_form_l5", "soccer_team1_cup", n=3, won=1, price=0.61)
+    quotes.append(_quote(
+        502, "team1_form_l5", "soccer_team1_cup", "open", 72,
+        "Far Side v Later", bet=False))
     return {"quotes": quotes}, {"pairs": {}}
 
 
@@ -134,6 +150,39 @@ def _roi_html(row):
 def _verdict_html(row):
     label, chip, _order = B.VERDICTS[row["v"]]
     return f'<span class="sig {chip}">{B.esc(label)}</span>'
+
+
+# Cutoff for "upcoming". A kickoff after the page clock and at most 48 hours
+# ahead counts, including one inside the next 24 hours. Past 48 hours does not.
+_HORIZON = timedelta(hours=48)
+
+
+def _kickoff(q):
+    raw = q.get("start")
+    if not raw:
+        return None
+    try:
+        return fmt.chicago(raw).astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
+
+
+def _upcoming(d, name, sport, now):
+    """A ledger quote for this rule, not an open bet, kicking off inside 48 hours."""
+    end = now + _HORIZON
+    for q in d.get("quotes") or []:
+        if q.get("source") != name or q.get("sport") != sport:
+            continue
+        if q.get("bet") or q.get("status") != "open":
+            continue
+        ko = _kickoff(q)
+        if ko is not None and now < ko <= end:
+            return True
+    return False
+
+
+def _expect_active(row, d, now):
+    return "1" if row["open"] or _upcoming(d, row["name"], row["sport"], now) else "0"
 
 
 def _cards(html):
@@ -199,9 +248,9 @@ for row in rows:
     verdict = _verdict_html(row)
     ok(roi in card, f"{row['name']}|{row['sport']} front ROI matches the Sandbox row")
     ok(verdict in card, f"{row['name']}|{row['sport']} front verdict matches the Sandbox row")
-    want_active = "1" if row["open"] else "0"
+    want_active = _expect_active(row, d, NOW)
     eq(_attr(card, "data-active"), want_active,
-       f"{row['name']}|{row['sport']} active flag follows the open count")
+       f"{row['name']}|{row['sport']} active flag is an open bet or a fixture inside 48 hours")
 
 # Same market, two active rules: the sooner kickoff is first in that grid.
 active_html = html.split('data-band="inactive"', 1)[0]
@@ -221,6 +270,33 @@ ok('data-sport="soccer_o15_cup"' in html, "the cup twin still has a card")
 cup_pos = html.find('data-sport="soccer_o15_cup"')
 active_end = html.find('data-band="inactive"')
 ok(cup_pos > active_end > 0, "the cup twin, with nothing open, sits in the inactive band")
+
+# No open bet. The fixture is one the tracker already stored (bet false, status
+# open). 36h is past a 24h cutoff and inside 48h. 12h is inside the next day,
+# which the 48h cutoff still counts. 72h is outside it.
+def _one(source, sport):
+    return next(c for c in cards if _attr(c, "data-source") == source
+                and _attr(c, "data-sport") == sport)
+
+window = _one("team1_form_l5", "soccer_team1")
+soon = _one("team2_ranked", "soccer_team2")
+far = _one("team1_form_l5", "soccer_team1_cup")
+eq(_attr(window, "data-active"), "1",
+   "a fixture 36h away and no open bet is active (cutoff is 48 hours)")
+eq(_attr(soon, "data-active"), "1",
+   "a fixture 12h away and no open bet is active (inside 48 hours, not only the 24–48h band)")
+eq(_attr(far, "data-active"), "0",
+   "a fixture 72h away and no open bet stays inactive")
+ok("No open game." in window and "Window Side v Keeper" not in window,
+   "the back stays the open bets; an unstaked fixture is not listed there")
+ok("No open game." in soon and "Soon Side v Tonight" not in soon,
+   "a nearer unstaked fixture is not copied onto the back")
+window_pos = html.find('data-sport="soccer_team1"')
+soon_pos = html.find('data-sport="soccer_team2"')
+far_pos = html.find('data-sport="soccer_team1_cup"')
+ok(0 < soon_pos < active_end and 0 < window_pos < active_end,
+   "fixtures inside 48 hours sit in the active band")
+ok(far_pos > active_end > 0, "a fixture past 48 hours sits in the inactive band")
 
 # Corners is receiving picks (open games past 48h), so it stays active and after
 # the rules whose game is inside 48 hours.

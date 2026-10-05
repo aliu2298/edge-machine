@@ -3,9 +3,11 @@
 
 Each Sandbox lane row becomes a card. The front is that row's verdict and its
 ROI after fees, the same strings the table cell already uses. The back is the
-open bets on that rule, soonest first, four of them. Active rules — a pick is
-in, including one whose game is inside 48 hours — sit above rules with nothing
-open. Nothing here grades, settles, or chooses a bet.
+open bets on that rule, soonest first, four of them. A rule is active when it
+has an open bet, or when the tracker has already stored a fixture for it whose
+kickoff is after the page clock and at most 48 hours ahead, even with no stake
+on that game yet. A kickoff inside the next 24 hours counts; one past 48 hours
+does not. Inactive rules sit below. Nothing here grades, settles, or chooses a bet.
 """
 import datetime
 from datetime import timedelta, timezone
@@ -15,7 +17,10 @@ import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 
-# The brief's window for "upcoming". A pick already in is active either way.
+# Upcoming fixture cutoff: after the page clock and at most 48 hours ahead.
+# That is the outer edge of the brief's "24–48 hours". A kickoff inside the
+# next 24 hours counts. A kickoff past 48 hours does not. An open bet is
+# active either way.
 HORIZON = timedelta(hours=48)
 # The back lists this many open games. The rest of the open count stays a number.
 OPEN_LIMIT = 4
@@ -79,6 +84,34 @@ def _soonest(quotes):
     return min(found) if found else None
 
 
+def upcoming_quotes(d, name, sport, now):
+    """Fixtures this rule has already been shown, with no open bet on them.
+
+    The tracker stores a quote when it sees the game. `bet` false and status
+    open is that row with no stake yet. The kickoff is the quote's own start.
+    Kept when it is still ahead of `now` and at most `HORIZON` (48 hours) out.
+    Open bets are not repeated here; `open_quotes` already lists those.
+    """
+    if now is None:
+        return []
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    end = now + HORIZON
+    live = []
+    for q in d.get("quotes") or []:
+        if q.get("source") != name or q.get("sport") != sport:
+            continue
+        if q.get("bet") or q.get("status") != "open":
+            continue
+        if T.climate_excluded(q) or S.tennis_refused_row(q):
+            continue
+        ko = _kickoff(q)
+        if ko is not None and now < ko <= end:
+            live.append(q)
+    live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
+    return live
+
+
 def _market_name(base, fam="Soccer"):
     """The market-fold heading. Same words `market_folds` prints."""
     full = S.SPORTS.get(base, base)
@@ -105,14 +138,14 @@ def _games(quotes):
             f'<ul class="rule-games">{"".join(items)}</ul>{more}')
 
 
-def _card(row, quotes):
+def _card(row, quotes, active):
     meta = row["meta"]
     name = meta["label"].split(" (")[0]
     sfx = B._scope(row["sport"])
     tag = f' <span class="sig w">{B.esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
     prod = '<span class="sig y">PRODUCTION</span>' if row.get("prod") else ""
     stage = f'<p class="rule-stage">{prod}</p>' if prod else ""
-    active = "1" if quotes else "0"
+    active = "1" if active else "0"
     base = B._base_sport(row["sport"])
     return f'''<article class="rule-card" data-active="{active}" data-market="{B.esc(base)}" data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}">
 <div class="rule-rotator">
@@ -130,8 +163,13 @@ def _card(row, quotes):
 </article>'''
 
 
-def _bands(d, rows):
-    """(active markets, inactive markets). Each market is (base, [(row, quotes)])."""
+def _bands(d, rows, now):
+    """(active markets, inactive markets). Each market is (base, [(row, open quotes, kickoff)]).
+
+    Active: at least one open bet, or a fixture already stored for the rule
+    whose kickoff is inside the next 48 hours. The sort key is the soonest of
+    those kickoffs.
+    """
     groups = {}
     for row in rows:
         groups.setdefault(B._base_sport(row["sport"]), []).append(row)
@@ -141,19 +179,21 @@ def _bands(d, rows):
         act, ina = [], []
         for row in ranked:
             quotes = open_quotes(d, row["name"], row["sport"])
-            (act if quotes else ina).append((row, quotes))
+            upcoming = upcoming_quotes(d, row["name"], row["sport"], now)
+            kick = _soonest(quotes) or _soonest(upcoming)
+            (act if quotes or upcoming else ina).append((row, quotes, kick))
         if act:
-            act.sort(key=lambda item: (_soonest(item[1]) or _FAR, item[0]["name"], item[0]["sport"]))
+            act.sort(key=lambda item: (item[2] or _FAR, item[0]["name"], item[0]["sport"]))
             active.append((base, act))
         if ina:
             inactive.append((base, ina))
     active.sort(key=lambda item: (
-        _soonest([q for _row, qs in item[1] for q in qs]) or _FAR,
-        -sum(row["a"]["n"] for row, _qs in item[1]),
+        min((kick for _row, _qs, kick in item[1] if kick is not None), default=_FAR),
+        -sum(row["a"]["n"] for row, _qs, _kick in item[1]),
         S.SPORTS.get(item[0], item[0]),
     ))
     inactive.sort(key=lambda item: (
-        -sum(row["a"]["n"] for row, _qs in item[1]),
+        -sum(row["a"]["n"] for row, _qs, _kick in item[1]),
         S.SPORTS.get(item[0], item[0]),
     ))
     return active, inactive
@@ -164,7 +204,8 @@ def _band(title, key, markets):
         return ""
     blocks = []
     for base, items in markets:
-        cards = "".join(_card(row, quotes) for row, quotes in items)
+        cards = "".join(_card(row, quotes, key == "active")
+                        for row, quotes, _kick in items)
         blocks.append(
             f'<div class="rule-market" data-market="{B.esc(base)}">'
             f'<h3>{B.esc(_market_name(base))}</h3>'
@@ -178,16 +219,17 @@ def _band(title, key, markets):
 def render(d, rows, now=None):
     """Card grid for the Soccer lanes section. `now` is the page clock.
 
-    Rules with an open bet are active. Inside that band, a game inside the
-    next 48 hours is ordered ahead of a pick whose kickoff is further out.
+    A rule is active with an open bet, or with a stored fixture kicking off
+    within 48 hours and no stake yet. Inside that band, the sooner kickoff
+    comes first.
     """
-    del now  # ordering reads each open bet's own start, not a second clock
+    now = now or datetime.datetime.now(timezone.utc)
     if not rows:
         return '<div class="note">No soccer lane has a record yet.</div>'
-    active, inactive = _bands(d, rows)
+    active, inactive = _bands(d, rows, now)
     note = ('<div class="note">Flip a card for the games that rule has open. '
             'The front is the verdict and the ROI after fees. A rule with a pick in, '
-            'or a game inside 48 hours, sits above a rule with nothing open.</div>')
+            'or a fixture kicking off within 48 hours, sits above the rest.</div>')
     cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)
     # The by-competition tables and the definitions stay, folded, under the cards.
     # They are the same Sandbox blocks the lane section already showed.
