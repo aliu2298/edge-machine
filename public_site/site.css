@@ -837,3 +837,121 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 @media (prefers-reduced-motion: reduce) {
   .rule-rotator { transition: none; }
 }
+
+/* SofaScore shell. Same dark tokens. No light theme, no toggle. */
+.bet-roll {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 10px 24px 4px;
+  min-width: 0;
+}
+.bet-roll-label {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+.bet-roll-track {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+}
+.bet-roll-empty {
+  margin: 0;
+  color: var(--mut);
+  font-size: 13px;
+}
+.sport-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px 12px;
+}
+nav.sports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+nav.sports button,
+.running-filters button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mut);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 36px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+nav.sports button[aria-disabled="true"] {
+  color: var(--mut);
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+nav.sports button[aria-disabled="true"]:hover,
+nav.sports button[aria-disabled="true"]:focus {
+  color: var(--mut);
+  background: transparent;
+}
+.sports-soon {
+  margin: 0;
+  color: var(--mut);
+  font-size: 13px;
+  font-weight: 600;
+}
+.running-filters button[aria-pressed="true"] {
+  color: var(--fg);
+  background: var(--raised);
+}
+.shell-kicker, .shell-note, .shell-empty {
+  margin: 0;
+  color: var(--mut);
+  font-size: 13px;
+}
+.shell-note { margin: 0 0 12px; }
+.shell-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 16px;
+  align-items: start;
+}
+.shell-pane {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 16px;
+  min-width: 0;
+}
+.shell-pane h2 { font-size: 18px; margin: 0 0 4px; }
+.pane-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pane-head h2 { margin: 0; }
+.running-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0;
+}
+.full-page { font-size: 13px; font-weight: 600; white-space: nowrap; }
+@media (max-width: 800px) {
+  .shell-columns { grid-template-columns: minmax(0, 1fr); }
+  .bet-roll, .sport-row { padding-left: 16px; padding-right: 16px; }
+}

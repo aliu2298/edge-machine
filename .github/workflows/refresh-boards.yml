@@ -70,15 +70,16 @@ jobs:
             exit 1
           fi
 
-      # The site root: forwards visitors to the Sandbox. Its stamp is not the watchdog's
-      # freshness check — that reads sandbox.html and production.html, which this job
-      # does not rebuild. A failed write must not publish: site_root.py used to truncate
-      # index.html before the new page existed, and !cancelled() would still let the
-      # commit and the Pages deploy run.
-      - name: Write the site root
+      # The site root is the SofaScore shell and lands on Production. sandbox-tracker
+      # writes index.html in the same pass as production.html, with that page's tiles
+      # and clock. This job must not recompute or publish the strip. The step still
+      # gates the commit and the Pages deploy, so a skipped snapshot cannot publish.
+      # site_root.py used to truncate index.html before the new page existed, and
+      # !cancelled() would still let those later steps run.
+      - name: Leave the shell strip to the tracker
         id: site_root
         if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' }}
-        run: python3 site_root.py
+        run: python3 -c "print('index.html is written with production.html by the tracker')"
 
       - name: Commit and push if changed
         id: publish
@@ -88,7 +89,7 @@ jobs:
           git config user.name  "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
 
-          PUBLISHED="public_site/index.html data/sandbox_closes/boards.json"
+          PUBLISHED="data/sandbox_closes/boards.json"
 
           for attempt in 1 2 3; do
             git add $PUBLISHED
@@ -116,7 +117,6 @@ jobs:
             echo "push rejected — rebuilding on top of the newer board (attempt $attempt)"
             git fetch origin main
             git reset --hard origin/main      # keeps the ignored fixture cache, so no refetch
-            python3 site_root.py
             if ! python3 sandbox_close.py --writer boards; then
               echo "::error::Sandbox closing-price snapshot failed"
               exit 1

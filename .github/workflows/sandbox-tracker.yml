@@ -155,7 +155,7 @@ jobs:
           # commits the data files only — not public_site, which may be half
           # written or still describing the previous feed.
           DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
-          SITE="public_site/sandbox.html public_site/production.html"
+          SITE="public_site/sandbox.html public_site/production.html public_site/index.html"
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE
             # trading.html is rebuilt with the other pages. site.css and the
@@ -208,8 +208,11 @@ jobs:
             # Rebase, do NOT reset: unlike the boards, this ledger is not derivable from
             # anything — it is the only record of what each source said and when, and a
             # reset would silently throw away calls that have already been graded. The
-            # rebase is safe because the two workflows write disjoint files: nothing else
-            # in the repo touches sandbox.html, production.html, sandbox_ledger.json, stages.json or sandbox_archive/.
+            # rebase is safe because refresh-boards does not write the ledger or these
+            # pages. index.html is written in this build, beside production.html, and
+            # refresh-boards does not stage it. Takeover may republish the shell by
+            # copying this page's tiles; it does not count them again. Nothing else
+            # touches sandbox.html, production.html, sandbox_ledger.json, stages.json or sandbox_archive/.
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
             # -X theirs: on a conflict, keep THIS run's copy (during a rebase "theirs" is the
             # commit being replayed). The pages are regenerated from this run's ledger, and a
