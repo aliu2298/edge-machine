@@ -2443,21 +2443,32 @@ def faded(d, name, sport=None, venues=None):
 # chance produces two. Nothing here promotes, demotes or retires a pair — the verdict column
 # goes on reading the whole record.
 
-def league_split(d, name, sport=None, venues=None):
+def league_split(d, name, sport=None, venues=None, since=None):
     """A pair's record per competition, best first: [dict(league, n, won, expected, ...)].
 
     Each entry carries the same figures the sport tables use — wins against what the prices
     implied, return after fees, and what backing the other side of those same bets would have
     returned — so a league row reads exactly like a pair row, only thinner.
+
+    The settled list is the one assess() counts. `since` is the pair's stage clock: a bet
+    logged earlier is not in the card's n, so it is not in this split either. A refused
+    tennis tour is left out the same way, including a price payout. A sport in
+    S.DAY_CLUSTERED is counted with day_units, the same collapse assess() uses, so a
+    corners league's n is matches and n_bets is the rungs. The other side stays priced
+    per bet, because each rung has its own ask.
     """
     bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
+            and not S.tennis_refused_row(q)
             and (sport is None or q["sport"] == sport)
+            and (since is None or q["logged"] >= since)
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
     priced = [q for q in bet_rows(d) if q["source"] == name
               and q.get("status") == "settled" and q.get("result") == "price"
               and not climate_excluded(q)
+              and not S.tennis_refused_row(q)
               and (sport is None or q["sport"] == sport)
+              and (since is None or q["logged"] >= since)
               and (venues is None or (q.get("venue") or "polymarket") in venues)]
     by = {}
     for q in bets:
@@ -2465,14 +2476,19 @@ def league_split(d, name, sport=None, venues=None):
     price_by = {}
     for q in priced:
         price_by.setdefault(S.display_league(q) or "Other competitions", []).append(q)
+    # Same units assess() returns. soccer_corners is a match, the other clustered
+    # sports a market-day. Anything else stays one row per bet.
+    clustered = sport in S.DAY_CLUSTERED
+    unit = ("match" if sport == "soccer_corners" else "market-day") if clustered else "bet"
     out = []
     for lg in list(dict.fromkeys(list(by) + list(price_by))):
         qs = by.get(lg) or []
         pq = price_by.get(lg) or []
-        n = len(qs)
-        won = sum(1 for q in qs if q["status"] == "won")
-        exp = sum(q["price"] for q in qs)
-        var = sum(q["price"] * (1 - q["price"]) for q in qs)
+        counted = day_units(qs) if clustered and qs else qs
+        n = len(counted)
+        won = sum(1 for q in counted if q["status"] == "won")
+        exp = sum(q["price"] for q in counted)
+        var = sum(q["price"] * (1 - q["price"]) for q in counted)
         # The other side of the same bets, priced at ITS OWN ask — never this row's price with
         # the sign flipped, which would hand the fade a spread it in fact also has to pay.
         rows = []
@@ -2484,11 +2500,15 @@ def league_split(d, name, sport=None, venues=None):
                 rows.append((float(p), f, q.get("result") == other))
         cost = sum(p + f * p * (1 - p) for p, f, _w in rows)
         stake_n = n + len(pq)
-        fee_pnl = sum(pnl_after_fee(q) for q in qs) + sum(pnl_after_fee(q) for q in pq)
+        # A collapsed day already averaged the fee per rung (day_units pnl_fee). Charging
+        # pnl_after_fee on that row would bill a losing day the whole stake.
+        fee_pnl = (sum(q["pnl_fee"] if clustered else pnl_after_fee(q) for q in counted)
+                   + sum(pnl_after_fee(q) for q in pq))
         out.append(dict(
             league=lg, n=n, won=won, expected=exp, edge=((won - exp) / n) if n else 0.0,
             z=(won - exp) / var ** 0.5 if var > 0 else 0.0,
             roi_fee=(fee_pnl / (stake_n * STAKE)) if stake_n else None,
+            n_bets=len(qs), unit=unit,
             fade_n=len(rows), fade_won=sum(1 for _p, _f, w in rows if w),
             fade_expected=sum(p for p, _f, _w in rows),
             fade_roi=((sum(1 for _p, _f, w in rows if w) - cost) / cost) if cost else None))
