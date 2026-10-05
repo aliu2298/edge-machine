@@ -8,6 +8,7 @@ the clustering has to change an assertion, which is the point.
 import datetime
 import sys
 from datetime import timezone
+from zoneinfo import ZoneInfo
 
 import sandbox_sources as S
 
@@ -52,7 +53,7 @@ def ids(rows, now=NOW):
 print("registered parameters")
 eq(S.CRYPTO_FAV_BAND, (0.70, 0.80), "the band is 0.70-0.80")
 eq((S.CRYPTO_FAV_MIN_H, S.CRYPTO_FAV_MAX_H), (2.0, 3.5), "the window is 2-3.5h to the close")
-eq(S.CRYPTO_FAV_CLOSE_UTC, 21, "and it is the 21:00Z (17:00 ET) close")
+eq(S.CRYPTO_FAV_CLOSE_ET, 17, "and it is the 17:00 Eastern close")
 eq(S.CRYPTO_FAV_MAX_SPREAD, 0.03, "the spread floor is 3c")
 eq(S.CRYPTO_FAV_MIN_ASK_SIZE, 25, "the ask-size floor is 25")
 eq(S.SOURCES["crypto_fav_band"]["sports"], ["crypto_fav"],
@@ -111,6 +112,24 @@ eq(ids([_untr]), [], "an untradeable Yes is refused")
 _mixed = [rung("KXBTCD", "85999", 0.71, bid=0.60), rung("KXBTCD", "84749", 0.73)]
 eq(ids(_mixed), ["KXBTCD-26OCT0517-T84749"],
    "an illiquid lowest rung falls through to the next lowest that passes the floor")
+
+print("\nthe close is matched in EASTERN, so the DST change moves it with the exchange")
+eq(S.CRYPTO_FAV_CLOSE_ET, 17, "the close is 17:00 Eastern")
+ok(not hasattr(S, "CRYPTO_FAV_CLOSE_UTC"),
+   "and is NOT pinned to a UTC hour -- 17:00 ET is 21:00Z under CDT and 22:00Z under CST, "
+   "so an hour-21 test would have silently refused every bet from 2026-11-01")
+_CT = ZoneInfo("America/Chicago")
+for _d, _utc in ((datetime.date(2026, 10, 15), 21), (datetime.date(2026, 11, 15), 22),
+                 (datetime.date(2027, 3, 20), 21)):
+    _exp = datetime.datetime.combine(_d, datetime.time(17, 5), S.CRYPTO_FAV_TZ)
+    eq(_exp.astimezone(timezone.utc).hour, _utc,
+       f"{_d}: the 17:05 ET expiry is {_utc:02d}:05Z")
+    # 13:15 local Central is the launchd slot. Central and Eastern shift on the same date,
+    # so it is permanently 2.83h before the close -- that is why the timer is local time.
+    _run = datetime.datetime.combine(_d, datetime.time(13, 15), _CT)
+    _r = rung("KXBTCD", "1", 0.75, start=_exp)
+    eq([p["market_id"] for p in picks([_r], now=_run)], ["KXBTCD-26OCT0517-T1"],
+       f"...and the 13:15 CT timer still lands in the window on {_d}")
 
 print("\nthe sport gate")
 eq(S.fetch_crypto_fav_band("crypto", universe={"crypto": ladder}, now=NOW), [],

@@ -7243,7 +7243,13 @@ def spot_price(coin):
 # lane only counts if picking the lowest beats the band itself. Read at 30 independent
 # outcomes, and an outcome is a DAY across all coins (see market_day) -- about six weeks.
 CRYPTO_FAV_BAND = (0.70, 0.80)          # BOTH ends inclusive, unlike band_picks
-CRYPTO_FAV_CLOSE_UTC = 21               # the 17:00 ET daily close, verified 2026-10-05
+# The close is 17:00 EASTERN, and that must be matched in Eastern rather than in UTC.
+# Written first as "hour == 21" from the observed 21:05Z expiry, which is correct only until
+# 2026-11-01: after the DST change 17:00 ET is 22:00Z, and an hour-21 test would have
+# refused every bet from that day on, silently and for ever. Nothing would have failed --
+# the lane would simply have stopped logging, which is the worst shape a bug can take here.
+CRYPTO_FAV_CLOSE_ET = 17                # the 17:00 ET daily close, verified 2026-10-05
+CRYPTO_FAV_TZ = ZoneInfo("America/New_York")
 CRYPTO_FAV_MIN_H = 2.0                  # no earlier than this before the close
 CRYPTO_FAV_MAX_H = 3.5                  # and no later
 # Liquidity floor. HYPE quoted the SAME 0.70 ask on fourteen consecutive strikes on
@@ -7291,8 +7297,9 @@ def fetch_crypto_fav_band(sport, universe=None, now=None):
         if exp.tzinfo is None:
             exp = exp.replace(tzinfo=timezone.utc)
         # The 17:00 ET close only. These series are hourly now, and an hourly rung is a
-        # different contract with a different hold -- it is not this lane's bet.
-        if exp.hour != CRYPTO_FAV_CLOSE_UTC:
+        # different contract with a different hold -- it is not this lane's bet. Compared
+        # in Eastern, so the DST change moves the test with the exchange.
+        if exp.astimezone(CRYPTO_FAV_TZ).hour != CRYPTO_FAV_CLOSE_ET:
             continue
         hours = (exp - now).total_seconds() / 3600.0
         if not (CRYPTO_FAV_MIN_H <= hours <= CRYPTO_FAV_MAX_H):
@@ -7457,11 +7464,13 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # remains: (remaining - reserve) / runs left until the reset, where runs left assumes the
 # four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
 # day late in case it lands on the 1st in a timezone behind UTC.
-# 9 since 2026-10-05: the three-hourly cron plus the 18:11Z run added for crypto_fav_band,
-# whose window the three-hourly cadence straddles without landing in. This MUST match the
-# number of scheduled tracker runs or pacing divides the remaining credits by too few runs
-# and overspends.
-ODDS_RUNS_PER_DAY = 9          # = the tracker's cron (every 3h, plus 18:11Z)
+# 10 since 2026-10-05: nine cron slots (every 3h, plus the 18:11Z one) and one daily
+# workflow_dispatch from this Mac's launchd timer for crypto_fav_band's window. This MUST be
+# at least the number of runs a day or pacing divides the remaining credits by too few runs
+# and overspends. It is deliberately the SCHEDULED count and not the observed one: GitHub
+# actually delivers about 4.2 cron runs a day here, so the real figure is lower and erring
+# high only underspends, which is the safe direction for a monthly credit budget.
+ODDS_RUNS_PER_DAY = 10         # 9 cron slots + 1 launchd dispatch
 # Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
 # sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
 # with the venue by the betting edge, that sport's venue already prices like Pinnacle and a

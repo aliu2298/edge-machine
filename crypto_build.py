@@ -61,9 +61,16 @@ def mechanism():
 <div class="tbl"><table>
 <tr><th>Entry</th><td>Yes ask <b>{lo:.2f}–{hi:.2f}</b>, both ends inclusive</td></tr>
 <tr><th>Window</th><td>{S.CRYPTO_FAV_MIN_H:g}–{S.CRYPTO_FAV_MAX_H:g} hours before the
- <b>17:00 ET ({S.CRYPTO_FAV_CLOSE_UTC}:00Z)</b> close — about a three-hour hold, settling
- the same afternoon. The hourly closes on the same series are a different contract and are
- not this bet.</td></tr>
+ <b>{S.CRYPTO_FAV_CLOSE_ET}:00 Eastern</b> close — about a three-hour hold, settling the
+ same afternoon. Matched in Eastern, not in UTC: that close is 21:00Z under daylight time
+ and 22:00Z under standard time, and a fixed UTC hour would have silently stopped the lane
+ at the November change. The hourly closes on the same series are a different contract and
+ are not this bet.</td></tr>
+<tr><th>When it reads</th><td>A launchd timer on the always-on Mac dispatches the tracker at
+ <b>13:15 local Central</b>, permanently 2.83h before the close because Central and Eastern
+ shift on the same date. GitHub\u2019s cron cannot hold a 90-minute window: measured over 18
+ days it ran 4.2 times a day against 8 scheduled, landing inside the window on 10 of
+ 18.</td></tr>
 <tr><th>Which rung</th><td>The <b>lowest-priced rung in band</b>, one per coin. A ladder
  offers several at once, so the choice is fixed in advance rather than after seeing
  results.</td></tr>

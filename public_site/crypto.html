@@ -15,7 +15,7 @@
 <div class="topbar">
 <a class="brand" href="./sandbox.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html" aria-current="page">Crypto</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-05T06:06:50Z">Updated Oct 5, 1:06 AM CT</time><span class="sr-only">updated 2026-10-05 06:06 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-05T06:38:07Z">Updated Oct 5, 1:38 AM CT</time><span class="sr-only">updated 2026-10-05 06:38 UTC</span></p>
 </div>
 <nav class="toc" aria-label="On this page"><a href="#rule">The rule under test</a><a href="#unit">Why a day is one bet</a><a href="#lanes">Records</a></nav>
 </header>
@@ -32,9 +32,16 @@ different question: whether the price itself is biased in the favourite band.</p
 <div class="tbl"><table>
 <tr><th>Entry</th><td>Yes ask <b>0.70–0.80</b>, both ends inclusive</td></tr>
 <tr><th>Window</th><td>2–3.5 hours before the
- <b>17:00 ET (21:00Z)</b> close — about a three-hour hold, settling
- the same afternoon. The hourly closes on the same series are a different contract and are
- not this bet.</td></tr>
+ <b>17:00 Eastern</b> close — about a three-hour hold, settling the
+ same afternoon. Matched in Eastern, not in UTC: that close is 21:00Z under daylight time
+ and 22:00Z under standard time, and a fixed UTC hour would have silently stopped the lane
+ at the November change. The hourly closes on the same series are a different contract and
+ are not this bet.</td></tr>
+<tr><th>When it reads</th><td>A launchd timer on the always-on Mac dispatches the tracker at
+ <b>13:15 local Central</b>, permanently 2.83h before the close because Central and Eastern
+ shift on the same date. GitHub’s cron cannot hold a 90-minute window: measured over 18
+ days it ran 4.2 times a day against 8 scheduled, landing inside the window on 10 of
+ 18.</td></tr>
 <tr><th>Which rung</th><td>The <b>lowest-priced rung in band</b>, one per coin. A ladder
  offers several at once, so the choice is fixed in advance rather than after seeing
  results.</td></tr>
