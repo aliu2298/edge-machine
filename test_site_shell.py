@@ -423,9 +423,9 @@ def _check_sport_tab(family, html, d, st):
     ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
     lanes = re.search(r'<section id="lanes">(.*?)</section>', html, re.S)
     ok(lanes is not None, f"{family} tab has a lanes section")
-    # Soccer replaces the lane table with cards. The verdict and the ROI on
-    # each card are still the Sandbox row's strings. Tennis and cricket keep
-    # the table, so their lanes stay the Sandbox section byte for byte.
+    # Soccer and Tennis replace the lane table with cards. The verdict and the
+    # ROI on each card are still the Sandbox row's strings. Cricket keeps the
+    # table, so its lanes stay the Sandbox section byte for byte.
     if family == "Soccer":
         ok('class="rule-card"' in html and 'class="rule-grid"' in html,
            "soccer lanes are flippable cards")
@@ -433,6 +433,13 @@ def _check_sport_tab(family, html, d, st):
         for r in rows:
             ok(soccer_cards.verdict_html(r) in html and soccer_cards.roi_html(r) in html,
                f"soccer card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
+    elif family == "Tennis":
+        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
+           "tennis lanes are flippable cards")
+        import tennis_cards
+        for r in rows:
+            ok(tennis_cards.verdict_html(r) in html and tennis_cards.roi_html(r) in html,
+               f"tennis card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
     else:
         ok(section in html, f"{family} tab lanes are the Sandbox sport_sections for that family")
         if lanes and section:

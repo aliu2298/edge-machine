@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Soccer rule rows render as flippable cards. Tennis and cricket stay tables.
+"""Tennis rule rows render as flippable cards. Cricket stays a table.
 
 Presentation only. The verdict word and the ROI text are the Sandbox row's own
 figures, compared as strings. Nothing here grades a bet or writes a ledger.
+Soccer keeps its own cards; this file does not change how those are built.
 """
 import datetime
 import os
@@ -13,7 +14,6 @@ from datetime import timedelta, timezone
 
 import fmt
 import sandbox_build as B
-import sandbox_sources as S
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -60,7 +60,7 @@ def _quote(i, source, sport, status, start, label, price=0.55,
         price_a=price, price_b=round(1 - price, 2),
         side_a="Yes", side_b="No",
         label=label,
-        market_id=f"KXTEST-{source}-{i}",
+        market_id=f"m-{source}-{i}",
         url=url,
     )
 
@@ -79,14 +79,20 @@ def _settled(source, sport, n=4, won=3, price=0.60):
 
 
 def _fixture():
-    """Two markets. Active rules have open games; inactive rules do not."""
+    """Tennis markets, plus one soccer lane and one cricket lane that must stay put.
+
+    Active tennis rules have an open bet, or a stored fixture inside 48 hours.
+    A fixture at 72 hours with no stake stays inactive.
+    """
     quotes = []
-    quotes += _settled("o15_form_l10", "soccer_o15", n=6, won=4)
-    quotes += _settled("o15_ranked", "soccer_o15", n=4, won=1, price=0.70)
-    quotes += _settled("o15_form_l10", "soccer_o15_cup", n=3, won=2)
-    quotes += _settled("btts_form_l10", "soccer_btts", n=5, won=2, price=0.48)
-    quotes += _settled("corners_under", "soccer_corners", n=4, won=3, price=0.52)
-    # Soonest four of five open games on the over-1.5 form rule. The fifth is later.
+    quotes += _settled("tennis_fav_band_3h", "tennis", n=6, won=4)
+    quotes += _settled("tennis_combo2", "tennis_combo", n=4, won=3, price=0.62)
+    quotes += _settled("tennis_combo3", "tennis_combo", n=4, won=2, price=0.58)
+    quotes += _settled("tennis_combo4", "tennis_combo", n=3, won=1, price=0.61)
+    quotes += _settled("pm_combo2", "tennis_pmcombo", n=5, won=2, price=0.48)
+    quotes += _settled("pm_combo3", "tennis_pmcombo", n=4, won=3, price=0.52)
+    quotes += _settled("pm_combo4", "tennis_pmcombo", n=4, won=1, price=0.70)
+    # Soonest four of five open games on the favourite-band rule. The fifth is later.
     soon = [
         (1, "Alpha v Beta soonest"),
         (2, "Gamma v Delta second"),
@@ -95,46 +101,40 @@ def _fixture():
         (30, "Iota v Kappa fifth and later"),
     ]
     for i, (hours, label) in enumerate(soon):
-        quotes.append(_quote(100 + i, "o15_form_l10", "soccer_o15", "open", hours, label))
-    # A second active rule in the same market, kicking off later the same day.
+        quotes.append(_quote(100 + i, "tennis_fav_band_3h", "tennis", "open", hours, label))
+    # No open bet. The tracker already stored the fixture (bet false, status open).
+    # 12h is inside the next day. 36h is past 24h and inside 48h. 72h is outside.
     quotes.append(_quote(
-        200, "o15_ranked", "soccer_o15", "open", 20, "Lambda v Mu ranked"))
-    # Active in another market, inside 48 hours, after the over-1.5 games.
+        500, "tennis_combo2", "tennis_combo", "open", 12,
+        "Soon Side v Tonight", bet=False))
     quotes.append(_quote(
-        300, "btts_form_l10", "soccer_btts", "open", 40, "Nu v Xi btts"))
+        501, "tennis_combo3", "tennis_combo", "open", 36,
+        "Window Side v Keeper", bet=False))
+    quotes.append(_quote(
+        502, "tennis_combo4", "tennis_combo", "open", 72,
+        "Far Side v Later", bet=False))
     # Open, but the kickoff is past 48 hours: still receiving a pick, so active,
-    # and ordered after rules whose game is inside the window.
+    # and the market sorts after rules whose game is inside the window.
     quotes.append(_quote(
-        400, "corners_under", "soccer_corners", "open", 80, "Omicron v Pi later"))
-    # A label and a url the card must not turn into markup or a script link.
+        400, "pm_combo2", "tennis_pmcombo", "open", 80, "Omicron v Pi later"))
     quotes.append(_quote(
-        401, "corners_under", "soccer_corners", "open", 90,
+        401, "pm_combo2", "tennis_pmcombo", "open", 90,
         'Rho <script>alert(1)</script> v "Sigma"',
         url="javascript:alert(1)",
         venue="polymarket_us",
     ))
-    # A record, no open bet, and a fixture the tracker already logged without a
-    # stake. 36h is inside the 48h cutoff and outside a 24h one. 12h is inside
-    # both, so a window that skips the next day would miss it.
-    quotes += _settled("team1_form_l5", "soccer_team1", n=4, won=3, price=0.62)
+    # Other families. They must not land on the Tennis cards, and Tennis cards
+    # must not land on their pages.
+    quotes += _settled("o15_form_l10", "soccer_o15", n=4, won=3)
     quotes.append(_quote(
-        500, "team1_form_l5", "soccer_team1", "open", 36,
-        "Window Side v Keeper", bet=False))
-    quotes += _settled("team2_ranked", "soccer_team2", n=4, won=2, price=0.58)
-    quotes.append(_quote(
-        501, "team2_ranked", "soccer_team2", "open", 12,
-        "Soon Side v Tonight", bet=False))
-    # Same shape, kickoff past 48 hours. Not an open bet, so it stays inactive.
-    quotes += _settled("team1_form_l5", "soccer_team1_cup", n=3, won=1, price=0.61)
-    quotes.append(_quote(
-        502, "team1_form_l5", "soccer_team1_cup", "open", 72,
-        "Far Side v Later", bet=False))
+        900, "o15_form_l10", "soccer_o15", "open", 5, "Soccer Only v Stay"))
+    quotes += _settled("oddspedia", "cricket", n=6, won=4, price=0.40)
     return {"quotes": quotes}, {"pairs": {}}
 
 
 def _rows(d, st):
     import sport_tab
-    return sport_tab.family_rows(d, st, "Soccer")
+    return sport_tab.family_rows(d, st, "Tennis")
 
 
 def _roi_html(row):
@@ -196,28 +196,38 @@ def _attr(card, name):
 
 print(f"SHA {SHA}")
 
-import soccer_build
+try:
+    import tennis_cards
+except ImportError:
+    tennis_cards = None
+
 import tennis_build
 import cricket_build
+import soccer_build
 
-print("\nsoccer cards")
+print("\ntennis cards")
 d, st = _fixture()
-html = soccer_build.build(d, st, NOW)
+html = tennis_build.build(d, st, NOW)
 rows = _rows(d, st)
-ok(rows, "the fixture has soccer lanes")
-ok('class="rule-grid"' in html, "soccer lanes use a card grid")
-ok('class="rule-card"' in html, "soccer lanes are flippable cards")
+ok(rows, "the fixture has tennis lanes")
+ok('class="rule-grid"' in html, "tennis lanes use a card grid")
+ok('class="rule-card"' in html, "tennis lanes are flippable cards")
 ok('class="rule-flip"' in html, "each card has a flip control")
-ok("<script" not in html.split("<main", 1)[-1].split("</main>", 1)[0].lower()
-   or 'src="./' in html, "the page body does not grow an inline script")
+main = html.split("<main", 1)[-1].split("</main>", 1)[0]
+ok("<script" not in main.lower(), "the page body does not grow an inline script")
 ok("javascript:" not in html, "a javascript: game url is not written")
 ok("&lt;script&gt;" in html, "a game label is escaped")
-ok('class="rule-grid"' in html and "repeat(4" in open(
-    os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read(),
-   "the grid is four columns")
+css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
+ok("repeat(4, minmax(0, 1fr))" in css, "the grid is four columns")
+ok("repeat(2, minmax(0, 1fr))" in css, "the grid is two columns under 980px")
+ok("grid-template-columns: minmax(0, 1fr)" in css, "the grid is one column under 640px")
+ok(">Match winner</h3>" in html and ">Combos</h3>" in html and ">PM Combos</h3>" in html,
+   "each tennis market is its own row")
+ok(html.count('class="rule-grid"') == html.count('class="rule-market"') > 1,
+   "each market row holds one card grid")
 
 cards = _cards(html)
-ok(len(cards) == len(rows), f"one card per soccer lane with a record ({len(cards)} cards, {len(rows)} lanes)")
+ok(len(cards) == len(rows), f"one card per tennis lane with a record ({len(cards)} cards, {len(rows)} lanes)")
 
 actives = [_attr(c, "data-active") for c in cards]
 if "0" in actives and "1" in actives:
@@ -227,60 +237,62 @@ if "0" in actives and "1" in actives:
 else:
     ok(False, "the fixture has both an active card and an inactive card")
 
-by_sport = {}
+by_key = {}
 for c in cards:
-    by_sport.setdefault(_attr(c, "data-sport"), []).append(c)
+    by_key.setdefault((_attr(c, "data-source"), _attr(c, "data-sport")), []).append(c)
 
-form = by_sport.get("soccer_o15", [""])[0]
+form = by_key.get(("tennis_fav_band_3h", "tennis"), [""])[0]
 ok("Alpha v Beta soonest" in form and "Eta v Theta fourth" in form,
    "the back lists the soonest open games")
 ok("Iota v Kappa fifth and later" not in form,
    "the back stops at four open games")
-ok("4 of 5 open" in form, "a longer slate says four of the open count")
-ok("Gamma v Delta second" in form and "Epsilon v Zeta third" in form,
-   "the other two soonest games are on the back")
+ok("4 of 5 open, soonest first." in form, "a longer slate says four of the open count")
+alpha = form.find("Alpha v Beta soonest")
+gamma = form.find("Gamma v Delta second")
+epsilon = form.find("Epsilon v Zeta third")
+eta = form.find("Eta v Theta fourth")
+ok(0 <= alpha < gamma < epsilon < eta, "the four open games are soonest first")
 
-# Front text is the helper's own verdict and ROI, character for character.
+if tennis_cards is None:
+    ok(False, "tennis_cards renders the Tennis lanes")
 for row in rows:
-    card = next(c for c in cards if _attr(c, "data-source") == row["name"]
-                and _attr(c, "data-sport") == row["sport"])
+    found = [c for c in cards if _attr(c, "data-source") == row["name"]
+             and _attr(c, "data-sport") == row["sport"]]
+    card = found[0] if found else ""
     roi = _roi_html(row)
     verdict = _verdict_html(row)
-    ok(roi in card, f"{row['name']}|{row['sport']} front ROI matches the Sandbox row")
-    ok(verdict in card, f"{row['name']}|{row['sport']} front verdict matches the Sandbox row")
+    ok(roi in card, f"{row['name']}|{row['sport']} front ROI matches the lane row")
+    ok(verdict in card, f"{row['name']}|{row['sport']} front verdict matches the lane row")
+    if tennis_cards is not None:
+        eq(tennis_cards.roi_html(row), roi,
+           f"{row['name']}|{row['sport']} ROI helper is the lane-row string")
+        eq(tennis_cards.verdict_html(row), verdict,
+           f"{row['name']}|{row['sport']} verdict helper is the lane-row string")
     want_active = _expect_active(row, d, NOW)
     eq(_attr(card, "data-active"), want_active,
        f"{row['name']}|{row['sport']} active flag is an open bet or a fixture inside 48 hours")
 
-# Same market, two active rules: the sooner kickoff is first in that grid.
 active_html = html.split('data-band="inactive"', 1)[0]
-o15_names = [_attr(c, "data-source") for c in _cards(active_html)
-             if _attr(c, "data-market") == "soccer_o15"]
-eq(o15_names, ["o15_form_l10", "o15_ranked"],
-   "the active over-1.5 row puts the sooner kickoff first")
-ok('data-market="soccer_o15"' in html and 'class="rule-grid"' in html,
-   "over 1.5 is its own market row")
+combo_names = [_attr(c, "data-source") for c in _cards(active_html)
+               if _attr(c, "data-market") == "tennis_combo"]
+eq(combo_names, ["tennis_combo2", "tennis_combo3"],
+   "the active combo row puts the sooner kickoff first")
+markets = [m.group(1) for m in re.finditer(r'class="rule-market" data-market="([^"]+)"', active_html)]
+eq(markets, ["tennis", "tennis_combo", "tennis_pmcombo"],
+   "active markets are soonest kickoff first, each on its own row")
 
-grids = re.findall(r'<div class="rule-grid">(.*?)</div>', html, re.S)
-ok(any(g.count('class="rule-card"') >= 1 for g in grids), "a market row holds its cards in one grid")
 ok('data-band="active"' in html and 'data-band="inactive"' in html,
    "active and inactive are separate bands")
-# The cup twin has no open game, so it is not in the active over-1.5 row.
-ok('data-sport="soccer_o15_cup"' in html, "the cup twin still has a card")
-cup_pos = html.find('data-sport="soccer_o15_cup"')
-active_end = html.find('data-band="inactive"')
-ok(cup_pos > active_end > 0, "the cup twin, with nothing open, sits in the inactive band")
 
-# No open bet. The fixture is one the tracker already stored (bet false, status
-# open). 36h is past a 24h cutoff and inside 48h. 12h is inside the next day,
-# which the 48h cutoff still counts. 72h is outside it.
+
 def _one(source, sport):
-    return next(c for c in cards if _attr(c, "data-source") == source
-                and _attr(c, "data-sport") == sport)
+    found = by_key.get((source, sport)) or [""]
+    return found[0]
 
-window = _one("team1_form_l5", "soccer_team1")
-soon = _one("team2_ranked", "soccer_team2")
-far = _one("team1_form_l5", "soccer_team1_cup")
+
+window = _one("tennis_combo3", "tennis_combo")
+soon = _one("tennis_combo2", "tennis_combo")
+far = _one("tennis_combo4", "tennis_combo")
 eq(_attr(window, "data-active"), "1",
    "a fixture 36h away and no open bet is active (cutoff is 48 hours)")
 eq(_attr(soon, "data-active"), "1",
@@ -291,40 +303,46 @@ ok("No open game." in window and "Window Side v Keeper" not in window,
    "the back stays the open bets; an unstaked fixture is not listed there")
 ok("No open game." in soon and "Soon Side v Tonight" not in soon,
    "a nearer unstaked fixture is not copied onto the back")
-window_pos = html.find('data-sport="soccer_team1"')
-soon_pos = html.find('data-sport="soccer_team2"')
-far_pos = html.find('data-sport="soccer_team1_cup"')
+active_end = html.find('data-band="inactive"')
+window_pos = html.find('data-source="tennis_combo3"')
+soon_pos = html.find('data-source="tennis_combo2"')
+far_pos = html.find('data-source="tennis_combo4"')
 ok(0 < soon_pos < active_end and 0 < window_pos < active_end,
    "fixtures inside 48 hours sit in the active band")
 ok(far_pos > active_end > 0, "a fixture past 48 hours sits in the inactive band")
 
-# Corners is receiving picks (open games past 48h), so it stays active and after
-# the rules whose game is inside 48 hours.
-corners_pos = html.find('data-sport="soccer_corners"')
-btts_pos = html.find('data-sport="soccer_btts"')
-ok(0 < btts_pos < corners_pos < active_end,
+late_pos = html.find('data-source="pm_combo2"')
+ok(0 < window_pos < late_pos < active_end,
    "a pick in, but outside 48 hours, is active and below the nearer games")
 
-print("\ncricket stays a table")
-ten = tennis_build.build(d, st, NOW)
+print("\ncricket and soccer stay on their own pages")
+ten = html
+soc = soccer_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
+ok("Soccer Only v Stay" not in ten and "oddspedia" not in ten.lower(),
+   "tennis cards do not pick up soccer or cricket lanes")
+ok('class="rule-card"' in soc and "Soccer Only v Stay" in soc,
+   "soccer still renders its own rule cards")
+ok("tennis_fav_band_3h" not in soc and "Alpha v Beta soonest" not in soc,
+   "soccer cards do not pick up tennis lanes")
 ok("rule-card" not in cri and "rule-grid" not in cri and "rule-flip" not in cri,
    "cricket does not use the rule card markup")
-ok('id="lanes"' in cri and "<table" in cri, "cricket lanes are still a table")
-ok("rule-card" not in ten and "rule-grid" not in ten,
-   "a ledger with no tennis lanes does not paint tennis cards")
+ok('id="lanes"' in cri and "<table" in cri and "Oddspedia" in cri,
+   "cricket lanes are still a table")
+ok("tennis_fav_band_3h" not in cri and "Alpha v Beta soonest" not in cri,
+   "cricket does not pick up tennis lanes")
 
-css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
 js = open(os.path.join(ROOT, "public_site", "tables.js"), encoding="utf-8").read()
-ok(".rule-grid" in css and "repeat(4, minmax(0, 1fr))" in css,
-   "site.css lays the soccer grid out in four columns")
-ok("function wireRuleCards" in js and "is-flipped" in js,
-   "tables.js flips a soccer card without an inline handler")
+ok("function wireRuleCards" in js and "is-flipped" in js and ".rule-flip" in js,
+   "tables.js flips a card, including the focus restore, without an inline handler")
+ok(js.count("function wireRuleCards") == 1, "tennis reuses the one card flip")
 
-published = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
+published = open(os.path.join(ROOT, "public_site", "tennis.html"), encoding="utf-8").read()
 ok('class="rule-card"' in published and 'class="rule-grid"' in published,
-   "public_site/soccer.html is the card page")
+   "public_site/tennis.html is the card page")
+soc_file = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
 cri_file = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
+ok('class="rule-card"' in soc_file, "published soccer page still has its cards")
 ok("rule-card" not in cri_file, "published cricket page has no rule card")
 
 if FAILS:
