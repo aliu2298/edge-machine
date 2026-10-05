@@ -4,29 +4,59 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge Machine</title>
-<meta name="description" content="Which rules and tipsters are making money, and which are failing.">
+<meta name="description" content="Production headlines, and the paper bets still to be listed.">
 <link rel="stylesheet" href="./site.css">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="refresh" content="0; url=./sandbox.html">
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="site">
-<div class="topbar">
-<a class="brand" href="./sandbox.html">Edge Machine</a>
-<nav class="main" aria-label="Pages"><a href="./sandbox.html" aria-current="page">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html">Crypto</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-05T19:06:13Z">Updated Oct 5, 2:06 PM CT</time></p>
+<div class="bet-roll">
+<p class="bet-roll-label">Open &amp; recent</p>
+<div class="bet-roll-track">
+<p class="bet-roll-empty">No open or recent paper bets yet.</p>
 </div>
-
+</div>
+<div class="topbar">
+<a class="brand" href="./index.html">Edge Machine</a>
+<nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html" aria-current="page">Production</a><a href="./trading.html">Trading</a><a href="./sandbox.html#method">Method</a></nav>
+<p class="stamp"><time datetime="2026-10-05T22:01:03Z">Updated Oct 5, 5:01 PM CT</time></p>
+</div>
+<nav class="sports" aria-label="Sports"><button type="button" data-sport="all" aria-pressed="true">All</button><button type="button" data-sport="nba" aria-pressed="false">NBA</button><button type="button" data-sport="soccer" aria-pressed="false">Soccer</button><button type="button" data-sport="tennis" aria-pressed="false">Tennis</button><button type="button" data-sport="cricket" aria-pressed="false">Cricket</button><button type="button" data-sport="crypto" aria-pressed="false">Crypto</button></nav>
 </header>
 <main id="content" class="wrap">
-<h1>Edge Machine</h1>
-<p class="lede">Updated Oct 5, 2:06 PM CT</p>
-<p><a href="./sandbox.html">Continue to the Sandbox</a></p>
+<h1 class="sr-only">Edge Machine · Production</h1>
+<section class="shell-summary" aria-label="Production totals" data-board="production">
+<div class="tiles">
+<div class="tile"><b>5</b><span>pairs in Production</span></div>
+<div class="tile"><b>11</b><span>leads still to come</span></div>
+<div class="tile"><b>9/13</b><span>recent leads landed</span></div>
+<div class="tile"><b class="when">Oct 6, 9:00 AM CT</b><span>next lead (CT)</span></div>
+</div>
+</section>
+<div class="shell-columns">
+<section class="shell-pane" aria-labelledby="running-title">
+<h2 id="running-title">Running</h2>
+<p class="shell-kicker">Open paper bets</p>
+<div class="running-filters" role="group" aria-label="Running filters">
+<button type="button" data-filter="live" aria-pressed="true">Live</button><button type="button" data-filter="settled" aria-pressed="false">Settled</button><button type="button" data-filter="upcoming" aria-pressed="false">Upcoming</button>
+</div>
+<p class="shell-note">These filters do not change the list yet.</p>
+<p class="shell-empty">No live, settled, or upcoming paper bets.</p>
+</section>
+<section class="shell-pane" aria-labelledby="rules-title">
+<div class="pane-head">
+<h2 id="rules-title">Rules applied</h2>
+<a class="full-page" href="./production.html">Full page →</a>
+</div>
+<p class="shell-empty">Select a contest in Running.</p>
+</section>
+</div>
+<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
 </main>
-<script src="./root.js"></script>
 <script src="./tables.js"></script>
+<script src="./shell.js"></script>
 </body>
 </html>

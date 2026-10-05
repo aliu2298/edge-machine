@@ -183,8 +183,12 @@ _stamp_text = _visible_html(_stamp_el.group(1) if _stamp_el else "")
 _lede_text = _visible_html(_lede_el.group(1) if _lede_el else "")
 ok(_STAMP_TEXT.fullmatch(_stamp_text) is not None,
    f"index.html stamp is 'Updated Mon D, H:MM AM/PM CT' (got {_stamp_text!r})")
-ok(_STAMP_TEXT.fullmatch(_lede_text) is not None,
-   f"index.html lede uses that same stamp (got {_lede_text!r})")
+ok("Continue to the Sandbox" not in _index and 'url=./sandbox.html' not in _index,
+   "index.html is the Production shell, not a redirect to the Sandbox")
+ok('href="./production.html" aria-current="page"' in _index,
+   "index.html marks Production as the current page")
+ok(_lede_text == "" or _STAMP_TEXT.fullmatch(_lede_text) is not None,
+   f"index.html has no stale lede (got {_lede_text!r})")
 _raw_hits = _RAW_ISO.findall(_index)
 _attr_ok = re.findall(r'datetime="(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)"', _index)
 ok("+00:00" not in _index and set(_raw_hits) <= set(_attr_ok),
@@ -513,7 +517,14 @@ ANCHOR = r"""
 """
 
 
-def _keyboard_focus(page, expect_toggle):
+def _nav_count(path):
+    """The shell's page pills are Sandbox, Production, Trading, and Method."""
+    if path == "index.html":
+        return 4
+    return len(site_chrome.PAGES)
+
+
+def _keyboard_focus(page, expect_toggle, pill_target=8):
     """Tab from the skip link through every main-nav pill, chip, and toggle segment."""
     page.evaluate("""() => {
       window.scrollTo(0, 0);
@@ -533,9 +544,9 @@ def _keyboard_focus(page, expect_toggle):
             chips.append(info)
         elif kind == "toggle":
             toggles.append(info)
-        elif len(pills) >= 8 and not expect_toggle:
+        elif len(pills) >= pill_target and not expect_toggle:
             break
-        if len(pills) >= 8 and expect_toggle and len(toggles) >= 2:
+        if len(pills) >= pill_target and expect_toggle and len(toggles) >= 2:
             break
     return pills, chips, toggles
 
@@ -676,14 +687,14 @@ def browser_checks():
                     label = f"{path} @{width}"
                     saved_nav = page.evaluate(
                         "() => { const n = document.querySelector('nav.main'); return n ? n.scrollLeft : 0; }")
-                    pills, chips, toggles = _keyboard_focus(page, _has_toggle(path))
+                    nav_n = _nav_count(path)
+                    pills, chips, toggles = _keyboard_focus(page, _has_toggle(path), nav_n)
                     page.evaluate("""(x) => {
                       const nav = document.querySelector('nav.main');
                       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
                       if (nav) nav.scrollLeft = x;
                       window.scrollTo(0, 0);
                     }""", saved_nav)
-                    nav_n = len(site_chrome.PAGES)
                     ok(len(pills) == nav_n,
                        f"{label}: tabbed through all {nav_n} main-nav pills (got {len(pills)}: "
                        + ", ".join(p.get("text", "") for p in pills) + ")")
@@ -731,7 +742,7 @@ def browser_checks():
                     ok(abs(hdr - h) <= 1,
                        f"{label}: --hdr-h matches the stuck height "
                        f"({got['hdr']} vs {h:.1f}px)")
-                    ok(got["rowSpread"] <= 1 and got["linkCount"] == len(site_chrome.PAGES),
+                    ok(got["rowSpread"] <= 1 and got["linkCount"] == nav_n,
                        f"{label}: all {got['linkCount']} main-nav links share one row "
                        f"(offsetTop spread {got['rowSpread']}px)")
                     missed = [a["text"] for a in got["reach"] if not a["ok"]]

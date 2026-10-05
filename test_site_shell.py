@@ -48,8 +48,10 @@ _CURRENT = {
     "tennis": 'href="./tennis.html" aria-current="page"',
     "cricket": 'href="./cricket.html" aria-current="page"',
     "crypto": 'href="./crypto.html" aria-current="page"',
-    "index": 'href="./sandbox.html" aria-current="page"',
+    "index": 'href="./production.html" aria-current="page"',
 }
+# The site root is the shell. Sport pages stay on the shared nine-link nav.
+_SHELL_LABELS = ["Sandbox", "Production", "Trading", "Method"]
 
 
 def _inline_script(html):
@@ -69,8 +71,17 @@ def _check_page(name, html, current):
     ok(_HANDLER.search(html) is None, f"{name} has no inline on* handler")
     ok('href="#content"' in html and "Skip to content" in html,
        f"{name} has a skip-to-content link")
-    for href in _NAV_HREFS:
-        ok(href in html, f"{name} nav includes {href}")
+    if current == "index":
+        for href in (
+            'href="./sandbox.html"',
+            'href="./production.html"',
+            'href="./trading.html"',
+            'href="./sandbox.html#method"',
+        ):
+            ok(href in html, f"{name} nav includes {href}")
+    else:
+        for href in _NAV_HREFS:
+            ok(href in html, f"{name} nav includes {href}")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
     # The eight links are the same set, in the same order, on every page.
     # aria-current on a breadcrumb is separate; the main nav marks one page.
@@ -80,7 +91,7 @@ def _check_page(name, html, current):
     eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, _NAV_LABELS, f"{name} nav labels")
+        eq(labels, _SHELL_LABELS if current == "index" else _NAV_LABELS, f"{name} nav labels")
 
 
 def _nba(now):
