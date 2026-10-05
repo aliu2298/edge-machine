@@ -97,6 +97,22 @@ def main():
        "spot is retired with its finding recorded")
     ok("spot" not in S.REMOVED_SOURCES and not S.lane_removed("spot", "crypto"),
        "and retired, not eliminated -- so grading and its record continue")
+    # A blind baseline is the bar a CHOICE has to clear. Boxing and MMA lost their last
+    # chooser on 2026-10-04 and the rows kept rendering off the venues' contests, reading
+    # as a lane that made money -- "MMA, back the favourite, +20.8%" -- when it is the
+    # favourite-longshot bias, already priced. Hidden by hand on 2026-10-05.
+    import sandbox_build as BLD
+    for _sp in ("boxing", "mma"):
+        ok(BLD.judges_nothing(_sp), f"{_sp} has no chooser left, so its baseline row is hidden")
+    # Scoped deliberately. A registry or ledger rule would also take table tennis, MLB and
+    # NHL Rest, and would contradict what test_tip_lanes_removed already pins: boxing and
+    # MMA keep their venue sweep and coverage row, and table tennis keeps a baseline row
+    # whenever the full ledger holds its contests. Those were separate decisions.
+    for _sp in ("soccer", "tennis", "cricket", "nfl", "table_tennis", "mlb", "nhl_rest"):
+        ok(not BLD.judges_nothing(_sp), f"{_sp} keeps its baseline row")
+    ok("boxing" not in S.REMOVED_VENUE_SPORTS and "mma" not in S.REMOVED_VENUE_SPORTS,
+       "and their venue listings are still swept -- only the baseline row was hidden")
+
     ok("scores24" in S.REMOVED_SOURCES and "sportsgambler" in S.REMOVED_SOURCES
        and "soccerpredictions" in S.REMOVED_SOURCES,
        "scores24, sportsgambler, and soccerpredictions stay off the board")
