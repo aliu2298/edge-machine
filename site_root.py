@@ -6,12 +6,19 @@ Central Time. It must NOT contain the tracker stamp "updated YYYY-MM-DD HH:MM UT
 that form lives on sandbox.html and production.html, and a freshness check
 pointed at this page fails closed on purpose. backup-refresh.yml reads those two pages.
 
+The tracker build (sandbox_build.production_and_index) is the producer of the
+summary strip. This command does not count tiles. When production.html is
+already beside the output, the shell copies that page's strip and clock.
+refresh-boards does not run this command.
+
 Usage:  python3 site_root.py
 """
 import datetime
 import os
+import re
 
 import fmt
+import page_freshness
 import shell_build
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public_site", "index.html")
@@ -63,10 +70,36 @@ def write_atomic(path, text):
         raise
 
 
+def _clock_from_production(html, fallback):
+    """The instant production.html was built, so a copy cannot move the clock."""
+    match = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)"', html)
+    if match:
+        return datetime.datetime.strptime(
+            match.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+    parsed = page_freshness.parse_stamp(html)
+    return parsed if parsed is not None else fallback
+
+
 def main():
+    """Write the shell. Tiles come from production.html when that page is there.
+
+    A missing production page falls back to root_stub, which still asks
+    production.page to count. The tracker build does not use that fallback:
+    it passes the tiles it just computed. A failed write leaves the old file.
+    """
     now = datetime.datetime.now(datetime.timezone.utc)
-    write_atomic(OUT, root_stub(now))
-    print(f"wrote {OUT} ({fmt.display_updated(now)})")
+    prod_path = os.path.join(os.path.dirname(OUT), "production.html")
+    if os.path.isfile(prod_path):
+        with open(prod_path, encoding="utf-8") as fh:
+            prod = fh.read()
+        when = _clock_from_production(prod, now)
+        text = shell_build.page(when, tiles=shell_build.tiles_html(prod))
+        shown = when
+    else:
+        text = root_stub(now)
+        shown = now
+    write_atomic(OUT, text)
+    print(f"wrote {OUT} ({fmt.display_updated(shown)})")
 
 
 if __name__ == "__main__":

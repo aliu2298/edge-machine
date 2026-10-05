@@ -13,8 +13,9 @@ name: Backup refresh (watchdog)
 #   3. Are the LIVE Sandbox and Production pages fresh?
 #      (a workflow ran green but those pages are stale — the Pages deploy has
 #      flaked before on an OIDC token timeout). The site root is not this check:
-#      site_root.py rewrites that redirect stub every refresh, so it stays new
-#      even when the tracker is dead.
+#      it is the SofaScore shell, written with production.html by the tracker.
+#      Its stamp is not the tracker form, so a fresh shell does not mean those
+#      two pages are fresh.
 # Any of these is enough to take over, judged at 5h. Takeover still cannot
 # rebuild the two pages, so after that deploy — and when takeover does not
 # run — the pages are checked again, and so is the tracker's last success.
@@ -142,9 +143,9 @@ jobs:
           echo "tracker_detail=$TRACKER_DETAIL" >> "$GITHUB_OUTPUT"
 
           # --- 2. are sandbox.html and production.html actually fresh? ---
-          # The site root is a redirect stub rewritten every refresh, so its stamp
-          # stays new when the tracker is dead. These two pages carry the tracker's
-          # own "updated YYYY-MM-DD HH:MM UTC" stamp. A missing or unparseable stamp
+          # The site root is the SofaScore shell, not a redirect stub. Its stamp is
+          # not the tracker form, so it stays out of this check. These two pages carry
+          # the tracker's own "updated YYYY-MM-DD HH:MM UTC" stamp. A missing or unparseable stamp
           # is stale. page_freshness.py is what the unit tests exercise.
           # Stale pages are a takeover reason, not a failure of this step. Takeover
           # cannot rebuild them; the recheck after deploy (and the no-takeover step

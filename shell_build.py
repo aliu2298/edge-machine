@@ -1,10 +1,11 @@
 """The SofaScore-style shell. Slice 1 is chrome and empty panes.
 
 The site root lands here with Production selected. Page pills go to the
-existing Sandbox, Production, Trading, and Method pages. Sport pills and the
-Live / Settled / Upcoming controls only record which one is pressed; they do
-not filter a list. The summary strip is the Production page's own headline
-tiles — the same counts that page already prints, not a new P&L.
+existing Sandbox, Production, Trading, and Method pages. Sport pills are
+inert until a later slice: they do not filter, navigate, or take focus.
+The summary strip is the Production page's own headline tiles — the same
+counts that page already prints, not a new P&L. The tracker build passes
+those tiles in so this page cannot count them on a different clock.
 """
 import datetime
 
@@ -28,7 +29,7 @@ PAGES = (
 RUNNING = (("live", "Live", True), ("settled", "Settled", False), ("upcoming", "Upcoming", False))
 
 
-def _tiles(html):
+def tiles_html(html):
     """Copy the Production headline strip out of a page that already built it."""
     start = html.find('<div class="tiles">')
     if start < 0:
@@ -52,7 +53,7 @@ def _tiles(html):
 
 def production_summary(d, st, blob, now):
     """The four Production tiles. page() does the counting; this only displays it."""
-    return _tiles(production.page(d, st, blob, "", now=now))
+    return tiles_html(production.page(d, st, blob, "", now=now))
 
 
 def _load(d, st, blob):
@@ -90,12 +91,13 @@ def _page_pills():
 
 
 def _sport_pills():
+    """Inert chrome. aria-disabled and out of the tab order, not a filter."""
     parts = []
     for key, label in SPORTS:
-        pressed = "true" if key == "all" else "false"
         parts.append(
             f'<button type="button" data-sport="{site_chrome.esc(key)}" '
-            f'aria-pressed="{pressed}">{site_chrome.esc(label)}</button>')
+            f'aria-disabled="true" tabindex="-1" aria-describedby="sports-soon">'
+            f'{site_chrome.esc(label)}</button>')
     return "".join(parts)
 
 
@@ -108,11 +110,18 @@ def _running_filters():
     return "".join(parts)
 
 
-def page(now, d=None, st=None, blob=None):
-    """The shell document. `d`, `st`, and `blob` default to the live board."""
-    d, st, blob = _load(d, st, blob)
-    now_dt = _now(now)
-    summary = production_summary(d, st, blob, now_dt)
+def page(now, d=None, st=None, blob=None, tiles=None):
+    """The shell document.
+
+    Pass `tiles` to reuse a strip already computed for production.html. Omitting
+    it builds that strip from `d`, `st`, and `blob` (the live board by default)
+    for callers that are not the tracker build.
+    """
+    if tiles is None:
+        d, st, blob = _load(d, st, blob)
+        summary = production_summary(d, st, blob, _now(now))
+    else:
+        summary = tiles
     body = f"""<h1 class="sr-only">Edge Machine · Production</h1>
 <section class="shell-summary" aria-label="Production totals" data-board="production">
 {summary}
@@ -162,7 +171,10 @@ def page(now, d=None, st=None, blob=None):
 <nav class="main" aria-label="Pages">{_page_pills()}</nav>
 <p class="stamp">{_stamp(now)}</p>
 </div>
-<nav class="sports" aria-label="Sports">{_sport_pills()}</nav>
+<div class="sport-row">
+<nav class="sports" aria-label="Sports" aria-describedby="sports-soon">{_sport_pills()}</nav>
+<p id="sports-soon" class="sports-soon">Coming soon</p>
+</div>
 </header>
 <main id="content" class="wrap">
 {body}

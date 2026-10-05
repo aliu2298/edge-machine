@@ -1,5 +1,6 @@
-// Sport pills and Running filters record which control is pressed.
-// They do not load contests, hide rows, or leave the page. The list is a later slice.
+// Running filters record which control is pressed. They do not load contests,
+// hide rows, or leave the page. Sport pills are aria-disabled chrome; this
+// file does not arm them. The list is a later slice.
 (function () {
   function arm(root) {
     if (!root) return;
@@ -12,6 +13,5 @@
       });
     });
   }
-  arm(document.querySelector("nav.sports"));
   arm(document.querySelector(".running-filters"));
 })();

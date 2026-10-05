@@ -867,13 +867,21 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   color: var(--mut);
   font-size: 13px;
 }
+.sport-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px 12px;
+}
 nav.sports {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 24px 12px;
+  margin: 0;
+  padding: 0;
 }
 nav.sports button,
 .running-filters button {
@@ -888,7 +896,23 @@ nav.sports button,
   padding: 0 12px;
   cursor: pointer;
 }
-nav.sports button[aria-pressed="true"],
+nav.sports button[aria-disabled="true"] {
+  color: var(--mut);
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+nav.sports button[aria-disabled="true"]:hover,
+nav.sports button[aria-disabled="true"]:focus {
+  color: var(--mut);
+  background: transparent;
+}
+.sports-soon {
+  margin: 0;
+  color: var(--mut);
+  font-size: 13px;
+  font-weight: 600;
+}
 .running-filters button[aria-pressed="true"] {
   color: var(--fg);
   background: var(--raised);
@@ -929,5 +953,5 @@ nav.sports button[aria-pressed="true"],
 .full-page { font-size: 13px; font-weight: 600; white-space: nowrap; }
 @media (max-width: 800px) {
   .shell-columns { grid-template-columns: minmax(0, 1fr); }
-  .bet-roll, nav.sports { padding-left: 16px; padding-right: 16px; }
+  .bet-roll, .sport-row { padding-left: 16px; padding-right: 16px; }
 }

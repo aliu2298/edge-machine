@@ -6159,7 +6159,7 @@ ok("if: always()" in _tracker_wf
 ok("git add -A" not in _tracker_wf and "\ngit add ." not in _tracker_wf and "git add .\n" not in _tracker_wf,
    "the commit lists paths explicitly")
 ok('DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"' in _tracker_wf
-   and 'SITE="public_site/sandbox.html public_site/production.html"' in _tracker_wf
+   and 'SITE="public_site/sandbox.html public_site/production.html public_site/index.html"' in _tracker_wf
    and "git add $DATA\n" in _tracker_wf and "git add $DATA $SITE" in _tracker_wf,
    "a failed run commits the data files and not public_site")
 ok("could not push the ledger after 3 attempts" in _tracker_wf and "exit 1" in _tracker_wf,

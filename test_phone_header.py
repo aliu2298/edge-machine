@@ -517,10 +517,19 @@ ANCHOR = r"""
 """
 
 
+def _landing_nav_labels():
+    """Page-pill labels from the published shell, not a fixed count."""
+    html = _read("public_site/index.html")
+    nav = re.search(r'<nav class="main"[^>]*>(.*?)</nav>', html, re.S)
+    if not nav:
+        return []
+    return re.findall(r"<a\b[^>]*>([^<]*)</a>", nav.group(1))
+
+
 def _nav_count(path):
-    """The shell's page pills are Sandbox, Production, Trading, and Method."""
+    """Landing pills come from index.html. Every other page uses the shared nav."""
     if path == "index.html":
-        return 4
+        return len(_landing_nav_labels())
     return len(site_chrome.PAGES)
 
 
@@ -698,6 +707,11 @@ def browser_checks():
                     ok(len(pills) == nav_n,
                        f"{label}: tabbed through all {nav_n} main-nav pills (got {len(pills)}: "
                        + ", ".join(p.get("text", "") for p in pills) + ")")
+                    if path == "index.html":
+                        want = _landing_nav_labels()
+                        got_labels = [p.get("text") for p in pills]
+                        ok(got_labels == want,
+                           f"{label}: landing nav links follow the page ({want}; got {got_labels})")
                     for pill in pills:
                         ok(pill["clear"] and pill["outlineInside"],
                            f"{label}: pill {pill['text']!r} is clear of the fades and its outline "

@@ -157,9 +157,13 @@ def _check_chrome(html, why):
        f"{why} sport pills")
     ok("<a " not in sports, f"{why} sport pills do not navigate")
     ok('data-sport="crypto"' in sports and "trading.html" not in sports,
-       f"{why} Crypto is a Running filter, not the Trading page")
-    ok('aria-pressed="true"' in sports and ">All</button>" in sports,
-       f"{why} All starts pressed")
+       f"{why} Crypto is a sport pill, not the Trading page")
+    eq(sports.count('aria-disabled="true"'), 6, f"{why} sport pills are aria-disabled")
+    eq(sports.count('tabindex="-1"'), 6, f"{why} sport pills are not in the tab order")
+    ok('aria-pressed' not in sports, f"{why} sport pills are not toggles")
+    ok('aria-describedby="sports-soon"' in sports, f"{why} sport pills describe Coming soon")
+    ok('id="sports-soon"' in html and ">Coming soon</p>" in html,
+       f"{why} shows a Coming soon note")
     ok(">Live</button>" in html and ">Settled</button>" in html
        and ">Upcoming</button>" in html,
        f"{why} has Live / Settled / Upcoming chrome")
@@ -222,6 +226,35 @@ if shell_build is not None:
        "the live shell strip matches the live Production headlines")
     _check_chrome(live, "live shell")
 
+    print("\none build writes production.html and index.html")
+    import sandbox_build
+    later = datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc)
+    built_prod, built_index = sandbox_build.production_and_index(NOW, d, st, blob)
+    eq(_tiles(built_prod), _tiles(built_index),
+       "one build writes both pages with the same tiles")
+    eq(_tile_map(_tiles(built_index)), {
+        "pairs in Production": "1",
+        "leads still to come": "2",
+        "recent leads landed": "1/2",
+        "next lead (CT)": want_next,
+    }, "that shared strip is the Production headlines at this clock")
+    later_prod, later_index = sandbox_build.production_and_index(later, d, st, blob)
+    eq(_tiles(later_prod), _tiles(later_index),
+       "a later clock still writes the same tiles on both pages")
+    ok(_tiles(later_prod) != _tiles(built_prod),
+       "the shared strip follows that clock")
+    # Passing tiles must not count again. A boom in production.page proves it.
+    sentinel = '<div class="tiles"><div class="tile"><b>7</b><span>pairs in Production</span></div></div>'
+    real_page = production.page
+    def _boom(*_a, **_k):
+        raise AssertionError("shell recounted tiles")
+    production.page = _boom
+    try:
+        copied = shell_build.page(NOW, tiles=sentinel)
+    finally:
+        production.page = real_page
+    ok(sentinel in copied, "the shell uses the tiles it was given")
+
     print("\npublished root")
     root_html = open(os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read()
     ok('href="./production.html" aria-current="page"' in root_html,
@@ -235,13 +268,27 @@ if shell_build is not None:
     for rel in ("sandbox.html", "production.html", "trading.html"):
         ok(os.path.isfile(os.path.join(ROOT, "public_site", rel)),
            f"{rel} still exists for the page pill")
+    prod_html = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
+    eq(_tile_map(_tiles(root_html)), _tile_map(_tiles(prod_html)),
+       "committed index.html tiles equal committed production.html tiles")
+    tracker = open(os.path.join(ROOT, ".github", "workflows", "sandbox-tracker.yml"),
+                   encoding="utf-8").read()
+    ok("public_site/index.html" in tracker.split('SITE="', 1)[-1].split('"', 1)[0],
+       "the tracker commit step stages index.html")
+    boards = open(os.path.join(ROOT, ".github", "workflows", "refresh-boards.yml"),
+                  encoding="utf-8").read()
+    ok("python3 site_root.py" not in boards and "public_site/index.html" not in boards,
+       "refresh-boards does not write or stage the shell strip")
     sandbox = open(os.path.join(ROOT, "public_site", "sandbox.html"), encoding="utf-8").read()
     ok('id="method"' in sandbox, "Method still points at the Sandbox method section")
 
     js = open(os.path.join(ROOT, "public_site", "shell.js"), encoding="utf-8").read()
     ok("fetch(" not in js and "location." not in js and "XMLHttpRequest" not in js,
        "shell.js does not load bets or navigate")
-    ok("aria-pressed" in js, "shell.js only records which filter is pressed")
+    ok("aria-pressed" in js, "shell.js records which Running filter is pressed")
+    ok("nav.sports" not in js, "shell.js does not arm the sport pills")
+    ok(not os.path.isfile(os.path.join(ROOT, "public_site", "root.js")),
+       "root.js is gone; no page loads the old Sandbox redirect")
 
 
 def _browser():
@@ -291,18 +338,48 @@ def _browser():
                "desktop shows the empty detail pane and no History tab")
             ok(wide["bg"] in ("rgb(11, 12, 15)", "rgb(11, 13, 16)"),
                f"desktop background stays dark ({wide['bg']})")
-            page.click('nav.sports button[data-sport="crypto"]')
-            crypto = page.evaluate("""() => ({
-              pressed: document.querySelector('[data-sport="crypto"]').getAttribute("aria-pressed"),
-              all: document.querySelector('[data-sport="all"]').getAttribute("aria-pressed"),
-              url: location.pathname,
-              rows: document.querySelectorAll(".running-row").length,
-              empty: document.body.textContent.includes("No live, settled, or upcoming paper bets."),
-            })""")
-            ok(crypto["pressed"] == "true" and crypto["all"] == "false"
-               and crypto["url"].endswith("index.html") and crypto["rows"] == 0
-               and crypto["empty"],
-               f"Crypto only changes the filter state ({crypto})")
+            sports = page.evaluate("""() => {
+              const buttons = [...document.querySelectorAll("nav.sports button")];
+              const note = document.getElementById("sports-soon");
+              const nav = document.querySelector("nav.sports");
+              const fg = getComputedStyle(document.body).color;
+              const sample = buttons[0];
+              const style = getComputedStyle(sample);
+              const nr = note.getBoundingClientRect();
+              const vr = nav.getBoundingClientRect();
+              document.querySelector("a.skip").focus();
+              return {
+                n: buttons.length,
+                disabled: buttons.every((b) => b.getAttribute("aria-disabled") === "true"
+                  && b.tabIndex < 0
+                  && b.getAttribute("aria-describedby") === "sports-soon"),
+                note: note.textContent.trim(),
+                noteSeen: nr.width > 0 && nr.height > 0 && nr.top < vr.bottom + 8,
+                described: nav.getAttribute("aria-describedby") === "sports-soon",
+                cursor: style.cursor,
+                muted: style.color !== fg,
+                bg: style.backgroundColor,
+                hrefs: [...document.querySelectorAll("nav.main a")].map((a) => a.getAttribute("href")),
+              };
+            }""")
+            focused = []
+            for _ in range(8):
+                page.keyboard.press("Tab")
+                focused.append(page.evaluate(
+                    "() => document.activeElement && document.activeElement.getAttribute('data-sport')"))
+            ok(sports["n"] == 6 and sports["disabled"] and sports["described"]
+               and sports["note"] == "Coming soon" and sports["noteSeen"]
+               and sports["cursor"] == "default" and sports["muted"]
+               and sports["bg"] in ("transparent", "rgba(0, 0, 0, 0)")
+               and sports["hrefs"] == ["./sandbox.html", "./production.html",
+                                        "./trading.html", "./sandbox.html#method"]
+               and all(item is None for item in focused),
+               f"sport pills are inert and page pills stay links ({sports}, focus {focused})")
+            page.click('nav.main a[href="./sandbox.html"]')
+            page.wait_for_url("**/sandbox.html")
+            ok(page.url.endswith("sandbox.html"),
+               f"the Sandbox page pill still opens the Sandbox ({page.url})")
+            page.goto(base, wait_until="load")
             page.set_viewport_size({"width": 390, "height": 844})
             page.wait_for_timeout(40)
             narrow = page.evaluate("""() => {

@@ -2096,6 +2096,19 @@ def _write(path, text):
         f.write(text)
 
 
+def production_and_index(now, d, st, blob):
+    """Production page and the site root, one clock, one tile strip.
+
+    The shell does not count. Its summary is the tiles this call just computed,
+    so index.html cannot disagree with production.html.
+    """
+    import production
+    import shell_build
+    prod = label_cells(production.page(d, st, blob, "", now=now))
+    index = shell_build.page(now, tiles=shell_build.tiles_html(prod))
+    return prod, index
+
+
 def main():
     now = datetime.now(timezone.utc)
     sandbox, index, weeks = render_pages(now)
@@ -2103,8 +2116,13 @@ def main():
     print(f"wrote {OUT}")
     import production
     prod_out = os.path.join(os.path.dirname(OUT), "production.html")
-    _write(prod_out, label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), "")))
+    index_out = os.path.join(os.path.dirname(OUT), "index.html")
+    prod_html, index_html = production_and_index(
+        now, T.load(), T.load_stages(), production.load_feed())
+    _write(prod_out, prod_html)
     print(f"wrote {prod_out}")
+    _write(index_out, index_html)
+    print(f"wrote {index_out}")
     trade_out = os.path.join(os.path.dirname(OUT), "trading.html")
     _write(trade_out, label_cells(trading_page(now)))
     print(f"wrote {trade_out}")
