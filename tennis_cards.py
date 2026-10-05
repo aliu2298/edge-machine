@@ -232,7 +232,8 @@ def render(d, rows, now=None):
             'The front is the verdict and the ROI after fees. A rule with a pick in, '
             'or a fixture kicking off within 48 hours, sits above the rest.</div>')
     cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)
-    # The by-competition tables and the definitions stay, folded, under the cards.
-    # They are the same Sandbox blocks the lane section already showed.
-    extra = B.league_panel(d, rows) + B.definitions(rows)
+    # Definitions stay folded under the cards. The soccer by-competition panel
+    # does not: it ignores the lane reset clock and the refused-tour filter,
+    # so its totals are not the records on the cards.
+    extra = B.definitions(rows)
     return note + cards + extra

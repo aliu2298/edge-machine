@@ -14,6 +14,7 @@ from datetime import timedelta, timezone
 
 import fmt
 import sandbox_build as B
+import sandbox_sources as S
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -344,6 +345,135 @@ soc_file = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-
 cri_file = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
 ok('class="rule-card"' in soc_file, "published soccer page still has its cards")
 ok("rule-card" not in cri_file, "published cricket page has no rule card")
+
+
+def _filtered_quote(i, source, sport, status, logged, label, league, tier, market_id,
+                    bet=True, start=None):
+    """One tennis quote. `logged` is the reset clock's own comparison string."""
+    when = start or logged
+    won = status == "won"
+    price = 0.55
+    return dict(
+        id=f"filter:{source}:{market_id}",
+        source=source, sport=sport, bet=bet, status=status,
+        pick="b", price=price,
+        result="b" if status in ("won", "lost") and won else ("a" if status in ("won", "lost") else None),
+        venue="kalshi",
+        pnl=(round(100 * (1 / price - 1), 2) if won else -100.0) if status in ("won", "lost") else None,
+        start=when, logged=logged, date=logged[:10],
+        price_a=price, price_b=round(1 - price, 2),
+        side_a="Yes", side_b="No",
+        label=label, league=league, tier=tier,
+        market_id=market_id,
+        url="https://kalshi.com/markets/example",
+    )
+
+
+print("\nrefused tours and pre-reset rows stay off the tennis page")
+# The lane clocks are the stage rows the page already reads. An empty stages
+# file would count the pre-reset bets, which is a different page.
+fav_clock = S.TENNIS_FAV_KEEP_SINCE
+combo_clock = S.TENNIS_COMBO_BAND_SINCE
+fav_after = "2026-10-03T12:00:00+00:00"
+fav_before = "2026-10-01T12:00:00+00:00"
+combo_after = "2026-10-04T12:00:00+00:00"
+combo_before = "2026-10-03T18:00:00+00:00"
+KEPT_N = 2
+GHOST_N = 4
+filter_quotes = []
+for i in range(KEPT_N):
+    filter_quotes.append(_filtered_quote(
+        i, "tennis_fav_band_3h", "tennis", "won", fav_after,
+        f"Kept Atp Settled {i}", "ATP Kept League", "atp",
+        f"aec-atp-kept-settled-{i}"))
+    filter_quotes.append(_filtered_quote(
+        i, "tennis_combo2", "tennis_combo", "won", combo_after,
+        f"Kept Combo Settled {i}", "ATP Kept Combo", "atp",
+        f"aec-atp-kept-combo-{i}"))
+for i in range(GHOST_N):
+    filter_quotes.append(_filtered_quote(
+        i, "tennis_fav_band_3h", "tennis", "won", fav_after,
+        f"GhostRefusedRow {i}", "GhostRefusedLeague", "wta",
+        f"aec-wta-ghostrefused-{i}"))
+    filter_quotes.append(_filtered_quote(
+        i, "tennis_fav_band_3h", "tennis", "won", fav_before,
+        f"GhostPreresetRow {i}", "GhostPreresetLeague", "atp",
+        f"aec-atp-ghostprereset-{i}"))
+    filter_quotes.append(_filtered_quote(
+        i, "tennis_combo2", "tennis_combo", "won", combo_after,
+        f"GhostComboRefused {i}", "GhostComboRefused", "wta",
+        f"aec-wta-ghostcomborefused-{i}"))
+    filter_quotes.append(_filtered_quote(
+        i, "tennis_combo2", "tennis_combo", "lost", combo_before,
+        f"GhostComboPrereset {i}", "GhostComboPrereset", "atp",
+        f"aec-atp-ghostcomboprereset-{i}"))
+filter_quotes.append(_filtered_quote(
+    0, "tennis_fav_band_3h", "tennis", "open", fav_after,
+    "GhostRefusedOpenLabel", "GhostRefusedLeague", "wta",
+    "aec-wta-ghostrefused-open",
+    start=(NOW + timedelta(hours=2)).isoformat()))
+filter_quotes.append(_filtered_quote(
+    1, "tennis_fav_band_3h", "tennis", "open", fav_after,
+    "KeptOpenAtpLabel", "ATP Kept League", "atp",
+    "aec-atp-kept-open",
+    start=(NOW + timedelta(hours=3)).isoformat()))
+filter_d = {"quotes": filter_quotes}
+filter_st = {"pairs": {
+    "tennis_fav_band_3h|tennis": {"stage": "sandbox", "since": fav_clock},
+    "tennis_combo2|tennis_combo": {"stage": "sandbox", "since": combo_clock},
+}}
+filter_html = tennis_build.build(filter_d, filter_st, NOW)
+filter_rows = _rows(filter_d, filter_st)
+by_lane = {(r["name"], r["sport"]): r for r in filter_rows}
+fav_row = by_lane.get(("tennis_fav_band_3h", "tennis"))
+combo_row = by_lane.get(("tennis_combo2", "tennis_combo"))
+ok(fav_row is not None and combo_row is not None,
+   "the filtered fixture still lists the favourite band and the 2-leg combo")
+if fav_row and combo_row:
+    eq(fav_row["a"]["n"], KEPT_N,
+       "the favourite-band record counts only kept tours logged after the reset")
+    eq(combo_row["a"]["n"], KEPT_N,
+       "the combo record counts only kept tours logged after its reset")
+    fav_card = next((c for c in _cards(filter_html)
+                     if _attr(c, "data-source") == "tennis_fav_band_3h"), "")
+    combo_card = next((c for c in _cards(filter_html)
+                       if _attr(c, "data-source") == "tennis_combo2"), "")
+    ok(tennis_cards is not None and tennis_cards.roi_html(fav_row) in fav_card,
+       "the favourite-band card ROI is the filtered lane row")
+    ok(tennis_cards is not None and tennis_cards.verdict_html(fav_row) in fav_card,
+       "the favourite-band card verdict is the filtered lane row")
+    ok(tennis_cards is not None and tennis_cards.roi_html(combo_row) in combo_card,
+       "the combo card ROI is the filtered lane row")
+    ok("KeptOpenAtpLabel" in fav_card, "a kept open bet is still on the card back")
+    ok("GhostRefusedOpenLabel" not in fav_card,
+       "a refused-tour open bet is not on the card back")
+# These names are the competition panel's own rows. Cards do not print a league.
+for ghost in ("GhostRefusedLeague", "GhostPreresetLeague",
+              "GhostComboRefused", "GhostComboPrereset",
+              "GhostRefusedRow", "GhostPreresetRow",
+              "GhostRefusedOpenLabel",
+              "aec-wta-ghostrefused", "aec-atp-ghostprereset",
+              "aec-wta-ghostcomborefused", "aec-atp-ghostcomboprereset"):
+    ok(ghost not in filter_html, f"{ghost} never reaches the tennis page")
+ok("By competition" not in filter_html,
+   "tennis does not add the soccer by-competition panel")
+ok("Bundesliga scored 3.49" not in filter_html,
+   "tennis does not add the soccer competition note")
+ok("How each rule is defined" in filter_html,
+   "the rule definitions stay under the cards")
+ok("within 3 hours of the scheduled start" in filter_html,
+   "the 3-hour definition stays on the page")
+# Unfiltered, the panel would print each ghost league's settled count.
+ok(f"{GHOST_N} settled" not in filter_html and f"{KEPT_N + GHOST_N * 2} settled" not in filter_html,
+   "a competition total that includes refused or pre-reset bets is not on the page")
+ok("By competition" not in published,
+   "published tennis page has no by-competition panel")
+ok("Bundesliga scored 3.49" not in published,
+   "published tennis page has no soccer competition note")
+ok("How each rule is defined" in published,
+   "published tennis page still has the rule definitions")
+ok("By competition" in soc_file,
+   "published soccer page still has its by-competition panel")
 
 if FAILS:
     print(f"\nSHA {SHA} FAILED {len(FAILS)}")
