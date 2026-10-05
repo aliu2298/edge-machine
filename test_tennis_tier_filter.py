@@ -355,13 +355,26 @@ def _frozen_overlaps():
         return json.load(fh)
 
 
-# Both pins are sha256 of the fixture's bytes. Each file is exactly
+# Each pin is sha256 of that fixture's bytes. Each file is exactly
 # json.dumps(obj, indent=2) + "\n". After an edit, rewrite it that way and
 # print the new digest; a one-cent change that skips this step fails the pin:
 #   python3 -c "import json,hashlib,pathlib; p=pathlib.Path('fixtures/tennis_fav_looked_at.json'); obj=json.loads(p.read_text()); raw=(json.dumps(obj, indent=2)+'\n').encode(); p.write_bytes(raw); print(hashlib.sha256(raw).hexdigest())"
 # The overlap list is the same command with fixtures/tennis_fav_overlaps.json.
+# The settled-pair list is the same command with fixtures/tennis_settled_pairs.json.
+#
+# That settled-pair file is every "name|sport" that has ever had a settled
+# tradeable bet and that the page rendered when the list was frozen. A
+# settled tradeable bet is a ledger or archive row with bet set, a venue in
+# TRADEABLE_VENUES, and status won, lost, or settled with result "price".
+# Removed lanes are not listed. The test reads the file. It does not rebuild
+# the list from SOURCES or from pair_list, so a drop upstream fails until
+# the file is edited on purpose. To rebuild after a deliberate removal,
+# take the sorted names of that intersection, write them with the command
+# above, and pin the digest it prints. Refreshing the list to cover a new
+# pair is the same edit; the test does not require it.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
+SETTLED_PAIRS_SHA256 = "cfa55e451f4744ee6b6b971cf6e0ed616a82474d1d7f0097ca0f867c38a7c695"
 
 
 def _check_frozen_note(rows):
@@ -427,18 +440,30 @@ def _has_phrase(note, phrase):
 
     A bare substring is not enough: '9 contests' is inside '19 contests', and
     '-24.1%' is still present after it trades places with '-68.7%'. The
-    character before and after the phrase must not be a word character, so a
-    longer number does not count.
+    character before the phrase must not be a word character. The character
+    after must not be a word character or a decimal continuation ('.' then a
+    digit): 'on those 9.5' is not 'on those 9', and '(z -2.88.1' is not
+    '(z -2.88'.
     """
-    return re.search(r"(?<!\w)" + re.escape(phrase) + r"(?!\w)", note) is not None
+    return re.search(r"(?<!\w)" + re.escape(phrase) + r"(?!\w|\.\d)", note) is not None
 
 
-def _check_note_quotes(note, rows, overlap_ids):
-    """The published note quotes these frozen figures, each in its own words.
+def _fade_pct(fade):
+    """A fade ROI in percent, with the sign.
 
-    The numbers come from the frozen snapshot. The words around them are the
-    note's. ATP's backed-side z is pinned on the snapshot; the note does not
-    print that z.
+    ':.1f' prints a positive fade with no plus. '-' is not a word character,
+    so that unsigned text matches a '-x%' already in the note. ':+.1f' does not.
+    """
+    return f"{fade * 100:+.1f}"
+
+
+def _note_phrases(rows, overlap_ids):
+    """The published note's frozen figures, in the note's own words.
+
+    The numbers come from the frozen snapshot. ATP's backed-side z is pinned
+    on the snapshot; the note does not print that z. The WTA Doubles ROI sits
+    on the 'rests on {n} contests' sentence, so a second copy of the same ROI
+    elsewhere does not satisfy it.
     """
     by = collections.defaultdict(list)
     for q in rows:
@@ -451,20 +476,82 @@ def _check_note_quotes(note, rows, overlap_ids):
     whole = _figures(rows)
     _rate, span = _per_day(rows)
     kept_rate = round(len(kept) / span, 1)
-    phrases = (
+    return (
         f"{len(rows)} distinct contests already logged ({len(overlap_ids)} that the parent lane and this lane both bet, counted once)",
         f"On the {span} days those contests cover, that was {_rate:.1f} contests a day",
         f"the kept tours were {kept_rate:.1f}",
         f"{len(kept)} contests, z {keep_f['z']:+.2f} before fees",
-        f"WTA Doubles rests on {wta['n']} contests",
-        f"ROI {wta['roi'] * 100:+.1f}% after fees",
-        f"{wta['fade'] * 100:.1f}% on those {wta['n']}",
-        f"{whole['fade'] * 100:.1f}% on the whole band (z {whole['fade_z']:+.2f}",
-        f"{keep_f['fade'] * 100:.1f}% on the kept set (z {keep_f['fade_z']:+.2f}",
+        f"WTA Doubles rests on {wta['n']} contests, ROI {wta['roi'] * 100:+.1f}% after fees",
+        f"{_fade_pct(wta['fade'])}% on those {wta['n']}",
+        f"{_fade_pct(whole['fade'])}% on the whole band (z {whole['fade_z']:+.2f}",
+        f"{_fade_pct(keep_f['fade'])}% on the kept set (z {keep_f['fade_z']:+.2f}",
         f"ATP {atp['unit']:+.2f}, UTR {utr['unit']:+.2f}, WTA Doubles {wta['unit']:+.2f}",
     )
-    for phrase in phrases:
+
+
+def _check_note_quotes(note, rows, overlap_ids):
+    """The published note quotes these frozen figures, each in its own words."""
+    for phrase in _note_phrases(rows, overlap_ids):
         ok(_has_phrase(note, phrase), f"the 3-hour note quotes the frozen record: {phrase}")
+
+
+def _check_phrase_guards(rows, overlap_ids):
+    """The three phrase guards. Each fails on the looser check it replaces."""
+    short = "-60.6% on those 9"
+    ok(not _has_phrase("returned -60.6% on those 9.5, next", short),
+       "on those 9.5 is not on those 9")
+    ok(_has_phrase("returned -60.6% on those 9, next", short),
+       "on those 9 still matches when the next character is a comma")
+    ok(not _has_phrase("(z -2.88.1 on the fade", "(z -2.88"),
+       "a z of -2.88.1 is not z -2.88")
+    phrases = _note_phrases(rows, overlap_ids)
+    wta_line = next(p for p in phrases if p.startswith("WTA Doubles rests on"))
+    ok(", ROI " in wta_line and wta_line.endswith("% after fees"),
+       "the WTA Doubles phrase includes its ROI")
+    stray = ("UTR was ROI +12.0% after fees. "
+             "WTA Doubles rests on 9 contests, ROI +13.0% after fees.")
+    ok(not _has_phrase(stray, wta_line),
+       "a stray ROI +12.0% after fees does not satisfy the WTA Doubles line")
+    ok(_has_phrase(
+        "WTA Doubles rests on 9 contests, ROI +12.0% after fees: a direction",
+        wta_line),
+       "the WTA Doubles line matches when the ROI sits on that sentence")
+    ok(_fade_pct(-0.241) == "-24.1", "a negative fade still prints with its minus")
+    pos = _fade_pct(0.241)
+    ok(pos == "+24.1", "a positive fade prints with a plus")
+    # The z is left off on purpose. A full phrase whose z also differs would
+    # miss the leak: '-' is not a word character, so unsigned "24.1%" matches
+    # inside "-24.1%".
+    ok(not _has_phrase("-24.1% on the whole band (z -2.88",
+                       f"{pos}% on the whole band"),
+       "a positive fade does not match a minus-sign phrase")
+
+
+def _check_record_clock_note(note):
+    """The page record is the merge. 05:00 is only the looked-at cutoff.
+
+    The old sentence called 05:00 the clock and said nothing was logged on
+    the kept tours between that clock and the widening. Two kept-tour bets
+    were logged in the author-to-merge gap, so that claim is false when the
+    clock is read as 05:00.
+    """
+    record = "2026-10-02T16:34:37Z"
+    evidence = "2026-10-02T05:00:00Z"
+    ok(f"page record restarts at {record}" in note,
+       "the note says the page record restarts at the merge")
+    ok(f"{evidence} is the looked-at cutoff" in note,
+       "05:00 stays as the looked-at cutoff for the 648-contest figures")
+    ok("not the page record" in note,
+       "the note says the 05:00 cutoff is not the page record")
+    ok(f"The clock starts {evidence}" not in note,
+       "the note does not say the clock starts at 05:00")
+    ok("Nothing was logged on the kept tours between the 2026-10-02 tour clock" not in note,
+       "the note does not claim nothing was logged against the unnamed tour clock")
+    ok(re.search(r"(?:clock starts|record restarts at|page record restarts at)\s*"
+                 + re.escape(evidence), note) is None,
+       "05:00 is not the record clock")
+    ok("stay on file under the old rule" in note and "do not count in the record" in note,
+       "the note says the author-to-merge gap bets stay on file and do not count")
 
 
 def _per_day(rows):
@@ -570,6 +657,35 @@ def _stamp_row(table, label):
         if needle in head:
             return head
     return ""
+
+
+def _frozen_settled_pairs():
+    """The settled-pair names, frozen beside the looked-at snapshot.
+
+    A checked-in list under fixtures/, not a walk of SOURCES. Editing it is
+    how a pair leaves the check. Losing the pair from the page is not.
+    """
+    with open(_fixture_path("tennis_settled_pairs.json")) as fh:
+        return json.load(fh)
+
+
+def _check_settled_pairs(rendered):
+    """Every listed pair still renders. The list is not pair_list's output.
+
+    A pair with no settled bet can render and stay off the list. A listed
+    pair that the page drops fails here, including a drop upstream of
+    pair_list. The sha pin is the file's bytes.
+    """
+    listed = set(_frozen_settled_pairs())
+    missing = sorted(listed - set(rendered))
+    ok(not missing, "every frozen settled pair still renders"
+       + (f" — dropped: {missing}" if missing else ""))
+    ok(set(rendered) - listed,
+       "the settled-pair list is not every rendered pair")
+    digest = hashlib.sha256(
+        open(_fixture_path("tennis_settled_pairs.json"), "rb").read()).hexdigest()
+    eq(digest, SETTLED_PAIRS_SHA256,
+       "an edit of the settled-pair list changes its sha256")
 
 
 def _wired_pairs(d, st, include_retired=True):
@@ -685,6 +801,8 @@ def main():
     overlaps = _frozen_overlaps()
     _check_frozen_note(frozen)
     _check_note_quotes(note, frozen, overlaps)
+    _check_phrase_guards(frozen, overlaps)
+    _check_record_clock_note(note)
     _check_overlap_ids(raw, overlaps)
 
     print("\nthe page record restarts; the ledger rows stay")
@@ -731,6 +849,7 @@ def main():
        "the rendered pairs are the wired pairs, by name"
        + (f" — dropped: {missing}" if missing else "")
        + (f" — not wired: {extra}" if extra else ""))
+    _check_settled_pairs(rendered)
     ok(not any(r["name"] in ("nws", "nws_fade", "covers") for r in rows),
        "removed lanes stay off the page")
     ok(any(S.tennis_tier(q.get("market_id")) == "atpdb"
