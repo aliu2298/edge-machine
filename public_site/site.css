@@ -721,3 +721,119 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     vertical-align: top;
   }
 }
+
+/* Soccer rule cards. Dark only. Colour is the verdict and the ROI. */
+.rule-band { margin: 0 0 28px; }
+.rule-band-title {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+.rule-market { margin: 0 0 18px; }
+.rule-market > h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--fg);
+}
+.rule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.rule-card {
+  min-width: 0;
+  perspective: 900px;
+  cursor: pointer;
+}
+.rule-rotator {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform .45s ease;
+}
+.rule-card.is-flipped .rule-rotator { transform: rotateY(180deg); }
+.rule-face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 168px;
+  min-width: 0;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rule-back { transform: rotateY(180deg); }
+.rule-card:not(.is-flipped) .rule-back { visibility: hidden; }
+.rule-card.is-flipped .rule-front { visibility: hidden; }
+.rule-card:not(.is-flipped) .rule-back { pointer-events: none; }
+.rule-card.is-flipped .rule-front { pointer-events: none; }
+.rule-name, .rule-game, .rule-roi, .rule-kicker {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.rule-name { font-size: 15px; line-height: 1.35; }
+.rule-status, .rule-stage { margin: 0; }
+.rule-roi {
+  margin: 4px 0 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.rule-roi .sm {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.rule-flip {
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--acc);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.rule-flip:hover { text-decoration: underline; }
+.rule-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+.rule-games {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+.rule-game { font-size: 14px; line-height: 1.35; }
+.rule-game .sm { margin-top: 2px; }
+@media (max-width: 980px) {
+  .rule-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .rule-grid { grid-template-columns: minmax(0, 1fr); }
+  .rule-roi { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rule-rotator { transition: none; }
+}

@@ -421,12 +421,23 @@ def _check_sport_tab(family, html, d, st):
             if B.family(r["sport"]) == family and not B.eliminated(r)]
     section = B.sport_sections(d, rows)
     ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
-    ok(section in html, f"{family} tab lanes are the Sandbox sport_sections for that family")
     lanes = re.search(r'<section id="lanes">(.*?)</section>', html, re.S)
     ok(lanes is not None, f"{family} tab has a lanes section")
-    if lanes and section:
-        eq(canonical_values(lanes.group(1)), canonical_values(section),
-           f"{family} tab lane numbers equal the Sandbox section")
+    # Soccer replaces the lane table with cards. The verdict and the ROI on
+    # each card are still the Sandbox row's strings. Tennis and cricket keep
+    # the table, so their lanes stay the Sandbox section byte for byte.
+    if family == "Soccer":
+        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
+           "soccer lanes are flippable cards")
+        import soccer_cards
+        for r in rows:
+            ok(soccer_cards.verdict_html(r) in html and soccer_cards.roi_html(r) in html,
+               f"soccer card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
+    else:
+        ok(section in html, f"{family} tab lanes are the Sandbox sport_sections for that family")
+        if lanes and section:
+            eq(canonical_values(lanes.group(1)), canonical_values(section),
+               f"{family} tab lane numbers equal the Sandbox section")
     got = _lane_metrics(rows)
     print(f"  {family} lanes {got}")
     ok(got, f"{family} fixture has lanes to compare")

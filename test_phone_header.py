@@ -683,8 +683,9 @@ def browser_checks():
                       if (nav) nav.scrollLeft = x;
                       window.scrollTo(0, 0);
                     }""", saved_nav)
-                    ok(len(pills) == 8,
-                       f"{label}: tabbed through all 8 main-nav pills (got {len(pills)}: "
+                    nav_n = len(site_chrome.PAGES)
+                    ok(len(pills) == nav_n,
+                       f"{label}: tabbed through all {nav_n} main-nav pills (got {len(pills)}: "
                        + ", ".join(p.get("text", "") for p in pills) + ")")
                     for pill in pills:
                         ok(pill["clear"] and pill["outlineInside"],
@@ -730,7 +731,7 @@ def browser_checks():
                     ok(abs(hdr - h) <= 1,
                        f"{label}: --hdr-h matches the stuck height "
                        f"({got['hdr']} vs {h:.1f}px)")
-                    ok(got["rowSpread"] <= 1 and got["linkCount"] == 8,
+                    ok(got["rowSpread"] <= 1 and got["linkCount"] == len(site_chrome.PAGES),
                        f"{label}: all {got['linkCount']} main-nav links share one row "
                        f"(offsetTop spread {got['rowSpread']}px)")
                     missed = [a["text"] for a in got["reach"] if not a["ok"]]
