@@ -4817,6 +4817,104 @@ ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corne
    "and the page says so")
 ok("soccer_corners" not in [k.split("|")[1] for k in T.PAIR_OVERRIDES], "the corners rule is not in Production")
 
+
+print("\nSoccer by-competition counts match the card window and the card's units")
+# o15_form_l10|soccer_o15 keeps the stage clock the card already reads. Corners has no
+# clock; its card n is matches (day_units), and the panel used to count rungs.
+_O15_SINCE = "2026-09-21T01:44:02+00:00"
+_PRE = "2026-09-14T02:51:18+00:00"
+_POST = "2026-09-23T01:32:37+00:00"
+
+
+def _panel_bet(i, source, sport, logged, league, status="won", pnl=None, market_id=None,
+               result=None, settle_px=None):
+    price = 0.45
+    won = status == "won"
+    if pnl is None:
+        pnl = 80.0 if won else -100.0
+    return dict(
+        id=f"panel:{source}:{sport}:{league}:{i}", source=source, sport=sport, bet=True,
+        venue="kalshi", market_id=market_id or f"KXMLSTOTAL-{i}",
+        pick="a", price=price, price_a=price, price_b=0.57,
+        result=result if result is not None else ("a" if won else "b"),
+        status=status, pnl=pnl, stake=100.0, settle_px=settle_px,
+        start=logged, logged=logged, league=league, label=league,
+        side_a="Yes", side_b="No")
+
+
+_panel_q = []
+for _i in range(4):
+    _panel_q.append(_panel_bet(_i, "o15_form_l10", "soccer_o15", _POST, "MLS"))
+for _i in range(2):
+    _panel_q.append(_panel_bet(10 + _i, "o15_form_l10", "soccer_o15", _PRE, "MLS"))
+for _i in range(4):
+    _panel_q.append(_panel_bet(20 + _i, "o15_form_l10", "soccer_o15", _PRE, "GhostPreLeague"))
+_panel_q.append(_panel_bet(
+    90, "o15_form_l10", "soccer_o15", _PRE, "PriceGhost", status="settled", pnl=40.0,
+    result="price", settle_px=0.8))
+# 8 matches, 11 rungs. Match 0's three rungs average a win; match 1's two average a loss
+# (the mean P/L is zero). The other six are one winning rung each.
+_corner_specs = [("M0", (100.0, 100.0, -100.0)), ("M1", (100.0, -100.0))]
+_corner_specs += [(f"M{_k}", (100.0,)) for _k in range(2, 8)]
+_rung_i = 0
+for _code, _pnls in _corner_specs:
+    for _pnl in _pnls:
+        _panel_q.append(_panel_bet(
+            _rung_i, "corners_under", "soccer_corners", _POST, "Premier League",
+            status="won" if _pnl > 0 else "lost", pnl=_pnl,
+            market_id=f"KXEPLCORNERS-{_code}-{_rung_i}"))
+        _rung_i += 1
+_panel_d = {"quotes": _panel_q}
+_panel_st = {"pairs": {"o15_form_l10|soccer_o15": {"since": _O15_SINCE}}, "events": []}
+_panel_rows = SB.pair_list(_panel_d, _panel_st)
+_panel_o15 = next(r for r in _panel_rows if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
+_panel_cu = next(r for r in _panel_rows if r["name"] == "corners_under" and r["sport"] == "soccer_corners")
+eq(_panel_o15.get("since"), _O15_SINCE, "the lane row carries the stage clock the card already uses")
+eq(_panel_o15["a"]["n"], 4, "the over-1.5 card counts only the four bets logged after the reset")
+_o15_parts = T.league_split(_panel_d, "o15_form_l10", "soccer_o15", venues=T.TRADEABLE_VENUES,
+                            since=_panel_o15["since"])
+eq(sum(sp["n"] for sp in _o15_parts), _panel_o15["a"]["n"],
+   "the competition split's settled total is the card's post-reset n")
+eq(sorted(sp["league"] for sp in _o15_parts), ["MLS"],
+   "pre-reset leagues, and a pre-reset price payout, are not in the split")
+eq((_panel_cu["a"]["n"], _panel_cu["a"]["n_bets"], _panel_cu["a"]["unit"]), (8, 11, "match"),
+   "the corners card counts eight matches and eleven rungs")
+_cu_parts = T.league_split(_panel_d, "corners_under", "soccer_corners", venues=T.TRADEABLE_VENUES,
+                           since=_panel_cu.get("since"))
+eq((sum(sp["n"] for sp in _cu_parts), sum(sp["won"] for sp in _cu_parts),
+    sum(sp["n_bets"] for sp in _cu_parts)),
+   (_panel_cu["a"]["n"], _panel_cu["a"]["won"], _panel_cu["a"]["n_bets"]),
+   "the corners split counts matches, the same wins day_units keeps, and the raw rungs")
+eq(_cu_parts[0]["unit"], "match", "a corners competition row says the unit is a match")
+for _r in (_panel_o15, _panel_cu):
+    _parts = T.league_split(_panel_d, _r["name"], _r["sport"], venues=T.TRADEABLE_VENUES,
+                            since=_r.get("since"))
+    eq(sum(sp["n"] for sp in _parts), _r["a"]["n"],
+       f"{_r['name']}|{_r['sport']} panel n matches the card")
+_panel_html = SB.league_panel(_panel_d, _panel_rows)
+ok("GhostPreLeague" not in _panel_html and "PriceGhost" not in _panel_html,
+   "the by-competition panel does not print a league that sits entirely before the reset")
+ok('<td><b>MLS</b><div class="sm mut">too thin to read</div></td><td class="num">4</td>' in _panel_html,
+   "MLS in the panel is the four post-reset bets, not the six that ignore the clock")
+ok("8 matches · 11 bets" in _panel_html,
+   "the corners competition row says eight matches and eleven bets, the way the card does")
+# A refused tour is not a soccer delta today. The split still has to drop it, because
+# assess() does. This does not put a competition panel on the tennis page.
+_kept_t = dict(_panel_bet(1, "tennis_fav_band_3h", "tennis", "2026-10-03T12:00:00+00:00", "ATP"),
+               tier="atp", market_id="aec-atp-kept")
+_refused_t = dict(_panel_bet(2, "tennis_fav_band_3h", "tennis", "2026-10-03T12:00:00+00:00",
+                             "GhostRefusedLeague"), tier="wta", market_id="aec-wta-refused")
+_refused_px = dict(_panel_bet(3, "tennis_fav_band_3h", "tennis", "2026-10-03T12:00:00+00:00",
+                              "RefusedPrice", status="settled", pnl=10.0, result="price",
+                              settle_px=0.7), tier="wta", market_id="aec-wta-price")
+_td_ref = {"quotes": [_kept_t, _refused_t, _refused_px]}
+_ta_ref = T.assess(_td_ref, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
+_ts_ref = T.league_split(_td_ref, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
+eq(sum(sp["n"] for sp in _ts_ref), _ta_ref["n"],
+   "a refused tour is out of the split, the same as the card")
+eq(sorted(sp["league"] for sp in _ts_ref), ["ATP"],
+   "the refused tour's bets and its price payout are not a competition row")
+
 # Every settled bet is accounted for: a sport's section lists its retired pairs too, and the
 # line under the sections reconciles what is judged against what is only kept on record.
 _recq = {"quotes": [

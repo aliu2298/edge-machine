@@ -895,7 +895,7 @@ def pair_list(d, st, include_retired=True):
                             fade=T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES),
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
-                            removed=removed, v=v))
+                            removed=removed, v=v, since=pair.get("since")))
     return out
 
 
@@ -1228,9 +1228,24 @@ def _cell(v, n, fade=False):
             f'<span class="{"mut" if n < EARLY_N else fmt.tone(v, ".1f", 100)}">{pct(v, sign=True)}</span>')
 
 
+def _split_settled(sp):
+    """How many settled units a competition row shows.
+
+    A bet stays 'N settled'. A match or market-day says so, and keeps the raw
+    bet count beside it, the same words the lane row uses for that unit.
+    """
+    n = sp["n"]
+    unit = sp.get("unit")
+    bets = sp.get("n_bets")
+    if unit in ("match", "market-day") and bets:
+        suffix = "" if n == 1 else ("es" if unit == "match" else "s")
+        return f'{n} {unit}{suffix} · {bets} bets'
+    return f'{n} settled'
+
+
 def _league_row(r, sp):
     """One rule's record inside one competition. The sport table's columns, thinner."""
-    rec = f'{sp["won"]}–{sp["n"] - sp["won"]}<div class="sm mut">{sp["n"]} settled</div>'
+    rec = f'{sp["won"]}–{sp["n"] - sp["won"]}<div class="sm mut">{_split_settled(sp)}</div>'
     vp = (f'{sp["won"]} v {sp["expected"]:.1f}<div class="sm mut">{sp["won"] - sp["expected"]:+.1f} wins '
           f'· {sp["edge"]:+.3f}/bet</div>')
     fade = ('<span class="mut">—</span>' if not sp["fade_n"] or sp["fade_roi"] is None else
@@ -1270,7 +1285,8 @@ def league_panel(d, rs):
     for r in rs:
         if not r["a"]["n"]:
             continue
-        for sp in T.league_split(d, r["name"], r["sport"], venues=T.TRADEABLE_VENUES):
+        for sp in T.league_split(d, r["name"], r["sport"], venues=T.TRADEABLE_VENUES,
+                                 since=r.get("since")):
             splits.setdefault(sp["league"], []).append((r, sp))
     if not splits:
         return ""
