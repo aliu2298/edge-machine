@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Soccer rule rows render as flippable cards. Tennis and cricket stay tables.
+"""Soccer rule rows render as flippable cards. Cricket has its own cards.
 
 Presentation only. The verdict word and the ROI text are the Sandbox row's own
 figures, compared as strings. Nothing here grades a bet or writes a ledger.
@@ -305,12 +305,15 @@ btts_pos = html.find('data-sport="soccer_btts"')
 ok(0 < btts_pos < corners_pos < active_end,
    "a pick in, but outside 48 hours, is active and below the nearer games")
 
-print("\ncricket stays a table")
+print("\ncricket keeps its own cards")
 ten = tennis_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
-ok("rule-card" not in cri and "rule-grid" not in cri and "rule-flip" not in cri,
-   "cricket does not use the rule card markup")
-ok('id="lanes"' in cri and "<table" in cri, "cricket lanes are still a table")
+ok("Alpha v Beta soonest" not in cri and "o15_form_l10" not in cri,
+   "cricket cards do not pick up soccer lanes")
+ok('class="rule-card"' in cri,
+   "a cricket lane the Sandbox still lists is a card on the cricket page")
+ok("By competition" not in cri,
+   "cricket does not add the soccer by-competition panel")
 ok("rule-card" not in ten and "rule-grid" not in ten,
    "a ledger with no tennis lanes does not paint tennis cards")
 
@@ -325,7 +328,7 @@ published = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf
 ok('class="rule-card"' in published and 'class="rule-grid"' in published,
    "public_site/soccer.html is the card page")
 cri_file = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
-ok("rule-card" not in cri_file, "published cricket page has no rule card")
+ok('class="rule-card"' in cri_file, "published cricket page has its own rule cards")
 
 if FAILS:
     print(f"\nSHA {SHA} FAILED {len(FAILS)}")

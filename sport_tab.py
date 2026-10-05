@@ -176,9 +176,9 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
          preflight=False, cards=False):
     """One sport tab. `preflight` is the Soccer Kalshi column; other sports leave it off.
 
-    `cards` is the rule-card grid. Soccer and Tennis ask for it. Cricket
-    leaves it off and keeps the Sandbox lane tables. Tennis has its own
-    renderer, so a Tennis change does not move Soccer's cards.
+    `cards` is the rule-card grid. Soccer, Tennis, and Cricket each ask for
+    it, and each has its own renderer, so a change on one page does not move
+    the others.
     """
     now = now or datetime.datetime.now(datetime.timezone.utc)
     d = d if d is not None else T.load()
@@ -190,6 +190,9 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
         if family == "Tennis":
             import tennis_cards
             sections = tennis_cards.render(d, rows, now)
+        elif family == "Cricket":
+            import cricket_cards
+            sections = cricket_cards.render(d, rows, now)
         else:
             import soccer_cards
             sections = soccer_cards.render(d, rows, now)

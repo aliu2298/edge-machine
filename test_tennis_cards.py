@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tennis rule rows render as flippable cards. Cricket stays a table.
+"""Tennis rule rows render as flippable cards. Cricket has its own cards.
 
 Presentation only. The verdict word and the ROI text are the Sandbox row's own
 figures, compared as strings. Nothing here grades a bet or writes a ledger.
@@ -326,10 +326,10 @@ ok('class="rule-card"' in soc and "Soccer Only v Stay" in soc,
    "soccer still renders its own rule cards")
 ok("tennis_fav_band_3h" not in soc and "Alpha v Beta soonest" not in soc,
    "soccer cards do not pick up tennis lanes")
-ok("rule-card" not in cri and "rule-grid" not in cri and "rule-flip" not in cri,
-   "cricket does not use the rule card markup")
-ok('id="lanes"' in cri and "<table" in cri and "Oddspedia" in cri,
-   "cricket lanes are still a table")
+ok('class="rule-card"' in cri and "Oddspedia" in cri,
+   "cricket renders its own cards for the cricket lane in this ledger")
+ok("By competition" not in cri,
+   "cricket does not add the soccer by-competition panel")
 ok("tennis_fav_band_3h" not in cri and "Alpha v Beta soonest" not in cri,
    "cricket does not pick up tennis lanes")
 
@@ -344,7 +344,7 @@ ok('class="rule-card"' in published and 'class="rule-grid"' in published,
 soc_file = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
 cri_file = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
 ok('class="rule-card"' in soc_file, "published soccer page still has its cards")
-ok("rule-card" not in cri_file, "published cricket page has no rule card")
+ok('class="rule-card"' in cri_file, "published cricket page has its own rule cards")
 
 
 def _filtered_quote(i, source, sport, status, logged, label, league, tier, market_id,
