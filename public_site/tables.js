@@ -10,6 +10,7 @@
       api.enhance(document);
       api.syncHeaderOffset(document);
       api.containWideTables(document);
+      api.wireRuleCards(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
     else go();
@@ -279,6 +280,34 @@
     }, true);
   }
 
+  // Soccer rule cards. A click flips the card; a link on the back is left alone.
+  // With script off, the front still shows the verdict and the ROI.
+  function wireRuleCards(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll(".rule-card"), function (card) {
+      if (card.getAttribute("data-wired") === "1") return;
+      card.setAttribute("data-wired", "1");
+      function paint(on) {
+        card.classList.toggle("is-flipped", on);
+        var front = card.querySelector(".rule-front");
+        var back = card.querySelector(".rule-back");
+        if (front) front.setAttribute("aria-hidden", on ? "true" : "false");
+        if (back) back.setAttribute("aria-hidden", on ? "false" : "true");
+        Array.prototype.forEach.call(card.querySelectorAll(".rule-flip"), function (btn) {
+          var face = btn.closest(".rule-face");
+          var shown = !!(face && ((on && face.classList.contains("rule-back"))
+            || (!on && face.classList.contains("rule-front"))));
+          btn.setAttribute("aria-expanded", on ? "true" : "false");
+          btn.tabIndex = shown ? 0 : -1;
+        });
+      }
+      card.addEventListener("click", function (ev) {
+        var target = ev.target;
+        if (target && target.closest && target.closest("a")) return;
+        paint(!card.classList.contains("is-flipped"));
+      });
+    });
+  }
+
   function enhance(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll("table.sortable"), function (table) {
       var rows = bodyRows(table);
@@ -399,5 +428,6 @@
     passesFilters: passesFilters,
     paintRow: paintRow,
     containWideTables: containWideTables,
+    wireRuleCards: wireRuleCards,
   };
 });
