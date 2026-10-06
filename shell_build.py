@@ -137,9 +137,10 @@ def _sport_pills():
 def _running_filters(counts):
     parts = []
     for key, label, pressed in RUNNING:
+        described = ' aria-describedby="settled-caption"' if key == "settled" else ""
         parts.append(
             f'<button type="button" data-filter="{site_chrome.esc(key)}" '
-            f'aria-pressed="{"true" if pressed else "false"}">'
+            f'aria-pressed="{"true" if pressed else "false"}"{described}>'
             f'{site_chrome.esc(label)} <span class="count">{int(counts.get(key, 0))}</span></button>')
     return "".join(parts)
 
@@ -449,6 +450,10 @@ def contests_from_lanes(lanes, now):
             "bucket": _contest_bucket(items, now),
             "pill": "Production" if any(lane["lane"] == "Production" for lane in items) else "Sandbox",
             "lanes": len({lane["pair"] for lane in items if lane.get("pair")}) or len(items),
+            "bets": [
+                {"status": lane["status"], "price": lane.get("price"), "pair": lane.get("pair")}
+                for lane in items
+            ],
         })
     return contests
 

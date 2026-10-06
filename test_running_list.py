@@ -219,16 +219,62 @@ ok("javascript:alert(1)" in html_lib.unescape(PAGE)
    "a javascript: string stays text")
 ok('aria-disabled="true"' in PAGE and 'id="sports-soon"' in PAGE,
    "sport pills stay inert with Coming soon")
+eq(PAGE.count('aria-describedby="settled-caption"'), 1,
+   "only the Settled filter points at the 14-day caption")
+ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption"' in PAGE,
+   "the Settled filter's described-by is the caption")
+
+
+def _face_leads(pairs):
+    leads = []
+    for i, item in enumerate(pairs):
+        status, pair = item[0], item[1]
+        price = item[2] if len(item) > 2 else 0.5
+        leads.append(_lead(
+            f"mix-{i}", "Kazakhstan", "Faroe Islands", "2026-10-04T15:00:00Z",
+            status, pair, "soccer", price, "UEFA Nations League"))
+    return leads
 
 
 def _face_page(pairs):
-    leads = []
-    for i, (status, pair) in enumerate(pairs):
-        leads.append(_lead(
-            f"mix-{i}", "Kazakhstan", "Faroe Islands", "2026-10-04T15:00:00Z",
-            status, pair, "soccer", 0.5, "UEFA Nations League"))
     return _rows(shell_build.page(
-        NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(leads)))
+        NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(_face_leads(pairs))))
+
+
+def _face_contests(pairs):
+    blob = _blob(_face_leads(pairs))
+    return shell_build.contests_from_lanes(
+        shell_build.collect_lanes({"quotes": []}, {"pairs": {}}, blob, NOW), NOW)
+
+
+def _subset_gaps(contests, entries):
+    """Entries are (match, status, cents). A Live contest is not required in Settled.
+
+    A gap means a production bet was not matched to its own status and price on a
+    Settled contest. Prices come from the contest's bet list, not the row price.
+    """
+    by_match = {}
+    for contest in contests:
+        by_match[contest["match"]] = {
+            "bucket": contest["bucket"],
+            "bets": [dict(bet) for bet in contest["bets"]],
+        }
+    gaps = []
+    for match, status, cents in entries:
+        contest = by_match.get(match)
+        if contest is None:
+            gaps.append((match, status, cents))
+            continue
+        if contest["bucket"] == "live":
+            continue
+        found = next((i for i, bet in enumerate(contest["bets"])
+                      if bet["status"] == status and shell_build._cents(bet["price"]) == cents),
+                     None)
+        if found is None:
+            gaps.append((match, status, cents))
+            continue
+        contest["bets"].pop(found)
+    return gaps
 
 
 def _bet_labels(visual):
@@ -252,14 +298,25 @@ def _bet_labels(visual):
 
 print("\nsplit results stay one row")
 # Under 3.5 sorts ahead of Faroe 1+ by pair name. The row must not keep only that loss.
-kaz = _face_page([
-    ("miss", "under35|soccer"),
-    ("hit", "zzz_faroe|soccer"),
-])
+kaz_pairs = [
+    ("miss", "under35|soccer", 0.67),
+    ("hit", "zzz_faroe|soccer", 0.80),
+]
+kaz = _face_page(kaz_pairs)
+kaz_contest = _face_contests(kaz_pairs)
 eq(len(kaz), 1, "Kazakhstan v Faroe stays one row when the two bets grade apart")
+eq(len(kaz_contest), 1, "the split is still one contest in the row model")
 ok(">1W 1L</span>" in kaz[0], "Faroe 1+ won and Under 3.5 lost render as 1W 1L")
 ok('class="sr-only">1 won, 1 lost</span>' in kaz[0],
    "the split is spoken as 1 won, 1 lost")
+eq([shell_build._cents(bet["price"]) for bet in kaz_contest[0]["bets"]], ["67¢", "80¢"],
+   "each Kazakhstan bet keeps its own price, 67¢ and 80¢")
+eq([bet["status"] for bet in kaz_contest[0]["bets"]], ["L", "W"],
+   "the bet list is the loss and the win, not the row's first result")
+eq(_attr(kaz[0], "data-price"), "67¢", "the visible price is only the first bet")
+ok(not all(shell_build._cents(bet["price"]) == _attr(kaz[0], "data-price")
+           for bet in kaz_contest[0]["bets"]),
+   "comparing every bet with the row's first price fails when the prices differ")
 eq(_bet_labels("1W 1L"), ["W", "L"],
    "1W 1L is two bets, so a row compare would miss one (the 20 vs 19 gap)")
 eq(len(_bet_labels("1W 1L")), 2, "the two Kazakhstan bets both count")
@@ -272,9 +329,26 @@ ok(">1W 1 void</span>" in win_void[0] and "1 won, 1 void" in win_void[0],
 win_price = _face_page([("hit", "a|soccer"), ("price", "b|soccer")])
 ok(">1W 1 price result</span>" in win_price[0] and "1 won, 1 price result" in win_price[0],
    "a win and a price result both show")
-loss_open = _face_page([("miss", "a|soccer"), ("pending", "b|soccer")])
+loss_pairs = [("miss", "a|soccer", 0.33), ("pending", "b|soccer", 0.44)]
+loss_open = _face_page(loss_pairs)
 ok(">1L 1 open</span>" in loss_open[0] and "1 lost, 1 open" in loss_open[0],
    "a settled bet and an open bet both show")
+loss_contest = _face_contests(loss_pairs)
+eq(loss_contest[0]["bucket"], "live",
+   "one open bet past kickoff makes the contest Live, even with a settled bet beside it")
+eq(_attr(loss_open[0], "data-filter"), "live", "that one-open/one-settled row is Live")
+eq(_subset_gaps(loss_contest, [("Kazakhstan v Faroe Islands", "L", "33¢")]), [],
+   "the settled bet on a Live contest is left out of the Settled subset")
+ok(_subset_gaps(
+    [dict(loss_contest[0], bucket="settled")],
+    [("Kazakhstan v Faroe Islands", "L", "33¢")]) == [],
+   "the same bet matches once the contest is Settled and the price is its own")
+eq(_subset_gaps(
+    [dict(loss_contest[0], bucket="settled",
+          bets=[{"status": "L", "price": 0.44, "pair": "a|soccer"}])],
+    [("Kazakhstan v Faroe Islands", "L", "33¢")]),
+   [("Kazakhstan v Faroe Islands", "L", "33¢")],
+   "a first-bet price does not satisfy the other bet")
 
 print("\nempty filter and quote window")
 empty = shell_build.page(
@@ -286,6 +360,10 @@ ok('id="running-empty"' in empty and "No live paper bets" in empty,
    "the empty live state keeps the Running chrome")
 ok('id="running-title"' in empty and 'class="running-filters"' in empty,
    "the pane chrome stays when a filter is empty")
+ok(not any(_attr(row, "data-filter") == "upcoming" for row in _rows(empty)),
+   "the empty board has zero upcoming rows")
+ok(all(bet == "Open" for bet in []),
+   "an empty upcoming bet list passes")
 
 st = _prod_st("oddspedia|cricket")
 _TILES = '<div class="tiles"><div class="tile"><b>1</b><span>pairs in Production</span></div></div>'
@@ -321,6 +399,31 @@ ok(">W</span>" in older_rows[0], "that ledger quote uses the same won → W path
 eq(_attr(older_rows[0], "data-price"), "41¢", "that ledger quote uses the same cents path")
 eq(_attr(older_rows[0], "data-filter"), "settled", "that ledger quote is Settled")
 
+before_entry = shell_build.page(NOW, d={"quotes": [
+    _quote("early-q", "won", "2026-09-26T18:00:00+00:00",
+           settled="2026-09-27T02:00:00+00:00", price=0.41),
+]}, st={"pairs": {
+    "oddspedia|cricket": {"stage": "production", "ready_at": "2026-09-27T00:00:00+00:00"},
+}}, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
+eq(_rows(before_entry), [],
+   "a ledger bet kicked off before the pair entered Production stays out")
+
+dup_lead = _lead("dup-q", "QuoteHome", "QuoteAway", "2026-09-26T18:00:00Z", "hit",
+                 "oddspedia|cricket", "cricket", 0.41)
+dup_quote = _quote("dup-q", "won", "2026-09-26T18:00:00+00:00",
+                   settled="2026-09-27T02:00:00+00:00", price=0.99)
+dup_blob = _blob([dup_lead])
+dup_page = shell_build.page(NOW, d={"quotes": [dup_quote]}, st=st, blob=dup_blob, tiles=_TILES)
+dup_rows = _rows(dup_page)
+eq(len(dup_rows), 1, "a feed bet is not added again from the ledger")
+eq(_attr(dup_rows[0], "data-price"), "41¢", "the feed price wins over the ledger copy")
+dup_contests = shell_build.contests_from_lanes(
+    shell_build.collect_lanes({"quotes": [dup_quote]}, st, dup_blob, NOW), NOW)
+eq(len(dup_contests), 1, "the duplicate quote does not become a second contest")
+eq(len(dup_contests[0]["bets"]), 1, "the feed id is not listed twice")
+eq(shell_build._cents(dup_contests[0]["bets"][0]["price"]), "41¢",
+   "the kept bet is the feed price, not the ledger's 99¢")
+
 # Noon Chicago time. Sep 21 2026 is CDT (UTC−5), so 17:00Z is 12:00 CT.
 boundary_out = "2026-09-21T17:00:00+00:00"
 boundary_in = "2026-09-22T17:00:00+00:00"
@@ -350,6 +453,26 @@ feed_out = _rows(shell_build.page(
     blob=_blob([_lead("edge-out", "Edge", "Out", "2026-09-21T17:00:00Z", "hit",
                       "oddspedia|cricket", "cricket", 0.41)])))
 eq(feed_out, [], "a feed lead on the Chicago date 14 days ago drops")
+# 04:30Z is 11:30 PM CT the day before; 05:30Z is 12:30 AM CT. A UTC-date
+# window would keep the first one, because both instants are Sep 22 in UTC.
+night_out = "2026-09-22T04:30:00+00:00"
+night_in = "2026-09-22T05:30:00+00:00"
+ok(not shell_build._in_shell_window(
+    datetime.datetime.fromisoformat(night_out), NOW),
+   "11:30 PM CT on the excluded Chicago date stays out")
+ok(shell_build._in_shell_window(
+    datetime.datetime.fromisoformat(night_in), NOW),
+   "12:30 AM CT on the next Chicago date stays in")
+eq(_rows(shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}},
+    blob=_blob([_lead("night-out", "Night", "Out", "2026-09-22T04:30:00Z", "hit",
+                      "oddspedia|cricket", "cricket", 0.41)]))), [],
+   "a kickoff just before midnight CT on the boundary date is not a row")
+night_rows = _rows(shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}},
+    blob=_blob([_lead("night-in", "Night", "In", "2026-09-22T05:30:00Z", "hit",
+                      "oddspedia|cricket", "cricket", 0.41)])))
+eq(len(night_rows), 1, "a kickoff just after midnight CT on the next date is a row")
 
 import production
 eq(production.KEEP_SETTLED_DAYS, 7, "production.KEEP_SETTLED_DAYS stays 7")
@@ -782,10 +905,11 @@ eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
 _RESULT = {"landed": "W", "missed": "L", "paid": "price result"}
 _recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
-_prod_entries = [
-    (html_lib.unescape(name), _RESULT[status])
-    for name, status in re.findall(
-        r'data-l="Match">([^<]*)</td>.*?data-l="Result"><span class="[^"]*">([^<]+)</span>',
+_prod_rows = [
+    (html_lib.unescape(name), html_lib.unescape(headline), _RESULT[status])
+    for name, headline, status in re.findall(
+        r'data-l="Match">([^<]*)</td>.*?data-l="Lead">([^<]*)</td>'
+        r'.*?data-l="Result"><span class="[^"]*">([^<]+)</span>',
         _recent, re.S)
 ]
 
@@ -804,43 +928,44 @@ def _bucket_bets(rows, bucket):
     return bets
 
 
-import fmt
-_feed_pool = []
-for _lead_row in production.load_feed().get("leads", {}).values():
-    _face = shell_build._status_label(_lead_row.get("status"))
-    if _face == "Open":
+_feed_left = list(production.load_feed().get("leads", {}).values())
+_priced_entries = []
+for _name, _headline, _status in _prod_rows:
+    _at = next((i for i, lead in enumerate(_feed_left)
+                if lead.get("match") == _name and lead.get("headline") == _headline), None)
+    ok(_at is not None, f"{_name} / {_headline} is a feed lead")
+    if _at is None:
         continue
-    _feed_pool.append({
-        "match": _lead_row.get("match"),
-        "status": _face,
-        "price": fmt.cents(_lead_row.get("price_at_log")),
-    })
-_settled_by_name = {}
+    _lead_row = _feed_left.pop(_at)
+    _priced_entries.append((_name, _status, shell_build._cents(_lead_row.get("price_at_log"))))
+_clock = re.search(r'<time datetime="([^"]+)"', _prod_committed).group(1)
+_when = datetime.datetime.strptime(_clock, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+_model = shell_build.contests_from_lanes(
+    shell_build.collect_lanes(
+        shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
+    _when)
+eq(_subset_gaps(_model, _priced_entries), [],
+   "each production recent bet matches its own status and price; Live contests are exempt")
+_by_model = {contest["match"]: contest for contest in _model}
+_html_settled = {}
 for _row in _committed_rows:
-    if _attr(_row, "data-filter") != "settled":
+    if _attr(_row, "data-filter") == "settled":
+        _html_settled.setdefault(_attr(_row, "data-name"), []).append(_row)
+_required = 0
+for _name, _status, _cents in _priced_entries:
+    _contest = _by_model.get(_name)
+    if _contest is not None and _contest["bucket"] == "live":
         continue
-    _settled_by_name.setdefault(_attr(_row, "data-name"), []).append(_row)
-for _name, _status in _prod_entries:
-    _hits = _settled_by_name.get(_name, [])
+    _required += 1
+    _hits = _html_settled.get(_name, [])
     ok(len(_hits) == 1, f"production recent lead {_name} is one Running Settled row")
     if len(_hits) != 1:
         continue
-    _labels = _bet_labels(_visual(_hits[0]))
-    ok(_status in _labels,
+    ok(_status in _bet_labels(_visual(_hits[0])),
        f"{_name} keeps the production recent status {_status}")
-    if _status in _labels:
-        _labels.remove(_status)
-    _match_at = next((i for i, item in enumerate(_feed_pool)
-                      if item["match"] == _name and item["status"] == _status), None)
-    ok(_match_at is not None, f"{_name} has a feed lead for its recent status")
-    if _match_at is None:
-        continue
-    _priced = _feed_pool.pop(_match_at)
-    eq(_attr(_hits[0], "data-price"), _priced["price"],
-       f"{_name} keeps the feed price on the Settled row")
 _shell_settled = _bucket_bets(_committed_rows, "settled")
-ok(len(_shell_settled) >= len(_prod_entries),
-   "Running Settled bets cover every production recent lead, and may add older ones")
+ok(len(_shell_settled) >= _required,
+   "Running Settled bets cover every non-live production recent lead, and may add older ones")
 _rsl = [row for row in _committed_rows
         if _attr(row, "data-name") == "Real Salt Lake v New England Revolution"]
 eq(len(_rsl), 1, "Settled includes Real Salt Lake v New England")
@@ -855,8 +980,10 @@ _to_come = re.search(
 _upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
 eq(len(_upcoming_bets), int(_to_come.group(1)) if _to_come else None,
    "Upcoming bets equal the strip's leads still to come")
-ok(_upcoming_bets and all(bet == "Open" for bet in _upcoming_bets),
+ok(all(bet == "Open" for bet in _upcoming_bets),
    "every upcoming bet is still open")
+eq(_committed.count('aria-describedby="settled-caption"'), 1,
+   "committed Settled filter points at the caption")
 
 
 def _browser():
