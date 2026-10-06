@@ -122,7 +122,7 @@ def _fixture():
     return {"quotes": []}, st, blob
 
 
-def _check_chrome(html, why):
+def _check_chrome(html, why, placeholders=True):
     print(f"\n{why}")
     ok('href="./site.css"' in html, f"{why} links site.css")
     ok("<style" not in html.lower(), f"{why} has no inline style")
@@ -136,7 +136,9 @@ def _check_chrome(html, why):
        f"{why} has no theme toggle")
     ok("download" not in html.lower() and ".csv" not in html.lower(),
        f"{why} has no download or CSV affordance")
-    for needle in SKETCH_FAKES:
+    banned = SKETCH_FAKES if placeholders else (
+        "+$1,840", "o15_ranked", "Paper P&L", "PAPER P&L")
+    for needle in banned:
         ok(needle not in html, f"{why} does not ship the sketch placeholder {needle!r}")
     ok("$" not in html, f"{why} does not invent a dollar P&L")
     nav = _nav(html)
@@ -164,18 +166,21 @@ def _check_chrome(html, why):
     ok('aria-describedby="sports-soon"' in sports, f"{why} sport pills describe Coming soon")
     ok('id="sports-soon"' in html and ">Coming soon</p>" in html,
        f"{why} shows a Coming soon note")
-    ok(">Live</button>" in html and ">Settled</button>" in html
-       and ">Upcoming</button>" in html,
-       f"{why} has Live / Settled / Upcoming chrome")
+    ok('data-filter="live"' in html and 'data-filter="settled"' in html
+       and 'data-filter="upcoming"' in html,
+       f"{why} has Live / Settled / Upcoming filters")
+    ok(">Live <span class=\"count\">" in html and ">Settled <span class=\"count\">" in html
+       and ">Upcoming <span class=\"count\">" in html,
+       f"{why} counts each Running filter")
     ok("No open or recent paper bets yet." in html,
        f"{why} bet roll is an empty state, not fake chips")
     ok('class="bet-chip"' not in html and 'class="event-chip"' not in html,
        f"{why} bet roll has no result chips")
-    ok("No live, settled, or upcoming paper bets." in html,
-       f"{why} Running pane is empty")
-    ok("Select a contest in Running." in html, f"{why} Rules-applied pane is empty")
-    ok('class="running-row"' not in html and "data-contest" not in html,
-       f"{why} has no Running contest rows")
+    ok("No live, settled, or upcoming paper bets." not in html,
+       f"{why} does not use the combined empty line")
+    ok("These filters do not change the list yet." not in html,
+       f"{why} does not mark the filters as display-only")
+    ok("Select a contest in Running." in html, f"{why} Rules-applied pane starts empty")
     ok('class="rule-mini"' not in html, f"{why} has no Rules-applied mini cards")
     ok(re.search(r">\s*History\s*<", html, re.I) is None,
        f"{why} has no History tab")
@@ -224,7 +229,7 @@ if shell_build is not None:
     live_prod = production.page(T.load(), T.load_stages(), production.load_feed(), "", now=NOW)
     eq(_tiles(live), _tiles(live_prod),
        "the live shell strip matches the live Production headlines")
-    _check_chrome(live, "live shell")
+    _check_chrome(live, "live shell", placeholders=False)
 
     print("\none build writes production.html and index.html")
     import sandbox_build

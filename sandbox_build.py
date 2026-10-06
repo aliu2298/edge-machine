@@ -2105,7 +2105,7 @@ def production_and_index(now, d, st, blob):
     import production
     import shell_build
     prod = label_cells(production.page(d, st, blob, "", now=now))
-    index = shell_build.page(now, tiles=shell_build.tiles_html(prod))
+    index = shell_build.page(now, d=d, st=st, blob=blob, tiles=shell_build.tiles_html(prod))
     return prod, index
 
 
