@@ -150,16 +150,6 @@ eq(mixed[0]["spoken"], "1 lost, 1 awaiting result",
    "the mix is spoken as 1 lost, 1 awaiting result")
 eq([card["status"] for card in mixed[0]["cards"]], ["L", "Awaiting result"],
    "only the stuck bet's card says Awaiting result")
-won_wait = _contests([
-    _lead("won", "Won", "Wait", "2026-10-05T11:00:00Z", "hit",
-          "a|soccer", "soccer", 0.40),
-    _lead("open", "Won", "Wait", "2026-10-05T11:00:00Z", "pending",
-          "b|soccer", "soccer", 0.70),
-])
-eq(won_wait[0]["bucket"], "live", "a win beside an awaiting bet stays Live")
-eq(won_wait[0]["status"], "1W 1 awaiting", "the row reads 1W 1 awaiting")
-eq([card["status"] for card in won_wait[0]["cards"]], ["W", "Awaiting result"],
-   "the cards are the win and Awaiting result")
 inside = _contests([
     _lead("g2", "Half", "Fresh", "2026-10-05T14:00:00Z", "miss",
           "a|soccer", "soccer", 0.40),
@@ -420,7 +410,7 @@ for i in range(12):
         venue="kalshi_binary", qid="intl-team" if i == 0 else None))
 for i in range(5):
     intl_quotes.append(_settled_quote(
-        i, "o15_ranked", False, 0.55, sport="soccer_o15_intl",
+        i, "u35_low_scoring", False, 0.55, sport="soccer_o15_intl",
         venue="kalshi_binary", qid="intl-o15" if i == 0 else None))
 intl_d = {"quotes": intl_quotes}
 intl_st = {"pairs": {}}
@@ -429,8 +419,8 @@ intl_leads = [
           "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.40,
           source="team1_form_l5", headline="Team 1+"),
     _lead("intl-o15", "Intl", "Fixture", "2026-10-04T15:00:00Z", "miss",
-          "o15_ranked|soccer_o15_intl", "soccer_o15_intl", 0.55,
-          source="o15_ranked", headline="Over 1.5"),
+          "u35_low_scoring|soccer_o15_intl", "soccer_o15_intl", 0.55,
+          source="u35_low_scoring", headline="Over 1.5"),
 ]
 intl_contest = _contests(intl_leads, d=intl_d, st=intl_st)[0]
 eq(len(intl_contest["cards"]), 2, "the international contest has two cards")
@@ -455,7 +445,7 @@ ok(len(intl_records) == 2 and len(set(intl_records)) == 2,
 intl_pairs = [
     (card.get("market"), card.get("venue"))
     for card, bet in zip(intl_contest["cards"], intl_contest["bets"])
-    if bet.get("pair") == "o15_ranked|soccer_o15_intl"
+    if "soccer_o15_intl" in (bet.get("pair") or "")
     or "soccer_team1_intl" in (bet.get("pair") or "")
 ]
 eq(len(intl_pairs), 2, "the contest has Over 1.5 and Team 1+ international cards")

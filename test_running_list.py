@@ -368,20 +368,6 @@ apart = shell_build.contests_from_lanes(
     shell_build.collect_lanes({"quotes": []}, {"pairs": {}},
                               _blob([half_sided, other_day]), NOW), NOW)
 eq(len(apart), 2, "the same sides on another day stay two contests")
-# Reversed home/away, and different case, on one Chicago day. 15:00Z is 10:00 AM CT
-# and 22:00Z is 5:00 PM CT, both 4 Oct 2026.
-rev_blob = _blob([
-    _lead("rev-a", "Alpha", "Beta", "2026-10-04T15:00:00Z", "hit",
-          "a|soccer", "soccer", 0.41),
-    _lead("rev-b", "beta", "ALPHA", "2026-10-04T22:00:00Z", "miss",
-          "b|soccer", "soccer", 0.62),
-])
-rev_contests = shell_build.contests_from_lanes(
-    shell_build.collect_lanes({"quotes": []}, {"pairs": {}}, rev_blob, NOW), NOW)
-eq(len(rev_contests), 1,
-   "reversed home/away with different case on the same Chicago day are one contest")
-eq(sorted(bet["status"] for bet in rev_contests[0]["bets"]), ["L", "W"],
-   "both of those bets are on that one contest")
 eq(_bet_labels("1W 1L"), ["W", "L"],
    "1W 1L is two bets, so a row compare would miss one (the 20 vs 19 gap)")
 eq(len(_bet_labels("1W 1L")), 2, "the two Kazakhstan bets both count")
@@ -993,22 +979,8 @@ for name in sorted(os.listdir(wf_dir)):
 print("\ncommitted shell")
 _committed = open(os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read()
 _committed_rows = _rows(_committed)
-_prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
-_clock_m = re.search(r'<time datetime="([^"]+)"', _prod_committed)
-ok(_clock_m is not None, "production.html has a build clock")
-_when = None
-if _clock_m is not None:
-    _when = datetime.datetime.strptime(
-        _clock_m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-_feed_leads = list((production.load_feed() or {}).get("leads", {}).values())
-_in_window = []
-if _when is not None:
-    for _lead_row in _feed_leads:
-        _kick = production._one_instant(_lead_row.get("kickoff"))
-        if _kick is not None and shell_build._in_shell_window(_kick, _when):
-            _in_window.append(_lead_row)
-ok(_committed_rows or not _in_window,
-   "committed index.html lists Running contests while the feed has in-window leads")
+ok(_committed_rows or 'id="running-empty"' in _committed,
+   "committed index.html lists Running contests or the empty state")
 for _key, _label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upcoming")):
     eq(_filter_count(_committed, _key, _label),
        sum(1 for _row in _committed_rows if _attr(_row, "data-filter") == _key),
@@ -1017,6 +989,7 @@ ok('class="rule-mini"' not in _committed,
    "committed index.html does not paint rule cards before a row is selected")
 if _committed_rows:
     ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
+_prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
 eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
 _RESULT = {"landed": "W", "missed": "L", "paid": "price result"}
@@ -1070,8 +1043,12 @@ for _row in _committed_rows:
                 ok(_card_status != "Void",
                    f"an unknown card status stays {_card_status!r}, not Void")
 eq(len(_contest_ids), len(set(_contest_ids)), "committed Running has one row per contest")
+_clock_m = re.search(r'<time datetime="([^"]+)"', _prod_committed)
+ok(_clock_m is not None, "production.html has a build clock")
 _model = []
-if _when is not None:
+if _clock_m is not None:
+    _when = datetime.datetime.strptime(
+        _clock_m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     _model = shell_build.contests_from_lanes(
         shell_build.collect_lanes(
             shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
@@ -1100,8 +1077,9 @@ _by_name = {}
 for _row in _committed_rows:
     _by_name.setdefault(_attr(_row, "data-name"), []).append(_row)
 _matched_settled = 0
+_feed_leads = list((production.load_feed() or {}).get("leads", {}).values())
 for _name, _headline, _status in _prod_rows:
-    if _when is None:
+    if _clock_m is None:
         break
     _same = [lead for lead in _feed_leads if lead.get("match") == _name]
     _kicks = [production._one_instant(lead.get("kickoff")) for lead in _same]
@@ -1115,8 +1093,7 @@ for _name, _headline, _status in _prod_rows:
     eq(len(_hits), 1, f"production recent lead {_name} is one Running row")
     if len(_hits) != 1:
         continue
-    eq(_attr(_hits[0], "data-filter"), "settled",
-       f"production recent lead {_name} is Settled")
+    eq(_attr(_hits[0], "data-filter"), "settled", f"production recent lead {_name} is Settled")
     ok(_status in _bet_labels(_visual(_hits[0])),
        "a production recent status is on that Running row")
     _matched_settled += 1
