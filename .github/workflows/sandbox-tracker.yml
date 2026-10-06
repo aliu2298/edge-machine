@@ -209,6 +209,12 @@ jobs:
             if [ -f public_site/cricket.html ]; then
               git add public_site/cricket.html
             fi
+            # crypto.html is rebuilt by sandbox_build.py from the same ledger.
+            # It must be staged here or the live page stays stale even though
+            # the build succeeded.
+            if [ -f public_site/crypto.html ]; then
+              git add public_site/crypto.html
+            fi
             # Weekly archive pages are rebuilt with the Sandbox. Skip the add
             # when the directory is absent so an empty diff still exits 0.
             if [ -d public_site/archive ]; then
