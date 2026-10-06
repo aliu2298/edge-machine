@@ -76,7 +76,7 @@ GitHub Actions builds and publishes everything; a public repo is required for Pa
   kept free of
 
 An always-on server runs `scripts/local_closes.sh` every 15 minutes (it writes only
-`data/sandbox_closes/mac.json`) and dispatches a workflow GitHub's scheduler skipped. GitHub
+`data/sandbox_closes/mac.json` on the Mac, `vps.json` on edge-vps — the writer follows the host) and dispatches a workflow GitHub's scheduler skipped. GitHub
 silently drops scheduled runs when it is busy; every run that starts succeeds, so boards are only
 delayed — but a closing price has to be taken in the hour before a start, and those were being
 missed. Nothing is entered by hand.
