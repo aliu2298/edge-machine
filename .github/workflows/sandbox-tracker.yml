@@ -34,6 +34,7 @@ on:
   # would not. Scoped to this one path, so the 15-minute closing-price pushes to
   # data/sandbox_closes/ never trigger a tracker run.
   push:
+    branches: [main]
     paths:
       - "data/crypto_window/**"
 
