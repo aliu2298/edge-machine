@@ -71,7 +71,7 @@ def _check_page(name, html, current):
     ok(_HANDLER.search(html) is None, f"{name} has no inline on* handler")
     ok('href="#content"' in html and "Skip to content" in html,
        f"{name} has a skip-to-content link")
-    if current == "index":
+    if current in ("index", "nba"):
         for href in (
             'href="./sandbox.html"',
             'href="./production.html"',
@@ -85,13 +85,23 @@ def _check_page(name, html, current):
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
     # The eight links are the same set, in the same order, on every page.
     # aria-current on a breadcrumb is separate; the main nav marks one page.
+    # The NBA board uses the shell's four page pills. Its current mark is the
+    # NBA sport tab, not a page pill.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
     currents = re.findall(r'aria-current="page"', nav.group(0) if nav else "")
-    eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
+    if current == "nba":
+        eq(len(currents), 0, f"{name} page nav does not mark a pill; the NBA sport tab is current")
+        sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
+        ok(sports is not None and sports.group(0).count('aria-current="page"') == 1
+           and 'href="./nba.html" aria-current="page"' in sports.group(0),
+           f"{name} sport tab marks NBA current")
+    else:
+        eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, _SHELL_LABELS if current == "index" else _NAV_LABELS, f"{name} nav labels")
+        want = _SHELL_LABELS if current in ("index", "nba") else _NAV_LABELS
+        eq(labels, want, f"{name} nav labels")
 
 
 def _nba(now):
