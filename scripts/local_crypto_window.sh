@@ -51,14 +51,30 @@ then
   exit 0
 fi
 
+# STOPGAP, and it is labelled as one. The VPS (scripts/vps_crypto_window.sh) is taking
+# this over; this host keeps it only until that timer is installed, because a laptop is
+# the wrong place for a clock. Remove this plist once the VPS timer is running, or both
+# will ask for the same run.
+#
+# RETRIES, because the first live window died without one. launchd ran this on WAKE at
+# 18:27Z rather than at 18:15, and a Mac waking from sleep has no DNS for a few seconds:
+# "Could not resolve host: github.com". It then gave up and logged that the three-hourly
+# cron was the fallback -- which had already been measured at 4.2 runs a day against 8
+# scheduled, and on that day delivered no run inside the window at all. The window is 90
+# minutes wide, so a few attempts over a minute cost nothing and cover exactly that race.
+#
 # gh reads its own keychain token; no secret lives in this file or the plist.
-if command -v gh >/dev/null 2>&1; then
-  if gh workflow run sandbox-tracker.yml --ref main --repo aliu2298/edge-machine 2>&1; then
-    echo "$(stamp) dispatched sandbox-tracker for the crypto window"
-  else
-    echo "$(stamp) dispatch failed — the three-hourly cron is the fallback"
-  fi
-else
+if ! command -v gh >/dev/null 2>&1; then
   echo "$(stamp) gh not on PATH, cannot dispatch"
+  exit 0
 fi
+for attempt in 1 2 3 4 5; do
+  if gh workflow run sandbox-tracker.yml --ref main --repo aliu2298/edge-machine 2>&1; then
+    echo "$(stamp) dispatched sandbox-tracker for the crypto window (attempt $attempt)"
+    exit 0
+  fi
+  echo "$(stamp) dispatch attempt $attempt failed, retrying in 20s"
+  sleep 20
+done
+echo "$(stamp) dispatch failed after 5 attempts"
 exit 0
