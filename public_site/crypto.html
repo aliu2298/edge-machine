@@ -15,7 +15,7 @@
 <div class="topbar">
 <a class="brand" href="./sandbox.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html" aria-current="page">Crypto</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-05T06:38:07Z">Updated Oct 5, 1:38 AM CT</time><span class="sr-only">updated 2026-10-05 06:38 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-06T21:47:49Z">Updated Oct 6, 4:47 PM CT</time><span class="sr-only">updated 2026-10-06 21:47 UTC</span></p>
 </div>
 <nav class="toc" aria-label="On this page"><a href="#rule">The rule under test</a><a href="#unit">Why a day is one bet</a><a href="#lanes">Records</a></nav>
 </header>
@@ -24,39 +24,39 @@
 <p class="lede">One rule and the baseline that motivated it. The baseline asked whether a
 forecast could beat assuming nothing changes, and the answer was no. The rule asks a
 different question: whether the price itself is biased in the favourite band.</p>
-<div class="tiles"><div class="tile"><b>0</b><span>pairs with a record</span></div><div class="tile"><b>0</b><span>outcomes settled</span></div><div class="tile"><b>2</b><span>bets running</span></div><div class="tile"><b>0</b><span>in Production</span></div><div class="tile"><b>5</b><span>coins live</span></div></div>
+<div class="tiles"><div class="tile"><b>1</b><span>pairs with a record</span></div><div class="tile"><b>0</b><span>outcomes settled</span></div><div class="tile"><b>1</b><span>bets running</span></div><div class="tile"><b>0</b><span>in Production</span></div><div class="tile"><b>5</b><span>coins live</span></div></div>
 <section id="rule">
 <h2>The rule under test</h2>
 <div class="note">Registered <b>2026-10-05</b>, before it logged anything, and registered
 <b>expecting to find nothing</b>. Every number below was fixed in advance.</div>
 <div class="tbl"><table>
-<tr><th>Entry</th><td>Yes ask <b>0.70–0.80</b>, both ends inclusive</td></tr>
-<tr><th>Window</th><td>2–3.5 hours before the
+<tr><th>Entry</th><td data-l="">Yes ask <b>0.70–0.80</b>, both ends inclusive</td></tr>
+<tr><th>Window</th><td data-l="">2–3.5 hours before the
  <b>17:00 Eastern</b> close — about a three-hour hold, settling the
  same afternoon. Matched in Eastern, not in UTC: that close is 21:00Z under daylight time
  and 22:00Z under standard time, and a fixed UTC hour would have silently stopped the lane
  at the November change. The hourly closes on the same series are a different contract and
  are not this bet.</td></tr>
-<tr><th>When it reads</th><td>A launchd timer on the always-on Mac dispatches the tracker at
+<tr><th>When it reads</th><td data-l="">A launchd timer on the always-on Mac dispatches the tracker at
  <b>13:15 local Central</b>, permanently 2.83h before the close because Central and Eastern
  shift on the same date. GitHub’s cron cannot hold a 90-minute window: measured over 18
  days it ran 4.2 times a day against 8 scheduled, landing inside the window on 10 of
  18.</td></tr>
-<tr><th>Which rung</th><td>The <b>lowest-priced rung in band</b>, one per coin. A ladder
+<tr><th>Which rung</th><td data-l="">The <b>lowest-priced rung in band</b>, one per coin. A ladder
  offers several at once, so the choice is fixed in advance rather than after seeing
  results.</td></tr>
-<tr><th>Why one per coin</th><td>Rungs are <b>nested, not exclusive</b> — “$84,750 or
+<tr><th>Why one per coin</th><td data-l="">Rungs are <b>nested, not exclusive</b> — “$84,750 or
  above” and “$84,500 or above” settle on one move. Counting both is one bet counted twice,
  the defect that once read the spot baseline at z +10.40 against a true +0.24.</td></tr>
-<tr><th>Liquidity floor</th><td>Two-sided quote, spread ≤
+<tr><th>Liquidity floor</th><td data-l="">Two-sided quote, spread ≤
  3c, ask size ≥ 25. One coin
  quoted a single price across fourteen consecutive strikes, which is a stale book rather
  than fourteen prices.</td></tr>
-<tr><th>Coins live</th><td>KXBTCD, KXETHD, KXHYPED, KXSOLD, KXXRPD</td></tr>
-<tr><th>Listed, no open market</th><td class="mut">BTCD, ETHD, KXLINKD, KXNEAR, KXNEARD, KXXLM, KXXLMD, KXXRP, KXZECD</td></tr>
-<tr><th>Judged against</th><td>Backing <b>every</b> in-band rung in the window, so the
+<tr><th>Coins live</th><td data-l="">KXBTCD, KXETHD, KXHYPED, KXSOLD, KXXRPD</td></tr>
+<tr><th>Listed, no open market</th><td class="mut" data-l="">BTCD, ETHD, KXLINKD, KXNEAR, KXNEARD, KXXLM, KXXLMD, KXXRP, KXZECD</td></tr>
+<tr><th>Judged against</th><td data-l="">Backing <b>every</b> in-band rung in the window, so the
  lane only counts if picking the lowest beats the band itself.</td></tr>
-<tr><th>Read at</th><td>30 independent outcomes — and an outcome is a <b>day</b>, so about
+<tr><th>Read at</th><td data-l="">30 independent outcomes — and an outcome is a <b>day</b>, so about
  six weeks.</td></tr>
 </table></div>
 <div class="note"><b>What it has to beat.</b> At the taker fee the effective price at
@@ -70,12 +70,12 @@ Sandbox has measured it. The one direct prior is against it: the spot baseline�
 <div class="note">Both crypto pairs are scored <b>per market-day</b>, not per bet, and that
 is measured rather than assumed. Over 90 days of daily closes for the five live coins:</div>
 <div class="tbl"><table>
-<tr><th>Mean pairwise return correlation</th><td><b>+0.757</b></td></tr>
-<tr><th>Mean sign agreement</th><td><b>77.8%</b></td></tr>
-<tr><th>Days all five move the same way</th><td><b>54.4%</b></td></tr>
-<tr><th>Variance inflation (k=5)</th><td><b>4.03</b></td></tr>
-<tr><th>Independent draws in a day</th><td><b>1.24</b>, not 5</td></tr>
-<tr><th>z overstatement if keyed per coin</th><td><b class="neg">2.01×</b></td></tr>
+<tr><th>Mean pairwise return correlation</th><td data-l=""><b>+0.757</b></td></tr>
+<tr><th>Mean sign agreement</th><td data-l=""><b>77.8%</b></td></tr>
+<tr><th>Days all five move the same way</th><td data-l=""><b>54.4%</b></td></tr>
+<tr><th>Variance inflation (k=5)</th><td data-l=""><b>4.03</b></td></tr>
+<tr><th>Independent draws in a day</th><td data-l=""><b>1.24</b>, not 5</td></tr>
+<tr><th>z overstatement if keyed per coin</th><td data-l=""><b class="neg">2.01×</b></td></tr>
 </table></div>
 <div class="note">A day of “or above” rungs wins or loses together because the coins do, so
 the day is the unit. Keying per coin would overstate the evidence by about double, in
@@ -86,7 +86,18 @@ once read z +10.40 against a true +0.24.</div>
 <h2>Records</h2>
 <div class="note">Counts are <b>market-days</b>, the unit above — not individual
 contracts.</div>
+<details class="sport"><summary><b>Crypto</b>
+<span class="mut"> · 1 tested</span></summary>
+<div class="tbl"><table><thead><tr><th class="num">#</th><th>Rule or tipster</th><th>Verdict</th><th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th><th class="num">v the close</th><th class="num">If faded</th><th class="num">Open</th><th>Stage</th></tr></thead><tbody><tr><td class="num" data-l="#" data-empty="1"><span class="mut">—</span></td>
+<td data-l="Rule or tipster"><b>Crypto favourite band</b>
+<div class="sm mut">Crypto · Favourite band</div></td>
+<td data-l="Verdict"><span class="sig n">Waiting for results</span></td>
+<td class="num" data-l="Record" data-empty="1">—</td><td class="num" data-l="Won v priced" data-empty="1">—</td><td class="num" data-l="ROI after fees" data-empty="1">—</td>
+<td class="num" data-l="v the close" data-empty="1"><span class="mut">—</span></td>
+<td class="num" data-l="If faded" data-empty="1"><span class="mut">—</span></td>
+<td class="num" data-l="Open">1</td><td data-l="Stage"><span class="mut sm">Sandbox</span></td></tr></tbody></table></div>
 
+<details class="sport"><summary><b>How each rule is defined</b><span class="mut"> · 1 of them, as registered</span></summary><div class="note sm">What each one backs, where the claim came from, and what was fixed before it ran. Written once and left alone: a definition that moves after the bets start is not a pre-registration.</div><div class="def"><b>Crypto favourite band</b><span class="mut sm"> · Rule · League</span><div class="sm mut">PRE-REGISTERED 2026-10-05, before it logged anything, and registered expecting to find nothing. Back the YES on a Kalshi coin-directional rung priced 0.70-0.80 inclusive, entered 2-3.5 hours before the 17:00 ET (21:00Z) close, so the bet is held about three hours and settles the same afternoon. ONE bet per coin per close, the LOWEST-priced rung in band — a ladder offers several at once (BTC offered 0.73 and 0.80 on 2026-10-05, HYPE offered fourteen), so the choice is fixed in advance instead of after seeing results. One per coin because rungs are NESTED, not exclusive: &#x27;$84,750 or above&#x27; and &#x27;$84,500 or above&#x27; settle on one move, and counting both is the defect that once inflated the spot baseline to z +10.40 against a true +0.24. FIVE coins are live (BTC, ETH, SOL, XRP, HYPE); four more are listed with no open event. WHAT IT MUST BEAT: the effective price at mid-band is 0.7632 after the taker fee, so the band has to beat its own price by about 1.3pp just to break even, which is roughly the whole size of the favourite-longshot bias anywhere this Sandbox has measured it — and the one direct prior is against it, the spot baseline&#x27;s own 0.70-0.80 cell running -1.9pp at z -0.17 on 10 bets over 8 days. AN OUTCOME IS A DAY, NOT A BET: across 90 days of daily closes the five coins&#x27; returns correlate +0.757 on average, agree in sign 77.8% of the time, and all five move together on 54.4% of days, so a day holds 1.24 independent draws and not five. Judged against backing every in-band rung in the window, so the lane only counts if picking the lowest beats the band itself. Read at 30 independent outcomes, about six weeks. A rung also needs a two-sided quote, a spread of 3c or less and 25 contracts on the ask: HYPE quoted one price on fourteen consecutive strikes, which is a stale book, not a signal.</div></div></details></details>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
