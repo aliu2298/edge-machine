@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-06T17:52:01+00:00",
+ "board_built_at": "2026-10-06T21:30:12+00:00",
  "leads": {
   "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Gibraltar",
@@ -491,8 +491,6 @@
    "id": "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
    "league": "UEFA Nations League",
    "match": "Albania v San Marino",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -506,7 +504,7 @@
    "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06ALBSMR-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35_intl",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-06|Colombia|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Peru",
@@ -523,7 +521,7 @@
    "kickoff": "2026-10-06T23:45Z",
    "lane": "production",
    "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
+   "last_seen_at": "2026-10-06T21:30:12+00:00",
    "league": "International Friendly",
    "match": "Colombia v Peru",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -548,7 +546,7 @@
    "kickoff": "2026-10-06T23:45Z",
    "lane": "production",
    "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
+   "last_seen_at": "2026-10-06T21:30:12+00:00",
    "league": "International Friendly",
    "match": "Colombia v Peru",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -579,8 +577,6 @@
    "id": "2026-10-06|Croatia|Spain|Spain to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
    "league": "UEFA Nations League",
    "match": "Croatia v Spain",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -588,7 +584,36 @@
    "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT06CROESP-ESP1",
    "source": "team1_form_l5",
    "sport": "soccer_team1_intl",
-   "status": "pending"
+   "status": "hit"
+  },
+  "2026-10-06|Jordan|Venezuela|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Venezuela",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-05",
+   "headline": "Under 3.5 goals",
+   "home": "Jordan",
+   "id": "2026-10-06|Jordan|Venezuela|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T17:00Z",
+   "lane": "production",
+   "league": "International Friendly",
+   "match": "Jordan v Venezuela",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "KXINTLFRIENDLYTOTAL-26OCT06JORVEN-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT06JORVEN-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
   },
   "2026-10-06|Kazakhstan|Faroe Islands|Faroe Islands to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Faroe Islands",
@@ -657,8 +682,6 @@
    "id": "2026-10-06|Luxembourg|Bulgaria|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
    "league": "UEFA Nations League",
    "match": "Luxembourg v Bulgaria",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -672,7 +695,7 @@
    "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06LUXBUL-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35_intl",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-06|Moldova|Slovakia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Slovakia",
@@ -688,8 +711,6 @@
    "id": "2026-10-06|Moldova|Slovakia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
    "league": "UEFA Nations League",
    "match": "Moldova v Slovakia",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -697,7 +718,7 @@
    "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT06MDASVK-2",
    "source": "o15_ranked",
    "sport": "soccer_o15_intl",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-06|Moldova|Slovakia|Slovakia to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Slovakia",
@@ -714,8 +735,6 @@
    "id": "2026-10-06|Moldova|Slovakia|Slovakia to score 1+ \u00b7 Team scores 1+ form rule",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
    "league": "UEFA Nations League",
    "match": "Moldova v Slovakia",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -723,7 +742,7 @@
    "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT06MDASVK-SVK1",
    "source": "team1_form_l5",
    "sport": "soccer_team1_intl",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-06|Scotland|Slovenia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Slovenia",
@@ -739,8 +758,6 @@
    "id": "2026-10-06|Scotland|Slovenia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
    "kickoff": "2026-10-06T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
    "league": "UEFA Nations League",
    "match": "Scotland v Slovenia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -754,6 +771,37 @@
    "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06SCOSLO-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-07|Lions|Garden Route Badgers|Garden Route Badgers to win \u00b7 Oddspedia community tips": {
+   "away": "Garden Route Badgers",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-07",
+   "edge_at_log": null,
+   "first_seen": "2026-10-06",
+   "headline": "Garden Route Badgers to win",
+   "home": "Lions",
+   "id": "2026-10-07|Lions|Garden Route Badgers|Garden Route Badgers to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-07T11:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-06",
+   "last_seen_at": "2026-10-06T21:30:12+00:00",
+   "league": "Cricket",
+   "match": "Lions v Garden Route Badgers",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.26,
+   "route": {
+    "market": "KXT20MATCH-26OCT070700LIOGRB",
+    "outcome": "Garden Route Badgers",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT070700LIOGRB",
+   "source": "oddspedia",
+   "sport": "cricket",
    "status": "pending"
   },
   "2026-10-07|West Indies Champions|England Champions|England Champions to win \u00b7 Oddspedia community tips": {
@@ -771,7 +819,7 @@
    "kickoff": "2026-10-07T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-06",
-   "last_seen_at": "2026-10-06T17:52:01+00:00",
+   "last_seen_at": "2026-10-06T21:30:12+00:00",
    "league": "Cricket",
    "match": "West Indies Champions v England Champions",
    "pair": "oddspedia|cricket",
@@ -795,10 +843,10 @@
    "promoted_at": "2026-10-01T16:20:16+00:00",
    "ready_at": "2026-10-01T16:20:16+00:00",
    "route": "moved by hand on 2026-10-01",
-   "sandbox_clv": 0.01,
-   "sandbox_n": 6,
-   "sandbox_roi": -0.1075,
-   "sandbox_roi_fee": -0.123
+   "sandbox_clv": 0.0043,
+   "sandbox_n": 7,
+   "sandbox_roi": -0.0541,
+   "sandbox_roi_fee": -0.0701
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -828,10 +876,10 @@
    "promoted_at": "2026-10-01T16:20:16+00:00",
    "ready_at": "2026-10-01T16:20:16+00:00",
    "route": "moved by hand on 2026-10-01",
-   "sandbox_clv": -0.03,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.2654,
-   "sandbox_roi_fee": 0.2472
+   "sandbox_clv": -0.022,
+   "sandbox_n": 5,
+   "sandbox_roi": 0.1895,
+   "sandbox_roi_fee": 0.1765
   },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
@@ -839,14 +887,14 @@
    "promoted_at": "2026-10-04T07:03:02+00:00",
    "ready_at": "2026-10-04T07:03:02+00:00",
    "route": "moved by hand on 2026-10-04",
-   "sandbox_clv": 0.03,
-   "sandbox_n": 3,
-   "sandbox_roi": -0.2097,
-   "sandbox_roi_fee": -0.2182
+   "sandbox_clv": 0.0186,
+   "sandbox_n": 7,
+   "sandbox_roi": 0.254,
+   "sandbox_roi_fee": 0.227
   }
  },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-06T17:52:01+00:00"
+ "updated_at": "2026-10-06T21:30:12+00:00"
 }

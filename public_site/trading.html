@@ -15,7 +15,7 @@
 <div class="topbar">
 <a class="brand" href="./sandbox.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html" aria-current="page">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html">Crypto</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-06T17:52:01Z">Updated Oct 6, 12:52 PM CT</time><span class="sr-only">updated 2026-10-06 17:52 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-06T21:30:12Z">Updated Oct 6, 4:30 PM CT</time><span class="sr-only">updated 2026-10-06 21:30 UTC</span></p>
 </div>
 
 </header>
@@ -24,10 +24,10 @@
 <p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>0</b><span>working (30+ days)</span></div>
-<div class="tile"><b>0</b><span>promising</span></div>
+<div class="tile"><b>1</b><span>promising</span></div>
 <div class="tile"><b class="">0</b><span>no edge</span></div>
-<div class="tile"><b>178</b><span>trades logged</span></div>
-<div class="tile"><b>113</b><span>open now</span></div>
+<div class="tile"><b>244</b><span>trades logged</span></div>
+<div class="tile"><b>62</b><span>open now</span></div>
 </div>
 <div class="note">These rules are scanned and graded on the machine that holds the market data keys, and the record below is what it published. This page is built elsewhere and only renders it, so it does not reach the market itself.</div>
 <section id="rules">
@@ -35,13 +35,13 @@
 <div class="tbl"><table><thead><tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th><th class="num">Trades</th><th class="num">Mean per day</th><th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr></thead><tbody><tr><td data-l="Rule"><details class="src"><summary><b>RSI(2) pullback in an uptrend</b>
 <div class="sm mut">Swing · sw_rsi2_pullback</div></summary>
 <div class="sm mut">Pre-registered 2026-09-19 (Connors&#x27; published RSI-2 rule, thresholds unchanged). Buy the next open when a stock closes above its 200-day average, below its 5-day average, with a 2-period RSI under 5. Leave at the open after the first close back above the 5-day average, or after 10 sessions, whichever comes first. The oldest published mean-reversion rule there is, which is the point: if a rule this well known still pays after costs, the Sandbox will show it; if it does not, that is the answer for every variant of it.</div></details></td>
-<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">21 more entry days to read</div></td>
-<td class="num" data-l="Entry days">9</td>
-<td class="num" data-l="Trades">156<div class="sm mut">92 open</div></td>
-<td class="num" data-l="Mean per day"><span class="pos">+1.31%</span><div class="sm mut">t +2.57</div></td>
-<td class="num" data-l="Edge"><span class="pos">+1.25%</span><div class="sm mut">v SPY · t +2.63</div></td>
-<td class="num pos" data-l="P/L">+$1,551</td>
-<td class="num mut sm" data-l="Last">2026-10-05</td></tr>
+<td data-l="Verdict"><span class="sig w">Promising</span><div class="sm mut">20 more entry days to read</div></td>
+<td class="num" data-l="Entry days">10</td>
+<td class="num" data-l="Trades">212<div class="sm mut">48 open</div></td>
+<td class="num" data-l="Mean per day"><span class="pos">+0.84%</span><div class="sm mut">t +2.20</div></td>
+<td class="num" data-l="Edge"><span class="pos">+0.47%</span><div class="sm mut">v SPY · t +1.62</div></td>
+<td class="num pos" data-l="P/L">+$1,708</td>
+<td class="num mut sm" data-l="Last">2026-10-06</td></tr>
 <tr><td colspan="8" class="sm mut" data-l="Rule">Backtest before the lane went live (2026-02-25 to
 2026-09-18, not part of the record above):
 141 entry days, 3730 trades,
@@ -49,17 +49,31 @@
 <tr><td data-l="Rule"><details class="src"><summary><b>Overnight hold (buy the close, sell the open)</b>
 <div class="sm mut">Swing · etf_overnight</div></summary>
 <div class="sm mut">Pre-registered 2026-09-22. Buy SPY and QQQ at every close and sell at the next open. Most of the US market&#x27;s long-run return has come overnight, not during the session, and 2025 research finds the tilt persists even on nights with no news. It enters at the close because the decision does not depend on that bar: the rule is the window itself. The question is only whether the overnight premium beats 10bp of round-trip cost a night — a hard bar at this frequency.</div></details></td>
-<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">22 more entry days to read</div></td>
-<td class="num" data-l="Entry days">8</td>
-<td class="num" data-l="Trades">16<div class="sm mut">0 open</div></td>
-<td class="num" data-l="Mean per day"><span class="pos">+0.04%</span><div class="sm mut">t +0.22</div></td>
-<td class="num" data-l="Edge"><span class="pos">+0.04%</span><div class="sm mut">v cash · t +0.22</div></td>
-<td class="num pos" data-l="P/L">+$6</td>
-<td class="num mut sm" data-l="Last">2026-10-02</td></tr>
+<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">21 more entry days to read</div></td>
+<td class="num" data-l="Entry days">9</td>
+<td class="num" data-l="Trades">18<div class="sm mut">0 open</div></td>
+<td class="num" data-l="Mean per day"><span class="pos">+0.08%</span><div class="sm mut">t +0.49</div></td>
+<td class="num" data-l="Edge"><span class="pos">+0.08%</span><div class="sm mut">v cash · t +0.49</div></td>
+<td class="num pos" data-l="P/L">+$14</td>
+<td class="num mut sm" data-l="Last">2026-10-05</td></tr>
 <tr><td colspan="8" class="sm mut" data-l="Rule">Backtest before the lane went live (2025-07-23 to
 2026-09-21, not part of the record above):
 293 entry days, 586 trades,
 −0.02% a day v cash, t −0.53.</td></tr>
+<tr><td data-l="Rule"><details class="src"><summary><b>Double 7s (Connors)</b>
+<div class="sm mut">Swing · etf_double7</div></summary>
+<div class="sm mut">Pre-registered 2026-09-22, Larry Connors&#x27; published rule unchanged: on SPY, QQQ, IWM and DIA, when the index is above its 200-day average and closes at its lowest close of the last 7 sessions, buy the next open; leave at the open after it closes at its highest close of the last 7 (or after 20 sessions). Tests still show it working on the main indices; it lags buy-and-hold only because it sits out most days, which is why it is judged against cash, not against SPY over its own days.</div></details></td>
+<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">25 more entry days to read</div></td>
+<td class="num" data-l="Entry days">5</td>
+<td class="num" data-l="Trades">7<div class="sm mut">3 open</div></td>
+<td class="num" data-l="Mean per day"><span class="pos">+1.29%</span><div class="sm mut">t +5.98</div></td>
+<td class="num" data-l="Edge"><span class="pos">+1.29%</span><div class="sm mut">v cash · t +5.98</div></td>
+<td class="num pos" data-l="P/L">+$99</td>
+<td class="num mut sm" data-l="Last">2026-10-01</td></tr>
+<tr><td colspan="8" class="sm mut" data-l="Rule">Backtest before the lane went live (2025-07-31 to
+2026-09-17, not part of the record above):
+76 entry days, 164 trades,
++0.94% a day v cash, t +4.16.</td></tr>
 <tr><td data-l="Rule"><details class="src"><summary><b>IBS mean reversion below the 10-day band</b>
 <div class="sm mut">Swing · etf_ibs_band</div></summary>
 <div class="sm mut">Pre-registered 2026-09-22. On SPY, QQQ, IWM and DIA: buy the next open when the close is more than 2.5x the 25-day average daily range below the 10-day high AND closes in the bottom 30% of its own day&#x27;s range (internal bar strength under 0.3). Leave at the open after the first close above the prior day&#x27;s high, or after 10 sessions. IBS was formally documented by Pagonidis (2013): below 0.2, SPY&#x27;s next day averaged +0.35%; this band version is the one published as still working in 2025-26. Judged against cash — it trades the index itself — after 5bp a side.</div></details></td>
@@ -79,38 +93,24 @@
 <div class="sm mut">Pre-registered 2026-09-19. Buy the next open when a stock in an uptrend (prior close above its 200-day average) gaps down 3% or more and still closes above its own open that day. Hold 5 sessions, then leave at the open. Tests whether the crowd overreacts to a single bad headline in a name the market otherwise likes.</div></details></td>
 <td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">29 more entry days to read</div></td>
 <td class="num" data-l="Entry days">1</td>
-<td class="num" data-l="Trades">2<div class="sm mut">8 open</div></td>
+<td class="num" data-l="Trades">2<div class="sm mut">9 open</div></td>
 <td class="num" data-l="Mean per day"><span class="neg">−1.96%</span><div class="sm mut"></div></td>
 <td class="num" data-l="Edge"><span class="neg">−0.86%</span><div class="sm mut">v SPY</div></td>
 <td class="num neg" data-l="P/L">−$39</td>
-<td class="num mut sm" data-l="Last">2026-10-05</td></tr>
+<td class="num mut sm" data-l="Last">2026-10-06</td></tr>
 <tr><td colspan="8" class="sm mut" data-l="Rule">Backtest before the lane went live (2026-02-25 to
 2026-09-18, not part of the record above):
 84 entry days, 362 trades,
 −0.26% a day v SPY, t −0.31.</td></tr>
-<tr><td data-l="Rule"><details class="src"><summary><b>Double 7s (Connors)</b>
-<div class="sm mut">Swing · etf_double7</div></summary>
-<div class="sm mut">Pre-registered 2026-09-22, Larry Connors&#x27; published rule unchanged: on SPY, QQQ, IWM and DIA, when the index is above its 200-day average and closes at its lowest close of the last 7 sessions, buy the next open; leave at the open after it closes at its highest close of the last 7 (or after 20 sessions). Tests still show it working on the main indices; it lags buy-and-hold only because it sits out most days, which is why it is judged against cash, not against SPY over its own days.</div></details></td>
-<td data-l="Verdict"><span class="sig n">Waiting for trades</span></td>
-<td class="num" data-l="Entry days">0</td>
-<td class="num" data-l="Trades">0<div class="sm mut">10 open</div></td>
-<td class="num" data-l="Mean per day" data-empty="1">—<div class="sm mut"></div></td>
-<td class="num" data-l="Edge">—<div class="sm mut">v cash</div></td>
-<td class="num mut" data-l="P/L" data-empty="1">—</td>
-<td class="num mut sm" data-l="Last">2026-10-01</td></tr>
-<tr><td colspan="8" class="sm mut" data-l="Rule">Backtest before the lane went live (2025-07-31 to
-2026-09-17, not part of the record above):
-76 entry days, 164 trades,
-+0.94% a day v cash, t +4.16.</td></tr>
 <tr><td data-l="Rule"><details class="src"><summary><b>Turn of the month</b>
 <div class="sm mut">Swing · etf_tom</div></summary>
 <div class="sm mut">Pre-registered 2026-09-22. Buy SPY at the open of the month&#x27;s last trading day, hold it and the first three trading days of the new month, and leave at the fourth&#x27;s open. The oldest calendar anomaly there is, and a contested one: recent work finds it has largely faded in US stocks over the past decade while persisting in index futures. That disagreement is exactly what a forward record settles.</div></details></td>
-<td data-l="Verdict"><span class="sig n">Waiting for trades</span></td>
-<td class="num" data-l="Entry days">0</td>
-<td class="num" data-l="Trades">0<div class="sm mut">1 open</div></td>
-<td class="num" data-l="Mean per day" data-empty="1">—<div class="sm mut"></div></td>
-<td class="num" data-l="Edge">—<div class="sm mut">v cash</div></td>
-<td class="num mut" data-l="P/L" data-empty="1">—</td>
+<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">29 more entry days to read</div></td>
+<td class="num" data-l="Entry days">1</td>
+<td class="num" data-l="Trades">1<div class="sm mut">0 open</div></td>
+<td class="num" data-l="Mean per day"><span class="pos">+1.43%</span><div class="sm mut"></div></td>
+<td class="num" data-l="Edge"><span class="pos">+1.43%</span><div class="sm mut">v cash</div></td>
+<td class="num pos" data-l="P/L">+$14</td>
 <td class="num mut sm" data-l="Last">2026-09-30</td></tr>
 <tr><td colspan="8" class="sm mut" data-l="Rule">Backtest before the lane went live (2025-07-31 to
 2026-08-31, not part of the record above):
