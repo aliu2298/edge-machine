@@ -1190,8 +1190,22 @@ for _name, _headline, _status in _prod_rows:
     ok(_status in _bet_labels(_visual(_hits[0])),
        "a production recent status is on that Running row")
     _matched_settled += 1
-ok(_matched_settled > 0,
-   "the Settled loop checked at least one in-window production recent row")
+# Guard against a vacuous loop only when this data can feed it: Production
+# recent rows on the page and a graded feed lead inside the 14-day window at
+# the build clock. A quiet week (no recent Production leads) or a feed whose
+# graded leads are all older than 14 days has nothing to check.
+_window_graded = [
+    lead for lead in _feed_leads
+    if lead.get("status") and lead.get("status") != "pending"
+    and production._one_instant(lead.get("kickoff")) is not None
+    and _clock_m is not None
+    and shell_build._in_shell_window(production._one_instant(lead.get("kickoff")), _when)
+]
+if _prod_rows and _window_graded:
+    ok(_matched_settled > 0,
+       "the Settled loop checked at least one in-window production recent row")
+else:
+    print("  skip  no in-window graded Production lead at this build clock; the Settled loop has nothing to check")
 _shell_settled = _bucket_bets(_committed_rows, "settled")
 ok(len(_shell_settled) >= _matched_settled,
    "Running Settled bets cover the production recent rows still on the page")

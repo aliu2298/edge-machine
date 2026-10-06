@@ -178,7 +178,7 @@
 
   function sportLabel(key) {
     if (!key || key === "all") return "";
-    var button = document.querySelector('nav.sports button[data-sport="' + key + '"]');
+    var button = document.querySelector('nav.sports button[data-sport="' + CSS.escape(key) + '"]');
     return button ? (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() : String(key).toLowerCase();
   }
 
