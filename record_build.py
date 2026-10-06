@@ -554,9 +554,6 @@ document.querySelector('#tabs button.on')?.click();
 </div></body></html>"""
 
 
-import site_root
-
-
 def build():
     fixtures = streaks_fetch.load_or_fetch()["fixtures"]
     ld = T.report(fixtures)
@@ -568,18 +565,12 @@ def build():
         rc = None
     fr = F.report(fixtures)
     bk = K.report(K.load())
-    now = datetime.datetime.now(datetime.timezone.utc).strftime("%b %d %Y · %H:%M UTC")
-
-    os.makedirs(OUT_DIR, exist_ok=True)
     # The Record page is HIDDEN since 2026-09-19: it mixed six unrelated tests on one ranked
-    # table and read as noise. page_html is kept so it can come back with one line. The
-    # site root is now a stub that sends visitors to the Sandbox and carries this run's
-    # "updated ... UTC" stamp — the backup watchdog reads that stamp off the root to know
-    # the boards pipeline deployed.
-    root = os.path.join(OUT_DIR, "index.html")
-    with open(root, "w") as f:
-        f.write(site_root.root_stub(now))
-    print(f"wrote {root} (root -> sandbox.html) — "
+    # table and read as noise. page_html is kept so it can come back with one line.
+    # index.html is the SofaScore shell. sandbox_build writes it in the same pass as
+    # production.html, and site_root.main copies that page's tiles and clock. This
+    # record pass does not stamp the shell with its own clock.
+    print(f"record pass does not write index.html — "
           f"leads {ld['graded']}, fire {fr['graded']}, book {bk['graded']} graded")
 
 

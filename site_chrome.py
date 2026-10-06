@@ -110,7 +110,7 @@ def stamp(when, machine=True):
     body = f'<time datetime="{esc(fmt.iso_z(when))}">{esc(visible)}</time>'
     if machine:
         # Lower-case "updated YYYY-MM-DD HH:MM UTC" is what page_freshness reads.
-        # The root stub leaves this off so a check pointed at it fails closed.
+        # The shell leaves this off so a check pointed at the root fails closed.
         body += f'<span class="sr-only">{esc(fmt.machine_stamp(when))}</span>'
     return body
 
