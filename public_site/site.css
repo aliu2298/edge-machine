@@ -1072,7 +1072,8 @@ nav.sports button[aria-disabled="true"]:focus {
 .rule-mini-edge,
 .rule-mini-verdict,
 .rule-mini-roi,
-.rule-mini-record {
+.rule-mini-record,
+.rule-mini-scope {
   margin: 0;
   overflow-wrap: anywhere;
 }
@@ -1107,6 +1108,7 @@ nav.sports button[aria-disabled="true"]:focus {
 .rule-mini-verdict,
 .rule-mini-roi,
 .rule-mini-record { font-size: 12px; color: var(--mut); }
+.rule-mini-scope { font-size: 11px; color: var(--mut); }
 .rule-mini-roi,
 .rule-mini-record { font-variant-numeric: tabular-nums; }
 @media (max-width: 800px) {

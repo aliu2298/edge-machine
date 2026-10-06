@@ -292,16 +292,43 @@ def _lane_from_lead(lead, settled_at=None):
     }
 
 
+def _settled_status(status):
+    """A graded result. Open and anything this map does not know are not graded."""
+    return status in ("W", "L", "Void", "price result")
+
+
 def _keeps(lane, now):
     if lane["status"] == "Open":
         return True
-    return _in_shell_window(lane.get("kickoff"), now)
+    kick = lane.get("kickoff")
+    # An unknown status is not a void and not a drop. A future kickoff stays
+    # on the list so it can sit in Upcoming; a past one uses the settled window.
+    if not _settled_status(lane.get("status")) and kick is not None and kick > now:
+        return True
+    return _in_shell_window(kick, now)
+
+
+def _contest_sides(lane):
+    """Home and away, or the two sides Production writes into the match title.
+
+    A Production lead's match is ``{home} v {away}`` whenever it has sides.
+    A second lead for that fixture can carry the title and not the sides.
+    Both have to share one key, or the contest splits into two rows.
+    """
+    home, away = lane.get("home"), lane.get("away")
+    if home and away:
+        return str(home).strip(), str(away).strip()
+    match = str(lane.get("match") or "")
+    parts = match.split(" v ")
+    if len(parts) == 2 and parts[0].strip() and parts[1].strip():
+        return parts[0].strip(), parts[1].strip()
+    return None, None
 
 
 def _contest_key(lane):
     day = production._chicago_day(lane.get("kickoff"))
     day_key = day.isoformat() if day is not None else ""
-    home, away = lane.get("home"), lane.get("away")
+    home, away = _contest_sides(lane)
     if home and away:
         sides = tuple(sorted((home.casefold(), away.casefold())))
         return ("sides", lane["sport"], sides, day_key)
@@ -311,6 +338,13 @@ def _contest_key(lane):
 def _contest_bucket(items, now):
     opens = [lane for lane in items if lane["status"] == "Open"]
     if not opens:
+        # No open bet. Graded bets are Settled. An unknown status follows
+        # its kickoff: still to come is Upcoming, already started is Settled.
+        future = [lane for lane in items
+                  if lane.get("kickoff") is not None and lane["kickoff"] > now
+                  and not _settled_status(lane.get("status"))]
+        if items and len(future) == len(items):
+            return "upcoming"
         return "settled"
     started = [lane for lane in opens
                if lane.get("kickoff") is not None and lane["kickoff"] <= now]
@@ -321,12 +355,13 @@ def _contest_bucket(items, now):
 
 # Visual token and spoken phrase for each bet status. W and L glue to the
 # count ("1W", "2L"); the words stay separate ("1 void", "1 open").
-_COMBO_ORDER = ("W", "L", "price result", "Void", "Open")
+_COMBO_ORDER = ("W", "L", "price result", "Void", "Awaiting result", "Open")
 _COMBO_TOKEN = {
     "W": "W",
     "L": "L",
     "price result": "price result",
     "Void": "void",
+    "Awaiting result": "awaiting",
     "Open": "open",
 }
 _SPOKEN = {
@@ -334,20 +369,23 @@ _SPOKEN = {
     "L": "lost",
     "price result": "price result",
     "Void": "void",
+    "Awaiting result": "awaiting result",
     "Open": "open",
 }
 
 
-def _status_face(items):
+def _status_face(items, statuses=None):
     """One contest row, one result line, counted per bet.
 
-    A single bet keeps its own label (W, L, Open, Void, price result). Several
-    bets add up: 2W, 1W 1L, 1W 1 void, 1L 1 open, 1W 1 price result. The
+    A single bet keeps its own label (W, L, Open, Void, price result,
+    Awaiting result). Several bets add up: 2W, 1W 1L, 1L 1 awaiting. The
     spoken line is what a screen reader should say instead of the letters.
+    `statuses` overrides each lane's stored status, so an open bet past the
+    await window can read Awaiting result without leaving the Live bucket.
     """
     counts = {}
-    for lane in items:
-        label = lane["status"]
+    labels = statuses if statuses is not None else [lane["status"] for lane in items]
+    for label in labels:
         counts[label] = counts.get(label, 0) + 1
     total = sum(counts.values())
     if total == 0:
@@ -473,9 +511,21 @@ def _bet_awaiting(lane, now):
         return False
 
 
+def _shown_status(lane, now):
+    """The status a card and the result line show.
+
+    An open bet past the await window stays in the Live bucket, but it no
+    longer reads Open. The lane's own status is left as Open so the bucket
+    still sees an open bet.
+    """
+    if _bet_awaiting(lane, now):
+        return "Awaiting result"
+    return lane.get("status") or "Unknown"
+
+
 def _contest_awaiting(items, now):
-    """Every bet on the contest is still ungraded, past the await window."""
-    return bool(items) and all(_bet_awaiting(lane, now) for lane in items)
+    """An open bet on the contest is past the await window."""
+    return any(_bet_awaiting(lane, now) for lane in items)
 
 
 def _price_text(items):
@@ -504,14 +554,36 @@ def _lane_name(source, sport_key):
 
 
 def _venue_name(venue):
-    """The venue badge, from the same source label the board prints. Omit if absent."""
+    """The venue badge, from the same source label the board prints. Omit if absent.
+
+    ``kalshi_binary`` is the ledger's name for a Kalshi yes/no contract. It is
+    not its own source. The board's Kalshi label is the one the badge uses.
+    """
     if venue is None or venue == "":
         return None
-    meta = S.SOURCES.get(str(venue)) or {}
+    key = "kalshi" if str(venue) == "kalshi_binary" else str(venue)
+    meta = S.SOURCES.get(key) or {}
     label = meta.get("label")
     if label:
         return str(label).split(" (")[0]
     return str(venue)
+
+
+def _quote_venues(d):
+    """Quote id to the venue on that paper-bet row. The feed lead often omits it."""
+    found = {}
+    if not isinstance(d, dict):
+        return found
+    try:
+        rows = T.bet_rows(d)
+    except (KeyError, TypeError):
+        return found
+    for quote in rows:
+        qid = quote.get("id")
+        venue = quote.get("venue")
+        if qid and venue and qid not in found:
+            found[qid] = str(venue)
+    return found
 
 
 def _edge_text(edge):
@@ -544,14 +616,14 @@ def _lane_board(d, st, pair_key, cache):
     try:
         group, assessed, _qa, _open_n, _last, _pair = sandbox_build.pair_status(
             d, st, source, sport)
-    except (KeyError, TypeError, ValueError, ZeroDivisionError, OverflowError, OSError):
+    except (KeyError, TypeError):
         return found
     if not isinstance(assessed, dict):
         return found
     try:
         key = sandbox_build.verdict(assessed) if group is not None else "nobets"
         found["verdict"] = sandbox_build.VERDICTS[key][0]
-    except (KeyError, TypeError, ValueError, ZeroDivisionError, OverflowError, OSError):
+    except (KeyError, TypeError):
         found["verdict"] = None
     n = assessed.get("n")
     if not n:
@@ -618,6 +690,10 @@ def _card(lane, board):
         card["roi"] = board["roi"]
     if board.get("record"):
         card["record"] = board["record"]
+    # The numbers are the pair's whole Sandbox record, every competition
+    # together. The sport page splits that same record by competition.
+    if board.get("verdict") or board.get("roi") or board.get("record"):
+        card["stats_note"] = "Sandbox, all competitions"
     return card
 
 
@@ -632,6 +708,7 @@ def contests_from_lanes(lanes, now, d=None, st=None):
     for lane in lanes:
         grouped.setdefault(_contest_key(lane), []).append(lane)
     cache = {}
+    venues = _quote_venues(d)
     contests = []
     for items in grouped.values():
         items.sort(key=lambda lane: (
@@ -643,17 +720,26 @@ def contests_from_lanes(lanes, now, d=None, st=None):
                       default=None)
         rep = next((lane for lane in items if lane["status"] == "Open"), items[0])
         competition = next((lane["competition"] for lane in items if lane.get("competition")), "")
+        for lane in items:
+            if not lane.get("venue"):
+                venue = venues.get(lane.get("quote_id"))
+                if venue:
+                    lane["venue"] = venue
         bucket = _contest_bucket(items, now)
-        awaiting = bucket == "live" and _contest_awaiting(items, now)
-        if awaiting:
+        shown = [_shown_status(lane, now) for lane in items]
+        awaiting = bucket == "live" and any(text == "Awaiting result" for text in shown)
+        if shown and all(text == "Awaiting result" for text in shown):
             face = {"visual": "Awaiting result", "spoken": "awaiting result", "data": "awaiting"}
         else:
-            face = _status_face(items)
+            face = _status_face(items, shown)
         bets = [
             {"status": lane["status"], "price": lane.get("price"), "pair": lane.get("pair")}
             for lane in items
         ]
-        cards = [_card(lane, _lane_board(d, st, lane.get("pair"), cache)) for lane in items]
+        cards = [
+            _card(dict(lane, status=text), _lane_board(d, st, lane.get("pair"), cache))
+            for lane, text in zip(items, shown)
+        ]
         contests.append({
             "sport": items[0]["sport"] or "Other",
             "match": rep.get("match") or items[0].get("match") or "",
@@ -796,6 +882,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <div class="rules-head" id="rules-head" hidden>
 <p class="rules-line" id="rules-line"></p>
 </div>
+<p class="sr-only" id="rules-live" aria-live="polite"></p>
 <h3 class="rules-section" id="rules-section" hidden></h3>
 <div class="rules-cards" id="rules-cards" hidden></div>
 <p class="shell-empty" id="rules-empty">Select a contest in Running.</p>

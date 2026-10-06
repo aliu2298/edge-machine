@@ -226,24 +226,25 @@ ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption
    "the Settled filter's described-by is the caption")
 
 
-def _face_leads(pairs):
+def _face_leads(pairs, kickoff="2026-10-04T15:00:00Z"):
     leads = []
     for i, item in enumerate(pairs):
         status, pair = item[0], item[1]
         price = item[2] if len(item) > 2 else 0.5
         leads.append(_lead(
-            f"mix-{i}", "Kazakhstan", "Faroe Islands", "2026-10-04T15:00:00Z",
+            f"mix-{i}", "Kazakhstan", "Faroe Islands", kickoff,
             status, pair, "soccer", price, "UEFA Nations League"))
     return leads
 
 
-def _face_page(pairs):
+def _face_page(pairs, kickoff="2026-10-04T15:00:00Z"):
     return _rows(shell_build.page(
-        NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(_face_leads(pairs))))
+        NOW, d={"quotes": []}, st={"pairs": {}},
+        blob=_blob(_face_leads(pairs, kickoff))))
 
 
-def _face_contests(pairs):
-    blob = _blob(_face_leads(pairs))
+def _face_contests(pairs, kickoff="2026-10-04T15:00:00Z"):
+    blob = _blob(_face_leads(pairs, kickoff))
     return shell_build.contests_from_lanes(
         shell_build.collect_lanes({"quotes": []}, {"pairs": {}}, blob, NOW), NOW)
 
@@ -271,6 +272,9 @@ def _subset_gaps(contests, entries):
         open_bet = any(bet.get("status") == "Open" for bet in contest["bets"])
         if contest["bucket"] == "live" and open_bet:
             continue
+        if not open_bet and contest["bucket"] != "settled":
+            gaps.append((match, status, cents))
+            continue
         found = next((i for i, bet in enumerate(contest["bets"])
                       if bet["status"] == status and shell_build._cents(bet["price"]) == cents),
                      None)
@@ -282,9 +286,10 @@ def _subset_gaps(contests, entries):
 
 
 def _bet_labels(visual):
-    if visual in ("W", "L", "Open", "Void", "price result"):
+    if visual in ("W", "L", "Open", "Void", "price result", "Awaiting result"):
         return [visual]
-    labels = {"W": "W", "L": "L", "price result": "price result", "void": "Void", "open": "Open"}
+    labels = {"W": "W", "L": "L", "price result": "price result", "void": "Void",
+              "open": "Open", "awaiting": "Awaiting result"}
     out = []
     rest = visual
     while rest:
@@ -292,7 +297,7 @@ def _bet_labels(visual):
         if not rest:
             break
         matched = re.match(r"(\d+)(W|L)(?![A-Za-z])", rest) or re.match(
-            r"(\d+) (price result|void|open)(?![A-Za-z])", rest)
+            r"(\d+) (price result|void|open|awaiting)(?![A-Za-z])", rest)
         if not matched:
             raise AssertionError(visual)
         out.extend([labels[matched.group(2)]] * int(matched.group(1)))
@@ -322,8 +327,42 @@ eq(_attr(kaz[0], "data-price"), "67¢ / 80¢",
 ok(all(shell_build._cents(bet["price"]) in _attr(kaz[0], "data-price")
        for bet in kaz_contest[0]["bets"]),
    "every Kazakhstan bet's cents is on the row")
-ok("Halfmatch v Teams" not in PAGE,
-   "the duplicate Halfmatch v Teams fixture row is not on the list")
+# One fixture, two lead ids. One lead has sides; the other has only the
+# match title Production writes as "{home} v {away}". They are one row.
+half_kick = "2026-10-04T15:00:00Z"
+half_sided = _lead("half-sides", "Halfmatch", "Teams", half_kick, "hit",
+                   "a|soccer", "soccer", 0.41)
+half_title = {
+    "id": "half-title",
+    "match": "Halfmatch v Teams",
+    "headline": "Over 1.5 goals",
+    "kickoff": half_kick,
+    "status": "miss",
+    "pair": "b|soccer",
+    "sport": "soccer",
+    "lane": "production",
+    "price_at_log": 0.62,
+    "league": "League",
+    "source": "b",
+    "sandbox_quote": "half-title",
+}
+half_blob = _blob([half_sided, half_title])
+half_rows = _rows(shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}}, blob=half_blob))
+half_named = [row for row in half_rows if _attr(row, "data-name") == "Halfmatch v Teams"]
+eq(len(half_named), 1, "two leads for Halfmatch v Teams, with different ids, are one row")
+ok(">1W 1L</span>" in half_named[0], "that fixture's win and loss render as 1W 1L")
+half_contests = shell_build.contests_from_lanes(
+    shell_build.collect_lanes({"quotes": []}, {"pairs": {}}, half_blob, NOW), NOW)
+eq(len(half_contests), 1, "the title-only lead shares the sided lead's contest key")
+eq(sorted(bet["status"] for bet in half_contests[0]["bets"]), ["L", "W"],
+   "both Halfmatch bets are on that one contest")
+other_day = dict(half_title, id="half-other-day", kickoff="2026-10-02T15:00:00Z",
+                 status="hit", sandbox_quote="half-other-day")
+apart = shell_build.contests_from_lanes(
+    shell_build.collect_lanes({"quotes": []}, {"pairs": {}},
+                              _blob([half_sided, other_day]), NOW), NOW)
+eq(len(apart), 2, "the same sides on another day stay two contests")
 eq(_bet_labels("1W 1L"), ["W", "L"],
    "1W 1L is two bets, so a row compare would miss one (the 20 vs 19 gap)")
 eq(len(_bet_labels("1W 1L")), 2, "the two Kazakhstan bets both count")
@@ -337,10 +376,11 @@ win_price = _face_page([("hit", "a|soccer"), ("price", "b|soccer")])
 ok(">1W 1 price result</span>" in win_price[0] and "1 won, 1 price result" in win_price[0],
    "a win and a price result both show")
 loss_pairs = [("miss", "a|soccer", 0.33), ("pending", "b|soccer", 0.44)]
-loss_open = _face_page(loss_pairs)
+# Inside the six-hour window, so the open bet still reads Open.
+loss_open = _face_page(loss_pairs, kickoff="2026-10-05T14:00:00Z")
 ok(">1L 1 open</span>" in loss_open[0] and "1 lost, 1 open" in loss_open[0],
    "a settled bet and an open bet both show")
-loss_contest = _face_contests(loss_pairs)
+loss_contest = _face_contests(loss_pairs, kickoff="2026-10-05T14:00:00Z")
 eq(loss_contest[0]["bucket"], "live",
    "one open bet past kickoff makes the contest Live, even with a settled bet beside it")
 eq(_attr(loss_open[0], "data-filter"), "live", "that one-open/one-settled row is Live")
@@ -373,6 +413,22 @@ eq(_subset_gaps(
     [("Finished v Pair", "W", "99¢")]),
    [],
    "a Live contest with an actual open bet stays exempt")
+_matched_live = {
+    "match": "Finished v Pair",
+    "bucket": "live",
+    "bets": [
+        {"status": "W", "price": 0.50, "pair": "a|soccer"},
+        {"status": "L", "price": 0.40, "pair": "b|soccer"},
+    ],
+}
+eq(_subset_gaps([_matched_live], [("Finished v Pair", "W", "50¢")]),
+   [("Finished v Pair", "W", "50¢")],
+   "a finished contest marked Live is a gap even when its price matches")
+_done = _face_contests([("hit", "a|soccer", 0.50), ("miss", "b|soccer", 0.40)])
+eq(_done[0]["bucket"], "settled",
+   "two settled Production bets are Settled, not Live")
+eq(_subset_gaps(_done, [("Kazakhstan v Faroe Islands", "W", "50¢")]), [],
+   "those settled bets are checked rather than skipped")
 
 print("\nempty filter and quote window")
 empty = shell_build.page(
@@ -972,6 +1028,15 @@ _model = shell_build.contests_from_lanes(
     _when)
 eq(_subset_gaps(_model, _priced_entries), [],
    "each production recent bet matches its own status and price; Live contests are exempt")
+for _contest in _model:
+    _open = any(bet.get("status") == "Open" for bet in _contest["bets"])
+    _graded = _contest["bets"] and all(
+        bet.get("status") in ("W", "L", "Void", "price result") for bet in _contest["bets"])
+    if _graded:
+        eq(_contest["bucket"], "settled",
+           f"{_contest['match']} has no open bet, so it is Settled")
+    elif _contest["bucket"] == "live":
+        ok(_open, f"{_contest['match']} is Live only while a bet is still open")
 _by_model = {contest["match"]: contest for contest in _model}
 _html_settled = {}
 for _row in _committed_rows:
@@ -980,7 +1045,9 @@ for _row in _committed_rows:
 _required = 0
 for _name, _status, _cents in _priced_entries:
     _contest = _by_model.get(_name)
-    if _contest is not None and _contest["bucket"] == "live":
+    _open = _contest is not None and any(
+        bet.get("status") == "Open" for bet in _contest["bets"])
+    if _contest is not None and _contest["bucket"] == "live" and _open:
         continue
     _required += 1
     _hits = _html_settled.get(_name, [])

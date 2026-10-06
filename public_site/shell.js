@@ -30,6 +30,11 @@
     if (link) link.setAttribute("href", "./production.html");
   }
 
+  function announce(text) {
+    var live = document.getElementById("rules-live");
+    if (live) live.textContent = text || "";
+  }
+
   function clearSelection() {
     Array.prototype.forEach.call(rows(), function (row) {
       row.setAttribute("aria-pressed", "false");
@@ -43,6 +48,7 @@
     if (head) head.hidden = true;
     if (empty) empty.hidden = false;
     clearCards();
+    announce("Select a contest in Running.");
   }
 
   function readCards(row) {
@@ -66,7 +72,8 @@
   function addStatus(parent, card) {
     var status = document.createElement("p");
     status.className = "running-status";
-    if (card.status) status.setAttribute("data-status", card.status);
+    var token = card.status === "Awaiting result" ? "awaiting" : card.status;
+    if (token) status.setAttribute("data-status", token);
     var visual = document.createElement("span");
     visual.setAttribute("aria-hidden", "true");
     visual.textContent = card.status || "";
@@ -127,11 +134,15 @@
       addStatus(article, card);
       if (card.edge) addLine(article, "rule-mini-edge", card.edge + " edge");
       if (card.verdict) addLine(article, "rule-mini-verdict", card.verdict);
-      if (card.roi) addLine(article, "rule-mini-roi", card.roi + " ROI after fees");
-      if (card.record) addLine(article, "rule-mini-record", card.record + " record");
+      if (card.roi) addLine(article, "rule-mini-roi", card.roi + " Sandbox ROI after fees");
+      if (card.record) addLine(article, "rule-mini-record", card.record + " Sandbox record");
+      if (card.stats_note) addLine(article, "rule-mini-scope", card.stats_note);
       host.appendChild(article);
     });
     host.hidden = n === 0;
+    if (window.matchMedia("(max-width: 640px)").matches && section && section.scrollIntoView) {
+      section.scrollIntoView({ block: "start" });
+    }
     var link = fullPage();
     if (link) {
       var page = row.getAttribute("data-page") || "./production.html";
@@ -168,6 +179,10 @@
   }
 
   function select(row) {
+    if (row.getAttribute("aria-pressed") === "true") {
+      clearSelection();
+      return;
+    }
     Array.prototype.forEach.call(rows(), function (other) {
       other.setAttribute("aria-pressed", other === row ? "true" : "false");
       other.removeAttribute("aria-selected");
@@ -177,9 +192,11 @@
     var line = document.getElementById("rules-line");
     var empty = document.getElementById("rules-empty");
     if (!head || !line) return;
-    line.textContent = ["data-competition", "data-sport", "data-name", "data-kickoff", "data-price"]
+    var text = ["data-competition", "data-sport", "data-name", "data-kickoff", "data-price"]
       .map(function (attr) { return row.getAttribute(attr) || "—"; })
       .join(" · ");
+    line.textContent = text;
+    announce(text);
     head.hidden = false;
     if (empty) empty.hidden = true;
     renderCards(row);
@@ -201,9 +218,18 @@
       select(row);
     });
     row.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        if (row.getAttribute("aria-pressed") === "true") clearSelection();
+        return;
+      }
       if (event.key !== "Enter" && event.key !== " " && event.key !== "Spacebar") return;
       event.preventDefault();
       select(row);
     });
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    var selected = document.querySelector('.running-row[aria-pressed="true"]');
+    if (selected) clearSelection();
   });
 })();
