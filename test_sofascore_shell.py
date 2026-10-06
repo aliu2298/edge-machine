@@ -160,12 +160,15 @@ def _check_chrome(html, why, placeholders=True):
     ok("<a " not in sports, f"{why} sport pills do not navigate")
     ok('data-sport="crypto"' in sports and "trading.html" not in sports,
        f"{why} Crypto is a sport pill, not the Trading page")
-    eq(sports.count('aria-disabled="true"'), 6, f"{why} sport pills are aria-disabled")
-    eq(sports.count('tabindex="-1"'), 6, f"{why} sport pills are not in the tab order")
-    ok('aria-pressed' not in sports, f"{why} sport pills are not toggles")
-    ok('aria-describedby="sports-soon"' in sports, f"{why} sport pills describe Coming soon")
-    ok('id="sports-soon"' in html and ">Coming soon</p>" in html,
-       f"{why} shows a Coming soon note")
+    ok('aria-disabled' not in sports and 'tabindex="-1"' not in sports,
+       f"{why} sport pills are enabled and in the tab order")
+    eq(sports.count('aria-pressed="true"'), 1, f"{why} exactly one sport pill is pressed")
+    ok('data-sport="all" aria-pressed="true"' in sports,
+       f"{why} All starts pressed")
+    eq(sports.count('aria-pressed="false"'), 5, f"{why} the other sport pills are not pressed")
+    ok('aria-describedby="sports-soon"' not in sports and 'id="sports-soon"' not in html
+       and ">Coming soon</p>" not in html,
+       f"{why} has no Coming soon note")
     ok('data-filter="live"' in html and 'data-filter="settled"' in html
        and 'data-filter="upcoming"' in html,
        f"{why} has Live / Settled / Upcoming filters")
@@ -356,43 +359,59 @@ def _browser():
                "desktop shows the empty detail pane and no History tab")
             ok(wide["bg"] in ("rgb(11, 12, 15)", "rgb(11, 13, 16)"),
                f"desktop background stays dark ({wide['bg']})")
+            page.mouse.move(0, 0)
             sports = page.evaluate("""() => {
               const buttons = [...document.querySelectorAll("nav.sports button")];
               const note = document.getElementById("sports-soon");
               const nav = document.querySelector("nav.sports");
               const fg = getComputedStyle(document.body).color;
-              const sample = buttons[0];
-              const style = getComputedStyle(sample);
-              const nr = note.getBoundingClientRect();
-              const vr = nav.getBoundingClientRect();
-              document.querySelector("a.skip").focus();
+              const pressed = buttons.filter((b) => b.getAttribute("aria-pressed") === "true");
+              const idle = buttons.find((b) => b.getAttribute("data-sport") === "tennis");
+              const all = buttons.find((b) => b.getAttribute("data-sport") === "all");
+              const allStyle = getComputedStyle(all);
+              const idleStyle = getComputedStyle(idle);
               return {
                 n: buttons.length,
-                disabled: buttons.every((b) => b.getAttribute("aria-disabled") === "true"
-                  && b.tabIndex < 0
-                  && b.getAttribute("aria-describedby") === "sports-soon"),
-                note: note.textContent.trim(),
-                noteSeen: nr.width > 0 && nr.height > 0 && nr.top < vr.bottom + 8,
-                described: nav.getAttribute("aria-describedby") === "sports-soon",
-                cursor: style.cursor,
-                muted: style.color !== fg,
-                bg: style.backgroundColor,
+                labels: buttons.map((b) => b.textContent.trim()),
+                disabled: buttons.some((b) => b.getAttribute("aria-disabled") === "true"
+                  || b.tabIndex < 0),
+                pressed: pressed.map((b) => b.getAttribute("data-sport")),
+                note: note ? note.textContent.trim() : "",
+                described: nav.getAttribute("aria-describedby"),
+                cursor: allStyle.cursor,
+                allColor: allStyle.color,
+                idleColor: idleStyle.color,
+                fg: fg,
+                allBg: allStyle.backgroundColor,
+                idleBg: idleStyle.backgroundColor,
                 hrefs: [...document.querySelectorAll("nav.main a")].map((a) => a.getAttribute("href")),
               };
             }""")
-            focused = []
-            for _ in range(8):
+            page.locator("a.brand").focus()
+            for _ in range(5):
                 page.keyboard.press("Tab")
-                focused.append(page.evaluate(
-                    "() => document.activeElement && document.activeElement.getAttribute('data-sport')"))
-            ok(sports["n"] == 6 and sports["disabled"] and sports["described"]
-               and sports["note"] == "Coming soon" and sports["noteSeen"]
-               and sports["cursor"] == "default" and sports["muted"]
-               and sports["bg"] in ("transparent", "rgba(0, 0, 0, 0)")
+            focused = page.evaluate("""() => {
+              const el = document.activeElement;
+              const style = getComputedStyle(el);
+              return {
+                sport: el && el.getAttribute("data-sport"),
+                tag: el && el.tagName,
+                outline: style.outlineStyle,
+                width: style.outlineWidth,
+              };
+            }""")
+            ok(sports["n"] == 6 and sports["labels"] == ["All", "NBA", "Soccer", "Tennis", "Cricket", "Crypto"]
+               and not sports["disabled"] and sports["pressed"] == ["all"]
+               and sports["note"] == "" and not sports["described"]
+               and sports["cursor"] == "pointer" and sports["allColor"] == sports["fg"]
+               and sports["idleColor"] != sports["fg"]
+               and sports["allBg"] not in ("transparent", "rgba(0, 0, 0, 0)")
+               and sports["idleBg"] in ("transparent", "rgba(0, 0, 0, 0)")
                and sports["hrefs"] == ["./sandbox.html", "./production.html",
                                         "./trading.html", "./sandbox.html#method"]
-               and all(item is None for item in focused),
-               f"sport pills are inert and page pills stay links ({sports}, focus {focused})")
+               and focused["sport"] == "all" and focused["tag"] == "BUTTON"
+               and focused["outline"] == "solid" and focused["width"] == "3px",
+               f"sport pills filter in place and page pills stay links ({sports}, focus {focused})")
             page.click('nav.main a[href="./sandbox.html"]')
             page.wait_for_url("**/sandbox.html")
             ok(page.url.endswith("sandbox.html"),

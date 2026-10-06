@@ -596,6 +596,12 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     flex-wrap: nowrap;
     align-items: center;
   }
+  /* Open & recent sits above this bar and scrolls off. A short root page
+     can be shorter than the screen plus that strip, so the bar never
+     reaches the top. Keep enough scroll for the strip to leave. */
+  body:has(.bet-roll) {
+    min-height: calc(100vh + 72px);
+  }
   .brand { flex: 0 0 auto; font-size: 16px; line-height: 44px; }
   .stamp { display: none; }
   nav.main {
@@ -931,6 +937,10 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   background: var(--raised);
   box-shadow: inset 3px 0 0 var(--acc);
 }
+/* Other sports stay in the roll. Dimmed, still readable, still a button. */
+.bet-chip[data-dimmed="true"] {
+  opacity: 0.62;
+}
 .sport-row {
   display: flex;
   flex-wrap: wrap;
@@ -974,6 +984,13 @@ nav.sports button[aria-disabled="true"]:focus {
   color: #6d7380;
   border-color: #3a3e48;
   background: transparent;
+}
+nav.sports button:hover {
+  color: var(--fg);
+}
+nav.sports button[aria-pressed="true"] {
+  color: var(--fg);
+  background: var(--raised);
 }
 .sports-soon {
   margin: 0;
@@ -1269,7 +1286,8 @@ nav.sports a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--acc); }
 @media (max-width: 640px) {
   .matchup-grid { grid-template-columns: minmax(0, 1fr); }
   .team-abbr, .expect-title { font-size: 24px; }
-  nav.sports a { min-height: 44px; }
+  nav.sports a,
+  nav.sports button { min-height: 44px; }
 }
 
 /* data-pct is the bar's share of the page's own min-to-max. */

@@ -1,8 +1,8 @@
 """The SofaScore-style shell.
 
 The site root lands here with Production selected. Page pills go to the
-existing Sandbox, Production, Trading, and Method pages. Sport pills stay
-inert: they do not filter, navigate, or take focus.
+existing Sandbox, Production, Trading, and Method pages. Sport pills filter
+the Running list in place. They do not navigate, and All starts pressed.
 
 Running rows are presentation. They reuse the Production feed and the same
 quote gates that feed already uses. They do not settle, assess, or rewrite a
@@ -138,12 +138,13 @@ def _page_pills():
 
 
 def _sport_pills():
-    """Inert chrome. aria-disabled and out of the tab order, not a filter."""
+    """Filter the Running list. All starts pressed. The choice is not stored."""
     parts = []
     for key, label in SPORTS:
+        pressed = "true" if key == "all" else "false"
         parts.append(
             f'<button type="button" data-sport="{site_chrome.esc(key)}" '
-            f'aria-disabled="true" tabindex="-1" aria-describedby="sports-soon">'
+            f'aria-pressed="{pressed}">'
             f'{site_chrome.esc(label)}</button>')
     return "".join(parts)
 
@@ -990,8 +991,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <p class="stamp">{_stamp(now)}</p>
 </div>
 <div class="sport-row">
-<nav class="sports" aria-label="Sports" aria-describedby="sports-soon">{_sport_pills()}</nav>
-<p id="sports-soon" class="sports-soon">Coming soon</p>
+<nav class="sports" aria-label="Sports">{_sport_pills()}</nav>
 </div>
 </header>
 <main id="content" class="wrap">
@@ -1008,7 +1008,8 @@ def sport_board(active, title, description, stamp_html, body):
     """A sport page in the same dark shell as the site root.
 
     Page pills match the root. None of them is the current page: the sport
-    tab is. The other sport pills stay inert, the way they are on the root.
+    tab is. The other sport pills stay inert. The root's pills filter
+    Running; these do not.
     No bet roll and no ledger read, so the page does not change when the
     Production feed does.
     """

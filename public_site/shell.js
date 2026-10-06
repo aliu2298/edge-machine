@@ -1,7 +1,9 @@
-// Running filters show one bucket of the rows already on the page. They do not
-// fetch bets or leave the page. Sport pills stay aria-disabled chrome; this
-// file does not arm them. A chip can still clear a sport filter that is
-// hiding its contest, then press that contest's row. Rows and chips are
+// Running filters and sport pills show a subset of the rows already on the
+// page. They do not fetch bets or leave the page, and they store nothing.
+// All starts pressed. One sport hides the other groups and recounts Live,
+// Settled, and Upcoming. A chip for another sport switches that pill (or
+// All, when the row's sport is not one of the pills) so the contest can
+// show, then presses that contest's row. Rows, chips, and sport pills are
 // plain buttons: each is its own tab stop, and Enter, Space, or a click
 // presses one. The pressed row's card payload was embedded at build time.
 // This file only reads attributes and writes text.
@@ -204,10 +206,66 @@
     return pressed ? pressed.getAttribute("data-filter") : "live";
   }
 
-  function setSportFilter(name) {
+  function syncSportPressed(name) {
     var nav = sportsNav();
-    if (nav) nav.setAttribute("data-sport-filter", name || "all");
+    if (!nav) return;
+    Array.prototype.forEach.call(nav.querySelectorAll("button[data-sport]"), function (btn) {
+      btn.setAttribute("aria-pressed", btn.getAttribute("data-sport") === name ? "true" : "false");
+    });
+  }
+
+  function refreshCounts() {
+    var counts = { live: 0, settled: 0, upcoming: 0 };
+    Array.prototype.forEach.call(rows(), function (row) {
+      if (!sportAllows(row)) return;
+      var bucket = row.getAttribute("data-filter");
+      if (Object.prototype.hasOwnProperty.call(counts, bucket)) counts[bucket] += 1;
+    });
+    var bar = document.querySelector(".running-filters");
+    if (!bar) return;
+    Array.prototype.forEach.call(bar.querySelectorAll("button"), function (btn) {
+      var span = btn.querySelector(".count");
+      var key = btn.getAttribute("data-filter");
+      if (span && Object.prototype.hasOwnProperty.call(counts, key)) {
+        span.textContent = String(counts[key]);
+      }
+    });
+  }
+
+  function syncChipDim() {
+    Array.prototype.forEach.call(chips(), function (chip) {
+      var row = rowForChip(chip);
+      var dim = sportFilter() !== "all" && !!row && !sportAllows(row);
+      if (dim) chip.setAttribute("data-dimmed", "true");
+      else chip.removeAttribute("data-dimmed");
+      var note = chip.querySelector(".chip-filter-note");
+      if (dim) {
+        if (!note) {
+          note = document.createElement("span");
+          note.className = "sr-only chip-filter-note";
+          chip.appendChild(note);
+        }
+        note.textContent = "other sport";
+      } else if (note && note.parentNode) {
+        note.parentNode.removeChild(note);
+      }
+    });
+  }
+
+  function setSportFilter(name) {
+    name = name || "all";
+    var nav = sportsNav();
+    if (nav) nav.setAttribute("data-sport-filter", name);
+    syncSportPressed(name);
     apply(currentBucket());
+  }
+
+  function pressSport(name) {
+    var previous = document.querySelector('.running-row[aria-pressed="true"]');
+    setSportFilter(name || "all");
+    if (!previous || !previous.hidden) return;
+    var next = document.querySelector(".running-row:not([hidden])");
+    if (next) select(next, true);
   }
 
   function apply(name) {
@@ -235,6 +293,8 @@
     if (caption) caption.hidden = name !== "settled";
     var selected = document.querySelector('.running-row[aria-pressed="true"]');
     if (selected && selected.hidden) clearSelection();
+    refreshCounts();
+    syncChipDim();
   }
 
   function select(row, force) {
@@ -295,6 +355,16 @@
     });
     var pressed = bar.querySelector('[aria-pressed="true"]');
     apply(pressed ? pressed.getAttribute("data-filter") : "live");
+  }
+
+  var sports = sportsNav();
+  if (sports) {
+    syncSportPressed(sportFilter());
+    Array.prototype.forEach.call(sports.querySelectorAll("button[data-sport]"), function (btn) {
+      btn.addEventListener("click", function () {
+        pressSport(btn.getAttribute("data-sport"));
+      });
+    });
   }
 
   function bindPress(el, press) {
