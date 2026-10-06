@@ -61,6 +61,28 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # actions/checkout with no ref checks out github.sha. That SHA is fixed
+      # when the run is created, and this job may have been queued behind
+      # another refresh-boards run (cancel-in-progress is false). A cron run
+      # created during the crypto-window push run would otherwise grade a
+      # ledger that does not contain the push run's rows. Fetch the tip now:
+      # the previous job in the group has finished, including its push.
+      #
+      # Skipped unless the event ref is main. workflow_dispatch from another
+      # branch keeps the default checkout of that branch's event SHA, on a
+      # local branch of that name. The commit step pushes the local main ref,
+      # which that checkout does not create, so the dispatch still does not
+      # publish that branch's tree to main. Do not point this checkout at
+      # main, and do not push HEAD:main.
+      - name: Start from the main tip
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          git reset --hard origin/main
+          test "$(git rev-parse --abbrev-ref HEAD)" = "main"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
@@ -215,23 +237,35 @@ jobs:
               exit 0
             fi
 
-            # A rejection here means refresh-boards published while this run was working.
-            # Rebase, do NOT reset: unlike the boards, this ledger is not derivable from
-            # anything — it is the only record of what each source said and when, and a
-            # reset would silently throw away calls that have already been graded. The
-            # rebase is safe because refresh-boards does not write the ledger or these
-            # pages. index.html is written in this build, beside production.html, and
-            # refresh-boards does not stage it. Takeover may republish the shell by
-            # copying this page's tiles; it does not count them again. Nothing else
-            # touches sandbox.html, production.html, sandbox_ledger.json, stages.json or sandbox_archive/.
+            # A rejection here means something else published while this run was
+            # working. Rebase, do NOT reset: unlike the boards, this ledger is
+            # not derivable from anything — it is the only record of what each
+            # source said and when, and a reset would throw away calls that
+            # have already been graded. refresh-boards writes
+            # data/sandbox_closes/boards.json only and does not stage
+            # index.html. The close job and the watchdog write their own files
+            # under data/sandbox_closes/. Those commits rebase cleanly.
+            # Takeover may republish the shell by copying this page's tiles; it
+            # does not count them again, and it shares this concurrency group
+            # so it is not pushing while this job holds the group.
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
-            # -X theirs: on a conflict, keep THIS run's copy (during a rebase "theirs" is the
-            # commit being replayed). The pages are regenerated from this run's ledger, and a
-            # hand-built copy pushed from a laptop mid-run made the rebase stop and the run lose
-            # its promotions (2026-09-16 22:08).
-            # --autostash: anything still dirty outside the data list (public_site is already
-            # restored above) must not make this rebase refuse.
-            git pull --rebase --autostash -X theirs origin main
+            # No strategy option on the rebase. Preferring the commit being
+            # replayed keeps this run's copy of every conflicting hunk. That
+            # used to let a hand-built page from a laptop through instead of
+            # stopping the rebase and losing this run's promotions (2026-09-16
+            # 22:08). The same preference also resolves a ledger conflict: two
+            # tracker commits from one base both append quotes and grades in
+            # that hunk, the rebase succeeds with valid JSON, and the other
+            # run's rows are gone. A conflict now fails the push. The next run
+            # starts from the main tip above and logs again.
+            # --autostash: anything still dirty outside the data list
+            # (public_site is already restored above) must not make this rebase
+            # refuse.
+            if ! git pull --rebase --autostash origin main; then
+              git rebase --abort 2>/dev/null || echo "rebase was not left in progress"
+              echo "::error::rebase onto origin/main conflicted; refusing to drop the other side's rows"
+              exit 1
+            fi
           done
           echo "::error::could not push the ledger after 3 attempts"
           exit 1
