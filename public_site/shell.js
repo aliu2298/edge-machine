@@ -1,9 +1,24 @@
 // Running filters show one bucket of the rows already on the page. They do not
 // fetch bets or leave the page. Sport pills are aria-disabled chrome; this
-// file does not arm them.
+// file does not arm them. Rows are plain buttons: each is its own tab stop,
+// and Enter, Space, or a click presses one.
 (function () {
   function rows() {
     return document.querySelectorAll(".running-row");
+  }
+
+  function clearSelection() {
+    Array.prototype.forEach.call(rows(), function (row) {
+      row.setAttribute("aria-pressed", "false");
+      row.removeAttribute("aria-selected");
+      row.removeAttribute("aria-current");
+    });
+    var head = document.getElementById("rules-head");
+    var line = document.getElementById("rules-line");
+    var empty = document.getElementById("rules-empty");
+    if (line) line.textContent = "";
+    if (head) head.hidden = true;
+    if (empty) empty.hidden = false;
   }
 
   function apply(name) {
@@ -22,18 +37,20 @@
       empty.textContent = empty.getAttribute("data-" + name) || "";
     }
     var bar = document.querySelector(".running-filters");
-    if (!bar) return;
-    Array.prototype.forEach.call(bar.querySelectorAll("button"), function (btn) {
-      btn.setAttribute("aria-pressed", btn.getAttribute("data-filter") === name ? "true" : "false");
-    });
+    if (bar) {
+      Array.prototype.forEach.call(bar.querySelectorAll("button"), function (btn) {
+        btn.setAttribute("aria-pressed", btn.getAttribute("data-filter") === name ? "true" : "false");
+      });
+    }
+    var selected = document.querySelector('.running-row[aria-pressed="true"]');
+    if (selected && selected.hidden) clearSelection();
   }
 
   function select(row) {
     Array.prototype.forEach.call(rows(), function (other) {
-      var on = other === row;
-      other.setAttribute("aria-selected", on ? "true" : "false");
-      if (on) other.setAttribute("aria-current", "true");
-      else other.removeAttribute("aria-current");
+      other.setAttribute("aria-pressed", other === row ? "true" : "false");
+      other.removeAttribute("aria-selected");
+      other.removeAttribute("aria-current");
     });
     var head = document.getElementById("rules-head");
     var line = document.getElementById("rules-line");

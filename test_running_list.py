@@ -126,7 +126,7 @@ LEADS = [
           "o15_ranked|soccer_o15_intl", "soccer_o15_intl", 0.61, "Nations League"),
     _lead("echo", "Echo", "Foxtrot", "2026-10-04T15:00:00Z", "hit",
           "oddspedia|cricket", "cricket", 0.48, "Big Bash"),
-    _lead("inside", "Inside", "Edge", "2026-09-22T18:00:00Z", "miss",
+    _lead("inside", "Inside", "Edge", "2026-10-01T18:00:00Z", "miss",
           "oddspedia|cricket", "cricket", 0.33, "Big Bash"),
     _lead("old", "Old", "Gone", "2026-09-21T18:00:00Z", "hit",
           "oddspedia|cricket", "cricket", 0.70, "Big Bash"),
@@ -142,8 +142,8 @@ LEADS = [
 PAGE = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(LEADS))
 ROWS = _rows(PAGE)
 
-eq(len(ROWS), 8, "one row per contest, with the 14-day-old contest left out")
-ok("Old v Gone" not in PAGE, "a contest settled 14 Chicago days ago is outside the window")
+eq(len(ROWS), 8, "one row per contest, with the contest outside the production window left out")
+ok("Old v Gone" not in PAGE, "a contest outside the production settled window is left out")
 ok(all("o15_ranked" not in row and "team1|cricket" not in row for row in ROWS),
    "rows do not print source ids")
 
@@ -239,19 +239,34 @@ upcoming_q = shell_build.page(NOW, d={"quotes": [
 eq(_rows(upcoming_q), [], "an upcoming quote stays off the list until the Production feed has it")
 
 kept = shell_build.page(NOW, d={"quotes": [
-    _quote("kept-q", "won", "2026-09-20T18:00:00+00:00",
-           settled="2026-09-28T18:00:00+00:00", price=0.41),
+    _quote("kept-q", "won", "2026-10-02T18:00:00+00:00",
+           settled="2026-10-02T20:00:00+00:00", price=0.41),
 ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
 kept_rows = _rows(kept)
-eq(len(kept_rows), 1, "a bet settled inside 14 days stays after the feed's shorter keep")
+eq(len(kept_rows), 1, "a settled quote inside the production window is a row")
 ok(">W</span>" in kept_rows[0], "that settled quote renders as W")
 eq(_attr(kept_rows[0], "data-price"), "41¢", "41% of a dollar is 41¢")
 
 dropped = shell_build.page(NOW, d={"quotes": [
     _quote("drop-q", "won", "2026-09-21T18:00:00+00:00",
-           settled="2026-09-21T18:00:00+00:00"),
+           settled="2026-09-28T18:00:00+00:00"),
 ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
-eq(_rows(dropped), [], "a bet settled 14 Chicago days ago is outside the window")
+eq(_rows(dropped), [], "a quote kicked off outside the production window is left out")
+import production
+saved_days = production.KEEP_SETTLED_DAYS
+try:
+    production.KEEP_SETTLED_DAYS = 1
+    ok(not shell_build._in_window(NOW - timedelta(days=2), NOW),
+       "shrinking production.KEEP_SETTLED_DAYS shrinks the shell window")
+    ok(shell_build._in_window(NOW - timedelta(hours=1), NOW),
+       "a kickoff inside the shrunk production window stays")
+finally:
+    production.KEEP_SETTLED_DAYS = saved_days
+ok(shell_build._in_window(NOW - timedelta(days=production.KEEP_SETTLED_DAYS), NOW),
+   "a kickoff exactly KEEP_SETTLED_DAYS ago stays, matching the feed")
+ok(not shell_build._in_window(
+    NOW - timedelta(days=production.KEEP_SETTLED_DAYS, seconds=1), NOW),
+   "a kickoff just older than KEEP_SETTLED_DAYS drops, matching the feed")
 
 sandbox_only = shell_build.page(NOW, d={"quotes": [
     _quote("sand-q", "open", "2026-10-05T12:00:00+00:00"),
@@ -430,6 +445,76 @@ ok('<div class="tile"><b>4</b><span>pairs in Production</span></div>' in taken,
 shutil.rmtree(take_dir, ignore_errors=True)
 
 
+print("\ntakeover does not rebuild Running from newer data")
+drift_dir = tempfile.mkdtemp(prefix="shell-drift-")
+drift_prod = os.path.join(drift_dir, "production.html")
+drift_index = os.path.join(drift_dir, "index.html")
+drift_blob = _blob([
+    _lead("soon", "Alpha", "Beta", "2026-10-06T15:00:00Z", "pending",
+          "oddspedia|cricket", "cricket", 0.61),
+])
+drift_prod_html, drift_index_html = sandbox_build.production_and_index(
+    NOW, {"quotes": []}, {"pairs": {
+        "oddspedia|cricket": {
+            "stage": "production",
+            "ready_at": "2026-09-27T00:00:00+00:00",
+            "since": "2026-09-01T00:00:00+00:00",
+            "by_hand": "2026-09-27",
+        },
+    }}, drift_blob)
+open(drift_prod, "w", encoding="utf-8").write(drift_prod_html)
+open(drift_index, "w", encoding="utf-8").write(drift_index_html)
+newer_blob = _blob([
+    _lead("soon", "Newer", "Data", "2026-10-06T15:00:00Z", "pending",
+          "oddspedia|cricket", "cricket", 0.22),
+])
+lane_calls = {"n": 0}
+real_collect = shell_build.collect_lanes
+
+
+def _count_lanes(*args, **kwargs):
+    lane_calls["n"] += 1
+    return real_collect(*args, **kwargs)
+
+
+saved_loaders = {
+    "collect": shell_build.collect_lanes,
+    "feed": production.load_feed,
+    "load": shell_build.T.load,
+    "stages": shell_build.T.load_stages,
+    "out": site_root.OUT,
+}
+shell_build.collect_lanes = _count_lanes
+production.load_feed = lambda *args, **kwargs: newer_blob
+shell_build.T.load = lambda *args, **kwargs: {"quotes": []}
+shell_build.T.load_stages = lambda *args, **kwargs: {"pairs": {}}
+site_root.OUT = drift_index
+try:
+    site_root.main()
+    matched = open(drift_index, encoding="utf-8").read()
+    eq(lane_calls["n"], 0, "a matching stamp does not rebuild Running")
+    ok("Alpha v Beta" in matched and "Newer v Data" not in matched,
+       "Running still names the production build, not the newer ledger")
+    tampered = matched.replace("2026-10-05T18:00:00Z", "2026-10-01T00:00:00Z", 1)
+    open(drift_index, "w", encoding="utf-8").write(tampered)
+    site_root.main()
+    copied = open(drift_index, encoding="utf-8").read()
+    eq(lane_calls["n"], 0, "a stamp mismatch still does not rebuild Running")
+    ok("Alpha v Beta" in copied and "Newer v Data" not in copied,
+       "the copied Running block is still the tracker block")
+    ok("2026-10-05T18:00:00Z" in _stamp(copied),
+       "the copied shell takes production.html's clock")
+    ok("2026-10-01T00:00:00Z" not in _stamp(copied),
+       "the copied shell does not keep the stale index clock")
+finally:
+    shell_build.collect_lanes = saved_loaders["collect"]
+    production.load_feed = saved_loaders["feed"]
+    shell_build.T.load = saved_loaders["load"]
+    shell_build.T.load_stages = saved_loaders["stages"]
+    site_root.OUT = saved_loaders["out"]
+    shutil.rmtree(drift_dir, ignore_errors=True)
+
+
 print("\nrecord_build does not stamp index.html")
 import book_track
 import fire_track
@@ -507,6 +592,23 @@ ok('class="rule-mini"' not in _committed, "committed index.html has no rule card
 _prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
 eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
+_RESULT = {"landed": "W", "missed": "L", "paid": "price result"}
+_recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
+_prod_settled = [
+    (html_lib.unescape(name), _RESULT[status])
+    for name, status in re.findall(
+        r'data-l="Match">([^<]*)</td>.*?data-l="Result"><span class="[^"]*">([^<]+)</span>',
+        _recent, re.S)
+]
+_shell_settled = [
+    (html_lib.unescape(name), html_lib.unescape(status))
+    for name, status in re.findall(
+        r'data-filter="settled"[^>]*data-name="([^"]*)"[^>]*>.*?'
+        r'<span class="running-status"[^>]*>([^<]+)</span>',
+        _committed, re.S)
+]
+eq(sorted(_shell_settled), sorted(_prod_settled),
+   "committed Settled rows match production.html's recent settled leads")
 
 
 def _browser():
@@ -572,49 +674,83 @@ def _browser():
                    and upcoming_off and all(row["display"] == "none" and row["h"] == 0 for row in upcoming_off),
                    "Upcoming hides the other buckets, including settled rows in the same sport group "
                    f"({shown})")
+                roles = page.evaluate("""() => ({
+                  listbox: document.querySelectorAll('[role="listbox"]').length,
+                  option: document.querySelectorAll('[role="option"]').length,
+                })""")
+                eq(roles, {"listbox": 0, "option": 0}, "Running rows are not a listbox")
                 page.click('.running-filters button[data-filter="settled"]')
                 page.wait_for_timeout(30)
+                page.locator('.running-filters button[data-filter="settled"]').focus()
+                page.keyboard.press("Tab")
+                page.keyboard.press("Tab")
+                tabbed = page.evaluate("""() => {
+                  const el = document.activeElement;
+                  return el ? el.className : "";
+                }""")
+                ok("running-row" in tabbed, f"Tab reaches a Running row ({tabbed})")
                 first = page.locator(".running-row:not([hidden])").nth(0)
                 second = page.locator(".running-row:not([hidden])").nth(1)
                 first.focus()
                 page.keyboard.press("Enter")
                 selected = page.evaluate("""() => {
                   const rows = [...document.querySelectorAll(".running-row")];
-                  const on = rows.filter((row) => row.getAttribute("aria-selected") === "true");
+                  const on = rows.filter((row) => row.getAttribute("aria-pressed") === "true");
                   const current = on[0];
                   const line = document.getElementById("rules-line");
                   const empty = document.getElementById("rules-empty");
                   return {
                     n: on.length,
-                    current: current ? current.getAttribute("aria-current") : "",
+                    pressed: current ? current.getAttribute("aria-pressed") : "",
                     name: current ? current.getAttribute("data-name") : "",
                     shadow: current ? getComputedStyle(current).boxShadow : "",
                     line: line ? line.textContent : "",
                     emptyHidden: empty ? empty.hidden : null,
                     cards: document.querySelectorAll(".rule-mini").length,
+                    selectedAttr: document.querySelectorAll("[aria-selected]").length,
                   };
                 }""")
-                ok(selected["n"] == 1 and selected["current"] == "true"
+                ok(selected["n"] == 1 and selected["pressed"] == "true"
                    and selected["name"] and selected["name"] in selected["line"]
                    and "inset" in selected["shadow"]
                    and "¢" in selected["line"] and " · " in selected["line"]
-                   and selected["emptyHidden"] and selected["cards"] == 0,
-                   f"Enter selects one row and names it in the header ({selected})")
+                   and selected["emptyHidden"] and selected["cards"] == 0
+                   and selected["selectedAttr"] == 0,
+                   f"Enter presses one row and names it in the header ({selected})")
                 second.focus()
                 page.keyboard.press("Space")
                 moved = page.evaluate("""() => {
                   const rows = [...document.querySelectorAll(".running-row:not([hidden])")];
-                  return rows.map((row) => row.getAttribute("aria-selected"));
+                  return rows.map((row) => row.getAttribute("aria-pressed"));
                 }""")
-                eq(moved[:2], ["false", "true"], "Space moves the selection to the focused row")
-                eq(moved.count("true"), 1, "Space leaves only one row selected")
+                eq(moved[:2], ["false", "true"], "Space moves aria-pressed to the focused row")
+                eq(moved.count("true"), 1, "Space leaves only one row pressed")
                 page.locator(".running-row:not([hidden])").nth(0).click()
                 clicked = page.evaluate("""() => {
                   const rows = [...document.querySelectorAll(".running-row:not([hidden])")];
-                  return rows.map((row) => row.getAttribute("aria-selected"));
+                  return rows.map((row) => row.getAttribute("aria-pressed"));
                 }""")
-                eq(clicked[0], "true", "a click selects that row")
+                eq(clicked[0], "true", "a click presses that row")
                 eq(clicked.count("true"), 1, "a click clears the other rows")
+                page.click('.running-filters button[data-filter="upcoming"]')
+                page.wait_for_timeout(30)
+                cleared = page.evaluate("""() => {
+                  const line = document.getElementById("rules-line");
+                  const head = document.getElementById("rules-head");
+                  const empty = document.getElementById("rules-empty");
+                  return {
+                    pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
+                    line: line ? line.textContent : null,
+                    headHidden: head ? head.hidden : null,
+                    emptyHidden: empty ? empty.hidden : null,
+                    empty: empty ? empty.textContent : "",
+                  };
+                }""")
+                eq(cleared["pressed"], 0, "hiding the selected row clears aria-pressed")
+                eq(cleared["line"], "", "hiding the selected row clears the detail header")
+                ok(cleared["headHidden"] and not cleared["emptyHidden"]
+                   and cleared["empty"] == "Select a contest in Running.",
+                   f"the detail pane returns to its empty state ({cleared})")
                 browser.close()
         finally:
             httpd.shutdown()

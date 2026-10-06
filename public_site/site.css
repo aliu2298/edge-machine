@@ -993,7 +993,7 @@ nav.sports button[aria-disabled="true"]:focus {
   padding: 0 6px;
 }
 .lane-pill { color: var(--acc); }
-.running-row[aria-selected="true"] {
+.running-row[aria-pressed="true"] {
   box-shadow: inset 3px 0 0 var(--acc);
   background: var(--raised);
 }

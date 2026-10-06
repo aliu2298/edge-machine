@@ -10,12 +10,9 @@ ledger. Page pills leave this page, so the list is Production lanes only; a
 row's lane pill reads Production. One row per contest. Several Production
 lanes on that contest show an N-lanes count.
 
-Settled rows are the last 14 America/Chicago dates, including the build date,
-using the same day test as the Sandbox recent table. That table's own window
-is sandbox_build.RECENT_DAYS (7). This list uses 14 because the shell kick
-asked for fourteen days. Feed leads have no settlement time, so their window
-is the kickoff. A settled quote the feed has already dropped uses its
-settlement time. The clock is the `now` the caller passed, the same instant
+Settled rows use production.KEEP_SETTLED_DAYS, the same kickoff cutoff as
+production.build_feed, so this list matches the recent leads on
+production.html. The clock is the `now` the caller passed, the same instant
 as production.html.
 """
 import datetime
@@ -42,9 +39,6 @@ PAGES = (
     ("Method", "./sandbox.html#method", False),
 )
 RUNNING = (("live", "Live", True), ("settled", "Settled", False), ("upcoming", "Upcoming", False))
-# Last N Chicago dates through the build date, including today. 14, not the
-# Sandbox table's RECENT_DAYS.
-SETTLED_DAYS = 14
 _GROUP_ORDER = ("NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Markets")
 _STATUS = {
     "pending": "Open",
@@ -159,14 +153,18 @@ def _status_label(status):
 
 
 def _in_window(instant, now):
-    """True when `instant` falls on one of the last SETTLED_DAYS Chicago dates."""
+    """True when `instant` is inside production's settled-lead cutoff.
+
+    production.build_feed drops a settled bet when its kickoff is strictly
+    older than `now - KEEP_SETTLED_DAYS`. Reading that name here, not a copy
+    of the number, keeps the two windows the same if the feed's window moves.
+    """
     if instant is None or now is None:
         return False
-    day = production._chicago_day(instant)
-    today = production._chicago_day(now)
-    if day is None or today is None:
+    try:
+        return not instant < now - datetime.timedelta(days=production.KEEP_SETTLED_DAYS)
+    except TypeError:
         return False
-    return 0 <= (today - day).days < SETTLED_DAYS
 
 
 def _cents(price):
@@ -239,7 +237,7 @@ def _lane_from_lead(lead, settled_at=None):
 def _keeps(lane, now):
     if lane["status"] == "Open":
         return True
-    return _in_window(lane.get("settled_at") or lane.get("kickoff"), now)
+    return _in_window(lane.get("kickoff"), now)
 
 
 def _contest_key(lane):
@@ -323,7 +321,7 @@ def _extra_quote_lanes(d, st, shown, now):
                 if kickoff > now:
                     continue
             elif status in _QUOTE_SETTLED:
-                if not _in_window(settled_at or kickoff, now):
+                if not _in_window(kickoff, now):
                     continue
             else:
                 continue
@@ -402,11 +400,11 @@ def _row_html(contest, index, now):
     price = _cents(contest["price"])
     esc = site_chrome.esc
     return (
-        f'<button type="button" class="running-row" role="option"'
+        f'<button type="button" class="running-row"'
         f' data-filter="{esc(bucket)}" data-contest="c{index}"'
         f' data-competition="{esc(competition)}" data-sport="{esc(contest["sport"])}"'
         f' data-name="{esc(name)}" data-kickoff="{esc(kickoff)}" data-price="{esc(price)}"'
-        f' aria-selected="false"{hidden}>'
+        f' aria-pressed="false"{hidden}>'
         f'<span class="running-time">{esc(_time_text(bucket, contest["kickoff"], now))}</span>'
         f'<span class="running-contest">{esc(name)}</span>'
         f'<span class="running-price">{esc(price)}</span>'
@@ -440,7 +438,7 @@ def _running_body(d, st, blob, now):
         groups.append(
             f'<section class="running-group" data-sport-group="{site_chrome.esc(label)}"{hidden}>'
             f'<h3>{site_chrome.esc(label)}</h3>'
-            f'<div role="listbox" aria-label="{site_chrome.esc(label)}">{"".join(rows)}</div>'
+            f'<div>{"".join(rows)}</div>'
             f'</section>')
     empty_hidden = "" if counts["live"] == 0 else " hidden"
     empty = (
