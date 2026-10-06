@@ -579,6 +579,9 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
      as the bar plus the section nav. */
   header.site {
     display: contents;
+    /* Sticky on a contents box lets a wide chip widen the page. The top bar
+       sticks on its own. */
+    position: static;
   }
   .topbar {
     position: sticky;
@@ -843,10 +846,12 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
   max-width: 1120px;
   margin: 0 auto;
   padding: 10px 24px 4px;
   min-width: 0;
+  overflow: hidden;
 }
 .bet-roll-label {
   flex: 0 0 auto;
@@ -860,12 +865,71 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 .bet-roll-track {
   flex: 1 1 auto;
   min-width: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
 }
 .bet-roll-empty {
   margin: 0;
   color: var(--mut);
   font-size: 13px;
+}
+.bet-chip {
+  /* The sport name is visually hidden and absolute. A positioned chip
+     keeps that text inside the scroller instead of widening the page. */
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 12px;
+  min-height: 36px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bet-chip-letter {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--mut);
+}
+.bet-chip-contest {
+  font-weight: 650;
+}
+.bet-chip-line {
+  color: var(--mut);
+  font-weight: 600;
+}
+.bet-chip-status { font-weight: 700; }
+.bet-chip[data-status="Open"] {
+  border-color: rgba(245, 194, 107, .75);
+}
+.bet-chip[data-status="Open"] .bet-chip-status { color: var(--warn); }
+.bet-chip[data-status="W"] .bet-chip-status { color: var(--pos); }
+.bet-chip[data-status="L"] .bet-chip-status { color: var(--neg); }
+.bet-chip[data-status="Void"] .bet-chip-status,
+.bet-chip[data-status="price result"] .bet-chip-status { color: var(--mut); }
+.bet-chip[data-status="Awaiting result"] .bet-chip-status {
+  color: var(--warn);
+  font-style: italic;
+}
+.bet-chip[aria-pressed="true"] {
+  background: var(--raised);
+  box-shadow: inset 3px 0 0 var(--acc);
 }
 .sport-row {
   display: flex;

@@ -193,6 +193,63 @@ eq(_one("2026-10-05T16:00:00Z")["status"], "Open",
    "restoring SHELL_AWAIT_HOURS restores the six-hour window")
 
 
+print("\nreversed sides and the Chicago day")
+reversed_sides = _contests([
+    _lead("home", "Chicago Fire", "Chicago Stars", "2026-10-05T18:00:00Z", "hit",
+          "a|soccer", "soccer", 0.40),
+    _lead("away", "chicago stars", "CHICAGO FIRE", "2026-10-05T20:00:00Z", "miss",
+          "b|soccer", "soccer", 0.55),
+])
+eq(len(reversed_sides), 1,
+   "reversed home/away with a different case on one Chicago day is one contest")
+eq(len(reversed_sides[0]["cards"]) if reversed_sides else 0, 2,
+   "that contest keeps both bets")
+same_chicago = _contests([
+    _lead("utc5", "Day", "Line", "2026-10-05T18:00:00Z", "hit",
+          "a|soccer", "soccer", 0.41),
+    _lead("utc6", "Day", "Line", "2026-10-06T03:30:00Z", "miss",
+          "b|soccer", "soccer", 0.42),
+])
+eq(len(same_chicago), 1,
+   "two UTC dates on the same Chicago day are one contest")
+split_chicago = _contests([
+    _lead("before", "Night", "Edge", "2026-10-05T04:30:00Z", "hit",
+          "a|soccer", "soccer", 0.43),
+    _lead("after", "Night", "Edge", "2026-10-05T06:00:00Z", "miss",
+          "b|soccer", "soccer", 0.44),
+])
+eq(len(split_chicago), 2,
+   "one UTC date that crosses midnight in Chicago is two contests")
+
+
+print("\na win beside an awaiting bet")
+won_open = _contests([
+    _lead("won", "Win", "Wait", "2026-10-05T11:00:00Z", "hit",
+          "a|soccer", "soccer", 0.40),
+    _lead("stuck", "Win", "Wait", "2026-10-05T11:00:00Z", "pending",
+          "b|soccer", "soccer", 0.70),
+])
+eq(len(won_open), 1, "a win and an open bet are one contest")
+eq(won_open[0]["bucket"] if won_open else None, "live",
+   "a win plus an open bet past six hours stays Live")
+eq(won_open[0]["status"] if won_open else None, "1W 1 awaiting",
+   "the row shows 1W 1 awaiting")
+ok(won_open and won_open[0]["awaiting"],
+   "the mixed row keeps the awaiting flag for the warn bar")
+eq([card["status"] for card in (won_open[0]["cards"] if won_open else [])],
+   ["W", "Awaiting result"],
+   "the cards are a W and an Awaiting result")
+won_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob([
+    _lead("won", "Win", "Wait", "2026-10-05T11:00:00Z", "hit",
+          "a|soccer", "soccer", 0.40),
+    _lead("stuck", "Win", "Wait", "2026-10-05T11:00:00Z", "pending",
+          "b|soccer", "soccer", 0.70),
+]))
+won_row = _named_row(won_page, "Win v Wait", "the mixed awaiting contest is its own row")
+ok('data-awaiting="true"' in won_row, "the mixed row renders the warn-bar flag")
+ok(">1W 1 awaiting</span>" in won_row, "the mixed row renders 1W 1 awaiting")
+
+
 print("\nunknown statuses follow the kickoff")
 future_unknown = _contests([
     _lead("later", "Later", "Kick", "2026-10-08T15:00:00Z", "postponed",
@@ -398,8 +455,8 @@ for card, bet in zip(pair_contest["cards"], pair_contest["bets"]):
 ok(len(set(seen_records)) == 2, "the two cards do not share one record")
 ok(pair_contest["cards"][0]["roi"] != pair_contest["cards"][1]["roi"],
    "the two cards do not share one ROI")
-eq(pair_contest["cards"][0]["stats_note"], "Sandbox, all competitions",
-   "the card says the stats are the whole Sandbox record")
+eq(pair_contest["cards"][0]["stats_note"], "Sandbox, US exchanges, all competitions",
+   "the card says the stats are the US-exchange record, every competition")
 
 
 print("\ninternational lanes from a fixed contest")
@@ -410,7 +467,7 @@ for i in range(12):
         venue="kalshi_binary", qid="intl-team" if i == 0 else None))
 for i in range(5):
     intl_quotes.append(_settled_quote(
-        i, "u35_low_scoring", False, 0.55, sport="soccer_o15_intl",
+        i, "o15_ranked", False, 0.55, sport="soccer_o15_intl",
         venue="kalshi_binary", qid="intl-o15" if i == 0 else None))
 intl_d = {"quotes": intl_quotes}
 intl_st = {"pairs": {}}
@@ -419,11 +476,14 @@ intl_leads = [
           "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.40,
           source="team1_form_l5", headline="Team 1+"),
     _lead("intl-o15", "Intl", "Fixture", "2026-10-04T15:00:00Z", "miss",
-          "u35_low_scoring|soccer_o15_intl", "soccer_o15_intl", 0.55,
-          source="u35_low_scoring", headline="Over 1.5"),
+          "o15_ranked|soccer_o15_intl", "soccer_o15_intl", 0.55,
+          source="o15_ranked", headline="Over 1.5"),
 ]
 intl_contest = _contests(intl_leads, d=intl_d, st=intl_st)[0]
 eq(len(intl_contest["cards"]), 2, "the international contest has two cards")
+eq(sorted(bet["pair"] for bet in intl_contest["bets"]),
+   ["o15_ranked|soccer_o15_intl", "team1_form_l5|soccer_team1_intl"],
+   "the Over 1.5 fixture uses the o15_ranked pair")
 intl_records = []
 for card, bet in zip(intl_contest["cards"], intl_contest["bets"]):
     eq(card.get("venue"), "Kalshi",
@@ -445,8 +505,8 @@ ok(len(intl_records) == 2 and len(set(intl_records)) == 2,
 intl_pairs = [
     (card.get("market"), card.get("venue"))
     for card, bet in zip(intl_contest["cards"], intl_contest["bets"])
-    if "soccer_o15_intl" in (bet.get("pair") or "")
-    or "soccer_team1_intl" in (bet.get("pair") or "")
+    if bet.get("pair") in (
+        "o15_ranked|soccer_o15_intl", "team1_form_l5|soccer_team1_intl")
 ]
 eq(len(intl_pairs), 2, "the contest has Over 1.5 and Team 1+ international cards")
 for market, venue in intl_pairs:
@@ -492,6 +552,14 @@ def _raise_oserror(*_args, **_kwargs):
     raise OSError("unexpected")
 
 
+def _raise_zero(*_args, **_kwargs):
+    raise ZeroDivisionError("empty sample")
+
+
+def _raise_value(*_args, **_kwargs):
+    raise ValueError("empty sample")
+
+
 _saved_pair_status = sandbox_build.pair_status
 sandbox_build.pair_status = _raise_oserror
 try:
@@ -503,9 +571,27 @@ try:
     ok(_raised, "an unexpected OSError from pair_status is raised")
 finally:
     sandbox_build.pair_status = _saved_pair_status
+for _exc, _raiser, _why in (
+    (ZeroDivisionError, _raise_zero, "a ZeroDivisionError from pair_status is raised"),
+    (ValueError, _raise_value, "a ValueError from pair_status is raised"),
+):
+    sandbox_build.pair_status = _raiser
+    _raised = False
+    try:
+        try:
+            shell_build._lane_board({"quotes": []}, {"pairs": {}}, "aaa|soccer", {})
+        except _exc:
+            _raised = True
+        ok(_raised, _why)
+    finally:
+        sandbox_build.pair_status = _saved_pair_status
 eq(shell_build._lane_board({}, {"pairs": {}}, "aaa|soccer", {}),
    {"verdict": None, "roi": None, "record": None},
    "a ledger with no quotes omits verdict, ROI and record")
+_empty_sample = shell_build._lane_board(
+    {"quotes": []}, {"pairs": {}}, "missing|soccer", {})
+ok(_empty_sample["roi"] is None and _empty_sample["record"] is None,
+   "an empty sample omits ROI and record without dividing")
 
 
 print("\nfull page targets a page that exists")
@@ -558,6 +644,10 @@ def _browser():
                   "oddspedia|cricket", "cricket", 0.50),
             _lead("on", "On", "Time", "2026-10-05T12:00:00Z", "pending",
                   "oddspedia|cricket", "cricket", 0.51),
+            _lead("won", "Win", "Wait", "2026-10-05T11:00:00Z", "hit",
+                  "a|soccer", "soccer", 0.40),
+            _lead("stuck", "Win", "Wait", "2026-10-05T11:00:00Z", "pending",
+                  "b|soccer", "soccer", 0.70),
         ]))
         open(os.path.join(site, "index.html"), "w", encoding="utf-8").write(browser_html)
         for name in ("site.css", "shell.js", "tables.js"):
@@ -580,7 +670,7 @@ def _browser():
                 view = browser.new_page(viewport={"width": 1280, "height": 800})
                 view.goto(base, wait_until="load")
                 colors = view.evaluate("""() => {
-                  const awaiting = document.querySelector('.running-row[data-awaiting="true"] .running-status');
+                  const awaiting = document.querySelector('.running-status[data-status="awaiting"]');
                   const open = document.querySelector('.running-row:not([data-awaiting="true"]) .running-status');
                   if (!awaiting || !open) return null;
                   const a = getComputedStyle(awaiting);
@@ -589,6 +679,41 @@ def _browser():
                 }""")
                 ok(colors and colors["awaiting"] != colors["open"] and colors["italic"] == "italic",
                    f"Awaiting result is styled apart from an open Live row ({colors})")
+                warn = view.evaluate("""() => {
+                  const row = [...document.querySelectorAll(".running-row")]
+                    .find((item) => item.getAttribute("data-name") === "Win v Wait");
+                  if (!row) return null;
+                  const shadow = getComputedStyle(row).boxShadow;
+                  return {
+                    flag: row.getAttribute("data-awaiting"),
+                    shadow: shadow,
+                    hidden: row.hidden,
+                  };
+                }""")
+                ok(warn and warn["flag"] == "true" and not warn["hidden"]
+                   and "245, 194, 107" in warn["shadow"],
+                   f"a mixed awaiting row keeps the warn bar ({warn})")
+                view.locator('.bet-chip').filter(has_text="Late v Grade").focus()
+                view.keyboard.press("Enter")
+                view.wait_for_timeout(30)
+                card_style = view.evaluate("""() => {
+                  const status = document.querySelector(".rule-mini .running-status");
+                  if (!status) return null;
+                  const style = getComputedStyle(status);
+                  return {
+                    token: status.getAttribute("data-status"),
+                    color: style.color,
+                    italic: style.fontStyle,
+                    text: status.textContent,
+                  };
+                }""")
+                ok(card_style and card_style["token"] == "awaiting"
+                   and card_style["italic"] == "italic"
+                   and "245, 194, 107" in card_style["color"]
+                   and "Awaiting result" in card_style["text"],
+                   f"an Awaiting result card uses the warn italic style ({card_style})")
+                view.keyboard.press("Escape")
+                view.wait_for_timeout(30)
                 view.click('.running-filters button[data-filter="settled"]')
                 view.wait_for_timeout(30)
                 row = view.locator(".running-row:not([hidden])")
@@ -625,8 +750,8 @@ def _browser():
                    f"the header lists both prices ({shown['line']!r})")
                 ok(hostile_lane in shown["text"] and hostile_market in shown["text"],
                    "hostile lane and market names render as text")
-                ok("Sandbox, all competitions" in shown["text"],
-                   "the card says the stats cover every competition")
+                ok("Sandbox, US exchanges, all competitions" in shown["text"],
+                   "the card says the stats are the US-exchange record")
                 live = view.evaluate("""() => {
                   const region = document.getElementById("rules-live");
                   const pressed = document.querySelector('.running-row[aria-pressed="true"]');
@@ -669,28 +794,92 @@ def _browser():
                 escaped = view.evaluate("""() => {
                   const empty = document.getElementById("rules-empty");
                   const live = document.getElementById("rules-live");
+                  const link = document.querySelector("a.full-page");
                   return {
                     pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
+                    chips: document.querySelectorAll('.bet-chip[aria-pressed="true"]').length,
                     cards: document.querySelectorAll(".rule-mini").length,
                     emptyHidden: empty ? empty.hidden : null,
                     live: live ? live.textContent : "",
+                    href: link ? link.getAttribute("href") : "",
                   };
                 }""")
                 eq(escaped["pressed"], 0, "Escape clears aria-pressed")
+                eq(escaped["chips"], 0, "Escape clears the chip's aria-pressed")
                 eq(escaped["cards"], 0, "Escape clears the cards")
                 ok(not escaped["emptyHidden"], "Escape restores the empty state")
                 eq(escaped["live"], "Select a contest in Running.",
                    "Escape announces the empty state")
+                eq(escaped["href"], "./production.html",
+                   "Escape resets Full page to the Production board")
                 view.click(".running-row:not([hidden])")
                 view.wait_for_timeout(30)
                 view.click(".running-row:not([hidden])")
                 view.wait_for_timeout(30)
-                reclicked = view.evaluate("""() => ({
-                  pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
-                  cards: document.querySelectorAll(".rule-mini").length,
-                })""")
+                reclicked = view.evaluate("""() => {
+                  const link = document.querySelector("a.full-page");
+                  return {
+                    pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    href: link ? link.getAttribute("href") : "",
+                  };
+                }""")
                 eq(reclicked["pressed"], 0, "clicking the selected row clears aria-pressed")
                 eq(reclicked["cards"], 0, "clicking the selected row clears the cards")
+                eq(reclicked["href"], "./production.html",
+                   "clicking the selected row resets Full page")
+                sport = view.evaluate("""() => {
+                  const nav = document.querySelector("nav.sports");
+                  nav.setAttribute("data-sport-filter", "cricket");
+                  document.querySelector(".running-filters button[aria-pressed='true']").click();
+                  const row = [...document.querySelectorAll(".running-row")]
+                    .find((item) => item.getAttribute("data-name") === "Mix v Match");
+                  return row ? row.hidden : null;
+                }""")
+                ok(sport is True, "a cricket sport filter hides the soccer row")
+                view.locator(".bet-chip").filter(has_text="Mix v Match").first.click()
+                view.wait_for_timeout(30)
+                opened = view.evaluate("""() => {
+                  const nav = document.querySelector("nav.sports");
+                  const row = [...document.querySelectorAll(".running-row")]
+                    .find((item) => item.getAttribute("data-name") === "Mix v Match");
+                  const chip = [...document.querySelectorAll(".bet-chip")]
+                    .find((item) => item.textContent.indexOf("Mix v Match") >= 0);
+                  const link = document.querySelector("a.full-page");
+                  return {
+                    filter: nav ? nav.getAttribute("data-sport-filter") : "",
+                    hidden: row ? row.hidden : null,
+                    pressed: row ? row.getAttribute("aria-pressed") : "",
+                    chip: chip ? chip.getAttribute("aria-pressed") : "",
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    href: link ? link.getAttribute("href") : "",
+                    bucket: document.querySelector(".running-filters button[aria-pressed='true']")
+                      ? document.querySelector(".running-filters button[aria-pressed='true']").getAttribute("data-filter")
+                      : "",
+                  };
+                }""")
+                ok(opened["filter"] in ("all", "soccer") and opened["hidden"] is False
+                   and opened["pressed"] == "true" and opened["chip"] == "true"
+                   and opened["cards"] == 2 and opened["href"] == "./soccer.html"
+                   and opened["bucket"] == "settled",
+                   f"a chip reveals the contest, selects it, and opens its cards ({opened})")
+                view.locator(".bet-chip").filter(has_text="Mix v Match").first.focus()
+                view.keyboard.press(" ")
+                view.wait_for_timeout(30)
+                closed = view.evaluate("""() => {
+                  const link = document.querySelector("a.full-page");
+                  return {
+                    pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
+                    chips: document.querySelectorAll('.bet-chip[aria-pressed="true"]').length,
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    href: link ? link.getAttribute("href") : "",
+                  };
+                }""")
+                eq(closed["pressed"], 0, "Space on the selected chip clears the row")
+                eq(closed["chips"], 0, "Space on the selected chip clears aria-pressed")
+                eq(closed["cards"], 0, "Space on the selected chip closes the cards")
+                eq(closed["href"], "./production.html",
+                   "closing the chip resets Full page")
                 view.evaluate("""() => {
                   const row = document.querySelector(".running-row:not([hidden])");
                   row.setAttribute("data-page", "./football.html");
