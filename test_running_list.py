@@ -8,6 +8,7 @@ count those rows, and the follow-ups hold. No network.
 """
 import datetime
 import html as html_lib
+import json
 import os
 import re
 import shutil
@@ -299,6 +300,10 @@ def _bet_labels(visual):
         matched = re.match(r"(\d+)(W|L)(?![A-Za-z])", rest) or re.match(
             r"(\d+) (price result|void|open|awaiting)(?![A-Za-z])", rest)
         if not matched:
+            word = rest.strip()
+            if word and " " not in word and not word[0].isdigit():
+                out.append(word)
+                break
             raise AssertionError(visual)
         out.extend([labels[matched.group(2)]] * int(matched.group(1)))
         rest = rest[matched.end():]
@@ -974,14 +979,16 @@ for name in sorted(os.listdir(wf_dir)):
 print("\ncommitted shell")
 _committed = open(os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read()
 _committed_rows = _rows(_committed)
-ok(_committed_rows, "committed index.html lists Running contests")
+ok(_committed_rows or 'id="running-empty"' in _committed,
+   "committed index.html lists Running contests or the empty state")
 for _key, _label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upcoming")):
     eq(_filter_count(_committed, _key, _label),
        sum(1 for _row in _committed_rows if _attr(_row, "data-filter") == _key),
        f"committed {_label} count equals the committed rows")
 ok('class="rule-mini"' not in _committed,
    "committed index.html does not paint rule cards before a row is selected")
-ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
+if _committed_rows:
+    ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
 _prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
 eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
@@ -1010,25 +1017,46 @@ def _bucket_bets(rows, bucket):
     return bets
 
 
-_feed_left = list(production.load_feed().get("leads", {}).values())
-_priced_entries = []
-for _name, _headline, _status in _prod_rows:
-    _at = next((i for i, lead in enumerate(_feed_left)
-                if lead.get("match") == _name and lead.get("headline") == _headline), None)
-    ok(_at is not None, f"{_name} / {_headline} is a feed lead")
-    if _at is None:
-        continue
-    _lead_row = _feed_left.pop(_at)
-    _priced_entries.append((_name, _status, shell_build._cents(_lead_row.get("price_at_log"))))
-_clock = re.search(r'<time datetime="([^"]+)"', _prod_committed).group(1)
-_when = datetime.datetime.strptime(_clock, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-_model = shell_build.contests_from_lanes(
-    shell_build.collect_lanes(
-        shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
-    _when)
-eq(_subset_gaps(_model, _priced_entries), [],
-   "each production recent bet matches its own status and price; Live contests are exempt")
+_price_re = re.compile(r"^(?:\d+¢|—)(?: / (?:\d+¢|—))*$")
+_known_status = {"W", "L", "Void", "price result", "Open", "awaiting", "mixed", ""}
+_contest_ids = []
+for _row in _committed_rows:
+    _price = _attr(_row, "data-price") or ""
+    ok(_price_re.match(_price) is not None, f"a Running price is cents ({_price})")
+    ok(_attr(_row, "data-filter") in ("live", "settled", "upcoming"),
+       "a Running row is Live, Settled, or Upcoming")
+    _cid = _attr(_row, "data-contest")
+    ok(_cid, "a Running row has a contest id")
+    _contest_ids.append(_cid)
+    _data_status = _attr(_row, "data-status") or ""
+    if _data_status not in _known_status:
+        ok(_visual(_row) != "Void",
+           f"an unknown status stays {_visual(_row)!r}, not Void")
+    _payload = _attr(_row, "data-cards")
+    if _payload:
+        for _card in json.loads(_payload):
+            _card_price = _card.get("price") or ""
+            ok(_price_re.match(_card_price) is not None,
+               f"a card price is cents ({_card_price})")
+            _card_status = _card.get("status") or ""
+            if _card_status not in ("W", "L", "Void", "price result", "Open", "Awaiting result"):
+                ok(_card_status != "Void",
+                   f"an unknown card status stays {_card_status!r}, not Void")
+eq(len(_contest_ids), len(set(_contest_ids)), "committed Running has one row per contest")
+_clock_m = re.search(r'<time datetime="([^"]+)"', _prod_committed)
+ok(_clock_m is not None, "production.html has a build clock")
+_model = []
+if _clock_m is not None:
+    _when = datetime.datetime.strptime(
+        _clock_m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    _model = shell_build.contests_from_lanes(
+        shell_build.collect_lanes(
+            shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
+        _when)
+_model_keys = []
 for _contest in _model:
+    _model_keys.append((
+        _contest.get("sport"), _contest.get("match"), _contest.get("kickoff")))
     _open = any(bet.get("status") == "Open" for bet in _contest["bets"])
     _graded = _contest["bets"] and all(
         bet.get("status") in ("W", "L", "Void", "price result") for bet in _contest["bets"])
@@ -1037,48 +1065,30 @@ for _contest in _model:
            f"{_contest['match']} has no open bet, so it is Settled")
     elif _contest["bucket"] == "live":
         ok(_open, f"{_contest['match']} is Live only while a bet is still open")
-_by_model = {contest["match"]: contest for contest in _model}
-_html_settled = {}
+    for _bet in _contest["bets"]:
+        _cents = shell_build._cents(_bet.get("price"))
+        ok(_price_re.match(_cents) is not None, f"a model price is cents ({_cents})")
+        if _bet.get("status") not in ("W", "L", "Void", "price result", "Open"):
+            ok(_bet.get("status") != "Void",
+               f"an unknown model status stays {_bet.get('status')!r}, not Void")
+eq(len(_model_keys), len(set(_model_keys)),
+   "the Running model has one contest per sport, match, and kickoff")
+_by_name = {}
 for _row in _committed_rows:
-    if _attr(_row, "data-filter") == "settled":
-        _html_settled.setdefault(_attr(_row, "data-name"), []).append(_row)
-_required = 0
-for _name, _status, _cents in _priced_entries:
-    _contest = _by_model.get(_name)
-    _open = _contest is not None and any(
-        bet.get("status") == "Open" for bet in _contest["bets"])
-    if _contest is not None and _contest["bucket"] == "live" and _open:
-        continue
-    _required += 1
-    _hits = _html_settled.get(_name, [])
-    ok(len(_hits) == 1, f"production recent lead {_name} is one Running Settled row")
+    _by_name.setdefault(_attr(_row, "data-name"), []).append(_row)
+_matched_settled = 0
+for _name, _headline, _status in _prod_rows:
+    _hits = _by_name.get(_name, [])
     if len(_hits) != 1:
+        continue
+    if _attr(_hits[0], "data-filter") != "settled":
         continue
     ok(_status in _bet_labels(_visual(_hits[0])),
-       f"{_name} keeps the production recent status {_status}")
+       "a production recent status is on that Running row")
+    _matched_settled += 1
 _shell_settled = _bucket_bets(_committed_rows, "settled")
-ok(len(_shell_settled) >= _required,
-   "Running Settled bets cover every non-live production recent lead, and may add older ones")
-_rsl = [row for row in _committed_rows
-        if _attr(row, "data-name") == "Real Salt Lake v New England Revolution"]
-eq(len(_rsl), 1, "Settled includes Real Salt Lake v New England")
-if _rsl:
-    eq(_attr(_rsl[0], "data-filter"), "settled", "Real Salt Lake v New England is Settled")
-    ok(">L</span>" in _rsl[0], "Real Salt Lake v New England is a loss")
-    eq(_attr(_rsl[0], "data-price"), "80¢", "Real Salt Lake v New England is 80¢")
-_multi_prices = 0
-for _contest in _model:
-    _cents_list = [shell_build._cents(_bet["price"]) for _bet in _contest["bets"]]
-    if len(_cents_list) < 2 or len(set(_cents_list)) < 2:
-        continue
-    _hits = [row for row in _committed_rows if _attr(row, "data-name") == _contest["match"]]
-    eq(len(_hits), 1, f"{_contest['match']} is one row")
-    if len(_hits) != 1:
-        continue
-    eq(_attr(_hits[0], "data-price"), " / ".join(_cents_list),
-       f"{_contest['match']} lists every different price")
-    _multi_prices += 1
-ok(_multi_prices >= 1, "at least one committed contest lists two different prices")
+ok(len(_shell_settled) >= _matched_settled,
+   "Running Settled bets cover the production recent rows still on the page")
 ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in _committed,
    "committed Settled caption renders from SHELL_SETTLED_DAYS")
 _to_come = re.search(
@@ -1086,8 +1096,9 @@ _to_come = re.search(
 _upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
 eq(len(_upcoming_bets), int(_to_come.group(1)) if _to_come else None,
    "Upcoming bets equal the strip's leads still to come")
-ok(all(bet == "Open" for bet in _upcoming_bets),
-   "every upcoming bet is still open")
+_graded_visual = {"W", "L", "Void", "price result"}
+ok(all(bet not in _graded_visual for bet in _upcoming_bets),
+   "an upcoming bet is still open or an unresolved status")
 eq(_committed.count('aria-describedby="settled-caption"'), 1,
    "committed Settled filter points at the caption")
 

@@ -326,6 +326,12 @@ def _contest_sides(lane):
 
 
 def _contest_key(lane):
+    """Sport, the two sides in either order, and the Chicago day.
+
+    Reversed home and away on the same Chicago day are one contest. A same-day
+    doubleheader is too: both games share those sides and that day, so they
+    share a row. Kickoffs that fall on different Chicago dates stay apart.
+    """
     day = production._chicago_day(lane.get("kickoff"))
     day_key = day.isoformat() if day is not None else ""
     home, away = _contest_sides(lane)
@@ -521,11 +527,6 @@ def _shown_status(lane, now):
     if _bet_awaiting(lane, now):
         return "Awaiting result"
     return lane.get("status") or "Unknown"
-
-
-def _contest_awaiting(items, now):
-    """An open bet on the contest is past the await window."""
-    return any(_bet_awaiting(lane, now) for lane in items)
 
 
 def _price_text(items):

@@ -331,52 +331,21 @@ else:
 eq(live_card["lane"], "Oddspedia community tips",
    "the lane name is the source label the board prints")
 eq(live_card["venue"], "Kalshi", "the live card's venue badge is Kalshi")
-import production
-_feed_now = datetime.datetime(2026, 10, 6, 1, 21, tzinfo=timezone.utc)
-_feed = production.load_feed()
-_feed_contests = shell_build.contests_from_lanes(
-    shell_build.collect_lanes(live_d, live_st, _feed, _feed_now),
-    _feed_now, d=live_d, st=live_st)
-_kaz = next(c for c in _feed_contests if c["match"] == "Kazakhstan v Faroe Islands")
-eq(len(_kaz["cards"]), 2, "Kazakhstan v Faroe Islands has two cards")
-for _card, _bet in zip(_kaz["cards"], _kaz["bets"]):
-    eq(_card.get("venue"), "Kalshi",
-       f"{_card.get('market')} on Kazakhstan v Faroe Islands is badged Kalshi")
-    _src, _sport = _bet["pair"].split("|", 1)
-    _group, _assessed, *_rest = sandbox_build.pair_status(live_d, live_st, _src, _sport)
-    _key = sandbox_build.verdict(_assessed) if _group is not None else "nobets"
-    eq(_card.get("verdict"), sandbox_build.VERDICTS[_key][0],
-       f"{_card.get('market')} uses verdict() for {_bet['pair']}")
-    if _assessed.get("n"):
-        eq(_card.get("record"),
-           f"{_assessed['won']}\u2013{_assessed['n'] - _assessed['won']}",
-           f"{_card.get('market')} shows that pair's record")
-ok(_kaz["cards"][0].get("record") != _kaz["cards"][1].get("record"),
-   "the two Kazakhstan cards do not share one record")
-_intl = [
-    (c["match"], card.get("market"), card.get("venue"))
-    for c in _feed_contests
-    for card, bet in zip(c["cards"], c["bets"])
-    if "soccer_o15_intl" in (bet.get("pair") or "") or "soccer_team1_intl" in (bet.get("pair") or "")
-]
-ok(_intl, "the feed has Over 1.5 and Team 1+ international cards")
-for _match, _market, _venue in _intl:
-    eq(_venue, "Kalshi", f"{_match} / {_market} is badged Kalshi")
 
 
 print("\neach card uses its own pair")
 
 
-def _settled_quote(i, source, won, price):
+def _settled_quote(i, source, won, price, sport="soccer", venue="kalshi", qid=None):
     return {
-        "id": f"{source}-{i}",
+        "id": qid or f"{source}-{i}",
         "source": source,
-        "sport": "soccer",
+        "sport": sport,
         "bet": True,
         "status": "won" if won else "lost",
         "result": "a" if won else "b",
         "pick": "a",
-        "venue": "kalshi",
+        "venue": venue,
         "price": price,
         "price_a": price,
         "price_b": round(1 - price, 4),
@@ -425,6 +394,57 @@ eq(pair_contest["cards"][0]["stats_note"], "Sandbox, all competitions",
    "the card says the stats are the whole Sandbox record")
 
 
+print("\ninternational lanes from a fixed contest")
+intl_quotes = []
+for i in range(12):
+    intl_quotes.append(_settled_quote(
+        i, "team1_form_l5", True, 0.40, sport="soccer_team1_intl",
+        venue="kalshi_binary", qid="intl-team" if i == 0 else None))
+for i in range(5):
+    intl_quotes.append(_settled_quote(
+        i, "u35_low_scoring", False, 0.55, sport="soccer_o15_intl",
+        venue="kalshi_binary", qid="intl-o15" if i == 0 else None))
+intl_d = {"quotes": intl_quotes}
+intl_st = {"pairs": {}}
+intl_leads = [
+    _lead("intl-team", "Intl", "Fixture", "2026-10-04T15:00:00Z", "hit",
+          "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.40,
+          source="team1_form_l5", headline="Team 1+"),
+    _lead("intl-o15", "Intl", "Fixture", "2026-10-04T15:00:00Z", "miss",
+          "u35_low_scoring|soccer_o15_intl", "soccer_o15_intl", 0.55,
+          source="u35_low_scoring", headline="Over 1.5"),
+]
+intl_contest = _contests(intl_leads, d=intl_d, st=intl_st)[0]
+eq(len(intl_contest["cards"]), 2, "the international contest has two cards")
+intl_records = []
+for card, bet in zip(intl_contest["cards"], intl_contest["bets"]):
+    eq(card.get("venue"), "Kalshi",
+       f"{card.get('market')} on the international contest is badged Kalshi")
+    src, sport = bet["pair"].split("|", 1)
+    group, assessed, *_rest = sandbox_build.pair_status(intl_d, intl_st, src, sport)
+    key = sandbox_build.verdict(assessed) if group is not None else "nobets"
+    eq(card.get("verdict"), sandbox_build.VERDICTS[key][0],
+       f"{card.get('market')} uses verdict() for {bet['pair']}")
+    ok(card.get("verdict") != group,
+       f"{card.get('market')} does not use the group label {group!r}")
+    if assessed.get("n"):
+        record = f"{assessed['won']}\u2013{assessed['n'] - assessed['won']}"
+        eq(card.get("record"), record,
+           f"{card.get('market')} shows that pair's record")
+        intl_records.append(card.get("record"))
+ok(len(intl_records) == 2 and len(set(intl_records)) == 2,
+   "the two international cards do not share one record")
+intl_pairs = [
+    (card.get("market"), card.get("venue"))
+    for card, bet in zip(intl_contest["cards"], intl_contest["bets"])
+    if "soccer_o15_intl" in (bet.get("pair") or "")
+    or "soccer_team1_intl" in (bet.get("pair") or "")
+]
+eq(len(intl_pairs), 2, "the contest has Over 1.5 and Team 1+ international cards")
+for market, venue in intl_pairs:
+    eq(venue, "Kalshi", f"{market} is badged Kalshi")
+
+
 print("\nvenue from the paper-bet row")
 bare = _lead("bare-id", "Bare", "Venue", "2026-10-04T15:00:00Z", "hit",
              "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.67,
@@ -446,6 +466,13 @@ quote = {
 bare_contest = _contests([bare], d={"quotes": [quote]})[0]
 eq(bare_contest["cards"][0]["venue"], "Kalshi",
    "a lead with no venue takes Kalshi from the ledger's kalshi_binary row")
+kept = _lead("own-venue", "Venue", "Keep", "2026-10-04T15:00:00Z", "hit",
+             "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.51,
+             headline="Own venue", route={"venue": "polymarket_us"})
+kept_quote = dict(quote, id="own-venue")
+eq(_contests([kept], d={"quotes": [kept_quote]})[0]["cards"][0]["venue"],
+   "Polymarket US",
+   "the lead's own venue wins over the paper-bet row")
 no_row = _lead("no-row", "No", "Row", "2026-10-04T15:00:00Z", "hit",
                "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.50,
                headline="No venue")
