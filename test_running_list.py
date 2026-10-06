@@ -168,9 +168,15 @@ eq(_attr(_got("Live v Now"), "data-filter"), "live", "started and unsettled is l
 ok(">Live</span>" in _got("Live v Now"), "a live row's time says Live")
 eq(_attr(_got("Echo v Foxtrot"), "data-filter"), "settled", "a hit inside the window is settled")
 ok(">W</span>" in _got("Echo v Foxtrot"), "a hit renders as W")
+ok('class="sr-only">won</span>' in _got("Echo v Foxtrot"),
+   "a single win is spoken as won")
 ok(">L</span>" in _got("Inside v Edge"), "a miss renders as L")
+ok('class="sr-only">lost</span>' in _got("Inside v Edge"),
+   "a single loss is spoken as lost")
 ok(">Void</span>" in _got("Void v Match"), "a void renders as Void")
 ok(">price result</span>" in _got("Price v Result"), "a price payout renders as price result")
+ok(">2 open</span>" in _got("Alpha v Beta") and 'class="sr-only">2 open</span>' in _got("Alpha v Beta"),
+   "two open bets on one contest read 2 open")
 ok(">Production</span>" in _got("Alpha v Beta"), "the lane pill says Production")
 ok(">Sandbox</span>" not in PAGE, "Sandbox contests are not on the Production list")
 ok("Tomorrow" in _got("Alpha v Beta"), "tomorrow's kickoff is a relative day")
@@ -210,6 +216,62 @@ ok("javascript:alert(1)" in html_lib.unescape(PAGE)
    "a javascript: string stays text")
 ok('aria-disabled="true"' in PAGE and 'id="sports-soon"' in PAGE,
    "sport pills stay inert with Coming soon")
+
+
+def _face_page(pairs):
+    leads = []
+    for i, (status, pair) in enumerate(pairs):
+        leads.append(_lead(
+            f"mix-{i}", "Kazakhstan", "Faroe Islands", "2026-10-04T15:00:00Z",
+            status, pair, "soccer", 0.5, "UEFA Nations League"))
+    return _rows(shell_build.page(
+        NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(leads)))
+
+
+def _bet_labels(visual):
+    if visual in ("W", "L", "Open", "Void", "price result"):
+        return [visual]
+    labels = {"W": "W", "L": "L", "price result": "price result", "void": "Void", "open": "Open"}
+    out = []
+    rest = visual
+    while rest:
+        rest = rest.lstrip()
+        if not rest:
+            break
+        matched = re.match(r"(\d+)(W|L)(?![A-Za-z])", rest) or re.match(
+            r"(\d+) (price result|void|open)(?![A-Za-z])", rest)
+        if not matched:
+            raise AssertionError(visual)
+        out.extend([labels[matched.group(2)]] * int(matched.group(1)))
+        rest = rest[matched.end():]
+    return out
+
+
+print("\nsplit results stay one row")
+# Under 3.5 sorts ahead of Faroe 1+ by pair name. The row must not keep only that loss.
+kaz = _face_page([
+    ("miss", "under35|soccer"),
+    ("hit", "zzz_faroe|soccer"),
+])
+eq(len(kaz), 1, "Kazakhstan v Faroe stays one row when the two bets grade apart")
+ok(">1W 1L</span>" in kaz[0], "Faroe 1+ won and Under 3.5 lost render as 1W 1L")
+ok('class="sr-only">1 won, 1 lost</span>' in kaz[0],
+   "the split is spoken as 1 won, 1 lost")
+eq(_bet_labels("1W 1L"), ["W", "L"],
+   "1W 1L is two bets, so a row compare would miss one (the 20 vs 19 gap)")
+eq(len(_bet_labels("1W 1L")), 2, "the two Kazakhstan bets both count")
+two_wins = _face_page([("hit", "a|soccer"), ("hit", "b|soccer")])
+ok(">2W</span>" in two_wins[0] and 'class="sr-only">2 won</span>' in two_wins[0],
+   "two wins render as 2W and are spoken as 2 won")
+win_void = _face_page([("hit", "a|soccer"), ("void", "b|soccer")])
+ok(">1W 1 void</span>" in win_void[0] and "1 won, 1 void" in win_void[0],
+   "a win and a void render as 1W 1 void")
+win_price = _face_page([("hit", "a|soccer"), ("price", "b|soccer")])
+ok(">1W 1 price result</span>" in win_price[0] and "1 won, 1 price result" in win_price[0],
+   "a win and a price result both show")
+loss_open = _face_page([("miss", "a|soccer"), ("pending", "b|soccer")])
+ok(">1L 1 open</span>" in loss_open[0] and "1 lost, 1 open" in loss_open[0],
+   "a settled bet and an open bet both show")
 
 print("\nempty filter and quote window")
 empty = shell_build.page(
@@ -515,6 +577,60 @@ finally:
     shutil.rmtree(drift_dir, ignore_errors=True)
 
 
+print("\nstamps-differ copies tiles and the clock")
+swapped_clock = site_root._swap_time(
+    '<p class="stamp"><time datetime="2026-10-01T00:00:00Z">old</time></p>',
+    '<p class="stamp"><time datetime="2026-10-05T12:00:00Z">a\\b</time></p>')
+ok("a\\b" in swapped_clock and "2026-10-05T12:00:00Z" in swapped_clock,
+   "a backslash in the clock is copied literally")
+copy_dir = tempfile.mkdtemp(prefix="shell-copy-")
+copy_prod = os.path.join(copy_dir, "production.html")
+copy_index = os.path.join(copy_dir, "index.html")
+running_block = (
+    '<div class="running-filters" role="group" aria-label="Running filters"></div>'
+    '<div class="running-list" id="running-list">'
+    '<button type="button" class="running-row" data-name="Alpha v Beta">Alpha v Beta</button>'
+    '</div>'
+    '<p class="shell-empty" id="running-empty">No live paper bets</p>'
+)
+open(copy_index, "w", encoding="utf-8").write(
+    '<p class="stamp"><time datetime="2026-10-01T00:00:00Z">old</time></p>'
+    '<div class="tiles"><div class="tile"><b>4</b><span>pairs in Production</span></div></div>'
+    + running_block)
+open(copy_prod, "w", encoding="utf-8").write(
+    '<p class="stamp"><time datetime="2026-10-05T12:00:00Z">a\\b</time></p>'
+    '<div class="tiles"><div class="tile"><b>10</b><span>leads still to come</span></div></div>')
+saved_copy_out = site_root.OUT
+site_root.OUT = copy_index
+try:
+    site_root.main()
+    copied_shell = open(copy_index, encoding="utf-8").read()
+finally:
+    site_root.OUT = saved_copy_out
+ok('<b>10</b>' in copied_shell and "leads still to come" in copied_shell,
+   "a different stamp copies production.html's tiles")
+ok('<b>4</b>' not in copied_shell, "the stale tiles do not stay")
+ok("2026-10-05T12:00:00Z" in copied_shell and "a\\b" in copied_shell,
+   "a different stamp copies production.html's clock, backslash included")
+ok(running_block in copied_shell, "the Running block is not rebuilt")
+open(copy_index, "w", encoding="utf-8").write(
+    '<p class="stamp"><time datetime="2026-10-01T00:00:00Z">old</time></p>'
+    '<div class="tiles"><div class="tile"><b>4</b><span>pairs in Production</span></div></div>'
+    + running_block)
+open(copy_prod, "w", encoding="utf-8").write(
+    '<p class="stamp"><time datetime="2026-10-01T00:00:00Z">old</time></p>'
+    '<div class="tiles"><div class="tile"><b>10</b><span>leads still to come</span></div></div>')
+site_root.OUT = copy_index
+try:
+    site_root.main()
+    held = open(copy_index, encoding="utf-8").read()
+finally:
+    site_root.OUT = saved_copy_out
+    shutil.rmtree(copy_dir, ignore_errors=True)
+ok('<b>4</b>' in held and '<b>10</b>' not in held,
+   "a matching stamp does not copy newer tiles")
+
+
 print("\nrecord_build does not stamp index.html")
 import book_track
 import fire_track
@@ -595,20 +711,39 @@ eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
 _RESULT = {"landed": "W", "missed": "L", "paid": "price result"}
 _recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
 _prod_settled = [
-    (html_lib.unescape(name), _RESULT[status])
-    for name, status in re.findall(
+    _RESULT[status]
+    for _name, status in re.findall(
         r'data-l="Match">([^<]*)</td>.*?data-l="Result"><span class="[^"]*">([^<]+)</span>',
         _recent, re.S)
 ]
-_shell_settled = [
-    (html_lib.unescape(name), html_lib.unescape(status))
-    for name, status in re.findall(
-        r'data-filter="settled"[^>]*data-name="([^"]*)"[^>]*>.*?'
-        r'<span class="running-status"[^>]*>([^<]+)</span>',
-        _committed, re.S)
-]
+
+
+def _visual(row):
+    match = re.search(r'aria-hidden="true">([^<]*)</span>', row)
+    return html_lib.unescape(match.group(1)) if match else ""
+
+
+def _bucket_bets(rows, bucket):
+    bets = []
+    for row in rows:
+        if _attr(row, "data-filter") != bucket:
+            continue
+        bets.extend(_bet_labels(_visual(row)))
+    return bets
+
+
+_shell_settled = _bucket_bets(_committed_rows, "settled")
 eq(sorted(_shell_settled), sorted(_prod_settled),
-   "committed Settled rows match production.html's recent settled leads")
+   "committed Settled bets match production.html's recent leads, per bet")
+eq(len(_shell_settled), len(_prod_settled),
+   "the Settled bet total equals the recent-lead entry count")
+_to_come = re.search(
+    r'<div class="tile"><b>(\d+)</b><span>leads still to come</span>', _committed)
+_upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
+eq(len(_upcoming_bets), int(_to_come.group(1)) if _to_come else None,
+   "Upcoming bets equal the strip's leads still to come")
+ok(_upcoming_bets and all(bet == "Open" for bet in _upcoming_bets),
+   "every upcoming bet is still open")
 
 
 def _browser():

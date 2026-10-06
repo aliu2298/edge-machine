@@ -93,9 +93,11 @@ def _swap_time(html, prod_html):
     prod_time = re.search(r'<time datetime="[^"]+"[^>]*>.*?</time>', prod_html, re.S)
     if not prod_time:
         return html
+    # A lambda keeps backslashes in the clock text. A plain replacement
+    # string would read them as group references.
     return re.sub(
         r'<time datetime="[^"]+"[^>]*>.*?</time>',
-        prod_time.group(0),
+        lambda _: prod_time.group(0),
         html,
         count=1,
         flags=re.S,

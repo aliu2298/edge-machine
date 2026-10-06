@@ -261,16 +261,61 @@ def _contest_bucket(items, now):
     return "upcoming"
 
 
-def _contest_status(items):
-    if any(lane["status"] == "Open" for lane in items):
-        return "Open"
-    labels = []
+# Visual token and spoken phrase for each bet status. W and L glue to the
+# count ("1W", "2L"); the words stay separate ("1 void", "1 open").
+_COMBO_ORDER = ("W", "L", "price result", "Void", "Open")
+_COMBO_TOKEN = {
+    "W": "W",
+    "L": "L",
+    "price result": "price result",
+    "Void": "void",
+    "Open": "open",
+}
+_SPOKEN = {
+    "W": "won",
+    "L": "lost",
+    "price result": "price result",
+    "Void": "void",
+    "Open": "open",
+}
+
+
+def _status_face(items):
+    """One contest row, one result line, counted per bet.
+
+    A single bet keeps its own label (W, L, Open, Void, price result). Several
+    bets add up: 2W, 1W 1L, 1W 1 void, 1L 1 open, 1W 1 price result. The
+    spoken line is what a screen reader should say instead of the letters.
+    """
+    counts = {}
     for lane in items:
-        if lane["status"] not in labels:
-            labels.append(lane["status"])
-    if len(labels) == 1:
-        return labels[0]
-    return items[0]["status"]
+        label = lane["status"]
+        counts[label] = counts.get(label, 0) + 1
+    total = sum(counts.values())
+    if total == 0:
+        return {"visual": "—", "spoken": "unknown", "data": ""}
+    if total == 1:
+        label = next(iter(counts))
+        return {"visual": label, "spoken": _SPOKEN.get(label, label), "data": label}
+    visual = []
+    spoken = []
+    for label in _COMBO_ORDER:
+        n = counts.get(label, 0)
+        if not n:
+            continue
+        token = _COMBO_TOKEN[label]
+        if label in ("W", "L"):
+            visual.append(f"{n}{token}")
+        else:
+            visual.append(f"{n} {token}")
+        spoken.append(f"{n} {_SPOKEN.get(label, label)}")
+    for label, n in counts.items():
+        if label in _COMBO_ORDER or not n:
+            continue
+        visual.append(f"{n} {label}")
+        spoken.append(f"{n} {label}")
+    data = next(iter(counts)) if len(counts) == 1 else "mixed"
+    return {"visual": " ".join(visual), "spoken": ", ".join(spoken), "data": data}
 
 
 def _extra_quote_lanes(d, st, shown, now):
@@ -367,13 +412,16 @@ def contests_from_lanes(lanes, now):
                       default=None)
         rep = next((lane for lane in items if lane["status"] == "Open"), items[0])
         competition = next((lane["competition"] for lane in items if lane.get("competition")), "")
+        face = _status_face(items)
         contests.append({
             "sport": items[0]["sport"] or "Other",
             "match": rep.get("match") or items[0].get("match") or "",
             "competition": competition,
             "kickoff": kickoff,
             "price": rep.get("price"),
-            "status": _contest_status(items),
+            "status": face["visual"],
+            "spoken": face["spoken"],
+            "data_status": face["data"],
             "bucket": _contest_bucket(items, now),
             "pill": "Production" if any(lane["lane"] == "Production" for lane in items) else "Sandbox",
             "lanes": len({lane["pair"] for lane in items if lane.get("pair")}) or len(items),
@@ -409,7 +457,9 @@ def _row_html(contest, index, now):
         f'<span class="running-contest">{esc(name)}</span>'
         f'<span class="running-price">{esc(price)}</span>'
         f'<span class="running-meta">'
-        f'<span class="running-status" data-status="{esc(contest["status"])}">{esc(contest["status"])}</span>'
+        f'<span class="running-status" data-status="{esc(contest["data_status"])}">'
+        f'<span aria-hidden="true">{esc(contest["status"])}</span>'
+        f'<span class="sr-only">{esc(contest["spoken"])}</span></span>'
         f'<span class="running-pills"><span class="lane-pill">{esc(contest["pill"])}</span>{lanes}</span>'
         f'</span></button>'
     )
