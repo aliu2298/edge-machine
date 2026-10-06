@@ -1,9 +1,10 @@
 // Running filters show one bucket of the rows already on the page. They do not
-// fetch bets or leave the page. Sport pills are aria-disabled chrome; this
-// file does not arm them. Rows are plain buttons: each is its own tab stop,
-// and Enter, Space, or a click presses one. The pressed row's card payload
-// was embedded at build time. This file only reads attributes and writes
-// text.
+// fetch bets or leave the page. Sport pills stay aria-disabled chrome; this
+// file does not arm them. A chip can still clear a sport filter that is
+// hiding its contest, then press that contest's row. Rows and chips are
+// plain buttons: each is its own tab stop, and Enter, Space, or a click
+// presses one. The pressed row's card payload was embedded at build time.
+// This file only reads attributes and writes text.
 (function () {
   var SAFE_PAGE = /^\.\/(?:soccer|tennis|cricket|nba|crypto|production)\.html$/;
 
@@ -35,6 +36,19 @@
     if (live) live.textContent = text || "";
   }
 
+  function chips() {
+    return document.querySelectorAll(".bet-chip");
+  }
+
+  function syncChips() {
+    var selected = document.querySelector('.running-row[aria-pressed="true"]');
+    var id = selected ? selected.getAttribute("data-contest") : "";
+    Array.prototype.forEach.call(chips(), function (chip) {
+      var on = !!id && chip.getAttribute("data-contest") === id;
+      chip.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
   function clearSelection() {
     Array.prototype.forEach.call(rows(), function (row) {
       row.setAttribute("aria-pressed", "false");
@@ -48,6 +62,7 @@
     if (head) head.hidden = true;
     if (empty) empty.hidden = false;
     clearCards();
+    syncChips();
     announce("Select a contest in Running.");
   }
 
@@ -151,10 +166,54 @@
     }
   }
 
+  function sportsNav() {
+    return document.querySelector("nav.sports");
+  }
+
+  function sportFilter() {
+    var nav = sportsNav();
+    var name = nav && nav.getAttribute("data-sport-filter");
+    return name || "all";
+  }
+
+  function sportLabel(key) {
+    if (!key || key === "all") return "";
+    var button = document.querySelector('nav.sports button[data-sport="' + CSS.escape(key) + '"]');
+    return button ? (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() : String(key).toLowerCase();
+  }
+
+  function sportAllows(row) {
+    var key = sportFilter();
+    if (key === "all") return true;
+    return (row.getAttribute("data-sport") || "").replace(/\s+/g, " ").trim().toLowerCase() === sportLabel(key);
+  }
+
+  function sportKeyFor(row) {
+    var label = (row.getAttribute("data-sport") || "").replace(/\s+/g, " ").trim().toLowerCase();
+    var buttons = document.querySelectorAll("nav.sports button[data-sport]");
+    for (var i = 0; i < buttons.length; i++) {
+      var text = (buttons[i].textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      if (text === label) return buttons[i].getAttribute("data-sport") || "all";
+    }
+    return "all";
+  }
+
+  function currentBucket() {
+    var bar = document.querySelector(".running-filters");
+    var pressed = bar && bar.querySelector("button[aria-pressed='true']");
+    return pressed ? pressed.getAttribute("data-filter") : "live";
+  }
+
+  function setSportFilter(name) {
+    var nav = sportsNav();
+    if (nav) nav.setAttribute("data-sport-filter", name || "all");
+    apply(currentBucket());
+  }
+
   function apply(name) {
     var n = 0;
     Array.prototype.forEach.call(rows(), function (row) {
-      var show = row.getAttribute("data-filter") === name;
+      var show = row.getAttribute("data-filter") === name && sportAllows(row);
       row.hidden = !show;
       if (show) n += 1;
     });
@@ -178,8 +237,8 @@
     if (selected && selected.hidden) clearSelection();
   }
 
-  function select(row) {
-    if (row.getAttribute("aria-pressed") === "true") {
+  function select(row, force) {
+    if (!force && row.getAttribute("aria-pressed") === "true") {
       clearSelection();
       return;
     }
@@ -191,7 +250,10 @@
     var head = document.getElementById("rules-head");
     var line = document.getElementById("rules-line");
     var empty = document.getElementById("rules-empty");
-    if (!head || !line) return;
+    if (!head || !line) {
+      syncChips();
+      return;
+    }
     var text = ["data-competition", "data-sport", "data-name", "data-kickoff", "data-price"]
       .map(function (attr) { return row.getAttribute(attr) || "—"; })
       .join(" · ");
@@ -200,6 +262,28 @@
     head.hidden = false;
     if (empty) empty.hidden = true;
     renderCards(row);
+    syncChips();
+  }
+
+  function rowForChip(chip) {
+    var id = chip.getAttribute("data-contest");
+    var found = null;
+    Array.prototype.forEach.call(rows(), function (row) {
+      if (row.getAttribute("data-contest") === id) found = row;
+    });
+    return found;
+  }
+
+  function openFromChip(chip) {
+    if (chip.getAttribute("aria-pressed") === "true") {
+      clearSelection();
+      return;
+    }
+    var row = rowForChip(chip);
+    if (!row) return;
+    if (!sportAllows(row)) setSportFilter(sportKeyFor(row));
+    if (row.hidden) apply(row.getAttribute("data-filter"));
+    select(row, true);
   }
 
   var bar = document.querySelector(".running-filters");
@@ -213,19 +297,26 @@
     apply(pressed ? pressed.getAttribute("data-filter") : "live");
   }
 
-  Array.prototype.forEach.call(rows(), function (row) {
-    row.addEventListener("click", function () {
-      select(row);
+  function bindPress(el, press) {
+    el.addEventListener("click", function () {
+      press();
     });
-    row.addEventListener("keydown", function (event) {
+    el.addEventListener("keydown", function (event) {
       if (event.key === "Escape") {
-        if (row.getAttribute("aria-pressed") === "true") clearSelection();
+        if (el.getAttribute("aria-pressed") === "true") clearSelection();
         return;
       }
       if (event.key !== "Enter" && event.key !== " " && event.key !== "Spacebar") return;
       event.preventDefault();
-      select(row);
+      press();
     });
+  }
+
+  Array.prototype.forEach.call(rows(), function (row) {
+    bindPress(row, function () { select(row); });
+  });
+  Array.prototype.forEach.call(chips(), function (chip) {
+    bindPress(chip, function () { openFromChip(chip); });
   });
   document.addEventListener("keydown", function (event) {
     if (event.key !== "Escape") return;

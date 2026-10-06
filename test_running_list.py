@@ -60,6 +60,14 @@ def _rows(page):
     return re.findall(r'<button\b[^>]*class="running-row"[^>]*>.*?</button>', page, re.S)
 
 
+def _chips(page):
+    return re.findall(r'<button\b[^>]*class="bet-chip"[^>]*>.*?</button>', page, re.S)
+
+
+def _chip_text(tag):
+    return re.sub(r"\s+", " ", html_lib.unescape(re.sub(r"<[^>]+>", " ", tag))).strip()
+
+
 def _attr(tag, name):
     match = re.search(rf'\b{name}="([^"]*)"', tag)
     return html_lib.unescape(match.group(1)) if match else None
@@ -225,6 +233,91 @@ eq(PAGE.count('aria-describedby="settled-caption"'), 1,
    "only the Settled filter points at the 14-day caption")
 ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption"' in PAGE,
    "the Settled filter's described-by is the caption")
+
+
+print("\nopen and recent roll")
+CHIPS = _chips(PAGE)
+ok(CHIPS, "the fixture roll has chips")
+ok("No open or recent paper bets yet." not in PAGE,
+   "a roll with chips does not keep the empty state")
+empty_roll = shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}}, blob={"leads": {}, "pairs": {}})
+ok("No open or recent paper bets yet." in empty_roll and 'class="bet-chip"' not in empty_roll,
+   "the empty state stays when there is nothing to show")
+ok("Old v Gone" not in _chip_text(" ".join(CHIPS)),
+   "a contest outside the 14-day window is not a chip")
+chip_names = []
+for chip in CHIPS:
+    contest = _attr(chip, "data-contest")
+    matched = [item for item in ROWS if _attr(item, "data-contest") == contest]
+    eq(len(matched), 1, f"chip {contest} selects exactly one Running row")
+    if len(matched) != 1:
+        continue
+    chip_names.append((_attr(chip, "data-status"), _attr(matched[0], "data-name")))
+# Open bets by kickoff, then settled bets newest first.
+eq([item[1] for item in chip_names], [
+    "Live v Now",
+    "Alpha v Beta",
+    "Alpha v Beta",
+    "Gamma v Delta",
+    "<b>Beta v javascript:alert(1)",
+    "Echo v Foxtrot",
+    "Void v Match",
+    "Price v Result",
+    "Inside v Edge",
+], "open chips follow kickoff, then settled chips are newest first")
+eq([item[0] for item in chip_names], [
+    "Open", "Open", "Open", "Open", "Open", "W", "Void", "price result", "L",
+], "chip status is Open, then W, Void, price result, and L")
+alpha_chips = [chip for chip in CHIPS if "Alpha v Beta" in _chip_text(chip)]
+eq(len(alpha_chips), 2, "each open bet on one contest is its own chip")
+eq(_attr(alpha_chips[0], "data-contest"), _attr(_got("Alpha v Beta"), "data-contest"),
+   "a chip points at that contest's Running row")
+ok("C" in _chip_text(alpha_chips[0]) and "Alpha to win · 54¢" in _chip_text(alpha_chips[0]),
+   "a chip shows the sport letter, the market, and the price in cents")
+ok("Alpha to win · 40¢" in _chip_text(alpha_chips[1]),
+   "the second chip keeps the other bet's price")
+gamma_chips = [chip for chip in CHIPS if "Gamma v Delta" in _chip_text(chip)]
+eq(len(gamma_chips), 1, "Gamma v Delta is one chip")
+ok(gamma_chips and "S" in _chip_text(gamma_chips[0]),
+   "a soccer chip uses the sport letter S")
+ok('aria-pressed="false"' in CHIPS[0] and "tabindex=\"-1\"" not in CHIPS[0],
+   "a chip is a focusable button that starts unpressed")
+ok("&lt;b&gt;" in CHIPS[4] and 'href="javascript:' not in CHIPS[4],
+   "the hostile chip escapes the contest name and does not make it a link")
+top = re.search(r'<div class="topbar">.*?<p class="stamp">(.*?)</p>', PAGE, re.S)
+ok(top and "2026-10-05T18:00:00Z" in top.group(1) and "CT" in top.group(1),
+   "the top bar stamp is this build's clock, labeled CT")
+ok(shell_build._stamp(NOW) in top.group(0),
+   "the stamp reuses the build timestamp, not a new clock")
+
+
+print("\ntwo prices inside the 14-day window")
+_twin_kick = datetime.datetime(2026, 10, 4, 16, 0, tzinfo=timezone.utc)
+ok(shell_build._in_shell_window(_twin_kick, NOW),
+   "the two-price fixture is inside the 14-day settled window")
+_twin_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob([
+    _lead("w91", "Twin", "Price", "2026-10-04T16:00:00Z", "hit",
+          "a|soccer", "soccer", 0.91),
+    _lead("l40", "Twin", "Price", "2026-10-04T16:00:00Z", "miss",
+          "b|soccer", "soccer", 0.40),
+]))
+_twin_rows = [row for row in _rows(_twin_page) if _attr(row, "data-name") == "Twin v Price"]
+_two_price = [row for row in _twin_rows if " / " in (_attr(row, "data-price") or "")]
+ok(len(_two_price) > 0, "the fixture checked at least one two-price contest")
+eq(len(_twin_rows), 1, "two prices on one contest are one Running row")
+eq(_attr(_twin_rows[0], "data-filter"), "settled",
+   "a graded two-price contest inside the window is Settled")
+eq(_attr(_twin_rows[0], "data-price"), "91¢ / 40¢",
+   "a production-recent row lists each bet's cents")
+ok("92¢" not in (_attr(_twin_rows[0], "data-price") or ""),
+   "91¢ is not shown as 92¢")
+_twin_cards = json.loads(_attr(_twin_rows[0], "data-cards"))
+eq([card["price"] for card in _twin_cards], ["91¢", "40¢"],
+   "each card price matches that bet, 91¢ then 40¢")
+eq(_twin_cards[0]["price"], shell_build._cents(0.91),
+   "the card price is the cents helper, so 0.91 stays 91¢")
+eq(shell_build._cents(0.91), "91¢", "0.91 formats as 91¢")
 
 
 def _face_leads(pairs, kickoff="2026-10-04T15:00:00Z"):
@@ -1097,6 +1190,22 @@ for _name, _headline, _status in _prod_rows:
     ok(_status in _bet_labels(_visual(_hits[0])),
        "a production recent status is on that Running row")
     _matched_settled += 1
+# Guard against a vacuous loop only when this data can feed it: Production
+# recent rows on the page and a graded feed lead inside the 14-day window at
+# the build clock. A quiet week (no recent Production leads) or a feed whose
+# graded leads are all older than 14 days has nothing to check.
+_window_graded = [
+    lead for lead in _feed_leads
+    if lead.get("status") and lead.get("status") != "pending"
+    and production._one_instant(lead.get("kickoff")) is not None
+    and _clock_m is not None
+    and shell_build._in_shell_window(production._one_instant(lead.get("kickoff")), _when)
+]
+if _prod_rows and _window_graded:
+    ok(_matched_settled > 0,
+       "the Settled loop checked at least one in-window production recent row")
+else:
+    print("  skip  no in-window graded Production lead at this build clock; the Settled loop has nothing to check")
 _shell_settled = _bucket_bets(_committed_rows, "settled")
 ok(len(_shell_settled) >= _matched_settled,
    "Running Settled bets cover the production recent rows still on the page")
@@ -1141,6 +1250,33 @@ def _browser():
                 browser = p.chromium.launch(channel="chrome", headless=True)
                 page = browser.new_page(viewport={"width": 1280, "height": 800})
                 page.goto(base, wait_until="load")
+                roll = page.evaluate("""() => {
+                  const track = document.querySelector(".bet-roll-track");
+                  if (!track) return null;
+                  const style = getComputedStyle(track);
+                  return {
+                    overflowX: style.overflowX,
+                    nowrap: style.flexWrap,
+                    chips: track.querySelectorAll(".bet-chip").length,
+                    empty: track.querySelector(".bet-roll-empty") ? true : false,
+                  };
+                }""")
+                ok(roll and roll["chips"] > 0 and not roll["empty"]
+                   and roll["overflowX"] in ("auto", "scroll") and roll["nowrap"] == "nowrap",
+                   f"the roll is a horizontal chip scroller ({roll})")
+                page.set_viewport_size({"width": 640, "height": 800})
+                page.wait_for_timeout(30)
+                narrow_roll = page.evaluate("""() => {
+                  const track = document.querySelector(".bet-roll-track");
+                  return {
+                    scrolls: track.scrollWidth > track.clientWidth + 1,
+                    page: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+                  };
+                }""")
+                ok(narrow_roll["scrolls"] and not narrow_roll["page"],
+                   f"at 640px the roll scrolls inside the track ({narrow_roll})")
+                page.set_viewport_size({"width": 1280, "height": 800})
+                page.wait_for_timeout(30)
                 styles = page.evaluate("""() => {
                   const sport = document.querySelector('nav.sports button[data-sport="crypto"]');
                   const filter = document.querySelector('.running-filters button[data-filter="settled"]');

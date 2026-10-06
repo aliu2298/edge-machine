@@ -172,10 +172,18 @@ def _check_chrome(html, why, placeholders=True):
     ok(">Live <span class=\"count\">" in html and ">Settled <span class=\"count\">" in html
        and ">Upcoming <span class=\"count\">" in html,
        f"{why} counts each Running filter")
-    ok("No open or recent paper bets yet." in html,
-       f"{why} bet roll is an empty state, not fake chips")
-    ok('class="bet-chip"' not in html and 'class="event-chip"' not in html,
-       f"{why} bet roll has no result chips")
+    if 'class="running-row"' in html:
+        ok('class="bet-chip"' in html, f"{why} wires the Open and recent roll")
+        ok("No open or recent paper bets yet." not in html,
+           f"{why} hides the roll empty state when a chip is showing")
+    else:
+        ok("No open or recent paper bets yet." in html,
+           f"{why} bet roll stays empty when there is nothing to show")
+        ok('class="bet-chip"' not in html, f"{why} an empty roll has no chips")
+    ok('class="event-chip"' not in html, f"{why} bet roll has no sketch chips")
+    stamp = re.search(r'<div class="topbar">.*?<p class="stamp">(.*?)</p>', html, re.S)
+    ok(stamp and fmt.iso_z(NOW) in stamp.group(1) and "CT" in stamp.group(1),
+       f"{why} top bar stamp is the build clock, labeled CT")
     ok("No live, settled, or upcoming paper bets." not in html,
        f"{why} does not use the combined empty line")
     ok("These filters do not change the list yet." not in html,
@@ -225,6 +233,8 @@ if shell_build is not None:
         "recent leads landed": "0/0",
         "next lead (CT)": production.PLACEHOLDER_DATE,
     }, "an empty board prints the Production zeros, not the sketch")
+    ok("No open or recent paper bets yet." in empty and 'class="bet-chip"' not in empty,
+       "an empty board keeps the roll empty state")
     live = shell_build.page(NOW)
     live_prod = production.page(T.load(), T.load_stages(), production.load_feed(), "", now=NOW)
     eq(_tiles(live), _tiles(live_prod),
@@ -291,7 +301,10 @@ if shell_build is not None:
     ok("fetch(" not in js and "location." not in js and "XMLHttpRequest" not in js,
        "shell.js does not load bets or navigate")
     ok("aria-pressed" in js, "shell.js records which Running filter is pressed")
-    ok("nav.sports" not in js, "shell.js does not arm the sport pills")
+    ok("data-sport-filter" in js,
+       "a chip can switch a sport filter that is hiding its contest")
+    ok("nav.sports button" in js,
+       "shell.js reads a sport pill so a chip can reveal its contest")
     ok(not os.path.isfile(os.path.join(ROOT, "public_site", "root.js")),
        "root.js is gone; no page loads the old Sandbox redirect")
 

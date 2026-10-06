@@ -691,10 +691,11 @@ def _card(lane, board):
         card["roi"] = board["roi"]
     if board.get("record"):
         card["record"] = board["record"]
-    # The numbers are the pair's whole Sandbox record, every competition
-    # together. The sport page splits that same record by competition.
+    # The numbers are that pair's Sandbox record on the US exchanges, every
+    # competition together. The sport page splits the same record by competition.
+    # pair_status already limits the judged sample to TRADEABLE_VENUES.
     if board.get("verdict") or board.get("roi") or board.get("record"):
-        card["stats_note"] = "Sandbox, all competitions"
+        card["stats_note"] = "Sandbox, US exchanges, all competitions"
     return card
 
 
@@ -769,6 +770,76 @@ def _group_key(label):
         return (1, label.lower())
 
 
+def _sport_letter(label):
+    """One letter for the roll. The full sport name stays in the chip for readers."""
+    text = str(label or "").strip()
+    return text[:1].upper() if text else "?"
+
+
+_OPEN_CHIP = ("Open", "Awaiting result")
+_SETTLED_CHIP = ("W", "L", "Void", "price result")
+
+
+def _chip_rank(kind, kick, order):
+    """Open bets by kickoff, then settled bets newest first. Missing times go last."""
+    if kind == "open":
+        when = kick.timestamp() if kick is not None else float("inf")
+        return (0, when, order)
+    when = -kick.timestamp() if kick is not None else float("inf")
+    return (1, when, order)
+
+
+def _chip_html(contest, index, card):
+    """One bet. Text is escaped here; the browser does not parse a payload."""
+    status = card.get("status") or "Unknown"
+    sport = contest.get("sport") or "Other"
+    name = contest.get("match") or "—"
+    market = card.get("market") or "—"
+    price = card.get("price") or "—"
+    spoken = card.get("spoken") or status
+    esc = site_chrome.esc
+    return (
+        f'<button type="button" class="bet-chip"'
+        f' data-contest="c{index}" data-status="{esc(status)}" aria-pressed="false">'
+        f'<span class="bet-chip-letter" aria-hidden="true">{esc(_sport_letter(sport))}</span>'
+        f'<span class="sr-only">{esc(sport)}</span>'
+        f'<span class="bet-chip-contest">{esc(name)}</span>'
+        f'<span class="bet-chip-line">{esc(market)} · {esc(price)}</span>'
+        f'<span class="bet-chip-status" data-status="{esc(status)}">'
+        f'<span aria-hidden="true">{esc(status)}</span>'
+        f'<span class="sr-only">{esc(spoken)}</span></span>'
+        f'</button>'
+    )
+
+
+def _roll_html(ordered):
+    """Open chips, then recently settled chips. Same contests as the Running list.
+
+    An open bet past the await window is still an open chip, with the Awaiting
+    result status the row already uses. Settled chips are the graded bets on
+    contests the 14-day window kept. Nothing else, including a contest outside
+    that window, is a chip.
+    """
+    pending = []
+    order = 0
+    for index, contest in enumerate(ordered):
+        kick = contest.get("kickoff")
+        for card in contest.get("cards") or []:
+            status = card.get("status") or ""
+            if status in _OPEN_CHIP:
+                kind = "open"
+            elif contest.get("bucket") == "settled" or status in _SETTLED_CHIP:
+                kind = "settled"
+            else:
+                continue
+            pending.append((kind, kick, order, _chip_html(contest, index, card)))
+            order += 1
+    if not pending:
+        return '<p class="bet-roll-empty">No open or recent paper bets yet.</p>'
+    pending.sort(key=lambda item: _chip_rank(item[0], item[1], item[2]))
+    return "".join(item[3] for item in pending)
+
+
 def _row_html(contest, index, now):
     bucket = contest["bucket"]
     hidden = "" if bucket == "live" else " hidden"
@@ -810,6 +881,7 @@ def _running_body(d, st, blob, now):
     for contest in contests:
         counts[contest["bucket"]] = counts.get(contest["bucket"], 0) + 1
     groups = []
+    ordered = []
     number = 0
     for label in sorted(by_sport, key=_group_key):
         items = sorted(by_sport[label],
@@ -819,6 +891,7 @@ def _running_body(d, st, blob, now):
         rows = []
         for contest in items:
             rows.append(_row_html(contest, number, now))
+            ordered.append(contest)
             number += 1
         hidden = "" if any(contest["bucket"] == "live" for contest in items) else " hidden"
         groups.append(
@@ -834,7 +907,7 @@ def _running_body(d, st, blob, now):
         f' data-upcoming="{site_chrome.esc(_EMPTY["upcoming"])}">'
         f'{site_chrome.esc(_EMPTY["live"])}</p>'
     )
-    return _running_filters(counts), "".join(groups), empty
+    return _running_filters(counts), "".join(groups), empty, _roll_html(ordered)
 
 
 def page(now, d=None, st=None, blob=None, tiles=None):
@@ -853,7 +926,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
         summary = tiles
         if d is None or st is None or blob is None:
             d, st, blob = _load(d, st, blob)
-    filters, groups, empty = _running_body(d, st, blob, when)
+    filters, groups, empty, roll = _running_body(d, st, blob, when)
     caption = (
         f'<p class="settled-caption" id="settled-caption" hidden>'
         f'Last {int(SHELL_SETTLED_DAYS)} days</p>'
@@ -908,7 +981,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <div class="bet-roll">
 <p class="bet-roll-label">Open &amp; recent</p>
 <div class="bet-roll-track">
-<p class="bet-roll-empty">No open or recent paper bets yet.</p>
+{roll}
 </div>
 </div>
 <div class="topbar">
