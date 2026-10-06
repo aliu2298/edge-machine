@@ -514,8 +514,9 @@ if tennis_build is not None and SB is not None:
     ok("99" not in _ten and "99" not in _cri and "Table Tennis" not in _ten and "Table Tennis" not in _cri,
        "table tennis stays off the Tennis and Cricket tabs")
     ok("within 3 hours of the scheduled start" in _ten and "Challenger" in _ten
-       and "Tennis Explorer" in _ten and "TENNIS_COMBO_BAND_SINCE" in _ten,
-       "tennis keeps the 3-hour note, the tour check, and the combo clocks")
+       and "Tennis Explorer" in _ten and S.TENNIS_COMBO_BAND_SINCE in _ten
+       and "TENNIS_COMBO_BAND_SINCE" not in _ten,
+       "tennis keeps the 3-hour note, the tour check, and the combo clock")
     ok("PRODUCTION" in _cri and "Oddspedia community tips" in _cri
        and "Cricket consensus" in _cri,
        "cricket shows the Production lane and the consensus lane")

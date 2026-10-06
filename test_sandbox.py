@@ -5833,7 +5833,8 @@ print("\nthe tennis band, narrowed")
 
 eq(S.fav_band("tennis"), (0.77, 0.81),
    "tennis backs 0.77-0.81 since 2026-09-24: 0.75-0.77 returned -1.03% on its own")
-eq(S.fav_band("tennis_combo"), (0.77, 0.81), "and a combo leg is the same pick, so it follows")
+eq(S.TENNIS_3H_BAND, (0.70, 0.85),
+   "a combo leg is cut from the 3-hour band, not from fav_band")
 eq(S.fav_band("mma"), S.FAV_BAND,
    "MMA keeps the full band: four settled bets is nothing to narrow on")
 _bp = [dict(market_id="m1", sport="tennis", side_a="A", side_b="B", price_a=0.78, price_b=0.25,
@@ -7038,8 +7039,8 @@ eq(S.SOURCES["tennis_fav_band_3h"]["note"],
    "was logged between that restart and the widening, so the record from "
    "the restart is the wide band only and is not reset again. Two kept-tour "
    "bets logged after the rule was written and before that merge stay on "
-   "file under the old rule and do not count in the record. The basket lanes keep "
-   "0.77-0.81 legs. The window stays 3 hours. Why the window: closing-line value on the "
+   "file under the old rule and do not count in the record. The basket lanes cut "
+   "the same 0.70-0.85 legs. The window stays 3 hours. Why the window: closing-line value on the "
    "band was about -1.2c on entries 3 or more hours before the start, and "
    "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
    "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "

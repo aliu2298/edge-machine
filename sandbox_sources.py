@@ -278,8 +278,8 @@ SOURCES = {
              "was logged between that restart and the widening, so the record from "
              "the restart is the wide band only and is not reset again. Two kept-tour "
              "bets logged after the rule was written and before that merge stay on "
-             "file under the old rule and do not count in the record. The basket lanes keep "
-             "0.77-0.81 legs. The window stays 3 hours. Why the window: closing-line value on the "
+             "file under the old rule and do not count in the record. The basket lanes cut "
+             "the same 0.70-0.85 legs. The window stays 3 hours. Why the window: closing-line value on the "
              "band was about -1.2c on entries 3 or more hours before the start, and "
              "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
              "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
@@ -2661,15 +2661,52 @@ _kalshi_open_fetch = {}
 # refused series cannot eat the tracker's run.
 _KALSHI_OPEN_ATTEMPTS = 3
 _KALSHI_OPEN_BACKOFF_S = (0.4, 0.8)
+# One GET. Short on purpose: a silent Kalshi (the connection hangs instead of
+# answering) used to wait out urllib and then curl, 30s each, three times,
+# about three minutes a series. Curl is not tried after a timeout, so the
+# wait is this times the attempts, plus the backoff.
+_KALSHI_HTTP_TIMEOUT = 8
+# fetch_kalshi_venue and fetch_kalshi_binary share one pool. Tennis has fewer
+# series than this, so a full tennis outage costs one series, not three.
+_KALSHI_OPEN_WORKERS = 6
 
 
-def _kalshi_http(url, timeout=30):
+def kalshi_silent_outage_seconds():
+    """Worst-case seconds for one series when every attempt times out.
+
+    Curl is not called after a timeout, so it is not in this number. Tennis
+    fetches its series in one wave (`_KALSHI_OPEN_WORKERS`), so this is also
+    the wall-clock for a full tennis outage.
+    """
+    pauses = _KALSHI_OPEN_BACKOFF_S[:max(0, _KALSHI_OPEN_ATTEMPTS - 1)]
+    return _KALSHI_HTTP_TIMEOUT * _KALSHI_OPEN_ATTEMPTS + sum(pauses)
+
+
+def _kalshi_timed_out(exc):
+    """True when this transport error is a timeout, not a fast refusal."""
+    seen = set()
+    cur = exc
+    while cur is not None and id(cur) not in seen:
+        seen.add(id(cur))
+        if isinstance(cur, TimeoutError):
+            return True
+        nxt = getattr(cur, "reason", None)
+        if nxt is None or nxt is cur:
+            nxt = getattr(cur, "__cause__", None)
+        cur = nxt
+    return False
+
+
+def _kalshi_http(url, timeout=None):
     """(http_status, json object) for one Kalshi GET.
 
     Status 0 is a transport failure. A 429 body is not a market list: curl's
     fallback used to return that body with no status, and the caller read it
-    as an empty book.
+    as an empty book. A timeout does not fall through to curl. The second
+    client would wait out the same silence.
     """
+    if timeout is None:
+        timeout = _KALSHI_HTTP_TIMEOUT
     try:
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=timeout) as f:
@@ -2686,8 +2723,9 @@ def _kalshi_http(url, timeout=30):
         except (UnicodeError, ValueError):
             body = {}
         return e.code, body if isinstance(body, dict) else {}
-    except (OSError, http.client.HTTPException, ValueError):
-        pass
+    except (OSError, http.client.HTTPException, ValueError) as exc:
+        if _kalshi_timed_out(exc):
+            return 0, {}
     try:
         out = subprocess.run(
             ["curl", "-sS", "-w", "\n%{http_code}", "--max-time", str(timeout), "-A", UA, url],
@@ -2711,7 +2749,7 @@ def _kalshi_open_attempt(url):
     """One page, retried on 429, 5xx, and transport failure. Other 4xx are final."""
     http, payload = 0, {}
     for i in range(_KALSHI_OPEN_ATTEMPTS):
-        http, payload = _kalshi_http(url, timeout=30)
+        http, payload = _kalshi_http(url, timeout=_KALSHI_HTTP_TIMEOUT)
         markets = payload.get("markets") if isinstance(payload, dict) else None
         if http == 200 and isinstance(markets, list):
             return http, payload
@@ -2726,11 +2764,13 @@ def _kalshi_open_attempt(url):
 def _kalshi_fetch_open(series):
     """(markets or None, http, 'ok'|'empty'|'failed').
 
-    'ok' is a finished non-empty book. 'empty' is HTTP 200 with no markets.
-    Anything else, including a 429 body, is 'failed'. None markets means failed.
+    'ok' is a non-empty book. 'empty' is HTTP 200 with no markets. A failure
+    on the first page, including a 429 body, is 'failed' and returns no
+    markets. A failure on a later page keeps the pages already read and is
+    logged on its own line: dropping them hid every open market in the series.
     """
     out, cursor, last_http = [], "", 0
-    for _page in range(10):
+    for page in range(10):
         url = f"{KALSHI_API}?limit=200&status=open&series_ticker={series}"
         if cursor:
             url += f"&cursor={cursor}"
@@ -2738,6 +2778,11 @@ def _kalshi_fetch_open(series):
         last_http = http
         markets = payload.get("markets") if isinstance(payload, dict) else None
         if http != 200 or not isinstance(markets, list):
+            if out:
+                print(f"  ! kalshi: {series} open markets page {page + 1} "
+                      f"fetch failed: HTTP {http}; keeping {len(out)} "
+                      f"markets from earlier pages")
+                return out, last_http, "ok"
             return None, last_http, "failed"
         out.extend(markets)
         cursor = payload.get("cursor") or ""
@@ -2782,29 +2827,46 @@ def _kalshi_open(series):
     return []
 
 
+def _atp_book_status():
+    """'ok', 'empty', 'failed', or 'unfetched' for KXATPMATCH only.
+
+    A 429 or an empty Challenger book is not an ATP failure. 'failed' and
+    'empty' mean the ATP series itself was asked and did not return a book.
+    A last good ATP book still counts as 'ok'.
+    """
+    if _kalshi_tour_good.get("KXATPMATCH"):
+        return "ok"
+    state = _kalshi_open_fetch.get("KXATPMATCH")
+    if not state:
+        return "unfetched"
+    status = state.get("status")
+    if status in ("ok", "empty", "failed"):
+        return status
+    return "failed"
+
+
 def kalshi_tour_fetch():
-    """'ok', 'empty', 'failed', or 'unfetched' for the ATP and Challenger books.
+    """The ATP book's status. See `_atp_book_status`.
 
     'failed' and 'empty' are not a listing. They do not mean the match is a
-    Challenger, and they do not mean Kalshi has no such match. A series with
-    a last good book still counts as 'ok'.
+    Challenger, and they do not mean Kalshi has no such match. The Challenger
+    series is not part of this answer.
     """
-    seen = []
-    for series, _tier in _TOUR_SERIES:
-        if _kalshi_tour_good.get(series):
-            seen.append("ok")
-            continue
-        state = _kalshi_open_fetch.get(series)
-        if not state:
-            continue
-        seen.append(state.get("status"))
-    if not seen:
-        return "unfetched"
-    if "failed" in seen:
-        return "failed"
-    if "empty" in seen:
-        return "empty"
-    return "ok"
+    return _atp_book_status()
+
+
+def _pm_atp_skip_reason(row):
+    """Why an atp-league row is not a bet, on its own line.
+
+    A fetch failure is not 'not listed'. The series line already named the
+    HTTP status. This line says which of the two it was.
+    """
+    status = _atp_book_status()
+    if status == "failed":
+        return "Kalshi ATP fetch failed, tour unknown"
+    if status == "empty":
+        return "Kalshi ATP book empty, tour unknown"
+    return "not listed, tour unknown"
 
 
 def _num(x):
@@ -2870,7 +2932,7 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None, now=None):
     # nearly five minutes of a run whose CPU time was under two seconds. Six workers stays
     # well inside Kalshi's public read limits.
     series_list = KALSHI_VENUE_SERIES.get(sport) or []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=_KALSHI_OPEN_WORKERS) as pool:
         fetched = dict(zip(series_list, pool.map(_kalshi_open, series_list)))
     events = {}
     for series in series_list:
@@ -3798,7 +3860,7 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
     if cfg.get("drop_series"):
         series = [x for x in series if not re.match(cfg["drop_series"], x)]
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=_KALSHI_OPEN_WORKERS) as pool:
         fetched = dict(zip(series, pool.map(_kalshi_open, series)))
 
     rows, listed = [], 0
@@ -4432,13 +4494,82 @@ def _open_tour_listings():
     return out
 
 
+# Particles and generational suffixes are not a surname. "de" is already in
+# STOP; the rest are here so "del Potro" and "Farah Jr" still share a surname
+# with the short form. A given name is not.
+_SURNAME_PARTICLES = frozenset({
+    "de", "del", "della", "di", "da", "dos", "das", "du",
+    "van", "von", "der", "den", "la", "le", "st", "saint",
+})
+_SURNAME_SUFFIXES = frozenset({"jr", "sr", "ii", "iii", "iv"})
+
+
+def _person_words(name):
+    """Significant words of one player, in order. Particles and suffixes drop."""
+    text = _name_text(name).replace("-", " ")
+    words = []
+    for w in re.sub(r"[^a-z0-9 ]", " ", text).split():
+        if len(w) <= 1 or w in STOP or w in _SURNAME_PARTICLES or w in _SURNAME_SUFFIXES:
+            continue
+        words.append(w)
+    return words
+
+
+def _surnames(name):
+    """Surname tokens: the last significant word, plus a hyphenated last word intact.
+
+    "Auger-Aliassime" contributes both "aliassime" and "augeraliassime", so a
+    feed that writes the hyphen as a space still shares the surname. An empty
+    name has none, and no surname is not a match.
+    """
+    words = _person_words(name)
+    if not words:
+        return frozenset()
+    out = {words[-1]}
+    raw = _name_text(name).split()
+    while raw and re.sub(r"[^a-z0-9]", "", raw[-1]) in _SURNAME_SUFFIXES:
+        raw.pop()
+    if raw:
+        intact = re.sub(r"[^a-z0-9]", "", raw[-1].replace("-", ""))
+        if len(intact) > 1:
+            out.add(intact)
+    return frozenset(out)
+
+
+def _surname_match(left, right):
+    """True when these two strings name one player at surname level.
+
+    The surnames have to agree. A shared given name is not a match: "Alex
+    Molcan" and "Alex de Minaur" share a token and are different players.
+    Surname-first writing ("Fils Arthur") still matches, because each side's
+    surname occurs in the other's words. A missing surname does not match.
+    """
+    sl, sr = _surnames(left), _surnames(right)
+    if not sl or not sr:
+        return False
+    if sl & sr:
+        return True
+    wl, wr = set(_person_words(left)), set(_person_words(right))
+    return bool(sl & wr) and bool(sr & wl)
+
+
+def _tour_pair_match(a1, a2, b1, b2):
+    """True when both players match, either order. One shared surname is not enough."""
+    if _surname_match(a1, b1) and _surname_match(a2, b2):
+        return True
+    if _surname_match(a1, b2) and _surname_match(a2, b1):
+        return True
+    return False
+
+
 def match_pm_atp_tour(side_a, side_b, listings, on=None):
     """'atp', 'atpch', or None for one Polymarket US atp-league match.
 
     None is unknown: no listing named both players on a date within a day,
-    or ATP and Challenger both did. Unknown is not ATP. `on` is the
-    Polymarket row's date. A listing with no date, or more than a day away,
-    does not count.
+    or ATP and Challenger both did. Unknown is not ATP. Both players have to
+    match at surname level. One shared given name is not a listing. `on` is
+    the Polymarket row's date. A listing with no date, or more than a day
+    away, does not count.
     """
     hits = set()
     for item in listings or []:
@@ -4446,8 +4577,7 @@ def match_pm_atp_tour(side_a, side_b, listings, on=None):
         listed = item[3] if len(item) > 3 else None
         if not _tour_days_ok(on, listed):
             continue
-        score, _flip = pair_match(side_a, side_b, a, b, sport="tennis")
-        if score > 0:
+        if _tour_pair_match(side_a, side_b, a, b):
             hits.add(tier)
     if hits == {"atp"}:
         return "atp"
@@ -4474,9 +4604,10 @@ def apply_pm_atp_tours(rows, listings_rows):
     including 'unknown', is left as it is, so a later pass over a deduped
     universe cannot wipe a Kalshi cross-match.
     """
-    # 'failed' or 'empty' means a series was asked and did not return a book.
-    # Do not read names off that answer. A last good book keeps the status
-    # at 'ok' inside kalshi_tour_fetch, so this is not that case.
+    # 'failed' or 'empty' means the ATP series itself was asked and did not
+    # return a book. A Challenger 429 or an empty Challenger body is not that:
+    # the ATP book still confirms the matches it names, and a match it does
+    # not name stays unknown. A last good ATP book keeps the status at 'ok'.
     blocked = kalshi_tour_fetch() in ("failed", "empty")
     listings = [] if blocked else (
         _kalshi_tour_listings(listings_rows) + _open_tour_listings())
@@ -5511,7 +5642,7 @@ def pm_combo_legs_by_day(universe=None):
                     p = r.get(f"price_{side}")
                     if p is not None and lo <= p < hi and (r.get("tradeable") or {}).get(side, True):
                         print(f"  pm_combo: skip {r.get('market_id')}: "
-                              f"tour {r.get('tour') or 'unknown'}, not ATP")
+                              f"{_pm_atp_skip_reason(r)}")
                         break
             continue
         for side in ("a", "b"):
@@ -5878,9 +6009,9 @@ TENNIS_FAV_3H = timedelta(hours=3)
 # is not this lane's evidence. On the kept tours 0.77-0.81 left about one contest a day
 # before the window. The record is not reset again: nothing was logged between
 # TENNIS_FAV_KEEP_SINCE and this change, so the record from that clock is this band only.
-# BAND_BY_SPORT["tennis"] is unchanged, so the six basket lanes still cut 0.77-0.81 legs.
+# BAND_BY_SPORT["tennis"] is unchanged: tennis_fav_band still cuts 0.77-0.81.
+# The six basket lanes cut this band, not that one.
 TENNIS_3H_BAND = (0.70, 0.85)
-TENNIS_3H_BAND_SINCE = "2026-10-04"
 
 # The basket lanes cut their legs from TENNIS_3H_BAND too, from TENNIS_COMBO_BAND_SINCE.
 # Unlike the 3-hour lane they DO reset: pm_combo2 logged a 0.77-0.81 basket after
@@ -5895,6 +6026,13 @@ TENNIS_COMBO_BAND_SINCE = "2026-10-04T06:46:57+00:00"
 TENNIS_COMBO_RESET = frozenset({
     "tennis_combo2", "tennis_combo3", "tennis_combo4", "pm_combo2", "pm_combo3",
 })
+# The five reset notes name this instant. Written with the constant's name so
+# the clock stays defined once, next to the reset set; the page has to show
+# the time, not the name.
+for _lane in TENNIS_COMBO_RESET:
+    SOURCES[_lane]["note"] = SOURCES[_lane]["note"].replace(
+        "TENNIS_COMBO_BAND_SINCE", TENNIS_COMBO_BAND_SINCE)
+del _lane
 
 
 def _combo_leg(row, side):
@@ -5998,7 +6136,7 @@ def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
         if not tennis_row_kept(r):
             if r.get("pm_league") == "atp":
                 print(f"  tennis_fav_band_3h: skip {r.get('market_id')}: "
-                      f"tour {r.get('tour') or 'unknown'}, not ATP")
+                      f"{_pm_atp_skip_reason(r)}")
             continue
         near.append(r)
     return band_picks(sport, TENNIS_3H_BAND, {sport: near})

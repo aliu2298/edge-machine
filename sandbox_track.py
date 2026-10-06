@@ -284,15 +284,18 @@ PAIR_OVERRIDES = {
     # Yes. An under is the No side of the over-3.5 contract (ticker suffix -4), so
     # FEED_SIDE now carries the side per kind and the lead names its exact contract.
     #
-    # WHAT DOWNSTREAM STILL CANNOT DO WITH IT, stated here rather than discovered later:
-    # the execution layer refuses total_lte at BOTH venues today, cleanly and by design.
-    # Polymarket US has the market but does not expose an Under price in its verified
-    # fields (mapping.NEEDS_SIDE), and the Kalshi reader takes only yes_ask/yes_bid, so
-    # covers() finds no series suffix for the kind. Each refuses with a named reason and
-    # neither approximates, which is the right failure. The lead is therefore publishable
-    # and can be taken by hand — Kalshi sells the No on that contract — and the execution
-    # layer will skip it until a No-side price is wired in. That change is downstream and
-    # is not made here.
+    # WHAT THE ROUTE IS, AND WHAT DOWNSTREAM DOES WITH IT. lead_from_quote puts the
+    # contract ticker (the -4 strike) in route.market, "Under 3.5 goals" in
+    # route.outcome, and outcome_side "no". That is the No side of Kalshi's over-3.5
+    # contract. A routed Kalshi lead does not go through covers() or mapping.NEEDS_SIDE.
+    # Those refuse an UNROUTED total_lte only: covers() finds no series suffix for the
+    # kind, and NEEDS_SIDE finds no Under price in the verified fields. The routed path
+    # looks route.market up as an event ticker. This value is the contract ticker, so
+    # that lookup finds no open markets and the lead is refused before any order.
+    # The Kalshi order path buys Yes and does not read outcome_side. Rewriting the
+    # route into an event ticker plus the Over subtitle would buy Over 3.5, the
+    # opposite of the bet. The lead can be taken by hand — Kalshi sells the No on
+    # that contract. That downstream change is not made here.
     "u35_low_scoring|soccer_u35_intl": dict(moved_on="2026-10-04", production_at=None),
     #   OLBG boxing — listed 2026-09-22, OUT 2026-09-27, as asked. It went 8-0 on the US
     #   exchanges (+17.4%, +16.3% after fees) and is still taken off, because the win record
