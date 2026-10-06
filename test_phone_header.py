@@ -73,7 +73,8 @@ def _has_toggle(path):
 
 
 # One link, or a breadcrumb in that slot. The section nav must not be rendered.
-_NO_TOC = {"index.html", "trading.html", "archive/index.html"}
+# The NBA board sits in the shell. It has sport tabs, not a section nav.
+_NO_TOC = {"index.html", "trading.html", "archive/index.html", "nba.html"}
 
 
 def _expects_toc(path):
@@ -203,8 +204,21 @@ for path in _published():
     ok('id="vw"' not in header and "Phone view" not in header and "view-toggle" not in header,
        f"{path} header does not contain the view toggle")
     _main = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
-    ok(_main is not None and _main.group(0).count('aria-current="page"') == 1,
-       f"{path} nav.main has exactly one aria-current=page")
+    if path == "nba.html":
+        ok(_main is not None and _main.group(0).count('aria-current="page"') == 0,
+           f"{path} page nav leaves the current mark to the NBA sport tab")
+        _sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
+        ok(_sports is not None and _sports.group(0).count('aria-current="page"') == 1
+           and 'href="./nba.html" aria-current="page"' in _sports.group(0),
+           f"{path} sport tab marks NBA current")
+        _labels = re.findall(r">([^<]+)</a>", _main.group(0) if _main else "")
+        _index_nav = re.search(
+            r'<nav class="main"[^>]*>(.*?)</nav>', _read("public_site/index.html"), re.S)
+        _want = re.findall(r"<a\b[^>]*>([^<]*)</a>", _index_nav.group(1) if _index_nav else "")
+        ok(_labels == _want, f"{path} page pills match the shell ({_labels})")
+    else:
+        ok(_main is not None and _main.group(0).count('aria-current="page"') == 1,
+           f"{path} nav.main has exactly one aria-current=page")
     toc = _toc(html)
     if not _expects_toc(path):
         ok(toc is None, f"{path} does not render nav.toc")
@@ -527,8 +541,8 @@ def _landing_nav_labels():
 
 
 def _nav_count(path):
-    """Landing pills come from index.html. Every other page uses the shared nav."""
-    if path == "index.html":
+    """Landing pills come from index.html. The NBA board uses those same pills."""
+    if path in ("index.html", "nba.html"):
         return len(_landing_nav_labels())
     return len(site_chrome.PAGES)
 
@@ -763,13 +777,32 @@ def browser_checks():
                     ok(not missed,
                        f"{label}: every main-nav link can be scrolled into view"
                        + ("" if not missed else " (missed " + ", ".join(missed) + ")"))
-                    ok(got["activeVisible"],
-                       f"{label}: the active pill ({got['active']!r}) is visible on load")
+                    if path == "nba.html":
+                        sport_on = page.evaluate("""() => {
+                          const nav = document.querySelector("nav.sports");
+                          const current = nav && nav.querySelector('[aria-current="page"]');
+                          if (!current) return { ok: false, text: "" };
+                          const a = current.getBoundingClientRect();
+                          const c = nav.getBoundingClientRect();
+                          const fits = a.width > 1 && a.height > 1
+                            && a.left >= c.left - 1 && a.right <= c.right + 1
+                            && a.top >= c.top - 1 && a.bottom <= c.bottom + 1
+                            && a.left >= -1 && a.right <= window.innerWidth + 1;
+                          return { ok: fits, text: (current.textContent || "").trim() };
+                        }""")
+                        ok(sport_on.get("ok") and sport_on.get("text") == "NBA",
+                           f"{label}: the NBA sport tab is visible ({sport_on})")
+                        ok(got["currents"] == 0,
+                           f"{label}: page nav has no aria-current; the sport tab carries it "
+                           f"({got['currents']})")
+                    else:
+                        ok(got["activeVisible"],
+                           f"{label}: the active pill ({got['active']!r}) is visible on load")
+                        ok(got["currents"] == 1,
+                           f"{label}: nav.main has exactly one aria-current=page ({got['currents']})")
                     ok(not got["overflow"] and got["scrollX"] == 0,
                        f"{label}: the page does not scroll sideways "
                        f"(scrollX {got['scrollX']})")
-                    ok(got["currents"] == 1,
-                       f"{label}: nav.main has exactly one aria-current=page ({got['currents']})")
                     short = [a for a in got["navHeights"] if a["height"] < 44]
                     ok(not short, f"{label}: main-nav pills are at least 44px tall"
                        + ("" if not short else f" ({short[0]})"))
