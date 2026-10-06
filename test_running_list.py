@@ -1280,6 +1280,38 @@ def _browser():
                 }""")
                 ok(narrow_roll["scrolls"] and not narrow_roll["page"],
                    f"at 640px the roll scrolls inside the track ({narrow_roll})")
+                mobile_chip = page.locator(".bet-chip").nth(0)
+                mobile_chip.focus()
+                page.keyboard.press("Enter")
+                page.wait_for_timeout(30)
+                mobile_open = page.evaluate("""() => {
+                  const chip = document.activeElement;
+                  const rect = chip ? chip.getBoundingClientRect() : null;
+                  return {
+                    chip: !!chip && chip.classList.contains("bet-chip"),
+                    pressed: chip ? chip.getAttribute("aria-pressed") : null,
+                    visible: !!rect && rect.bottom > 0 && rect.top < window.innerHeight,
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    row: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
+                  };
+                }""")
+                ok(mobile_open["chip"] and mobile_open["pressed"] == "true"
+                   and mobile_open["visible"] and mobile_open["cards"] >= 1
+                   and mobile_open["row"] == 1,
+                   f"opening a roll chip on a phone keeps the focused chip in view ({mobile_open})")
+                page.keyboard.press("Escape")
+                mobile_closed = page.evaluate("""() => {
+                  const chip = document.activeElement;
+                  return {
+                    chip: !!chip && chip.classList.contains("bet-chip"),
+                    pressed: chip ? chip.getAttribute("aria-pressed") : null,
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    row: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
+                  };
+                }""")
+                ok(mobile_closed["chip"] and mobile_closed["pressed"] == "false"
+                   and mobile_closed["cards"] == 0 and mobile_closed["row"] == 0,
+                   f"Escape closes a selected roll chip without losing focus ({mobile_closed})")
                 page.set_viewport_size({"width": 1280, "height": 800})
                 page.wait_for_timeout(30)
                 styles = page.evaluate("""() => {
