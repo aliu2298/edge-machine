@@ -1,0 +1,11 @@
+[Unit]
+Description=Crypto favourite-band window request
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=bot
+Environment=EDGE_CRYPTO_DIR=/home/bot/edge-machine-closes
+Environment=EDGE_CRYPTO_PY=/usr/bin/python3
+ExecStart=/home/bot/edge-machine-closes/scripts/vps_crypto_window.sh
