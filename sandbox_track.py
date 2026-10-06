@@ -1132,6 +1132,24 @@ def _retire_replaced_kalshi(d, row, stamp, now):
     return n
 
 
+# KXBTCD-26OCT0617-T84750 -> series KXBTCD, close 26OCT0617. The strike is the
+# tail. Two rungs of one coin's close share the series and this token.
+_COIN_CLOSE_RE = re.compile(r"^([A-Z0-9]+)-(\d{2}[A-Z]{3}\d{4})(?:-|$)")
+
+
+def _coin_close(market_id):
+    """Series and close token from a Kalshi coin ticker, or None.
+
+    'KXBTCD-26OCT0617-T84750' -> ('KXBTCD', '26OCT0617'). A decimal strike
+    (T119.9999) stays outside the token. A ticker with no date-hour token
+    does not match; the id gate still applies to it.
+    """
+    m = _COIN_CLOSE_RE.match(str(market_id or "").strip().upper())
+    if not m:
+        return None
+    return m.group(1), m.group(2)
+
+
 def publish(d, universe, coverage, verbose=True, now=None):
     """Log one quote per (source, market) for every source with an opinion."""
     # Retirement uses one clock, taken as publish begins. Each new quote is
@@ -1160,6 +1178,20 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 q.get("source") == "mma_fav_band" and q.get("sport") == "mma"):
             continue
         prior.setdefault((q["source"], q["sport"]), []).append(q)
+    # crypto_fav_band: one bet per coin per close. The id gate is the ticker,
+    # and the ticker includes the strike, so the next rung is a new id. The
+    # key is the series plus the date-hour token. A row already in the ledger,
+    # the archive, or logged earlier in this pass blocks the new candidate.
+    # The first row keeps the price it was logged at. No other lane sets
+    # one_per_coin_close, so this set stays empty for them.
+    coin_close = {}
+    for q in d["quotes"] + (d.get("_archive") or []):
+        src = q.get("source")
+        if not (S.SOURCES.get(src) or {}).get("one_per_coin_close"):
+            continue
+        key = _coin_close(q.get("market_id"))
+        if key:
+            coin_close.setdefault(src, set()).add(key)
     added = 0
     # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
     # prices — a page that can never be scored is not worth a polite second of waiting.
@@ -1322,6 +1354,12 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 if (S.SOURCES.get(name) or {}).get("one_per_day") and any(
                         p.get("date") == r["date"] for p in prior.get((name, sport), ())):
                     continue
+                # Per coin per close, for a lane that registers the flag. A
+                # different coin, or the same coin on a later close, still logs.
+                if (S.SOURCES.get(name) or {}).get("one_per_coin_close"):
+                    key = _coin_close(mid)
+                    if key and key in coin_close.get(name, ()):
+                        continue
                 # Strictly before the start, for every source and every venue, checked at
                 # the moment of logging. The venue feeds keep a contest for five minutes
                 # past its start to absorb clock skew, and that window let a tip on Al
@@ -1412,6 +1450,10 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 ))
                 seen.add(qid)
                 prior.setdefault((name, sport), []).append(d["quotes"][-1])
+                if (S.SOURCES.get(name) or {}).get("one_per_coin_close"):
+                    key = _coin_close(mid)
+                    if key:
+                        coin_close.setdefault(name, set()).add(key)
                 added += 1
 
     snapped = snap_closing(d, universe)
