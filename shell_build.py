@@ -10,10 +10,11 @@ ledger. Page pills leave this page, so the list is Production lanes only; a
 row's lane pill reads Production. One row per contest. Several Production
 lanes on that contest show an N-lanes count.
 
-Settled rows use production.KEEP_SETTLED_DAYS, the same kickoff cutoff as
-production.build_feed, so this list matches the recent leads on
-production.html. The clock is the `now` the caller passed, the same instant
-as production.html.
+Settled rows cover SHELL_SETTLED_DAYS Chicago dates, today included. Days
+still inside production.KEEP_SETTLED_DAYS come from the same feed
+production.html uses. Older days inside this window come from the quote
+ledger, through the same status and price path. The clock is the `now`
+the caller passed, the same instant as production.html.
 """
 import datetime
 
@@ -57,6 +58,9 @@ _EMPTY = {
     "upcoming": "No upcoming paper bets",
 }
 _QUOTE_SETTLED = ("won", "lost", "void", "settled")
+# Chicago dates on the Running Settled list, today included. Not
+# production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
+SHELL_SETTLED_DAYS = 14
 
 
 def tiles_html(html):
@@ -152,17 +156,35 @@ def _status_label(status):
     return _STATUS.get(status, "Void")
 
 
-def _in_window(instant, now):
-    """True when `instant` is inside production's settled-lead cutoff.
+def _in_production_window(instant, now):
+    """True when `instant` is still inside production.build_feed's cutoff.
 
-    production.build_feed drops a settled bet when its kickoff is strictly
-    older than `now - KEEP_SETTLED_DAYS`. Reading that name here, not a copy
-    of the number, keeps the two windows the same if the feed's window moves.
+    The feed drops a settled bet when its kickoff is strictly older than
+    `now - KEEP_SETTLED_DAYS`. Those days stay the feed's job. The name is
+    read on each call, not copied.
     """
     if instant is None or now is None:
         return False
     try:
         return not instant < now - datetime.timedelta(days=production.KEEP_SETTLED_DAYS)
+    except TypeError:
+        return False
+
+
+def _in_shell_window(instant, now):
+    """True when the kickoff's Chicago date is inside SHELL_SETTLED_DAYS.
+
+    Today is included. The date SHELL_SETTLED_DAYS ago is not. The name is
+    read on each call, so moving the constant moves this window.
+    """
+    if instant is None or now is None:
+        return False
+    today = production._chicago_day(now)
+    day = production._chicago_day(instant)
+    if today is None or day is None:
+        return False
+    try:
+        return 0 <= (today - day).days < SHELL_SETTLED_DAYS
     except TypeError:
         return False
 
@@ -237,7 +259,7 @@ def _lane_from_lead(lead, settled_at=None):
 def _keeps(lane, now):
     if lane["status"] == "Open":
         return True
-    return _in_window(lane.get("kickoff"), now)
+    return _in_shell_window(lane.get("kickoff"), now)
 
 
 def _contest_key(lane):
@@ -366,7 +388,9 @@ def _extra_quote_lanes(d, st, shown, now):
                 if kickoff > now:
                     continue
             elif status in _QUOTE_SETTLED:
-                if not _in_window(kickoff, now):
+                # Days the feed still carries stay on the feed. The ledger
+                # only fills the older days that are still inside the shell window.
+                if _in_production_window(kickoff, now) or not _in_shell_window(kickoff, now):
                     continue
             else:
                 continue
@@ -518,6 +542,10 @@ def page(now, d=None, st=None, blob=None, tiles=None):
         if d is None or st is None or blob is None:
             d, st, blob = _load(d, st, blob)
     filters, groups, empty = _running_body(d, st, blob, when)
+    caption = (
+        f'<p class="settled-caption" id="settled-caption" hidden>'
+        f'Last {int(SHELL_SETTLED_DAYS)} days</p>'
+    )
     body = f"""<h1 class="sr-only">Edge Machine · Production</h1>
 <section class="shell-summary" aria-label="Production totals" data-board="production">
 {summary}
@@ -529,6 +557,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <div class="running-filters" role="group" aria-label="Running filters">
 {filters}
 </div>
+{caption}
 <div class="running-list" id="running-list">
 {groups}
 </div>

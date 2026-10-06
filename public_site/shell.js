@@ -42,6 +42,8 @@
         btn.setAttribute("aria-pressed", btn.getAttribute("data-filter") === name ? "true" : "false");
       });
     }
+    var caption = document.getElementById("settled-caption");
+    if (caption) caption.hidden = name !== "settled";
     var selected = document.querySelector('.running-row[aria-pressed="true"]');
     if (selected && selected.hidden) clearSelection();
   }

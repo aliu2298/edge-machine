@@ -1031,6 +1031,11 @@ nav.sports button[aria-disabled="true"]:focus {
   gap: 6px;
   margin: 12px 0;
 }
+.settled-caption {
+  margin: -6px 0 12px;
+  color: var(--mut);
+  font-size: 12px;
+}
 .full-page { font-size: 13px; font-weight: 600; white-space: nowrap; }
 @media (max-width: 800px) {
   .shell-columns { grid-template-columns: minmax(0, 1fr); }

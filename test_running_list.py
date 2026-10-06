@@ -142,8 +142,11 @@ LEADS = [
 PAGE = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(LEADS))
 ROWS = _rows(PAGE)
 
-eq(len(ROWS), 8, "one row per contest, with the contest outside the production window left out")
-ok("Old v Gone" not in PAGE, "a contest outside the production settled window is left out")
+eq(len(ROWS), 8, "one row per contest, with the contest outside the 14-day window left out")
+ok("Old v Gone" not in PAGE, "a contest outside the 14 Chicago-day window is left out")
+ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in PAGE,
+   "the settled caption is the shell window constant")
+ok('id="settled-caption" hidden' in PAGE, "the caption starts hidden, with Live selected")
 ok(all("o15_ranked" not in row and "team1|cricket" not in row for row in ROWS),
    "rows do not print source ids")
 
@@ -300,35 +303,104 @@ upcoming_q = shell_build.page(NOW, d={"quotes": [
 ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
 eq(_rows(upcoming_q), [], "an upcoming quote stays off the list until the Production feed has it")
 
-kept = shell_build.page(NOW, d={"quotes": [
-    _quote("kept-q", "won", "2026-10-02T18:00:00+00:00",
+inside_feed = shell_build.page(NOW, d={"quotes": [
+    _quote("feed-q", "won", "2026-10-02T18:00:00+00:00",
            settled="2026-10-02T20:00:00+00:00", price=0.41),
 ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
-kept_rows = _rows(kept)
-eq(len(kept_rows), 1, "a settled quote inside the production window is a row")
-ok(">W</span>" in kept_rows[0], "that settled quote renders as W")
-eq(_attr(kept_rows[0], "data-price"), "41¢", "41% of a dollar is 41¢")
+eq(_rows(inside_feed), [],
+   "a settled quote inside production's window is not added from the ledger")
 
-dropped = shell_build.page(NOW, d={"quotes": [
-    _quote("drop-q", "won", "2026-09-21T18:00:00+00:00",
-           settled="2026-09-28T18:00:00+00:00"),
+older = shell_build.page(NOW, d={"quotes": [
+    _quote("older-q", "won", "2026-09-26T18:00:00+00:00",
+           settled="2026-09-27T02:00:00+00:00", price=0.41),
 ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
-eq(_rows(dropped), [], "a quote kicked off outside the production window is left out")
+older_rows = _rows(older)
+eq(len(older_rows), 1,
+   "a settled quote older than production's window and inside 14 Chicago days comes from the ledger")
+ok(">W</span>" in older_rows[0], "that ledger quote uses the same won → W path")
+eq(_attr(older_rows[0], "data-price"), "41¢", "that ledger quote uses the same cents path")
+eq(_attr(older_rows[0], "data-filter"), "settled", "that ledger quote is Settled")
+
+# Noon Chicago time. Sep 21 2026 is CDT (UTC−5), so 17:00Z is 12:00 CT.
+boundary_out = "2026-09-21T17:00:00+00:00"
+boundary_in = "2026-09-22T17:00:00+00:00"
+ok(not shell_build._in_shell_window(
+    datetime.datetime.fromisoformat(boundary_out), NOW),
+   "a kickoff 14 Chicago days ago is outside the shell window")
+ok(shell_build._in_shell_window(
+    datetime.datetime.fromisoformat(boundary_in), NOW),
+   "a kickoff 13 Chicago days ago is inside the shell window")
+eq(_rows(shell_build.page(NOW, d={"quotes": [
+    _quote("out-q", "won", boundary_out, settled="2026-09-22T02:00:00+00:00", price=0.41),
+]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)), [],
+   "the 14-day boundary leaves out the Chicago date 14 days ago")
+boundary_rows = _rows(shell_build.page(NOW, d={"quotes": [
+    _quote("in-q", "won", boundary_in, settled="2026-09-23T02:00:00+00:00", price=0.41),
+]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES))
+eq(len(boundary_rows), 1, "the 14-day boundary keeps the next Chicago date")
+ok(">W</span>" in boundary_rows[0] and _attr(boundary_rows[0], "data-price") == "41¢",
+   "the boundary row keeps the ledger status and price")
+feed_edge = _rows(shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}},
+    blob=_blob([_lead("edge-in", "Edge", "In", "2026-09-22T17:00:00Z", "hit",
+                      "oddspedia|cricket", "cricket", 0.41)])))
+eq(len(feed_edge), 1, "a feed lead on the last kept Chicago date stays")
+feed_out = _rows(shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}},
+    blob=_blob([_lead("edge-out", "Edge", "Out", "2026-09-21T17:00:00Z", "hit",
+                      "oddspedia|cricket", "cricket", 0.41)])))
+eq(feed_out, [], "a feed lead on the Chicago date 14 days ago drops")
+
 import production
+eq(production.KEEP_SETTLED_DAYS, 7, "production.KEEP_SETTLED_DAYS stays 7")
+eq(shell_build.SHELL_SETTLED_DAYS, 14, "the shell window is its own 14-day constant")
+ok("KEEP_SETTLED_DAYS = 7" in open(os.path.join(ROOT, "production.py"), encoding="utf-8").read(),
+   "production.py still defines KEEP_SETTLED_DAYS as 7")
 saved_days = production.KEEP_SETTLED_DAYS
 try:
     production.KEEP_SETTLED_DAYS = 1
-    ok(not shell_build._in_window(NOW - timedelta(days=2), NOW),
-       "shrinking production.KEEP_SETTLED_DAYS shrinks the shell window")
-    ok(shell_build._in_window(NOW - timedelta(hours=1), NOW),
-       "a kickoff inside the shrunk production window stays")
+    ok(shell_build._in_shell_window(NOW - timedelta(days=2), NOW),
+       "shrinking production.KEEP_SETTLED_DAYS does not shrink the shell window")
+    ok(not shell_build._in_production_window(NOW - timedelta(days=2), NOW),
+       "the production cutoff still follows KEEP_SETTLED_DAYS")
+    widened = _rows(shell_build.page(NOW, d={"quotes": [
+        _quote("young-q", "won", "2026-10-03T18:00:00+00:00",
+               settled="2026-10-03T20:00:00+00:00", price=0.41),
+    ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES))
+    eq(len(widened), 1,
+       "once a quote is older than the production cutoff, the ledger supplies it")
 finally:
     production.KEEP_SETTLED_DAYS = saved_days
-ok(shell_build._in_window(NOW - timedelta(days=production.KEEP_SETTLED_DAYS), NOW),
-   "a kickoff exactly KEEP_SETTLED_DAYS ago stays, matching the feed")
-ok(not shell_build._in_window(
+ok(shell_build._in_production_window(
+    NOW - timedelta(days=production.KEEP_SETTLED_DAYS), NOW),
+   "a kickoff exactly KEEP_SETTLED_DAYS ago stays inside the production cutoff")
+ok(not shell_build._in_production_window(
     NOW - timedelta(days=production.KEEP_SETTLED_DAYS, seconds=1), NOW),
-   "a kickoff just older than KEEP_SETTLED_DAYS drops, matching the feed")
+   "a kickoff just older than KEEP_SETTLED_DAYS is outside the production cutoff")
+saved_shell = shell_build.SHELL_SETTLED_DAYS
+try:
+    shell_build.SHELL_SETTLED_DAYS = 9
+    shrunk = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob([
+        _lead("twelve", "Twelve", "Ago", "2026-09-23T18:00:00Z", "hit",
+              "oddspedia|cricket", "cricket", 0.41),
+        _lead("eight", "Eight", "Ago", "2026-09-27T18:00:00Z", "hit",
+              "oddspedia|cricket", "cricket", 0.22),
+    ]))
+    ok("Last 9 days" in shrunk and "Last 14 days" not in shrunk,
+       "the caption renders from SHELL_SETTLED_DAYS")
+    shrunk_rows = _rows(shrunk)
+    ok(all(_attr(row, "data-name") != "Twelve v Ago" for row in shrunk_rows),
+       "a 12-Chicago-day bet drops when the constant is 9")
+    ok(any(_attr(row, "data-name") == "Eight v Ago" for row in shrunk_rows),
+       "an 8-Chicago-day bet stays when the constant is 9")
+    ok(not shell_build._in_shell_window(
+        datetime.datetime(2026, 9, 23, 18, 0, tzinfo=timezone.utc), NOW),
+       "SHELL_SETTLED_DAYS is read on each call")
+finally:
+    shell_build.SHELL_SETTLED_DAYS = saved_shell
+ok(shell_build._in_shell_window(
+    datetime.datetime(2026, 9, 23, 18, 0, tzinfo=timezone.utc), NOW),
+   "restoring SHELL_SETTLED_DAYS restores the 14-day window")
 
 sandbox_only = shell_build.page(NOW, d={"quotes": [
     _quote("sand-q", "open", "2026-10-05T12:00:00+00:00"),
@@ -710,9 +782,9 @@ eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
 _RESULT = {"landed": "W", "missed": "L", "paid": "price result"}
 _recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
-_prod_settled = [
-    _RESULT[status]
-    for _name, status in re.findall(
+_prod_entries = [
+    (html_lib.unescape(name), _RESULT[status])
+    for name, status in re.findall(
         r'data-l="Match">([^<]*)</td>.*?data-l="Result"><span class="[^"]*">([^<]+)</span>',
         _recent, re.S)
 ]
@@ -732,11 +804,52 @@ def _bucket_bets(rows, bucket):
     return bets
 
 
+import fmt
+_feed_pool = []
+for _lead_row in production.load_feed().get("leads", {}).values():
+    _face = shell_build._status_label(_lead_row.get("status"))
+    if _face == "Open":
+        continue
+    _feed_pool.append({
+        "match": _lead_row.get("match"),
+        "status": _face,
+        "price": fmt.cents(_lead_row.get("price_at_log")),
+    })
+_settled_by_name = {}
+for _row in _committed_rows:
+    if _attr(_row, "data-filter") != "settled":
+        continue
+    _settled_by_name.setdefault(_attr(_row, "data-name"), []).append(_row)
+for _name, _status in _prod_entries:
+    _hits = _settled_by_name.get(_name, [])
+    ok(len(_hits) == 1, f"production recent lead {_name} is one Running Settled row")
+    if len(_hits) != 1:
+        continue
+    _labels = _bet_labels(_visual(_hits[0]))
+    ok(_status in _labels,
+       f"{_name} keeps the production recent status {_status}")
+    if _status in _labels:
+        _labels.remove(_status)
+    _match_at = next((i for i, item in enumerate(_feed_pool)
+                      if item["match"] == _name and item["status"] == _status), None)
+    ok(_match_at is not None, f"{_name} has a feed lead for its recent status")
+    if _match_at is None:
+        continue
+    _priced = _feed_pool.pop(_match_at)
+    eq(_attr(_hits[0], "data-price"), _priced["price"],
+       f"{_name} keeps the feed price on the Settled row")
 _shell_settled = _bucket_bets(_committed_rows, "settled")
-eq(sorted(_shell_settled), sorted(_prod_settled),
-   "committed Settled bets match production.html's recent leads, per bet")
-eq(len(_shell_settled), len(_prod_settled),
-   "the Settled bet total equals the recent-lead entry count")
+ok(len(_shell_settled) >= len(_prod_entries),
+   "Running Settled bets cover every production recent lead, and may add older ones")
+_rsl = [row for row in _committed_rows
+        if _attr(row, "data-name") == "Real Salt Lake v New England Revolution"]
+eq(len(_rsl), 1, "Settled includes Real Salt Lake v New England")
+if _rsl:
+    eq(_attr(_rsl[0], "data-filter"), "settled", "Real Salt Lake v New England is Settled")
+    ok(">L</span>" in _rsl[0], "Real Salt Lake v New England is a loss")
+    eq(_attr(_rsl[0], "data-price"), "80¢", "Real Salt Lake v New England is 80¢")
+ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in _committed,
+   "committed Settled caption renders from SHELL_SETTLED_DAYS")
 _to_come = re.search(
     r'<div class="tile"><b>(\d+)</b><span>leads still to come</span>', _committed)
 _upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
@@ -816,6 +929,19 @@ def _browser():
                 eq(roles, {"listbox": 0, "option": 0}, "Running rows are not a listbox")
                 page.click('.running-filters button[data-filter="settled"]')
                 page.wait_for_timeout(30)
+                caption_on = page.evaluate("""() => {
+                  const cap = document.getElementById("settled-caption");
+                  if (!cap) return null;
+                  return {
+                    hidden: cap.hidden,
+                    text: cap.textContent,
+                    display: getComputedStyle(cap).display,
+                  };
+                }""")
+                ok(caption_on and caption_on["hidden"] is False
+                   and caption_on["text"] == "Last 14 days"
+                   and caption_on["display"] != "none",
+                   f"Settled shows the caption from the 14-day constant ({caption_on})")
                 page.locator('.running-filters button[data-filter="settled"]').focus()
                 page.keyboard.press("Tab")
                 page.keyboard.press("Tab")
@@ -881,6 +1007,11 @@ def _browser():
                     empty: empty ? empty.textContent : "",
                   };
                 }""")
+                caption_off = page.evaluate("""() => {
+                  const cap = document.getElementById("settled-caption");
+                  return cap ? cap.hidden : null;
+                }""")
+                ok(caption_off is True, "leaving Settled hides the caption")
                 eq(cleared["pressed"], 0, "hiding the selected row clears aria-pressed")
                 eq(cleared["line"], "", "hiding the selected row clears the detail header")
                 ok(cleared["headHidden"] and not cleared["emptyHidden"]
