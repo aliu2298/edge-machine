@@ -163,7 +163,8 @@ eq(sum(1 for row in ROWS if _attr(row, "data-name") == "Alpha v Beta"), 1,
 ok("2 lanes" in _got("Alpha v Beta"), "a contest with two lanes shows the count")
 ok("Gamma v Delta" in by_name and "2 lanes" not in _got("Gamma v Delta"),
    "a single lane does not show a count")
-eq(_attr(_got("Alpha v Beta"), "data-price"), "54¢", "the row price is cents, 0.54 → 54¢")
+eq(_attr(_got("Alpha v Beta"), "data-price"), "54¢ / 40¢",
+   "two different prices both show, 54¢ and 40¢")
 ok("$" not in _got("Alpha v Beta") and "0.54" not in _got("Alpha v Beta"),
    "the row does not print a dollar price or the raw fraction")
 eq(_attr(_got("Alpha v Beta"), "data-filter"), "upcoming", "a later kickoff is upcoming")
@@ -248,10 +249,12 @@ def _face_contests(pairs):
 
 
 def _subset_gaps(contests, entries):
-    """Entries are (match, status, cents). A Live contest is not required in Settled.
+    """Entries are (match, status, cents).
 
-    A gap means a production bet was not matched to its own status and price on a
-    Settled contest. Prices come from the contest's bet list, not the row price.
+    A Live contest is exempt only when it still has an open bet. A finished
+    contest that was bucketed Live anyway is checked, so a missing price fails.
+    A gap means a production bet was not matched to its own status and price.
+    Prices come from the contest's bet list, not the row price.
     """
     by_match = {}
     for contest in contests:
@@ -265,7 +268,8 @@ def _subset_gaps(contests, entries):
         if contest is None:
             gaps.append((match, status, cents))
             continue
-        if contest["bucket"] == "live":
+        open_bet = any(bet.get("status") == "Open" for bet in contest["bets"])
+        if contest["bucket"] == "live" and open_bet:
             continue
         found = next((i for i, bet in enumerate(contest["bets"])
                       if bet["status"] == status and shell_build._cents(bet["price"]) == cents),
@@ -313,10 +317,13 @@ eq([shell_build._cents(bet["price"]) for bet in kaz_contest[0]["bets"]], ["67¢"
    "each Kazakhstan bet keeps its own price, 67¢ and 80¢")
 eq([bet["status"] for bet in kaz_contest[0]["bets"]], ["L", "W"],
    "the bet list is the loss and the win, not the row's first result")
-eq(_attr(kaz[0], "data-price"), "67¢", "the visible price is only the first bet")
-ok(not all(shell_build._cents(bet["price"]) == _attr(kaz[0], "data-price")
-           for bet in kaz_contest[0]["bets"]),
-   "comparing every bet with the row's first price fails when the prices differ")
+eq(_attr(kaz[0], "data-price"), "67¢ / 80¢",
+   "different prices list on the row, 67¢ and 80¢")
+ok(all(shell_build._cents(bet["price"]) in _attr(kaz[0], "data-price")
+       for bet in kaz_contest[0]["bets"]),
+   "every Kazakhstan bet's cents is on the row")
+ok("Halfmatch v Teams" not in PAGE,
+   "the duplicate Halfmatch v Teams fixture row is not on the list")
 eq(_bet_labels("1W 1L"), ["W", "L"],
    "1W 1L is two bets, so a row compare would miss one (the 20 vs 19 gap)")
 eq(len(_bet_labels("1W 1L")), 2, "the two Kazakhstan bets both count")
@@ -349,6 +356,23 @@ eq(_subset_gaps(
     [("Kazakhstan v Faroe Islands", "L", "33¢")]),
    [("Kazakhstan v Faroe Islands", "L", "33¢")],
    "a first-bet price does not satisfy the other bet")
+_finished_live = {
+    "match": "Finished v Pair",
+    "bucket": "live",
+    "bets": [
+        {"status": "W", "price": 0.50, "pair": "a|soccer"},
+        {"status": "L", "price": 0.40, "pair": "b|soccer"},
+    ],
+}
+eq(_subset_gaps([_finished_live], [("Finished v Pair", "W", "99¢")]),
+   [("Finished v Pair", "W", "99¢")],
+   "a finished two-bet contest marked Live is not exempt without an open bet")
+eq(_subset_gaps(
+    [dict(_finished_live, bets=_finished_live["bets"] + [
+        {"status": "Open", "price": 0.20, "pair": "c|soccer"}])],
+    [("Finished v Pair", "W", "99¢")]),
+   [],
+   "a Live contest with an actual open bet stays exempt")
 
 print("\nempty filter and quote window")
 empty = shell_build.page(
@@ -899,7 +923,9 @@ for _key, _label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upc
     eq(_filter_count(_committed, _key, _label),
        sum(1 for _row in _committed_rows if _attr(_row, "data-filter") == _key),
        f"committed {_label} count equals the committed rows")
-ok('class="rule-mini"' not in _committed, "committed index.html has no rule cards yet")
+ok('class="rule-mini"' not in _committed,
+   "committed index.html does not paint rule cards before a row is selected")
+ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
 _prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
 eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
@@ -973,6 +999,19 @@ if _rsl:
     eq(_attr(_rsl[0], "data-filter"), "settled", "Real Salt Lake v New England is Settled")
     ok(">L</span>" in _rsl[0], "Real Salt Lake v New England is a loss")
     eq(_attr(_rsl[0], "data-price"), "80¢", "Real Salt Lake v New England is 80¢")
+_multi_prices = 0
+for _contest in _model:
+    _cents_list = [shell_build._cents(_bet["price"]) for _bet in _contest["bets"]]
+    if len(_cents_list) < 2 or len(set(_cents_list)) < 2:
+        continue
+    _hits = [row for row in _committed_rows if _attr(row, "data-name") == _contest["match"]]
+    eq(len(_hits), 1, f"{_contest['match']} is one row")
+    if len(_hits) != 1:
+        continue
+    eq(_attr(_hits[0], "data-price"), " / ".join(_cents_list),
+       f"{_contest['match']} lists every different price")
+    _multi_prices += 1
+ok(_multi_prices >= 1, "at least one committed contest lists two different prices")
 ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in _committed,
    "committed Settled caption renders from SHELL_SETTLED_DAYS")
 _to_come = re.search(
@@ -1095,6 +1134,8 @@ def _browser():
                     line: line ? line.textContent : "",
                     emptyHidden: empty ? empty.hidden : null,
                     cards: document.querySelectorAll(".rule-mini").length,
+                    want: current ? JSON.parse(current.getAttribute("data-cards") || "[]").length : 0,
+                    section: (document.getElementById("rules-section") || {}).textContent || "",
                     selectedAttr: document.querySelectorAll("[aria-selected]").length,
                   };
                 }""")
@@ -1102,9 +1143,11 @@ def _browser():
                    and selected["name"] and selected["name"] in selected["line"]
                    and "inset" in selected["shadow"]
                    and "¢" in selected["line"] and " · " in selected["line"]
-                   and selected["emptyHidden"] and selected["cards"] == 0
+                   and selected["emptyHidden"] and selected["cards"] == selected["want"]
+                   and selected["cards"] >= 1
+                   and selected["section"].startswith("Rules applied · ")
                    and selected["selectedAttr"] == 0,
-                   f"Enter presses one row and names it in the header ({selected})")
+                   f"Enter presses one row, names it, and shows its cards ({selected})")
                 second.focus()
                 page.keyboard.press("Space")
                 moved = page.evaluate("""() => {
@@ -1132,6 +1175,8 @@ def _browser():
                     headHidden: head ? head.hidden : null,
                     emptyHidden: empty ? empty.hidden : null,
                     empty: empty ? empty.textContent : "",
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    sectionHidden: (document.getElementById("rules-section") || {}).hidden,
                   };
                 }""")
                 caption_off = page.evaluate("""() => {
@@ -1142,8 +1187,9 @@ def _browser():
                 eq(cleared["pressed"], 0, "hiding the selected row clears aria-pressed")
                 eq(cleared["line"], "", "hiding the selected row clears the detail header")
                 ok(cleared["headHidden"] and not cleared["emptyHidden"]
-                   and cleared["empty"] == "Select a contest in Running.",
-                   f"the detail pane returns to its empty state ({cleared})")
+                   and cleared["empty"] == "Select a contest in Running."
+                   and cleared["cards"] == 0 and cleared["sectionHidden"],
+                   f"the detail pane returns to its empty state and clears cards ({cleared})")
                 browser.close()
         finally:
             httpd.shutdown()

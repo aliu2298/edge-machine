@@ -1,10 +1,33 @@
 // Running filters show one bucket of the rows already on the page. They do not
 // fetch bets or leave the page. Sport pills are aria-disabled chrome; this
 // file does not arm them. Rows are plain buttons: each is its own tab stop,
-// and Enter, Space, or a click presses one.
+// and Enter, Space, or a click presses one. The pressed row's card payload
+// was embedded at build time. This file only reads attributes and writes
+// text.
 (function () {
+  var SAFE_PAGE = /^\.\/(?:soccer|tennis|cricket|nba|crypto|production)\.html$/;
+
   function rows() {
     return document.querySelectorAll(".running-row");
+  }
+
+  function fullPage() {
+    return document.querySelector("a.full-page");
+  }
+
+  function clearCards() {
+    var section = document.getElementById("rules-section");
+    var host = document.getElementById("rules-cards");
+    if (section) {
+      section.textContent = "";
+      section.hidden = true;
+    }
+    if (host) {
+      while (host.firstChild) host.removeChild(host.firstChild);
+      host.hidden = true;
+    }
+    var link = fullPage();
+    if (link) link.setAttribute("href", "./production.html");
   }
 
   function clearSelection() {
@@ -19,6 +42,102 @@
     if (line) line.textContent = "";
     if (head) head.hidden = true;
     if (empty) empty.hidden = false;
+    clearCards();
+  }
+
+  function readCards(row) {
+    var raw = row.getAttribute("data-cards") || "[]";
+    try {
+      var parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function addLine(parent, className, text) {
+    if (!text) return;
+    var node = document.createElement("p");
+    node.className = className;
+    node.textContent = text;
+    parent.appendChild(node);
+  }
+
+  function addStatus(parent, card) {
+    var status = document.createElement("p");
+    status.className = "running-status";
+    if (card.status) status.setAttribute("data-status", card.status);
+    var visual = document.createElement("span");
+    visual.setAttribute("aria-hidden", "true");
+    visual.textContent = card.status || "";
+    var spoken = document.createElement("span");
+    spoken.className = "sr-only";
+    spoken.textContent = card.spoken || "";
+    status.appendChild(visual);
+    status.appendChild(spoken);
+    parent.appendChild(status);
+  }
+
+  function renderCards(row) {
+    var section = document.getElementById("rules-section");
+    var host = document.getElementById("rules-cards");
+    clearCards();
+    var cards = readCards(row);
+    var n = cards.length;
+    var noun = n === 1 ? "lane fired" : "lanes fired";
+    if (section) {
+      section.textContent = "Rules applied · " + n + " " + noun;
+      section.hidden = false;
+    }
+    if (!host) return;
+    cards.forEach(function (card) {
+      if (!card || typeof card !== "object") return;
+      var article = document.createElement("article");
+      article.className = "rule-mini";
+      var title = document.createElement("p");
+      title.className = "rule-mini-name";
+      var name = document.createElement("span");
+      name.textContent = card.lane || "—";
+      title.appendChild(name);
+      if (card.pill) {
+        var pill = document.createElement("span");
+        pill.className = card.pill === "Sandbox" ? "lane-pill sandbox" : "lane-pill";
+        pill.textContent = card.pill;
+        title.appendChild(pill);
+      }
+      article.appendChild(title);
+      addLine(article, "rule-mini-market", card.market || "");
+      if (card.venue || card.price) {
+        var meta = document.createElement("p");
+        meta.className = "rule-mini-meta";
+        if (card.venue) {
+          var badge = document.createElement("span");
+          badge.className = "venue-badge";
+          badge.textContent = card.venue;
+          meta.appendChild(badge);
+        }
+        if (card.price) {
+          var price = document.createElement("span");
+          price.className = "rule-mini-price";
+          price.textContent = card.price;
+          meta.appendChild(price);
+        }
+        article.appendChild(meta);
+      }
+      addStatus(article, card);
+      if (card.edge) addLine(article, "rule-mini-edge", card.edge + " edge");
+      if (card.verdict) addLine(article, "rule-mini-verdict", card.verdict);
+      if (card.roi) addLine(article, "rule-mini-roi", card.roi + " ROI after fees");
+      if (card.record) addLine(article, "rule-mini-record", card.record + " record");
+      host.appendChild(article);
+    });
+    host.hidden = n === 0;
+    var link = fullPage();
+    if (link) {
+      var page = row.getAttribute("data-page") || "./production.html";
+      if (!SAFE_PAGE.test(page)) page = "./production.html";
+      link.setAttribute("href", page);
+    }
   }
 
   function apply(name) {
@@ -63,6 +182,7 @@
       .join(" · ");
     head.hidden = false;
     if (empty) empty.hidden = true;
+    renderCards(row);
   }
 
   var bar = document.querySelector(".running-filters");
