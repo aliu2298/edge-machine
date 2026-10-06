@@ -7,6 +7,7 @@ already stored on each game. Nothing here refetches, relabels, or regrades.
 import datetime
 import json
 import os
+import re
 
 import fmt
 import shell_build
@@ -28,6 +29,8 @@ PERIODS = (
     ("h1", "1H", "First half"),
     ("ft", "FT", "Full game"),
 )
+_MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 _DAY = datetime.timedelta(hours=24)
 PRA_SOON = "Coming soon"
 PRA_NONE = "No recent game"
@@ -92,8 +95,8 @@ def _signed_points(value):
 def _pct(value, lo, hi):
     """0 at the lowest expectation on the page, 100 at the highest.
 
-    A period with one value, or with every value equal, fills the bar.
-    Anything outside the expectation range clamps to the end of the track.
+    A period with one value, or with every value equal, is 100.
+    Anything outside the expectation range clamps to an end of the track.
     """
     if value is None or lo is None or hi is None:
         return None
@@ -108,6 +111,21 @@ def _pct(value, lo, hi):
     return number
 
 
+# A stored expectation at the bottom of the scale would otherwise paint an
+# empty track. The text is the number; this only keeps the bar visible.
+_FILL_FLOOR = 8
+
+
+def _fill_pct(value, lo, hi):
+    """The painted width. Same scale as `_pct`, never empty when a value exists."""
+    number = _pct(value, lo, hi)
+    if number is None or number >= 100:
+        return number
+    if number < _FILL_FLOOR:
+        return _FILL_FLOOR
+    return number
+
+
 def _games(blob):
     games = blob.get("games") if isinstance(blob, dict) else None
     if not isinstance(games, list):
@@ -115,78 +133,136 @@ def _games(blob):
     return [game for game in games if isinstance(game, dict)]
 
 
-def _recent(blob, team):
-    """True when this team has a completed NBA game in the file.
+def _team_entry(blob, team):
+    """Top-level teams[T], the ESPN-abbreviation record. Absent is not null.
 
-    The April seed is not a recent game: those rows have no event, and a team
-    that has not played yet must not be given a guessed last box score.
+    Missing `teams`, or a missing team, means that feed has not landed.
+    `last_game: null` is a different fact and is read by the caller.
     """
-    if not team:
-        return False
-    for game in _games(blob):
-        if game.get("skipped") or not game.get("completed"):
-            continue
-        if game.get("home") == team or game.get("away") == team:
-            return True
-    return False
+    if not team or not isinstance(blob, dict):
+        return None
+    teams = blob.get("teams")
+    if not isinstance(teams, dict) or team not in teams:
+        return None
+    rec = teams.get(team)
+    return rec if isinstance(rec, dict) else None
 
 
-def _present(value):
-    if value is None or value is False:
-        return False
-    if isinstance(value, str):
-        return bool(value.strip())
-    if isinstance(value, dict):
-        return bool(value)
-    return True
+def _count(value):
+    """A stored counting stat. Whole numbers stay whole. Anything else is 1 dp."""
+    number = _finite(value)
+    if number is None:
+        return "—"
+    text = f"{number:.1f}"
+    if text.endswith(".0"):
+        return str(int(round(number)))
+    return text
 
 
-def _pra_field(blob, game, team, side):
-    """A stored top-PRA record, if a later feed put one on the game or the team.
+def _day_label(value):
+    """A stored YYYY-MM-DD, as 'Oct 4'. The day is already a calendar date."""
+    if not isinstance(value, str):
+        return None
+    match = re.match(r"^(\d{4})-(\d{2})-(\d{2})", value.strip())
+    if match is None:
+        return None
+    month = int(match.group(2))
+    day = int(match.group(3))
+    if not 1 <= month <= 12 or not 1 <= day <= 31:
+        return None
+    return f"{_MONTHS[month - 1]} {day}"
 
-    This does not score a player. The first field that is actually present wins.
+
+def _pra_text(blob, team):
+    """Last-game top PRA from teams[T].last_game. Nothing here is summed.
+
+    No `teams` record: Coming soon. last_game null: No recent game.
+    A present top_pra is the stored name, pra, and the pts/reb/ast split.
     """
-    if isinstance(game, dict):
-        direct = game.get("top_pra_" + side)
-        if _present(direct):
-            return direct
-        block = game.get("top_pra")
-        if isinstance(block, dict):
-            if _present(block.get(side)):
-                return block.get(side)
-            if _present(block.get(team)):
-                return block.get(team)
-    block = blob.get("top_pra") if isinstance(blob, dict) else None
-    if isinstance(block, dict) and _present(block.get(team)):
-        return block.get(team)
-    teams = (blob.get("seed") or {}).get("teams") if isinstance(blob, dict) else None
-    rec = teams.get(team) if isinstance(teams, dict) else None
-    if isinstance(rec, dict) and _present(rec.get("top_pra")):
-        return rec.get("top_pra")
-    return None
-
-
-def _pra_text(blob, game, team, side):
-    if not _recent(blob, team):
-        return PRA_NONE
-    found = _pra_field(blob, game, team, side)
-    if found is None:
+    rec = _team_entry(blob, team)
+    if rec is None or "last_game" not in rec:
         return PRA_SOON
-    if isinstance(found, str):
-        return found.strip()
-    if isinstance(found, dict):
-        name = found.get("name") or found.get("player") or ""
-        name = name.strip() if isinstance(name, str) else ""
-        bits = []
-        for key, label in (("pts", "pts"), ("reb", "reb"), ("ast", "ast")):
-            if key in found and found.get(key) is not None:
-                bits.append(f"{found.get(key)} {label}")
-        body = ", ".join(bits)
-        if name and body:
-            return f"{name} · {body}"
-        if name or body:
-            return name or body
-    return PRA_SOON
+    last = rec.get("last_game")
+    if last is None:
+        return PRA_NONE
+    if not isinstance(last, dict):
+        return PRA_SOON
+    top = last.get("top_pra")
+    if not isinstance(top, dict):
+        return PRA_SOON
+    name = top.get("name")
+    name = name.strip() if isinstance(name, str) and name.strip() else "—"
+    where = ""
+    opp = last.get("opp")
+    opp = opp.strip() if isinstance(opp, str) else ""
+    side = last.get("home_away")
+    if opp and side == "away":
+        where = f"at {opp}"
+    elif opp and side == "home":
+        where = f"vs {opp}"
+    elif opp:
+        where = opp
+    day = _day_label(last.get("date"))
+    tail = " ".join(part for part in (where, day) if part)
+    body = (f"{name} {_count(top.get('pra'))} PRA "
+            f"({_count(top.get('pts'))} pts · {_count(top.get('reb'))} reb · "
+            f"{_count(top.get('ast'))} ast)")
+    if tail:
+        body += f", {tail}"
+    return body
+
+
+def _game_period(game, side, period):
+    """Pre-tip quarter rates on the game, when those keys were stored."""
+    if not isinstance(game, dict):
+        return None
+    scored_key = f"roll_{side}_O_{period}"
+    allowed_key = f"roll_{side}_D_{period}"
+    if scored_key not in game and allowed_key not in game:
+        return None
+    return (_finite(game.get(scored_key)), _finite(game.get(allowed_key)), None)
+
+
+def _roll_period(blob, team, period):
+    """teams[T].roll[period], the window as of the build. None when absent."""
+    rec = _team_entry(blob, team)
+    if rec is None:
+        return None
+    roll = rec.get("roll")
+    if not isinstance(roll, dict):
+        return None
+    block = roll.get(period)
+    if not isinstance(block, dict):
+        return None
+    if "O" not in block and "D" not in block:
+        return None
+    return (_finite(block.get("O")), _finite(block.get("D")), _finite(block.get("n")))
+
+
+def _period_phrase(short, found):
+    scored, allowed, count = found
+    text = f"{short} scored {_points(scored)} · allowed {_points(allowed)}"
+    if count is not None:
+        text += f" · n {_count(count)}"
+    return text
+
+
+def _period_text(blob, game, team, side):
+    """1Q and 1H. Per-game pre-tip values win, then teams[T].roll, else soon."""
+    parts = []
+    found_any = False
+    for key, short in (("q1", "1Q"), ("h1", "1H")):
+        found = _game_period(game, side, key)
+        if found is None and team:
+            found = _roll_period(blob, team, key)
+        if found is None:
+            parts.append(f"{short} —")
+            continue
+        found_any = True
+        parts.append(_period_phrase(short, found))
+    if not found_any:
+        return PERIOD_SOON
+    return " · ".join(parts)
 
 
 def _full_name(blob, team):
@@ -267,7 +343,8 @@ def _team_card(blob, game, team, side):
     scored = _points(game.get("roll_" + side + "_O"))
     allowed = _points(game.get("roll_" + side + "_D"))
     tag = game.get("roll_lab_" + side + "_ft")
-    pra = _pra_text(blob, game, team, side) if team else PRA_NONE
+    pra = _pra_text(blob, team) if team else PRA_SOON
+    periods = _period_text(blob, game, team, side)
     label = f"{side_word}, {shown}"
     if name:
         label += f", {name}"
@@ -281,7 +358,7 @@ def _team_card(blob, game, team, side):
         f'<p class="pra-slot"><span class="slot-k">Top PRA (points + rebounds + assists), last game</span> '
         f'<span class="pra-value">{esc(pra)}</span></p>'
         f'<p class="period-slot"><span class="slot-k">1Q / 1H</span> '
-        f'<span class="period-value">{esc(PERIOD_SOON)}</span></p>'
+        f'<span class="period-value">{esc(periods)}</span></p>'
         f'</section>'
     )
 
@@ -292,7 +369,7 @@ def _tempo_row(game, period, short, full, lo, hi, uid):
     err = _finite(game.get("err_" + period)) if act is not None else None
     exp_txt = _points(exp)
     read = f"{full} ({short}) expected {exp_txt} combined"
-    fill = _pct(exp, lo, hi) if exp is not None else None
+    fill = _fill_pct(exp, lo, hi) if exp is not None else None
     mark = None
     if act is not None:
         err_txt = _signed_points(err)
@@ -500,7 +577,7 @@ combined expectations were recorded before tip-off. Preseason basketball predict
 <h2>Next 24 hours</h2>
 <p class="note sm">A game tipping off within 24 hours of this page's clock. The window is the
 last {window_txt} games. Per-team first-quarter and first-half totals, and the top PRA from
-the last game, are not in the file yet.</p>
+the last game, are shown when the file has them.</p>
 {_matchups(blob, upcoming, scale, "upcoming")}
 </section>
 {graded_html}

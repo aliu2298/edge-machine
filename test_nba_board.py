@@ -3,8 +3,9 @@
 
 The page is presentation. These checks fail if a card crosses the 24h line,
 the middle card reprints a recomputed total, the tempo bar uses a fixed
-scale, the error is act minus expected instead of the file's err_*, a team
-with no completed game is given a PRA, or a team name is left unescaped.
+scale or paints a real value as an empty track, the error is act minus
+expected instead of the file's err_*, a missing teams record is called
+'No recent game', or a player name is left unescaped.
 """
 import datetime
 import os
@@ -57,6 +58,14 @@ def _pct(value, lo, hi):
         return 100
     number = int(round((value - lo) / (hi - lo) * 100.0))
     return max(0, min(100, number))
+
+
+def _fill(value, lo, hi):
+    """Painted width. The scale stays min-to-max. A real value is at least 8%."""
+    raw = _pct(value, lo, hi)
+    if raw >= 100:
+        return 100
+    return max(8, raw)
 
 
 def _section(html, sid):
@@ -262,15 +271,19 @@ q1_lo, q1_hi = _scale([50.0, 40.0, 40.0, 56.2, 57.3])
 h1_lo, h1_hi = _scale([80.0, 80.0, 114.0, 112.3])
 ft_lo, ft_hi = _scale([160.0, 160.0, 200.0, 221.5, 227.9])
 eq(_attr(_tempo(bkn, "q1"), "fill"), _pct(56.2, q1_lo, q1_hi), "BKN 1Q bar width")
+ok(_pct(56.2, q1_lo, q1_hi) > 8, "BKN 1Q is above the visibility floor, so the floor does not move it")
 eq(_attr(_tempo(bkn, "h1"), "fill"), _pct(114.0, h1_lo, h1_hi), "BKN 1H bar width")
 eq(_attr(_tempo(bkn, "ft"), "fill"), _pct(221.5, ft_lo, ft_hi), "BKN full-game bar width")
-eq(_attr(_tempo(_article(UP, "CC"), "q1"), "fill"), _pct(40.0, q1_lo, q1_hi),
-   "a shared expectation uses the page min-to-max, not a fixed points scale")
+eq(_pct(40.0, q1_lo, q1_hi), 0, "40 is the low end of the 1Q scale")
+eq(_attr(_tempo(_article(UP, "CC"), "q1"), "fill"), 8,
+   "the low end still paints about 8% so the bar is not an empty track")
+ok("40.0" in _read(_tempo(_article(UP, "CC"), "q1")),
+   "the floored bar still prints the stored expectation")
 eq(_attr(_tempo(_article(UP, "AA"), "q1"), "fill"),
    _attr(_tempo(_article(UP, "CC"), "q1"), "fill"),
    "two games with the same expectation get the same bar width")
 inside_q1 = _tempo(inside, "q1")
-eq(_attr(inside_q1, "fill"), _pct(50.0, q1_lo, q1_hi), "inside game 1Q bar width")
+eq(_attr(inside_q1, "fill"), _fill(50.0, q1_lo, q1_hi), "inside game 1Q bar width")
 eq(_attr(inside_q1, "mark"), _pct(53, q1_lo, q1_hi), "actual marker uses the expectation scale")
 ok("error +9.0" in _read(inside_q1) and "error +3.0" not in _read(inside_q1),
    "the upcoming card shows the file's positive error, not actual minus expected")
@@ -328,18 +341,81 @@ def _pra(article, team):
     period = re.search(r'class="period-value">(.*?)</span>', block)
     return (match.group(1) if match else "", period.group(1) if period else "")
 
-eq(_pra(bkn, "BKN"), ("No recent game", "Coming soon"),
-   "a team with no completed game says so, and 1Q/1H stays Coming soon")
-eq(_pra(bkn, "CHA"), ("No recent game", "Coming soon"),
-   "the home team with no completed game is not given the other side's PRA")
-ok("Should Not Show" not in HTML, "a stored PRA is ignored when the team has no recent game")
-eq(_pra(graded, "GS")[0], "Stephen Curry · 30 pts, 5 reb, 8 ast",
-   "a stored top_pra is shown for a team that has a completed game")
-ok("43" not in _pra(graded, "GS")[0], "PRA is not the sum of the counting stats")
-eq(_pra(graded, "LAC"), ("Coming soon", "Coming soon"),
-   "a team with a recent game and no top_pra says Coming soon")
+eq(_pra(bkn, "BKN"), ("Coming soon", "Coming soon"),
+   "with no teams record the PRA slot is Coming soon, not No recent game")
+eq(_pra(bkn, "CHA"), ("Coming soon", "Coming soon"),
+   "the home card is also Coming soon when its teams entry is absent")
+ok("No recent game" not in HTML, "absent keys are not described as no recent game")
+ok("Should Not Show" not in HTML and "Stephen Curry" not in HTML,
+   "a PRA hung on the game row is not read")
+eq(_pra(graded, "GS"), ("Coming soon", "Coming soon"),
+   "a completed game without teams[T] stays Coming soon")
 eq(_pra(inside, "IN"), ("Coming soon", "Coming soon"),
-   "1Q and 1H stay Coming soon even when the game was graded")
+   "1Q and 1H stay Coming soon when neither the game nor teams has them")
+
+HOSTILE_PLAYER = "<img src=x onerror=alert(1)>"
+fed = N.build({
+    "window": 5,
+    "games": [
+        _game("box", NOW + timedelta(hours=2), "GS", "LAC",
+              roll_exp_q1=50.0, roll_exp_h1=100.0, roll_exp_ft=200.0,
+              roll_away_O_q1=20.0, roll_away_D_q1=14.0,
+              roll_away_O_h1=48.0, roll_away_D_h1=42.0),
+        _game("none", NOW + timedelta(hours=3), "BKN", "CHA",
+              roll_exp_q1=40.0, roll_exp_h1=80.0, roll_exp_ft=160.0),
+    ],
+    "teams": {
+        "GS": {
+            "roll": {"q1": {"O": 1.1, "D": 1.2, "n": 5},
+                     "h1": {"O": 1.3, "D": 1.4, "n": 5}},
+            "last_game": {
+                "id": "401918010", "date": "2026-10-04", "opp": "LAC",
+                "home_away": "away",
+                "top_pra": {"name": "Charles Bassey", "pts": 12, "reb": 8, "ast": 1, "pra": 21},
+            },
+        },
+        "LAC": {
+            "roll": {"q1": {"O": 13.6, "D": 19.2, "n": 5},
+                     "h1": {"O": 42.0, "D": 46.8, "n": 5}},
+            "last_game": {
+                "id": "g1", "date": "2026-10-03", "opp": "NY", "home_away": "home",
+                "top_pra": {"name": HOSTILE_PLAYER, "pts": 30, "reb": 5, "ast": 8, "pra": 4},
+            },
+        },
+        "BKN": {
+            "roll": {"q1": {"O": 10.0, "D": 11.0, "n": 5},
+                     "h1": {"O": "NaN", "D": 28.0, "n": 5}},
+            "last_game": None,
+        },
+    },
+    "seed": {"teams": {}},
+}, now=NOW)
+fed_up = _section(fed, "matchups")
+gs = _article(fed_up, "GS")
+eq(_pra(gs, "GS"), (
+    "Charles Bassey 21 PRA (12 pts · 8 reb · 1 ast), at LAC Oct 4",
+    "1Q scored 20.0 · allowed 14.0 · 1H scored 48.0 · allowed 42.0",
+), "a stored top_pra renders, and the matchup prefers the pre-tip quarter rates")
+ok("1.1" not in _pra(gs, "GS")[1] and "1.2" not in _pra(gs, "GS")[1],
+   "the team roll does not replace pre-tip quarter rates")
+lac = _pra(gs, "LAC")
+eq(lac[1], "1Q scored 13.6 · allowed 19.2 · n 5 · 1H scored 42.0 · allowed 46.8 · n 5",
+   "with no pre-tip quarter keys the card uses teams[T].roll, including n")
+ok("4 PRA" in lac[0] and "vs NY Oct 3" in lac[0] and "43" not in lac[0],
+   "the home card shows the stored pra and the home opponent, not the sum")
+ok(HOSTILE_PLAYER not in fed and "&lt;img src=x onerror=alert(1)&gt;" in fed,
+   "a hostile player name is escaped")
+fed_tags = _Tags()
+fed_tags.feed(fed)
+ok("img" not in fed_tags.tags and not fed_tags.handlers, "the player name is not a tag")
+bkn_fed = _pra(_article(fed_up, "BKN"), "BKN")
+eq(bkn_fed[0], "No recent game", "last_game null is No recent game")
+eq(bkn_fed[1], "1Q scored 10.0 · allowed 11.0 · n 5 · 1H scored — · allowed 28.0 · n 5",
+   "a null last game still shows the stored quarter rates, and a bad number is an em dash")
+eq(_pra(_article(fed_up, "BKN"), "CHA"), ("Coming soon", "Coming soon"),
+   "a missing team entry is Coming soon on both slots")
+ok("None" not in fed and not re.search(r"\bnan\b", fed, re.I),
+   "the fed card never prints None or NaN")
 
 skipped = _article(UP, HOSTILE)
 ok("Skipped" in skipped and "&lt;script&gt;alert(1)&lt;/script&gt;" in skipped,
