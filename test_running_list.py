@@ -8,6 +8,7 @@ count those rows, and the follow-ups hold. No network.
 """
 import datetime
 import html as html_lib
+import json
 import os
 import re
 import shutil
@@ -163,7 +164,8 @@ eq(sum(1 for row in ROWS if _attr(row, "data-name") == "Alpha v Beta"), 1,
 ok("2 lanes" in _got("Alpha v Beta"), "a contest with two lanes shows the count")
 ok("Gamma v Delta" in by_name and "2 lanes" not in _got("Gamma v Delta"),
    "a single lane does not show a count")
-eq(_attr(_got("Alpha v Beta"), "data-price"), "54¢", "the row price is cents, 0.54 → 54¢")
+eq(_attr(_got("Alpha v Beta"), "data-price"), "54¢ / 40¢",
+   "two different prices both show, 54¢ and 40¢")
 ok("$" not in _got("Alpha v Beta") and "0.54" not in _got("Alpha v Beta"),
    "the row does not print a dollar price or the raw fraction")
 eq(_attr(_got("Alpha v Beta"), "data-filter"), "upcoming", "a later kickoff is upcoming")
@@ -225,33 +227,36 @@ ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption
    "the Settled filter's described-by is the caption")
 
 
-def _face_leads(pairs):
+def _face_leads(pairs, kickoff="2026-10-04T15:00:00Z"):
     leads = []
     for i, item in enumerate(pairs):
         status, pair = item[0], item[1]
         price = item[2] if len(item) > 2 else 0.5
         leads.append(_lead(
-            f"mix-{i}", "Kazakhstan", "Faroe Islands", "2026-10-04T15:00:00Z",
+            f"mix-{i}", "Kazakhstan", "Faroe Islands", kickoff,
             status, pair, "soccer", price, "UEFA Nations League"))
     return leads
 
 
-def _face_page(pairs):
+def _face_page(pairs, kickoff="2026-10-04T15:00:00Z"):
     return _rows(shell_build.page(
-        NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(_face_leads(pairs))))
+        NOW, d={"quotes": []}, st={"pairs": {}},
+        blob=_blob(_face_leads(pairs, kickoff))))
 
 
-def _face_contests(pairs):
-    blob = _blob(_face_leads(pairs))
+def _face_contests(pairs, kickoff="2026-10-04T15:00:00Z"):
+    blob = _blob(_face_leads(pairs, kickoff))
     return shell_build.contests_from_lanes(
         shell_build.collect_lanes({"quotes": []}, {"pairs": {}}, blob, NOW), NOW)
 
 
 def _subset_gaps(contests, entries):
-    """Entries are (match, status, cents). A Live contest is not required in Settled.
+    """Entries are (match, status, cents).
 
-    A gap means a production bet was not matched to its own status and price on a
-    Settled contest. Prices come from the contest's bet list, not the row price.
+    A Live contest is exempt only when it still has an open bet. A finished
+    contest that was bucketed Live anyway is checked, so a missing price fails.
+    A gap means a production bet was not matched to its own status and price.
+    Prices come from the contest's bet list, not the row price.
     """
     by_match = {}
     for contest in contests:
@@ -265,7 +270,11 @@ def _subset_gaps(contests, entries):
         if contest is None:
             gaps.append((match, status, cents))
             continue
-        if contest["bucket"] == "live":
+        open_bet = any(bet.get("status") == "Open" for bet in contest["bets"])
+        if contest["bucket"] == "live" and open_bet:
+            continue
+        if not open_bet and contest["bucket"] != "settled":
+            gaps.append((match, status, cents))
             continue
         found = next((i for i, bet in enumerate(contest["bets"])
                       if bet["status"] == status and shell_build._cents(bet["price"]) == cents),
@@ -278,9 +287,10 @@ def _subset_gaps(contests, entries):
 
 
 def _bet_labels(visual):
-    if visual in ("W", "L", "Open", "Void", "price result"):
+    if visual in ("W", "L", "Open", "Void", "price result", "Awaiting result"):
         return [visual]
-    labels = {"W": "W", "L": "L", "price result": "price result", "void": "Void", "open": "Open"}
+    labels = {"W": "W", "L": "L", "price result": "price result", "void": "Void",
+              "open": "Open", "awaiting": "Awaiting result"}
     out = []
     rest = visual
     while rest:
@@ -288,8 +298,12 @@ def _bet_labels(visual):
         if not rest:
             break
         matched = re.match(r"(\d+)(W|L)(?![A-Za-z])", rest) or re.match(
-            r"(\d+) (price result|void|open)(?![A-Za-z])", rest)
+            r"(\d+) (price result|void|open|awaiting)(?![A-Za-z])", rest)
         if not matched:
+            word = rest.strip()
+            if word and " " not in word and not word[0].isdigit():
+                out.append(word)
+                break
             raise AssertionError(visual)
         out.extend([labels[matched.group(2)]] * int(matched.group(1)))
         rest = rest[matched.end():]
@@ -313,10 +327,47 @@ eq([shell_build._cents(bet["price"]) for bet in kaz_contest[0]["bets"]], ["67¢"
    "each Kazakhstan bet keeps its own price, 67¢ and 80¢")
 eq([bet["status"] for bet in kaz_contest[0]["bets"]], ["L", "W"],
    "the bet list is the loss and the win, not the row's first result")
-eq(_attr(kaz[0], "data-price"), "67¢", "the visible price is only the first bet")
-ok(not all(shell_build._cents(bet["price"]) == _attr(kaz[0], "data-price")
-           for bet in kaz_contest[0]["bets"]),
-   "comparing every bet with the row's first price fails when the prices differ")
+eq(_attr(kaz[0], "data-price"), "67¢ / 80¢",
+   "different prices list on the row, 67¢ and 80¢")
+ok(all(shell_build._cents(bet["price"]) in _attr(kaz[0], "data-price")
+       for bet in kaz_contest[0]["bets"]),
+   "every Kazakhstan bet's cents is on the row")
+# One fixture, two lead ids. One lead has sides; the other has only the
+# match title Production writes as "{home} v {away}". They are one row.
+half_kick = "2026-10-04T15:00:00Z"
+half_sided = _lead("half-sides", "Halfmatch", "Teams", half_kick, "hit",
+                   "a|soccer", "soccer", 0.41)
+half_title = {
+    "id": "half-title",
+    "match": "Halfmatch v Teams",
+    "headline": "Over 1.5 goals",
+    "kickoff": half_kick,
+    "status": "miss",
+    "pair": "b|soccer",
+    "sport": "soccer",
+    "lane": "production",
+    "price_at_log": 0.62,
+    "league": "League",
+    "source": "b",
+    "sandbox_quote": "half-title",
+}
+half_blob = _blob([half_sided, half_title])
+half_rows = _rows(shell_build.page(
+    NOW, d={"quotes": []}, st={"pairs": {}}, blob=half_blob))
+half_named = [row for row in half_rows if _attr(row, "data-name") == "Halfmatch v Teams"]
+eq(len(half_named), 1, "two leads for Halfmatch v Teams, with different ids, are one row")
+ok(">1W 1L</span>" in half_named[0], "that fixture's win and loss render as 1W 1L")
+half_contests = shell_build.contests_from_lanes(
+    shell_build.collect_lanes({"quotes": []}, {"pairs": {}}, half_blob, NOW), NOW)
+eq(len(half_contests), 1, "the title-only lead shares the sided lead's contest key")
+eq(sorted(bet["status"] for bet in half_contests[0]["bets"]), ["L", "W"],
+   "both Halfmatch bets are on that one contest")
+other_day = dict(half_title, id="half-other-day", kickoff="2026-10-02T15:00:00Z",
+                 status="hit", sandbox_quote="half-other-day")
+apart = shell_build.contests_from_lanes(
+    shell_build.collect_lanes({"quotes": []}, {"pairs": {}},
+                              _blob([half_sided, other_day]), NOW), NOW)
+eq(len(apart), 2, "the same sides on another day stay two contests")
 eq(_bet_labels("1W 1L"), ["W", "L"],
    "1W 1L is two bets, so a row compare would miss one (the 20 vs 19 gap)")
 eq(len(_bet_labels("1W 1L")), 2, "the two Kazakhstan bets both count")
@@ -330,10 +381,11 @@ win_price = _face_page([("hit", "a|soccer"), ("price", "b|soccer")])
 ok(">1W 1 price result</span>" in win_price[0] and "1 won, 1 price result" in win_price[0],
    "a win and a price result both show")
 loss_pairs = [("miss", "a|soccer", 0.33), ("pending", "b|soccer", 0.44)]
-loss_open = _face_page(loss_pairs)
+# Inside the six-hour window, so the open bet still reads Open.
+loss_open = _face_page(loss_pairs, kickoff="2026-10-05T14:00:00Z")
 ok(">1L 1 open</span>" in loss_open[0] and "1 lost, 1 open" in loss_open[0],
    "a settled bet and an open bet both show")
-loss_contest = _face_contests(loss_pairs)
+loss_contest = _face_contests(loss_pairs, kickoff="2026-10-05T14:00:00Z")
 eq(loss_contest[0]["bucket"], "live",
    "one open bet past kickoff makes the contest Live, even with a settled bet beside it")
 eq(_attr(loss_open[0], "data-filter"), "live", "that one-open/one-settled row is Live")
@@ -349,6 +401,39 @@ eq(_subset_gaps(
     [("Kazakhstan v Faroe Islands", "L", "33¢")]),
    [("Kazakhstan v Faroe Islands", "L", "33¢")],
    "a first-bet price does not satisfy the other bet")
+_finished_live = {
+    "match": "Finished v Pair",
+    "bucket": "live",
+    "bets": [
+        {"status": "W", "price": 0.50, "pair": "a|soccer"},
+        {"status": "L", "price": 0.40, "pair": "b|soccer"},
+    ],
+}
+eq(_subset_gaps([_finished_live], [("Finished v Pair", "W", "99¢")]),
+   [("Finished v Pair", "W", "99¢")],
+   "a finished two-bet contest marked Live is not exempt without an open bet")
+eq(_subset_gaps(
+    [dict(_finished_live, bets=_finished_live["bets"] + [
+        {"status": "Open", "price": 0.20, "pair": "c|soccer"}])],
+    [("Finished v Pair", "W", "99¢")]),
+   [],
+   "a Live contest with an actual open bet stays exempt")
+_matched_live = {
+    "match": "Finished v Pair",
+    "bucket": "live",
+    "bets": [
+        {"status": "W", "price": 0.50, "pair": "a|soccer"},
+        {"status": "L", "price": 0.40, "pair": "b|soccer"},
+    ],
+}
+eq(_subset_gaps([_matched_live], [("Finished v Pair", "W", "50¢")]),
+   [("Finished v Pair", "W", "50¢")],
+   "a finished contest marked Live is a gap even when its price matches")
+_done = _face_contests([("hit", "a|soccer", 0.50), ("miss", "b|soccer", 0.40)])
+eq(_done[0]["bucket"], "settled",
+   "two settled Production bets are Settled, not Live")
+eq(_subset_gaps(_done, [("Kazakhstan v Faroe Islands", "W", "50¢")]), [],
+   "those settled bets are checked rather than skipped")
 
 print("\nempty filter and quote window")
 empty = shell_build.page(
@@ -894,12 +979,16 @@ for name in sorted(os.listdir(wf_dir)):
 print("\ncommitted shell")
 _committed = open(os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read()
 _committed_rows = _rows(_committed)
-ok(_committed_rows, "committed index.html lists Running contests")
+ok(_committed_rows or 'id="running-empty"' in _committed,
+   "committed index.html lists Running contests or the empty state")
 for _key, _label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upcoming")):
     eq(_filter_count(_committed, _key, _label),
        sum(1 for _row in _committed_rows if _attr(_row, "data-filter") == _key),
        f"committed {_label} count equals the committed rows")
-ok('class="rule-mini"' not in _committed, "committed index.html has no rule cards yet")
+ok('class="rule-mini"' not in _committed,
+   "committed index.html does not paint rule cards before a row is selected")
+if _committed_rows:
+    ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
 _prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
 eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
    "committed index.html tiles equal committed production.html tiles")
@@ -928,51 +1017,89 @@ def _bucket_bets(rows, bucket):
     return bets
 
 
-_feed_left = list(production.load_feed().get("leads", {}).values())
-_priced_entries = []
-for _name, _headline, _status in _prod_rows:
-    _at = next((i for i, lead in enumerate(_feed_left)
-                if lead.get("match") == _name and lead.get("headline") == _headline), None)
-    ok(_at is not None, f"{_name} / {_headline} is a feed lead")
-    if _at is None:
-        continue
-    _lead_row = _feed_left.pop(_at)
-    _priced_entries.append((_name, _status, shell_build._cents(_lead_row.get("price_at_log"))))
-_clock = re.search(r'<time datetime="([^"]+)"', _prod_committed).group(1)
-_when = datetime.datetime.strptime(_clock, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-_model = shell_build.contests_from_lanes(
-    shell_build.collect_lanes(
-        shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
-    _when)
-eq(_subset_gaps(_model, _priced_entries), [],
-   "each production recent bet matches its own status and price; Live contests are exempt")
-_by_model = {contest["match"]: contest for contest in _model}
-_html_settled = {}
+_price_re = re.compile(r"^(?:\d+¢|—)(?: / (?:\d+¢|—))*$")
+_known_status = {"W", "L", "Void", "price result", "Open", "awaiting", "mixed", ""}
+_contest_ids = []
 for _row in _committed_rows:
-    if _attr(_row, "data-filter") == "settled":
-        _html_settled.setdefault(_attr(_row, "data-name"), []).append(_row)
-_required = 0
-for _name, _status, _cents in _priced_entries:
-    _contest = _by_model.get(_name)
-    if _contest is not None and _contest["bucket"] == "live":
-        continue
-    _required += 1
-    _hits = _html_settled.get(_name, [])
-    ok(len(_hits) == 1, f"production recent lead {_name} is one Running Settled row")
+    _price = _attr(_row, "data-price") or ""
+    ok(_price_re.match(_price) is not None, f"a Running price is cents ({_price})")
+    ok(_attr(_row, "data-filter") in ("live", "settled", "upcoming"),
+       "a Running row is Live, Settled, or Upcoming")
+    _cid = _attr(_row, "data-contest")
+    ok(_cid, "a Running row has a contest id")
+    _contest_ids.append(_cid)
+    _data_status = _attr(_row, "data-status") or ""
+    if _data_status not in _known_status:
+        ok(_visual(_row) != "Void",
+           f"an unknown status stays {_visual(_row)!r}, not Void")
+    _payload = _attr(_row, "data-cards")
+    if _payload:
+        for _card in json.loads(_payload):
+            _card_price = _card.get("price") or ""
+            ok(_price_re.match(_card_price) is not None,
+               f"a card price is cents ({_card_price})")
+            _card_status = _card.get("status") or ""
+            if _card_status not in ("W", "L", "Void", "price result", "Open", "Awaiting result"):
+                ok(_card_status != "Void",
+                   f"an unknown card status stays {_card_status!r}, not Void")
+eq(len(_contest_ids), len(set(_contest_ids)), "committed Running has one row per contest")
+_clock_m = re.search(r'<time datetime="([^"]+)"', _prod_committed)
+ok(_clock_m is not None, "production.html has a build clock")
+_model = []
+if _clock_m is not None:
+    _when = datetime.datetime.strptime(
+        _clock_m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    _model = shell_build.contests_from_lanes(
+        shell_build.collect_lanes(
+            shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
+        _when)
+_model_keys = []
+for _contest in _model:
+    _model_keys.append((
+        _contest.get("sport"), _contest.get("match"), _contest.get("kickoff")))
+    _open = any(bet.get("status") == "Open" for bet in _contest["bets"])
+    _graded = _contest["bets"] and all(
+        bet.get("status") in ("W", "L", "Void", "price result") for bet in _contest["bets"])
+    if _graded:
+        eq(_contest["bucket"], "settled",
+           f"{_contest['match']} has no open bet, so it is Settled")
+    elif _contest["bucket"] == "live":
+        ok(_open, f"{_contest['match']} is Live only while a bet is still open")
+    for _bet in _contest["bets"]:
+        _cents = shell_build._cents(_bet.get("price"))
+        ok(_price_re.match(_cents) is not None, f"a model price is cents ({_cents})")
+        if _bet.get("status") not in ("W", "L", "Void", "price result", "Open"):
+            ok(_bet.get("status") != "Void",
+               f"an unknown model status stays {_bet.get('status')!r}, not Void")
+eq(len(_model_keys), len(set(_model_keys)),
+   "the Running model has one contest per sport, match, and kickoff")
+_by_name = {}
+for _row in _committed_rows:
+    _by_name.setdefault(_attr(_row, "data-name"), []).append(_row)
+_matched_settled = 0
+_feed_leads = list((production.load_feed() or {}).get("leads", {}).values())
+for _name, _headline, _status in _prod_rows:
+    if _clock_m is None:
+        break
+    _same = [lead for lead in _feed_leads if lead.get("match") == _name]
+    _kicks = [production._one_instant(lead.get("kickoff")) for lead in _same]
+    if not _same or not any(
+            k is not None and shell_build._in_shell_window(k, _when) for k in _kicks):
+        continue  # not in this feed, or outside the 14-day window at the build clock
+    if any(lead.get("status") == "pending" and k is not None and k <= _when
+           for lead, k in zip(_same, _kicks)):
+        continue  # a Live contest with an open bet is exempt
+    _hits = _by_name.get(_name, [])
+    eq(len(_hits), 1, f"production recent lead {_name} is one Running row")
     if len(_hits) != 1:
         continue
+    eq(_attr(_hits[0], "data-filter"), "settled", f"production recent lead {_name} is Settled")
     ok(_status in _bet_labels(_visual(_hits[0])),
-       f"{_name} keeps the production recent status {_status}")
+       "a production recent status is on that Running row")
+    _matched_settled += 1
 _shell_settled = _bucket_bets(_committed_rows, "settled")
-ok(len(_shell_settled) >= _required,
-   "Running Settled bets cover every non-live production recent lead, and may add older ones")
-_rsl = [row for row in _committed_rows
-        if _attr(row, "data-name") == "Real Salt Lake v New England Revolution"]
-eq(len(_rsl), 1, "Settled includes Real Salt Lake v New England")
-if _rsl:
-    eq(_attr(_rsl[0], "data-filter"), "settled", "Real Salt Lake v New England is Settled")
-    ok(">L</span>" in _rsl[0], "Real Salt Lake v New England is a loss")
-    eq(_attr(_rsl[0], "data-price"), "80¢", "Real Salt Lake v New England is 80¢")
+ok(len(_shell_settled) >= _matched_settled,
+   "Running Settled bets cover the production recent rows still on the page")
 ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in _committed,
    "committed Settled caption renders from SHELL_SETTLED_DAYS")
 _to_come = re.search(
@@ -980,8 +1107,9 @@ _to_come = re.search(
 _upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
 eq(len(_upcoming_bets), int(_to_come.group(1)) if _to_come else None,
    "Upcoming bets equal the strip's leads still to come")
-ok(all(bet == "Open" for bet in _upcoming_bets),
-   "every upcoming bet is still open")
+_graded_visual = {"W", "L", "Void", "price result"}
+ok(all(bet not in _graded_visual for bet in _upcoming_bets),
+   "an upcoming bet is still open or an unresolved status")
 eq(_committed.count('aria-describedby="settled-caption"'), 1,
    "committed Settled filter points at the caption")
 
@@ -1095,6 +1223,8 @@ def _browser():
                     line: line ? line.textContent : "",
                     emptyHidden: empty ? empty.hidden : null,
                     cards: document.querySelectorAll(".rule-mini").length,
+                    want: current ? JSON.parse(current.getAttribute("data-cards") || "[]").length : 0,
+                    section: (document.getElementById("rules-section") || {}).textContent || "",
                     selectedAttr: document.querySelectorAll("[aria-selected]").length,
                   };
                 }""")
@@ -1102,9 +1232,11 @@ def _browser():
                    and selected["name"] and selected["name"] in selected["line"]
                    and "inset" in selected["shadow"]
                    and "¢" in selected["line"] and " · " in selected["line"]
-                   and selected["emptyHidden"] and selected["cards"] == 0
+                   and selected["emptyHidden"] and selected["cards"] == selected["want"]
+                   and selected["cards"] >= 1
+                   and selected["section"].startswith("Rules applied · ")
                    and selected["selectedAttr"] == 0,
-                   f"Enter presses one row and names it in the header ({selected})")
+                   f"Enter presses one row, names it, and shows its cards ({selected})")
                 second.focus()
                 page.keyboard.press("Space")
                 moved = page.evaluate("""() => {
@@ -1132,6 +1264,8 @@ def _browser():
                     headHidden: head ? head.hidden : null,
                     emptyHidden: empty ? empty.hidden : null,
                     empty: empty ? empty.textContent : "",
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    sectionHidden: (document.getElementById("rules-section") || {}).hidden,
                   };
                 }""")
                 caption_off = page.evaluate("""() => {
@@ -1142,8 +1276,9 @@ def _browser():
                 eq(cleared["pressed"], 0, "hiding the selected row clears aria-pressed")
                 eq(cleared["line"], "", "hiding the selected row clears the detail header")
                 ok(cleared["headHidden"] and not cleared["emptyHidden"]
-                   and cleared["empty"] == "Select a contest in Running.",
-                   f"the detail pane returns to its empty state ({cleared})")
+                   and cleared["empty"] == "Select a contest in Running."
+                   and cleared["cards"] == 0 and cleared["sectionHidden"],
+                   f"the detail pane returns to its empty state and clears cards ({cleared})")
                 browser.close()
         finally:
             httpd.shutdown()

@@ -7,8 +7,10 @@ inert: they do not filter, navigate, or take focus.
 Running rows are presentation. They reuse the Production feed and the same
 quote gates that feed already uses. They do not settle, assess, or rewrite a
 ledger. Page pills leave this page, so the list is Production lanes only; a
-row's lane pill reads Production. One row per contest. Several Production
-lanes on that contest show an N-lanes count.
+row's lane pill reads Production. One row per contest. Several bets on that
+contest show an N-lanes count and, on the right, one Rules-applied card each.
+Card verdicts, ROI, and records come from the helpers the sport pages already
+call. This file does not compute a new one.
 
 Settled rows cover SHELL_SETTLED_DAYS Chicago dates, today included. Days
 still inside production.KEEP_SETTLED_DAYS come from the same feed
@@ -17,6 +19,7 @@ ledger, through the same status and price path. The clock is the `now`
 the caller passed, the same instant as production.html.
 """
 import datetime
+import json
 
 import fmt
 import production
@@ -61,6 +64,17 @@ _QUOTE_SETTLED = ("won", "lost", "void", "settled")
 # Chicago dates on the Running Settled list, today included. Not
 # production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
 SHELL_SETTLED_DAYS = 14
+# An open bet still ungraded this long after kickoff stays in Live, but the
+# row says "Awaiting result" instead of Open. The name is read on each call.
+SHELL_AWAIT_HOURS = 6
+# Sport pages that already exist. Anything else stays on the Production board.
+_SPORT_PAGES = {
+    "soccer": "./soccer.html",
+    "tennis": "./tennis.html",
+    "cricket": "./cricket.html",
+    "nba": "./nba.html",
+    "crypto": "./crypto.html",
+}
 
 
 def tiles_html(html):
@@ -154,7 +168,16 @@ def _sport_label(sport):
 
 
 def _status_label(status):
-    return _STATUS.get(status, "Void")
+    """Open / W / L / Void / price result. Anything else stays neutral.
+
+    A status this map does not know is not a void. A real string is shown as
+    itself (escaped at render). Missing statuses read Unknown.
+    """
+    if status in _STATUS:
+        return _STATUS[status]
+    if isinstance(status, str) and status.strip():
+        return status.strip()
+    return "Unknown"
 
 
 def _in_production_window(instant, now):
@@ -241,32 +264,77 @@ def _lane_from_lead(lead, settled_at=None):
         home = str(home)
     if away is not None:
         away = str(away)
+    route = lead.get("route") if isinstance(lead.get("route"), dict) else {}
+    venue = route.get("venue")
+    if venue is None:
+        venue = lead.get("venue")
+    pair = str(lead.get("pair") or "")
+    source = lead.get("source") or pair.split("|", 1)[0]
+    edge = lead.get("edge_at_log") if "edge_at_log" in lead else lead.get("edge")
     return {
-        "pair": str(lead.get("pair") or ""),
+        "pair": pair,
         "quote_id": lead.get("sandbox_quote") or lead.get("id"),
         "sport": _sport_label(lead.get("sport")),
+        "sport_key": str(lead.get("sport") or ""),
+        "source": str(source or ""),
         "home": home,
         "away": away,
         "match": str(lead.get("match") or ""),
+        "headline": str(lead.get("headline") or ""),
         "competition": str(lead.get("league") or ""),
         "kickoff": kickoff,
         "price": lead.get("price_at_log"),
+        "edge": edge,
+        "venue": None if venue is None else str(venue),
         "status": _status_label(lead.get("status")),
         "lane": "Sandbox" if lead.get("lane") == "sandbox" else "Production",
         "settled_at": settled_at,
     }
 
 
+def _settled_status(status):
+    """A graded result. Open and anything this map does not know are not graded."""
+    return status in ("W", "L", "Void", "price result")
+
+
 def _keeps(lane, now):
     if lane["status"] == "Open":
         return True
-    return _in_shell_window(lane.get("kickoff"), now)
+    kick = lane.get("kickoff")
+    # An unknown status is not a void and not a drop. A future kickoff stays
+    # on the list so it can sit in Upcoming; a past one uses the settled window.
+    if not _settled_status(lane.get("status")) and kick is not None and kick > now:
+        return True
+    return _in_shell_window(kick, now)
+
+
+def _contest_sides(lane):
+    """Home and away, or the two sides Production writes into the match title.
+
+    A Production lead's match is ``{home} v {away}`` whenever it has sides.
+    A second lead for that fixture can carry the title and not the sides.
+    Both have to share one key, or the contest splits into two rows.
+    """
+    home, away = lane.get("home"), lane.get("away")
+    if home and away:
+        return str(home).strip(), str(away).strip()
+    match = str(lane.get("match") or "")
+    parts = match.split(" v ")
+    if len(parts) == 2 and parts[0].strip() and parts[1].strip():
+        return parts[0].strip(), parts[1].strip()
+    return None, None
 
 
 def _contest_key(lane):
+    """Sport, the two sides in either order, and the Chicago day.
+
+    Reversed home and away on the same Chicago day are one contest. A same-day
+    doubleheader is too: both games share those sides and that day, so they
+    share a row. Kickoffs that fall on different Chicago dates stay apart.
+    """
     day = production._chicago_day(lane.get("kickoff"))
     day_key = day.isoformat() if day is not None else ""
-    home, away = lane.get("home"), lane.get("away")
+    home, away = _contest_sides(lane)
     if home and away:
         sides = tuple(sorted((home.casefold(), away.casefold())))
         return ("sides", lane["sport"], sides, day_key)
@@ -276,6 +344,13 @@ def _contest_key(lane):
 def _contest_bucket(items, now):
     opens = [lane for lane in items if lane["status"] == "Open"]
     if not opens:
+        # No open bet. Graded bets are Settled. An unknown status follows
+        # its kickoff: still to come is Upcoming, already started is Settled.
+        future = [lane for lane in items
+                  if lane.get("kickoff") is not None and lane["kickoff"] > now
+                  and not _settled_status(lane.get("status"))]
+        if items and len(future) == len(items):
+            return "upcoming"
         return "settled"
     started = [lane for lane in opens
                if lane.get("kickoff") is not None and lane["kickoff"] <= now]
@@ -286,12 +361,13 @@ def _contest_bucket(items, now):
 
 # Visual token and spoken phrase for each bet status. W and L glue to the
 # count ("1W", "2L"); the words stay separate ("1 void", "1 open").
-_COMBO_ORDER = ("W", "L", "price result", "Void", "Open")
+_COMBO_ORDER = ("W", "L", "price result", "Void", "Awaiting result", "Open")
 _COMBO_TOKEN = {
     "W": "W",
     "L": "L",
     "price result": "price result",
     "Void": "void",
+    "Awaiting result": "awaiting",
     "Open": "open",
 }
 _SPOKEN = {
@@ -299,20 +375,23 @@ _SPOKEN = {
     "L": "lost",
     "price result": "price result",
     "Void": "void",
+    "Awaiting result": "awaiting result",
     "Open": "open",
 }
 
 
-def _status_face(items):
+def _status_face(items, statuses=None):
     """One contest row, one result line, counted per bet.
 
-    A single bet keeps its own label (W, L, Open, Void, price result). Several
-    bets add up: 2W, 1W 1L, 1W 1 void, 1L 1 open, 1W 1 price result. The
+    A single bet keeps its own label (W, L, Open, Void, price result,
+    Awaiting result). Several bets add up: 2W, 1W 1L, 1L 1 awaiting. The
     spoken line is what a screen reader should say instead of the letters.
+    `statuses` overrides each lane's stored status, so an open bet past the
+    await window can read Awaiting result without leaving the Live bucket.
     """
     counts = {}
-    for lane in items:
-        label = lane["status"]
+    labels = statuses if statuses is not None else [lane["status"] for lane in items]
+    for label in labels:
         counts[label] = counts.get(label, 0) + 1
     total = sum(counts.values())
     if total == 0:
@@ -425,35 +504,260 @@ def collect_lanes(d, st, blob, now):
     return lanes
 
 
-def contests_from_lanes(lanes, now):
-    """One contest per event. The representative lane is the first pair name."""
+def _bet_awaiting(lane, now):
+    """An open bet whose kickoff is strictly more than SHELL_AWAIT_HOURS ago."""
+    if lane.get("status") != "Open" or now is None:
+        return False
+    kick = lane.get("kickoff")
+    if kick is None:
+        return False
+    try:
+        return now - kick > datetime.timedelta(hours=SHELL_AWAIT_HOURS)
+    except TypeError:
+        return False
+
+
+def _shown_status(lane, now):
+    """The status a card and the result line show.
+
+    An open bet past the await window stays in the Live bucket, but it no
+    longer reads Open. The lane's own status is left as Open so the bucket
+    still sees an open bet.
+    """
+    if _bet_awaiting(lane, now):
+        return "Awaiting result"
+    return lane.get("status") or "Unknown"
+
+
+def _price_text(items):
+    """Every bet's cents, in card order. One price stays a single figure."""
+    parts = [_cents(lane.get("price")) for lane in items]
+    if not parts:
+        return "—"
+    if len(parts) == 1:
+        return parts[0]
+    return " / ".join(parts)
+
+
+def _lane_name(source, sport_key):
+    """The rule or tipster label the Sandbox and Production pages already print."""
+    meta = S.SOURCES.get(source) or {}
+    label = meta.get("label") or source or ""
+    name = str(label).split(" (")[0] or "—"
+    try:
+        sfx = sandbox_build._scope(sport_key)
+    except (TypeError, AttributeError):
+        sfx = ""
+    scope = S.SCOPE_LABEL.get(sfx) if sfx else None
+    if scope:
+        return f"{name} · {scope}"
+    return name
+
+
+def _venue_name(venue):
+    """The venue badge, from the same source label the board prints. Omit if absent.
+
+    ``kalshi_binary`` is the ledger's name for a Kalshi yes/no contract. It is
+    not its own source. The board's Kalshi label is the one the badge uses.
+    """
+    if venue is None or venue == "":
+        return None
+    key = "kalshi" if str(venue) == "kalshi_binary" else str(venue)
+    meta = S.SOURCES.get(key) or {}
+    label = meta.get("label")
+    if label:
+        return str(label).split(" (")[0]
+    return str(venue)
+
+
+def _quote_venues(d):
+    """Quote id to the venue on that paper-bet row. The feed lead often omits it."""
+    found = {}
+    if not isinstance(d, dict):
+        return found
+    try:
+        rows = T.bet_rows(d)
+    except (KeyError, TypeError):
+        return found
+    for quote in rows:
+        qid = quote.get("id")
+        venue = quote.get("venue")
+        if qid and venue and qid not in found:
+            found[qid] = str(venue)
+    return found
+
+
+def _edge_text(edge):
+    """Edge already stored on the lead, in the board's percent format. None omits it."""
+    if edge is None or edge == "":
+        return None
+    try:
+        text = fmt.pct(float(edge), digits=1, sign=True)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if not text or text == "—":
+        return None
+    return text
+
+
+def _lane_board(d, st, pair_key, cache):
+    """Verdict, ROI after fees, and record from the helpers the sport pages use.
+
+    `pair_status` is the Sandbox row's assess. `verdict` and `pct` are the
+    words and the ROI that row already prints. Nothing here is a new formula.
+    A missing sample omits ROI and record. A missing pair omits all three.
+    """
+    if pair_key in cache:
+        return cache[pair_key]
+    found = {"verdict": None, "roi": None, "record": None}
+    cache[pair_key] = found
+    if not d or not st or not pair_key or "|" not in str(pair_key):
+        return found
+    source, sport = str(pair_key).split("|", 1)
+    try:
+        group, assessed, _qa, _open_n, _last, _pair = sandbox_build.pair_status(
+            d, st, source, sport)
+    except (KeyError, TypeError):
+        return found
+    if not isinstance(assessed, dict):
+        return found
+    try:
+        key = sandbox_build.verdict(assessed) if group is not None else "nobets"
+        found["verdict"] = sandbox_build.VERDICTS[key][0]
+    except (KeyError, TypeError):
+        found["verdict"] = None
+    n = assessed.get("n")
+    if not n:
+        return found
+    roi = assessed.get("roi_fee")
+    if roi is not None:
+        try:
+            text = sandbox_build.pct(roi, sign=True)
+        except (TypeError, ValueError, OverflowError):
+            text = None
+        if text and text != "—":
+            found["roi"] = text
+    won = assessed.get("won")
+    if won is not None:
+        try:
+            found["record"] = f"{won}\u2013{n - won}"
+        except TypeError:
+            found["record"] = None
+    return found
+
+
+def _full_page(sport_key):
+    """The existing sport page for this lane, or the Production board."""
+    key = str(sport_key or "")
+    try:
+        base = str(sandbox_build._base_sport(key))
+    except (TypeError, AttributeError):
+        base = key
+    for slug, href in _SPORT_PAGES.items():
+        if key == slug or key.startswith(slug + "_") or base == slug or base.startswith(slug + "_"):
+            return href
+    return "./production.html"
+
+
+def _contest_page(items):
+    pages = [_full_page(lane.get("sport_key")) for lane in items]
+    chosen = [href for href in pages if href != "./production.html"]
+    if chosen and all(href == chosen[0] for href in pages):
+        return chosen[0]
+    return "./production.html"
+
+
+def _card(lane, board):
+    """One bet's mini card. Fields the helpers did not compute are left out."""
+    status = lane.get("status") or "Unknown"
+    card = {
+        "lane": _lane_name(lane.get("source") or "", lane.get("sport_key")),
+        "pill": "PRODUCTION" if lane.get("lane") == "Production" else "Sandbox",
+        "price": _cents(lane.get("price")),
+        "status": status,
+        "spoken": _SPOKEN.get(status, status),
+    }
+    if lane.get("headline"):
+        card["market"] = lane["headline"]
+    venue = _venue_name(lane.get("venue"))
+    if venue:
+        card["venue"] = venue
+    edge = _edge_text(lane.get("edge"))
+    if edge:
+        card["edge"] = edge
+    if board.get("verdict"):
+        card["verdict"] = board["verdict"]
+    if board.get("roi"):
+        card["roi"] = board["roi"]
+    if board.get("record"):
+        card["record"] = board["record"]
+    # The numbers are the pair's whole Sandbox record, every competition
+    # together. The sport page splits that same record by competition.
+    if board.get("verdict") or board.get("roi") or board.get("record"):
+        card["stats_note"] = "Sandbox, all competitions"
+    return card
+
+
+def _cards_attr(cards):
+    raw = json.dumps(cards, ensure_ascii=True, separators=(",", ":"))
+    return site_chrome.esc(raw)
+
+
+def contests_from_lanes(lanes, now, d=None, st=None):
+    """One contest per event. Production bets sort ahead of Sandbox bets."""
     grouped = {}
     for lane in lanes:
         grouped.setdefault(_contest_key(lane), []).append(lane)
+    cache = {}
+    venues = _quote_venues(d)
     contests = []
     for items in grouped.values():
-        items.sort(key=lambda lane: (lane.get("pair") or "", str(lane.get("quote_id") or "")))
+        items.sort(key=lambda lane: (
+            0 if lane.get("lane") == "Production" else 1,
+            lane.get("pair") or "",
+            str(lane.get("quote_id") or ""),
+        ))
         kickoff = min((lane["kickoff"] for lane in items if lane.get("kickoff") is not None),
                       default=None)
         rep = next((lane for lane in items if lane["status"] == "Open"), items[0])
         competition = next((lane["competition"] for lane in items if lane.get("competition")), "")
-        face = _status_face(items)
+        for lane in items:
+            if not lane.get("venue"):
+                venue = venues.get(lane.get("quote_id"))
+                if venue:
+                    lane["venue"] = venue
+        bucket = _contest_bucket(items, now)
+        shown = [_shown_status(lane, now) for lane in items]
+        awaiting = bucket == "live" and any(text == "Awaiting result" for text in shown)
+        if shown and all(text == "Awaiting result" for text in shown):
+            face = {"visual": "Awaiting result", "spoken": "awaiting result", "data": "awaiting"}
+        else:
+            face = _status_face(items, shown)
+        bets = [
+            {"status": lane["status"], "price": lane.get("price"), "pair": lane.get("pair")}
+            for lane in items
+        ]
+        cards = [
+            _card(dict(lane, status=text), _lane_board(d, st, lane.get("pair"), cache))
+            for lane, text in zip(items, shown)
+        ]
         contests.append({
             "sport": items[0]["sport"] or "Other",
             "match": rep.get("match") or items[0].get("match") or "",
             "competition": competition,
             "kickoff": kickoff,
             "price": rep.get("price"),
+            "price_text": _price_text(items),
             "status": face["visual"],
             "spoken": face["spoken"],
             "data_status": face["data"],
-            "bucket": _contest_bucket(items, now),
+            "awaiting": awaiting,
+            "bucket": bucket,
+            "page": _contest_page(items),
             "pill": "Production" if any(lane["lane"] == "Production" for lane in items) else "Sandbox",
             "lanes": len({lane["pair"] for lane in items if lane.get("pair")}) or len(items),
-            "bets": [
-                {"status": lane["status"], "price": lane.get("price"), "pair": lane.get("pair")}
-                for lane in items
-            ],
+            "bets": bets,
+            "cards": cards,
         })
     return contests
 
@@ -474,14 +778,17 @@ def _row_html(contest, index, now):
     competition = contest["competition"] or "—"
     name = contest["match"] or "—"
     kickoff = _when_text(contest["kickoff"])
-    price = _cents(contest["price"])
+    price = contest.get("price_text") or _cents(contest.get("price"))
+    awaiting = ' data-awaiting="true"' if contest.get("awaiting") else ""
     esc = site_chrome.esc
     return (
         f'<button type="button" class="running-row"'
         f' data-filter="{esc(bucket)}" data-contest="c{index}"'
         f' data-competition="{esc(competition)}" data-sport="{esc(contest["sport"])}"'
         f' data-name="{esc(name)}" data-kickoff="{esc(kickoff)}" data-price="{esc(price)}"'
-        f' aria-pressed="false"{hidden}>'
+        f' data-page="{esc(contest.get("page") or "./production.html")}"'
+        f' data-cards="{_cards_attr(contest.get("cards") or [])}"'
+        f' aria-pressed="false"{awaiting}{hidden}>'
         f'<span class="running-time">{esc(_time_text(bucket, contest["kickoff"], now))}</span>'
         f'<span class="running-contest">{esc(name)}</span>'
         f'<span class="running-price">{esc(price)}</span>'
@@ -495,7 +802,7 @@ def _row_html(contest, index, now):
 
 
 def _running_body(d, st, blob, now):
-    contests = contests_from_lanes(collect_lanes(d, st, blob, now), now)
+    contests = contests_from_lanes(collect_lanes(d, st, blob, now), now, d=d, st=st)
     by_sport = {}
     for contest in contests:
         by_sport.setdefault(contest["sport"], []).append(contest)
@@ -576,6 +883,9 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <div class="rules-head" id="rules-head" hidden>
 <p class="rules-line" id="rules-line"></p>
 </div>
+<p class="sr-only" id="rules-live" aria-live="polite"></p>
+<h3 class="rules-section" id="rules-section" hidden></h3>
+<div class="rules-cards" id="rules-cards" hidden></div>
 <p class="shell-empty" id="rules-empty">Select a contest in Running.</p>
 </section>
 </div>
