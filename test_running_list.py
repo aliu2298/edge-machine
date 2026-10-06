@@ -227,8 +227,13 @@ ok("<script>alert" not in PAGE and "&lt;b&gt;Beta" in PAGE,
 ok("javascript:alert(1)" in html_lib.unescape(PAGE)
    and 'href="javascript:alert(1)"' not in PAGE,
    "a javascript: string stays text")
-ok('aria-disabled="true"' in PAGE and 'id="sports-soon"' in PAGE,
-   "sport pills stay inert with Coming soon")
+_sports_nav = re.search(r'<nav class="sports"[^>]*>.*?</nav>', PAGE, re.S)
+ok(_sports_nav and 'aria-disabled' not in _sports_nav.group(0)
+   and 'tabindex="-1"' not in _sports_nav.group(0)
+   and 'id="sports-soon"' not in PAGE and ">Coming soon</p>" not in PAGE,
+   "sport pills are enabled filters, with no Coming soon note")
+ok('data-sport="all" aria-pressed="true"' in (_sports_nav.group(0) if _sports_nav else ""),
+   "All starts pressed")
 eq(PAGE.count('aria-describedby="settled-caption"'), 1,
    "only the Settled filter points at the 14-day caption")
 ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption"' in PAGE,
@@ -1278,25 +1283,31 @@ def _browser():
                 page.set_viewport_size({"width": 1280, "height": 800})
                 page.wait_for_timeout(30)
                 styles = page.evaluate("""() => {
-                  const sport = document.querySelector('nav.sports button[data-sport="crypto"]');
-                  const filter = document.querySelector('.running-filters button[data-filter="settled"]');
-                  const a = getComputedStyle(sport);
-                  const b = getComputedStyle(filter);
+                  const pressed = document.querySelector('nav.sports button[data-sport="all"]');
+                  const idle = document.querySelector('nav.sports button[data-sport="crypto"]');
+                  const filter = document.querySelector('.running-filters button[aria-pressed="true"]');
+                  const a = getComputedStyle(pressed);
+                  const b = getComputedStyle(idle);
+                  const c = getComputedStyle(filter);
                   return {
-                    sportOpacity: a.opacity,
-                    filterOpacity: b.opacity,
-                    sportColor: a.color,
-                    filterColor: b.color,
-                    sportBorder: a.borderTopColor,
-                    filterBorder: b.borderTopColor,
-                    sportDisabled: sport.getAttribute("aria-disabled"),
+                    pressedOpacity: a.opacity,
+                    idleOpacity: b.opacity,
+                    pressedBg: a.backgroundColor,
+                    idleBg: b.backgroundColor,
+                    filterBg: c.backgroundColor,
+                    pressedColor: a.color,
+                    filterColor: c.color,
+                    disabled: idle.getAttribute("aria-disabled"),
+                    tab: idle.tabIndex,
                   };
                 }""")
-                ok(styles["sportDisabled"] == "true"
-                   and float(styles["sportOpacity"]) < float(styles["filterOpacity"])
-                   and styles["sportColor"] != styles["filterColor"]
-                   and styles["sportBorder"] != styles["filterBorder"],
-                   f"disabled sport pills are dimmer than an unpressed filter ({styles})")
+                ok(styles["disabled"] is None and styles["tab"] >= 0
+                   and float(styles["pressedOpacity"]) == 1
+                   and float(styles["idleOpacity"]) == 1
+                   and styles["pressedBg"] == styles["filterBg"]
+                   and styles["pressedBg"] != styles["idleBg"]
+                   and styles["pressedColor"] == styles["filterColor"],
+                   f"a pressed sport pill matches a pressed filter and stays enabled ({styles})")
                 page.click('.running-filters button[data-filter="upcoming"]')
                 page.wait_for_timeout(30)
                 shown = page.evaluate("""() => {
