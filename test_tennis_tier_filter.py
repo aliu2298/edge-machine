@@ -4,7 +4,7 @@
 tennis_fav_band_3h and every basket lane that cuts legs from that band
 refuse every other tour, including ATP Doubles and ATP Challenger qualifying,
 which share the letters "atp" and must not match by prefix. The 3-hour lane
-backs 0.70-0.85 from 2026-10-04, the baskets 0.77-0.81; the window stays 3 hours.
+backs 0.70-0.85 from 2026-10-04, and the baskets cut that same band; the window stays 3 hours.
 
 Fails on main: a dropped tour inside the window is still picked, and a
 dropped-tour leg still enters a basket. No network.
@@ -727,7 +727,8 @@ def main():
     print("\nkept tours are an exact set, not a prefix")
     eq(getattr(S, "TENNIS_FAV_KEEP", None), KEEP,
        "the keep set is exactly ATP, WTA Doubles, and UTR")
-    eq(S.BAND_BY_SPORT["tennis"], (0.77, 0.81), "the price band is still 0.77-0.81")
+    eq(S.BAND_BY_SPORT["tennis"], (0.77, 0.81),
+       "tennis_fav_band is still 0.77-0.81; the baskets are not on that band")
     eq(S.TENNIS_3H_BAND, (0.70, 0.85), "the 3-hour band is still 0.70-0.85")
     eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is still 3 hours")
     eq(S.tennis_tier("aec-atpdb-aa-bb-2026-10-02"), "atpdb", "ATP Doubles resolves as atpdb")
@@ -751,6 +752,33 @@ def main():
        "0.70 and 0.84 are picked; 0.69 and 0.85 are not")
     ok(_slug("atpdb") not in got and _slug("atpcq") not in got,
        "ATP Doubles and Challenger qualifying are refused inside the window")
+
+    print("\ncombo legs use the wide band, so 0.77-0.81 cannot come back quietly")
+    start = NOW + timedelta(hours=2)
+
+    def _priced(mid, price, venue, **extra):
+        row = _row(mid, price, start, venue)
+        row.update(extra)
+        return row
+
+    wide_prices = (0.69, 0.72, 0.77, 0.83, 0.85)
+    kalshi_wide = {"tennis": [
+        _priced(f"KXATPMATCH-26OCT02P{int(p * 100):02d}", p, "kalshi")
+        for p in wide_prices]}
+    kalshi_got = sorted(round(leg[2], 2)
+                        for group in S.combo_legs_by_day(kalshi_wide).values()
+                        for leg in group)
+    eq(kalshi_got, [0.72, 0.77, 0.83],
+       "0.72 and 0.83 are Kalshi combo legs; 0.69 and 0.85 are not")
+    pm_wide = {"tennis": [
+        _priced(f"aec-atp-p{int(p * 100):02d}-bb-2026-10-02", p, "polymarket_us",
+                pm_league="atp", tour="atp")
+        for p in wide_prices]}
+    pm_got = sorted(round(leg[2], 2)
+                    for group in S.pm_combo_legs_by_day(pm_wide).values()
+                    for leg in group)
+    eq(pm_got, [0.72, 0.77, 0.83],
+       "Polymarket baskets cut the same 0.70-0.85 legs")
 
     print("\nevery basket lane cuts legs from that same kept set")
     eq(tuple(BASKETS), ("tennis_combo2", "tennis_combo3", "tennis_combo4",
