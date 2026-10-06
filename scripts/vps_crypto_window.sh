@@ -20,9 +20,9 @@
 # That makes every later run a free retry of a failed earlier one, which is the whole of
 # what went wrong on the Mac, and it needs no state of its own.
 #
-# Live on edge-vps as a USER CRONTAB (no root needed; `bot`'s sudoers is scoped to named
-# polymarket-bot commands only):
-#   */15 17-20 * * * /home/bot/edge-machine-closes/scripts/vps_crypto_window.sh >> ~/edge-crypto.log 2>&1
+# Live on edge-vps as a USER CRONTAB (no root needed; that account's sudoers is scoped to
+# named polymarket commands only):
+#   */15 17-20 * * * "$HOME/edge-machine-closes/scripts/vps_crypto_window.sh" >> ~/edge-crypto.log 2>&1
 # scripts/edge-crypto.timer is the same schedule as a systemd unit, for a host with root.
 set -uo pipefail
 DIR="${EDGE_CRYPTO_DIR:-$HOME/edge-machine-closes}"
