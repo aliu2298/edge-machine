@@ -39,7 +39,10 @@ highest points + rebounds + assists line from that team's latest completed game 
 `games` that has an ESPN event id. A team with no such game stores null. The April
 seed is not a last game: those rows have no event id. A finished box score is fetched
 once and carried forward; if both ESPN hosts fail, or the payload has no box score,
-the run raises and the previous file is left where it is.
+the run raises and the previous file is left where it is. A scoreboard day is tried
+once more on the same host, then on the same fallback host the summaries use. If it
+still fails, the run raises with the date, the host and the status, before the file
+is written. A missed day is not skipped and not written over the last good file.
 
 WHAT IS ALREADY KNOWN TO BE WRONG WITH IT, measured rather than guessed:
 
@@ -80,6 +83,7 @@ Usage:
 """
 import argparse
 import datetime
+import http.client
 import json
 import os
 import sys
@@ -92,10 +96,18 @@ from collections import defaultdict, deque
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "data", "nba_pace.json")
 
-ESPN = ("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
-        "?dates={date}")
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/129.0 Safari/537.36")
+# Same order as the box-score hosts. site.api.espn.com has 403'd the site API
+# before; site.web.api.espn.com serves this scoreboard path (the host the rest
+# of the repo already uses). One retry on each host, then the day fails loud.
+SCORE_HOSTS = ("site.web.api.espn.com", "site.api.espn.com")
+SCORE_ATTEMPTS = 2
+SCORE_TIMEOUT = 30
+# Timeout, connection failure, truncated body, bad UTF-8. HTTPError is handled
+# inside the GET helper and comes back as a status. Both callers retry these.
+_TRANSPORT = (urllib.error.URLError, OSError, http.client.IncompleteRead,
+              UnicodeDecodeError)
 
 WINDOW = 5                 # games in the rolling label
 PERIODS = ("q1", "h1", "ft")
@@ -109,19 +121,6 @@ PRE, REG, POST = 1, 2, 3
 SEED_FROM = datetime.date(2026, 3, 25)
 SEED_TO = datetime.date(2026, 4, 12)
 SEED_SEASON = 2026         # ESPN's `season.year` for the 2025-26 season
-
-
-def _get(url, tries=3):
-    """One ESPN call. Raises RuntimeError without leaking the URL into the message."""
-    last = None
-    for _ in range(tries):
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=30) as f:
-                return json.load(f)
-        except (urllib.error.URLError, OSError, ValueError) as e:
-            last = type(e).__name__
-    raise RuntimeError(f"ESPN unreachable ({last})")
 
 
 def _periods(competitor):
@@ -141,9 +140,59 @@ def _periods(competitor):
     return int(ls[0]), int(ls[0]) + int(ls[1]), ft
 
 
+class ScoreboardError(RuntimeError):
+    """A scoreboard day could not be read.
+
+    The message names the date, the host and the HTTP status. Callers must let
+    it propagate. Skipping the day would drop games and slide last_game back.
+    """
+
+
+def _scoreboard_url(host, day):
+    return (f"https://{host}/apis/site/v2/sports/basketball/nba/scoreboard"
+            f"?dates={day.strftime('%Y%m%d')}")
+
+
+def _fetch_scoreboard(day):
+    """JSON for one date. Raises ScoreboardError. Never a skipped day.
+
+    Web host first, then the api host, one retry on each. A transport or decode
+    failure is another failed attempt, not a reason to move on to the next date.
+    """
+    failures = []
+    for host in SCORE_HOSTS:
+        url = _scoreboard_url(host, day)
+        for _attempt in range(SCORE_ATTEMPTS):
+            try:
+                status, text = _http_get(url, SCORE_TIMEOUT, ua=UA)
+            except _TRANSPORT as e:
+                failures.append((host, None, type(e).__name__))
+                continue
+            if status != 200 or not text:
+                failures.append((host, status, "no scoreboard"))
+                continue
+            try:
+                payload = json.loads(text)
+            except ValueError:
+                failures.append((host, status, "malformed json"))
+                continue
+            if not isinstance(payload, dict):
+                failures.append((host, status, "malformed json"))
+                continue
+            return payload
+    parts = [f"{host} (status {_status_text(status)}): {why}"
+             for host, status, why in failures]
+    raise ScoreboardError(
+        f"ESPN scoreboard failed for {day.isoformat()}: " + "; ".join(parts))
+
+
 def fetch_day(day):
-    """Every NBA game ESPN lists for one date, as flat rows. Never raises on a bad game."""
-    js = _get(ESPN.format(date=day.strftime("%Y%m%d")))
+    """Every NBA game ESPN lists for one date, as flat rows.
+
+    A bad game is skipped. The day itself is not: a failed fetch raises
+    ScoreboardError after one retry and the host fallback.
+    """
+    js = _fetch_scoreboard(day)
     out = []
     for ev in js.get("events") or []:
         season = ev.get("season") or {}
@@ -175,15 +224,16 @@ def fetch_day(day):
 
 
 def fetch_range(start, end, keep=None, log=print):
-    """Rows for every date in [start, end], optionally filtered to some season types."""
+    """Rows for every date in [start, end], optionally filtered to some season types.
+
+    A day that still fails after the retry and the host fallback raises
+    ScoreboardError. The day is not logged and skipped: the caller must not
+    write a file built from a hole. `log` is accepted so existing callers keep
+    working; the failure is the exception, not a log line.
+    """
     rows, day = [], start
     while day <= end:
-        try:
-            got = fetch_day(day)
-        except RuntimeError as e:
-            log(f"  ! {day}: {e}")
-            day += datetime.timedelta(days=1)
-            continue
+        got = fetch_day(day)
         if keep is not None:
             got = [r for r in got if r.get("season_type") in keep]
         rows += got
@@ -342,13 +392,15 @@ def _mark_box_request():
     _box_gap["sent"] = True
 
 
-def _http_get(url, timeout):
+def _http_get(url, timeout, ua=None):
     """GET url. Returns (status, text). text is None unless the status is 200.
 
-    A connection failure returns (None, None). HTTP errors return the status
-    and no body. Only GET, only the identifying User-Agent, no key.
+    HTTP errors return the status and no body. A timeout, URLError, truncated
+    read or bad UTF-8 body propagates, so the caller retries, falls back, then
+    raises. Only GET, no key. `ua` defaults to the box-score identifier.
     """
-    req = urllib.request.Request(url, headers={"User-Agent": BOX_UA}, method="GET")
+    req = urllib.request.Request(
+        url, headers={"User-Agent": BOX_UA if ua is None else ua}, method="GET")
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             status = getattr(resp, "status", None) or resp.getcode()
@@ -359,8 +411,6 @@ def _http_get(url, timeout):
         finally:
             e.close()
         return e.code, None
-    except (urllib.error.URLError, OSError):
-        return None, None
     if status != 200:
         return status, None
     return status, raw.decode("utf-8")
@@ -383,8 +433,9 @@ def fetch_summary(event_id):
     """(payload, host, status) for one event. Raises BoxScoreError, never None.
 
     Web host first, api host if that host cannot return a box score. Each host
-    gets one retry. A 200 with no boxscore is a failure of that attempt, not a
-    silent null.
+    gets one retry. Timeout, connection errors, a truncated read, and JSON or
+    UTF-8 decode failures take that same path. A 200 with no boxscore is a
+    failure of that attempt, not a silent null.
     """
     failures = []
     for host in BOX_HOSTS:
@@ -393,7 +444,7 @@ def fetch_summary(event_id):
             _mark_box_request()
             try:
                 status, text = _http_get(url, BOX_TIMEOUT)
-            except (urllib.error.URLError, OSError) as e:
+            except _TRANSPORT as e:
                 failures.append((host, None, type(e).__name__))
                 continue
             if status != 200 or not text:
@@ -460,6 +511,10 @@ def _better_pra(row, best):
 
 def top_pra(payload, team):
     """Highest PTS+REB+AST for one team. Columns come from the labels, not a fixed index.
+
+    DNP means the didNotPlay flag, or empty or unreadable stats. 0 or missing
+    minutes is not DNP. A DNP player is skipped, so a blank cell is never
+    turned into a number.
 
     Raises BoxScoreError when the box cannot produce a player. That is a broken
     payload, not an empty last game.
