@@ -102,7 +102,7 @@
     parent.appendChild(status);
   }
 
-  function renderCards(row) {
+  function renderCards(row, scrollToCards) {
     var section = document.getElementById("rules-section");
     var host = document.getElementById("rules-cards");
     clearCards();
@@ -157,7 +157,7 @@
       host.appendChild(article);
     });
     host.hidden = n === 0;
-    if (window.matchMedia("(max-width: 640px)").matches && section && section.scrollIntoView) {
+    if (scrollToCards !== false && window.matchMedia("(max-width: 640px)").matches && section && section.scrollIntoView) {
       section.scrollIntoView({ block: "start" });
     }
     var link = fullPage();
@@ -297,7 +297,7 @@
     syncChipDim();
   }
 
-  function select(row, force) {
+  function select(row, force, scrollToCards) {
     if (!force && row.getAttribute("aria-pressed") === "true") {
       clearSelection();
       return;
@@ -321,7 +321,7 @@
     announce(text);
     head.hidden = false;
     if (empty) empty.hidden = true;
-    renderCards(row);
+    renderCards(row, scrollToCards);
     syncChips();
   }
 
@@ -343,7 +343,10 @@
     if (!row) return;
     if (!sportAllows(row)) setSportFilter(sportKeyFor(row));
     if (row.hidden) apply(row.getAttribute("data-filter"));
-    select(row, true);
+    // A chip lives in the horizontal roll. On phones, keep that focused
+    // control in view instead of jumping the viewport down to the cards.
+    // Running-row selection still scrolls the card pane into view.
+    select(row, true, false);
   }
 
   var bar = document.querySelector(".running-filters");
