@@ -988,6 +988,10 @@ SOURCES = {
         label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["crypto_fav"],
         baseline="favourite_population",
+        # One bet per series per close token (KXBTCD + 26OCT0617), across runs.
+        # one_per_day is the wrong switch: it keys on the date alone and would
+        # allow only one coin that day. publish() reads this flag.
+        one_per_coin_close=True,
         note="PRE-REGISTERED 2026-10-05, before it logged anything, and registered "
              "expecting to find nothing. Back the YES on a Kalshi coin-directional rung "
              "priced 0.70-0.80 inclusive, entered 2-3.5 hours before the 17:00 ET "
