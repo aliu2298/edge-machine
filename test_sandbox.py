@@ -6171,9 +6171,10 @@ _else = _commit_step.split("\n          else\n", 1)[-1].split("\n          fi\n"
 ok("git checkout -- public_site/" in _else
    and _else.find("git checkout -- public_site/") < _else.find("git add"),
    "the failure path restores public_site before git add")
-ok("git pull --rebase --autostash -X theirs origin main" in _commit_step
+ok("git pull --rebase --autostash origin main" in _commit_step
+   and "-X theirs" not in _commit_step
    and _commit_step.find("git checkout -- public_site/") < _commit_step.find("git pull --rebase"),
-   "public_site is restored before the rebase, and the rebase autostashes anything else left dirty")
+   "public_site is restored before the rebase, the rebase autostashes, and a conflict is not auto-resolved")
 
 _fail_step = _tracker_wf.split("- name: Fail the job if the tracker or the page build failed", 1)[-1]
 ok("::error::tracker step did not run" in _fail_step,
@@ -6380,6 +6381,196 @@ if _pushed.returncode == 0:
     eq(_extra, "clean\n", "a dirty file outside the data list was not committed")
     eq(open(_os.path.join(_local, "public_site", "sandbox.html")).read(), _page,
        "the worktree page is restored, so it cannot block a later rebase")
+
+
+print("\nstale tracker base: a queued run starts from the main tip")
+
+_checkout_at = next(i for i, ln in enumerate(_tracker_wf.splitlines()) if "actions/checkout@" in ln)
+_after_checkout = next(ln.strip() for ln in _tracker_wf.splitlines()[_checkout_at + 1:]
+                       if ln.strip() and not ln.strip().startswith("#"))
+ok(_after_checkout.startswith("- name: Start from the main tip"),
+   "checkout has no ref of its own; the next step is the main-tip sync")
+ok("git push origin HEAD:main" not in _tracker_wf,
+   "the push still names local main, so a non-main checkout has no ref to publish")
+_sync_step = _tracker_wf.split("- name: Start from the main tip", 1)[1].split("\n      - ", 1)[0]
+ok("if: github.ref == 'refs/heads/main'" in _sync_step,
+   "the fast-forward runs only for an event ref of main; another branch's dispatch skips it")
+ok(_tracker_wf.find("- name: Start from the main tip") < _tracker_wf.find("- name: Logic tests"),
+   "the main tip is fetched before the fixture tests and the tracker")
+_sync_script = _step_script(_tracker_wf, "Start from the main tip")
+ok("git fetch --no-tags --prune --depth=1 origin +refs/heads/main:refs/remotes/origin/main" in _sync_script
+   and "git reset --hard origin/main" in _sync_script
+   and 'test "$(git rev-parse --abbrev-ref HEAD)" = "main"' in _sync_script,
+   "the sync fetches the main tip at job start and resets the local main branch onto it")
+ok("-X theirs" not in _tracker_wf,
+   "the workflow does not auto-resolve a rebase by keeping this run's hunks")
+ok("refusing to drop the other side's rows" in _push_script
+   and "git rebase --abort" in _push_script,
+   "a conflicting rebase aborts and fails the push")
+
+
+def _ledger_text(quotes):
+    """One quote per line, so two edits of the same empty ledger conflict in one hunk."""
+    if not quotes:
+        return '{\n  "quotes": []\n}\n'
+    lines = ['  "quotes": [']
+    for i, (qid, grade) in enumerate(quotes):
+        comma = "," if i + 1 < len(quotes) else ""
+        lines.append('    {"id": "%s", "grade": "%s"}%s' % (qid, grade, comma))
+    lines.append("  ]")
+    return "{\n" + "\n".join(lines) + "\n}\n"
+
+
+def _rows(text):
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return None
+    return [(q.get("id"), q.get("grade")) for q in data.get("quotes", [])]
+
+
+def _ident(cwd):
+    _git(cwd, "config", "user.email", "t@example.com")
+    _git(cwd, "config", "user.name", "T")
+    _git(cwd, "config", "commit.gpgsign", "false")
+
+
+_file_env = {
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "protocol.file.allow",
+    "GIT_CONFIG_VALUE_0": "always",
+}
+
+
+def _bare(path):
+    _os.makedirs(_os.path.dirname(path), exist_ok=True)
+    made = _git(_os.path.dirname(path), "init", "--bare", "-b", "main", path, env=_file_env)
+    ok(made.returncode == 0, "bare origin for the replay"
+       + ("" if made.returncode == 0 else "\n" + made.stderr))
+    return "file://" + path
+
+
+def _seed(url, path, ledger):
+    made = _git(_os.path.dirname(path), "init", "-b", "main", path, env=_file_env)
+    ok(made.returncode == 0, "seed repo" + ("" if made.returncode == 0 else "\n" + made.stderr))
+    _ident(path)
+    _write(_os.path.join(path, "data", "sandbox_ledger.json"), ledger)
+    _write(_os.path.join(path, "data", "stages.json"), "{}\n")
+    _write(_os.path.join(path, "data", "production_leads.json"), "{}\n")
+    _write(_os.path.join(path, "data", "sandbox_archive", "keep.json"), "[]\n")
+    _write(_os.path.join(path, "data", "espn_history", "keep.json"), "{}\n")
+    _write(_os.path.join(path, "public_site", "sandbox.html"), "page\n")
+    added = _git(path, "add", "-A", env=_file_env)
+    committed = _git(path, "commit", "-m", "base", env=_file_env)
+    remote = _git(path, "remote", "add", "origin", url, env=_file_env)
+    pushed = _git(path, "push", "-u", "origin", "main", env=_file_env)
+    ok(added.returncode == committed.returncode == remote.returncode == pushed.returncode == 0,
+       "base ledger is on origin")
+    return _git(path, "rev-parse", "HEAD", env=_file_env).stdout.strip()
+
+
+def _pin_sha(url, path, sha):
+    """What actions/checkout does with no ref: fetch that SHA as origin/main, depth 1."""
+    _os.makedirs(path, exist_ok=True)
+    _git(path, "init", "-b", "main", env=_file_env)
+    _ident(path)
+    _git(path, "remote", "add", "origin", url, env=_file_env)
+    fetched = _git(path, "fetch", "--no-tags", "--prune", "--depth=1", "origin",
+                   "+%s:refs/remotes/origin/main" % sha, env=_file_env)
+    checked = _git(path, "checkout", "-B", "main", "origin/main", env=_file_env)
+    ok(fetched.returncode == 0 and checked.returncode == 0,
+       "pinned checkout of the event SHA"
+       + ("" if fetched.returncode == checked.returncode == 0
+          else "\n" + fetched.stderr + checked.stderr))
+    ok(_os.path.isfile(_os.path.join(path, ".git", "shallow")),
+       "the pinned checkout is shallow, as on the runner")
+
+
+_replay = _tf.mkdtemp(prefix="ledger-race-")
+
+# L&Q: two commits from the same base, then the old rebase. Run 2's hunk wins.
+_o_drop = _bare(_os.path.join(_replay, "drop.git"))
+_drop_seed = _os.path.join(_replay, "drop-seed")
+_event = _seed(_o_drop, _drop_seed, _ledger_text([]))
+_drop_stale = _os.path.join(_replay, "drop-stale")
+_pin_sha(_o_drop, _drop_stale, _event)
+_write(_os.path.join(_drop_seed, "data", "sandbox_ledger.json"), _ledger_text([("run1", "W")]))
+_git(_drop_seed, "add", "-A", env=_file_env)
+_git(_drop_seed, "commit", "-m", "tracker run 1", env=_file_env)
+_git(_drop_seed, "push", "origin", "main", env=_file_env)
+_write(_os.path.join(_drop_stale, "data", "sandbox_ledger.json"), _ledger_text([("run2", "L")]))
+_git(_drop_stale, "add", "-A", env=_file_env)
+_git(_drop_stale, "commit", "-m", "tracker run 2", env=_file_env)
+_theirs = _git(_drop_stale, "pull", "--rebase", "--autostash", "-X", "theirs", "origin", "main",
+               env=_file_env)
+ok(_theirs.returncode == 0, "the old rebase succeeds"
+   + ("" if _theirs.returncode == 0 else "\n" + _theirs.stderr))
+_git(_drop_stale, "push", "origin", "main", env=_file_env)
+_dropped = _git(_os.path.join(_replay, "drop.git"), "show", "main:data/sandbox_ledger.json",
+                env=_file_env).stdout
+eq(_rows(_dropped), [("run2", "L")],
+   "rebasing with the old strategy option keeps run 2 and drops run 1's quote and grade")
+
+# The commit step, on that same shape: the push fails and run 1 stays on main.
+_o_keep = _bare(_os.path.join(_replay, "keep.git"))
+_keep_seed = _os.path.join(_replay, "keep-seed")
+_keep_event = _seed(_o_keep, _keep_seed, _ledger_text([]))
+_keep_stale = _os.path.join(_replay, "keep-stale")
+_pin_sha(_o_keep, _keep_stale, _keep_event)
+_write(_os.path.join(_keep_seed, "data", "sandbox_ledger.json"), _ledger_text([("run1", "W")]))
+_git(_keep_seed, "add", "-A", env=_file_env)
+_git(_keep_seed, "commit", "-m", "tracker run 1", env=_file_env)
+_git(_keep_seed, "push", "origin", "main", env=_file_env)
+_write(_os.path.join(_keep_stale, "data", "sandbox_ledger.json"), _ledger_text([("run2", "L")]))
+_kept_push = _bash(_push_script, {"COMMIT_SITE": "false", **_git_env, **_file_env}, cwd=_keep_stale)
+ok(_kept_push.returncode != 0,
+   "a stale run whose ledger conflicts fails the push"
+   + ("" if _kept_push.returncode != 0 else "\n" + _kept_push.stdout + _kept_push.stderr))
+ok("refusing to drop the other side's rows" in (_kept_push.stdout + _kept_push.stderr),
+   "and the error says the other side's rows were not dropped")
+_kept = _git(_os.path.join(_replay, "keep.git"), "show", "main:data/sandbox_ledger.json",
+             env=_file_env).stdout
+eq(_rows(_kept), [("run1", "W")],
+   "main still has run 1's quote and grade, and not run 2's")
+
+# The sync step: a shallow checkout of the event SHA moves to the tip before appending.
+_o_tip = _bare(_os.path.join(_replay, "tip.git"))
+_tip_seed = _os.path.join(_replay, "tip-seed")
+_tip_event = _seed(_o_tip, _tip_seed, _ledger_text([]))
+_tip_queued = _os.path.join(_replay, "tip-queued")
+_pin_sha(_o_tip, _tip_queued, _tip_event)
+_write(_os.path.join(_tip_seed, "data", "sandbox_ledger.json"), _ledger_text([("run1", "W")]))
+_git(_tip_seed, "add", "-A", env=_file_env)
+_git(_tip_seed, "commit", "-m", "tracker run 1", env=_file_env)
+_git(_tip_seed, "push", "origin", "main", env=_file_env)
+ok(_git(_tip_queued, "rev-parse", "HEAD", env=_file_env).stdout.strip() == _tip_event,
+   "before the sync, the queued checkout is still the event SHA")
+_synced = _bash(_sync_script, {**_git_env, **_file_env}, cwd=_tip_queued)
+ok(_synced.returncode == 0,
+   "the sync step fast-forwards a shallow event-SHA checkout onto origin/main"
+   + ("" if _synced.returncode == 0 else "\n" + _synced.stdout + _synced.stderr))
+_tip_led = open(_os.path.join(_tip_queued, "data", "sandbox_ledger.json")).read()
+eq(_rows(_tip_led), [("run1", "W")], "the queued run now sees run 1's quote and grade")
+_write(_os.path.join(_tip_queued, "data", "sandbox_ledger.json"),
+       _ledger_text([("run1", "W"), ("run2", "L")]))
+_git(_tip_queued, "add", "-A", env=_file_env)
+_git(_tip_queued, "commit", "-m", "tracker run 2", env=_file_env)
+_write(_os.path.join(_tip_seed, "data", "sandbox_closes", "close.json"), '{"from": "close"}\n')
+_git(_tip_seed, "add", "-A", env=_file_env)
+_git(_tip_seed, "commit", "-m", "close job", env=_file_env)
+_git(_tip_seed, "push", "origin", "main", env=_file_env)
+_rebased = _git(_tip_queued, "pull", "--rebase", "--autostash", "origin", "main", env=_file_env)
+ok(_rebased.returncode == 0,
+   "a close-job commit rebases without a strategy option"
+   + ("" if _rebased.returncode == 0 else "\n" + _rebased.stderr))
+_git(_tip_queued, "push", "origin", "main", env=_file_env)
+_tipped = _git(_os.path.join(_replay, "tip.git"), "show", "main:data/sandbox_ledger.json",
+               env=_file_env).stdout
+eq(_rows(_tipped), [("run1", "W"), ("run2", "L")],
+   "both runs' quotes and grades are on main")
+_tip_close = _git(_os.path.join(_replay, "tip.git"), "show", "main:data/sandbox_closes/close.json",
+                  env=_file_env).stdout
+ok('"close"' in _tip_close, "and the close job's file is still on main")
 
 
 print("\nledger save is atomic")
