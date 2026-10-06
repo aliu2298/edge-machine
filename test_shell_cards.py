@@ -150,6 +150,16 @@ eq(mixed[0]["spoken"], "1 lost, 1 awaiting result",
    "the mix is spoken as 1 lost, 1 awaiting result")
 eq([card["status"] for card in mixed[0]["cards"]], ["L", "Awaiting result"],
    "only the stuck bet's card says Awaiting result")
+won_wait = _contests([
+    _lead("won", "Won", "Wait", "2026-10-05T11:00:00Z", "hit",
+          "a|soccer", "soccer", 0.40),
+    _lead("open", "Won", "Wait", "2026-10-05T11:00:00Z", "pending",
+          "b|soccer", "soccer", 0.70),
+])
+eq(won_wait[0]["bucket"], "live", "a win beside an awaiting bet stays Live")
+eq(won_wait[0]["status"], "1W 1 awaiting", "the row reads 1W 1 awaiting")
+eq([card["status"] for card in won_wait[0]["cards"]], ["W", "Awaiting result"],
+   "the cards are the win and Awaiting result")
 inside = _contests([
     _lead("g2", "Half", "Fresh", "2026-10-05T14:00:00Z", "miss",
           "a|soccer", "soccer", 0.40),
@@ -166,8 +176,16 @@ past_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob
     _lead("on", "On", "Time", "2026-10-05T12:00:00Z", "pending",
           "oddspedia|cricket", "cricket", 0.51),
 ]))
-late_row = next(row for row in _rows(past_page) if _attr(row, "data-name") == "Late v Grade")
-on_row = next(row for row in _rows(past_page) if _attr(row, "data-name") == "On v Time")
+
+
+def _named_row(page, name, why):
+    found = [row for row in _rows(page) if _attr(row, "data-name") == name]
+    eq(len(found), 1, why)
+    return found[0] if len(found) == 1 else ""
+
+
+late_row = _named_row(past_page, "Late v Grade", "the awaiting contest is its own row")
+on_row = _named_row(past_page, "On v Time", "the six-hour contest is its own row")
 ok('data-awaiting="true"' in late_row and ">Awaiting result</span>" in late_row,
    "the stuck row renders Awaiting result")
 eq(_attr(late_row, "data-filter"), "live", "Awaiting result stays in Live")
@@ -210,7 +228,7 @@ unknown_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_b
     _lead("later", "Later", "Kick", "2026-10-08T15:00:00Z", "postponed",
           "oddspedia|cricket", "cricket", 0.30),
 ]))
-later_row = next(row for row in _rows(unknown_page) if _attr(row, "data-name") == "Later v Kick")
+later_row = _named_row(unknown_page, "Later v Kick", "the future unknown contest is its own row")
 eq(_attr(later_row, "data-filter"), "upcoming", "the future unknown row is in Upcoming")
 ok(">postponed</span>" in later_row, "the future unknown row shows postponed")
 
@@ -402,7 +420,7 @@ for i in range(12):
         venue="kalshi_binary", qid="intl-team" if i == 0 else None))
 for i in range(5):
     intl_quotes.append(_settled_quote(
-        i, "u35_low_scoring", False, 0.55, sport="soccer_o15_intl",
+        i, "o15_ranked", False, 0.55, sport="soccer_o15_intl",
         venue="kalshi_binary", qid="intl-o15" if i == 0 else None))
 intl_d = {"quotes": intl_quotes}
 intl_st = {"pairs": {}}
@@ -411,8 +429,8 @@ intl_leads = [
           "team1_form_l5|soccer_team1_intl", "soccer_team1_intl", 0.40,
           source="team1_form_l5", headline="Team 1+"),
     _lead("intl-o15", "Intl", "Fixture", "2026-10-04T15:00:00Z", "miss",
-          "u35_low_scoring|soccer_o15_intl", "soccer_o15_intl", 0.55,
-          source="u35_low_scoring", headline="Over 1.5"),
+          "o15_ranked|soccer_o15_intl", "soccer_o15_intl", 0.55,
+          source="o15_ranked", headline="Over 1.5"),
 ]
 intl_contest = _contests(intl_leads, d=intl_d, st=intl_st)[0]
 eq(len(intl_contest["cards"]), 2, "the international contest has two cards")
@@ -437,7 +455,7 @@ ok(len(intl_records) == 2 and len(set(intl_records)) == 2,
 intl_pairs = [
     (card.get("market"), card.get("venue"))
     for card, bet in zip(intl_contest["cards"], intl_contest["bets"])
-    if "soccer_o15_intl" in (bet.get("pair") or "")
+    if bet.get("pair") == "o15_ranked|soccer_o15_intl"
     or "soccer_team1_intl" in (bet.get("pair") or "")
 ]
 eq(len(intl_pairs), 2, "the contest has Over 1.5 and Team 1+ international cards")
