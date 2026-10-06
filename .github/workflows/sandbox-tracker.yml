@@ -26,6 +26,16 @@ on:
     # queue for the 18:41 boards refresh; the alternative was a lane that never fires.
     - cron: "11 18 * * *"
   workflow_dispatch:
+  # The VPS asks for a run from inside that window by committing one line here, because
+  # GitHub's cron cannot hold a 90-minute slot: over 18 days this workflow ran 4.2 times a
+  # day against 8 scheduled and landed inside the window on 10 of 18. That box pushes with
+  # an SSH deploy key and holds no API token, and a push from a deploy key is a real event
+  # that starts a workflow, where a dispatch made with the repository's own GITHUB_TOKEN
+  # would not. Scoped to this one path, so the 15-minute closing-price pushes to
+  # data/sandbox_closes/ never trigger a tracker run.
+  push:
+    paths:
+      - "data/crypto_window/**"
 
 permissions:
   contents: write
