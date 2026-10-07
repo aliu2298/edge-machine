@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """NBA matchup board. Fixture clock, no live ledger, no wall clock.
 
-The page is presentation. These checks fail if a card crosses the 24h line,
-the middle card reprints a recomputed total, the tempo bar uses a fixed
-scale or paints a real value as an empty track, the error is act minus
-expected instead of the file's err_*, a missing teams record is called
-'No recent game', or a player name is left unescaped.
+The page is presentation: three tables and a detail row per game, no bars.
+These checks fail if a row crosses the 24h line, a total is recomputed from
+the rates, the mark lands on anything but the board's highest expectation,
+the error is act minus expected instead of the file's err_*, a missing
+teams record is called 'No recent game', a player name is left unescaped,
+or a bar or meter comes back.
 """
 import datetime
 import os
@@ -19,12 +20,13 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 import fmt
 import nba_pace_build as N
+import sandbox_build
 import site_chrome
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NOW = datetime.datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc)
-MINUS = "\u2212"
+MINUS = "−"
 HOSTILE = '"><svg/onload=alert(1)>'
 SKIP_REASON = "<script>alert(1)</script>"
 
@@ -52,24 +54,8 @@ class _Tags(HTMLParser):
                 self.handlers.append(name)
 
 
-def _pct(value, lo, hi):
-    """The page's scale, copied here so a mutated builder fails this file."""
-    if hi <= lo:
-        return 100
-    number = int(round((value - lo) / (hi - lo) * 100.0))
-    return max(0, min(100, number))
-
-
-def _fill(value, lo, hi):
-    """Painted width. The scale stays min-to-max. A real value is at least 8%."""
-    raw = _pct(value, lo, hi)
-    if raw >= 100:
-        return 100
-    return max(8, raw)
-
-
 def _section(html, sid):
-    """The inside of one section, including the cards nested in it."""
+    """The inside of one section, including anything nested in it."""
     open_tag = f'<section id="{sid}">'
     start = html.find(open_tag)
     if start < 0:
@@ -92,45 +78,51 @@ def _section(html, sid):
     return ""
 
 
-def _articles(fragment):
-    return re.findall(r'<article class="matchup\b.*?</article>', fragment, re.S)
+def _text(block):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", block)).strip()
 
 
-def _article(fragment, away):
-    for article in _articles(fragment):
-        if f'data-away="{site_chrome.esc(away)}"' in article:
-            return article
-    return ""
+def _game_rows(fragment):
+    return re.findall(r'<tr class="nba-row[^"]*"[^>]*>.*?</tr>', fragment, re.S)
 
 
-def _rows(fragment):
-    table = re.search(r'<table class="team-table">.*?</table>', fragment, re.S)
-    if not table:
-        return []
-    return re.findall(r"<tr>.*?</tr>", table.group(0), re.S)
-
-
-def _row(fragment, team):
-    for row in _rows(fragment):
-        if f"<td>{team}</td>" in row:
+def _game_row(fragment, away):
+    for row in _game_rows(fragment):
+        if f'data-away="{site_chrome.esc(away)}"' in row:
             return row
     return ""
 
 
-def _tempo(article, period):
-    match = re.search(
-        rf'<div class="tempo-row" data-period="{period}">(.*?)</div></div>', article, re.S)
-    return match.group(1) if match else ""
+def _detail(fragment, row):
+    """The detail row the chevron on `row` controls."""
+    match = re.search(r'aria-controls="([^"]+)"', row)
+    if not match:
+        return ""
+    found = re.search(rf'<tr class="nba-detail" id="{re.escape(match.group(1))}"[^>]*>.*?</tr>', fragment, re.S)
+    return found.group(0) if found else ""
 
 
-def _read(block):
-    match = re.search(r'class="tempo-read">(.*?)</p>', block, re.S)
-    return match.group(1) if match else ""
+def _cells(row):
+    return re.findall(r"<td\b[^>]*>.*?</td>", row, re.S)
 
 
-def _attr(block, kind):
-    match = re.search(rf'class="tempo-{kind}" data-pct="(\d+)"', block)
-    return None if match is None else int(match.group(1))
+def _side(detail, which):
+    match = re.search(rf'<div class="nba-side nba-side-{which}">.*?</div>', detail, re.S)
+    return match.group(0) if match else ""
+
+
+def _team_rows(fragment):
+    table = re.search(r'<table class="team-table sortable">.*?</table>', fragment, re.S)
+    if not table:
+        return []
+    return [row for row in re.findall(r"<tr>.*?</tr>", table.group(0), re.S) if "<td" in row]
+
+
+def _team_row(fragment, team):
+    for row in _team_rows(fragment):
+        if re.search(rf"<td[^>]*><b>{re.escape(team)}</b></td>", row):
+            return row
+    return ""
 
 
 def _game(gid, start, away, home, **extra):
@@ -203,155 +195,157 @@ def _blob():
     }
 
 
-def _scale(values):
-    return min(values), max(values)
-
-
-print("windows, order, and the middle card")
+print("windows, order, and the upcoming table")
 BLOB = _blob()
 HTML = N.build(BLOB, now=NOW)
 UP = _section(HTML, "matchups")
 GRADED = _section(HTML, "graded")
 TEAMS = _section(HTML, "teams")
 ok(UP and GRADED and TEAMS, "the board has upcoming, graded, and team sections")
-
-upcoming = _articles(UP)
-eq([re.search(r'data-away="([^"]*)"', article).group(1) for article in upcoming],
+ok('<table class="nba-games">' in UP and "<th>Tip (CT)</th><th>Matchup</th>" in UP
+   and '<th class="num">1Q</th><th class="num">1H</th><th class="num">FT</th><th>Status</th>' in UP,
+   "Upcoming is a table: Tip (CT), Matchup, 1Q, 1H, FT, Status")
+rows = _game_rows(UP)
+eq([re.search(r'data-away="([^"]*)"', row).group(1) for row in rows],
    [site_chrome.esc(HOSTILE), "BKN", "CC", "AA", "IN"],
-   "upcoming cards are start order, then id, away on the card")
-eq([re.search(r'data-home="([^"]*)"', article).group(1) for article in upcoming],
-   ["POR", "CHA", "DD", "BB", "SIDE"],
-   "home sits on the card opposite the away team")
+   "upcoming rows are start order, then id")
+eq([re.search(r'data-home="([^"]*)"', row).group(1) for row in rows],
+   ["POR", "CHA", "DD", "BB", "SIDE"], "home sits opposite the away team")
+ok(all('data-window="upcoming"' in row for row in rows), "every upcoming row says so")
 
-bkn = _article(UP, "BKN")
-ok(bkn.index('class="team-card team-away"') < bkn.index('class="expect-card"')
-   < bkn.index('class="team-card team-home"'),
-   "a matchup is away, then the expectation, then home")
-ok(">Away<" in bkn and ">Home<" in bkn, "the two sides are named, not only placed")
-ok("56.2" in _read(_tempo(bkn, "q1")) and "114.0" in _read(_tempo(bkn, "h1"))
-   and "221.5" in _read(_tempo(bkn, "ft")),
-   "the middle card prints the file's roll_exp values")
-ok("combined" in _read(_tempo(bkn, "q1")) and "Combined expectations" in bkn,
-   "the middle card says the totals are combined")
-ok("25.5" not in bkn, "the middle card does not recompute the total from O and D")
-ok("11.1" in bkn and "12.2" in bkn and "O-D-" in bkn,
-   "the away card shows the stored full-game averages and label")
-ok("13.3" in bkn and "14.4" in bkn, "the home card shows the stored full-game averages")
-ok("Nets" not in HTML and "Brooklyn" not in HTML and "Celtics" not in HTML and "Boston" not in HTML,
-   "a team with no stored full name is not given one")
+bkn = _game_row(UP, "BKN")
+cells = _cells(bkn)
+eq(len(cells), 6, "a game row has one cell per column")
+ok(fmt.when(NOW + timedelta(hours=5)) in cells[0] and "<time" in cells[0],
+   "the tip is the CT clock in the site's date form")
+ok("<b>BKN</b>" in cells[1] and "<b>CHA</b>" in cells[1] and " at " in _text(cells[1]) + " at ",
+   "the matchup names both sides")
+ok("56.2" in cells[2] and "114.0" in cells[3] and "221.5" in cells[4],
+   "the row prints the file's roll_exp values for 1Q, 1H, FT")
+ok("25.5" not in bkn, "the row does not recompute the total from O and D")
+ok("Upcoming" in _text(cells[5]), "the status column reads Upcoming")
+ok('class="num is-lead"' in cells[2] and 'class="num is-lead"' in cells[3] and 'class="num is-lead"' in cells[4]
+   and "highest on the board" in cells[2],
+   "BKN carries the mark in all three columns: it has the board's highest expectation")
+for away in ("CC", "AA", "IN"):
+    ok("is-lead" not in _game_row(UP, away), f"{away} carries no mark")
+ok("999.9" not in HTML and "is-lead" not in _game_row(UP, HOSTILE),
+   "a skipped game's expectation is neither printed nor a lead")
+ok("pace-leader" not in HTML and "leader" not in _text(UP).lower(),
+   "the three leader tiles are gone")
 
-inside = _article(UP, "IN")
-ok("IN" in UP and 'data-window="upcoming"' in inside, "a tip one second inside 24h is a card")
-ok(_row(TEAMS, "IN") == "" and _row(TEAMS, "BKN") == "" and _row(TEAMS, "CHA") == "",
-   "teams on a card in the next 24h leave the list")
-edge = _row(TEAMS, "EDGE")
-ok('data-away="EDGE"' not in HTML and "Next up" in edge and fmt.when(NOW + timedelta(hours=24)) in edge,
-   "a tip exactly 24h out stays in the list as Next up")
-soon = _row(TEAMS, "SOON")
-ok("Next up" in soon and fmt.when(NOW + timedelta(hours=36)) in soon,
-   "a game in the 24–48h window is flagged Next up with the tip")
-out = _row(TEAMS, "OUT")
-ok(out and "Next up" not in out, "a tip exactly 48h out is not Next up")
-ok(_row(TEAMS, "AAA") and "Next up" not in _row(TEAMS, "AAA"),
-   "a team with no game in the window is unflagged")
-names = []
-for row in _rows(TEAMS):
-    cell = re.search(r"<td>([^<]*)</td>", row)
-    if cell:
-        names.append(cell.group(1))
-eq(names[0], "WALL", "the list stays in combined order, with Next up as a flag")
-aaa = _row(TEAMS, "AAA")
-ok(">100.0<" in aaa and ">80.0<" in aaa and ">180.0<" in aaa and "O+D+" in aaa,
-   "the list still prints seed scored, allowed, combined, and the seed label")
-
-
-print("\ntempo track")
-# Expectations on the page, skipped and the 30h-old game excluded.
-q1_lo, q1_hi = _scale([50.0, 40.0, 40.0, 56.2, 57.3])
-h1_lo, h1_hi = _scale([80.0, 80.0, 114.0, 112.3])
-ft_lo, ft_hi = _scale([160.0, 160.0, 200.0, 221.5, 227.9])
-eq(_attr(_tempo(bkn, "q1"), "fill"), _pct(56.2, q1_lo, q1_hi), "BKN 1Q bar width")
-ok(_pct(56.2, q1_lo, q1_hi) > 8, "BKN 1Q is above the visibility floor, so the floor does not move it")
-eq(_attr(_tempo(bkn, "h1"), "fill"), _pct(114.0, h1_lo, h1_hi), "BKN 1H bar width")
-eq(_attr(_tempo(bkn, "ft"), "fill"), _pct(221.5, ft_lo, ft_hi), "BKN full-game bar width")
-eq(_pct(40.0, q1_lo, q1_hi), 0, "40 is the low end of the 1Q scale")
-eq(_attr(_tempo(_article(UP, "CC"), "q1"), "fill"), 8,
-   "the low end still paints about 8% so the bar is not an empty track")
-ok("40.0" in _read(_tempo(_article(UP, "CC"), "q1")),
-   "the floored bar still prints the stored expectation")
-eq(_attr(_tempo(_article(UP, "AA"), "q1"), "fill"),
-   _attr(_tempo(_article(UP, "CC"), "q1"), "fill"),
-   "two games with the same expectation get the same bar width")
-inside_q1 = _tempo(inside, "q1")
-eq(_attr(inside_q1, "fill"), _fill(50.0, q1_lo, q1_hi), "inside game 1Q bar width")
-eq(_attr(inside_q1, "mark"), _pct(53, q1_lo, q1_hi), "actual marker uses the expectation scale")
-ok("error +9.0" in _read(inside_q1) and "error +3.0" not in _read(inside_q1),
-   "the upcoming card shows the file's positive error, not actual minus expected")
-h1 = _tempo(inside, "h1")
-ok("expected — combined" in _read(h1) and _attr(h1, "fill") is None,
-   "a missing expectation is an em dash and an empty bar")
-ok(not re.search(r"\bnan\b", HTML, re.I), "NaN is never printed")
-
-graded = _article(GRADED, "GS")
-ok(graded and 'data-window="graded"' in graded, "a completed game in the last 24h is a graded card")
-ok('data-away="MIA"' not in HTML and "9.9" not in HTML,
-   "a completed game older than 24h is not a card")
-gq1 = _tempo(graded, "q1")
-eq(_attr(gq1, "mark"), _pct(55, q1_lo, q1_hi), "graded 1Q marker")
-ok(f"error {MINUS}1.5" in _read(gq1) and f"{MINUS}2.3" not in _read(gq1) and "-2.3" not in _read(gq1),
-   "a negative error uses the file's err and a real minus")
-gh1 = _tempo(graded, "h1")
-eq(_attr(gh1, "mark"), 100, "an actual above every expectation clamps to the end of the bar")
-ok("outside the range of expectations on this page" in _read(gh1),
-   "a clamped actual is also said in text")
-ok("error +5.0" in _read(gh1) and "27.7" not in _read(gh1),
-   "the high actual still shows the file's error")
-gft = _tempo(graded, "ft")
-eq(_attr(gft, "mark"), _pct(210, ft_lo, ft_hi), "graded full-game marker")
-ok("error +4.0" in _read(gft) and f"{MINUS}17.9" not in HTML and "-17.9" not in HTML,
-   "the full-game error is the file's +4.0")
-for period in ("q1", "h1", "ft"):
-    block = _tempo(graded, period)
-    label = re.search(r'aria-label="([^"]*)"', block)
-    ok(label is not None and label.group(1) == _read(block),
-       f"the {period} bar's aria-label matches its text")
-ok("33.3" in graded and "88.8" not in graded, "a graded card uses the game's rolling averages")
 tied = N.build({"window": 5, "games": [
     _game("a", NOW + timedelta(hours=2), "AA", "BB",
           roll_exp_q1=40.0, roll_exp_h1=40.0, roll_exp_ft=40.0),
     _game("b", NOW + timedelta(hours=3), "CC", "DD",
           roll_exp_q1=40.0, roll_exp_h1=40.0, roll_exp_ft=40.0),
 ], "seed": {"teams": {}}}, now=NOW)
-tied_q1 = _tempo(_article(_section(tied, "matchups"), "AA"), "q1")
-eq(_attr(tied_q1, "fill"), 100,
-   "when every expectation of a period is equal, the bar fills instead of a fixed scale")
-ok("40.0" in _read(tied_q1), "the tied bar still prints the stored expectation")
-ok("88.8" in _row(TEAMS, "GS"), "the same team keeps its seed average on the list")
-ok("&lt;b&gt;Warriors&lt;/b&gt;" in graded and "<b>Warriors</b>" not in HTML,
-   "a stored full name is shown and escaped")
+tied_up = _section(tied, "matchups")
+ok(_game_row(tied_up, "AA").count("is-lead") == 3 and _game_row(tied_up, "CC").count("is-lead") == 3,
+   "two games tied on the highest expectation both carry the mark")
 
+print("\ndetail rows")
+detail = _detail(UP, bkn)
+ok(detail and ' hidden>' in detail.split(">", 1)[0] + ">", "the BKN detail row exists and starts hidden")
+ok('colspan="6"' in detail and 'data-l=""' in detail,
+   "the detail cell spans every column and carries no phone-card label")
+ok(bkn.index("nba-more") < len(bkn) and 'aria-expanded="false"' in bkn,
+   "the chevron is a button that starts collapsed")
+away, home = _side(detail, "away"), _side(detail, "home")
+ok(">Away<" in away and ">Home<" in home and detail.index(away) < detail.index(home),
+   "the detail is two columns, away then home")
+ok("11.1" in away and "12.2" in away and "O-D-" in away and "Slow offense · strong defense" in away,
+   "the away column shows the stored rates, the code and its meaning")
+ok("13.3" in home and "14.4" in home and "O+D+" in home, "the home column shows the stored rates and label")
+ok("Scored 11.1 · allowed 12.2" in _text(away), "rates read Scored X · allowed Y")
+ok("Nets" not in HTML and "Brooklyn" not in HTML, "a team with no stored full name is not given one")
+ok("tempo" not in HTML and "Combined expectations" not in HTML and "<meter" not in HTML
+   and "<progress" not in HTML and "data-pct" not in HTML,
+   "no bars, meters, or expectation tracks anywhere on the page")
+inside = _game_row(UP, "IN")
+ok(inside and 'data-window="upcoming"' in inside, "a tip one second inside 24h is an upcoming row")
+ok("—" in _cells(inside)[3] and not re.search(r"\bnan\b", HTML, re.I),
+   "a missing expectation is an em dash, and NaN is never printed")
+ok('data-away="EDGE"' not in UP, "a tip exactly 24h out is not upcoming")
+skipped = _game_row(UP, HOSTILE)
+ok("Skipped" in _text(skipped) and "is-skipped" in skipped,
+   "a skipped game is on the board with a Skipped status")
+skip_detail = _detail(UP, skipped)
+ok("Skipped." in skip_detail and "&lt;script&gt;alert(1)&lt;/script&gt;" in skip_detail,
+   "its detail says why, escaped")
 
-print("\nPRA, skipped, empty, shell")
-def _pra(article, team):
-    # The away card is first. Split so the two slots are not mixed.
-    away, _rest = article.split('class="team-card team-home"', 1)
-    home = _rest
-    block = away if f'class="team-abbr">{team}<' in away else home
-    match = re.search(r'class="pra-value">(.*?)</span>', block)
-    period = re.search(r'class="period-value">(.*?)</span>', block)
-    return (match.group(1) if match else "", period.group(1) if period else "")
+print("\nresults and accuracy")
+acc = re.search(r'class="nba-accuracy" id="accuracy">([^<]*)<', HTML)
+eq(acc.group(1) if acc else None,
+   "Last 24h: 1 game graded · mean abs error FT 4.0, 1H 5.0, 1Q 1.5 · 1 of 1 FT within ±5.",
+   "the accuracy line is built from the file's own errors on the graded games")
+ok(UP.index("nba-games") < HTML.index('id="accuracy"') < HTML.index('<section id="graded">'),
+   "the accuracy line sits under the upcoming table, before Results")
+ok('<details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b>' in GRADED
+   and "<details" in GRADED and ' open' not in GRADED.split("<summary>", 1)[0],
+   "Results is a collapsed section headed Results · last 24 hours")
+ok('<th class="num">1Q exp / act</th><th class="num">1H exp / act</th><th class="num">FT exp / act</th>' in GRADED,
+   "the results table has the exp / act columns")
+gs = _game_row(GRADED, "GS")
+ok(gs and 'data-window="graded"' in gs, "a completed game in the last 24h is a results row")
+gcells = _cells(gs)
+ok("57.3 / 55" in _text(gcells[2]) and f"{MINUS}1.5" in gcells[2] and "err-ok" in gcells[2],
+   "1Q shows expected / actual and the file's negative error in green")
+ok(f"{MINUS}2.3" not in HTML and "-2.3" not in HTML, "the error is never actual minus expected")
+ok("112.3 / 140" in _text(gcells[3]) and "+5.0" in gcells[3] and "err-ok" in gcells[3] and "27.7" not in HTML,
+   "1H shows the file's +5.0 (on the ±5 line, green), not 27.7")
+ok("227.9 / 210" in _text(gcells[4]) and "+4.0" in gcells[4] and f"{MINUS}17.9" not in HTML,
+   "FT shows the file's +4.0")
+ok("nba-more" not in gs, "a results row has no detail chevron")
+ok('data-away="MIA"' not in HTML and "9.9" not in HTML, "a completed game older than 24h is not a row")
+ok("<b>Warriors</b>" not in HTML, "a stored full name is never injected raw")
 
-eq(_pra(bkn, "BKN"), ("Coming soon", "Coming soon"),
-   "with no teams record the PRA slot is Coming soon, not No recent game")
-eq(_pra(bkn, "CHA"), ("Coming soon", "Coming soon"),
-   "the home card is also Coming soon when its teams entry is absent")
+coloured = N.build({"window": 5, "games": [
+    _game("g", NOW - timedelta(hours=1), "AA", "BB", completed=True,
+          roll_exp_q1=50.0, roll_exp_h1=100.0, roll_exp_ft=200.0,
+          act_q1=53, act_h1=93, act_ft=212, err_q1=3.0, err_h1=-7.0, err_ft=12.0),
+    _game("h", NOW - timedelta(hours=2), "CC", "DD", completed=True,
+          roll_exp_ft=200.0, act_ft=204, err_ft=4.0),
+], "seed": {"teams": {}}}, now=NOW)
+crow = _cells(_game_row(_section(coloured, "graded"), "AA"))
+ok("err-ok" in crow[2] and "+3.0" in crow[2], "within ±5 is green")
+ok("err-near" in crow[3] and f"{MINUS}7.0" in crow[3], "between 5 and 10 is amber")
+ok("err-far" in crow[4] and "+12.0" in crow[4], "beyond 10 is red")
+cacc = re.search(r'class="nba-accuracy" id="accuracy">([^<]*)<', coloured).group(1)
+eq(cacc, "Last 24h: 2 games graded · mean abs error FT 8.0, 1H 7.0, 1Q 3.0 · 1 of 2 FT within ±5.",
+   "the accuracy line averages absolute errors and counts FT within ±5")
+
+print("\nteam reference")
+ok('<table class="team-table sortable">' in TEAMS and "<details" in TEAMS
+   and "<b>Team reference</b>" in TEAMS and ' open' not in TEAMS.split("<summary>", 1)[0],
+   "Teams is one sortable table, collapsed under Team reference")
+ok("<th>Team</th><th>Pace profile</th>" in TEAMS and "1Q scored/allowed" in TEAMS
+   and "1H scored/allowed" in TEAMS and "<th>Last-game PRA</th>" in TEAMS,
+   "the team table has the reference columns")
+names = [re.search(r"<td[^>]*><b>([^<]*)</b></td>", row).group(1) for row in _team_rows(TEAMS)]
+eq(names[0], "WALL", "the list is highest combined first")
+ok("BKN" in names and "IN" in names and "AAA" in names, "every team is on the reference, upcoming or not")
+aaa = _team_row(TEAMS, "AAA")
+ok('data-v="100.0"' in aaa and ">100.0<" in aaa and ">80.0<" in aaa and "O+D+" in aaa
+   and "Fast offense · porous defense" in aaa,
+   "a row prints seed scored and allowed with a sortable value and the profile in words")
+ok("88.8" in _team_row(TEAMS, "GS"), "a graded team keeps its seed average on the list")
+ok("Coming soon" in _text(aaa), "with no teams record the PRA column is Coming soon")
+ok("Next up" not in HTML, "the Next up flag is gone with the old list")
+
+print("\nPRA, periods, shell")
+def _pra(detail, which):
+    block = _side(detail, which)
+    pra = re.search(r'class="nba-side-pra pra-value">Last game: (.*?)</p>', block)
+    period = re.search(r'class="nba-side-periods period-value">(.*?)</p>', block)
+    return (pra.group(1) if pra else "", period.group(1) if period else "")
+
+eq(_pra(detail, "away"), ("Coming soon", "Coming soon"),
+   "with no teams record the PRA and period slots are Coming soon, not No recent game")
+eq(_pra(detail, "home"), ("Coming soon", "Coming soon"), "the home side is also Coming soon")
 ok("No recent game" not in HTML, "absent keys are not described as no recent game")
 ok("Should Not Show" not in HTML and "Stephen Curry" not in HTML,
    "a PRA hung on the game row is not read")
-eq(_pra(graded, "GS"), ("Coming soon", "Coming soon"),
-   "a completed game without teams[T] stays Coming soon")
-eq(_pra(inside, "IN"), ("Coming soon", "Coming soon"),
-   "1Q and 1H stay Coming soon when neither the game nor teams has them")
 
 HOSTILE_PLAYER = "<img src=x onerror=alert(1)>"
 fed = N.build({
@@ -391,37 +385,29 @@ fed = N.build({
     "seed": {"teams": {}},
 }, now=NOW)
 fed_up = _section(fed, "matchups")
-gs = _article(fed_up, "GS")
-eq(_pra(gs, "GS"), (
+gs_detail = _detail(fed_up, _game_row(fed_up, "GS"))
+eq(_pra(gs_detail, "away"), (
     "Charles Bassey 21 PRA (12 pts · 8 reb · 1 ast), at LAC Oct 4",
-    "1Q scored 20.0 · allowed 14.0 · 1H scored 48.0 · allowed 42.0",
+    "1Q 20.0/14.0 · 1H 48.0/42.0",
 ), "a stored top_pra renders, and the matchup prefers the pre-tip quarter rates")
-ok("1.1" not in _pra(gs, "GS")[1] and "1.2" not in _pra(gs, "GS")[1],
-   "the team roll does not replace pre-tip quarter rates")
-lac = _pra(gs, "LAC")
-eq(lac[1], "1Q scored 13.6 · allowed 19.2 · n 5 · 1H scored 42.0 · allowed 46.8 · n 5",
-   "with no pre-tip quarter keys the card uses teams[T].roll, including n")
+ok("1.1" not in _pra(gs_detail, "away")[1], "the team roll does not replace pre-tip quarter rates")
+lac = _pra(gs_detail, "home")
+eq(lac[1], "1Q 13.6/19.2 · 1H 42.0/46.8", "with no pre-tip quarter keys the side uses teams[T].roll")
 ok("4 PRA" in lac[0] and "vs NY Oct 3" in lac[0] and "43" not in lac[0],
-   "the home card shows the stored pra and the home opponent, not the sum")
-ok(HOSTILE_PLAYER not in fed and "&lt;img src=x onerror=alert(1)&gt;" in fed,
-   "a hostile player name is escaped")
+   "the home side shows the stored pra and the home opponent, not the sum")
+ok(HOSTILE_PLAYER not in fed and "&lt;img src=x onerror=alert(1)&gt;" in fed, "a hostile player name is escaped")
 fed_tags = _Tags()
 fed_tags.feed(fed)
 ok("img" not in fed_tags.tags and not fed_tags.handlers, "the player name is not a tag")
-bkn_fed = _pra(_article(fed_up, "BKN"), "BKN")
+bkn_detail = _detail(fed_up, _game_row(fed_up, "BKN"))
+bkn_fed = _pra(bkn_detail, "away")
 eq(bkn_fed[0], "No recent game", "last_game null is No recent game")
-eq(bkn_fed[1], "1Q scored 10.0 · allowed 11.0 · n 5 · 1H scored — · allowed 28.0 · n 5",
+eq(bkn_fed[1], "1Q 10.0/11.0 · 1H —/28.0",
    "a null last game still shows the stored quarter rates, and a bad number is an em dash")
-eq(_pra(_article(fed_up, "BKN"), "CHA"), ("Coming soon", "Coming soon"),
-   "a missing team entry is Coming soon on both slots")
-ok("None" not in fed and not re.search(r"\bnan\b", fed, re.I),
-   "the fed card never prints None or NaN")
+eq(_pra(bkn_detail, "home"), ("Coming soon", "Coming soon"), "a missing team entry is Coming soon on both slots")
+ok("None" not in fed and not re.search(r"\bnan\b", fed, re.I), "the fed page never prints None or NaN")
+ok("Charles Bassey" in _section(fed, "teams"), "the team reference shows the same last-game PRA")
 
-skipped = _article(UP, HOSTILE)
-ok("Skipped" in skipped and "&lt;script&gt;alert(1)&lt;/script&gt;" in skipped,
-   "a skipped game in the window says why, escaped")
-ok("999.9" not in HTML and "tempo-scale" not in skipped,
-   "a skipped game does not show an expectation")
 ok(HOSTILE not in HTML and "svg/onload" in HTML and "&lt;svg/onload=alert(1)&gt;" in HTML,
    "a hostile team string is escaped")
 parsed = _Tags()
@@ -446,32 +432,49 @@ main_nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', HTML, re.S)
 main_nav = main_nav.group(0) if main_nav else ""
 nba_tab = re.search(r'<a\b[^>]*href="./nba.html"[^>]*>', main_nav)
 ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
-   and "aria-describedby" not in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
-   "only the NBA pill is current, and that pill is not described as coming soon")
-ok(all(f'href="./{sport}.html"' in main_nav for sport in ("soccer", "tennis", "cricket", "crypto"))
-   and 'aria-disabled="true"' not in main_nav,
-   "the other sport pills reach the published pages")
+   "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok("theme-toggle" not in HTML and "data-theme" not in HTML, "no theme toggle")
-ok("download" not in HTML.lower() and ".csv" not in HTML.lower(), "no download or CSV")
+ok('<nav class="nba-local-nav" aria-label="NBA sections">' in HTML
+   and all(f'href="#{sid}">{label}</a>' in HTML for sid, label in
+           (("matchups", "Upcoming"), ("graded", "Results"), ("teams", "Teams"))),
+   "the Upcoming / Results / Teams jump pills are in the sub-nav")
+head = HTML.split('<section id="matchups">', 1)[0]
+ok("<h1>NBA</h1>" in head and "Expected combined points · tip times CT" in head
+   and "Pace data as of Oct 1, 1:00 PM CT" in head and "Open a matchup" not in HTML,
+   "the header is the title, one line, and the freshness line")
 ok(fmt.display_updated(NOW) in HTML and "CT" in fmt.display_updated(NOW),
    "the stamp is Updated … CT for the pinned clock")
+about = re.search(r'<details class="section-disclosure nba-about">.*?</details>', HTML, re.S)
+ok(about and " open" not in about.group(0).split(">", 1)[0]
+   and len(re.findall(r"[.!?](\s|$)", _text(about.group(0)))) <= 4,
+   "About this desk is collapsed and a few sentences")
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
 ok("color-scheme: dark" in css and "prefers-color-scheme: light" not in css, "the stylesheet is dark only")
-narrow = css.split("@media (max-width: 640px)", 1)[-1]
-ok(".matchup-grid { grid-template-columns: minmax(0, 1fr); }" in narrow,
-   "at 640px the matchup cards stack")
+ok("tempo" not in css and "pace-leader" not in css, "the bar and leader-tile styles are gone")
+ok("tr.nba-detail[hidden] { display: none !important; }" in css,
+   "a hidden detail row stays hidden under the phone cards")
+ok("td.is-lead" in css and ".nba-err.err-ok" in css and ".nba-err.err-far" in css,
+   "the lead mark and error colours are styled")
+js = open(os.path.join(ROOT, "public_site", "sports.js"), encoding="utf-8").read()
+ok("button.nba-more" in js and "aria-expanded" in js, "sports.js wires the row chevron")
+
+labelled = HTML
+ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
+   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 3,
+   "the page names each column for the phone cards and leaves the detail cell unlabelled")
+ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 
 empty = N.build({"window": 5, "games": [
     _game("late", NOW + timedelta(hours=30), "SOON", "LATER"),
     _game("gone", NOW - timedelta(hours=30), "MIA", "TOR", completed=True,
           roll_exp_ft=1.1, act_ft=2, err_ft=0.9),
 ], "seed": {"teams": {"SOON": _ft(50, 50), "MIA": _ft(30, 30)}}}, now=NOW)
-ok(N.EMPTY_UPCOMING in empty and "<article" not in empty,
-   "no game in the next 24h is an empty board, not a stale card")
-ok("Next up" in _row(_section(empty, "teams"), "SOON"),
-   "Next up still flags a 24–48h game when nothing is a card")
+ok(N.EMPTY_UPCOMING in empty and "nba-row" not in _section(empty, "matchups"),
+   "no game in the next 24h is an empty board, not a stale row")
+ok(N.EMPTY_GRADED in empty and "Last 24h: no graded game yet." in empty,
+   "no graded game is said plainly in both places")
+ok("<b>SOON</b>" in _section(empty, "teams"), "the team reference still lists the teams")
 
 bare = N.build(BLOB)
 ok("Updated Oct 1, 1:00 PM CT" in bare and 'data-away="BKN"' not in bare,
@@ -491,44 +494,23 @@ def _serve(directory):
     return httpd
 
 
-LAYOUT = r"""
+STATE = r"""
 () => {
-  const grid = document.querySelector("#matchups .matchup-grid");
-  const cards = [...grid.children];
-  const box = (el) => {
-    const r = el.getBoundingClientRect();
-    return { top: r.top, left: r.left, right: r.right, bottom: r.bottom };
-  };
-  const tracks = getComputedStyle(grid).gridTemplateColumns.split(" ").filter(Boolean);
   const doc = document.documentElement;
-  const bars = [...document.querySelectorAll(".tempo-row")].map((row) => {
-    const scale = row.querySelector(".tempo-scale");
-    const fill = row.querySelector(".tempo-fill");
-    const mark = row.querySelector(".tempo-mark");
-    const sw = scale.getBoundingClientRect().width;
-    const shown = fill && getComputedStyle(fill).display !== "none";
-    const fw = shown ? fill.getBoundingClientRect().width : 0;
-    let marker = null;
-    if (mark && sw) {
-      const m = mark.getBoundingClientRect();
-      const center = ((m.left + m.right) / 2 - scale.getBoundingClientRect().left) / sw * 100;
-      marker = { pct: Number(mark.getAttribute("data-pct")), center };
-    }
-    return {
-      period: row.getAttribute("data-period"),
-      pct: fill ? Number(fill.getAttribute("data-pct")) : 0,
-      width: sw ? fw / sw * 100 : 0,
-      marker,
-      label: (row.querySelector(".tempo-scale") || {}).getAttribute
-        ? row.querySelector(".tempo-scale").getAttribute("aria-label") : "",
-      text: (row.querySelector(".tempo-read") || {}).textContent || "",
-    };
-  });
+  const detail = document.getElementById(document.querySelector("#matchups button.nba-more").getAttribute("aria-controls"));
+  const table = document.querySelector("#matchups table");
+  const results = document.querySelector("#graded details");
+  const teams = document.querySelector("#teams details");
+  const row = detail.previousElementSibling;
+  const vis = (el) => el && getComputedStyle(el).display !== "none" && el.getBoundingClientRect().height > 0;
   return {
-    tracks: tracks.length,
-    cards: cards.map(box),
     overflow: doc.scrollWidth > doc.clientWidth + 1,
-    bars,
+    detailShown: vis(detail),
+    expanded: document.querySelector("#matchups button.nba-more").getAttribute("aria-expanded"),
+    tableDisplay: getComputedStyle(table).display,
+    resultsOpen: results.open, teamsOpen: teams.open,
+    rowTop: row.getBoundingClientRect().top, detailTop: detail.getBoundingClientRect().top,
+    bars: document.querySelectorAll("meter, progress, .tempo-scale").length,
   };
 }
 """
@@ -541,11 +523,10 @@ def browser_checks():
     if sync_playwright is None:
         return
     folder = tempfile.mkdtemp(prefix="nba-board-")
-    os.symlink(os.path.join(ROOT, "public_site", "site.css"), os.path.join(folder, "site.css"))
-    os.symlink(os.path.join(ROOT, "public_site", "tables.js"), os.path.join(folder, "tables.js"))
+    for name in ("site.css", "tables.js", "sports.js"):
+        os.symlink(os.path.join(ROOT, "public_site", name), os.path.join(folder, name))
     with open(os.path.join(folder, "board.html"), "w", encoding="utf-8") as fh:
-        fh.write(HTML)
-    os.symlink(os.path.join(ROOT, "public_site", "sports.js"), os.path.join(folder, "sports.js"))
+        fh.write(labelled)
     httpd = _serve(folder)
     base = f"http://127.0.0.1:{httpd.server_address[1]}/board.html"
     try:
@@ -554,58 +535,44 @@ def browser_checks():
             page = browser.new_page(viewport={"width": 1280, "height": 800})
             page.goto(base, wait_until="load")
             page.wait_for_timeout(40)
-            ok(not page.locator("#matchups .team-card").first.is_visible(),
-               "desktop starts with compact summaries")
-            page.locator(".nba-results > summary").click()
-            for summary in page.locator("details.nba-game > summary").all():
-                summary.click()
-            wide = page.evaluate(LAYOUT)
-            ok(wide["tracks"] == 3 and not wide["overflow"],
-               f"at 1280px the matchup is three columns and the page does not scroll sideways "
-               f"({wide['tracks']} tracks, overflow {wide['overflow']})")
-            away, mid, home = wide["cards"]
-            ok(away["left"] < mid["left"] < home["left"]
-               and abs(away["top"] - home["top"]) < 4,
-               "at 1280px away is left of the expectation and home is right")
-            page.set_viewport_size({"width": 640, "height": 800})
+            wide = page.evaluate(STATE)
+            ok(not wide["detailShown"] and wide["expanded"] == "false",
+               "desktop starts with every detail row closed")
+            ok(not wide["resultsOpen"] and not wide["teamsOpen"], "Results and Team reference start collapsed")
+            ok(wide["tableDisplay"] == "table" and not wide["overflow"] and wide["bars"] == 0,
+               f"at 1280px the board is a table with no bars and no sideways scroll (overflow {wide['overflow']})")
+            page.locator("#matchups button.nba-more").first.click()
+            page.wait_for_timeout(40)
+            opened = page.evaluate(STATE)
+            ok(opened["detailShown"] and opened["expanded"] == "true"
+               and opened["detailTop"] > opened["rowTop"] and not opened["overflow"],
+               "the chevron opens the detail row under its game")
+            page.locator("#matchups button.nba-more").first.click()
+            page.wait_for_timeout(40)
+            ok(not page.evaluate(STATE)["detailShown"], "a second press closes it again")
+            page.locator("#graded summary").click()
+            page.wait_for_timeout(40)
+            ok(page.evaluate(STATE)["resultsOpen"] and page.locator("#graded table").is_visible(),
+               "Results opens to its table")
+            page.locator("#teams summary").click()
+            page.wait_for_timeout(40)
+            scored = page.locator("#teams th.num").first  # the Scored column
+            scored.click()
+            page.wait_for_timeout(40)
+            sort = scored.get_attribute("aria-sort")
+            ok(sort in ("ascending", "descending"), f"the team reference sorts on a column ({sort})")
+            page.set_viewport_size({"width": 390, "height": 800})
             page.reload(wait_until="load")
             page.wait_for_timeout(40)
-            first_detail = page.locator("#matchups details.nba-game").first
-            ok(first_detail.get_attribute("open") is None,
-               "at 640px the first matchup starts as a compact closed row")
-            ok(not page.locator("#matchups .team-card").first.is_visible(),
-               "mobile detail starts collapsed")
-            page.locator("#matchups .nba-game-summary").first.click()
-            ok(page.locator("#matchups .team-card").first.is_visible(),
-               "mobile summary opens the analysis")
-            narrow = page.evaluate(LAYOUT)
-            ok(narrow["tracks"] == 1 and not narrow["overflow"],
-               f"at 640px the matchup stacks and the page does not scroll sideways "
-               f"({narrow['tracks']} tracks, overflow {narrow['overflow']})")
-            away, mid, home = narrow["cards"]
-            ok(away["bottom"] <= mid["top"] + 16 and mid["bottom"] <= home["top"] + 16
-               and abs(away["left"] - home["left"]) < 2,
-               "at 640px the cards stack away, expectation, home")
-            bars = {bar["period"]: bar for bar in wide["bars"]}
-            # The first matchup on the page is the skipped game, which has no bars.
-            # wide["bars"] is every tempo row. Check the graded 1Q marker and a fill.
-            graded_q1 = [bar for bar in wide["bars"]
-                         if bar["period"] == "q1" and bar["marker"] and bar["marker"]["pct"] == _pct(55, q1_lo, q1_hi)]
-            ok(len(graded_q1) == 1, "the graded 1Q marker is on the page")
-            if graded_q1:
-                bar = graded_q1[0]
-                ok(abs(bar["width"] - bar["pct"]) <= 2,
-                   f"the 1Q fill is as wide as its data-pct ({bar['width']:.1f} vs {bar['pct']})")
-                col = bar["marker"]["pct"] or 1
-                want = col - 0.5
-                ok(abs(bar["marker"]["center"] - want) <= 2.5,
-                   f"the actual marker sits on its column ({bar['marker']['center']:.1f} vs {want})")
-                ok(bar["label"] == bar["text"] and "combined" in bar["text"],
-                   "the bar label and the visible text say the same thing")
-            page.set_viewport_size({"width": 1280, "height": 800})
+            narrow = page.evaluate(STATE)
+            ok(narrow["tableDisplay"] == "block" and not narrow["detailShown"] and not narrow["overflow"],
+               f"at 390px the table is the phone cards, the detail stays hidden, and nothing scrolls sideways "
+               f"(display {narrow['tableDisplay']}, overflow {narrow['overflow']})")
+            page.locator("#matchups button.nba-more").first.click()
             page.wait_for_timeout(40)
-            ok(page.locator("#matchups .team-card").first.is_visible(),
-               "returning to desktop preserves the user's expanded analysis")
+            phone_open = page.evaluate(STATE)
+            ok(phone_open["detailShown"] and not phone_open["overflow"],
+               "on the phone the chevron opens the detail card without widening the page")
             browser.close()
     finally:
         httpd.shutdown()

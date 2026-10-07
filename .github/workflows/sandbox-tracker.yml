@@ -275,9 +275,30 @@ jobs:
             # (public_site is already restored above) must not make this rebase
             # refuse.
             if ! git pull --rebase --autostash origin main; then
-              git rebase --abort 2>/dev/null || echo "rebase was not left in progress"
-              echo "::error::rebase onto origin/main conflicted; refusing to drop the other side's rows"
-              exit 1
+              # A page under public_site is derived from the ledgers, so a
+              # conflict there is not a lost row. The NBA pace job writes
+              # nba.html on its own clock (2026-10-07 21:06: it pushed while
+              # this run was building, and the rebase stopped on that page).
+              # Keep this run's copy of each conflicted page, finish the
+              # rebase, then rebuild every page from the rebased data so the
+              # pages describe the newest ledgers. A conflict anywhere else
+              # still fails, as before: that is the ledger, and only a human
+              # may reconcile two sides of it.
+              conflicted="$(git diff --name-only --diff-filter=U)"
+              if [ -n "$conflicted" ] && ! printf '%s\n' "$conflicted" | grep -qv '^public_site/'; then
+                echo "conflict only in generated pages; keeping this run's copy and rebuilding"
+                printf '%s\n' "$conflicted" | xargs git checkout --theirs --
+                printf '%s\n' "$conflicted" | xargs git add --
+                GIT_EDITOR=true git rebase --continue
+                if [ "$COMMIT_SITE" = "true" ] && python3 sandbox_build.py; then
+                  git add public_site
+                  git commit --amend --no-edit
+                fi
+              else
+                git rebase --abort 2>/dev/null || echo "rebase was not left in progress"
+                echo "::error::rebase onto origin/main conflicted; refusing to drop the other side's rows"
+                exit 1
+              fi
             fi
           done
           echo "::error::could not push the ledger after 3 attempts"

@@ -90,16 +90,28 @@ jobs:
             exit 0
           fi
           git commit -m "NBA pace labels ($(date -u +%Y-%m-%d\ %H:%MZ))"
-          # Commit once; retry the push only. Only this workflow writes this file, so a
-          # rebase onto whatever the tracker or the boards pushed cannot conflict.
+          # Commit once; retry the push only. The tracker rebuilds nba.html too, on
+          # its own clock, so a rebase onto a tracker push can conflict on that one
+          # page. The page is derived from data/nba_pace.json, which only this job
+          # writes, so this run's copy is the fresher one: keep it and continue. A
+          # conflict in anything else is not this job's to resolve.
           for attempt in 1 2 3; do
             if git push origin main; then
               exit 0
             fi
             echo "push rejected — rebasing onto origin/main (attempt $attempt)"
             if ! git pull --rebase origin main; then
-              echo "::error::rebase onto origin/main failed on attempt $attempt"
-              exit 1
+              conflicted="$(git diff --name-only --diff-filter=U)"
+              if [ "$conflicted" = "public_site/nba.html" ]; then
+                echo "conflict only in nba.html; keeping this run's copy"
+                git checkout --theirs -- public_site/nba.html
+                git add -- public_site/nba.html
+                GIT_EDITOR=true git rebase --continue
+              else
+                git rebase --abort 2>/dev/null || echo "rebase was not left in progress"
+                echo "::error::rebase onto origin/main failed on attempt $attempt"
+                exit 1
+              fi
             fi
           done
           echo "::error::could not push pace labels after 3 attempts"

@@ -96,9 +96,11 @@ if playwright is not None:
                 })"""), (sport, width)
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (sport, width, "nav")
                 if sport == "nba":
-                    assert page.locator("details.nba-game[open]").count() == 0
-                    page.locator(".nba-game-summary").click()
-                    assert page.locator("details.nba-game[open]").count() == 1
+                    # The game row's chevron opens the detail row under it.
+                    assert page.locator("tr.nba-detail:not([hidden])").count() == 0
+                    page.locator("button.nba-more").first.click()
+                    assert page.locator("tr.nba-detail:not([hidden])").count() == 1
+                    assert page.locator("tr.nba-detail .nba-side").first.is_visible()
                     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (sport, width, "analysis")
                     page.locator("a[href='#graded']").click()
                     page.locator(".nba-results[open]").wait_for(state="attached")
