@@ -1855,3 +1855,182 @@ body.analyst-desk footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+
+/* NBA Analyst Desk — scan-first game board.
+   Desktop keeps the full three-card analysis visible. Mobile starts with
+   compact matchup rows; tapping a row opens the full detail. */
+.nba-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.nba-head .lede { margin-bottom: 0; }
+.nba-local-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.nba-local-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--mut);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.nba-local-nav a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
+.pace-leaders {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.pace-leader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  color: var(--fg);
+  text-decoration: none;
+}
+.pace-leader:hover { background: var(--raised); text-decoration: none; }
+.pace-leader-k {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.pace-leader strong { overflow-wrap: anywhere; }
+.pace-leader > span:last-child { color: var(--acc); font-size: 13px; font-variant-numeric: tabular-nums; }
+.nba-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin: 24px 0 10px;
+}
+.nba-section-head h2 { margin: 0; }
+.nba-count {
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.matchup { margin-bottom: 8px; }
+details.nba-game {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.nba-game-summary {
+  display: grid;
+  grid-template-columns: 110px minmax(150px, 1fr) repeat(3, minmax(64px, 76px)) 82px 16px;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+.nba-game-summary::-webkit-details-marker { display: none; }
+.nba-game-summary::after {
+  content: "▾";
+  color: var(--mut);
+  font-size: 12px;
+  justify-self: end;
+}
+details.nba-game:not([open]) .nba-game-summary::after { content: "›"; }
+.nba-summary-time { color: var(--mut); font-size: 12px; font-variant-numeric: tabular-nums; }
+.nba-summary-match {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+.nba-summary-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.nba-summary-metric small {
+  color: var(--mut);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .05em;
+}
+.nba-summary-status {
+  justify-self: end;
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+details.nba-game > .matchup-grid {
+  border-top: 1px solid var(--line);
+  padding: 12px;
+}
+.team-tag .tag {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.team-tag .tag::after {
+  content: attr(title);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 600;
+}
+@media (min-width: 801px) {
+  details.nba-game > .matchup-grid { display: grid !important; }
+  .nba-game-summary::after { visibility: hidden; }
+}
+@media (max-width: 800px) {
+  .nba-head { align-items: flex-start; flex-direction: column; }
+  .nba-local-nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nba-local-nav::-webkit-scrollbar { display: none; }
+  .pace-leaders {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .pace-leaders::-webkit-scrollbar { display: none; }
+  .nba-game-summary {
+    grid-template-columns: 72px minmax(0, 1fr) repeat(3, 44px) 18px;
+    gap: 6px;
+    min-height: 58px;
+    padding: 9px 10px;
+  }
+  .nba-summary-status { display: none; }
+  .nba-summary-time { font-size: 11px; }
+  .nba-summary-match { font-size: 13px; }
+  .nba-summary-metric { font-size: 12px; }
+  details.nba-game > .matchup-grid { padding: 10px; }
+}
+@media (max-width: 520px) {
+  .nba-game-summary {
+    grid-template-columns: 58px minmax(0, 1fr) repeat(3, 38px) 14px;
+    gap: 4px;
+  }
+  .nba-summary-time { max-width: 58px; line-height: 1.15; }
+  .team-tag .tag::after { display: block; }
+}
