@@ -1,8 +1,8 @@
 """The Analyst Desk production shell.
 
-The site root lands here with Production selected. Page pills go to the
-existing Sandbox, Production, Trading, and Method pages. Sport pills filter
-the Running list in place. They do not navigate, and All starts pressed.
+The site root. It wears the same header as every other page. Sport pills
+inside the Running pane filter the list in place. They do not navigate, and
+All starts pressed; a sport with no lane on the list has no pill.
 
 Running rows are presentation. They reuse the Production feed and the same
 quote gates that feed already uses. They do not settle, assess, or rewrite a
@@ -20,6 +20,7 @@ the caller passed, the same instant as production.html.
 """
 import datetime
 import json
+import re
 
 import fmt
 import production
@@ -36,14 +37,12 @@ SPORTS = (
     ("cricket", "Cricket"),
     ("crypto", "Crypto"),
 )
-PAGES = (
-    ("Sandbox", "./sandbox.html", False),
-    ("Production", "./production.html", True),
-    ("Trading", "./trading.html", False),
-    ("Method", "./sandbox.html#method", False),
-)
 RUNNING = (("live", "Live", True), ("settled", "Settled", False), ("upcoming", "Upcoming", False))
 _GROUP_ORDER = ("NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Markets")
+PRICE_LABEL = "Settled on price"
+# Chicago dates on the Running Settled list, today included. Not
+# production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
+SHELL_SETTLED_DAYS = 14
 _STATUS = {
     "pending": "Open",
     "open": "Open",
@@ -52,18 +51,27 @@ _STATUS = {
     "miss": "L",
     "lost": "L",
     "void": "Void",
-    "price": "price result",
-    "settled": "price result",
+    "price": PRICE_LABEL,
+    "settled": PRICE_LABEL,
 }
 _EMPTY = {
-    "live": "No live paper bets",
-    "settled": "No settled paper bets",
-    "upcoming": "No upcoming paper bets",
+    "live": "No paper bet is in play right now. Settled and upcoming bets sit under the other two filters.",
+    "settled": f"Nothing settled in the last {SHELL_SETTLED_DAYS} days.",
+    "upcoming": "No paper bet is waiting on a start time. New leads appear here when a Production lane fires.",
+}
+# A bet the venue paid out at a price instead of a win or a loss (an
+# abandoned match, for example). The ledger stores it as "price"/"settled".
+PRICE_TOKEN = "price"
+_STATUS_TOKEN = {
+    "Open": "Open",
+    "W": "W",
+    "L": "L",
+    "Void": "Void",
+    PRICE_LABEL: PRICE_TOKEN,
+    "Awaiting result": "awaiting",
+    "mixed": "mixed",
 }
 _QUOTE_SETTLED = ("won", "lost", "void", "settled")
-# Chicago dates on the Running Settled list, today included. Not
-# production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
-SHELL_SETTLED_DAYS = 14
 # An open bet still ungraded this long after kickoff stays in Live, but the
 # row says "Awaiting result" instead of Open. The name is read on each call.
 SHELL_AWAIT_HOURS = 6
@@ -129,18 +137,17 @@ def _stamp(now):
     return site_chrome.esc(str(now))
 
 
-def _page_pills():
-    parts = []
-    for label, href, current in PAGES:
-        attr = ' aria-current="page"' if current else ""
-        parts.append(f'<a href="{site_chrome.esc(href)}"{attr}>{site_chrome.esc(label)}</a>')
-    return "".join(parts)
+def _sport_pills(present=None):
+    """Filter the Running list. All starts pressed. The choice is not stored.
 
-
-def _sport_pills():
-    """Filter the Running list. All starts pressed. The choice is not stored."""
+    `present` is the set of sport labels with at least one lane on the list.
+    A sport with nothing to show gets no pill: a filter that empties every
+    bucket is a dead control. All is always there. None keeps every pill.
+    """
     parts = []
     for key, label in SPORTS:
+        if present is not None and key != "all" and label not in present:
+            continue
         pressed = "true" if key == "all" else "false"
         parts.append(
             f'<button type="button" data-sport="{site_chrome.esc(key)}" '
@@ -150,13 +157,15 @@ def _sport_pills():
 
 
 def _running_filters(counts):
+    """Live / Settled / Upcoming. Each count is paper bets (lanes), not contests."""
     parts = []
     for key, label, pressed in RUNNING:
         described = ' aria-describedby="settled-caption"' if key == "settled" else ""
         parts.append(
             f'<button type="button" data-filter="{site_chrome.esc(key)}" '
             f'aria-pressed="{"true" if pressed else "false"}"{described}>'
-            f'{site_chrome.esc(label)} <span class="count">{int(counts.get(key, 0))}</span></button>')
+            f'{site_chrome.esc(label)} <span class="count">{int(counts.get(key, 0))}</span>'
+            f'<span class="sr-only"> paper bets</span></button>')
     return "".join(parts)
 
 
@@ -168,8 +177,23 @@ def _sport_label(sport):
         return str(text).split(" · ")[0] or "Other"
 
 
+def _status_token(label):
+    """The short data-status value a style or a test can hook. Unknown labels pass through."""
+    return _STATUS_TOKEN.get(label, label)
+
+
+def _status_html(cls, label, spoken, token):
+    """A status with its spoken form. The spoken line is only added when it differs,
+    so assistive tech never reads the same words twice."""
+    esc = site_chrome.esc
+    inner = esc(label)
+    if spoken and spoken != label:
+        inner = f'<span aria-hidden="true">{esc(label)}</span><span class="sr-only">{esc(spoken)}</span>'
+    return f'<span class="{esc(cls)}" data-status="{esc(token)}">{inner}</span>'
+
+
 def _status_label(status):
-    """Open / W / L / Void / price result. Anything else stays neutral.
+    """Open / W / L / Void / Settled on price. Anything else stays neutral.
 
     A status this map does not know is not a void. A real string is shown as
     itself (escaped at render). Missing statuses read Unknown.
@@ -231,25 +255,17 @@ def _when_text(kickoff):
 
 
 def _time_text(bucket, kickoff, now):
-    """Live, the kickoff clock on the build date, or a relative day."""
+    """Live, or the kickoff as "Today, 6:00 AM CT" / "Oct 9, 8:50 AM CT".
+
+    The same clock form as every other page. Only today and the two
+    neighbouring days get a word, and they keep the time.
+    """
     if bucket == "live":
         return "Live"
     if kickoff is None:
         return "—"
-    today = production._chicago_day(now)
-    day = production._chicago_day(kickoff)
-    if today is None or day is None:
-        return "—"
-    delta = (day - today).days
-    if delta == -1:
-        return "Yesterday"
-    if delta == 0:
-        try:
-            return fmt.clock(kickoff)
-        except (TypeError, ValueError, OverflowError, OSError):
-            return "—"
     try:
-        return production._day_label(day, today)
+        return fmt.when_relative(kickoff, now)
     except (TypeError, ValueError, OverflowError, OSError):
         return "—"
 
@@ -295,7 +311,7 @@ def _lane_from_lead(lead, settled_at=None):
 
 def _settled_status(status):
     """A graded result. Open and anything this map does not know are not graded."""
-    return status in ("W", "L", "Void", "price result")
+    return status in ("W", "L", "Void", PRICE_LABEL)
 
 
 def _keeps(lane, now):
@@ -362,11 +378,11 @@ def _contest_bucket(items, now):
 
 # Visual token and spoken phrase for each bet status. W and L glue to the
 # count ("1W", "2L"); the words stay separate ("1 void", "1 open").
-_COMBO_ORDER = ("W", "L", "price result", "Void", "Awaiting result", "Open")
+_COMBO_ORDER = ("W", "L", PRICE_LABEL, "Void", "Awaiting result", "Open")
 _COMBO_TOKEN = {
     "W": "W",
     "L": "L",
-    "price result": "price result",
+    PRICE_LABEL: "priced",
     "Void": "void",
     "Awaiting result": "awaiting",
     "Open": "open",
@@ -374,7 +390,7 @@ _COMBO_TOKEN = {
 _SPOKEN = {
     "W": "won",
     "L": "lost",
-    "price result": "price result",
+    PRICE_LABEL: "settled on price",
     "Void": "void",
     "Awaiting result": "awaiting result",
     "Open": "open",
@@ -384,7 +400,7 @@ _SPOKEN = {
 def _status_face(items, statuses=None):
     """One contest row, one result line, counted per bet.
 
-    A single bet keeps its own label (W, L, Open, Void, price result,
+    A single bet keeps its own label (W, L, Open, Void, Settled on price,
     Awaiting result). Several bets add up: 2W, 1W 1L, 1L 1 awaiting. The
     spoken line is what a screen reader should say instead of the letters.
     `statuses` overrides each lane's stored status, so an open bet past the
@@ -668,6 +684,20 @@ def _contest_page(items):
     return "./production.html"
 
 
+def _about(source):
+    """The first sentence of the rule's registered note, so every card says what the lane is."""
+    meta = S.SOURCES.get(source) or {}
+    note = str(meta.get("note") or "").strip()
+    if not note:
+        return None
+    first = re.split(r"(?<=[.!?])\s+", note, maxsplit=1)[0].strip()
+    # A bare pre-registration date is not a description. Take the next sentence.
+    if re.fullmatch(r"Pre-registered \d{4}-\d{2}-\d{2}\.?", first) and " " in note[len(first):].strip():
+        rest = note[len(first):].strip()
+        first = re.split(r"(?<=[.!?])\s+", rest, maxsplit=1)[0].strip()
+    return first or None
+
+
 def _card(lane, board):
     """One bet's mini card. Fields the helpers did not compute are left out."""
     status = lane.get("status") or "Unknown"
@@ -678,6 +708,9 @@ def _card(lane, board):
         "status": status,
         "spoken": _SPOKEN.get(status, status),
     }
+    about = _about(lane.get("source") or "")
+    if about:
+        card["about"] = about
     if lane.get("headline"):
         card["market"] = lane["headline"]
     venue = _venue_name(lane.get("venue"))
@@ -723,6 +756,10 @@ def contests_from_lanes(lanes, now, d=None, st=None):
                       default=None)
         rep = next((lane for lane in items if lane["status"] == "Open"), items[0])
         competition = next((lane["competition"] for lane in items if lane.get("competition")), "")
+        # A feed that has no competition falls back to the sport's own name.
+        # "Cricket · Cricket" says nothing twice; leave the field out.
+        if competition.strip().casefold() == str(items[0]["sport"] or "").strip().casefold():
+            competition = ""
         for lane in items:
             if not lane.get("venue"):
                 venue = venues.get(lane.get("quote_id"))
@@ -758,6 +795,7 @@ def contests_from_lanes(lanes, now, d=None, st=None):
             "page": _contest_page(items),
             "pill": "Production" if any(lane["lane"] == "Production" for lane in items) else "Sandbox",
             "lanes": len({lane["pair"] for lane in items if lane.get("pair")}) or len(items),
+            "n_bets": len(items),
             "bets": bets,
             "cards": cards,
         })
@@ -778,7 +816,7 @@ def _sport_letter(label):
 
 
 _OPEN_CHIP = ("Open", "Awaiting result")
-_SETTLED_CHIP = ("W", "L", "Void", "price result")
+_SETTLED_CHIP = ("W", "L", "Void", PRICE_LABEL)
 
 
 def _chip_rank(kind, kick, order):
@@ -794,21 +832,20 @@ def _chip_html(contest, index, card):
     """One bet. Text is escaped here; the browser does not parse a payload."""
     status = card.get("status") or "Unknown"
     sport = contest.get("sport") or "Other"
-    name = contest.get("match") or "—"
+    name = fmt.contest(contest.get("match") or "—")
     market = card.get("market") or "—"
     price = card.get("price") or "—"
     spoken = card.get("spoken") or status
+    token = _status_token(status)
     esc = site_chrome.esc
     return (
         f'<button type="button" class="bet-chip"'
-        f' data-contest="c{index}" data-status="{esc(status)}" aria-pressed="false">'
-        f'<span class="bet-chip-letter" aria-hidden="true">{esc(_sport_letter(sport))}</span>'
-        f'<span class="sr-only">{esc(sport)}</span>'
-        f'<span class="bet-chip-contest">{esc(name)}</span>'
-        f'<span class="bet-chip-line">{esc(market)} · {esc(price)}</span>'
-        f'<span class="bet-chip-status" data-status="{esc(status)}">'
-        f'<span aria-hidden="true">{esc(status)}</span>'
-        f'<span class="sr-only">{esc(spoken)}</span></span>'
+        f' data-contest="c{index}" data-status="{esc(token)}" aria-pressed="false">'
+        f'<span class="bet-chip-letter" aria-hidden="true" title="{esc(sport)}">{esc(_sport_letter(sport))}</span>'
+        f'<span class="sr-only">{esc(sport)}: </span>'
+        f'<span class="bet-chip-contest" title="{esc(name)}">{esc(name)}</span>'
+        f'<span class="bet-chip-line" title="{esc(market)}">{esc(market)} · {esc(price)}</span>'
+        f'{_status_html("bet-chip-status", status, spoken, token)}'
         f'</button>'
     )
 
@@ -841,23 +878,40 @@ def _roll_html(ordered):
     return "".join(item[3] for item in pending)
 
 
+def _roll_counts(ordered):
+    """(open chips, settled chips, won chips): the same bets _roll_html draws."""
+    n_open = n_settled = n_won = 0
+    for contest in ordered:
+        for card in contest.get("cards") or []:
+            status = card.get("status") or ""
+            if status in _OPEN_CHIP:
+                n_open += 1
+            elif contest.get("bucket") == "settled" or status in _SETTLED_CHIP:
+                n_settled += 1
+                if status == "W":
+                    n_won += 1
+    return n_open, n_settled, n_won
+
+
 def _row_html(contest, index, now):
     bucket = contest["bucket"]
     hidden = "" if bucket == "live" else " hidden"
     lanes = ""
     if contest["lanes"] > 1:
         lanes = f'<span class="lane-n">{int(contest["lanes"])} lanes</span>'
-    competition = contest["competition"] or "—"
-    name = contest["match"] or "—"
+    competition = contest["competition"] or ""
+    name = fmt.contest(contest["match"] or "—")
     kickoff = _when_text(contest["kickoff"])
     price = contest.get("price_text") or _cents(contest.get("price"))
     awaiting = ' data-awaiting="true"' if contest.get("awaiting") else ""
+    n_bets = int(contest.get("n_bets") or len(contest.get("cards") or ()) or 1)
     esc = site_chrome.esc
     return (
         f'<button type="button" class="running-row"'
         f' data-filter="{esc(bucket)}" data-contest="c{index}"'
         f' data-competition="{esc(competition)}" data-sport="{esc(contest["sport"])}"'
         f' data-name="{esc(name)}" data-kickoff="{esc(kickoff)}" data-price="{esc(price)}"'
+        f' data-lanes="{n_bets}"'
         f' data-page="{esc(contest.get("page") or "./production.html")}"'
         f' data-cards="{_cards_attr(contest.get("cards") or [])}"'
         f' aria-pressed="false"{awaiting}{hidden}>'
@@ -865,9 +919,7 @@ def _row_html(contest, index, now):
         f'<span class="running-contest">{esc(name)}</span>'
         f'<span class="running-price">{esc(price)}</span>'
         f'<span class="running-meta">'
-        f'<span class="running-status" data-status="{esc(contest["data_status"])}">'
-        f'<span aria-hidden="true">{esc(contest["status"])}</span>'
-        f'<span class="sr-only">{esc(contest["spoken"])}</span></span>'
+        f'{_status_html("running-status", contest["status"], contest["spoken"], _status_token(contest["data_status"]))}'
         f'<span class="running-pills"><span class="lane-pill">{esc(contest["pill"])}</span>{lanes}</span>'
         f'</span></button>'
     )
@@ -878,9 +930,11 @@ def _running_body(d, st, blob, now):
     by_sport = {}
     for contest in contests:
         by_sport.setdefault(contest["sport"], []).append(contest)
+    # Counts are paper bets (lanes). A contest with two bets counts twice,
+    # the same way the roll draws two chips for it.
     counts = {key: 0 for key, _label, _pressed in RUNNING}
     for contest in contests:
-        counts[contest["bucket"]] = counts.get(contest["bucket"], 0) + 1
+        counts[contest["bucket"]] = counts.get(contest["bucket"], 0) + int(contest.get("n_bets") or 1)
     groups = []
     ordered = []
     number = 0
@@ -908,7 +962,40 @@ def _running_body(d, st, blob, now):
         f' data-upcoming="{site_chrome.esc(_EMPTY["upcoming"])}">'
         f'{site_chrome.esc(_EMPTY["live"])}</p>'
     )
-    return _running_filters(counts), "".join(groups), empty, _roll_html(ordered)
+    present = {contest["sport"] for contest in contests}
+    return {
+        "filters": _running_filters(counts),
+        "sports": _sport_pills(present),
+        "groups": "".join(groups),
+        "empty": empty,
+        "roll": _roll_html(ordered),
+        "roll_counts": _roll_counts(ordered),
+        "counts": counts,
+    }
+
+
+_LANDED_TILE = re.compile(
+    r'<div class="tile"><b>[^<]*</b><span>recent leads landed</span></div>')
+
+
+def _landed_tile(n_won, n_settled):
+    return (f'<div class="tile"><b>{int(n_won)}/{int(n_settled)}</b>'
+            f'<span>paper bets landed · last {int(SHELL_SETTLED_DAYS)} days</span></div>')
+
+
+def _with_landed(tiles, n_won, n_settled):
+    """The Production strip with its landed tile counted the way this page counts.
+
+    production.html counts leads over its own {KEEP_SETTLED_DAYS}-day feed. The
+    shell lists bets over SHELL_SETTLED_DAYS, so its tile has to count those
+    same bets or the two numbers on one screen disagree. The other three tiles
+    are still production.html's own.
+    """
+    tile = _landed_tile(n_won, n_settled)
+    if _LANDED_TILE.search(tiles):
+        return _LANDED_TILE.sub(lambda _m: tile, tiles, count=1)
+    end = tiles.rfind("</div>")
+    return tiles[:end] + tile + tiles[end:] if end >= 0 else tiles + tile
 
 
 def page(now, d=None, st=None, blob=None, tiles=None):
@@ -917,7 +1004,8 @@ def page(now, d=None, st=None, blob=None, tiles=None):
     Pass `tiles` to reuse a strip already computed for production.html. Omitting
     it builds that strip from `d`, `st`, and `blob` (the live board by default)
     for callers that are not the tracker build. Running rows use `now` either way
-    and do not count the tiles again.
+    and do not count the tiles again, except the landed tile, which is this
+    page's own bets over its own window.
     """
     when = _now(now)
     if tiles is None:
@@ -927,50 +1015,49 @@ def page(now, d=None, st=None, blob=None, tiles=None):
         summary = tiles
         if d is None or st is None or blob is None:
             d, st, blob = _load(d, st, blob)
-    filters, groups, empty, roll = _running_body(d, st, blob, when)
+    parts = _running_body(d, st, blob, when)
+    n_open, n_settled, n_won = parts["roll_counts"]
+    summary = _with_landed(summary, n_won, n_settled)
     caption = (
         f'<p class="settled-caption" id="settled-caption" hidden>'
-        f'Last {int(SHELL_SETTLED_DAYS)} days</p>'
+        f'Last {int(SHELL_SETTLED_DAYS)} days · counts are paper bets, one contest can carry several</p>'
     )
-    body = f"""<h1 class="sr-only">Edge Machine · Production</h1>
+    roll_note = (f'{n_open} open, then {n_settled} settled in the last {int(SHELL_SETTLED_DAYS)} days'
+                 if (n_open or n_settled) else "")
+    body = f"""<h1 class="sr-only">Edge Machine · Home</h1>
 <div class="desk-layout" data-layout="analyst-desk">
-<aside class="desk-nav" aria-label="Quick access">
-<div class="desk-nav-block">
-<p class="desk-nav-label">Workspace</p>
-<nav class="main" aria-label="Pages">{_page_pills()}</nav>
-</div>
-<div class="desk-nav-block">
-<p class="desk-nav-label">Sports</p>
-<nav class="sports" aria-label="Sports">{_sport_pills()}</nav>
-</div>
-</aside>
 <div class="shell-columns">
 <div class="desk-center">
-<section class="shell-pane running-pane" aria-labelledby="running-title">
+<section class="shell-pane running-pane" id="running" aria-labelledby="running-title">
 <div class="pane-head">
 <div>
 <h2 id="running-title">Running markets</h2>
 <p class="shell-kicker">Production lanes · choose a market to inspect its rules</p>
 </div>
+<span class="production-badge">Production</span>
 </div>
 <div class="running-filters" role="group" aria-label="Running filters">
-{filters}
+{parts["filters"]}
 </div>
+<nav class="sports sport-filter" aria-label="Sport filter">{parts["sports"]}</nav>
 {caption}
 <div class="running-list" id="running-list">
-{groups}
+{parts["groups"]}
 </div>
-{empty}
+{parts["empty"]}
 </section>
-<section class="bet-roll shell-pane" aria-labelledby="bets-roll-title">
+<section class="bet-roll shell-pane" id="bets-roll" aria-labelledby="bets-roll-title">
+<div class="bet-roll-head">
 <p class="bet-roll-label" id="bets-roll-title">Bets roll</p>
+<p class="bet-roll-note">{site_chrome.esc(roll_note)}</p>
+</div>
 <div class="bet-roll-track">
-{roll}
+{parts["roll"]}
 </div>
 </section>
 </div>
 <div class="desk-side">
-<section class="shell-pane rules-pane" aria-labelledby="rules-title">
+<section class="shell-pane rules-pane" id="rules" aria-labelledby="rules-title">
 <div class="pane-head">
 <h2 id="rules-title">Rule cards</h2>
 <a class="full-page" href="./production.html">Full page →</a>
@@ -983,7 +1070,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <div class="rules-cards" id="rules-cards" hidden></div>
 <p class="shell-empty" id="rules-empty">Select a contest in Running.</p>
 </section>
-<section class="shell-pane desk-status" aria-labelledby="status-title">
+<section class="shell-pane desk-status" id="status" aria-labelledby="status-title">
 <div class="pane-head">
 <h2 id="status-title">System status</h2>
 <span class="production-badge">Production</span>
@@ -997,34 +1084,17 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 </div>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge Machine</title>
-<meta name="description" content="Production headlines, and the paper bets on those lanes.">
-<link rel="stylesheet" href="./site.css">
-{site_chrome.CSP}
-{site_chrome.REFERRER}
-</head>
-<body class="analyst-desk">
-<a class="skip" href="#content">Skip to content</a>
-<header class="site">
-<div class="topbar">
-<a class="brand" href="./index.html">Edge Machine</a>
-<span class="top-production">Production</span>
-<p class="stamp">{_stamp(now)}</p>
-</div>
-</header>
-<main id="content" class="wrap">
-{body}
-</main>
-<script src="./tables.js"></script>
-<script src="./shell.js"></script>
-</body>
-</html>
-"""
+    return site_chrome.document(
+        "Home",
+        "Production headlines, and the paper bets on those lanes.",
+        "index",
+        (("running", "Running"), ("bets-roll", "Bets roll"), ("rules", "Rule cards"), ("status", "Status")),
+        _stamp(now),
+        body,
+        script_src="./tables.js",
+        scripts=("./shell.js",),
+        body_class="analyst-desk",
+    )
 
 
 def sport_board(active, title, description, stamp_html, body):

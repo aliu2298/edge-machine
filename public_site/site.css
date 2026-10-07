@@ -248,6 +248,13 @@ h2 {
   }
   .tbl.scroll-x thead { top: 0; }
 }
+/* A card with columns past its right edge fades that edge. tables.js drops
+   the fade once the card is scrolled to its end. */
+.tbl.scroll-x:not(.scroll-end) {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), rgba(0, 0, 0, .15));
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), rgba(0, 0, 0, .15));
+}
+.tbl.scroll-x { scrollbar-width: thin; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 /* The whole header row sticks flush under the site header. tables.js sets --hdr-h
    from the measured header, which is shorter or taller per page and when the
@@ -286,6 +293,8 @@ th {
 th.grp { text-align: center; border-bottom: 1px solid var(--line); }
 td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
 td[data-l="Date"],
+td[data-l="Starts"],
+td[data-l="Kickoff"],
 td[data-l="Settled"],
 td[data-l="Last"] { white-space: nowrap; }
 /* Phone cards set every tr to display:block, which beats the hidden attribute.
@@ -318,14 +327,13 @@ details.sport {
 }
 details.sport > summary { cursor: pointer; padding: 14px 16px; font-size: 15px; list-style: none; }
 details.sport > summary::-webkit-details-marker { display: none; }
-details.sport > summary::before { content: "▸ "; color: var(--mut); }
-details.sport[open] > summary::before { content: "▾ "; }
+details.sport > summary::before { content: "›"; }
 details.sec { margin-top: 28px; }
 details.sec > summary { cursor: pointer; list-style: none; }
 details.sec > summary::-webkit-details-marker { display: none; }
 details.sec > summary h2 { display: inline; margin: 0; }
-details.sec > summary::before { content: "▸ "; color: var(--mut); font-size: 14px; }
-details.sec[open] > summary::before { content: "▾ "; }
+details.sec > summary { display: flex; align-items: center; gap: 10px; }
+details.sec > summary::before { content: "›"; }
 details.sec[open] > summary { margin-bottom: 12px; }
 details.grp-fold {
   background: var(--card);
@@ -335,8 +343,7 @@ details.grp-fold {
 }
 details.grp-fold > summary { cursor: pointer; padding: 12px 14px; font-size: 15px; list-style: none; }
 details.grp-fold > summary::-webkit-details-marker { display: none; }
-details.grp-fold > summary::before { content: "▸ "; color: var(--mut); }
-details.grp-fold[open] > summary::before { content: "▾ "; }
+details.grp-fold > summary::before { content: "›"; }
 details.grp-fold .tbl { border: none; border-top: 1px solid var(--line); border-radius: 0 0 var(--r) var(--r); margin: 0; }
 .folds-ctl { display: flex; gap: 8px; margin-bottom: 12px; }
 .folds-ctl button {
@@ -393,8 +400,7 @@ ul.weeks li {
 }
 details.more > summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--acc); padding: 6px 2px; list-style: none; }
 details.more > summary::-webkit-details-marker { display: none; }
-details.more > summary::before { content: "▸ "; }
-details.more[open] > summary::before { content: "▾ "; }
+details.more > summary::before { content: "›"; color: var(--acc); }
 .grp td {
   font-size: 13px;
   font-weight: 700;
@@ -409,6 +415,57 @@ details.more[open] > summary::before { content: "▾ "; }
 details.src > summary { cursor: pointer; list-style: none; }
 details.src > summary::-webkit-details-marker { display: none; }
 details.src .sm { margin-top: 6px; max-width: 420px; line-height: 1.5; }
+/* One chevron for every folding section: a bold glyph in the text colour
+   that turns when the section is open. Replaces the 8px grey triangles. */
+details.sec > summary::before,
+details.sport > summary::before,
+details.grp-fold > summary::before,
+details.more > summary::before,
+details.fold > summary::before,
+details.ref > summary::before,
+details.rule-more > summary::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin-right: 2px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--raised);
+  color: var(--fg);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform .15s ease;
+}
+details.sec[open] > summary::before,
+details.sport[open] > summary::before,
+details.grp-fold[open] > summary::before,
+details.more[open] > summary::before,
+details.fold[open] > summary::before,
+details.ref[open] > summary::before,
+details.rule-more[open] > summary::before { transform: rotate(90deg); }
+details.sport > summary,
+details.grp-fold > summary { display: flex; align-items: center; gap: 10px; }
+/* Trading: what a rule does, under its own row, the full width of the table. */
+details.rule-more > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  font-weight: 600;
+  color: var(--fg);
+}
+details.rule-more > summary::-webkit-details-marker { display: none; }
+details.rule-more > summary::before { content: "›"; }
+details.rule-more > summary:hover { color: var(--acc); }
+details.rule-more[open] > summary { margin-bottom: 6px; }
+details.rule-more .sm { max-width: none; line-height: 1.55; }
+.rule-mini-about { margin: 0; font-size: 12px; color: var(--mut); overflow-wrap: anywhere; }
 details.ref {
   background: var(--card);
   border: 1px solid var(--line);
@@ -416,7 +473,9 @@ details.ref {
   padding: 12px 16px;
   margin-bottom: 10px;
 }
-details.ref > summary { cursor: pointer; font-size: 15px; font-weight: 600; }
+details.ref > summary { cursor: pointer; font-size: 15px; font-weight: 600; list-style: none; display: flex; align-items: center; gap: 10px; }
+details.ref > summary::-webkit-details-marker { display: none; }
+details.ref > summary::before { content: "›"; }
 details.ref[open] > summary { margin-bottom: 10px; }
 .bar {
   display: inline-block;
@@ -441,8 +500,8 @@ details.fold > summary {
   font-size: 15px;
 }
 details.fold > summary::-webkit-details-marker { display: none; }
-details.fold > summary::before { content: "▸"; color: var(--mut); font-size: 13px; width: 12px; }
-details.fold[open] > summary::before { content: "▾"; }
+details.fold > summary { align-items: center; }
+details.fold > summary::before { content: "›"; }
 details.fold.sec > summary { margin-top: 8px; }
 details.fold.sec > summary h2 { margin: 0; display: inline; }
 details.fold details.fold > summary { margin: 12px 0 6px; font-size: 15px; }
@@ -475,8 +534,20 @@ details.fold details.fold > summary { margin: 12px 0 6px; font-size: 15px; }
     text-transform: uppercase;
     letter-spacing: .04em;
     text-align: left;
-    white-space: nowrap;
-    flex: 0 0 auto;
+    /* A lane name can be a column header. It wraps rather than widening the page. */
+    white-space: normal;
+    overflow-wrap: anywhere;
+    flex: 0 1 auto;
+    max-width: 60%;
+  }
+  /* A named text column keeps its label on its own line above the value. */
+  html:not([data-view="table"]) td[data-l="Source"]::before,
+  html:not([data-view="table"]) td[data-l="Competition"]::before,
+  html:not([data-view="table"]) td[data-l="Rule"]::before,
+  html:not([data-view="table"]) td[data-l="Pair"]::before {
+    display: block;
+    max-width: none;
+    margin-bottom: 2px;
   }
   html:not([data-view="table"]) td > .sm { flex: 1 0 100%; text-align: right; }
   html:not([data-view="table"]) td[data-l="#"] { justify-content: flex-start; gap: 8px; text-align: left; }
@@ -602,7 +673,17 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   body:has(.bet-roll) {
     min-height: calc(100vh + 72px);
   }
-  .brand { flex: 0 0 auto; font-size: 16px; line-height: 44px; }
+  /* The brand sits in front of the scrolling pills on an opaque block, so a
+     pill that scrolls under it is masked instead of showing through. */
+  .brand {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    font-size: 16px;
+    line-height: 44px;
+    padding-right: 10px;
+    background: linear-gradient(to right, var(--bg) 0, var(--bg) calc(100% - 10px), transparent);
+  }
   .stamp { display: none; }
   nav.main {
     flex: 1 1 auto;
@@ -678,50 +759,16 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   .tiles { grid-template-columns: 1fr 1fr; }
   .tile b { font-size: 24px; }
   th, td { padding: 10px 12px; vertical-align: top; }
-  /* Under 640px the table stays a table and scrolls sideways inside the card,
-     unless the reader asked for the phone cards. The card rules above are
-     more specific for named columns (display:block, text-align:right,
-     tighter padding). Repeat those selectors here so a short value such as
-     "MLB" stays at the left of its column, and every cell shares one padding
-     and one vertical alignment. */
-  html:not([data-view="cards"]) .tbl {
+  /* Under 640px the phone cards hold unless the reader asked for the table.
+     Then the table scrolls sideways inside its card, with a fade on the
+     edge that still has columns past it (tables.js keeps the fade honest). */
+  html[data-view="table"] .tbl {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  html:not([data-view="cards"]) table { display: table; width: max-content; min-width: 100%; }
-  html:not([data-view="cards"]) thead { display: table-header-group; }
-  html:not([data-view="cards"]) tbody { display: table-row-group; }
-  html:not([data-view="cards"]) tr { display: table-row; width: auto; padding: 0; border-bottom: none; }
-  html:not([data-view="cards"]) td,
-  html:not([data-view="cards"]) th,
-  html:not([data-view="cards"]) td[data-l],
-  html:not([data-view="cards"]) td[data-empty],
-  html:not([data-view="cards"]) td[data-l="Rule or tipster"],
-  html:not([data-view="cards"]) td[data-l="Competition"],
-  html:not([data-view="cards"]) td[data-l="Rule"],
-  html:not([data-view="cards"]) td[data-l="Contest"],
-  html:not([data-view="cards"]) td[data-l="Source"],
-  html:not([data-view="cards"]) td[data-l="Pair"],
-  html:not([data-view="cards"]) td:first-child:not([data-l="#"]),
-  html:not([data-view="cards"]) td[data-l="#"] + td {
-    display: table-cell;
-    width: auto;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--line);
-    vertical-align: top;
-    text-align: left;
-  }
-  html:not([data-view="cards"]) td.num,
-  html:not([data-view="cards"]) th.num {
-    text-align: right;
-    vertical-align: top;
-    white-space: nowrap;
-  }
-  html:not([data-view="cards"]) td::before,
-  html:not([data-view="cards"]) td:first-child:not([data-l="#"])::before,
-  html:not([data-view="cards"]) td[data-l="#"] + td::before { content: none; }
-  html:not([data-view="cards"]) .tbl td:first-child,
-  html:not([data-view="cards"]) .tbl th:first-child {
+  html[data-view="table"] table { width: max-content; min-width: 100%; }
+  html[data-view="table"] .tbl td:first-child,
+  html[data-view="table"] .tbl th:first-child {
     position: sticky;
     left: 0;
     max-width: 11rem;
@@ -729,6 +776,8 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     overflow-wrap: anywhere;
     vertical-align: top;
   }
+  /* Five tiles used to wrap 2-2-1. An odd last tile takes the full row. */
+  .tiles > .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 
 /* Soccer rule cards. Dark only. Colour is the verdict and the ROI. */
@@ -844,20 +893,26 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   .rule-roi { font-size: 26px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  details > summary::before { transition: none; }
   .rule-rotator { transition: none; }
 }
 
 /* SofaScore shell. Same dark tokens. No light theme, no toggle. */
 .bet-roll {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: block;
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
   padding: 10px 24px 4px;
   min-width: 0;
-  overflow: hidden;
+}
+.bet-roll-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 8px;
 }
 .bet-roll-label {
   flex: 0 0 auto;
@@ -868,15 +923,15 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   text-transform: uppercase;
   color: var(--mut);
 }
+.bet-roll-note { margin: 0; font-size: 12px; color: var(--mut); }
+/* Every chip is on the page. The grid wraps; nothing scrolls sideways and
+   nothing is clipped mid-word: a long contest name ends in an ellipsis and
+   carries its full text in a title. */
 .bet-roll-track {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 8px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: thin;
+  min-width: 0;
 }
 .bet-roll-empty {
   margin: 0;
@@ -885,16 +940,22 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 }
 .bet-chip {
   /* The sport name is visually hidden and absolute. A positioned chip
-     keeps that text inside the scroller instead of widening the page. */
+     keeps that text inside its cell instead of widening the page. Two
+     lines: the contest, then the market, price and result. */
   position: relative;
-  flex: 0 0 auto;
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "letter contest status" "letter line status";
   align-items: center;
-  gap: 8px;
+  column-gap: 8px;
+  row-gap: 1px;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
   margin: 0;
-  padding: 0 12px;
-  min-height: 36px;
+  padding: 6px 12px;
+  min-height: 48px;
+  text-align: left;
   font: inherit;
   font-size: 12px;
   font-weight: 600;
@@ -907,20 +968,36 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   white-space: nowrap;
 }
 .bet-chip-letter {
-  flex: 0 0 auto;
+  grid-area: letter;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .04em;
   color: var(--mut);
+  cursor: help;
 }
 .bet-chip-contest {
+  grid-area: contest;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 650;
 }
 .bet-chip-line {
+  grid-area: line;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--mut);
   font-weight: 600;
 }
-.bet-chip-status { font-weight: 700; }
+.bet-chip-status { grid-area: status; font-weight: 700; }
 .bet-chip[data-status="Open"] {
   border-color: rgba(245, 194, 107, .75);
 }
@@ -928,7 +1005,7 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 .bet-chip[data-status="W"] .bet-chip-status { color: var(--pos); }
 .bet-chip[data-status="L"] .bet-chip-status { color: var(--neg); }
 .bet-chip[data-status="Void"] .bet-chip-status,
-.bet-chip[data-status="price result"] .bet-chip-status { color: var(--mut); }
+.bet-chip[data-status="price"] .bet-chip-status { color: var(--mut); }
 .bet-chip[data-status="Awaiting result"] .bet-chip-status {
   color: var(--warn);
   font-style: italic;
@@ -940,15 +1017,6 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 /* Other sports stay in the roll. Dimmed, still readable, still a button. */
 .bet-chip[data-dimmed="true"] {
   opacity: 0.62;
-}
-.sport-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 24px 12px;
 }
 nav.sports {
   display: flex;
@@ -1064,7 +1132,7 @@ nav.sports button[aria-pressed="true"] {
 .running-status[data-status="W"] { color: var(--pos); }
 .running-status[data-status="L"] { color: var(--neg); }
 .running-status[data-status="Void"],
-.running-status[data-status="price result"] { color: var(--mut); }
+.running-status[data-status="price"] { color: var(--mut); }
 .running-status[data-status="awaiting"] {
   color: var(--warn);
   font-style: italic;
@@ -1194,27 +1262,10 @@ nav.sports button[aria-pressed="true"] {
 .rule-mini-record { font-variant-numeric: tabular-nums; }
 @media (max-width: 800px) {
   .shell-columns { grid-template-columns: minmax(0, 1fr); }
-  .bet-roll, .sport-row { padding-left: 16px; padding-right: 16px; }
+  .bet-roll { padding-left: 16px; padding-right: 16px; }
 }
 
 /* NBA matchup board. Dark shell only. Bars use data-pct, not an inline width. */
-nav.sports a {
-  display: inline-flex;
-  align-items: center;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--fg);
-  background: var(--raised);
-  border: 1px solid var(--fg);
-  border-radius: 999px;
-  min-height: 36px;
-  padding: 0 12px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-nav.sports a:hover { color: var(--fg); text-decoration: none; }
-nav.sports a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--acc); }
 /* The spoken label sits in the tag. A relative tag keeps that text inside
    the table scroller, so a phone page does not grow sideways. */
 .tag { position: relative; }
@@ -1495,14 +1546,11 @@ nav.sports a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--acc); }
 .tempo-mark[data-pct="100"] { grid-column: 100; }
 
 
-/* Analyst Desk — approved Production landing layout.
-   Desktop: quick-access rail, dense running feed, persistent rules/status rail.
-   Mobile: sport rail stays near the top and workspace nav becomes a bottom bar. */
-body.analyst-desk .topbar {
-  max-width: 1480px;
-}
+/* Analyst Desk — the site root. Same header as every page; the Running
+   feed in the middle and the rules/status rail on the right. The sport
+   pills live inside the Running pane and filter it in place. */
 body.analyst-desk .wrap {
-  max-width: 1480px;
+  max-width: 1280px;
   padding-top: 18px;
 }
 .top-production,
@@ -1521,63 +1569,7 @@ body.analyst-desk .wrap {
   letter-spacing: .02em;
   white-space: nowrap;
 }
-.desk-layout {
-  display: grid;
-  grid-template-columns: 184px minmax(0, 1fr);
-  gap: 14px;
-  align-items: start;
-  min-width: 0;
-}
-.desk-nav {
-  position: sticky;
-  top: 74px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 0;
-}
-.desk-nav-block {
-  min-width: 0;
-  padding: 10px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-}
-.desk-nav-label {
-  margin: 0 0 8px;
-  color: var(--mut);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-body.analyst-desk .desk-nav nav.main,
-body.analyst-desk .desk-nav nav.sports {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  gap: 4px;
-  overflow: visible;
-}
-body.analyst-desk .desk-nav nav.main a,
-body.analyst-desk .desk-nav nav.sports button {
-  width: 100%;
-  min-height: 38px;
-  justify-content: flex-start;
-  border-radius: 9px;
-  padding: 0 10px;
-}
-body.analyst-desk .desk-nav nav.main a[aria-current="page"],
-body.analyst-desk .desk-nav nav.sports button[aria-pressed="true"] {
-  background: var(--raised);
-  box-shadow: inset 3px 0 0 var(--acc);
-}
-body.analyst-desk .desk-nav nav.sports button {
-  border-color: transparent;
-}
-body.analyst-desk .desk-nav nav.sports button[aria-pressed="true"] {
-  border-color: var(--line);
-}
+.desk-layout { display: block; min-width: 0; }
 body.analyst-desk .shell-columns {
   grid-template-columns: minmax(0, 1fr) minmax(286px, 340px);
   gap: 14px;
@@ -1594,7 +1586,7 @@ body.analyst-desk .shell-pane {
   padding: 14px;
 }
 body.analyst-desk .running-pane {
-  min-height: 520px;
+  min-height: 0;
 }
 body.analyst-desk .running-group h3 {
   position: sticky;
@@ -1619,6 +1611,13 @@ body.analyst-desk .running-filters {
   background: rgba(17, 19, 24, .94);
   backdrop-filter: blur(12px);
   border-radius: 10px;
+}
+/* The sport filter: pills under Live / Settled / Upcoming, in their own row. */
+nav.sport-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
 }
 body.analyst-desk .rules-pane,
 body.analyst-desk .desk-status {
@@ -1656,138 +1655,11 @@ body.analyst-desk .bet-roll {
   max-width: none;
   margin: 0;
   padding: 12px 14px;
-  align-items: flex-start;
-}
-body.analyst-desk .bet-roll-label {
-  padding-top: 10px;
-}
-body.analyst-desk footer {
-  margin-left: 198px;
-}
-
-@media (max-width: 1040px) {
-  .desk-layout {
-    grid-template-columns: 150px minmax(0, 1fr);
-  }
-  body.analyst-desk .shell-columns {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
-  body.analyst-desk footer {
-    margin-left: 164px;
-  }
 }
 
 @media (max-width: 800px) {
-  body.analyst-desk {
-    padding-bottom: 74px;
-  }
   body.analyst-desk .wrap {
-    padding: 12px 12px 92px;
-  }
-  body.analyst-desk header.site {
-    display: block;
-    position: sticky;
-    top: 0;
-    z-index: 30;
-  }
-  body.analyst-desk .topbar {
-    position: static;
-    min-height: 50px;
-    padding: 4px 12px;
-    border-bottom: 1px solid var(--line);
-  }
-  body.analyst-desk .brand {
-    line-height: 40px;
-  }
-  body.analyst-desk .top-production {
-    margin-left: 2px;
-  }
-  .desk-layout {
-    display: block;
-  }
-  .desk-nav {
-    position: sticky;
-    top: 51px;
-    z-index: 19;
-    display: block;
-    margin: 0 0 10px;
-    background: rgba(11, 12, 15, .96);
-    backdrop-filter: blur(14px);
-  }
-  .desk-nav-block {
-    padding: 0;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-  }
-  .desk-nav-block:first-child .desk-nav-label {
-    display: none;
-  }
-  .desk-nav-block + .desk-nav-block {
-    padding: 7px 0 8px;
-    border-bottom: 1px solid var(--line);
-  }
-  .desk-nav-label {
-    display: none;
-  }
-  body.analyst-desk .desk-nav nav.sports {
-    flex-direction: row;
-    gap: 6px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    padding: 0 2px;
-  }
-  body.analyst-desk .desk-nav nav.sports::-webkit-scrollbar {
-    display: none;
-  }
-  body.analyst-desk .desk-nav nav.sports button {
-    width: auto;
-    min-width: max-content;
-    min-height: 38px;
-    justify-content: center;
-    padding: 0 12px;
-    border-radius: 999px;
-    background: var(--card);
-    border-color: var(--line);
-    box-shadow: none;
-  }
-  body.analyst-desk .desk-nav nav.sports button[aria-pressed="true"] {
-    background: var(--raised);
-    border-color: var(--fg);
-    box-shadow: inset 0 -3px 0 var(--acc);
-  }
-  body.analyst-desk .desk-nav nav.main {
-    position: fixed;
-    left: 8px;
-    right: 8px;
-    bottom: max(8px, env(safe-area-inset-bottom));
-    z-index: 50;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 4px;
-    padding: 6px;
-    background: rgba(17, 19, 24, .97);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, .35);
-    overflow: visible;
-  }
-  body.analyst-desk .desk-nav nav.main::after {
-    content: none;
-  }
-  body.analyst-desk .desk-nav nav.main a {
-    width: auto;
-    min-width: 0;
-    min-height: 46px;
-    height: auto;
-    justify-content: center;
-    padding: 4px 3px;
-    border-radius: 10px;
-    font-size: 11px;
-    text-align: center;
-    white-space: normal;
-    line-height: 1.15;
+    padding: 12px 12px 60px;
   }
   body.analyst-desk .shell-columns {
     grid-template-columns: minmax(0, 1fr);
@@ -1797,11 +1669,8 @@ body.analyst-desk footer {
   .desk-side {
     gap: 10px;
   }
-  body.analyst-desk .running-pane {
-    min-height: 0;
-  }
   body.analyst-desk .running-filters {
-    top: 99px;
+    top: 62px;
     overflow-x: auto;
     flex-wrap: nowrap;
     scrollbar-width: none;
@@ -1810,15 +1679,20 @@ body.analyst-desk footer {
     display: none;
   }
   body.analyst-desk .running-group h3 {
-    top: 141px;
+    top: 104px;
   }
   body.analyst-desk .rules-pane,
   body.analyst-desk .desk-status {
     position: static;
     max-height: none;
   }
-  body.analyst-desk .desk-side {
+  /* One column: Running, then the rule cards and status, then every chip. */
+  body.analyst-desk .desk-side,
+  body.analyst-desk .desk-center {
     display: contents;
+  }
+  body.analyst-desk .running-pane {
+    order: 1;
   }
   body.analyst-desk .rules-pane {
     order: 3;
@@ -1827,27 +1701,12 @@ body.analyst-desk footer {
     order: 4;
   }
   body.analyst-desk .bet-roll {
-    overflow: hidden;
-  }
-  body.analyst-desk .bet-roll-label {
-    display: none;
-  }
-  body.analyst-desk .bet-roll-track {
-    width: 100%;
-  }
-  body.analyst-desk footer {
-    margin-left: 0;
+    order: 5;
   }
 }
 
 @media (max-width: 480px) {
-  body.analyst-desk .topbar {
-    gap: 8px;
-  }
-  body.analyst-desk .top-production {
-    font-size: 11px;
-    padding: 0 8px;
-  }
+  .tiles { grid-template-columns: 1fr; }
   body.analyst-desk .shell-pane {
     padding: 12px;
   }
@@ -2875,19 +2734,7 @@ details.nba-game > .matchup-grid {
 .tennis-match > *, .tennis-combo-card > * { min-width: 0; }
 .tennis-rule-chip a { color: inherit; }
 
-/* Compact shared sport shell and disclosure rhythm. */
-.sports-page .topbar { gap: 12px; min-height: 56px; }
-.sports-page .brand { min-height: 44px; display: flex; align-items: center; }
-.sports-page .stamp { display: block; font-size: 11px; }
-.sports-page .sport-row { max-width: 1120px; margin: auto; padding: 0 24px 8px; }
-.sports-page nav.sports { display: flex; gap: 4px; flex-wrap: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: thin; }
-.sports-page nav.sports a { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; font-size: 13px; color: var(--mut); border: 1px solid transparent; border-radius: 10px; text-decoration: none; }
-.sports-page nav.sports a[aria-current="page"] { color: var(--fg); background: #183249; border-color: #365f81; font-weight: 750; }
-.sports-page .page-menu { position: relative; flex: 0 0 auto; }
-.sports-page .page-menu > summary { cursor: pointer; display: flex; gap: 10px; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; list-style: none; }
-.sports-page .page-menu > summary::-webkit-details-marker { display: none; }
-.sports-page .page-menu nav.main { position: absolute; right: 0; top: calc(100% + 8px); display: flex; flex-direction: column; flex-wrap: nowrap; overflow: visible; width: 220px; max-width: calc(100vw - 32px); padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: 0 12px 36px #0008; }
-.sports-page .page-menu nav.main a { display: flex; align-items: center; min-height: 44px; border-radius: 8px; }
+/* Sport pages share the site header. What follows is their content rhythm. */
 .sports-page .wrap { padding-top: 24px; }
 .sports-page section { scroll-margin-top: 16px; }
 .sports-page .lede { margin: 8px 0 16px; max-width: 64ch; font-size: 14px; }
@@ -2920,12 +2767,7 @@ details.nba-game > .matchup-grid {
 .crypto-health b { font-size: 13px; overflow-wrap: anywhere; }
 .sports-page .nba-game-summary::after { visibility: visible; }
 @media (max-width: 640px) {
-  .sports-page .topbar { padding: 0 16px; gap: 8px; flex-wrap: wrap; }
-  .sports-page .stamp { order: 3; width: 100%; margin: -6px 0 4px; white-space: normal; }
-  .sports-page .page-menu { margin-left: auto; }
   .sports-page .soccer-prod-strip { grid-template-columns: 1fr; }
-  .sports-page .sport-row { padding: 0 16px 6px; }
-  .sports-page nav.sports a { padding: 8px 14px; }
   .sports-page .wrap { padding: 20px 16px; }
   .sports-page section { scroll-margin-top: 0; }
   .sports-page .pace-leaders { grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }

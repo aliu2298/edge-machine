@@ -193,3 +193,38 @@ def tstat(value):
         return "—"
     body = _magnitude(value, ".2f")
     return f"t {_sign(value, body, plus=True)}{body}"
+
+
+def day(value):
+    """Oct 9. The Chicago calendar day, with no clock."""
+    local = chicago(value)
+    return f"{_MONTHS[local.month - 1]} {local.day}"
+
+
+def when_relative(value, now):
+    """Today, 8:50 AM CT / Yesterday, 8:50 AM CT / Tomorrow, 8:50 AM CT / Oct 9, 8:50 AM CT.
+
+    Only the two neighbouring days and today get a word; every other day is
+    the same `when` form the rest of the site prints. `now` sets today.
+    """
+    local = chicago(value)
+    today = chicago(now).date()
+    delta = (local.date() - today).days
+    if delta == 0:
+        word = "Today"
+    elif delta == -1:
+        word = "Yesterday"
+    elif delta == 1:
+        word = "Tomorrow"
+    else:
+        return when(value)
+    return f"{word}, {clock(value)}"
+
+
+def contest(name):
+    """One spelling for the two sides of a contest: 'A vs B', never 'A v B'.
+
+    Presentation only. Keys and joins still use the stored text.
+    """
+    text = str(name or "")
+    return text.replace(" v ", " vs ").replace(" vs. ", " vs ")

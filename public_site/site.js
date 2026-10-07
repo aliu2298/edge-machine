@@ -7,10 +7,10 @@
   var tableBtn = box.querySelector('[data-view="table"]');
   if (!cardsBtn || !tableBtn) return;
   var phoneCards = function () {
-    // 641–760px keeps the card layout. Under 640px the table scrolls sideways
-    // until the reader asks for cards.
-    return window.matchMedia("(max-width:760px)").matches
-      && !window.matchMedia("(max-width:640px)").matches;
+    // Under 760px the card layout is the default. A phone-width table was
+    // 1131px wide in a 390px viewport with no scroll affordance; the reader
+    // can still ask for the table with the toggle, and it then scrolls.
+    return window.matchMedia("(max-width:760px)").matches;
   };
   var showing = function () {
     var v = root.getAttribute("data-view");
@@ -32,7 +32,6 @@
   } catch (e) {}
   paint();
   window.matchMedia("(max-width:760px)").addEventListener("change", paint);
-  window.matchMedia("(max-width:640px)").addEventListener("change", paint);
   cardsBtn.addEventListener("click", function () { choose("cards"); });
   tableBtn.addEventListener("click", function () { choose("table"); });
 })();
