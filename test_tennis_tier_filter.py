@@ -976,8 +976,10 @@ def main():
         if judged["status"] == "unproven":
             ok("NO READ" in row, f"{name}'s stamp is still NO READ")
     h3_row = _stamp_row(stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
-    ok("20 bets" not in h3_row and "18 won" not in h3_row and "+14.3%" not in h3_row,
-       "the 3-hour stamp does not carry the pre-clock kept-tour record")
+    h3_judged = T.assess(SB.stamp_ledger(d, "tennis_fav_band_3h"),
+                         "tennis_fav_band_3h", since=since)
+    ok(f"{h3_judged['won']} won v {h3_judged['expected']:.1f} priced" in h3_row,
+       "the 3-hour stamp's wins and priced reference match the post-clock record")
     combo2 = _stamp_row(stamp, S.SOURCES["pm_combo2"]["label"])
     ok("+58.1%" not in combo2 and "3 bets over 2 days" not in combo2,
        "pm_combo2's stamp does not carry the pre-clock +58.1% on 3")
