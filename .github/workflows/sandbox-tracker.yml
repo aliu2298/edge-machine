@@ -215,6 +215,13 @@ jobs:
             if [ -f public_site/crypto.html ]; then
               git add public_site/crypto.html
             fi
+            # The NBA board is rebuilt on the tracker clock as well as by its own job.
+            if [ -f public_site/nba.html ]; then
+              git add public_site/nba.html
+            fi
+            if [ -f public_site/404.html ]; then
+              git add public_site/404.html
+            fi
             # Weekly archive pages are rebuilt with the Sandbox. Skip the add
             # when the directory is absent so an empty diff still exits 0.
             if [ -d public_site/archive ]; then
