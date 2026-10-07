@@ -420,8 +420,8 @@ ok('class="rule-card"' in soc and _shown("Soccer Only v Stay") in soc,
    "soccer still renders its own rule cards")
 ok("PreResetOpenLabel" not in soc and "TourLookingOpen" not in soc,
    "soccer cards do not pick up cricket lanes")
-ok('class="rule-card"' in ten and _shown("Tennis Only v Stay") in ten,
-   "tennis still renders its own rule cards")
+ok('class="tn-rules"' in ten and _shown("Tennis Only v Stay") in ten,
+   "tennis still renders its own rules table and picks")
 ok("PreResetOpenLabel" not in ten and "oddspedia" not in ten.lower(),
    "tennis cards do not pick up cricket lanes")
 
@@ -443,7 +443,7 @@ ok("How each rule is defined" in published,
 soc_file = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
 ten_file = open(os.path.join(ROOT, "public_site", "tennis.html"), encoding="utf-8").read()
 ok('class="rule-card"' in soc_file, "published soccer page still has its cards")
-ok('class="rule-card"' in ten_file, "published tennis page still has its cards")
+ok('class="tn-rules"' in ten_file, "published tennis page has its rules table")
 ok("By competition" in soc_file, "published soccer page still has its by-competition panel")
 
 if FAILS:

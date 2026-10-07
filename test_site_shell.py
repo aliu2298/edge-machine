@@ -454,8 +454,8 @@ def _check_sport_tab(family, html, d, st):
             ok(soccer_cards.verdict_html(r) in html and soccer_cards.roi_html(r) in html,
                f"soccer card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
     elif family == "Tennis":
-        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
-           "tennis lanes are flippable cards")
+        ok('class="tn-rules"' in html and 'class="tn-picks"' in html,
+           "tennis lanes are one rules table beside the picks list")
         import tennis_cards
         for r in rows:
             ok(tennis_cards.verdict_html(r) in html and tennis_cards.roi_html(r) in html,

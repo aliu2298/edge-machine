@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Tennis rule cards. Presentation only, and only the Tennis page asks for them.
+"""The Tennis page body. Presentation only, and only the Tennis page asks for it.
 
-Each Sandbox lane row becomes a card. The front is that row's verdict and its
-ROI after fees, the same strings the table cell already uses. The back is the
-open bets on that rule, soonest first, four of them. A rule is active when it
-has an open bet, or when the tracker has already stored a fixture for it whose
-kickoff is after the page clock and at most 48 hours ahead, even with no stake
-on that game yet. A kickoff inside the next 24 hours counts; one past 48 hours
-does not. Inactive rules sit below. Nothing here grades, settles, or chooses a bet.
+Four stat tiles, one flat list of picks grouped by day, one rules table, and
+the venue note folded away. The record, verdict and ROI on every row are the
+Sandbox row's own figures, the same strings the Sandbox table prints, so this
+page cannot disagree with the Sandbox about the same pair. Nothing here grades,
+settles, or chooses a bet.
 """
 import datetime
+import os
+import re
 from datetime import timedelta, timezone
 
 import fmt
@@ -18,17 +18,27 @@ import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 
-# Upcoming fixture cutoff: after the page clock and at most 48 hours ahead.
-# That is the outer edge of the brief's "24–48 hours". A kickoff inside the
-# next 24 hours counts. A kickoff past 48 hours does not. An open bet is
-# active either way.
-HORIZON = timedelta(hours=48)
-# The back lists this many open games. The rest of the open count stays a number.
-OPEN_LIMIT = 4
-_FAR = datetime.datetime.max.replace(tzinfo=timezone.utc)
 FAMILY = "Tennis"
+ROOT = os.path.dirname(os.path.abspath(__file__))
+# The tracker's own schedule. The empty state reads the next firing from it.
+TRACKER_WORKFLOW = os.path.join(ROOT, ".github", "workflows", "sandbox-tracker.yml")
+# Settled picks listed under an expanded rule, newest first.
+RECENT_LIMIT = 5
+_FAR = datetime.datetime.max.replace(tzinfo=timezone.utc)
+
+COMBO_SPORTS = ("tennis_combo", "tennis_pmcombo")
+# Where a rule's contracts trade. A basket lane is one venue by construction;
+# the single-match rule is read from the venues of its own bets.
+SPORT_VENUE = {"tennis_combo": "Kalshi", "tennis_pmcombo": "Polymarket US"}
+VENUE_NAMES = {"kalshi": "Kalshi", "kalshi_binary": "Kalshi", "polymarket_us": "Polymarket US"}
+# The one registered label too long for a table cell. Every other rule name is
+# its registered label with the family word and the parenthesis dropped.
+SHORT_NAMES = {"tennis_fav_band_3h": "Favourite band · within 3h of the start"}
+
+_CRON = re.compile(r'cron:\s*"(\d{1,2})\s+(\S+)\s+\*\s+\*\s+\*"')
 
 
+# ------------------------------------------------------------------ Sandbox strings
 def roi_html(row):
     """The ROI text a Sandbox row prints for this pair. Grey under the read floor."""
     a = row["a"]
@@ -45,19 +55,45 @@ def verdict_html(row):
     return f'<span class="sig {chip}">{B.esc(label)}</span>'
 
 
-def open_quotes(d, name, sport):
-    """Open bets for one rule, soonest first. The same rows the open count uses.
+def record_text(a):
+    """'23–8' from a record, or an em dash with nothing settled."""
+    if not a.get("n"):
+        return "—"
+    return f'{a["won"]}–{max(0, a["n"] - a["won"])}'
 
-    `pair_status` counts a bet row that is open, not removed by the climate
-    rule, and not a refused tennis tour. This is that list, ordered the way
-    the Sandbox's running table orders a slate.
+
+# ------------------------------------------------------------------ the rows a rule owns
+def _on_clock(q, row):
+    """False for a bet logged before this lane's reset clock. Those stay on file only.
+
+    The clock is the stage row's, read the way the Sandbox's If-faded cell reads
+    it, so the picks listed here are the bets the row's record counts.
     """
-    live = [q for q in T.bet_rows(d)
-            if q.get("source") == name and q.get("sport") == sport
-            and q.get("status") == "open" and q.get("bet")
-            and not T.climate_excluded(q) and not S.tennis_refused_row(q)]
-    live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
+    clock = S.tour_clock_since(since=row.get("since"))
+    if clock is None:
+        return True
+    return str(q.get("logged") or "") >= clock
+
+
+def _kept(q, row):
+    return (q.get("source") == row["name"] and q.get("sport") == row["sport"]
+            and q.get("bet") and not T.climate_excluded(q)
+            and not S.tennis_refused_row(q) and _on_clock(q, row))
+
+
+def open_quotes(d, name, sport, row=None):
+    """Open bets for one rule, soonest first. The same rows the open count uses."""
+    row = row or dict(name=name, sport=sport)
+    live = [q for q in T.bet_rows(d) if q.get("status") == "open" and _kept(q, row)]
+    live.sort(key=lambda q: (q.get("start") or "", str(q.get("id") or "")))
     return live
+
+
+def settled_quotes(d, row):
+    """Settled bets for one rule, newest first. The rows its record counts."""
+    done = [q for q in T.bet_rows(d) if q.get("status") in ("won", "lost") and _kept(q, row)]
+    done.sort(key=lambda q: (q.get("start") or "", str(q.get("id") or "")), reverse=True)
+    return done
 
 
 def _kickoff(q):
@@ -70,335 +106,360 @@ def _kickoff(q):
         return None
 
 
-def _kick_label(q):
-    raw = q.get("start")
-    if raw:
-        try:
-            return fmt.when(raw)
-        except (TypeError, ValueError, OverflowError, OSError):
-            pass
-    day = q.get("date")
-    return day.strip() if isinstance(day, str) else ""
-
-
-def _soonest(quotes):
-    found = [k for k in (_kickoff(q) for q in quotes) if k is not None]
-    return min(found) if found else None
-
-
-def upcoming_quotes(d, name, sport, now):
-    """Fixtures this rule has already been shown, with no open bet on them.
-
-    The tracker stores a quote when it sees the game. `bet` false and status
-    open is that row with no stake yet. The kickoff is the quote's own start.
-    Kept when it is still ahead of `now` and at most `HORIZON` (48 hours) out.
-    Open bets are not repeated here; `open_quotes` already lists those.
-    """
-    if now is None:
-        return []
+def _as_utc(now):
     if now.tzinfo is None:
-        now = now.replace(tzinfo=timezone.utc)
-    end = now + HORIZON
-    live = []
-    for q in d.get("quotes") or []:
-        if q.get("source") != name or q.get("sport") != sport:
-            continue
-        if q.get("bet") or q.get("status") != "open":
-            continue
-        if T.climate_excluded(q) or S.tennis_refused_row(q):
-            continue
-        ko = _kickoff(q)
-        if ko is not None and now < ko <= end:
-            live.append(q)
-    live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
-    return live
+        return now.replace(tzinfo=timezone.utc)
+    return now.astimezone(timezone.utc)
 
 
-def _market_name(base, fam=FAMILY):
-    """The market-fold heading. Same words `market_folds` prints."""
-    full = S.SPORTS.get(base, base)
-    return "Match winner" if full == fam else full.split(" · ")[-1]
+# ------------------------------------------------------------------ words
+def rule_name(row):
+    """A rule's short name: 'Favourite band · within 3h of the start', '2-leg combo'."""
+    short = SHORT_NAMES.get(row["name"])
+    if short:
+        return short
+    label = row["meta"]["label"].split(" (")[0].strip()
+    if label.startswith(FAMILY + " "):
+        label = label[len(FAMILY) + 1:]
+    return label
+
+
+def is_combo(row):
+    return B._base_sport(row["sport"]) in COMBO_SPORTS
+
+
+def venue_name(d, row):
+    """Kalshi, Polymarket US, or both, for the rule's own contracts."""
+    fixed = SPORT_VENUE.get(B._base_sport(row["sport"]))
+    if fixed:
+        return fixed
+    seen = {VENUE_NAMES.get(q.get("venue")) for q in T.bet_rows(d) if _kept(q, row)}
+    names = sorted(n for n in seen if n)
+    return " · ".join(names) if names else "—"
 
 
 def _fixture_label(q):
     return S.position_label(q).split(":", 1)[0].strip()
 
 
-def _fixture_key(q):
-    label, kickoff = _fixture_label(q), _kickoff(q)
-    if label and kickoff is not None:
-        return ("fixture", " ".join(label.casefold().split()),
-                _tour_label(q).casefold(), kickoff)
-    return ("market", str(q.get("market_id") or q.get("id") or ""),
-            str(q.get("start") or ""))
+def pick_label(q):
+    """(pick, legs line). The human position: a player, or 'N-leg combo: A + B'.
+
+    A two-leg basket names both legs in the pick. A bigger basket keeps the
+    pick short and lists its legs on the muted line under it.
+    """
+    legs = q.get("legs") or []
+    if legs:
+        names = [str(leg.get("name") or "").strip() for leg in legs if leg.get("name")]
+        head = f"{len(legs)}-leg combo"
+        if len(legs) <= 2:
+            return f"{head}: {' + '.join(names)}", ""
+        return head, " · ".join(names)
+    return str(B._side(q) or ""), ""
 
 
-def _tour_label(q):
-    tier = str(q.get("tier") or "").strip()
-    league = str(q.get("league") or "").strip()
-    raw = tier or league
-    if not raw:
-        return ""
-    low = raw.lower()
-    if "wta" in low and "double" in low:
-        return "WTA Doubles"
-    if "atp" in low:
-        return "ATP"
-    if "utr" in low:
-        return "UTR"
-    if "wta" in low:
-        return "WTA"
-    return raw
+def match_label(q, row):
+    """The contest, or the basket's venue when the row is a combo contract."""
+    if q.get("legs") or is_combo(row):
+        venue = SPORT_VENUE.get(B._base_sport(row["sport"]), "")
+        return f"Combo · {venue}" if venue else "Combo"
+    return _fixture_label(q)
 
 
-def _match_rows(d, rows, now):
-    """Single-match tennis only; combo products are rendered separately."""
-    singles = [r for r in rows if B._base_sport(r["sport"]) == "tennis"]
-    by_key = {}
-    for row in singles:
-        for q in open_quotes(d, row["name"], row["sport"]) + upcoming_quotes(d, row["name"], row["sport"], now):
-            key = _fixture_key(q)
-            rec = by_key.setdefault(key, {"q": q, "rules": []})
-            rec["rules"].append((row, q))
-    found = list(by_key.values())
-    found.sort(key=lambda rec: (_kickoff(rec["q"]) or _FAR,
-                                str(rec["q"].get("label") or rec["q"].get("market_id") or "")))
-    return found
+def state_of(q, now):
+    """(word, class). W / L once settled; in play from the start; upcoming before it."""
+    status = q.get("status")
+    if status == "won":
+        return "W", "is-won"
+    if status == "lost":
+        return "L", "is-lost"
+    ko = _kickoff(q)
+    if ko is not None and ko <= now:
+        return "in play", "is-live"
+    return "upcoming", "is-next"
 
 
-def _match_rule(row, q):
-    label = row["meta"]["label"].split(" (")[0]
-    side = B._side(q) if q.get("bet") else ""
-    scope = B._scope(row["sport"])
-    bits = [label, _market_name(B._base_sport(row["sport"]))]
-    if scope:
-        bits.append(S.SCOPE_LABEL[scope])
-    if side:
-        bits.append(str(side))
-    text = " · ".join(bits)
-    stage = '<span class="tennis-prod">Production</span>' if row.get("prod") else ""
-    return f'<span class="tennis-rule-chip">{B.safe_href(S.market_url(q), text)}{stage}</span>'
+def _day_label(day, today):
+    """'Today · Oct 7', 'Tomorrow · Oct 8', or 'Oct 9'."""
+    text = f"{fmt._MONTHS[day.month - 1]} {day.day}"
+    delta = (day - today).days
+    if delta == 0:
+        return f"Today · {text}"
+    if delta == 1:
+        return f"Tomorrow · {text}"
+    return text
 
 
-def _match_card(rec):
-    q = rec["q"]
-    label = _fixture_label(q)
-    when = _kick_label(q)
-    tour = _tour_label(q)
-    link = B.safe_href(S.market_url(q), label)
-    chips = "".join(_match_rule(row, quote) for row, quote in rec["rules"])
-    has_bet = any(quote.get("bet") for _row, quote in rec["rules"])
-    state = "Pick in" if has_bet else "Watching"
-    state_cls = "is-live" if has_bet else "is-watch"
-    tour_html = f'<span class="tennis-tour">{B.esc(tour)}</span>' if tour else ""
-    return (
-        f'<article class="tennis-match">'
-        f'<div class="tennis-match-time">{B.esc(when)}{tour_html}</div>'
-        f'<div class="tennis-match-main"><div class="tennis-match-title">{link}</div>'
-        f'<div class="tennis-match-rules">{chips}</div></div>'
-        f'<span class="tennis-match-state {state_cls}">{state}</span>'
-        f'</article>'
-    )
-
-
-def _combo_summary(row, quotes):
-    a = row["a"]
-    name = row["meta"]["label"].split(" (")[0]
-    rec = f'{a["won"]}–{max(0, a["n"] - a["won"])}' if a.get("n") else "—"
-    open_n = len(quotes)
-    return (
-        f'<article class="tennis-combo-card">'
-        f'<div><span class="tennis-combo-kicker">{B.esc(_market_name(B._base_sport(row["sport"])))}</span>'
-        f'<h4>{B.esc(name)}</h4></div>'
-        f'<div class="tennis-combo-stat"><b>{B.esc(rec)}</b><span>record</span></div>'
-        f'<div class="tennis-combo-stat"><b>{roi_html(row)}</b><span>ROI</span></div>'
-        f'<div class="tennis-combo-stat"><b>{open_n}</b><span>open</span></div>'
-        f'</article>'
-    )
-
-
-def match_center(d, rows, now):
-    matches = _match_rows(d, rows, now)
-    now_ct = fmt.chicago(now)
-    today_key = now_ct.date()
-    now = now_ct.astimezone(timezone.utc)
-    today, upcoming, past, other = [], [], [], []
-    for rec in matches:
-        ko = _kickoff(rec["q"])
-        if ko is None or ko > now + HORIZON:
-            other.append(rec)
-        elif ko <= now:
-            past.append(rec)
-        elif fmt.chicago(ko).date() == today_key:
-            today.append(rec)
+def _cron_hours(field):
+    out = set()
+    for part in field.split(","):
+        step = 1
+        if "/" in part:
+            part, step = part.split("/", 1)
+            step = int(step)
+        if part == "*":
+            lo, hi = 0, 23
+        elif "-" in part:
+            lo, hi = (int(x) for x in part.split("-", 1))
         else:
-            upcoming.append(rec)
-
-    combo_rows = [r for r in rows if B._base_sport(r["sport"]) in ("tennis_combo", "tennis_pmcombo")]
-    combo_rows = [r for _rank, _prov, r in B.rank_rows(combo_rows)]
-    live_combos, inactive_combos = [], []
-    for r in combo_rows:
-        quotes = open_quotes(d, r["name"], r["sport"])
-        (live_combos if quotes else inactive_combos).append(_combo_summary(r, quotes))
-    combo_html = '<div class="tennis-combo-grid">' + "".join(live_combos) + '</div>' if live_combos else ""
-    if inactive_combos:
-        combo_html += UI.disclosure("Inactive combo rules",
-                                    '<div class="tennis-combo-grid">' + "".join(inactive_combos) + '</div>',
-                                    len(inactive_combos), css="historical")
-
-    today_html = "".join(_match_card(x) for x in today) or '<div class="note">No tracked tennis match today.</div>'
-    upcoming_html = "".join(_match_card(x) for x in upcoming[:12]) or '<div class="note">No tracked tennis match in the next 48 hours.</div>'
-    more = (f'<p class="sm mut">{len(upcoming) - 12} more upcoming matches not shown.</p>'
-            if len(upcoming) > 12 else "")
-    past_html = '<div class="tennis-match-list">' + "".join(_match_card(x) for x in past[:3]) + '</div>'
-    if len(past) > 3:
-        past_html += UI.disclosure("More open picks", '<div class="tennis-match-list">' +
-                                   "".join(_match_card(x) for x in past[3:]) + '</div>', len(past) - 3)
-    return f'''<div class="tennis-desk">
-<div class="tennis-desk-head">
-<div><span class="tennis-kicker">Match center</span><h2>Today & upcoming</h2></div>
-<nav class="tennis-local-nav" aria-label="Tennis sections">
-<a href="#today">Today</a><a href="#upcoming">Upcoming</a><a href="#in-play">Past kickoff</a><a href="#combos">Combos</a><a href="#rules">Rules</a><a href="#system">System</a>
-</nav>
-</div>
-<section id="today" class="tennis-match-block">
-<div class="tennis-block-head"><h3>Today</h3><span>{len(today)} matches</span></div>
-<div class="tennis-match-list">{today_html}</div>
-</section>
-<section id="upcoming" class="tennis-match-block">
-<div class="tennis-block-head"><h3>Next 48 hours</h3><span>{len(upcoming)} matches</span></div>
-<div class="tennis-match-list">{upcoming_html}</div>{more}
-</section>
-<section id="in-play" class="tennis-match-block">
-<div class="tennis-block-head"><h3>Open picks past kickoff</h3><span>{len(past)} matches</span></div>
-{past_html if past else '<p class="sm mut">No open pick past kickoff.</p>'}
-</section>
-<section id="other-open" class="tennis-match-block">
-{UI.disclosure("Later / time unconfirmed", '<div class="tennis-match-list">' + "".join(_match_card(x) for x in other) + '</div>', str(len(other)) + " matches") if other else '<p class="sm mut">No other open pick.</p>'}
-</section>
-<section id="combos" class="tennis-combos">
-<div class="tennis-block-head"><h3>Combo baskets</h3><span>{len(combo_rows)} rules</span></div>
-{combo_html or '<div class="note">No combo lane has a record yet.</div>'}
-</section>
-</div>'''
+            lo = hi = int(part)
+        out.update(range(lo, hi + 1, step))
+    return out
 
 
-def _games(quotes):
-    shown = quotes[:OPEN_LIMIT]
-    if not shown:
-        return '<p class="mut">No open game.</p>'
-    items = []
-    for q in shown:
-        label = S.position_label(q)
-        side = B._side(q) or ""
-        when = _kick_label(q)
-        extra = " · ".join(part for part in (str(side), when) if part)
-        link = B.safe_href(S.market_url(q), label)
-        sub = f'<div class="sm mut">{B.esc(extra)}</div>' if extra else ""
-        items.append(f'<li class="rule-game">{link}{sub}</li>')
-    more = ""
-    if len(quotes) > OPEN_LIMIT:
-        more = f'<p class="sm mut">{OPEN_LIMIT} of {len(quotes)} open, soonest first.</p>'
-    return (f'<p class="rule-kicker">Open games</p>'
-            f'<ul class="rule-games">{"".join(items)}</ul>{more}')
+def next_check(now, path=TRACKER_WORKFLOW):
+    """The tracker's next scheduled firing after `now`, from its workflow crons.
 
-
-def _card(row, quotes, active):
-    meta = row["meta"]
-    name = meta["label"].split(" (")[0]
-    sfx = B._scope(row["sport"])
-    tag = f' <span class="sig w">{B.esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
-    prod = '<span class="sig y">PRODUCTION</span>' if row.get("prod") else ""
-    stage = f'<p class="rule-stage">{prod}</p>' if prod else ""
-    active = "1" if active else "0"
-    base = B._base_sport(row["sport"])
-    return f'''<article class="rule-card" data-active="{active}" data-market="{B.esc(base)}" data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}">
-<div class="rule-rotator">
-<div class="rule-face rule-front" aria-hidden="false">
-<p class="rule-name"><b>{B.esc(name)}</b>{tag}</p>
-{stage}<p class="rule-status">{verdict_html(row)}</p>
-<p class="rule-roi">{roi_html(row)}<span class="sm mut">ROI after fees</span></p>
-<button type="button" class="rule-flip" aria-expanded="false">Open games</button>
-</div>
-<div class="rule-face rule-back" aria-hidden="true">
-<button type="button" class="rule-flip" aria-expanded="false" tabindex="-1">Verdict</button>
-{_games(quotes)}
-</div>
-</div>
-</article>'''
-
-
-def _bands(d, rows, now):
-    """(active markets, inactive markets). Each market is (base, [(row, open quotes, kickoff)]).
-
-    Active: at least one open bet, or a fixture already stored for the rule
-    whose kickoff is inside the next 48 hours. The sort key is the soonest of
-    those kickoffs.
+    None when the workflow cannot be read or carries no cron the page understands,
+    so a missing file is a shorter sentence, not a crash.
     """
-    groups = {}
+    try:
+        with open(path, encoding="utf-8") as fh:
+            text = fh.read()
+    except OSError:
+        return None
+    slots = []
+    for m in _CRON.finditer(text):
+        try:
+            minute = int(m.group(1))
+            hours = _cron_hours(m.group(2))
+        except ValueError:
+            continue
+        slots.extend((h, minute) for h in hours if 0 <= h <= 23 and 0 <= minute <= 59)
+    if not slots:
+        return None
+    now = _as_utc(now)
+    base = now.replace(second=0, microsecond=0)
+    best = None
+    for hour, minute in slots:
+        cand = base.replace(hour=hour, minute=minute)
+        if cand <= now:
+            cand += timedelta(days=1)
+        if best is None or cand < best:
+            best = cand
+    return best
+
+
+# ------------------------------------------------------------------ the picks list
+def active_rows(rows, d):
+    """(active, inactive). A rule is active once it has a settled or an open bet."""
+    act, ina = [], []
     for row in rows:
-        groups.setdefault(B._base_sport(row["sport"]), []).append(row)
-    active, inactive = [], []
-    for base, rs in groups.items():
-        ranked = [row for _rank, _prov, row in B.rank_rows(rs)]
-        act, ina = [], []
-        for row in ranked:
-            quotes = open_quotes(d, row["name"], row["sport"])
-            upcoming = upcoming_quotes(d, row["name"], row["sport"], now)
-            kick = _soonest(quotes) or _soonest(upcoming)
-            (act if quotes or upcoming else ina).append((row, quotes, kick))
-        if act:
-            act.sort(key=lambda item: (item[2] or _FAR, item[0]["name"], item[0]["sport"]))
-            active.append((base, act))
-        if ina:
-            inactive.append((base, ina))
-    active.sort(key=lambda item: (
-        min((kick for _row, _qs, kick in item[1] if kick is not None), default=_FAR),
-        -sum(row["a"]["n"] for row, _qs, _kick in item[1]),
-        S.SPORTS.get(item[0], item[0]),
-    ))
-    inactive.sort(key=lambda item: (
-        -sum(row["a"]["n"] for row, _qs, _kick in item[1]),
-        S.SPORTS.get(item[0], item[0]),
-    ))
-    return active, inactive
+        fired = bool(row["a"].get("n")) or bool(open_quotes(d, row["name"], row["sport"], row))
+        (act if fired else ina).append(row)
+    return act, ina
 
 
-def _band(title, key, markets):
-    if not markets:
-        return ""
-    blocks = []
-    for base, items in markets:
-        cards = "".join(_card(row, quotes, key == "active")
-                        for row, quotes, _kick in items)
-        blocks.append(
-            f'<div class="rule-market" data-market="{B.esc(base)}">'
-            f'<h3>{B.esc(_market_name(base))}</h3>'
-            f'<div class="rule-grid">{cards}</div>'
-            f'</div>')
-    content = ''.join(blocks)
-    if key == 'inactive':
-        content = UI.disclosure('Inactive rules', content, sum(len(items) for _, items in markets), css='historical')
-    return (f'<div class="rule-band" data-band="{key}">'
-            + ('<h3 class="rule-band-title">Active / open rules</h3>' if key == 'active' else '')
-            + f'{content}</div>')
+def pick_rows(d, rows, now):
+    """Every open pick, plus today's settled ones, soonest first, as (row, quote)."""
+    now = _as_utc(now)
+    today = fmt.chicago(now).date()
+    out = []
+    for row in rows:
+        out.extend((row, q) for q in open_quotes(d, row["name"], row["sport"], row))
+        for q in settled_quotes(d, row):
+            ko = _kickoff(q)
+            if ko is not None and fmt.chicago(ko).date() == today:
+                out.append((row, q))
+    out.sort(key=lambda rq: (_kickoff(rq[1]) or _FAR, str(rq[1].get("id") or "")))
+    return out
 
 
-def render(d, rows, now=None):
-    """Card grid for the Tennis lanes section. `now` is the page clock.
+def _pick_html(row, q, now):
+    ko = _kickoff(q)
+    when = fmt.clock(ko) if ko is not None else "time TBC"
+    pick, legs = pick_label(q)
+    legs_html = f'<span class="tn-legs">{B.esc(legs)}</span>' if legs else ""
+    word, cls = state_of(q, now)
+    prod = ' <span class="tn-prod">Production</span>' if row.get("prod") else ""
+    price = fmt.cents(q.get("price")) if q.get("price") is not None else "—"
+    return (
+        f'<div class="tn-pick {cls}" data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}">'
+        f'<span class="tn-time">{B.esc(when)}</span>'
+        f'<span class="tn-match">{B.safe_href(S.market_url(q), match_label(q, row))}</span>'
+        f'<span class="tn-pos"><b>{B.esc(pick)}</b>{legs_html}</span>'
+        f'<span class="tn-price">{B.esc(price)}</span>'
+        f'<span class="tn-rule">{B.esc(rule_name(row))}{prod}</span>'
+        f'<span class="tn-state {cls}">{B.esc(word)}</span>'
+        f'</div>')
 
-    A rule is active with an open bet, or with a stored fixture kicking off
-    within 48 hours and no stake yet. Inside that band, the sooner kickoff
-    comes first.
-    """
-    now = now or datetime.datetime.now(timezone.utc)
-    active, inactive = _bands(d, rows, now)
-    note = ''
-    cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)
-    extra = B.definitions(rows)
+
+def picks_html(d, rows, now):
+    """The Matches section body: day headers and one line per pick."""
+    now = _as_utc(now)
+    today = fmt.chicago(now).date()
+    picks = pick_rows(d, rows, now)
+    # One block per day, so a day header sticks only while its own picks are
+    # under it and the next day's header takes its place.
+    blocks, day = [], object()
+    for row, q in picks:
+        ko = _kickoff(q)
+        key = fmt.chicago(ko).date() if ko is not None else None
+        if key != day:
+            day = key
+            label = _day_label(key, today) if key is not None else "Time unconfirmed"
+            blocks.append([f'<div class="tn-day">{B.esc(label)}</div>'])
+        blocks[-1].append(_pick_html(row, q, now))
+    parts = [f'<div class="tn-dayblock">{"".join(block)}</div>' for block in blocks]
+    html = f'<div class="tn-picks">{"".join(parts)}</div>' if parts else ""
+    if not any(q.get("status") == "open" for _row, q in picks):
+        nxt = next_check(now)
+        tail = f" · next check {fmt.when(nxt)}" if nxt is not None else ""
+        html += f'<p class="tn-empty">No open pick{B.esc(tail)}</p>'
+    return html
+
+
+# ------------------------------------------------------------------ the rules table
+def _recent_html(d, row, now):
+    live = open_quotes(d, row["name"], row["sport"], row)
+    done = settled_quotes(d, row)[:RECENT_LIMIT]
+    if not live and not done:
+        return '<p class="sm mut tn-none">No pick logged yet.</p>'
+    items = []
+    for q in live + done:
+        ko = _kickoff(q)
+        when = fmt.when(ko) if ko is not None else "time TBC"
+        pick, legs = pick_label(q)
+        word, cls = state_of(q, now)
+        bits = [B.esc(when), B.safe_href(S.market_url(q), match_label(q, row)), B.esc(pick)]
+        if legs:
+            bits.append(f'<span class="mut">{B.esc(legs)}</span>')
+        if q.get("price") is not None:
+            bits.append(B.esc(fmt.cents(q.get("price"))))
+        bits.append(f'<span class="tn-state {cls}">{B.esc(word)}</span>')
+        items.append(f'<li>{" · ".join(bits)}</li>')
+    return f'<ul class="tn-recent">{"".join(items)}</ul>'
+
+
+def _rule_row(d, row, now):
+    name = rule_name(row)
+    badges = ""
+    if is_combo(row):
+        badges += ' <span class="sig n">Combo</span>'
+    if row.get("prod"):
+        badges += ' <span class="sig y">PRODUCTION</span>'
+    note = (row["meta"].get("note") or "").strip()
+    note_html = f'<p class="tn-def sm mut">{B.esc(note)}</p>' if note else ""
+    open_n = len(open_quotes(d, row["name"], row["sport"], row))
+    return (
+        f'<tr data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}">'
+        f'<td><details class="tn-rule"><summary><b>{B.esc(name)}</b>{badges}</summary>'
+        f'{note_html}{_recent_html(d, row, now)}</details></td>'
+        f'<td>{B.esc(venue_name(d, row))}</td>'
+        f'<td class="num">{B.esc(record_text(row["a"]))}</td>'
+        f'<td class="num">{roi_html(row)}</td>'
+        f'<td>{verdict_html(row)}</td>'
+        f'<td class="num">{open_n or "—"}</td></tr>')
+
+
+def _sort_key(row):
+    a = row["a"]
+    roi = a["roi_fee"] if a.get("n") and a.get("roi_fee") is not None else float("-inf")
+    return (not row.get("prod"), -roi, -(a.get("n") or 0), row["name"])
+
+
+_HEAD = ('<tr><th>Rule</th><th>Venue</th><th class="num">Record</th>'
+         '<th class="num">ROI</th><th>Verdict</th><th class="num">Open</th></tr>')
+
+
+def _table(d, rows, now):
+    body = "".join(_rule_row(d, row, now) for row in rows)
+    return f'<div class="tbl"><table class="tn-rules">{_HEAD}{body}</table></div>'
+
+
+def rules_html(d, rows, now):
+    """One table, Production first then by ROI; the never-fired rules behind a toggle."""
+    now = _as_utc(now)
+    act, ina = active_rows(rows, d)
+    act = sorted(act, key=_sort_key)
+    ina = sorted(ina, key=_sort_key)
     if not rows:
-        note += '<div class="note">No tennis lane has a record yet.</div>'
-    return (match_center(d, rows, now)
-            + '<section id="rules" class="tennis-rule-desk"><div class="tennis-block-head"><h3>Rules</h3>'
-              '<span>active first</span></div>'
-            + note + cards + extra + '</section>')
+        return '<div class="note">No tennis rule has a record yet.</div>'
+    html = _table(d, act, now) if act else '<div class="note">No tennis rule has fired yet.</div>'
+    if ina:
+        n = len(ina)
+        html += UI.disclosure(f"Show {n} inactive rule{'s' if n != 1 else ''}",
+                              _table(d, ina, now), css="historical tn-inactive")
+    return html
+
+
+# ------------------------------------------------------------------ tiles and the venue fold
+def tiles_html(d, rows):
+    """Open picks · active rules · record · ROI after fees, across the active rules."""
+    act, _ina = active_rows(rows, d)
+    open_n = sum(len(open_quotes(d, r["name"], r["sport"], r)) for r in rows)
+    n = sum(r["a"].get("n") or 0 for r in act)
+    won = sum(r["a"].get("won") or 0 for r in act)
+    if n:
+        # Flat stakes, so the n-weighted mean of each rule's ROI is the pooled ROI.
+        roi = sum((r["a"].get("roi_fee") or 0) * (r["a"].get("n") or 0) for r in act) / n
+        klass = "mut" if n < B.MIN_N else fmt.tone(roi, ".1f", 100)
+        roi_cell = f'<b class="{klass}">{B.pct(roi, sign=True)}</b>'
+        rec = f"{won}–{n - won}"
+    else:
+        roi_cell = '<b class="mut">—</b>'
+        rec = "—"
+    return (
+        '<div class="tiles tn-tiles">'
+        f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
+        f'<div class="tile"><b>{len(act)}</b><span>active rules</span></div>'
+        f'<div class="tile"><b>{rec}</b><span>record · active rules</span></div>'
+        f'<div class="tile">{roi_cell}<span>ROI after fees</span></div>'
+        '</div>')
+
+
+def _listing(d):
+    """The Polymarket US counts for this family, from the ledger's stored coverage."""
+    import sport_tab
+    meta = S.SOURCES.get("polymarket_us") or {}
+    sports = [sp for sp in (meta.get("sports") or [])
+              if B.family(sp) == FAMILY
+              and not S.lane_removed("polymarket_us", sp)
+              and sp not in S.REMOVED_VENUE_SPORTS]
+    if not sports:
+        return ""
+    cov = d.get("coverage") or {}
+    rows = []
+    for sp in sports:
+        cell = cov.get(sp) or {}
+        rows.append(
+            f'<tr><td>{B.esc(S.SPORTS.get(sp, sp))}</td>'
+            f'{sport_tab._count_cell(cell.get("polymarket_us"))}'
+            f'{sport_tab._count_cell(cell.get("polymarket_us_listed"))}'
+            f'{sport_tab._count_cell(cell.get("polymarket_us_priced"))}</tr>')
+    head = ('<tr><th>Market</th><th class="num">Taken</th>'
+            '<th class="num">Listed</th><th class="num">Priced</th></tr>')
+    return f'<div class="tbl" id="listing"><table>{head}{"".join(rows)}</table></div>'
+
+
+def system_html(d, idle_html=""):
+    """The venue and grading note, closed by default."""
+    listing = _listing(d) or '<div class="note">No venue coverage stored yet.</div>'
+    return f'''<section id="system" class="tn-system">
+<details><summary><b>Polymarket US &amp; how picks are graded</b><small>venue listing</small></summary>
+<div>
+<p class="sm">Polymarket US lists the match-winner markets; it logs prices and holds no record of its own, so it has no row in the rules table, and the counts are what the last run stored.</p>
+<p class="sm">Every pick is logged before the start at the price available then, settled on the real result at a flat ${int(T.STAKE)} stake, and judged after fees against the price it paid.</p>
+{listing}{idle_html}
+</div>
+</details>
+</section>'''
+
+
+def render(d, rows, now=None, idle_html=""):
+    """The whole page body under the shared header. `now` is the page clock."""
+    now = _as_utc(now or datetime.datetime.now(timezone.utc))
+    return f'''<h1>Tennis</h1>
+<p class="lede">Match-winner picks and combo baskets · times CT</p>
+{tiles_html(d, rows)}
+<section id="matches" class="tn-section">
+<h2>Matches</h2>
+<p class="sm mut">Every open pick, soonest first, plus today's settled ones.</p>
+{picks_html(d, rows, now)}
+</section>
+<section id="rules" class="tn-section">
+<h2>Rules</h2>
+<p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>
+{rules_html(d, rows, now)}
+</section>
+{system_html(d, idle_html)}'''
