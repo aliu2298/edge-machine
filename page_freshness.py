@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Freshness of the published Sandbox and Production pages.
 
-backup-refresh.yml used to read the site root. site_root.py rewrites that redirect
-stub on every board refresh, so the root's "updated … UTC" stamp stays new even when
-the tracker has stopped. The tracker's own stamp is on these two pages, in the form
-written by sandbox_build.py and production.py:
+The site root is the SofaScore shell. It lands on Production, and its visible
+stamp is Central Time, not the tracker form below. backup-refresh.yml does not
+read it for freshness. Takeover rewrites the shell from the Production page's
+tiles and clock; that still cannot rebuild sandbox.html or production.html.
+The tracker's own stamp is on these two pages, in the form written by
+sandbox_build.py and production.py:
 
     updated 2026-09-25 13:45 UTC
 
-A missing or unparseable stamp is stale. The root stub's "Sep 25 2026 · 15:50 UTC"
+A missing or unparseable stamp is stale. The shell's "Updated Oct 5, 6:13 PM CT"
 form does not match, so a check pointed at the root fails closed.
 """
 from datetime import datetime, timezone
@@ -94,7 +96,7 @@ def fetch_pages(base_url, stale_hours=STALE_AFTER_HOURS, now=None, opener=None,
 def recheck_exit(results):
     """(exit_code, detail) after takeover, or when takeover did not run.
 
-    Takeover rewrites index.html and redeploys. That cannot rebuild sandbox.html
+    Takeover rewrites the shell (index.html) and redeploys. That cannot rebuild sandbox.html
     or production.html, so a page that is still stale or missing fails the job.
     exit_code is 1 in that case and 0 when every page is fresh. `detail` is the
     freshness messages, which name the page and, when the stamp parsed, its age.

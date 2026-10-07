@@ -519,12 +519,41 @@ def write_step_summary(text):
         fh.write(text)
 
 
+STATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data",
+                     "lane_preflight.json")
+
+
+def save(results, now, path=STATE):
+    """Persist the last verdict per lane series, for the Soccer page to render.
+
+    The page cannot call Kalshi itself: it is rebuilt every three hours by the tracker,
+    and a live venue call there would turn a Kalshi hiccup into a failed publish. This
+    file is written by THIS job, which is allowed to go red on its own without taking
+    anything else down, and the page reads it and says how old it is.
+    """
+    blob = dict(checked=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                lanes=[{k: r.get(k) for k in ("lane", "series", "kind", "state", "detail")}
+                       for r in results])
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(blob, f, indent=1, sort_keys=True)
+        f.write("\n")
+    os.replace(tmp, path)
+    return blob
+
+
 def main():
     now = datetime.now(timezone.utc)
     results = evaluate(live_get, now=now)
     text, code = render(results, now)
     sys.stdout.write(text)
     write_step_summary(summary_text(results, now))
+    try:
+        save(results, now)
+    except OSError as e:
+        # Never fail the pre-flight over a file: its job is to report on Kalshi.
+        print(f"::warning::could not write {STATE} ({type(e).__name__})")
     return code
 
 

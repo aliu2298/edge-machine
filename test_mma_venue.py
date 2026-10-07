@@ -91,6 +91,18 @@ def _page(d, st, now):
 
 
 def main():
+    saved_removed = S.REMOVED_SOURCES
+    # Off the board as of 2026-10-04. These cases are the guarded
+    # Kalshi-to-Polymarket-US replacement, so they lift the source for the
+    # run and put it back. The live tracker does not log the lane.
+    S.REMOVED_SOURCES = frozenset(n for n in saved_removed if n != "mma_fav_band")
+    try:
+        return _cases()
+    finally:
+        S.REMOVED_SOURCES = saved_removed
+
+
+def _cases():
     soon = datetime.now(timezone.utc) + timedelta(days=2)
     soon = soon.replace(microsecond=0)
     past = datetime.now(timezone.utc) - timedelta(hours=3)
@@ -225,6 +237,7 @@ def main():
     near = (datetime.now(timezone.utc) + timedelta(hours=1)).replace(microsecond=0)
     t_k = _row("KXATPMATCH-26OCT03ALPHBE", "kalshi", "Alex Alpha", "Blake Beta",
                0.78, 0.24, near, sport="tennis")
+    t_k["start_source"] = "tennisexplorer"
     t_p = _row("aec-atp-alpha-beta-2026-10-03", "polymarket_us", "Alex Alpha", "Blake Beta",
                0.79, 0.23, near, sport="tennis")
     tennis = {"quotes": [], "meta": {}, "coverage": {}}
@@ -344,8 +357,17 @@ def main():
           else f" — {(bet_rep.errors + dup_rep.errors + stale_rep.errors + settle_rep.errors)[:3]}"))
     ok(retired["market_id"] not in settle_calls, "settlement does not re-resolve the retired market")
     ok("probe-mlb" in settle_calls, "settlement still samples a non-MMA settled bet")
-    prod_rep = A.Report()
-    A.check_production(audit_d, T.load_stages(), prod_rep)
+    # The cases above lift mma_fav_band out of REMOVED_SOURCES so the
+    # replacement can run. The committed stages file may still name that pair
+    # as Production until the next tracker run. Put the source back for this
+    # check: off the board, the audit warns and does not error.
+    held_removed = S.REMOVED_SOURCES
+    S.REMOVED_SOURCES = held_removed | {"mma_fav_band"}
+    try:
+        prod_rep = A.Report()
+        A.check_production(audit_d, T.load_stages(), prod_rep)
+    finally:
+        S.REMOVED_SOURCES = held_removed
     ok(not prod_rep.errors, "the production check stays clean"
        + ("" if not prod_rep.errors else f" — {prod_rep.errors[:2]}"))
 

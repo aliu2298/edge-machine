@@ -60,20 +60,44 @@ def route_label(pair):
     return f"moved by hand on {pair['by_hand']}" if pair.get("by_hand") else "moved by hand"
 
 
-def _kickoff(q):
-    """UTC kickoff, or None when the timestamp cannot be parsed or converted.
+def _one_instant(value):
+    """One timestamp as a UTC instant, or None when it cannot be parsed or converted.
 
     An out-of-range instant (year 1 at midnight UTC, converted into a zone
     behind UTC) raises OverflowError. A malformed string raises ValueError.
     Callers show a placeholder or skip the quote; they do not crash.
     """
     try:
-        dt = datetime.datetime.fromisoformat(str(q["start"]))
+        dt = datetime.datetime.fromisoformat(str(value))
         if dt.tzinfo is None:
             dt = dt.replace(tzinfo=datetime.timezone.utc)
         return dt.astimezone(datetime.timezone.utc)
     except (TypeError, ValueError, OverflowError, OSError):
         return None
+
+
+def _kickoff(q):
+    """The EARLIEST credible UTC start for this bet, or None when none parses.
+
+    A row can carry two times that do not agree. `start` is the one a source may have
+    adjusted — Pinnacle re-times a fight from the card — and `venue_start` is the route
+    venue's own time for this contest. On 2026-10-03 ten open bets disagreed, four of
+    them with `start` LATER than the venue's: Pinnacle put a UFC bout at the card's
+    23:30Z while Polymarket US listed that bout at 21:30Z, and a boxing row was three
+    hours late. Publishing the later time is the dangerous direction, because a consumer
+    measures its own cutoff backwards from this field: at 30 minutes before 23:30Z the
+    feed still called that pick open for ninety minutes after the fight had begun, and
+    Polymarket US keeps a fight market trading throughout. Only a price ceiling stood
+    between the feed and a bet placed on a result already half known.
+
+    So the feed takes the EARLIER of the two, always. Being early costs a bet that was
+    never placed; being late buys into a contest whose outcome is partly settled, and
+    that is not a risk a paper record can price. `start` alone is used when it is the
+    only one that parses, which is the common case.
+    """
+    cands = [t for t in (_one_instant(q.get("start")), _one_instant(q.get("venue_start")))
+             if t is not None]
+    return min(cands) if cands else None
 
 
 def start_verified(q):
@@ -129,8 +153,11 @@ def lead_from_quote(q, pair_key, built):
         if bet["kind"] == "team_gte":
             bet["team"] = q["team"]
             headline = f"{q['team']} to score {bet['n']}+"
+        elif bet["kind"] == "total_lte":
+            # total_lte n means n goals or fewer, i.e. under (n + 0.5).
+            headline = f"Under {bet['n'] + 0.5:g} goals"
         else:
-            headline = "Over 1.5 goals"
+            headline = f"Over {bet['n'] - 0.5:g} goals"
     elif True:
         home, away = q["side_a"], q["side_b"]
         side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]
@@ -152,6 +179,15 @@ def lead_from_quote(q, pair_key, built):
                  "legs": [{"market": l["market_id"], "name": l.get("name"),
                            "side": "yes" if l["pick"] == "a" else "no",
                            "starts": str(l.get("start"))[:16]} for l in (q.get("legs") or [])]}
+    elif q["sport"] in T.FEED_BETS and bet["kind"] == "total_lte":
+        # An under is the No side of the over market, and Kalshi lists one contract per
+        # STRIKE inside the totals event -- the -4 ticker is over 3.5, the -3 over 2.5.
+        # So the lead names the exact contract it was priced on and says which side to
+        # take, rather than leaving a follower to pick a strike and then invert it. Every
+        # other FEED_BETS lane is a plain Yes on a market its headline fully identifies,
+        # and keeps no route.
+        route = {"venue": "kalshi", "market": q["market_id"],
+                 "outcome": headline, "outcome_side": "no"}
     elif q["sport"] in T.ROUTED_SPORTS:
         # Kalshi lists a market per player inside one event, so backing either player is a
         # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,
@@ -186,9 +222,34 @@ def lead_from_quote(q, pair_key, built):
     return lead
 
 
-def _sandbox_record(d, key, since):
+def _assess_since_kickoff(d, key, pair):
+    """US-exchange record for contests that kick off at or after this pair entered.
+
+    The feed publishes a bet when `_kickoff(q).isoformat() >= entered_at(pair)`.
+    `assess` windows on `logged`, so this copies the ledger and the archive,
+    keeps only this pair's rows in that kickoff window, and calls `assess`
+    with the log window open. A row with no readable kickoff is not in it.
+    """
     source, sport = key.split("|", 1)
-    a = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+    entered = entered_at(pair)
+
+    def kept(rows):
+        out = []
+        for q in rows or ():
+            if q.get("source") != source or q.get("sport") != sport:
+                continue
+            ko = _kickoff(q)
+            if ko is not None and entered is not None and ko.isoformat() >= entered:
+                out.append(q)
+        return out
+
+    window = {"quotes": kept(d.get("quotes")), "_archive": kept(d.get("_archive"))}
+    return T.assess(window, source, sport, since=None, venues=T.TRADEABLE_VENUES)
+
+
+def _sandbox_record(d, key, since):
+    # `since` is entered_at(pair). The record counts the contest, not the log.
+    a = _assess_since_kickoff(d, key, {"ready_at": since})
     r = lambda x: round(x, 4) if isinstance(x, float) else x
     return {"sandbox_n": a["n"], "sandbox_roi": r(a["roi"]), "sandbox_roi_fee": r(a["roi_fee"]),
             "sandbox_clv": r(a["clv"])}
@@ -282,8 +343,9 @@ def build_feed(d, st, now=None):
             leads[lead["id"]] = lead
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
-        # The Sandbox's own record for each pair since it entered Production, at the logged
-        # price, so a follower's real fills can be compared with it.
+        # The Sandbox's own record for each pair since it entered Production, counted on
+        # kickoff — the same contest the leads use — at the logged price, so a follower's
+        # real fills can be compared with it.
         "pairs": {k: dict({"ready_at": p.get("ready_at"), "promoted_at": p.get("promoted_at"),
                            "entered_at": entered_at(p), "route": route_label(p),
                            "by_hand": p.get("by_hand")},
@@ -384,6 +446,63 @@ def _clip_shown(value, limit=80):
     if len(value) <= limit:
         return value
     return value[:limit] + "…"
+
+
+# A Production pair is GREEN or RED. Green means everything it has logged lately reached
+# the feed and it is still publishing. Red means a fault, and a fault here is the dangerous
+# kind: it is SILENT. A bet the feed cannot express is simply dropped -- no error, no row, no
+# trace on the page -- which is how mma_fav_band ran for weeks with seven of twenty-one bets
+# unreachable and cricket with nineteen of thirty, both unnoticed until someone went looking.
+#
+# Red fires on three faults, each of which would otherwise pass unseen:
+#   dropped  a bet logged inside HEALTH_WINDOW_DAYS that placeable() refuses. The pair had an
+#            opinion and nothing downstream could act on it.
+#   dark     no leads in the feed AND nothing logged in the window. Not merely quiet: quiet
+#            with nothing to show for it.
+#   unwired  the pair is listed in Production but missing from the feed's own pairs map, so
+#            the two halves disagree about what is live.
+# A pair that is merely WAITING -- publishing leads, declining on price, between fixtures --
+# is green. A light that cries wolf is a light that gets ignored, so quiet alone is not a
+# fault; the Since-Production cell already says how quiet.
+HEALTH_WINDOW_DAYS = 7
+
+
+def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_WINDOW_DAYS):
+    """(state, reason) for one Production pair: "ok" or "bad", and why.
+
+    `bets` is every bet the pair has logged, `lead_count` how many leads it has in the feed,
+    `feed_pairs` the feed's own pairs map. Pure: it takes what it needs rather than reading
+    files, so the faults can be tested without a ledger.
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    cut = (now - datetime.timedelta(days=window_days)).isoformat()
+    if feed_pairs is not None and key not in feed_pairs:
+        return "bad", "listed in Production but missing from the feed"
+    recent = [q for q in bets if str(q.get("logged") or "") >= cut]
+    dropped = [q for q in recent if not T.placeable(q)]
+    if dropped:
+        return "bad", (f"{len(dropped)} of {len(recent)} recent bets cannot be published "
+                       f"— the feed drops them silently")
+    if not lead_count and not recent:
+        return "bad", f"no leads and nothing logged in {window_days}d"
+    return "ok", ("publishing" if lead_count else "nothing to publish yet")
+
+
+def _days_since(when, now=None):
+    """Whole days from `when` to now, or None when `when` is unreadable.
+
+    Used only to say how long a Production pair has gone without logging a bet.
+    """
+    if not when:
+        return None
+    try:
+        t = datetime.datetime.fromisoformat(str(when).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=datetime.timezone.utc)
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    return max(0, int((now - t).total_seconds() // 86400))
 
 
 def _kickoff_known(lead):
@@ -502,21 +621,67 @@ def page(d, st, blob, style, now=None):
         # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
         # never show two different records for one rule.
         whole = T.assess(raw, source, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
-        live = T.assess(raw, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+        live = _assess_since_kickoff(raw, key, pair)
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)
         clv = fmt.signed_cents(whole["clv"])
+        # WHY the Since-Production record is empty, which "none yet" alone hid. Three pairs
+        # read "— none yet" at once and they meant three different things: one had two bets
+        # running and nothing settled, one had logged nothing in two days, and one cannot be
+        # executed at all. A pair idling is a thing to act on; a pair waiting is not, and the
+        # column has to tell them apart.
+        # Same inclusive kickoff test as _assess_since_kickoff. Open and priced-out
+        # rows never enter the settled record, and the note under it counts the contest.
+        mine_since = []
+        for q in (raw.get("quotes") or []):
+            if q.get("source") != source or q.get("sport") != sport:
+                continue
+            ko = _kickoff(q)
+            if ko is not None and since is not None and ko.isoformat() >= since:
+                mine_since.append(q)
+        open_since = sum(1 for q in mine_since if q.get("bet") and q.get("status") == "open")
+        # PICKED BUT NOT BACKED is its own state, and the first version of this cell missed
+        # it. team1_form_l5 on the internationals read "nothing in 2d" while it had picked
+        # Spain to score at 0.99 and the Netherlands at 0.97 -- both refused by PRICE_CEIL,
+        # which is the rule working, not idling. A lane declining on price has an opinion;
+        # a lane seeing no board has none, and the column must not call them the same thing.
+        priced_out = sum(1 for q in mine_since if not q.get("bet"))
+        # REACHABLE: of this pair's bets, how many the feed could ever publish. A pair can be
+        # promoted on a record only partly visible downstream -- cricket was moved on +142.8%
+        # across 30 bets of which 11 were reachable, and those 11 return +270% while the other
+        # 19 return +2.5%. Two lanes under one name. Nothing on this page said so, so it had
+        # to be dug out. The gate still judges the whole record; this only shows the gap.
+        all_bets = [q for q in T.all_bets(raw)
+                    if q.get("source") == source and q.get("sport") == sport and q.get("bet")]
+        reach_n = sum(1 for q in all_bets if T.placeable(q))
+        reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
+        reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
+        state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None))
+        light = ("<b class=\"pos\">\u25cf</b>" if state == "ok" else "<b class=\"neg\">\u25cf</b>")
+        idle_days = _days_since(since)
+        if live["n"]:
+            since_note = f"{live['n']} settled"
+        elif open_since:
+            since_note = f"{open_since} running"
+        elif priced_out:
+            since_note = f"{priced_out} priced out"
+        elif idle_days is not None:
+            since_note = f"nothing in {idle_days}d"
+        else:
+            since_note = "none yet"
         cards.append(f"""<tr>
 <td><b>{esc(name(key))}</b><div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{f"{live['n']} settled" if live['n'] else 'none yet'}</div></td>
+<td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
+<td class="num">{light}<div class="sm mut">{esc(why)}</div></td>
+<td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>
 <tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
-<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
 <tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
 {''.join(cards)}</table></div>""" if cards else
         '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '

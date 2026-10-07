@@ -86,3 +86,147 @@ assert.strictEqual(shownRow.hidden, false);
 assert.strictEqual(shownRow.props.display, undefined, "a row that passes clears the inline display");
 
 console.log("ok: Boston + MLB matches the row and the card, and the tennis combo does not");
+
+// Keyboard flip. Enter/Space on a .rule-flip clicks the card. After paint(),
+// focus has to land on the .rule-flip of the face now showing, or the next
+// keypress hits BODY and a screen reader loses the control.
+var sha = "unknown";
+try {
+  sha = require("child_process").execSync("git rev-parse HEAD", {
+    cwd: require("path").join(__dirname),
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "ignore"],
+  }).trim() || "unknown";
+} catch (e) {
+  sha = "unknown";
+}
+console.log("SHA " + sha);
+
+function classListOf(node) {
+  return {
+    contains: function (name) { return node.classes.indexOf(name) !== -1; },
+    toggle: function (name, force) {
+      var has = node.classes.indexOf(name) !== -1;
+      var on = force === undefined ? !has : !!force;
+      if (on && !has) node.classes.push(name);
+      if (!on && has) node.classes.splice(node.classes.indexOf(name), 1);
+      return on;
+    },
+  };
+}
+
+function matches(node, sel) {
+  if (sel.charAt(0) === ".") return node.classList.contains(sel.slice(1));
+  return node.tag === sel;
+}
+
+function descendants(node, out) {
+  node.children.forEach(function (child) {
+    out.push(child);
+    descendants(child, out);
+  });
+  return out;
+}
+
+function queryAll(root, selector) {
+  var parts = selector.trim().split(/\s+/);
+  return descendants(root, []).filter(function (node) {
+    var part = parts.length - 1;
+    var cur = node;
+    if (!matches(cur, parts[part])) return false;
+    while (part > 0) {
+      part -= 1;
+      var found = false;
+      cur = cur.parent;
+      while (cur) {
+        if (matches(cur, parts[part])) { found = true; break; }
+        cur = cur.parent;
+      }
+      if (!found) return false;
+    }
+    return true;
+  });
+}
+
+function el(tag, classes, children) {
+  var node = {
+    tag: tag,
+    classes: classes ? classes.split(/\s+/).filter(Boolean) : [],
+    children: children || [],
+    parent: null,
+    attrs: {},
+    tabIndex: 0,
+    listeners: {},
+  };
+  node.classList = classListOf(node);
+  node.children.forEach(function (child) { child.parent = node; });
+  node.setAttribute = function (name, value) { node.attrs[name] = String(value); };
+  node.getAttribute = function (name) {
+    return Object.prototype.hasOwnProperty.call(node.attrs, name) ? node.attrs[name] : null;
+  };
+  node.querySelectorAll = function (selector) { return queryAll(node, selector); };
+  node.querySelector = function (selector) { return queryAll(node, selector)[0] || null; };
+  node.closest = function (selector) {
+    var cur = node;
+    while (cur) {
+      if (matches(cur, selector)) return cur;
+      cur = cur.parent;
+    }
+    return null;
+  };
+  node.addEventListener = function (type, fn) {
+    (node.listeners[type] = node.listeners[type] || []).push(fn);
+  };
+  node.focus = function () { global.document.activeElement = node; };
+  node.click = function () {
+    var ev = { target: node };
+    var cur = node;
+    while (cur) {
+      (cur.listeners.click || []).slice().forEach(function (fn) { fn(ev); });
+      cur = cur.parent;
+    }
+  };
+  return node;
+}
+
+var openGames = el("button", "rule-flip");
+var verdict = el("button", "rule-flip");
+openGames.name = "Open games";
+verdict.name = "Verdict";
+var front = el("div", "rule-face rule-front", [openGames]);
+var back = el("div", "rule-face rule-back", [verdict]);
+var card = el("article", "rule-card", [el("div", "rule-rotator", [front, back])]);
+var doc = el("div", "", [card]);
+global.document = doc;
+doc.activeElement = doc;
+
+function focusedFlip() {
+  var current = document.activeElement;
+  if (!current || !current.classList || !current.classList.contains("rule-flip")) return "(none)";
+  var face = current.closest(".rule-face");
+  var side = face && face.classList.contains("rule-back") ? "back"
+    : face && face.classList.contains("rule-front") ? "front" : "?";
+  return side + ":" + (current.name || "?");
+}
+
+tables.wireRuleCards(doc);
+openGames.focus();
+openGames.click();
+assert.ok(card.classList.contains("is-flipped"), "the card flips");
+assert.strictEqual(focusedFlip(), "back:Verdict",
+  "after flip from a .rule-flip, focus is on the visible face's .rule-flip");
+assert.strictEqual(back.getAttribute("aria-hidden"), "false");
+assert.strictEqual(front.getAttribute("aria-hidden"), "true");
+verdict.click();
+assert.ok(!card.classList.contains("is-flipped"), "a second flip returns to the front");
+assert.strictEqual(focusedFlip(), "front:Open games",
+  "a second flip puts focus back on the front .rule-flip");
+
+doc.activeElement = doc;
+card.click();
+assert.ok(card.classList.contains("is-flipped"), "a click elsewhere on the card still flips");
+assert.strictEqual(document.activeElement, doc,
+  "a click that was not on a .rule-flip leaves focus where it was");
+
+console.log("ok: flip from a .rule-flip keeps focus on the face now showing");
+console.log("SHA " + sha + " PASSED");

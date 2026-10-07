@@ -1,0 +1,29 @@
+# NOT WHAT IS LIVE. edge-vps runs this schedule as a USER CRONTAB instead:
+#
+#   */15 17-20 * * * /home/bot/edge-machine-closes/scripts/vps_crypto_window.sh >> ~/edge-crypto.log 2>&1
+#
+# because installing a systemd unit needs root and `bot`'s sudoers is scoped to a handful
+# of named polymarket-bot commands. A user crontab needs no root, cron is active there, and
+# it was verified under cron's own stripped environment -- including the git pull over the
+# SSH deploy key, which is the part that fails without an agent. These units are kept for a
+# host where root is available, and are the same schedule by another mechanism.
+#
+# Ask for a tracker run inside crypto_fav_band's window. Install on such a host:
+#   sudo cp scripts/edge-crypto.timer   /etc/systemd/system/
+#   sudo cp scripts/edge-crypto.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now edge-crypto.timer
+#   systemctl list-timers edge-crypto.timer ; journalctl -u edge-crypto -n 20
+#
+# 17:00-21:00 UTC covers the window under BOTH daylight and standard time: the 17:00 ET
+# close is 21:05Z under EDT (window 17:35-19:05Z) and 22:05Z under EST (18:35-20:05Z).
+# The box runs UTC, so the band is deliberately wider than either window and the script's
+# own check -- which reads the repo's constants -- decides what is actually inside.
+[Unit]
+Description=Crypto favourite-band window request
+
+[Timer]
+OnCalendar=*-*-* 17,18,19,20:00,15,30,45:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

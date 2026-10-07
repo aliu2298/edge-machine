@@ -263,7 +263,7 @@ def vs_price(d, name, sport=None):
     winners a source should have had by luck alone. Beating the price is the whole test;
     a hot ROI on heavy favourites is not an edge.
     """
-    rows = [q for q in d["quotes"] if q["source"] == name and q["bet"]
+    rows = [q for q in T.bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not T.climate_excluded(q)
             and (sport is None or q["sport"] == sport)]
     if not rows:
@@ -370,15 +370,49 @@ def approval_table(d, scores, full=None):
 {''.join(rows)}</table></div>"""
 
 
+# Sports whose blind-baseline row comes off the Sandbox, decided by hand on 2026-10-05.
+#
+# A blind strategy is the bar a CHOICE has to clear. The five lanes taken off on
+# 2026-10-04 were the last choosers in boxing and MMA, but their baseline rows went on
+# rendering, because the VENUES still cover those sports and the contests stay in the
+# ledger. What was left read as a lane in its own right -- "MMA, back the favourite,
+# +20.8%, +$436" on a research page -- when it is the favourite-longshot bias, already
+# priced, with nothing being tested against it. That is the exact misreading that
+# eliminated the OLBG boxing pair, which tied its blind rule to the decimal.
+#
+# A HAND-KEPT LIST, not a rule derived from the registry or the ledger, because every
+# general version of this was wrong. Keying on source KIND keeps boxing, since
+# polymarket_us is a "Prediction market" and reads as a lane. Keying on the LEDGER drops
+# bare soccer, whose only choosers are two MLS bands and a draw band that have never
+# fired -- connected and waiting for Kalshi to list a market, not gone, and nothing in
+# the ledger can tell WAITING from GONE. A registry rule then also takes table tennis,
+# MLB and NHL Rest, which is a wider change than was asked for and contradicts the
+# deliberate choices already pinned in test_tip_lanes_removed: boxing and MMA keep their
+# venue sweep and their coverage row, like NHL Puck line, and table tennis keeps a
+# baseline row whenever the full ledger holds its contests.
+#
+# So this is a judgement call written down as one. Records stay on file either way, and a
+# sport comes off this list the day a chooser is registered in it again.
+BASELINE_HIDDEN = ("boxing", "mma")
+
+
+def judges_nothing(sport):
+    """True when this sport's blind baseline has nothing left to judge (BASELINE_HIDDEN)."""
+    return sport in BASELINE_HIDDEN
+
+
 def baseline_table(d):
     """The blind strategies, per sport — the bar every source's choices have to clear.
 
     `d` is the filtered page copy. A contest that only a removed lane quoted
-    is not a row here. A kept lane's own baseline is a different number, read
+    is not a row here, and neither is a sport with no kept rule to judge
+    (judges_nothing). A kept lane's own baseline is a different number, read
     from the full ledger on that lane's row.
     """
     rows = []
     for sport in SPORT_KEYS:
+        if judges_nothing(sport):
+            continue
         b = T.baselines(d, sport)
         for kind, label in (("favourite", "Back the favourite"),
                             ("underdog", "Back the underdog"), ("draw", "Back every draw")):
@@ -442,7 +476,12 @@ def coverage_table(cov):
                    for n in names)
     rows = []
     for sport, label in S.SPORTS.items():
-        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS:
+        # A sport leaves this table when its venue listings stop being swept:
+        # table tennis and MLB, then boxing, MMA and NHL · Rest on 2026-10-05 with
+        # the five lanes taken off the day before. Every other sport stays,
+        # including one whose only lane is already gone (NHL · Puck line) and the
+        # ones no source lists (Economics, Finance, Politics, Elections).
+        if sport in S.REMOVED_SPORTS or sport in S.REMOVED_VENUE_SPORTS or sport == "nhl_rest":
             continue
         cells = []
         for n in names:
@@ -517,7 +556,7 @@ def _cityday_repeat(q):
 
 def settled_rows(d, limit=None):
     """Settled bets, newest first. One flat table: Contest, then P/L."""
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+    done = [q for q in T.bet_rows(d) if q["status"] in _HIST and q["bet"]
             and not _cityday_repeat(q) and not S.removed_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     out = []
@@ -587,13 +626,16 @@ def _is_recent(q, today):
 def partition_settled(d, now):
     """(recent, older) settled bets. Recent is the last 7 Chicago dates through `now`.
 
-    Every settled bet that still counts is in exactly one of the two lists. A
-    repeat city-day quote is in neither. A void is not a repeat, so a stale
-    city-day flag does not remove it. A timestamp that cannot be placed on the
-    Chicago calendar is older, so it still appears on an archive page.
+    Every settled bet that still counts is in exactly one of the two lists. The
+    list is the live quotes plus archived bets (one row per id; compact price
+    rows are not bets). A repeat city-day quote is in neither. A void is not a
+    repeat, so a stale city-day flag does not remove it. A timestamp that cannot
+    be placed on the Chicago calendar is older, so it still appears on an archive
+    page. Removed rows are left out. Refused tours and eliminated pairs are
+    filtered by the caller, the same way they were before the archive was read.
     """
     today = _chicago_today(now)
-    done = [q for q in d["quotes"] if q["status"] in _HIST and q["bet"]
+    done = [q for q in T.bet_rows(d) if q["status"] in _HIST and q["bet"]
             and not _cityday_repeat(q) and not S.removed_row(q)]
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
@@ -627,8 +669,10 @@ def _week_order(slugs):
     return dated
 
 
-def _tools(placeholder, label):
-    return (f'<div class="table-tools"><input class="flt" type="search" '
+def _tools(placeholder, label, view=False):
+    """Search box, and on the first card-capable table the Cards | Table control."""
+    toggle = site_chrome.VIEW_TOGGLE if view else ""
+    return (f'<div class="table-tools">{toggle}<input class="flt" type="search" '
             f'placeholder="{esc(placeholder)}" aria-label="{esc(label)}"></div>')
 
 
@@ -682,7 +726,7 @@ def unconnected_rows(d=None):
             continue
         rec = ""
         if m.get("retired") and d is not None:
-            n = sum(1 for q in T.all_bets(d) if q["source"] == name and q.get("bet")
+            n = sum(1 for q in T.bet_rows(d) if q["source"] == name
                     and q["status"] in ("won", "lost") and not T.climate_excluded(q))
             rec = f'<div class="sm">{n} settled bets kept on record</div>'
         why = (f'<b class="neg">Retired</b> {esc(m["retired"])}' if m.get("retired") else esc(m["note"]))
@@ -696,8 +740,8 @@ def unconnected_rows(d=None):
                 continue
             rec = ""
             if d is not None:
-                n = sum(1 for q in T.all_bets(d) if q["source"] == name and q["sport"] == sport
-                        and q.get("bet") and q["status"] in ("won", "lost")
+                n = sum(1 for q in T.bet_rows(d) if q["source"] == name and q["sport"] == sport
+                        and q["status"] in ("won", "lost")
                         and not T.climate_excluded(q))
                 rec = f'<div class="sm">{n} settled bets kept on record</div>'
             out.append(f"""<tr><td><b>{esc(m['label'].split(' (')[0])} · {esc(S.SPORTS.get(sport, sport))}</b>
@@ -718,7 +762,7 @@ def pair_status(d, st, name, sport):
     whole = T.assess(d, name, sport, since=since)
     a = dict(a, whole_n=whole["n"], whole_roi=whole["roi"])
     qa = a
-    mine = [q for q in d["quotes"] if q["source"] == name and q["sport"] == sport and q.get("bet")
+    mine = [q for q in T.bet_rows(d) if q["source"] == name and q["sport"] == sport
             and not S.tennis_refused_row(q)]
     open_n = sum(1 for q in mine if q["status"] == "open" and not T.climate_excluded(q))
     last = max((str(q.get("logged") or "") for q in mine), default="")
@@ -748,12 +792,20 @@ VERDICTS = {                     # key -> (label, chip class, sort order)
     "removed":   ("Removed from Production", "x", 5),
     "nobets":    ("No qualifying match yet", "n", 7),
     "retired":   ("Retired", "x", 8),
+    "build_fail": ("Fails BUILD", "x", 5),
 }
 EARLY_N = 10      # under this, even a lean is not worth a word: 1-0 is not "promising"
 
 
 def verdict(a):
-    """proven / working / no edge at MIN_N+ settled; promising / behind from EARLY_N; early below."""
+    """proven / working / no edge at MIN_N+ settled; promising / behind from EARLY_N; early below.
+
+    When the row carries BUILD sub-periods, a fail is build_passes and nothing else.
+    A row without them is the live record, unchanged.
+    """
+    blocks = a.get("build_subperiods")
+    if blocks is not None and not S.build_passes(blocks):
+        return "build_fail"
     if not a["n"]:
         return "waiting"
     if a["n"] < EARLY_N:
@@ -813,7 +865,16 @@ def pair_list(d, st, include_retired=True):
             # reviewed before its first qualifying match; other pairs appear once they bet.
             # A consensus row is listed from the day it is wired too: it only ever bets where
             # two sources agree, so it can sit empty for days and should be visible meanwhile.
-            if group is None and not _scope(sport) and name not in T.CONSENSUS:
+            # A pair whose stage row carries a RESET has an empty window by construction --
+            # the reset is why -- so skipping it for having no bets deletes the row entirely
+            # and takes the record it was removed on with it. pm_combo4 left Production on
+            # 2026-10-03 with no ongoing volume and disappeared from the page outright, while
+            # olbg|boxing survived its own removal only because boxing kept betting. The
+            # "removed" branch below exists for exactly this and never got the chance to run.
+            reset_row = bool(pair.get("since")) and bool(
+                T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
+            if (group is None and not _scope(sport)
+                    and name not in T.CONSENSUS and not reset_row):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Waiting for results") and hides the record it was removed on.
@@ -823,7 +884,10 @@ def pair_list(d, st, include_retired=True):
                                a=T.assess(d, name, sport, until=pair["demoted_at"],
                                           venues=T.TRADEABLE_VENUES))
             v = verdict(a) if group is not None else "nobets"
-            if removed and v in ("waiting", "early"):
+            # "nobets" included: a removed pair with no volume since the removal has an empty
+            # window by construction, and reading it as a source that has never bet is the
+            # same erasure as dropping the row. pm_combo4 has four settled baskets.
+            if removed and v in ("waiting", "early", "nobets"):
                 v = "removed"
             if sport in gone:
                 v = "retired"
@@ -831,7 +895,7 @@ def pair_list(d, st, include_retired=True):
                             fade=T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES),
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
-                            removed=removed, v=v))
+                            removed=removed, v=v, since=pair.get("since")))
     return out
 
 
@@ -1121,7 +1185,7 @@ def reconcile(d, rows):
     """Where every settled bet is. The sections judge a subset on purpose — a retired venue's
     bets, a baseline's, and anything logged before a pair's clock was reset are all excluded
     from a verdict — so the page says so in numbers rather than leaving a gap to find."""
-    bets = [q for q in T.all_bets(d) if q.get("bet") and q["status"] in ("won", "lost")
+    bets = [q for q in T.bet_rows(d) if q["status"] in ("won", "lost")
             and not T.climate_excluded(q) and not S.removed_row(q)]
     shown = {(r["name"], r["sport"]) for r in rows}
     in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
@@ -1164,9 +1228,24 @@ def _cell(v, n, fade=False):
             f'<span class="{"mut" if n < EARLY_N else fmt.tone(v, ".1f", 100)}">{pct(v, sign=True)}</span>')
 
 
+def _split_settled(sp):
+    """How many settled units a competition row shows.
+
+    A bet stays 'N settled'. A match or market-day says so, and keeps the raw
+    bet count beside it, the same words the lane row uses for that unit.
+    """
+    n = sp["n"]
+    unit = sp.get("unit")
+    bets = sp.get("n_bets")
+    if unit in ("match", "market-day") and bets:
+        suffix = "" if n == 1 else ("es" if unit == "match" else "s")
+        return f'{n} {unit}{suffix} · {bets} bets'
+    return f'{n} settled'
+
+
 def _league_row(r, sp):
     """One rule's record inside one competition. The sport table's columns, thinner."""
-    rec = f'{sp["won"]}–{sp["n"] - sp["won"]}<div class="sm mut">{sp["n"]} settled</div>'
+    rec = f'{sp["won"]}–{sp["n"] - sp["won"]}<div class="sm mut">{_split_settled(sp)}</div>'
     vp = (f'{sp["won"]} v {sp["expected"]:.1f}<div class="sm mut">{sp["won"] - sp["expected"]:+.1f} wins '
           f'· {sp["edge"]:+.3f}/bet</div>')
     fade = ('<span class="mut">—</span>' if not sp["fade_n"] or sp["fade_roi"] is None else
@@ -1206,7 +1285,8 @@ def league_panel(d, rs):
     for r in rs:
         if not r["a"]["n"]:
             continue
-        for sp in T.league_split(d, r["name"], r["sport"], venues=T.TRADEABLE_VENUES):
+        for sp in T.league_split(d, r["name"], r["sport"], venues=T.TRADEABLE_VENUES,
+                                 since=r.get("since")):
             splits.setdefault(sp["league"], []).append((r, sp))
     if not splits:
         return ""
@@ -1551,7 +1631,8 @@ def trading_rows(md):
         meta = MT.RULES[r["rule"]]
         label, chip, _o = MT.VERDICTS[r["verdict"]]
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
-                if r["verdict"] in ("promising", "behind", "early") else "")
+                if r["verdict"] in ("promising", "behind", "early") else
+                f'<div class="sm mut">{esc(meta["retired"])}</div>' if r["verdict"] == "retired" else "")
         pc = lambda x: "—" if x is None else f'<span class="{fmt.tone(x, ".2f", 100)}">{fmt.pct(x, digits=2, sign=True)}</span>'
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
         # coin against cash, since set against its own asset it would show zero edge by design.
@@ -1583,12 +1664,20 @@ def _as_now(now):
 _FOOT = "Read-only static export · rebuilt by GitHub Actions · research, not betting advice."
 
 
-def _archive_document(title, description, sections, body, now_dt):
+def _week_crumb(slug):
+    """2026-W39 -> W39. The archive trail uses the short week name."""
+    if slug == "undated":
+        return "Undated"
+    match = re.fullmatch(r"\d{4}-(W\d{2})", slug or "")
+    return match.group(1) if match else (slug or "")
+
+
+def _archive_document(title, description, sections, body, now_dt, crumb):
     return site_chrome.document(
         title, description, "sandbox", sections,
         site_chrome.stamp(now_dt), body,
         script_src="./site.js", scripts=("./tables.js",),
-        prefix="../", tools=site_chrome.VIEW_BUTTON,
+        prefix="../", crumb=crumb,
     )
 
 
@@ -1608,6 +1697,7 @@ def archive_index_html(groups, now_dt):
         "Settled Sandbox bets by week.",
         (("weeks", "Weeks"),),
         body, now_dt,
+        (("Sandbox", "../sandbox.html"), ("Archive", None)),
     )
 
 
@@ -1691,7 +1781,7 @@ def archive_week_html(slug, rows, now_dt, d=None):
     note = outage_notes(d, *bounds) if d is not None and bounds else ""
     body = f"""<h1>Archive · {esc(label)}</h1>
 <p class="lede">{n:,} settled {noun}. Paper only. <a href="./index.html">All weeks</a> · <a href="../sandbox.html#recently-settled">Recently settled</a></p>
-{note}{_tools("Search contests…", "Search this week") if n else ""}
+{note}{_tools("Search contests…", "Search this week", view=True) if n else ""}
 {_sortable(HIST_HEAD, rows_html) if n else '<div class="note">Nothing settled this week.</div>'}
 <footer>{_FOOT}</footer>
 """
@@ -1700,6 +1790,8 @@ def archive_week_html(slug, rows, now_dt, d=None):
         f"Sandbox bets settled in {label}.",
         (),
         body, now_dt,
+        (("Sandbox", "../sandbox.html"), ("Archive", "./index.html"),
+         (_week_crumb(slug), None)),
     )
 
 
@@ -1807,13 +1899,13 @@ def _sandbox_html(d, st, now_dt, full=None):
     groups = archive_groups(older)
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)
-    n_void = sum(1 for q in d["quotes"]
-                 if q["status"] == "void" and q["bet"] and not S.removed_row(q))
+    n_void = sum(1 for q in T.bet_rows(d)
+                 if q["status"] == "void" and not S.removed_row(q))
     # A stale city-day flag does not make a void a repeat. The void stays in
     # this count and on the settled pages, and out of the city-day count.
     # Weather is not on the page, so its repeats are not in this count.
-    n_city = sum(1 for q in d["quotes"]
-                 if q.get("bet") and _cityday_repeat(q) and not S.removed_row(q))
+    n_city = sum(1 for q in T.bet_rows(d)
+                 if _cityday_repeat(q) and not S.removed_row(q))
     _city = (f" · {n_city} city-day repeat set aside" if n_city == 1
              else (f" · {n_city} city-day repeats set aside" if n_city else ""))
     today = _chicago_today(now_dt)
@@ -1832,8 +1924,8 @@ def _sandbox_html(d, st, now_dt, full=None):
     # `full`; the sport sections then total those rows, which are kept lanes.
     rows = pair_list(full, st)
     live = {(r["name"], r["sport"]) for r in rows if r["v"] != "retired"}
-    leads = sorted(x for x in (T.close_lead_min(q) for q in d["quotes"]
-                               if q.get("bet") and (q["source"], q["sport"]) in live)
+    leads = sorted(x for x in (T.close_lead_min(q) for q in T.bet_rows(d)
+                               if (q["source"], q["sport"]) in live)
                    if x is not None and x >= 0)
     close_line = (f" A closing price counts only when taken within {T.CLOSE_MAX_LEAD_MIN} minutes "
                   f"of the start ({sum(1 for x in leads if x <= T.CLOSE_MAX_LEAD_MIN)} of {len(leads)} "
@@ -1857,15 +1949,15 @@ def _sandbox_html(d, st, now_dt, full=None):
 <section id="running">
 <h2>Running ({n_live:,})</h2>
 <p class="sm mut">Bets still open. The price is the number next to the contest.</p>
-{_tools("Search contests…", "Search running bets") if n_live else ""}
+{_tools("Search contests…", "Search running bets", view=True) if n_live else ""}
 {_sortable(LIVE_HEAD, live_rows) if n_live else '<div class="note">No open bets.</div>'}
 </section>
 
 <section id="recently-settled">
 <h2>Recently settled ({len(recent):,})</h2>
 <p class="sm mut">The last {RECENT_DAYS} days in America/Chicago, through the build date. {n_hist - n_void:,} settled on the record{f" · {n_void} void" if n_void else ""}{_city}; older bets are in the archive.</p>
-{recent_note}{_tools("Search contests…", "Search recently settled bets") if recent else ""}
-{_sortable(HIST_HEAD, recent_rows) if recent else '<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
+{recent_note}{_tools("Search contests…", "Search recently settled bets", view=not n_live) if recent else ""}
+{_sortable(HIST_HEAD, recent_rows) if recent else f'<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'}
 </section>
 
 <section id="archive">
@@ -1925,7 +2017,6 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         ("summary", "What it says"),
         ("by-sport", "By sport"),
         ("reference", "Reference"),
-        ("method", "Method"),
     )
     return site_chrome.document(
         "Sandbox Tracker",
@@ -1936,7 +2027,6 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         body,
         script_src="./site.js",
         scripts=("./tables.js",),
-        tools=site_chrome.VIEW_BUTTON,
     )
 
 
@@ -1969,7 +2059,7 @@ def trading_page(now=None):
                   'the market data keys, and the record below is what it published. This page is '
                   'built elsewhere and only renders it, so it does not reach the market itself.</div>')
     body = f"""<h1>Trading</h1>
-<p class="lede">Stock and crypto rules under test, judged per entry day. Paper only.</p>
+<p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
 <div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
@@ -1979,7 +2069,7 @@ def trading_page(now=None):
 </div>
 {trade_note}
 <section id="rules">
-<h2>Stock rules under test</h2>
+<h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
@@ -1992,7 +2082,7 @@ under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it doe
 """
     return site_chrome.document(
         "Edge Machine · Trading",
-        "Stock and crypto rules under test, judged per entry day at real prices.",
+        "Stock and ETF rules under test, judged per entry day at real prices.",
         "trading",
         (("rules", "Rules"),),
         site_chrome.stamp(now_dt),
@@ -2006,6 +2096,19 @@ def _write(path, text):
         f.write(text)
 
 
+def production_and_index(now, d, st, blob):
+    """Production page and the site root, one clock, one tile strip.
+
+    The shell does not count. Its summary is the tiles this call just computed,
+    so index.html cannot disagree with production.html.
+    """
+    import production
+    import shell_build
+    prod = label_cells(production.page(d, st, blob, "", now=now))
+    index = shell_build.page(now, d=d, st=st, blob=blob, tiles=shell_build.tiles_html(prod))
+    return prod, index
+
+
 def main():
     now = datetime.now(timezone.utc)
     sandbox, index, weeks = render_pages(now)
@@ -2013,11 +2116,57 @@ def main():
     print(f"wrote {OUT}")
     import production
     prod_out = os.path.join(os.path.dirname(OUT), "production.html")
-    _write(prod_out, label_cells(production.page(T.load(), T.load_stages(), production.load_feed(), "")))
+    index_out = os.path.join(os.path.dirname(OUT), "index.html")
+    prod_html, index_html = production_and_index(
+        now, T.load(), T.load_stages(), production.load_feed())
+    _write(prod_out, prod_html)
     print(f"wrote {prod_out}")
+    _write(index_out, index_html)
+    print(f"wrote {index_out}")
     trade_out = os.path.join(os.path.dirname(OUT), "trading.html")
     _write(trade_out, label_cells(trading_page(now)))
     print(f"wrote {trade_out}")
+    # Soccer rides the same rebuild because it reads the same ledger. A failure here must
+    # not cost the Sandbox and Production pages that already rendered above.
+    #
+    # No Kalshi call happens here. lane-preflight.yml is deliberately `contents: read` with
+    # no credentials, and a separate test asserts this job does not run the pre-flight at
+    # all, because backup-refresh judges the tracker by its last success and a red
+    # pre-flight must not read as a dead tracker. The Soccer page therefore renders the
+    # pre-flight file only when one exists, and says how old it is.
+    try:
+        import soccer_build
+        soccer_out = os.path.join(os.path.dirname(OUT), "soccer.html")
+        _write(soccer_out, label_cells(soccer_build.build(now=now)))
+        print(f"wrote {soccer_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::soccer page not rebuilt ({type(exc).__name__}: {exc})")
+    # Tennis and Cricket read the same ledger. Each failure stays on its own page.
+    # The Kalshi pre-flight file is soccer-specific, so neither page reads it.
+    try:
+        import tennis_build
+        tennis_out = os.path.join(os.path.dirname(OUT), "tennis.html")
+        _write(tennis_out, label_cells(tennis_build.build(now=now)))
+        print(f"wrote {tennis_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::tennis page not rebuilt ({type(exc).__name__}: {exc})")
+    try:
+        import cricket_build
+        cricket_out = os.path.join(os.path.dirname(OUT), "cricket.html")
+        _write(cricket_out, label_cells(cricket_build.build(now=now)))
+        print(f"wrote {cricket_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::cricket page not rebuilt ({type(exc).__name__}: {exc})")
+    # Crypto is the one domain page whose record is counted in MARKET-DAYS rather than
+    # bets, because its coins move together. The page exists to say so where the record is
+    # read; the Sandbox shows both pairs inside the folding Markets section.
+    try:
+        import crypto_build
+        crypto_out = os.path.join(os.path.dirname(OUT), "crypto.html")
+        _write(crypto_out, label_cells(crypto_build.build(now=now)))
+        print(f"wrote {crypto_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::crypto page not rebuilt ({type(exc).__name__}: {exc})")
     archive_dir = os.path.join(os.path.dirname(OUT), "archive")
     os.makedirs(archive_dir, exist_ok=True)
     keep = {"index.html"}

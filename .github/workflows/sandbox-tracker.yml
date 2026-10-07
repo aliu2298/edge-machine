@@ -14,7 +14,29 @@ on:
     # before kickoff and missed any tip published between runs for an early start.
     # sandbox_sources.ODDS_RUNS_PER_DAY must match this cadence, or credit pacing overspends.
     - cron: "11 2-23/3 * * *"
+    # A NINTH run, 2026-10-05, for crypto_fav_band and nothing else. That lane reads the
+    # Kalshi coin ladders 2-3.5h before their 21:05Z close, and the three-hourly cadence
+    # straddles the window without ever landing in it: 17:11 is 3.90h out (too early) and
+    # 20:11 is 0.90h (too late), so the lane could not have fired once. 18:11 is 2.90h out.
+    #
+    # It is 30 minutes from the boards at 18:41 rather than the usual ninety. That is
+    # acceptable and not an oversight: the shared group is cancel-in-progress: false, so an
+    # overlap QUEUES rather than cancelling, and a 90-minute clearance is impossible inside
+    # a 90-minute window that already contains a boards run. The cost is a possible short
+    # queue for the 18:41 boards refresh; the alternative was a lane that never fires.
+    - cron: "11 18 * * *"
   workflow_dispatch:
+  # The VPS asks for a run from inside that window by committing one line here, because
+  # GitHub's cron cannot hold a 90-minute slot: over 18 days this workflow ran 4.2 times a
+  # day against 8 scheduled and landed inside the window on 10 of 18. That box pushes with
+  # an SSH deploy key and holds no API token, and a push from a deploy key is a real event
+  # that starts a workflow, where a dispatch made with the repository's own GITHUB_TOKEN
+  # would not. Scoped to this one path, so the 15-minute closing-price pushes to
+  # data/sandbox_closes/ never trigger a tracker run.
+  push:
+    branches: [main]
+    paths:
+      - "data/crypto_window/**"
 
 permissions:
   contents: write
@@ -38,6 +60,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # actions/checkout with no ref checks out github.sha. That SHA is fixed
+      # when the run is created, and this job may have been queued behind
+      # another refresh-boards run (cancel-in-progress is false). A cron run
+      # created during the crypto-window push run would otherwise grade a
+      # ledger that does not contain the push run's rows. Fetch the tip now:
+      # the previous job in the group has finished, including its push.
+      #
+      # Skipped unless the event ref is main. workflow_dispatch from another
+      # branch keeps the default checkout of that branch's event SHA, on a
+      # local branch of that name. The commit step pushes the local main ref,
+      # which that checkout does not create, so the dispatch still does not
+      # publish that branch's tree to main. Do not point this checkout at
+      # main, and do not push HEAD:main.
+      - name: Start from the main tip
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          git reset --hard origin/main
+          test "$(git rev-parse --abbrev-ref HEAD)" = "main"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
@@ -144,7 +188,7 @@ jobs:
           # commits the data files only — not public_site, which may be half
           # written or still describing the previous feed.
           DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
-          SITE="public_site/sandbox.html public_site/production.html"
+          SITE="public_site/sandbox.html public_site/production.html public_site/index.html"
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE
             # trading.html is rebuilt with the other pages. site.css and the
@@ -152,6 +196,24 @@ jobs:
             # add when the page is absent so an empty diff still exits 0.
             if [ -f public_site/trading.html ]; then
               git add public_site/trading.html
+            fi
+            # soccer.html, tennis.html and cricket.html are rebuilt with the
+            # other pages. Skip each add when the page is absent so an empty
+            # diff still exits 0.
+            if [ -f public_site/soccer.html ]; then
+              git add public_site/soccer.html
+            fi
+            if [ -f public_site/tennis.html ]; then
+              git add public_site/tennis.html
+            fi
+            if [ -f public_site/cricket.html ]; then
+              git add public_site/cricket.html
+            fi
+            # crypto.html is rebuilt by sandbox_build.py from the same ledger.
+            # It must be staged here or the live page stays stale even though
+            # the build succeeded.
+            if [ -f public_site/crypto.html ]; then
+              git add public_site/crypto.html
             fi
             # Weekly archive pages are rebuilt with the Sandbox. Skip the add
             # when the directory is absent so an empty diff still exits 0.
@@ -181,20 +243,35 @@ jobs:
               exit 0
             fi
 
-            # A rejection here means refresh-boards published while this run was working.
-            # Rebase, do NOT reset: unlike the boards, this ledger is not derivable from
-            # anything — it is the only record of what each source said and when, and a
-            # reset would silently throw away calls that have already been graded. The
-            # rebase is safe because the two workflows write disjoint files: nothing else
-            # in the repo touches sandbox.html, production.html, sandbox_ledger.json, stages.json or sandbox_archive/.
+            # A rejection here means something else published while this run was
+            # working. Rebase, do NOT reset: unlike the boards, this ledger is
+            # not derivable from anything — it is the only record of what each
+            # source said and when, and a reset would throw away calls that
+            # have already been graded. refresh-boards writes
+            # data/sandbox_closes/boards.json only and does not stage
+            # index.html. The close job and the watchdog write their own files
+            # under data/sandbox_closes/. Those commits rebase cleanly.
+            # Takeover may republish the shell by copying this page's tiles; it
+            # does not count them again, and it shares this concurrency group
+            # so it is not pushing while this job holds the group.
             echo "push rejected — rebasing onto the newer main (attempt $attempt)"
-            # -X theirs: on a conflict, keep THIS run's copy (during a rebase "theirs" is the
-            # commit being replayed). The pages are regenerated from this run's ledger, and a
-            # hand-built copy pushed from a laptop mid-run made the rebase stop and the run lose
-            # its promotions (2026-09-16 22:08).
-            # --autostash: anything still dirty outside the data list (public_site is already
-            # restored above) must not make this rebase refuse.
-            git pull --rebase --autostash -X theirs origin main
+            # No strategy option on the rebase. Preferring the commit being
+            # replayed keeps this run's copy of every conflicting hunk. That
+            # used to let a hand-built page from a laptop through instead of
+            # stopping the rebase and losing this run's promotions (2026-09-16
+            # 22:08). The same preference also resolves a ledger conflict: two
+            # tracker commits from one base both append quotes and grades in
+            # that hunk, the rebase succeeds with valid JSON, and the other
+            # run's rows are gone. A conflict now fails the push. The next run
+            # starts from the main tip above and logs again.
+            # --autostash: anything still dirty outside the data list
+            # (public_site is already restored above) must not make this rebase
+            # refuse.
+            if ! git pull --rebase --autostash origin main; then
+              git rebase --abort 2>/dev/null || echo "rebase was not left in progress"
+              echo "::error::rebase onto origin/main conflicted; refusing to drop the other side's rows"
+              exit 1
+            fi
           done
           echo "::error::could not push the ledger after 3 attempts"
           exit 1

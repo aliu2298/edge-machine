@@ -27,6 +27,7 @@ import json
 import math
 import os
 import statistics
+import subprocess
 from zoneinfo import ZoneInfo
 
 import market_sources as M
@@ -40,6 +41,7 @@ STAKE = 1000.0          # notional per trade, so P/L reads in dollars as well as
 READ_FLOOR = 30         # entry days before a record is read at all
 EARLY_N = 10            # below this, not even a lean is shown
 BENCH = "SPY"
+VOID_GAP = 2.0           # an overnight move past 2x either way is a corporate action, not a price
 
 
 # --------------------------------------------------------------------------- indicators
@@ -258,6 +260,8 @@ RULES = {
              "known still pays after costs, the Sandbox will show it; if it does not, that is "
              "the answer for every variant of it."),
     "sw_52w_breakout": dict(
+        retired="2026-10-04: removed by choice — "
+                "2 entry days, -5.85% a day v SPY; backtest -2.42% (t -3.81)",
         lane="swing", label="52-week breakout on volume", signal=_sw_breakout, exit=_sw_breakout_exit,
         note="Pre-registered 2026-09-19. Buy the next open when a stock closes at its highest "
              "close of the last 252 sessions on volume at least 1.5x its 50-day average. Leave at "
@@ -272,6 +276,8 @@ RULES = {
              "own open that day. Hold 5 sessions, then leave at the open. Tests whether the "
              "crowd overreacts to a single bad headline in a name the market otherwise likes."),
     "sw_ma_cross_rsi": dict(
+        retired="2026-10-04: removed by choice — "
+                "1 entry day, -5.53% a day v SPY",
         lane="swing", label="10/100 MA cross with an RSI filter", signal=_sw_ma_cross,
         exit=_sw_ma_cross_exit,
         note="The swing-trader project's own strategy (~/Swing trader, June 2026), registered "
@@ -319,6 +325,8 @@ RULES = {
              "the window itself. The question is only whether the overnight premium beats 10bp "
              "of round-trip cost a night — a hard bar at this frequency."),
     "dt_orb30": dict(
+        retired="2026-10-04: over 50 closed trades and behind SPY — "
+                "10 entry days, 158 trades, -0.27% a day v SPY",
         lane="day", label="Opening-range breakout (30 min)", signal=None, exit=None,
         note="Pre-registered 2026-09-19. On the 20 most liquid names only: take the first "
              "5-minute close beyond the first 30 minutes' range, enter at the next bar's open, "
@@ -328,6 +336,8 @@ RULES = {
              "after them; this lane asks whether US equities, with an actual opening auction, "
              "behave differently."),
     "dt_orb30_long": dict(
+        retired="2026-10-04: over 50 closed trades and behind SPY — "
+                "8 entry days, 56 trades, -0.22% a day v SPY",
         lane="day", label="Opening-range breakout, long only", signal=None, exit=None,
         live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22: the opening-range breakout a cash account can actually "
@@ -336,6 +346,8 @@ RULES = {
              "open, stop at the range low, leave at the close. On its first live day the two-way "
              "rule's trades were 13 long and 5 short, so this measures the part that is tradable."),
     "dt_intraday_mom": dict(
+        retired="2026-10-04: removed by choice — "
+                "5 entry days, -0.19% a day v cash",
         lane="day", label="Market intraday momentum (last half-hour)", signal=None, exit=None,
         universe="etf", bench="cash", live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22 from Gao, Han, Li and Zhou (Journal of Financial "
@@ -345,6 +357,8 @@ RULES = {
              "ten other ETFs; the 2024 'Beat the Market' paper builds a full intraday momentum "
              "system on the same effect. Judged against cash, after 5bp a side."),
     "dt_vwap_reclaim": dict(
+        retired="2026-10-04: over 50 closed trades and behind SPY — "
+                "10 entry days, 153 trades, -0.22% a day v SPY",
         lane="day", label="VWAP reclaim", signal=None, exit=None,
         note="Pre-registered 2026-09-19. Long only, same 20 names: after a stock has traded "
              "below the session VWAP, take the first 5-minute close back above it from 14:00 UTC, "
@@ -352,6 +366,8 @@ RULES = {
              "the close. VWAP is the most-watched intraday level there is, which is exactly why "
              "it is worth measuring rather than assuming."),
     "cr_trend20": dict(
+        retired="2026-10-04: removed by choice — "
+                "no trade yet in 8 sessions",
         lane="crypto", label="Crypto trend: close crosses above its 20-day average",
         signal=_cr_trend, exit=_cr_trend_exit, universe="crypto", bench="cash",
         cost_bps=M.CRYPTO_COST_BPS_PER_SIDE, live_from=LIVE_2026_09_23,
@@ -362,6 +378,8 @@ RULES = {
              "0.25% a side; the stricter comparison, simply holding the coin, is noted beside it "
              "because any long-biased rule looks good in a rising market."),
     "cr_btc_2200": dict(
+        retired="2026-10-04: removed by choice — "
+                "9 entry days, -0.37% a day v cash",
         lane="crypto", label="BTC 22:00-00:00 UTC seasonality", signal=None, exit=None,
         universe=["BTC/USD"], bench="cash", cost_bps=M.CRYPTO_COST_BPS_PER_SIDE,
         live_from=LIVE_2026_09_23,
@@ -372,6 +390,31 @@ RULES = {
              "against an edge that was a few basis points a night. If it survives that, it is "
              "real; the expectation is that it does not."),
 }
+# Taken off every page 2026-10-04, the same way a removed Sandbox lane is.
+# Five were retired by choice and three by the rule (50 closed trades, behind
+# SPY). A removed rule does not log, grade, or render. The ledger keeps every
+# trade it already has. A rule with no trades that is not in this set still
+# renders: emptiness is not removal.
+REMOVED_RULES = frozenset({
+    "cr_btc_2200",
+    "dt_intraday_mom",
+    "sw_52w_breakout",
+    "sw_ma_cross_rsi",
+    "cr_trend20",
+    "dt_orb30",
+    "dt_orb30_long",
+    "dt_vwap_reclaim",
+})
+
+
+def rule_removed(name):
+    """True when this trading rule is off the board. Its rows stay in the ledger."""
+    return name in REMOVED_RULES
+
+
+# A retired rule is not scanned. REMOVED_RULES is what the pages and the
+# entry gate read, so a retired rule cannot be logged by passing RULES through.
+ACTIVE = {k: v for k, v in RULES.items() if not v.get("retired")}
 
 
 # --------------------------------------------------------------------------- the day lane
@@ -494,7 +537,7 @@ def scan_day(bars_by_symbol, d, research_before=None, rules=None):
         bench_day.setdefault(_day(b), []).append(b)
     added = 0
     for name, rule in rules.items():
-        if rule["lane"] != "day":
+        if rule_removed(name) or rule["lane"] != "day":
             continue
         start = starts(rule, research_before)
         for sym in universe_for(rule, list(bars_by_symbol)):
@@ -541,7 +584,7 @@ def scan_hours(bars_by_symbol, d, research_before=None, rules=None):
     seen = {t["id"] for t in d["trades"]}
     added = 0
     for name, rule in rules.items():
-        if name != "cr_btc_2200":
+        if rule_removed(name) or name != "cr_btc_2200":
             continue
         start = starts(rule, research_before)
         for sym in universe_for(rule, list(bars_by_symbol)):
@@ -577,12 +620,40 @@ def load():
     return d
 
 
+def code_sha():
+    """The checkout this run graded against, stamped into the ledger with the trades.
+
+    The daily runner passes MARKET_CODE_SHA from `git rev-parse HEAD` before it
+    commits the ledger, so the recorded SHA is the code that ran and not the
+    ledger commit that follows. A direct run reads that same rev-parse. When
+    neither is available the stamp is the string "unknown", which replaces any
+    previous meta.code_sha.
+    """
+    stamped = os.environ.get("MARKET_CODE_SHA", "").strip()
+    if stamped:
+        return stamped
+    try:
+        out = subprocess.run(
+            ["git", "-C", ROOT, "rev-parse", "HEAD"],
+            capture_output=True, text=True, timeout=10, check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+    if out.returncode != 0:
+        return "unknown"
+    sha = out.stdout.strip()
+    return sha or "unknown"
+
+
 def save(d):
     d["meta"]["updated"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    d["meta"]["code_sha"] = code_sha()
     os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
     tmp = LEDGER + ".tmp"
     with open(tmp, "w") as f:
         json.dump(d, f, indent=1, sort_keys=True)
+        f.flush()
+        os.fsync(f.fileno())
     os.replace(tmp, LEDGER)
 
 
@@ -604,6 +675,8 @@ def scan(bars_by_symbol, d, now=None, rules=None, research_before=None):
     seen = {t["id"] for t in d["trades"]}
     added = 0
     for name, rule in (rules or RULES).items():
+        if rule_removed(name):
+            continue
         if rule["lane"] not in ("swing", "crypto") or rule.get("signal") is None:
             continue
         start = starts(rule, research_before)
@@ -647,7 +720,7 @@ def grade(bars_by_symbol, d, rules=None):
     bench = {_day(b): b for b in bars_by_symbol.get(BENCH, [])}
     closed = 0
     for t in d["trades"]:
-        if t["status"] != "open":
+        if t["status"] != "open" or rule_removed(t.get("rule")):
             continue
         bars = bars_by_symbol.get(t["symbol"]) or []
         idx = next((i for i, b in enumerate(bars) if _day(b) == t["entry_day"]), None)
@@ -657,6 +730,14 @@ def grade(bars_by_symbol, d, rules=None):
         if not rule:
             continue
         after = bars[idx + 1:]
+        # An overnight gap past VOID_GAP with no split adjustment is a corporate action the
+        # feed did not adjust (CTVA's spin-off, 2026-10-01), not a price move: void, never grade.
+        held = bars[idx:]
+        gap = next((b for p, b in zip(held, held[1:])
+                    if not 1 / VOID_GAP < b["o"] / p["c"] < VOID_GAP), None)
+        if gap is not None:
+            t.update(status="void", void_reason=f"unadjusted corporate action ({_day(gap)})")
+            continue
         k = rule["exit"](after, dict(hist=bars[:idx + 1]))
         if k is None or k + 1 >= len(after):
             continue                                  # still open, or no open to leave at yet
@@ -684,6 +765,7 @@ VERDICTS = {                       # key -> (label, chip class, order)
     "early":     ("Too early", "n", 4),
     "noedge":    ("No edge", "x", 5),
     "waiting":   ("Waiting for trades", "n", 6),
+    "retired":   ("Retired", "x", 7),
 }
 
 
@@ -717,6 +799,8 @@ def assess(d, rule):
         v = ("proven" if ahead and edge_t >= 2 else "working") if ahead else "noedge"
     else:
         v = "promising" if (edge or 0) > 0 and (mean or 0) > 0 else "behind"
+    if (RULES.get(rule) or {}).get("retired"):
+        v = "retired"
     r = (d.get("research") or {}).get(rule) or {}
     return dict(rule=rule, days=n, trades=len(ts), open=len(op), verdict=v,
                 research_days=r.get("days", 0), research_trades=r.get("trades", 0),
@@ -729,7 +813,8 @@ def assess(d, rule):
 
 
 def report(d, rules=None):
-    return [assess(d, name) for name in (rules or RULES)]
+    """One row per rule that is still on the board. Removed rules are not counted."""
+    return [assess(d, name) for name in (rules or RULES) if not rule_removed(name)]
 
 
 def main():
@@ -744,12 +829,13 @@ def main():
     bars.update(M.crypto_bars(M.CRYPTO, "1Day", start=start))
     print(f"bars for {len(bars)} symbols")
     live_from = d["meta"].setdefault("live_from", datetime.date.today().isoformat())
-    added = scan(bars, d, research_before=live_from)
+    added = scan(bars, d, rules=ACTIVE, research_before=live_from)
     closed = grade(bars, d)
     recent = (datetime.date.today() - datetime.timedelta(days=30)).isoformat()
     intraday = M.bars(sorted(set(DAY_UNIVERSE + [BENCH] + M.ETFS)), "5Min", start=recent)
-    added += scan_day(intraday, d, research_before=live_from)
-    added += scan_hours(M.crypto_bars(["BTC/USD"], "1Hour", start=recent), d, research_before=live_from)
+    added += scan_day(intraday, d, rules=ACTIVE, research_before=live_from)
+    added += scan_hours(M.crypto_bars(["BTC/USD"], "1Hour", start=recent), d, rules=ACTIVE,
+                         research_before=live_from)
     save(d)
     print(f"logged {added} new trade(s), closed {closed}")
     for r in report(d):

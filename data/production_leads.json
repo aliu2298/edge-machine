@@ -1,204 +1,6 @@
 {
- "board_built_at": "2026-10-02T16:40:54+00:00",
+ "board_built_at": "2026-10-07T02:23:59+00:00",
  "leads": {
-  "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule": {
-   "away": "Rinya Nakamura",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-26",
-   "edge_at_log": null,
-   "first_seen": "2026-09-23",
-   "headline": "Rinya Nakamura to win",
-   "home": "Brady Hiestand",
-   "id": "2026-09-26|Brady Hiestand|Rinya Nakamura|Rinya Nakamura to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-26T18:30Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Brady Hiestand v Rinya Nakamura",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.75,
-   "route": {
-    "market": "aec-ufc-brahie-rinnak-2026-09-26",
-    "outcome": "Rinya Nakamura",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-ufc-brahie-rinnak-2026-09-26",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "void"
-  },
-  "2026-09-26|John Castaneda|Alatengheili|John Castaneda to win \u00b7 MMA favourite-band rule": {
-   "away": "Alatengheili",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-26",
-   "edge_at_log": null,
-   "first_seen": "2026-09-24",
-   "headline": "John Castaneda to win",
-   "home": "John Castaneda",
-   "id": "2026-09-26|John Castaneda|Alatengheili|John Castaneda to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-26T21:30Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "John Castaneda v Alatengheili",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.75,
-   "route": {
-    "market": "aec-ufc-johcas-alaten-2026-09-26",
-    "outcome": "John Castaneda",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-ufc-johcas-alaten-2026-09-26",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "miss"
-  },
-  "2026-09-26|Vanessa Demopoulos|Yazmin Jauregui|Yazmin Jauregui to win \u00b7 MMA favourite-band rule": {
-   "away": "Yazmin Jauregui",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-26",
-   "edge_at_log": null,
-   "first_seen": "2026-09-22",
-   "headline": "Yazmin Jauregui to win",
-   "home": "Vanessa Demopoulos",
-   "id": "2026-09-26|Vanessa Demopoulos|Yazmin Jauregui|Yazmin Jauregui to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-26T18:30Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Vanessa Demopoulos v Yazmin Jauregui",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.87,
-   "route": {
-    "market": "aec-ufc-vandem-yazjau-2026-09-26",
-    "outcome": "Yazmin Jauregui",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-ufc-vandem-yazjau-2026-09-26",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "void"
-  },
-  "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "New England Revolution",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "New England Revolution"
-   },
-   "date": "2026-09-27",
-   "edge_at_log": null,
-   "first_seen": "2026-09-25",
-   "headline": "New England Revolution to score 1+",
-   "home": "Real Salt Lake",
-   "id": "2026-09-27|Real Salt Lake|New England Revolution|New England Revolution to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-09-27T01:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Real Salt Lake v New England Revolution",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.8,
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26SEP26RSLNE-NE1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "miss"
-  },
-  "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule": {
-   "away": "Camila Reynoso",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-09-29",
-   "edge_at_log": null,
-   "first_seen": "2026-09-28",
-   "headline": "Aieza Bertolso to win",
-   "home": "Aieza Bertolso",
-   "id": "2026-09-29|Aieza Bertolso|Camila Reynoso|Aieza Bertolso to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-29T23:30Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Aieza Bertolso v Camila Reynoso",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.81,
-   "route": {
-    "market": "aec-dwcs-aieber-camrey-2026-09-29",
-    "outcome": "Aieza Bertolso",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-aieber-camrey-2026-09-29",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "hit"
-  },
-  "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule": {
-   "away": "Zaurbek Sabanov",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-30",
-   "edge_at_log": null,
-   "first_seen": "2026-09-28",
-   "headline": "Zaurbek Sabanov to win",
-   "home": "Adama Diop",
-   "id": "2026-09-30|Adama Diop|Zaurbek Sabanov|Zaurbek Sabanov to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-30T00:30Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Adama Diop v Zaurbek Sabanov",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.81,
-   "route": {
-    "market": "aec-dwcs-adadio-zausab-2026-09-29",
-    "outcome": "Zaurbek Sabanov",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-adadio-zausab-2026-09-29",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "miss"
-  },
-  "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule": {
-   "away": "George Staines",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-09-30",
-   "edge_at_log": null,
-   "first_seen": "2026-09-28",
-   "headline": "George Staines to win",
-   "home": "Loai Abushaar",
-   "id": "2026-09-30|Loai Abushaar|George Staines|George Staines to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-09-30T00:25Z",
-   "lane": "production",
-   "league": "MMA",
-   "match": "Loai Abushaar v George Staines",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.76,
-   "route": {
-    "market": "aec-dwcs-loaabu-geosta-2026-09-29",
-    "outcome": "George Staines",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-dwcs-loaabu-geosta-2026-09-29",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "hit"
-  },
   "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Gibraltar",
    "bet": {
@@ -270,6 +72,35 @@
    "sport": "soccer_team1_intl",
    "status": "hit"
   },
+  "2026-10-02|North West Dragons|Lions|North West Dragons to win \u00b7 Oddspedia community tips": {
+   "away": "Lions",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-02",
+   "edge_at_log": null,
+   "first_seen": "2026-10-02",
+   "headline": "North West Dragons to win",
+   "home": "North West Dragons",
+   "id": "2026-10-02|North West Dragons|Lions|North West Dragons to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-02T16:00Z",
+   "lane": "production",
+   "league": "Cricket",
+   "match": "North West Dragons v Lions",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.37,
+   "route": {
+    "market": "KXT20MATCH-26OCT021200NWDLIO",
+    "outcome": "North West Dragons",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT021200NWDLIO",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "hit"
+  },
   "2026-10-02|Poland|Romania|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Romania",
    "bet": {
@@ -284,8 +115,6 @@
    "id": "2026-10-02|Poland|Romania|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-02T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
    "league": "UEFA Nations League",
    "match": "Poland v Romania",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -293,38 +122,65 @@
    "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT02POLROU-2",
    "source": "o15_ranked",
    "sport": "soccer_o15_intl",
-   "status": "pending"
+   "status": "hit"
   },
-  "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule": {
-   "away": "Lucas Armand",
+  "2026-10-02|Titans (SA)|Knights|Titans (SA) to win \u00b7 Oddspedia community tips": {
+   "away": "Knights",
    "bet": {
     "kind": "match_result",
     "side": "home"
    },
+   "date": "2026-10-02",
+   "edge_at_log": null,
+   "first_seen": "2026-10-02",
+   "headline": "Titans (SA) to win",
+   "home": "Titans (SA)",
+   "id": "2026-10-02|Titans (SA)|Knights|Titans (SA) to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-02T16:00Z",
+   "lane": "production",
+   "league": "Cricket",
+   "match": "Titans (SA) v Knights",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.71,
+   "route": {
+    "market": "KXT20MATCH-26OCT021200TTNKNI",
+    "outcome": "Titans (SA)",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT021200TTNKNI",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "hit"
+  },
+  "2026-10-03|Bangladesh|Sri Lanka|Sri Lanka to win \u00b7 Oddspedia community tips": {
+   "away": "Sri Lanka",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
    "date": "2026-10-03",
    "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Anthony Wint to win",
-   "home": "Anthony Wint",
-   "id": "2026-10-03|Anthony Wint|Lucas Armand|Anthony Wint to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-03T20:30Z",
+   "first_seen": "2026-10-02",
+   "headline": "Sri Lanka to win",
+   "home": "Bangladesh",
+   "id": "2026-10-03|Bangladesh|Sri Lanka|Sri Lanka to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-03T00:00Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
-   "league": "MMA",
-   "match": "Anthony Wint v Lucas Armand",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.82,
+   "league": "Cricket",
+   "match": "Bangladesh v Sri Lanka",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.33,
    "route": {
-    "market": "aec-ufc-antwin-lucarm-2026-10-03",
-    "outcome": "Anthony Wint",
-    "outcome_side": "yes",
+    "market": "aec-t20icr-ban-slr-2026-10-03-ban-slr",
+    "outcome": "Sri Lanka",
+    "outcome_side": "no",
     "venue": "polymarket_us"
    },
-   "sandbox_quote": "mma_fav_band:aec-ufc-antwin-lucarm-2026-10-03",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
+   "sandbox_quote": "oddspedia:aec-t20icr-ban-slr-2026-10-03-ban-slr",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "hit"
   },
   "2026-10-03|Canada|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Peru",
@@ -340,8 +196,6 @@
    "id": "2026-10-03|Canada|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-03T18:00Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
    "league": "International Friendly",
    "match": "Canada v Peru",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -349,38 +203,7 @@
    "sandbox_quote": "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT03CANPER-2",
    "source": "o15_ranked",
    "sport": "soccer_o15_intl",
-   "status": "pending"
-  },
-  "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule": {
-   "away": "Andrey Pulyaev",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-03",
-   "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Damian Pinas to win",
-   "home": "Damian Pinas",
-   "id": "2026-10-03|Damian Pinas|Andrey Pulyaev|Damian Pinas to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-03T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
-   "league": "MMA",
-   "match": "Damian Pinas v Andrey Pulyaev",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.81,
-   "route": {
-    "market": "aec-ufc-dampin-andpul-2026-10-03",
-    "outcome": "Damian Pinas",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-ufc-dampin-andpul-2026-10-03",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-03|Iceland|Bulgaria|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Bulgaria",
@@ -396,8 +219,6 @@
    "id": "2026-10-03|Iceland|Bulgaria|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-03T16:00Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
    "league": "UEFA Nations League",
    "match": "Iceland v Bulgaria",
    "pair": "o15_ranked|soccer_o15_intl",
@@ -405,7 +226,7 @@
    "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT03ISLBUL-2",
    "source": "o15_ranked",
    "sport": "soccer_o15_intl",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-03|India|Pakistan|Pakistan to win \u00b7 Oddspedia community tips": {
    "away": "Pakistan",
@@ -421,8 +242,6 @@
    "id": "2026-10-03|India|Pakistan|Pakistan to win \u00b7 Oddspedia community tips",
    "kickoff": "2026-10-03T04:30Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
    "league": "Cricket",
    "match": "India v Pakistan",
    "pair": "oddspedia|cricket",
@@ -436,155 +255,594 @@
    "sandbox_quote": "oddspedia:KXT20MATCH-26OCT030030INDPAK",
    "source": "oddspedia",
    "sport": "cricket",
-   "status": "pending"
+   "status": "miss"
   },
-  "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule": {
-   "away": "Bruce Whitehead",
+  "2026-10-04|CSA Emerging|Western Province|CSA Emerging to win \u00b7 Oddspedia community tips": {
+   "away": "Western Province",
    "bet": {
     "kind": "match_result",
     "side": "home"
    },
-   "date": "2026-10-03",
+   "date": "2026-10-04",
    "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Jacobe Smith to win",
-   "home": "Jacobe Smith",
-   "id": "2026-10-03|Jacobe Smith|Bruce Whitehead|Jacobe Smith to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-03T23:30Z",
+   "first_seen": "2026-10-04",
+   "headline": "CSA Emerging to win",
+   "home": "CSA Emerging",
+   "id": "2026-10-04|CSA Emerging|Western Province|CSA Emerging to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-04T16:00Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
-   "league": "MMA",
-   "match": "Jacobe Smith v Bruce Whitehead",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.88,
+   "league": "Cricket",
+   "match": "CSA Emerging v Western Province",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.39,
    "route": {
-    "market": "aec-ufc-jacsmi-bruwhi-2026-10-03",
-    "outcome": "Jacobe Smith",
+    "market": "KXT20MATCH-26OCT041200CSAEMEWPR",
+    "outcome": "CSA Emerging",
     "outcome_side": "yes",
-    "venue": "polymarket_us"
+    "venue": "kalshi"
    },
-   "sandbox_quote": "mma_fav_band:aec-ufc-jacsmi-bruwhi-2026-10-03",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT041200CSAEMEWPR",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "miss"
   },
-  "2026-10-03|Marcus McGhee|Anthony Romero|Marcus McGhee to win \u00b7 MMA favourite-band rule": {
-   "away": "Anthony Romero",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-03",
-   "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Marcus McGhee to win",
-   "home": "Marcus McGhee",
-   "id": "2026-10-03|Marcus McGhee|Anthony Romero|Marcus McGhee to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-03T22:15Z",
-   "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
-   "league": "MMA",
-   "match": "Marcus McGhee v Anthony Romero",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.8,
-   "route": {
-    "market": "aec-ufc-marmcg-antrom-2026-10-03",
-    "outcome": "Marcus McGhee",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-ufc-marmcg-antrom-2026-10-03",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
-  },
-  "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule": {
-   "away": "Paul Elliott",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-03",
-   "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Shamil Erdogan to win",
-   "home": "Shamil Erdogan",
-   "id": "2026-10-03|Shamil Erdogan|Paul Elliott|Shamil Erdogan to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-03T01:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
-   "league": "MMA",
-   "match": "Shamil Erdogan v Paul Elliott",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.77,
-   "route": {
-    "market": "aec-one-shaerd-pauell-2026-10-02-shaerd-pauell",
-    "outcome": "Shamil Erdogan",
-    "outcome_side": "yes",
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "mma_fav_band:aec-one-shaerd-pauell-2026-10-02-shaerd-pauell",
-   "source": "mma_fav_band",
-   "sport": "mma",
-   "status": "pending"
-  },
-  "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule": {
-   "away": "Payton Talbott",
+  "2026-10-04|Lions|Warriors (SA)|Warriors (SA) to win \u00b7 Oddspedia community tips": {
+   "away": "Warriors (SA)",
    "bet": {
     "kind": "match_result",
     "side": "away"
    },
    "date": "2026-10-04",
    "edge_at_log": null,
-   "first_seen": "2026-10-01",
-   "headline": "Payton Talbott to win",
-   "home": "Deiveson Figueiredo",
-   "id": "2026-10-04|Deiveson Figueiredo|Payton Talbott|Payton Talbott to win \u00b7 MMA favourite-band rule",
-   "kickoff": "2026-10-04T01:15Z",
+   "first_seen": "2026-10-04",
+   "headline": "Warriors (SA) to win",
+   "home": "Lions",
+   "id": "2026-10-04|Lions|Warriors (SA)|Warriors (SA) to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-04T16:00Z",
    "lane": "production",
-   "last_seen": "2026-10-02",
-   "last_seen_at": "2026-10-02T16:40:54+00:00",
-   "league": "MMA",
-   "match": "Deiveson Figueiredo v Payton Talbott",
-   "pair": "mma_fav_band|mma",
-   "price_at_log": 0.84,
+   "league": "Cricket",
+   "match": "Lions v Warriors (SA)",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.43,
    "route": {
-    "market": "aec-ufc-deifig-paytal-2026-10-03",
-    "outcome": "Payton Talbott",
-    "outcome_side": "no",
-    "venue": "polymarket_us"
+    "market": "KXT20MATCH-26OCT041200LIOWAR",
+    "outcome": "Warriors (SA)",
+    "outcome_side": "yes",
+    "venue": "kalshi"
    },
-   "sandbox_quote": "mma_fav_band:aec-ufc-deifig-paytal-2026-10-03",
-   "source": "mma_fav_band",
-   "sport": "mma",
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT041200LIOWAR",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "price"
+  },
+  "2026-10-04|Malta|Andorra|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Andorra",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-04",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Over 1.5 goals",
+   "home": "Malta",
+   "id": "2026-10-04|Malta|Andorra|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-04T16:00Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Malta v Andorra",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.61,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT04MLTAND-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "miss"
+  },
+  "2026-10-05|Garden Route Badgers|Limpopo Impalas|Limpopo Impalas to win \u00b7 Oddspedia community tips": {
+   "away": "Limpopo Impalas",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-05",
+   "edge_at_log": null,
+   "first_seen": "2026-10-05",
+   "headline": "Limpopo Impalas to win",
+   "home": "Garden Route Badgers",
+   "id": "2026-10-05|Garden Route Badgers|Limpopo Impalas|Limpopo Impalas to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-05T11:00Z",
+   "lane": "production",
+   "league": "Cricket",
+   "match": "Garden Route Badgers v Limpopo Impalas",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.37,
+   "route": {
+    "market": "KXT20MATCH-26OCT050700GRBLIMP",
+    "outcome": "Limpopo Impalas",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT050700GRBLIMP",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "miss"
+  },
+  "2026-10-05|Liechtenstein|Gibraltar|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Gibraltar",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-05",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Liechtenstein",
+   "id": "2026-10-05|Liechtenstein|Gibraltar|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-05T18:45Z",
+   "lane": "production",
+   "league": "International Friendly",
+   "match": "Liechtenstein v Gibraltar",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.88,
+   "route": {
+    "market": "KXINTLFRIENDLYTOTAL-26OCT05LIEGIB-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT05LIEGIB-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Armenia",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-05",
+   "edge_at_log": null,
+   "first_seen": "2026-10-03",
+   "headline": "Over 1.5 goals",
+   "home": "Montenegro",
+   "id": "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-05T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Montenegro v Armenia",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.8,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT05MNEARM-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "miss"
+  },
+  "2026-10-05|Northern Ireland|Georgia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Georgia",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-05",
+   "edge_at_log": null,
+   "first_seen": "2026-10-02",
+   "headline": "Under 3.5 goals",
+   "home": "Northern Ireland",
+   "id": "2026-10-05|Northern Ireland|Georgia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-05T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Northern Ireland v Georgia",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT05NIRGEO-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT05NIRGEO-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-05|Pakistan Champions|Australia Champions|Pakistan Champions to win \u00b7 Oddspedia community tips": {
+   "away": "Australia Champions",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-05",
+   "edge_at_log": null,
+   "first_seen": "2026-10-05",
+   "headline": "Pakistan Champions to win",
+   "home": "Pakistan Champions",
+   "id": "2026-10-05|Pakistan Champions|Australia Champions|Pakistan Champions to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-05T11:30Z",
+   "lane": "production",
+   "league": "Cricket",
+   "match": "Pakistan Champions v Australia Champions",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.44,
+   "route": {
+    "market": "KXT20MATCH-26OCT050730PAKCHPAUSCHP",
+    "outcome": "Pakistan Champions",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT050730PAKCHPAUSCHP",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "price"
+  },
+  "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "San Marino",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Albania",
+   "id": "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Albania v San Marino",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.37,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT06ALBSMR-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06ALBSMR-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Colombia|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Peru",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Over 1.5 goals",
+   "home": "Colombia",
+   "id": "2026-10-06|Colombia|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-06T23:45Z",
+   "lane": "production",
+   "league": "International Friendly",
+   "match": "Colombia v Peru",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.79,
+   "sandbox_quote": "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT06COLPER-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Colombia|Peru|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Peru",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Colombia",
+   "id": "2026-10-06|Colombia|Peru|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T23:45Z",
+   "lane": "production",
+   "league": "International Friendly",
+   "match": "Colombia v Peru",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.77,
+   "route": {
+    "market": "KXINTLFRIENDLYTOTAL-26OCT06COLPER-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT06COLPER-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Croatia|Spain|Spain to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Spain",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Spain"
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Spain to score 1+",
+   "home": "Croatia",
+   "id": "2026-10-06|Croatia|Spain|Spain to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Croatia v Spain",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.95,
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT06CROESP-ESP1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Jordan|Venezuela|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Venezuela",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-05",
+   "headline": "Under 3.5 goals",
+   "home": "Jordan",
+   "id": "2026-10-06|Jordan|Venezuela|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T17:00Z",
+   "lane": "production",
+   "league": "International Friendly",
+   "match": "Jordan v Venezuela",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "KXINTLFRIENDLYTOTAL-26OCT06JORVEN-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT06JORVEN-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Kazakhstan|Faroe Islands|Faroe Islands to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Faroe Islands",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Faroe Islands"
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Faroe Islands to score 1+",
+   "home": "Kazakhstan",
+   "id": "2026-10-06|Kazakhstan|Faroe Islands|Faroe Islands to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-06T14:00Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Kazakhstan v Faroe Islands",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.67,
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT06KAZFRO-FRO1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Kazakhstan|Faroe Islands|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Faroe Islands",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-03",
+   "headline": "Under 3.5 goals",
+   "home": "Kazakhstan",
+   "id": "2026-10-06|Kazakhstan|Faroe Islands|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T14:00Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Kazakhstan v Faroe Islands",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.8,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT06KAZFRO-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06KAZFRO-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "miss"
+  },
+  "2026-10-06|Luxembourg|Bulgaria|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Bulgaria",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Luxembourg",
+   "id": "2026-10-06|Luxembourg|Bulgaria|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Luxembourg v Bulgaria",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.82,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT06LUXBUL-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06LUXBUL-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Moldova|Slovakia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Slovakia",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-03",
+   "headline": "Over 1.5 goals",
+   "home": "Moldova",
+   "id": "2026-10-06|Moldova|Slovakia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Moldova v Slovakia",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "price_at_log": 0.79,
+   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT06MDASVK-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Moldova|Slovakia|Slovakia to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Slovakia",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Slovakia"
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Slovakia to score 1+",
+   "home": "Moldova",
+   "id": "2026-10-06|Moldova|Slovakia|Slovakia to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Moldova v Slovakia",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.91,
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26OCT06MDASVK-SVK1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "hit"
+  },
+  "2026-10-06|Scotland|Slovenia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Slovenia",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-06",
+   "edge_at_log": null,
+   "first_seen": "2026-10-04",
+   "headline": "Under 3.5 goals",
+   "home": "Scotland",
+   "id": "2026-10-06|Scotland|Slovenia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-06T18:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Scotland v Slovenia",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.81,
+   "route": {
+    "market": "KXUEFANLTOTAL-26OCT06SCOSLO-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT06SCOSLO-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-10-07|Lions|Garden Route Badgers|Garden Route Badgers to win \u00b7 Oddspedia community tips": {
+   "away": "Garden Route Badgers",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-07",
+   "edge_at_log": null,
+   "first_seen": "2026-10-06",
+   "headline": "Garden Route Badgers to win",
+   "home": "Lions",
+   "id": "2026-10-07|Lions|Garden Route Badgers|Garden Route Badgers to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-07T11:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-07",
+   "last_seen_at": "2026-10-07T02:23:59+00:00",
+   "league": "Cricket",
+   "match": "Lions v Garden Route Badgers",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.26,
+   "route": {
+    "market": "KXT20MATCH-26OCT070700LIOGRB",
+    "outcome": "Garden Route Badgers",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT070700LIOGRB",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "pending"
+  },
+  "2026-10-07|West Indies Champions|England Champions|England Champions to win \u00b7 Oddspedia community tips": {
+   "away": "England Champions",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-07",
+   "edge_at_log": null,
+   "first_seen": "2026-10-06",
+   "headline": "England Champions to win",
+   "home": "West Indies Champions",
+   "id": "2026-10-07|West Indies Champions|England Champions|England Champions to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-07T15:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-07",
+   "last_seen_at": "2026-10-07T02:23:59+00:00",
+   "league": "Cricket",
+   "match": "West Indies Champions v England Champions",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.6,
+   "route": {
+    "market": "KXT20MATCH-26OCT071130WICHPENGCHP",
+    "outcome": "England Champions",
+    "outcome_side": "yes",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT071130WICHPENGCHP",
+   "source": "oddspedia",
+   "sport": "cricket",
    "status": "pending"
   }
  },
  "pairs": {
-  "mma_fav_band|mma": {
-   "by_hand": "2026-09-22",
-   "entered_at": "2026-09-22T16:20:08+00:00",
-   "promoted_at": "2026-09-22T16:20:08+00:00",
-   "ready_at": "2026-09-22T16:20:08+00:00",
-   "route": "moved by hand on 2026-09-22",
-   "sandbox_clv": -0.008,
-   "sandbox_n": 5,
-   "sandbox_roi": -0.4899,
-   "sandbox_roi_fee": -0.4964
-  },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
    "entered_at": "2026-10-01T16:20:16+00:00",
    "promoted_at": "2026-10-01T16:20:16+00:00",
    "ready_at": "2026-10-01T16:20:16+00:00",
    "route": "moved by hand on 2026-10-01",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": -0.0063,
+   "sandbox_n": 8,
+   "sandbox_roi": -0.0142,
+   "sandbox_roi_fee": -0.0304
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -592,21 +850,10 @@
    "promoted_at": "2026-09-28T02:59:44+00:00",
    "ready_at": "2026-09-28T02:59:44+00:00",
    "route": "moved by hand on 2026-09-27",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
-  },
-  "pm_combo4|tennis_pmcombo": {
-   "by_hand": "2026-09-28",
-   "entered_at": "2026-09-28T17:01:21+00:00",
-   "promoted_at": "2026-09-28T17:01:21+00:00",
-   "ready_at": "2026-09-28T17:01:21+00:00",
-   "route": "moved by hand on 2026-09-28",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": 0.0067,
+   "sandbox_n": 6,
+   "sandbox_roi": 0.1801,
+   "sandbox_roi_fee": 0.1367
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -614,10 +861,10 @@
    "promoted_at": "2026-09-18T00:43:21+00:00",
    "ready_at": "2026-09-18T00:51:24+00:00",
    "route": "moved by hand on 2026-09-18",
-   "sandbox_clv": -0.0,
-   "sandbox_n": 8,
-   "sandbox_roi": -0.1304,
-   "sandbox_roi_fee": -0.1387
+   "sandbox_clv": -0.0036,
+   "sandbox_n": 14,
+   "sandbox_roi": 0.0046,
+   "sandbox_roi_fee": -0.0056
   },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
@@ -625,14 +872,25 @@
    "promoted_at": "2026-10-01T16:20:16+00:00",
    "ready_at": "2026-10-01T16:20:16+00:00",
    "route": "moved by hand on 2026-10-01",
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": -0.022,
+   "sandbox_n": 5,
+   "sandbox_roi": 0.1895,
+   "sandbox_roi_fee": 0.1765
+  },
+  "u35_low_scoring|soccer_u35_intl": {
+   "by_hand": "2026-10-04",
+   "entered_at": "2026-10-04T07:03:02+00:00",
+   "promoted_at": "2026-10-04T07:03:02+00:00",
+   "ready_at": "2026-10-04T07:03:02+00:00",
+   "route": "moved by hand on 2026-10-04",
+   "sandbox_clv": 0.0187,
+   "sandbox_n": 8,
+   "sandbox_roi": 0.2596,
+   "sandbox_roi_fee": 0.2334
   }
  },
  "stage": "production",
- "unlisted_skipped": 3,
+ "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-02T16:40:54+00:00"
+ "updated_at": "2026-10-07T02:23:59+00:00"
 }

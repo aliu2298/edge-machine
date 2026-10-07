@@ -627,6 +627,84 @@
    "pair": "team1_form_l5|soccer_team1_intl",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-03T18:56:04+00:00",
+   "pair": "pm_combo4|tennis_pmcombo",
+   "reason": "taken off the Production list by hand",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T06:46:57+00:00",
+   "pair": "tennis_combo2|tennis_combo",
+   "reason": "legs widened to 0.70-0.85 by hand; record restarts",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T06:46:57+00:00",
+   "pair": "tennis_combo3|tennis_combo",
+   "reason": "legs widened to 0.70-0.85 by hand; record restarts",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T06:46:57+00:00",
+   "pair": "tennis_combo4|tennis_combo",
+   "reason": "legs widened to 0.70-0.85 by hand; record restarts",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T06:46:57+00:00",
+   "pair": "pm_combo2|tennis_pmcombo",
+   "reason": "legs widened to 0.70-0.85 by hand; record restarts",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T06:46:57+00:00",
+   "pair": "pm_combo3|tennis_pmcombo",
+   "reason": "legs widened to 0.70-0.85 by hand; record restarts",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-04T07:03:02+00:00",
+   "evidence": {
+    "base_roi": 0.0274,
+    "clv": 0.0117,
+    "clv_n": 18,
+    "n": 18,
+    "own_roi": 0.2143,
+    "roi": 0.2143,
+    "roi_fee": 0.1957,
+    "span_days": 9.3854,
+    "weeks": 1,
+    "z": 1.6573
+   },
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "reason": "moved to Production by hand on 2026-10-04",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-04T07:03:02+00:00",
+   "evidence": {
+    "base_roi": 0.0274,
+    "clv": 0.0117,
+    "clv_n": 18,
+    "n": 18,
+    "own_roi": 0.2143,
+    "roi": 0.2143,
+    "roi_fee": 0.1957,
+    "span_days": 9.3854,
+    "weeks": 1,
+    "z": 1.6573
+   },
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-04T11:09:14+00:00",
+   "pair": "mma_fav_band|mma",
+   "reason": "taken off the Production list by hand",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -640,24 +718,9 @@
    "stage": "sandbox"
   },
   "mma_fav_band|mma": {
-   "by_hand": "2026-09-22",
-   "entry": {
-    "base_roi": -0.1737,
-    "clv": -0.2167,
-    "clv_n": 3,
-    "n": 4,
-    "own_roi": 0.2517,
-    "roi": 0.2517,
-    "roi_fee": 0.2343,
-    "span_days": 4.1181,
-    "weeks": 0,
-    "z": 1.0027
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-22T16:20:08+00:00",
-   "ready_at": "2026-09-22T16:20:08+00:00",
-   "ready_since": "2026-09-22T16:20:08+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-04T11:09:14+00:00",
+   "since": "2026-10-04T11:09:14+00:00",
+   "stage": "sandbox"
   },
   "o15_form_l10|soccer_o15": {
    "since": "2026-09-21T01:44:02+00:00",
@@ -704,38 +767,24 @@
    "stage": "production"
   },
   "olbg|boxing": {
+   "demoted_at": "2026-09-28T02:59:44+00:00",
    "since": "2026-09-28T02:59:44+00:00",
    "stage": "sandbox"
   },
   "pm_combo2|tennis_pmcombo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
+   "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
+   "since": "2026-10-04T06:46:57+00:00",
    "stage": "sandbox"
   },
   "pm_combo3|tennis_pmcombo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
+   "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
+   "since": "2026-10-04T06:46:57+00:00",
    "stage": "sandbox"
   },
   "pm_combo4|tennis_pmcombo": {
-   "by_hand": "2026-09-28",
-   "entry": {
-    "base_roi": 0.1153,
-    "clv": -0.0135,
-    "clv_n": 4,
-    "n": 4,
-    "own_roi": 0.2473,
-    "roi": 0.2473,
-    "roi_fee": 0.1972,
-    "span_days": 1.0833,
-    "weeks": 0,
-    "z": 0.4526
-   },
-   "entry_since": null,
-   "promoted_at": "2026-09-28T17:01:21+00:00",
-   "ready_at": "2026-09-28T17:01:21+00:00",
-   "ready_since": "2026-09-28T17:01:21+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-03T18:56:04+00:00",
+   "since": "2026-10-03T18:56:04+00:00",
+   "stage": "sandbox"
   },
   "soccerpredictions|soccer": {
    "since": "2026-09-21T02:05:59+00:00",
@@ -782,30 +831,50 @@
    "stage": "production"
   },
   "tennis_combo2|tennis_combo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
+   "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
+   "since": "2026-10-04T06:46:57+00:00",
    "stage": "sandbox"
   },
   "tennis_combo3|tennis_combo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
+   "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
+   "since": "2026-10-04T06:46:57+00:00",
    "stage": "sandbox"
   },
   "tennis_combo4|tennis_combo": {
-   "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
+   "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
+   "since": "2026-10-04T06:46:57+00:00",
    "stage": "sandbox"
   },
   "tennis_fav_band_3h|tennis": {
    "reset": "2026-10-02: legs kept only on ATP, WTA Doubles and UTR. Those tours were chosen by looking at the record already on file, so that record counts toward nothing here.",
-   "since": "2026-10-02T05:00:00+00:00",
+   "since": "2026-10-02T16:34:37+00:00",
    "stage": "sandbox"
   },
   "tennis_fav_band|tennis": {
    "reset": "2026-09-24: band narrowed again to 0.77-0.81; the 0.75-0.80 record is on file but counts toward nothing here \u2014 a 0.77-0.81 contract is not a 0.75-0.80 one",
    "since": "2026-09-24T13:16:04+00:00",
    "stage": "sandbox"
+  },
+  "u35_low_scoring|soccer_u35_intl": {
+   "by_hand": "2026-10-04",
+   "entry": {
+    "base_roi": 0.0274,
+    "clv": 0.0117,
+    "clv_n": 18,
+    "n": 18,
+    "own_roi": 0.2143,
+    "roi": 0.2143,
+    "roi_fee": 0.1957,
+    "span_days": 9.3854,
+    "weeks": 1,
+    "z": 1.6573
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-04T07:03:02+00:00",
+   "ready_at": "2026-10-04T07:03:02+00:00",
+   "ready_since": "2026-10-04T07:03:02+00:00",
+   "stage": "production"
   }
  },
- "updated": "2026-10-02T16:40:54+00:00"
+ "updated": "2026-10-07T02:23:59+00:00"
 }

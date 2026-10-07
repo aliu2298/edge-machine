@@ -1,0 +1,105 @@
+name: NBA pace labels
+
+# Daily through the 2026-27 PRESEASON only. The lane exists to test whether a dynamic
+# last-five-games label transitions cleanly -- every scheduled game labelled and projected
+# before tip-off, every finished game graded, the window advancing -- not to forecast
+# anything. Preseason basketball is indicative of nothing, which is the point: if the
+# transition logic breaks it breaks here, on games nobody is trading.
+#
+# ESPN's scoreboard only. Keyless, public, no crawl delay, so this job holds no secret.
+# nba_pace.py refetches the whole preseason each run and is idempotent, which is deliberate:
+# a late-corrected linescore is picked up on the next pass rather than frozen wrong.
+#
+# STOPS BY ITSELF. The 2026-27 regular season opens 2026-10-20. Past STOP_AFTER the job
+# exits early with a notice instead of running, because WINDOW=5 is already known to be too
+# short to carry a label into real games -- the seed agreed with the same teams' full-season
+# labels for only 15 of 30 -- and this cron must not quietly become a regular-season lane on
+# a window that has been measured and found wanting. Removing the cron is the owner's call.
+
+on:
+  schedule:
+    # 10:00 UTC = 05:00 CT, after the latest West-coast preseason game has gone final,
+    # and clear of the tracker (:11), the boards (:41) and the pre-flight (:26).
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nba-pace
+  cancel-in-progress: false
+
+jobs:
+  pace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      STOP_AFTER: "2026-10-20"
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Preseason window check
+        id: window
+        run: |
+          set -euo pipefail
+          today="$(date -u +%F)"
+          if [[ "$today" > "$STOP_AFTER" ]]; then
+            echo "run=no" >> "$GITHUB_OUTPUT"
+            {
+              echo "## NBA pace labels — not run"
+              echo ""
+              echo "Today is \`$today\`, past \`STOP_AFTER=$STOP_AFTER\`. The preseason test is over."
+              echo ""
+              echo "Before this becomes a regular-season lane, \`WINDOW\` needs revisiting:"
+              echo "the five-game seed agreed with the same teams' full-season labels for"
+              echo "only 15 of 30, with Memphis 16.9 points out on defence. Either widen the"
+              echo "window or shrink toward a prior. Then remove or re-point this cron."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        if: steps.window.outputs.run == 'yes'
+        with:
+          python-version: "3.12"
+
+      - name: Label, project, grade
+        if: steps.window.outputs.run == 'yes'
+        run: |
+          set -o pipefail
+          python3 nba_pace.py --run | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Build the NBA page
+        if: steps.window.outputs.run == 'yes'
+        run: python3 nba_pace_build.py
+
+      - name: Commit and push if changed
+        if: steps.window.outputs.run == 'yes'
+        run: |
+          set -euo pipefail
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/nba_pace.json public_site/nba.html
+          if git diff --cached --quiet; then
+            echo "no changes" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git commit -m "NBA pace labels ($(date -u +%Y-%m-%d\ %H:%MZ))"
+          # Commit once; retry the push only. Only this workflow writes this file, so a
+          # rebase onto whatever the tracker or the boards pushed cannot conflict.
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              exit 0
+            fi
+            echo "push rejected — rebasing onto origin/main (attempt $attempt)"
+            if ! git pull --rebase origin main; then
+              echo "::error::rebase onto origin/main failed on attempt $attempt"
+              exit 1
+            fi
+          done
+          echo "::error::could not push pace labels after 3 attempts"
+          exit 1

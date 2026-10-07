@@ -147,11 +147,9 @@ PHONE = r"""
 
 def browser_checks():
     print("\nbrowser 1280x800")
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        print("::warning::Playwright is not installed; browser checks in test_sticky_header.py were not run")
-        print("  skipped: playwright is not installed; browser check not run")
+    from require_browser import require_browser
+    sync_playwright = require_browser("test_sticky_header.py")
+    if sync_playwright is None:
         return
     httpd = _serve()
     base = f"http://127.0.0.1:{httpd.server_address[1]}"

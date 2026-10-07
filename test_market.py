@@ -128,15 +128,22 @@ _t2 = T.day_trades(_rev, "dt_orb30")
 eq((_t2[0], _t2[2], _t2[4]), (-1, 99.4, 102), "a break DOWN goes short, and stops out at the range high")
 eq(T.day_trades(_up_day[:4], "dt_orb30"), None, "a session too short to have an opening range trades nothing")
 _dd = {"trades": [], "meta": {}}
-_n5 = T.scan_day({"AAA": _up_day, "SPY": _up_day}, _dd, rules={"dt_orb30": T.RULES["dt_orb30"]})
-eq(_n5, 1, "one session, one logged day trade")
-_dt = _dd["trades"][0]
-eq((_dt["lane"], _dt["status"], _dt["entry_day"] == _dt["exit_day"]), ("day", "closed", True),
-   "a day trade is logged already closed, inside its own session")
-eq(round(_dt["ret_gross"] - _dt["ret_net"], 6), round(2 * M.COST_BPS_PER_SIDE / 10000, 6),
-   "and is charged a cost on both sides like every other trade")
-eq(T.scan_day({"AAA": _up_day, "SPY": _up_day}, _dd, rules={"dt_orb30": T.RULES["dt_orb30"]}), 0,
-   "a second pass over the same session logs nothing twice")
+# The live set blocks this rule. The logger itself is checked with the rule
+# unblocked, so a removal does not erase the no-lookahead and cost checks.
+_saved_removed = T.REMOVED_RULES
+T.REMOVED_RULES = frozenset(n for n in _saved_removed if n != "dt_orb30")
+try:
+    _n5 = T.scan_day({"AAA": _up_day, "SPY": _up_day}, _dd, rules={"dt_orb30": T.RULES["dt_orb30"]})
+    eq(_n5, 1, "one session, one logged day trade")
+    _dt = _dd["trades"][0]
+    eq((_dt["lane"], _dt["status"], _dt["entry_day"] == _dt["exit_day"]), ("day", "closed", True),
+       "a day trade is logged already closed, inside its own session")
+    eq(round(_dt["ret_gross"] - _dt["ret_net"], 6), round(2 * M.COST_BPS_PER_SIDE / 10000, 6),
+       "and is charged a cost on both sides like every other trade")
+    eq(T.scan_day({"AAA": _up_day, "SPY": _up_day}, _dd, rules={"dt_orb30": T.RULES["dt_orb30"]}), 0,
+       "a second pass over the same session logs nothing twice")
+finally:
+    T.REMOVED_RULES = _saved_removed
 ok_(T.DAY_UNIVERSE and len(T.DAY_UNIVERSE) <= 25, "the day lane's universe is a small pre-registered list")
 
 print("\nhousekeeping")
@@ -230,14 +237,32 @@ _hb = {"BTC/USD": [dict(t="2026-09-24T21:00:00Z", o=99, h=99, l=99, c=99, v=1),
                    dict(t="2026-09-24T23:00:00Z", o=100.5, h=102, l=100, c=101.8, v=1),
                    dict(t="2026-09-25T00:00:00Z", o=102, h=102, l=101, c=101.5, v=1)]}
 _hd = {"trades": [], "meta": {}}
-eq(T.scan_hours(_hb, _hd, research_before="2026-09-19"), 1, "the BTC seasonality rule makes one trade per UTC day")
-_ht = _hd["trades"][0]
-eq((_ht["entry"], _ht["exit"], _ht["exit_day"]), (100.0, 102.0, "2026-09-25"), "in at the 22:00 open, out at the 00:00 open")
-eq(round(_ht["ret_net"], 6), round(0.02 - 0.005, 6), "and charged crypto's 0.5% round trip")
-eq(T.scan_hours({"BTC/USD": _hb["BTC/USD"][:3]}, {"trades": [], "meta": {}}, research_before="2026-09-19"), 0,
-   "nothing is logged until the exit bar exists")
-eq(T.scan_hours(_hb, {"trades": [], "meta": {}}, research_before="2026-09-26"), 0,
-   "and nothing from before the rule's own start")
+# Same as the day logger: the live set blocks the rule, and the price check
+# runs with it unblocked.
+_saved_removed = T.REMOVED_RULES
+T.REMOVED_RULES = frozenset(n for n in _saved_removed if n != "cr_btc_2200")
+try:
+    eq(T.scan_hours(_hb, _hd, research_before="2026-09-19"), 1, "the BTC seasonality rule makes one trade per UTC day")
+    _ht = _hd["trades"][0]
+    eq((_ht["entry"], _ht["exit"], _ht["exit_day"]), (100.0, 102.0, "2026-09-25"), "in at the 22:00 open, out at the 00:00 open")
+    eq(round(_ht["ret_net"], 6), round(0.02 - 0.005, 6), "and charged crypto's 0.5% round trip")
+    eq(T.scan_hours({"BTC/USD": _hb["BTC/USD"][:3]}, {"trades": [], "meta": {}}, research_before="2026-09-19"), 0,
+       "nothing is logged until the exit bar exists")
+    eq(T.scan_hours(_hb, {"trades": [], "meta": {}}, research_before="2026-09-26"), 0,
+       "and nothing from before the rule's own start")
+finally:
+    T.REMOVED_RULES = _saved_removed
+
+print("\nan unadjusted corporate action voids the trade")
+_vb = [dict(t=f"2026-09-{d:02d}T04:00:00Z", o=o, h=o, l=c, c=c, v=1)
+       for d, o, c in ((28, 78.2, 77.8), (29, 77.0, 77.8), (30, 77.8, 77.7), (31, 14.0, 12.6))]
+_vd = {"trades": [dict(id="sw_rsi2_pullback|X|2026-09-25", rule="sw_rsi2_pullback", lane="swing",
+                       symbol="X", signal_day="2026-09-25", entry_day="2026-09-28", entry=78.2,
+                       status="open", exit=None, exit_day=None, ret_gross=None, ret_net=None,
+                       bench_ret=None, bars_held=None)], "meta": {}}
+eq(T.grade({"X": _vb}, _vd), 0, "a spin-off gap is not graded as a loss")
+eq(_vd["trades"][0]["status"], "void", "it is marked void")
+eq(T.assess(_vd, "sw_rsi2_pullback")["open"], 0, "and leaves the record entirely")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'all market tests passed'}")
 for f in FAILS:
