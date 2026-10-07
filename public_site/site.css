@@ -1493,3 +1493,365 @@ nav.sports a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--acc); }
 .tempo-mark[data-pct="98"] { grid-column: 98; }
 .tempo-mark[data-pct="99"] { grid-column: 99; }
 .tempo-mark[data-pct="100"] { grid-column: 100; }
+
+
+/* Analyst Desk — approved Production landing layout.
+   Desktop: quick-access rail, dense running feed, persistent rules/status rail.
+   Mobile: sport rail stays near the top and workspace nav becomes a bottom bar. */
+body.analyst-desk .topbar {
+  max-width: 1480px;
+}
+body.analyst-desk .wrap {
+  max-width: 1480px;
+  padding-top: 18px;
+}
+.top-production,
+.production-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border: 1px solid rgba(57, 214, 138, .45);
+  border-radius: 999px;
+  color: var(--pos);
+  background: rgba(57, 214, 138, .08);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.desk-layout {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-width: 0;
+}
+.desk-nav {
+  position: sticky;
+  top: 74px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.desk-nav-block {
+  min-width: 0;
+  padding: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+.desk-nav-label {
+  margin: 0 0 8px;
+  color: var(--mut);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+body.analyst-desk .desk-nav nav.main,
+body.analyst-desk .desk-nav nav.sports {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 4px;
+  overflow: visible;
+}
+body.analyst-desk .desk-nav nav.main a,
+body.analyst-desk .desk-nav nav.sports button {
+  width: 100%;
+  min-height: 38px;
+  justify-content: flex-start;
+  border-radius: 9px;
+  padding: 0 10px;
+}
+body.analyst-desk .desk-nav nav.main a[aria-current="page"],
+body.analyst-desk .desk-nav nav.sports button[aria-pressed="true"] {
+  background: var(--raised);
+  box-shadow: inset 3px 0 0 var(--acc);
+}
+body.analyst-desk .desk-nav nav.sports button {
+  border-color: transparent;
+}
+body.analyst-desk .desk-nav nav.sports button[aria-pressed="true"] {
+  border-color: var(--line);
+}
+body.analyst-desk .shell-columns {
+  grid-template-columns: minmax(0, 1fr) minmax(286px, 340px);
+  gap: 14px;
+  min-width: 0;
+}
+.desk-center,
+.desk-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+body.analyst-desk .shell-pane {
+  padding: 14px;
+}
+body.analyst-desk .running-pane {
+  min-height: 520px;
+}
+body.analyst-desk .running-group h3 {
+  position: sticky;
+  top: 62px;
+  z-index: 2;
+  margin: 0;
+  padding: 7px 8px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+body.analyst-desk .running-row {
+  min-height: 52px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+body.analyst-desk .running-filters {
+  position: sticky;
+  top: 56px;
+  z-index: 4;
+  margin: 10px -4px 8px;
+  padding: 4px;
+  background: rgba(17, 19, 24, .94);
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
+}
+body.analyst-desk .rules-pane,
+body.analyst-desk .desk-status {
+  position: sticky;
+}
+body.analyst-desk .rules-pane {
+  top: 74px;
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
+}
+body.analyst-desk .desk-status {
+  top: 470px;
+}
+body.analyst-desk .desk-status .shell-summary {
+  margin-top: 12px;
+}
+body.analyst-desk .desk-status .tiles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+body.analyst-desk .desk-status .tile {
+  min-height: 78px;
+  padding: 10px;
+}
+body.analyst-desk .desk-status .tile b {
+  font-size: 18px;
+}
+body.analyst-desk .desk-status .tile b.when {
+  font-size: 13px;
+}
+body.analyst-desk .desk-status .tile span {
+  font-size: 10px;
+}
+body.analyst-desk .bet-roll {
+  max-width: none;
+  margin: 0;
+  padding: 12px 14px;
+  align-items: flex-start;
+}
+body.analyst-desk .bet-roll-label {
+  padding-top: 10px;
+}
+body.analyst-desk footer {
+  margin-left: 198px;
+}
+
+@media (max-width: 1040px) {
+  .desk-layout {
+    grid-template-columns: 150px minmax(0, 1fr);
+  }
+  body.analyst-desk .shell-columns {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+  body.analyst-desk footer {
+    margin-left: 164px;
+  }
+}
+
+@media (max-width: 800px) {
+  body.analyst-desk {
+    padding-bottom: 74px;
+  }
+  body.analyst-desk .wrap {
+    padding: 12px 12px 92px;
+  }
+  body.analyst-desk header.site {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+  body.analyst-desk .topbar {
+    position: static;
+    min-height: 50px;
+    padding: 4px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  body.analyst-desk .brand {
+    line-height: 40px;
+  }
+  body.analyst-desk .top-production {
+    margin-left: 2px;
+  }
+  .desk-layout {
+    display: block;
+  }
+  .desk-nav {
+    position: sticky;
+    top: 51px;
+    z-index: 19;
+    display: block;
+    margin: 0 0 10px;
+    background: rgba(11, 12, 15, .96);
+    backdrop-filter: blur(14px);
+  }
+  .desk-nav-block {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+  .desk-nav-block:first-child .desk-nav-label {
+    display: none;
+  }
+  .desk-nav-block + .desk-nav-block {
+    padding: 7px 0 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .desk-nav-label {
+    display: none;
+  }
+  body.analyst-desk .desk-nav nav.sports {
+    flex-direction: row;
+    gap: 6px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    padding: 0 2px;
+  }
+  body.analyst-desk .desk-nav nav.sports::-webkit-scrollbar {
+    display: none;
+  }
+  body.analyst-desk .desk-nav nav.sports button {
+    width: auto;
+    min-width: max-content;
+    min-height: 38px;
+    justify-content: center;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: var(--card);
+    border-color: var(--line);
+    box-shadow: none;
+  }
+  body.analyst-desk .desk-nav nav.sports button[aria-pressed="true"] {
+    background: var(--raised);
+    border-color: var(--fg);
+    box-shadow: inset 0 -3px 0 var(--acc);
+  }
+  body.analyst-desk .desk-nav nav.main {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    padding: 6px;
+    background: rgba(17, 19, 24, .97);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .35);
+    overflow: visible;
+  }
+  body.analyst-desk .desk-nav nav.main::after {
+    content: none;
+  }
+  body.analyst-desk .desk-nav nav.main a {
+    width: auto;
+    min-width: 0;
+    min-height: 46px;
+    height: auto;
+    justify-content: center;
+    padding: 4px 3px;
+    border-radius: 10px;
+    font-size: 11px;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.15;
+  }
+  body.analyst-desk .shell-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .desk-center,
+  .desk-side {
+    gap: 10px;
+  }
+  body.analyst-desk .running-pane {
+    min-height: 0;
+  }
+  body.analyst-desk .running-filters {
+    top: 99px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+  body.analyst-desk .running-filters::-webkit-scrollbar {
+    display: none;
+  }
+  body.analyst-desk .running-group h3 {
+    top: 141px;
+  }
+  body.analyst-desk .rules-pane,
+  body.analyst-desk .desk-status {
+    position: static;
+    max-height: none;
+  }
+  body.analyst-desk .desk-side {
+    display: contents;
+  }
+  body.analyst-desk .rules-pane {
+    order: 3;
+  }
+  body.analyst-desk .desk-status {
+    order: 4;
+  }
+  body.analyst-desk .bet-roll {
+    overflow: hidden;
+  }
+  body.analyst-desk .bet-roll-label {
+    display: none;
+  }
+  body.analyst-desk .bet-roll-track {
+    width: 100%;
+  }
+  body.analyst-desk footer {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body.analyst-desk .topbar {
+    gap: 8px;
+  }
+  body.analyst-desk .top-production {
+    font-size: 10px;
+    padding: 0 8px;
+  }
+  body.analyst-desk .shell-pane {
+    padding: 12px;
+  }
+  body.analyst-desk .desk-status .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
