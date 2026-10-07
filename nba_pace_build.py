@@ -19,10 +19,10 @@ OUT = os.path.join(ROOT, "public_site", "nba.html")
 
 # What each label means, spelled out once rather than left as jargon.
 TAGS = {
-    "O+D+": "scores more, allows more",
-    "O+D-": "scores more, allows less",
-    "O-D+": "scores less, allows more",
-    "O-D-": "scores less, allows less",
+    "O+D+": "Fast offense · porous defense",
+    "O+D-": "Fast offense · strong defense",
+    "O-D+": "Slow offense · porous defense",
+    "O-D-": "Slow offense · strong defense",
 }
 PERIODS = (
     ("q1", "1Q", "First quarter"),
@@ -445,19 +445,64 @@ def _skipped_card(blob, game):
     )
 
 
-def _matchup(blob, game, scale, uid, window):
-    if game.get("skipped"):
-        return _skipped_card(blob, game)
+def _summary_value(game, period):
+    value = _finite(game.get("roll_exp_" + period))
+    return _points(value) if value is not None else "—"
+
+
+def _matchup_summary(game, window):
     away = game.get("away") or "—"
     home = game.get("home") or "—"
+    start = _instant(game.get("start"))
+    when = fmt.when(start) if start is not None else "—"
+    status = "Final" if window == "graded" else ("Skipped" if game.get("skipped") else "Upcoming")
     return (
-        f'<article class="matchup" data-window="{esc(window)}" '
+        f'<summary class="nba-game-summary">'
+        f'<span class="nba-summary-time">{esc(when)}</span>'
+        f'<span class="nba-summary-match"><b>{esc(away)}</b><span aria-hidden="true"> @ </span><b>{esc(home)}</b></span>'
+        f'<span class="nba-summary-metric"><small>1Q</small>{esc(_summary_value(game, "q1"))}</span>'
+        f'<span class="nba-summary-metric"><small>1H</small>{esc(_summary_value(game, "h1"))}</span>'
+        f'<span class="nba-summary-metric"><small>FT</small>{esc(_summary_value(game, "ft"))}</span>'
+        f'<span class="nba-summary-status">{esc(status)}</span>'
+        f'</summary>'
+    )
+
+
+def _matchup(blob, game, scale, uid, window):
+    away = game.get("away") or "—"
+    home = game.get("home") or "—"
+    skipped = bool(game.get("skipped"))
+    return (
+        f'<article class="matchup{" is-skipped" if skipped else ""}" data-window="{esc(window)}" '
         f'data-away="{esc(away)}" data-home="{esc(home)}">'
+        f'<details class="nba-game" open>'
+        f'{_matchup_summary(game, window)}'
         f'<div class="matchup-grid">'
         f'{_team_card(blob, game, game.get("away"), "away")}'
-        f'{_expect_card(game, scale, uid)}'
+        f'{_skipped_expect(game) if skipped else _expect_card(game, scale, uid)}'
         f'{_team_card(blob, game, game.get("home"), "home")}'
-        f'</div></article>'
+        f'</div></details></article>'
+    )
+
+
+def _skipped_expect(game):
+    away = game.get("away") or "—"
+    home = game.get("home") or "—"
+    reason = game.get("skipped") or "Skipped"
+    start = _instant(game.get("start"))
+    if start is None:
+        when = "—"
+        stamp = ""
+    else:
+        when = fmt.when(start)
+        stamp = f' datetime="{esc(fmt.iso_z(start))}"'
+    return (
+        f'<section class="expect-card" aria-label="{esc(f"Skipped, {away} at {home}")}">'
+        f'<p class="expect-title">{esc(away)} at {esc(home)}</p>'
+        f'<p class="expect-when"><time{stamp}>{esc(when)}</time></p>'
+        f'<p class="expect-kicker">Skipped</p>'
+        f'<p class="skip-reason">{esc(reason)}</p>'
+        f'</section>'
     )
 
 
@@ -467,6 +512,33 @@ def _matchups(blob, games, scale, window):
     return "".join(
         _matchup(blob, game, scale, f"m{window[0]}{index}", window)
         for index, game in enumerate(games))
+
+
+def _pace_leaders(games):
+    rows = []
+    for period, short, full in PERIODS:
+        ranked = []
+        for game in games:
+            if game.get("skipped"):
+                continue
+            value = _finite(game.get("roll_exp_" + period))
+            if value is None:
+                continue
+            ranked.append((value, game))
+        ranked.sort(key=lambda item: (-item[0], str(item[1].get("id") or "")))
+        if not ranked:
+            continue
+        value, game = ranked[0]
+        away = game.get("away") or "—"
+        home = game.get("home") or "—"
+        rows.append(
+            f'<a class="pace-leader" href="#matchups">'
+            f'<span class="pace-leader-k">{esc(short)} leader</span>'
+            f'<strong>{esc(away)} @ {esc(home)}</strong>'
+            f'<span>{esc(_points(value))} combined</span>'
+            f'</a>'
+        )
+    return "".join(rows)
 
 
 def _seed_rows(blob):
@@ -559,7 +631,7 @@ def build(blob=None, now=None):
     if graded:
         graded_html = (
             '<section id="graded">'
-            '<h2>Graded, last 24 hours</h2>'
+            '<div class="nba-section-head"><div><h2>Results</h2><p class="shell-kicker">Graded, last 24 hours</p></div></div>'
             '<p class="note sm">The tick is the actual combined total. The error is the '
             'file\'s own actual minus expected.</p>'
             f'{_matchups(blob, graded, scale, "graded")}'
@@ -567,22 +639,33 @@ def build(blob=None, now=None):
         )
     window = blob.get("window")
     window_txt = esc(window) if window is not None else "—"
-    body = f"""<h1>NBA</h1>
-<p class="lede">Matchups for the next 24 hours, then the team list. A team card is the
-full-game label and the scoring and allowing averages already stored. The middle card is
-both teams together. No prices, no bets.</p>
-<div class="note"><b>This is a test of the mechanism, not a forecast.</b> Labels and
-combined expectations were recorded before tip-off. Preseason basketball predicts nothing.</div>
+    body = f"""<div class="nba-head">
+<div>
+<h1>NBA Analyst Desk</h1>
+<p class="lede">Scan the next games first. Open a matchup for the full last-{window_txt} detail.</p>
+</div>
+<nav class="nba-local-nav" aria-label="NBA sections">
+<a href="#matchups">Upcoming</a>
+<a href="#graded">Results</a>
+<a href="#teams">Teams</a>
+</nav>
+</div>
+<div class="note"><b>Research view.</b> These are stored preseason expectations, not betting lines or recommendations.</div>
+<section class="pace-leaders" aria-label="Highest combined expectations">
+{_pace_leaders(upcoming)}
+</section>
 <section id="matchups">
-<h2>Next 24 hours</h2>
-<p class="note sm">A game tipping off within 24 hours of this page's clock. The window is the
-last {window_txt} games. Per-team first-quarter and first-half totals, and the top PRA from
-the last game, are shown when the file has them.</p>
+<div class="nba-section-head">
+<div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological</p></div>
+<span class="nba-count">{len(upcoming)} games</span>
+</div>
+<p class="note sm">Each row shows tip time and stored 1Q, 1H and full-game combined expectations.
+Open a matchup for offense/defense rates, PRA and the expectation tracks.</p>
 {_matchups(blob, upcoming, scale, "upcoming")}
 </section>
 {graded_html}
 <section id="teams">
-<h2>Teams</h2>
+<div class="nba-section-head"><div><h2>Teams</h2><p class="shell-kicker">Reference list</p></div></div>
 {team_list(blob, soon, featured)}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
