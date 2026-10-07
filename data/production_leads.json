@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-07T09:39:20+00:00",
+ "board_built_at": "2026-10-07T11:47:48+00:00",
  "leads": {
   "2026-10-01|Malta|Gibraltar|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Gibraltar",
@@ -769,37 +769,6 @@
    "sport": "soccer_u35_intl",
    "status": "hit"
   },
-  "2026-10-07|Lions|Garden Route Badgers|Garden Route Badgers to win \u00b7 Oddspedia community tips": {
-   "away": "Garden Route Badgers",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-07",
-   "edge_at_log": null,
-   "first_seen": "2026-10-06",
-   "headline": "Garden Route Badgers to win",
-   "home": "Lions",
-   "id": "2026-10-07|Lions|Garden Route Badgers|Garden Route Badgers to win \u00b7 Oddspedia community tips",
-   "kickoff": "2026-10-07T11:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-07",
-   "last_seen_at": "2026-10-07T09:39:20+00:00",
-   "league": "Cricket",
-   "match": "Lions v Garden Route Badgers",
-   "pair": "oddspedia|cricket",
-   "price_at_log": 0.26,
-   "route": {
-    "market": "KXT20MATCH-26OCT070700LIOGRB",
-    "outcome": "Garden Route Badgers",
-    "outcome_side": "yes",
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT070700LIOGRB",
-   "source": "oddspedia",
-   "sport": "cricket",
-   "status": "pending"
-  },
   "2026-10-07|West Indies Champions|England Champions|England Champions to win \u00b7 Oddspedia community tips": {
    "away": "England Champions",
    "bet": {
@@ -815,7 +784,7 @@
    "kickoff": "2026-10-07T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-07",
-   "last_seen_at": "2026-10-07T09:39:20+00:00",
+   "last_seen_at": "2026-10-07T11:47:48+00:00",
    "league": "Cricket",
    "match": "West Indies Champions v England Champions",
    "pair": "oddspedia|cricket",
@@ -892,5 +861,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-07T09:39:20+00:00"
+ "updated_at": "2026-10-07T11:47:48+00:00"
 }
