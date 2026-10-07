@@ -36,9 +36,9 @@ ok('class="shell-summary"' in html and 'data-board="production"' in html,
    "Production totals remain the system-status source")
 ok('class="bet-roll shell-pane"' in html and 'id="bets-roll-title">Bets roll<' in html,
    "Bets roll is in the center workspace")
-ok(html.index('class="running-pane"') < html.index('class="bet-roll shell-pane"'),
+ok(html.index('class="shell-pane running-pane"') < html.index('class="bet-roll shell-pane"'),
    "Running appears before Bets roll")
-ok(html.index('class="rules-pane"') < html.index('class="desk-status"'),
+ok(html.index('class="shell-pane rules-pane"') < html.index('class="shell-pane desk-status"'),
    "Rule cards appear before System status")
 ok('class="top-production">Production</span>' in html,
    "header exposes Production state immediately")
