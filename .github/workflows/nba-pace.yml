@@ -18,9 +18,10 @@ name: NBA pace labels
 
 on:
   schedule:
-    # 10:00 UTC = 05:00 CT, after the latest West-coast preseason game has gone final,
-    # and clear of the tracker (:11), the boards (:41) and the pre-flight (:26).
-    - cron: "0 10 * * *"
+    # Refresh through the day so the NBA board is not an early-morning snapshot.
+    # 04/10/16/22 UTC = 23:00/05:00/11:00/17:00 CT during CDT.
+    # The lane is keyless/public and still stops itself at STOP_AFTER.
+    - cron: "0 4,10,16,22 * * *"
   workflow_dispatch:
 
 permissions:
