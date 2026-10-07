@@ -556,6 +556,11 @@ def browser_checks():
                "at 1280px away is left of the expectation and home is right")
             page.set_viewport_size({"width": 640, "height": 800})
             page.wait_for_timeout(40)
+            first_detail = page.locator("#matchups details.nba-game").first
+            ok(first_detail.get_attribute("open") is None,
+               "at 640px the first matchup starts as a compact closed row")
+            first_detail.locator("summary").click()
+            page.wait_for_timeout(20)
             narrow = page.evaluate(LAYOUT)
             ok(narrow["tracks"] == 1 and not narrow["overflow"],
                f"at 640px the matchup stacks and the page does not scroll sideways "
