@@ -267,7 +267,7 @@ o15_names = [_attr(c, "data-source") for c in _cards(active_html)
 eq(o15_names, ["o15_form_l10", "o15_ranked"],
    "the active over-1.5 row puts the sooner kickoff first")
 ok('data-market="soccer_o15"' in html and 'class="rule-grid"' in html,
-   "over 1.5 is its own market row")
+   "over 1.5 keeps its market identity inside the Goals category")
 
 grids = re.findall(r'<div class="rule-grid">(.*?)</div>', html, re.S)
 ok(any(g.count('class="rule-card"') >= 1 for g in grids), "a market row holds its cards in one grid")
@@ -403,14 +403,14 @@ if sync_playwright is not None:
     import threading
     from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-    # Several Production rules force the strip to scroll within the phone width.
+    # Several Production rules exercise wrapping within the phone width.
     browser_st = {"pairs": {f'{r["name"]}|{r["sport"]}': {"stage": "production"}
                             for r in rows}}
     browser_html = soccer_build.build(d, browser_st, NOW)
     with tempfile.TemporaryDirectory(prefix="soccer-center-") as site:
         with open(os.path.join(site, "soccer.html"), "w", encoding="utf-8") as fh:
             fh.write(browser_html)
-        for asset in ("site.css", "site.js", "tables.js"):
+        for asset in ("site.css", "site.js", "tables.js", "sports.js"):
             shutil.copy2(os.path.join(ROOT, "public_site", asset), site)
         class Handler(SimpleHTTPRequestHandler):
             def __init__(self, *args, **kwargs):
@@ -431,6 +431,9 @@ if sync_playwright is not None:
                     ok(not errors, f"{width}px match center runs without JavaScript errors")
                     ok(page.evaluate("document.documentElement.scrollWidth <= innerWidth"),
                        f"{width}px match center has no sideways page scroll")
+                    ok(page.locator(".soccer-fixture-title a, .soccer-rule-chip a").evaluate_all(
+                        "links => links.every(a => !a.checkVisibility() || a.getBoundingClientRect().height >= 44)"),
+                       f"{width}px fixture links have comfortable tap targets")
                     anchors = page.locator(".soccer-local-nav a").evaluate_all(
                         "links => links.map(a => a.getAttribute('href'))")
                     ok(all(page.locator(a).count() == 1 for a in anchors),

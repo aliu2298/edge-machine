@@ -14,6 +14,7 @@ import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome as C
+import sport_ui as UI
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PREFLIGHT = os.path.join(ROOT, "data", "lane_preflight.json")
@@ -201,6 +202,8 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
     if description is None:
         description = lede
 
+    record = UI.disclosure("Full record", f'<div class="tiles">{tiles}</div>',
+                           "Tracked lanes & outcomes", css="page-record")
     if preflight:
         by_lane, pf_note = preflight_report(now=now)
         # idle_table re-reads lanes when status is set. Pass the tile list by
@@ -208,24 +211,28 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
         # set is the one the tiles counted.
         idle_html = _idle_html(idle, by_lane, status=True, prefix=key)
         if family == "Soccer" and cards:
+            attention = 'class="neg"' in pf_note or "could not be read" in pf_note
+            health_open = " open" if attention else ""
+            health_label = "System · check needed" if attention else "System & registered lanes"
             body = f"""<div class="soccer-page-head">
 <div><span class="soccer-kicker">Edge Machine</span><h1>{esc(family)}</h1>
 <p class="lede">{esc(lede)}</p></div>
-<div class="tiles">{tiles}</div>
 </div>
 
 <section id="lanes">
 {sections}
 </section>
 
+{record}
+
 <section id="health" class="soccer-health">
-<details>
-<summary><span><b>System & registered lanes</b><small>{len(idle)} waiting for a market</small></span></summary>
-<div class="note">These lanes are connected and waiting, and have <b>no row in the
-Sandbox</b> because they have never logged a quote. This is market availability, not
-evidence that the rule failed.</div>
+<details{health_open}>
+<summary><span><b>{health_label}</b><small>{len(idle)} waiting for a market</small></span></summary>
 {pf_note}
+<details class="section-disclosure"><summary><b>Registered lanes</b></summary>
+<div class="note">These lanes are waiting for markets and have never logged a quote.</div>
 {idle_html}
+</details>
 </details>
 </section>
 <footer>{_FOOT}</footer>
@@ -257,10 +264,10 @@ pre-flight's own verdict on each one.</div>
     else:
         parts = [f"""<h1>{esc(family)}</h1>
 <p class="lede">{lede}</p>
-<div class="tiles">{tiles}</div>
+{'' if family == 'Tennis' and cards else f'<div class="tiles">{tiles}</div>'}
 """]
         toc = []
-        if idle:
+        if idle and not (family == "Tennis" and cards):
             parts.append(f"""
 <section id="idle">
 <h2>Registered, never fired</h2>
@@ -279,9 +286,12 @@ pre-flight's own verdict on each one.</div>
             toc.extend((("today", "Today"), ("upcoming", "Upcoming"), ("in-play", "Past kickoff"),
                         ("combos", "Combos"), ("rules", "Rules")))
             parts.append(f"""
+{record}
+
 <section id="system" class="tennis-system">
 <details><summary><span><b>System & venue coverage</b><small>Polymarket US listing</small></span></summary>
 {listing or '<div class="note">No venue coverage stored yet.</div>'}
+{_idle_html(idle, {}, status=False, prefix=key) if idle else ''}
 </details>
 </section>
 """)
@@ -310,6 +320,7 @@ pre-flight's own verdict on each one.</div>
         body,
         script_src="./site.js",
         scripts=("./tables.js",),
+        sports=family in ("Soccer", "Tennis"),
     )
 
 

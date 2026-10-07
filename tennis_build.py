@@ -19,9 +19,7 @@ TITLE = "Edge Machine · Tennis"
 DESCRIPTION = ("Every tennis rule under test — the 3-hour favourite band, the combo "
                "baskets, and the Polymarket US listing.")
 LEDE = (
-    "Every tennis rule under test — the 3-hour favourite band, the combo baskets, "
-    "and the Polymarket US listing — with the same records and verdicts as the Sandbox. "
-    "Table tennis is a separate sport and is not on this page."
+    "Single-match picks and combo baskets."
 )
 
 

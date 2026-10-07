@@ -49,6 +49,7 @@ def _published():
     pages = [
         "index.html", "sandbox.html", "production.html", "trading.html",
         "nba.html", "soccer.html", "tennis.html", "cricket.html",
+        "crypto.html",
         "archive/index.html",
     ]
     archive = os.path.join(ROOT, "public_site", "archive")
@@ -74,7 +75,8 @@ def _has_toggle(path):
 
 # One link, or a breadcrumb in that slot. The section nav must not be rendered.
 # The NBA board sits in the shell. It has sport tabs, not a section nav.
-_NO_TOC = {"index.html", "trading.html", "archive/index.html", "nba.html"}
+_SPORT_PAGES = {"nba.html", "soccer.html", "tennis.html", "crypto.html"}
+_NO_TOC = {"index.html", "trading.html", "archive/index.html"} | _SPORT_PAGES
 
 
 def _expects_toc(path):
@@ -204,13 +206,13 @@ for path in _published():
     ok('id="vw"' not in header and "Phone view" not in header and "view-toggle" not in header,
        f"{path} header does not contain the view toggle")
     _main = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
-    if path == "nba.html":
+    if path in _SPORT_PAGES:
         ok(_main is not None and _main.group(0).count('aria-current="page"') == 0,
            f"{path} page nav leaves the current mark to the NBA sport tab")
         _sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
         ok(_sports is not None and _sports.group(0).count('aria-current="page"') == 1
-           and 'href="./nba.html" aria-current="page"' in _sports.group(0),
-           f"{path} sport tab marks NBA current")
+           and f'href="./{path}" aria-current="page"' in _sports.group(0),
+           f"{path} sport selector marks the current page")
         _labels = re.findall(r">([^<]+)</a>", _main.group(0) if _main else "")
         _index_nav = re.search(
             r'<nav class="main"[^>]*>(.*?)</nav>', _read("public_site/index.html"), re.S)
@@ -677,6 +679,42 @@ def _height_keeps_scroll(page, label, width, height):
        f"{label}: a height-only resize keeps a manual nav scroll ({before:.0f}px -> {after:.0f}px)")
 
 
+def _sport_header(page, label):
+    """The compact sport shell has a vertical Pages menu and a scrolling selector."""
+    menu = page.locator(".page-menu > summary")
+    menu.click()
+    links = page.locator("nav.main a")
+    ok(links.count() == 4 and links.evaluate_all("""links => links.every(a => {
+        const r = a.getBoundingClientRect();
+        return r.height >= 44 && r.left >= 0 && r.right <= innerWidth;
+    })"""), f"{label}: four comfortable page destinations fit the menu")
+    menu.focus()
+    reached = []
+    for _ in range(4):
+        page.keyboard.press("Tab")
+        reached.append(page.evaluate("document.activeElement.textContent.trim()"))
+    ok(reached == ["Sandbox", "Production", "Trading", "Method"],
+       f"{label}: keyboard reaches every page destination ({reached})")
+    ok(links.evaluate_all("""links => links.every(a => {
+        const r = a.getBoundingClientRect();
+        return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2).closest('a') === a;
+    })"""), f"{label}: each page destination receives pointer input")
+    page.keyboard.press("Escape")
+    ok(page.locator(".page-menu").get_attribute("open") is None,
+       f"{label}: Escape closes the menu")
+    ok(page.locator("nav.sports [aria-current='page']").evaluate("""a => {
+        const r = a.getBoundingClientRect(), n = a.parentElement.getBoundingClientRect();
+        return r.height >= 44 && r.left >= n.left - 1 && r.right <= n.right + 1;
+    }"""), f"{label}: the current sport is visible and easy to tap")
+    ok(page.evaluate("document.documentElement.scrollWidth <= innerWidth"),
+       f"{label}: no horizontal page overflow")
+    page.evaluate("window.scrollTo(0, 400)")
+    page.wait_for_timeout(40)
+    ok(page.locator(".topbar").evaluate("""e => {
+        const r = e.getBoundingClientRect(); return Math.abs(r.top) <= 1 && r.height <= 80;
+    }"""), f"{label}: a compact bar stays at the top")
+
+
 def browser_checks():
     print("\nbrowser")
     from require_browser import require_browser
@@ -708,6 +746,9 @@ def browser_checks():
                         ok(False, f"{path} @{width}: index stub stayed on the stub (went to {page.url})")
                         continue
                     label = f"{path} @{width}"
+                    if path in _SPORT_PAGES:
+                        _sport_header(page, label)
+                        continue
                     saved_nav = page.evaluate(
                         "() => { const n = document.querySelector('nav.main'); return n ? n.scrollLeft : 0; }")
                     nav_n = _nav_count(path)

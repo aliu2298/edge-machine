@@ -15,9 +15,7 @@ KEY = "soccer"
 TITLE = "Edge Machine · Soccer"
 DESCRIPTION = "Every soccer rule and tipster under test, and the lanes still waiting for a market."
 LEDE = (
-    "Every soccer rule and tipster under test — over 1.5, both teams to score,\n"
-    "team totals, corners, each again for cups and internationals — plus the lanes that have\n"
-    "been registered and have never had a market to bet."
+    "Fixtures, open picks, and Production rules."
 )
 
 
