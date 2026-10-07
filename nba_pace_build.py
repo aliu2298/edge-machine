@@ -455,14 +455,18 @@ def _matchup_summary(game, window):
     home = game.get("home") or "—"
     start = _instant(game.get("start"))
     when = fmt.when(start) if start is not None else "—"
-    status = "Final" if window == "graded" else ("Skipped" if game.get("skipped") else "Upcoming")
+    skipped = bool(game.get("skipped"))
+    status = "Final" if window == "graded" else ("Skipped" if skipped else "Upcoming")
+    q1 = "—" if skipped else _summary_value(game, "q1")
+    h1 = "—" if skipped else _summary_value(game, "h1")
+    ft = "—" if skipped else _summary_value(game, "ft")
     return (
         f'<summary class="nba-game-summary">'
         f'<span class="nba-summary-time">{esc(when)}</span>'
         f'<span class="nba-summary-match"><b>{esc(away)}</b><span aria-hidden="true"> @ </span><b>{esc(home)}</b></span>'
-        f'<span class="nba-summary-metric"><small>1Q</small>{esc(_summary_value(game, "q1"))}</span>'
-        f'<span class="nba-summary-metric"><small>1H</small>{esc(_summary_value(game, "h1"))}</span>'
-        f'<span class="nba-summary-metric"><small>FT</small>{esc(_summary_value(game, "ft"))}</span>'
+        f'<span class="nba-summary-metric"><small>1Q</small>{esc(q1)}</span>'
+        f'<span class="nba-summary-metric"><small>1H</small>{esc(h1)}</span>'
+        f'<span class="nba-summary-metric"><small>FT</small>{esc(ft)}</span>'
         f'<span class="nba-summary-status">{esc(status)}</span>'
         f'</summary>'
     )
