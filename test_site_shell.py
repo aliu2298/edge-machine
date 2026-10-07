@@ -442,7 +442,8 @@ def _check_sport_tab(family, html, d, st):
             if B.family(r["sport"]) == family and not B.eliminated(r)]
     section = B.sport_sections(d, rows)
     ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
-    lanes = re.search(r'<section id="lanes">(.*?)</section>', html, re.S)
+    # Tennis names its one rules table #rules; the other tabs keep #lanes.
+    lanes = re.search(r'<section id="(?:lanes|rules)"[^>]*>(.*?)</section>', html, re.S)
     ok(lanes is not None, f"{family} tab has a lanes section")
     # Soccer, Tennis, and Cricket replace the lane table with cards. The
     # verdict and the ROI on each card are still the Sandbox row's strings.
