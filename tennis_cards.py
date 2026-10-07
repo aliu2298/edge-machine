@@ -13,6 +13,7 @@ import datetime
 from datetime import timedelta, timezone
 
 import fmt
+import sport_ui as UI
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -235,12 +236,24 @@ def match_center(d, rows, now):
 
     combo_rows = [r for r in rows if B._base_sport(r["sport"]) in ("tennis_combo", "tennis_pmcombo")]
     combo_rows = [r for _rank, _prov, r in B.rank_rows(combo_rows)]
-    combo_html = "".join(_combo_summary(r, open_quotes(d, r["name"], r["sport"])) for r in combo_rows)
+    live_combos, inactive_combos = [], []
+    for r in combo_rows:
+        quotes = open_quotes(d, r["name"], r["sport"])
+        (live_combos if quotes else inactive_combos).append(_combo_summary(r, quotes))
+    combo_html = '<div class="tennis-combo-grid">' + "".join(live_combos) + '</div>' if live_combos else ""
+    if inactive_combos:
+        combo_html += UI.disclosure("Inactive combo rules",
+                                    '<div class="tennis-combo-grid">' + "".join(inactive_combos) + '</div>',
+                                    len(inactive_combos), css="historical")
 
     today_html = "".join(_match_card(x) for x in today) or '<div class="note">No tracked tennis match today.</div>'
     upcoming_html = "".join(_match_card(x) for x in upcoming[:12]) or '<div class="note">No tracked tennis match in the next 48 hours.</div>'
     more = (f'<p class="sm mut">{len(upcoming) - 12} more upcoming matches not shown.</p>'
             if len(upcoming) > 12 else "")
+    past_html = '<div class="tennis-match-list">' + "".join(_match_card(x) for x in past[:3]) + '</div>'
+    if len(past) > 3:
+        past_html += UI.disclosure("More open picks", '<div class="tennis-match-list">' +
+                                   "".join(_match_card(x) for x in past[3:]) + '</div>', len(past) - 3)
     return f'''<div class="tennis-desk">
 <div class="tennis-desk-head">
 <div><span class="tennis-kicker">Match center</span><h2>Today & upcoming</h2></div>
@@ -257,16 +270,15 @@ def match_center(d, rows, now):
 <div class="tennis-match-list">{upcoming_html}</div>{more}
 </section>
 <section id="in-play" class="tennis-match-block">
-<div class="tennis-block-head"><h3>In play / past kickoff</h3><span>{len(past)} matches</span></div>
-<div class="tennis-match-list">{"".join(_match_card(x) for x in past) or '<div class="note">No open pick past kickoff.</div>'}</div>
+<div class="tennis-block-head"><h3>Open picks past kickoff</h3><span>{len(past)} matches</span></div>
+{past_html if past else '<p class="sm mut">No open pick past kickoff.</p>'}
 </section>
 <section id="other-open" class="tennis-match-block">
-<div class="tennis-block-head"><h3>Later / time unconfirmed</h3><span>{len(other)} matches</span></div>
-<div class="tennis-match-list">{"".join(_match_card(x) for x in other) or '<div class="note">No other open pick.</div>'}</div>
+{UI.disclosure("Later / time unconfirmed", '<div class="tennis-match-list">' + "".join(_match_card(x) for x in other) + '</div>', str(len(other)) + " matches") if other else '<p class="sm mut">No other open pick.</p>'}
 </section>
 <section id="combos" class="tennis-combos">
 <div class="tennis-block-head"><h3>Combo baskets</h3><span>{len(combo_rows)} rules</span></div>
-<div class="tennis-combo-grid">{combo_html or '<div class="note">No combo lane has a record yet.</div>'}</div>
+{combo_html or '<div class="note">No combo lane has a record yet.</div>'}
 </section>
 </div>'''
 
@@ -364,9 +376,12 @@ def _band(title, key, markets):
             f'<h3>{B.esc(_market_name(base))}</h3>'
             f'<div class="rule-grid">{cards}</div>'
             f'</div>')
+    content = ''.join(blocks)
+    if key == 'inactive':
+        content = UI.disclosure('Inactive rules', content, sum(len(items) for _, items in markets), css='historical')
     return (f'<div class="rule-band" data-band="{key}">'
-            f'<h3 class="rule-band-title">{B.esc(title)}</h3>'
-            f'{"".join(blocks)}</div>')
+            + ('<h3 class="rule-band-title">Active / open rules</h3>' if key == 'active' else '')
+            + f'{content}</div>')
 
 
 def render(d, rows, now=None):
@@ -378,8 +393,7 @@ def render(d, rows, now=None):
     """
     now = now or datetime.datetime.now(timezone.utc)
     active, inactive = _bands(d, rows, now)
-    note = ('<div class="note">Match center first. Single-match tennis is separated '
-            'from combo products; the full rule record stays below.</div>')
+    note = ''
     cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)
     extra = B.definitions(rows)
     if not rows:

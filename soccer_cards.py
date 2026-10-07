@@ -13,6 +13,7 @@ import datetime
 from datetime import timedelta, timezone
 
 import fmt
+import sport_ui as UI
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -214,6 +215,10 @@ def match_center(d, rows, now):
     upcoming_html = "".join(_fixture_card(x) for x in upcoming[:12]) or '<div class="note">No tracked fixture in the next 48 hours.</div>'
     more = (f'<p class="sm mut">{len(upcoming) - 12} more upcoming fixtures not shown.</p>'
             if len(upcoming) > 12 else "")
+    past_html = '<div class="soccer-fixture-list">' + "".join(_fixture_card(x) for x in past[:3]) + '</div>'
+    if len(past) > 3:
+        past_html += UI.disclosure("More open picks", '<div class="soccer-fixture-list">' +
+                                   "".join(_fixture_card(x) for x in past[3:]) + '</div>', len(past) - 3)
     return f'''<div class="soccer-desk">
 <div class="soccer-desk-head">
 <div><span class="soccer-kicker">Match center</span><h2>Today & upcoming</h2></div>
@@ -229,18 +234,18 @@ def match_center(d, rows, now):
 <div class="soccer-block-head"><h3>Next 48 hours</h3><span>{len(upcoming)} fixtures</span></div>
 <div class="soccer-fixture-list">{upcoming_html}</div>{more}
 </section>
-<section id="in-play" class="soccer-fixture-block">
-<div class="soccer-block-head"><h3>In play / past kickoff</h3><span>{len(past)} fixtures</span></div>
-<div class="soccer-fixture-list">{"".join(_fixture_card(x) for x in past) or '<div class="note">No open pick past kickoff.</div>'}</div>
-</section>
-<section id="other-open" class="soccer-fixture-block">
-<div class="soccer-block-head"><h3>Later / time unconfirmed</h3><span>{len(other)} fixtures</span></div>
-<div class="soccer-fixture-list">{"".join(_fixture_card(x) for x in other) or '<div class="note">No other open pick.</div>'}</div>
-</section>
 <section class="soccer-production">
 <div class="soccer-block-head"><h3>Production rules</h3><span>{len(prod)} live</span></div>
 <div class="soccer-prod-strip">{prod_chips or '<span class="mut">None in Production.</span>'}</div>
 </section>
+<section id="in-play" class="soccer-fixture-block">
+<div class="soccer-block-head"><h3>Open picks past kickoff</h3><span>{len(past)} fixtures</span></div>
+{past_html if past else '<p class="sm mut">No open pick past kickoff.</p>'}
+</section>
+<section id="other-open" class="soccer-fixture-block">
+{UI.disclosure("Later / time unconfirmed", '<div class="soccer-fixture-list">' + "".join(_fixture_card(x) for x in other) + '</div>', str(len(other)) + " fixtures") if other else '<p class="sm mut">No other open pick.</p>'}
+</section>
+
 </div>'''
 
 
@@ -325,21 +330,42 @@ def _bands(d, rows, now):
     return active, inactive
 
 
+def _category(base):
+    if base in ("soccer_team1", "soccer_team2"):
+        return "Team totals"
+    if base == "soccer_btts":
+        return "BTTS"
+    if base == "soccer_p05":
+        return "Double chance / +0.5"
+    if base in ("soccer_o15", "soccer_o25", "soccer_u35"):
+        return "Goals"
+    return "Match winner" if base == "soccer" else _market_name(base)
+
+
 def _band(title, key, markets):
     if not markets:
         return ""
-    blocks = []
+    groups = {}
     for base, items in markets:
-        cards = "".join(_card(row, quotes, key == "active")
-                        for row, quotes, _kick in items)
-        blocks.append(
-            f'<div class="rule-market" data-market="{B.esc(base)}">'
-            f'<h3>{B.esc(_market_name(base))}</h3>'
-            f'<div class="rule-grid">{cards}</div>'
-            f'</div>')
-    return (f'<div class="rule-band" data-band="{key}">'
-            f'<h3 class="rule-band-title">{B.esc(title)}</h3>'
-            f'{"".join(blocks)}</div>')
+        groups.setdefault(_category(base), []).extend(items)
+    blocks = []
+    order = ("Goals", "BTTS", "Team totals", "Double chance / +0.5", "Match winner")
+    for category in sorted(groups, key=lambda x: (order.index(x) if x in order else len(order), x)):
+        items = groups[category]
+        production = [(r, qs) for r, qs, _ in items if key == "active" and r.get("prod")]
+        sandbox = [(r, qs) for r, qs, _ in items if not (key == "active" and r.get("prod"))]
+        live = "".join(_card(r, qs, True) for r, qs in production)
+        research = "".join(_card(r, qs, key == "active") for r, qs in sandbox)
+        body = (f'<div class="rule-grid">{live}</div>' if live else "")
+        if research:
+            body += UI.disclosure("Sandbox rules" if key == "active" else "Inactive rules",
+                                  f'<div class="rule-grid">{research}</div>', len(sandbox))
+        blocks.append(f'<div class="rule-market"><h3>{B.esc(category)}</h3>{body}</div>')
+    content = "".join(blocks)
+    if key == "inactive":
+        content = UI.disclosure("Inactive rules", content,
+                               sum(len(items) for _, items in markets), css="historical")
+    return f'<div class="rule-band" data-band="{key}">{content}</div>'
 
 
 def render(d, rows, now=None):
@@ -351,9 +377,7 @@ def render(d, rows, now=None):
     """
     now = now or datetime.datetime.now(timezone.utc)
     active, inactive = _bands(d, rows, now)
-    note = ('<div class="note">Match center first; rule cards below. '
-            'Open picks and fixtures inside 48 hours stay at the top, while the full '
-            'research record remains available underneath.</div>')
+    note = ''
     if not rows:
         note = '<div class="note">No soccer lane has a record yet.</div>'
     cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)

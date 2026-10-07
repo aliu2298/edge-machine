@@ -155,10 +155,37 @@ def _record_cards(rows):
     edge_text = f"{won - expected:+.1f} wins" if expected is not None else "—"
     return f"""<div class="crypto-metrics">
 <div><span>Won v priced</span><strong>{esc(won)} v {esc(priced_text)}</strong><small>{esc(edge_text)}</small></div>
-<div><span>ROI after fees</span><strong>{esc(B.pct(a.get("roi_fee"), sign=True) if a.get("roi_fee") is not None else "—")}</strong><small>{esc(a.get("n_bets", 0))} contracts logged</small></div>
-<div><span>Closing value</span><strong>{esc(fmt.signed_cents(a.get("clv")) if a.get("clv") is not None and a.get("clv_n") else "—")}</strong><small>{esc(a.get("clv_n", 0))} close{"s" if a.get("clv_n", 0) != 1 else ""}</small></div>
-<div><span>Stage</span><strong>{"Production" if fav.get("prod") else "Sandbox"}</strong><small>{"live" if fav.get("open") else "no open position"}</small></div>
+<div><span>Contracts</span><strong>{esc(a.get("n_bets", 0))}</strong><small>{esc(a.get("n_bets", 0))} contracts logged</small></div>
 </div>"""
+
+
+def _scan_status(d, now):
+    """Display stored tracker coverage and the existing rule's entry window."""
+    stamp = (d.get("meta") or {}).get("updated")
+    try:
+        last = datetime.datetime.fromisoformat(str(stamp).replace("Z", "+00:00"))
+        if last.tzinfo is None:
+            last = None
+    except ValueError:
+        last = None
+    coverage = ((d.get("coverage") or {}).get("crypto_fav") or {}).get("crypto_fav_band")
+    recorded = isinstance(coverage, dict) and last is not None
+    status = "Coverage recorded" if recorded else "Not recorded"
+    detail = (f'{coverage.get("offered", 0)} quotes · {coverage.get("picked", 0)} picks'
+              if recorded else "No stored scanner coverage")
+    local = now.astimezone(S.CRYPTO_FAV_TZ)
+    close = local.replace(hour=S.CRYPTO_FAV_CLOSE_ET, minute=0, second=0, microsecond=0)
+    end = close - datetime.timedelta(hours=S.CRYPTO_FAV_MIN_H)
+    if local > end:
+        close += datetime.timedelta(days=1)
+    start = close - datetime.timedelta(hours=S.CRYPTO_FAV_MAX_H)
+    end = close - datetime.timedelta(hours=S.CRYPTO_FAV_MIN_H)
+    window = f'{fmt.chicago(start):%b %-d, %-I:%M %p}–{fmt.chicago(end):%-I:%M %p} CT'
+    return f'''<section class="crypto-health" aria-label="Scanner status">
+<div><span>Scanner coverage</span><b>{esc(status)}</b><small>{esc(detail)}</small></div>
+<div><span>Last tracker scan</span><b>{esc(fmt.when(last) if last else "Not recorded")}</b><small>Coin-specific scan times unavailable</small></div>
+<div><span>{"Current" if start <= local <= end else "Next"} entry window</span><b>{esc(window)}</b><small>{S.CRYPTO_FAV_MAX_H:g}–{S.CRYPTO_FAV_MIN_H:g}h before close</small></div>
+</section>'''
 
 
 def mechanism():
@@ -248,6 +275,7 @@ def build(d=None, st=None, now=None):
 <div class="crypto-section-head"><div><span class="crypto-eyebrow">Today’s watch</span><h2>Five live coins</h2></div>
 <span class="crypto-rule-chip">{esc(band)} · {esc(window)}</span></div>
 <div class="crypto-watch">{_watch_html(d)}</div>
+{_scan_status(d, now)}
 <div class="crypto-rule-strip">
 <div><span>Entry</span><b>Yes ask {esc(band)}</b></div>
 <div><span>Selection</span><b>Lowest qualifying rung</b></div>
@@ -283,6 +311,7 @@ def build(d=None, st=None, now=None):
         body,
         script_src="./site.js",
         scripts=("./tables.js",),
+        sports=True,
     )
 
 

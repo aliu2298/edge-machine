@@ -50,7 +50,7 @@ _CURRENT = {
     "crypto": 'href="./crypto.html" aria-current="page"',
     "index": 'href="./production.html" aria-current="page"',
 }
-# The site root is the shell. Sport pages stay on the shared nine-link nav.
+# The sport shell separates four page destinations from the sport selector.
 _SHELL_LABELS = ["Sandbox", "Production", "Trading", "Method"]
 
 
@@ -83,24 +83,21 @@ def _check_page(name, html, current):
         for href in _NAV_HREFS:
             ok(href in html, f"{name} nav includes {href}")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
-    # The eight links are the same set, in the same order, on every page.
-    # aria-current on a breadcrumb is separate; the main nav marks one page.
-    # The NBA board uses the shell's four page pills. Its current mark is the
-    # NBA sport tab, not a page pill.
+    # Sport pages mark the current sport; other pages mark the main nav.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
     currents = re.findall(r'aria-current="page"', nav.group(0) if nav else "")
-    if current == "nba":
-        eq(len(currents), 0, f"{name} page nav does not mark a pill; the NBA sport tab is current")
+    if current in ("nba", "soccer", "tennis", "crypto"):
+        eq(len(currents), 0, f"{name} marks the current sport in the sport selector")
         sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
         ok(sports is not None and sports.group(0).count('aria-current="page"') == 1
-           and 'href="./nba.html" aria-current="page"' in sports.group(0),
-           f"{name} sport tab marks NBA current")
+           and _CURRENT[current] in sports.group(0),
+           f"{name} sport tab marks {current} current")
     else:
         eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        want = _SHELL_LABELS if current in ("index", "nba") else _NAV_LABELS
+        want = _SHELL_LABELS if current in ("index", "nba", "soccer", "tennis", "crypto") else _NAV_LABELS
         eq(labels, want, f"{name} nav labels")
 
 

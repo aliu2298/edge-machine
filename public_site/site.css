@@ -2874,3 +2874,65 @@ details.nba-game > .matchup-grid {
 
 .tennis-match > *, .tennis-combo-card > * { min-width: 0; }
 .tennis-rule-chip a { color: inherit; }
+
+/* Compact shared sport shell and disclosure rhythm. */
+.sports-page .topbar { gap: 12px; min-height: 56px; }
+.sports-page .brand { min-height: 44px; display: flex; align-items: center; }
+.sports-page .stamp { display: block; font-size: 11px; }
+.sports-page .sport-row { max-width: 1120px; margin: auto; padding: 0 24px 8px; }
+.sports-page nav.sports { display: flex; gap: 4px; flex-wrap: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: thin; }
+.sports-page nav.sports a { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; font-size: 13px; color: var(--mut); border: 1px solid transparent; border-radius: 10px; text-decoration: none; }
+.sports-page nav.sports a[aria-current="page"] { color: var(--fg); background: #183249; border-color: #365f81; font-weight: 750; }
+.sports-page .page-menu { position: relative; flex: 0 0 auto; }
+.sports-page .page-menu > summary { cursor: pointer; display: flex; gap: 10px; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; list-style: none; }
+.sports-page .page-menu > summary::-webkit-details-marker { display: none; }
+.sports-page .page-menu nav.main { position: absolute; right: 0; top: calc(100% + 8px); display: flex; flex-direction: column; flex-wrap: nowrap; overflow: visible; width: 220px; max-width: calc(100vw - 32px); padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: 0 12px 36px #0008; }
+.sports-page .page-menu nav.main a { display: flex; align-items: center; min-height: 44px; border-radius: 8px; }
+.sports-page .wrap { padding-top: 24px; }
+.sports-page section { scroll-margin-top: 16px; }
+.sports-page .lede { margin: 8px 0 16px; max-width: 64ch; font-size: 14px; }
+.sports-page .section-disclosure { border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: 0 14px; margin: 10px 0; min-width: 0; }
+.sports-page .section-disclosure > summary { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 0; cursor: pointer; list-style: none; font-size: 13px; }
+.sports-page .section-disclosure > summary::-webkit-details-marker { display: none; }
+.sports-page .section-disclosure > summary::after { content: '›'; margin-left: auto; color: var(--mut); }
+.sports-page .section-disclosure[open] > summary::after { content: '⌄'; }
+.sports-page .section-disclosure > summary > span { font-size: 11px; color: var(--mut); }
+.sports-page .section-disclosure[open] { padding-bottom: 14px; }
+.sports-page .section-disclosure.historical { background: transparent; }
+.sports-page .soccer-page-head { display: block; }
+.sports-page .soccer-prod-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; }
+.sports-page .soccer-prod-rule { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
+.sports-page .page-record { max-width: 480px; }
+.sports-page .page-record[open] { max-width: none; }
+.sports-page .rule-band-title { position: static; }
+.sports-page .rule-face { padding: 14px; }
+.sports-page .rule-flip { min-height: 44px; }
+.sports-page .soccer-local-nav a, .sports-page .tennis-local-nav a, .sports-page .nba-local-nav a, .sports-page .crypto-tabs a { display: inline-flex; align-items: center; min-height: 44px; }
+.sports-page details > summary { min-height: 44px; }
+.sports-page .soccer-rule-chip, .sports-page .tennis-rule-chip { min-height: 44px; padding-top: 0; padding-bottom: 0; }
+.sports-page .soccer-rule-chip a, .sports-page .tennis-rule-chip a,
+.sports-page .soccer-fixture-title a, .sports-page .tennis-match-title a { display: inline-flex; align-items: center; min-height: 44px; }
+.sports-page .crypto-tabs { position: static; }
+.sports-page .crypto-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.crypto-health { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
+.crypto-health > div { display: flex; flex-direction: column; gap: 5px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
+.crypto-health span, .crypto-health small { color: var(--mut); font-size: 11px; }
+.crypto-health b { font-size: 13px; overflow-wrap: anywhere; }
+.sports-page .nba-game-summary::after { visibility: visible; }
+@media (max-width: 640px) {
+  .sports-page .topbar { padding: 0 16px; gap: 8px; flex-wrap: wrap; }
+  .sports-page .stamp { order: 3; width: 100%; margin: -6px 0 4px; white-space: normal; }
+  .sports-page .page-menu { margin-left: auto; }
+  .sports-page .soccer-prod-strip { grid-template-columns: 1fr; }
+  .sports-page .sport-row { padding: 0 16px 6px; }
+  .sports-page nav.sports a { padding: 8px 14px; }
+  .sports-page .wrap { padding: 20px 16px; }
+  .sports-page section { scroll-margin-top: 0; }
+  .sports-page .pace-leaders { grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
+  .sports-page .pace-leader { padding: 10px; font-size: 12px; }
+  .sports-page .pace-leader > span:last-child { font-size: 11px; }
+  .sports-page .section-disclosure > summary { flex-wrap: wrap; gap: 4px 10px; }
+  .crypto-health { grid-template-columns: 1fr; gap: 8px; }
+  .crypto-health > div { display: grid; grid-template-columns: 1fr 1.35fr; gap: 4px 12px; padding: 12px; }
+  .crypto-health small { grid-column: 2; }
+}

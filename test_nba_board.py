@@ -231,7 +231,7 @@ ok(">Away<" in bkn and ">Home<" in bkn, "the two sides are named, not only place
 ok("56.2" in _read(_tempo(bkn, "q1")) and "114.0" in _read(_tempo(bkn, "h1"))
    and "221.5" in _read(_tempo(bkn, "ft")),
    "the middle card prints the file's roll_exp values")
-ok("combined" in _read(_tempo(bkn, "q1")) and "Expected combined points, both teams" in bkn,
+ok("combined" in _read(_tempo(bkn, "q1")) and "Combined expectations" in bkn,
    "the middle card says the totals are combined")
 ok("25.5" not in bkn, "the middle card does not recompute the total from O and D")
 ok("11.1" in bkn and "12.2" in bkn and "O-D-" in bkn,
@@ -444,8 +444,9 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and "aria-describedby" not in nba_tab.group(0)
    and sports.count('aria-current="page"') == 1,
    "only the NBA tab is current, and that tab is not described as coming soon")
-ok(sports.count('aria-describedby="sports-soon"') == 5,
-   "the other five sport pills stay inert and described as coming soon")
+ok(all(f'href="./{sport}.html"' in sports for sport in ("soccer", "tennis", "cricket", "crypto"))
+   and 'aria-disabled="true"' not in sports,
+   "the other sport tabs reach the published pages")
 ok("theme-toggle" not in HTML and "data-theme" not in HTML, "no theme toggle")
 ok("download" not in HTML.lower() and ".csv" not in HTML.lower(), "no download or CSV")
 ok(fmt.display_updated(NOW) in HTML and "CT" in fmt.display_updated(NOW),
@@ -538,7 +539,7 @@ def browser_checks():
     os.symlink(os.path.join(ROOT, "public_site", "tables.js"), os.path.join(folder, "tables.js"))
     with open(os.path.join(folder, "board.html"), "w", encoding="utf-8") as fh:
         fh.write(HTML)
-    os.symlink(os.path.join(ROOT, "public_site", "nba-board.js"), os.path.join(folder, "nba-board.js"))
+    os.symlink(os.path.join(ROOT, "public_site", "sports.js"), os.path.join(folder, "sports.js"))
     httpd = _serve(folder)
     base = f"http://127.0.0.1:{httpd.server_address[1]}/board.html"
     try:
@@ -547,8 +548,11 @@ def browser_checks():
             page = browser.new_page(viewport={"width": 1280, "height": 800})
             page.goto(base, wait_until="load")
             page.wait_for_timeout(40)
-            ok(page.locator("#matchups .team-card").first.is_visible(),
-               "desktop matchup detail is actually visible")
+            ok(not page.locator("#matchups .team-card").first.is_visible(),
+               "desktop starts with compact summaries")
+            page.locator(".nba-results > summary").click()
+            for summary in page.locator("details.nba-game > summary").all():
+                summary.click()
             wide = page.evaluate(LAYOUT)
             ok(wide["tracks"] == 3 and not wide["overflow"],
                f"at 1280px the matchup is three columns and the page does not scroll sideways "
@@ -558,6 +562,7 @@ def browser_checks():
                and abs(away["top"] - home["top"]) < 4,
                "at 1280px away is left of the expectation and home is right")
             page.set_viewport_size({"width": 640, "height": 800})
+            page.reload(wait_until="load")
             page.wait_for_timeout(40)
             first_detail = page.locator("#matchups details.nba-game").first
             ok(first_detail.get_attribute("open") is None,
@@ -594,7 +599,7 @@ def browser_checks():
             page.set_viewport_size({"width": 1280, "height": 800})
             page.wait_for_timeout(40)
             ok(page.locator("#matchups .team-card").first.is_visible(),
-               "returning to desktop restores visible analysis")
+               "returning to desktop preserves the user's expanded analysis")
             browser.close()
     finally:
         httpd.shutdown()

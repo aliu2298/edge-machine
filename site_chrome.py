@@ -137,9 +137,28 @@ def header(active, sections, stamp_html, tools="", prefix="./", crumb=None):
 </header>"""
 
 
+def sports_header(active, stamp_html, prefix="./"):
+    """Compact workspace menu and one current sport in a scrollable selector."""
+    pages = "".join(f'<a href="{esc(_href(href, prefix))}">{esc(label)}</a>'
+                    for key, label, href in PAGES if key in ("sandbox", "production", "trading", "method"))
+    sports = "".join(
+        f'<a href="{esc(_href(href, prefix))}"'
+        + (' aria-current="page"' if key == active else '')
+        + f' data-sport="{esc(key)}">{esc(label)}</a>'
+        for key, label, href in PAGES if key in ("nba", "soccer", "tennis", "cricket", "crypto"))
+    return f'''<a class="skip" href="#content">Skip to content</a>
+<header class="site">
+<div class="topbar"><a class="brand" href="{esc(_href('./index.html', prefix))}">Edge Machine</a>
+<p class="stamp">{stamp_html}</p>
+<details class="page-menu"><summary>Pages <span aria-hidden="true">⌄</span></summary>
+<nav class="main" aria-label="Pages">{pages}</nav></details></div>
+<div class="sport-row"><nav class="sports" aria-label="Sports">{sports}</nav></div>
+</header>'''
+
+
 def document(title, description, active, sections, stamp_html, body,
              script_src=None, extra_head="", tools="", scripts=None, prefix="./",
-             crumb=None):
+             crumb=None, sports=False):
     srcs = []
     if script_src:
         srcs.append(script_src)
@@ -151,6 +170,8 @@ def document(title, description, active, sections, stamp_html, body,
     # tables.js alone: that file also scrolls the active phone-nav pill.
     if "./tables.js" not in srcs:
         srcs.append("./tables.js")
+    if sports:
+        srcs.append("./sports.js")
     script = "".join(
         f'\n<script src="{esc(_href(src, prefix))}"></script>' for src in srcs)
     extra = f"\n{extra_head}" if extra_head else ""
@@ -165,8 +186,8 @@ def document(title, description, active, sections, stamp_html, body,
 {CSP}
 {REFERRER}{extra}
 </head>
-<body>
-{header(active, sections, stamp_html, tools=tools, prefix=prefix, crumb=crumb)}
+<body{f' class="sports-page sport-{esc(active)}"' if sports else ''}>
+{sports_header(active, stamp_html, prefix) if sports else header(active, sections, stamp_html, tools=tools, prefix=prefix, crumb=crumb)}
 <main id="content" class="wrap">
 {body}
 </main>{script}

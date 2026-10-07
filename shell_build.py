@@ -1028,58 +1028,6 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 
 
 def sport_board(active, title, description, stamp_html, body):
-    """A sport page in the same dark shell as the site root.
-
-    Page pills match the root. None of them is the current page: the sport
-    tab is. The other sport pills stay inert. The root's pills filter
-    Running; these do not.
-    No bet roll and no ledger read, so the page does not change when the
-    Production feed does.
-    """
-    parts = []
-    for label, href, _current in PAGES:
-        parts.append(f'<a href="{site_chrome.esc(href)}">{site_chrome.esc(label)}</a>')
-    pills = "".join(parts)
-    sports = []
-    for key, label in SPORTS:
-        if key == active:
-            href = _SPORT_PAGES.get(key, "./index.html")
-            sports.append(
-                f'<a href="{site_chrome.esc(href)}" aria-current="page" '
-                f'data-sport="{site_chrome.esc(key)}">{site_chrome.esc(label)}</a>')
-        else:
-            sports.append(
-                f'<button type="button" data-sport="{site_chrome.esc(key)}" '
-                f'aria-disabled="true" tabindex="-1" aria-describedby="sports-soon">'
-                f'{site_chrome.esc(label)}</button>')
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{site_chrome.esc(title)}</title>
-<meta name="description" content="{site_chrome.esc(description)}">
-<link rel="stylesheet" href="./site.css">
-{site_chrome.CSP}
-{site_chrome.REFERRER}
-</head>
-<body>
-<a class="skip" href="#content">Skip to content</a>
-<header class="site">
-<div class="topbar">
-<a class="brand" href="./index.html">Edge Machine</a>
-<nav class="main" aria-label="Pages">{pills}</nav>
-<p class="stamp">{stamp_html}</p>
-</div>
-<div class="sport-row">
-<nav class="sports" aria-label="Sports">{"".join(sports)}</nav>
-<p id="sports-soon" class="sports-soon">Coming soon</p>
-</div>
-</header>
-<main id="content" class="wrap">
-{body}
-</main>
-<script src="./tables.js"></script>
-</body>
-</html>
-"""
+    """Read-only sport board with the shared compact sport navigation."""
+    return site_chrome.document(title, description, active, (), stamp_html, body,
+                                scripts=("./tables.js",), sports=True)

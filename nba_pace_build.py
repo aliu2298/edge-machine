@@ -355,7 +355,7 @@ def _team_card(blob, game, team, side):
         f'{name_html}'
         f'<p class="team-tag">{_tag_html(tag)}</p>'
         f'<p class="team-rates">Full game scored {esc(scored)} · allowed {esc(allowed)}</p>'
-        f'<p class="pra-slot"><span class="slot-k">Top PRA (points + rebounds + assists), last game</span> '
+        f'<p class="pra-slot"><span class="slot-k">Last-game PRA (pts + reb + ast)</span> '
         f'<span class="pra-value">{esc(pra)}</span></p>'
         f'<p class="period-slot"><span class="slot-k">1Q / 1H</span> '
         f'<span class="period-value">{esc(periods)}</span></p>'
@@ -395,24 +395,14 @@ def _tempo_row(game, period, short, full, lo, hi, uid):
 def _expect_card(game, scale, uid):
     away = game.get("away") or "—"
     home = game.get("home") or "—"
-    start = _instant(game.get("start"))
-    if start is None:
-        when = "—"
-        stamp = ""
-    else:
-        when = fmt.when(start)
-        stamp = f' datetime="{esc(fmt.iso_z(start))}"'
     rows = []
     for index, (key, short, full) in enumerate(PERIODS):
         lo, hi = scale.get(key, (None, None))
         rows.append(_tempo_row(game, key, short, full, lo, hi, f"{uid}-{index}"))
     return (
         f'<section class="expect-card" aria-label="{esc(f"Combined expectation, {away} at {home}")}">'
-        f'<p class="expect-title">{esc(away)} at {esc(home)}</p>'
-        f'<p class="expect-when"><time{stamp}>{esc(when)}</time></p>'
-        f'<p class="expect-kicker">Expected combined points, both teams</p>'
-        f'<p class="tempo-note">Each bar runs from the lowest to the highest '
-        f'combined expectation of that period on this page.</p>'
+        f'<p class="expect-kicker">Combined expectations</p>'
+        f'<p class="tempo-note">Bars compare the expectations on this page.</p>'
         f'<div class="tempo" role="group" aria-label="Tempo track, combined points">'
         f'{"".join(rows)}</div></section>'
     )
@@ -452,7 +442,7 @@ def _matchup(blob, game, scale, uid, window):
     return (
         f'<article class="matchup{" is-skipped" if skipped else ""}" data-window="{esc(window)}" '
         f'data-away="{esc(away)}" data-home="{esc(home)}">'
-        f'<details class="nba-game" open>'
+        f'<details class="nba-game">'
         f'{_matchup_summary(game, window)}'
         f'<div class="matchup-grid">'
         f'{_team_card(blob, game, game.get("away"), "away")}'
@@ -620,7 +610,7 @@ def build(blob=None, now=None):
     body = f"""<div class="nba-head">
 <div>
 <h1>NBA Analyst Desk</h1>
-<p class="lede">Scan the next games first. Open a matchup for the full last-{window_txt} detail.</p>
+<p class="lede">Tip times in CT · combined points. Open a matchup for last-{window_txt} analysis.</p>
 </div>
 <nav class="nba-local-nav" aria-label="NBA sections">
 <a href="#matchups">Upcoming</a>
@@ -628,7 +618,6 @@ def build(blob=None, now=None):
 <a href="#teams">Teams</a>
 </nav>
 </div>
-<div class="note"><b>Research view.</b> These are stored preseason expectations, not betting lines or recommendations.</div>
 <section class="pace-leaders" aria-label="Highest combined expectations">
 {_pace_leaders(upcoming)}
 </section>
@@ -637,17 +626,17 @@ def build(blob=None, now=None):
 <div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological</p></div>
 <span class="nba-count">{len(upcoming)} games</span>
 </div>
-<p class="note sm">Each row shows tip time and stored 1Q, 1H and full-game combined expectations.
-Open a matchup for offense/defense rates, PRA and the expectation tracks.</p>
 {_matchups(blob, upcoming, scale, "upcoming")}
 </section>
-{graded_html}
+<details class="section-disclosure nba-results"><summary><b>Results</b><span>Last 24 hours</span></summary>{graded_html}</details>
 <section id="teams">
-<div class="nba-section-head"><div><h2>Teams</h2><p class="shell-kicker">Reference list</p></div></div>
-{team_list(blob, soon, featured)}
+<details class="section-disclosure"><summary><b>Team reference</b><span>Last-{window_txt} window</span></summary>
+{team_list(blob, soon, featured)}</details>
 </section>
+<details class="section-disclosure"><summary><b>About this desk</b><span>Preseason research</span></summary>
+<p class="sm mut">Stored expectations for both teams: 1Q is the first quarter, 1H the first half, and FT the full game. These are research expectations, not betting lines or recommendations.</p></details>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-<script src="./nba-board.js"></script>
+
 """
     return shell_build.sport_board(
         "nba",
