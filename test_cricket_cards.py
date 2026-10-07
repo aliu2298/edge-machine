@@ -416,8 +416,8 @@ ok(_absent("Soccer Only v Stay", cri) and _absent("Tennis Only v Stay", cri),
    "cricket cards do not pick up soccer or tennis lanes")
 ok("o15_form_l10" not in cri and "tennis_fav_band_3h" not in cri,
    "cricket cards do not name soccer or tennis rules")
-ok('class="rule-card"' in soc and _shown("Soccer Only v Stay") in soc,
-   "soccer still renders its own rule cards")
+ok('class="soccer-rules"' in soc and _shown("Soccer Only v Stay") in soc,
+   "soccer renders its own rules table and fixture list")
 ok("PreResetOpenLabel" not in soc and "TourLookingOpen" not in soc,
    "soccer cards do not pick up cricket lanes")
 ok('class="tn-rules"' in ten and _shown("Tennis Only v Stay") in ten,
@@ -442,9 +442,9 @@ ok("How each rule is defined" in published,
    "published cricket page still has the rule definitions")
 soc_file = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
 ten_file = open(os.path.join(ROOT, "public_site", "tennis.html"), encoding="utf-8").read()
-ok('class="rule-card"' in soc_file, "published soccer page still has its cards")
+ok('class="soccer-rules"' in soc_file and 'class="rule-card"' not in soc_file,
+   "published soccer page is the rules table, not cards")
 ok('class="tn-rules"' in ten_file, "published tennis page has its rules table")
-ok("By competition" in soc_file, "published soccer page still has its by-competition panel")
 
 if FAILS:
     print(f"\nSHA {SHA} FAILED {len(FAILS)}")

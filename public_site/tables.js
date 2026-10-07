@@ -11,6 +11,7 @@
       api.syncHeaderOffset(document);
       api.containWideTables(document);
       api.wireRuleCards(document);
+      api.wireRuleRows(document);
       api.revealHash(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
@@ -349,6 +350,25 @@
     });
   }
 
+  // Soccer rules table. The chevron in a rule's row shows the row under it:
+  // the registered description and the rule's recent picks. With script off,
+  // the row itself still carries the record, the ROI and the status.
+  function wireRuleRows(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll("button.rule-chev[aria-controls]"), function (btn) {
+      if (btn.getAttribute("data-wired") === "1") return;
+      btn.setAttribute("data-wired", "1");
+      var target = doc.getElementById(btn.getAttribute("aria-controls"));
+      if (!target) return;
+      btn.addEventListener("click", function () {
+        var open = btn.getAttribute("aria-expanded") !== "true";
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        paintRow(target, open);
+        var row = btn.closest("tr");
+        if (row) row.classList.toggle("is-open", open);
+      });
+    });
+  }
+
   function enhance(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll("table.sortable"), function (table) {
       var rows = bodyRows(table);
@@ -470,6 +490,7 @@
     paintRow: paintRow,
     containWideTables: containWideTables,
     wireRuleCards: wireRuleCards,
+    wireRuleRows: wireRuleRows,
     revealHash: revealHash,
   };
 });

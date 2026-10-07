@@ -1492,8 +1492,8 @@ def label_cells(page):
         attrs = m.group(1) or ""
         body = m.group(2)
         # A table that already has its <thead> was labelled by an earlier
-        # pass (the NBA page labels itself). Labelling it again would nest
-        # a second thead. Leave it as it is.
+        # pass (the NBA and Soccer pages label themselves). Labelling it
+        # again would nest a second thead. Leave it as it is.
         if "<thead" in body:
             out.append(m.group(0))
             pos = m.end()

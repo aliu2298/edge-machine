@@ -356,7 +356,8 @@ soc = soccer_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
 ok("Soccer Only vs Stay" not in html and "oddspedia" not in html.lower(),
    "the tennis page does not pick up soccer or cricket lanes")
-ok('class="rule-card"' in soc and "Soccer Only vs Stay" in soc, "soccer still renders its own rule cards")
+ok('class="soccer-rules"' in soc and "Soccer Only vs Stay" in soc,
+   "soccer renders its own rules table and fixture list")
 ok("tennis_fav_band_3h" not in soc and "Alpha vs Beta soonest" not in soc,
    "soccer cards do not pick up tennis lanes")
 ok('class="rule-card"' in cri and "Oddspedia" in cri, "cricket renders its own cards")
