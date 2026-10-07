@@ -37,7 +37,8 @@ _NAV_HREFS = (
     'href="./cricket.html"',
     'href="./sandbox.html#method"',
 )
-_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Method"]
+_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket",
+               "Crypto", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
@@ -46,8 +47,11 @@ _CURRENT = {
     "soccer": 'href="./soccer.html" aria-current="page"',
     "tennis": 'href="./tennis.html" aria-current="page"',
     "cricket": 'href="./cricket.html" aria-current="page"',
-    "index": 'href="./sandbox.html" aria-current="page"',
+    "crypto": 'href="./crypto.html" aria-current="page"',
+    "index": 'href="./production.html" aria-current="page"',
 }
+# The site root is the shell. Sport pages stay on the shared nine-link nav.
+_SHELL_LABELS = ["Sandbox", "Production", "Trading", "Method"]
 
 
 def _inline_script(html):
@@ -67,17 +71,37 @@ def _check_page(name, html, current):
     ok(_HANDLER.search(html) is None, f"{name} has no inline on* handler")
     ok('href="#content"' in html and "Skip to content" in html,
        f"{name} has a skip-to-content link")
-    for href in _NAV_HREFS:
-        ok(href in html, f"{name} nav includes {href}")
-    currents = re.findall(r'aria-current="page"', html)
-    eq(len(currents), 1, f"{name} has exactly one aria-current")
+    if current in ("index", "nba"):
+        for href in (
+            'href="./sandbox.html"',
+            'href="./production.html"',
+            'href="./trading.html"',
+            'href="./sandbox.html#method"',
+        ):
+            ok(href in html, f"{name} nav includes {href}")
+    else:
+        for href in _NAV_HREFS:
+            ok(href in html, f"{name} nav includes {href}")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
     # The eight links are the same set, in the same order, on every page.
+    # aria-current on a breadcrumb is separate; the main nav marks one page.
+    # The NBA board uses the shell's four page pills. Its current mark is the
+    # NBA sport tab, not a page pill.
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     ok(nav is not None, f"{name} has the shared main nav")
+    currents = re.findall(r'aria-current="page"', nav.group(0) if nav else "")
+    if current == "nba":
+        eq(len(currents), 0, f"{name} page nav does not mark a pill; the NBA sport tab is current")
+        sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
+        ok(sports is not None and sports.group(0).count('aria-current="page"') == 1
+           and 'href="./nba.html" aria-current="page"' in sports.group(0),
+           f"{name} sport tab marks NBA current")
+    else:
+        eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, _NAV_LABELS, f"{name} nav labels")
+        want = _SHELL_LABELS if current in ("index", "nba") else _NAV_LABELS
+        eq(labels, want, f"{name} nav labels")
 
 
 def _nba(now):
@@ -108,6 +132,12 @@ def _cricket(now):
     return cricket_build.build({"quotes": []}, {"pairs": {}}, now=now)
 
 
+def _crypto(now):
+    """The Crypto page off an empty ledger, so the shell is checked without live data."""
+    import crypto_build
+    return crypto_build.build({"quotes": []}, {"pairs": {}}, now=now)
+
+
 def _pages():
     """Each published page, even when a later one cannot be built yet."""
     import sandbox_build as SB
@@ -125,6 +155,7 @@ def _pages():
         ("soccer.html", "soccer", lambda: _soccer(now)),
         ("tennis.html", "tennis", lambda: _tennis(now)),
         ("cricket.html", "cricket", lambda: _cricket(now)),
+        ("crypto.html", "crypto", lambda: _crypto(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:
@@ -411,12 +442,38 @@ def _check_sport_tab(family, html, d, st):
             if B.family(r["sport"]) == family and not B.eliminated(r)]
     section = B.sport_sections(d, rows)
     ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
-    ok(section in html, f"{family} tab lanes are the Sandbox sport_sections for that family")
     lanes = re.search(r'<section id="lanes">(.*?)</section>', html, re.S)
     ok(lanes is not None, f"{family} tab has a lanes section")
-    if lanes and section:
-        eq(canonical_values(lanes.group(1)), canonical_values(section),
-           f"{family} tab lane numbers equal the Sandbox section")
+    # Soccer, Tennis, and Cricket replace the lane table with cards. The
+    # verdict and the ROI on each card are still the Sandbox row's strings.
+    if family == "Soccer":
+        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
+           "soccer lanes are flippable cards")
+        import soccer_cards
+        for r in rows:
+            ok(soccer_cards.verdict_html(r) in html and soccer_cards.roi_html(r) in html,
+               f"soccer card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
+    elif family == "Tennis":
+        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
+           "tennis lanes are flippable cards")
+        import tennis_cards
+        for r in rows:
+            ok(tennis_cards.verdict_html(r) in html and tennis_cards.roi_html(r) in html,
+               f"tennis card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
+    elif family == "Cricket":
+        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
+           "cricket lanes are flippable cards")
+        import cricket_cards
+        for r in rows:
+            ok(cricket_cards.verdict_html(r) in html and cricket_cards.roi_html(r) in html,
+               f"cricket card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
+        ok("By competition" not in html,
+           "cricket does not add the soccer by-competition panel")
+    else:
+        ok(section in html, f"{family} tab lanes are the Sandbox sport_sections for that family")
+        if lanes and section:
+            eq(canonical_values(lanes.group(1)), canonical_values(section),
+               f"{family} tab lane numbers equal the Sandbox section")
     got = _lane_metrics(rows)
     print(f"  {family} lanes {got}")
     ok(got, f"{family} fixture has lanes to compare")
@@ -457,8 +514,9 @@ if tennis_build is not None and SB is not None:
     ok("99" not in _ten and "99" not in _cri and "Table Tennis" not in _ten and "Table Tennis" not in _cri,
        "table tennis stays off the Tennis and Cricket tabs")
     ok("within 3 hours of the scheduled start" in _ten and "Challenger" in _ten
-       and "Tennis Explorer" in _ten and "TENNIS_COMBO_BAND_SINCE" in _ten,
-       "tennis keeps the 3-hour note, the tour check, and the combo clocks")
+       and "Tennis Explorer" in _ten and S.TENNIS_COMBO_BAND_SINCE in _ten
+       and "TENNIS_COMBO_BAND_SINCE" not in _ten,
+       "tennis keeps the 3-hour note, the tour check, and the combo clock")
     ok("PRODUCTION" in _cri and "Oddspedia community tips" in _cri
        and "Cricket consensus" in _cri,
        "cricket shows the Production lane and the consensus lane")

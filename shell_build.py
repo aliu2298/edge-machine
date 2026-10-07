@@ -1,0 +1,1085 @@
+"""The Analyst Desk production shell.
+
+The site root lands here with Production selected. Page pills go to the
+existing Sandbox, Production, Trading, and Method pages. Sport pills filter
+the Running list in place. They do not navigate, and All starts pressed.
+
+Running rows are presentation. They reuse the Production feed and the same
+quote gates that feed already uses. They do not settle, assess, or rewrite a
+ledger. Page pills leave this page, so the list is Production lanes only; a
+row's lane pill reads Production. One row per contest. Several bets on that
+contest show an N-lanes count and, on the right, one Rules-applied card each.
+Card verdicts, ROI, and records come from the helpers the sport pages already
+call. This file does not compute a new one.
+
+Settled rows cover SHELL_SETTLED_DAYS Chicago dates, today included. Days
+still inside production.KEEP_SETTLED_DAYS come from the same feed
+production.html uses. Older days inside this window come from the quote
+ledger, through the same status and price path. The clock is the `now`
+the caller passed, the same instant as production.html.
+"""
+import datetime
+import json
+
+import fmt
+import production
+import sandbox_build
+import sandbox_sources as S
+import sandbox_track as T
+import site_chrome
+
+SPORTS = (
+    ("all", "All"),
+    ("nba", "NBA"),
+    ("soccer", "Soccer"),
+    ("tennis", "Tennis"),
+    ("cricket", "Cricket"),
+    ("crypto", "Crypto"),
+)
+PAGES = (
+    ("Sandbox", "./sandbox.html", False),
+    ("Production", "./production.html", True),
+    ("Trading", "./trading.html", False),
+    ("Method", "./sandbox.html#method", False),
+)
+RUNNING = (("live", "Live", True), ("settled", "Settled", False), ("upcoming", "Upcoming", False))
+_GROUP_ORDER = ("NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Markets")
+_STATUS = {
+    "pending": "Open",
+    "open": "Open",
+    "hit": "W",
+    "won": "W",
+    "miss": "L",
+    "lost": "L",
+    "void": "Void",
+    "price": "price result",
+    "settled": "price result",
+}
+_EMPTY = {
+    "live": "No live paper bets",
+    "settled": "No settled paper bets",
+    "upcoming": "No upcoming paper bets",
+}
+_QUOTE_SETTLED = ("won", "lost", "void", "settled")
+# Chicago dates on the Running Settled list, today included. Not
+# production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
+SHELL_SETTLED_DAYS = 14
+# An open bet still ungraded this long after kickoff stays in Live, but the
+# row says "Awaiting result" instead of Open. The name is read on each call.
+SHELL_AWAIT_HOURS = 6
+# Sport pages that already exist. Anything else stays on the Production board.
+_SPORT_PAGES = {
+    "soccer": "./soccer.html",
+    "tennis": "./tennis.html",
+    "cricket": "./cricket.html",
+    "nba": "./nba.html",
+    "crypto": "./crypto.html",
+}
+
+
+def tiles_html(html):
+    """Copy the Production headline strip out of a page that already built it."""
+    start = html.find('<div class="tiles">')
+    if start < 0:
+        raise RuntimeError("Production board has no headline tiles")
+    depth = 0
+    i = start
+    while i < len(html):
+        if html.startswith("<div", i):
+            depth += 1
+            i = html.find(">", i) + 1
+            continue
+        if html.startswith("</div>", i):
+            depth -= 1
+            i += len("</div>")
+            if depth == 0:
+                return html[start:i]
+            continue
+        i += 1
+    raise RuntimeError("Production headline tiles are not closed")
+
+
+def production_summary(d, st, blob, now):
+    """The four Production tiles. page() does the counting; this only displays it."""
+    return tiles_html(production.page(d, st, blob, "", now=now))
+
+
+def _load(d, st, blob):
+    if d is None or st is None or blob is None:
+        if d is None:
+            d = T.load()
+        if st is None:
+            st = T.load_stages()
+        if blob is None:
+            blob = production.load_feed()
+    return d, st, blob
+
+
+def _now(now):
+    if isinstance(now, datetime.datetime):
+        if now.tzinfo is None:
+            return now.replace(tzinfo=datetime.timezone.utc)
+        return now.astimezone(datetime.timezone.utc)
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+def _stamp(now):
+    if isinstance(now, datetime.datetime):
+        return site_chrome.stamp(_now(now), machine=False)
+    return site_chrome.esc(str(now))
+
+
+def _page_pills():
+    parts = []
+    for label, href, current in PAGES:
+        attr = ' aria-current="page"' if current else ""
+        parts.append(f'<a href="{site_chrome.esc(href)}"{attr}>{site_chrome.esc(label)}</a>')
+    return "".join(parts)
+
+
+def _sport_pills():
+    """Filter the Running list. All starts pressed. The choice is not stored."""
+    parts = []
+    for key, label in SPORTS:
+        pressed = "true" if key == "all" else "false"
+        parts.append(
+            f'<button type="button" data-sport="{site_chrome.esc(key)}" '
+            f'aria-pressed="{pressed}">'
+            f'{site_chrome.esc(label)}</button>')
+    return "".join(parts)
+
+
+def _running_filters(counts):
+    parts = []
+    for key, label, pressed in RUNNING:
+        described = ' aria-describedby="settled-caption"' if key == "settled" else ""
+        parts.append(
+            f'<button type="button" data-filter="{site_chrome.esc(key)}" '
+            f'aria-pressed="{"true" if pressed else "false"}"{described}>'
+            f'{site_chrome.esc(label)} <span class="count">{int(counts.get(key, 0))}</span></button>')
+    return "".join(parts)
+
+
+def _sport_label(sport):
+    try:
+        return sandbox_build.family(sport or "")
+    except Exception:
+        text = S.SPORTS.get(sport, sport or "Other")
+        return str(text).split(" · ")[0] or "Other"
+
+
+def _status_label(status):
+    """Open / W / L / Void / price result. Anything else stays neutral.
+
+    A status this map does not know is not a void. A real string is shown as
+    itself (escaped at render). Missing statuses read Unknown.
+    """
+    if status in _STATUS:
+        return _STATUS[status]
+    if isinstance(status, str) and status.strip():
+        return status.strip()
+    return "Unknown"
+
+
+def _in_production_window(instant, now):
+    """True when `instant` is still inside production.build_feed's cutoff.
+
+    The feed drops a settled bet when its kickoff is strictly older than
+    `now - KEEP_SETTLED_DAYS`. Those days stay the feed's job. The name is
+    read on each call, not copied.
+    """
+    if instant is None or now is None:
+        return False
+    try:
+        return not instant < now - datetime.timedelta(days=production.KEEP_SETTLED_DAYS)
+    except TypeError:
+        return False
+
+
+def _in_shell_window(instant, now):
+    """True when the kickoff's Chicago date is inside SHELL_SETTLED_DAYS.
+
+    Today is included. The date SHELL_SETTLED_DAYS ago is not. The name is
+    read on each call, so moving the constant moves this window.
+    """
+    if instant is None or now is None:
+        return False
+    today = production._chicago_day(now)
+    day = production._chicago_day(instant)
+    if today is None or day is None:
+        return False
+    try:
+        return 0 <= (today - day).days < SHELL_SETTLED_DAYS
+    except TypeError:
+        return False
+
+
+def _cents(price):
+    try:
+        return fmt.cents(price)
+    except (TypeError, ValueError, OverflowError):
+        return "—"
+
+
+def _when_text(kickoff):
+    if kickoff is None:
+        return "—"
+    try:
+        return fmt.when(kickoff)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return "—"
+
+
+def _time_text(bucket, kickoff, now):
+    """Live, the kickoff clock on the build date, or a relative day."""
+    if bucket == "live":
+        return "Live"
+    if kickoff is None:
+        return "—"
+    today = production._chicago_day(now)
+    day = production._chicago_day(kickoff)
+    if today is None or day is None:
+        return "—"
+    delta = (day - today).days
+    if delta == -1:
+        return "Yesterday"
+    if delta == 0:
+        try:
+            return fmt.clock(kickoff)
+        except (TypeError, ValueError, OverflowError, OSError):
+            return "—"
+    try:
+        return production._day_label(day, today)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return "—"
+
+
+def _lane_from_lead(lead, settled_at=None):
+    if not isinstance(lead, dict):
+        return None
+    if S.removed_row(lead) or production._weather_pair(lead.get("pair") or ""):
+        return None
+    kickoff = production._one_instant(lead.get("kickoff"))
+    home, away = lead.get("home"), lead.get("away")
+    if home is not None:
+        home = str(home)
+    if away is not None:
+        away = str(away)
+    route = lead.get("route") if isinstance(lead.get("route"), dict) else {}
+    venue = route.get("venue")
+    if venue is None:
+        venue = lead.get("venue")
+    pair = str(lead.get("pair") or "")
+    source = lead.get("source") or pair.split("|", 1)[0]
+    edge = lead.get("edge_at_log") if "edge_at_log" in lead else lead.get("edge")
+    return {
+        "pair": pair,
+        "quote_id": lead.get("sandbox_quote") or lead.get("id"),
+        "sport": _sport_label(lead.get("sport")),
+        "sport_key": str(lead.get("sport") or ""),
+        "source": str(source or ""),
+        "home": home,
+        "away": away,
+        "match": str(lead.get("match") or ""),
+        "headline": str(lead.get("headline") or ""),
+        "competition": str(lead.get("league") or ""),
+        "kickoff": kickoff,
+        "price": lead.get("price_at_log"),
+        "edge": edge,
+        "venue": None if venue is None else str(venue),
+        "status": _status_label(lead.get("status")),
+        "lane": "Sandbox" if lead.get("lane") == "sandbox" else "Production",
+        "settled_at": settled_at,
+    }
+
+
+def _settled_status(status):
+    """A graded result. Open and anything this map does not know are not graded."""
+    return status in ("W", "L", "Void", "price result")
+
+
+def _keeps(lane, now):
+    if lane["status"] == "Open":
+        return True
+    kick = lane.get("kickoff")
+    # An unknown status is not a void and not a drop. A future kickoff stays
+    # on the list so it can sit in Upcoming; a past one uses the settled window.
+    if not _settled_status(lane.get("status")) and kick is not None and kick > now:
+        return True
+    return _in_shell_window(kick, now)
+
+
+def _contest_sides(lane):
+    """Home and away, or the two sides Production writes into the match title.
+
+    A Production lead's match is ``{home} v {away}`` whenever it has sides.
+    A second lead for that fixture can carry the title and not the sides.
+    Both have to share one key, or the contest splits into two rows.
+    """
+    home, away = lane.get("home"), lane.get("away")
+    if home and away:
+        return str(home).strip(), str(away).strip()
+    match = str(lane.get("match") or "")
+    parts = match.split(" v ")
+    if len(parts) == 2 and parts[0].strip() and parts[1].strip():
+        return parts[0].strip(), parts[1].strip()
+    return None, None
+
+
+def _contest_key(lane):
+    """Sport, the two sides in either order, and the Chicago day.
+
+    Reversed home and away on the same Chicago day are one contest. A same-day
+    doubleheader is too: both games share those sides and that day, so they
+    share a row. Kickoffs that fall on different Chicago dates stay apart.
+    """
+    day = production._chicago_day(lane.get("kickoff"))
+    day_key = day.isoformat() if day is not None else ""
+    home, away = _contest_sides(lane)
+    if home and away:
+        sides = tuple(sorted((home.casefold(), away.casefold())))
+        return ("sides", lane["sport"], sides, day_key)
+    return ("match", lane["sport"], (lane.get("match") or "").casefold(), day_key)
+
+
+def _contest_bucket(items, now):
+    opens = [lane for lane in items if lane["status"] == "Open"]
+    if not opens:
+        # No open bet. Graded bets are Settled. An unknown status follows
+        # its kickoff: still to come is Upcoming, already started is Settled.
+        future = [lane for lane in items
+                  if lane.get("kickoff") is not None and lane["kickoff"] > now
+                  and not _settled_status(lane.get("status"))]
+        if items and len(future) == len(items):
+            return "upcoming"
+        return "settled"
+    started = [lane for lane in opens
+               if lane.get("kickoff") is not None and lane["kickoff"] <= now]
+    if started:
+        return "live"
+    return "upcoming"
+
+
+# Visual token and spoken phrase for each bet status. W and L glue to the
+# count ("1W", "2L"); the words stay separate ("1 void", "1 open").
+_COMBO_ORDER = ("W", "L", "price result", "Void", "Awaiting result", "Open")
+_COMBO_TOKEN = {
+    "W": "W",
+    "L": "L",
+    "price result": "price result",
+    "Void": "void",
+    "Awaiting result": "awaiting",
+    "Open": "open",
+}
+_SPOKEN = {
+    "W": "won",
+    "L": "lost",
+    "price result": "price result",
+    "Void": "void",
+    "Awaiting result": "awaiting result",
+    "Open": "open",
+}
+
+
+def _status_face(items, statuses=None):
+    """One contest row, one result line, counted per bet.
+
+    A single bet keeps its own label (W, L, Open, Void, price result,
+    Awaiting result). Several bets add up: 2W, 1W 1L, 1L 1 awaiting. The
+    spoken line is what a screen reader should say instead of the letters.
+    `statuses` overrides each lane's stored status, so an open bet past the
+    await window can read Awaiting result without leaving the Live bucket.
+    """
+    counts = {}
+    labels = statuses if statuses is not None else [lane["status"] for lane in items]
+    for label in labels:
+        counts[label] = counts.get(label, 0) + 1
+    total = sum(counts.values())
+    if total == 0:
+        return {"visual": "—", "spoken": "unknown", "data": ""}
+    if total == 1:
+        label = next(iter(counts))
+        return {"visual": label, "spoken": _SPOKEN.get(label, label), "data": label}
+    visual = []
+    spoken = []
+    for label in _COMBO_ORDER:
+        n = counts.get(label, 0)
+        if not n:
+            continue
+        token = _COMBO_TOKEN[label]
+        if label in ("W", "L"):
+            visual.append(f"{n}{token}")
+        else:
+            visual.append(f"{n} {token}")
+        spoken.append(f"{n} {_SPOKEN.get(label, label)}")
+    for label, n in counts.items():
+        if label in _COMBO_ORDER or not n:
+            continue
+        visual.append(f"{n} {label}")
+        spoken.append(f"{n} {label}")
+    data = next(iter(counts)) if len(counts) == 1 else "mixed"
+    return {"visual": " ".join(visual), "spoken": ", ".join(spoken), "data": data}
+
+
+def _extra_quote_lanes(d, st, shown, now):
+    """Live bets, and settled bets the feed no longer carries.
+
+    Upcoming quotes stay on the feed. This does not widen placeable() or
+    start_verified(); a quote those two already refuse stays off the list.
+    """
+    if not d or "quotes" not in d or not st:
+        return []
+    pairs = {key: pair for key, pair in production.production_pairs(st).items()
+             if not production._weather_pair(key)}
+    if not pairs:
+        return []
+    built = now.replace(microsecond=0).isoformat()
+    out = []
+    try:
+        rows = T.bet_rows(d)
+    except (KeyError, TypeError):
+        return []
+    for key, pair in pairs.items():
+        source, sport = key.split("|", 1)
+        if S.lane_removed(source, sport):
+            continue
+        entered = production.entered_at(pair)
+        for quote in rows:
+            if quote.get("source") != source or quote.get("sport") != sport or not quote.get("bet"):
+                continue
+            if S.removed_row(quote):
+                continue
+            qid = quote.get("id")
+            if qid and qid in shown:
+                continue
+            try:
+                kickoff = production._kickoff(quote)
+            except (KeyError, TypeError, ValueError, OverflowError, OSError):
+                continue
+            if kickoff is None:
+                continue
+            try:
+                if kickoff.isoformat() < entered:
+                    continue
+            except TypeError:
+                continue
+            status = quote.get("status")
+            settled_at = production._one_instant(quote.get("settled"))
+            if status == "open":
+                if kickoff > now:
+                    continue
+            elif status in _QUOTE_SETTLED:
+                # Days the feed still carries stay on the feed. The ledger
+                # only fills the older days that are still inside the shell window.
+                if _in_production_window(kickoff, now) or not _in_shell_window(kickoff, now):
+                    continue
+            else:
+                continue
+            if not T.placeable(quote) or not production.start_verified(quote):
+                continue
+            try:
+                lead = production.lead_from_quote(quote, key, built)
+            except (KeyError, TypeError, ValueError, OverflowError, OSError):
+                continue
+            lane = _lane_from_lead(lead, settled_at=settled_at)
+            if lane is None:
+                continue
+            out.append(lane)
+            if qid:
+                shown.add(qid)
+    return out
+
+
+def collect_lanes(d, st, blob, now):
+    """Production lanes for the Running list. Display only."""
+    lanes = []
+    shown = set()
+    for lead in ((blob or {}).get("leads") or {}).values():
+        lane = _lane_from_lead(lead)
+        if lane is None or not _keeps(lane, now):
+            continue
+        lanes.append(lane)
+        if lane.get("quote_id"):
+            shown.add(lane["quote_id"])
+    lanes.extend(_extra_quote_lanes(d, st, shown, now))
+    return lanes
+
+
+def _bet_awaiting(lane, now):
+    """An open bet whose kickoff is strictly more than SHELL_AWAIT_HOURS ago."""
+    if lane.get("status") != "Open" or now is None:
+        return False
+    kick = lane.get("kickoff")
+    if kick is None:
+        return False
+    try:
+        return now - kick > datetime.timedelta(hours=SHELL_AWAIT_HOURS)
+    except TypeError:
+        return False
+
+
+def _shown_status(lane, now):
+    """The status a card and the result line show.
+
+    An open bet past the await window stays in the Live bucket, but it no
+    longer reads Open. The lane's own status is left as Open so the bucket
+    still sees an open bet.
+    """
+    if _bet_awaiting(lane, now):
+        return "Awaiting result"
+    return lane.get("status") or "Unknown"
+
+
+def _price_text(items):
+    """Every bet's cents, in card order. One price stays a single figure."""
+    parts = [_cents(lane.get("price")) for lane in items]
+    if not parts:
+        return "—"
+    if len(parts) == 1:
+        return parts[0]
+    return " / ".join(parts)
+
+
+def _lane_name(source, sport_key):
+    """The rule or tipster label the Sandbox and Production pages already print."""
+    meta = S.SOURCES.get(source) or {}
+    label = meta.get("label") or source or ""
+    name = str(label).split(" (")[0] or "—"
+    try:
+        sfx = sandbox_build._scope(sport_key)
+    except (TypeError, AttributeError):
+        sfx = ""
+    scope = S.SCOPE_LABEL.get(sfx) if sfx else None
+    if scope:
+        return f"{name} · {scope}"
+    return name
+
+
+def _venue_name(venue):
+    """The venue badge, from the same source label the board prints. Omit if absent.
+
+    ``kalshi_binary`` is the ledger's name for a Kalshi yes/no contract. It is
+    not its own source. The board's Kalshi label is the one the badge uses.
+    """
+    if venue is None or venue == "":
+        return None
+    key = "kalshi" if str(venue) == "kalshi_binary" else str(venue)
+    meta = S.SOURCES.get(key) or {}
+    label = meta.get("label")
+    if label:
+        return str(label).split(" (")[0]
+    return str(venue)
+
+
+def _quote_venues(d):
+    """Quote id to the venue on that paper-bet row. The feed lead often omits it."""
+    found = {}
+    if not isinstance(d, dict):
+        return found
+    try:
+        rows = T.bet_rows(d)
+    except (KeyError, TypeError):
+        return found
+    for quote in rows:
+        qid = quote.get("id")
+        venue = quote.get("venue")
+        if qid and venue and qid not in found:
+            found[qid] = str(venue)
+    return found
+
+
+def _edge_text(edge):
+    """Edge already stored on the lead, in the board's percent format. None omits it."""
+    if edge is None or edge == "":
+        return None
+    try:
+        text = fmt.pct(float(edge), digits=1, sign=True)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if not text or text == "—":
+        return None
+    return text
+
+
+def _lane_board(d, st, pair_key, cache):
+    """Verdict, ROI after fees, and record from the helpers the sport pages use.
+
+    `pair_status` is the Sandbox row's assess. `verdict` and `pct` are the
+    words and the ROI that row already prints. Nothing here is a new formula.
+    A missing sample omits ROI and record. A missing pair omits all three.
+    """
+    if pair_key in cache:
+        return cache[pair_key]
+    found = {"verdict": None, "roi": None, "record": None}
+    cache[pair_key] = found
+    if not d or not st or not pair_key or "|" not in str(pair_key):
+        return found
+    source, sport = str(pair_key).split("|", 1)
+    try:
+        group, assessed, _qa, _open_n, _last, _pair = sandbox_build.pair_status(
+            d, st, source, sport)
+    except (KeyError, TypeError):
+        return found
+    if not isinstance(assessed, dict):
+        return found
+    try:
+        key = sandbox_build.verdict(assessed) if group is not None else "nobets"
+        found["verdict"] = sandbox_build.VERDICTS[key][0]
+    except (KeyError, TypeError):
+        found["verdict"] = None
+    n = assessed.get("n")
+    if not n:
+        return found
+    roi = assessed.get("roi_fee")
+    if roi is not None:
+        try:
+            text = sandbox_build.pct(roi, sign=True)
+        except (TypeError, ValueError, OverflowError):
+            text = None
+        if text and text != "—":
+            found["roi"] = text
+    won = assessed.get("won")
+    if won is not None:
+        try:
+            found["record"] = f"{won}\u2013{n - won}"
+        except TypeError:
+            found["record"] = None
+    return found
+
+
+def _full_page(sport_key):
+    """The existing sport page for this lane, or the Production board."""
+    key = str(sport_key or "")
+    try:
+        base = str(sandbox_build._base_sport(key))
+    except (TypeError, AttributeError):
+        base = key
+    for slug, href in _SPORT_PAGES.items():
+        if key == slug or key.startswith(slug + "_") or base == slug or base.startswith(slug + "_"):
+            return href
+    return "./production.html"
+
+
+def _contest_page(items):
+    pages = [_full_page(lane.get("sport_key")) for lane in items]
+    chosen = [href for href in pages if href != "./production.html"]
+    if chosen and all(href == chosen[0] for href in pages):
+        return chosen[0]
+    return "./production.html"
+
+
+def _card(lane, board):
+    """One bet's mini card. Fields the helpers did not compute are left out."""
+    status = lane.get("status") or "Unknown"
+    card = {
+        "lane": _lane_name(lane.get("source") or "", lane.get("sport_key")),
+        "pill": "PRODUCTION" if lane.get("lane") == "Production" else "Sandbox",
+        "price": _cents(lane.get("price")),
+        "status": status,
+        "spoken": _SPOKEN.get(status, status),
+    }
+    if lane.get("headline"):
+        card["market"] = lane["headline"]
+    venue = _venue_name(lane.get("venue"))
+    if venue:
+        card["venue"] = venue
+    edge = _edge_text(lane.get("edge"))
+    if edge:
+        card["edge"] = edge
+    if board.get("verdict"):
+        card["verdict"] = board["verdict"]
+    if board.get("roi"):
+        card["roi"] = board["roi"]
+    if board.get("record"):
+        card["record"] = board["record"]
+    # The numbers are that pair's Sandbox record on the US exchanges, every
+    # competition together. The sport page splits the same record by competition.
+    # pair_status already limits the judged sample to TRADEABLE_VENUES.
+    if board.get("verdict") or board.get("roi") or board.get("record"):
+        card["stats_note"] = "Sandbox, US exchanges, all competitions"
+    return card
+
+
+def _cards_attr(cards):
+    raw = json.dumps(cards, ensure_ascii=True, separators=(",", ":"))
+    return site_chrome.esc(raw)
+
+
+def contests_from_lanes(lanes, now, d=None, st=None):
+    """One contest per event. Production bets sort ahead of Sandbox bets."""
+    grouped = {}
+    for lane in lanes:
+        grouped.setdefault(_contest_key(lane), []).append(lane)
+    cache = {}
+    venues = _quote_venues(d)
+    contests = []
+    for items in grouped.values():
+        items.sort(key=lambda lane: (
+            0 if lane.get("lane") == "Production" else 1,
+            lane.get("pair") or "",
+            str(lane.get("quote_id") or ""),
+        ))
+        kickoff = min((lane["kickoff"] for lane in items if lane.get("kickoff") is not None),
+                      default=None)
+        rep = next((lane for lane in items if lane["status"] == "Open"), items[0])
+        competition = next((lane["competition"] for lane in items if lane.get("competition")), "")
+        for lane in items:
+            if not lane.get("venue"):
+                venue = venues.get(lane.get("quote_id"))
+                if venue:
+                    lane["venue"] = venue
+        bucket = _contest_bucket(items, now)
+        shown = [_shown_status(lane, now) for lane in items]
+        awaiting = bucket == "live" and any(text == "Awaiting result" for text in shown)
+        if shown and all(text == "Awaiting result" for text in shown):
+            face = {"visual": "Awaiting result", "spoken": "awaiting result", "data": "awaiting"}
+        else:
+            face = _status_face(items, shown)
+        bets = [
+            {"status": lane["status"], "price": lane.get("price"), "pair": lane.get("pair")}
+            for lane in items
+        ]
+        cards = [
+            _card(dict(lane, status=text), _lane_board(d, st, lane.get("pair"), cache))
+            for lane, text in zip(items, shown)
+        ]
+        contests.append({
+            "sport": items[0]["sport"] or "Other",
+            "match": rep.get("match") or items[0].get("match") or "",
+            "competition": competition,
+            "kickoff": kickoff,
+            "price": rep.get("price"),
+            "price_text": _price_text(items),
+            "status": face["visual"],
+            "spoken": face["spoken"],
+            "data_status": face["data"],
+            "awaiting": awaiting,
+            "bucket": bucket,
+            "page": _contest_page(items),
+            "pill": "Production" if any(lane["lane"] == "Production" for lane in items) else "Sandbox",
+            "lanes": len({lane["pair"] for lane in items if lane.get("pair")}) or len(items),
+            "bets": bets,
+            "cards": cards,
+        })
+    return contests
+
+
+def _group_key(label):
+    try:
+        return (0, _GROUP_ORDER.index(label))
+    except ValueError:
+        return (1, label.lower())
+
+
+def _sport_letter(label):
+    """One letter for the roll. The full sport name stays in the chip for readers."""
+    text = str(label or "").strip()
+    return text[:1].upper() if text else "?"
+
+
+_OPEN_CHIP = ("Open", "Awaiting result")
+_SETTLED_CHIP = ("W", "L", "Void", "price result")
+
+
+def _chip_rank(kind, kick, order):
+    """Open bets by kickoff, then settled bets newest first. Missing times go last."""
+    if kind == "open":
+        when = kick.timestamp() if kick is not None else float("inf")
+        return (0, when, order)
+    when = -kick.timestamp() if kick is not None else float("inf")
+    return (1, when, order)
+
+
+def _chip_html(contest, index, card):
+    """One bet. Text is escaped here; the browser does not parse a payload."""
+    status = card.get("status") or "Unknown"
+    sport = contest.get("sport") or "Other"
+    name = contest.get("match") or "—"
+    market = card.get("market") or "—"
+    price = card.get("price") or "—"
+    spoken = card.get("spoken") or status
+    esc = site_chrome.esc
+    return (
+        f'<button type="button" class="bet-chip"'
+        f' data-contest="c{index}" data-status="{esc(status)}" aria-pressed="false">'
+        f'<span class="bet-chip-letter" aria-hidden="true">{esc(_sport_letter(sport))}</span>'
+        f'<span class="sr-only">{esc(sport)}</span>'
+        f'<span class="bet-chip-contest">{esc(name)}</span>'
+        f'<span class="bet-chip-line">{esc(market)} · {esc(price)}</span>'
+        f'<span class="bet-chip-status" data-status="{esc(status)}">'
+        f'<span aria-hidden="true">{esc(status)}</span>'
+        f'<span class="sr-only">{esc(spoken)}</span></span>'
+        f'</button>'
+    )
+
+
+def _roll_html(ordered):
+    """Open chips, then recently settled chips. Same contests as the Running list.
+
+    An open bet past the await window is still an open chip, with the Awaiting
+    result status the row already uses. Settled chips are the graded bets on
+    contests the 14-day window kept. Nothing else, including a contest outside
+    that window, is a chip.
+    """
+    pending = []
+    order = 0
+    for index, contest in enumerate(ordered):
+        kick = contest.get("kickoff")
+        for card in contest.get("cards") or []:
+            status = card.get("status") or ""
+            if status in _OPEN_CHIP:
+                kind = "open"
+            elif contest.get("bucket") == "settled" or status in _SETTLED_CHIP:
+                kind = "settled"
+            else:
+                continue
+            pending.append((kind, kick, order, _chip_html(contest, index, card)))
+            order += 1
+    if not pending:
+        return '<p class="bet-roll-empty">No open or recent paper bets yet.</p>'
+    pending.sort(key=lambda item: _chip_rank(item[0], item[1], item[2]))
+    return "".join(item[3] for item in pending)
+
+
+def _row_html(contest, index, now):
+    bucket = contest["bucket"]
+    hidden = "" if bucket == "live" else " hidden"
+    lanes = ""
+    if contest["lanes"] > 1:
+        lanes = f'<span class="lane-n">{int(contest["lanes"])} lanes</span>'
+    competition = contest["competition"] or "—"
+    name = contest["match"] or "—"
+    kickoff = _when_text(contest["kickoff"])
+    price = contest.get("price_text") or _cents(contest.get("price"))
+    awaiting = ' data-awaiting="true"' if contest.get("awaiting") else ""
+    esc = site_chrome.esc
+    return (
+        f'<button type="button" class="running-row"'
+        f' data-filter="{esc(bucket)}" data-contest="c{index}"'
+        f' data-competition="{esc(competition)}" data-sport="{esc(contest["sport"])}"'
+        f' data-name="{esc(name)}" data-kickoff="{esc(kickoff)}" data-price="{esc(price)}"'
+        f' data-page="{esc(contest.get("page") or "./production.html")}"'
+        f' data-cards="{_cards_attr(contest.get("cards") or [])}"'
+        f' aria-pressed="false"{awaiting}{hidden}>'
+        f'<span class="running-time">{esc(_time_text(bucket, contest["kickoff"], now))}</span>'
+        f'<span class="running-contest">{esc(name)}</span>'
+        f'<span class="running-price">{esc(price)}</span>'
+        f'<span class="running-meta">'
+        f'<span class="running-status" data-status="{esc(contest["data_status"])}">'
+        f'<span aria-hidden="true">{esc(contest["status"])}</span>'
+        f'<span class="sr-only">{esc(contest["spoken"])}</span></span>'
+        f'<span class="running-pills"><span class="lane-pill">{esc(contest["pill"])}</span>{lanes}</span>'
+        f'</span></button>'
+    )
+
+
+def _running_body(d, st, blob, now):
+    contests = contests_from_lanes(collect_lanes(d, st, blob, now), now, d=d, st=st)
+    by_sport = {}
+    for contest in contests:
+        by_sport.setdefault(contest["sport"], []).append(contest)
+    counts = {key: 0 for key, _label, _pressed in RUNNING}
+    for contest in contests:
+        counts[contest["bucket"]] = counts.get(contest["bucket"], 0) + 1
+    groups = []
+    ordered = []
+    number = 0
+    for label in sorted(by_sport, key=_group_key):
+        items = sorted(by_sport[label],
+                       key=lambda contest: (contest["kickoff"] is None,
+                                            contest["kickoff"] or datetime.datetime.max.replace(
+                                                tzinfo=datetime.timezone.utc)))
+        rows = []
+        for contest in items:
+            rows.append(_row_html(contest, number, now))
+            ordered.append(contest)
+            number += 1
+        hidden = "" if any(contest["bucket"] == "live" for contest in items) else " hidden"
+        groups.append(
+            f'<section class="running-group" data-sport-group="{site_chrome.esc(label)}"{hidden}>'
+            f'<h3>{site_chrome.esc(label)}</h3>'
+            f'<div>{"".join(rows)}</div>'
+            f'</section>')
+    empty_hidden = "" if counts["live"] == 0 else " hidden"
+    empty = (
+        f'<p class="shell-empty" id="running-empty"{empty_hidden}'
+        f' data-live="{site_chrome.esc(_EMPTY["live"])}"'
+        f' data-settled="{site_chrome.esc(_EMPTY["settled"])}"'
+        f' data-upcoming="{site_chrome.esc(_EMPTY["upcoming"])}">'
+        f'{site_chrome.esc(_EMPTY["live"])}</p>'
+    )
+    return _running_filters(counts), "".join(groups), empty, _roll_html(ordered)
+
+
+def page(now, d=None, st=None, blob=None, tiles=None):
+    """The shell document.
+
+    Pass `tiles` to reuse a strip already computed for production.html. Omitting
+    it builds that strip from `d`, `st`, and `blob` (the live board by default)
+    for callers that are not the tracker build. Running rows use `now` either way
+    and do not count the tiles again.
+    """
+    when = _now(now)
+    if tiles is None:
+        d, st, blob = _load(d, st, blob)
+        summary = production_summary(d, st, blob, when)
+    else:
+        summary = tiles
+        if d is None or st is None or blob is None:
+            d, st, blob = _load(d, st, blob)
+    filters, groups, empty, roll = _running_body(d, st, blob, when)
+    caption = (
+        f'<p class="settled-caption" id="settled-caption" hidden>'
+        f'Last {int(SHELL_SETTLED_DAYS)} days</p>'
+    )
+    body = f"""<h1 class="sr-only">Edge Machine · Production</h1>
+<div class="desk-layout" data-layout="analyst-desk">
+<aside class="desk-nav" aria-label="Quick access">
+<div class="desk-nav-block">
+<p class="desk-nav-label">Workspace</p>
+<nav class="main" aria-label="Pages">{_page_pills()}</nav>
+</div>
+<div class="desk-nav-block">
+<p class="desk-nav-label">Sports</p>
+<nav class="sports" aria-label="Sports">{_sport_pills()}</nav>
+</div>
+</aside>
+<div class="shell-columns">
+<div class="desk-center">
+<section class="shell-pane running-pane" aria-labelledby="running-title">
+<div class="pane-head">
+<div>
+<h2 id="running-title">Running markets</h2>
+<p class="shell-kicker">Production lanes · choose a market to inspect its rules</p>
+</div>
+</div>
+<div class="running-filters" role="group" aria-label="Running filters">
+{filters}
+</div>
+{caption}
+<div class="running-list" id="running-list">
+{groups}
+</div>
+{empty}
+</section>
+<section class="bet-roll shell-pane" aria-labelledby="bets-roll-title">
+<p class="bet-roll-label" id="bets-roll-title">Bets roll</p>
+<div class="bet-roll-track">
+{roll}
+</div>
+</section>
+</div>
+<div class="desk-side">
+<section class="shell-pane rules-pane" aria-labelledby="rules-title">
+<div class="pane-head">
+<h2 id="rules-title">Rule cards</h2>
+<a class="full-page" href="./production.html">Full page →</a>
+</div>
+<div class="rules-head" id="rules-head" hidden>
+<p class="rules-line" id="rules-line"></p>
+</div>
+<p class="sr-only" id="rules-live" aria-live="polite"></p>
+<h3 class="rules-section" id="rules-section" hidden></h3>
+<div class="rules-cards" id="rules-cards" hidden></div>
+<p class="shell-empty" id="rules-empty">Select a contest in Running.</p>
+</section>
+<section class="shell-pane desk-status" aria-labelledby="status-title">
+<div class="pane-head">
+<h2 id="status-title">System status</h2>
+<span class="production-badge">Production</span>
+</div>
+<section class="shell-summary" aria-label="Production totals" data-board="production">
+{summary}
+</section>
+</section>
+</div>
+</div>
+</div>
+<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+"""
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edge Machine</title>
+<meta name="description" content="Production headlines, and the paper bets on those lanes.">
+<link rel="stylesheet" href="./site.css">
+{site_chrome.CSP}
+{site_chrome.REFERRER}
+</head>
+<body class="analyst-desk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site">
+<div class="topbar">
+<a class="brand" href="./index.html">Edge Machine</a>
+<span class="top-production">Production</span>
+<p class="stamp">{_stamp(now)}</p>
+</div>
+</header>
+<main id="content" class="wrap">
+{body}
+</main>
+<script src="./tables.js"></script>
+<script src="./shell.js"></script>
+</body>
+</html>
+"""
+
+
+def sport_board(active, title, description, stamp_html, body):
+    """A sport page in the same dark shell as the site root.
+
+    Page pills match the root. None of them is the current page: the sport
+    tab is. The other sport pills stay inert. The root's pills filter
+    Running; these do not.
+    No bet roll and no ledger read, so the page does not change when the
+    Production feed does.
+    """
+    parts = []
+    for label, href, _current in PAGES:
+        parts.append(f'<a href="{site_chrome.esc(href)}">{site_chrome.esc(label)}</a>')
+    pills = "".join(parts)
+    sports = []
+    for key, label in SPORTS:
+        if key == active:
+            href = _SPORT_PAGES.get(key, "./index.html")
+            sports.append(
+                f'<a href="{site_chrome.esc(href)}" aria-current="page" '
+                f'data-sport="{site_chrome.esc(key)}">{site_chrome.esc(label)}</a>')
+        else:
+            sports.append(
+                f'<button type="button" data-sport="{site_chrome.esc(key)}" '
+                f'aria-disabled="true" tabindex="-1" aria-describedby="sports-soon">'
+                f'{site_chrome.esc(label)}</button>')
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{site_chrome.esc(title)}</title>
+<meta name="description" content="{site_chrome.esc(description)}">
+<link rel="stylesheet" href="./site.css">
+{site_chrome.CSP}
+{site_chrome.REFERRER}
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site">
+<div class="topbar">
+<a class="brand" href="./index.html">Edge Machine</a>
+<nav class="main" aria-label="Pages">{pills}</nav>
+<p class="stamp">{stamp_html}</p>
+</div>
+<div class="sport-row">
+<nav class="sports" aria-label="Sports">{"".join(sports)}</nav>
+<p id="sports-soon" class="sports-soon">Coming soon</p>
+</div>
+</header>
+<main id="content" class="wrap">
+{body}
+</main>
+<script src="./tables.js"></script>
+</body>
+</html>
+"""

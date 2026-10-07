@@ -205,21 +205,41 @@ def check_bets(d, rep):
         rep.ok("bets", f"{len(qs):,} quotes, {n:,} bets: P/L, status, prices and timing all consistent")
 
 
+def _frozen_weather(q):
+    """A weather row left on the ledger. Duplicate checks do not flag it.
+
+    nws and nws_fade are weather even when the row's sport is not climate.
+    """
+    return q.get("source") in ("nws", "nws_fade") or q.get("sport") == "climate"
+
+
 def check_duplicates(d, rep):
     """Flag a settled bet that repeats an earlier one on the same contest, another venue.
 
     Both copies pay, so the P/L counts twice. Voiding the later copy is what clears it.
     The matcher is the tracker's own, including the wider window for a Kalshi placeholder.
+    Frozen weather rows are not flagged. The matcher groups by (source, sport), so
+    dropping them cannot hide or create a pair on any other lane. Every other removed
+    lane is checked. A duplicate there is a warning, not an error, so the check does
+    not call that case clean.
     """
-    # Frozen weather rows are not flagged. Dropping them cannot change a non-weather
-    # pair: the matcher groups by (source, sport).
     pairs = T.settled_cross_venue_dups(
-        [q for q in T.all_bets(d) if not S.removed_row(q)])
+        [q for q in T.all_bets(d) if not _frozen_weather(q)])
+    live, gone = [], []
     for later, kept in pairs:
+        if S.removed_row(later) and S.removed_row(kept):
+            gone.append((later, kept))
+        else:
+            live.append((later, kept))
+    for later, kept in live:
         rep.error("duplicates",
                   f"{later.get('id')} repeats {kept.get('id')} "
                   f"({later.get('source')}, {later.get('status')}, P/L {later.get('pnl')})")
-    if not pairs:
+    for later, kept in gone:
+        rep.warn("duplicates",
+                 f"{later.get('id')} repeats {kept.get('id')} "
+                 f"({later.get('source')}, {later.get('status')}, P/L {later.get('pnl')})")
+    if not live and not gone:
         rep.ok("duplicates", "no settled bet repeats an earlier one on the same contest")
 
 

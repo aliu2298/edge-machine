@@ -3,7 +3,8 @@
 
 Family Tennis: the 3-hour band, the combo lanes, and the Polymarket US listing.
 Table tennis is a different family and is not on this page. The Kalshi pre-flight
-is a soccer file, so this page does not show that column.
+is a soccer file, so this page does not show that column. Lanes with a record
+are flippable cards, the same presentation as Soccer. The records are unchanged.
 """
 import os
 
@@ -25,7 +26,9 @@ LEDE = (
 
 
 def build(d=None, st=None, now=None):
-    return sport_tab.build(FAMILY, KEY, TITLE, LEDE, d, st, now, description=DESCRIPTION)
+    return sport_tab.build(
+        FAMILY, KEY, TITLE, LEDE, d, st, now,
+        description=DESCRIPTION, cards=True)
 
 
 def main():

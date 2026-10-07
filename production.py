@@ -222,9 +222,34 @@ def lead_from_quote(q, pair_key, built):
     return lead
 
 
-def _sandbox_record(d, key, since):
+def _assess_since_kickoff(d, key, pair):
+    """US-exchange record for contests that kick off at or after this pair entered.
+
+    The feed publishes a bet when `_kickoff(q).isoformat() >= entered_at(pair)`.
+    `assess` windows on `logged`, so this copies the ledger and the archive,
+    keeps only this pair's rows in that kickoff window, and calls `assess`
+    with the log window open. A row with no readable kickoff is not in it.
+    """
     source, sport = key.split("|", 1)
-    a = T.assess(d, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+    entered = entered_at(pair)
+
+    def kept(rows):
+        out = []
+        for q in rows or ():
+            if q.get("source") != source or q.get("sport") != sport:
+                continue
+            ko = _kickoff(q)
+            if ko is not None and entered is not None and ko.isoformat() >= entered:
+                out.append(q)
+        return out
+
+    window = {"quotes": kept(d.get("quotes")), "_archive": kept(d.get("_archive"))}
+    return T.assess(window, source, sport, since=None, venues=T.TRADEABLE_VENUES)
+
+
+def _sandbox_record(d, key, since):
+    # `since` is entered_at(pair). The record counts the contest, not the log.
+    a = _assess_since_kickoff(d, key, {"ready_at": since})
     r = lambda x: round(x, 4) if isinstance(x, float) else x
     return {"sandbox_n": a["n"], "sandbox_roi": r(a["roi"]), "sandbox_roi_fee": r(a["roi_fee"]),
             "sandbox_clv": r(a["clv"])}
@@ -318,8 +343,9 @@ def build_feed(d, st, now=None):
             leads[lead["id"]] = lead
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
-        # The Sandbox's own record for each pair since it entered Production, at the logged
-        # price, so a follower's real fills can be compared with it.
+        # The Sandbox's own record for each pair since it entered Production, counted on
+        # kickoff — the same contest the leads use — at the logged price, so a follower's
+        # real fills can be compared with it.
         "pairs": {k: dict({"ready_at": p.get("ready_at"), "promoted_at": p.get("promoted_at"),
                            "entered_at": entered_at(p), "route": route_label(p),
                            "by_hand": p.get("by_hand")},
@@ -595,7 +621,7 @@ def page(d, st, blob, style, now=None):
         # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
         # never show two different records for one rule.
         whole = T.assess(raw, source, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
-        live = T.assess(raw, source, sport, since=since, venues=T.TRADEABLE_VENUES)
+        live = _assess_since_kickoff(raw, key, pair)
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)
         clv = fmt.signed_cents(whole["clv"])
@@ -604,9 +630,15 @@ def page(d, st, blob, style, now=None):
         # running and nothing settled, one had logged nothing in two days, and one cannot be
         # executed at all. A pair idling is a thing to act on; a pair waiting is not, and the
         # column has to tell them apart.
-        mine_since = [q for q in (raw.get("quotes") or [])
-                      if q.get("source") == source and q.get("sport") == sport
-                      and str(q.get("logged") or "") >= str(since or "")]
+        # Same inclusive kickoff test as _assess_since_kickoff. Open and priced-out
+        # rows never enter the settled record, and the note under it counts the contest.
+        mine_since = []
+        for q in (raw.get("quotes") or []):
+            if q.get("source") != source or q.get("sport") != sport:
+                continue
+            ko = _kickoff(q)
+            if ko is not None and since is not None and ko.isoformat() >= since:
+                mine_since.append(q)
         open_since = sum(1 for q in mine_since if q.get("bet") and q.get("status") == "open")
         # PICKED BUT NOT BACKED is its own state, and the first version of this cell missed
         # it. team1_form_l5 on the internationals read "nothing in 2d" while it had picked

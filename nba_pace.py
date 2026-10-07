@@ -33,6 +33,17 @@ what "dynamic" means. `seed` freezes the window at the last five REGULAR-season 
 2025-26. Both are logged for every game so that when the regular season starts there is a
 record of whether preseason data helped or polluted. Nothing decides that question here.
 
+PER-TEAM WINDOW AND LAST GAME. `teams` stores, for every seeded team, the rolling
+offence and defence as of this build (first quarter, first half, full game) and the
+highest points + rebounds + assists line from that team's latest completed game in
+`games` that has an ESPN event id. A team with no such game stores null. The April
+seed is not a last game: those rows have no event id. A finished box score is fetched
+once and carried forward; if both ESPN hosts fail, or the payload has no box score,
+the run raises and the previous file is left where it is. A scoreboard day is tried
+once more on the same host, then on the same fallback host the summaries use. If it
+still fails, the run raises with the date, the host and the status, before the file
+is written. A missed day is not skipped and not written over the last good file.
+
 WHAT IS ALREADY KNOWN TO BE WRONG WITH IT, measured rather than guessed:
 
   * PRIOR-SEASON LABELS WERE ANTI-PREDICTIVE. The full-season equivalent of this label,
@@ -72,20 +83,31 @@ Usage:
 """
 import argparse
 import datetime
+import http.client
 import json
 import os
 import sys
+import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from collections import defaultdict, deque
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "data", "nba_pace.json")
 
-ESPN = ("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
-        "?dates={date}")
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/129.0 Safari/537.36")
+# Same order as the box-score hosts. site.api.espn.com has 403'd the site API
+# before; site.web.api.espn.com serves this scoreboard path (the host the rest
+# of the repo already uses). One retry on each host, then the day fails loud.
+SCORE_HOSTS = ("site.web.api.espn.com", "site.api.espn.com")
+SCORE_ATTEMPTS = 2
+SCORE_TIMEOUT = 30
+# Timeout, connection failure, truncated body, bad UTF-8. HTTPError is handled
+# inside the GET helper and comes back as a status. Both callers retry these.
+_TRANSPORT = (urllib.error.URLError, OSError, http.client.IncompleteRead,
+              UnicodeDecodeError)
 
 WINDOW = 5                 # games in the rolling label
 PERIODS = ("q1", "h1", "ft")
@@ -99,19 +121,6 @@ PRE, REG, POST = 1, 2, 3
 SEED_FROM = datetime.date(2026, 3, 25)
 SEED_TO = datetime.date(2026, 4, 12)
 SEED_SEASON = 2026         # ESPN's `season.year` for the 2025-26 season
-
-
-def _get(url, tries=3):
-    """One ESPN call. Raises RuntimeError without leaking the URL into the message."""
-    last = None
-    for _ in range(tries):
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=30) as f:
-                return json.load(f)
-        except (urllib.error.URLError, OSError, ValueError) as e:
-            last = type(e).__name__
-    raise RuntimeError(f"ESPN unreachable ({last})")
 
 
 def _periods(competitor):
@@ -131,9 +140,59 @@ def _periods(competitor):
     return int(ls[0]), int(ls[0]) + int(ls[1]), ft
 
 
+class ScoreboardError(RuntimeError):
+    """A scoreboard day could not be read.
+
+    The message names the date, the host and the HTTP status. Callers must let
+    it propagate. Skipping the day would drop games and slide last_game back.
+    """
+
+
+def _scoreboard_url(host, day):
+    return (f"https://{host}/apis/site/v2/sports/basketball/nba/scoreboard"
+            f"?dates={day.strftime('%Y%m%d')}")
+
+
+def _fetch_scoreboard(day):
+    """JSON for one date. Raises ScoreboardError. Never a skipped day.
+
+    Web host first, then the api host, one retry on each. A transport or decode
+    failure is another failed attempt, not a reason to move on to the next date.
+    """
+    failures = []
+    for host in SCORE_HOSTS:
+        url = _scoreboard_url(host, day)
+        for _attempt in range(SCORE_ATTEMPTS):
+            try:
+                status, text = _http_get(url, SCORE_TIMEOUT, ua=UA)
+            except _TRANSPORT as e:
+                failures.append((host, None, type(e).__name__))
+                continue
+            if status != 200 or not text:
+                failures.append((host, status, "no scoreboard"))
+                continue
+            try:
+                payload = json.loads(text)
+            except ValueError:
+                failures.append((host, status, "malformed json"))
+                continue
+            if not isinstance(payload, dict):
+                failures.append((host, status, "malformed json"))
+                continue
+            return payload
+    parts = [f"{host} (status {_status_text(status)}): {why}"
+             for host, status, why in failures]
+    raise ScoreboardError(
+        f"ESPN scoreboard failed for {day.isoformat()}: " + "; ".join(parts))
+
+
 def fetch_day(day):
-    """Every NBA game ESPN lists for one date, as flat rows. Never raises on a bad game."""
-    js = _get(ESPN.format(date=day.strftime("%Y%m%d")))
+    """Every NBA game ESPN lists for one date, as flat rows.
+
+    A bad game is skipped. The day itself is not: a failed fetch raises
+    ScoreboardError after one retry and the host fallback.
+    """
+    js = _fetch_scoreboard(day)
     out = []
     for ev in js.get("events") or []:
         season = ev.get("season") or {}
@@ -165,15 +224,16 @@ def fetch_day(day):
 
 
 def fetch_range(start, end, keep=None, log=print):
-    """Rows for every date in [start, end], optionally filtered to some season types."""
+    """Rows for every date in [start, end], optionally filtered to some season types.
+
+    A day that still fails after the retry and the host fallback raises
+    ScoreboardError. The day is not logged and skipped: the caller must not
+    write a file built from a hole. `log` is accepted so existing callers keep
+    working; the failure is the exception, not a log line.
+    """
     rows, day = [], start
     while day <= end:
-        try:
-            got = fetch_day(day)
-        except RuntimeError as e:
-            log(f"  ! {day}: {e}")
-            day += datetime.timedelta(days=1)
-            continue
+        got = fetch_day(day)
         if keep is not None:
             got = [r for r in got if r.get("season_type") in keep]
         rows += got
@@ -275,6 +335,355 @@ def project(state, row):
     return out
 
 
+def _rounded_od(state, team, period):
+    """(O, D, n) rounded the same way label() rounds, or (None, None, 0)."""
+    o, d, n = rates(state, team, period)
+    if not n:
+        return None, None, 0
+    return round(o, 2), round(d, 2), n
+
+
+def _roll_block(state, team):
+    """The team's current window: q1, h1 and ft, each {O, D, n}."""
+    block = {}
+    for p in PERIODS:
+        o, d, n = _rounded_od(state, team, p)
+        block[p] = {"O": o, "D": d, "n": n}
+    return block
+
+
+# Box scores. site.api.espn.com has 403'd the whole site API before (see the
+# sandbox_sources note from 2026-08-08); site.web.api.espn.com is the same path
+# and is tried first. Both are keyless. A finished box score does not change,
+# so a last_game already stored for the same event id is not fetched again.
+BOX_HOSTS = ("site.web.api.espn.com", "site.api.espn.com")
+BOX_UA = "edge-machine/nba-pace"
+BOX_TIMEOUT = 15
+BOX_ATTEMPTS = 2          # the request, plus one retry, on each host
+BOX_PAUSE = 1.0           # seconds between box-score requests
+_PRA_FIELDS = ("name", "pts", "reb", "ast", "pra")
+# Set once a request has gone out this run, so the next one waits. attach_teams
+# clears it at the start of a build.
+_box_gap = {"sent": False}
+
+
+class BoxScoreError(RuntimeError):
+    """A completed game's box score could not be read.
+
+    The message names the event id, the host and the HTTP status. Callers must
+    let it propagate: null is only for a team with no qualifying game.
+    """
+
+
+def _sleep(seconds):
+    time.sleep(seconds)
+
+
+def _summary_url(host, event_id):
+    eid = urllib.parse.quote(str(event_id), safe="")
+    return (f"https://{host}/apis/site/v2/sports/basketball/nba/summary"
+            f"?event={eid}")
+
+
+def _mark_box_request():
+    """One request at a time, with BOX_PAUSE between them. The first is immediate."""
+    if _box_gap["sent"]:
+        _sleep(BOX_PAUSE)
+    _box_gap["sent"] = True
+
+
+def _http_get(url, timeout, ua=None):
+    """GET url. Returns (status, text). text is None unless the status is 200.
+
+    HTTP errors return the status and no body. A timeout, URLError, truncated
+    read or bad UTF-8 body propagates, so the caller retries, falls back, then
+    raises. Only GET, no key. `ua` defaults to the box-score identifier.
+    """
+    req = urllib.request.Request(
+        url, headers={"User-Agent": BOX_UA if ua is None else ua}, method="GET")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            status = getattr(resp, "status", None) or resp.getcode()
+            raw = resp.read()
+    except urllib.error.HTTPError as e:
+        try:
+            e.read()
+        finally:
+            e.close()
+        return e.code, None
+    if status != 200:
+        return status, None
+    return status, raw.decode("utf-8")
+
+
+def _usable_box(payload):
+    if not isinstance(payload, dict):
+        return False
+    box = payload.get("boxscore")
+    if not isinstance(box, dict):
+        return False
+    return isinstance(box.get("players"), list) and len(box["players"]) > 0
+
+
+def _status_text(status):
+    return "none" if status is None else str(status)
+
+
+def fetch_summary(event_id):
+    """(payload, host, status) for one event. Raises BoxScoreError, never None.
+
+    Web host first, api host if that host cannot return a box score. Each host
+    gets one retry. Timeout, connection errors, a truncated read, and JSON or
+    UTF-8 decode failures take that same path. A 200 with no boxscore is a
+    failure of that attempt, not a silent null.
+    """
+    failures = []
+    for host in BOX_HOSTS:
+        url = _summary_url(host, event_id)
+        for _attempt in range(BOX_ATTEMPTS):
+            _mark_box_request()
+            try:
+                status, text = _http_get(url, BOX_TIMEOUT)
+            except _TRANSPORT as e:
+                failures.append((host, None, type(e).__name__))
+                continue
+            if status != 200 or not text:
+                failures.append((host, status, "no box score"))
+                continue
+            try:
+                payload = json.loads(text)
+            except ValueError:
+                failures.append((host, status, "malformed json"))
+                continue
+            if not _usable_box(payload):
+                failures.append((host, status, "missing boxscore"))
+                continue
+            return payload, host, status
+    parts = [f"{host} (status {_status_text(status)}): {why}"
+             for host, status, why in failures]
+    raise BoxScoreError(
+        f"ESPN box score failed for event {event_id}: " + "; ".join(parts))
+
+
+def _cell_int(cell):
+    """One box-score cell as an int, or ValueError when it is blank."""
+    if isinstance(cell, bool) or cell is None:
+        raise ValueError("empty stat")
+    if isinstance(cell, str):
+        cell = cell.strip()
+        if cell == "":
+            raise ValueError("empty stat")
+    return int(cell)
+
+
+def _pra_row(ath, i_pts, i_reb, i_ast):
+    """One athlete's PRA line, or None for DNP / empty / unreadable stats."""
+    if not isinstance(ath, dict) or ath.get("didNotPlay"):
+        return None
+    stats = ath.get("stats")
+    if not isinstance(stats, list) or not stats:
+        return None
+    athlete = ath.get("athlete")
+    name = ""
+    if isinstance(athlete, dict):
+        name = str(athlete.get("displayName") or "").strip()
+    if not name:
+        return None
+    try:
+        pts = _cell_int(stats[i_pts])
+        reb = _cell_int(stats[i_reb])
+        ast = _cell_int(stats[i_ast])
+    except (IndexError, TypeError, ValueError):
+        return None
+    return {"name": name, "pts": pts, "reb": reb, "ast": ast, "pra": pts + reb + ast}
+
+
+def _better_pra(row, best):
+    """Higher PRA, then more points, then the display name A to Z."""
+    if best is None:
+        return True
+    if row["pra"] != best["pra"]:
+        return row["pra"] > best["pra"]
+    if row["pts"] != best["pts"]:
+        return row["pts"] > best["pts"]
+    return row["name"] < best["name"]
+
+
+def top_pra(payload, team):
+    """Highest PTS+REB+AST for one team. Columns come from the labels, not a fixed index.
+
+    DNP means the didNotPlay flag, or empty or unreadable stats. 0 or missing
+    minutes is not DNP. A DNP player is skipped, so a blank cell is never
+    turned into a number.
+
+    Raises BoxScoreError when the box cannot produce a player. That is a broken
+    payload, not an empty last game.
+    """
+    if not isinstance(payload, dict):
+        raise BoxScoreError("missing boxscore")
+    box = payload.get("boxscore")
+    if not isinstance(box, dict) or not isinstance(box.get("players"), list):
+        raise BoxScoreError("missing boxscore")
+    side = None
+    for entry in box["players"]:
+        if not isinstance(entry, dict):
+            continue
+        club = entry.get("team")
+        abbr = club.get("abbreviation") if isinstance(club, dict) else None
+        if abbr == team:
+            side = entry
+            break
+    if side is None:
+        raise BoxScoreError(f"team {team} missing from boxscore")
+    groups = side.get("statistics")
+    if not isinstance(groups, list) or not groups or not isinstance(groups[0], dict):
+        raise BoxScoreError(f"team {team} missing statistics")
+    group = groups[0]
+    labels = group.get("labels")
+    if not isinstance(labels, list):
+        raise BoxScoreError(f"team {team} missing stat labels")
+    missing = [name for name in ("PTS", "REB", "AST") if name not in labels]
+    if missing:
+        raise BoxScoreError(
+            f"team {team} labels missing {', '.join(missing)}")
+    i_pts, i_reb, i_ast = (labels.index("PTS"), labels.index("REB"), labels.index("AST"))
+    athletes = group.get("athletes")
+    if not isinstance(athletes, list):
+        raise BoxScoreError(f"team {team} missing athletes")
+    best = None
+    for ath in athletes:
+        row = _pra_row(ath, i_pts, i_reb, i_ast)
+        if row is not None and _better_pra(row, best):
+            best = row
+    if best is None:
+        raise BoxScoreError(f"team {team} has no countable player")
+    return best
+
+
+def _event_id(game):
+    """The ESPN event id on a games[] row, or None when the row has none."""
+    if not isinstance(game, dict):
+        return None
+    eid = game.get("id")
+    if eid is None or str(eid).strip() == "":
+        return None
+    return eid
+
+
+def latest_completed(games, team):
+    """The latest completed games[] row for team that has an event id.
+
+    Season type is ignored, so a regular-season row qualifies the same way a
+    preseason row does. A row with no id does not qualify. The April seed is
+    not in games[] and is never used here.
+    """
+    found, found_key = None, None
+    for game in games or []:
+        if not isinstance(game, dict) or not game.get("completed"):
+            continue
+        eid = _event_id(game)
+        if eid is None:
+            continue
+        if team != game.get("home") and team != game.get("away"):
+            continue
+        key = (str(game.get("start") or ""), str(eid))
+        if found is None or key >= found_key:
+            found, found_key = game, key
+    return found
+
+
+def _carry_last_game(prior, team, event_id):
+    """The stored last_game when it is already this event, else None.
+
+    A finished box score does not change, so the stored line is reused and the
+    event is not fetched again for this team.
+    """
+    if not isinstance(prior, dict):
+        return None
+    row = prior.get(team)
+    if not isinstance(row, dict):
+        return None
+    last = row.get("last_game")
+    if not isinstance(last, dict):
+        return None
+    if str(last.get("id")) != str(event_id):
+        return None
+    pra = last.get("top_pra")
+    if not isinstance(pra, dict) or any(k not in pra for k in _PRA_FIELDS):
+        return None
+    return {
+        "id": last.get("id"),
+        "date": last.get("date"),
+        "opp": last.get("opp"),
+        "home_away": last.get("home_away"),
+        "top_pra": {k: pra[k] for k in _PRA_FIELDS},
+    }
+
+
+def _prior_teams(path):
+    """teams object from the file already on disk, or {} when there is none."""
+    if not path or not os.path.exists(path):
+        return {}
+    with open(path) as f:
+        blob = json.load(f)
+    if not isinstance(blob, dict):
+        return {}
+    teams = blob.get("teams")
+    return teams if isinstance(teams, dict) else {}
+
+
+def _last_game_record(game, team, pra):
+    home = team == game.get("home")
+    return {
+        "id": game.get("id"),
+        "date": game.get("day"),
+        "opp": game.get("away") if home else game.get("home"),
+        "home_away": "home" if home else "away",
+        "top_pra": pra,
+    }
+
+
+def attach_teams(games, roll, prior, log=print):
+    """{team: {roll, last_game}} for every team in the rolling window.
+
+    last_game is null only when that team has no completed games[] row with an
+    event id. Newly latest games are fetched one at a time. A fetch or a
+    malformed box raises BoxScoreError before the caller writes.
+    """
+    _box_gap["sent"] = False
+    chosen = [(team, latest_completed(games, team)) for team in sorted(roll)]
+    payloads = {}
+    seen = set()
+    for team, game in chosen:
+        if game is None or _carry_last_game(prior, team, game.get("id")) is not None:
+            continue
+        eid = str(game.get("id"))
+        if eid in seen:
+            continue
+        seen.add(eid)
+        log(f"  box score {eid}")
+        payloads[eid] = fetch_summary(eid)
+    teams = {}
+    for team, game in chosen:
+        entry = {"roll": _roll_block(roll, team), "last_game": None}
+        if game is not None:
+            carried = _carry_last_game(prior, team, game.get("id"))
+            if carried is not None:
+                entry["last_game"] = carried
+            else:
+                payload, host, status = payloads[str(game.get("id"))]
+                try:
+                    pra = top_pra(payload, team)
+                except BoxScoreError as e:
+                    raise BoxScoreError(
+                        f"ESPN box score malformed for event {game.get('id')} "
+                        f"on {host} (status {_status_text(status)}): {e}"
+                    ) from e
+                entry["last_game"] = _last_game_record(game, team, pra)
+        teams[team] = entry
+    return teams
+
+
 # ---------------------------------------------------------------------------
 # the two states: a frozen regular-season seed, and a window that keeps moving
 # ---------------------------------------------------------------------------
@@ -332,6 +741,13 @@ def run(log=print):
             continue
         rec.update({("roll_" + k): v for k, v in project(roll, g).items()})
         rec.update({("seed_" + k): v for k, v in project(frozen, g).items()})
+        # Pre-tip 1Q and 1H rates, rounded like roll_home_O. The full game is
+        # already roll_{home,away}_O/D/n. Written before the window advances.
+        for side, club in (("home", g["home"]), ("away", g["away"])):
+            for p in ("q1", "h1"):
+                o, d, _n = _rounded_od(roll, club, p)
+                rec[f"roll_{side}_O_{p}"] = o
+                rec[f"roll_{side}_D_{p}"] = d
         for p in PERIODS:
             rec["act_" + p] = g.get(p)
             e = rec.get("roll_exp_" + p)
@@ -349,6 +765,10 @@ def run(log=print):
         if g["completed"]:
             push(roll, g)                            # frozen is never pushed, by design
 
+    # Box scores are resolved before the temp file exists. A failure here
+    # leaves the previous nba_pace.json untouched.
+    prior = _prior_teams(OUT)
+    teams = attach_teams(out, roll, prior, log=log)
     blob = dict(
         built=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         window=WINDOW, periods=list(PERIODS),
@@ -357,6 +777,7 @@ def run(log=print):
                   teams={t: {p: list(frozen[t][p]) for p in PERIODS} for t in frozen}),
         label_flips=dict(sorted(flips.items(), key=lambda kv: -kv[1])),
         skipped=skipped,
+        teams=teams,
         games=out,
     )
     tmp = OUT + ".tmp"

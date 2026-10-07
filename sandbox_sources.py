@@ -59,6 +59,7 @@ SPORTS = {
     "nhl_pl":       "NHL · Puck line",
     "climate":      "Climate",
     "crypto":       "Crypto",
+    "crypto_fav":   "Crypto · Favourite band",
     "economics":    "Economics",
     "commodities":  "Commodities",
     "finance":      "Finance",
@@ -272,10 +273,13 @@ SOURCES = {
              "has to be ATP, WTA Doubles, or UTR. BAND WIDENED 2026-10-04 from "
              "0.77-0.81 to 0.70-0.85: the lane is tour-specific, the narrow band was "
              "cut on every tour's record, and on the kept tours it left about one "
-             "contest a day. Nothing was logged on the kept tours between the "
-             "2026-10-02 tour clock and the widening, so the record from that clock is "
-             "the wide band only and is not reset again. The basket lanes keep "
-             "0.77-0.81 legs. The window stays 3 hours. Why the window: closing-line value on the "
+             "contest a day. The page record restarts at 2026-10-02T16:34:37Z, "
+             "the merge that put the narrowed selection on main. No kept-tour bet "
+             "was logged between that restart and the widening, so the record from "
+             "the restart is the wide band only and is not reset again. Two kept-tour "
+             "bets logged after the rule was written and before that merge stay on "
+             "file under the old rule and do not count in the record. The basket lanes cut "
+             "the same 0.70-0.85 legs. The window stays 3 hours. Why the window: closing-line value on the "
              "band was about -1.2c on entries 3 or more hours before the start, and "
              "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
              "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
@@ -283,8 +287,9 @@ SOURCES = {
              "On the 18 days those contests cover, that was 36.0 contests a day, and "
              "the kept tours were 4.3. Kept: ATP, WTA Doubles, UTR, 78 contests, "
              "z +2.76 before fees. That z is a selected-group z. It is not a "
-             "significance test and must not be quoted as one. The clock starts "
-             "2026-10-02T05:00:00Z. Those 648 contests are the reason for looking, "
+             "significance test and must not be quoted as one. "
+             "2026-10-02T05:00:00Z is the looked-at cutoff for those 648 contests, "
+             "not the page record. Those 648 contests are the reason for looking, "
              "not evidence, and they count toward nothing here. No mechanism is "
              "claimed. ATP is the deepest field here and UTR the shallowest, with "
              "four flatter tours between them, and the idea that a deeper field "
@@ -979,12 +984,67 @@ SOURCES = {
              "match); this rule +9.7% on 60 matches (t 0.78), +29.6% at a 10c edge (29 matches, "
              "t 1.62). A lead, not proof. Judged PER MATCH: every rung it buys in one match is one "
              "result."),
+    "crypto_fav_band": dict(
+        label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
+        connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population",
+        # One bet per series per close token (KXBTCD + 26OCT0617), across runs.
+        # one_per_day is the wrong switch: it keys on the date alone and would
+        # allow only one coin that day. publish() reads this flag.
+        one_per_coin_close=True,
+        note="PRE-REGISTERED 2026-10-05, before it logged anything, and registered "
+             "expecting to find nothing. Back the YES on a Kalshi coin-directional rung "
+             "priced 0.70-0.80 inclusive, entered 2-3.5 hours before the 17:00 ET "
+             "(21:00Z) close, so the bet is held about three hours and settles the same "
+             "afternoon. ONE bet per coin per close, the LOWEST-priced rung in band — a "
+             "ladder offers several at once (BTC offered 0.73 and 0.80 on 2026-10-05, HYPE "
+             "offered fourteen), so the choice is fixed in advance instead of after seeing "
+             "results. One per coin because rungs are NESTED, not exclusive: '$84,750 or "
+             "above' and '$84,500 or above' settle on one move, and counting both is the "
+             "defect that once inflated the spot baseline to z +10.40 against a true "
+             "+0.24. FIVE coins are live (BTC, ETH, SOL, XRP, HYPE); four more are listed "
+             "with no open event. WHAT IT MUST BEAT: the effective price at mid-band is "
+             "0.7632 after the taker fee, so the band has to beat its own price by about "
+             "1.3pp just to break even, which is roughly the whole size of the "
+             "favourite-longshot bias anywhere this Sandbox has measured it — and the one "
+             "direct prior is against it, the spot baseline's own 0.70-0.80 cell running "
+             "-1.9pp at z -0.17 on 10 bets over 8 days. AN OUTCOME IS A DAY, NOT A BET: "
+             "across 90 days of daily closes the five coins' returns correlate +0.757 on "
+             "average, agree in sign 77.8% of the time, and all five move together on "
+             "54.4% of days, so a day holds 1.24 independent draws and not five. Judged "
+             "against backing every in-band rung in the window, so the lane only counts "
+             "if picking the lowest beats the band itself. Read at 30 independent "
+             "outcomes, about six weeks. A rung also needs a two-sided quote, a spread of "
+             "3c or less and 25 contracts on the ask: HYPE quoted one price on fourteen "
+             "consecutive strikes, which is a stale book, not a signal."),
     "spot": dict(
-        label="Spot price (no-change baseline)", kind="Baseline", connected=True,
+        label="Spot price (no-change baseline)", kind="Baseline", connected=False,
+        retired="2026-10-05: ANSWERED, which is why it is retired rather than eliminated. "
+                "It was built to decide whether connecting a crypto forecaster was worth "
+                "it, and over 22 days (2026-09-12 to 10-04) it came back exactly flat: 26 "
+                "market-days, 15 won v 14.44 priced, -0.91% (-3.62% after fees), z -0.07, "
+                "against -1.30% for its blind rule. It beat the closing price on 50.0% of "
+                "16 fresh closes — the definition of noise — and routed 0 of its bets, so "
+                "it was never publishable. The answer is that Kalshi's coin buckets are "
+                "efficiently priced, so nothing subtler is worth adding ON A FORECAST. "
+                "There is no fade to keep open: a flat null hypothesis has no other side "
+                "to take, which is the whole difference between this and an elimination. "
+                "TWO THINGS ABOUT ITS RECORD, both stated rather than buried. Its series "
+                "map was WRONG for its entire life — Kalshi had renamed the directional "
+                "series and only KXSOLD and KXHYPED ever resolved — so 89 of 97 bets were "
+                "SOL and 8 were XRP, and it never saw BTC or ETH at all. And `cap` kept "
+                "ladders whole at 60, so exactly ONE crypto ladder entered the universe "
+                "per run. Neither changes the verdict (both bugs are now fixed, and the "
+                "surviving record is flat), but it was a Solana lane, not a crypto one. "
+                "Its successor asks a DIFFERENT question and is not a retune of this one: "
+                "crypto_fav_band tests whether the PRICE is biased in the 0.70-0.80 band "
+                "over a three-hour hold, not whether a forecast beats it.",
         site="coingecko.com", sports=["crypto"],
         note="Today's price carried forward, backing whichever bucket it already sits in. "
              "Not really a forecast — the null hypothesis. A crypto source that cannot "
-             "beat assuming nothing changes is not worth connecting."),
+             "beat assuming nothing changes is not worth connecting. Of a day's rungs it "
+             "took the one nearest a coin flip, which is also why it could never test the "
+             "favourite band: by construction it refused to generate a sub-0.50 bet."),
     "sportsgambler": dict(
         label="SportsGambler", kind="Tipster site", connected=False, retired='2026-09-15: 20 won v 21.2 priced on 43 settled (z -0.36, -7.0%). Its match tips add nothing over the price.',
         site="sportsgambler.com", sports=["soccer"],
@@ -1161,6 +1221,12 @@ REMOVED_LANES = frozenset({
 # no kept reader. MLB joined it on 2026-10-04: the fade-the-streak rule was
 # the last source that read those prices. Kalshi, ESPN FPI, Polymarket and
 # Polymarket US were already off MLB.
+#
+# `crypto` IS NOT HERE YET, deliberately. spot retired 2026-10-05 and was its only lane,
+# so collect() now spends a Kalshi read a run on a domain nothing bets. Adding it stops
+# that fetch -- but spot still had two open SOL bets closing 2026-10-05 17:00 ET when it
+# was retired, and cutting a lane's venue read is how an open bet gets stranded. Add
+# `crypto` here once those two have settled. `crypto_fav` is its own domain and unaffected.
 REMOVED_VENUE_SPORTS = frozenset({"table_tennis", "mlb"})
 
 _NOT_PAUSED = object()
@@ -1401,6 +1467,11 @@ def _name_text(name):
     return _BRACKETED.sub(" ", _fold(name))
 
 
+def _joined(name):
+    """A name with accents, asides, spaces and punctuation removed: "Alateng Heili" -> "alatengheili"."""
+    return re.sub(r"[^a-z0-9]", "", _name_text(name))
+
+
 @functools.lru_cache(maxsize=50000)
 def tokens(name):
     """Lowercase alphanumeric tokens of a team or player name, minus filler.
@@ -1606,6 +1677,11 @@ def _score(a, b, sport):
         return 1.0 if ca == cb else 0.0
     s = sim(a, b)
     if s == 0 and sport in ("boxing", "mma"):
+        # John Castaneda vs Alatengheili and vs Alateng Heili are one fighter.
+        # A space is not a second name. Tennis and team sports do not use this.
+        joined_a, joined_b = _joined(a), _joined(b)
+        if joined_a and joined_b and joined_a == joined_b:
+            return 1.0
         # Fighters' names are transliterated, and every feed does it differently: Kalshi
         # and Polymarket write "Mikaelian", OLBG "Mikaeljan", for the same Armenian
         # fighter. A long word spelled almost identically is the same name. Scored below
@@ -2585,15 +2661,52 @@ _kalshi_open_fetch = {}
 # refused series cannot eat the tracker's run.
 _KALSHI_OPEN_ATTEMPTS = 3
 _KALSHI_OPEN_BACKOFF_S = (0.4, 0.8)
+# One GET. Short on purpose: a silent Kalshi (the connection hangs instead of
+# answering) used to wait out urllib and then curl, 30s each, three times,
+# about three minutes a series. Curl is not tried after a timeout, so the
+# wait is this times the attempts, plus the backoff.
+_KALSHI_HTTP_TIMEOUT = 8
+# fetch_kalshi_venue and fetch_kalshi_binary share one pool. Tennis has fewer
+# series than this, so a full tennis outage costs one series, not three.
+_KALSHI_OPEN_WORKERS = 6
 
 
-def _kalshi_http(url, timeout=30):
+def kalshi_silent_outage_seconds():
+    """Worst-case seconds for one series when every attempt times out.
+
+    Curl is not called after a timeout, so it is not in this number. Tennis
+    fetches its series in one wave (`_KALSHI_OPEN_WORKERS`), so this is also
+    the wall-clock for a full tennis outage.
+    """
+    pauses = _KALSHI_OPEN_BACKOFF_S[:max(0, _KALSHI_OPEN_ATTEMPTS - 1)]
+    return _KALSHI_HTTP_TIMEOUT * _KALSHI_OPEN_ATTEMPTS + sum(pauses)
+
+
+def _kalshi_timed_out(exc):
+    """True when this transport error is a timeout, not a fast refusal."""
+    seen = set()
+    cur = exc
+    while cur is not None and id(cur) not in seen:
+        seen.add(id(cur))
+        if isinstance(cur, TimeoutError):
+            return True
+        nxt = getattr(cur, "reason", None)
+        if nxt is None or nxt is cur:
+            nxt = getattr(cur, "__cause__", None)
+        cur = nxt
+    return False
+
+
+def _kalshi_http(url, timeout=None):
     """(http_status, json object) for one Kalshi GET.
 
     Status 0 is a transport failure. A 429 body is not a market list: curl's
     fallback used to return that body with no status, and the caller read it
-    as an empty book.
+    as an empty book. A timeout does not fall through to curl. The second
+    client would wait out the same silence.
     """
+    if timeout is None:
+        timeout = _KALSHI_HTTP_TIMEOUT
     try:
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=timeout) as f:
@@ -2610,8 +2723,9 @@ def _kalshi_http(url, timeout=30):
         except (UnicodeError, ValueError):
             body = {}
         return e.code, body if isinstance(body, dict) else {}
-    except (OSError, http.client.HTTPException, ValueError):
-        pass
+    except (OSError, http.client.HTTPException, ValueError) as exc:
+        if _kalshi_timed_out(exc):
+            return 0, {}
     try:
         out = subprocess.run(
             ["curl", "-sS", "-w", "\n%{http_code}", "--max-time", str(timeout), "-A", UA, url],
@@ -2635,7 +2749,7 @@ def _kalshi_open_attempt(url):
     """One page, retried on 429, 5xx, and transport failure. Other 4xx are final."""
     http, payload = 0, {}
     for i in range(_KALSHI_OPEN_ATTEMPTS):
-        http, payload = _kalshi_http(url, timeout=30)
+        http, payload = _kalshi_http(url, timeout=_KALSHI_HTTP_TIMEOUT)
         markets = payload.get("markets") if isinstance(payload, dict) else None
         if http == 200 and isinstance(markets, list):
             return http, payload
@@ -2650,11 +2764,13 @@ def _kalshi_open_attempt(url):
 def _kalshi_fetch_open(series):
     """(markets or None, http, 'ok'|'empty'|'failed').
 
-    'ok' is a finished non-empty book. 'empty' is HTTP 200 with no markets.
-    Anything else, including a 429 body, is 'failed'. None markets means failed.
+    'ok' is a non-empty book. 'empty' is HTTP 200 with no markets. A failure
+    on the first page, including a 429 body, is 'failed' and returns no
+    markets. A failure on a later page keeps the pages already read and is
+    logged on its own line: dropping them hid every open market in the series.
     """
     out, cursor, last_http = [], "", 0
-    for _page in range(10):
+    for page in range(10):
         url = f"{KALSHI_API}?limit=200&status=open&series_ticker={series}"
         if cursor:
             url += f"&cursor={cursor}"
@@ -2662,6 +2778,11 @@ def _kalshi_fetch_open(series):
         last_http = http
         markets = payload.get("markets") if isinstance(payload, dict) else None
         if http != 200 or not isinstance(markets, list):
+            if out:
+                print(f"  ! kalshi: {series} open markets page {page + 1} "
+                      f"fetch failed: HTTP {http}; keeping {len(out)} "
+                      f"markets from earlier pages")
+                return out, last_http, "ok"
             return None, last_http, "failed"
         out.extend(markets)
         cursor = payload.get("cursor") or ""
@@ -2706,29 +2827,46 @@ def _kalshi_open(series):
     return []
 
 
+def _atp_book_status():
+    """'ok', 'empty', 'failed', or 'unfetched' for KXATPMATCH only.
+
+    A 429 or an empty Challenger book is not an ATP failure. 'failed' and
+    'empty' mean the ATP series itself was asked and did not return a book.
+    A last good ATP book still counts as 'ok'.
+    """
+    if _kalshi_tour_good.get("KXATPMATCH"):
+        return "ok"
+    state = _kalshi_open_fetch.get("KXATPMATCH")
+    if not state:
+        return "unfetched"
+    status = state.get("status")
+    if status in ("ok", "empty", "failed"):
+        return status
+    return "failed"
+
+
 def kalshi_tour_fetch():
-    """'ok', 'empty', 'failed', or 'unfetched' for the ATP and Challenger books.
+    """The ATP book's status. See `_atp_book_status`.
 
     'failed' and 'empty' are not a listing. They do not mean the match is a
-    Challenger, and they do not mean Kalshi has no such match. A series with
-    a last good book still counts as 'ok'.
+    Challenger, and they do not mean Kalshi has no such match. The Challenger
+    series is not part of this answer.
     """
-    seen = []
-    for series, _tier in _TOUR_SERIES:
-        if _kalshi_tour_good.get(series):
-            seen.append("ok")
-            continue
-        state = _kalshi_open_fetch.get(series)
-        if not state:
-            continue
-        seen.append(state.get("status"))
-    if not seen:
-        return "unfetched"
-    if "failed" in seen:
-        return "failed"
-    if "empty" in seen:
-        return "empty"
-    return "ok"
+    return _atp_book_status()
+
+
+def _pm_atp_skip_reason(row):
+    """Why an atp-league row is not a bet, on its own line.
+
+    A fetch failure is not 'not listed'. The series line already named the
+    HTTP status. This line says which of the two it was.
+    """
+    status = _atp_book_status()
+    if status == "failed":
+        return "Kalshi ATP fetch failed, tour unknown"
+    if status == "empty":
+        return "Kalshi ATP book empty, tour unknown"
+    return "not listed, tour unknown"
 
 
 def _num(x):
@@ -2794,7 +2932,7 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None, now=None):
     # nearly five minutes of a run whose CPU time was under two seconds. Six workers stays
     # well inside Kalshi's public read limits.
     series_list = KALSHI_VENUE_SERIES.get(sport) or []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=_KALSHI_OPEN_WORKERS) as pool:
         fetched = dict(zip(series_list, pool.map(_kalshi_open, series_list)))
     events = {}
     for series in series_list:
@@ -3575,12 +3713,22 @@ ELIMINATED = {
 # z read +10.40 where the honest figure on one-day-one-result is +0.24. Any nested ladder
 # belongs here, and cluster_stats in sandbox_track now refuses to produce a z for a record
 # that is mostly such clusters rather than quietly returning one.
-DAY_CLUSTERED = ("commodities", "crypto", "soccer_corners")
+DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "soccer_corners")
 
 
 def market_day(q):
     """'KXAAAGASD|20260919' — every state's gas series on one day share a key."""
     series = str(q.get("market_id") or "").split("-")[0]
+    if q.get("sport") == "crypto_fav":
+        # EVERY COIN ON ONE DAY IS ONE OUTCOME, and that is measured rather than assumed.
+        # Keying per series would be wrong here in the direction that makes a dead lane
+        # look alive. On 90 days of CoinGecko daily closes for the five live series the
+        # mean pairwise return correlation is +0.757, the mean sign agreement is 77.8%,
+        # and on 54.4% of days ALL FIVE move the same way. With k=5 that is a variance
+        # inflation of 4.03, so a day holds 1.24 independent draws, not 5, and a
+        # per-series key would overstate z by 2.01x. A day of "or above" rungs wins or
+        # loses together because the coins do, so the day is the unit.
+        return f"CRYPTOFAV|{str(q.get('date') or '').replace('-', '')}"
     if q.get("sport") == "soccer_corners":
         # Every total- and team-corner rung of one match is one result (per MATCH, not per day).
         code = (str(q.get("market_id") or "").split("-") + ["", ""])[1]
@@ -3589,10 +3737,30 @@ def market_day(q):
     return f"{fam}|{str(q.get('date') or '').replace('-', '')}"
 
 
-# Kalshi daily coin series -> CoinGecko id.
-COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
-         "KXLINKD": "chainlink", "KXXRP": "ripple", "KXXLM": "stellar",
-         "KXZECD": "zcash", "KXNEAR": "near", "KXHYPED": "hyperliquid"}
+# Kalshi coin series -> CoinGecko id.
+#
+# CORRECTED 2026-10-05, and the correction is the explanation for the whole of `spot`'s
+# history. Kalshi moved its crypto DIRECTIONAL markets from daily to HOURLY series and
+# renamed most of them; this map was never updated. Checked against /series?category=Crypto
+# and /events on 2026-10-05: BTCD, ETHD, KXLINKD and KXXLM have ZERO open events (the live
+# tickers are KXBTCD, KXETHD, KXLINKD-as-dark, KXXLMD), and KXXRP is the RANGE series, not
+# the directional one (KXXRPD). Of the nine names below only KXSOLD and KXHYPED ever
+# resolved to anything, which is why 22 days of `spot` logged SOL and XRP and no other coin.
+#
+# `spot`'s population therefore WIDENS at this commit, from two coins to five. That is a
+# real break in its record and is stated rather than hidden: a lane measured on SOL alone
+# is not the lane measured on five coins. `spot` is flat either way (26 market-days, z
+# -0.07) and is slated for retirement, so the fix is taken rather than deferred to protect
+# a record that is already being retired.
+COINS = {"KXBTCD": "bitcoin", "KXETHD": "ethereum", "KXSOLD": "solana",
+         "KXXRPD": "ripple", "KXHYPED": "hyperliquid"}
+# Listed in the catalogue, no open event on 2026-10-05. Held here rather than in COINS so
+# that re-checking them is a one-line move and not a rediscovery. Merged into the
+# series->coin lookup only, so a stored row on an old ticker still resolves its coin.
+COINS_DARK = {"KXZECD": "zcash", "KXNEARD": "near", "KXXLMD": "stellar",
+              "KXLINKD": "chainlink", "BTCD": "bitcoin", "ETHD": "ethereum",
+              "KXXRP": "ripple", "KXXLM": "stellar", "KXNEAR": "near"}
+COIN_OF_SERIES = dict(COINS_DARK, **COINS)
 
 # Where a forecaster exists, the series are named explicitly rather than taken from the
 # category. Selecting a whole category and then capping by soonest expiry starved the
@@ -3602,6 +3770,15 @@ COINS = {"BTCD": "bitcoin", "ETHD": "ethereum", "KXSOLD": "solana",
 KALSHI_BINARY = {
     "climate":     dict(series=list(NWS_CITIES), lead_h=12, cap=80),
     "crypto":      dict(series=list(COINS), lead_h=2, cap=60),
+    # The favourite-band lane's own domain (2026-10-05). It cannot share `crypto` above:
+    # that cap is 60 and ladders are kept WHOLE, so with BTC alone listing 80 rungs the
+    # first ladder exhausts the allowance and exactly ONE crypto ladder entered the
+    # universe per run. `ladders_per_series` is how the commodity ladders fixed the same
+    # bug. Four ladders per series because the band is read 2-3.5h before a 21:00Z close
+    # and these series are now HOURLY: at 18:00Z the 19:00, 20:00 and 21:00 closes are all
+    # nearer than the one this lane wants, so taking fewer would hide it. The lane then
+    # keeps only the 21:00Z expiry itself.
+    "crypto_fav":  dict(series=list(COINS), lead_h=2, cap=1200, ladders_per_series=4),
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
     # Seven commodity ladders a day (WTI, Brent, gold, silver, copper, natural gas, retail
     # gasoline), each 20-65 strikes: take the soonest ladder of each, not 80 of the first.
@@ -3683,7 +3860,7 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
     if cfg.get("drop_series"):
         series = [x for x in series if not re.match(cfg["drop_series"], x)]
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=_KALSHI_OPEN_WORKERS) as pool:
         fetched = dict(zip(series, pool.map(_kalshi_open, series)))
 
     rows, listed = [], 0
@@ -4317,13 +4494,82 @@ def _open_tour_listings():
     return out
 
 
+# Particles and generational suffixes are not a surname. "de" is already in
+# STOP; the rest are here so "del Potro" and "Farah Jr" still share a surname
+# with the short form. A given name is not.
+_SURNAME_PARTICLES = frozenset({
+    "de", "del", "della", "di", "da", "dos", "das", "du",
+    "van", "von", "der", "den", "la", "le", "st", "saint",
+})
+_SURNAME_SUFFIXES = frozenset({"jr", "sr", "ii", "iii", "iv"})
+
+
+def _person_words(name):
+    """Significant words of one player, in order. Particles and suffixes drop."""
+    text = _name_text(name).replace("-", " ")
+    words = []
+    for w in re.sub(r"[^a-z0-9 ]", " ", text).split():
+        if len(w) <= 1 or w in STOP or w in _SURNAME_PARTICLES or w in _SURNAME_SUFFIXES:
+            continue
+        words.append(w)
+    return words
+
+
+def _surnames(name):
+    """Surname tokens: the last significant word, plus a hyphenated last word intact.
+
+    "Auger-Aliassime" contributes both "aliassime" and "augeraliassime", so a
+    feed that writes the hyphen as a space still shares the surname. An empty
+    name has none, and no surname is not a match.
+    """
+    words = _person_words(name)
+    if not words:
+        return frozenset()
+    out = {words[-1]}
+    raw = _name_text(name).split()
+    while raw and re.sub(r"[^a-z0-9]", "", raw[-1]) in _SURNAME_SUFFIXES:
+        raw.pop()
+    if raw:
+        intact = re.sub(r"[^a-z0-9]", "", raw[-1].replace("-", ""))
+        if len(intact) > 1:
+            out.add(intact)
+    return frozenset(out)
+
+
+def _surname_match(left, right):
+    """True when these two strings name one player at surname level.
+
+    The surnames have to agree. A shared given name is not a match: "Alex
+    Molcan" and "Alex de Minaur" share a token and are different players.
+    Surname-first writing ("Fils Arthur") still matches, because each side's
+    surname occurs in the other's words. A missing surname does not match.
+    """
+    sl, sr = _surnames(left), _surnames(right)
+    if not sl or not sr:
+        return False
+    if sl & sr:
+        return True
+    wl, wr = set(_person_words(left)), set(_person_words(right))
+    return bool(sl & wr) and bool(sr & wl)
+
+
+def _tour_pair_match(a1, a2, b1, b2):
+    """True when both players match, either order. One shared surname is not enough."""
+    if _surname_match(a1, b1) and _surname_match(a2, b2):
+        return True
+    if _surname_match(a1, b2) and _surname_match(a2, b1):
+        return True
+    return False
+
+
 def match_pm_atp_tour(side_a, side_b, listings, on=None):
     """'atp', 'atpch', or None for one Polymarket US atp-league match.
 
     None is unknown: no listing named both players on a date within a day,
-    or ATP and Challenger both did. Unknown is not ATP. `on` is the
-    Polymarket row's date. A listing with no date, or more than a day away,
-    does not count.
+    or ATP and Challenger both did. Unknown is not ATP. Both players have to
+    match at surname level. One shared given name is not a listing. `on` is
+    the Polymarket row's date. A listing with no date, or more than a day
+    away, does not count.
     """
     hits = set()
     for item in listings or []:
@@ -4331,8 +4577,7 @@ def match_pm_atp_tour(side_a, side_b, listings, on=None):
         listed = item[3] if len(item) > 3 else None
         if not _tour_days_ok(on, listed):
             continue
-        score, _flip = pair_match(side_a, side_b, a, b, sport="tennis")
-        if score > 0:
+        if _tour_pair_match(side_a, side_b, a, b):
             hits.add(tier)
     if hits == {"atp"}:
         return "atp"
@@ -4359,9 +4604,10 @@ def apply_pm_atp_tours(rows, listings_rows):
     including 'unknown', is left as it is, so a later pass over a deduped
     universe cannot wipe a Kalshi cross-match.
     """
-    # 'failed' or 'empty' means a series was asked and did not return a book.
-    # Do not read names off that answer. A last good book keeps the status
-    # at 'ok' inside kalshi_tour_fetch, so this is not that case.
+    # 'failed' or 'empty' means the ATP series itself was asked and did not
+    # return a book. A Challenger 429 or an empty Challenger body is not that:
+    # the ATP book still confirms the matches it names, and a match it does
+    # not name stays unknown. A last good ATP book keeps the status at 'ok'.
     blocked = kalshi_tour_fetch() in ("failed", "empty")
     listings = [] if blocked else (
         _kalshi_tour_listings(listings_rows) + _open_tour_listings())
@@ -5396,7 +5642,7 @@ def pm_combo_legs_by_day(universe=None):
                     p = r.get(f"price_{side}")
                     if p is not None and lo <= p < hi and (r.get("tradeable") or {}).get(side, True):
                         print(f"  pm_combo: skip {r.get('market_id')}: "
-                              f"tour {r.get('tour') or 'unknown'}, not ATP")
+                              f"{_pm_atp_skip_reason(r)}")
                         break
             continue
         for side in ("a", "b"):
@@ -5763,9 +6009,9 @@ TENNIS_FAV_3H = timedelta(hours=3)
 # is not this lane's evidence. On the kept tours 0.77-0.81 left about one contest a day
 # before the window. The record is not reset again: nothing was logged between
 # TENNIS_FAV_KEEP_SINCE and this change, so the record from that clock is this band only.
-# BAND_BY_SPORT["tennis"] is unchanged, so the six basket lanes still cut 0.77-0.81 legs.
+# BAND_BY_SPORT["tennis"] is unchanged: tennis_fav_band still cuts 0.77-0.81.
+# The six basket lanes cut this band, not that one.
 TENNIS_3H_BAND = (0.70, 0.85)
-TENNIS_3H_BAND_SINCE = "2026-10-04"
 
 # The basket lanes cut their legs from TENNIS_3H_BAND too, from TENNIS_COMBO_BAND_SINCE.
 # Unlike the 3-hour lane they DO reset: pm_combo2 logged a 0.77-0.81 basket after
@@ -5780,6 +6026,13 @@ TENNIS_COMBO_BAND_SINCE = "2026-10-04T06:46:57+00:00"
 TENNIS_COMBO_RESET = frozenset({
     "tennis_combo2", "tennis_combo3", "tennis_combo4", "pm_combo2", "pm_combo3",
 })
+# The five reset notes name this instant. Written with the constant's name so
+# the clock stays defined once, next to the reset set; the page has to show
+# the time, not the name.
+for _lane in TENNIS_COMBO_RESET:
+    SOURCES[_lane]["note"] = SOURCES[_lane]["note"].replace(
+        "TENNIS_COMBO_BAND_SINCE", TENNIS_COMBO_BAND_SINCE)
+del _lane
 
 
 def _combo_leg(row, side):
@@ -5883,7 +6136,7 @@ def fetch_tennis_fav_band_3h(sport, universe=None, now=None):
         if not tennis_row_kept(r):
             if r.get("pm_league") == "atp":
                 print(f"  tennis_fav_band_3h: skip {r.get('market_id')}: "
-                      f"tour {r.get('tour') or 'unknown'}, not ATP")
+                      f"{_pm_atp_skip_reason(r)}")
             continue
         near.append(r)
     return band_picks(sport, TENNIS_3H_BAND, {sport: near})
@@ -7105,13 +7358,124 @@ def spot_price(coin):
     return _spot_cache[coin]
 
 
+# ---------------------------------------------------------------------------
+# Crypto favourite band — registered 2026-10-05, before it logged anything
+# ---------------------------------------------------------------------------
+#
+# Back the YES on a Kalshi coin-directional rung priced 0.70-0.80, entered 2-3.5 hours
+# before the 17:00 ET (21:00Z) close, so the bet is held about three hours and settles the
+# same afternoon. One bet per series per close, the LOWEST-priced rung in band.
+#
+# WHY THE LOWEST RUNG. A directional ladder offers several in-band rungs at once -- on
+# 2026-10-05 BTC offered 0.73 and 0.80, HYPE offered fourteen -- and "the Yes priced
+# 0.70-0.80" does not pick between them. Choosing after seeing results would be a free
+# parameter, so it is fixed here: the lowest ask in band, which is the rung furthest from
+# certainty and so the one with the most room for a favourite-longshot edge to exist.
+#
+# WHY ONE PER SERIES. "$84,750 or above" and "$84,500 or above" are NESTED, not exclusive:
+# one move settles both. Taking two rungs of one coin is one bet counted twice, which is
+# exactly the defect that inflated `spot` to z +10.40 against a true +0.24. One rung per
+# series makes nesting impossible by construction rather than by a later guard.
+#
+# WHAT IT HAS TO BEAT. At Kalshi's taker fee the effective price at mid-band is 0.7632, so
+# the band must beat its own price by about 1.3pp to break even -- roughly the entire size
+# of the favourite-longshot bias wherever this Sandbox has measured it. The only direct
+# prior is discouraging: `spot`'s own 0.70-0.80 cell ran 7 won v 7.19 priced over 10 bets
+# on 8 days, -1.9pp at z -0.17. That cell was incidental rather than chosen and the
+# three-hour hold is a different bet, which is why this is worth measuring -- but it is
+# registered expecting nothing, not expecting a winner.
+#
+# Judged against backing every in-band rung in the window (favourite_population), so the
+# lane only counts if picking the lowest beats the band itself. Read at 30 independent
+# outcomes, and an outcome is a DAY across all coins (see market_day) -- about six weeks.
+CRYPTO_FAV_BAND = (0.70, 0.80)          # BOTH ends inclusive, unlike band_picks
+# The close is 17:00 EASTERN, and that must be matched in Eastern rather than in UTC.
+# Written first as "hour == 21" from the observed 21:05Z expiry, which is correct only until
+# 2026-11-01: after the DST change 17:00 ET is 22:00Z, and an hour-21 test would have
+# refused every bet from that day on, silently and for ever. Nothing would have failed --
+# the lane would simply have stopped logging, which is the worst shape a bug can take here.
+CRYPTO_FAV_CLOSE_ET = 17                # the 17:00 ET daily close, verified 2026-10-05
+CRYPTO_FAV_TZ = ZoneInfo("America/New_York")
+CRYPTO_FAV_MIN_H = 2.0                  # no earlier than this before the close
+CRYPTO_FAV_MAX_H = 3.5                  # and no later
+# Liquidity floor. HYPE quoted the SAME 0.70 ask on fourteen consecutive strikes on
+# 2026-10-05, which is a wide or stale book rather than fourteen prices. Without a floor
+# that one coin would supply most of the lane's volume and the least of its information.
+CRYPTO_FAV_MAX_SPREAD = 0.03
+CRYPTO_FAV_MIN_ASK_SIZE = 25
+
+
+def _crypto_fav_liquid(row):
+    """Is this rung tight and deep enough to be a real price? (ok, why)."""
+    if not (row.get("tradeable") or {}).get("a"):
+        return False, "yes side not tradeable"
+    m = row.get("market") or {}
+    bid, ask = _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars"))
+    if bid is None or ask is None:
+        return False, "no two-sided quote"
+    # Tolerance, not decoration: Kalshi prices sit on a 1c grid and 0.75 - 0.72 is
+    # 0.030000000000000027 in binary floating point, so a bare > rejected an exactly
+    # 3c spread -- the boundary the floor is meant to ALLOW.
+    if ask - bid > CRYPTO_FAV_MAX_SPREAD + 1e-9:
+        return False, f"spread {ask - bid:.2f} over {CRYPTO_FAV_MAX_SPREAD:.2f}"
+    size = _num(m.get("yes_ask_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_ask_size"))
+    if size is not None and size < CRYPTO_FAV_MIN_ASK_SIZE:
+        return False, f"ask size {size:g} under {CRYPTO_FAV_MIN_ASK_SIZE}"
+    return True, ""
+
+
+def fetch_crypto_fav_band(sport, universe=None, now=None):
+    """The lowest in-band Yes per coin, 2-3.5h before the 21:00Z close."""
+    if sport != "crypto_fav":
+        return []
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    lo, hi = CRYPTO_FAV_BAND
+    best, skipped = {}, {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        try:
+            exp = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            continue
+        if exp.tzinfo is None:
+            exp = exp.replace(tzinfo=timezone.utc)
+        # The 17:00 ET close only. These series are hourly now, and an hourly rung is a
+        # different contract with a different hold -- it is not this lane's bet. Compared
+        # in Eastern, so the DST change moves the test with the exchange.
+        if exp.astimezone(CRYPTO_FAV_TZ).hour != CRYPTO_FAV_CLOSE_ET:
+            continue
+        hours = (exp - now).total_seconds() / 3600.0
+        if not (CRYPTO_FAV_MIN_H <= hours <= CRYPTO_FAV_MAX_H):
+            continue
+        price = r.get("price_a")
+        if price is None or not (lo <= price <= hi) or r.get("price_draw") is not None:
+            continue
+        ok, why = _crypto_fav_liquid(r)
+        if not ok:
+            skipped.setdefault(r.get("series"), why)
+            continue
+        cur = best.get(r.get("series"))
+        if cur is None or price < cur["price_a"]:
+            best[r.get("series")] = r
+    for series, why in sorted(skipped.items()):
+        if series not in best:
+            print(f"  crypto_fav_band: skip {series}: {why}")
+    return [dict(market_id=r["market_id"], pick="a",
+                 detail=f"lowest in band {r['price_a']:.2f}, "
+                        f"{(datetime.fromisoformat(str(r['start']).replace('Z', '+00:00')) - now).total_seconds() / 3600:.1f}h to close")
+            for r in sorted(best.values(), key=lambda x: x["market_id"])]
+
+
 def fetch_spot(domain):
     """Back the bucket today's spot price already sits in."""
     if domain != "crypto":
         return []
     groups = {}
     for r in (UNIVERSE or {}).get("crypto") or []:
-        coin = COINS.get(r.get("series"))
+        coin = COIN_OF_SERIES.get(r.get("series"))
         price = spot_price(coin) if coin else None
         if price is None or not in_range(price, r["market"]):
             continue
@@ -7246,7 +7610,13 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # remains: (remaining - reserve) / runs left until the reset, where runs left assumes the
 # four scheduled runs a day PLUS ODDS_RUN_SLACK for manual ones, and the reset is taken a
 # day late in case it lands on the 1st in a timezone behind UTC.
-ODDS_RUNS_PER_DAY = 8          # = the tracker's cron (every 3h); pacing divides by it
+# 10 since 2026-10-05: nine cron slots (every 3h, plus the 18:11Z one) and one daily
+# workflow_dispatch from this Mac's launchd timer for crypto_fav_band's window. This MUST be
+# at least the number of runs a day or pacing divides the remaining credits by too few runs
+# and overspends. It is deliberately the SCHEDULED count and not the observed one: GitHub
+# actually delivers about 4.2 cron runs a day here, so the real figure is lower and erring
+# high only underspends, which is the safe direction for a monthly credit budget.
+ODDS_RUNS_PER_DAY = 10         # 9 cron slots + 1 launchd dispatch
 # Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
 # sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
 # with the venue by the betting edge, that sport's venue already prices like Pinnacle and a
@@ -8722,6 +9092,7 @@ CHALLENGERS = {
     "o15_cup_mismatch": fetch_o15_cup_mismatch,
     "o15_ranked": fetch_o15_ranked,
     "team2_ranked": fetch_team2_ranked,
+    "crypto_fav_band": fetch_crypto_fav_band,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "mls_away_band": fetch_mls_away_band,

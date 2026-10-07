@@ -24,7 +24,7 @@ LEDE = (
 def build(d=None, st=None, now=None):
     return sport_tab.build(
         FAMILY, KEY, TITLE, LEDE, d, st, now,
-        description=DESCRIPTION, preflight=True)
+        description=DESCRIPTION, preflight=True, cards=True)
 
 
 def main():

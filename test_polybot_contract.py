@@ -318,10 +318,133 @@ def test_breaks_fail(written, quotes):
     return stamp_problems, price_problems, prob_problems
 
 
+# build_feed on the fixture above, at FIXED_NOW, as main 0dfa4d35 writes it,
+# with the four sandbox-record fields removed. Those four may change. Leads
+# (every lead, every field), updated_at, and every other key may not.
+_MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
+{
+  "board_built_at": "2026-10-01T12:00:00+00:00",
+  "leads": {
+    "2026-10-03|Home Side|Away Side|Away Side to win · Oddspedia community tips": {
+      "away": "Away Side",
+      "bet": {"kind": "match_result", "side": "away"},
+      "date": "2026-10-03",
+      "edge_at_log": null,
+      "first_seen": "2026-10-01",
+      "headline": "Away Side to win",
+      "home": "Home Side",
+      "id": "2026-10-03|Home Side|Away Side|Away Side to win · Oddspedia community tips",
+      "kickoff": "2026-10-03T22:00Z",
+      "lane": "production",
+      "last_seen": "2026-10-01",
+      "last_seen_at": "2026-10-01T12:00:00+00:00",
+      "league": "Cricket",
+      "match": "Home Side v Away Side",
+      "pair": "oddspedia|cricket",
+      "price_at_log": 0.8,
+      "route": {
+        "market": "aec-fixture-pick",
+        "outcome": "Away Side",
+        "outcome_side": "no",
+        "venue": "polymarket_us"
+      },
+      "sandbox_quote": "oddspedia:aec-fixture-pick",
+      "source": "oddspedia",
+      "sport": "cricket",
+      "status": "pending"
+    },
+    "2026-10-03|Home Side|Away Side|Home Side to win · ESPN FPI / Matchup Predictor": {
+      "away": "Away Side",
+      "bet": {"kind": "match_result", "side": "home"},
+      "date": "2026-10-03",
+      "edge_at_log": 0.07,
+      "first_seen": "2026-10-01",
+      "headline": "Home Side to win",
+      "home": "Home Side",
+      "id": "2026-10-03|Home Side|Away Side|Home Side to win · ESPN FPI / Matchup Predictor",
+      "kickoff": "2026-10-03T23:00Z",
+      "lane": "production",
+      "last_seen": "2026-10-01",
+      "last_seen_at": "2026-10-01T12:00:00+00:00",
+      "league": "NFL",
+      "match": "Home Side v Away Side",
+      "model_prob": 0.62,
+      "pair": "espn_fpi|nfl",
+      "price_at_log": 0.55,
+      "route": {
+        "market": "aec-fixture-model",
+        "outcome": "Home Side",
+        "outcome_side": "yes",
+        "venue": "polymarket_us"
+      },
+      "sandbox_quote": "espn_fpi:aec-fixture-model",
+      "source": "espn_fpi",
+      "sport": "nfl",
+      "status": "pending"
+    }
+  },
+  "pairs": {
+    "espn_fpi|nfl": {
+      "by_hand": "2026-09-01",
+      "entered_at": "2026-09-01T00:00:00+00:00",
+      "promoted_at": null,
+      "ready_at": "2026-09-01T00:00:00+00:00",
+      "route": "moved by hand on 2026-09-01"
+    },
+    "oddspedia|cricket": {
+      "by_hand": "2026-09-01",
+      "entered_at": "2026-09-01T00:00:00+00:00",
+      "promoted_at": null,
+      "ready_at": "2026-09-01T00:00:00+00:00",
+      "route": "moved by hand on 2026-09-01"
+    }
+  },
+  "stage": "production",
+  "unlisted_skipped": 0,
+  "unverified_kickoff_skipped": 0,
+  "updated_at": "2026-10-01T12:00:00+00:00"
+}
+""")
+SANDBOX_RECORD_FIELDS = ("sandbox_n", "sandbox_roi", "sandbox_roi_fee", "sandbox_clv")
+
+
+def _aside_from_sandbox(blob):
+    """A copy of a feed with the four sandbox-record numbers removed."""
+    out = copy.deepcopy(blob)
+    for pair in (out.get("pairs") or {}).values():
+        if isinstance(pair, dict):
+            for field in SANDBOX_RECORD_FIELDS:
+                pair.pop(field, None)
+    return out
+
+
+def _canonical(blob):
+    return json.dumps(blob, sort_keys=True, separators=(",", ":"))
+
+
+def test_feed_matches_main_aside_from_sandbox_record():
+    print("\nbuild_feed matches main except the sandbox record fields")
+    written, _quotes = written_fixture()
+    got = _canonical(_aside_from_sandbox(written))
+    want = _canonical(_MAIN_FEED_ASIDE_FROM_SANDBOX)
+    ok(got == want,
+       "leads (every lead, every field), updated_at and every other key are "
+       "byte-identical to main; only pairs.*.sandbox_n / sandbox_roi / "
+       "sandbox_roi_fee / sandbox_clv may differ")
+    ok(written["updated_at"] == FIXED_NOW.replace(microsecond=0).isoformat(),
+       "updated_at is still the fixed now=")
+    ok(set(written) == set(_MAIN_FEED_ASIDE_FROM_SANDBOX),
+       "the top-level keys are unchanged")
+    for key, pair in written.get("pairs", {}).items():
+        missing = [name for name in SANDBOX_RECORD_FIELDS if name not in pair]
+        ok(not missing, f"{key} still carries the sandbox record fields")
+
+
 def main():
     test_files_exist_and_parse()
     written, quotes = test_builder_writes_both_lanes()
     test_breaks_fail(written, quotes)
+    test_feed_matches_main_aside_from_sandbox_record()
     if FAILS:
         print(f"\n{len(FAILS)} FAILED")
         for item in FAILS:

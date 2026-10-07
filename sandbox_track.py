@@ -284,15 +284,18 @@ PAIR_OVERRIDES = {
     # Yes. An under is the No side of the over-3.5 contract (ticker suffix -4), so
     # FEED_SIDE now carries the side per kind and the lead names its exact contract.
     #
-    # WHAT DOWNSTREAM STILL CANNOT DO WITH IT, stated here rather than discovered later:
-    # the execution layer refuses total_lte at BOTH venues today, cleanly and by design.
-    # Polymarket US has the market but does not expose an Under price in its verified
-    # fields (mapping.NEEDS_SIDE), and the Kalshi reader takes only yes_ask/yes_bid, so
-    # covers() finds no series suffix for the kind. Each refuses with a named reason and
-    # neither approximates, which is the right failure. The lead is therefore publishable
-    # and can be taken by hand — Kalshi sells the No on that contract — and the execution
-    # layer will skip it until a No-side price is wired in. That change is downstream and
-    # is not made here.
+    # WHAT THE ROUTE IS, AND WHAT DOWNSTREAM DOES WITH IT. lead_from_quote puts the
+    # contract ticker (the -4 strike) in route.market, "Under 3.5 goals" in
+    # route.outcome, and outcome_side "no". That is the No side of Kalshi's over-3.5
+    # contract. A routed Kalshi lead does not go through covers() or mapping.NEEDS_SIDE.
+    # Those refuse an UNROUTED total_lte only: covers() finds no series suffix for the
+    # kind, and NEEDS_SIDE finds no Under price in the verified fields. The routed path
+    # looks route.market up as an event ticker. This value is the contract ticker, so
+    # that lookup finds no open markets and the lead is refused before any order.
+    # The Kalshi order path buys Yes and does not read outcome_side. Rewriting the
+    # route into an event ticker plus the Over subtitle would buy Over 3.5, the
+    # opposite of the bet. The lead can be taken by hand — Kalshi sells the No on
+    # that contract. That downstream change is not made here.
     "u35_low_scoring|soccer_u35_intl": dict(moved_on="2026-10-04", production_at=None),
     #   OLBG boxing — listed 2026-09-22, OUT 2026-09-27, as asked. It went 8-0 on the US
     #   exchanges (+17.4%, +16.3% after fees) and is still taken off, because the win record
@@ -1134,6 +1137,24 @@ def _retire_replaced_kalshi(d, row, stamp, now):
     return n
 
 
+# KXBTCD-26OCT0617-T84750 -> series KXBTCD, close 26OCT0617. The strike is the
+# tail. Two rungs of one coin's close share the series and this token.
+_COIN_CLOSE_RE = re.compile(r"^([A-Z0-9]+)-(\d{2}[A-Z]{3}\d{4})(?:-|$)")
+
+
+def _coin_close(market_id):
+    """Series and close token from a Kalshi coin ticker, or None.
+
+    'KXBTCD-26OCT0617-T84750' -> ('KXBTCD', '26OCT0617'). A decimal strike
+    (T119.9999) stays outside the token. A ticker with no date-hour token
+    does not match; the id gate still applies to it.
+    """
+    m = _COIN_CLOSE_RE.match(str(market_id or "").strip().upper())
+    if not m:
+        return None
+    return m.group(1), m.group(2)
+
+
 def publish(d, universe, coverage, verbose=True, now=None):
     """Log one quote per (source, market) for every source with an opinion."""
     # Retirement uses one clock, taken as publish begins. Each new quote is
@@ -1162,6 +1183,20 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 q.get("source") == "mma_fav_band" and q.get("sport") == "mma"):
             continue
         prior.setdefault((q["source"], q["sport"]), []).append(q)
+    # crypto_fav_band: one bet per coin per close. The id gate is the ticker,
+    # and the ticker includes the strike, so the next rung is a new id. The
+    # key is the series plus the date-hour token. A row already in the ledger,
+    # the archive, or logged earlier in this pass blocks the new candidate.
+    # The first row keeps the price it was logged at. No other lane sets
+    # one_per_coin_close, so this set stays empty for them.
+    coin_close = {}
+    for q in d["quotes"] + (d.get("_archive") or []):
+        src = q.get("source")
+        if not (S.SOURCES.get(src) or {}).get("one_per_coin_close"):
+            continue
+        key = _coin_close(q.get("market_id"))
+        if key:
+            coin_close.setdefault(src, set()).add(key)
     added = 0
     # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
     # prices — a page that can never be scored is not worth a polite second of waiting.
@@ -1324,6 +1359,12 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 if (S.SOURCES.get(name) or {}).get("one_per_day") and any(
                         p.get("date") == r["date"] for p in prior.get((name, sport), ())):
                     continue
+                # Per coin per close, for a lane that registers the flag. A
+                # different coin, or the same coin on a later close, still logs.
+                if (S.SOURCES.get(name) or {}).get("one_per_coin_close"):
+                    key = _coin_close(mid)
+                    if key and key in coin_close.get(name, ()):
+                        continue
                 # Strictly before the start, for every source and every venue, checked at
                 # the moment of logging. The venue feeds keep a contest for five minutes
                 # past its start to absorb clock skew, and that window let a tip on Al
@@ -1414,6 +1455,10 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 ))
                 seen.add(qid)
                 prior.setdefault((name, sport), []).append(d["quotes"][-1])
+                if (S.SOURCES.get(name) or {}).get("one_per_coin_close"):
+                    key = _coin_close(mid)
+                    if key:
+                        coin_close.setdefault(name, set()).add(key)
                 added += 1
 
     snapped = snap_closing(d, universe)
@@ -2445,21 +2490,32 @@ def faded(d, name, sport=None, venues=None):
 # chance produces two. Nothing here promotes, demotes or retires a pair — the verdict column
 # goes on reading the whole record.
 
-def league_split(d, name, sport=None, venues=None):
+def league_split(d, name, sport=None, venues=None, since=None):
     """A pair's record per competition, best first: [dict(league, n, won, expected, ...)].
 
     Each entry carries the same figures the sport tables use — wins against what the prices
     implied, return after fees, and what backing the other side of those same bets would have
     returned — so a league row reads exactly like a pair row, only thinner.
+
+    The settled list is the one assess() counts. `since` is the pair's stage clock: a bet
+    logged earlier is not in the card's n, so it is not in this split either. A refused
+    tennis tour is left out the same way, including a price payout. A sport in
+    S.DAY_CLUSTERED is counted with day_units, the same collapse assess() uses, so a
+    corners league's n is matches and n_bets is the rungs. The other side stays priced
+    per bet, because each rung has its own ask.
     """
     bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
+            and not S.tennis_refused_row(q)
             and (sport is None or q["sport"] == sport)
+            and (since is None or q["logged"] >= since)
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
     priced = [q for q in bet_rows(d) if q["source"] == name
               and q.get("status") == "settled" and q.get("result") == "price"
               and not climate_excluded(q)
+              and not S.tennis_refused_row(q)
               and (sport is None or q["sport"] == sport)
+              and (since is None or q["logged"] >= since)
               and (venues is None or (q.get("venue") or "polymarket") in venues)]
     by = {}
     for q in bets:
@@ -2467,14 +2523,19 @@ def league_split(d, name, sport=None, venues=None):
     price_by = {}
     for q in priced:
         price_by.setdefault(S.display_league(q) or "Other competitions", []).append(q)
+    # Same units assess() returns. soccer_corners is a match, the other clustered
+    # sports a market-day. Anything else stays one row per bet.
+    clustered = sport in S.DAY_CLUSTERED
+    unit = ("match" if sport == "soccer_corners" else "market-day") if clustered else "bet"
     out = []
     for lg in list(dict.fromkeys(list(by) + list(price_by))):
         qs = by.get(lg) or []
         pq = price_by.get(lg) or []
-        n = len(qs)
-        won = sum(1 for q in qs if q["status"] == "won")
-        exp = sum(q["price"] for q in qs)
-        var = sum(q["price"] * (1 - q["price"]) for q in qs)
+        counted = day_units(qs) if clustered and qs else qs
+        n = len(counted)
+        won = sum(1 for q in counted if q["status"] == "won")
+        exp = sum(q["price"] for q in counted)
+        var = sum(q["price"] * (1 - q["price"]) for q in counted)
         # The other side of the same bets, priced at ITS OWN ask — never this row's price with
         # the sign flipped, which would hand the fade a spread it in fact also has to pay.
         rows = []
@@ -2486,11 +2547,15 @@ def league_split(d, name, sport=None, venues=None):
                 rows.append((float(p), f, q.get("result") == other))
         cost = sum(p + f * p * (1 - p) for p, f, _w in rows)
         stake_n = n + len(pq)
-        fee_pnl = sum(pnl_after_fee(q) for q in qs) + sum(pnl_after_fee(q) for q in pq)
+        # A collapsed day already averaged the fee per rung (day_units pnl_fee). Charging
+        # pnl_after_fee on that row would bill a losing day the whole stake.
+        fee_pnl = (sum(q["pnl_fee"] if clustered else pnl_after_fee(q) for q in counted)
+                   + sum(pnl_after_fee(q) for q in pq))
         out.append(dict(
             league=lg, n=n, won=won, expected=exp, edge=((won - exp) / n) if n else 0.0,
             z=(won - exp) / var ** 0.5 if var > 0 else 0.0,
             roi_fee=(fee_pnl / (stake_n * STAKE)) if stake_n else None,
+            n_bets=len(qs), unit=unit,
             fade_n=len(rows), fade_won=sum(1 for _p, _f, w in rows if w),
             fade_expected=sum(p for p, _f, _w in rows),
             fade_roi=((sum(1 for _p, _f, w in rows if w) - cost) / cost) if cost else None))
@@ -3454,6 +3519,107 @@ def retire_venue_duplicates(d, verbose=True):
     return voided
 
 
+# The map is the row to void -> the row that stands.
+# Castaneda: the earlier Polymarket US row stands. pair_match has to agree.
+# Medvedev v Royer: Kalshi was logged first (2026-09-24T07:39:55Z, +28.21)
+# and the Polymarket US copy later (2026-09-26T06:43:41Z, +26.58). The starts
+# are 26.8h apart, so this one is pinned instead of matched.
+SETTLED_DUP_VOIDS = {
+    "mma_fav_band:KXUFCFIGHT-26SEP26CASHEI": "mma_fav_band:aec-ufc-johcas-alaten-2026-09-26",
+    "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23": "tennis_fav_band:KXATPMATCH-26SEP25MEDROY",
+}
+# Pinned void ids skip pair_match. Same lane, same side_a and side_b, same
+# pick, both settled won or lost bets. The contest window is not widened.
+SETTLED_DUP_PINNED = frozenset({
+    "tennis_fav_band:aec-atp-danmed-valroy-2026-09-23",
+})
+
+
+def _ledger_row(d, row_id):
+    """The quote with this id, or the archived copy when the quote has rolled up."""
+    for q in d.get("quotes") or []:
+        if q.get("id") == row_id:
+            return q, False
+    for q in d.get("_archive") or []:
+        if q.get("id") == row_id:
+            return q, True
+    return None, False
+
+
+def _unroll_voided_archive(d, q, old_status, old_pnl):
+    """A pruned bet was folded into retired. Voiding it takes that P/L back out."""
+    r = (d.get("retired") or {}).get(q.get("source"))
+    if not r:
+        return
+    r["settled"] = r.get("settled", 0) - 1
+    if old_status == "won":
+        r["won"] = r.get("won", 0) - 1
+    r["staked"] = round(r.get("staked", 0.0) - float(q.get("stake") or 0.0), 2)
+    r["pnl"] = round(r.get("pnl", 0.0) - float(old_pnl or 0.0), 2)
+    if (q.get("result") in ("a", "b") and not q.get("untraded")
+            and q.get("prob_a") is not None):
+        term = (q["prob_a"] - (1.0 if q["result"] == "a" else 0.0)) ** 2
+        r["brier_sum"] = r.get("brier_sum", 0.0) - term
+        r["brier_n"] = r.get("brier_n", 0) - 1
+
+
+def _pinned_same_side(later, kept):
+    """True when both rows name the same competitors and bet the same side."""
+    return (later.get("side_a") == kept.get("side_a")
+            and later.get("side_b") == kept.get("side_b")
+            and later.get("side_a") not in (None, "")
+            and later.get("side_b") not in (None, "")
+            and later.get("pick") == kept.get("pick"))
+
+
+def void_listed_settled_dups(d, verbose=True):
+    """Void the rows named in SETTLED_DUP_VOIDS when they are the same contest.
+
+    Both rows have to be in the ledger, in the same lane, betting the same
+    pick, and settled won or lost. A Castaneda entry also needs pair_match to
+    agree. A pinned entry (Medvedev v Royer) needs the same side_a and side_b
+    instead, because its starts are outside the contest window. The settled
+    time stays. The note is 'dup of <kept id>'. A row already voided is left
+    alone, so a second call changes nothing.
+    """
+    n = 0
+    for void_id, kept_id in SETTLED_DUP_VOIDS.items():
+        later, later_archived = _ledger_row(d, void_id)
+        kept, _kept_archived = _ledger_row(d, kept_id)
+        if later is None or kept is None:
+            continue
+        if (later.get("source"), later.get("sport")) != (kept.get("source"), kept.get("sport")):
+            continue
+        if not later.get("bet") or not kept.get("bet"):
+            continue
+        if later.get("status") not in ("won", "lost") or kept.get("status") not in ("won", "lost"):
+            continue
+        if void_id in SETTLED_DUP_PINNED:
+            if not _pinned_same_side(later, kept):
+                continue
+        else:
+            score, _flip = S.pair_match(later.get("side_a"), later.get("side_b"),
+                                        kept.get("side_a"), kept.get("side_b"),
+                                        sport=later.get("sport"))
+            if not score or later.get("pick") != kept.get("pick"):
+                continue
+        old_status, old_pnl = later.get("status"), later.get("pnl")
+        settled = later.get("settled")
+        later["status"] = "void"
+        later["pnl"] = 0.0
+        later["note"] = f"dup of {kept_id}"
+        later["settled"] = settled
+        if later_archived:
+            _unroll_voided_archive(d, later, old_status, old_pnl)
+            month = str(settled or "")[:7]
+            if month:
+                d.setdefault("_archive_dirty", set()).add(month)
+        n += 1
+    if verbose and n:
+        print(f"  settled duplicates: voided {n}")
+    return n
+
+
 def retire_pre_gate(d, now=None, verbose=True):
     """One rule, applied blind to outcomes, for quotes logged before the book gate.
 
@@ -3611,6 +3777,7 @@ def main():
     retire_pre_gate(d)
     retire_late(d)
     retire_venue_duplicates(d)
+    void_listed_settled_dups(d)
     # Stage timings are printed so a slow run in CI names its own culprit. The first
     # run with soccer on Kalshi took 14.6 minutes against 3 before it, with only 25s of
     # CPU — all of it waiting on the network, and no log line said where.

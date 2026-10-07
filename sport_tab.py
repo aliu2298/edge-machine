@@ -172,15 +172,32 @@ def venue_listing(d, family):
 </section>"""
 
 
-def build(family, key, title, lede, d=None, st=None, now=None, description=None, preflight=False):
-    """One sport tab. `preflight` is the Soccer Kalshi column; other sports leave it off."""
+def build(family, key, title, lede, d=None, st=None, now=None, description=None,
+         preflight=False, cards=False):
+    """One sport tab. `preflight` is the Soccer Kalshi column; other sports leave it off.
+
+    `cards` is the rule-card grid. Soccer, Tennis, and Cricket each ask for
+    it, and each has its own renderer, so a change on one page does not move
+    the others.
+    """
     now = now or datetime.datetime.now(datetime.timezone.utc)
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
     rows = family_rows(d, st, family)
     idle = idle_lanes(key, d, skip=tuple(r["name"] for r in rows))
     tiles = _tiles(rows, idle, _open_bets(d, key))
-    sections = B.sport_sections(d, rows)
+    if cards:
+        if family == "Tennis":
+            import tennis_cards
+            sections = tennis_cards.render(d, rows, now)
+        elif family == "Cricket":
+            import cricket_cards
+            sections = cricket_cards.render(d, rows, now)
+        else:
+            import soccer_cards
+            sections = soccer_cards.render(d, rows, now)
+    else:
+        sections = B.sport_sections(d, rows)
     if description is None:
         description = lede
 

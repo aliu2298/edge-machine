@@ -4817,6 +4817,104 @@ ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corne
    "and the page says so")
 ok("soccer_corners" not in [k.split("|")[1] for k in T.PAIR_OVERRIDES], "the corners rule is not in Production")
 
+
+print("\nSoccer by-competition counts match the card window and the card's units")
+# o15_form_l10|soccer_o15 keeps the stage clock the card already reads. Corners has no
+# clock; its card n is matches (day_units), and the panel used to count rungs.
+_O15_SINCE = "2026-09-21T01:44:02+00:00"
+_PRE = "2026-09-14T02:51:18+00:00"
+_POST = "2026-09-23T01:32:37+00:00"
+
+
+def _panel_bet(i, source, sport, logged, league, status="won", pnl=None, market_id=None,
+               result=None, settle_px=None):
+    price = 0.45
+    won = status == "won"
+    if pnl is None:
+        pnl = 80.0 if won else -100.0
+    return dict(
+        id=f"panel:{source}:{sport}:{league}:{i}", source=source, sport=sport, bet=True,
+        venue="kalshi", market_id=market_id or f"KXMLSTOTAL-{i}",
+        pick="a", price=price, price_a=price, price_b=0.57,
+        result=result if result is not None else ("a" if won else "b"),
+        status=status, pnl=pnl, stake=100.0, settle_px=settle_px,
+        start=logged, logged=logged, league=league, label=league,
+        side_a="Yes", side_b="No")
+
+
+_panel_q = []
+for _i in range(4):
+    _panel_q.append(_panel_bet(_i, "o15_form_l10", "soccer_o15", _POST, "MLS"))
+for _i in range(2):
+    _panel_q.append(_panel_bet(10 + _i, "o15_form_l10", "soccer_o15", _PRE, "MLS"))
+for _i in range(4):
+    _panel_q.append(_panel_bet(20 + _i, "o15_form_l10", "soccer_o15", _PRE, "GhostPreLeague"))
+_panel_q.append(_panel_bet(
+    90, "o15_form_l10", "soccer_o15", _PRE, "PriceGhost", status="settled", pnl=40.0,
+    result="price", settle_px=0.8))
+# 8 matches, 11 rungs. Match 0's three rungs average a win; match 1's two average a loss
+# (the mean P/L is zero). The other six are one winning rung each.
+_corner_specs = [("M0", (100.0, 100.0, -100.0)), ("M1", (100.0, -100.0))]
+_corner_specs += [(f"M{_k}", (100.0,)) for _k in range(2, 8)]
+_rung_i = 0
+for _code, _pnls in _corner_specs:
+    for _pnl in _pnls:
+        _panel_q.append(_panel_bet(
+            _rung_i, "corners_under", "soccer_corners", _POST, "Premier League",
+            status="won" if _pnl > 0 else "lost", pnl=_pnl,
+            market_id=f"KXEPLCORNERS-{_code}-{_rung_i}"))
+        _rung_i += 1
+_panel_d = {"quotes": _panel_q}
+_panel_st = {"pairs": {"o15_form_l10|soccer_o15": {"since": _O15_SINCE}}, "events": []}
+_panel_rows = SB.pair_list(_panel_d, _panel_st)
+_panel_o15 = next(r for r in _panel_rows if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
+_panel_cu = next(r for r in _panel_rows if r["name"] == "corners_under" and r["sport"] == "soccer_corners")
+eq(_panel_o15.get("since"), _O15_SINCE, "the lane row carries the stage clock the card already uses")
+eq(_panel_o15["a"]["n"], 4, "the over-1.5 card counts only the four bets logged after the reset")
+_o15_parts = T.league_split(_panel_d, "o15_form_l10", "soccer_o15", venues=T.TRADEABLE_VENUES,
+                            since=_panel_o15["since"])
+eq(sum(sp["n"] for sp in _o15_parts), _panel_o15["a"]["n"],
+   "the competition split's settled total is the card's post-reset n")
+eq(sorted(sp["league"] for sp in _o15_parts), ["MLS"],
+   "pre-reset leagues, and a pre-reset price payout, are not in the split")
+eq((_panel_cu["a"]["n"], _panel_cu["a"]["n_bets"], _panel_cu["a"]["unit"]), (8, 11, "match"),
+   "the corners card counts eight matches and eleven rungs")
+_cu_parts = T.league_split(_panel_d, "corners_under", "soccer_corners", venues=T.TRADEABLE_VENUES,
+                           since=_panel_cu.get("since"))
+eq((sum(sp["n"] for sp in _cu_parts), sum(sp["won"] for sp in _cu_parts),
+    sum(sp["n_bets"] for sp in _cu_parts)),
+   (_panel_cu["a"]["n"], _panel_cu["a"]["won"], _panel_cu["a"]["n_bets"]),
+   "the corners split counts matches, the same wins day_units keeps, and the raw rungs")
+eq(_cu_parts[0]["unit"], "match", "a corners competition row says the unit is a match")
+for _r in (_panel_o15, _panel_cu):
+    _parts = T.league_split(_panel_d, _r["name"], _r["sport"], venues=T.TRADEABLE_VENUES,
+                            since=_r.get("since"))
+    eq(sum(sp["n"] for sp in _parts), _r["a"]["n"],
+       f"{_r['name']}|{_r['sport']} panel n matches the card")
+_panel_html = SB.league_panel(_panel_d, _panel_rows)
+ok("GhostPreLeague" not in _panel_html and "PriceGhost" not in _panel_html,
+   "the by-competition panel does not print a league that sits entirely before the reset")
+ok('<td><b>MLS</b><div class="sm mut">too thin to read</div></td><td class="num">4</td>' in _panel_html,
+   "MLS in the panel is the four post-reset bets, not the six that ignore the clock")
+ok("8 matches · 11 bets" in _panel_html,
+   "the corners competition row says eight matches and eleven bets, the way the card does")
+# A refused tour is not a soccer delta today. The split still has to drop it, because
+# assess() does. This does not put a competition panel on the tennis page.
+_kept_t = dict(_panel_bet(1, "tennis_fav_band_3h", "tennis", "2026-10-03T12:00:00+00:00", "ATP"),
+               tier="atp", market_id="aec-atp-kept")
+_refused_t = dict(_panel_bet(2, "tennis_fav_band_3h", "tennis", "2026-10-03T12:00:00+00:00",
+                             "GhostRefusedLeague"), tier="wta", market_id="aec-wta-refused")
+_refused_px = dict(_panel_bet(3, "tennis_fav_band_3h", "tennis", "2026-10-03T12:00:00+00:00",
+                              "RefusedPrice", status="settled", pnl=10.0, result="price",
+                              settle_px=0.7), tier="wta", market_id="aec-wta-price")
+_td_ref = {"quotes": [_kept_t, _refused_t, _refused_px]}
+_ta_ref = T.assess(_td_ref, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
+_ts_ref = T.league_split(_td_ref, "tennis_fav_band_3h", "tennis", venues=T.TRADEABLE_VENUES)
+eq(sum(sp["n"] for sp in _ts_ref), _ta_ref["n"],
+   "a refused tour is out of the split, the same as the card")
+eq(sorted(sp["league"] for sp in _ts_ref), ["ATP"],
+   "the refused tour's bets and its price payout are not a competition row")
+
 # Every settled bet is accounted for: a sport's section lists its retired pairs too, and the
 # line under the sections reconciles what is judged against what is only kept on record.
 _recq = {"quotes": [
@@ -5735,7 +5833,8 @@ print("\nthe tennis band, narrowed")
 
 eq(S.fav_band("tennis"), (0.77, 0.81),
    "tennis backs 0.77-0.81 since 2026-09-24: 0.75-0.77 returned -1.03% on its own")
-eq(S.fav_band("tennis_combo"), (0.77, 0.81), "and a combo leg is the same pick, so it follows")
+eq(S.TENNIS_3H_BAND, (0.70, 0.85),
+   "a combo leg is cut from the 3-hour band, not from fav_band")
 eq(S.fav_band("mma"), S.FAV_BAND,
    "MMA keeps the full band: four settled bets is nothing to narrow on")
 _bp = [dict(market_id="m1", sport="tennis", side_a="A", side_b="B", price_a=0.78, price_b=0.25,
@@ -6061,7 +6160,7 @@ ok("if: always()" in _tracker_wf
 ok("git add -A" not in _tracker_wf and "\ngit add ." not in _tracker_wf and "git add .\n" not in _tracker_wf,
    "the commit lists paths explicitly")
 ok('DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"' in _tracker_wf
-   and 'SITE="public_site/sandbox.html public_site/production.html"' in _tracker_wf
+   and 'SITE="public_site/sandbox.html public_site/production.html public_site/index.html"' in _tracker_wf
    and "git add $DATA\n" in _tracker_wf and "git add $DATA $SITE" in _tracker_wf,
    "a failed run commits the data files and not public_site")
 ok("could not push the ledger after 3 attempts" in _tracker_wf and "exit 1" in _tracker_wf,
@@ -6072,9 +6171,10 @@ _else = _commit_step.split("\n          else\n", 1)[-1].split("\n          fi\n"
 ok("git checkout -- public_site/" in _else
    and _else.find("git checkout -- public_site/") < _else.find("git add"),
    "the failure path restores public_site before git add")
-ok("git pull --rebase --autostash -X theirs origin main" in _commit_step
+ok("git pull --rebase --autostash origin main" in _commit_step
+   and "-X theirs" not in _commit_step
    and _commit_step.find("git checkout -- public_site/") < _commit_step.find("git pull --rebase"),
-   "public_site is restored before the rebase, and the rebase autostashes anything else left dirty")
+   "public_site is restored before the rebase, the rebase autostashes, and a conflict is not auto-resolved")
 
 _fail_step = _tracker_wf.split("- name: Fail the job if the tracker or the page build failed", 1)[-1]
 ok("::error::tracker step did not run" in _fail_step,
@@ -6281,6 +6381,196 @@ if _pushed.returncode == 0:
     eq(_extra, "clean\n", "a dirty file outside the data list was not committed")
     eq(open(_os.path.join(_local, "public_site", "sandbox.html")).read(), _page,
        "the worktree page is restored, so it cannot block a later rebase")
+
+
+print("\nstale tracker base: a queued run starts from the main tip")
+
+_checkout_at = next(i for i, ln in enumerate(_tracker_wf.splitlines()) if "actions/checkout@" in ln)
+_after_checkout = next(ln.strip() for ln in _tracker_wf.splitlines()[_checkout_at + 1:]
+                       if ln.strip() and not ln.strip().startswith("#"))
+ok(_after_checkout.startswith("- name: Start from the main tip"),
+   "checkout has no ref of its own; the next step is the main-tip sync")
+ok("git push origin HEAD:main" not in _tracker_wf,
+   "the push still names local main, so a non-main checkout has no ref to publish")
+_sync_step = _tracker_wf.split("- name: Start from the main tip", 1)[1].split("\n      - ", 1)[0]
+ok("if: github.ref == 'refs/heads/main'" in _sync_step,
+   "the fast-forward runs only for an event ref of main; another branch's dispatch skips it")
+ok(_tracker_wf.find("- name: Start from the main tip") < _tracker_wf.find("- name: Logic tests"),
+   "the main tip is fetched before the fixture tests and the tracker")
+_sync_script = _step_script(_tracker_wf, "Start from the main tip")
+ok("git fetch --no-tags --prune --depth=1 origin +refs/heads/main:refs/remotes/origin/main" in _sync_script
+   and "git reset --hard origin/main" in _sync_script
+   and 'test "$(git rev-parse --abbrev-ref HEAD)" = "main"' in _sync_script,
+   "the sync fetches the main tip at job start and resets the local main branch onto it")
+ok("-X theirs" not in _tracker_wf,
+   "the workflow does not auto-resolve a rebase by keeping this run's hunks")
+ok("refusing to drop the other side's rows" in _push_script
+   and "git rebase --abort" in _push_script,
+   "a conflicting rebase aborts and fails the push")
+
+
+def _ledger_text(quotes):
+    """One quote per line, so two edits of the same empty ledger conflict in one hunk."""
+    if not quotes:
+        return '{\n  "quotes": []\n}\n'
+    lines = ['  "quotes": [']
+    for i, (qid, grade) in enumerate(quotes):
+        comma = "," if i + 1 < len(quotes) else ""
+        lines.append('    {"id": "%s", "grade": "%s"}%s' % (qid, grade, comma))
+    lines.append("  ]")
+    return "{\n" + "\n".join(lines) + "\n}\n"
+
+
+def _rows(text):
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return None
+    return [(q.get("id"), q.get("grade")) for q in data.get("quotes", [])]
+
+
+def _ident(cwd):
+    _git(cwd, "config", "user.email", "t@example.com")
+    _git(cwd, "config", "user.name", "T")
+    _git(cwd, "config", "commit.gpgsign", "false")
+
+
+_file_env = {
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "protocol.file.allow",
+    "GIT_CONFIG_VALUE_0": "always",
+}
+
+
+def _bare(path):
+    _os.makedirs(_os.path.dirname(path), exist_ok=True)
+    made = _git(_os.path.dirname(path), "init", "--bare", "-b", "main", path, env=_file_env)
+    ok(made.returncode == 0, "bare origin for the replay"
+       + ("" if made.returncode == 0 else "\n" + made.stderr))
+    return "file://" + path
+
+
+def _seed(url, path, ledger):
+    made = _git(_os.path.dirname(path), "init", "-b", "main", path, env=_file_env)
+    ok(made.returncode == 0, "seed repo" + ("" if made.returncode == 0 else "\n" + made.stderr))
+    _ident(path)
+    _write(_os.path.join(path, "data", "sandbox_ledger.json"), ledger)
+    _write(_os.path.join(path, "data", "stages.json"), "{}\n")
+    _write(_os.path.join(path, "data", "production_leads.json"), "{}\n")
+    _write(_os.path.join(path, "data", "sandbox_archive", "keep.json"), "[]\n")
+    _write(_os.path.join(path, "data", "espn_history", "keep.json"), "{}\n")
+    _write(_os.path.join(path, "public_site", "sandbox.html"), "page\n")
+    added = _git(path, "add", "-A", env=_file_env)
+    committed = _git(path, "commit", "-m", "base", env=_file_env)
+    remote = _git(path, "remote", "add", "origin", url, env=_file_env)
+    pushed = _git(path, "push", "-u", "origin", "main", env=_file_env)
+    ok(added.returncode == committed.returncode == remote.returncode == pushed.returncode == 0,
+       "base ledger is on origin")
+    return _git(path, "rev-parse", "HEAD", env=_file_env).stdout.strip()
+
+
+def _pin_sha(url, path, sha):
+    """What actions/checkout does with no ref: fetch that SHA as origin/main, depth 1."""
+    _os.makedirs(path, exist_ok=True)
+    _git(path, "init", "-b", "main", env=_file_env)
+    _ident(path)
+    _git(path, "remote", "add", "origin", url, env=_file_env)
+    fetched = _git(path, "fetch", "--no-tags", "--prune", "--depth=1", "origin",
+                   "+%s:refs/remotes/origin/main" % sha, env=_file_env)
+    checked = _git(path, "checkout", "-B", "main", "origin/main", env=_file_env)
+    ok(fetched.returncode == 0 and checked.returncode == 0,
+       "pinned checkout of the event SHA"
+       + ("" if fetched.returncode == checked.returncode == 0
+          else "\n" + fetched.stderr + checked.stderr))
+    ok(_os.path.isfile(_os.path.join(path, ".git", "shallow")),
+       "the pinned checkout is shallow, as on the runner")
+
+
+_replay = _tf.mkdtemp(prefix="ledger-race-")
+
+# L&Q: two commits from the same base, then the old rebase. Run 2's hunk wins.
+_o_drop = _bare(_os.path.join(_replay, "drop.git"))
+_drop_seed = _os.path.join(_replay, "drop-seed")
+_event = _seed(_o_drop, _drop_seed, _ledger_text([]))
+_drop_stale = _os.path.join(_replay, "drop-stale")
+_pin_sha(_o_drop, _drop_stale, _event)
+_write(_os.path.join(_drop_seed, "data", "sandbox_ledger.json"), _ledger_text([("run1", "W")]))
+_git(_drop_seed, "add", "-A", env=_file_env)
+_git(_drop_seed, "commit", "-m", "tracker run 1", env=_file_env)
+_git(_drop_seed, "push", "origin", "main", env=_file_env)
+_write(_os.path.join(_drop_stale, "data", "sandbox_ledger.json"), _ledger_text([("run2", "L")]))
+_git(_drop_stale, "add", "-A", env=_file_env)
+_git(_drop_stale, "commit", "-m", "tracker run 2", env=_file_env)
+_theirs = _git(_drop_stale, "pull", "--rebase", "--autostash", "-X", "theirs", "origin", "main",
+               env=_file_env)
+ok(_theirs.returncode == 0, "the old rebase succeeds"
+   + ("" if _theirs.returncode == 0 else "\n" + _theirs.stderr))
+_git(_drop_stale, "push", "origin", "main", env=_file_env)
+_dropped = _git(_os.path.join(_replay, "drop.git"), "show", "main:data/sandbox_ledger.json",
+                env=_file_env).stdout
+eq(_rows(_dropped), [("run2", "L")],
+   "rebasing with the old strategy option keeps run 2 and drops run 1's quote and grade")
+
+# The commit step, on that same shape: the push fails and run 1 stays on main.
+_o_keep = _bare(_os.path.join(_replay, "keep.git"))
+_keep_seed = _os.path.join(_replay, "keep-seed")
+_keep_event = _seed(_o_keep, _keep_seed, _ledger_text([]))
+_keep_stale = _os.path.join(_replay, "keep-stale")
+_pin_sha(_o_keep, _keep_stale, _keep_event)
+_write(_os.path.join(_keep_seed, "data", "sandbox_ledger.json"), _ledger_text([("run1", "W")]))
+_git(_keep_seed, "add", "-A", env=_file_env)
+_git(_keep_seed, "commit", "-m", "tracker run 1", env=_file_env)
+_git(_keep_seed, "push", "origin", "main", env=_file_env)
+_write(_os.path.join(_keep_stale, "data", "sandbox_ledger.json"), _ledger_text([("run2", "L")]))
+_kept_push = _bash(_push_script, {"COMMIT_SITE": "false", **_git_env, **_file_env}, cwd=_keep_stale)
+ok(_kept_push.returncode != 0,
+   "a stale run whose ledger conflicts fails the push"
+   + ("" if _kept_push.returncode != 0 else "\n" + _kept_push.stdout + _kept_push.stderr))
+ok("refusing to drop the other side's rows" in (_kept_push.stdout + _kept_push.stderr),
+   "and the error says the other side's rows were not dropped")
+_kept = _git(_os.path.join(_replay, "keep.git"), "show", "main:data/sandbox_ledger.json",
+             env=_file_env).stdout
+eq(_rows(_kept), [("run1", "W")],
+   "main still has run 1's quote and grade, and not run 2's")
+
+# The sync step: a shallow checkout of the event SHA moves to the tip before appending.
+_o_tip = _bare(_os.path.join(_replay, "tip.git"))
+_tip_seed = _os.path.join(_replay, "tip-seed")
+_tip_event = _seed(_o_tip, _tip_seed, _ledger_text([]))
+_tip_queued = _os.path.join(_replay, "tip-queued")
+_pin_sha(_o_tip, _tip_queued, _tip_event)
+_write(_os.path.join(_tip_seed, "data", "sandbox_ledger.json"), _ledger_text([("run1", "W")]))
+_git(_tip_seed, "add", "-A", env=_file_env)
+_git(_tip_seed, "commit", "-m", "tracker run 1", env=_file_env)
+_git(_tip_seed, "push", "origin", "main", env=_file_env)
+ok(_git(_tip_queued, "rev-parse", "HEAD", env=_file_env).stdout.strip() == _tip_event,
+   "before the sync, the queued checkout is still the event SHA")
+_synced = _bash(_sync_script, {**_git_env, **_file_env}, cwd=_tip_queued)
+ok(_synced.returncode == 0,
+   "the sync step fast-forwards a shallow event-SHA checkout onto origin/main"
+   + ("" if _synced.returncode == 0 else "\n" + _synced.stdout + _synced.stderr))
+_tip_led = open(_os.path.join(_tip_queued, "data", "sandbox_ledger.json")).read()
+eq(_rows(_tip_led), [("run1", "W")], "the queued run now sees run 1's quote and grade")
+_write(_os.path.join(_tip_queued, "data", "sandbox_ledger.json"),
+       _ledger_text([("run1", "W"), ("run2", "L")]))
+_git(_tip_queued, "add", "-A", env=_file_env)
+_git(_tip_queued, "commit", "-m", "tracker run 2", env=_file_env)
+_write(_os.path.join(_tip_seed, "data", "sandbox_closes", "close.json"), '{"from": "close"}\n')
+_git(_tip_seed, "add", "-A", env=_file_env)
+_git(_tip_seed, "commit", "-m", "close job", env=_file_env)
+_git(_tip_seed, "push", "origin", "main", env=_file_env)
+_rebased = _git(_tip_queued, "pull", "--rebase", "--autostash", "origin", "main", env=_file_env)
+ok(_rebased.returncode == 0,
+   "a close-job commit rebases without a strategy option"
+   + ("" if _rebased.returncode == 0 else "\n" + _rebased.stderr))
+_git(_tip_queued, "push", "origin", "main", env=_file_env)
+_tipped = _git(_os.path.join(_replay, "tip.git"), "show", "main:data/sandbox_ledger.json",
+               env=_file_env).stdout
+eq(_rows(_tipped), [("run1", "W"), ("run2", "L")],
+   "both runs' quotes and grades are on main")
+_tip_close = _git(_os.path.join(_replay, "tip.git"), "show", "main:data/sandbox_closes/close.json",
+                  env=_file_env).stdout
+ok('"close"' in _tip_close, "and the close job's file is still on main")
 
 
 print("\nledger save is atomic")
@@ -6671,7 +6961,7 @@ ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
    and not S.source_fully_paused("polymarket_us"),
    "a removed source logs no sport; Polymarket US still logs the sports it keeps")
 for _name, _sport in (
-        ("tennis_fav_band_3h", "tennis"), ("spot", "crypto"),
+        ("tennis_fav_band_3h", "tennis"), ("crypto_fav_band", "crypto_fav"),
         ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
         ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),
@@ -6935,10 +7225,13 @@ eq(S.SOURCES["tennis_fav_band_3h"]["note"],
    "has to be ATP, WTA Doubles, or UTR. BAND WIDENED 2026-10-04 from "
    "0.77-0.81 to 0.70-0.85: the lane is tour-specific, the narrow band was "
    "cut on every tour's record, and on the kept tours it left about one "
-   "contest a day. Nothing was logged on the kept tours between the "
-   "2026-10-02 tour clock and the widening, so the record from that clock is "
-   "the wide band only and is not reset again. The basket lanes keep "
-   "0.77-0.81 legs. The window stays 3 hours. Why the window: closing-line value on the "
+   "contest a day. The page record restarts at 2026-10-02T16:34:37Z, "
+   "the merge that put the narrowed selection on main. No kept-tour bet "
+   "was logged between that restart and the widening, so the record from "
+   "the restart is the wide band only and is not reset again. Two kept-tour "
+   "bets logged after the rule was written and before that merge stay on "
+   "file under the old rule and do not count in the record. The basket lanes cut "
+   "the same 0.70-0.85 legs. The window stays 3 hours. Why the window: closing-line value on the "
    "band was about -1.2c on entries 3 or more hours before the start, and "
    "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
    "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
@@ -6946,8 +7239,9 @@ eq(S.SOURCES["tennis_fav_band_3h"]["note"],
    "On the 18 days those contests cover, that was 36.0 contests a day, and "
    "the kept tours were 4.3. Kept: ATP, WTA Doubles, UTR, 78 contests, "
    "z +2.76 before fees. That z is a selected-group z. It is not a "
-   "significance test and must not be quoted as one. The clock starts "
-   "2026-10-02T05:00:00Z. Those 648 contests are the reason for looking, "
+   "significance test and must not be quoted as one. "
+   "2026-10-02T05:00:00Z is the looked-at cutoff for those 648 contests, "
+   "not the page record. Those 648 contests are the reason for looking, "
    "not evidence, and they count toward nothing here. No mechanism is "
    "claimed. ATP is the deepest field here and UTR the shallowest, with "
    "four flatter tours between them, and the idea that a deeper field "

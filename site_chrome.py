@@ -16,12 +16,17 @@ PAGES = (
     ("soccer", "Soccer", "./soccer.html"),
     ("tennis", "Tennis", "./tennis.html"),
     ("cricket", "Cricket", "./cricket.html"),
+    ("crypto", "Crypto", "./crypto.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 
-VIEW_BUTTON = (
-    '<button type="button" id="vw" class="vw" '
-    'title="Switch between the phone layout and the full table">Phone view</button>'
+# Fixed-width segmented control. The label is the current choice (aria-pressed),
+# not the choice you would switch to. It lives in the table tools, not the header.
+VIEW_TOGGLE = (
+    '<div id="vw" class="view-toggle" role="group" aria-label="Layout">'
+    '<button type="button" data-view="cards" aria-pressed="false">Cards</button>'
+    '<button type="button" data-view="table" aria-pressed="true">Table</button>'
+    '</div>'
 )
 
 
@@ -71,11 +76,32 @@ def nav(active, prefix="./"):
 
 
 def toc(sections):
-    """In-page section links. `sections` is (id, label) pairs."""
-    if not sections:
+    """In-page section links. `sections` is (id, label) pairs.
+
+    A single link is the page's own heading, not a nav, so it is left out.
+    """
+    if not sections or len(tuple(sections)) < 2:
         return ""
     links = "".join(f'<a href="#{esc(i)}">{esc(label)}</a>' for i, label in sections)
     return f'<nav class="toc" aria-label="On this page">{links}</nav>'
+
+
+def breadcrumb(parts):
+    """A short trail. `parts` is (label, href or None); the last item is not a link.
+
+    The current crumb carries aria-current. nav.main still marks exactly one page.
+    """
+    if not parts:
+        return ""
+    bits = []
+    for label, href in parts:
+        if bits:
+            bits.append('<span class="sep" aria-hidden="true">\u203a</span>')
+        if href:
+            bits.append(f'<a href="{esc(href)}">{esc(label)}</a>')
+        else:
+            bits.append(f'<span class="here" aria-current="page">{esc(label)}</span>')
+    return f'<nav class="crumbs" aria-label="Breadcrumb">{"".join(bits)}</nav>'
 
 
 def stamp(when, machine=True):
@@ -84,27 +110,36 @@ def stamp(when, machine=True):
     body = f'<time datetime="{esc(fmt.iso_z(when))}">{esc(visible)}</time>'
     if machine:
         # Lower-case "updated YYYY-MM-DD HH:MM UTC" is what page_freshness reads.
-        # The root stub leaves this off so a check pointed at it fails closed.
+        # The shell leaves this off so a check pointed at the root fails closed.
         body += f'<span class="sr-only">{esc(fmt.machine_stamp(when))}</span>'
     return body
 
 
-def header(active, sections, stamp_html, tools="", prefix="./"):
-    tool = f"{tools}" if tools else ""
+def header(active, sections, stamp_html, tools="", prefix="./", crumb=None):
+    """Brand, main nav and stamp, then the section nav or a breadcrumb.
+
+    `tools` is accepted so older callers keep working, and ignored. The view
+    toggle sits next to the table search, not in this bar.
+    """
+    del tools
+    below = [part for part in (
+        breadcrumb(crumb) if crumb else "",
+        toc(sections),
+    ) if part]
+    sub = ("\n" + "\n".join(below)) if below else "\n"
     return f"""<a class="skip" href="#content">Skip to content</a>
 <header class="site">
 <div class="topbar">
 <a class="brand" href="{esc(_href("./sandbox.html", prefix))}">Edge Machine</a>
 {nav(active, prefix)}
-{tool}
 <p class="stamp">{stamp_html}</p>
-</div>
-{toc(sections)}
+</div>{sub}
 </header>"""
 
 
 def document(title, description, active, sections, stamp_html, body,
-             script_src=None, extra_head="", tools="", scripts=None, prefix="./"):
+             script_src=None, extra_head="", tools="", scripts=None, prefix="./",
+             crumb=None):
     srcs = []
     if script_src:
         srcs.append(script_src)
@@ -112,7 +147,8 @@ def document(title, description, active, sections, stamp_html, body,
         if src not in srcs:
             srcs.append(src)
     # Sticky column headers read --hdr-h from tables.js. Pages that already
-    # pass the script keep their order; the rest gain it.
+    # pass the script keep their order; the rest gain it. Production stays on
+    # tables.js alone: that file also scrolls the active phone-nav pill.
     if "./tables.js" not in srcs:
         srcs.append("./tables.js")
     script = "".join(
@@ -130,7 +166,7 @@ def document(title, description, active, sections, stamp_html, body,
 {REFERRER}{extra}
 </head>
 <body>
-{header(active, sections, stamp_html, tools=tools, prefix=prefix)}
+{header(active, sections, stamp_html, tools=tools, prefix=prefix, crumb=crumb)}
 <main id="content" class="wrap">
 {body}
 </main>{script}

@@ -27,6 +27,7 @@ import json
 import math
 import os
 import statistics
+import subprocess
 from zoneinfo import ZoneInfo
 
 import market_sources as M
@@ -389,7 +390,30 @@ RULES = {
              "against an edge that was a few basis points a night. If it survives that, it is "
              "real; the expectation is that it does not."),
 }
-# A retired rule logs no new trades; its record stays on the page under "Retired".
+# Taken off every page 2026-10-04, the same way a removed Sandbox lane is.
+# Five were retired by choice and three by the rule (50 closed trades, behind
+# SPY). A removed rule does not log, grade, or render. The ledger keeps every
+# trade it already has. A rule with no trades that is not in this set still
+# renders: emptiness is not removal.
+REMOVED_RULES = frozenset({
+    "cr_btc_2200",
+    "dt_intraday_mom",
+    "sw_52w_breakout",
+    "sw_ma_cross_rsi",
+    "cr_trend20",
+    "dt_orb30",
+    "dt_orb30_long",
+    "dt_vwap_reclaim",
+})
+
+
+def rule_removed(name):
+    """True when this trading rule is off the board. Its rows stay in the ledger."""
+    return name in REMOVED_RULES
+
+
+# A retired rule is not scanned. REMOVED_RULES is what the pages and the
+# entry gate read, so a retired rule cannot be logged by passing RULES through.
 ACTIVE = {k: v for k, v in RULES.items() if not v.get("retired")}
 
 
@@ -513,7 +537,7 @@ def scan_day(bars_by_symbol, d, research_before=None, rules=None):
         bench_day.setdefault(_day(b), []).append(b)
     added = 0
     for name, rule in rules.items():
-        if rule["lane"] != "day":
+        if rule_removed(name) or rule["lane"] != "day":
             continue
         start = starts(rule, research_before)
         for sym in universe_for(rule, list(bars_by_symbol)):
@@ -560,7 +584,7 @@ def scan_hours(bars_by_symbol, d, research_before=None, rules=None):
     seen = {t["id"] for t in d["trades"]}
     added = 0
     for name, rule in rules.items():
-        if name != "cr_btc_2200":
+        if rule_removed(name) or name != "cr_btc_2200":
             continue
         start = starts(rule, research_before)
         for sym in universe_for(rule, list(bars_by_symbol)):
@@ -596,12 +620,40 @@ def load():
     return d
 
 
+def code_sha():
+    """The checkout this run graded against, stamped into the ledger with the trades.
+
+    The daily runner passes MARKET_CODE_SHA from `git rev-parse HEAD` before it
+    commits the ledger, so the recorded SHA is the code that ran and not the
+    ledger commit that follows. A direct run reads that same rev-parse. When
+    neither is available the stamp is the string "unknown", which replaces any
+    previous meta.code_sha.
+    """
+    stamped = os.environ.get("MARKET_CODE_SHA", "").strip()
+    if stamped:
+        return stamped
+    try:
+        out = subprocess.run(
+            ["git", "-C", ROOT, "rev-parse", "HEAD"],
+            capture_output=True, text=True, timeout=10, check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+    if out.returncode != 0:
+        return "unknown"
+    sha = out.stdout.strip()
+    return sha or "unknown"
+
+
 def save(d):
     d["meta"]["updated"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    d["meta"]["code_sha"] = code_sha()
     os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
     tmp = LEDGER + ".tmp"
     with open(tmp, "w") as f:
         json.dump(d, f, indent=1, sort_keys=True)
+        f.flush()
+        os.fsync(f.fileno())
     os.replace(tmp, LEDGER)
 
 
@@ -623,6 +675,8 @@ def scan(bars_by_symbol, d, now=None, rules=None, research_before=None):
     seen = {t["id"] for t in d["trades"]}
     added = 0
     for name, rule in (rules or RULES).items():
+        if rule_removed(name):
+            continue
         if rule["lane"] not in ("swing", "crypto") or rule.get("signal") is None:
             continue
         start = starts(rule, research_before)
@@ -666,7 +720,7 @@ def grade(bars_by_symbol, d, rules=None):
     bench = {_day(b): b for b in bars_by_symbol.get(BENCH, [])}
     closed = 0
     for t in d["trades"]:
-        if t["status"] != "open":
+        if t["status"] != "open" or rule_removed(t.get("rule")):
             continue
         bars = bars_by_symbol.get(t["symbol"]) or []
         idx = next((i for i, b in enumerate(bars) if _day(b) == t["entry_day"]), None)
@@ -759,7 +813,8 @@ def assess(d, rule):
 
 
 def report(d, rules=None):
-    return [assess(d, name) for name in (rules or RULES)]
+    """One row per rule that is still on the board. Removed rules are not counted."""
+    return [assess(d, name) for name in (rules or RULES) if not rule_removed(name)]
 
 
 def main():

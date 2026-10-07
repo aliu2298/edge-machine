@@ -137,7 +137,7 @@ def _no_removed_band_name(pages):
     """Built HTML and the JS those pages load. tennis_fav_band_3h may stay."""
     bare = re.compile(r"tennis_fav_band(?!_3h)")
     named = dict(pages)
-    for js in ("site.js", "tables.js", "root.js"):
+    for js in ("site.js", "tables.js"):
         with open(os.path.join(ROOT, "public_site", js), encoding="utf-8") as f:
             named[js] = f.read()
     rule = ("Back the player priced 0.70-0.85, only when the entry is within "
