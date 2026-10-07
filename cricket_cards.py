@@ -140,7 +140,7 @@ def _games(quotes):
         return '<p class="mut">No open game.</p>'
     items = []
     for q in shown:
-        label = S.display_label(q)
+        label = S.position_label(q)
         side = B._side(q) or ""
         when = _kick_label(q)
         extra = " · ".join(part for part in (str(side), when) if part)

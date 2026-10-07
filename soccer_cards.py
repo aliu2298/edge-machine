@@ -121,7 +121,7 @@ def _market_name(base, fam="Soccer"):
 
 def _fixture_label(q):
     # Soccer market labels append the outcome after the match's team names.
-    return S.display_label(q).split(":", 1)[0].strip()
+    return S.position_label(q).split(":", 1)[0].strip()
 
 
 def _fixture_key(q):
@@ -149,6 +149,19 @@ def _fixture_rows(d, rows, now):
         _kickoff(rec["q"]) or _FAR,
         str(rec["q"].get("label") or rec["q"].get("market_id") or "")))
     return out
+
+
+def _scoped_name(row):
+    """The rule's name with its scope: 'Team scores 1+ form rule · Internationals'.
+
+    A league pair carries 'League' only when a twin of the same rule is also
+    in Production, so a lone rule keeps its plain name.
+    """
+    name = row["meta"]["label"].split(" (")[0]
+    sfx = B._scope(row["sport"])
+    if sfx:
+        return f"{name} · {S.SCOPE_LABEL[sfx]}"
+    return name
 
 
 def _fixture_rule_chip(row, q):
@@ -207,8 +220,10 @@ def match_center(d, rows, now):
         else:
             upcoming.append(rec)
     prod = [r for r in rows if r.get("prod")]
+    # Two scopes of one rule (league and internationals) used to print the
+    # same bold name twice. The scope is part of the name now.
     prod_chips = "".join(
-        f'<span class="soccer-prod-rule"><b>{B.esc(r["meta"]["label"].split(" (")[0])}</b>'
+        f'<span class="soccer-prod-rule"><b>{B.esc(_scoped_name(r))}</b>'
         f'<small>{B.esc(S.SPORTS.get(r["sport"], r["sport"]))}</small></span>'
         for r in prod)
     today_html = "".join(_fixture_card(x) for x in today) or '<div class="note">No tracked fixture today.</div>'
@@ -255,7 +270,7 @@ def _games(quotes):
         return '<p class="mut">No open game.</p>'
     items = []
     for q in shown:
-        label = S.display_label(q)
+        label = S.position_label(q)
         side = B._side(q) or ""
         when = _kick_label(q)
         extra = " · ".join(part for part in (str(side), when) if part)
