@@ -408,10 +408,12 @@ def _logged_id(q):
 # One built list per loaded ledger. hide_removed, hide_refused_tours and a
 # roll-up each hand back a new dict with new quotes and archive lists, so they
 # miss. A build asks for this about 1,650 times; rebuilding it each time walks
-# every live row and every archived row again. The token covers both lists'
-# ids and both lengths. Any in-place edit that keeps the length the same
-# makes the cache stale, not only a flip: the token does not change, and
-# the cached list is returned as built.
+# every live row and every archived row again. The token holds the Python
+# object ids of the quotes and archive lists plus both lengths. A status or
+# pnl edit on a cached row shows through, because the list holds those row
+# objects. An edit to bet, id or logged, or a replaced row object, keeps
+# both lengths the same, so the token does not change and the cached list
+# is returned as built.
 _BET_ROWS_CACHE = {}
 _BET_ROWS_MAX = 48
 

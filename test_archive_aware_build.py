@@ -454,12 +454,16 @@ def _logged_id_tie():
 
 
 def _both_places():
-    """A crash can leave one id in the ledger and in the archive.
+    """The same id in the ledger, the archive, and retired.
 
-    prune() has already added it to retired. All-sport score() must not count
-    it again. The live row wins. The reach cell reads all_bets() inside
-    production.py, which stays the raw list so a repeated id is still visible
-    to the day check, so this test does not claim that cell changed.
+    save() writes the ledger before the archive, so a crash between those
+    writes leaves the row in retired and not in the archive file. It does
+    not leave a duplicate. This fixture is an id in both lists, as from a
+    bad merge, not a doubled archive file (that repeats the id inside the
+    archive only). All-sport score() must not count this id again. The live
+    row wins. The reach cell reads bet_rows(), so that id is counted once
+    there too. all_bets() stays the raw list, so a repeated id is still
+    visible to the day check.
     """
     print("\nrow in the ledger and the archive")
     live = _bet(id="both", status="won", pnl=80.0, stake=100.0, edge=0.05,
