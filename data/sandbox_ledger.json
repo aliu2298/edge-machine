@@ -25,7 +25,7 @@
    },
    "polymarket_us": 20,
    "polymarket_us_listed": 20,
-   "polymarket_us_priced": 16
+   "polymarket_us_priced": 15
   },
   "crypto": {
    "kalshi_venue": 80
@@ -63,14 +63,14 @@
    "kalshi_venue": 16
   },
   "nhl_rest": {
-   "kalshi_venue": 31
+   "kalshi_venue": 32
   },
   "soccer": {
    "ere_draw": {
     "offered": 9,
     "picked": 3
    },
-   "kalshi_venue": 303,
+   "kalshi_venue": 262,
    "mls_away_band": {
     "offered": 0,
     "picked": 0
@@ -370,13 +370,13 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 9,
+   "kalshi_venue": 13,
    "polymarket_us": 40,
-   "polymarket_us_listed": 402,
-   "polymarket_us_priced": 158,
+   "polymarket_us_listed": 397,
+   "polymarket_us_priced": 164,
    "tennis_fav_band_3h": {
-    "offered": 49,
-    "picked": 1
+    "offered": 53,
+    "picked": 0
    }
   },
   "tennis_combo": {
@@ -403,9 +403,9 @@
   "created": "2026-09-10T04:42:15+00:00",
   "odds_api": {
    "allowance": 1,
-   "at": "2026-10-07T20:51:47+00:00",
+   "at": "2026-10-07T21:14:49+00:00",
    "calls": 1,
-   "remaining": 448,
+   "remaining": 446,
    "totals_on": [
     {
      "empty": {
@@ -525,7 +525,7 @@
      ]
     }
    ],
-   "used": 52
+   "used": 54
   },
   "outages": [
    {
@@ -544,8 +544,8 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 291,
-  "updated": "2026-10-07T20:52:33+00:00"
+  "runs": 292,
+  "updated": "2026-10-07T21:15:33+00:00"
  },
  "quotes": [
   {
@@ -275309,7 +275309,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.84,
    "date": "2026-10-09",
    "edge": null,
@@ -281136,7 +281136,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.48,
    "date": "2026-10-09",
    "edge": null,
@@ -281668,7 +281668,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.92,
    "date": "2026-10-09",
    "edge": null,
@@ -281708,7 +281708,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.62,
    "date": "2026-10-09",
    "edge": null,
@@ -281748,7 +281748,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.75,
    "date": "2026-10-09",
    "edge": null,
@@ -283777,7 +283777,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.24,
    "date": "2026-10-10",
    "edge": null,
@@ -283812,7 +283812,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.25,
    "date": "2026-10-10",
    "edge": null,
@@ -291438,7 +291438,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.55,
    "date": "2026-10-10",
    "edge": null,
@@ -293024,7 +293024,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.69,
    "date": "2026-10-10",
    "edge": null,
@@ -293062,7 +293062,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.46,
    "date": "2026-10-10",
    "edge": null,
@@ -293100,7 +293100,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.51,
    "date": "2026-10-10",
    "edge": null,
@@ -293138,7 +293138,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.48,
    "date": "2026-10-10",
    "edge": null,
@@ -293176,7 +293176,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.41,
    "date": "2026-10-10",
    "edge": null,
@@ -293214,7 +293214,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.41,
    "date": "2026-10-10",
    "edge": null,
@@ -293252,7 +293252,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.77,
    "date": "2026-10-10",
    "edge": null,
@@ -293290,7 +293290,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.64,
    "date": "2026-10-10",
    "edge": null,
@@ -295000,7 +295000,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.65,
    "date": "2026-10-10",
    "edge": null,
@@ -295040,7 +295040,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.43,
    "date": "2026-10-10",
    "edge": null,
@@ -295080,7 +295080,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.8,
    "date": "2026-10-10",
    "edge": null,
@@ -295120,7 +295120,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.88,
    "date": "2026-10-10",
    "edge": null,
@@ -295160,7 +295160,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.95,
    "date": "2026-10-10",
    "edge": null,
@@ -300402,7 +300402,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.1,
    "date": "2026-10-10",
    "edge": null,
@@ -300728,7 +300728,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.55,
    "date": "2026-10-10",
    "edge": null,
@@ -301146,7 +301146,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.79,
    "date": "2026-10-10",
    "edge": null,
@@ -302830,7 +302830,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.79,
    "date": "2026-10-10",
    "edge": null,
@@ -302868,7 +302868,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.76,
    "date": "2026-10-09",
    "edge": null,
@@ -302906,7 +302906,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.11,
    "date": "2026-10-10",
    "edge": null,
@@ -304500,7 +304500,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.77,
    "date": "2026-10-10",
    "edge": null,
@@ -304540,7 +304540,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.83,
    "date": "2026-10-10",
    "edge": null,
@@ -304580,7 +304580,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.72,
    "date": "2026-10-10",
    "edge": null,
@@ -304620,7 +304620,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.89,
    "date": "2026-10-10",
    "edge": null,
@@ -304660,7 +304660,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.9,
    "date": "2026-10-10",
    "edge": null,
@@ -306991,7 +306991,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.24,
    "date": "2026-10-11",
    "edge": null,
@@ -309446,7 +309446,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.58,
    "date": "2026-10-10",
    "edge": null,
@@ -309486,7 +309486,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.6,
    "date": "2026-10-11",
    "edge": null,
@@ -309526,7 +309526,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.86,
    "date": "2026-10-10",
    "edge": null,
@@ -309566,7 +309566,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.76,
    "date": "2026-10-11",
    "edge": null,
@@ -311816,7 +311816,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.4,
    "date": "2026-10-10",
    "edge": null,
@@ -315056,7 +315056,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.82,
    "date": "2026-10-11",
    "edge": null,
@@ -321545,7 +321545,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.79,
    "date": "2026-10-11",
    "edge": null,
@@ -321583,7 +321583,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.8,
    "date": "2026-10-11",
    "edge": null,
@@ -322917,7 +322917,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.44,
    "date": "2026-10-11",
    "edge": null,
@@ -322955,7 +322955,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.4,
    "date": "2026-10-11",
    "edge": null,
@@ -322993,7 +322993,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.59,
    "date": "2026-10-11",
    "edge": null,
@@ -324399,7 +324399,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.63,
    "date": "2026-10-11",
    "edge": null,
@@ -324439,7 +324439,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.85,
    "date": "2026-10-11",
    "edge": null,
@@ -325364,8 +325364,8 @@
    "price_b": 0.26,
    "price_draw": null,
    "prob_a": 0.745,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-10-07T21:15:06+00:00",
    "side_a": "Kate Fakih",
    "side_b": "Allegra Korpanec Davies",
    "source": "polymarket_us",
@@ -325374,7 +325374,7 @@
    "stake": 0.0,
    "start": "2026-10-07T17:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -325500,8 +325500,8 @@
    "price_b": 0.84,
    "price_draw": null,
    "prob_a": 0.17,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-10-07T21:15:06+00:00",
    "side_a": "Wei, Darren",
    "side_b": "Barthes, Timothe",
    "source": "polymarket_us",
@@ -325510,7 +325510,7 @@
    "stake": 0.0,
    "start": "2026-10-07T17:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -326281,14 +326281,14 @@
    "logged": "2026-10-07T16:46:32+00:00",
    "market_id": "aec-utr-weidar-bartim-2026-10-07",
    "pick": "b",
-   "pnl": 0.0,
+   "pnl": 19.05,
    "price": 0.84,
    "price_a": 0.18,
    "price_b": 0.84,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-10-07T21:15:27+00:00",
    "side_a": "Wei, Darren",
    "side_b": "Barthes, Timothe",
    "source": "tennis_fav_band_3h",
@@ -326297,7 +326297,7 @@
    "stake": 100.0,
    "start": "2026-10-07T17:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "won",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -330157,7 +330157,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.94,
    "date": "2026-10-11",
    "edge": null,
@@ -331306,8 +331306,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
-   "close_price": 0.84,
+   "close_at": "2026-10-07T21:08:53+00:00",
+   "close_price": 0.85,
    "date": "2026-10-07",
    "edge": null,
    "id": "tennis_fav_band_3h:aec-utr-keicha-tirtej-2026-10-06",
@@ -332750,7 +332750,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-07T20:51:47+00:00",
+   "close_at": "2026-10-07T21:14:49+00:00",
    "close_price": 0.74,
    "date": "2026-10-11",
    "edge": null,
@@ -333809,6 +333809,108 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/itfwo-yirche-annyan-2026-10-08",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-08",
+   "edge": -0.01,
+   "id": "polymarket_us:aec-itfwo-hararasernis-monbarkansaw-2026-10-08",
+   "label": "Arakawa - Nishimoto vs Barry - Sawashiro",
+   "liquidity": null,
+   "logged": "2026-10-07T21:14:49+00:00",
+   "market_id": "aec-itfwo-hararasernis-monbarkansaw-2026-10-08",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.47,
+   "price_b": 0.55,
+   "price_draw": null,
+   "prob_a": 0.46,
+   "result": null,
+   "settled": null,
+   "side_a": "Arakawa - Nishimoto",
+   "side_b": "Barry - Sawashiro",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.02,
+   "stake": 0.0,
+   "start": "2026-10-08T02:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-hararasernis-monbarkansaw-2026-10-08",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-08",
+   "edge": -0.025,
+   "id": "polymarket_us:aec-itfwo-amystebeltho-laqkhanaomck-2026-10-08",
+   "label": "Stevens - Thompson vs Khan - McKenzie",
+   "liquidity": null,
+   "logged": "2026-10-07T21:14:49+00:00",
+   "market_id": "aec-itfwo-amystebeltho-laqkhanaomck-2026-10-08",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.74,
+   "price_b": 0.31,
+   "price_draw": null,
+   "prob_a": 0.715,
+   "result": null,
+   "settled": null,
+   "side_a": "Stevens - Thompson",
+   "side_b": "Khan - McKenzie",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.05,
+   "stake": 0.0,
+   "start": "2026-10-08T02:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-amystebeltho-laqkhanaomck-2026-10-08",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-08",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-nataramutuem-jasadachrdod-2026-10-08",
+   "label": "Arakawa - Uemura vs Adams - Dodaj",
+   "liquidity": null,
+   "logged": "2026-10-07T21:14:49+00:00",
+   "market_id": "aec-itfwo-nataramutuem-jasadachrdod-2026-10-08",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.92,
+   "price_b": 0.09,
+   "price_draw": null,
+   "prob_a": 0.915,
+   "result": null,
+   "settled": null,
+   "side_a": "Arakawa - Uemura",
+   "side_b": "Adams - Dodaj",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-10-08T02:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-nataramutuem-jasadachrdod-2026-10-08",
    "venue": "polymarket_us",
    "venue_start": null
   }
