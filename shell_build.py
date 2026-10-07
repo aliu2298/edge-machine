@@ -1,4 +1,4 @@
-"""The SofaScore-style shell.
+"""The Analyst Desk production shell.
 
 The site root lands here with Production selected. Page pills go to the
 existing Sandbox, Production, Trading, and Method pages. Sport pills filter
@@ -933,13 +933,26 @@ def page(now, d=None, st=None, blob=None, tiles=None):
         f'Last {int(SHELL_SETTLED_DAYS)} days</p>'
     )
     body = f"""<h1 class="sr-only">Edge Machine · Production</h1>
-<section class="shell-summary" aria-label="Production totals" data-board="production">
-{summary}
-</section>
+<div class="desk-layout" data-layout="analyst-desk">
+<aside class="desk-nav" aria-label="Quick access">
+<div class="desk-nav-block">
+<p class="desk-nav-label">Workspace</p>
+<nav class="main" aria-label="Pages">{_page_pills()}</nav>
+</div>
+<div class="desk-nav-block">
+<p class="desk-nav-label">Sports</p>
+<nav class="sports" aria-label="Sports">{_sport_pills()}</nav>
+</div>
+</aside>
 <div class="shell-columns">
-<section class="shell-pane" aria-labelledby="running-title">
-<h2 id="running-title">Running</h2>
-<p class="shell-kicker">Production lanes</p>
+<div class="desk-center">
+<section class="shell-pane running-pane" aria-labelledby="running-title">
+<div class="pane-head">
+<div>
+<h2 id="running-title">Running markets</h2>
+<p class="shell-kicker">Production lanes · choose a market to inspect its rules</p>
+</div>
+</div>
 <div class="running-filters" role="group" aria-label="Running filters">
 {filters}
 </div>
@@ -949,10 +962,18 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 </div>
 {empty}
 </section>
-<section class="shell-pane" aria-labelledby="rules-title">
+<section class="bet-roll shell-pane" aria-labelledby="bets-roll-title">
+<p class="bet-roll-label" id="bets-roll-title">Bets roll</p>
+<div class="bet-roll-track">
+{roll}
+</div>
+</section>
+</div>
+<div class="desk-side">
+<section class="shell-pane rules-pane" aria-labelledby="rules-title">
 <div class="pane-head">
-<h2 id="rules-title">Rules applied</h2>
-<a class="full-page" href="./production.html">Full page →</a>
+<h2 id="rules-title">Rule cards</h2>
+<a class="full-page" href="./production.html">View all →</a>
 </div>
 <div class="rules-head" id="rules-head" hidden>
 <p class="rules-line" id="rules-line"></p>
@@ -962,6 +983,17 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <div class="rules-cards" id="rules-cards" hidden></div>
 <p class="shell-empty" id="rules-empty">Select a contest in Running.</p>
 </section>
+<section class="shell-pane desk-status" aria-labelledby="status-title">
+<div class="pane-head">
+<h2 id="status-title">System status</h2>
+<span class="production-badge">Production</span>
+</div>
+<section class="shell-summary" aria-label="Production totals" data-board="production">
+{summary}
+</section>
+</section>
+</div>
+</div>
 </div>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
@@ -976,22 +1008,13 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 {site_chrome.CSP}
 {site_chrome.REFERRER}
 </head>
-<body>
+<body class="analyst-desk">
 <a class="skip" href="#content">Skip to content</a>
 <header class="site">
-<div class="bet-roll">
-<p class="bet-roll-label">Open &amp; recent</p>
-<div class="bet-roll-track">
-{roll}
-</div>
-</div>
 <div class="topbar">
 <a class="brand" href="./index.html">Edge Machine</a>
-<nav class="main" aria-label="Pages">{_page_pills()}</nav>
+<span class="top-production">Production</span>
 <p class="stamp">{_stamp(now)}</p>
-</div>
-<div class="sport-row">
-<nav class="sports" aria-label="Sports">{_sport_pills()}</nav>
 </div>
 </header>
 <main id="content" class="wrap">
