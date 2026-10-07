@@ -94,6 +94,7 @@ def _fixture():
     quotes += _settled("pm_combo3", "tennis_pmcombo", n=4, won=3, price=0.52)
     quotes += _settled("pm_combo4", "tennis_pmcombo", n=4, won=1, price=0.70)
     # Soonest four of five open games on the favourite-band rule. The fifth is later.
+    # Labels are stored with " v "; the page prints them as " vs " (S.position_label).
     soon = [
         (1, "Alpha v Beta soonest"),
         (2, "Gamma v Delta second"),
@@ -217,8 +218,8 @@ ok('class="tennis-desk"' in html and 'class="tennis-match-list"' in html,
 ok('href="#today"' in html and 'href="#upcoming"' in html and 'href="#combos"' in html
    and 'href="#rules"' in html and 'href="#system"' in html,
    "the match center has Today, Upcoming, Combos, Rules, and System navigation")
-ok("Alpha v Beta soonest" in html,
-   "a tracked single-match fixture is visible before opening its rule card")
+ok("Alpha vs Beta soonest" in html and "Alpha v Beta soonest" not in html,
+   "a tracked single-match fixture is visible before opening its rule card, spelt \"vs\"")
 ok('class="tennis-combo-grid"' in html and "Tennis 2-leg combo" in html,
    "combo products have their own desk instead of reading like matches")
 ok('class="tennis-system"' in html and html.find('class="tennis-system"') > html.find('id="rules"'),
@@ -254,15 +255,15 @@ for c in cards:
     by_key.setdefault((_attr(c, "data-source"), _attr(c, "data-sport")), []).append(c)
 
 form = by_key.get(("tennis_fav_band_3h", "tennis"), [""])[0]
-ok("Alpha v Beta soonest" in form and "Eta v Theta fourth" in form,
+ok("Alpha vs Beta soonest" in form and "Eta vs Theta fourth" in form,
    "the back lists the soonest open games")
-ok("Iota v Kappa fifth and later" not in form,
+ok("Iota vs Kappa fifth and later" not in form,
    "the back stops at four open games")
 ok("4 of 5 open, soonest first." in form, "a longer slate says four of the open count")
-alpha = form.find("Alpha v Beta soonest")
-gamma = form.find("Gamma v Delta second")
-epsilon = form.find("Epsilon v Zeta third")
-eta = form.find("Eta v Theta fourth")
+alpha = form.find("Alpha vs Beta soonest")
+gamma = form.find("Gamma vs Delta second")
+epsilon = form.find("Epsilon vs Zeta third")
+eta = form.find("Eta vs Theta fourth")
 ok(0 <= alpha < gamma < epsilon < eta, "the four open games are soonest first")
 
 if tennis_cards is None:
@@ -311,9 +312,9 @@ eq(_attr(soon, "data-active"), "1",
    "a fixture 12h away and no open bet is active (inside 48 hours, not only the 24–48h band)")
 eq(_attr(far, "data-active"), "0",
    "a fixture 72h away and no open bet stays inactive")
-ok("No open game." in window and "Window Side v Keeper" not in window,
+ok("No open game." in window and "Window Side vs Keeper" not in window,
    "the back stays the open bets; an unstaked fixture is not listed there")
-ok("No open game." in soon and "Soon Side v Tonight" not in soon,
+ok("No open game." in soon and "Soon Side vs Tonight" not in soon,
    "a nearer unstaked fixture is not copied onto the back")
 active_end = html.find('data-band="inactive"')
 window_pos = html.find('data-source="tennis_combo3"')
@@ -331,17 +332,17 @@ print("\ncricket and soccer stay on their own pages")
 ten = html
 soc = soccer_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
-ok("Soccer Only v Stay" not in ten and "oddspedia" not in ten.lower(),
+ok("Soccer Only vs Stay" not in ten and "oddspedia" not in ten.lower(),
    "tennis cards do not pick up soccer or cricket lanes")
-ok('class="rule-card"' in soc and "Soccer Only v Stay" in soc,
+ok('class="rule-card"' in soc and "Soccer Only vs Stay" in soc,
    "soccer still renders its own rule cards")
-ok("tennis_fav_band_3h" not in soc and "Alpha v Beta soonest" not in soc,
+ok("tennis_fav_band_3h" not in soc and "Alpha vs Beta soonest" not in soc,
    "soccer cards do not pick up tennis lanes")
 ok('class="rule-card"' in cri and "Oddspedia" in cri,
    "cricket renders its own cards for the cricket lane in this ledger")
 ok("By competition" not in cri,
    "cricket does not add the soccer by-competition panel")
-ok("tennis_fav_band_3h" not in cri and "Alpha v Beta soonest" not in cri,
+ok("tennis_fav_band_3h" not in cri and "Alpha vs Beta soonest" not in cri,
    "cricket does not pick up tennis lanes")
 
 js = open(os.path.join(ROOT, "public_site", "tables.js"), encoding="utf-8").read()

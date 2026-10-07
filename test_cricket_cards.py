@@ -6,7 +6,8 @@ figures, compared as strings. Nothing here grades a bet or writes a ledger.
 The open list is the lane's open count: a repeat city-day quote is left out,
 and a cricket row is not dropped for looking like a refused tennis tour.
 A lane reset clock stays in the verdict and the ROI. It does not hide an
-open bet. There is no by-competition panel.
+open bet. There is no by-competition panel. A game label is printed through
+S.position_label: "A v B" in the ledger reads "A vs B" on the card.
 """
 import datetime
 import os
@@ -244,6 +245,16 @@ def _attr(card, name):
     return m.group(1) if m else None
 
 
+def _shown(label):
+    """How a ledger label is printed on a card: 'A v B' becomes 'A vs B'."""
+    return fmt.contest(label)
+
+
+def _absent(label, html):
+    """Neither the stored spelling nor the printed one is on the page."""
+    return label not in html and _shown(label) not in html
+
+
 print(f"SHA {SHA}")
 
 try:
@@ -293,8 +304,11 @@ for c in cards:
     by_key.setdefault((_attr(c, "data-source"), _attr(c, "data-sport")), []).append(c)
 
 form = by_key.get(("oddspedia", "cricket"), [""])[0]
-ok("Alpha v Beta soonest" in form and "TourLookingOpen" in form,
-   "the back lists the soonest open games")
+ok("Alpha vs Beta soonest" in form and "TourLookingOpen" in form,
+   "the back lists the soonest open games, with the contest printed as A vs B")
+ok("Alpha v Beta soonest" not in form, "the card does not print the ledger's 'A v B' spelling")
+eq(S.position_label(next(q for q in d["quotes"] if q["label"] == "Alpha v Beta soonest")),
+   "Alpha vs Beta soonest", "the card label is S.position_label of the quote")
 ok("FourthOpenLabel" not in form and "FifthLaterLabel" not in form,
    "the back stops at four open games")
 ok("4 of 6 open, soonest first." in form,
@@ -302,7 +316,7 @@ ok("4 of 6 open, soonest first." in form,
 ok("&lt;script&gt;" in form, "a game label on the card is escaped")
 
 hostile = form.find("&lt;script&gt;")
-alpha = form.find("Alpha v Beta soonest")
+alpha = form.find("Alpha vs Beta soonest")
 pre = form.find("PreResetOpenLabel")
 tour = form.find("TourLookingOpen")
 ok(0 <= hostile < alpha < pre < tour, "the four open games are soonest first")
@@ -365,9 +379,9 @@ eq(_attr(soon, "data-active"), "1",
    "a fixture 12h away and no open bet is active (inside 48 hours, not only the 24–48h band)")
 eq(_attr(far, "data-active"), "0",
    "a fixture 72h away, and a city-day fixture inside 48 hours, stays inactive")
-ok("No open game." in window and "Window Side v Keeper" not in window,
+ok("No open game." in window and _absent("Window Side v Keeper", window),
    "the back stays the open bets; an unstaked fixture is not listed there")
-ok("No open game." in soon and "Soon Side v Tonight" not in soon,
+ok("No open game." in soon and _absent("Soon Side v Tonight", soon),
    "a nearer unstaked fixture is not copied onto the back")
 ok("GhostClimateFixture" not in html,
    "a city-day fixture is not listed and does not activate the lane")
@@ -398,15 +412,15 @@ print("\nsoccer and tennis stay on their own pages")
 cri = html
 soc = soccer_build.build(d, st, NOW)
 ten = tennis_build.build(d, st, NOW)
-ok("Soccer Only v Stay" not in cri and "Tennis Only v Stay" not in cri,
+ok(_absent("Soccer Only v Stay", cri) and _absent("Tennis Only v Stay", cri),
    "cricket cards do not pick up soccer or tennis lanes")
 ok("o15_form_l10" not in cri and "tennis_fav_band_3h" not in cri,
    "cricket cards do not name soccer or tennis rules")
-ok('class="rule-card"' in soc and "Soccer Only v Stay" in soc,
+ok('class="rule-card"' in soc and _shown("Soccer Only v Stay") in soc,
    "soccer still renders its own rule cards")
 ok("PreResetOpenLabel" not in soc and "TourLookingOpen" not in soc,
    "soccer cards do not pick up cricket lanes")
-ok('class="rule-card"' in ten and "Tennis Only v Stay" in ten,
+ok('class="rule-card"' in ten and _shown("Tennis Only v Stay") in ten,
    "tennis still renders its own rule cards")
 ok("PreResetOpenLabel" not in ten and "oddspedia" not in ten.lower(),
    "tennis cards do not pick up cricket lanes")

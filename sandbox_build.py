@@ -512,13 +512,12 @@ def open_rows(d, limit=None):
     live.sort(key=lambda q: (q.get("start") or "", q.get("sport") or "", str(q.get("id") or "")))
     out = []
     for q in (live[:limit] if limit else live):
-        out.append(f"""<tr{_row_id(q)}><td>{safe_href(S.market_url(q), S.display_label(q))}</td>
+        out.append(f"""<tr{_row_id(q)}><td>{safe_href(S.market_url(q), S.position_label(q))}</td>
 {_price_cell(q.get('price'))}
 <td>{esc(S.SPORTS.get(q['sport'], q['sport']))}</td>
 <td><b>{esc(_side(q))}</b></td>
 <td>{esc(_source_label(q))}</td>
-{_open_date_cell(q)}
-{_edge_cell(q.get('edge'))}</tr>""")
+{_open_date_cell(q)}</tr>""")
     return "\n".join(out), len(live)
 
 
@@ -562,7 +561,7 @@ def settled_rows(d, limit=None):
     out = []
     for q in (done[:limit] if limit else done):
         klass, label = _badge(q)
-        out.append(f"""<tr{_row_id(q)}><td>{esc(S.display_label(q))}</td>
+        out.append(f"""<tr{_row_id(q)}><td>{esc(S.position_label(q))}</td>
 {_money_cell(q.get('pnl'))}
 <td>{esc(S.SPORTS.get(q['sport'], q['sport']))}</td>
 <td>{esc(_side(q))}</td>
@@ -574,7 +573,7 @@ def settled_rows(d, limit=None):
 
 
 LIVE_HEAD = ('<tr><th>Contest</th><th class="num">Price</th><th>Sport</th>'
-             '<th>Backing</th><th>Source</th><th>Date</th><th class="num">Edge</th></tr>')
+             '<th>Backing</th><th>Source</th><th>Starts</th></tr>')
 HIST_HEAD = ('<tr><th>Contest</th><th class="num">P/L</th><th>Sport</th><th>Backed</th>'
              '<th>Source</th><th>Status</th><th class="num">Price</th><th>Settled</th></tr>')
 
@@ -584,18 +583,30 @@ RECENT_DAYS = 7
 
 
 def _settled_day(q):
-    """Chicago calendar date the bet settled, or a placeholder if it cannot be read."""
+    """When the bet settled, as 'Oct 6, 6:00 PM CT', or a placeholder if it cannot be read."""
     try:
-        return fmt.chicago(q.get("settled")).date().isoformat()
+        return fmt.when(q.get("settled"))
     except (TypeError, ValueError, OverflowError, OSError):
         return "—"
 
 
 def _open_date_cell(q):
-    """Date on a running row. A missing or unreadable kickoff date is the same dash
-    the settled tables use. Its data-v is empty, which a numeric sort leaves last.
-    A readable calendar date is shown as stored.
+    """Start on a running row, as 'Oct 9, 8:50 AM CT'. A quote that stored a
+    calendar day and no clock shows 'Oct 9'. A missing or unreadable date is
+    the same dash the settled tables use. Its data-v is empty, which a
+    numeric sort leaves last; a readable one sorts by its instant.
     """
+    start = q.get("start")
+    if isinstance(start, str) and start.strip():
+        try:
+            # The sort key is the Chicago minute, the same calendar the text
+            # and the day-only fallback use, so a late evening never sorts
+            # onto the next day.
+            local = fmt.chicago(start.strip())
+            return (f'<td class="mut" data-v="{local.strftime("%Y%m%d%H%M")}">'
+                    f'{esc(fmt.when(local))}</td>')
+        except (TypeError, ValueError, OverflowError, OSError):
+            pass
     raw = q.get("date")
     text = raw.strip() if isinstance(raw, str) else ""
     if not text:
@@ -603,11 +614,14 @@ def _open_date_cell(q):
     try:
         if len(text) == 10:
             day = datetime.strptime(text, "%Y-%m-%d").date()
+            shown = f"{fmt._MONTHS[day.month - 1]} {day.day}"
         else:
-            day = fmt.chicago(text).date()
+            instant = fmt.chicago(text)
+            day = instant.date()
+            shown = fmt.when(text)
     except (TypeError, ValueError, OverflowError, OSError):
         return '<td class="mut" data-v="">—</td>'
-    return f'<td class="mut" data-v="{day.strftime("%Y%m%d")}">{esc(text)}</td>'
+    return f'<td class="mut" data-v="{day.strftime("%Y%m%d")}0000">{esc(shown)}</td>'
 
 
 def _chicago_today(now):
@@ -1623,6 +1637,16 @@ TRADE_HEAD = ('<tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th>'
               '<th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr>')
 
 
+def _trade_day(value):
+    """A stored YYYY-MM-DD trading day as 'Oct 6'. Anything else is a dash."""
+    text = str(value or "")[:10]
+    try:
+        day = datetime.strptime(text, "%Y-%m-%d").date()
+    except ValueError:
+        return "—"
+    return f"{fmt._MONTHS[day.month - 1]} {day.day}"
+
+
 def trading_rows(md):
     """The trading lane: one row per rule, counted per ENTRY DAY (see market_track)."""
     import market_track as MT
@@ -1637,20 +1661,21 @@ def trading_rows(md):
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
         # coin against cash, since set against its own asset it would show zero edge by design.
         vs = "v cash" if meta.get("bench") == "cash" else "v SPY"
-        rows.append(f"""<tr><td><details class="src"><summary><b>{esc(meta['label'])}</b>
-<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div></summary>
-<div class="sm mut">{esc(meta['note'])}</div></details></td>
+        rows.append(f"""<tr><td><b>{esc(meta['label'])}</b>
+<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div></td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}</td>
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
 <td class="num">{pc(r['mean'])}<div class="sm mut">{fmt.tstat(r['t']) if r['days'] > 1 else ''}</div></td>
 <td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{(" · " + fmt.tstat(r['edge_t'])) if r['days'] > 1 else ''}</div></td>
 <td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}</td>
-<td class="num mut sm">{esc(r['last'][:10]) or '—'}</td></tr>
-<tr><td colspan="8" class="sm mut">Backtest before the lane went live ({esc(str((r.get('research_window') or ['', ''])[0]))} to
-{esc(str((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
+<td class="num mut sm">{esc(_trade_day(r['last']))}</td></tr>
+<tr class="rule-about"><td colspan="8"><details class="rule-more"><summary>What this rule does</summary>
+<div class="sm mut">{esc(meta['note'])}</div>
+<div class="sm mut">Backtest before the lane went live ({esc(_trade_day((r.get('research_window') or ['', ''])[0]))} to
+{esc(_trade_day((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
 {r['research_days']} entry days, {r['research_trades']} trades,
-{'—' if r['research_edge'] is None else fmt.pct(r['research_edge'], digits=2, sign=True)} a day {vs}, {fmt.tstat(r['research_t'])}.</td></tr>""")
+{'—' if r['research_edge'] is None else fmt.pct(r['research_edge'], digits=2, sign=True)} a day {vs}, {fmt.tstat(r['research_t'])}.</div></details></td></tr>""")
     return "\n".join(rows)
 
 
@@ -1967,7 +1992,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 </section>
 
 <section id="summary">
-<details class="sec"><summary><h2>What the Sandbox says</h2></summary>
+<details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
 <div class="note">{insights(shown)}</div></details>
 </section>
 
@@ -2019,7 +2044,7 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         ("reference", "Reference"),
     )
     return site_chrome.document(
-        "Sandbox Tracker",
+        "Edge Machine · Sandbox",
         "Every source and rule under test, per sport, at real prices and settled on real results — what is working and what is not.",
         "sandbox",
         sections,
@@ -2076,7 +2101,7 @@ logs a trade. A trade is logged only from bars that closed BEFORE it, and enters
 never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
 <b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
 <b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days;
-under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it does.</div>
+under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
@@ -2088,6 +2113,32 @@ under {MT.EARLY_N} a rule is only <i>Too early</i>. Click a rule for what it doe
         site_chrome.stamp(now_dt),
         body,
     )
+
+
+def not_found_page(now=None):
+    """public_site/404.html — GitHub Pages serves it for any missing path.
+
+    Same shell as every page. Links are absolute to the site root because the
+    missing path can sit at any depth.
+    """
+    now_dt = _as_now(now)
+    root = site_chrome.SITE_URL
+    links = "".join(
+        f'<li><a href="{esc(root + file)}">{esc(label)}</a></li>'
+        for key, label, _href in site_chrome.PAGES
+        for file in (site_chrome.PAGE_FILES.get(key),) if file)
+    body = f"""<h1>Page not found</h1>
+<p class="lede">Nothing is published at this address. The pages are rebuilt by GitHub Actions, so a link that worked once may have moved.</p>
+<div class="note"><b>Go to:</b>
+<ul class="weeks"><li><a href="{esc(root)}">Home</a></li>{links}</ul></div>
+<footer>{_FOOT}</footer>
+"""
+    html = site_chrome.document(
+        "Edge Machine · Page not found",
+        "Nothing is published at this address.",
+        "index", (), site_chrome.stamp(now_dt, machine=False), body)
+    # Every same-origin asset absolute, so the page works from any missing path.
+    return html.replace('href="./', f'href="{root}').replace('src="./', f'src="{root}')
 
 
 def _write(path, text):
@@ -2167,6 +2218,19 @@ def main():
         print(f"wrote {crypto_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::crypto page not rebuilt ({type(exc).__name__}: {exc})")
+    # The NBA board reads a file its own job writes four times a day. Rebuilt
+    # here too, on the same clock as every other page, so its Upcoming list is
+    # filtered by the real time rather than the file's own build stamp.
+    try:
+        import nba_pace_build
+        if os.path.exists(nba_pace_build.SRC):
+            nba_out = os.path.join(os.path.dirname(OUT), "nba.html")
+            with open(nba_pace_build.SRC, encoding="utf-8") as fh:
+                _write(nba_out, label_cells(nba_pace_build.build(json.load(fh), now=now)))
+            print(f"wrote {nba_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::nba page not rebuilt ({type(exc).__name__}: {exc})")
+    _write(os.path.join(os.path.dirname(OUT), "404.html"), not_found_page(now))
     archive_dir = os.path.join(os.path.dirname(OUT), "archive")
     os.makedirs(archive_dir, exist_ok=True)
     keep = {"index.html"}

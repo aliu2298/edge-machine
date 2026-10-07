@@ -52,13 +52,15 @@ assert C._fixture_key(quotes[0]) != C._fixture_key(dict(quotes[0], start='2026-1
 html = C.match_center(d, rows, NOW)
 def section(anchor):
     return re.search(r'<section id="' + anchor + r'".*?</section>', html, re.S).group()
-assert 'Today v Future' in section('today') and 'Earlier v Today' not in section('today')
+# Labels are stored with ' v '; the page prints them as ' vs ' (S.position_label -> fmt.contest).
+assert 'Today vs Future' in section('today') and 'Earlier vs Today' not in section('today')
+assert ' v ' not in re.sub(r'<[^>]+>', ' ', section('today'))
 upcoming = section('upcoming')
-assert 'Alpha v Beta' in upcoming and 'Boundary v Match' in upcoming
-for name in ('Old v Match', 'Earlier v Today', 'Beyond v Window', 'Later v Match', 'Unknown v Time'):
+assert 'Alpha vs Beta' in upcoming and 'Boundary vs Match' in upcoming
+for name in ('Old vs Match', 'Earlier vs Today', 'Beyond vs Window', 'Later vs Match', 'Unknown vs Time'):
     assert name not in upcoming, name
-assert 'Old v Match' in section('in-play') and 'Earlier v Today' in section('in-play')
-assert all(name in section('other-open') for name in ('Beyond v Window', 'Later v Match', 'Unknown v Time'))
+assert 'Old vs Match' in section('in-play') and 'Earlier vs Today' in section('in-play')
+assert all(name in section('other-open') for name in ('Beyond vs Window', 'Later vs Match', 'Unknown vs Time'))
 empty = tennis_build.build({'quotes': []}, {'pairs': {}}, NOW)
 for anchor in ('today', 'upcoming', 'in-play', 'combos', 'rules', 'system'):
     assert f'id="{anchor}"' in empty, anchor

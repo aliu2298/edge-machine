@@ -3,6 +3,8 @@
 
 Presentation only. The verdict word and the ROI text are the Sandbox row's own
 figures, compared as strings. Nothing here grades a bet or writes a ledger.
+A game label is printed through S.position_label: "A v B" in the ledger reads
+"A vs B" on the page, and a Yes/No over market backed No reads as the under.
 """
 import datetime
 import os
@@ -194,6 +196,16 @@ def _attr(card, name):
     return m.group(1) if m else None
 
 
+def _shown(label):
+    """How a ledger label is printed on the page: 'A v B' becomes 'A vs B'."""
+    return fmt.contest(label)
+
+
+def _absent(label, html):
+    """Neither the stored spelling nor the printed one is on the page."""
+    return label not in html and _shown(label) not in html
+
+
 print(f"SHA {SHA}")
 
 import soccer_build
@@ -210,8 +222,10 @@ ok('class="soccer-desk"' in html and 'class="soccer-fixture-list"' in html,
    "soccer opens as a fixture-first match center")
 ok('href="#today"' in html and 'href="#upcoming"' in html and 'href="#rules"' in html,
    "the match center has Today, Upcoming, and Rules navigation")
-ok("Alpha v Beta soonest" in html and "Nu v Xi btts" in html,
-   "tracked fixtures are visible before opening rule cards")
+ok("Alpha vs Beta soonest" in html and "Nu vs Xi btts" in html,
+   "tracked fixtures are visible before opening rule cards, printed as A vs B")
+ok("Alpha v Beta soonest" not in html and "Nu v Xi btts" not in html,
+   "the page does not print the ledger's 'A v B' spelling")
 ok('class="soccer-health"' in html and html.find('class="soccer-health"') > html.find('id="rules"'),
    "registered-lane health is folded below the live desk")
 ok('class="rule-card"' in html, "soccer lanes are flippable cards")
@@ -240,12 +254,12 @@ for c in cards:
     by_sport.setdefault(_attr(c, "data-sport"), []).append(c)
 
 form = by_sport.get("soccer_o15", [""])[0]
-ok("Alpha v Beta soonest" in form and "Eta v Theta fourth" in form,
+ok("Alpha vs Beta soonest" in form and "Eta vs Theta fourth" in form,
    "the back lists the soonest open games")
-ok("Iota v Kappa fifth and later" not in form,
+ok(_absent("Iota v Kappa fifth and later", form),
    "the back stops at four open games")
 ok("4 of 5 open" in form, "a longer slate says four of the open count")
-ok("Gamma v Delta second" in form and "Epsilon v Zeta third" in form,
+ok("Gamma vs Delta second" in form and "Epsilon vs Zeta third" in form,
    "the other two soonest games are on the back")
 
 # Front text is the helper's own verdict and ROI, character for character.
@@ -295,9 +309,9 @@ eq(_attr(soon, "data-active"), "1",
    "a fixture 12h away and no open bet is active (inside 48 hours, not only the 24–48h band)")
 eq(_attr(far, "data-active"), "0",
    "a fixture 72h away and no open bet stays inactive")
-ok("No open game." in window and "Window Side v Keeper" not in window,
+ok("No open game." in window and _absent("Window Side v Keeper", window),
    "the back stays the open bets; an unstaked fixture is not listed there")
-ok("No open game." in soon and "Soon Side v Tonight" not in soon,
+ok("No open game." in soon and _absent("Soon Side v Tonight", soon),
    "a nearer unstaked fixture is not copied onto the back")
 window_pos = html.find('data-sport="soccer_team1"')
 soon_pos = html.find('data-sport="soccer_team2"')
@@ -316,7 +330,7 @@ ok(0 < btts_pos < corners_pos < active_end,
 print("\ncricket keeps its own cards")
 ten = tennis_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
-ok("Alpha v Beta soonest" not in cri and "o15_form_l10" not in cri,
+ok(_absent("Alpha v Beta soonest", cri) and "o15_form_l10" not in cri,
    "cricket cards do not pick up soccer lanes")
 ok('class="rule-card"' in cri,
    "a cricket lane the Sandbox still lists is a card on the cricket page")
@@ -363,8 +377,26 @@ ok("Over 1.5" in merged_html and "BTTS No" in merged_html and "BTTS Yes" not in 
 ok(f'href="{S.market_url(over)}"' in merged_html
    and f'href="{S.market_url(btts)}"' in merged_html,
    "merged rule chips link to their own market")
-ok("City v United: over" not in merged_html.split('class="soccer-fixture-rules"', 1)[0],
-   "the fixture heading names the match rather than one outcome")
+_merged_head = merged_html.split('class="soccer-fixture-rules"', 1)[0]
+ok("City vs United" in _merged_head and "City vs United: over" not in _merged_head
+   and "City v United" not in _merged_head,
+   "the fixture heading names the match as A vs B rather than one outcome")
+
+# A Yes/No market whose title names the over, backed on No, is printed as the
+# under; the same title backed Yes keeps the over. The stored label is untouched.
+no_over = _quote(920, "o15_form_l10", "soccer_o15", "open", 30, "Genoa v Fiorentina: over 3.5 goals")
+no_over.update(pick="b")
+yes_over = dict(no_over, id="yes-over", pick="a")
+eq(S.position_label(no_over), "Genoa vs Fiorentina: under 3.5 goals",
+   "a Yes/No over market backed No is printed as the under")
+eq(S.position_label(yes_over), "Genoa vs Fiorentina: over 3.5 goals",
+   "the same market backed Yes keeps the over")
+eq(S.display_label(no_over), "Genoa v Fiorentina: over 3.5 goals",
+   "display_label still returns the stored title")
+flip_html = C._games([no_over])
+ok("Genoa vs Fiorentina: under 3.5 goals" in flip_html
+   and "over 3.5" not in flip_html,
+   "the card back prints the flipped label")
 
 past = _quote(910, "o15_form_l10", "soccer_o15", "open", -30, "Past match")
 today_pick = _quote(911, "o15_form_l10", "soccer_o15", "open", 1, "Today match")
@@ -407,6 +439,17 @@ if sync_playwright is not None:
     browser_st = {"pairs": {f'{r["name"]}|{r["sport"]}': {"stage": "production"}
                             for r in rows}}
     browser_html = soccer_build.build(d, browser_st, NOW)
+    _strip = re.search(r'<div class="soccer-prod-strip">(.*?)</div>', browser_html, re.S)
+    _chips = re.findall(r'<span class="soccer-prod-rule"><b>(.*?)</b>', _strip.group(1) if _strip else "")
+    ok(len(_chips) == len(rows), f"one Production strip chip per Production rule ({len(_chips)} of {len(rows)})")
+    _prod_rows = [r for r in _rows(d, browser_st) if r.get("prod")]
+    eq(_chips, [B.esc(C._scoped_name(r)) for r in _prod_rows],
+       "each strip chip is _scoped_name(row), in row order")
+    ok("Team scores 1+ form rule · Internationals" in _chips
+       and "Team scores 1+ form rule · Cups" in _chips and "Team scores 1+ form rule" in _chips,
+       "a scoped twin carries its scope in the chip name; the league rule keeps its plain name")
+    ok(not any("(" in chip for chip in _chips), "a chip name drops the rule's parenthetical")
+    eq(_chips.count("Team scores 1+ form rule"), 1, "the plain name is not printed twice")
     with tempfile.TemporaryDirectory(prefix="soccer-center-") as site:
         with open(os.path.join(site, "soccer.html"), "w", encoding="utf-8") as fh:
             fh.write(browser_html)

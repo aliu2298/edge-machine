@@ -18,6 +18,8 @@ import threading
 from datetime import timedelta, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
+import fmt
+
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NOW = datetime.datetime(2026, 10, 5, 18, 0, tzinfo=timezone.utc)
@@ -75,9 +77,24 @@ def _attr(tag, name):
 
 def _filter_count(page, key, label):
     match = re.search(
-        rf'data-filter="{key}"[^>]*>{label} <span class="count">(\d+)</span>',
+        rf'data-filter="{key}"[^>]*>{label} <span class="count">(\d+)</span>'
+        r'<span class="sr-only"> paper bets</span>',
         page)
     return int(match.group(1)) if match else None
+
+
+def _lanes(row):
+    """Paper bets on a row. A filter count is the sum of these, not a row count."""
+    return int(_attr(row, "data-lanes") or 1)
+
+
+def _bets_in(rows, key):
+    return sum(_lanes(row) for row in rows if _attr(row, "data-filter") == key)
+
+
+def _vs(name):
+    """The rendered contest name: data keeps 'A v B', the page shows 'A vs B'."""
+    return fmt.contest(name)
 
 
 def _groups(page):
@@ -152,7 +169,8 @@ PAGE = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(LEAD
 ROWS = _rows(PAGE)
 
 eq(len(ROWS), 8, "one row per contest, with the contest outside the 14-day window left out")
-ok("Old v Gone" not in PAGE, "a contest outside the 14 Chicago-day window is left out")
+ok("Old v Gone" not in PAGE and "Old vs Gone" not in PAGE,
+   "a contest outside the 14 Chicago-day window is left out")
 ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in PAGE,
    "the settled caption is the shell window constant")
 ok('id="settled-caption" hidden' in PAGE, "the caption starts hidden, with Live selected")
@@ -163,15 +181,22 @@ by_name = {_attr(row, "data-name"): row for row in ROWS}
 
 
 def _got(name):
-    return by_name.get(name, "")
+    """Look a row up by its data name. Rows render 'A v B' as 'A vs B'."""
+    return by_name.get(_vs(name), "")
 
 
-ok("Alpha v Beta" in by_name, "the two Alpha lanes collapse to one contest")
-eq(sum(1 for row in ROWS if _attr(row, "data-name") == "Alpha v Beta"), 1,
+ok(_vs("Alpha v Beta") in by_name and "Alpha v Beta" not in by_name,
+   "the two Alpha lanes collapse to one contest, named Alpha vs Beta")
+eq(_vs("Alpha v Beta"), "Alpha vs Beta", "the rendered name spells the sides with vs")
+ok('<span class="running-contest">Alpha vs Beta</span>' in _got("Alpha v Beta"),
+   "the row text uses the vs spelling too")
+eq(sum(1 for row in ROWS if _attr(row, "data-name") == _vs("Alpha v Beta")), 1,
    "the contest title is not repeated per lane")
 ok("2 lanes" in _got("Alpha v Beta"), "a contest with two lanes shows the count")
-ok("Gamma v Delta" in by_name and "2 lanes" not in _got("Gamma v Delta"),
+eq(_attr(_got("Alpha v Beta"), "data-lanes"), "2", "a two-bet contest carries data-lanes=2")
+ok(_vs("Gamma v Delta") in by_name and "2 lanes" not in _got("Gamma v Delta"),
    "a single lane does not show a count")
+eq(_attr(_got("Gamma v Delta"), "data-lanes"), "1", "a one-bet contest carries data-lanes=1")
 eq(_attr(_got("Alpha v Beta"), "data-price"), "54¢ / 40¢",
    "two different prices both show, 54¢ and 40¢")
 ok("$" not in _got("Alpha v Beta") and "0.54" not in _got("Alpha v Beta"),
@@ -187,32 +212,47 @@ ok(">L</span>" in _got("Inside v Edge"), "a miss renders as L")
 ok('class="sr-only">lost</span>' in _got("Inside v Edge"),
    "a single loss is spoken as lost")
 ok(">Void</span>" in _got("Void v Match"), "a void renders as Void")
-ok(">price result</span>" in _got("Price v Result"), "a price payout renders as price result")
-ok(">2 open</span>" in _got("Alpha v Beta") and 'class="sr-only">2 open</span>' in _got("Alpha v Beta"),
-   "two open bets on one contest read 2 open")
+ok(">Settled on price</span>" in _got("Price v Result")
+   and 'data-status="price"' in _got("Price v Result")
+   and 'class="sr-only">settled on price</span>' in _got("Price v Result"),
+   "a price payout renders as Settled on price, token price, spoken settled on price")
+ok("price result" not in PAGE, "the old price result label is gone")
+ok('data-status="Open">2 open</span>' in _got("Alpha v Beta")
+   and 'class="sr-only">2 open</span>' not in _got("Alpha v Beta")
+   and 'aria-hidden="true">2 open</span>' not in _got("Alpha v Beta"),
+   "two open bets on one contest read 2 open, once, with no hidden/spoken pair")
 ok(">Production</span>" in _got("Alpha v Beta"), "the lane pill says Production")
 ok(">Sandbox</span>" not in PAGE, "Sandbox contests are not on the Production list")
-ok("Tomorrow" in _got("Alpha v Beta"), "tomorrow's kickoff is a relative day")
-ok("Yesterday" in _got("Echo v Foxtrot"), "yesterday's kickoff is a relative day")
+ok('<span class="running-time">Tomorrow, 10:00 AM CT</span>' in _got("Alpha v Beta"),
+   "tomorrow's kickoff is a relative day with its CT clock")
+ok('<span class="running-time">Yesterday, 10:00 AM CT</span>' in _got("Echo v Foxtrot"),
+   "yesterday's kickoff is a relative day with its CT clock")
+ok('<span class="running-time">Oct 1, 1:00 PM CT</span>' in _got("Inside v Edge"),
+   "an older kickoff is the site's date-and-clock form")
+ok(not re.search(r'<span class="running-time">\w{3} \d\d \w{3}</span>', PAGE),
+   "no row time is a bare weekday-day-month")
 
 groups = _groups(PAGE)
 eq([name for name, _body in groups], ["Soccer", "Cricket"],
    "rows are grouped under sport labels, Soccer then Cricket")
 soccer_body = dict(groups)["Soccer"]
 cricket_body = dict(groups)["Cricket"]
-ok("Gamma v Delta" in soccer_body and "Alpha v Beta" not in soccer_body,
+ok(_vs("Gamma v Delta") in soccer_body and _vs("Alpha v Beta") not in soccer_body,
    "a soccer contest sits under Soccer only")
-ok("Alpha v Beta" in cricket_body and "Gamma v Delta" not in cricket_body,
+ok(_vs("Alpha v Beta") in cricket_body and _vs("Gamma v Delta") not in cricket_body,
    "a cricket contest sits under Cricket only")
 
 for key, label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upcoming")):
-    shown = sum(1 for row in ROWS if _attr(row, "data-filter") == key)
-    eq(_filter_count(PAGE, key, label), shown,
-       f"the {label} count equals the rendered {label} rows")
+    eq(_filter_count(PAGE, key, label), _bets_in(ROWS, key),
+       f"the {label} count equals the paper bets on the rendered {label} rows")
+ok(_bets_in(ROWS, "upcoming") == sum(1 for row in ROWS if _attr(row, "data-filter") == "upcoming") + 1,
+   "the two-lane Alpha contest counts twice in Upcoming")
 
-ok("No live paper bets" in PAGE and "No settled paper bets" in PAGE
-   and "No upcoming paper bets" in PAGE,
+ok(shell_build._EMPTY["live"] in PAGE and shell_build._EMPTY["settled"] in PAGE
+   and shell_build._EMPTY["upcoming"] in PAGE,
    "each filter has its empty-state copy")
+ok(f"Nothing settled in the last {shell_build.SHELL_SETTLED_DAYS} days." in PAGE,
+   "the settled empty line names the window")
 ok("No live, settled, or upcoming paper bets." not in PAGE,
    "the combined empty line is gone")
 ok("These filters do not change the list yet." not in PAGE,
@@ -227,13 +267,23 @@ ok("<script>alert" not in PAGE and "&lt;b&gt;Beta" in PAGE,
 ok("javascript:alert(1)" in html_lib.unescape(PAGE)
    and 'href="javascript:alert(1)"' not in PAGE,
    "a javascript: string stays text")
-_sports_nav = re.search(r'<nav class="sports"[^>]*>.*?</nav>', PAGE, re.S)
+_sports_nav = re.search(r'<nav class="sports sport-filter"[^>]*>.*?</nav>', PAGE, re.S)
 ok(_sports_nav and 'aria-disabled' not in _sports_nav.group(0)
    and 'tabindex="-1"' not in _sports_nav.group(0)
    and 'id="sports-soon"' not in PAGE and ">Coming soon</p>" not in PAGE,
    "sport pills are enabled filters, with no Coming soon note")
 ok('data-sport="all" aria-pressed="true"' in (_sports_nav.group(0) if _sports_nav else ""),
    "All starts pressed")
+_running_pane = PAGE.split('id="running"', 1)[1].split("</section>", 1)[0]
+ok(_sports_nav and _sports_nav.group(0) in _running_pane
+   and _running_pane.find('class="running-filters"') < _running_pane.find('class="sports sport-filter"')
+   < _running_pane.find('id="settled-caption"'),
+   "the sport filter sits inside the Running pane, between the filters and the caption")
+eq(re.findall(r">([^<]+)</button>", _sports_nav.group(0) if _sports_nav else ""),
+   ["All", "Soccer", "Cricket"],
+   "only sports with a lane on the list get a pill, after All")
+ok('aside class="desk-nav"' not in PAGE and 'class="desk-nav-block"' not in PAGE,
+   "there is no sidebar nav")
 eq(PAGE.count('aria-describedby="settled-caption"'), 1,
    "only the Settled filter points at the 14-day caption")
 ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption"' in PAGE,
@@ -249,7 +299,7 @@ empty_roll = shell_build.page(
     NOW, d={"quotes": []}, st={"pairs": {}}, blob={"leads": {}, "pairs": {}})
 ok("No open or recent paper bets yet." in empty_roll and 'class="bet-chip"' not in empty_roll,
    "the empty state stays when there is nothing to show")
-ok("Old v Gone" not in _chip_text(" ".join(CHIPS)),
+ok("Old v Gone" not in _chip_text(" ".join(CHIPS)) and "Old vs Gone" not in _chip_text(" ".join(CHIPS)),
    "a contest outside the 14-day window is not a chip")
 chip_names = []
 for chip in CHIPS:
@@ -260,7 +310,7 @@ for chip in CHIPS:
         continue
     chip_names.append((_attr(chip, "data-status"), _attr(matched[0], "data-name")))
 # Open bets by kickoff, then settled bets newest first.
-eq([item[1] for item in chip_names], [
+eq([item[1] for item in chip_names], [_vs(name) for name in (
     "Live v Now",
     "Alpha v Beta",
     "Alpha v Beta",
@@ -270,19 +320,26 @@ eq([item[1] for item in chip_names], [
     "Void v Match",
     "Price v Result",
     "Inside v Edge",
-], "open chips follow kickoff, then settled chips are newest first")
+)], "open chips follow kickoff, then settled chips are newest first")
 eq([item[0] for item in chip_names], [
-    "Open", "Open", "Open", "Open", "Open", "W", "Void", "price result", "L",
-], "chip status is Open, then W, Void, price result, and L")
-alpha_chips = [chip for chip in CHIPS if "Alpha v Beta" in _chip_text(chip)]
+    "Open", "Open", "Open", "Open", "Open", "W", "Void", shell_build.PRICE_TOKEN, "L",
+], "chip status is Open, then W, Void, price, and L")
+eq(shell_build.PRICE_TOKEN, "price", "the price token is the short word price")
+alpha_chips = [chip for chip in CHIPS if _vs("Alpha v Beta") in _chip_text(chip)]
 eq(len(alpha_chips), 2, "each open bet on one contest is its own chip")
+ok(all("Alpha v Beta" not in _chip_text(chip) for chip in CHIPS),
+   "no chip spells the contest with a bare v")
+ok(alpha_chips and '<span class="bet-chip-letter" aria-hidden="true" title="Cricket">C</span>' in alpha_chips[0]
+   and '<span class="bet-chip-contest" title="Alpha vs Beta">Alpha vs Beta</span>' in alpha_chips[0]
+   and '<span class="bet-chip-line" title="Alpha to win">' in alpha_chips[0],
+   "a chip's letter and contest carry the full text in a title")
 eq(_attr(alpha_chips[0], "data-contest"), _attr(_got("Alpha v Beta"), "data-contest"),
    "a chip points at that contest's Running row")
 ok("C" in _chip_text(alpha_chips[0]) and "Alpha to win · 54¢" in _chip_text(alpha_chips[0]),
    "a chip shows the sport letter, the market, and the price in cents")
 ok("Alpha to win · 40¢" in _chip_text(alpha_chips[1]),
    "the second chip keeps the other bet's price")
-gamma_chips = [chip for chip in CHIPS if "Gamma v Delta" in _chip_text(chip)]
+gamma_chips = [chip for chip in CHIPS if _vs("Gamma v Delta") in _chip_text(chip)]
 eq(len(gamma_chips), 1, "Gamma v Delta is one chip")
 ok(gamma_chips and "S" in _chip_text(gamma_chips[0]),
    "a soccer chip uses the sport letter S")
@@ -307,7 +364,7 @@ _twin_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blo
     _lead("l40", "Twin", "Price", "2026-10-04T16:00:00Z", "miss",
           "b|soccer", "soccer", 0.40),
 ]))
-_twin_rows = [row for row in _rows(_twin_page) if _attr(row, "data-name") == "Twin v Price"]
+_twin_rows = [row for row in _rows(_twin_page) if _attr(row, "data-name") == _vs("Twin v Price")]
 _two_price = [row for row in _twin_rows if " / " in (_attr(row, "data-price") or "")]
 ok(len(_two_price) > 0, "the fixture checked at least one two-price contest")
 eq(len(_twin_rows), 1, "two prices on one contest are one Running row")
@@ -385,9 +442,9 @@ def _subset_gaps(contests, entries):
 
 
 def _bet_labels(visual):
-    if visual in ("W", "L", "Open", "Void", "price result", "Awaiting result"):
+    if visual in ("W", "L", "Open", "Void", shell_build.PRICE_LABEL, "Awaiting result"):
         return [visual]
-    labels = {"W": "W", "L": "L", "price result": "price result", "void": "Void",
+    labels = {"W": "W", "L": "L", "priced": shell_build.PRICE_LABEL, "void": "Void",
               "open": "Open", "awaiting": "Awaiting result"}
     out = []
     rest = visual
@@ -396,7 +453,7 @@ def _bet_labels(visual):
         if not rest:
             break
         matched = re.match(r"(\d+)(W|L)(?![A-Za-z])", rest) or re.match(
-            r"(\d+) (price result|void|open|awaiting)(?![A-Za-z])", rest)
+            r"(\d+) (priced|void|open|awaiting)(?![A-Za-z])", rest)
         if not matched:
             word = rest.strip()
             if word and " " not in word and not word[0].isdigit():
@@ -452,7 +509,7 @@ half_title = {
 half_blob = _blob([half_sided, half_title])
 half_rows = _rows(shell_build.page(
     NOW, d={"quotes": []}, st={"pairs": {}}, blob=half_blob))
-half_named = [row for row in half_rows if _attr(row, "data-name") == "Halfmatch v Teams"]
+half_named = [row for row in half_rows if _attr(row, "data-name") == _vs("Halfmatch v Teams")]
 eq(len(half_named), 1, "two leads for Halfmatch v Teams, with different ids, are one row")
 ok(">1W 1L</span>" in half_named[0], "that fixture's win and loss render as 1W 1L")
 half_contests = shell_build.contests_from_lanes(
@@ -476,8 +533,10 @@ win_void = _face_page([("hit", "a|soccer"), ("void", "b|soccer")])
 ok(">1W 1 void</span>" in win_void[0] and "1 won, 1 void" in win_void[0],
    "a win and a void render as 1W 1 void")
 win_price = _face_page([("hit", "a|soccer"), ("price", "b|soccer")])
-ok(">1W 1 price result</span>" in win_price[0] and "1 won, 1 price result" in win_price[0],
-   "a win and a price result both show")
+ok(">1W 1 priced</span>" in win_price[0] and "1 won, 1 settled on price" in win_price[0],
+   "a win and a price settlement both show, spoken as settled on price")
+eq(_bet_labels("1W 1 priced"), ["W", shell_build.PRICE_LABEL],
+   "the priced token reads back as Settled on price")
 loss_pairs = [("miss", "a|soccer", 0.33), ("pending", "b|soccer", 0.44)]
 # Inside the six-hour window, so the open bet still reads Open.
 loss_open = _face_page(loss_pairs, kickoff="2026-10-05T14:00:00Z")
@@ -539,7 +598,8 @@ empty = shell_build.page(
 eq(_rows(empty), [], "an empty board has no contest rows")
 for key, label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upcoming")):
     eq(_filter_count(empty, key, label), 0, f"an empty board counts {label} as 0")
-ok('id="running-empty"' in empty and "No live paper bets" in empty,
+ok('id="running-empty"' in empty and shell_build._EMPTY["live"] in empty
+   and 'id="running-empty" data-live=' in empty,
    "the empty live state keeps the Running chrome")
 ok('id="running-title"' in empty and 'class="running-filters"' in empty,
    "the pane chrome stays when a filter is empty")
@@ -555,7 +615,7 @@ live_q = shell_build.page(NOW, d={"quotes": [
 ]}, st=st, blob={"leads": {}, "pairs": {}}, tiles=_TILES)
 live_rows = _rows(live_q)
 eq(len(live_rows), 1, "a started open Production bet is a live row even though the feed drops it")
-eq(_attr(live_rows[0], "data-name"), "QuoteHome v QuoteAway", "the live row names the contest")
+eq(_attr(live_rows[0], "data-name"), "QuoteHome vs QuoteAway", "the live row names the contest")
 eq(_attr(live_rows[0], "data-filter"), "live", "that quote is in Live")
 eq(_attr(live_rows[0], "data-price"), "54¢", "the live quote price is cents")
 
@@ -695,9 +755,9 @@ try:
     ok("Last 9 days" in shrunk and "Last 14 days" not in shrunk,
        "the caption renders from SHELL_SETTLED_DAYS")
     shrunk_rows = _rows(shrunk)
-    ok(all(_attr(row, "data-name") != "Twelve v Ago" for row in shrunk_rows),
+    ok(all(_attr(row, "data-name") != _vs("Twelve v Ago") for row in shrunk_rows),
        "a 12-Chicago-day bet drops when the constant is 9")
-    ok(any(_attr(row, "data-name") == "Eight v Ago" for row in shrunk_rows),
+    ok(any(_attr(row, "data-name") == _vs("Eight v Ago") for row in shrunk_rows),
        "an 8-Chicago-day bet stays when the constant is 9")
     ok(not shell_build._in_shell_window(
         datetime.datetime(2026, 9, 23, 18, 0, tzinfo=timezone.utc), NOW),
@@ -753,12 +813,17 @@ prod_html, index_html = sandbox_build.production_and_index(
     NOW, fixture_d, fixture_st, fixture_blob)
 prod_tiles = shell_build.tiles_html(prod_html)
 index_tiles = shell_build.tiles_html(index_html)
-eq(index_tiles, prod_tiles, "the shared pass still copies Production tiles onto the shell")
+ok(index_tiles != prod_tiles and "paper bets landed" in index_tiles
+   and "recent leads landed" not in index_tiles and "recent leads landed" in prod_tiles,
+   "the shared pass copies Production tiles onto the shell, then rewrites the landed tile")
+_landed = re.compile(r'<div class="tile"><b>[^<]*</b><span>(?:recent leads landed|paper bets landed[^<]*)</span></div>')
+eq(_landed.sub("", index_tiles), _landed.sub("", prod_tiles),
+   "the other three tiles are production.html's own")
 prod_stamp = re.search(r'<time datetime="([^"]+)"', prod_html)
 index_stamp = re.search(r'<p class="stamp">.*?<time datetime="([^"]+)"', index_html, re.S)
 ok(prod_stamp and index_stamp and prod_stamp.group(1) == index_stamp.group(1),
    "the shared pass stamps index.html with production.html's clock")
-ok('data-name="Alpha v Beta"' in index_html, "that same pass writes the Running row")
+ok('data-name="Alpha vs Beta"' in index_html, "that same pass writes the Running row")
 
 
 def _stamp(page):
@@ -802,8 +867,13 @@ saved_builds = {
 }
 for mod in (soccer_build, tennis_build, cricket_build, crypto_build):
     mod.build = lambda *args, **kwargs: "<html></html>"
+import nba_pace_build
+saved_nba_out = nba_pace_build.OUT
 tmpdir = tempfile.mkdtemp(prefix="shell-main-")
 sandbox_build.OUT = os.path.join(tmpdir, "sandbox.html")
+# main() writes the NBA page at nba_pace_build.OUT, not beside OUT. Keep the
+# test out of the committed public_site.
+nba_pace_build.OUT = os.path.join(tmpdir, "nba.html")
 try:
     sandbox_build.main()
     prod_path = os.path.join(tmpdir, "production.html")
@@ -825,6 +895,7 @@ finally:
     sandbox_build.datetime = saved["clock"]
     sandbox_build.render_pages = saved["render"]
     sandbox_build.trading_page = saved["trade"]
+    nba_pace_build.OUT = saved_nba_out
     soccer_build.build = saved_builds["soccer"]
     tennis_build.build = saved_builds["tennis"]
     cricket_build.build = saved_builds["cricket"]
@@ -933,14 +1004,14 @@ try:
     site_root.main()
     matched = open(drift_index, encoding="utf-8").read()
     eq(lane_calls["n"], 0, "a matching stamp does not rebuild Running")
-    ok("Alpha v Beta" in matched and "Newer v Data" not in matched,
+    ok("Alpha vs Beta" in matched and "Newer vs Data" not in matched and "Newer v Data" not in matched,
        "Running still names the production build, not the newer ledger")
     tampered = matched.replace("2026-10-05T18:00:00Z", "2026-10-01T00:00:00Z", 1)
     open(drift_index, "w", encoding="utf-8").write(tampered)
     site_root.main()
     copied = open(drift_index, encoding="utf-8").read()
     eq(lane_calls["n"], 0, "a stamp mismatch still does not rebuild Running")
-    ok("Alpha v Beta" in copied and "Newer v Data" not in copied,
+    ok("Alpha vs Beta" in copied and "Newer vs Data" not in copied and "Newer v Data" not in copied,
        "the copied Running block is still the tracker block")
     ok("2026-10-05T18:00:00Z" in _stamp(copied),
        "the copied shell takes production.html's clock")
@@ -1080,17 +1151,27 @@ _committed_rows = _rows(_committed)
 ok(_committed_rows or 'id="running-empty"' in _committed,
    "committed index.html lists Running contests or the empty state")
 for _key, _label in (("live", "Live"), ("settled", "Settled"), ("upcoming", "Upcoming")):
-    eq(_filter_count(_committed, _key, _label),
-       sum(1 for _row in _committed_rows if _attr(_row, "data-filter") == _key),
-       f"committed {_label} count equals the committed rows")
+    eq(_filter_count(_committed, _key, _label), _bets_in(_committed_rows, _key),
+       f"committed {_label} count equals the paper bets on the committed rows")
 ok('class="rule-mini"' not in _committed,
    "committed index.html does not paint rule cards before a row is selected")
 if _committed_rows:
     ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
 _prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
-eq(shell_build.tiles_html(_committed), shell_build.tiles_html(_prod_committed),
-   "committed index.html tiles equal committed production.html tiles")
-_RESULT = {"landed": "W", "missed": "L", "paid": "price result"}
+eq(_landed.sub("", shell_build.tiles_html(_committed)),
+   _landed.sub("", shell_build.tiles_html(_prod_committed)),
+   "committed index.html tiles equal committed production.html tiles, bar the landed tile")
+_committed_chips = _chips(_committed)
+_landed_m = re.search(r'<div class="tile"><b>(\d+)/(\d+)</b><span>paper bets landed · last 14 days</span></div>',
+                      _committed)
+ok(_landed_m is not None, "committed index.html has the paper-bets-landed tile")
+if _landed_m is not None:
+    eq((int(_landed_m.group(1)), int(_landed_m.group(2))),
+       (sum(1 for c in _committed_chips if _attr(c, "data-status") == "W"),
+        sum(1 for c in _committed_chips
+            if _attr(c, "data-status") in ("W", "L", "Void", shell_build.PRICE_TOKEN))),
+       "the landed tile counts the roll's settled chips")
+_RESULT = {"landed": "W", "missed": "L", "paid": shell_build.PRICE_LABEL}
 _recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
 _prod_rows = [
     (html_lib.unescape(name), html_lib.unescape(headline), _RESULT[status])
@@ -1102,8 +1183,13 @@ _prod_rows = [
 
 
 def _visual(row):
-    match = re.search(r'aria-hidden="true">([^<]*)</span>', row)
-    return html_lib.unescape(match.group(1)) if match else ""
+    """The result text: the aria-hidden half when there is a spoken pair, else the whole span."""
+    match = re.search(r'class="running-status" data-status="[^"]*">(.*?)</span>', row, re.S)
+    if not match:
+        return ""
+    inner = match.group(1)
+    hidden = re.search(r'aria-hidden="true">([^<]*)$', inner)
+    return html_lib.unescape(hidden.group(1) if hidden else inner)
 
 
 def _bucket_bets(rows, bucket):
@@ -1116,7 +1202,7 @@ def _bucket_bets(rows, bucket):
 
 
 _price_re = re.compile(r"^(?:\d+¢|—)(?: / (?:\d+¢|—))*$")
-_known_status = {"W", "L", "Void", "price result", "Open", "awaiting", "mixed", ""}
+_known_status = {"W", "L", "Void", shell_build.PRICE_TOKEN, "Open", "awaiting", "mixed", ""}
 _contest_ids = []
 for _row in _committed_rows:
     _price = _attr(_row, "data-price") or ""
@@ -1137,7 +1223,7 @@ for _row in _committed_rows:
             ok(_price_re.match(_card_price) is not None,
                f"a card price is cents ({_card_price})")
             _card_status = _card.get("status") or ""
-            if _card_status not in ("W", "L", "Void", "price result", "Open", "Awaiting result"):
+            if _card_status not in ("W", "L", "Void", shell_build.PRICE_LABEL, "Open", "Awaiting result"):
                 ok(_card_status != "Void",
                    f"an unknown card status stays {_card_status!r}, not Void")
 eq(len(_contest_ids), len(set(_contest_ids)), "committed Running has one row per contest")
@@ -1157,7 +1243,7 @@ for _contest in _model:
         _contest.get("sport"), _contest.get("match"), _contest.get("kickoff")))
     _open = any(bet.get("status") == "Open" for bet in _contest["bets"])
     _graded = _contest["bets"] and all(
-        bet.get("status") in ("W", "L", "Void", "price result") for bet in _contest["bets"])
+        bet.get("status") in ("W", "L", "Void", shell_build.PRICE_LABEL) for bet in _contest["bets"])
     if _graded:
         eq(_contest["bucket"], "settled",
            f"{_contest['match']} has no open bet, so it is Settled")
@@ -1166,7 +1252,7 @@ for _contest in _model:
     for _bet in _contest["bets"]:
         _cents = shell_build._cents(_bet.get("price"))
         ok(_price_re.match(_cents) is not None, f"a model price is cents ({_cents})")
-        if _bet.get("status") not in ("W", "L", "Void", "price result", "Open"):
+        if _bet.get("status") not in ("W", "L", "Void", shell_build.PRICE_LABEL, "Open"):
             ok(_bet.get("status") != "Void",
                f"an unknown model status stays {_bet.get('status')!r}, not Void")
 eq(len(_model_keys), len(set(_model_keys)),
@@ -1179,7 +1265,8 @@ _feed_leads = list((production.load_feed() or {}).get("leads", {}).values())
 for _name, _headline, _status in _prod_rows:
     if _clock_m is None:
         break
-    _same = [lead for lead in _feed_leads if lead.get("match") == _name]
+    # production.html prints the match with vs; the feed stores the raw text.
+    _same = [lead for lead in _feed_leads if fmt.contest(lead.get("match")) == _name]
     _kicks = [production._one_instant(lead.get("kickoff")) for lead in _same]
     if not _same or not any(
             k is not None and shell_build._in_shell_window(k, _when) for k in _kicks):
@@ -1221,7 +1308,7 @@ _to_come = re.search(
 _upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
 eq(len(_upcoming_bets), int(_to_come.group(1)) if _to_come else None,
    "Upcoming bets equal the strip's leads still to come")
-_graded_visual = {"W", "L", "Void", "price result"}
+_graded_visual = {"W", "L", "Void", shell_build.PRICE_LABEL}
 ok(all(bet not in _graded_visual for bet in _upcoming_bets),
    "an upcoming bet is still open or an unresolved status")
 eq(_committed.count('aria-describedby="settled-caption"'), 1,
@@ -1259,28 +1346,53 @@ def _browser():
                   const track = document.querySelector(".bet-roll-track");
                   if (!track) return null;
                   const style = getComputedStyle(track);
+                  const chips = [...track.querySelectorAll(".bet-chip")];
+                  const tops = new Set(chips.map((chip) => Math.round(chip.getBoundingClientRect().top)));
                   return {
-                    overflowX: style.overflowX,
-                    nowrap: style.flexWrap,
-                    chips: track.querySelectorAll(".bet-chip").length,
+                    display: style.display,
+                    scrolls: track.scrollWidth > track.clientWidth + 1,
+                    chips: chips.length,
+                    rows: tops.size,
                     empty: track.querySelector(".bet-roll-empty") ? true : false,
                   };
                 }""")
                 ok(roll and roll["chips"] > 0 and not roll["empty"]
-                   and roll["overflowX"] in ("auto", "scroll") and roll["nowrap"] == "nowrap",
-                   f"the roll is a horizontal chip scroller ({roll})")
+                   and roll["display"] == "grid" and not roll["scrolls"],
+                   f"the roll is a wrapping chip grid, not a scroller ({roll})")
                 page.set_viewport_size({"width": 640, "height": 800})
                 page.wait_for_timeout(30)
                 narrow_roll = page.evaluate("""() => {
                   const track = document.querySelector(".bet-roll-track");
+                  const chips = [...track.querySelectorAll(".bet-chip")];
+                  const tops = new Set(chips.map((chip) => Math.round(chip.getBoundingClientRect().top)));
                   return {
                     scrolls: track.scrollWidth > track.clientWidth + 1,
+                    rows: tops.size,
                     page: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
                   };
                 }""")
-                ok(narrow_roll["scrolls"] and not narrow_roll["page"],
-                   f"at 640px the roll scrolls inside the track ({narrow_roll})")
-                mobile_chip = page.locator(".bet-chip").nth(0)
+                ok(not narrow_roll["scrolls"] and narrow_roll["rows"] > 1 and not narrow_roll["page"],
+                   f"at 640px the roll wraps onto more rows and nothing scrolls sideways ({narrow_roll})")
+                loaded = page.evaluate("""() => {
+                  const pressed = [...document.querySelectorAll('.running-row[aria-pressed="true"]')];
+                  const first = document.querySelector(".running-row:not([hidden])");
+                  const chips = [...document.querySelectorAll('.bet-chip[aria-pressed="true"]')];
+                  const empty = document.getElementById("rules-empty");
+                  return {
+                    n: pressed.length,
+                    first: !!first && pressed[0] === first,
+                    name: pressed[0] ? pressed[0].getAttribute("data-name") : "",
+                    chips: chips.map((chip) => chip.getAttribute("data-contest")),
+                    contest: pressed[0] ? pressed[0].getAttribute("data-contest") : "",
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    emptyHidden: empty ? empty.hidden : null,
+                  };
+                }""")
+                ok(loaded["n"] == 1 and loaded["first"] and loaded["name"] == "Live vs Now"
+                   and loaded["chips"] == [loaded["contest"]] and loaded["cards"] >= 1
+                   and loaded["emptyHidden"],
+                   f"on load the first visible row is pressed and its chip and cards follow ({loaded})")
+                mobile_chip = page.locator('.bet-chip[aria-pressed="false"]').nth(0)
                 mobile_chip.focus()
                 page.keyboard.press("Enter")
                 page.wait_for_timeout(30)
@@ -1315,8 +1427,8 @@ def _browser():
                 page.set_viewport_size({"width": 1280, "height": 800})
                 page.wait_for_timeout(30)
                 styles = page.evaluate("""() => {
-                  const pressed = document.querySelector('nav.sports button[data-sport="all"]');
-                  const idle = document.querySelector('nav.sports button[data-sport="crypto"]');
+                  const pressed = document.querySelector('nav.sport-filter button[data-sport="all"]');
+                  const idle = document.querySelector('nav.sport-filter button[data-sport="soccer"]');
                   const filter = document.querySelector('.running-filters button[aria-pressed="true"]');
                   const a = getComputedStyle(pressed);
                   const b = getComputedStyle(idle);
@@ -1373,17 +1485,22 @@ def _browser():
                   };
                 }""")
                 ok(caption_on and caption_on["hidden"] is False
-                   and caption_on["text"] == "Last 14 days"
+                   and caption_on["text"] == "Last 14 days · counts are paper bets, one contest can carry several"
                    and caption_on["display"] != "none",
                    f"Settled shows the caption from the 14-day constant ({caption_on})")
                 page.locator('.running-filters button[data-filter="settled"]').focus()
-                page.keyboard.press("Tab")
-                page.keyboard.press("Tab")
-                tabbed = page.evaluate("""() => {
-                  const el = document.activeElement;
-                  return el ? el.className : "";
-                }""")
-                ok("running-row" in tabbed, f"Tab reaches a Running row ({tabbed})")
+                tab_path = []
+                for _ in range(8):
+                    page.keyboard.press("Tab")
+                    tab_path.append(page.evaluate("""() => {
+                      const el = document.activeElement;
+                      if (!el) return "";
+                      return (el.className || "") + "|" + (el.getAttribute("data-sport") || "");
+                    }"""))
+                    if "running-row" in tab_path[-1]:
+                        break
+                ok("running-row" in tab_path[-1] and any(item.endswith("|all") for item in tab_path),
+                   f"Tab passes the sport filter pills and reaches a Running row ({tab_path})")
                 first = page.locator(".running-row:not([hidden])").nth(0)
                 second = page.locator(".running-row:not([hidden])").nth(1)
                 first.focus()
@@ -1431,6 +1548,8 @@ def _browser():
                 }""")
                 eq(clicked[0], "true", "a click presses that row")
                 eq(clicked.count("true"), 1, "a click clears the other rows")
+                clicked_name = page.evaluate(
+                    """() => document.querySelector('.running-row[aria-pressed="true"]').getAttribute("data-name")""")
                 page.click('.running-filters button[data-filter="upcoming"]')
                 page.wait_for_timeout(30)
                 cleared = page.evaluate("""() => {
@@ -1455,9 +1574,11 @@ def _browser():
                 eq(cleared["pressed"], 0, "hiding the selected row clears aria-pressed")
                 eq(cleared["line"], "", "hiding the selected row clears the detail header")
                 ok(cleared["headHidden"] and not cleared["emptyHidden"]
-                   and cleared["empty"] == "Select a contest in Running."
+                   and cleared["empty"].startswith("Selection cleared: ")
+                   and clicked_name in cleared["empty"]
+                   and cleared["empty"].endswith(" Select a contest in Running.")
                    and cleared["cards"] == 0 and cleared["sectionHidden"],
-                   f"the detail pane returns to its empty state and clears cards ({cleared})")
+                   f"the detail pane says why it emptied and clears cards ({cleared})")
                 browser.close()
         finally:
             httpd.shutdown()

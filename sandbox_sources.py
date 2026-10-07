@@ -24,6 +24,8 @@ import functools
 import html
 import http.client
 import re
+
+import fmt
 import unicodedata
 import subprocess
 import time
@@ -3668,6 +3670,31 @@ def display_label(q):
     label = str(q.get("label") or "")
     city = NWS_CITY_NAMES.get(str(q.get("market_id") or "").split("-")[0])
     return f"{city}: {label}" if city and not label.startswith(city) else label
+
+
+_OVER_UNDER = re.compile(r"\b(over|under)\b", re.IGNORECASE)
+
+
+def position_label(q):
+    """The contest with the side actually backed written into the market.
+
+    ``display_label`` is the market as the venue titles it: "Genoa v Fiorentina:
+    over 3.5 goals". A No on that market is the under, and a row that read
+    "over 3.5 goals" beside Backing "No" looked like the opposite bet. A
+    Yes/No market whose title names an over or an under flips that word when
+    the No side is backed. Every other title is left as the venue wrote it;
+    the Backing column still says which side. Contest names read "A vs B".
+    """
+    label = display_label(q)
+    sides = {str(q.get("side_a") or "").strip().lower(), str(q.get("side_b") or "").strip().lower()}
+    backed = str(q.get("side_b") if q.get("pick") == "b" else q.get("side_a") or "").strip().lower()
+    if sides == {"yes", "no"} and backed == "no":
+        head, sep, market = label.partition(": ")
+        if sep and _OVER_UNDER.search(market):
+            flip = {"over": "under", "under": "over", "Over": "Under", "Under": "Over"}
+            market = _OVER_UNDER.sub(lambda m: flip.get(m.group(0), m.group(0)), market, count=1)
+            label = f"{head}{sep}{market}"
+    return fmt.contest(label)
 
 
 def outcome_cluster(q):

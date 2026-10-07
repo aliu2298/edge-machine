@@ -374,13 +374,18 @@ def load_feed(path=None):
 
 
 def _day_label(day, today):
-    """'Today', 'Tomorrow', or 'Sat 20 Sep' for a kickoff date."""
+    """'Today · Oct 7', 'Tomorrow · Oct 8', or 'Oct 9' for a kickoff date.
+
+    The same month-day form the rest of the site prints, with a word for
+    today and tomorrow only.
+    """
     delta = (day - today).days
+    text = f"{fmt._MONTHS[day.month - 1]} {day.day}"
     if delta == 0:
-        return "Today"
+        return f"Today · {text}"
     if delta == 1:
-        return "Tomorrow"
-    return day.strftime("%a %d %b")
+        return f"Tomorrow · {text}"
+    return text
 
 
 EARLY_N = 10      # under this many settled bets an ROI is shown grey and marked too early
@@ -575,6 +580,32 @@ def _weather_pair(key):
     return S.lane_removed(source, sport)
 
 
+def _coming_up_count(n_leads, n_days):
+    """'3 leads over 2 days', or a plain 'nothing scheduled' instead of '0 leads over 0 days'."""
+    if not n_leads:
+        return "nothing scheduled"
+    return (f"{n_leads} lead{'s' if n_leads != 1 else ''} over "
+            f"{n_days} day{'s' if n_days != 1 else ''}")
+
+
+def _held_count(held):
+    return "nothing held back" if not held else str(held)
+
+
+def _held_note(held, blob):
+    unlisted = blob.get("unlisted_skipped", 0)
+    unverified = blob.get("unverified_kickoff_skipped", 0)
+    if not held:
+        return ('<div class="note">Every bet these pairs logged was published. A bet is held '
+                'back only when it cannot be expressed as a standard market, or when its '
+                'start time is not yet verified.</div>')
+    return (f'<div class="note">{held} bet{"s" if held != 1 else ""} from these pairs '
+            f'{"were" if held != 1 else "was"} not published: {unlisted} cannot be expressed '
+            f'as a standard market, and {unverified} {"are" if unverified != 1 else "is"} '
+            f'waiting for a verified start time. A lead is only published once its start '
+            f'has been confirmed.</div>')
+
+
 def page(d, st, blob, style, now=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -706,43 +737,44 @@ def page(d, st, blob, style, now=None):
     ordered = known + ([(None, unknown)] if unknown else [])
     for i, (day, ls) in enumerate(ordered):
         rows = "".join(
-            f"""<tr><td class="mut">{esc(_ct_clock(l.get('kickoff')))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
-<td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
+            f"""<tr><td class="mut">{esc(_ct_when(l.get('kickoff')))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+<td>{esc(fmt.contest(l['match']))}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
             for l in ls)
         # Each day folds; the soonest one starts open, since that is what a visitor came for.
         label = PLACEHOLDER_DATE if day is None else _day_label(day, today)
         days_html += (f"""<details class="fold"{' open' if i == 0 else ''}><summary>{esc(label)}
 <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
-<div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<div class="tbl"><table><tr><th>Starts</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr>{rows}</table></div></details>""")
     if unknown_up:
         rows = "".join(
             f"""<tr><td class="mut">{_KICKOFF_UNKNOWN}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
-<td>{esc(l['match'])}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
+<td>{esc(fmt.contest(l['match']))}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
             for l in unknown_up)
         days_html += (f"""<details class="fold"><summary>{_KICKOFF_UNKNOWN}
 <span class="mut sm">· {len(unknown_up)} lead{'s' if len(unknown_up) != 1 else ''}</span></summary>
-<div class="tbl"><table><tr><th>CT</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
+<div class="tbl"><table><tr><th>Starts</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Logged at</th></tr>{rows}</table></div></details>""")
-    upcoming_html = days_html or '<div class="note">No leads still to come.</div>'
+    upcoming_html = days_html or ('<div class="note">Nothing is scheduled. A lead appears here when a '
+                                  'Production pair logs a bet on a contest with a verified start time.</div>')
 
     # ---- how the recent ones landed ----
     # The 25 newest readable kickoffs, then every settled lead whose kickoff
     # cannot be read, so a missing kickoff cannot fall off the end of the list.
     recent = settled_known[:25] + settled_unknown
     rec_rows = "".join(
-        f"""<tr><td class="mut">{esc(_ct_date(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(l['match'])}</td>
+        f"""<tr><td class="mut">{esc(_ct_when(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(fmt.contest(l['match']))}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else ('paid' if l['status'] == 'price' else 'missed')}</span></td></tr>"""
         for l in recent)
     hits = sum(1 for l in landed if l["status"] == "hit")
-    recent_html = (f"""<div class="tbl"><table><tr><th>Date</th><th>Match</th><th>Lead</th><th>From</th>
+    recent_html = (f"""<div class="tbl"><table><tr><th>Kickoff</th><th>Match</th><th>Lead</th><th>From</th>
 <th class="num">Result</th></tr>{rec_rows}</table></div>""" if rec_rows else
                    '<div class="note">Nothing has settled since these pairs were moved.</div>')
 
-    nxt = _ct_when(upcoming[0].get("kickoff")) if upcoming else "—"
+    nxt = _ct_when(upcoming[0].get("kickoff")) if upcoming else "None scheduled"
     held = blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
     # `style` used to be the Sandbox page's inline stylesheet. The shared site.css
     # replaced it. The argument stays so existing callers do not break.
@@ -754,7 +786,7 @@ def page(d, st, blob, style, now=None):
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
 <div class="tile"><b>{len(upcoming)}</b><span>leads still to come</span></div>
 <div class="tile"><b>{hits}/{len(landed)}</b><span>recent leads landed</span></div>
-<div class="tile"><b class="when">{esc(nxt)}</b><span>next lead (CT)</span></div>
+<div class="tile"><b class="when">{esc(nxt)}</b><span>{'next lead (CT)' if upcoming else 'next lead · none logged yet'}</span></div>
 </div>
 
 <section id="pairs">
@@ -767,21 +799,18 @@ dearer after they were published.</p>
 </section>
 
 <section id="coming-up">
-<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {len(upcoming)} leads over {len(by_day)} day{'s' if len(by_day) != 1 else ''}</span></summary>
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {_coming_up_count(len(upcoming), len(by_day))}</span></summary>
 {upcoming_html}</details>
 </section>
 
 <section id="recent">
-<details class="fold sec"><summary><h2>Recently settled</h2> <span class="mut sm">· {hits} of {len(landed)} landed</span></summary>
+<details class="fold sec" open><summary><h2>Recently settled</h2> <span class="mut sm">· {hits} of {len(landed)} landed</span></summary>
 {recent_html}</details>
 </section>
 
 <section id="held-back">
-<details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· {held}</span></summary>
-<div class="note">{held} bet{'s' if held != 1 else ''} from these pairs {'were' if held != 1 else 'was'} not published:
-{blob.get('unlisted_skipped', 0)} cannot be expressed as a standard market, and
-{blob.get('unverified_kickoff_skipped', 0)} {'are' if blob.get('unverified_kickoff_skipped', 0) != 1 else 'is'} waiting for a verified start
-time. A lead is only published once its start has been confirmed.</div></details>
+<details class="fold sec"><summary><h2>Held back</h2> <span class="mut sm">· {_held_count(held)}</span></summary>
+{_held_note(held, blob)}</details>
 </section>
 
 <section id="how">

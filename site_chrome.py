@@ -1,12 +1,17 @@
 """The shared header for every published page.
 
-Sandbox, Production, Trading, NBA, Soccer, Tennis, Cricket, and the site root
-all call header(). Exactly one link carries aria-current. Method points at the
-method section on the Sandbox.
+Sandbox, Production, Trading, NBA, Soccer, Tennis, Cricket, Crypto, the site
+root and the archive all call header() through document(). One shell: the
+brand (always the site root), the page pills, the stamp, then the per-page
+section nav or a breadcrumb. Exactly one link carries aria-current; on the
+root that link is the brand. Method points at the method section on the Sandbox.
 """
 import html
 
 import fmt
+
+SITE_NAME = "Edge Machine"
+SITE_URL = "https://aliu2298.github.io/edge-machine/"
 
 PAGES = (
     ("sandbox", "Sandbox", "./sandbox.html"),
@@ -19,6 +24,19 @@ PAGES = (
     ("crypto", "Crypto", "./crypto.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
+SPORT_KEYS = ("nba", "soccer", "tennis", "cricket", "crypto")
+# The file each page key is published as, for the canonical and og:url tags.
+PAGE_FILES = {
+    "index": "index.html",
+    "sandbox": "sandbox.html",
+    "production": "production.html",
+    "trading": "trading.html",
+    "nba": "nba.html",
+    "soccer": "soccer.html",
+    "tennis": "tennis.html",
+    "cricket": "cricket.html",
+    "crypto": "crypto.html",
+}
 
 # Fixed-width segmented control. The label is the current choice (aria-pressed),
 # not the choice you would switch to. It lives in the table tools, not the header.
@@ -60,8 +78,21 @@ CSP = (
 REFERRER = '<meta name="referrer" content="no-referrer">'
 
 
+def title_for(page):
+    """'Edge Machine · <Page>'. A title already in that form is kept."""
+    text = str(page or "").strip()
+    if not text:
+        return SITE_NAME
+    if text == SITE_NAME or text.startswith(SITE_NAME + " · "):
+        return text
+    return f"{SITE_NAME} · {text}"
+
+
 def nav(active, prefix="./"):
-    """One link per page, with aria-current on exactly one."""
+    """One link per page, with aria-current on exactly one.
+
+    The site root ("index") is the brand, not a pill, so no pill is current there.
+    """
     parts = []
     current = 0
     for key, label, href in PAGES:
@@ -70,8 +101,9 @@ def nav(active, prefix="./"):
             attr = ' aria-current="page"'
             current += 1
         parts.append(f'<a href="{esc(_href(href, prefix))}"{attr}>{esc(label)}</a>')
-    if current != 1:
-        raise ValueError(f"aria-current must mark one page, got {current} for {active!r}")
+    expected = 0 if active == "index" else 1
+    if current != expected:
+        raise ValueError(f"aria-current must mark {expected} page, got {current} for {active!r}")
     return f'<nav class="main" aria-label="Pages">{"".join(parts)}</nav>'
 
 
@@ -96,7 +128,7 @@ def breadcrumb(parts):
     bits = []
     for label, href in parts:
         if bits:
-            bits.append('<span class="sep" aria-hidden="true">\u203a</span>')
+            bits.append('<span class="sep" aria-hidden="true">›</span>')
         if href:
             bits.append(f'<a href="{esc(href)}">{esc(label)}</a>')
         else:
@@ -127,10 +159,11 @@ def header(active, sections, stamp_html, tools="", prefix="./", crumb=None):
         toc(sections),
     ) if part]
     sub = ("\n" + "\n".join(below)) if below else "\n"
+    brand_current = ' aria-current="page"' if active == "index" else ""
     return f"""<a class="skip" href="#content">Skip to content</a>
 <header class="site">
 <div class="topbar">
-<a class="brand" href="{esc(_href("./sandbox.html", prefix))}">Edge Machine</a>
+<a class="brand" href="{esc(_href("./index.html", prefix))}"{brand_current}>Edge Machine</a>
 {nav(active, prefix)}
 <p class="stamp">{stamp_html}</p>
 </div>{sub}
@@ -138,27 +171,35 @@ def header(active, sections, stamp_html, tools="", prefix="./", crumb=None):
 
 
 def sports_header(active, stamp_html, prefix="./"):
-    """Compact workspace menu and one current sport in a scrollable selector."""
-    pages = "".join(f'<a href="{esc(_href(href, prefix))}">{esc(label)}</a>'
-                    for key, label, href in PAGES if key in ("sandbox", "production", "trading", "method"))
-    sports = "".join(
-        f'<a href="{esc(_href(href, prefix))}"'
-        + (' aria-current="page"' if key == active else '')
-        + f' data-sport="{esc(key)}">{esc(label)}</a>'
-        for key, label, href in PAGES if key in ("nba", "soccer", "tennis", "cricket", "crypto"))
-    return f'''<a class="skip" href="#content">Skip to content</a>
-<header class="site">
-<div class="topbar"><a class="brand" href="{esc(_href('./index.html', prefix))}">Edge Machine</a>
-<p class="stamp">{stamp_html}</p>
-<details class="page-menu"><summary>Pages <span aria-hidden="true">⌄</span></summary>
-<nav class="main" aria-label="Pages">{pages}</nav></details></div>
-<div class="sport-row"><nav class="sports" aria-label="Sports">{sports}</nav></div>
-</header>'''
+    """The sport pages used to carry a third header. They use the one shell now."""
+    return header(active, (), stamp_html, prefix=prefix)
+
+
+def head_meta(title, description, active, prefix="./"):
+    """Icon, canonical, Open Graph and Twitter cards. Same-origin assets only."""
+    icon = esc(_href("./favicon.svg", prefix))
+    parts = [
+        f'<link rel="icon" href="{icon}" type="image/svg+xml">',
+        f'<link rel="apple-touch-icon" href="{icon}">',
+        f'<meta property="og:site_name" content="{esc(SITE_NAME)}">',
+        '<meta property="og:type" content="website">',
+        f'<meta property="og:title" content="{esc(title)}">',
+        f'<meta property="og:description" content="{esc(description)}">',
+        '<meta name="twitter:card" content="summary">',
+        f'<meta name="twitter:title" content="{esc(title)}">',
+        f'<meta name="twitter:description" content="{esc(description)}">',
+    ]
+    file = PAGE_FILES.get(active)
+    if file and _root(prefix) == "./":
+        url = SITE_URL + ("" if file == "index.html" else file)
+        parts.insert(2, f'<link rel="canonical" href="{esc(url)}">')
+        parts.append(f'<meta property="og:url" content="{esc(url)}">')
+    return "\n".join(parts)
 
 
 def document(title, description, active, sections, stamp_html, body,
              script_src=None, extra_head="", tools="", scripts=None, prefix="./",
-             crumb=None, sports=False):
+             crumb=None, sports=False, body_class=""):
     srcs = []
     if script_src:
         srcs.append(script_src)
@@ -175,6 +216,13 @@ def document(title, description, active, sections, stamp_html, body,
     script = "".join(
         f'\n<script src="{esc(_href(src, prefix))}"></script>' for src in srcs)
     extra = f"\n{extra_head}" if extra_head else ""
+    title = title_for(title)
+    classes = []
+    if sports:
+        classes.append(f"sports-page sport-{esc(active)}")
+    if body_class:
+        classes.append(esc(body_class))
+    body_attr = f' class="{" ".join(classes)}"' if classes else ""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -183,11 +231,12 @@ def document(title, description, active, sections, stamp_html, body,
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
 <link rel="stylesheet" href="{esc(_href("./site.css", prefix))}">
+{head_meta(title, description, active, prefix)}
 {CSP}
 {REFERRER}{extra}
 </head>
-<body{f' class="sports-page sport-{esc(active)}"' if sports else ''}>
-{sports_header(active, stamp_html, prefix) if sports else header(active, sections, stamp_html, tools=tools, prefix=prefix, crumb=crumb)}
+<body{body_attr}>
+{header(active, sections, stamp_html, tools=tools, prefix=prefix, crumb=crumb)}
 <main id="content" class="wrap">
 {body}
 </main>{script}

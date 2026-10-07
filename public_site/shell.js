@@ -1,12 +1,16 @@
 // Running filters and sport pills show a subset of the rows already on the
 // page. They do not fetch bets or leave the page, and they store nothing.
 // All starts pressed. One sport hides the other groups and recounts Live,
-// Settled, and Upcoming. A chip for another sport switches that pill (or
-// All, when the row's sport is not one of the pills) so the contest can
-// show, then presses that contest's row. Rows, chips, and sport pills are
-// plain buttons: each is its own tab stop, and Enter, Space, or a click
-// presses one. The pressed row's card payload was embedded at build time.
-// This file only reads attributes and writes text.
+// Settled, and Upcoming in paper bets (a row's data-lanes). A chip for
+// another sport switches that pill (or All, when the row's sport is not one
+// of the pills) so the contest can show, then presses that contest's row.
+// The first visible row starts pressed so the card pane is never blank. A
+// pressed row that a filter hides is cleared, and the reason is announced;
+// one that still shows is kept. Rows, chips, and sport pills are plain
+// buttons: each is its own tab stop, and Enter, Space, or a click presses
+// one. The pressed row's card payload was embedded at build time. This file
+// only reads attributes and writes text. The sport pills are the ones inside
+// the Running pane (nav.sport-filter), not the site header's sport links.
 (function () {
   var SAFE_PAGE = /^\.\/(?:soccer|tennis|cricket|nba|crypto|production)\.html$/;
 
@@ -51,7 +55,7 @@
     });
   }
 
-  function clearSelection() {
+  function clearSelection(why) {
     Array.prototype.forEach.call(rows(), function (row) {
       row.setAttribute("aria-pressed", "false");
       row.removeAttribute("aria-selected");
@@ -62,10 +66,13 @@
     var empty = document.getElementById("rules-empty");
     if (line) line.textContent = "";
     if (head) head.hidden = true;
-    if (empty) empty.hidden = false;
+    if (empty) {
+      empty.hidden = false;
+      empty.textContent = why || "Select a contest in Running.";
+    }
     clearCards();
     syncChips();
-    announce("Select a contest in Running.");
+    announce(why || "Select a contest in Running.");
   }
 
   function readCards(row) {
@@ -130,6 +137,7 @@
         title.appendChild(pill);
       }
       article.appendChild(title);
+      addLine(article, "rule-mini-about", card.about || "");
       addLine(article, "rule-mini-market", card.market || "");
       if (card.venue || card.price) {
         var meta = document.createElement("p");
@@ -169,7 +177,7 @@
   }
 
   function sportsNav() {
-    return document.querySelector("nav.sports");
+    return document.querySelector("nav.sport-filter") || document.querySelector("nav.sports");
   }
 
   function sportFilter() {
@@ -178,10 +186,26 @@
     return name || "all";
   }
 
-  function sportLabel(key) {
+  function sportName(key) {
     if (!key || key === "all") return "";
-    var button = document.querySelector('nav.sports button[data-sport="' + CSS.escape(key) + '"]');
-    return button ? (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() : String(key).toLowerCase();
+    var nav = sportsNav();
+    var button = nav && nav.querySelector('button[data-sport="' + CSS.escape(key) + '"]');
+    return button ? (button.textContent || "").replace(/\s+/g, " ").trim() : String(key);
+  }
+
+  function sportLabel(key) {
+    return sportName(key).toLowerCase();
+  }
+
+  function bucketName(key) {
+    var bar = document.querySelector(".running-filters");
+    var button = bar && bar.querySelector('button[data-filter="' + CSS.escape(key) + '"]');
+    if (!button) return key;
+    var text = "";
+    Array.prototype.forEach.call(button.childNodes, function (node) {
+      if (node.nodeType === 3) text += node.textContent;
+    });
+    return text.replace(/\s+/g, " ").trim() || key;
   }
 
   function sportAllows(row) {
@@ -192,7 +216,8 @@
 
   function sportKeyFor(row) {
     var label = (row.getAttribute("data-sport") || "").replace(/\s+/g, " ").trim().toLowerCase();
-    var buttons = document.querySelectorAll("nav.sports button[data-sport]");
+    var nav = sportsNav();
+    var buttons = nav ? nav.querySelectorAll("button[data-sport]") : [];
     for (var i = 0; i < buttons.length; i++) {
       var text = (buttons[i].textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
       if (text === label) return buttons[i].getAttribute("data-sport") || "all";
@@ -214,12 +239,17 @@
     });
   }
 
+  function lanesOf(row) {
+    var n = parseInt(row.getAttribute("data-lanes") || "1", 10);
+    return n > 0 ? n : 1;
+  }
+
   function refreshCounts() {
     var counts = { live: 0, settled: 0, upcoming: 0 };
     Array.prototype.forEach.call(rows(), function (row) {
       if (!sportAllows(row)) return;
       var bucket = row.getAttribute("data-filter");
-      if (Object.prototype.hasOwnProperty.call(counts, bucket)) counts[bucket] += 1;
+      if (Object.prototype.hasOwnProperty.call(counts, bucket)) counts[bucket] += lanesOf(row);
     });
     var bar = document.querySelector(".running-filters");
     if (!bar) return;
@@ -252,23 +282,26 @@
     });
   }
 
-  function setSportFilter(name) {
+  function setSportFilter(name, clearedName) {
     name = name || "all";
     var nav = sportsNav();
     if (nav) nav.setAttribute("data-sport-filter", name);
     syncSportPressed(name);
-    apply(currentBucket());
+    apply(currentBucket(), clearedName, sportName(name) || "this filter");
   }
 
   function pressSport(name) {
+    // A pressed row that still matches the new sport stays pressed. One that
+    // does not is cleared, and the card pane says why, rather than swapping
+    // in another contest without a word.
     var previous = document.querySelector('.running-row[aria-pressed="true"]');
-    setSportFilter(name || "all");
-    if (!previous || !previous.hidden) return;
-    var next = document.querySelector(".running-row:not([hidden])");
-    if (next) select(next, true);
+    var previousName = previous ? (previous.getAttribute("data-name") || "that contest") : "";
+    setSportFilter(name || "all", previousName);
   }
 
-  function apply(name) {
+  // `where` names what hid the pressed row: the sport just pressed, or the
+  // bucket tab just pressed. Omitted, it is the bucket.
+  function apply(name, clearedName, where) {
     var n = 0;
     Array.prototype.forEach.call(rows(), function (row) {
       var show = row.getAttribute("data-filter") === name && sportAllows(row);
@@ -292,7 +325,16 @@
     var caption = document.getElementById("settled-caption");
     if (caption) caption.hidden = name !== "settled";
     var selected = document.querySelector('.running-row[aria-pressed="true"]');
-    if (selected && selected.hidden) clearSelection();
+    if (selected && selected.hidden) {
+      var why = "Selection cleared: " + (clearedName || selected.getAttribute("data-name") || "that contest")
+        + " is not in " + (where || bucketName(name)) + ". Select a contest in Running.";
+      clearSelection(why);
+    } else if (!selected) {
+      // Nothing pressed and nothing cleared on this press: the pane's own
+      // prompt, not a reason left over from an earlier press.
+      var prompt = document.getElementById("rules-empty");
+      if (prompt) prompt.textContent = "Select a contest in Running.";
+    }
     refreshCounts();
     syncChipDim();
   }
@@ -315,7 +357,8 @@
       return;
     }
     var text = ["data-competition", "data-sport", "data-name", "data-kickoff", "data-price"]
-      .map(function (attr) { return row.getAttribute(attr) || "—"; })
+      .map(function (attr) { return row.getAttribute(attr) || ""; })
+      .filter(function (part, index, all) { return part && part !== "—" && all.indexOf(part) === index; })
       .join(" · ");
     line.textContent = text;
     announce(text);
@@ -358,6 +401,12 @@
     });
     var pressed = bar.querySelector('[aria-pressed="true"]');
     apply(pressed ? pressed.getAttribute("data-filter") : "live");
+    // Nothing pressed yet: press the first market on show so the card pane
+    // opens with content. No scroll: the reader has not asked for anything.
+    if (!document.querySelector('.running-row[aria-pressed="true"]')) {
+      var first = document.querySelector(".running-row:not([hidden])");
+      if (first) select(first, true, false);
+    }
   }
 
   var sports = sportsNav();

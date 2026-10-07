@@ -11,6 +11,7 @@
       api.syncHeaderOffset(document);
       api.containWideTables(document);
       api.wireRuleCards(document);
+      api.revealHash(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
     else go();
@@ -272,12 +273,50 @@
         });
       }
     }
+    // The right-edge fade stays while columns sit past the edge. At the end
+    // of the scroll it comes off, so the last column is never dimmed for good.
+    function paintEnd(box) {
+      var atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
+      box.classList.toggle("scroll-end", atEnd);
+    }
+    function paintEnds() {
+      Array.prototype.forEach.call(doc.querySelectorAll(".tbl.scroll-x"), paintEnd);
+    }
     measure();
-    if (view) view.addEventListener("resize", measure);
+    paintEnds();
+    if (view) view.addEventListener("resize", function () { measure(); paintEnds(); });
     doc.addEventListener("toggle", function (event) {
       var target = event.target;
-      if (target && String(target.tagName).toLowerCase() === "details") measure();
+      if (target && String(target.tagName).toLowerCase() === "details") { measure(); paintEnds(); }
     }, true);
+    doc.addEventListener("scroll", function (event) {
+      var box = event.target;
+      if (box && box.classList && box.classList.contains("tbl")) paintEnd(box);
+    }, true);
+  }
+
+  // A link to #summary or #method lands inside a closed <details>, which
+  // reads as an empty heading. Open the target and every folded ancestor,
+  // and a section whose first child is the fold. Runs on load and on every
+  // hash change, on every page that loads this file.
+  function revealHash(doc) {
+    var view = doc.defaultView;
+    function reveal() {
+      var hash = (view && view.location ? view.location.hash : "") || "";
+      if (hash.length < 2) return;
+      var id;
+      try { id = decodeURIComponent(hash.slice(1)); } catch (err) { return; }
+      var target = doc.getElementById(id);
+      if (!target) return;
+      for (var node = target; node; node = node.parentElement) {
+        if (String(node.tagName).toLowerCase() === "details") node.open = true;
+      }
+      var own = target.querySelector(":scope > details");
+      if (own) own.open = true;
+      if (target.scrollIntoView) target.scrollIntoView({ block: "start" });
+    }
+    reveal();
+    if (view) view.addEventListener("hashchange", reveal);
   }
 
   // Soccer rule cards. A click flips the card; a link on the back is left alone.
@@ -431,5 +470,6 @@
     paintRow: paintRow,
     containWideTables: containWideTables,
     wireRuleCards: wireRuleCards,
+    revealHash: revealHash,
   };
 });

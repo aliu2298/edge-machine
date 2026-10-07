@@ -58,8 +58,8 @@ def _read(rel):
 
 def _published_pages():
     """Sandbox, production, trading, and whatever archive weeks are on disk."""
-    pages = ["sandbox.html", "production.html", "trading.html", "soccer.html",
-             "tennis.html", "cricket.html", "nba.html", "archive/index.html"]
+    pages = ["index.html", "sandbox.html", "production.html", "trading.html", "soccer.html",
+             "tennis.html", "cricket.html", "nba.html", "crypto.html", "archive/index.html"]
     archive = os.path.join(ROOT, "public_site", "archive")
     if os.path.isdir(archive):
         weeks = sorted(
@@ -91,6 +91,17 @@ print("\n3. nav wraps instead of clipping")
 nav_css = css.split("nav.main, nav.toc {", 1)[-1].split("}", 1)[0]
 ok("flex-wrap: wrap" in nav_css and "overflow-x: visible" in nav_css,
    "the main nav and the sub-nav wrap")
+import site_chrome
+for rel in ("index.html", "nba.html", "archive/index.html"):
+    page_html = _read(os.path.join("public_site", rel))
+    header = re.search(r'<header class="site">.*?</header>', page_html, re.S)
+    header = header.group(0) if header else ""
+    root = "../index.html" if rel.startswith("archive/") else "./index.html"
+    ok(page_html.count('<header class="site">') == 1 and f'<a class="brand" href="{root}"' in header
+       and header.count("<nav class=\"main\"") == 1
+       and len(re.findall(r"<a\b", re.search(r'<nav class="main"[^>]*>.*?</nav>', header, re.S).group(0))) == len(site_chrome.PAGES)
+       and "page-menu" not in header and '<nav class="sports"' not in header,
+       f"{rel} carries the one shell: brand to the root and {len(site_chrome.PAGES)} page pills")
 
 print("\n4. dates stay on one line")
 date_css = css.split('td[data-l="Date"]', 1)[-1][:240] if 'td[data-l="Date"]' in css else ""
@@ -153,8 +164,8 @@ def _fixture_html():
 <body>
 <header class="site">
 <div class="topbar">
-<a class="brand" href="/sandbox.html">Edge Machine</a>
-<nav class="main" aria-label="Pages"><a href="/sandbox.html" aria-current="page">Sandbox</a><a href="/production.html">Production</a><a href="/trading.html">Trading</a><a href="/sandbox.html#method">Method</a></nav>
+<a class="brand" href="/index.html">Edge Machine</a>
+<nav class="main" aria-label="Pages"><a href="/sandbox.html" aria-current="page">Sandbox</a><a href="/production.html">Production</a><a href="/trading.html">Trading</a><a href="/nba.html">NBA</a><a href="/soccer.html">Soccer</a><a href="/tennis.html">Tennis</a><a href="/cricket.html">Cricket</a><a href="/crypto.html">Crypto</a><a href="/sandbox.html#method">Method</a></nav>
 <button type="button" id="vw" class="vw">Phone view</button>
 <p class="stamp">Updated Sep 30, 9:09 PM CT</p>
 </div>

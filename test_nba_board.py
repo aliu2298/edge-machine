@@ -435,18 +435,24 @@ ok(not any(m.group(2).strip() for m in _SCRIPT.finditer(HTML))
 ok(site_chrome.CSP in HTML, "the page keeps the site Content-Security-Policy")
 ok('href="./site.css"' in HTML and "<style" not in HTML.lower() and not re.search(r"\sstyle\s*=", HTML),
    "no inline style")
-ok('class="sport-row"' in HTML and 'class="topbar"' in HTML
-   and 'href="./nba.html" aria-current="page"' in HTML,
-   "the dark shell is up and the NBA tab is current")
-sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', HTML, re.S).group(0)
-nba_tab = re.search(r'<a\b[^>]*href="./nba.html"[^>]*>', sports)
+ok(HTML.count('<header class="site">') == 1 and 'class="topbar"' in HTML
+   and '<a class="brand" href="./index.html">Edge Machine</a>' in HTML
+   and '<body class="sports-page sport-nba">' in HTML,
+   "the one shared shell is up, the brand is the site root, and the body is the NBA sport page")
+ok('class="sport-row"' not in HTML and 'class="page-menu"' not in HTML
+   and "Pages ⌄" not in HTML and '<nav class="sports"' not in HTML,
+   "no third header: no sport row, Pages menu, or sport selector")
+main_nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', HTML, re.S)
+main_nav = main_nav.group(0) if main_nav else ""
+nba_tab = re.search(r'<a\b[^>]*href="./nba.html"[^>]*>', main_nav)
 ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and "aria-describedby" not in nba_tab.group(0)
-   and sports.count('aria-current="page"') == 1,
-   "only the NBA tab is current, and that tab is not described as coming soon")
-ok(all(f'href="./{sport}.html"' in sports for sport in ("soccer", "tennis", "cricket", "crypto"))
-   and 'aria-disabled="true"' not in sports,
-   "the other sport tabs reach the published pages")
+   and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
+   "only the NBA pill is current, and that pill is not described as coming soon")
+ok(all(f'href="./{sport}.html"' in main_nav for sport in ("soccer", "tennis", "cricket", "crypto"))
+   and 'aria-disabled="true"' not in main_nav,
+   "the other sport pills reach the published pages")
+ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
 ok("theme-toggle" not in HTML and "data-theme" not in HTML, "no theme toggle")
 ok("download" not in HTML.lower() and ".csv" not in HTML.lower(), "no download or CSV")
 ok(fmt.display_updated(NOW) in HTML and "CT" in fmt.display_updated(NOW),

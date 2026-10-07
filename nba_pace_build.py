@@ -564,9 +564,10 @@ def team_list(blob, soon, featured):
             f'<tr><td>{esc(team)}</td><td class="num">{_points(scored)}</td>'
             f'<td class="num">{_points(allowed)}</td><td class="num">{_points(scored + allowed)}</td>'
             f'<td>{_tag_html(tag)}</td>{nxt}</tr>')
-    head = ("<tr><th>Team</th><th>Scored</th><th>Allowed</th><th>Combined</th>"
-            "<th>Label</th><th>Next</th></tr>")
-    return f'{note}<div class="tbl"><table class="team-table">{head}{"".join(rows)}</table></div>'
+    head = ("<thead><tr><th>Team</th><th>Scored</th><th>Allowed</th><th>Combined</th>"
+            "<th>Label</th><th>Next</th></tr></thead>")
+    return (f'{note}<div class="tbl"><table class="team-table">{head}'
+            f'<tbody>{"".join(rows)}</tbody></table></div>')
 
 
 def _clock(blob, now):
@@ -607,11 +608,16 @@ def build(blob=None, now=None):
         )
     window = blob.get("window")
     window_txt = esc(window) if window is not None else "—"
+    built = _instant(blob.get("built")) if isinstance(blob, dict) else None
+    data_note = ""
+    if built is not None and abs((clock - built).total_seconds()) > 60:
+        data_note = (f'<p class="sm mut">Pace data as of {esc(fmt.when(built))}; the lists below are '
+                     f'cut at {esc(fmt.when(clock))}.</p>')
     body = f"""<div class="nba-head">
 <div>
 <h1>NBA Analyst Desk</h1>
 <p class="lede">Tip times in CT · combined points. Open a matchup for last-{window_txt} analysis.</p>
-</div>
+{data_note}</div>
 <nav class="nba-local-nav" aria-label="NBA sections">
 <a href="#matchups">Upcoming</a>
 <a href="#graded">Results</a>
@@ -653,7 +659,11 @@ def main():
         return 1
     with open(SRC, encoding="utf-8") as fh:
         blob = json.load(fh)
-    html = build(blob)
+    # The real clock, not the file's own build stamp: Upcoming is the next 24
+    # hours from now, so a game already played is never listed as upcoming.
+    import sandbox_build
+    html = sandbox_build.label_cells(
+        build(blob, now=datetime.datetime.now(datetime.timezone.utc)))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     tmp = OUT + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:

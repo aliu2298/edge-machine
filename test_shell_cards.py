@@ -19,6 +19,7 @@ import threading
 from datetime import timedelta, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
+import fmt
 import sandbox_build
 import shell_build
 
@@ -105,6 +106,8 @@ held_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob
 held_row = _rows(held_page)[0]
 ok(">held</span>" in held_row and ">Void</span>" not in held_row,
    "rendered unknown status is the escaped raw word")
+ok('<span class="running-status" data-status="held">held</span>' in held_row,
+   "a status spoken the same as it reads has no hidden/spoken pair")
 
 
 print("\nungraded bets past six hours")
@@ -169,7 +172,8 @@ past_page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob
 
 
 def _named_row(page, name, why):
-    found = [row for row in _rows(page) if _attr(row, "data-name") == name]
+    """Rows carry the rendered name: 'A v B' in data is 'A vs B' on the page."""
+    found = [row for row in _rows(page) if _attr(row, "data-name") == fmt.contest(name)]
     eq(len(found), 1, why)
     return found[0] if len(found) == 1 else ""
 
@@ -178,6 +182,11 @@ late_row = _named_row(past_page, "Late v Grade", "the awaiting contest is its ow
 on_row = _named_row(past_page, "On v Time", "the six-hour contest is its own row")
 ok('data-awaiting="true"' in late_row and ">Awaiting result</span>" in late_row,
    "the stuck row renders Awaiting result")
+ok('data-status="awaiting"><span aria-hidden="true">Awaiting result</span>'
+   '<span class="sr-only">awaiting result</span>' in late_row,
+   "Awaiting result keeps its spoken form, which differs from the label")
+eq(_attr(late_row, "data-name"), "Late vs Grade", "the row name spells the sides with vs")
+ok('<span class="running-time">Live</span>' in late_row, "a live row's time reads Live")
 eq(_attr(late_row, "data-filter"), "live", "Awaiting result stays in Live")
 ok('data-awaiting="true"' not in on_row and ">Open</span>" in on_row,
    "the six-hour boundary row stays Open")
@@ -338,6 +347,13 @@ plain = _contests([
 ])
 eq(plain[0]["page"], "./cricket.html", "a cricket contest links to cricket.html")
 ok("edge" not in plain[0]["cards"][0], "a null edge is omitted")
+_about = shell_build._about("oddspedia")
+ok(_about and plain[0]["cards"][0].get("about") == _about and _about.endswith("."),
+   f"a registered source's card carries the first sentence of its note ({_about!r})")
+ok("about" not in found[0]["cards"][0], "a source with no registered note has no about line")
+ok('addLine(article, "rule-mini-about", card.about' in open(
+    os.path.join(ROOT, "public_site", "shell.js"), encoding="utf-8").read(),
+   "shell.js renders the about line as rule-mini-about")
 mma = _contests([
     _lead("m", "A", "B", "2026-10-06T15:00:00Z", "pending", "x|mma", "mma", 0.50),
 ])
@@ -679,9 +695,33 @@ def _browser():
                 }""")
                 ok(colors and colors["awaiting"] != colors["open"] and colors["italic"] == "italic",
                    f"Awaiting result is styled apart from an open Live row ({colors})")
+                loaded = view.evaluate("""() => {
+                  const pressed = [...document.querySelectorAll('.running-row[aria-pressed="true"]')];
+                  const first = document.querySelector(".running-row:not([hidden])");
+                  const about = [...document.querySelectorAll(".rule-mini .rule-mini-about")];
+                  return {
+                    n: pressed.length,
+                    first: !!first && pressed[0] === first,
+                    cards: document.querySelectorAll(".rule-mini").length,
+                    about: about.map((p) => p.textContent),
+                  };
+                }""")
+                ok(loaded["n"] == 1 and loaded["first"] and loaded["cards"] >= 1,
+                   f"on load the first visible row is pressed and its cards show ({loaded})")
+                view.locator('.bet-chip').filter(has_text="On vs Time").focus()
+                view.keyboard.press("Enter")
+                view.wait_for_timeout(30)
+                about_line = view.evaluate("""() => {
+                  const about = [...document.querySelectorAll(".rule-mini .rule-mini-about")];
+                  return about.map((p) => p.textContent);
+                }""")
+                eq(about_line, [shell_build._about("oddspedia")],
+                   "a card paints the source's about line")
+                view.keyboard.press("Escape")
+                view.wait_for_timeout(30)
                 warn = view.evaluate("""() => {
                   const row = [...document.querySelectorAll(".running-row")]
-                    .find((item) => item.getAttribute("data-name") === "Win v Wait");
+                    .find((item) => item.getAttribute("data-name") === "Win vs Wait");
                   if (!row) return null;
                   const shadow = getComputedStyle(row).boxShadow;
                   return {
@@ -693,7 +733,7 @@ def _browser():
                 ok(warn and warn["flag"] == "true" and not warn["hidden"]
                    and "245, 194, 107" in warn["shadow"],
                    f"a mixed awaiting row keeps the warn bar ({warn})")
-                view.locator('.bet-chip').filter(has_text="Late v Grade").focus()
+                view.locator('.bet-chip').filter(has_text="Late vs Grade").focus()
                 view.keyboard.press("Enter")
                 view.wait_for_timeout(30)
                 card_style = view.evaluate("""() => {
@@ -829,22 +869,22 @@ def _browser():
                 eq(reclicked["href"], "./production.html",
                    "clicking the selected row resets Full page")
                 sport = view.evaluate("""() => {
-                  const nav = document.querySelector("nav.sports");
+                  const nav = document.querySelector("nav.sport-filter");
                   nav.setAttribute("data-sport-filter", "cricket");
                   document.querySelector(".running-filters button[aria-pressed='true']").click();
                   const row = [...document.querySelectorAll(".running-row")]
-                    .find((item) => item.getAttribute("data-name") === "Mix v Match");
+                    .find((item) => item.getAttribute("data-name") === "Mix vs Match");
                   return row ? row.hidden : null;
                 }""")
                 ok(sport is True, "a cricket sport filter hides the soccer row")
-                view.locator(".bet-chip").filter(has_text="Mix v Match").first.click()
+                view.locator(".bet-chip").filter(has_text="Mix vs Match").first.click()
                 view.wait_for_timeout(30)
                 opened = view.evaluate("""() => {
-                  const nav = document.querySelector("nav.sports");
+                  const nav = document.querySelector("nav.sport-filter");
                   const row = [...document.querySelectorAll(".running-row")]
-                    .find((item) => item.getAttribute("data-name") === "Mix v Match");
+                    .find((item) => item.getAttribute("data-name") === "Mix vs Match");
                   const chip = [...document.querySelectorAll(".bet-chip")]
-                    .find((item) => item.textContent.indexOf("Mix v Match") >= 0);
+                    .find((item) => item.textContent.indexOf("Mix vs Match") >= 0);
                   const link = document.querySelector("a.full-page");
                   return {
                     filter: nav ? nav.getAttribute("data-sport-filter") : "",
@@ -863,7 +903,7 @@ def _browser():
                    and opened["cards"] == 2 and opened["href"] == "./soccer.html"
                    and opened["bucket"] == "settled",
                    f"a chip reveals the contest, selects it, and opens its cards ({opened})")
-                view.locator(".bet-chip").filter(has_text="Mix v Match").first.focus()
+                view.locator(".bet-chip").filter(has_text="Mix vs Match").first.focus()
                 view.keyboard.press(" ")
                 view.wait_for_timeout(30)
                 closed = view.evaluate("""() => {
@@ -897,16 +937,20 @@ def _browser():
                 cleared = view.evaluate("""() => {
                   const empty = document.getElementById("rules-empty");
                   const link = document.querySelector("a.full-page");
+                  const live = document.getElementById("rules-live");
                   return {
                     cards: document.querySelectorAll(".rule-mini").length,
                     empty: empty ? empty.textContent : "",
                     emptyHidden: empty ? empty.hidden : null,
                     href: link ? link.getAttribute("href") : "",
+                    live: live ? live.textContent : "",
                   };
                 }""")
                 eq(cleared["cards"], 0, "hiding the selected row clears the cards")
-                eq(cleared["empty"], "Select a contest in Running.",
-                   "hiding the selected row restores the empty state")
+                ok(cleared["empty"].startswith("Selection cleared: Mix vs Match is not in ")
+                   and cleared["empty"].endswith(" Select a contest in Running.")
+                   and cleared["live"] == cleared["empty"],
+                   f"hiding the selected row says why the pane emptied, and announces it ({cleared['empty']!r})")
                 ok(not cleared["emptyHidden"], "the empty state is visible again")
                 eq(cleared["href"], "./production.html",
                    "Full page returns to the Production board")

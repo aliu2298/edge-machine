@@ -351,6 +351,12 @@ if not hasattr(SB, "_pct_span"):
 else:
     eq(SB._pct_span(-0.0004, digits=1), '<span class="mut">0.0%</span>',
        "the percent span for -0.0004 is mut 0.0%")
+# The edge cell helper still follows the displayed digits, but the Running
+# table no longer prints an Edge column: Contest, Price, Sport, Backing,
+# Source, Starts. A row has exactly those cells and no edge percent.
+_edge_cell = SB._edge_cell(-0.0004) if hasattr(SB, "_edge_cell") else ""
+ok(_edge_cell and "0.0%" in _edge_cell and "pos" not in _edge_cell and "neg" not in _edge_cell,
+   "an edge shown as 0.0% is not painted positive or negative")
 _edge_html, _n = SB.open_rows({"quotes": [{
     "id": "colour", "status": "open", "bet": True, "sport": "mlb",
     "start": "2026-09-27T23:00:00+00:00", "pick": "a", "side_a": "Home", "side_b": "Away",
@@ -358,13 +364,15 @@ _edge_html, _n = SB.open_rows({"quotes": [{
     "label": "Home v Away",
     "venue": "kalshi", "market_id": "COLOUR", "url": "https://example.com/c",
 }]})
-_edge_cell = ""
-for _td in re.findall(r"<td\b[^>]*>.*?</td>", _edge_html, re.S):
-    if "0.0%" in _td:
-        _edge_cell = _td
-        break
-ok(_edge_cell and "pos" not in _edge_cell and "neg" not in _edge_cell,
-   "an edge shown as 0.0% is not painted positive or negative")
+_live_heads = [re.sub(r"<[^>]+>", "", h) for h in re.findall(r"<th\b[^>]*>.*?</th>", SB.LIVE_HEAD, re.S)]
+eq(_live_heads, ["Contest", "Price", "Sport", "Backing", "Source", "Starts"],
+   "the Running header is Contest, Price, Sport, Backing, Source, Starts, with no Edge column")
+_edge_tds = re.findall(r"<td\b[^>]*>.*?</td>", _edge_html, re.S)
+eq(len(_edge_tds), len(_live_heads), "a Running row has one cell per header column")
+ok("0.0%" not in _edge_html and "Edge" not in _edge_html,
+   "a Running row prints no edge percent")
+ok("Home vs Away" in _edge_tds[0] and "Home v Away" not in _edge_tds[0],
+   "the Running contest cell prints A vs B")
 if not hasattr(production, "_tone"):
     ok(False, "production colours a 0.0% display as neutral")
 else:
@@ -400,11 +408,14 @@ except (OverflowError, ValueError, OSError) as exc:
     _prod = ""
 ok(_raised is None, "a malformed kickoff does not crash the production page"
    + (f" ({type(_raised).__name__}: {_raised})" if _raised else ""))
-ok("Overflow FC v Range" in _prod, "the out-of-range kickoff row is still on the page")
-ok("Bad Stamp v Placeholder" in _prod, "the unparseable kickoff row is still on the page")
+# Match names are printed as "A vs B" (fmt.contest) whatever the lead stored.
+ok(fmt.contest("Overflow FC v Range") in _prod and "Overflow FC v Range" not in _prod,
+   "the out-of-range kickoff row is still on the page, as A vs B")
+ok(fmt.contest("Bad Stamp v Placeholder") in _prod and "Bad Stamp v Placeholder" not in _prod,
+   "the unparseable kickoff row is still on the page, as A vs B")
 _overflow_row = ""
 for _row in re.findall(r"<tr\b[^>]*>.*?</tr>", _prod, re.S):
-    if "Overflow FC v Range" in _row:
+    if fmt.contest("Overflow FC v Range") in _row:
         _overflow_row = _row
         break
 _ph = getattr(production, "PLACEHOLDER_DATE", None)
@@ -413,7 +424,7 @@ ok(_overflow_row and "kickoff unknown" in _overflow_row,
    "the out-of-range kickoff is labeled kickoff unknown")
 _bad_row = ""
 for _row in re.findall(r"<tr\b[^>]*>.*?</tr>", _prod, re.S):
-    if "Bad Stamp v Placeholder" in _row:
+    if fmt.contest("Bad Stamp v Placeholder") in _row:
         _bad_row = _row
         break
 ok(_bad_row and "kickoff unknown" in _bad_row,
@@ -464,11 +475,45 @@ if _run_tables:
            f"all {_checked} Running rows match the header, and Sport is filled when the ledger has one")
 
 _css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
-_narrow = _css.split("@media (max-width: 640px)", 1)[-1]
-ok('td[data-l="Source"]' in _narrow and "display: table-cell" in _narrow and "text-align: left" in _narrow,
-   "under 640px the card rules do not leave Sport or Source as a right-aligned block")
+_site_js = open(os.path.join(ROOT, "public_site", "site.js"), encoding="utf-8").read()
+_tables_js = open(os.path.join(ROOT, "public_site", "tables.js"), encoding="utf-8").read()
+
+
+def _media_block(css, query):
+    """The body of the first @media block whose query matches, braces balanced."""
+    m = re.search(r"@media\s*\(\s*" + query + r"\s*\)\s*\{", css)
+    if not m:
+        return ""
+    depth, i = 1, m.end()
+    while i < len(css) and depth:
+        depth += {"{": 1, "}": -1}.get(css[i], 0)
+        i += 1
+    return css[m.end():i - 1]
+
+
+# Under 760px the phone cards are the default. The 640px block used to force
+# the table back (display: table-cell); now it only makes a requested table
+# scroll inside its card.
+_phone_js = _site_js.split("var phoneCards", 1)[-1].split("};", 1)[0]
+ok("(max-width:760px)" in _phone_js and "640" not in _phone_js,
+   "site.js phoneCards is only the 760px query, with no 640px table override")
+_cards = _media_block(_css, "max-width:\s*760px")
+ok('html:not([data-view="table"]) td[data-l="Source"]' in _cards
+   and 'html:not([data-view="table"]) td[data-l="Contest"]' in _cards
+   and "display: block;" in _cards and "text-align: left;" in _cards,
+   "under 760px the card rules lay Contest and Source out as left-aligned blocks")
+ok('html:not([data-view="table"]) thead { display: none; }' in _cards,
+   "under 760px the cards hide the header row unless the reader asked for the table")
+_narrow = _media_block(_css, "max-width:\s*640px")
+ok("display: table-cell" not in _narrow and 'html[data-view="table"] .tbl' in _narrow
+   and "overflow-x: auto" in _narrow,
+   "under 640px the table is not forced back; a requested table scrolls inside its card")
 ok(_narrow.count("vertical-align: top") >= 2,
    "under 640px every cell uses the same vertical alignment")
+ok(".tbl.scroll-x:not(.scroll-end)" in _css and "mask-image" in _css,
+   "a scrolling table fades the edge that still has columns past it")
+ok('classList.toggle("scroll-end"' in _tables_js and 'classList.add("scroll-x")' in _tables_js,
+   "tables.js marks a wide table scroll-x and drops the fade with scroll-end at the end")
 
 
 print("\ntest_climate_excluded_rows_stay_off_the_pages")
@@ -580,17 +625,21 @@ def _kickoff_quote(**extra):
     return q
 
 
+# A quote with a start instant prints fmt.when; one with only a calendar
+# day prints "Sep 27"; a missing or unreadable day is the dash.
 _kick_html, _kick_n = SB.open_rows({"quotes": [
-    _kickoff_quote(id="early-date", date="2026-09-01", label="Early kickoff",
+    _kickoff_quote(id="start-instant", date="2026-09-27", label="Instant kickoff",
+                   market_id="INSTANT"),
+    _kickoff_quote(id="early-date", start=None, date="2026-09-01", label="Early kickoff",
                    market_id="EARLYDATE"),
-    _kickoff_quote(id="good-date", date="2026-09-27", label="Good kickoff",
+    _kickoff_quote(id="good-date", start=None, date="2026-09-27", label="Good kickoff",
                    market_id="GOODDATE"),
-    _kickoff_quote(id="none-date", date=None, label="None kickoff",
+    _kickoff_quote(id="none-date", start=None, date=None, label="None kickoff",
                    market_id="NONEDATE"),
-    _kickoff_quote(id="garbage-date", date="not-a-date", label="Garbage kickoff",
+    _kickoff_quote(id="garbage-date", start=None, date="not-a-date", label="Garbage kickoff",
                    market_id="GARBAGE"),
 ]})
-eq(_kick_n, 4, "a bad kickoff still leaves the open bet on the running table")
+eq(_kick_n, 5, "a bad kickoff still leaves the open bet on the running table")
 
 
 def _row_for(html, label):
@@ -605,11 +654,16 @@ def _date_td(row):
     return cells[5] if len(cells) > 5 else ("", "")
 
 
+_instant_attrs, _instant_inner = _date_td(_row_for(_kick_html, "Instant kickoff"))
 _good_attrs, _good_inner = _date_td(_row_for(_kick_html, "Good kickoff"))
 _none_attrs, _none_inner = _date_td(_row_for(_kick_html, "None kickoff"))
 _garbage_attrs, _garbage_inner = _date_td(_row_for(_kick_html, "Garbage kickoff"))
-ok("2026-09-27" in _good_inner and 'data-v="20260927"' in _good_attrs,
-   "a readable kickoff date is shown, with a numeric data-v")
+# The data-v is the start's UTC minute (23:00Z), while the text is the Chicago clock.
+ok(_instant_inner.strip() == "Sep 27, 6:00 PM CT" and 'data-v="202609271800"' in _instant_attrs,
+   "a start instant is shown as fmt.when, with a YYYYMMDDHHMM data-v of the instant")
+ok(_good_inner.strip() == "Sep 27" and 'data-v="202609270000"' in _good_attrs,
+   "a readable kickoff day with no clock is shown as Sep 27, with a YYYYMMDD0000 data-v")
+ok("2026-09-27" not in _kick_html, "no Starts cell prints an ISO date")
 ok(_none_inner.strip() == "—" and 'data-v=""' in _none_attrs,
    "an open bet with a None kickoff shows the placeholder dash")
 ok(_garbage_inner.strip() == "—" and "not-a-date" not in _garbage_inner
@@ -623,8 +677,9 @@ def _cell_data_v(attrs):
 
 
 _sort_rows = []
-for _qid, _label in (("early-date", "Early kickoff"), ("good-date", "Good kickoff"),
-                     ("none-date", "None kickoff"), ("garbage-date", "Garbage kickoff")):
+for _qid, _label in (("start-instant", "Instant kickoff"), ("early-date", "Early kickoff"),
+                     ("good-date", "Good kickoff"), ("none-date", "None kickoff"),
+                     ("garbage-date", "Garbage kickoff")):
     _attrs, _inner = _date_td(_row_for(_kick_html, _label))
     _sort_rows.append({
         "id": _qid,
@@ -663,6 +718,22 @@ for _dir in ("asc", "desc"):
     _order = (_sort.get("order") or {}).get(_dir) or []
     ok(_sort.get("numeric") is True and set(_order[-2:]) == _bad_ids,
        f"a None or garbage kickoff sorts last when the date column is {_dir}")
+eq(((_sort.get("order") or {}).get("asc") or [])[:3], ["early-date", "good-date", "start-instant"],
+   "a day-only Starts cell sorts before an instant later that same day")
+
+# The Settled cell on a settled row is fmt.when of the settlement, not an ISO date.
+_settled_html, _settled_n = SB.settled_rows({"quotes": [{
+    "id": "settled-when", "status": "won", "bet": True, "sport": "mlb", "pick": "a",
+    "side_a": "Home", "side_b": "Away", "price": 0.5, "pnl": 100.0, "result": "a",
+    "settled": "2026-09-27T23:00:00+00:00", "start": "2026-09-27T20:00:00+00:00",
+    "date": "2026-09-27", "source": "team2_form_l10", "label": "Home v Away",
+    "venue": "kalshi", "market_id": "SETTLEDWHEN", "url": "https://example.com/s",
+}]})
+_settled_tds = re.findall(r"<td\b[^>]*>(.*?)</td>", _settled_html, re.S)
+eq(_settled_n, 1, "the settled fixture row is on the settled table")
+ok(_settled_tds and _settled_tds[-1].strip() == "Sep 27, 6:00 PM CT",
+   "a settled row prints the settlement as fmt.when, not an ISO date")
+eq(SB._settled_day({"settled": "not-a-date"}), "—", "an unreadable settlement is the dash")
 
 
 if FAILS:

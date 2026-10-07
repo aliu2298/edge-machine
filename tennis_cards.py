@@ -121,7 +121,7 @@ def _market_name(base, fam=FAMILY):
 
 
 def _fixture_label(q):
-    return S.display_label(q).split(":", 1)[0].strip()
+    return S.position_label(q).split(":", 1)[0].strip()
 
 
 def _fixture_key(q):
@@ -289,7 +289,7 @@ def _games(quotes):
         return '<p class="mut">No open game.</p>'
     items = []
     for q in shown:
-        label = S.display_label(q)
+        label = S.position_label(q)
         side = B._side(q) or ""
         when = _kick_label(q)
         extra = " · ".join(part for part in (str(side), when) if part)
