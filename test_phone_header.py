@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Phone header: one short stuck bar, a sideways nav, toggle out of the header.
 
-Fails on the wrapping header (main at the base of this change): the stuck bar
-is several rows tall, the view toggle sits inside it, a one-link section nav
-is rendered, and archive pages have no breadcrumb. Playwright is optional
+Every page carries the same shell: brand (the site root), nine page pills,
+stamp, then a section nav or a breadcrumb. The root marks the brand current
+and no pill. Fails on the wrapping header (main at the base of this change):
+the stuck bar is several rows tall, the view toggle sits inside it, a one-link
+section nav is rendered, and archive pages have no breadcrumb. Playwright is optional
 locally. Without it the static checks still run. CI sets REQUIRE_BROWSER=1,
 and then a missing Playwright fails this test.
 """
@@ -74,15 +76,24 @@ def _has_toggle(path):
 
 
 # One link, or a breadcrumb in that slot. The section nav must not be rendered.
-# The NBA board sits in the shell. It has sport tabs, not a section nav.
-_SPORT_PAGES = {"nba.html", "soccer.html", "tennis.html", "crypto.html"}
-_NO_TOC = {"index.html", "trading.html", "archive/index.html"} | _SPORT_PAGES
+# Every page, the sport pages included, carries the one shell: brand, page
+# pills, stamp. The NBA board and Trading have one section, so no section nav.
+_NO_TOC = {"trading.html", "nba.html", "archive/index.html"}
 
 
 def _expects_toc(path):
     if path in _NO_TOC or path.startswith("archive/"):
         return False
     return True
+
+
+def _brand_href(path):
+    return "../index.html" if path.startswith("archive/") else "./index.html"
+
+
+def _toc_repeats_method(path, labels):
+    """A Method chip repeats the Method pill only where that pill lands: the Sandbox."""
+    return path == "sandbox.html" and "Method" in labels
 
 
 print(f"SHA {SHA}")
@@ -136,7 +147,7 @@ ok('class="here" aria-current="page"' in trail,
 
 src = _read("sandbox_build.py")
 section = re.search(
-    r'sections = \((.*?)\n    \)\n    return site_chrome\.document\(\n        "Sandbox Tracker"',
+    r'sections = \((.*?)\n    \)\n    return site_chrome\.document\(\n        "Edge Machine · Sandbox"',
     src, re.S)
 ok(section is not None and "method" not in section.group(1).lower(),
    "the Sandbox section list does not repeat Method")
@@ -163,7 +174,10 @@ ok('id="vw"' not in index_html and 'class="toc"' not in index_html,
 ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in week_html,
    "a week page generator writes a Sandbox › Archive › W39 breadcrumb")
 ok('class="toc"' not in trade_html, "Trading does not render a one-link Rules nav")
-ok('class="toc"' not in root_html, "the index stub does not render a one-link Sandbox nav")
+_root_toc = _toc(root_html)
+_root_labels = re.findall(r">([^<]+)</a>", _root_toc.group(0) if _root_toc else "")
+ok(_root_labels == ["Running", "Bets roll", "Rule cards", "Status"],
+   f"the site root renders its own four-link section nav, not a one-link Sandbox nav ({_root_labels})")
 
 # The site root's visible time is Central Time, the same form site_root.py writes.
 # A raw ISO instant or a +00:00 offset in that stamp is the broken regeneration.
@@ -188,8 +202,15 @@ ok(_STAMP_TEXT.fullmatch(_stamp_text) is not None,
    f"index.html stamp is 'Updated Mon D, H:MM AM/PM CT' (got {_stamp_text!r})")
 ok("Continue to the Sandbox" not in _index and 'url=./sandbox.html' not in _index,
    "index.html is the Production shell, not a redirect to the Sandbox")
-ok('href="./production.html" aria-current="page"' in _index,
-   "index.html marks Production as the current page")
+ok('<a class="brand" href="./index.html" aria-current="page">Edge Machine</a>' in _index,
+   "index.html marks the brand as the current page")
+_index_main = re.search(r'<nav class="main"[^>]*>.*?</nav>', _index, re.S)
+ok(_index.count('<nav class="main"') == 1 and _index_main is not None
+   and 'aria-current="page"' not in _index_main.group(0),
+   "index.html has one page nav, in the header, with no pill current")
+ok("<title>Edge Machine · Home</title>" in _index and '<body class="analyst-desk">' in _index
+   and "desk-nav" not in _index and "top-production" not in _index,
+   "index.html is the Analyst Desk in the shared shell, with no sidebar rail")
 ok(_lede_text == "" or _STAMP_TEXT.fullmatch(_lede_text) is not None,
    f"index.html has no stale lede (got {_lede_text!r})")
 _raw_hits = _RAW_ISO.findall(_index)
@@ -205,22 +226,27 @@ for path in _published():
     ok(header != "", f"{path} has a site header")
     ok('id="vw"' not in header and "Phone view" not in header and "view-toggle" not in header,
        f"{path} header does not contain the view toggle")
-    _main = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
-    if path in _SPORT_PAGES:
-        ok(_main is not None and _main.group(0).count('aria-current="page"') == 0,
-           f"{path} page nav leaves the current mark to the NBA sport tab")
-        _sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
-        ok(_sports is not None and _sports.group(0).count('aria-current="page"') == 1
-           and f'href="./{path}" aria-current="page"' in _sports.group(0),
-           f"{path} sport selector marks the current page")
-        _labels = re.findall(r">([^<]+)</a>", _main.group(0) if _main else "")
-        _index_nav = re.search(
-            r'<nav class="main"[^>]*>(.*?)</nav>', _read("public_site/index.html"), re.S)
-        _want = re.findall(r"<a\b[^>]*>([^<]*)</a>", _index_nav.group(1) if _index_nav else "")
-        ok(_labels == _want, f"{path} page pills match the shell ({_labels})")
+    ok(html.count('<header class="site">') == 1 and 'class="topbar"' in header,
+       f"{path} has one site header with the top bar")
+    ok(f'<a class="brand" href="{_brand_href(path)}"' in header,
+       f"{path} brand links to the site root")
+    ok("page-menu" not in header and "Pages ⌄" not in header
+       and '<nav class="sports"' not in header and "sport-row" not in header,
+       f"{path} header has no Pages menu, sport selector, or sport row")
+    _main = re.search(r'<nav class="main"[^>]*>.*?</nav>', header, re.S)
+    ok(_main is not None and html.count('<nav class="main"') == 1,
+       f"{path} has one nav.main, in the header")
+    _labels = re.findall(r">([^<]+)</a>", _main.group(0) if _main else "")
+    ok(_labels == [label for _key, label, _href in site_chrome.PAGES],
+       f"{path} page pills match the shell ({_labels})")
+    if path == "index.html":
+        ok(_main is not None and _main.group(0).count('aria-current="page"') == 0
+           and f'<a class="brand" href="{_brand_href(path)}" aria-current="page">' in header,
+           f"{path} marks the brand current and no pill")
     else:
-        ok(_main is not None and _main.group(0).count('aria-current="page"') == 1,
-           f"{path} nav.main has exactly one aria-current=page")
+        ok(_main is not None and _main.group(0).count('aria-current="page"') == 1
+           and f'<a class="brand" href="{_brand_href(path)}">' in header,
+           f"{path} nav.main has exactly one aria-current=page, and the brand is not current")
     toc = _toc(html)
     if not _expects_toc(path):
         ok(toc is None, f"{path} does not render nav.toc")
@@ -229,7 +255,7 @@ for path in _published():
     else:
         labels = re.findall(r">([^<]+)</a>", toc.group(0))
         ok(len(labels) >= 2, f"{path} section nav has {len(labels)} links")
-        ok("Method" not in labels, f"{path} section nav does not repeat Method")
+        ok(not _toc_repeats_method(path, labels), f"{path} section nav does not repeat Method")
     if path.startswith("archive/"):
         ok('class="crumbs"' in html and ">Sandbox<" in html and ">Archive<" in html,
            f"{path} shows the archive breadcrumb")
@@ -263,22 +289,6 @@ def _serve():
     return httpd
 
 
-def _hold_root(route):
-    """Keep the index stub on screen. Visitors are redirected; the audit is not."""
-    path = urllib.parse.urlparse(route.request.url).path
-    if not path.endswith("/index.html") or path.endswith("/archive/index.html"):
-        route.continue_()
-        return
-    resp = route.fetch()
-    body = resp.text()
-    body = body.replace(
-        '<meta http-equiv="refresh" content="0; url=./sandbox.html">',
-        '<meta name="em-hold" content="1">')
-    body = body.replace('\n<script src="./root.js"></script>', "")
-    headers = {k: v for k, v in resp.headers.items() if k.lower() != "content-length"}
-    route.fulfill(status=resp.status, headers=headers, body=body)
-
-
 MEASURE = r"""
 async () => {
   await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
@@ -288,7 +298,8 @@ async () => {
   const nav = document.querySelector("nav.main");
   const links = [...nav.querySelectorAll("a")];
   const tops = links.map((a) => a.offsetTop);
-  const current = nav.querySelector('[aria-current="page"]');
+  const brand = document.querySelector('.brand[aria-current="page"]');
+  const current = nav.querySelector('[aria-current="page"]') || brand;
 
   function fits(el, box) {
     const a = el.getBoundingClientRect();
@@ -297,7 +308,7 @@ async () => {
       && a.left >= c.left - 1 && a.right <= c.right + 1
       && a.top >= c.top - 1 && a.bottom <= c.bottom + 1;
   }
-  const activeVisible = !!(current && fits(current, nav)
+  const activeVisible = !!(current && fits(current, current === brand ? topbar : nav)
     && current.getBoundingClientRect().left >= -1
     && current.getBoundingClientRect().right <= window.innerWidth + 1);
 
@@ -348,9 +359,8 @@ async () => {
   function resolved() {
     const v = doc.getAttribute("data-view");
     if (v === "cards" || v === "table") return v;
-    const wide = window.matchMedia("(max-width:760px)").matches;
-    const phone = window.matchMedia("(max-width:640px)").matches;
-    return wide && !phone ? "cards" : "table";
+    // Cards are the default under 760px. There is no 640px table override.
+    return window.matchMedia("(max-width:760px)").matches ? "cards" : "table";
   }
   const vw = document.getElementById("vw");
   let toggle = null;
@@ -403,6 +413,8 @@ async () => {
     tocMethod: toc ? [...toc.querySelectorAll("a")].some((a) => a.textContent.trim() === "Method") : false,
     crumb: crumbs ? crumbs.textContent.replace(/\s+/g, " ").trim() : "",
     currents: document.querySelectorAll('nav.main [aria-current="page"]').length,
+    brandCurrent: document.querySelectorAll('.brand[aria-current="page"]').length,
+    allCurrent: document.querySelectorAll('header.site [aria-current="page"]').length,
     crumbCurrent: document.querySelectorAll('nav.crumbs [aria-current="page"]').length,
     navHeights: heights("nav.main a"),
     tocHeights: heights("nav.toc a"),
@@ -543,9 +555,8 @@ def _landing_nav_labels():
 
 
 def _nav_count(path):
-    """Landing pills come from index.html. The NBA board uses those same pills."""
-    if path in ("index.html", "nba.html"):
-        return len(_landing_nav_labels())
+    """Every page carries the same pills: site_chrome.PAGES."""
+    del path
     return len(site_chrome.PAGES)
 
 
@@ -679,42 +690,6 @@ def _height_keeps_scroll(page, label, width, height):
        f"{label}: a height-only resize keeps a manual nav scroll ({before:.0f}px -> {after:.0f}px)")
 
 
-def _sport_header(page, label):
-    """The compact sport shell has a vertical Pages menu and a scrolling selector."""
-    menu = page.locator(".page-menu > summary")
-    menu.click()
-    links = page.locator("nav.main a")
-    ok(links.count() == 4 and links.evaluate_all("""links => links.every(a => {
-        const r = a.getBoundingClientRect();
-        return r.height >= 44 && r.left >= 0 && r.right <= innerWidth;
-    })"""), f"{label}: four comfortable page destinations fit the menu")
-    menu.focus()
-    reached = []
-    for _ in range(4):
-        page.keyboard.press("Tab")
-        reached.append(page.evaluate("document.activeElement.textContent.trim()"))
-    ok(reached == ["Sandbox", "Production", "Trading", "Method"],
-       f"{label}: keyboard reaches every page destination ({reached})")
-    ok(links.evaluate_all("""links => links.every(a => {
-        const r = a.getBoundingClientRect();
-        return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2).closest('a') === a;
-    })"""), f"{label}: each page destination receives pointer input")
-    page.keyboard.press("Escape")
-    ok(page.locator(".page-menu").get_attribute("open") is None,
-       f"{label}: Escape closes the menu")
-    ok(page.locator("nav.sports [aria-current='page']").evaluate("""a => {
-        const r = a.getBoundingClientRect(), n = a.parentElement.getBoundingClientRect();
-        return r.height >= 44 && r.left >= n.left - 1 && r.right <= n.right + 1;
-    }"""), f"{label}: the current sport is visible and easy to tap")
-    ok(page.evaluate("document.documentElement.scrollWidth <= innerWidth"),
-       f"{label}: no horizontal page overflow")
-    page.evaluate("window.scrollTo(0, 400)")
-    page.wait_for_timeout(40)
-    ok(page.locator(".topbar").evaluate("""e => {
-        const r = e.getBoundingClientRect(); return Math.abs(r.top) <= 1 && r.height <= 80;
-    }"""), f"{label}: a compact bar stays at the top")
-
-
 def browser_checks():
     print("\nbrowser")
     from require_browser import require_browser
@@ -737,18 +712,11 @@ def browser_checks():
                 )
                 context.add_init_script(
                     "try{localStorage.removeItem('sandbox-view')}catch(e){}")
-                context.route("**/index.html", _hold_root)
                 page = context.new_page()
                 for path in pages:
                     page.goto(f"{base}/{path}", wait_until="load")
                     page.wait_for_timeout(40)
-                    if path == "index.html" and "sandbox.html" in page.url:
-                        ok(False, f"{path} @{width}: index stub stayed on the stub (went to {page.url})")
-                        continue
                     label = f"{path} @{width}"
-                    if path in _SPORT_PAGES:
-                        _sport_header(page, label)
-                        continue
                     saved_nav = page.evaluate(
                         "() => { const n = document.querySelector('nav.main'); return n ? n.scrollLeft : 0; }")
                     nav_n = _nav_count(path)
@@ -818,29 +786,21 @@ def browser_checks():
                     ok(not missed,
                        f"{label}: every main-nav link can be scrolled into view"
                        + ("" if not missed else " (missed " + ", ".join(missed) + ")"))
-                    if path == "nba.html":
-                        sport_on = page.evaluate("""() => {
-                          const nav = document.querySelector("nav.sports");
-                          const current = nav && nav.querySelector('[aria-current="page"]');
-                          if (!current) return { ok: false, text: "" };
-                          const a = current.getBoundingClientRect();
-                          const c = nav.getBoundingClientRect();
-                          const fits = a.width > 1 && a.height > 1
-                            && a.left >= c.left - 1 && a.right <= c.right + 1
-                            && a.top >= c.top - 1 && a.bottom <= c.bottom + 1
-                            && a.left >= -1 && a.right <= window.innerWidth + 1;
-                          return { ok: fits, text: (current.textContent || "").trim() };
-                        }""")
-                        ok(sport_on.get("ok") and sport_on.get("text") == "NBA",
-                           f"{label}: the NBA sport tab is visible ({sport_on})")
-                        ok(got["currents"] == 0,
-                           f"{label}: page nav has no aria-current; the sport tab carries it "
-                           f"({got['currents']})")
+                    if path == "index.html":
+                        ok(got["activeVisible"] and got["active"] == "Edge Machine",
+                           f"{label}: the brand is the current page and is visible ({got['active']!r})")
+                        ok(got["currents"] == 0 and got["brandCurrent"] == 1,
+                           f"{label}: no pill is current on the root; the brand carries it "
+                           f"({got['currents']} pills, {got['brandCurrent']} brand)")
                     else:
                         ok(got["activeVisible"],
                            f"{label}: the active pill ({got['active']!r}) is visible on load")
-                        ok(got["currents"] == 1,
+                        ok(got["currents"] == 1 and got["brandCurrent"] == 0,
                            f"{label}: nav.main has exactly one aria-current=page ({got['currents']})")
+                    ok(got["allCurrent"] == (2 if path.startswith("archive/") else 1),
+                       f"{label}: one current mark in the header"
+                       + (" plus the breadcrumb" if path.startswith("archive/") else "")
+                       + f" ({got['allCurrent']})")
                     ok(not got["overflow"] and got["scrollX"] == 0,
                        f"{label}: the page does not scroll sideways "
                        f"(scrollX {got['scrollX']})")
@@ -848,11 +808,12 @@ def browser_checks():
                     ok(not short, f"{label}: main-nav pills are at least 44px tall"
                        + ("" if not short else f" ({short[0]})"))
                     if not _expects_toc(path):
-                        ok(got["tocCount"] == 0 and not got["tocMethod"],
+                        ok(got["tocCount"] == 0,
                            f"{label}: nav.toc is not rendered")
                     else:
-                        ok(got["tocCount"] >= 2 and not got["tocMethod"],
-                           f"{label}: section nav has {got['tocCount']} links and no Method")
+                        ok(got["tocCount"] >= 2 and not (path == "sandbox.html" and got["tocMethod"]),
+                           f"{label}: section nav has {got['tocCount']} links"
+                           + (" and no Method" if path == "sandbox.html" else ""))
                         short = [a for a in got["tocHeights"] if a["height"] < 44]
                         ok(not short, f"{label}: section chips are at least 44px tall"
                            + ("" if not short else f" ({short[0]})"))

@@ -35,6 +35,7 @@ _NAV_HREFS = (
     'href="./soccer.html"',
     'href="./tennis.html"',
     'href="./cricket.html"',
+    'href="./crypto.html"',
     'href="./sandbox.html#method"',
 )
 _NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket",
@@ -48,10 +49,10 @@ _CURRENT = {
     "tennis": 'href="./tennis.html" aria-current="page"',
     "cricket": 'href="./cricket.html" aria-current="page"',
     "crypto": 'href="./crypto.html" aria-current="page"',
-    "index": 'href="./production.html" aria-current="page"',
+    # The site root is the brand, not a pill. No pill is current there.
+    "index": '<a class="brand" href="./index.html" aria-current="page">Edge Machine</a>',
 }
-# The sport shell separates four page destinations from the sport selector.
-_SHELL_LABELS = ["Sandbox", "Production", "Trading", "Method"]
+_BRAND = '<a class="brand" href="./index.html"'
 
 
 def _inline_script(html):
@@ -71,34 +72,31 @@ def _check_page(name, html, current):
     ok(_HANDLER.search(html) is None, f"{name} has no inline on* handler")
     ok('href="#content"' in html and "Skip to content" in html,
        f"{name} has a skip-to-content link")
-    if current in ("index", "nba"):
-        for href in (
-            'href="./sandbox.html"',
-            'href="./production.html"',
-            'href="./trading.html"',
-            'href="./sandbox.html#method"',
-        ):
-            ok(href in html, f"{name} nav includes {href}")
-    else:
-        for href in _NAV_HREFS:
-            ok(href in html, f"{name} nav includes {href}")
+    for href in _NAV_HREFS:
+        ok(href in html, f"{name} nav includes {href}")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
-    # Sport pages mark the current sport; other pages mark the main nav.
-    nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
-    ok(nav is not None, f"{name} has the shared main nav")
+    # One shell on every page: the brand (the site root), then the page pills.
+    # The root marks the brand current and no pill; every other page marks one pill.
+    header = re.search(r'<header class="site">.*?</header>', html, re.S)
+    ok(header is not None and html.count('<header class="site">') == 1,
+       f"{name} has exactly one site header")
+    header = header.group(0) if header else ""
+    ok(_BRAND in header, f"{name} brand links to the site root")
+    ok('class="page-menu"' not in header and '<nav class="sports"' not in header
+       and 'class="sport-row"' not in header,
+       f"{name} header has no Pages menu, sport selector, or sport row")
+    nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', header, re.S)
+    ok(nav is not None and html.count('<nav class="main"') == 1,
+       f"{name} has the shared main nav, once, in the header")
     currents = re.findall(r'aria-current="page"', nav.group(0) if nav else "")
-    if current in ("nba", "soccer", "tennis", "crypto"):
-        eq(len(currents), 0, f"{name} marks the current sport in the sport selector")
-        sports = re.search(r'<nav class="sports"[^>]*>.*?</nav>', html, re.S)
-        ok(sports is not None and sports.group(0).count('aria-current="page"') == 1
-           and _CURRENT[current] in sports.group(0),
-           f"{name} sport tab marks {current} current")
+    if current == "index":
+        eq(len(currents), 0, f"{name} nav.main marks no pill: the brand is current")
     else:
         eq(len(currents), 1, f"{name} nav.main has exactly one aria-current")
+        ok(_BRAND + ">" in header, f"{name} brand is not current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        want = _SHELL_LABELS if current in ("index", "nba", "soccer", "tennis", "crypto") else _NAV_LABELS
-        eq(labels, want, f"{name} nav labels")
+        eq(labels, _NAV_LABELS, f"{name} nav labels")
 
 
 def _nba(now):
@@ -245,8 +243,8 @@ for name, html, current in pages:
     _check_page(name, html, current)
     nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', html, re.S)
     navs.append(nav.group(0) if nav else "")
-if len(navs) == 4:
-    ok(_same_links(navs), "the four nav hrefs match on every published page")
+ok(len(navs) == len(pages) and _same_links(navs),
+   f"the nav hrefs match on every published page ({len(navs)} of {len(pages)})")
 
 
 # ---------------------------------------------------------------------------
@@ -325,7 +323,10 @@ if SB is not None:
     live_html, n_live = SB.open_rows({"quotes": [quote]})
     eq(n_live, 1, "the fixture still contributes one running bet")
     ok("77¢" in live_html, "the running price renders as 77¢")
-    ok(f"{MINUS}0.1%" in live_html, "the running edge uses a real minus sign")
+    ok("%" not in live_html and "Edge" not in live_html,
+       "the running row has no edge column")
+    ok("Home vs Away" in live_html and "Home v Away" not in live_html,
+       "the running contest label says vs")
     ok("javascript:" not in live_html, "the fixture link is not a javascript url")
     settled = dict(quote, status="lost", result="b", pnl=-100.0,
                    settled="2026-09-26T18:00:00+00:00")
@@ -334,16 +335,18 @@ if SB is not None:
     ok(f"{MINUS}$100" in hist_html, "−$100 on the settled row")
     ok("77¢" in hist_html, "the settled price renders as 77¢")
     got = canonical_values(live_html + hist_html)
-    want = legacy_values(0.77, -100, -0.0015, 1)
-    # pnl is only on the settled row; edge is only on the running row.
-    for value in (0.77, -0.15 if False else round(-0.0015 * 100, 1), -100.0):
+    # The Running table no longer prints the edge, so the legacy edge is not expected.
+    want = [value for value in legacy_values(0.77, -100, -0.0015, 1)
+            if value != round(-0.0015 * 100, 1)]
+    # pnl is only on the settled row; the price is on both.
+    for value in (0.77, -100.0):
         ok(value in got, f"canonical value {value} survived formatting")
     for value in want:
         ok(value in got, f"legacy value {value} is still on the page")
     # A hostile url stays plain text, same as PR 1.
     hostile = dict(quote, url="javascript:alert(1)", venue="polymarket")
     hostile_html, _n = SB.open_rows({"quotes": [hostile]})
-    ok("href=" not in hostile_html.split("Home v Away")[0][-80:] or "javascript:" not in hostile_html,
+    ok("href=" not in hostile_html.split("Home vs Away")[0][-80:] or "javascript:" not in hostile_html,
        "javascript: contest url is not an href")
     ok("javascript:" not in hostile_html, "javascript: is not written into the row")
 

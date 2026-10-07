@@ -29,8 +29,9 @@ def _head_sha():
 SHA = _head_sha()
 
 # The four long tables from the report: two on Sandbox, Pairs, Stock rules.
+# The Running table's date column is Starts ("Oct 9, 8:50 AM CT"); there is no Edge column.
 TABLES = (
-    ("sandbox.html", "#running table", "sandbox Running", "Date"),
+    ("sandbox.html", "#running table", "sandbox Running", "Starts"),
     ("sandbox.html", "#recently-settled table", "sandbox Recently settled", "Settled"),
     ("production.html", "#pairs table", "production Pairs", None),
     ("trading.html", "#rules table", "trading Stock rules", None),
@@ -62,6 +63,9 @@ ok("ResizeObserver" in js and 'setProperty("--hdr-h"' in js
 ok('td[data-l="Date"]' in css and 'td[data-l="Settled"]' in css
    and "nowrap" in css.split('td[data-l="Date"]', 1)[-1][:180],
    "date and settled cells stay on one line")
+_nowrap_rule = css.split('td[data-l="Date"]', 1)[-1][:180]
+ok('td[data-l="Starts"]' in _nowrap_rule,
+   "the Running table's Starts cell (the renamed date column) shares the nowrap rule")
 ok('src="./tables.js"' in _read("public_site/production.html"),
    "production.html loads tables.js")
 ok('src="./tables.js"' in _read("public_site/trading.html"),
@@ -70,6 +74,12 @@ ok('"./tables.js" not in srcs' in chrome,
    "the page template adds tables.js when a page does not already")
 ok("thead { position: static; top: auto;" in css and "--sticky-top: 0px" in css,
    "under 640px the header row is not restuck")
+ok('html[data-view="table"] .tbl {' in css
+   and "overflow-x: auto" in css.split('html[data-view="table"] .tbl {', 1)[-1][:120],
+   "under 640px a table the reader asks for scrolls inside its card")
+site_js = _read("public_site/site.js")
+ok('matchMedia("(max-width:760px)")' in site_js and "(max-width:640px)" not in site_js.split("var narrow", 1)[0],
+   "site.js makes cards the default under 760px with no 640px table override")
 
 
 def _serve():
@@ -129,11 +139,14 @@ MEASURE = r"""
 """
 
 PHONE = r"""
-() => {
+(view) => {
+  if (view) document.documentElement.setAttribute("data-view", view);
+  else document.documentElement.removeAttribute("data-view");
   const table = document.querySelector("#running table");
   const th = table.querySelector("th");
   const thead = table.tHead;
   return {
+    view: document.documentElement.getAttribute("data-view"),
     theadPosition: getComputedStyle(thead).position,
     theadTop: getComputedStyle(thead).top,
     thTop: getComputedStyle(th).top,
@@ -182,11 +195,18 @@ def browser_checks():
             phone = browser.new_page(viewport={"width": 390, "height": 844}, device_scale_factor=1)
             phone.goto(f"{base}/sandbox.html", wait_until="networkidle")
             phone.wait_for_timeout(100)
-            view = phone.evaluate(PHONE)
+            # Cards are the default under 760px: the header row is not drawn at all.
+            cards = phone.evaluate(PHONE, None)
+            ok(cards["view"] is None and cards["tableDisplay"] == "block"
+               and cards["theadDisplay"] == "none" and cards["theadPosition"] == "static",
+               f"390px phone shows cards by default, with no header row ({cards})")
+            # A reader who asks for the table gets one that scrolls inside its card
+            # with the header row left where it was, not restuck under the bar.
+            view = phone.evaluate(PHONE, "table")
             ok(view["theadPosition"] == "static" and view["thTop"] == "0px"
                and view["tableDisplay"] == "table" and view["theadDisplay"] == "table-header-group"
                and view["overflowX"] == "auto",
-               f"390px phone table is unchanged ({view})")
+               f"390px phone table on request is unchanged ({view})")
             browser.close()
     finally:
         httpd.shutdown()

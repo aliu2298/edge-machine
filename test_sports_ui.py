@@ -40,9 +40,13 @@ with patch("sport_tab.preflight_report", return_value=({}, '<p class="note">Chec
 with patch("sport_tab.preflight_report", return_value=({}, '<p class="note"><b class="neg">Status is old.</b></p>')):
     warning = soccer.build(ledger, {"pairs": {}}, NOW)
 assert ledger == original, "rendering must not mutate stored data"
-for html in pages.values():
+for sport, html in pages.items():
     assert site_chrome.CSP in html
     assert '<script src="./sports.js"></script>' in html
+    assert f'<body class="sports-page sport-{sport}">' in html, sport
+    assert html.count('<header class="site">') == 1, sport
+    assert '<a class="brand" href="./index.html">Edge Machine</a>' in html, sport
+    assert "page-menu" not in html and "sport-row" not in html and '<nav class="sports"' not in html, sport
 
 playwright = require_browser("test_sports_ui.py")
 if playwright is not None:
@@ -63,22 +67,34 @@ if playwright is not None:
                 page.goto(f"http://fixture.local/{sport}.html", wait_until="load")
                 assert not errors, (sport, width, errors)
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (sport, width)
-                assert page.locator(".stamp").is_visible(), (sport, width)
-                assert page.locator("nav.sports [aria-current='page']").count() == 1
-                assert page.locator("nav.sports [aria-current='page']").evaluate("""e => {
+                # The shared shell hides the stamp on a phone and shows it from 641px.
+                assert page.locator(".stamp").count() == 1, (sport, width)
+                assert page.locator(".stamp").is_visible() == (width > 640), (sport, width)
+                assert page.locator("header.site .brand[href='./index.html']").count() == 1, (sport, width)
+                assert page.locator("header.site nav.main [aria-current='page']").count() == 1, (sport, width)
+                assert page.locator("[aria-current='page']").count() == 1, (sport, width)
+                # Phone pills are 44px touch targets; from 641px the pointer shell is shorter.
+                tap = 44 if width <= 640 else 24
+                assert page.locator("nav.main [aria-current='page']").evaluate("""(e, tap) => {
                     const r = e.getBoundingClientRect(), n = e.parentElement.getBoundingClientRect();
-                    return r.left >= n.left - 1 && r.right <= n.right + 1 && r.height >= 44;
-                }"""), (sport, width)
+                    return r.left >= n.left - 1 && r.right <= n.right + 1 && r.height >= tap
+                        && r.left >= -1 && r.right <= innerWidth + 1;
+                }""", tap), (sport, width)
                 assert page.evaluate("""() => [...document.querySelectorAll('body *')].every(e =>
                     !e.checkVisibility() || ![...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())
                     || parseFloat(getComputedStyle(e).fontSize) >= 11)"""), (sport, width)
-                page.locator(".page-menu > summary").click()
-                assert page.locator("nav.main a").count() == 4
+                assert page.locator(".page-menu").count() == 0 and page.locator("nav.sports").count() == 0
+                assert page.locator("nav.main a").count() == len(site_chrome.PAGES)
                 assert page.locator("nav.main a").evaluate_all(
-                    "links => links.every(e => e.getBoundingClientRect().height >= 44)")
-                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (sport, width, "menu")
-                page.keyboard.press("Escape")
-                assert page.locator(".page-menu").get_attribute("open") is None
+                    "(links, tap) => links.every(e => e.getBoundingClientRect().height >= tap)", tap)
+                # Every page pill can be brought into view, on a phone by scrolling the row.
+                assert page.locator("nav.main a").evaluate_all("""links => links.every(a => {
+                    const nav = a.parentElement;
+                    a.scrollIntoView({block: "nearest", inline: "nearest"});
+                    const r = a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+                    return r.left >= n.left - 1 && r.right <= n.right + 1 && r.left >= -1 && r.right <= innerWidth + 1;
+                })"""), (sport, width)
+                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (sport, width, "nav")
                 if sport == "nba":
                     assert page.locator("details.nba-game[open]").count() == 0
                     page.locator(".nba-game-summary").click()
@@ -104,4 +120,4 @@ if playwright is not None:
         assert page.locator("#health > details").get_attribute("open") is not None
         assert page.locator("#health details.section-disclosure").get_attribute("open") is None
         browser.close()
-print("PASS four sport pages: 320–1280px, readable text, menu, disclosures, stored scan status")
+print("PASS four sport pages: 320–1280px, readable text, one shell, disclosures, stored scan status")
