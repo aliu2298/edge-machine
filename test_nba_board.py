@@ -538,6 +538,7 @@ def browser_checks():
     os.symlink(os.path.join(ROOT, "public_site", "tables.js"), os.path.join(folder, "tables.js"))
     with open(os.path.join(folder, "board.html"), "w", encoding="utf-8") as fh:
         fh.write(HTML)
+    os.symlink(os.path.join(ROOT, "public_site", "nba-board.js"), os.path.join(folder, "nba-board.js"))
     httpd = _serve(folder)
     base = f"http://127.0.0.1:{httpd.server_address[1]}/board.html"
     try:
@@ -546,6 +547,8 @@ def browser_checks():
             page = browser.new_page(viewport={"width": 1280, "height": 800})
             page.goto(base, wait_until="load")
             page.wait_for_timeout(40)
+            ok(page.locator("#matchups .team-card").first.is_visible(),
+               "desktop matchup detail is actually visible")
             wide = page.evaluate(LAYOUT)
             ok(wide["tracks"] == 3 and not wide["overflow"],
                f"at 1280px the matchup is three columns and the page does not scroll sideways "
@@ -556,6 +559,14 @@ def browser_checks():
                "at 1280px away is left of the expectation and home is right")
             page.set_viewport_size({"width": 640, "height": 800})
             page.wait_for_timeout(40)
+            first_detail = page.locator("#matchups details.nba-game").first
+            ok(first_detail.get_attribute("open") is None,
+               "at 640px the first matchup starts as a compact closed row")
+            ok(not page.locator("#matchups .team-card").first.is_visible(),
+               "mobile detail starts collapsed")
+            page.locator("#matchups .nba-game-summary").first.click()
+            ok(page.locator("#matchups .team-card").first.is_visible(),
+               "mobile summary opens the analysis")
             narrow = page.evaluate(LAYOUT)
             ok(narrow["tracks"] == 1 and not narrow["overflow"],
                f"at 640px the matchup stacks and the page does not scroll sideways "
@@ -580,6 +591,10 @@ def browser_checks():
                    f"the actual marker sits on its column ({bar['marker']['center']:.1f} vs {want})")
                 ok(bar["label"] == bar["text"] and "combined" in bar["text"],
                    "the bar label and the visible text say the same thing")
+            page.set_viewport_size({"width": 1280, "height": 800})
+            page.wait_for_timeout(40)
+            ok(page.locator("#matchups .team-card").first.is_visible(),
+               "returning to desktop restores visible analysis")
             browser.close()
     finally:
         httpd.shutdown()

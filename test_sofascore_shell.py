@@ -421,11 +421,13 @@ def _browser():
             page.wait_for_timeout(40)
             narrow = page.evaluate("""() => {
               const cols = document.querySelector(".shell-columns");
-              const panes = [...cols.children];
-              const a = panes[0].getBoundingClientRect();
-              const b = panes[1].getBoundingClientRect();
+              // The mobile sidebar uses display:contents; measure its visible panes.
+              const a = cols.querySelector('.desk-center').getBoundingClientRect();
+              const b = cols.querySelector('.rules-pane').getBoundingClientRect();
+              const c = cols.querySelector('.desk-status').getBoundingClientRect();
               return {
-                stacked: b.top >= a.bottom - 2 && a.width > 200,
+                stacked: b.top >= a.bottom - 2 && c.top >= b.bottom - 2
+                  && a.width > 200 && b.width > 200 && c.width > 200,
                 overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
               };
             }""")
