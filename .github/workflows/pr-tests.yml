@@ -62,6 +62,16 @@ jobs:
           python -m playwright --version
           google-chrome --version
 
+      # The committed pages are whatever the tracker last published from main.
+      # A pull request that changes a page builder or the shared shell is
+      # judged on the pages it would publish, so they are rebuilt here from
+      # the committed ledgers first. Stdlib only, no network, nothing pushed.
+      - name: Build the pages this branch would publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 sandbox_build.py
+
       - name: Run every root test
         shell: bash
         run: |
