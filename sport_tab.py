@@ -10,6 +10,7 @@ import datetime
 import json
 import os
 
+import fmt
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -213,32 +214,30 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
         if family == "Soccer" and cards:
             attention = 'class="neg"' in pf_note or "could not be read" in pf_note
             health_open = " open" if attention else ""
-            health_label = "System · check needed" if attention else "System & registered lanes"
+            health_label = "System · check needed" if attention else "System"
+            import soccer_cards
             body = f"""<div class="soccer-page-head">
-<div><span class="soccer-kicker">Edge Machine</span><h1>{esc(family)}</h1>
-<p class="lede">{esc(lede)}</p></div>
+<h1>{esc(family)}</h1>
+<p class="lede">{esc(lede)}</p>
+<p class="soccer-updated">{esc(fmt.display_updated(now))}</p>
+{soccer_cards.production_strip(rows)}
 </div>
 
-<section id="lanes">
 {sections}
-</section>
-
-{record}
 
 <section id="health" class="soccer-health">
 <details{health_open}>
 <summary><span><b>{health_label}</b><small>{len(idle)} waiting for a market</small></span></summary>
+<p class="note sm">Prices are the Kalshi ask the tracker logged when a rule fired. Results are read back from the venue's own settlement, and this page is rebuilt from that ledger by GitHub Actions.</p>
 {pf_note}
-<details class="section-disclosure"><summary><b>Registered lanes</b></summary>
-<div class="note">These lanes are waiting for markets and have never logged a quote.</div>
+<details class="section-disclosure"><summary><b>Registered lanes</b><span>{len(idle)}</span></summary>
 {idle_html}
 </details>
 </details>
 </section>
 <footer>{_FOOT}</footer>
 """
-            toc = (("today", "Today"), ("upcoming", "Upcoming"), ("in-play", "Past kickoff"), ("rules", "Rules"),
-                   ("health", "System"))
+            toc = (("fixtures", "Fixtures"), ("rules", "Rules"), ("health", "System"))
         else:
             body = f"""<h1>{esc(family)}</h1>
 <p class="lede">{lede}</p>

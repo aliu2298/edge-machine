@@ -442,18 +442,19 @@ def _check_sport_tab(family, html, d, st):
             if B.family(r["sport"]) == family and not B.eliminated(r)]
     section = B.sport_sections(d, rows)
     ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
-    # Tennis names its one rules table #rules; the other tabs keep #lanes.
+    # Tennis and Soccer name their one rules table #rules; the other tabs keep #lanes.
     lanes = re.search(r'<section id="(?:lanes|rules)"[^>]*>(.*?)</section>', html, re.S)
     ok(lanes is not None, f"{family} tab has a lanes section")
-    # Soccer, Tennis, and Cricket replace the lane table with cards. The
-    # verdict and the ROI on each card are still the Sandbox row's strings.
+    # Tennis and Cricket replace the lane table with cards; Soccer is a rules
+    # table with a detail row per rule. The verdict and the ROI are still the
+    # Sandbox row's strings.
     if family == "Soccer":
-        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
-           "soccer lanes are flippable cards")
+        ok('class="soccer-rules"' in html and 'class="rule-card"' not in html,
+           "soccer lanes are one rules table")
         import soccer_cards
         for r in rows:
             ok(soccer_cards.verdict_html(r) in html and soccer_cards.roi_html(r) in html,
-               f"soccer card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
+               f"soccer rules table shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
     elif family == "Tennis":
         ok('class="tn-rules"' in html and 'class="tn-picks"' in html,
            "tennis lanes are one rules table beside the picks list")

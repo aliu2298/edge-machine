@@ -13,16 +13,20 @@ OUT = os.path.join(ROOT, "public_site", "soccer.html")
 FAMILY = "Soccer"
 KEY = "soccer"
 TITLE = "Edge Machine · Soccer"
-DESCRIPTION = "Every soccer rule and tipster under test, and the lanes still waiting for a market."
-LEDE = (
-    "Fixtures, open picks, and Production rules."
-)
+DESCRIPTION = "Open soccer picks by kickoff, and the record of every rule that fires them."
+LEDE = "Open picks and the rules that fire them · kickoff times CT"
 
 
 def build(d=None, st=None, now=None):
-    return sport_tab.build(
+    """The page, with its table cells already named for the phone layout.
+
+    The tracker's own pass over the finished page leaves a labelled table
+    alone, so the direct build and the tracker build are the same document.
+    """
+    import sandbox_build
+    return sandbox_build.label_cells(sport_tab.build(
         FAMILY, KEY, TITLE, LEDE, d, st, now,
-        description=DESCRIPTION, preflight=True, cards=True)
+        description=DESCRIPTION, preflight=True, cards=True))
 
 
 def main():

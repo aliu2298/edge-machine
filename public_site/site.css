@@ -1849,196 +1849,141 @@ tr.is-open td { border-bottom: 0; }
   .crypto-state { min-width: 70px; font-size: 11px; }
 }
 
-/* Soccer Match Center — SofaScore-inspired hierarchy, fixture first. */
-.soccer-page-head {
-  display: grid;
-  grid-template-columns: minmax(0,1.35fr) minmax(380px,1fr);
-  gap: 24px;
-  align-items: end;
-  margin-bottom: 18px;
-}
-.soccer-page-head .tiles { margin: 0; }
-.soccer-kicker {
-  color: var(--mut);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.soccer-desk {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
-}
-.soccer-desk > * { min-width: 0; }
-.soccer-desk-head,
-.soccer-block-head {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 12px;
-}
-.soccer-desk-head h2,
-.soccer-block-head h3 { margin: 2px 0 0; }
-.soccer-local-nav {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.soccer-local-nav a {
+/* Soccer — a flat fixture list grouped by day and a rules table. No cards, no bars. */
+.soccer-page-head { margin-bottom: 22px; }
+.soccer-page-head h1 { margin-bottom: 4px; }
+.soccer-page-head .lede { margin: 0 0 4px; }
+.soccer-updated { margin: 0 0 12px; color: var(--mut); font-size: 13px; }
+.soccer-prod-strip { display: flex; flex-wrap: wrap; gap: 6px; }
+.soccer-prod-rule {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 0 12px;
+  gap: 4px;
+  min-width: 0;
+  padding: 5px 10px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--card);
-  color: var(--mut);
   font-size: 12px;
-  font-weight: 750;
-  text-decoration: none;
-}
-.soccer-local-nav a:hover {
-  color: var(--fg);
-  background: var(--raised);
-  text-decoration: none;
-}
-.soccer-fixture-block,
-.soccer-production,
-.soccer-rule-desk,
-.soccer-health {
-  scroll-margin-top: calc(var(--hdr-h) + 18px);
-}
-.soccer-block-head {
-  margin-bottom: 8px;
-}
-.soccer-block-head > span {
-  color: var(--mut);
-  font-size: 11px;
-  font-weight: 700;
-}
-.soccer-fixture-list {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--card);
-}
-.soccer-fixture {
-  display: grid;
-  grid-template-columns: 112px minmax(0,1fr) 80px;
-  gap: 14px;
-  align-items: center;
-  min-height: 72px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--line);
-}
-.soccer-fixture:last-child { border-bottom: 0; }
-.soccer-fixture:hover { background: var(--raised); }
-.soccer-fixture-time {
-  color: var(--mut);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-.soccer-fixture-main { min-width: 0; }
-.soccer-fixture-title {
-  font-size: 14px;
-  font-weight: 750;
-}
-.soccer-fixture-title a {
-  color: var(--fg);
-  text-decoration: none;
-}
-.soccer-fixture-title a:hover { text-decoration: underline; }
-.soccer-fixture-rules {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 7px;
-}
-.soccer-rule-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  max-width: 100%;
-  padding: 4px 7px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,.025);
-  color: var(--mut);
-  font-size: 11px;
-  font-weight: 700;
+  line-height: 1.3;
   overflow-wrap: anywhere;
 }
-.soccer-rule-chip a {
-  color: inherit;
-  text-decoration: none;
-}
-.soccer-rule-chip a:hover { text-decoration: underline; }
-.soccer-prod {
-  color: var(--pos);
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: .03em;
-  text-transform: uppercase;
-}
-.soccer-fixture-state {
-  justify-self: end;
-  min-width: 70px;
-  text-align: center;
-  padding: 5px 8px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 800;
-}
-.soccer-fixture-state.is-live {
-  color: var(--pos);
-  background: rgba(74,222,128,.10);
-  border: 1px solid rgba(74,222,128,.20);
-}
-.soccer-fixture-state.is-watch {
-  color: var(--mut);
-  background: var(--raised);
-  border: 1px solid var(--line);
-}
-.soccer-production {
-  padding: 14px;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.012));
-}
-.soccer-prod-strip {
+.soccer-prod-rule b { font-weight: 650; }
+.soccer-prod-rule small { color: var(--mut); font-size: 12px; white-space: nowrap; }
+.soccer-prod-rule small::before { content: "· "; }
+.soccer-section-head {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-  scrollbar-width: none;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
 }
-.soccer-prod-strip::-webkit-scrollbar { display: none; }
-.soccer-prod-rule {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 180px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: var(--card);
-  border: 1px solid var(--line);
-}
-.soccer-prod-rule small {
-  color: var(--mut);
-  font-size: 11px;
-}
-.soccer-rule-desk {
-  margin-top: 8px;
-}
-.soccer-rule-desk .rule-band-title {
+.soccer-section-head h2 { margin: 0; }
+.soccer-section-head > span { color: var(--mut); font-size: 13px; white-space: nowrap; }
+.soccer-fixtures, .soccer-rule-desk, .soccer-health { scroll-margin-top: calc(var(--hdr-h) + 18px); }
+.soccer-fixtures { margin-bottom: 32px; }
+.soccer-day { margin: 0; }
+.soccer-day-head {
   position: sticky;
   top: var(--hdr-h);
   z-index: 4;
-  padding: 8px 0;
+  margin: 0;
+  padding: 10px 0 6px;
   background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
 }
+.soccer-day-head small { margin-left: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--pos); }
+.soccer-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1.1fr) minmax(0, 2fr);
+  gap: 4px 14px;
+  align-items: start;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.soccer-row:hover { background: var(--raised); }
+.soccer-row-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-height: 44px;
+  justify-content: center;
+  color: var(--mut);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.soccer-row.is-past .soccer-row-time { color: var(--fg); }
+.soccer-tbc { font-size: 12px; }
+.soccer-live {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 222, 128, .35);
+  background: rgba(74, 222, 128, .12);
+  color: var(--pos);
+  font-size: 11px;
+  font-weight: 700;
+}
+.soccer-row-match {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.soccer-row-picks { display: grid; gap: 2px; min-width: 0; }
+.soccer-pick {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 44px minmax(0, 1.6fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  min-width: 0;
+  font-size: 14px;
+}
+.soccer-pick-side { font-weight: 600; overflow-wrap: anywhere; }
+.soccer-pick-side a { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); text-decoration: none; }
+.soccer-pick-side a:hover { text-decoration: underline; }
+.soccer-pick-side.is-watch { color: var(--mut); font-weight: 500; }
+.soccer-pick-price { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.soccer-pick-rule { color: var(--mut); font-size: 13px; overflow-wrap: anywhere; }
+/* The rules table. A chevron in the first cell opens the row under it. */
+.soccer-rules td { vertical-align: middle; }
+.rule-name-cell { display: inline-flex; align-items: center; gap: 10px; }
+.rule-chev {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--mut);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.rule-chev:hover { color: var(--fg); background: var(--raised); }
+.rule-chev[aria-expanded="true"] { transform: rotate(90deg); }
+.rule-row.is-open td { border-bottom-color: transparent; }
+.rule-detail-cell { background: var(--raised); }
+.rule-about { margin: 0 0 10px; max-width: 90ch; font-size: 14px; line-height: 1.55; color: var(--mut); }
+.rule-about .sig { margin-right: 6px; }
+.rule-picks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 13px; }
+.rule-pick { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.rule-pick .num { text-align: left; }
+/* System: one fold, closed unless the pre-flight needs attention. */
 .soccer-health {
   margin-top: 24px;
   border: 1px solid var(--line);
@@ -2068,60 +2013,26 @@ tr.is-open td { border-bottom: 0; }
 }
 .soccer-health > details[open] > summary::after { content: "⌄"; }
 .soccer-health .note,
-.soccer-health .tbl {
+.soccer-health .tbl,
+.soccer-health .section-disclosure {
   margin-left: 12px;
   margin-right: 12px;
 }
-@media (max-width: 900px) {
-  .soccer-page-head {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
+@media (max-width: 640px) {
+  .soccer-row { grid-template-columns: 64px minmax(0, 1fr); gap: 2px 10px; }
+  .soccer-row-time { font-size: 12px; min-height: 36px; }
+  .soccer-row-match { min-height: 36px; }
+  .soccer-row-picks { grid-column: 2; }
+  .soccer-pick { grid-template-columns: minmax(0, 1fr) 40px; gap: 2px 10px; }
+  .soccer-pick-rule { grid-column: 1 / -1; font-size: 12px; }
 }
-@media (max-width: 700px) {
-  .soccer-desk-head {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .soccer-local-nav {
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .soccer-local-nav::-webkit-scrollbar { display:none; }
-  .soccer-fixture {
-    grid-template-columns: 68px minmax(0,1fr) 64px;
-    gap: 8px;
-    min-height: 68px;
-    padding: 10px 11px;
-  }
-  .soccer-fixture-time { font-size: 11px; line-height: 1.15; }
-  .soccer-fixture-title { font-size: 13px; }
-  .soccer-rule-chip { font-size: 11px; }
-  .soccer-fixture-state {
-    min-width: 58px;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 11px;
-  }
-  .soccer-rule-desk .rule-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr));
-  }
+@media (max-width: 760px) {
+  /* The phone card prints each column's name; the opened description has none. */
+  html:not([data-view="table"]) .soccer-rules td.rule-detail-cell::before { content: none; }
+  html:not([data-view="table"]) .soccer-rules td.rule-detail-cell { display: block; text-align: left; }
 }
-@media (max-width: 480px) {
-  .soccer-page-head .tiles {
-    grid-template-columns: repeat(2, minmax(0,1fr));
-  }
-  .soccer-fixture {
-    grid-template-columns: 54px minmax(0,1fr) 54px;
-    gap: 6px;
-  }
-  .soccer-fixture-state { min-width: 50px; }
-  .soccer-rule-desk .rule-grid {
-    grid-template-columns: minmax(0,1fr);
-  }
-}
+html[data-view="cards"] .soccer-rules td.rule-detail-cell::before { content: none; }
+html[data-view="cards"] .soccer-rules td.rule-detail-cell { display: block; text-align: left; }
 
 /* Tennis Match Center — SofaScore-inspired hierarchy with separate combo products. */
 .tennis-desk {
@@ -2425,19 +2336,16 @@ tr.is-open td { border-bottom: 0; }
 .sports-page .section-disclosure > summary > span { font-size: 11px; color: var(--mut); }
 .sports-page .section-disclosure[open] { padding-bottom: 14px; }
 .sports-page .section-disclosure.historical { background: transparent; }
-.sports-page .soccer-page-head { display: block; }
-.sports-page .soccer-prod-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; }
-.sports-page .soccer-prod-rule { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
 .sports-page .page-record { max-width: 480px; }
 .sports-page .page-record[open] { max-width: none; }
 .sports-page .rule-band-title { position: static; }
 .sports-page .rule-face { padding: 14px; }
 .sports-page .rule-flip { min-height: 44px; }
-.sports-page .soccer-local-nav a, .sports-page .tennis-local-nav a, .sports-page .nba-local-nav a, .sports-page .crypto-tabs a { display: inline-flex; align-items: center; min-height: 44px; }
+.sports-page .tennis-local-nav a, .sports-page .nba-local-nav a, .sports-page .crypto-tabs a { display: inline-flex; align-items: center; min-height: 44px; }
 .sports-page details > summary { min-height: 44px; }
-.sports-page .soccer-rule-chip, .sports-page .tennis-rule-chip { min-height: 44px; padding-top: 0; padding-bottom: 0; }
-.sports-page .soccer-rule-chip a, .sports-page .tennis-rule-chip a,
-.sports-page .soccer-fixture-title a, .sports-page .tennis-match-title a { display: inline-flex; align-items: center; min-height: 44px; }
+.sports-page .tennis-rule-chip { min-height: 44px; padding-top: 0; padding-bottom: 0; }
+.sports-page .tennis-rule-chip a,
+.sports-page .tennis-match-title a { display: inline-flex; align-items: center; min-height: 44px; }
 .sports-page .crypto-tabs { position: static; }
 .sports-page .crypto-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .crypto-health { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
@@ -2446,7 +2354,6 @@ tr.is-open td { border-bottom: 0; }
 .crypto-health b { font-size: 13px; overflow-wrap: anywhere; }
 .sports-page .nba-game-summary::after { visibility: visible; }
 @media (max-width: 640px) {
-  .sports-page .soccer-prod-strip { grid-template-columns: 1fr; }
   .sports-page .wrap { padding: 20px 16px; }
   .sports-page section { scroll-margin-top: 0; }
   .sports-page .section-disclosure > summary { flex-wrap: wrap; gap: 4px 10px; }
