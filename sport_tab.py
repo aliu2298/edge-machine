@@ -270,17 +270,35 @@ pre-flight's own verdict on each one.</div>
 """)
             toc.append(("idle", "Registered, never fired"))
         listing = venue_listing(d, family)
-        if listing:
-            parts.append("\n" + listing + "\n")
-            toc.append(("listing", "Polymarket US"))
-        parts.append(f"""
+        if family == "Tennis" and cards:
+            parts.append(f"""
+<section id="lanes">
+{sections}
+</section>
+""")
+            toc.extend((("today", "Today"), ("upcoming", "Upcoming"), ("in-play", "Past kickoff"),
+                        ("combos", "Combos"), ("rules", "Rules")))
+            parts.append(f"""
+<section id="system" class="tennis-system">
+<details><summary><span><b>System & venue coverage</b><small>Polymarket US listing</small></span></summary>
+{listing or '<div class="note">No venue coverage stored yet.</div>'}
+</details>
+</section>
+""")
+            toc.append(("system", "System"))
+            parts.append(f"<footer>{_FOOT}</footer>\n")
+        else:
+            if listing:
+                parts.append("\n" + listing + "\n")
+                toc.append(("listing", "Polymarket US"))
+            parts.append(f"""
 <section id="lanes">
 <h2>Lanes with a record</h2>
 {sections}
 </section>
 <footer>{_FOOT}</footer>
 """)
-        toc.append(("lanes", "Lanes with a record"))
+            toc.append(("lanes", "Lanes with a record"))
         body = "".join(parts)
 
     return C.document(
