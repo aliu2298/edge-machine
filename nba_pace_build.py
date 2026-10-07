@@ -418,33 +418,6 @@ def _expect_card(game, scale, uid):
     )
 
 
-def _skipped_card(blob, game):
-    away = game.get("away") or "—"
-    home = game.get("home") or "—"
-    reason = game.get("skipped") or "Skipped"
-    start = _instant(game.get("start"))
-    if start is None:
-        when = "—"
-        stamp = ""
-    else:
-        when = fmt.when(start)
-        stamp = f' datetime="{esc(fmt.iso_z(start))}"'
-    return (
-        f'<article class="matchup is-skipped" data-window="upcoming" '
-        f'data-away="{esc(away)}" data-home="{esc(home)}">'
-        f'<div class="matchup-grid">'
-        f'{_team_card(blob, game, game.get("away"), "away")}'
-        f'<section class="expect-card" aria-label="{esc(f"Skipped, {away} at {home}")}">'
-        f'<p class="expect-title">{esc(away)} at {esc(home)}</p>'
-        f'<p class="expect-when"><time{stamp}>{esc(when)}</time></p>'
-        f'<p class="expect-kicker">Skipped</p>'
-        f'<p class="skip-reason">{esc(reason)}</p>'
-        f'</section>'
-        f'{_team_card(blob, game, game.get("home"), "home")}'
-        f'</div></article>'
-    )
-
-
 def _summary_value(game, period):
     value = _finite(game.get("roll_exp_" + period))
     return _points(value) if value is not None else "—"
@@ -479,7 +452,7 @@ def _matchup(blob, game, scale, uid, window):
     return (
         f'<article class="matchup{" is-skipped" if skipped else ""}" data-window="{esc(window)}" '
         f'data-away="{esc(away)}" data-home="{esc(home)}">'
-        f'<details class="nba-game">'
+        f'<details class="nba-game" open>'
         f'{_matchup_summary(game, window)}'
         f'<div class="matchup-grid">'
         f'{_team_card(blob, game, game.get("away"), "away")}'
@@ -631,7 +604,8 @@ def build(blob=None, now=None):
         if game.get("home"):
             featured.add(game["home"])
     scale = _scale(_tempo_games(upcoming, graded))
-    graded_html = ""
+    graded_html = ('<section id="graded"><h2>Results</h2>'
+                   '<p class="matchup-empty">No graded game in the last 24 hours.</p></section>')
     if graded:
         graded_html = (
             '<section id="graded">'
@@ -673,6 +647,7 @@ Open a matchup for offense/defense rates, PRA and the expectation tracks.</p>
 {team_list(blob, soon, featured)}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
+<script src="./nba-board.js"></script>
 """
     return shell_build.sport_board(
         "nba",

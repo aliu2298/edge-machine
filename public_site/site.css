@@ -1995,7 +1995,6 @@ details.nba-game > .matchup-grid {
   font-weight: 600;
 }
 @media (min-width: 801px) {
-  details.nba-game > .matchup-grid { display: grid !important; }
   .nba-game-summary::after { visibility: hidden; }
 }
 @media (max-width: 800px) {
