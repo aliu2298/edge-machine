@@ -475,7 +475,7 @@ def _matchup(blob, game, scale, uid, window):
     return (
         f'<article class="matchup{" is-skipped" if skipped else ""}" data-window="{esc(window)}" '
         f'data-away="{esc(away)}" data-home="{esc(home)}">'
-        f'<details class="nba-game" open>'
+        f'<details class="nba-game">'
         f'{_matchup_summary(game, window)}'
         f'<div class="matchup-grid">'
         f'{_team_card(blob, game, game.get("away"), "away")}'
