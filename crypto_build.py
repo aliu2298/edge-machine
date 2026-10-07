@@ -27,6 +27,8 @@ must not turn into a failed publish.
 import datetime
 import os
 
+import fmt
+
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -48,6 +50,115 @@ def crypto_rows(d, st):
     rows = [r for r in B.pair_list(d, st) if r["sport"] in SPORTS]
     order = {s: i for i, s in enumerate(SPORTS)}
     return sorted(rows, key=lambda r: (order.get(r["sport"], 9), r["name"]))
+
+
+def _fav_row(rows):
+    return next((r for r in rows if r.get("sport") == "crypto_fav"), None)
+
+
+def _fav_quotes(d):
+    return [q for q in (T.bet_rows(d) + [q for q in (d.get("quotes") or []) if not q.get("bet")])
+            if q.get("source") == "crypto_fav_band" and q.get("sport") == "crypto_fav"]
+
+
+def _series(q):
+    market_id = str(q.get("market_id") or "")
+    return market_id.split("-", 1)[0] if "-" in market_id else market_id
+
+
+def _coin_watch(d):
+    """Five fixed live series, with only facts already stored in the ledger."""
+    quotes = _fav_quotes(d)
+    out = []
+    labels = {
+        "bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
+        "ripple": "XRP", "hyperliquid": "HYPE",
+    }
+    for series, coin in S.COINS.items():
+        items = [q for q in quotes if _series(q) == series]
+        items.sort(key=lambda q: str(q.get("logged") or q.get("start") or ""), reverse=True)
+        open_rows = [q for q in items if q.get("bet") and q.get("status") == "open"]
+        bets = [q for q in items if q.get("bet")]
+        latest = open_rows[0] if open_rows else (bets[0] if bets else (items[0] if items else None))
+        if open_rows:
+            state = "Open"
+            state_cls = "crypto-state-open"
+        elif latest and latest.get("bet") and latest.get("status") in ("won", "lost"):
+            state = "Last " + str(latest.get("status")).title()
+            state_cls = "crypto-state-won" if latest.get("status") == "won" else "crypto-state-lost"
+        else:
+            state = "Watching"
+            state_cls = "crypto-state-watch"
+        price = latest.get("price") if isinstance(latest, dict) else None
+        price_text = fmt.cents(price) if price is not None else "—"
+        out.append((labels.get(coin, coin.upper()), series, state, state_cls, price_text))
+    return out
+
+
+def _watch_html(d):
+    cards = []
+    for coin, series, state, state_cls, price in _coin_watch(d):
+        cards.append(
+            f'<div class="crypto-coin">'
+            f'<div class="crypto-coin-name"><strong>{esc(coin)}</strong><span>{esc(series)}</span></div>'
+            f'<div class="crypto-coin-price">{esc(price)}</div>'
+            f'<span class="crypto-state {esc(state_cls)}">{esc(state)}</span>'
+            f'</div>'
+        )
+    return "".join(cards)
+
+
+def _hero(rows):
+    fav = _fav_row(rows)
+    a = (fav or {}).get("a") or {}
+    n = int(a.get("n") or 0)
+    won = int(a.get("won") or 0)
+    roi = a.get("roi_fee")
+    clv = a.get("clv")
+    clv_n = int(a.get("clv_n") or 0)
+    open_n = int((fav or {}).get("open") or 0)
+    stage = "Production" if (fav or {}).get("prod") else "Sandbox"
+    roi_text = B.pct(roi, sign=True) if roi is not None else "—"
+    clv_text = fmt.signed_cents(clv) if clv is not None and clv_n else "—"
+    remaining = max(0, T.READ_FLOOR - n)
+    progress_cells = "".join(
+        '<span class="is-filled" aria-hidden="true"></span>' if i < n
+        else '<span aria-hidden="true"></span>'
+        for i in range(T.READ_FLOOR)
+    )
+    return f"""<section class="crypto-hero" aria-label="Crypto lane status">
+<div class="crypto-hero-top">
+<div><span class="crypto-stage">{esc(stage)}</span><h1>Crypto</h1></div>
+<div class="crypto-live-dot"><span aria-hidden="true"></span>{open_n} open</div>
+</div>
+<div class="crypto-return"><strong>{esc(roi_text)}</strong><span>ROI after fees</span></div>
+<div class="crypto-stats">
+<div><b>{won}–{max(0, n - won)}</b><span>record</span></div>
+<div><b>{esc(clv_text)}</b><span>vs close</span></div>
+<div><b>{n} / {T.READ_FLOOR}</b><span>market-days</span></div>
+</div>
+<div class="crypto-progress" role="progressbar" aria-valuemin="0" aria-valuemax="{T.READ_FLOOR}" aria-valuenow="{min(n, T.READ_FLOOR)}">
+{progress_cells}
+</div>
+<p class="sm mut">{remaining} more independent market-day{"s" if remaining != 1 else ""} before the planned read.</p>
+</section>"""
+
+
+def _record_cards(rows):
+    fav = _fav_row(rows)
+    if not fav:
+        return '<div class="note">No crypto favourite-band record yet.</div>'
+    a = fav.get("a") or {}
+    won = a.get("won") or 0
+    expected = a.get("expected")
+    priced_text = f"{expected:.1f}" if expected is not None else "—"
+    edge_text = f"{won - expected:+.1f} wins" if expected is not None else "—"
+    return f"""<div class="crypto-metrics">
+<div><span>Won v priced</span><strong>{esc(won)} v {esc(priced_text)}</strong><small>{esc(edge_text)}</small></div>
+<div><span>ROI after fees</span><strong>{esc(B.pct(a.get("roi_fee"), sign=True) if a.get("roi_fee") is not None else "—")}</strong><small>{esc(a.get("n_bets", 0))} contracts logged</small></div>
+<div><span>Closing value</span><strong>{esc(fmt.signed_cents(a.get("clv")) if a.get("clv") is not None and a.get("clv_n") else "—")}</strong><small>{esc(a.get("clv_n", 0))} close{"s" if a.get("clv_n", 0) != 1 else ""}</small></div>
+<div><span>Stage</span><strong>{"Production" if fav.get("prod") else "Sandbox"}</strong><small>{"live" if fav.get("open") else "no open position"}</small></div>
+</div>"""
 
 
 def mechanism():
@@ -122,40 +233,52 @@ def build(d=None, st=None, now=None):
     st = st if st is not None else T.load_stages()
     rows = crypto_rows(d, st)
 
-    settled = sum(r["a"]["n"] for r in rows)
-    prod = sum(1 for r in rows if r.get("prod"))
-    open_bets = sum(1 for q in d.get("quotes", [])
-                    if q.get("bet") and q.get("status") == "open"
-                    and q.get("sport") in SPORTS)
-    tiles = "".join(f'<div class="tile"><b>{v:,}</b><span>{k}</span></div>' for k, v in (
-        ("pairs with a record", len(rows)),
-        ("outcomes settled", settled),
-        ("bets running", open_bets),
-        ("in Production", prod),
-        ("coins live", len(S.COINS)),
-    ))
+    lo, hi = S.CRYPTO_FAV_BAND
+    band = f"{lo * 100:g}–{hi * 100:g}¢"
+    window = f"{S.CRYPTO_FAV_MIN_H:g}–{S.CRYPTO_FAV_MAX_H:g}h"
+    liquidity = f"≤{S.CRYPTO_FAV_MAX_SPREAD * 100:g}¢ spread · {S.CRYPTO_FAV_MIN_ASK_SIZE:g}+ ask"
+    close = f"{S.CRYPTO_FAV_CLOSE_ET:02d}:00 ET"
 
-    body = f"""<h1>Crypto</h1>
-<p class="lede">One rule and the baseline that motivated it. The baseline asked whether a
-forecast could beat assuming nothing changes, and the answer was no. The rule asks a
-different question: whether the price itself is biased in the favourite band.</p>
-<div class="tiles">{tiles}</div>
-{mechanism()}
-{unit()}
-<section id="lanes">
-<h2>Records</h2>
-<div class="note">Counts are <b>market-days</b>, the unit above — not individual
-contracts.</div>
+    body = f"""{_hero(rows)}
+<nav class="crypto-tabs" aria-label="Crypto sections">
+<a href="#today">Today</a><a href="#performance">Performance</a><a href="#method">Method</a>
+</nav>
+
+<section id="today" class="crypto-section">
+<div class="crypto-section-head"><div><span class="crypto-eyebrow">Today’s watch</span><h2>Five live coins</h2></div>
+<span class="crypto-rule-chip">{esc(band)} · {esc(window)}</span></div>
+<div class="crypto-watch">{_watch_html(d)}</div>
+<div class="crypto-rule-strip">
+<div><span>Entry</span><b>Yes ask {esc(band)}</b></div>
+<div><span>Selection</span><b>Lowest qualifying rung</b></div>
+<div><span>Liquidity</span><b>{esc(liquidity)}</b></div>
+<div><span>Close</span><b>{esc(close)}</b></div>
+</div>
+</section>
+
+<section id="performance" class="crypto-section">
+<span id="lanes"></span>
+<div class="crypto-section-head"><div><span class="crypto-eyebrow">Performance</span><h2>Favourite-band record</h2></div></div>
+{_record_cards(rows)}
+<details class="crypto-disclosure">
+<summary>Full record table</summary>
+<div class="note sm">Counts are <b>market-days</b>, not individual contracts.</div>
 {B.sport_sections(d, rows)}
+</details>
+</section>
+
+<section id="method" class="crypto-section">
+<div class="crypto-section-head"><div><span class="crypto-eyebrow">Research notes</span><h2>Method</h2></div></div>
+<details class="crypto-disclosure"><summary>The rule under test</summary>{mechanism()}</details>
+<details class="crypto-disclosure"><summary>Why a day is one outcome</summary>{unit()}</details>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
     return C.document(
         "Edge Machine · Crypto",
-        "The crypto favourite-band rule, the no-change baseline, and why a day is one bet.",
+        "Crypto favourite-band Analyst Desk: today, performance, and method.",
         "crypto",
-        (("rule", "The rule under test"), ("unit", "Why a day is one bet"),
-         ("lanes", "Records")),
+        (("today", "Today"), ("performance", "Performance"), ("method", "Method")),
         C.stamp(now),
         body,
         script_src="./site.js",
