@@ -2584,3 +2584,293 @@ details.nba-game > .matchup-grid {
     grid-template-columns: minmax(0,1fr);
   }
 }
+
+/* Tennis Match Center — SofaScore-inspired hierarchy with separate combo products. */
+.tennis-desk {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.tennis-desk > * { min-width: 0; }
+.tennis-desk-head,
+.tennis-block-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tennis-desk-head h2,
+.tennis-block-head h3 { margin: 2px 0 0; }
+.tennis-kicker {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.tennis-local-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tennis-local-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.tennis-local-nav a:hover {
+  color: var(--fg);
+  background: var(--raised);
+  text-decoration: none;
+}
+.tennis-match-block,
+.tennis-combos,
+.tennis-rule-desk,
+.tennis-system {
+  scroll-margin-top: calc(var(--hdr-h) + 18px);
+}
+.tennis-block-head { margin-bottom: 8px; }
+.tennis-block-head > span {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+}
+.tennis-match-list {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+}
+.tennis-match {
+  display: grid;
+  grid-template-columns: 118px minmax(0,1fr) 80px;
+  gap: 14px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.tennis-match:last-child { border-bottom: 0; }
+.tennis-match:hover { background: var(--raised); }
+.tennis-match-time {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--mut);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.tennis-tour {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 3px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--raised);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.tennis-match-main { min-width: 0; }
+.tennis-match-title {
+  font-size: 14px;
+  font-weight: 750;
+}
+.tennis-match-title a {
+  color: var(--fg);
+  text-decoration: none;
+}
+.tennis-match-title a:hover { text-decoration: underline; }
+.tennis-match-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.tennis-rule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.025);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.tennis-prod {
+  color: var(--pos);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.tennis-match-state {
+  justify-self: end;
+  min-width: 70px;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.tennis-match-state.is-live {
+  color: var(--pos);
+  background: rgba(74,222,128,.10);
+  border: 1px solid rgba(74,222,128,.20);
+}
+.tennis-match-state.is-watch {
+  color: var(--mut);
+  background: var(--raised);
+  border: 1px solid var(--line);
+}
+.tennis-combo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+.tennis-combo-card {
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) repeat(3, minmax(60px,.55fr));
+  gap: 10px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+}
+.tennis-combo-card h4 {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+.tennis-combo-kicker {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.tennis-combo-stat {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.tennis-combo-stat b {
+  display: block;
+  font-size: 13px;
+}
+.tennis-combo-stat span {
+  display: block;
+  color: var(--mut);
+  font-size: 11px;
+}
+.tennis-rule-desk { margin-top: 8px; }
+.tennis-rule-desk .rule-band-title {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 4;
+  padding: 8px 0;
+  background: var(--bg);
+}
+.tennis-system {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  overflow: hidden;
+}
+.tennis-system > details > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 16px;
+}
+.tennis-system > details > summary::-webkit-details-marker { display: none; }
+.tennis-system > details > summary > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tennis-system > details > summary small {
+  color: var(--mut);
+  font-size: 11px;
+}
+.tennis-system > details > summary::after {
+  content: "›";
+  float: right;
+  color: var(--mut);
+}
+.tennis-system > details[open] > summary::after { content: "⌄"; }
+.tennis-system #listing {
+  margin: 0 12px 12px;
+}
+@media (max-width: 900px) {
+  .tennis-combo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .tennis-desk-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .tennis-local-nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tennis-local-nav::-webkit-scrollbar { display: none; }
+  .tennis-match {
+    grid-template-columns: 70px minmax(0,1fr) 62px;
+    gap: 8px;
+    min-height: 68px;
+    padding: 10px 11px;
+  }
+  .tennis-match-time { font-size: 11px; }
+  .tennis-match-title { font-size: 13px; }
+  .tennis-rule-chip { font-size: 11px; }
+  .tennis-match-state {
+    min-width: 56px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 11px;
+  }
+  .tennis-combo-grid { grid-template-columns: 1fr; }
+  .tennis-combo-card {
+    grid-template-columns: minmax(0,1.25fr) repeat(3, minmax(52px,.55fr));
+  }
+  .tennis-rule-desk .rule-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (max-width: 480px) {
+  .tennis-match {
+    grid-template-columns: 54px minmax(0,1fr) 52px;
+    gap: 6px;
+  }
+  .tennis-tour { font-size: 11px; }
+  .tennis-match-state { min-width: 48px; }
+  .tennis-combo-card {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .tennis-combo-card > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .tennis-rule-desk .rule-grid {
+    grid-template-columns: minmax(0,1fr);
+  }
+}
+
+.tennis-match > *, .tennis-combo-card > * { min-width: 0; }
+.tennis-rule-chip a { color: inherit; }

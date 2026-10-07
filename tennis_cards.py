@@ -119,6 +119,158 @@ def _market_name(base, fam=FAMILY):
     return "Match winner" if full == fam else full.split(" · ")[-1]
 
 
+def _fixture_label(q):
+    return S.display_label(q).split(":", 1)[0].strip()
+
+
+def _fixture_key(q):
+    label, kickoff = _fixture_label(q), _kickoff(q)
+    if label and kickoff is not None:
+        return ("fixture", " ".join(label.casefold().split()),
+                _tour_label(q).casefold(), kickoff)
+    return ("market", str(q.get("market_id") or q.get("id") or ""),
+            str(q.get("start") or ""))
+
+
+def _tour_label(q):
+    tier = str(q.get("tier") or "").strip()
+    league = str(q.get("league") or "").strip()
+    raw = tier or league
+    if not raw:
+        return ""
+    low = raw.lower()
+    if "wta" in low and "double" in low:
+        return "WTA Doubles"
+    if "atp" in low:
+        return "ATP"
+    if "utr" in low:
+        return "UTR"
+    if "wta" in low:
+        return "WTA"
+    return raw
+
+
+def _match_rows(d, rows, now):
+    """Single-match tennis only; combo products are rendered separately."""
+    singles = [r for r in rows if B._base_sport(r["sport"]) == "tennis"]
+    by_key = {}
+    for row in singles:
+        for q in open_quotes(d, row["name"], row["sport"]) + upcoming_quotes(d, row["name"], row["sport"], now):
+            key = _fixture_key(q)
+            rec = by_key.setdefault(key, {"q": q, "rules": []})
+            rec["rules"].append((row, q))
+    found = list(by_key.values())
+    found.sort(key=lambda rec: (_kickoff(rec["q"]) or _FAR,
+                                str(rec["q"].get("label") or rec["q"].get("market_id") or "")))
+    return found
+
+
+def _match_rule(row, q):
+    label = row["meta"]["label"].split(" (")[0]
+    side = B._side(q) if q.get("bet") else ""
+    scope = B._scope(row["sport"])
+    bits = [label, _market_name(B._base_sport(row["sport"]))]
+    if scope:
+        bits.append(S.SCOPE_LABEL[scope])
+    if side:
+        bits.append(str(side))
+    text = " · ".join(bits)
+    stage = '<span class="tennis-prod">Production</span>' if row.get("prod") else ""
+    return f'<span class="tennis-rule-chip">{B.safe_href(S.market_url(q), text)}{stage}</span>'
+
+
+def _match_card(rec):
+    q = rec["q"]
+    label = _fixture_label(q)
+    when = _kick_label(q)
+    tour = _tour_label(q)
+    link = B.safe_href(S.market_url(q), label)
+    chips = "".join(_match_rule(row, quote) for row, quote in rec["rules"])
+    has_bet = any(quote.get("bet") for _row, quote in rec["rules"])
+    state = "Pick in" if has_bet else "Watching"
+    state_cls = "is-live" if has_bet else "is-watch"
+    tour_html = f'<span class="tennis-tour">{B.esc(tour)}</span>' if tour else ""
+    return (
+        f'<article class="tennis-match">'
+        f'<div class="tennis-match-time">{B.esc(when)}{tour_html}</div>'
+        f'<div class="tennis-match-main"><div class="tennis-match-title">{link}</div>'
+        f'<div class="tennis-match-rules">{chips}</div></div>'
+        f'<span class="tennis-match-state {state_cls}">{state}</span>'
+        f'</article>'
+    )
+
+
+def _combo_summary(row, quotes):
+    a = row["a"]
+    name = row["meta"]["label"].split(" (")[0]
+    rec = f'{a["won"]}–{max(0, a["n"] - a["won"])}' if a.get("n") else "—"
+    open_n = len(quotes)
+    return (
+        f'<article class="tennis-combo-card">'
+        f'<div><span class="tennis-combo-kicker">{B.esc(_market_name(B._base_sport(row["sport"])))}</span>'
+        f'<h4>{B.esc(name)}</h4></div>'
+        f'<div class="tennis-combo-stat"><b>{B.esc(rec)}</b><span>record</span></div>'
+        f'<div class="tennis-combo-stat"><b>{roi_html(row)}</b><span>ROI</span></div>'
+        f'<div class="tennis-combo-stat"><b>{open_n}</b><span>open</span></div>'
+        f'</article>'
+    )
+
+
+def match_center(d, rows, now):
+    matches = _match_rows(d, rows, now)
+    now_ct = fmt.chicago(now)
+    today_key = now_ct.date()
+    now = now_ct.astimezone(timezone.utc)
+    today, upcoming, past, other = [], [], [], []
+    for rec in matches:
+        ko = _kickoff(rec["q"])
+        if ko is None or ko > now + HORIZON:
+            other.append(rec)
+        elif ko <= now:
+            past.append(rec)
+        elif fmt.chicago(ko).date() == today_key:
+            today.append(rec)
+        else:
+            upcoming.append(rec)
+
+    combo_rows = [r for r in rows if B._base_sport(r["sport"]) in ("tennis_combo", "tennis_pmcombo")]
+    combo_rows = [r for _rank, _prov, r in B.rank_rows(combo_rows)]
+    combo_html = "".join(_combo_summary(r, open_quotes(d, r["name"], r["sport"])) for r in combo_rows)
+
+    today_html = "".join(_match_card(x) for x in today) or '<div class="note">No tracked tennis match today.</div>'
+    upcoming_html = "".join(_match_card(x) for x in upcoming[:12]) or '<div class="note">No tracked tennis match in the next 48 hours.</div>'
+    more = (f'<p class="sm mut">{len(upcoming) - 12} more upcoming matches not shown.</p>'
+            if len(upcoming) > 12 else "")
+    return f'''<div class="tennis-desk">
+<div class="tennis-desk-head">
+<div><span class="tennis-kicker">Match center</span><h2>Today & upcoming</h2></div>
+<nav class="tennis-local-nav" aria-label="Tennis sections">
+<a href="#today">Today</a><a href="#upcoming">Upcoming</a><a href="#in-play">Past kickoff</a><a href="#combos">Combos</a><a href="#rules">Rules</a><a href="#system">System</a>
+</nav>
+</div>
+<section id="today" class="tennis-match-block">
+<div class="tennis-block-head"><h3>Today</h3><span>{len(today)} matches</span></div>
+<div class="tennis-match-list">{today_html}</div>
+</section>
+<section id="upcoming" class="tennis-match-block">
+<div class="tennis-block-head"><h3>Next 48 hours</h3><span>{len(upcoming)} matches</span></div>
+<div class="tennis-match-list">{upcoming_html}</div>{more}
+</section>
+<section id="in-play" class="tennis-match-block">
+<div class="tennis-block-head"><h3>In play / past kickoff</h3><span>{len(past)} matches</span></div>
+<div class="tennis-match-list">{"".join(_match_card(x) for x in past) or '<div class="note">No open pick past kickoff.</div>'}</div>
+</section>
+<section id="other-open" class="tennis-match-block">
+<div class="tennis-block-head"><h3>Later / time unconfirmed</h3><span>{len(other)} matches</span></div>
+<div class="tennis-match-list">{"".join(_match_card(x) for x in other) or '<div class="note">No other open pick.</div>'}</div>
+</section>
+<section id="combos" class="tennis-combos">
+<div class="tennis-block-head"><h3>Combo baskets</h3><span>{len(combo_rows)} rules</span></div>
+<div class="tennis-combo-grid">{combo_html or '<div class="note">No combo lane has a record yet.</div>'}</div>
+</section>
+</div>'''
+
+
 def _games(quotes):
     shown = quotes[:OPEN_LIMIT]
     if not shown:
@@ -225,15 +377,14 @@ def render(d, rows, now=None):
     comes first.
     """
     now = now or datetime.datetime.now(timezone.utc)
-    if not rows:
-        return '<div class="note">No tennis lane has a record yet.</div>'
     active, inactive = _bands(d, rows, now)
-    note = ('<div class="note">Flip a card for the games that rule has open. '
-            'The front is the verdict and the ROI after fees. A rule with a pick in, '
-            'or a fixture kicking off within 48 hours, sits above the rest.</div>')
+    note = ('<div class="note">Match center first. Single-match tennis is separated '
+            'from combo products; the full rule record stays below.</div>')
     cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)
-    # Definitions stay folded under the cards. The soccer by-competition panel
-    # does not: it ignores the lane reset clock and the refused-tour filter,
-    # so its totals are not the records on the cards.
     extra = B.definitions(rows)
-    return note + cards + extra
+    if not rows:
+        note += '<div class="note">No tennis lane has a record yet.</div>'
+    return (match_center(d, rows, now)
+            + '<section id="rules" class="tennis-rule-desk"><div class="tennis-block-head"><h3>Rules</h3>'
+              '<span>active first</span></div>'
+            + note + cards + extra + '</section>')
