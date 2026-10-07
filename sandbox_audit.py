@@ -40,6 +40,9 @@ Checks, each an ERROR (fails the run) unless marked:
               2.4 days to settle WTI on 2026-09-18 and finalised it eight minutes after a
               grading run — a check that could not tell those apart called a healthy grader broken.
   copy        no public file uses the phrases the public pages are kept free of.
+  tours       a filtered lane logged a refused tour at or after NEW_CODE_SINCE.
+              WARNING, not an error: the row stays on the ledger, and a hit must
+              not turn the run red. It is printed and written to the step summary.
 
 Usage:  python3 sandbox_audit.py [--no-network] [--sample N]
 
@@ -73,6 +76,16 @@ FRESH_WARN_H = 4.5               # the tracker runs every 3h; one late run is a 
 FRESH_ERR_H = 6.5                # two missed runs: the grader has stopped
 PNL_TOL = 0.011                  # stored P/L is rounded to the cent
 PRICE_TOL = 0.0051               # a logged price and its side's ask may differ by rounding
+
+# The first tracker run on the code that applies the tour filter
+# (run 37035009388, started 2026-10-02T16:35:51Z). Refused-tour bets logged
+# earlier are the old tracker and are expected on the ledger.
+NEW_CODE_SINCE = "2026-10-02T16:35:51Z"
+# Lanes whose picks go through the tour filter: the six reset lanes, plus
+# pm_combo4, which buys from the same Polymarket leg pool and is not a reset
+# lane. tennis_fav_band is not here; its picks are not filtered. A later lane
+# belongs here when its picks go through tennis_fav_kept.
+FILTERED_TOUR_LANES = S.TENNIS_FAV_RESET | frozenset({"pm_combo4"})
 
 # The phrases the public pages must never contain. Stored encoded so that this file, which is
 # itself public, does not print them in the clear.
@@ -866,6 +879,61 @@ def emit(rep):
                 f.write(f"| skipped | {c} | {m.replace('|', '/')} |\n")
 
 
+def _refused_tour(q):
+    """The tour test inside tennis_refused_row, without its reset-lane gate.
+
+    pm_combo4 is filtered and is not a reset lane, so tennis_refused_row
+    would miss a refused leg there. A basket is refused when any leg is.
+    An id that is not a tennis market is not a refused tour.
+    """
+    if not isinstance(q, dict):
+        return False
+    legs = q.get("legs") or []
+    if legs:
+        return any(not S._tennis_leg_kept(leg) for leg in legs)
+    return S._tour_outside_keep(q.get("market_id"), q.get("tier"))
+
+
+def refused_tour_rows(d, since=None):
+    """Refused-tour bets in a filtered lane logged at or after `since`.
+
+    `since` defaults to NEW_CODE_SINCE. A Z suffix and +00:00 are the same
+    instant, which is how the ledger writes a logged time. A basket counts
+    when any leg is a refused tour. A row logged before the cutoff is the
+    old tracker. A lane whose picks do not go through the tour filter is
+    not a hit.
+    """
+    cutoff = _dt(NEW_CODE_SINCE if since is None else since)
+    if cutoff is None or not isinstance(d, dict):
+        return []
+    hits = []
+    for q in T.all_bets(d):
+        if not isinstance(q, dict) or not q.get("bet"):
+            continue
+        if q.get("source") not in FILTERED_TOUR_LANES:
+            continue
+        logged = _dt(q.get("logged"))
+        if logged is None or logged < cutoff:
+            continue
+        if _refused_tour(q):
+            hits.append(q)
+    return hits
+
+
+def check_refused_tours(d, rep):
+    """WARN when a filtered lane logged a refused tour on or after the new code.
+
+    A hit does not fail the run. The row is already on the ledger; the warning
+    is how the audit output and the step summary show the filter missed.
+    """
+    hits = refused_tour_rows(d)
+    if not hits:
+        rep.ok("tours", f"no refused-tour bet in a filtered lane since {NEW_CODE_SINCE}")
+        return
+    for q in hits:
+        rep.warn("tours", f"{q.get('id')} on {q.get('source')}: refused tour logged {q.get('logged')}")
+
+
 def run(network=True, sample=25):
     d, st, rep = T.load(), T.load_stages(), Report()
     check_bets(d, rep)
@@ -873,6 +941,7 @@ def run(network=True, sample=25):
     check_records(d, st, rep)
     check_production(d, st, rep)
     check_combos(d, rep)
+    check_refused_tours(d, rep)
     check_fresh(d, rep)
     if network:
         check_settlement(d, rep, sample)
