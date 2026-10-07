@@ -118,6 +118,132 @@ def _market_name(base, fam="Soccer"):
     return "Match winner" if full == fam else full.split(" · ")[-1]
 
 
+def _fixture_label(q):
+    # Soccer market labels append the outcome after the match's team names.
+    return S.display_label(q).split(":", 1)[0].strip()
+
+
+def _fixture_key(q):
+    label, kickoff = _fixture_label(q), _kickoff(q)
+    if label and kickoff is not None:
+        return ("fixture", " ".join(label.casefold().split()),
+                str(S.display_league(q) or "").casefold(), kickoff)
+    # Without a match name and verified instant, keep distinct markets separate.
+    return ("market", str(q.get("market_id") or q.get("id") or ""),
+            str(q.get("start") or ""))
+
+
+def _fixture_rows(d, rows, now):
+    """Upcoming/open fixtures, grouped across rules so one match is one row."""
+    by_key = {}
+    for row in rows:
+        open_live = open_quotes(d, row["name"], row["sport"])
+        upcoming = upcoming_quotes(d, row["name"], row["sport"], now)
+        for q in open_live + upcoming:
+            key = _fixture_key(q)
+            rec = by_key.setdefault(key, {"q": q, "rules": []})
+            rec["rules"].append((row, q))
+    out = list(by_key.values())
+    out.sort(key=lambda rec: (
+        _kickoff(rec["q"]) or _FAR,
+        str(rec["q"].get("label") or rec["q"].get("market_id") or "")))
+    return out
+
+
+def _fixture_rule_chip(row, q):
+    meta = row["meta"]
+    label = meta["label"].split(" (")[0]
+    sfx = B._scope(row["sport"])
+    scope = S.SCOPE_LABEL[sfx] if sfx else ""
+    side = B._side(q) if q.get("bet") else ""
+    bits = [label, _market_name(B._base_sport(row["sport"]))]
+    if scope:
+        bits.append(scope)
+    if side:
+        bits.append(str(side))
+    text = " · ".join(bits)
+    stage = '<span class="soccer-prod">Production</span>' if row.get("prod") else ""
+    link = B.safe_href(S.market_url(q), text)
+    return f'<span class="soccer-rule-chip">{link}{stage}</span>'
+
+
+def _fixture_card(rec):
+    q = rec["q"]
+    label = _fixture_label(q)
+    when = _kick_label(q)
+    link = B.safe_href(S.market_url(q), label)
+    chips = "".join(_fixture_rule_chip(row, quote) for row, quote in rec["rules"])
+    open_count = sum(1 for _row, quote in rec["rules"] if quote.get("bet"))
+    state = "Pick in" if open_count else "Watching"
+    state_cls = "is-live" if open_count else "is-watch"
+    return (
+        f'<article class="soccer-fixture">'
+        f'<div class="soccer-fixture-time">{B.esc(when)}</div>'
+        f'<div class="soccer-fixture-main"><div class="soccer-fixture-title">{link}</div>'
+        f'<div class="soccer-fixture-rules">{chips}</div></div>'
+        f'<span class="soccer-fixture-state {state_cls}">{state}</span>'
+        f'</article>'
+    )
+
+
+def match_center(d, rows, now):
+    fixtures = _fixture_rows(d, rows, now)
+    today = []
+    upcoming = []
+    past = []
+    other = []
+    now_ct = fmt.chicago(now)
+    now = now_ct.astimezone(timezone.utc)
+    today_key = now_ct.date()
+    for rec in fixtures:
+        ko = _kickoff(rec["q"])
+        if ko is None or ko > now + HORIZON:
+            other.append(rec)
+        elif ko <= now:
+            past.append(rec)
+        elif fmt.chicago(ko).date() == today_key:
+            today.append(rec)
+        else:
+            upcoming.append(rec)
+    prod = [r for r in rows if r.get("prod")]
+    prod_chips = "".join(
+        f'<span class="soccer-prod-rule"><b>{B.esc(r["meta"]["label"].split(" (")[0])}</b>'
+        f'<small>{B.esc(S.SPORTS.get(r["sport"], r["sport"]))}</small></span>'
+        for r in prod)
+    today_html = "".join(_fixture_card(x) for x in today) or '<div class="note">No tracked fixture today.</div>'
+    upcoming_html = "".join(_fixture_card(x) for x in upcoming[:12]) or '<div class="note">No tracked fixture in the next 48 hours.</div>'
+    more = (f'<p class="sm mut">{len(upcoming) - 12} more upcoming fixtures not shown.</p>'
+            if len(upcoming) > 12 else "")
+    return f'''<div class="soccer-desk">
+<div class="soccer-desk-head">
+<div><span class="soccer-kicker">Match center</span><h2>Today & upcoming</h2></div>
+<nav class="soccer-local-nav" aria-label="Soccer sections">
+<a href="#today">Today</a><a href="#upcoming">Upcoming</a><a href="#in-play">Past kickoff</a><a href="#rules">Rules</a><a href="#health">System</a>
+</nav>
+</div>
+<section id="today" class="soccer-fixture-block">
+<div class="soccer-block-head"><h3>Today</h3><span>{len(today)} fixtures</span></div>
+<div class="soccer-fixture-list">{today_html}</div>
+</section>
+<section id="upcoming" class="soccer-fixture-block">
+<div class="soccer-block-head"><h3>Next 48 hours</h3><span>{len(upcoming)} fixtures</span></div>
+<div class="soccer-fixture-list">{upcoming_html}</div>{more}
+</section>
+<section id="in-play" class="soccer-fixture-block">
+<div class="soccer-block-head"><h3>In play / past kickoff</h3><span>{len(past)} fixtures</span></div>
+<div class="soccer-fixture-list">{"".join(_fixture_card(x) for x in past) or '<div class="note">No open pick past kickoff.</div>'}</div>
+</section>
+<section id="other-open" class="soccer-fixture-block">
+<div class="soccer-block-head"><h3>Later / time unconfirmed</h3><span>{len(other)} fixtures</span></div>
+<div class="soccer-fixture-list">{"".join(_fixture_card(x) for x in other) or '<div class="note">No other open pick.</div>'}</div>
+</section>
+<section class="soccer-production">
+<div class="soccer-block-head"><h3>Production rules</h3><span>{len(prod)} live</span></div>
+<div class="soccer-prod-strip">{prod_chips or '<span class="mut">None in Production.</span>'}</div>
+</section>
+</div>'''
+
+
 def _games(quotes):
     shown = quotes[:OPEN_LIMIT]
     if not shown:
@@ -224,14 +350,15 @@ def render(d, rows, now=None):
     comes first.
     """
     now = now or datetime.datetime.now(timezone.utc)
-    if not rows:
-        return '<div class="note">No soccer lane has a record yet.</div>'
     active, inactive = _bands(d, rows, now)
-    note = ('<div class="note">Flip a card for the games that rule has open. '
-            'The front is the verdict and the ROI after fees. A rule with a pick in, '
-            'or a fixture kicking off within 48 hours, sits above the rest.</div>')
+    note = ('<div class="note">Match center first; rule cards below. '
+            'Open picks and fixtures inside 48 hours stay at the top, while the full '
+            'research record remains available underneath.</div>')
+    if not rows:
+        note = '<div class="note">No soccer lane has a record yet.</div>'
     cards = _band("Active", "active", active) + _band("Inactive", "inactive", inactive)
-    # The by-competition tables and the definitions stay, folded, under the cards.
-    # They are the same Sandbox blocks the lane section already showed.
     extra = B.league_panel(d, rows) + B.definitions(rows)
-    return note + cards + extra
+    return (match_center(d, rows, now)
+            + '<section id="rules" class="soccer-rule-desk"><div class="soccer-block-head"><h3>Rules</h3>'
+              '<span>active first</span></div>'
+            + note + cards + extra + '</section>')
