@@ -973,7 +973,7 @@ def page(now, d=None, st=None, blob=None, tiles=None):
 <section class="shell-pane rules-pane" aria-labelledby="rules-title">
 <div class="pane-head">
 <h2 id="rules-title">Rule cards</h2>
-<a class="full-page" href="./production.html">View all →</a>
+<a class="full-page" href="./production.html">Full page →</a>
 </div>
 <div class="rules-head" id="rules-head" hidden>
 <p class="rules-line" id="rules-line"></p>
