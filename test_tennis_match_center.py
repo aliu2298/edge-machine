@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Match identity, each pick's link, real time windows, and phone layout."""
+"""Match identity, each pick's link, the day windows, the empty line, and phone layout."""
 import datetime
 import os
 import re
@@ -11,11 +11,17 @@ import tennis_cards as C
 import tennis_build
 import site_chrome
 
-NOW = datetime.datetime(2026, 10, 7, 12, tzinfo=datetime.timezone.utc)
+NOW = datetime.datetime(2026, 10, 7, 12, tzinfo=datetime.timezone.utc)   # 7 AM CT
+
+
 def row(name):
     return dict(name=name, sport='tennis', meta=S.SOURCES[name],
-                prod=True, v='waiting', a=dict(n=0, won=0), open=1)
+                prod=True, v='waiting', a=dict(n=0, won=0), open=1, since=None)
+
+
 rows = [row('tennis_fav_band_3h'), row('tennis_fav_band')]
+
+
 def quote(pid, name, label, hours, **kwargs):
     start = (NOW + datetime.timedelta(hours=hours)).isoformat() if hours is not None else None
     q = dict(id=pid, source=name, sport='tennis', status='open', bet=True,
@@ -25,65 +31,81 @@ def quote(pid, name, label, hours, **kwargs):
              url='https://polymarket.us/event/' + pid)
     q.update(kwargs)
     return q
-quotes = [quote('market-a', rows[0]['name'], 'Alpha v Beta: Alpha wins', 24),
-          quote('market-b', rows[1]['name'], 'Alpha v Beta: Beta wins', 24,
-                start='2026-10-08T12:00:00Z', pick='b'),
+
+
+quotes = [quote('market-a', rows[0]['name'], 'Alpha v Beta', 24),
+          quote('market-b', rows[1]['name'], 'Alpha v Beta', 24, pick='b'),
           quote('past-day', rows[0]['name'], 'Old v Match', -30),
           quote('past-today', rows[0]['name'], 'Earlier v Today', -1),
           quote('today', rows[0]['name'], 'Today v Future', 2),
-          quote('boundary', rows[0]['name'], 'Boundary v Match', 48),
-          quote('beyond', rows[0]['name'], 'Beyond v Window', 48 + 1 / 3600),
           quote('later', rows[0]['name'], 'Later v Match', 72),
-          quote('unknown', rows[0]['name'], 'Unknown v Time', None)]
+          quote('unknown', rows[0]['name'], 'Unknown v Time', None),
+          quote('won-today', rows[0]['name'], 'Won v Today', -5, status='won', result='a', pnl=33.33),
+          quote('lost-yesterday', rows[0]['name'], 'Lost v Yesterday', -20, status='lost', result='b', pnl=-100.0)]
 d = {'quotes': quotes}
-matches = C._match_rows(d, rows, NOW)
-assert len(matches) == len(quotes) - 1
-match = next(m for m in matches if m['q']['id'] == 'market-a')
-html = C._match_card(match)
-assert 'Alpha' in html and 'Beta' in html
-assert 'href="https://polymarket.us/event/market-a"' in html
-assert 'href="https://polymarket.us/event/market-b"' in html
+
+picks = C.pick_rows(d, rows, NOW)
+# Every open pick, plus the one settled today. Yesterday's loss is not a line.
+assert [q['id'] for _r, q in picks] == [
+    'past-day', 'won-today', 'past-today', 'today', 'market-a', 'market-b', 'later', 'unknown'], \
+    [q['id'] for _r, q in picks]
+
+html = C.picks_html(d, rows, NOW)
+# The same contest picked by two rules is two lines, each linked to its own market and
+# each naming its own side. Labels are stored with ' v '; the page prints ' vs '.
+assert html.count('Alpha vs Beta') == 2 and ' v ' not in re.sub(r'<[^>]+>', ' ', html)
 for market, side in (('market-a', 'Alpha'), ('market-b', 'Beta')):
-    links = re.findall(r'<a\b[^>]*href="https://polymarket.us/event/' + market + r'"[^>]*>([^<]+)</a>', html)
-    assert links[-1].endswith(' · ' + side), links
-assert len(match['rules']) == 2 and {q['pick'] for _, q in match['rules']} == {'a', 'b'}
-assert C._fixture_key(quotes[0]) != C._fixture_key(dict(quotes[0], tier='wta'))
-assert C._fixture_key(quotes[0]) != C._fixture_key(dict(quotes[0], start='2026-10-09T12:00:00Z'))
-html = C.match_center(d, rows, NOW)
-def section(anchor):
-    return re.search(r'<section id="' + anchor + r'".*?</section>', html, re.S).group()
-# Labels are stored with ' v '; the page prints them as ' vs ' (S.position_label -> fmt.contest).
-assert 'Today vs Future' in section('today') and 'Earlier vs Today' not in section('today')
-assert ' v ' not in re.sub(r'<[^>]+>', ' ', section('today'))
-upcoming = section('upcoming')
-assert 'Alpha vs Beta' in upcoming and 'Boundary vs Match' in upcoming
-for name in ('Old vs Match', 'Earlier vs Today', 'Beyond vs Window', 'Later vs Match', 'Unknown vs Time'):
-    assert name not in upcoming, name
-assert 'Old vs Match' in section('in-play') and 'Earlier vs Today' in section('in-play')
-assert all(name in section('other-open') for name in ('Beyond vs Window', 'Later vs Match', 'Unknown vs Time'))
+    line = re.search(r'<div class="tn-pick [^"]*"[^>]*>(?:(?!tn-pick).)*?href="https://polymarket.us/event/'
+                     + market + r'".*?</span></div>', html, re.S).group()
+    assert f'<span class="tn-pos"><b>{side}</b></span>' in line, line
+days = re.findall(r'<div class="tn-day">([^<]+)</div>', html)
+assert days == ['Oct 6', 'Today · Oct 7', 'Tomorrow · Oct 8', 'Oct 10', 'Time unconfirmed'], days
+states = re.findall(r'<span class="tn-state ([^"]+)">([^<]+)</span>', html)
+assert states == [('is-live', 'in play'), ('is-won', 'W'), ('is-live', 'in play'),
+                  ('is-next', 'upcoming'), ('is-next', 'upcoming'), ('is-next', 'upcoming'),
+                  ('is-next', 'upcoming'), ('is-next', 'upcoming')], states
+assert '<span class="tn-time">time TBC</span>' in html
+assert 'No open pick' not in html
+
+# Settled today and nothing open: the lines stay, and the one-line empty state follows.
+quiet = C.picks_html({'quotes': [quotes[7]]}, rows, NOW)
+assert 'Won vs Today' in quiet and quiet.count('No open pick · next check ') == 1, quiet
+nothing = C.picks_html({'quotes': []}, rows, NOW)
+assert nothing.startswith('<p class="tn-empty">No open pick · next check ') and 'tn-picks' not in nothing
+
 empty = tennis_build.build({'quotes': []}, {'pairs': {}}, NOW)
-for anchor in ('today', 'upcoming', 'in-play', 'combos', 'rules', 'system'):
+for anchor in ('matches', 'rules', 'system'):
     assert f'id="{anchor}"' in empty, anchor
+assert 'href="#matches"' in empty and 'href="#rules"' in empty and 'href="#system"' in empty
 
 from require_browser import require_browser
 playwright = require_browser('test_tennis_match_center.py')
 if playwright is not None:
+    import sandbox_build as B
+    # The publish path labels every cell for the phone cards; judge that page.
+    full = B.label_cells(tennis_build.build(d, {'pairs': {}}, NOW))
     with playwright() as p:
         browser = p.chromium.launch(channel='chrome', headless=True)
         page = browser.new_page()
-        document = site_chrome.document('Tennis', 'Fixture', 'tennis', (), '', html)
+
         def serve(route):
             name = Path(urlparse(route.request.url).path).name
             if name == 'tennis.html':
-                route.fulfill(body=document, content_type='text/html')
+                route.fulfill(body=full, content_type='text/html')
             else:
                 route.fulfill(path=str(Path(C.__file__).parent / 'public_site' / name))
         page.route('http://fixture.local/**', serve)
         page.goto('http://fixture.local/tennis.html', wait_until='load')
         for width in (1280, 390, 320):
             page.set_viewport_size({'width': width, 'height': 800})
-            assert page.locator('#upcoming .tennis-match').first.is_visible()
+            assert page.locator('#matches .tn-pick').first.is_visible()
             assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), width
-            assert page.locator('#upcoming .tennis-rule-chip a').count() == 3
+            # The match list stays a flat list at every width: one grid row per pick.
+            assert page.locator('#matches .tn-pick').count() == full.count('class="tn-pick ') > 0
+            assert page.evaluate("getComputedStyle(document.querySelector('.tn-pick')).display") == 'grid'
+            # The rules table is cards under 760px, a table above it.
+            thead_shown = page.locator('#rules table thead').first.is_visible()
+            assert thead_shown == (width > 760), (width, thead_shown)
+            assert page.locator('#system > details').get_attribute('open') is None
         browser.close()
-print('PASS tennis identity, per-pick links, time windows, empty navigation, and phone layout')
+print('PASS tennis identity, per-pick links, day windows, empty line, and phone layout')

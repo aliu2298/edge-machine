@@ -2778,3 +2778,142 @@ details.nba-game > .matchup-grid {
   .crypto-health > div { display: grid; grid-template-columns: 1fr 1.35fr; gap: 4px 12px; padding: 12px; }
   .crypto-health small { grid-column: 2; }
 }
+
+/* Tennis page, rebuilt 2026-10-07: tiles, one picks list, one rules table, one fold.
+   New tennis-scoped rules only (tn-); the shared rules above are untouched. */
+.tn-section { margin-top: 24px; }
+.tn-section > h2 { margin: 0 0 4px; }
+.tn-section > p.sm { margin: 0 0 12px; }
+.tn-picks {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--card);
+  /* clip, not hidden: hidden would make this box the day headers' scroll
+     container, so they could never stick to the page header */
+  overflow: clip;
+  margin: 0 0 12px;
+}
+.tn-day {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 2;
+  padding: 8px 14px;
+  background: var(--raised);
+  border-bottom: 1px solid var(--line);
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.tn-pick {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1.4fr) minmax(0, 1.3fr) 56px minmax(0, 1.1fr) 76px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.tn-dayblock:last-child .tn-pick:last-child { border-bottom: 0; }
+.tn-pick:hover { background: var(--raised); }
+.tn-pick > * { min-width: 0; overflow-wrap: anywhere; }
+.tn-time { color: var(--mut); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tn-match a { color: var(--fg); text-decoration: none; }
+.tn-match a:hover { text-decoration: underline; }
+.tn-pos b { font-weight: 600; }
+.tn-legs { display: block; color: var(--mut); font-size: 12px; }
+.tn-price { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tn-rule { color: var(--mut); font-size: 13px; }
+.tn-prod { color: var(--pos); font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+.tn-state {
+  justify-self: end;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--raised);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.tn-state.is-live, .tn-state.is-won { color: var(--pos); border-color: rgba(74, 222, 128, .35); background: rgba(74, 222, 128, .12); }
+.tn-state.is-lost { color: var(--neg); border-color: rgba(255, 123, 114, .35); background: rgba(255, 123, 114, .12); }
+.tn-empty {
+  margin: 0 0 12px;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r);
+  color: var(--mut);
+  font-size: 14px;
+}
+.tn-rules td:first-child { min-width: 220px; }
+details.tn-rule > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+details.tn-rule > summary::-webkit-details-marker { display: none; }
+details.tn-rule > summary::before {
+  content: "›";
+  flex: 0 0 auto;
+  color: var(--mut);
+  font-size: 18px;
+  line-height: 1;
+  transition: transform .15s ease;
+}
+details.tn-rule[open] > summary::before { transform: rotate(90deg); }
+details.tn-rule .tn-def { margin: 8px 0 0; max-width: 72ch; line-height: 1.5; white-space: normal; }
+.tn-recent { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; }
+.tn-recent .tn-state { justify-self: start; }
+.tn-none { margin: 8px 0 0; }
+.tn-inactive .tbl { margin-bottom: 0; }
+.tn-system {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--card);
+}
+.tn-system > details > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+}
+.tn-system > details > summary::-webkit-details-marker { display: none; }
+.tn-system > details > summary::before {
+  content: "›";
+  color: var(--mut);
+  font-size: 18px;
+  line-height: 1;
+  transition: transform .15s ease;
+}
+.tn-system > details[open] > summary::before { transform: rotate(90deg); }
+.tn-system > details > summary small { margin-left: auto; color: var(--mut); font-size: 12px; }
+.tn-system > details > div { padding: 0 16px 14px; }
+.tn-system > details > div > p.sm { margin: 0 0 10px; max-width: 72ch; }
+.tn-system .tbl { margin-bottom: 0; }
+@media (max-width: 760px) {
+  .tn-pick {
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    grid-template-areas: "time match state" "time pos price" "time rule rule";
+    gap: 2px 10px;
+    align-items: start;
+  }
+  .tn-time { grid-area: time; }
+  .tn-match { grid-area: match; }
+  .tn-pos { grid-area: pos; }
+  .tn-price { grid-area: price; }
+  .tn-rule { grid-area: rule; }
+  .tn-state { grid-area: state; }
+  .tn-rules td:first-child { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  details.tn-rule > summary::before, .tn-system > details > summary::before { transition: none; }
+}
