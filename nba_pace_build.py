@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
-"""The NBA page: a matchup board in the dark shell, from data/nba_pace.json.
+"""The NBA page: a matchup board in the site shell, from data/nba_pace.json.
 
 Presentation only. Expectations, labels, actuals, and errors are the values
 already stored on each game. Nothing here refetches, relabels, or regrades.
+
+The board is three tables. Upcoming is one row per game in the next 24
+hours with the expected combined points for 1Q, 1H and FT; the highest
+value in each column carries a mark, and a chevron opens a detail row with
+each side's pace profile. Results is the graded games of the last 24 hours
+with expected, actual and the file's own error. Teams is a sortable
+reference of every team's current window. No bars: the three numbers are
+the numbers.
 """
 import datetime
 import json
@@ -36,6 +44,10 @@ PRA_SOON = "Coming soon"
 PRA_NONE = "No recent game"
 PERIOD_SOON = "Coming soon"
 EMPTY_UPCOMING = "No games in the next 24 hours."
+EMPTY_GRADED = "No graded game in the last 24 hours."
+# An error inside this many points is on target; inside twice it is near.
+ERR_OK = 5.0
+ERR_NEAR = 10.0
 
 
 def esc(x):
@@ -90,40 +102,6 @@ def _signed_points(value):
     if number < 0:
         return f"{fmt.MINUS}{body}"
     return f"+{body}"
-
-
-def _pct(value, lo, hi):
-    """0 at the lowest expectation on the page, 100 at the highest.
-
-    A period with one value, or with every value equal, is 100.
-    Anything outside the expectation range clamps to an end of the track.
-    """
-    if value is None or lo is None or hi is None:
-        return None
-    if hi <= lo:
-        return 100
-    raw = (float(value) - float(lo)) / (float(hi) - float(lo)) * 100.0
-    number = int(round(raw))
-    if number < 0:
-        return 0
-    if number > 100:
-        return 100
-    return number
-
-
-# A stored expectation at the bottom of the scale would otherwise paint an
-# empty track. The text is the number; this only keeps the bar visible.
-_FILL_FLOOR = 8
-
-
-def _fill_pct(value, lo, hi):
-    """The painted width. Same scale as `_pct`, never empty when a value exists."""
-    number = _pct(value, lo, hi)
-    if number is None or number >= 100:
-        return number
-    if number < _FILL_FLOOR:
-        return _FILL_FLOOR
-    return number
 
 
 def _games(blob):
@@ -220,7 +198,7 @@ def _game_period(game, side, period):
     allowed_key = f"roll_{side}_D_{period}"
     if scored_key not in game and allowed_key not in game:
         return None
-    return (_finite(game.get(scored_key)), _finite(game.get(allowed_key)), None)
+    return (_finite(game.get(scored_key)), _finite(game.get(allowed_key)))
 
 
 def _roll_period(blob, team, period):
@@ -236,19 +214,12 @@ def _roll_period(blob, team, period):
         return None
     if "O" not in block and "D" not in block:
         return None
-    return (_finite(block.get("O")), _finite(block.get("D")), _finite(block.get("n")))
-
-
-def _period_phrase(short, found):
-    scored, allowed, count = found
-    text = f"{short} scored {_points(scored)} · allowed {_points(allowed)}"
-    if count is not None:
-        text += f" · n {_count(count)}"
-    return text
+    return (_finite(block.get("O")), _finite(block.get("D")))
 
 
 def _period_text(blob, game, team, side):
-    """1Q and 1H. Per-game pre-tip values win, then teams[T].roll, else soon."""
+    """'1Q 33.8/28.2 · 1H 63.6/59.2': scored/allowed. Per-game pre-tip
+    values win, then teams[T].roll, else Coming soon."""
     parts = []
     found_any = False
     for key, short in (("q1", "1Q"), ("h1", "1H")):
@@ -259,7 +230,7 @@ def _period_text(blob, game, team, side):
             parts.append(f"{short} —")
             continue
         found_any = True
-        parts.append(_period_phrase(short, found))
+        parts.append(f"{short} {_points(found[0])}/{_points(found[1])}")
     if not found_any:
         return PERIOD_SOON
     return " · ".join(parts)
@@ -278,11 +249,10 @@ def _full_name(blob, team):
 
 
 def _classify(blob, now):
-    """Upcoming cards, graded cards, and the 24–48h 'Next up' index.
+    """Upcoming games, graded games, and the 24–48h 'Next up' index.
 
-    A tip exactly 24h out is not a card. A tip exactly 48h out is not Next up.
-    Graded cards are completed games that tipped off in the last 24h. They
-    keep their teams in the list.
+    A tip exactly 24h out is not upcoming. A tip exactly 48h out is not Next
+    up. Graded games are completed games that tipped off in the last 24h.
     """
     upcoming, graded = [], []
     soon = {}
@@ -302,6 +272,7 @@ def _classify(blob, now):
                     soon[team] = (start, game)
         elif -_DAY <= delta < datetime.timedelta(0) and game.get("completed") and not game.get("skipped"):
             graded.append(game)
+
     def _key(game):
         return (_instant(game.get("start")), str(game.get("id") or ""))
     upcoming.sort(key=_key)
@@ -309,265 +280,294 @@ def _classify(blob, now):
     return upcoming, graded, soon
 
 
-def _tempo_games(upcoming, graded):
-    return [game for game in upcoming if not game.get("skipped")] + list(graded)
-
-
-def _scale(games):
-    found = {key: [] for key, _short, _full in PERIODS}
-    for game in games:
-        for key, _short, _full in PERIODS:
-            number = _finite(game.get("roll_exp_" + key))
-            if number is not None:
-                found[key].append(number)
-    out = {}
-    for key, values in found.items():
-        out[key] = (min(values), max(values)) if values else (None, None)
-    return out
-
-
-def _tag_html(tag):
+def _tag_html(tag, phrase_visible=False):
+    """The O+D+ code with its meaning. The meaning is spoken always and
+    shown when `phrase_visible`."""
     if not isinstance(tag, str) or not tag:
-        return "<span class=\"mut\">—</span>"
+        return '<span class="mut">—</span>'
     phrase = TAGS.get(tag)
     title = f' title="{esc(phrase)}"' if phrase else ""
+    if phrase and phrase_visible:
+        return (f'<span class="tag"{title}>{esc(tag)}</span>'
+                f'<span class="tag-phrase"> {esc(phrase)}</span>')
     spoken = f'<span class="sr-only">, {esc(phrase)}</span>' if phrase else ""
     return f'<span class="tag"{title}>{esc(tag)}{spoken}</span>'
 
 
-def _team_card(blob, game, team, side):
+def _leads(games):
+    """{period: highest expectation} over the games that have one. Skipped games are out."""
+    out = {}
+    for key, _short, _full in PERIODS:
+        values = [_finite(game.get("roll_exp_" + key)) for game in games if not game.get("skipped")]
+        values = [value for value in values if value is not None]
+        out[key] = max(values) if values else None
+    return out
+
+
+def _exp_cell(game, period, leads):
+    """One expectation. The column's highest value carries a mark and says so."""
+    value = _finite(game.get("roll_exp_" + period))
+    if value is None or game.get("skipped"):
+        return '<td class="num mut">—</td>'
+    lead = leads.get(period)
+    if lead is not None and value == lead:
+        return (f'<td class="num is-lead" data-v="{value:.1f}"><span class="nba-val">{_points(value)}'
+                f'<span class="sr-only"> (highest on the board)</span></span></td>')
+    return f'<td class="num" data-v="{value:.1f}"><span class="nba-val">{_points(value)}</span></td>'
+
+
+def _tip_cell(game):
+    start = _instant(game.get("start"))
+    if start is None:
+        return '<td class="mut">—</td>'
+    return (f'<td data-v="{esc(start.strftime("%Y%m%d%H%M"))}">'
+            f'<time datetime="{esc(fmt.iso_z(start))}">{esc(fmt.when(start))}</time></td>')
+
+
+def _matchup_cell(game, uid, expandable=True):
+    away = game.get("away") or "—"
+    home = game.get("home") or "—"
+    name = (f'<span class="nba-matchup"><b>{esc(away)}</b><span aria-hidden="true"> @ </span>'
+            f'<span class="sr-only"> at </span><b>{esc(home)}</b></span>')
+    if not expandable:
+        return f"<td>{name}</td>"
+    return (f'<td><span class="nba-matchup-cell">{name} <button type="button" class="nba-more" aria-expanded="false"'
+            f' aria-controls="{esc(uid)}" aria-label="Details, {esc(away)} at {esc(home)}">'
+            f'<span aria-hidden="true">›</span></button></span></td>')
+
+
+def _side_html(blob, game, team, side):
     side_word = "Away" if side == "away" else "Home"
     shown = team if team else "—"
     name = _full_name(blob, team) if team else None
-    name_html = f'<p class="team-name">{esc(name)}</p>' if name else ""
+    name_html = f'<span class="mut"> {esc(name)}</span>' if name else ""
     scored = _points(game.get("roll_" + side + "_O"))
     allowed = _points(game.get("roll_" + side + "_D"))
     tag = game.get("roll_lab_" + side + "_ft")
     pra = _pra_text(blob, team) if team else PRA_SOON
     periods = _period_text(blob, game, team, side)
-    label = f"{side_word}, {shown}"
-    if name:
-        label += f", {name}"
     return (
-        f'<section class="team-card team-{side}" aria-label="{esc(label)}">'
-        f'<p class="team-side">{side_word}</p>'
-        f'<p class="team-abbr">{esc(shown)}</p>'
-        f'{name_html}'
-        f'<p class="team-tag">{_tag_html(tag)}</p>'
-        f'<p class="team-rates">Full game scored {esc(scored)} · allowed {esc(allowed)}</p>'
-        f'<p class="pra-slot"><span class="slot-k">Last-game PRA (pts + reb + ast)</span> '
-        f'<span class="pra-value">{esc(pra)}</span></p>'
-        f'<p class="period-slot"><span class="slot-k">1Q / 1H</span> '
-        f'<span class="period-value">{esc(periods)}</span></p>'
-        f'</section>'
+        f'<div class="nba-side nba-side-{side}">'
+        f'<p class="nba-side-k">{side_word}</p>'
+        f'<p class="nba-side-team"><b class="team-abbr">{esc(shown)}</b>{name_html} {_tag_html(tag, phrase_visible=True)}</p>'
+        f'<p class="nba-side-rates team-rates">Scored {esc(scored)} · allowed {esc(allowed)}</p>'
+        f'<p class="nba-side-periods period-value">{esc(periods)}</p>'
+        f'<p class="nba-side-pra pra-value">Last game: {esc(pra)}</p>'
+        f'</div>'
     )
 
 
-def _tempo_row(game, period, short, full, lo, hi, uid):
-    exp = _finite(game.get("roll_exp_" + period))
-    act = _finite(game.get("act_" + period)) if game.get("completed") else None
-    err = _finite(game.get("err_" + period)) if act is not None else None
-    exp_txt = _points(exp)
-    read = f"{full} ({short}) expected {exp_txt} combined"
-    fill = _fill_pct(exp, lo, hi) if exp is not None else None
-    mark = None
-    if act is not None:
-        err_txt = _signed_points(err)
-        read += f", actual {_points(act)}, error {err_txt}"
-        if lo is not None and hi is not None and (act < lo or act > hi):
-            read += ", outside the range of expectations on this page"
-        mark = _pct(act, lo, hi)
-    fill_html = ""
-    if fill is not None:
-        fill_html = f'<span class="tempo-fill" data-pct="{int(fill)}" aria-hidden="true"></span>'
-    mark_html = ""
-    if mark is not None:
-        mark_html = f'<span class="tempo-mark" data-pct="{int(mark)}" aria-hidden="true"></span>'
-    return (
-        f'<div class="tempo-row" data-period="{esc(period)}">'
-        f'<p class="tempo-read">{esc(read)}</p>'
-        f'<div class="tempo-scale" role="img" aria-label="{esc(read)}">'
-        f'{fill_html}{mark_html}'
-        f'</div></div>'
-    )
-
-
-def _expect_card(game, scale, uid):
+def _detail_row(blob, game, uid, columns):
     away = game.get("away") or "—"
     home = game.get("home") or "—"
-    rows = []
-    for index, (key, short, full) in enumerate(PERIODS):
-        lo, hi = scale.get(key, (None, None))
-        rows.append(_tempo_row(game, key, short, full, lo, hi, f"{uid}-{index}"))
-    return (
-        f'<section class="expect-card" aria-label="{esc(f"Combined expectation, {away} at {home}")}">'
-        f'<p class="expect-kicker">Combined expectations</p>'
-        f'<p class="tempo-note">Bars compare the expectations on this page.</p>'
-        f'<div class="tempo" role="group" aria-label="Tempo track, combined points">'
-        f'{"".join(rows)}</div></section>'
-    )
-
-
-def _summary_value(game, period):
-    value = _finite(game.get("roll_exp_" + period))
-    return _points(value) if value is not None else "—"
-
-
-def _matchup_summary(game, window):
-    away = game.get("away") or "—"
-    home = game.get("home") or "—"
-    start = _instant(game.get("start"))
-    when = fmt.when(start) if start is not None else "—"
-    skipped = bool(game.get("skipped"))
-    status = "Final" if window == "graded" else ("Skipped" if skipped else "Upcoming")
-    q1 = "—" if skipped else _summary_value(game, "q1")
-    h1 = "—" if skipped else _summary_value(game, "h1")
-    ft = "—" if skipped else _summary_value(game, "ft")
-    return (
-        f'<summary class="nba-game-summary">'
-        f'<span class="nba-summary-time">{esc(when)}</span>'
-        f'<span class="nba-summary-match"><b>{esc(away)}</b><span aria-hidden="true"> @ </span><b>{esc(home)}</b></span>'
-        f'<span class="nba-summary-metric"><small>1Q</small>{esc(q1)}</span>'
-        f'<span class="nba-summary-metric"><small>1H</small>{esc(h1)}</span>'
-        f'<span class="nba-summary-metric"><small>FT</small>{esc(ft)}</span>'
-        f'<span class="nba-summary-status">{esc(status)}</span>'
-        f'</summary>'
-    )
-
-
-def _matchup(blob, game, scale, uid, window):
-    away = game.get("away") or "—"
-    home = game.get("home") or "—"
-    skipped = bool(game.get("skipped"))
-    return (
-        f'<article class="matchup{" is-skipped" if skipped else ""}" data-window="{esc(window)}" '
-        f'data-away="{esc(away)}" data-home="{esc(home)}">'
-        f'<details class="nba-game">'
-        f'{_matchup_summary(game, window)}'
-        f'<div class="matchup-grid">'
-        f'{_team_card(blob, game, game.get("away"), "away")}'
-        f'{_skipped_expect(game) if skipped else _expect_card(game, scale, uid)}'
-        f'{_team_card(blob, game, game.get("home"), "home")}'
-        f'</div></details></article>'
-    )
-
-
-def _skipped_expect(game):
-    away = game.get("away") or "—"
-    home = game.get("home") or "—"
-    reason = game.get("skipped") or "Skipped"
-    start = _instant(game.get("start"))
-    if start is None:
-        when = "—"
-        stamp = ""
+    if game.get("skipped"):
+        inner = (f'<p class="nba-skip"><b>Skipped.</b> {esc(game.get("skipped"))}</p>')
     else:
-        when = fmt.when(start)
-        stamp = f' datetime="{esc(fmt.iso_z(start))}"'
-    return (
-        f'<section class="expect-card" aria-label="{esc(f"Skipped, {away} at {home}")}">'
-        f'<p class="expect-title">{esc(away)} at {esc(home)}</p>'
-        f'<p class="expect-when"><time{stamp}>{esc(when)}</time></p>'
-        f'<p class="expect-kicker">Skipped</p>'
-        f'<p class="skip-reason">{esc(reason)}</p>'
-        f'</section>'
-    )
+        inner = (f'<div class="nba-detail-grid">'
+                 f'{_side_html(blob, game, game.get("away"), "away")}'
+                 f'{_side_html(blob, game, game.get("home"), "home")}'
+                 f'</div>')
+    return (f'<tr class="nba-detail" id="{esc(uid)}" hidden>'
+            f'<td colspan="{int(columns)}" data-l="">'
+            f'<div class="nba-detail-box" aria-label="{esc(f"Details, {away} at {home}")}">{inner}</div>'
+            f'</td></tr>')
 
 
-def _matchups(blob, games, scale, window):
-    if window == "upcoming" and not games:
+def _status_cell(game):
+    if game.get("skipped"):
+        return f'<td><span class="nba-status is-skipped">Skipped</span></td>'
+    return '<td><span class="nba-status">Upcoming</span></td>'
+
+
+UP_HEAD = ('<tr><th>Tip (CT)</th><th>Matchup</th><th class="num">1Q</th>'
+           '<th class="num">1H</th><th class="num">FT</th><th>Status</th></tr>')
+
+
+def upcoming_table(blob, games):
+    """One row per game, chronological, with a detail row under each."""
+    if not games:
         return f'<p class="matchup-empty">{esc(EMPTY_UPCOMING)}</p>'
-    return "".join(
-        _matchup(blob, game, scale, f"m{window[0]}{index}", window)
-        for index, game in enumerate(games))
-
-
-def _pace_leaders(games):
+    leads = _leads(games)
     rows = []
-    for period, short, full in PERIODS:
-        ranked = []
-        for game in games:
-            if game.get("skipped"):
-                continue
-            value = _finite(game.get("roll_exp_" + period))
-            if value is None:
-                continue
-            ranked.append((value, game))
-        ranked.sort(key=lambda item: (-item[0], str(item[1].get("id") or "")))
-        if not ranked:
-            continue
-        value, game = ranked[0]
-        away = game.get("away") or "—"
-        home = game.get("home") or "—"
+    for index, game in enumerate(games):
+        uid = f"game-u{index}"
+        skipped = " is-skipped" if game.get("skipped") else ""
         rows.append(
-            f'<a class="pace-leader" href="#matchups">'
-            f'<span class="pace-leader-k">{esc(short)} leader</span>'
-            f'<strong>{esc(away)} @ {esc(home)}</strong>'
-            f'<span>{esc(_points(value))} combined</span>'
-            f'</a>'
-        )
-    return "".join(rows)
+            f'<tr class="nba-row{skipped}" data-away="{esc(game.get("away") or "—")}"'
+            f' data-home="{esc(game.get("home") or "—")}" data-window="upcoming">'
+            f'{_tip_cell(game)}{_matchup_cell(game, uid)}'
+            f'{_exp_cell(game, "q1", leads)}{_exp_cell(game, "h1", leads)}{_exp_cell(game, "ft", leads)}'
+            f'{_status_cell(game)}</tr>'
+            f'{_detail_row(blob, game, uid, 6)}')
+    return f'<div class="tbl"><table class="nba-games">{UP_HEAD}{"".join(rows)}</table></div>'
 
 
-def _seed_rows(blob):
+def _err_class(err):
+    number = _finite(err)
+    if number is None:
+        return ""
+    if abs(number) <= ERR_OK:
+        return "err-ok"
+    if abs(number) <= ERR_NEAR:
+        return "err-near"
+    return "err-far"
+
+
+def _result_cell(game, period):
+    exp = _finite(game.get("roll_exp_" + period))
+    act = _finite(game.get("act_" + period))
+    err = _finite(game.get("err_" + period))
+    exp_txt = _points(exp)
+    act_txt = _points(act) if act is None else _count(act)
+    if exp is None and act is None:
+        return '<td class="num mut">—</td>'
+    cls = _err_class(err)
+    err_html = ""
+    if err is not None:
+        err_html = (f' <span class="nba-err {cls}" title="error, actual minus expected">'
+                    f'{esc(_signed_points(err))}</span>')
+    data = f' data-v="{err:.1f}"' if err is not None else ""
+    return (f'<td class="num"{data}><span class="nba-pair">{esc(exp_txt)} / {esc(act_txt)}</span>'
+            f'{err_html}</td>')
+
+
+RES_HEAD = ('<tr><th>Tip (CT)</th><th>Matchup</th><th class="num">1Q exp / act</th>'
+            '<th class="num">1H exp / act</th><th class="num">FT exp / act</th></tr>')
+
+
+def results_table(graded):
+    if not graded:
+        return f'<p class="matchup-empty">{esc(EMPTY_GRADED)}</p>'
+    rows = []
+    for index, game in enumerate(graded):
+        rows.append(
+            f'<tr class="nba-row" data-away="{esc(game.get("away") or "—")}"'
+            f' data-home="{esc(game.get("home") or "—")}" data-window="graded">'
+            f'{_tip_cell(game)}{_matchup_cell(game, f"game-g{index}", expandable=False)}'
+            f'{_result_cell(game, "q1")}{_result_cell(game, "h1")}{_result_cell(game, "ft")}</tr>')
+    return f'<div class="tbl"><table class="nba-results-table">{RES_HEAD}{"".join(rows)}</table></div>'
+
+
+def accuracy_line(graded):
+    """'Last 24h: 4 games graded · mean abs error FT 6.1, 1H 4.8, 1Q 5.2 · 2 of 4 FT within ±5.'
+
+    Every figure is the file's own err_* values. A period with no error on
+    any game is left out of the sentence.
+    """
+    n = len(graded)
+    if not n:
+        return "Last 24h: no graded game yet."
+    parts = []
+    for key, short, _full in reversed(PERIODS):
+        errs = [abs(e) for e in (_finite(g.get("err_" + key)) for g in graded) if e is not None]
+        if errs:
+            parts.append(f"{short} {sum(errs) / len(errs):.1f}")
+    ft = [abs(e) for e in (_finite(g.get("err_ft")) for g in graded) if e is not None]
+    within = sum(1 for e in ft if e <= ERR_OK)
+    sentence = f"Last 24h: {n} game{'s' if n != 1 else ''} graded"
+    if parts:
+        sentence += f" · mean abs error {', '.join(parts)}"
+    if ft:
+        sentence += f" · {within} of {len(ft)} FT within ±{ERR_OK:g}"
+    return sentence + "."
+
+
+def _seed_means(blob):
+    """{team: {period: (scored, allowed)}} from the seed window's stored games."""
     seed = blob.get("seed") if isinstance(blob, dict) else None
     teams = seed.get("teams") if isinstance(seed, dict) else None
+    out = {}
     if not isinstance(teams, dict):
-        return {}, {}
-    calc = {}
+        return out
     for team, window in teams.items():
         if not isinstance(window, dict):
             continue
-        ft = window.get("ft") or []
-        pairs = [pair for pair in ft if isinstance(pair, (list, tuple)) and len(pair) >= 2
-                 and _finite(pair[0]) is not None and _finite(pair[1]) is not None]
-        if not pairs:
-            continue
-        calc[team] = (sum(pair[0] for pair in pairs) / len(pairs),
-                      sum(pair[1] for pair in pairs) / len(pairs))
-    return calc, seed
+        rec = {}
+        for key, _short, _full in PERIODS:
+            pairs = [pair for pair in (window.get(key) or [])
+                     if isinstance(pair, (list, tuple)) and len(pair) >= 2
+                     and _finite(pair[0]) is not None and _finite(pair[1]) is not None]
+            if pairs:
+                rec[key] = (sum(float(p[0]) for p in pairs) / len(pairs),
+                            sum(float(p[1]) for p in pairs) / len(pairs))
+        if rec:
+            out[team] = rec
+    return out
 
 
-def team_list(blob, soon, featured):
-    """The 30-team list. Same columns as before, plus a Next up flag.
+def _team_rows(blob):
+    """Every team: current window from teams[T].roll, else the seed window."""
+    seeds = _seed_means(blob)
+    names = set(seeds)
+    teams = blob.get("teams") if isinstance(blob, dict) else None
+    if isinstance(teams, dict):
+        names.update(str(t) for t in teams)
+    out = {}
+    for team in names:
+        rec = {}
+        for key, _short, _full in PERIODS:
+            found = _roll_period(blob, team, key)
+            if found is None or found[0] is None or found[1] is None:
+                found = seeds.get(team, {}).get(key)
+            if found is not None:
+                rec[key] = found
+        if rec:
+            out[team] = rec
+    return out
 
-    Teams on a card in the next 24h are left out: they moved up. A game in
-    the following day stays here. Labels are the seed window's own means
-    against the seed league, the same comparison the list already printed.
+
+TEAM_HEAD = ('<tr><th>Team</th><th>Pace profile</th><th class="num">Scored</th>'
+             '<th class="num">Allowed</th><th class="num">1Q scored/allowed</th>'
+             '<th class="num">1H scored/allowed</th><th>Last-game PRA</th></tr>')
+
+
+def team_table(blob):
+    """The reference table: one row per team, sortable, highest combined first.
+
+    The label is each team's full-game rates against the league means of the
+    same rows, the comparison the old list made against the seed league.
     """
-    calc, seed = _seed_rows(blob)
-    if not calc:
+    rows_data = _team_rows(blob)
+    if not rows_data:
         return ""
-    shown = [(team, pair) for team, pair in calc.items() if team not in featured]
-    lo = sum(pair[0] for pair in calc.values()) / len(calc)
-    ld = sum(pair[1] for pair in calc.values()) / len(calc)
-    span = seed.get("span", ["", ""]) if isinstance(seed, dict) else ["", ""]
-    window = blob.get("window")
-    window_txt = esc(window) if window is not None else "—"
-    note = (f'<div class="note sm">Each team\'s last {window_txt} regular-season games '
-            f'of 2025-26, {esc(span[0] if span else "")} to {esc(span[1] if len(span) > 1 else "")} '
-            f'({esc(seed.get("games", 0) if isinstance(seed, dict) else 0)} games). '
-            f'This is the starting window. A team with a game in the next 24 hours '
-            f'is on a matchup card above. Next up is a game in the 24 hours after that.</div>')
-    if not shown:
-        return note + '<p class="matchup-empty">Every listed team has a game in the next 24 hours.</p>'
+    fulls = [rec["ft"] for rec in rows_data.values() if "ft" in rec]
+    lo = sum(pair[0] for pair in fulls) / len(fulls) if fulls else None
+    ld = sum(pair[1] for pair in fulls) / len(fulls) if fulls else None
+
+    def _order(item):
+        pair = item[1].get("ft")
+        return (pair is None, -(pair[0] + pair[1]) if pair else 0.0, str(item[0]))
     rows = []
-    for team, (scored, allowed) in sorted(shown, key=lambda item: (-(item[1][0] + item[1][1]), str(item[0]))):
-        tag = ("O+" if scored >= lo else "O-") + ("D+" if allowed >= ld else "D-")
-        hit = soon.get(team)
-        if hit:
-            start = hit[0]
-            nxt = (f'<td class="next-up">Next up <time datetime="{esc(fmt.iso_z(start))}">'
-                   f'{esc(fmt.when(start))}</time></td>')
-        else:
-            nxt = '<td class="mut">—</td>'
+    for team, rec in sorted(rows_data.items(), key=_order):
+        scored, allowed = rec.get("ft") or (None, None)
+        tag = None
+        if scored is not None and lo is not None:
+            tag = ("O+" if scored >= lo else "O-") + ("D+" if allowed >= ld else "D-")
+        cells = []
+        for key in ("q1", "h1"):
+            pair = rec.get(key)
+            if pair is None:
+                cells.append('<td class="num mut">—</td>')
+            else:
+                cells.append(f'<td class="num" data-v="{pair[0]:.1f}">{_points(pair[0])}/{_points(pair[1])}</td>')
+        full = [
+            f'<td class="num" data-v="{scored:.1f}">{_points(scored)}</td>' if scored is not None
+            else '<td class="num mut">—</td>',
+            f'<td class="num" data-v="{allowed:.1f}">{_points(allowed)}</td>' if allowed is not None
+            else '<td class="num mut">—</td>',
+        ]
         rows.append(
-            f'<tr><td>{esc(team)}</td><td class="num">{_points(scored)}</td>'
-            f'<td class="num">{_points(allowed)}</td><td class="num">{_points(scored + allowed)}</td>'
-            f'<td>{_tag_html(tag)}</td>{nxt}</tr>')
-    head = ("<thead><tr><th>Team</th><th>Scored</th><th>Allowed</th><th>Combined</th>"
-            "<th>Label</th><th>Next</th></tr></thead>")
-    return (f'{note}<div class="tbl"><table class="team-table">{head}'
-            f'<tbody>{"".join(rows)}</tbody></table></div>')
+            f'<tr><td><b>{esc(team)}</b></td><td>{_tag_html(tag, phrase_visible=True)}</td>'
+            f'{full[0]}{full[1]}'
+            f'{cells[0]}{cells[1]}'
+            f'<td class="sm">{esc(_pra_text(blob, team))}</td></tr>')
+    return f'<div class="tbl"><table class="team-table sortable">{TEAM_HEAD}{"".join(rows)}</table></div>'
+
+
+def team_list(blob, soon=None, featured=None):
+    """Kept for callers of the old name. The reference table lists every team."""
+    del soon, featured
+    return team_table(blob)
 
 
 def _clock(blob, now):
@@ -587,70 +587,63 @@ def build(blob=None, now=None):
     if not isinstance(blob, dict):
         blob = {}
     clock = _clock(blob, now)
-    upcoming, graded, soon = _classify(blob, clock)
-    featured = set()
-    for game in upcoming:
-        if game.get("away"):
-            featured.add(game["away"])
-        if game.get("home"):
-            featured.add(game["home"])
-    scale = _scale(_tempo_games(upcoming, graded))
-    graded_html = ('<section id="graded"><h2>Results</h2>'
-                   '<p class="matchup-empty">No graded game in the last 24 hours.</p></section>')
-    if graded:
-        graded_html = (
-            '<section id="graded">'
-            '<div class="nba-section-head"><div><h2>Results</h2><p class="shell-kicker">Graded, last 24 hours</p></div></div>'
-            '<p class="note sm">The tick is the actual combined total. The error is the '
-            'file\'s own actual minus expected.</p>'
-            f'{_matchups(blob, graded, scale, "graded")}'
-            '</section>'
-        )
+    upcoming, graded, _soon = _classify(blob, clock)
     window = blob.get("window")
     window_txt = esc(window) if window is not None else "—"
     built = _instant(blob.get("built")) if isinstance(blob, dict) else None
-    data_note = ""
-    if built is not None and abs((clock - built).total_seconds()) > 60:
-        data_note = (f'<p class="sm mut">Pace data as of {esc(fmt.when(built))}; the lists below are '
-                     f'cut at {esc(fmt.when(clock))}.</p>')
+    fresh = ""
+    if built is not None:
+        fresh = f"Pace data as of {fmt.when(built)}"
+        if abs((clock - built).total_seconds()) > 60:
+            fresh += f" · board cut at {fmt.when(clock)}"
+    fresh_html = f'<p class="nba-fresh">{esc(fresh)}</p>' if fresh else ""
+    n_up = len(upcoming)
     body = f"""<div class="nba-head">
 <div>
-<h1>NBA Analyst Desk</h1>
-<p class="lede">Tip times in CT · combined points. Open a matchup for last-{window_txt} analysis.</p>
-{data_note}</div>
+<h1>NBA</h1>
+<p class="lede">Expected combined points · tip times CT</p>
+{fresh_html}</div>
 <nav class="nba-local-nav" aria-label="NBA sections">
 <a href="#matchups">Upcoming</a>
 <a href="#graded">Results</a>
 <a href="#teams">Teams</a>
 </nav>
 </div>
-<section class="pace-leaders" aria-label="Highest combined expectations">
-{_pace_leaders(upcoming)}
-</section>
 <section id="matchups">
 <div class="nba-section-head">
-<div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological</p></div>
-<span class="nba-count">{len(upcoming)} games</span>
+<div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological · the mark is the board's highest expectation in that column</p></div>
+<span class="nba-count">{n_up} game{"s" if n_up != 1 else ""}</span>
 </div>
-{_matchups(blob, upcoming, scale, "upcoming")}
+{upcoming_table(blob, upcoming)}
+<p class="nba-accuracy" id="accuracy">{esc(accuracy_line(graded))}</p>
 </section>
-<details class="section-disclosure nba-results"><summary><b>Results</b><span>Last 24 hours</span></summary>{graded_html}</details>
+<section id="graded">
+<details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
+<p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
+{results_table(graded)}
+</details>
+</section>
 <section id="teams">
-<details class="section-disclosure"><summary><b>Team reference</b><span>Last-{window_txt} window</span></summary>
-{team_list(blob, soon, featured)}</details>
+<details class="section-disclosure nba-teams"><summary><b>Team reference</b><span>Last-{window_txt} window</span></summary>
+<p class="sm mut">Each team's scoring and allowing rates over its last {window_txt} games, labelled against the league means of this table.</p>
+{team_table(blob)}</details>
 </section>
-<details class="section-disclosure"><summary><b>About this desk</b><span>Preseason research</span></summary>
-<p class="sm mut">Stored expectations for both teams: 1Q is the first quarter, 1H the first half, and FT the full game. These are research expectations, not betting lines or recommendations.</p></details>
+<details class="section-disclosure nba-about"><summary><b>About this desk</b><span>Preseason research</span></summary>
+<p class="sm mut">1Q, 1H and FT are expected combined points for both teams, from each team's last-{window_txt} scoring and allowing rates. A finished game is graded against its actual combined total, and the error shown is actual minus expected as stored in the pace file. These are research expectations, not betting lines or recommendations.</p></details>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
 """
-    return shell_build.sport_board(
+    page = shell_build.sport_board(
         "nba",
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         C.stamp(clock),
         body,
     )
+    # Every cell named for its column and the header rows in <thead>, so the
+    # phone cards work on this page however it is written out.
+    import sandbox_build
+    return sandbox_build.label_cells(page)
 
 
 def main():
@@ -661,9 +654,7 @@ def main():
         blob = json.load(fh)
     # The real clock, not the file's own build stamp: Upcoming is the next 24
     # hours from now, so a game already played is never listed as upcoming.
-    import sandbox_build
-    html = sandbox_build.label_cells(
-        build(blob, now=datetime.datetime.now(datetime.timezone.utc)))
+    html = build(blob, now=datetime.datetime.now(datetime.timezone.utc))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     tmp = OUT + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:

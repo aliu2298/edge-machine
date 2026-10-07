@@ -18,4 +18,20 @@
     reveal();
     window.addEventListener("hashchange", reveal);
   }
+
+  // NBA board: the chevron on a game row shows or hides the detail row
+  // under it. The detail row is on the page already; this only flips its
+  // hidden attribute and the button's aria-expanded.
+  Array.prototype.forEach.call(document.querySelectorAll("button.nba-more"), function (btn) {
+    btn.addEventListener("click", function () {
+      var id = btn.getAttribute("aria-controls");
+      var row = id ? document.getElementById(id) : null;
+      if (!row) return;
+      var open = row.hidden;
+      row.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      var host = btn.closest("tr");
+      if (host) host.classList.toggle("is-open", open);
+    });
+  });
 })();

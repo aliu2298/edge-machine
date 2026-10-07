@@ -1491,6 +1491,13 @@ def label_cells(page):
         out.append(page[pos:m.start()])
         attrs = m.group(1) or ""
         body = m.group(2)
+        # A table that already has its <thead> was labelled by an earlier
+        # pass (the NBA page labels itself). Labelling it again would nest
+        # a second thead. Leave it as it is.
+        if "<thead" in body:
+            out.append(m.group(0))
+            pos = m.end()
+            continue
         heads = _column_labels([rm.group(0) for rm in _header_rows(body)])
 
         def one_row(rm):
@@ -1507,6 +1514,11 @@ def label_cells(page):
                 inner = re.sub(r"<[^>]+>", "", cm.group(2))
                 empty = ' data-empty="1"' if _DASH.match(html.unescape(inner)) else ""
                 open_tag = cm.group(0)[:cm.group(0).index(">")]
+                # A cell that already names its column (or names none, with
+                # data-l="") keeps its own word: a spanning detail row is
+                # not a Tip cell.
+                if re.search(r'\sdata-l=', open_tag):
+                    return f'{open_tag}{empty}>{cm.group(2)}</td>'
                 return f'{open_tag} data-l="{esc(lab)}"{empty}>{cm.group(2)}</td>'
             return _TD.sub(cell, rm.group(0))
 
@@ -2226,7 +2238,7 @@ def main():
         if os.path.exists(nba_pace_build.SRC):
             nba_out = os.path.join(os.path.dirname(OUT), "nba.html")
             with open(nba_pace_build.SRC, encoding="utf-8") as fh:
-                _write(nba_out, label_cells(nba_pace_build.build(json.load(fh), now=now)))
+                _write(nba_out, nba_pace_build.build(json.load(fh), now=now))
             print(f"wrote {nba_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::nba page not rebuilt ({type(exc).__name__}: {exc})")
