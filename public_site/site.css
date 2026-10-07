@@ -1855,3 +1855,1022 @@ body.analyst-desk footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+
+/* NBA Analyst Desk — scan-first game board.
+   Desktop keeps the full three-card analysis visible. Mobile starts with
+   compact matchup rows; tapping a row opens the full detail. */
+.nba-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.nba-head .lede { margin-bottom: 0; }
+.nba-local-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.nba-local-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--mut);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.nba-local-nav a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
+.pace-leaders {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.pace-leader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  color: var(--fg);
+  text-decoration: none;
+}
+.pace-leader:hover { background: var(--raised); text-decoration: none; }
+.pace-leader-k {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.pace-leader strong { overflow-wrap: anywhere; }
+.pace-leader > span:last-child { color: var(--acc); font-size: 13px; font-variant-numeric: tabular-nums; }
+.nba-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin: 24px 0 10px;
+}
+.nba-section-head h2 { margin: 0; }
+.nba-count {
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.matchup { margin-bottom: 8px; }
+details.nba-game {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.nba-game-summary {
+  display: grid;
+  grid-template-columns: 110px minmax(150px, 1fr) repeat(3, minmax(64px, 76px)) 82px 16px;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+.nba-game-summary::-webkit-details-marker { display: none; }
+.nba-game-summary::after {
+  content: "▾";
+  color: var(--mut);
+  font-size: 12px;
+  justify-self: end;
+}
+details.nba-game:not([open]) .nba-game-summary::after { content: "›"; }
+.nba-summary-time { color: var(--mut); font-size: 12px; font-variant-numeric: tabular-nums; }
+.nba-summary-match {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+.nba-summary-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.nba-summary-metric small {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .05em;
+}
+.nba-summary-status {
+  justify-self: end;
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+details.nba-game > .matchup-grid {
+  border-top: 1px solid var(--line);
+  padding: 12px;
+}
+.team-tag .tag {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.team-tag .tag::after {
+  content: attr(title);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 600;
+}
+@media (min-width: 801px) {
+  .nba-game-summary::after { visibility: hidden; }
+}
+@media (max-width: 800px) {
+  .nba-head { align-items: flex-start; flex-direction: column; }
+  .nba-local-nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nba-local-nav::-webkit-scrollbar { display: none; }
+  .pace-leaders {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .pace-leaders::-webkit-scrollbar { display: none; }
+  .nba-game-summary {
+    grid-template-columns: 72px minmax(0, 1fr) repeat(3, 44px) 18px;
+    gap: 6px;
+    min-height: 58px;
+    padding: 9px 10px;
+  }
+  .nba-summary-status { display: none; }
+  .nba-summary-time { font-size: 11px; }
+  .nba-summary-match { font-size: 13px; }
+  .nba-summary-metric { font-size: 12px; }
+  details.nba-game > .matchup-grid { padding: 10px; }
+}
+@media (max-width: 520px) {
+  .nba-game-summary {
+    grid-template-columns: 58px minmax(0, 1fr) repeat(3, 38px) 14px;
+    gap: 4px;
+  }
+  .nba-summary-time { max-width: 58px; line-height: 1.15; }
+  .team-tag .tag::after { display: block; }
+}
+
+/* Crypto Analyst Desk — finance-app polish without changing the research logic. */
+.crypto-hero {
+  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 24px;
+  margin: 0 0 14px;
+  box-shadow: 0 18px 42px rgba(0,0,0,.20);
+}
+.crypto-hero-top,
+.crypto-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+.crypto-hero h1 { margin: 2px 0 0; font-size: clamp(34px, 6vw, 52px); }
+.crypto-stage,
+.crypto-eyebrow {
+  display: inline-block;
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.crypto-live-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 700;
+}
+.crypto-live-dot > span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pos);
+  box-shadow: 0 0 0 4px rgba(74,222,128,.08);
+}
+.crypto-return {
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0 18px;
+}
+.crypto-return strong {
+  font-size: clamp(42px, 8vw, 68px);
+  line-height: .95;
+  letter-spacing: -.045em;
+  font-variant-numeric: tabular-nums;
+}
+.crypto-return span {
+  margin-top: 8px;
+  color: var(--mut);
+  font-size: 13px;
+  font-weight: 650;
+}
+.crypto-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.crypto-stats > div,
+.crypto-metrics > div {
+  min-width: 0;
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(255,255,255,.055);
+  border-radius: 16px;
+  padding: 13px 14px;
+}
+.crypto-stats b,
+.crypto-metrics strong {
+  display: block;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.crypto-stats span,
+.crypto-metrics span,
+.crypto-metrics small {
+  display: block;
+  color: var(--mut);
+  font-size: 11px;
+  margin-top: 3px;
+}
+.crypto-progress {
+  display: grid;
+  grid-template-columns: repeat(30, minmax(2px,1fr));
+  gap: 3px;
+  margin: 6px 0 8px;
+}
+.crypto-progress span {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--line);
+}
+.crypto-progress span.is-filled { background: var(--pos); }
+.crypto-tabs {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 8;
+  display: flex;
+  gap: 6px;
+  padding: 8px 0 14px;
+  background: linear-gradient(var(--bg) 72%, rgba(11,12,15,0));
+}
+.crypto-tabs a {
+  flex: 1 1 0;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--mut);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.crypto-tabs a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
+.crypto-section {
+  scroll-margin-top: calc(var(--hdr-h) + 56px);
+  margin: 18px 0 28px;
+}
+.crypto-section-head { align-items: end; margin-bottom: 12px; }
+.crypto-section-head h2 { margin-top: 2px; }
+.crypto-rule-chip {
+  flex: 0 0 auto;
+  color: var(--fg);
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.crypto-watch {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
+.crypto-coin {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 72px 92px;
+  gap: 12px;
+  align-items: center;
+  min-height: 64px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.crypto-coin:last-child { border-bottom: 0; }
+.crypto-coin:hover { background: var(--raised); }
+.crypto-coin-name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.crypto-coin-name strong { font-size: 15px; }
+.crypto-coin-name span { color: var(--mut); font-size: 11px; }
+.crypto-coin-price {
+  text-align: right;
+  font-size: 15px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.crypto-state {
+  justify-self: end;
+  min-width: 78px;
+  text-align: center;
+  border-radius: 999px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .025em;
+}
+.crypto-state-open,
+.crypto-state-won {
+  color: var(--pos);
+  background: rgba(74,222,128,.10);
+  border: 1px solid rgba(74,222,128,.20);
+}
+.crypto-state-lost {
+  color: var(--neg);
+  background: rgba(255,123,114,.10);
+  border: 1px solid rgba(255,123,114,.20);
+}
+.crypto-state-watch {
+  color: var(--mut);
+  background: var(--raised);
+  border: 1px solid var(--line);
+}
+.crypto-rule-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.crypto-rule-strip > div {
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.crypto-rule-strip span,
+.crypto-rule-strip b {
+  display: block;
+}
+.crypto-rule-strip span {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.crypto-rule-strip b { margin-top: 4px; font-size: 12px; }
+.crypto-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 10px;
+}
+.crypto-disclosure {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  overflow: hidden;
+}
+.crypto-disclosure > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 16px;
+  font-weight: 750;
+}
+.crypto-disclosure > summary::-webkit-details-marker { display:none; }
+.crypto-disclosure > summary::after {
+  content: "›";
+  float: right;
+  color: var(--mut);
+}
+.crypto-disclosure[open] > summary::after { content: "⌄"; }
+.crypto-disclosure > section,
+.crypto-disclosure > .note,
+.crypto-disclosure > details,
+.crypto-disclosure > .tbl {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+.crypto-disclosure > section { padding-bottom: 8px; }
+
+@media (max-width: 700px) {
+  .crypto-hero { border-radius: 20px; padding: 18px; }
+  .crypto-stats { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+  .crypto-stats > div { padding: 10px; }
+  .crypto-stats b { font-size: 15px; }
+  .crypto-tabs { margin-left: -4px; margin-right: -4px; }
+  .crypto-section-head { align-items: flex-start; }
+  .crypto-rule-strip,
+  .crypto-metrics { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .crypto-coin { grid-template-columns: minmax(0,1fr) 58px 84px; gap: 8px; }
+}
+@media (max-width: 430px) {
+  .crypto-hero-top { align-items: center; }
+  .crypto-return { margin-top: 18px; }
+  .crypto-stats { grid-template-columns: 1fr 1fr 1fr; }
+  .crypto-stats span { font-size: 11px; }
+  .crypto-progress { gap: 2px; }
+  .crypto-rule-chip { display:none; }
+  .crypto-rule-strip,
+  .crypto-metrics { grid-template-columns: 1fr 1fr; }
+  .crypto-coin { grid-template-columns: minmax(0,1fr) 52px 76px; padding-left: 12px; padding-right: 12px; }
+  .crypto-state { min-width: 70px; font-size: 11px; }
+}
+
+/* Soccer Match Center — SofaScore-inspired hierarchy, fixture first. */
+.soccer-page-head {
+  display: grid;
+  grid-template-columns: minmax(0,1.35fr) minmax(380px,1fr);
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+.soccer-page-head .tiles { margin: 0; }
+.soccer-kicker {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.soccer-desk {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.soccer-desk > * { min-width: 0; }
+.soccer-desk-head,
+.soccer-block-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.soccer-desk-head h2,
+.soccer-block-head h3 { margin: 2px 0 0; }
+.soccer-local-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.soccer-local-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.soccer-local-nav a:hover {
+  color: var(--fg);
+  background: var(--raised);
+  text-decoration: none;
+}
+.soccer-fixture-block,
+.soccer-production,
+.soccer-rule-desk,
+.soccer-health {
+  scroll-margin-top: calc(var(--hdr-h) + 18px);
+}
+.soccer-block-head {
+  margin-bottom: 8px;
+}
+.soccer-block-head > span {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+}
+.soccer-fixture-list {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+}
+.soccer-fixture {
+  display: grid;
+  grid-template-columns: 112px minmax(0,1fr) 80px;
+  gap: 14px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.soccer-fixture:last-child { border-bottom: 0; }
+.soccer-fixture:hover { background: var(--raised); }
+.soccer-fixture-time {
+  color: var(--mut);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.soccer-fixture-main { min-width: 0; }
+.soccer-fixture-title {
+  font-size: 14px;
+  font-weight: 750;
+}
+.soccer-fixture-title a {
+  color: var(--fg);
+  text-decoration: none;
+}
+.soccer-fixture-title a:hover { text-decoration: underline; }
+.soccer-fixture-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.soccer-rule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.025);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.soccer-rule-chip a {
+  color: inherit;
+  text-decoration: none;
+}
+.soccer-rule-chip a:hover { text-decoration: underline; }
+.soccer-prod {
+  color: var(--pos);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.soccer-fixture-state {
+  justify-self: end;
+  min-width: 70px;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.soccer-fixture-state.is-live {
+  color: var(--pos);
+  background: rgba(74,222,128,.10);
+  border: 1px solid rgba(74,222,128,.20);
+}
+.soccer-fixture-state.is-watch {
+  color: var(--mut);
+  background: var(--raised);
+  border: 1px solid var(--line);
+}
+.soccer-production {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.012));
+}
+.soccer-prod-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.soccer-prod-strip::-webkit-scrollbar { display: none; }
+.soccer-prod-rule {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.soccer-prod-rule small {
+  color: var(--mut);
+  font-size: 11px;
+}
+.soccer-rule-desk {
+  margin-top: 8px;
+}
+.soccer-rule-desk .rule-band-title {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 4;
+  padding: 8px 0;
+  background: var(--bg);
+}
+.soccer-health {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  overflow: hidden;
+}
+.soccer-health > details > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 16px;
+}
+.soccer-health > details > summary::-webkit-details-marker { display:none; }
+.soccer-health > details > summary > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.soccer-health > details > summary small {
+  color: var(--mut);
+  font-size: 11px;
+}
+.soccer-health > details > summary::after {
+  content: "›";
+  float: right;
+  color: var(--mut);
+}
+.soccer-health > details[open] > summary::after { content: "⌄"; }
+.soccer-health .note,
+.soccer-health .tbl {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+@media (max-width: 900px) {
+  .soccer-page-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+@media (max-width: 700px) {
+  .soccer-desk-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .soccer-local-nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .soccer-local-nav::-webkit-scrollbar { display:none; }
+  .soccer-fixture {
+    grid-template-columns: 68px minmax(0,1fr) 64px;
+    gap: 8px;
+    min-height: 68px;
+    padding: 10px 11px;
+  }
+  .soccer-fixture-time { font-size: 11px; line-height: 1.15; }
+  .soccer-fixture-title { font-size: 13px; }
+  .soccer-rule-chip { font-size: 11px; }
+  .soccer-fixture-state {
+    min-width: 58px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 11px;
+  }
+  .soccer-rule-desk .rule-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (max-width: 480px) {
+  .soccer-page-head .tiles {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+  .soccer-fixture {
+    grid-template-columns: 54px minmax(0,1fr) 54px;
+    gap: 6px;
+  }
+  .soccer-fixture-state { min-width: 50px; }
+  .soccer-rule-desk .rule-grid {
+    grid-template-columns: minmax(0,1fr);
+  }
+}
+
+/* Tennis Match Center — SofaScore-inspired hierarchy with separate combo products. */
+.tennis-desk {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.tennis-desk > * { min-width: 0; }
+.tennis-desk-head,
+.tennis-block-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tennis-desk-head h2,
+.tennis-block-head h3 { margin: 2px 0 0; }
+.tennis-kicker {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.tennis-local-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tennis-local-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.tennis-local-nav a:hover {
+  color: var(--fg);
+  background: var(--raised);
+  text-decoration: none;
+}
+.tennis-match-block,
+.tennis-combos,
+.tennis-rule-desk,
+.tennis-system {
+  scroll-margin-top: calc(var(--hdr-h) + 18px);
+}
+.tennis-block-head { margin-bottom: 8px; }
+.tennis-block-head > span {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+}
+.tennis-match-list {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+}
+.tennis-match {
+  display: grid;
+  grid-template-columns: 118px minmax(0,1fr) 80px;
+  gap: 14px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.tennis-match:last-child { border-bottom: 0; }
+.tennis-match:hover { background: var(--raised); }
+.tennis-match-time {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--mut);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.tennis-tour {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 3px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--raised);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.tennis-match-main { min-width: 0; }
+.tennis-match-title {
+  font-size: 14px;
+  font-weight: 750;
+}
+.tennis-match-title a {
+  color: var(--fg);
+  text-decoration: none;
+}
+.tennis-match-title a:hover { text-decoration: underline; }
+.tennis-match-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.tennis-rule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.025);
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.tennis-prod {
+  color: var(--pos);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.tennis-match-state {
+  justify-self: end;
+  min-width: 70px;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.tennis-match-state.is-live {
+  color: var(--pos);
+  background: rgba(74,222,128,.10);
+  border: 1px solid rgba(74,222,128,.20);
+}
+.tennis-match-state.is-watch {
+  color: var(--mut);
+  background: var(--raised);
+  border: 1px solid var(--line);
+}
+.tennis-combo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+.tennis-combo-card {
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) repeat(3, minmax(60px,.55fr));
+  gap: 10px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+}
+.tennis-combo-card h4 {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+.tennis-combo-kicker {
+  color: var(--mut);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.tennis-combo-stat {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.tennis-combo-stat b {
+  display: block;
+  font-size: 13px;
+}
+.tennis-combo-stat span {
+  display: block;
+  color: var(--mut);
+  font-size: 11px;
+}
+.tennis-rule-desk { margin-top: 8px; }
+.tennis-rule-desk .rule-band-title {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 4;
+  padding: 8px 0;
+  background: var(--bg);
+}
+.tennis-system {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  overflow: hidden;
+}
+.tennis-system > details > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 16px;
+}
+.tennis-system > details > summary::-webkit-details-marker { display: none; }
+.tennis-system > details > summary > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tennis-system > details > summary small {
+  color: var(--mut);
+  font-size: 11px;
+}
+.tennis-system > details > summary::after {
+  content: "›";
+  float: right;
+  color: var(--mut);
+}
+.tennis-system > details[open] > summary::after { content: "⌄"; }
+.tennis-system #listing {
+  margin: 0 12px 12px;
+}
+@media (max-width: 900px) {
+  .tennis-combo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .tennis-desk-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .tennis-local-nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tennis-local-nav::-webkit-scrollbar { display: none; }
+  .tennis-match {
+    grid-template-columns: 70px minmax(0,1fr) 62px;
+    gap: 8px;
+    min-height: 68px;
+    padding: 10px 11px;
+  }
+  .tennis-match-time { font-size: 11px; }
+  .tennis-match-title { font-size: 13px; }
+  .tennis-rule-chip { font-size: 11px; }
+  .tennis-match-state {
+    min-width: 56px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 11px;
+  }
+  .tennis-combo-grid { grid-template-columns: 1fr; }
+  .tennis-combo-card {
+    grid-template-columns: minmax(0,1.25fr) repeat(3, minmax(52px,.55fr));
+  }
+  .tennis-rule-desk .rule-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (max-width: 480px) {
+  .tennis-match {
+    grid-template-columns: 54px minmax(0,1fr) 52px;
+    gap: 6px;
+  }
+  .tennis-tour { font-size: 11px; }
+  .tennis-match-state { min-width: 48px; }
+  .tennis-combo-card {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .tennis-combo-card > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .tennis-rule-desk .rule-grid {
+    grid-template-columns: minmax(0,1fr);
+  }
+}
+
+.tennis-match > *, .tennis-combo-card > * { min-width: 0; }
+.tennis-rule-chip a { color: inherit; }

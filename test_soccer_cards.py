@@ -206,6 +206,14 @@ html = soccer_build.build(d, st, NOW)
 rows = _rows(d, st)
 ok(rows, "the fixture has soccer lanes")
 ok('class="rule-grid"' in html, "soccer lanes use a card grid")
+ok('class="soccer-desk"' in html and 'class="soccer-fixture-list"' in html,
+   "soccer opens as a fixture-first match center")
+ok('href="#today"' in html and 'href="#upcoming"' in html and 'href="#rules"' in html,
+   "the match center has Today, Upcoming, and Rules navigation")
+ok("Alpha v Beta soonest" in html and "Nu v Xi btts" in html,
+   "tracked fixtures are visible before opening rule cards")
+ok('class="soccer-health"' in html and html.find('class="soccer-health"') > html.find('id="rules"'),
+   "registered-lane health is folded below the live desk")
 ok('class="rule-card"' in html, "soccer lanes are flippable cards")
 ok('class="rule-flip"' in html, "each card has a flip control")
 ok("<script" not in html.split("<main", 1)[-1].split("</main>", 1)[0].lower()
@@ -329,6 +337,109 @@ ok('class="rule-card"' in published and 'class="rule-grid"' in published,
    "public_site/soccer.html is the card page")
 cri_file = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
 ok('class="rule-card"' in cri_file, "published cricket page has its own rule cards")
+
+print("\nmatch-center fixture identity and time buckets")
+import soccer_cards as C
+
+over = _quote(900, "o15_form_l10", "soccer_o15", "open", 30,
+              "City v United: over 1.5 goals")
+over.update(side_a="Over 1.5", side_b="Under 1.5", pick="a",
+            url="https://kalshi.com/markets/over")
+btts = _quote(901, "btts_form_l10", "soccer_btts", "open", 30,
+              "City v United: both teams to score")
+btts.update(side_a="BTTS Yes", side_b="BTTS No", pick="b",
+            start=over["start"].replace("+00:00", "Z"),
+            url="https://kalshi.com/markets/btts")
+repeat = dict(over, id="repeat", start=(NOW + timedelta(hours=72)).isoformat())
+other_league = dict(over, id="other-league", league="Other League")
+center_data = {"quotes": [over, btts, repeat, other_league]}
+center_rows = _rows(center_data, {"pairs": {}})
+fixtures = C._fixture_rows(center_data, center_rows, NOW)
+eq(len(fixtures), 3, "different markets on one match merge; other kickoffs and leagues stay distinct")
+merged = next(r for r in fixtures if len(r["rules"]) == 2)
+merged_html = C._fixture_card(merged)
+ok("Over 1.5" in merged_html and "BTTS No" in merged_html and "BTTS Yes" not in merged_html,
+   "each market's rule chip keeps its own picked outcome")
+ok(f'href="{S.market_url(over)}"' in merged_html
+   and f'href="{S.market_url(btts)}"' in merged_html,
+   "merged rule chips link to their own market")
+ok("City v United: over" not in merged_html.split('class="soccer-fixture-rules"', 1)[0],
+   "the fixture heading names the match rather than one outcome")
+
+past = _quote(910, "o15_form_l10", "soccer_o15", "open", -30, "Past match")
+today_pick = _quote(911, "o15_form_l10", "soccer_o15", "open", 1, "Today match")
+next_pick = _quote(912, "o15_form_l10", "soccer_o15", "open", 30, "Next match")
+later_pick = _quote(913, "o15_form_l10", "soccer_o15", "open", 72, "Later match")
+unknown = dict(over, id="unknown", label="Unknown match", start="unreadable")
+bucket_data = {"quotes": [past, today_pick, next_pick, later_pick, unknown]}
+bucket_html = C.match_center(bucket_data, _rows(bucket_data, {"pairs": {}}), NOW)
+def _center_section(markup, name):
+    match = re.search(rf'<section id="{name}"[^>]*>(.*?)</section>', markup, re.S)
+    return match.group(1) if match else ""
+ok("Past match" in _center_section(bucket_html, "in-play")
+   and "Past match" not in _center_section(bucket_html, "upcoming"),
+   "unsettled past fixtures never claim to be upcoming")
+ok("Today match" in _center_section(bucket_html, "today")
+   and "Next match" in _center_section(bucket_html, "upcoming"),
+   "future fixtures split by today's Chicago date")
+ok("Later match" in _center_section(bucket_html, "other-open")
+   and "Unknown match" in _center_section(bucket_html, "other-open")
+   and "Later match" not in _center_section(bucket_html, "upcoming"),
+   "later and unreadable open picks stay outside the 48-hour list")
+from unittest.mock import patch
+with patch("sport_tab.family_rows", return_value=[]):
+    empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW)
+ok(all(f'id="{anchor}"' in empty_html for anchor in ("today", "upcoming", "in-play", "rules", "health")),
+   "empty soccer pages preserve every match-center navigation target")
+ok("No soccer lane has a record yet." in empty_html,
+   "empty pages still explain the missing record")
+
+print("\nmatch-center browser layout")
+from require_browser import require_browser
+sync_playwright = require_browser("test_soccer_cards.py")
+if sync_playwright is not None:
+    import tempfile
+    import shutil
+    import threading
+    from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+    # Several Production rules force the strip to scroll within the phone width.
+    browser_st = {"pairs": {f'{r["name"]}|{r["sport"]}': {"stage": "production"}
+                            for r in rows}}
+    browser_html = soccer_build.build(d, browser_st, NOW)
+    with tempfile.TemporaryDirectory(prefix="soccer-center-") as site:
+        with open(os.path.join(site, "soccer.html"), "w", encoding="utf-8") as fh:
+            fh.write(browser_html)
+        for asset in ("site.css", "site.js", "tables.js"):
+            shutil.copy2(os.path.join(ROOT, "public_site", asset), site)
+        class Handler(SimpleHTTPRequestHandler):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, directory=site, **kwargs)
+            def log_message(self, *args):
+                pass
+        httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        threading.Thread(target=httpd.serve_forever, daemon=True).start()
+        try:
+            with sync_playwright() as p:
+                browser = p.chromium.launch(channel="chrome", headless=True)
+                for width in (1280, 390, 320):
+                    page = browser.new_page(viewport={"width": width, "height": 844})
+                    errors = []
+                    page.on("pageerror", lambda e: errors.append(str(e)))
+                    page.goto(f"http://127.0.0.1:{httpd.server_port}/soccer.html",
+                              wait_until="networkidle")
+                    ok(not errors, f"{width}px match center runs without JavaScript errors")
+                    ok(page.evaluate("document.documentElement.scrollWidth <= innerWidth"),
+                       f"{width}px match center has no sideways page scroll")
+                    anchors = page.locator(".soccer-local-nav a").evaluate_all(
+                        "links => links.map(a => a.getAttribute('href'))")
+                    ok(all(page.locator(a).count() == 1 for a in anchors),
+                       f"{width}px match-center navigation reaches unique sections")
+                    page.close()
+                browser.close()
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
 
 if FAILS:
     print(f"\nSHA {SHA} FAILED {len(FAILS)}")

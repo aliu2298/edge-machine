@@ -207,7 +207,33 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
         # calling the table builder with the lanes already chosen, so the skip
         # set is the one the tiles counted.
         idle_html = _idle_html(idle, by_lane, status=True, prefix=key)
-        body = f"""<h1>{esc(family)}</h1>
+        if family == "Soccer" and cards:
+            body = f"""<div class="soccer-page-head">
+<div><span class="soccer-kicker">Edge Machine</span><h1>{esc(family)}</h1>
+<p class="lede">{esc(lede)}</p></div>
+<div class="tiles">{tiles}</div>
+</div>
+
+<section id="lanes">
+{sections}
+</section>
+
+<section id="health" class="soccer-health">
+<details>
+<summary><span><b>System & registered lanes</b><small>{len(idle)} waiting for a market</small></span></summary>
+<div class="note">These lanes are connected and waiting, and have <b>no row in the
+Sandbox</b> because they have never logged a quote. This is market availability, not
+evidence that the rule failed.</div>
+{pf_note}
+{idle_html}
+</details>
+</section>
+<footer>{_FOOT}</footer>
+"""
+            toc = (("today", "Today"), ("upcoming", "Upcoming"), ("in-play", "Past kickoff"), ("rules", "Rules"),
+                   ("health", "System"))
+        else:
+            body = f"""<h1>{esc(family)}</h1>
 <p class="lede">{lede}</p>
 <div class="tiles">{tiles}</div>
 
@@ -227,7 +253,7 @@ pre-flight's own verdict on each one.</div>
 </section>
 <footer>{_FOOT}</footer>
 """
-        toc = (("idle", "Registered, never fired"), ("lanes", "Lanes with a record"))
+            toc = (("idle", "Registered, never fired"), ("lanes", "Lanes with a record"))
     else:
         parts = [f"""<h1>{esc(family)}</h1>
 <p class="lede">{lede}</p>
@@ -244,17 +270,35 @@ pre-flight's own verdict on each one.</div>
 """)
             toc.append(("idle", "Registered, never fired"))
         listing = venue_listing(d, family)
-        if listing:
-            parts.append("\n" + listing + "\n")
-            toc.append(("listing", "Polymarket US"))
-        parts.append(f"""
+        if family == "Tennis" and cards:
+            parts.append(f"""
+<section id="lanes">
+{sections}
+</section>
+""")
+            toc.extend((("today", "Today"), ("upcoming", "Upcoming"), ("in-play", "Past kickoff"),
+                        ("combos", "Combos"), ("rules", "Rules")))
+            parts.append(f"""
+<section id="system" class="tennis-system">
+<details><summary><span><b>System & venue coverage</b><small>Polymarket US listing</small></span></summary>
+{listing or '<div class="note">No venue coverage stored yet.</div>'}
+</details>
+</section>
+""")
+            toc.append(("system", "System"))
+            parts.append(f"<footer>{_FOOT}</footer>\n")
+        else:
+            if listing:
+                parts.append("\n" + listing + "\n")
+                toc.append(("listing", "Polymarket US"))
+            parts.append(f"""
 <section id="lanes">
 <h2>Lanes with a record</h2>
 {sections}
 </section>
 <footer>{_FOOT}</footer>
 """)
-        toc.append(("lanes", "Lanes with a record"))
+            toc.append(("lanes", "Lanes with a record"))
         body = "".join(parts)
 
     return C.document(

@@ -212,6 +212,17 @@ html = tennis_build.build(d, st, NOW)
 rows = _rows(d, st)
 ok(rows, "the fixture has tennis lanes")
 ok('class="rule-grid"' in html, "tennis lanes use a card grid")
+ok('class="tennis-desk"' in html and 'class="tennis-match-list"' in html,
+   "tennis opens as a fixture-first match center")
+ok('href="#today"' in html and 'href="#upcoming"' in html and 'href="#combos"' in html
+   and 'href="#rules"' in html and 'href="#system"' in html,
+   "the match center has Today, Upcoming, Combos, Rules, and System navigation")
+ok("Alpha v Beta soonest" in html,
+   "a tracked single-match fixture is visible before opening its rule card")
+ok('class="tennis-combo-grid"' in html and "Tennis 2-leg combo" in html,
+   "combo products have their own desk instead of reading like matches")
+ok('class="tennis-system"' in html and html.find('class="tennis-system"') > html.find('id="rules"'),
+   "venue coverage is folded below the live desk")
 ok('class="rule-card"' in html, "tennis lanes are flippable cards")
 ok('class="rule-flip"' in html, "each card has a flip control")
 main = html.split("<main", 1)[-1].split("</main>", 1)[0]
