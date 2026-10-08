@@ -13,6 +13,7 @@ import re
 from datetime import timedelta, timezone
 
 import fmt
+import production
 import sport_ui as UI
 import sandbox_build as B
 import sandbox_sources as S
@@ -402,7 +403,7 @@ def _rule_row(d, row, now):
     if is_combo(row):
         badges += ' <span class="sig n">Combo</span>'
     if row.get("prod"):
-        badges += ' <span class="sig y">PRODUCTION</span>'
+        badges += ' <span class="sig y">PRODUCTION</span>' + production.early_html(row.get("early"))
     frozen = row["meta"].get("frozen")
     if frozen:
         badges += f' <span class="sig n">Frozen {B.esc(frozen)}</span>'

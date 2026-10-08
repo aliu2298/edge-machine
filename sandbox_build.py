@@ -13,6 +13,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 
 import fmt
+import production
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome
@@ -910,6 +911,11 @@ def pair_list(d, st, include_retired=True):
                             fade=T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES),
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
+                            # "Early · N bets" while a pair moved on or after
+                            # production.EARLY_STATE_SINCE has under EARLY_N settled since
+                            # its move; None for every other row. The sport pages and the
+                            # home cards print it beside the Production chip.
+                            early=production.early_badge(d, f"{name}|{sport}", pair),
                             removed=removed, v=v, since=pair.get("since")))
     return out
 

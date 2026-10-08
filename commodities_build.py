@@ -16,6 +16,7 @@ import datetime
 import os
 
 import fmt
+import production
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -277,7 +278,8 @@ def rule_html(rows, d):
     n = int(a.get("n") or 0)
     open_n = sum(1 for q in _fav_quotes(d) if q.get("bet") and q.get("status") == "open")
     note = (fav["meta"].get("note") or "").strip()
-    stage = ' <span class="sig y">PRODUCTION</span>' if fav.get("prod") else ""
+    stage = (' <span class="sig y">PRODUCTION</span>' + production.early_html(fav.get("early"))
+             if fav.get("prod") else "")
     dl = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in params())
     sample = f'<div class="sm mut">on {n} {_unit(n)}</div>' if n else ""
     return (

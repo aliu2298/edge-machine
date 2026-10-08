@@ -19,7 +19,10 @@ data/production_leads.json is the machine-readable feed. It has the Leads ledger
     match already in play as upcoming. Held back and counted.
   * bet {"kind": "match_result", "side": "home" | "away" | "draw"} (home = the Kalshi event's first
     side, sandbox_sources.kalshi_sides), or {"kind": "total_gte", "n": 2} /
-    {"kind": "team_gte", "n": 1 | 2, "team": ...} — the Leads board's own bet vocabulary
+    {"kind": "team_gte", "n": 1 | 2, "team": ...} / {"kind": "total_lte", "n": 3} /
+    {"kind": "btts"} — the Leads board's own bet vocabulary; {"kind": "combo", ...} for a
+    basket of Kalshi legs; and since 2026-10-08 {"kind": "ladder", "side": "yes"} for one
+    rung of a Kalshi daily-close ladder, the contract and the rung named in the route
   * status pending / hit / miss / void / price from the Sandbox settlement.
     A price payout is the amount the venue paid. It is not a hit, a miss, or a void.
   * last_seen_at == board_built_at on every lead still open; a lead whose pair has left
@@ -123,6 +126,12 @@ def start_verified(q):
                     if isinstance(l, dict)
                     and l.get("start_source", "kalshi_milestone") == "kalshi_milestone"]
         return bool(carriers) and all(l.get("sport") == "cricket" for l in carriers)
+    if q.get("sport") in T.LADDER_SPORTS:
+        # A daily-close ladder has no kickoff to confirm: its "start" is the close the
+        # contract is written on, published by Kalshi as a term of the contract (the
+        # ticker names it, KXBTCD-26OCT0717 is the Oct 7 17:00 ET close). Verified
+        # whenever it parses; a rung with no readable close is held back like any other.
+        return _kickoff(q) is not None
     if q.get("sport") in T.ROUTED_SPORTS:
         # Polymarket US publishes the contest's own start; a Kalshi row has one only once
         # something has confirmed it (the tennis schedule, an ESPN fixture, or, for
@@ -148,7 +157,11 @@ def lead_from_quote(q, pair_key, built):
         headline = f"{len(legs)}-leg combo: " + " + ".join(str(l.get("name"))[:18] for l in legs)
         bet = {"kind": "combo", "n": len(legs), "all_must_win": True}
     elif q["sport"] in T.FEED_BETS:
-        bet = dict(T.FEED_BETS[q["sport"]])
+        # The claim follows the PICK, not the domain alone: on the league under-3.5
+        # domain the No is the under and the Yes is the over (T.FEED_YES_TWIN).
+        bet = T.feed_bet(q)
+        if bet is None:
+            raise ValueError("the feed names no claim for this side of the market")
         home, away = q["espn_home"], q["espn_away"]
         if bet["kind"] == "team_gte":
             bet["team"] = q["team"]
@@ -156,8 +169,18 @@ def lead_from_quote(q, pair_key, built):
         elif bet["kind"] == "total_lte":
             # total_lte n means n goals or fewer, i.e. under (n + 0.5).
             headline = f"Under {bet['n'] + 0.5:g} goals"
+        elif bet["kind"] == "btts":
+            headline = "Both teams to score"
         else:
             headline = f"Over {bet['n'] - 0.5:g} goals"
+    elif q["sport"] in T.LADDER_SPORTS:
+        # One rung of a daily-close ladder. No two sides to name: the contest is the
+        # coin's close ("Bitcoin price on Oct 7, 2026") and the claim is the rung the
+        # venue names ("$82,750 or above"), so the lead reads as the ticket would.
+        home = away = None
+        contest = S.display_label(q).rstrip("?").strip() or str(q["market_id"])
+        headline = f"{q['side_a']} at the close"
+        bet = {"kind": "ladder", "side": "yes"}
     elif True:
         home, away = q["side_a"], q["side_b"]
         side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]
@@ -188,6 +211,12 @@ def lead_from_quote(q, pair_key, built):
         # and keeps no route.
         route = {"venue": "kalshi", "market": q["market_id"],
                  "outcome": headline, "outcome_side": "no"}
+    elif q["sport"] in T.LADDER_SPORTS:
+        # A ladder lists one contract per rung inside the coin's daily event, so the lead
+        # names the exact contract it was priced on and the rung's own wording. The Yes
+        # side, always: the rule backs "or above", never fades it.
+        route = {"venue": "kalshi", "market": q["market_id"],
+                 "outcome": q["side_a"], "outcome_side": "yes"}
     elif q["sport"] in T.ROUTED_SPORTS:
         # Kalshi lists a market per player inside one event, so backing either player is a
         # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,
@@ -199,8 +228,9 @@ def lead_from_quote(q, pair_key, built):
         "id": (f"{date}|{q['market_id']}|{headline} · {label}" if home is None
                else f"{date}|{home}|{away}|{headline} · {label}"),
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
-        "league": S.quote_league(q) or (S.SPORTS.get(q["sport"]) if q["sport"] in T.ROUTED_SPORTS else None),
-        "match": headline if home is None else f"{home} v {away}",
+        "league": S.quote_league(q) or (S.SPORTS.get(q["sport"])
+                                        if q["sport"] in T.ROUTED_SPORTS + T.LADDER_SPORTS else None),
+        "match": (contest if q["sport"] in T.LADDER_SPORTS else headline) if home is None else f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,
         "status": STATUS.get(q["status"], "void"),
@@ -389,6 +419,62 @@ def _day_label(day, today):
 
 
 EARLY_N = 10      # under this many settled bets an ROI is shown grey and marked too early
+# THE EARLY STATE (2026-10-08). A pair moved by hand on or after this date, with fewer than
+# EARLY_N settled bets since its move, is badged "Early · N bets" wherever it is shown as
+# a Production pair: the Production pairs table, its sport page's Rules table, and the
+# home rule cards. The badge is a fact about the SAMPLE, not the rule -- six rules were
+# moved that day on records of 0 to 10 bets, and a reader should see that before reading a
+# ROI that the page already greys under EARLY_N. The badge drops on its own at EARLY_N.
+# Pairs moved before this date are not badged: the state did not exist when they were
+# listed, and four of the five would otherwise acquire one on the day it was introduced.
+EARLY_STATE_SINCE = "2026-10-08"
+
+
+def early_label(n):
+    """'Early · 3 bets' for a since-Production settled count under EARLY_N, else None."""
+    try:
+        n = int(n or 0)
+    except (TypeError, ValueError):
+        return None
+    if n >= EARLY_N:
+        return None
+    return f"Early · {n} bet{'' if n == 1 else 's'}"
+
+
+def early_state(pair, n_since):
+    """The Early badge text for a Production pair, or None.
+
+    `pair` is the stage record (by_hand is the move date), `n_since` its settled bets
+    since the move. A pair moved before EARLY_STATE_SINCE is never badged.
+    """
+    if not pair or pair.get("stage") != "production":
+        return None
+    moved = str(pair.get("by_hand") or "")[:10]
+    if not moved or moved < EARLY_STATE_SINCE:
+        return None
+    return early_label(n_since)
+
+
+def early_badge(d, key, pair):
+    """The Early badge for one Production pair, read off the ledger. None when not early.
+
+    Settled bets are counted the way the Production page counts them: on contests that
+    kicked off at or after the pair entered (the same window as its Since-Production
+    record), wins and losses only.
+    """
+    if not pair or pair.get("stage") != "production":
+        return None
+    moved = str(pair.get("by_hand") or "")[:10]
+    if not moved or moved < EARLY_STATE_SINCE:
+        return None            # before the record is read: an old pair costs nothing
+    if entered_at(pair) is None:
+        return early_label(0)
+    return early_state(pair, _assess_since_kickoff(d, key, pair)["n"])
+
+
+def early_html(text):
+    """The badge as the pages print it, or an empty string."""
+    return f' <span class="sig w early">{esc(text)}</span>' if text else ""
 
 
 def _tone(x, n, digits=1):
@@ -649,6 +735,7 @@ def page(d, st, blob, style, now=None):
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
     cards = []
+    n_early = 0
     for key, pair in sorted(pairs.items(), key=lambda kv: (sport_of(kv[0]), name(kv[0]))):
         source, sport = key.split("|", 1)
         since = entered_at(pair)
@@ -711,8 +798,11 @@ def page(d, st, blob, style, now=None):
             since_note = f"nothing in {idle_days}d"
         else:
             since_note = "none yet"
+        early = early_state(pair, live["n"])
+        if early:
+            n_early += 1
         cards.append(f"""<tr>
-<td><b>{esc(name(key))}</b><div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
+<td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
@@ -794,11 +884,12 @@ def page(d, st, blob, style, now=None):
 </div>
 
 <section id="pairs">
-<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}</span></summary>
+<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}{f' · {n_early} early' if n_early else ''}</span></summary>
 <p class="sm mut">Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
 and its record since it entered Production. Under {EARLY_N} settled bets an ROI is grey: one win at 0.46 reads
-+117%, and means nothing yet. CLV is the closing price minus the price at logging: positive means its leads got
-dearer after they were published.</p>
++117%, and means nothing yet. A pair moved on or after {EARLY_STATE_SINCE} carries an <b>Early</b> badge with its
+settled count until it reaches {EARLY_N}. CLV is the closing price minus the price at logging: positive means its
+leads got dearer after they were published.</p>
 {pairs_html}</details>
 </section>
 

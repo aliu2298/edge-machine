@@ -88,10 +88,11 @@ def main():
        ((0.20, 0.25), 0.26, (0.40, 0.45), 0.66, 0.06, "KXMLSGAME"),
        "MLS bands, ceilings, hold and series are unchanged")
     eq(sorted(T.PAIR_OVERRIDES),
-       ["o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-        "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
-        "u35_low_scoring|soccer_u35_intl"],
-       "PAIR_OVERRIDES is unchanged")
+       ["bund_o35|soccer_u35", "crypto_fav_band|crypto_fav", "liga_btts_even|soccer_btts",
+        "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
+        "oddspedia|cricket", "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+        "tennis_combo2|tennis_combo", "u35_low_scoring|soccer_u35_intl"],
+       "PAIR_OVERRIDES is the eleven pairs moved by hand, the six of 2026-10-08 included")
 
     print("\n0 of 0 — nothing offered")
     d = run("ere_draw", {"soccer": []})

@@ -19,6 +19,7 @@ import re
 from datetime import timedelta, timezone
 
 import fmt
+import production
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -295,7 +296,7 @@ def _status(row):
     if row.get("gone") or row["v"] == "retired":
         return "retired", '<span class="sig x">Retired</span>'
     if row.get("prod"):
-        return "production", '<span class="sig y">Production</span>'
+        return "production", '<span class="sig y">Production</span>' + production.early_html(row.get("early"))
     return "sandbox", '<span class="mut">Sandbox</span>'
 
 

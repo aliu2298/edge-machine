@@ -3334,9 +3334,10 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-    "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
-    "u35_low_scoring|soccer_u35_intl"],
+   ["bund_o35|soccer_u35", "crypto_fav_band|crypto_fav", "liga_btts_even|soccer_btts",
+    "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
+    "oddspedia|cricket", "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+    "tennis_combo2|tennis_combo", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
@@ -3383,8 +3384,10 @@ ok("combo" in T.TRADEABLE_VENUES and not T.placeable(dict(sport="tennis_combo", 
                                                             market_id="combo2:x", side_a="A", side_b="B")),
    "a tennis basket counts toward its own record, and reaches the feed only once it carries "
    "its legs — this one has none")
-for _gone, _why in (("o15_form_l10|soccer_o15", "it was the only pair there behind the price"),
-                    ("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
+# o15_form_l10|soccer_o15 came OFF on 2026-09-21 as the only pair behind the price, and went
+# BACK on 2026-10-08 as an Early pair (4-0 since its clock restarted); test_production_early
+# holds that listing. The pairs below stay off.
+for _gone, _why in (("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
                     ("espn_fpi|nfl", "it was staking money on four settled bets"),
                     ("espn_fpi|mlb", "it stopped beating the blind rules and demoted itself"),
                     ("tennis_combo3|tennis_combo",
@@ -4720,13 +4723,19 @@ ok(T.placeable(_intl_q("u35_low_scoring", "soccer_u35_intl", "KXUEFANLTOTAL-26OC
 ok(not T.placeable(_intl_q("u35_low_scoring", "soccer_u35_intl", "KXUEFANLTOTAL-26OCT02KAZMDA-4",
                            pick="a", team=None)),
    "and its Yes cannot -- that is the over, which no rule here claims")
-ok(not T.placeable(_intl_q("u35_low_scoring", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT02X-4",
-                           pick="b", team=None, league="Bundesliga")),
-   "the LEAGUE under-3.5 twin is still not in the feed -- only the internationals pair moved")
+# The LEAGUE under-3.5 domain joined the feed on 2026-10-08 with bund_o35|soccer_u35, which
+# backs the YES on the same over-3.5 ticker. One domain, two claims, told apart by the pick
+# (FEED_YES_TWIN); the league under twin is expressible as a side effect and is not listed.
+ok(T.placeable(_intl_q("u35_low_scoring", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT02X-4",
+                       pick="b", team=None, league="Bundesliga")),
+   "No on a league over-3.5 total is the under, and the feed can say it now")
+ok(T.placeable(_intl_q("bund_o35", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT02X-4",
+                       pick="a", team=None, league="Bundesliga")),
+   "and Yes on it is the over -- the Bundesliga rule's bet, the Yes twin of the under domain")
 ok("soccer_team1_cup" not in T.FEED_BETS and "soccer_o15_cup" not in T.FEED_BETS
-   and "soccer_u35" not in T.FEED_BETS and "soccer_u35_cup" not in T.FEED_BETS
-   and "soccer_team1_other" not in T.FEED_BETS,
-   "the feed names the three internationals sports and no other suffix")
+   and "soccer_u35_cup" not in T.FEED_BETS and "soccer_btts_cup" not in T.FEED_BETS
+   and "soccer_btts_intl" not in T.FEED_BETS and "soccer_team1_other" not in T.FEED_BETS,
+   "the feed names no cup suffix and no unknown one")
 
 _verified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")
 _unverified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02X-B1",
