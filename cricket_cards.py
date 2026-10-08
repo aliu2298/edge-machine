@@ -37,9 +37,12 @@ _SETTLED_STATES = {
     "won": ("W", "is-won"),
     "lost": ("L", "is-lost"),
     "void": ("Void", "is-void"),
-    "settled": ("Settled on price", "is-price"),
+    "settled": (T.NO_RESULT_LABEL, "is-price"),
 }
 SETTLED_STATUSES = tuple(_SETTLED_STATES)
+# A rule is active while it has an open pick or a pick that started inside this
+# many days. One that has not picked for longer sits behind the inactive toggle.
+ACTIVE_DAYS = 7
 
 roi_html = TN.roi_html
 verdict_html = TN.verdict_html
@@ -117,10 +120,12 @@ def pick_label(q):
 
 
 def state_of(q, now):
-    """(word, class). W / L / Void / Settled on price once settled; in play
+    """(word, class). W / L / Void / No result · paid 50¢ once settled; in play
     from the start; upcoming before it."""
     found = _SETTLED_STATES.get(q.get("status"))
     if found:
+        if q.get("status") == "settled":
+            return T.no_result_label(q), found[1]
         return found
     ko = _kickoff(q)
     if ko is not None and ko <= now:
@@ -129,13 +134,54 @@ def state_of(q, now):
 
 
 # ------------------------------------------------------------------ the picks list
-def active_rows(rows, d):
-    """(active, inactive). A rule is active once it has a settled or an open bet."""
+def _pick_instant(q):
+    """When a settled pick happened: its start, or the settlement stamp without one."""
+    ko = _kickoff(q)
+    if ko is not None:
+        return ko
+    try:
+        return _as_utc(datetime.datetime.fromisoformat(str(q.get("settled")).replace("Z", "+00:00")))
+    except (TypeError, ValueError):
+        return None
+
+
+def _picked_lately(d, row, now):
+    """True if one of the rule's own picks started (or settled) inside ACTIVE_DAYS."""
+    cutoff = now - timedelta(days=ACTIVE_DAYS)
+    for q in T.bet_rows(d):
+        if q.get("status") in SETTLED_STATUSES and _kept(q, row):
+            when = _pick_instant(q)
+            if when is not None and when >= cutoff:
+                return True
+    return False
+
+
+def active_rows(rows, d, now=None):
+    """(active, inactive). A rule is active while it has an open pick or a pick
+    inside the last ACTIVE_DAYS; a rule whose last pick is older than that has
+    a record but is not running, so it sits behind the inactive toggle."""
+    now = _as_utc(now) if now is not None else datetime.datetime.now(timezone.utc)
     act, ina = [], []
     for row in rows:
-        fired = bool(row["a"].get("n")) or bool(open_quotes(d, row["name"], row["sport"], row))
+        fired = (bool(open_quotes(d, row["name"], row["sport"], row))
+                 or _picked_lately(d, row, now))
         (act if fired else ina).append(row)
     return act, ina
+
+
+def headline_row(rows, d, now=None):
+    """The rule the tiles describe: the one in Production, else the first active
+    rule in table order, else the first rule with a record. Never a pool: two
+    rules' ROIs added together describe neither."""
+    prod = [r for r in rows if r.get("prod")]
+    if prod:
+        return sorted(prod, key=_sort_key)[0]
+    act, ina = active_rows(rows, d, now)
+    for group in (act, ina):
+        with_record = [r for r in group if r["a"].get("n") or r["a"].get("n_price")]
+        if with_record:
+            return sorted(with_record, key=_sort_key)[0]
+    return None
 
 
 def pick_rows(d, rows, now):
@@ -229,7 +275,7 @@ def roi_cell(row):
     """The ROI beside its sample, so a tiny sample cannot read as a headline:
     '+522.8% on 4 bets'. Nothing settled is a dash."""
     a = row["a"]
-    n = a.get("n") or 0
+    n = (a.get("n") or 0) + (a.get("n_price") or 0)
     if not n:
         return "—"
     return f'{roi_html(row)}<span class="tn-roi-n sm mut"> on {n} bet{"s" if n != 1 else ""}</span>'
@@ -246,7 +292,7 @@ def _rule_row(d, row, now):
         f'<td><details class="tn-rule"><summary><b>{B.esc(name)}</b>{badges}</summary>'
         f'{note_html}{_recent_html(d, row, now)}</details></td>'
         f'<td>{B.esc(venue_name(d, row))}</td>'
-        f'<td class="num">{B.esc(record_text(row["a"]))}</td>'
+        f'<td class="num">{T.record_html(row["a"])}</td>'
         f'<td class="num">{roi_cell(row)}</td>'
         f'<td>{verdict_html(row)}</td>'
         f'<td class="num">{open_n or "—"}</td></tr>')
@@ -264,7 +310,7 @@ def _table(d, rows, now):
 def rules_html(d, rows, now):
     """One table, Production first then by ROI; the never-fired rules behind a toggle."""
     now = _as_utc(now)
-    act, ina = active_rows(rows, d)
+    act, ina = active_rows(rows, d, now)
     act = sorted(act, key=_sort_key)
     ina = sorted(ina, key=_sort_key)
     if not rows:
@@ -278,27 +324,29 @@ def rules_html(d, rows, now):
 
 
 # ------------------------------------------------------------------ tiles and the venue fold
-def tiles_html(d, rows):
-    """Open picks · active rules · record · ROI after fees, across the rules with a record."""
-    act, _ina = active_rows(rows, d)
+def tiles_html(d, rows, now=None):
+    """Open picks · active rules · one rule's record · that rule's ROI after fees.
+
+    The record and the ROI are one rule's own figures (headline_row: the
+    Production rule), named on the tile. They are never pooled across rules:
+    the first version added Oddspedia's 20 bets to the Polymarket rule's four
+    longshots and printed +166.6%, a number that described neither rule.
+    """
+    act, _ina = active_rows(rows, d, now)
     open_n = sum(len(open_quotes(d, r["name"], r["sport"], r)) for r in rows)
-    n = sum(r["a"].get("n") or 0 for r in act)
-    won = sum(r["a"].get("won") or 0 for r in act)
-    if n:
-        # Flat stakes, so the n-weighted mean of each rule's ROI is the pooled ROI.
-        roi = sum((r["a"].get("roi_fee") or 0) * (r["a"].get("n") or 0) for r in act) / n
-        klass = "mut" if n < B.MIN_N else fmt.tone(roi, ".1f", 100)
-        roi_cell_html = f'<b class="{klass}">{B.pct(roi, sign=True)}</b>'
-        rec = f"{won}–{n - won}"
+    head = headline_row(rows, d, now)
+    if head is not None and (head["a"].get("n") or head["a"].get("n_price")):
+        rec = record_text(head["a"])
+        roi_cell_html = f'<b>{roi_html(head)}</b>'
+        who = rule_name(head) + (" · Production" if head.get("prod") else "")
     else:
-        roi_cell_html = '<b class="mut">—</b>'
-        rec = "—"
+        rec, roi_cell_html, who = "—", '<b class="mut">—</b>', "no rule with a record"
     return (
         '<div class="tiles tn-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
         f'<div class="tile"><b>{len(act)}</b><span>active rules</span></div>'
-        f'<div class="tile"><b>{rec}</b><span>record · rules with a record</span></div>'
-        f'<div class="tile">{roi_cell_html}<span>ROI after fees</span></div>'
+        f'<div class="tile"><b>{B.esc(rec)}</b><span>record · {B.esc(who)}</span></div>'
+        f'<div class="tile">{roi_cell_html}<span>ROI after fees · {B.esc(who)}</span></div>'
         '</div>')
 
 
@@ -355,7 +403,7 @@ def render(d, rows, now=None, idle_html=""):
     now = _as_utc(now or datetime.datetime.now(timezone.utc))
     return f'''<h1>Cricket</h1>
 <p class="lede">Match-winner picks and the rules that fire them · times CT</p>
-{tiles_html(d, rows)}
+{tiles_html(d, rows, now)}
 <section id="rules" class="tn-section">
 <h2>Rules</h2>
 <p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>

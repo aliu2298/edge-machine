@@ -528,7 +528,7 @@ _HIST = ("won", "lost", "void", "settled")
 def _badge(q):
     """(css class, label). A price payout is not painted as a win, a loss, or a void."""
     if q.get("result") == "price":
-        return "price", "PRICE"
+        return "price", "NO RESULT"
     return q.get("status") or "", str(q.get("status") or "").upper()
 
 
@@ -540,7 +540,7 @@ def _day_summary(qs):
     n = sum(1 for q in counted if q["status"] in ("won", "lost"))
     n_price = sum(1 for q in counted if q.get("result") == "price")
     pl = sum(q["pnl"] for q in counted)
-    extra = f" · {n_price} priced" if n_price else ""
+    extra = f" · {n_price} no result" if n_price else ""
     return won, n, extra, pl
 
 
@@ -1087,7 +1087,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     thin = a["n"] < MIN_N
     unit = (f'{a["n"]} {a["unit"]}{"" if a["n"] == 1 else ("es" if a["unit"] == "match" else "s")} · {a["n_bets"]} bets'
             if a.get("unit") in ("market-day", "match") else f'{a["n"]} settled')
-    rec = (f'{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{unit}</div>' if a["n"] else "—")
+    rec = (f'{T.record_html(a)}<div class="sm mut">{unit}</div>' if a["n"] or a.get("n_price") else "—")
     # The per-bet figure is what the ranking sorts on, shown here so a position can be
     # checked against the row rather than taken on trust.
     vp = (f'{a["won"]} v {a["expected"]:.1f}<div class="sm mut">{a["won"] - a["expected"]:+.1f} wins '
@@ -1270,7 +1270,7 @@ def _split_settled(sp):
 
 def _league_row(r, sp):
     """One rule's record inside one competition. The sport table's columns, thinner."""
-    rec = f'{sp["won"]}–{sp["n"] - sp["won"]}<div class="sm mut">{_split_settled(sp)}</div>'
+    rec = f'{T.record_html(sp)}<div class="sm mut">{_split_settled(sp)}</div>'
     vp = (f'{sp["won"]} v {sp["expected"]:.1f}<div class="sm mut">{sp["won"] - sp["expected"]:+.1f} wins '
           f'· {sp["edge"]:+.3f}/bet</div>')
     fade = ('<span class="mut">—</span>' if not sp["fade_n"] or sp["fade_roi"] is None else

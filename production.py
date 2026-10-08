@@ -716,16 +716,17 @@ def page(d, st, blob, style, now=None):
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{f"{live['won']}–{live['n'] - live['won']}" if live['n'] else '—'}<div class="sm mut">{esc(since_note)}</div></td>
+<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
-<td class="num">{light}<div class="sm mut">{esc(why)}</div></td>
+<td class="num">{light}<div class="sm mut wrap">{esc(why)}</div></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>
 <tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
 <th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
 <tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
-{''.join(cards)}</table></div>""" if cards else
+{''.join(cards)}</table></div>
+<p class="sm mut">Reaches the feed counts the pair's bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>""" if cards else
         '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
         'the Sandbox measured.</div>')
 
@@ -770,7 +771,7 @@ def page(d, st, blob, style, now=None):
     rec_rows = "".join(
         f"""<tr><td class="mut">{esc(_ct_when(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(fmt.contest(l['match']))}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
-<td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else ('paid' if l['status'] == 'price' else 'missed')}</span></td></tr>"""
+<td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else (T.NO_RESULT_LABEL if l['status'] == 'price' else 'missed')}</span></td></tr>"""
         for l in recent)
     hits = sum(1 for l in landed if l["status"] == "hit")
     recent_html = (f"""<div class="tbl"><table><tr><th>Kickoff</th><th>Match</th><th>Lead</th><th>From</th>

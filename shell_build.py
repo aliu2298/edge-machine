@@ -40,7 +40,7 @@ SPORTS = (
 )
 RUNNING = (("live", "Live", True), ("settled", "Settled", False), ("upcoming", "Upcoming", False))
 _GROUP_ORDER = ("NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Commodities", "Markets")
-PRICE_LABEL = "Settled on price"
+PRICE_LABEL = "No result · paid 50¢"
 # Chicago dates on the Running Settled list, today included. Not
 # production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
 SHELL_SETTLED_DAYS = 14
@@ -198,7 +198,7 @@ def _status_html(cls, label, spoken, token):
 
 
 def _status_label(status):
-    """Open / W / L / Void / Settled on price. Anything else stays neutral.
+    """Open / W / L / Void / No result · paid 50¢. Anything else stays neutral.
 
     A status this map does not know is not a void. A real string is shown as
     itself (escaped at render). Missing statuses read Unknown.
@@ -387,7 +387,7 @@ _COMBO_ORDER = ("W", "L", PRICE_LABEL, "Void", "Awaiting result", "Open")
 _COMBO_TOKEN = {
     "W": "W",
     "L": "L",
-    PRICE_LABEL: "priced",
+    PRICE_LABEL: "no result",
     "Void": "void",
     "Awaiting result": "awaiting",
     "Open": "open",
@@ -395,7 +395,7 @@ _COMBO_TOKEN = {
 _SPOKEN = {
     "W": "won",
     "L": "lost",
-    PRICE_LABEL: "settled on price",
+    PRICE_LABEL: "no result, paid 50 cents",
     "Void": "void",
     "Awaiting result": "awaiting result",
     "Open": "open",
@@ -405,7 +405,7 @@ _SPOKEN = {
 def _status_face(items, statuses=None):
     """One contest row, one result line, counted per bet.
 
-    A single bet keeps its own label (W, L, Open, Void, Settled on price,
+    A single bet keeps its own label (W, L, Open, Void, No result · paid 50¢,
     Awaiting result). Several bets add up: 2W, 1W 1L, 1L 1 awaiting. The
     spoken line is what a screen reader should say instead of the letters.
     `statuses` overrides each lane's stored status, so an open bet past the
@@ -876,18 +876,31 @@ def _roll_html(ordered):
 
 
 def _roll_counts(ordered):
-    """(open chips, settled chips, won chips): the same bets _roll_html draws."""
+    """(open chips, settled chips, won chips): the same bets _roll_html draws.
+
+    A no-result chip is on the settled list and out of this settled count: it is
+    neither a win nor a loss, so it must not read as a miss in the landed tile.
+    _roll_no_result counts those.
+    """
     n_open = n_settled = n_won = 0
     for contest in ordered:
         for card in contest.get("cards") or []:
             status = card.get("status") or ""
             if status in _OPEN_CHIP:
                 n_open += 1
+            elif status == PRICE_LABEL:
+                continue
             elif contest.get("bucket") == "settled" or status in _SETTLED_CHIP:
                 n_settled += 1
                 if status == "W":
                     n_won += 1
     return n_open, n_settled, n_won
+
+
+def _roll_no_result(ordered):
+    """How many chips on the roll were paid out at a price."""
+    return sum(1 for contest in ordered for card in contest.get("cards") or []
+               if (card.get("status") or "") == PRICE_LABEL)
 
 
 def _row_html(contest, index, now):
@@ -967,6 +980,7 @@ def _running_body(d, st, blob, now):
         "empty": empty,
         "roll": _roll_html(ordered),
         "roll_counts": _roll_counts(ordered),
+        "roll_no_result": _roll_no_result(ordered),
         "counts": counts,
     }
 
@@ -1019,8 +1033,10 @@ def page(now, d=None, st=None, blob=None, tiles=None):
         f'<p class="settled-caption" id="settled-caption" hidden>'
         f'Last {int(SHELL_SETTLED_DAYS)} days · counts are paper bets, one contest can carry several</p>'
     )
+    n_price = parts.get("roll_no_result") or 0
     roll_note = (f'{n_open} open, then {n_settled} settled in the last {int(SHELL_SETTLED_DAYS)} days'
-                 if (n_open or n_settled) else "")
+                 + (f', {n_price} no result' if n_price else '')
+                 if (n_open or n_settled or n_price) else "")
     body = f"""<h1 class="sr-only">Edge Machine · Home</h1>
 <div class="desk-layout" data-layout="analyst-desk">
 <div class="shell-columns">
