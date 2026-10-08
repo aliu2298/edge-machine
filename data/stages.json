@@ -705,9 +705,265 @@
    "pair": "mma_fav_band|mma",
    "reason": "taken off the Production list by hand",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": 0.1086,
+    "clv": -0.0202,
+    "clv_n": 11,
+    "n": 11,
+    "own_roi": 0.1086,
+    "roi": 0.1086,
+    "roi_fee": 0.0765,
+    "span_days": 2.8125,
+    "weeks": 0,
+    "z": 0.3362
+   },
+   "pair": "tennis_combo2|tennis_combo",
+   "reason": "moved to Production by hand on 2026-10-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": 0.1086,
+    "clv": -0.0202,
+    "clv_n": 11,
+    "n": 11,
+    "own_roi": 0.1086,
+    "roi": 0.1086,
+    "roi_fee": 0.0765,
+    "span_days": 2.8125,
+    "weeks": 0,
+    "z": 0.3362
+   },
+   "pair": "tennis_combo2|tennis_combo",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": 0.0339,
+    "clv": 0.01,
+    "clv_n": 4,
+    "n": 4,
+    "own_roi": 0.1611,
+    "roi": 0.1611,
+    "roi_fee": 0.1499,
+    "span_days": 0.9792,
+    "weeks": 0,
+    "z": 0.8022
+   },
+   "pair": "o15_form_l10|soccer_o15",
+   "reason": "moved to Production by hand on 2026-10-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": 0.0339,
+    "clv": 0.01,
+    "clv_n": 4,
+    "n": 4,
+    "own_roi": 0.1611,
+    "roi": 0.1611,
+    "roi_fee": 0.1499,
+    "span_days": 0.9792,
+    "weeks": 0,
+    "z": 0.8022
+   },
+   "pair": "o15_form_l10|soccer_o15",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "o15_ranked|soccer_o15",
+   "reason": "moved to Production by hand on 2026-10-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "o15_ranked|soccer_o15",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "liga_btts_even|soccer_btts",
+   "reason": "moved to Production by hand on 2026-10-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "liga_btts_even|soccer_btts",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "bund_o35|soccer_u35",
+   "reason": "moved to Production by hand on 2026-10-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "bund_o35|soccer_u35",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": 0.2661,
+    "clv": 0.08,
+    "clv_n": 2,
+    "n": 2,
+    "own_roi": 0.2661,
+    "roi": 0.2661,
+    "roi_fee": 0.2477,
+    "span_days": 1.0,
+    "weeks": 0,
+    "z": 16.5763
+   },
+   "pair": "crypto_fav_band|crypto_fav",
+   "reason": "moved to Production by hand on 2026-10-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-08T17:50:08+00:00",
+   "evidence": {
+    "base_roi": 0.2661,
+    "clv": 0.08,
+    "clv_n": 2,
+    "n": 2,
+    "own_roi": 0.2661,
+    "roi": 0.2661,
+    "roi_fee": 0.2477,
+    "span_days": 1.0,
+    "weeks": 0,
+    "z": 16.5763
+   },
+   "pair": "crypto_fav_band|crypto_fav",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
+  "bund_o35|soccer_u35": {
+   "by_hand": "2026-10-08",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-08T17:50:08+00:00",
+   "ready_at": "2026-10-08T17:50:08+00:00",
+   "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
+  },
+  "crypto_fav_band|crypto_fav": {
+   "by_hand": "2026-10-08",
+   "entry": {
+    "base_roi": 0.2661,
+    "clv": 0.08,
+    "clv_n": 2,
+    "n": 2,
+    "own_roi": 0.2661,
+    "roi": 0.2661,
+    "roi_fee": 0.2477,
+    "span_days": 1.0,
+    "weeks": 0,
+    "z": 16.5763
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-08T17:50:08+00:00",
+   "ready_at": "2026-10-08T17:50:08+00:00",
+   "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
+  },
   "espn_fpi|mlb": {
    "demoted_at": "2026-09-21T01:06:15+00:00",
    "since": "2026-09-21T01:06:15+00:00",
@@ -717,14 +973,70 @@
    "since": "2026-09-21T02:05:59+00:00",
    "stage": "sandbox"
   },
+  "liga_btts_even|soccer_btts": {
+   "by_hand": "2026-10-08",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-08T17:50:08+00:00",
+   "ready_at": "2026-10-08T17:50:08+00:00",
+   "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
+  },
   "mma_fav_band|mma": {
    "demoted_at": "2026-10-04T11:09:14+00:00",
    "since": "2026-10-04T11:09:14+00:00",
    "stage": "sandbox"
   },
   "o15_form_l10|soccer_o15": {
-   "since": "2026-09-21T01:44:02+00:00",
-   "stage": "sandbox"
+   "by_hand": "2026-10-08",
+   "entry": {
+    "base_roi": 0.0339,
+    "clv": 0.01,
+    "clv_n": 4,
+    "n": 4,
+    "own_roi": 0.1611,
+    "roi": 0.1611,
+    "roi_fee": 0.1499,
+    "span_days": 0.9792,
+    "weeks": 0,
+    "z": 0.8022
+   },
+   "entry_since": "2026-09-21T01:44:02+00:00",
+   "promoted_at": "2026-10-08T17:50:08+00:00",
+   "ready_at": "2026-10-08T17:50:08+00:00",
+   "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
+  },
+  "o15_ranked|soccer_o15": {
+   "by_hand": "2026-10-08",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-08T17:50:08+00:00",
+   "ready_at": "2026-10-08T17:50:08+00:00",
+   "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -831,9 +1143,24 @@
    "stage": "production"
   },
   "tennis_combo2|tennis_combo": {
-   "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
-   "since": "2026-10-04T06:46:57+00:00",
-   "stage": "sandbox"
+   "by_hand": "2026-10-08",
+   "entry": {
+    "base_roi": 0.1086,
+    "clv": -0.0202,
+    "clv_n": 11,
+    "n": 11,
+    "own_roi": 0.1086,
+    "roi": 0.1086,
+    "roi_fee": 0.0765,
+    "span_days": 2.8125,
+    "weeks": 0,
+    "z": 0.3362
+   },
+   "entry_since": "2026-10-04T06:46:57+00:00",
+   "promoted_at": "2026-10-08T17:50:08+00:00",
+   "ready_at": "2026-10-08T17:50:08+00:00",
+   "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
   },
   "tennis_combo3|tennis_combo": {
    "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
@@ -876,5 +1203,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-08T16:29:46+00:00"
+ "updated": "2026-10-08T17:50:08+00:00"
 }
