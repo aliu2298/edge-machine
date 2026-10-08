@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Ask for a tracker run from this Mac inside commod_fav_band's WTI window.
+
+  The lane has two windows. The 17:00 ET group (Brent, gold, silver, copper, natural gas)
+  shares the crypto lane's 13:15 local dispatch (com.aliu.edge-machine-crypto.plist), so
+  this timer fires once, at 10:15 local Central: permanently 3.25h before WTI's 14:30
+  Eastern close, because Central and Eastern shift on the same date (15:15Z under CDT,
+  16:15Z under CST), inside the 2-3.5h window either way.
+
+  It runs scripts/vps_commodities_window.sh from the dedicated clone the closes job keeps
+  current (~/edge-machine-closes). That script re-checks the window and the trading-day
+  calendar against the repo's own constants and refuses outside them, so a fire at load or
+  after a late wake costs nothing. It writes the stamp file with the deploy key the clone
+  already pushes with; nothing here needs gh.
+
+  STOPGAP, like the crypto plist: the VPS crontab is the live mechanism. Install this only
+  while that line is not yet in place, and remove it once it is, or both will ask.
+
+  Install (once):
+    cp ~/edge-machine-closes/scripts/com.aliu.edge-machine-commodities.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.aliu.edge-machine-commodities.plist
+  Check:
+    launchctl print gui/$(id -u)/com.aliu.edge-machine-commodities | head -20
+    tail /tmp/edge-machine-commodities.log
+  Stop:
+    launchctl bootout gui/$(id -u)/com.aliu.edge-machine-commodities
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.aliu.edge-machine-commodities</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>exec "$HOME/edge-machine-closes/scripts/vps_commodities_window.sh"</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Hour</key><integer>10</integer>
+      <key>Minute</key><integer>15</integer>
+    </dict>
+  </dict>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>EDGE_COMMOD_PY</key><string>/opt/homebrew/bin/python3</string>
+  </dict>
+  <key>StandardOutPath</key><string>/tmp/edge-machine-commodities.log</string>
+  <key>StandardErrorPath</key><string>/tmp/edge-machine-commodities.log</string>
+</dict>
+</plist>

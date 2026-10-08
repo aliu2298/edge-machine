@@ -51,7 +51,7 @@ def _published():
     pages = [
         "index.html", "sandbox.html", "production.html", "trading.html",
         "nba.html", "soccer.html", "tennis.html", "cricket.html",
-        "crypto.html",
+        "crypto.html", "commodities.html",
         "archive/index.html",
     ]
     archive = os.path.join(ROOT, "public_site", "archive")

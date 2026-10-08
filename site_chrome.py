@@ -22,9 +22,10 @@ PAGES = (
     ("tennis", "Tennis", "./tennis.html"),
     ("cricket", "Cricket", "./cricket.html"),
     ("crypto", "Crypto", "./crypto.html"),
+    ("commodities", "Commodities", "./commodities.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
-SPORT_KEYS = ("nba", "soccer", "tennis", "cricket", "crypto")
+SPORT_KEYS = ("nba", "soccer", "tennis", "cricket", "crypto", "commodities")
 # The file each page key is published as, for the canonical and og:url tags.
 PAGE_FILES = {
     "index": "index.html",
@@ -36,6 +37,7 @@ PAGE_FILES = {
     "tennis": "tennis.html",
     "cricket": "cricket.html",
     "crypto": "crypto.html",
+    "commodities": "commodities.html",
 }
 
 # Fixed-width segmented control. The label is the current choice (aria-pressed),

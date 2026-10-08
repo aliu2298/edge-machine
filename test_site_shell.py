@@ -36,10 +36,11 @@ _NAV_HREFS = (
     'href="./tennis.html"',
     'href="./cricket.html"',
     'href="./crypto.html"',
+    'href="./commodities.html"',
     'href="./sandbox.html#method"',
 )
 _NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket",
-               "Crypto", "Method"]
+               "Crypto", "Commodities", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
@@ -49,6 +50,7 @@ _CURRENT = {
     "tennis": 'href="./tennis.html" aria-current="page"',
     "cricket": 'href="./cricket.html" aria-current="page"',
     "crypto": 'href="./crypto.html" aria-current="page"',
+    "commodities": 'href="./commodities.html" aria-current="page"',
     # The site root is the brand, not a pill. No pill is current there.
     "index": '<a class="brand" href="./index.html" aria-current="page">Edge Machine</a>',
 }
@@ -133,6 +135,12 @@ def _crypto(now):
     return crypto_build.build({"quotes": []}, {"pairs": {}}, now=now)
 
 
+def _commodities(now):
+    """The Commodities page off an empty ledger, so the shell is checked without live data."""
+    import commodities_build
+    return commodities_build.build({"quotes": []}, {"pairs": {}}, now=now)
+
+
 def _pages():
     """Each published page, even when a later one cannot be built yet."""
     import sandbox_build as SB
@@ -151,6 +159,7 @@ def _pages():
         ("tennis.html", "tennis", lambda: _tennis(now)),
         ("cricket.html", "cricket", lambda: _cricket(now)),
         ("crypto.html", "crypto", lambda: _crypto(now)),
+        ("commodities.html", "commodities", lambda: _commodities(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:
