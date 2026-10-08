@@ -1903,7 +1903,46 @@ def grade(d, verbose=True, now=None, mismatches=None):
 
     if verbose:
         print(f"  settled {settled} quotes" + (f", regraded {regraded}" if regraded else ""))
+        for q, age in overdue_bets(d, now):
+            print(f"::warning::{q['id']} is still open {age:.0f}h past its start "
+                  f"({q.get('venue')}, {q.get('label')}); the venue has no final answer yet")
     return settled
+
+
+# An open bet this long past its start is reported by name on every run, so a
+# market the venue is slow to finalise cannot sit silently "in play" for days.
+# The audit's stale check (48h) asks the venue when it went final; this is the
+# earlier, cheaper flag from the settler itself, with no extra venue call.
+OVERDUE_H = 24
+
+
+def overdue_bets(d, now=None):
+    """[(quote, hours past start)] for every bet still open OVERDUE_H after its start.
+
+    Removed lanes and rows retired as unplaceable are left out, the same rows
+    grade() does not settle. A start that cannot be read is not overdue.
+    Oldest first.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    out = []
+    for q in d.get("quotes") or []:
+        if not q.get("bet") or q.get("status") != "open":
+            continue
+        if S.removed_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
+            continue
+        try:
+            start = datetime.fromisoformat(str(q.get("start") or "").replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if start.tzinfo is None:
+            start = start.replace(tzinfo=timezone.utc)
+        age = (now - start).total_seconds() / 3600
+        if age > OVERDUE_H:
+            out.append((q, age))
+    out.sort(key=lambda item: (-item[1], str(item[0].get("id") or "")))
+    return out
 
 
 # ---------------------------------------------------------------------------

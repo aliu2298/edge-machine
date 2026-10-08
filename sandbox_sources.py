@@ -271,151 +271,202 @@ SOURCES = {
     "tennis_fav_band_3h": dict(
         label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
         connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
-        note="PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, "
-             "only when the entry is within 3 hours of the scheduled start. The tour "
-             "has to be ATP, WTA Doubles, or UTR. BAND WIDENED 2026-10-04 from "
-             "0.77-0.81 to 0.70-0.85: the lane is tour-specific, the narrow band was "
-             "cut on every tour's record, and on the kept tours it left about one "
-             "contest a day. The page record restarts at 2026-10-02T16:34:37Z, "
-             "the merge that put the narrowed selection on main. No kept-tour bet "
-             "was logged between that restart and the widening, so the record from "
-             "the restart is the wide band only and is not reset again. Two kept-tour "
-             "bets logged after the rule was written and before that merge stay on "
-             "file under the old rule and do not count in the record. The basket lanes cut "
-             "the same 0.70-0.85 legs. The window stays 3 hours. Why the window: closing-line value on the "
-             "band was about -1.2c on entries 3 or more hours before the start, and "
-             "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
-             "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
-             "logged (27 that the parent lane and this lane both bet, counted once). "
-             "On the 18 days those contests cover, that was 36.0 contests a day, and "
-             "the kept tours were 4.3. Kept: ATP, WTA Doubles, UTR, 78 contests, "
-             "z +2.76 before fees. That z is a selected-group z. It is not a "
-             "significance test and must not be quoted as one. "
-             "2026-10-02T05:00:00Z is the looked-at cutoff for those 648 contests, "
-             "not the page record. Those 648 contests are the reason for looking, "
-             "not evidence, and they count toward nothing here. No mechanism is "
-             "claimed. ATP is the deepest field here and UTR the shallowest, with "
-             "four flatter tours between them, and the idea that a deeper field "
-             "prices better does not survive UTR. WTA Doubles rests on 9 contests, "
-             "ROI +12.0% after fees: a direction, not a result, and the first of the "
-             "three to be readable or to fail. A flat $100 stake on the opposite "
-             "side at its own price, after fees, returned -60.6% on those 9, -24.1% "
-             "on the whole band (z -2.88 on the fade prices before fees) and -68.7% "
-             "on the kept set (z -3.06 on the fade prices before fees). The units of "
-             "P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and the "
-             "z on the side that was backed are before fees: one contract, pay the "
-             "price, receive 1. A Polymarket US match filed under the atp league is "
-             "ATP only when Kalshi's ATP series lists the same two players. A "
-             "Challenger listing, or no listing, is not ATP. A Kalshi start is "
-             "inside the 3-hour window only when Tennis Explorer has confirmed "
-             "it; an estimate is unknown and is not a bet."),
+        note=(
+             'PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, only when the entry '
+             'is within 3 hours of the scheduled start. The tour has to be ATP, WTA Doubles, or UTR. '
+             'The basket lanes cut the same 0.70-0.85 legs. The window stays 3 hours. Why the window: '
+             'closing-line value on the band was about -1.2c on entries 3 or more hours before the '
+             'start, and about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). '
+             'TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already logged (27 that '
+             'the parent lane and this lane both bet, counted once). On the 18 days those contests '
+             'cover, that was 36.0 contests a day, and the kept tours were 4.3. Kept: ATP, WTA '
+             'Doubles, UTR, 78 contests, z +2.76 before fees. That z is a selected-group z. It is not '
+             'a significance test and must not be quoted as one. 2026-10-02T05:00:00Z is the looked-at '
+             'cutoff for those 648 contests, not the page record. Those 648 contests are the reason '
+             'for looking, not evidence, and they count toward nothing here. No mechanism is claimed. '
+             'ATP is the deepest field here and UTR the shallowest, with four flatter tours between '
+             'them, and the idea that a deeper field prices better does not survive UTR. WTA Doubles '
+             'rests on 9 contests, ROI +12.0% after fees: a direction, not a result, and the first of '
+             'the three to be readable or to fail. A flat $100 stake on the opposite side at its own '
+             'price, after fees, returned -60.6% on those 9, -24.1% on the whole band (z -2.88 on the '
+             'fade prices before fees) and -68.7% on the kept set (z -3.06 on the fade prices before '
+             'fees). The units of P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and '
+             'the z on the side that was backed are before fees: one contract, pay the price, receive '
+             "1. A Polymarket US match filed under the atp league is ATP only when Kalshi's ATP series "
+             'lists the same two players. A Challenger listing, or no listing, is not ATP. A Kalshi '
+             'start is inside the 3-hour window only when Tennis Explorer has confirmed it; an '
+             'estimate is unknown and is not a bet.'),
+        changes=[
+            (
+                'BAND WIDENED 2026-10-04 from 0.77-0.81 to 0.70-0.85: the lane is tour-specific, the '
+                "narrow band was cut on every tour's record, and on the kept tours it left about one "
+                'contest a day. The page record restarts at 2026-10-02T16:34:37Z, the merge that put the '
+                'narrowed selection on main. No kept-tour bet was logged between that restart and the '
+                'widening, so the record from the restart is the wide band only and is not reset again. '
+                'Two kept-tour bets logged after the rule was written and before that merge stay on file '
+                'under the old rule and do not count in the record.')],
+        frozen="2026-10-08"),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
-             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
-             "the same tours tennis_fav_band_3h keeps. A basket logged before "
-             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
-             "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
-             "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts "
-             "toward nothing here and stays on file under Reference — a basket of narrow legs "
-             "is a different contract. Cut each day's "
-             "favourite-band legs, in start-time order, into consecutive baskets of 2 and buy "
-             "each basket as ONE combo contract, which "
-             "pays only if all 2 win. A combo multiplies a rule's edge rather "
-             "than averaging it: at m = 1.042 over 238 settled single-leg bets, 2 legs would "
-             "run at 8.5% over the price it pays — and at about the same multiple BELOW it if "
-             "that edge is really zero, which is why this is in the Sandbox and not in "
-             "Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
-             "median 0.84% over the product of the legs, far inside the 8.5% the edge could "
-             "absorb. The price here is that product plus the measured markup, not a live "
-             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. Each leg sits in one basket of each size and baskets share no match, so each is an independent result, judged per basket like the single-leg rule. Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.'),
+        note=(
+             "Cut each day's favourite-band legs, in start-time order, into consecutive baskets of 2 "
+             'and buy each basket as ONE combo contract, which pays only if all 2 win. A combo '
+             "multiplies a rule's edge rather than averaging it: at m = 1.042 over 238 settled "
+             'single-leg bets, 2 legs would run at 8.5% over the price it pays — and at about the same '
+             'multiple BELOW it if that edge is really zero, which is why this is in the Sandbox and '
+             "not in Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
+             'median 0.84% over the product of the legs, far inside the 8.5% the edge could absorb. '
+             'The price here is that product plus the measured markup, not a live quote. Judged '
+             'against the SAME legs bet singly — the only question a combo asks is whether bundling '
+             'beats betting them one at a time, and that comparison is the single-leg tennis record '
+             'sitting beside it. Each leg sits in one basket of each size and baskets share no match, '
+             'so each is an independent result, judged per basket like the single-leg rule.'),
+        changes=[
+            (
+                'WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h '
+                'backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and '
+                'stays on file -- a basket of wide legs is a different contract.'),
+            (
+                'FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, the same '
+                'tours tennis_fav_band_3h keeps. A basket logged before 2026-10-02T05:00:00Z counts '
+                'toward nothing here and stays on file.'),
+            (
+                'NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs are now '
+                'priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck '
+                'before that date counts toward nothing here and stays on file under Reference — a basket '
+                'of narrow legs is a different contract.'),
+            (
+                'Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first '
+                'legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.')],
+        frozen="2026-10-08"),
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
-             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
-             "the same tours tennis_fav_band_3h keeps. A basket logged before "
-             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
-             "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
-             "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts "
-             "toward nothing here and stays on file under Reference — a basket of narrow legs "
-             "is a different contract. Cut each day's "
-             "favourite-band legs, in start-time order, into consecutive baskets of 3 and buy "
-             "each basket as ONE combo contract, which "
-             "pays only if all 3 win. A combo multiplies a rule's edge rather "
-             "than averaging it: at m = 1.042 over 238 settled single-leg bets, 3 legs would "
-             "run at 13.1% over the price it pays — and at about the same multiple BELOW it if "
-             "that edge is really zero, which is why this is in the Sandbox and not in "
-             "Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
-             "median 1.06% over the product of the legs, far inside the 13.1% the edge could "
-             "absorb. The price here is that product plus the measured markup, not a live "
-             "quote. " + 'Judged against the SAME legs bet singly — the only question a combo asks is whether bundling beats betting them one at a time, and that comparison is the single-leg tennis record sitting beside it. Each leg sits in one basket of each size and baskets share no match, so each is an independent result, judged per basket like the single-leg rule. Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.'),
+        note=(
+             "Cut each day's favourite-band legs, in start-time order, into consecutive baskets of 3 "
+             'and buy each basket as ONE combo contract, which pays only if all 3 win. A combo '
+             "multiplies a rule's edge rather than averaging it: at m = 1.042 over 238 settled "
+             'single-leg bets, 3 legs would run at 13.1% over the price it pays — and at about the '
+             'same multiple BELOW it if that edge is really zero, which is why this is in the Sandbox '
+             "and not in Production. Kalshi's RFQ was measured first: on 20 real baskets it quoted a "
+             'median 1.06% over the product of the legs, far inside the 13.1% the edge could absorb. '
+             'The price here is that product plus the measured markup, not a live quote. Judged '
+             'against the SAME legs bet singly — the only question a combo asks is whether bundling '
+             'beats betting them one at a time, and that comparison is the single-leg tennis record '
+             'sitting beside it. Each leg sits in one basket of each size and baskets share no match, '
+             'so each is an independent result, judged per basket like the single-leg rule.'),
+        changes=[
+            (
+                'WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h '
+                'backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and '
+                'stays on file -- a basket of wide legs is a different contract.'),
+            (
+                'FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, the same '
+                'tours tennis_fav_band_3h keeps. A basket logged before 2026-10-02T05:00:00Z counts '
+                'toward nothing here and stays on file.'),
+            (
+                'NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs are now '
+                'priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck '
+                'before that date counts toward nothing here and stays on file under Reference — a basket '
+                'of narrow legs is a different contract.'),
+            (
+                'Changed 2026-09-21 after two baskets: it first built ONE basket a day from the first '
+                'legs and left ~55 of ~60 eligible legs unused, so it could not be read for a month.')],
+        frozen="2026-10-08"),
     "tennis_combo4": dict(
         label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
-        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
-             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
-             "the same tours tennis_fav_band_3h keeps. A basket logged before "
-             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
-             "NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs "
-             "are now priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck before that date counts toward "
-             "nothing here and stays on file under Reference. The same construction as the "
-             "2- and 3-leg rules at four legs: each day's favourite-band legs, in start-time order, "
-             "cut into consecutive baskets of four, each bought as ONE combo contract that pays "
-             "only if all four win. At m = 1.042 a leg, four legs would run at about 1.18 over the "
-             "price — and about as far below it if that edge is really zero. Kalshi's RFQ was "
-             "measured first: 12 real baskets, 12-18 market makers each, a median 0.66% over the "
-             "product of the legs. The price logged is that product plus the measured markup. "
-             "Each leg sits in one 4-leg basket and baskets share no match, so each is an "
-             "independent result, judged per basket."),
+        note=(
+             "The same construction as the 2- and 3-leg rules at four legs: each day's favourite-band "
+             'legs, in start-time order, cut into consecutive baskets of four, each bought as ONE '
+             'combo contract that pays only if all four win. At m = 1.042 a leg, four legs would run '
+             'at about 1.18 over the price — and about as far below it if that edge is really zero. '
+             "Kalshi's RFQ was measured first: 12 real baskets, 12-18 market makers each, a median "
+             '0.66% over the product of the legs. The price logged is that product plus the measured '
+             'markup. Each leg sits in one 4-leg basket and baskets share no match, so each is an '
+             'independent result, judged per basket.'),
+        changes=[
+            (
+                'WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h '
+                'backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and '
+                'stays on file -- a basket of wide legs is a different contract.'),
+            (
+                'FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, the same '
+                'tours tennis_fav_band_3h keeps. A basket logged before 2026-10-02T05:00:00Z counts '
+                'toward nothing here and stays on file.'),
+            (
+                'NARROWED AND RESET AGAIN 2026-09-24 with the single-leg rule it wraps: its legs are now '
+                'priced 0.77-0.81 (0.75-0.80 from 2026-09-23, 0.75-0.90 before), so a basket struck '
+                'before that date counts toward nothing here and stays on file under Reference.')],
+        frozen="2026-10-08"),
     "pm_combo2": dict(
         label="Tennis 2-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
-             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
-             "the same tours tennis_fav_band_3h keeps. A basket logged before "
-             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
-             "PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut "
-             "from Polymarket US legs instead. Built because that is where the legs are: after "
-             "the 2026-09-23 band narrowing the tennis rule picked 15 of 15 on Polymarket US, "
-             "and the Kalshi basket lane went to zero for want of in-band Kalshi legs. In the "
-             "0.75-0.80 band it was measured in (the legs follow the single-leg rule and moved to "
-             "0.77-0.81 on 2026-09-24, so re-measure) Polymarket US supplied 14.6 in-band "
-             "legs a day against Kalshi's "
-             "6.3, and returned +6.86% gross a leg (n=146) against Kalshi's +5.45% (n=58). "
-             "NEITHER of those leg edges is significant (t +1.66 and +0.81), and a basket "
-             "multiplies the error as surely as the edge: if the true edge is zero this does "
-             "not return zero, it loses the wrapper and the fee every time. That is what this "
-             "lane is for and why it starts here and not in Production. The price is the "
-             "product of the legs plus PM_COMBO_MARKUP -- a MODEL, and a thin one: the 2-leg "
-             "markup comes from a single pre-match quote read live on 2026-09-24 (2.69% over "
-             "the product), against the 20 baskets behind Kalshi's. Re-measure it."),
+        note=(
+             'PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut from '
+             'Polymarket US legs instead. Built because that is where the legs are: after the '
+             '2026-09-23 band narrowing the tennis rule picked 15 of 15 on Polymarket US, and the '
+             'Kalshi basket lane went to zero for want of in-band Kalshi legs. In the 0.75-0.80 band '
+             'it was measured in (the legs follow the single-leg rule and moved to 0.77-0.81 on '
+             '2026-09-24, so re-measure) Polymarket US supplied 14.6 in-band legs a day against '
+             "Kalshi's 6.3, and returned +6.86% gross a leg (n=146) against Kalshi's +5.45% (n=58). "
+             'NEITHER of those leg edges is significant (t +1.66 and +0.81), and a basket multiplies '
+             'the error as surely as the edge: if the true edge is zero this does not return zero, it '
+             'loses the wrapper and the fee every time. That is what this lane is for and why it '
+             'starts here and not in Production. The price is the product of the legs plus '
+             'PM_COMBO_MARKUP -- a MODEL, and a thin one: the 2-leg markup comes from a single '
+             'pre-match quote read live on 2026-09-24 (2.69% over the product), against the 20 baskets '
+             "behind Kalshi's. Re-measure it."),
+        changes=[
+            (
+                'WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h '
+                'backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and '
+                'stays on file -- a basket of wide legs is a different contract.'),
+            (
+                'FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, the same '
+                'tours tennis_fav_band_3h keeps. A basket logged before 2026-10-02T05:00:00Z counts '
+                'toward nothing here and stays on file.')],
+        frozen="2026-10-08"),
     "pm_combo3": dict(
         label="Tennis 3-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and stays on file -- a basket of wide legs is a different contract. "
-             "FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, "
-             "the same tours tennis_fav_band_3h keeps. A basket logged before "
-             "2026-10-02T05:00:00Z counts toward nothing here and stays on file. "
-             "PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's "
-             "in-band Polymarket US legs in start-time order, cut into consecutive baskets of "
-             "three, each bought as ONE combo contract paying only if all three win. Its "
-             "3-leg markup is NOT measured: it is extrapolated from the single 2-leg reading "
-             "on the shape Kalshi's own constants showed from two legs to three, so the price "
-             "is the weakest part of this lane and the first thing to firm up. Judged against "
-             "the same legs bet singly, which is the only question a basket asks."),
+        note=(
+             "PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's in-band "
+             'Polymarket US legs in start-time order, cut into consecutive baskets of three, each '
+             'bought as ONE combo contract paying only if all three win. Its 3-leg markup is NOT '
+             "measured: it is extrapolated from the single 2-leg reading on the shape Kalshi's own "
+             'constants showed from two legs to three, so the price is the weakest part of this lane '
+             'and the first thing to firm up. Judged against the same legs bet singly, which is the '
+             'only question a basket asks.'),
+        changes=[
+            (
+                'WIDENED AND RESET 2026-10-04: legs are priced 0.70-0.85, the band tennis_fav_band_3h '
+                'backs, and a basket logged before TENNIS_COMBO_BAND_SINCE counts toward nothing here and '
+                'stays on file -- a basket of wide legs is a different contract.'),
+            (
+                'FROM 2026-10-02 a leg is kept only when its tour is ATP, WTA Doubles, or UTR, the same '
+                'tours tennis_fav_band_3h keeps. A basket logged before 2026-10-02T05:00:00Z counts '
+                'toward nothing here and stays on file.')],
+        frozen="2026-10-08"),
     "pm_combo4": dict(
         label="Tennis 4-leg combo on Polymarket US", kind="Rule", connected=True,
         site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
-        note="WIDENED 2026-10-04: new legs are priced 0.70-0.85, the band tennis_fav_band_3h backs. It has logged no basket since it left Production on 2026-10-03, so no record mixes the two bands. "
-             "FROM 2026-10-02 a new basket keeps a leg only when its tour is ATP, WTA "
-             "Doubles, or UTR, the same tours tennis_fav_band_3h keeps. The Production "
-             "record already on file is the judged record. "
-             "PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and "
-             "unmeasured markup as the 3-leg rule. Four legs compound both the edge and the "
-             "error hardest, so this is the rung that answers soonest whether the leg edge is "
-             "real -- in either direction."),
+        note=(
+             'PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and '
+             'unmeasured markup as the 3-leg rule. Four legs compound both the edge and the error '
+             'hardest, so this is the rung that answers soonest whether the leg edge is real -- in '
+             'either direction.'),
+        changes=[
+            (
+                'WIDENED 2026-10-04: new legs are priced 0.70-0.85, the band tennis_fav_band_3h backs. It '
+                'has logged no basket since it left Production on 2026-10-03, so no record mixes the two '
+                'bands.'),
+            (
+                'FROM 2026-10-02 a new basket keeps a leg only when its tour is ATP, WTA Doubles, or UTR, '
+                'the same tours tennis_fav_band_3h keeps. The Production record already on file is the '
+                'judged record.')],
+        frozen="2026-10-08"),
     "tt_band_55_60": dict(
         label="Table tennis 0.55-0.60 band (confirmation test)", kind="Rule", connected=False, retired='2026-09-15: the confirmation test answered — on new matches 36 won v 36.3 priced (64 settled, z -0.08, -1.1%). The early spike was noise.',
         site="edge-machine", sports=["table_tennis"], baseline="favourite_population",
@@ -6168,10 +6219,27 @@ TENNIS_COMBO_RESET = frozenset({
 })
 # The five reset notes name this instant. Written with the constant's name so
 # the clock stays defined once, next to the reset set; the page has to show
-# the time, not the name.
+# the time, not the name. The dated change entries carry it too.
 for _lane in TENNIS_COMBO_RESET:
     SOURCES[_lane]["note"] = SOURCES[_lane]["note"].replace(
         "TENNIS_COMBO_BAND_SINCE", TENNIS_COMBO_BAND_SINCE)
+    SOURCES[_lane]["changes"] = [
+        c.replace("TENNIS_COMBO_BAND_SINCE", TENNIS_COMBO_BAND_SINCE)
+        for c in SOURCES[_lane].get("changes") or []]
+del _lane
+
+# FREEZE (2026-10-08). The seven live tennis rules are frozen: band, window, tours
+# and construction stay as registered until the planned read. A change after this
+# date retires the rule and starts a new one; test_tennis_freeze.py pins the
+# constants and the registration text. Each frozen registration carries the line.
+TENNIS_FROZEN = "2026-10-08"
+TENNIS_FROZEN_LINE = (f"FROZEN {TENNIS_FROZEN}: no further changes to band, window, tours or "
+                      "construction until the planned read; a change after this date "
+                      "retires the rule and starts a new one.")
+TENNIS_FROZEN_RULES = frozenset(
+    name for name, meta in SOURCES.items() if meta.get("frozen") == TENNIS_FROZEN)
+for _lane in TENNIS_FROZEN_RULES:
+    SOURCES[_lane]["note"] = SOURCES[_lane]["note"].rstrip() + " " + TENNIS_FROZEN_LINE
 del _lane
 
 

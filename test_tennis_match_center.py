@@ -61,7 +61,7 @@ for market, side in (('market-a', 'Alpha'), ('market-b', 'Beta')):
 days = re.findall(r'<div class="tn-day">([^<]+)</div>', html)
 assert days == ['Oct 6', 'Today · Oct 7', 'Tomorrow · Oct 8', 'Oct 10', 'Time unconfirmed'], days
 states = re.findall(r'<span class="tn-state ([^"]+)">([^<]+)</span>', html)
-assert states == [('is-live', 'in play'), ('is-won', 'W'), ('is-live', 'in play'),
+assert states == [('is-late', 'unsettled · 30h'), ('is-won', 'W'), ('is-live', 'in play'),
                   ('is-next', 'upcoming'), ('is-next', 'upcoming'), ('is-next', 'upcoming'),
                   ('is-next', 'upcoming'), ('is-next', 'upcoming')], states
 assert '<span class="tn-time">time TBC</span>' in html
