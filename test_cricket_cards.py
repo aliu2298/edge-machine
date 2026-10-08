@@ -270,8 +270,8 @@ ok("<h1>Cricket</h1>" in html and "Match-winner picks and the rules that fire th
 ok(html.count("<h1>") == 1 and html.count('<header class="site">') == 1
    and '<body class="sports-page sport-cricket">' in html,
    "one shell, one title, the cricket sport page")
-ok('<a href="#matches">Matches</a><a href="#rules">Rules</a>' in html and 'href="#system"' not in html,
-   "the sub-nav pills are Matches and Rules")
+ok('<a href="#rules">Rules</a><a href="#matches">Matches</a>' in html and 'href="#system"' not in html,
+   "the sub-nav pills are Rules and Matches")
 ok("rule-card" not in html and "rule-band" not in html and "rule-grid" not in html
    and "rule-flip" not in html and "How each rule is defined" not in html,
    "no flip-cards, bands, or the open definitions block")

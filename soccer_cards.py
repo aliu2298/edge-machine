@@ -382,6 +382,6 @@ def production_strip(rows):
 
 
 def render(d, rows, now=None):
-    """Fixtures, then Rules. `now` is the page clock."""
+    """Rules, then Fixtures. `now` is the page clock."""
     now = now or datetime.datetime.now(timezone.utc)
-    return fixtures(d, rows, now) + rules_table(d, rows)
+    return rules_table(d, rows) + fixtures(d, rows, now)

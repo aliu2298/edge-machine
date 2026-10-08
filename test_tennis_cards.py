@@ -197,8 +197,8 @@ ok("<h1>Tennis</h1>" in main and "Match-winner picks and combo baskets · times 
 ok('id="matches"' in main and 'id="rules"' in main and 'id="system"' in main,
    "the page has Matches, Rules and System sections")
 toc = re.search(r'<nav class="toc"[^>]*>(.*?)</nav>', html, re.S)
-eq(re.findall(r">([^<]+)</a>", toc.group(1)) if toc else None, ["Matches", "Rules", "System"],
-   "the jump pills are Matches / Rules / System")
+eq(re.findall(r">([^<]+)</a>", toc.group(1)) if toc else None, ["Rules", "Matches", "System"],
+   "the jump pills are Rules / Matches / System")
 for gone in ('id="today"', 'id="upcoming"', 'id="in-play"', 'id="combos"', "No tracked tennis match",
              "rule-card", "rule-grid", "tennis-combo-grid", "How each rule is defined", "Match center"):
     ok(gone not in main, f"{gone} is gone")

@@ -22,7 +22,7 @@ KEY = "cricket"
 TITLE = "Edge Machine · Cricket"
 DESCRIPTION = "Every cricket rule and tipster under test, including the lane in Production."
 LEDE = "Match-winner picks and the rules that fire them · times CT"
-TOC = (("matches", "Matches"), ("rules", "Rules"))
+TOC = (("rules", "Rules"), ("matches", "Matches"))
 
 
 def build(d=None, st=None, now=None):

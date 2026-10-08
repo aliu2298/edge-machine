@@ -79,8 +79,8 @@ ok("Daily favourite-band picks on Kalshi coin closes · times CT" in html, "the 
 ok(fmt.display_updated(NOW) in html.split("<main", 1)[-1], "the freshness stamp is under the title")
 for anchor in ("picks", "rule", "method"):
     ok(f'id="{anchor}"' in html and f'href="#{anchor}"' in html, f"section and sub-nav pill for #{anchor}")
-ok(html.find('id="picks"') < html.find('id="rule"') < html.find('id="method"'),
-   "picks, then the rule, then the folded method")
+ok(html.find('id="rule"') < html.find('id="picks"') < html.find('id="method"'),
+   "the rule first, then the picks, then the folded method")
 for gone in ("crypto-hero", "crypto-progress", "progressbar", "crypto-coin", "crypto-tabs", "crypto-health",
              "crypto-rule-strip", "Favourite-band record", "Five live coins", "crypto-metrics",
              'id="today"', 'id="performance"', 'id="lanes"', "Full record table", "<h3"):
@@ -241,7 +241,7 @@ if playwright is not None:
             cards = page.locator(".cr-rules thead").first.evaluate("e => getComputedStyle(e).display")
             eq(cards, "none" if width < 760 else "table-header-group", f"{width}px cards fallback under 760px")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
-               ["#picks", "#rule", "#method"], f"{width}px sub-nav is Picks / Rule / Method")
+               ["#rule", "#picks", "#method"], f"{width}px sub-nav is Rule / Picks / Method")
             page.close()
         browser.close()
 
