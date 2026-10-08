@@ -297,6 +297,14 @@ td[data-l="Starts"],
 td[data-l="Kickoff"],
 td[data-l="Settled"],
 td[data-l="Last"] { white-space: nowrap; }
+/* A rule's name may now carry its scope ("… · Internationals"). A long bold word
+   must not set the table's minimum width: on a runner whose fallback font is
+   wider than Inter the Production Pairs table sat 5px inside its card, and that
+   word tipped it into in-card scrolling, where the header row can no longer
+   stick. Let the name break instead; at desktop widths it never has to. */
+td[data-l="Pair"],
+td[data-l="Rule"],
+td[data-l="Rule or tipster"] { overflow-wrap: anywhere; }
 /* Phone cards set every tr to display:block, which beats the hidden attribute.
    A filtered-out row stays hidden in the table and in the cards. */
 tr[hidden] { display: none !important; }

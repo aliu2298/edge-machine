@@ -4076,6 +4076,42 @@ CUP_FRAGS = {
 INTL_FRAGS = {"UEFANL": "UEFA Nations League", "INTLFRIENDLY": "International Friendly"}
 SCOPES = (("", BTTS_LEAGUES, "league"), ("_cup", CUP_FRAGS, "cup"), ("_intl", INTL_FRAGS, "intl"))
 SCOPE_LABEL = {"_cup": "Cups", "_intl": "Internationals"}
+# The league pair's scope word, shown only beside a rule that also has a cup or an
+# internationals twin: "Team scores 1+ form rule · Clubs". A rule with one scope keeps
+# its plain name. Display only; ids, ledger keys and pair keys never carry it.
+CLUB_SCOPE_LABEL = "Clubs"
+
+
+def scope_of(sport):
+    """'_cup' / '_intl' for a soccer form twin, '' for the league pair and everything else."""
+    return next((x for x in SCOPE_LABEL if str(sport or "").endswith(x)), "")
+
+
+def rule_scopes(source):
+    """The scopes a source is registered on, live and retired. One entry means no twin."""
+    meta = SOURCES.get(source) or {}
+    sports = list(meta.get("sports") or []) + list((meta.get("retired_sports") or {}).keys())
+    return {scope_of(s) for s in sports}
+
+
+def scoped_rule(source, sport=None):
+    """A rule's display name, carrying its scope whenever the name is shared across scopes.
+
+    'Team scores 1+ form rule · Clubs' for the league pair of a rule that also has a
+    cup or an internationals twin, '· Cups' and '· Internationals' for the twins, and
+    the plain name for a rule registered on one scope only. Two Production rules used
+    to print as one name, so a settled lead could not say which rule it came from.
+    The registered label, the source id, the ledger and the pair keys are untouched:
+    this is the name a page prints, nothing a join reads. An unknown source, or a
+    call without the sport, is the plain name.
+    """
+    meta = SOURCES.get(source)
+    if not meta:
+        return str(source or "")
+    name = str(meta.get("label") or source).split(" (")[0].strip()
+    if sport is None or len(rule_scopes(source)) < 2:
+        return name
+    return f"{name} · {SCOPE_LABEL.get(scope_of(sport), CLUB_SCOPE_LABEL)}"
 SCOPE_NOTE = {
     "_cup": ("CUPS PAIR — the same rule applied only to cup ties ({}). Form is every competitive "
              "game (league and cup, lower tiers included), 90-minute results only. A separate "
