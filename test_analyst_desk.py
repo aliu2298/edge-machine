@@ -83,7 +83,7 @@ if sports:
 ok(html.index("</header>") < html.index('<nav class="sports sport-filter"'),
    "page destinations in the header lead into the sport filter in the workspace")
 every = re.findall(r'>([^<]+)</button>', shell_build._sport_pills(None))
-ok(every == ["All", "NBA", "Soccer", "Tennis", "Cricket", "Crypto"],
+ok(every == ["All", "NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Commodities"],
    f"_sport_pills(None) keeps every filter ({every})")
 some = re.findall(r'>([^<]+)</button>', shell_build._sport_pills({"Cricket", "Soccer"}))
 ok(some == ["All", "Soccer", "Cricket"],
