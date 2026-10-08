@@ -453,28 +453,37 @@ def rules_html(d, rows, now):
 
 
 # ------------------------------------------------------------------ tiles and the venue fold
-def singles_row(rows):
-    """The match-winner rule the tiles report: Production first, then the deepest record."""
-    singles = [r for r in rows if B._base_sport(r["sport"]) == "tennis"]
-    return sorted(singles, key=_sort_key)[0] if singles else None
+def singles_rows(rows):
+    """The match-winner rules. The baskets are different contracts on different venues."""
+    return [r for r in rows if B._base_sport(r["sport"]) == "tennis"]
 
 
-def tiles_html(d, rows):
-    """Open picks · active rules, then the match-winner rule's own W–L and ROI.
+def tiles_html(d, rows, now=None):
+    """Open picks · active rules, then ONE match-winner rule's own W–L and ROI.
 
-    The combo baskets are different contracts on different venues; each one's
+    The headline rule is chosen the way the Cricket page chooses its own
+    (cricket_cards.headline_row: Production first, else the first active rule
+    in table order), over the match-winner rules only; its record is the
+    ledger's own words (record_text, "27–9, 2 no result"). Each basket's
     record and ROI is on its own table row. Nothing here pools across rules.
     """
+    import cricket_cards
     act, _ina = active_rows(rows, d)
     open_n = sum(len(open_quotes(d, r["name"], r["sport"], r)) for r in rows)
-    single = singles_row(rows)
-    label = rule_name(single).split(" · ")[0] if single else "Match winner"
+    head = cricket_cards.headline_row(singles_rows(rows), d, now)
+    if head is not None and (head["a"].get("n") or head["a"].get("n_price")):
+        rec = record_text(head["a"])
+        roi_cell_html = f'<b>{roi_html(head)}</b>'
+        who = rule_name(head) + (" · Production" if head.get("prod") else "")
+    else:
+        rec, roi_cell_html, who = "—", '<b class="mut">—</b>', "no match-winner rule with a record"
     return (
         '<div class="tiles tn-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
         f'<div class="tile"><b>{len(act)}</b><span>active rules</span></div>'
-        + UI.rule_tiles(single["a"] if single else {}, label, B.MIN_N)
-        + '</div>')
+        f'<div class="tile"><b>{B.esc(rec)}</b><span>record · {B.esc(who)}</span></div>'
+        f'<div class="tile">{roi_cell_html}<span>ROI after fees · {B.esc(who)}</span></div>'
+        '</div>')
 
 
 def _listing(d):
@@ -520,7 +529,7 @@ def render(d, rows, now=None, idle_html=""):
     now = _as_utc(now or datetime.datetime.now(timezone.utc))
     return f'''<h1>Tennis</h1>
 <p class="lede">Match-winner picks and combo baskets · times CT</p>
-{tiles_html(d, rows)}
+{tiles_html(d, rows, now)}
 <section id="rules" class="tn-section">
 <h2>Rules</h2>
 <p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>

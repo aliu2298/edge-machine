@@ -16,6 +16,7 @@ from datetime import timedelta, timezone
 import fmt
 import sandbox_build as B
 import sandbox_sources as S
+import sandbox_track as T
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -211,26 +212,27 @@ print("\ntiles")
 tiles = re.findall(r'<div class="tile">(.*?)</div>', main, re.S)
 eq(len(tiles), 4, "four stat tiles")
 labels = [re.search(r"<span>(.*?)</span>", t).group(1) for t in tiles]
-eq(labels, ["open picks", "active rules", "Favourite band · W–L", "Favourite band · ROI after fees"],
-   "the tiles are open picks · active rules · the singles rule's W–L · its ROI")
+single = next(r for r in rows if r["name"] == "tennis_fav_band_3h")
+who = tennis_cards.rule_name(single)
+eq(labels, ["open picks", "active rules", f"record · {who}", f"ROI after fees · {who}"],
+   "the tiles are open picks · active rules · one match-winner rule's W–L · its ROI, named")
 open_n = sum(1 for q in d["quotes"] if str(q["sport"]).startswith("tennis")
              and q["bet"] and q["status"] == "open")
 eq(_text(tiles[0]), f"{open_n} open picks", "open picks counts every open tennis bet")
 active = [r for r in rows if r["a"]["n"] or r["open"]]
 eq(_text(tiles[1]), f"{len(active)} active rules", "a rule is active once it has fired")
-single = next(r for r in rows if r["name"] == "tennis_fav_band_3h")
 sa = single["a"]
-eq(_text(tiles[2]), f"{sa['won']}–{sa['n'] - sa['won']} Favourite band · W–L",
-   "the record tile is the singles rule's own W–L, not a pool")
+import cricket_cards
+eq(cricket_cards.headline_row(tennis_cards.singles_rows(rows), d, NOW)["name"], "tennis_fav_band_3h",
+   "the headline rule is chosen by the Cricket page's own helper, over the match-winner rules")
+eq(_text(tiles[2]), f"{T.record_text(sa)} record · {who}",
+   "the record tile is the singles rule's own W–L in the ledger's words, not a pool")
 ok(B.pct(sa["roi_fee"], sign=True) in tiles[3], "the ROI tile is the singles rule's own ROI after fees")
 ok('class="mut"' in tiles[3], f"the ROI is grey under the read floor ({sa['n']} < {B.MIN_N})")
 pooled = sum(r["a"]["n"] for r in active)
 ok(f"{sum(r['a']['won'] for r in active)}–{pooled - sum(r['a']['won'] for r in active)}" not in _text(tiles[2]),
    "no tile pools the combo baskets into the singles record")
-import sport_ui
-eq(sport_ui.rule_tiles(sa, "Favourite band", B.MIN_N), tiles[2] and
-   '<div class="tile">' + tiles[2] + '</div><div class="tile">' + tiles[3] + '</div>',
-   "the two rule tiles are the shared sport_ui helper's output")
+ok(not hasattr(__import__("sport_ui"), "rule_tiles"), "there is no second per-rule tile helper")
 
 print("\npicks")
 picks = _picks(html)
