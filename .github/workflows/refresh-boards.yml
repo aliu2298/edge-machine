@@ -126,15 +126,33 @@ jobs:
           echo "::error::could not publish after 3 attempts — another run keeps winning the race"
           exit 1
 
+      # Deploy the main tip, never this run's checkout. The checkout is pinned to the
+      # commit the run was created on, and the tracker commits rebuilt pages to main on
+      # its own clock: on 2026-10-08 the 01:19 cron run checked out the Cricket merge
+      # (which carried the pages from before the merge), the tracker landed the rebuilt
+      # cricket.html and crypto.html twelve seconds later and deployed at 01:20:04, and
+      # this job, with nothing of its own to commit, deployed its stale checkout at
+      # 01:20:26. The last deploy wins on Pages, so the old pages went live until the
+      # next dispatch. After a successful push origin/main already holds this run's
+      # commit, so the reset only ever moves forward. Ignored files survive it.
+      - name: Deploy from the main tip
+        id: main_tip
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git reset --hard origin/main
+          echo "deploying public_site from $(git rev-parse --short HEAD)"
+
       # GitHub Pages is the ONLY host (Netlify dropped Aug 3 2026 — it was skipping
       # every deploy for exceeded credit usage, and nothing here needed a feature
       # Pages lacks). Runs unconditionally so the board publishes even when nothing changed.
-      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' && steps.main_tip.outcome == 'success' }}
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+      - if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' && steps.main_tip.outcome == 'success' }}
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
       - id: deployment
-        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' && steps.main_tip.outcome == 'success' }}
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
