@@ -2500,3 +2500,29 @@ details.tn-rule .tn-def { margin: 8px 0 0; max-width: 72ch; line-height: 1.5; wh
 @media (prefers-reduced-motion: reduce) {
   details.tn-rule > summary::before, .tn-system > details > summary::before { transition: none; }
 }
+
+/* Crypto page, rebuilt 2026-10-08 on the Tennis patterns: tiles, one picks list
+   grouped by day, a one-row rules table, the method folded. Additive only. */
+.cr-updated { margin: -20px 0 16px; }
+.tn-pick.cr-pick { grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1.6fr) 56px 76px; }
+.tn-pick.cr-pick.is-muted .tn-match, .tn-pick.cr-pick.is-muted .tn-pos { color: var(--mut); font-weight: 400; }
+.tn-pick.cr-pick.is-muted .tn-pos b { font-weight: 400; }
+.cr-scan { margin: 0; }
+.cr-params {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  white-space: normal;
+}
+.cr-params dt { color: var(--mut); font-weight: 600; }
+.cr-params dd { margin: 0; }
+@media (max-width: 760px) {
+  .tn-pick.cr-pick {
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    grid-template-areas: "time match state" "time pos price";
+  }
+  .cr-params { grid-template-columns: 1fr; gap: 2px; }
+  .cr-params dd { margin-bottom: 6px; }
+}
