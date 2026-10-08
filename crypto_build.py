@@ -1,45 +1,38 @@
 #!/usr/bin/env python3
-"""The Crypto page: the favourite-band rule, and the baseline that motivated it.
+"""The Crypto page: the favourite-band rule on Kalshi's daily coin closes.
 
-WHY IT EXISTS SEPARATELY. Crypto is two pairs, not twenty, so this page is not here to
-hold a long list. It is here because the two pairs only make sense next to each other and
-neither reads correctly alone.
+Four stat tiles, one flat list of picks grouped by day, a one-row rules table,
+and the method folded away. The record, verdict and ROI are the Sandbox row's
+own figures, the same strings the Sandbox table prints, so this page cannot
+disagree with the Sandbox about the pair. The page states the unit the Sandbox
+cannot: the lane is judged per market-day, not per contract, because the coins
+move together.
 
-`spot|crypto` is a declared NULL HYPOTHESIS — today's price carried forward — and it came
-back flat over 22 days (26 market-days, 15 won v 14.44 priced, z -0.07). That is its
-answer, not its failure: it says Kalshi's daily coin buckets are efficiently priced, so
-nothing subtler is worth connecting on the strength of a forecast.
-
-`crypto_fav_band|crypto_fav` is the follow-up question, and a different one. It does not
-forecast anything. It asks whether the PRICE ITSELF is biased in the 0.70-0.80 favourite
-band, held for about three hours into the 17:00 ET close.
-
-WHAT THIS PAGE ADDS THAT THE SANDBOX CANNOT. Both pairs sit inside the Sandbox's folding
-"Markets" section with climate, commodities and finance, where the thing that matters most
-about them is invisible: they are judged PER DAY, not per bet, because the coins move
-together. A reader seeing "97 bets" on the Sandbox has no way to know the honest
-denominator is 26. This page states the unit, and the measurement behind it, in the place
-where the record is read.
-
-No live venue call is made here. The page is rebuilt by the tracker, and a Kalshi hiccup
-must not turn into a failed publish.
+The list and table reuse the Tennis page's patterns (tn-*), so the sport pages
+read as one product. No live venue call is made here; the page is rebuilt by
+the tracker, and a Kalshi hiccup must not turn into a failed publish.
 """
 import datetime
 import os
 
 import fmt
-
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome as C
+import tennis_cards as TN
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "public_site", "crypto.html")
 
-# Both pairs, named rather than derived: family() puts crypto in "Markets" with the other
-# yes/no domains, which is right for the Sandbox and wrong for this page.
-SPORTS = ("crypto_fav", "crypto")
+# The one lane on this page. family() files crypto under "Markets" with the
+# other yes/no domains, which is right for the Sandbox and wrong for here.
+SPORTS = ("crypto_fav",)
+SOURCE = "crypto_fav_band"
+COIN_LABELS = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
+               "ripple": "XRP", "hyperliquid": "HYPE"}
+TOC = (("picks", "Picks"), ("rule", "Rule"), ("method", "Method"))
+LEDE = "Daily favourite-band picks on Kalshi coin closes · times CT"
 
 
 def esc(x):
@@ -48,8 +41,7 @@ def esc(x):
 
 def crypto_rows(d, st):
     rows = [r for r in B.pair_list(d, st) if r["sport"] in SPORTS]
-    order = {s: i for i, s in enumerate(SPORTS)}
-    return sorted(rows, key=lambda r: (order.get(r["sport"], 9), r["name"]))
+    return sorted(rows, key=lambda r: r["name"])
 
 
 def _fav_row(rows):
@@ -57,8 +49,9 @@ def _fav_row(rows):
 
 
 def _fav_quotes(d):
+    """Every row this lane has logged: bets (live and archived) and watch-only quotes."""
     return [q for q in (T.bet_rows(d) + [q for q in (d.get("quotes") or []) if not q.get("bet")])
-            if q.get("source") == "crypto_fav_band" and q.get("sport") == "crypto_fav"]
+            if q.get("source") == SOURCE and q.get("sport") in SPORTS]
 
 
 def _series(q):
@@ -66,101 +59,148 @@ def _series(q):
     return market_id.split("-", 1)[0] if "-" in market_id else market_id
 
 
-def _coin_watch(d):
-    """Five fixed live series, with only facts already stored in the ledger."""
-    quotes = _fav_quotes(d)
-    out = []
-    labels = {
-        "bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
-        "ripple": "XRP", "hyperliquid": "HYPE",
-    }
-    for series, coin in S.COINS.items():
-        items = [q for q in quotes if _series(q) == series]
-        items.sort(key=lambda q: str(q.get("logged") or q.get("start") or ""), reverse=True)
-        open_rows = [q for q in items if q.get("bet") and q.get("status") == "open"]
-        bets = [q for q in items if q.get("bet")]
-        latest = open_rows[0] if open_rows else (bets[0] if bets else (items[0] if items else None))
-        if open_rows:
-            state = "Open"
-            state_cls = "crypto-state-open"
-        elif latest and latest.get("bet") and latest.get("status") in ("won", "lost"):
-            state = "Last " + str(latest.get("status")).title()
-            state_cls = "crypto-state-won" if latest.get("status") == "won" else "crypto-state-lost"
-        else:
-            state = "Watching"
-            state_cls = "crypto-state-watch"
-        price = latest.get("price") if isinstance(latest, dict) else None
-        price_text = fmt.cents(price) if price is not None else "—"
-        out.append((labels.get(coin, coin.upper()), series, state, state_cls, price_text))
-    return out
+def _coin(series):
+    return COIN_LABELS.get(S.COINS.get(series, ""), S.COINS.get(series, series).upper())
 
 
-def _watch_html(d):
-    cards = []
-    for coin, series, state, state_cls, price in _coin_watch(d):
-        cards.append(
-            f'<div class="crypto-coin">'
-            f'<div class="crypto-coin-name"><strong>{esc(coin)}</strong><span>{esc(series)}</span></div>'
-            f'<div class="crypto-coin-price">{esc(price)}</div>'
-            f'<span class="crypto-state {esc(state_cls)}">{esc(state)}</span>'
-            f'</div>'
-        )
-    return "".join(cards)
+def _close(q):
+    raw = q.get("start")
+    if not raw:
+        return None
+    try:
+        return fmt.chicago(raw).astimezone(datetime.timezone.utc)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
 
 
-def _hero(rows):
-    fav = _fav_row(rows)
-    a = (fav or {}).get("a") or {}
-    n = int(a.get("n") or 0)
-    won = int(a.get("won") or 0)
-    roi = a.get("roi_fee")
-    clv = a.get("clv")
-    clv_n = int(a.get("clv_n") or 0)
-    open_n = int((fav or {}).get("open") or 0)
-    stage = "Production" if (fav or {}).get("prod") else "Sandbox"
-    roi_text = B.pct(roi, sign=True) if roi is not None else "—"
-    clv_text = fmt.signed_cents(clv) if clv is not None and clv_n else "—"
-    remaining = max(0, T.READ_FLOOR - n)
-    progress_cells = "".join(
-        '<span class="is-filled" aria-hidden="true"></span>' if i < n
-        else '<span aria-hidden="true"></span>'
-        for i in range(T.READ_FLOOR)
-    )
-    return f"""<section class="crypto-hero" aria-label="Crypto lane status">
-<div class="crypto-hero-top">
-<div><span class="crypto-stage">{esc(stage)}</span><h1>Crypto</h1></div>
-<div class="crypto-live-dot"><span aria-hidden="true"></span>{open_n} open</div>
-</div>
-<div class="crypto-return"><strong>{esc(roi_text)}</strong><span>ROI after fees</span></div>
-<div class="crypto-stats">
-<div><b>{won}–{max(0, n - won)}</b><span>record</span></div>
-<div><b>{esc(clv_text)}</b><span>vs close</span></div>
-<div><b>{n} / {T.READ_FLOOR}</b><span>market-days</span></div>
-</div>
-<div class="crypto-progress" role="progressbar" aria-valuemin="0" aria-valuemax="{T.READ_FLOOR}" aria-valuenow="{min(n, T.READ_FLOOR)}">
-{progress_cells}
-</div>
-<p class="sm mut">{remaining} more independent market-day{"s" if remaining != 1 else ""} before the planned read.</p>
-</section>"""
+def _day_of(q):
+    """The Chicago day a quote settles on: its close, else its stored date."""
+    close = _close(q)
+    if close is not None:
+        return fmt.chicago(close).date()
+    raw = q.get("date")
+    try:
+        return datetime.date.fromisoformat(str(raw)[:10])
+    except (TypeError, ValueError):
+        return None
 
 
-def _record_cards(rows):
-    fav = _fav_row(rows)
-    if not fav:
-        return '<div class="note">No crypto favourite-band record yet.</div>'
-    a = fav.get("a") or {}
-    won = a.get("won") or 0
-    expected = a.get("expected")
-    priced_text = f"{expected:.1f}" if expected is not None else "—"
-    edge_text = f"{won - expected:+.1f} wins" if expected is not None else "—"
-    return f"""<div class="crypto-metrics">
-<div><span>Won v priced</span><strong>{esc(won)} v {esc(priced_text)}</strong><small>{esc(edge_text)}</small></div>
-<div><span>Contracts</span><strong>{esc(a.get("n_bets", 0))}</strong><small>{esc(a.get("n_bets", 0))} contracts logged</small></div>
-</div>"""
+def _as_utc(now):
+    if now.tzinfo is None:
+        return now.replace(tzinfo=datetime.timezone.utc)
+    return now.astimezone(datetime.timezone.utc)
+
+
+def _today_close(now):
+    """Today's 17:00 ET close as a UTC instant."""
+    local = _as_utc(now).astimezone(S.CRYPTO_FAV_TZ)
+    close = local.replace(hour=S.CRYPTO_FAV_CLOSE_ET, minute=0, second=0, microsecond=0)
+    return close.astimezone(datetime.timezone.utc)
+
+
+def state_of(q):
+    """(word, class) for one row: W / L once settled, open while it runs, watching for a quote."""
+    if q is None:
+        return "no entry", "is-none"
+    status = q.get("status")
+    if q.get("bet"):
+        if status == "won":
+            return "W", "is-won"
+        if status == "lost":
+            return "L", "is-lost"
+        if status == "void":
+            return "void", "is-none"
+        return "open", "is-live"
+    return "watching", "is-next"
+
+
+def pick_text(q):
+    """The rung backed, as the venue names it: '$84,500 or above'."""
+    side = B._side(q)
+    return str(side or "—")
+
+
+# ------------------------------------------------------------------ the picks list
+def _pick_html(coin, series, q, when):
+    word, cls = state_of(q)
+    if q is not None:
+        link = B.safe_href(S.market_url(q), f"{coin} · {series}")
+        pick = B.esc(pick_text(q)) if q.get("bet") or q.get("side_a") else "—"
+        price = fmt.cents(q.get("price")) if q.get("price") is not None else "—"
+    else:
+        link = f"{B.esc(coin)} · {B.esc(series)}"
+        pick, price = "", ""
+    muted = " is-muted" if q is None else ""
+    return (f'<div class="tn-pick cr-pick{muted} {cls}" data-series="{B.esc(series)}">'
+            f'<span class="tn-time">{B.esc(when)}</span>'
+            f'<span class="tn-match">{link}</span>'
+            f'<span class="tn-pos">{f"<b>{pick}</b>" if pick else ""}</span>'
+            f'<span class="tn-price">{B.esc(price)}</span>'
+            f'<span class="tn-state {cls}">{B.esc(word)}</span></div>')
+
+
+def day_blocks(d, now):
+    """[(day, [(coin, series, quote or None)])], today first, then earlier days, newest first.
+
+    Today lists every live coin once: its bet or watch-only quote, else no
+    entry. Every other day lists the rows that were logged on it.
+    """
+    now = _as_utc(now)
+    today = fmt.chicago(now).date()
+    by_day = {}
+    for q in _fav_quotes(d):
+        day = _day_of(q)
+        if day is None:
+            continue
+        by_day.setdefault(day, []).append(q)
+    blocks = []
+    todays = by_day.pop(today, [])
+    rows = []
+    for series in S.COINS:
+        mine = [q for q in todays if _series(q) == series]
+        mine.sort(key=lambda q: (not q.get("bet"), str(q.get("logged") or "")), reverse=False)
+        bets = [q for q in mine if q.get("bet")]
+        rows.append((_coin(series), series, bets[0] if bets else (mine[0] if mine else None)))
+    blocks.append((today, rows))
+    for day in sorted(by_day, reverse=True):
+        rows = sorted(by_day[day], key=lambda q: (not q.get("bet"), _series(q)))
+        blocks.append((day, [(_coin(_series(q)), _series(q), q) for q in rows]))
+    return blocks
+
+
+def picks_html(d, now):
+    now = _as_utc(now)
+    today = fmt.chicago(now).date()
+    close_today = fmt.clock(_today_close(now))
+    parts = []
+    for day, rows in day_blocks(d, now):
+        label = TN._day_label(day, today)
+        items = [f'<div class="tn-day">{B.esc(label)}</div>']
+        for coin, series, q in rows:
+            close = _close(q) if q is not None else None
+            when = fmt.clock(close) if close is not None else (close_today if day == today else "—")
+            items.append(_pick_html(coin, series, q, when))
+        parts.append(f'<div class="tn-dayblock">{"".join(items)}</div>')
+    return f'<div class="tn-picks">{"".join(parts)}</div>'
+
+
+def _window(now):
+    """('Next' or 'Current', 'Oct 8, 12:30–2:00 PM CT') for the entry window."""
+    local = _as_utc(now).astimezone(S.CRYPTO_FAV_TZ)
+    close = local.replace(hour=S.CRYPTO_FAV_CLOSE_ET, minute=0, second=0, microsecond=0)
+    end = close - datetime.timedelta(hours=S.CRYPTO_FAV_MIN_H)
+    if local > end:
+        close += datetime.timedelta(days=1)
+    start = close - datetime.timedelta(hours=S.CRYPTO_FAV_MAX_H)
+    end = close - datetime.timedelta(hours=S.CRYPTO_FAV_MIN_H)
+    s, e = fmt.chicago(start), fmt.chicago(end)
+    first = f"{s:%-I:%M}" if f"{s:%p}" == f"{e:%p}" else f"{s:%-I:%M %p}"
+    text = f"{fmt._MONTHS[s.month - 1]} {s.day}, {first}–{e:%-I:%M %p} CT"
+    return ("Current" if start <= local <= end else "Next"), text
 
 
 def _scan_status(d, now):
-    """Display stored tracker coverage and the existing rule's entry window."""
+    """One muted line: last scan · quotes seen · the next entry window."""
     stamp = (d.get("meta") or {}).get("updated")
     try:
         last = datetime.datetime.fromisoformat(str(stamp).replace("Z", "+00:00"))
@@ -168,151 +208,130 @@ def _scan_status(d, now):
             last = None
     except ValueError:
         last = None
-    coverage = ((d.get("coverage") or {}).get("crypto_fav") or {}).get("crypto_fav_band")
-    recorded = isinstance(coverage, dict) and last is not None
-    status = "Coverage recorded" if recorded else "Not recorded"
-    detail = (f'{coverage.get("offered", 0)} quotes · {coverage.get("picked", 0)} picks'
-              if recorded else "No stored scanner coverage")
-    local = now.astimezone(S.CRYPTO_FAV_TZ)
-    close = local.replace(hour=S.CRYPTO_FAV_CLOSE_ET, minute=0, second=0, microsecond=0)
-    end = close - datetime.timedelta(hours=S.CRYPTO_FAV_MIN_H)
-    if local > end:
-        close += datetime.timedelta(days=1)
-    start = close - datetime.timedelta(hours=S.CRYPTO_FAV_MAX_H)
-    end = close - datetime.timedelta(hours=S.CRYPTO_FAV_MIN_H)
-    window = f'{fmt.chicago(start):%b %-d, %-I:%M %p}–{fmt.chicago(end):%-I:%M %p} CT'
-    return f'''<section class="crypto-health" aria-label="Scanner status">
-<div><span>Scanner coverage</span><b>{esc(status)}</b><small>{esc(detail)}</small></div>
-<div><span>Last tracker scan</span><b>{esc(fmt.when(last) if last else "Not recorded")}</b><small>Coin-specific scan times unavailable</small></div>
-<div><span>{"Current" if start <= local <= end else "Next"} entry window</span><b>{esc(window)}</b><small>{S.CRYPTO_FAV_MAX_H:g}–{S.CRYPTO_FAV_MIN_H:g}h before close</small></div>
+    coverage = ((d.get("coverage") or {}).get("crypto_fav") or {}).get(SOURCE)
+    bits = [f"Last scan {fmt.when(last)}" if last is not None else "Last scan not recorded"]
+    if isinstance(coverage, dict) and last is not None:
+        bits.append(f'{int(coverage.get("offered") or 0)} quotes')
+    else:
+        bits.append("no scanner coverage stored")
+    word, window = _window(now)
+    bits.append(f"{word.lower()} window {window}")
+    return f'<p class="sm mut cr-scan">{esc(" · ".join(bits))}</p>'
+
+
+# ------------------------------------------------------------------ tiles and the rule
+def _unit(a, n=None):
+    n = a.get("n") if n is None else n
+    return f'market-day{"" if n == 1 else "s"}'
+
+
+def tiles_html(rows, d):
+    fav = _fav_row(rows)
+    a = (fav or {}).get("a") or {}
+    n = int(a.get("n") or 0)
+    open_n = sum(1 for q in _fav_quotes(d) if q.get("bet") and q.get("status") == "open")
+    if n and a.get("roi_fee") is not None:
+        klass = "mut" if n < B.MIN_N else fmt.tone(a["roi_fee"], ".1f", 100)
+        roi = f'<b class="{klass}">{B.pct(a["roi_fee"], sign=True)}</b>'
+    else:
+        roi = '<b class="mut">—</b>'
+    return (
+        '<div class="tiles tn-tiles">'
+        f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
+        f'<div class="tile"><b>{esc(TN.record_text(a))}</b><span>record · W–L</span></div>'
+        f'<div class="tile">{roi}<span>ROI after fees</span></div>'
+        f'<div class="tile"><b>{n} of {T.READ_FLOOR}</b><span>market-days logged · {T.READ_FLOOR} planned</span></div>'
+        '</div>')
+
+
+def params():
+    """The four entry parameters, as (name, value), from the registered constants."""
+    lo, hi = S.CRYPTO_FAV_BAND
+    return (
+        ("Entry", f"Yes ask {lo * 100:g}–{hi * 100:g}¢, {S.CRYPTO_FAV_MIN_H:g}–{S.CRYPTO_FAV_MAX_H:g}h before the close"),
+        ("Selection", "lowest qualifying rung, one per coin"),
+        ("Liquidity", f"≤{S.CRYPTO_FAV_MAX_SPREAD * 100:g}¢ spread, {S.CRYPTO_FAV_MIN_ASK_SIZE:g}+ ask"),
+        ("Close", f"{S.CRYPTO_FAV_CLOSE_ET:02d}:00 ET"),
+    )
+
+
+_HEAD = ('<tr><th>Rule</th><th>Venue</th><th class="num">Record</th>'
+         '<th class="num">ROI</th><th>Verdict</th><th class="num">Open</th></tr>')
+
+
+def rule_html(rows, d):
+    fav = _fav_row(rows)
+    if not fav:
+        return '<div class="note">No crypto favourite-band record yet.</div>'
+    a = fav["a"]
+    n = int(a.get("n") or 0)
+    open_n = sum(1 for q in _fav_quotes(d) if q.get("bet") and q.get("status") == "open")
+    note = (fav["meta"].get("note") or "").strip()
+    stage = ' <span class="sig y">PRODUCTION</span>' if fav.get("prod") else ""
+    dl = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in params())
+    sample = f'<div class="sm mut">on {n} {_unit(a, n)}</div>' if n else ""
+    return (
+        f'<div class="tbl"><table class="tn-rules cr-rules">{_HEAD}'
+        f'<tr data-source="{esc(fav["name"])}" data-sport="{esc(fav["sport"])}">'
+        f'<td><details class="tn-rule"><summary><b>Favourite band · 3h to the close</b>{stage}</summary>'
+        f'<dl class="cr-params">{dl}</dl>'
+        f'<p class="tn-def sm mut">{esc(note)}</p></details></td>'
+        f'<td>Kalshi</td>'
+        f'<td class="num">{esc(TN.record_text(a))}</td>'
+        f'<td class="num">{TN.roi_html(fav)}{sample}</td>'
+        f'<td>{TN.verdict_html(fav)}</td>'
+        f'<td class="num">{open_n or "—"}</td></tr></table></div>')
+
+
+# ------------------------------------------------------------------ method
+def method_html():
+    return f'''<section id="method" class="tn-system">
+<details><summary><b>Method</b><small>why a day is one bet · scheduling</small></summary>
+<div>
+<p class="sm">A day is one bet because the five coins move together: over 90 days of closes their returns correlate at +0.76 and all five move the same way on 54% of days, so a day's rungs win or lose as one and keying per coin would overstate the evidence about twofold. Each contract is logged at the Yes ask inside the window, settled on Kalshi's own result at a flat ${int(T.STAKE)} stake, and the day is graded as a single outcome against backing every in-band rung that day; the lane reads at {T.READ_FLOOR} market-days.</p>
+<p class="sm"><b>Scheduling.</b> A timer on the always-on Mac runs the tracker at 13:15 Central, a fixed 2.83h before the 17:00 Eastern close on either side of the clock change; GitHub's cron could not hold the 90-minute window (inside it on 10 of 18 days). The close is matched in Eastern, not UTC, and the hourly closes on the same series are a different contract.</p>
+</div>
+</details>
 </section>'''
 
 
-def mechanism():
-    lo, hi = S.CRYPTO_FAV_BAND
-    coins = ", ".join(sorted(S.COINS))
-    dark = ", ".join(sorted(S.COINS_DARK))
-    return f"""<section id="rule">
-<h2>The rule under test</h2>
-<div class="note">Registered <b>2026-10-05</b>, before it logged anything, and registered
-<b>expecting to find nothing</b>. Every number below was fixed in advance.</div>
-<div class="tbl"><table>
-<tr><th>Entry</th><td>Yes ask <b>{lo:.2f}–{hi:.2f}</b>, both ends inclusive</td></tr>
-<tr><th>Window</th><td>{S.CRYPTO_FAV_MIN_H:g}–{S.CRYPTO_FAV_MAX_H:g} hours before the
- <b>{S.CRYPTO_FAV_CLOSE_ET}:00 Eastern</b> close — about a three-hour hold, settling the
- same afternoon. Matched in Eastern, not in UTC: that close is 21:00Z under daylight time
- and 22:00Z under standard time, and a fixed UTC hour would have silently stopped the lane
- at the November change. The hourly closes on the same series are a different contract and
- are not this bet.</td></tr>
-<tr><th>When it reads</th><td>A launchd timer on the always-on Mac dispatches the tracker at
- <b>13:15 local Central</b>, permanently 2.83h before the close because Central and Eastern
- shift on the same date. GitHub\u2019s cron cannot hold a 90-minute window: measured over 18
- days it ran 4.2 times a day against 8 scheduled, landing inside the window on 10 of
- 18.</td></tr>
-<tr><th>Which rung</th><td>The <b>lowest-priced rung in band</b>, one per coin. A ladder
- offers several at once, so the choice is fixed in advance rather than after seeing
- results.</td></tr>
-<tr><th>Why one per coin</th><td>Rungs are <b>nested, not exclusive</b> — “$84,750 or
- above” and “$84,500 or above” settle on one move. Counting both is one bet counted twice,
- the defect that once read the spot baseline at z +10.40 against a true +0.24.</td></tr>
-<tr><th>Liquidity floor</th><td>Two-sided quote, spread ≤
- {S.CRYPTO_FAV_MAX_SPREAD*100:.0f}c, ask size ≥ {S.CRYPTO_FAV_MIN_ASK_SIZE}. One coin
- quoted a single price across fourteen consecutive strikes, which is a stale book rather
- than fourteen prices.</td></tr>
-<tr><th>Coins live</th><td>{esc(coins)}</td></tr>
-<tr><th>Listed, no open market</th><td class="mut">{esc(dark)}</td></tr>
-<tr><th>Judged against</th><td>Backing <b>every</b> in-band rung in the window, so the
- lane only counts if picking the lowest beats the band itself.</td></tr>
-<tr><th>Read at</th><td>30 independent outcomes — and an outcome is a <b>day</b>, so about
- six weeks.</td></tr>
-</table></div>
-<div class="note"><b>What it has to beat.</b> At the taker fee the effective price at
-mid-band is <b>0.7632</b>, so the band must beat its own price by about <b>1.3pp</b> just
-to break even — roughly the whole size of the favourite-longshot bias anywhere this
-Sandbox has measured it. The one direct prior is against it: the spot baseline’s own
-0.70–0.80 cell ran <b class="neg">−1.9pp at z −0.17</b> on 10 bets over 8 days.</div>
-</section>"""
-
-
-def unit():
-    return """<section id="unit">
-<h2>Why a day is one bet</h2>
-<div class="note">Both crypto pairs are scored <b>per market-day</b>, not per bet, and that
-is measured rather than assumed. Over 90 days of daily closes for the five live coins:</div>
-<div class="tbl"><table>
-<tr><th>Mean pairwise return correlation</th><td><b>+0.757</b></td></tr>
-<tr><th>Mean sign agreement</th><td><b>77.8%</b></td></tr>
-<tr><th>Days all five move the same way</th><td><b>54.4%</b></td></tr>
-<tr><th>Variance inflation (k=5)</th><td><b>4.03</b></td></tr>
-<tr><th>Independent draws in a day</th><td><b>1.24</b>, not 5</td></tr>
-<tr><th>z overstatement if keyed per coin</th><td><b class="neg">2.01×</b></td></tr>
-</table></div>
-<div class="note">A day of “or above” rungs wins or loses together because the coins do, so
-the day is the unit. Keying per coin would overstate the evidence by about double, in
-exactly the direction that makes a dead lane look alive — which is how the spot baseline
-once read z +10.40 against a true +0.24.</div>
-</section>"""
-
-
 def build(d=None, st=None, now=None):
-    now = now or datetime.datetime.now(datetime.timezone.utc)
+    now = _as_utc(now or datetime.datetime.now(datetime.timezone.utc))
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
     rows = crypto_rows(d, st)
-
-    lo, hi = S.CRYPTO_FAV_BAND
-    band = f"{lo * 100:g}–{hi * 100:g}¢"
-    window = f"{S.CRYPTO_FAV_MIN_H:g}–{S.CRYPTO_FAV_MAX_H:g}h"
-    liquidity = f"≤{S.CRYPTO_FAV_MAX_SPREAD * 100:g}¢ spread · {S.CRYPTO_FAV_MIN_ASK_SIZE:g}+ ask"
-    close = f"{S.CRYPTO_FAV_CLOSE_ET:02d}:00 ET"
-
-    body = f"""{_hero(rows)}
-<nav class="crypto-tabs" aria-label="Crypto sections">
-<a href="#today">Today</a><a href="#performance">Performance</a><a href="#method">Method</a>
-</nav>
-
-<section id="today" class="crypto-section">
-<div class="crypto-section-head"><div><span class="crypto-eyebrow">Today’s watch</span><h2>Five live coins</h2></div>
-<span class="crypto-rule-chip">{esc(band)} · {esc(window)}</span></div>
-<div class="crypto-watch">{_watch_html(d)}</div>
+    body = f"""<h1>Crypto</h1>
+<p class="lede">{esc(LEDE)}</p>
+<p class="sm mut cr-updated">{esc(fmt.display_updated(now))}</p>
+{tiles_html(rows, d)}
+<section id="picks" class="tn-section">
+<h2>Picks</h2>
+<p class="sm mut">Today's five coins once each, then every settled market-day.</p>
+{picks_html(d, now)}
 {_scan_status(d, now)}
-<div class="crypto-rule-strip">
-<div><span>Entry</span><b>Yes ask {esc(band)}</b></div>
-<div><span>Selection</span><b>Lowest qualifying rung</b></div>
-<div><span>Liquidity</span><b>{esc(liquidity)}</b></div>
-<div><span>Close</span><b>{esc(close)}</b></div>
-</div>
 </section>
-
-<section id="performance" class="crypto-section">
-<span id="lanes"></span>
-<div class="crypto-section-head"><div><span class="crypto-eyebrow">Performance</span><h2>Favourite-band record</h2></div></div>
-{_record_cards(rows)}
-<details class="crypto-disclosure">
-<summary>Full record table</summary>
-<div class="note sm">Counts are <b>market-days</b>, not individual contracts.</div>
-{B.sport_sections(d, rows)}
-</details>
+<section id="rule" class="tn-section">
+<h2>Rule</h2>
+<p class="sm mut">Open the row for the entry parameters and the registered definition.</p>
+{rule_html(rows, d)}
 </section>
-
-<section id="method" class="crypto-section">
-<div class="crypto-section-head"><div><span class="crypto-eyebrow">Research notes</span><h2>Method</h2></div></div>
-<details class="crypto-disclosure"><summary>The rule under test</summary>{mechanism()}</details>
-<details class="crypto-disclosure"><summary>Why a day is one outcome</summary>{unit()}</details>
-</section>
+{method_html()}
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
-    return C.document(
+    page = C.document(
         "Edge Machine · Crypto",
-        "Crypto favourite-band Analyst Desk: today, performance, and method.",
+        "Daily favourite-band picks on Kalshi coin closes, and the rule's record per market-day.",
         "crypto",
-        (("today", "Today"), ("performance", "Performance"), ("method", "Method")),
+        TOC,
         C.stamp(now),
         body,
         script_src="./site.js",
         scripts=("./tables.js",),
         sports=True,
     )
+    # Cells named for the phone layout here, so the direct build and the
+    # tracker build (which labels every page) are the same document.
+    return B.label_cells(page)
 
 
 def main():

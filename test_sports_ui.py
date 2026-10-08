@@ -19,16 +19,15 @@ ledger = {"quotes": [], "meta": {"updated": "2026-10-07T11:00:00Z"},
           "coverage": {"crypto_fav": {"crypto_fav_band": {"offered": 42, "picked": 0}}}}
 original = copy.deepcopy(ledger)
 scan = crypto._scan_status(ledger, NOW)
-assert "42 quotes · 0 picks" in scan and "Last tracker scan" in scan
-assert "Oct 7, 12:30 PM–2:00 PM CT" in scan
-assert "Coin-specific scan times unavailable" in scan
-assert "Not recorded" in crypto._scan_status({"quotes": []}, NOW)
-assert "Coverage recorded" not in crypto._scan_status(
+assert "Last scan Oct 7, 6:00 AM CT · 42 quotes · next window Oct 7, 12:30–2:00 PM CT" in scan, scan
+assert scan.count("<p") == 1 and 'class="sm mut cr-scan"' in scan
+assert "Last scan not recorded" in crypto._scan_status({"quotes": []}, NOW)
+assert "quotes" not in crypto._scan_status(
     {"meta": {"updated": "bad"}, "coverage": ledger["coverage"]}, NOW)
 for date in (dt.datetime(2026, 11, 1, 12, tzinfo=dt.timezone.utc),
              dt.datetime(2026, 7, 1, 12, tzinfo=dt.timezone.utc)):
-    assert "12:30 PM–2:00 PM CT" in crypto._scan_status(ledger, date)
-assert "Oct 8" in crypto._scan_status(ledger, NOW.replace(hour=23))
+    assert "12:30–2:00 PM CT" in crypto._scan_status(ledger, date)
+assert "next window Oct 8" in crypto._scan_status(ledger, NOW.replace(hour=23))
 
 game = {"id": "next", "start": "2026-10-07T18:00:00Z", "away": "BKN", "home": "CHA",
         "roll_exp_q1": 56.2, "roll_exp_h1": 114.0, "roll_exp_ft": 221.5}
@@ -112,7 +111,8 @@ if playwright is not None:
                     assert page.locator("#system > details").get_attribute("open") is None
                 if sport == "crypto":
                     assert page.locator("#method details[open]").count() == 0
-                    assert page.locator(".crypto-coin").count() == 5
+                    assert page.locator(".tn-pick.cr-pick").count() == 5
+                    assert page.locator(".crypto-hero, .crypto-progress, .crypto-coin").count() == 0
                 page.close()
         page = browser.new_page()
         page.route("http://fixture.local/soccer.html", lambda route: route.fulfill(body=warning, content_type="text/html"))
