@@ -31,9 +31,11 @@ PAGE_HREFS = (
     'href="./tennis.html"',
     'href="./cricket.html"',
     'href="./crypto.html"',
+    'href="./commodities.html"',
     'href="./sandbox.html#method"',
 )
-PAGE_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Method"]
+PAGE_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Crypto",
+               "Commodities", "Method"]
 LANDED = re.compile(
     r'<div class="tile"><b>[^<]*</b><span>(?:recent leads landed|paper bets landed[^<]*)</span></div>')
 SKETCH_FAKES = (

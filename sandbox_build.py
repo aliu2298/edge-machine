@@ -2230,6 +2230,15 @@ def main():
         print(f"wrote {crypto_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::crypto page not rebuilt ({type(exc).__name__}: {exc})")
+    # Commodities: the same favourite-band question on the daily commodity ladders,
+    # counted in market-days for the same reason. Built the way crypto.html is.
+    try:
+        import commodities_build
+        commod_out = os.path.join(os.path.dirname(OUT), "commodities.html")
+        _write(commod_out, label_cells(commodities_build.build(now=now)))
+        print(f"wrote {commod_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::commodities page not rebuilt ({type(exc).__name__}: {exc})")
     # The NBA board reads a file its own job writes four times a day. Rebuilt
     # here too, on the same clock as every other page, so its Upcoming list is
     # filtered by the real time rather than the file's own build stamp.

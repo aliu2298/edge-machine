@@ -108,7 +108,7 @@ eq(re.findall(r">([^<]+)</button>", sports),
    "the pills are All plus the sports with a lane: NBA, Soccer, Cricket, and Crypto")
 ok('data-sport="tennis"' not in sports, "a sport with no lane on the list has no pill")
 eq(re.findall(r">([^<]+)</button>", shell_build._sport_pills(None)),
-   ["All", "NBA", "Soccer", "Tennis", "Cricket", "Crypto"],
+   ["All", "NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Commodities"],
    "with no present set, every pill is drawn")
 eq(re.findall(r">([^<]+)</button>", shell_build._sport_pills(set())), ["All"],
    "with nothing present, only All is drawn")

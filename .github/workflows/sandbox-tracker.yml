@@ -37,6 +37,10 @@ on:
     branches: [main]
     paths:
       - "data/crypto_window/**"
+      # The commodity favourite-band lane asks the same way, from its own stamp file:
+      # once for the WTI window (14:30 ET close) and once for the 17:00 ET group when
+      # the crypto request has not already covered that window.
+      - "data/commodities_window/**"
 
 permissions:
   contents: write
@@ -214,6 +218,10 @@ jobs:
             # the build succeeded.
             if [ -f public_site/crypto.html ]; then
               git add public_site/crypto.html
+            fi
+            # commodities.html is rebuilt by sandbox_build.py the same way.
+            if [ -f public_site/commodities.html ]; then
+              git add public_site/commodities.html
             fi
             # The NBA board is rebuilt on the tracker clock as well as by its own job.
             if [ -f public_site/nba.html ]; then
