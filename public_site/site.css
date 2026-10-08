@@ -2526,3 +2526,20 @@ details.tn-rule .tn-def { margin: 8px 0 0; max-width: 72ch; line-height: 1.5; wh
   .cr-params { grid-template-columns: 1fr; gap: 2px; }
   .cr-params dd { margin-bottom: 6px; }
 }
+
+/* Cricket page, rebuilt 2026-10-08 on the Tennis page's tn- patterns. Additive
+   only: a venue badge on a pick, two more settled states, and the ROI sample. */
+.tn-venue {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--fg);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.tn-state.is-void, .tn-state.is-price { color: var(--mut); }
+.tn-roi-n { white-space: nowrap; }
