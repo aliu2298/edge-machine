@@ -84,19 +84,29 @@ def _quote(i, source, sport, status, start, label, price=0.55,
     return row
 
 
-def _settled(source, sport, n=4, won=3, price=0.60, logged=None, league=None, tag="Settled"):
+def _settled(source, sport, n=4, won=3, price=0.60, logged=None, league=None, tag="Settled",
+             age_days=3):
     rows = []
     for i in range(n):
         status = "won" if i < won else "lost"
         rows.append(_quote(
             i, source, sport, status,
-            NOW - timedelta(days=3, hours=i),
+            NOW - timedelta(days=age_days, hours=i),
             f"{tag} {source} {i}",
             price=price,
             logged=logged,
             league=league,
         ))
     return rows
+
+
+def _no_result(i, source, sport, start, label, price=0.40, logged=None, settle_px=0.5):
+    """A bet the venue paid out at a price: a cancelled match settled at 50¢ a side."""
+    row = _quote(i, source, sport, "settled", start, label, price=price, logged=logged)
+    row.update(result="price", settle_px=settle_px, stake=100.0,
+               pnl=round(100 * (settle_px / price - 1), 2),
+               settled=(row["start"] if isinstance(start, datetime.datetime) else NOW.isoformat()))
+    return row
 
 
 def _fixture():
@@ -150,10 +160,15 @@ def _fixture():
     # No open bet. The tracker already stored the fixture. 12h and 36h are
     # inside 48 hours. 72h is outside. A city-day fixture inside the window
     # does not make the consensus lane active.
-    quotes += _settled("polymarket", "cricket", n=4, won=3, price=0.50, logged=AFTER)
+    # Three wins and a loss, the last of them 20 days ago: a record, and not a running rule.
+    quotes += _settled("polymarket", "cricket", n=4, won=3, price=0.50, logged=AFTER, age_days=20)
     quotes.append(_quote(
         500, "polymarket", "cricket", "open", 12,
         "Soon Side v Tonight", bet=False, logged=AFTER))
+    # One Oddspedia pick the venue settled at 50¢: no result, money in the ROI, not in W–L.
+    quotes.append(_no_result(
+        600, "oddspedia", "cricket", NOW - timedelta(days=2), "Rained Off v Nobody",
+        price=0.40, logged=AFTER))
     quotes += _settled("polymarket_us", "cricket", n=4, won=2, price=0.52, logged=AFTER)
     quotes.append(_quote(
         501, "polymarket_us", "cricket", "open", 36,
@@ -285,21 +300,54 @@ ok(fmt.display_updated(NOW) in html, "the stamp is the page clock")
 print("\ntiles")
 tiles = re.search(r'<div class="tiles tn-tiles">(.*?)</div></div>', html, re.S).group(1)
 open_n = sum(len(C.open_quotes(d, r["name"], r["sport"], r)) for r in rows)
-act, ina = C.active_rows(rows, d)
+act, ina = C.active_rows(rows, d, NOW)
 eq(re.search(r'<b>(\d+)</b><span>open picks', tiles).group(1), str(open_n),
    "open picks is the open count across every rule")
 ok(open_n == 6, f"the fixture has six open bets the lanes count ({open_n})")
 eq(re.search(r'<b>(\d+)</b><span>active rules', tiles).group(1), str(len(act)),
-   "active rules counts rules with a settled or an open bet")
-n = sum(r["a"]["n"] for r in act)
-won = sum(r["a"]["won"] for r in act)
-ok(f"<b>{won}–{n - won}</b><span>record · rules with a record" in tiles,
-   "the record tile is W–L across the rules with a record")
-roi = sum(r["a"]["roi_fee"] * r["a"]["n"] for r in act if r["a"]["n"]) / n
-ok(B.pct(roi, sign=True) in tiles and "ROI after fees" in tiles, "ROI after fees is the pooled ROI")
-ok("GhostPrereset" not in html and n == by_name["oddspedia"]["a"]["n"] + by_name["polymarket"]["a"]["n"]
-   + (by_name["polymarket_us"]["a"]["n"] if "polymarket_us" in by_name else 0),
-   "pre-reset bets are not in the record and not on the page")
+   "active rules counts rules with an open pick or a pick in the last 7 days")
+odds_a = by_name["oddspedia"]["a"]
+eq(T.record_text(odds_a), f'{odds_a["won"]}–{odds_a["n"] - odds_a["won"]}, 1 no result',
+   "the Production rule's record names its one no-result bet beside the W–L")
+ok(f"<b>{T.record_text(odds_a)}</b><span>record · Oddspedia community tips · Production" in tiles,
+   "the record tile is the Production rule's own, named")
+ok(B.pct(odds_a["roi_fee"], sign=True) in tiles
+   and "ROI after fees · Oddspedia community tips · Production" in tiles,
+   "the ROI tile is the Production rule's own ROI, named")
+pool_n = sum(r["a"]["n"] for r in rows if r["a"]["n"])
+pool = sum(r["a"]["roi_fee"] * r["a"]["n"] for r in rows if r["a"]["n"]) / pool_n
+ok(abs(pool - odds_a["roi_fee"]) > 1e-9 and B.pct(pool, sign=True) not in tiles
+   and f'{sum(r["a"]["won"] for r in rows)}–' not in tiles,
+   "the ROI and the record are never pooled across rules")
+ok("GhostPrereset" not in html and odds_a["n_price"] == 1 and odds_a["n"] == 3,
+   "pre-reset bets are not in the record and not on the page; the no-result bet is counted apart")
+_money = [q for q in d["quotes"] if q["source"] == "oddspedia" and q.get("bet")
+          and q["status"] in ("won", "lost", "settled") and q["logged"] >= SINCE]
+ok(abs(odds_a["roi_fee"] - sum(T.pnl_after_fee(q) for q in _money) / (100.0 * len(_money))) < 1e-9
+   and len(_money) == odds_a["n"] + odds_a["n_price"],
+   "the ROI is the money over every stake, the 50¢ payout included at its real P/L")
+
+print("\nactive rules")
+act_names = {r["name"] for r in act}
+ina_names = {r["name"] for r in ina}
+ok("oddspedia" in act_names, "a rule with an open pick is active")
+ok("polymarket" in ina_names and by_name["polymarket"]["a"]["n"] == 4,
+   "a rule whose last pick is 20 days old has a record and is inactive")
+ok("cricket_consensus" in ina_names, "a rule that never picked is inactive")
+_recent = dict(d, quotes=d["quotes"] + [_quote(
+    777, "polymarket", "cricket", "lost", NOW - timedelta(days=6), "Fresh Pick v Lately",
+    logged=AFTER)])
+_act2, _ina2 = C.active_rows(rows, _recent, NOW)
+ok("polymarket" in {r["name"] for r in _act2}, "a pick inside the last 7 days makes the rule active")
+_stale = dict(d, quotes=[q for q in d["quotes"] if q["source"] != "oddspedia" or q["status"] != "open"])
+_act3, _ina3 = C.active_rows(rows, _stale, NOW + timedelta(days=8))
+ok("oddspedia" in {r["name"] for r in _ina3},
+   "with no open pick and nothing inside 7 days the Production rule is inactive too")
+_tiles3 = C.tiles_html(_stale, rows, NOW + timedelta(days=8))
+eq(re.search(r'<b>(\d+)</b><span>active rules', _tiles3).group(1), str(len(_act3)),
+   "the active-rules tile follows the same clock")
+ok("record · Oddspedia community tips · Production" in _tiles3,
+   "an inactive Production rule still headlines the tiles")
 
 print("\nmatches")
 matches = _section(html, "matches")
@@ -310,6 +358,10 @@ for label in ("Alpha v Beta soonest", "PreResetOpenLabel", "TourLookingOpen", "F
     ok(_pick(matches, label) and "upcoming" in _pick(matches, label), f"open pick on the list: {label}")
 ok(_pick(matches, "KeptSettled oddspedia 0") and "is-won" in _pick(matches, "KeptSettled oddspedia 0"),
    "a settled pick from the last 14 days is on the list with its result")
+ok(_pick(matches, "Rained Off v Nobody")
+   and '<span class="tn-state is-price">No result · paid 50¢</span>' in _pick(matches, "Rained Off v Nobody")
+   and "Settled on price" not in html,
+   "a bet the venue paid out at 50¢ reads No result · paid 50¢")
 ok(_absent("Old Side v Window Edge", matches), "a settled pick older than 14 days is off the list")
 ok(by_name["oddspedia"]["a"]["n"] == 3 and _shown("Old Side v Window Edge") in _rule_row(_section(html, "rules"), "oddspedia"),
    "but it still counts in the record and shows under its rule's recent picks")
@@ -354,9 +406,10 @@ ok(rois == sorted(rois, reverse=True), "then by ROI after fees")
 odd = _rule_row(rules, "oddspedia")
 ok('<span class="sig y">PRODUCTION</span>' in odd, "the Production badge stays")
 a = by_name["oddspedia"]["a"]
-ok(f'on {a["n"]} bet' in odd and B.pct(a["roi_fee"], sign=True) in odd,
-   "ROI sits next to its sample size")
-ok(f'<td class="num">{a["won"]}–{a["n"] - a["won"]}</td>' in odd, "the record column is W–L")
+ok(f'on {a["n"] + a["n_price"]} bet' in odd and B.pct(a["roi_fee"], sign=True) in odd,
+   "ROI sits next to its sample size, every stake in the ROI counted")
+ok(f'<td class="num">{a["won"]}–{a["n"] - a["won"]}, {a["n_price"]} no result</td>' in odd,
+   "the record column is W–L with the no-result count beside it")
 ok(_verdict_html(by_name["oddspedia"]) in odd, "the verdict chip is the Sandbox's")
 ok("<td>Polymarket US</td>" in odd, "the venue column names where the rule's bets traded")
 ok('<details class="tn-rule"><summary>' in odd and "A public tipster community" in odd,
@@ -365,10 +418,16 @@ ok('class="tn-recent"' in odd and _shown("Alpha v Beta soonest") in odd
    and _shown("KeptSettled oddspedia 0") in odd and "GhostPrereset" not in odd,
    "and its recent picks, on the lane clock")
 ok(f'<td class="num">{len(C.open_quotes(d, "oddspedia", "cricket"))}</td>' in odd, "the Open column counts open bets")
+ok(f'<td class="num">{T.record_text(odds_a)}</td>' in odd and ", 1 no result" in odd,
+   "the record cell counts the no-result bet beside the W–L")
+ok(f'on {odds_a["n"] + odds_a["n_price"]} bets' in odd, "the ROI sample counts every stake in the ROI")
 ok("cricket_consensus" not in "".join(_rule_rows(rules)), "a rule that never fired is not in the main table")
-ok("Show 1 inactive rule" in rules and _rule_row(rules, "cricket_consensus", inactive=True)
+ok(not _rule_row(rules, "polymarket"), "a rule that has not picked in 7 days is not in the main table")
+ok("Show 2 inactive rules" in rules and _rule_row(rules, "cricket_consensus", inactive=True)
    and "No pick logged yet." in _rule_row(rules, "cricket_consensus", inactive=True),
-   "it sits behind the inactive toggle with an honest empty line")
+   "the never-fired rule sits behind the inactive toggle with an honest empty line")
+_pm = _rule_row(rules, "polymarket", inactive=True)
+ok(_pm and "3–1" in _pm and "on 4 bets" in _pm, "the idle Polymarket rule keeps its record behind the toggle")
 ok(len(re.findall(r'<p class="sm mut">', rules)) == 1, "one sentence of copy on the section")
 
 print("\nsystem")

@@ -212,10 +212,11 @@ ok(">L</span>" in _got("Inside v Edge"), "a miss renders as L")
 ok('class="sr-only">lost</span>' in _got("Inside v Edge"),
    "a single loss is spoken as lost")
 ok(">Void</span>" in _got("Void v Match"), "a void renders as Void")
-ok(">Settled on price</span>" in _got("Price v Result")
+ok(">No result · paid 50¢</span>" in _got("Price v Result")
    and 'data-status="price"' in _got("Price v Result")
-   and 'class="sr-only">settled on price</span>' in _got("Price v Result"),
-   "a price payout renders as Settled on price, token price, spoken settled on price")
+   and 'class="sr-only">no result, paid 50 cents</span>' in _got("Price v Result"),
+   "a price payout renders as No result · paid 50¢, token price, spoken no result, paid 50 cents")
+ok("Settled on price" not in PAGE, "the old settled-on-price label is gone")
 ok("price result" not in PAGE, "the old price result label is gone")
 ok('data-status="Open">2 open</span>' in _got("Alpha v Beta")
    and 'class="sr-only">2 open</span>' not in _got("Alpha v Beta")
@@ -444,7 +445,7 @@ def _subset_gaps(contests, entries):
 def _bet_labels(visual):
     if visual in ("W", "L", "Open", "Void", shell_build.PRICE_LABEL, "Awaiting result"):
         return [visual]
-    labels = {"W": "W", "L": "L", "priced": shell_build.PRICE_LABEL, "void": "Void",
+    labels = {"W": "W", "L": "L", "no result": shell_build.PRICE_LABEL, "void": "Void",
               "open": "Open", "awaiting": "Awaiting result"}
     out = []
     rest = visual
@@ -453,7 +454,7 @@ def _bet_labels(visual):
         if not rest:
             break
         matched = re.match(r"(\d+)(W|L)(?![A-Za-z])", rest) or re.match(
-            r"(\d+) (priced|void|open|awaiting)(?![A-Za-z])", rest)
+            r"(\d+) (no result|void|open|awaiting)(?![A-Za-z])", rest)
         if not matched:
             word = rest.strip()
             if word and " " not in word and not word[0].isdigit():
@@ -533,10 +534,10 @@ win_void = _face_page([("hit", "a|soccer"), ("void", "b|soccer")])
 ok(">1W 1 void</span>" in win_void[0] and "1 won, 1 void" in win_void[0],
    "a win and a void render as 1W 1 void")
 win_price = _face_page([("hit", "a|soccer"), ("price", "b|soccer")])
-ok(">1W 1 priced</span>" in win_price[0] and "1 won, 1 settled on price" in win_price[0],
-   "a win and a price settlement both show, spoken as settled on price")
-eq(_bet_labels("1W 1 priced"), ["W", shell_build.PRICE_LABEL],
-   "the priced token reads back as Settled on price")
+ok(">1W 1 no result</span>" in win_price[0] and "1 won, 1 no result, paid 50 cents" in win_price[0],
+   "a win and a price settlement both show, spoken as no result, paid 50 cents")
+eq(_bet_labels("1W 1 no result"), ["W", shell_build.PRICE_LABEL],
+   "the no-result token reads back as the label")
 loss_pairs = [("miss", "a|soccer", 0.33), ("pending", "b|soccer", 0.44)]
 # Inside the six-hour window, so the open bet still reads Open.
 loss_open = _face_page(loss_pairs, kickoff="2026-10-05T14:00:00Z")
@@ -1169,9 +1170,9 @@ if _landed_m is not None:
     eq((int(_landed_m.group(1)), int(_landed_m.group(2))),
        (sum(1 for c in _committed_chips if _attr(c, "data-status") == "W"),
         sum(1 for c in _committed_chips
-            if _attr(c, "data-status") in ("W", "L", "Void", shell_build.PRICE_TOKEN))),
-       "the landed tile counts the roll's settled chips")
-_RESULT = {"landed": "W", "missed": "L", "paid": shell_build.PRICE_LABEL}
+            if _attr(c, "data-status") in ("W", "L", "Void"))),
+       "the landed tile counts the roll's settled chips, a no-result chip apart")
+_RESULT = {"landed": "W", "missed": "L", shell_build.PRICE_LABEL: shell_build.PRICE_LABEL}
 _recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
 _prod_rows = [
     (html_lib.unescape(name), html_lib.unescape(headline), _RESULT[status])

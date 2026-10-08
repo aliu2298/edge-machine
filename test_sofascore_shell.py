@@ -295,10 +295,12 @@ if shell_build is not None:
        "the live shell strip matches the live Production headlines, bar the landed tile")
     live_chips = re.findall(r'<button\b[^>]*class="bet-chip"[^>]*>', live)
     live_won = sum(1 for chip in live_chips if 'data-status="W"' in chip)
+    # A no-result chip (data-status price) is on the settled list and out of
+    # the landed count: it is neither a win nor a loss.
     live_settled = sum(1 for chip in live_chips
-                       if re.search(r'data-status="(?:W|L|Void|price)"', chip))
+                       if re.search(r'data-status="(?:W|L|Void)"', chip))
     eq(_tiles(live), shell_build._with_landed(_tiles(live_prod), live_won, live_settled),
-       "the live landed tile counts the live roll's settled chips")
+       "the live landed tile counts the live roll's settled chips, no-result chips apart")
     _check_chrome(live, "live shell", placeholders=False)
 
     print("\none build writes production.html and index.html")

@@ -330,7 +330,7 @@ def _rule_rows(d, row, i):
     stage, chip = _status(row)
     sfx = B._scope(row["sport"])
     scope = S.SCOPE_LABEL[sfx] if sfx else S.CLUB_SCOPE_LABEL
-    record = f'{a["won"]}–{a["n"] - a["won"]}' if a["n"] else "—"
+    record = T.record_text(a)
     detail_id = f"rule-d-{i}"
     note = (row["meta"].get("note") or "").strip()
     picks = recent_picks(d, row["name"], row["sport"])

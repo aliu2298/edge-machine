@@ -36,6 +36,40 @@ LEDGER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sandb
 MISMATCHES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "settlement_mismatches.json")
 _WATCH_FIELDS = ("market_id", "quote_id", "stored", "venue", "venue_result")
 
+NO_RESULT_LABEL = "No result · paid 50¢"
+
+
+def no_result_label(q=None):
+    """The words a bet paid out at a price instead of a result carries.
+
+    Kalshi settles a cancelled, abandoned or no-result match at 50¢ a side, so
+    the stake buys 50¢ whichever side it backed. The stored settle_px is printed
+    where it differs from that.
+    """
+    px = (q or {}).get("settle_px")
+    if px is None:
+        return NO_RESULT_LABEL
+    return f"No result · paid {int(round(float(px) * 100))}¢"
+
+
+def record_text(a):
+    """'12–8, 6 no result' from an assess() record, or an em dash with nothing settled.
+
+    Wins and losses are the record. A bet paid out at a price is neither: it is
+    money in the ROI (cost the entry price, payout the settlement price) and a
+    count beside the record, never a win or a loss.
+    """
+    n = a.get("n") or 0
+    n_price = a.get("n_price") or 0
+    if not n and not n_price:
+        return "—"
+    won = a.get("won") or 0
+    rec = f"{won}–{max(0, n - won)}"
+    if n_price:
+        rec += f", {n_price} no result"
+    return rec
+
+
 STAKE = 100.0        # flat, always. Any staking plan mixes bet-sizing skill into the
                      # source's score, and the question here is only "is it right?".
 EDGE_MIN = 0.03      # 3pp. Below this a "disagreement" is just the tick size.
@@ -3101,6 +3135,7 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     clv_sd = (sum((c - sum(clv) / len(clv)) ** 2 for c in clv) / len(clv)) ** 0.5 if len(clv) > 1 else None
     clv_t = ((sum(clv) / len(clv)) / (clv_sd / len(clv) ** 0.5)) if clv_sd else None
     return dict(status=status, criteria=criteria, n=n, sport=sport, won=won, roi=roi, pnl=pnl,
+                n_price=len(price_bets),
                 n_bets=n_bets, unit=("match" if sport == "soccer_corners" else
                                      "market-day" if sport in S.DAY_CLUSTERED or day_collapsed else
                                      "bet"),

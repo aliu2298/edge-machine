@@ -56,10 +56,9 @@ def verdict_html(row):
 
 
 def record_text(a):
-    """'23–8' from a record, or an em dash with nothing settled."""
-    if not a.get("n"):
-        return "—"
-    return f'{a["won"]}–{max(0, a["n"] - a["won"])}'
+    """'23–8', or '12–8, 6 no result' where bets were paid out at a price; an em
+    dash with nothing settled. The ledger's own words (sandbox_track.record_text)."""
+    return T.record_text(a)
 
 
 # ------------------------------------------------------------------ the rows a rule owns
