@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The Crypto page: the favourite-band rule on Kalshi's daily coin closes.
 
-Four stat tiles, one flat list of picks grouped by day, a one-row rules table,
+Four stat tiles, a one-row rules table, one flat list of picks grouped by day,
 and the method folded away. The record, verdict and ROI are the Sandbox row's
 own figures, the same strings the Sandbox table prints, so this page cannot
 disagree with the Sandbox about the pair. The page states the unit the Sandbox
@@ -31,7 +31,7 @@ SPORTS = ("crypto_fav",)
 SOURCE = "crypto_fav_band"
 COIN_LABELS = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
                "ripple": "XRP", "hyperliquid": "HYPE"}
-TOC = (("picks", "Picks"), ("rule", "Rule"), ("method", "Method"))
+TOC = (("rule", "Rule"), ("picks", "Picks"), ("method", "Method"))
 LEDE = "Daily favourite-band picks on Kalshi coin closes · times CT"
 
 
@@ -304,16 +304,16 @@ def build(d=None, st=None, now=None):
 <p class="lede">{esc(LEDE)}</p>
 <p class="sm mut cr-updated">{esc(fmt.display_updated(now))}</p>
 {tiles_html(rows, d)}
+<section id="rule" class="tn-section">
+<h2>Rule</h2>
+<p class="sm mut">Open the row for the entry parameters and the registered definition.</p>
+{rule_html(rows, d)}
+</section>
 <section id="picks" class="tn-section">
 <h2>Picks</h2>
 <p class="sm mut">Today's five coins once each, then every settled market-day.</p>
 {picks_html(d, now)}
 {_scan_status(d, now)}
-</section>
-<section id="rule" class="tn-section">
-<h2>Rule</h2>
-<p class="sm mut">Open the row for the entry parameters and the registered definition.</p>
-{rule_html(rows, d)}
 </section>
 {method_html()}
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>

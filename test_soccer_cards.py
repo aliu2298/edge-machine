@@ -198,13 +198,13 @@ ok('id="fixtures"' in html and 'id="rules"' in html and 'id="health"' in html,
    "the page has Fixtures, Rules and System sections")
 ok('href="#fixtures"' in html and 'href="#rules"' in html and 'href="#health"' in html,
    "the sub-nav jumps to Fixtures, Rules and System")
-ok(html.find('id="fixtures"') < html.find('id="rules"') < html.find('id="health"'),
-   "fixtures come first, then rules, then the folded system note")
+ok(html.find('id="rules"') < html.find('id="fixtures"') < html.find('id="health"'),
+   "rules come first, then fixtures, then the folded system note")
 ok("Open picks and the rules that fire them · kickoff times CT" in html,
    "the one-line lede names open picks, rules and the CT clock")
 ok(fmt.display_updated(NOW) in html.split("<main", 1)[-1],
    "the freshness stamp is printed under the title")
-ok('class="soccer-prod-strip"' in html and html.find('class="soccer-prod-strip"') < html.find('id="fixtures"'),
+ok('class="soccer-prod-strip"' in html and html.find('class="soccer-prod-strip"') < html.find('id="rules"'),
    "Production rules sit as a chip strip under the header")
 for gone in ('class="rule-card"', 'class="rule-grid"', "soccer-fixture-state", "Pick in",
              "Later / time unconfirmed", "soccer-local-nav", "No tracked fixture today",
@@ -463,7 +463,7 @@ if sync_playwright is not None:
                        f"{width}px pick links have comfortable tap targets")
                     anchors = page.locator("nav.toc a").evaluate_all(
                         "links => links.map(a => a.getAttribute('href'))")
-                    eq(anchors, ["#fixtures", "#rules", "#health"], f"{width}px sub-nav is Fixtures / Rules / System")
+                    eq(anchors, ["#rules", "#fixtures", "#health"], f"{width}px sub-nav is Rules / Fixtures / System")
                     ok(all(page.locator(a).count() == 1 for a in anchors),
                        f"{width}px sub-nav reaches unique sections")
                     eq(page.locator(".soccer-day-head").first.evaluate("e => getComputedStyle(e).position"),

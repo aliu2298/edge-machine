@@ -356,14 +356,14 @@ def render(d, rows, now=None, idle_html=""):
     return f'''<h1>Cricket</h1>
 <p class="lede">Match-winner picks and the rules that fire them · times CT</p>
 {tiles_html(d, rows)}
-<section id="matches" class="tn-section">
-<h2>Matches</h2>
-<p class="sm mut">Every open pick, plus the last {SETTLED_DAYS} days of settled ones, newest day first.</p>
-{picks_html(d, rows, now)}
-</section>
 <section id="rules" class="tn-section">
 <h2>Rules</h2>
 <p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>
 {rules_html(d, rows, now)}
+</section>
+<section id="matches" class="tn-section">
+<h2>Matches</h2>
+<p class="sm mut">Every open pick, plus the last {SETTLED_DAYS} days of settled ones, newest day first.</p>
+{picks_html(d, rows, now)}
 </section>
 {system_html(d, idle_html)}'''

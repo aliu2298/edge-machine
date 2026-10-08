@@ -237,7 +237,7 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
 </section>
 <footer>{_FOOT}</footer>
 """
-            toc = (("fixtures", "Fixtures"), ("rules", "Rules"), ("health", "System"))
+            toc = (("rules", "Rules"), ("fixtures", "Fixtures"), ("health", "System"))
         else:
             body = f"""<h1>{esc(family)}</h1>
 <p class="lede">{lede}</p>

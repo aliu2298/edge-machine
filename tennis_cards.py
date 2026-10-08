@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The Tennis page body. Presentation only, and only the Tennis page asks for it.
 
-Four stat tiles, one flat list of picks grouped by day, one rules table, and
+Four stat tiles, one rules table, one flat list of picks grouped by day, and
 the venue note folded away. The record, verdict and ROI on every row are the
 Sandbox row's own figures, the same strings the Sandbox table prints, so this
 page cannot disagree with the Sandbox about the same pair. Nothing here grades,
@@ -452,14 +452,14 @@ def render(d, rows, now=None, idle_html=""):
     return f'''<h1>Tennis</h1>
 <p class="lede">Match-winner picks and combo baskets · times CT</p>
 {tiles_html(d, rows)}
-<section id="matches" class="tn-section">
-<h2>Matches</h2>
-<p class="sm mut">Every open pick, soonest first, plus today's settled ones.</p>
-{picks_html(d, rows, now)}
-</section>
 <section id="rules" class="tn-section">
 <h2>Rules</h2>
 <p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>
 {rules_html(d, rows, now)}
+</section>
+<section id="matches" class="tn-section">
+<h2>Matches</h2>
+<p class="sm mut">Every open pick, soonest first, plus today's settled ones.</p>
+{picks_html(d, rows, now)}
 </section>
 {system_html(d, idle_html)}'''

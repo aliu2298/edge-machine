@@ -23,7 +23,7 @@ TITLE = "Edge Machine · Tennis"
 DESCRIPTION = ("Every tennis rule under test — the 3-hour favourite band and the combo "
                "baskets, on Kalshi and Polymarket US.")
 LEDE = "Match-winner picks and combo baskets · times CT"
-TOC = (("matches", "Matches"), ("rules", "Rules"), ("system", "System"))
+TOC = (("rules", "Rules"), ("matches", "Matches"), ("system", "System"))
 
 
 def build(d=None, st=None, now=None):
