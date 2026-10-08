@@ -92,8 +92,8 @@ weekly FX in-band rungs show sizes of 0.01–2 contracts at spreads of 11–56¢
    favourite-longshot margin and more, so loosening the floor to let them in would change
    what the rule measures, not just how often it fires.
 3. **The daily FX ladders are empty.** Zero in-band quotes in the window on every pair
-   and every day, and three pairs with no trade at all in five days. They are listed, not
-   traded.
+   and every day, and three pairs with no trade at all in five days. They are listed, and
+   nobody is quoting them.
 4. **The weekly FX ladders are the traded ones** (EURUSD 25–90k contracts a week) but they
    are a different bet from the Crypto rule: one settlement a week, so 30 independent
    market-days would take 30 weeks, and the Friday 5 PM close means the window sits in
