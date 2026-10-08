@@ -166,10 +166,18 @@ def _live_ledger_checks():
        "and it is on the page from the day it is wired")
 
     _st = T.load_stages()
-    for _k in ("tennis_fav_band|tennis", "tennis_combo2|tennis_combo"):
-        _e = (_st.get("pairs") or {}).get(_k) or {}
-        ok(_e.get("since") and _e.get("stage") == "sandbox",
-           f"{_k} counts from its reset, in the Sandbox")
+    _e = (_st.get("pairs") or {}).get("tennis_fav_band|tennis") or {}
+    ok(_e.get("since") and _e.get("stage") == "sandbox",
+       "tennis_fav_band|tennis counts from its reset, in the Sandbox")
+    # tennis_combo2 moved to Production by hand on 2026-10-08 (#105). The move keeps
+    # the 2026-10-04 reset: evaluate_stages carries the Sandbox clock into entry_since,
+    # and qa_since reads it for a listed pair, so the judged record still starts at
+    # TENNIS_COMBO_BAND_SINCE. Until 2026-10-08 this check asked for stage "sandbox",
+    # which the promotion made false while the clock it was guarding stayed right.
+    _e = (_st.get("pairs") or {}).get("tennis_combo2|tennis_combo") or {}
+    ok(_e.get("stage") == "production" and _e.get("entry_since") == S.TENNIS_COMBO_BAND_SINCE
+       and T.qa_since(_e, "tennis_combo", "tennis_combo2|tennis_combo") == S.TENNIS_COMBO_BAND_SINCE,
+       "tennis_combo2|tennis_combo counts from its 2026-10-04 reset, in Production")
 
     print("\nledger history is unchanged by the pause")
 

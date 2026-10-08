@@ -853,6 +853,13 @@ def main():
         pair = (st.get("pairs") or {}).get(key) or {}
         # The baskets restarted again when their legs widened to 0.70-0.85.
         want = since if key.startswith("tennis_fav_band_3h") else S.TENNIS_COMBO_BAND_SINCE
+        if key == "tennis_combo2|tennis_combo":
+            # Moved to Production by hand on 2026-10-08 (#105). The move carries the
+            # reset into entry_since, and T.record_since reads it back, so the record
+            # still starts at the clock; only the stage changed.
+            eq((pair.get("stage"), T.record_since(pair)), ("production", want),
+               f"{key} counts from its latest reset, in Production")
+            continue
         eq((pair.get("stage"), pair.get("since")), ("sandbox", want),
            f"{key} counts from its latest reset, in the Sandbox")
     # pm_combo4 left Production on 2026-10-03 (no parlay API to act on), but it is still

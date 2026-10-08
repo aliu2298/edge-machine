@@ -377,5 +377,51 @@ ok('if (card.early)' in js and 'early.className = "lane-pill early"' in js
 css = open("public_site/site.css", encoding="utf-8").read()
 ok(".rule-mini .lane-pill.early" in css and ".sig.early" in css, "the pill and the chip are styled")
 
+# ---------------------------------------------------------------------------
+print("\nthe Sandbox record keeps its clock through the move")
+# ---------------------------------------------------------------------------
+# o15_form_l10|soccer_o15 came off Production on 2026-09-21 and its Sandbox clock
+# restarted there: 4-0 on 4 since, 24-6 on 30 in all. The move must not change that
+# record -- it changes where the picks publish, nothing beside them.
+CLOCK = "2026-09-21T01:44:02+00:00"
+O15 = "o15_form_l10|soccer_o15"
+
+
+def _o15(i, when, won):
+    q = _settled(i, O15, won=won)
+    q.update(start=(when + timedelta(hours=i)).isoformat(), logged=when.isoformat(),
+             market_id=f"KXMLSTOTAL-26SEP{10 + i}X-2", league="MLS")
+    return q
+
+
+before = datetime.datetime(2026, 9, 15, 12, tzinfo=timezone.utc)
+after = datetime.datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
+d_o15 = {"quotes": [_o15(i, before, won=i % 5 != 0) for i in range(26)]
+         + [_o15(100 + i, after, won=True) for i in range(4)]}
+# The live stage row: a Sandbox clock and no demoted_at, because the 2026-09-21 removal
+# was made by hand before by-hand removals were stamped. (A pair whose demotion IS
+# stamped and is then re-listed has that demotion cancelled by evaluate_stages, and its
+# whole record counts again, on purpose; that is a different row from this one.)
+st_o15 = {"pairs": {O15: {"stage": "sandbox", "since": CLOCK}}, "events": []}
+_grp, a_before, *_ = SB.pair_status(d_o15, st_o15, "o15_form_l10", "soccer_o15")
+eq((a_before["n"], a_before["won"]), (4, 4), "before the move the Sandbox record counts from the clock")
+T.evaluate_stages(d_o15, st_o15, now=NOW, verbose=False)
+moved = st_o15["pairs"][O15]
+eq((moved["stage"], moved.get("since"), moved.get("entry_since")), ("production", None, CLOCK),
+   "the move carries the clock into entry_since")
+eq(T.record_since(moved), CLOCK, "record_since reads it back")
+eq(T.record_since({"stage": "sandbox", "since": CLOCK}), CLOCK, "and a Sandbox pair's own clock")
+eq(T.record_since({"stage": "production"}), None, "a pair that never reset has no clock: its whole record")
+eq(T.record_since(None), None, "no pair, no clock")
+_grp, a_after, *_ = SB.pair_status(d_o15, st_o15, "o15_form_l10", "soccer_o15")
+eq((a_after["n"], a_after["won"]), (4, 4), "after the move the Sandbox row still counts 4-0 on 4, not 24-6 on 30")
+page_o15 = PR.page(d_o15, st_o15, {"leads": {}, "pairs": {}}, "", now=NOW + timedelta(days=1))
+row_o15 = page_o15.split("Over 1.5 form rule", 1)[1].split("</tr>", 1)[0]
+ok('<td class="num">4<div class="sm mut">settled</div></td>' in row_o15,
+   "and the Production pairs table's Sandbox Bets column says 4")
+ok('<td class="num">30<div class="sm mut">settled</div></td>' not in row_o15, "never 30")
+row_list = next(r for r in SB.pair_list(d_o15, st_o15) if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
+eq(row_list["since"], CLOCK, "the row carries the clock for the league split and the pick lists")
+
 print(f"\n{len(FAILS)} FAILED" if FAILS else "\nall passed")
 sys.exit(1 if FAILS else 0)

@@ -167,7 +167,11 @@ def _check_chrome(html, why, placeholders=True):
         "+$1,840", "o15_ranked", "Paper P&L", "PAPER P&L")
     for needle in banned:
         ok(needle not in html, f"{why} does not ship the sketch placeholder {needle!r}")
-    ok("$" not in html, f"{why} does not invent a dollar P&L")
+    # A dollar P&L is a SIGNED amount ("+$1,840"). A Kalshi ladder rung names its strike
+    # in dollars ("$80,250 or above at the close", the crypto lane's lead since
+    # 2026-10-08), which is the bet, not a profit; a bare "$" no longer proves anything.
+    ok(not re.search(r"[+\-\u2212]\$\d", html) and "P&L" not in html and "P&amp;L" not in html,
+       f"{why} does not invent a dollar P&L")
     nav = _nav(html)
     ok(nav, f"{why} has the page nav")
     eq(html.count('<nav class="main"'), 1, f"{why} has one page nav, in the header")

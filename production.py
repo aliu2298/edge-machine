@@ -741,7 +741,7 @@ def page(d, st, blob, style, now=None):
         since = entered_at(pair)
         # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
         # never show two different records for one rule.
-        whole = T.assess(raw, source, sport, since=pair.get("since"), venues=T.TRADEABLE_VENUES)
+        whole = T.assess(raw, source, sport, since=T.record_since(pair), venues=T.TRADEABLE_VENUES)
         live = _assess_since_kickoff(raw, key, pair)
         mine = [l for l in leads if l.get("pair") == key]
         to_come = sum(1 for l in mine if l in upcoming)

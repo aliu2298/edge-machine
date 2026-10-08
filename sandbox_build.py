@@ -769,7 +769,8 @@ def unconnected_rows(d=None):
 def pair_status(d, st, name, sport):
     """(group, sandbox record, QA-entry record, open bets, last logged) for one (source, sport)."""
     pair = (st.get("pairs") or {}).get(f"{name}|{sport}") or {}
-    since = pair.get("since")
+    # The pair's own clock, carried into entry_since when it was moved by hand.
+    since = T.record_since(pair)
     # JUDGED ON THE US EXCHANGES ONLY — the bets that could ever reach Production. The whole
     # record includes the retired polymarket.com venue, and ranking on it showed Covers MLB as
     # working at +8.3% after fees when its exchange record was -22.1%: a pair can look ready on
@@ -785,7 +786,7 @@ def pair_status(d, st, name, sport):
     if not a["n"]:
         # A tour-clock reset with nothing counted yet stays Waiting. Dropping
         # the row would hide the lane for having no entries.
-        reset_empty = S.tour_clock_since(since=pair.get("since")) is not None
+        reset_empty = S.tour_clock_since(since=T.record_since(pair)) is not None
         group = "waiting" if open_n or reset_empty else None
     elif a["n"] >= MIN_N:
         group = "working" if (a["roi"] or 0) > 0 and a["z"] > 0 else "failing"
@@ -844,7 +845,7 @@ def _fade_book(d, pair):
     only bets logged at or after the clock, and only on a kept tour, so the
     If-faded cell is that set and T.faded() itself is not retargeted.
     """
-    clock = S.tour_clock_since(since=pair.get("since"))
+    clock = S.tour_clock_since(since=T.record_since(pair))
     if clock is None:
         return d
 
@@ -887,7 +888,7 @@ def pair_list(d, st, include_retired=True):
             # 2026-10-03 with no ongoing volume and disappeared from the page outright, while
             # olbg|boxing survived its own removal only because boxing kept betting. The
             # "removed" branch below exists for exactly this and never got the chance to run.
-            reset_row = bool(pair.get("since")) and bool(
+            reset_row = bool(T.record_since(pair)) and bool(
                 T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
             if (group is None and not _scope(sport)
                     and name not in T.CONSENSUS and not reset_row):
@@ -916,7 +917,7 @@ def pair_list(d, st, include_retired=True):
                             # its move; None for every other row. The sport pages and the
                             # home cards print it beside the Production chip.
                             early=production.early_badge(d, f"{name}|{sport}", pair),
-                            removed=removed, v=v, since=pair.get("since")))
+                            removed=removed, v=v, since=T.record_since(pair)))
     return out
 
 
