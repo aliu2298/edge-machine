@@ -90,15 +90,44 @@ nav.main, nav.toc {
   overflow-x: visible;
   min-width: 0;
 }
+/* The page pills stay on one line at every width. Ten of them no longer fit
+   the 1120px bar with the brand and the stamp, so the row is tighter and,
+   when it still does not fit, scrolls sideways under a hidden scrollbar, as
+   it does on a phone. Nothing wraps and no pill is dropped. */
+nav.main {
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  gap: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+nav.main::-webkit-scrollbar { display: none; height: 0; }
 nav.main a {
   color: var(--mut);
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 12px;
+  padding: 6px 9px;
   border-radius: 999px;
   white-space: nowrap;
   flex: 0 0 auto;
   text-decoration: none;
+}
+nav.main a:focus-visible { outline-offset: -3px; }
+/* The same edge fades the phone row uses, so a scrolled desktop row shows
+   that more pills sit past its edge. The scripts set the classes. */
+nav.main.nav-fade {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+}
+nav.main.nav-fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+  mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+}
+nav.main.nav-fade.nav-fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
 }
 nav.main a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
 nav.main a[aria-current="page"] { color: var(--fg); background: #2a2e37; }
@@ -2554,3 +2583,29 @@ details.tn-rule .tn-def { margin: 8px 0 0; max-width: 72ch; line-height: 1.5; wh
 }
 .tn-state.is-void, .tn-state.is-price { color: var(--mut); }
 .tn-roi-n { white-space: nowrap; }
+
+/* Tennis follow-ups (2026-10-08): the current contract's parameters, the folded
+   change history, and the overdue badge. New tn- rules only. */
+.tn-params {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 14px;
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+.tn-params dt { color: var(--mut); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; font-size: 11px; }
+.tn-params dd { margin: 0; }
+details.tn-changes { margin: 8px 0 0; font-size: 13px; }
+details.tn-changes > summary { cursor: pointer; list-style: none; color: var(--mut); font-weight: 600; }
+details.tn-changes > summary::-webkit-details-marker { display: none; }
+details.tn-changes > summary::before { content: "›"; margin-right: 6px; display: inline-block; transition: transform .15s ease; }
+details.tn-changes[open] > summary::before { transform: rotate(90deg); }
+details.tn-changes ol { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 6px; max-width: 72ch; line-height: 1.5; }
+.tn-state.is-late { color: var(--warn); border-color: rgba(245, 194, 107, .4); background: rgba(245, 194, 107, .12); }
+@media (max-width: 760px) {
+  .tn-params { grid-template-columns: 1fr; gap: 2px; }
+  .tn-params dd { margin-bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  details.tn-changes > summary::before { transition: none; }
+}

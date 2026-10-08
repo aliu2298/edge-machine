@@ -77,6 +77,7 @@ def _on_clock(q, row):
 def _kept(q, row):
     return (q.get("source") == row["name"] and q.get("sport") == row["sport"]
             and q.get("bet") and not T.climate_excluded(q)
+            and q.get("note") != T.KALSHI_UNPLACEABLE
             and not S.tennis_refused_row(q) and _on_clock(q, row))
 
 
@@ -174,6 +175,11 @@ def state_of(q, now):
         return "L", "is-lost"
     ko = _kickoff(q)
     if ko is not None and ko <= now:
+        age = (now - ko).total_seconds() / 3600
+        # Past the settler's own flag, "in play" would be a fiction: the venue has
+        # not finalised the market, and the row says so with its age.
+        if age > T.OVERDUE_H:
+            return f"unsettled · {age:.0f}h", "is-late"
         return "in play", "is-live"
     return "upcoming", "is-next"
 
@@ -330,6 +336,66 @@ def _recent_html(d, row, now):
     return f'<ul class="tn-recent">{"".join(items)}</ul>'
 
 
+def _legs(row):
+    """How many legs a basket rule buys, from its registered source name; 0 for singles."""
+    m = re.search(r"(\d)$", row["name"])
+    return int(m.group(1)) if m and is_combo(row) else 0
+
+
+def params(d, row):
+    """What the rule backs now, from the registered constants: (name, value) pairs.
+
+    The dated history is in `changes_html`; this is the current contract, so a
+    reader sees the band, window, tours and venue before any reset is mentioned.
+    Only the frozen tennis rules print one; another family's row prints nothing.
+    """
+    if row["name"] not in S.TENNIS_FROZEN_RULES:
+        return ()
+    lo, hi = S.TENNIS_3H_BAND
+    band = f"{lo * 100:g}–{hi * 100:g}¢"
+    hours = S.TENNIS_FAV_3H.total_seconds() / 3600
+    # In the registry's own order, the way the registration names them.
+    tours = ", ".join(S.TENNIS_TIERS[t] for t in S.TENNIS_TIERS if t in S.TENNIS_FAV_KEEP)
+    k = _legs(row)
+    if not k:
+        return (
+            ("Backs", f"the match winner priced {band}, one contract per match"),
+            ("Window", f"entered within {hours:g}h of a verified start"),
+            ("Tours", tours),
+            ("Venue", venue_name(d, row)),
+        )
+    pm = B._base_sport(row["sport"]) == "tennis_pmcombo"
+    markup = (S.PM_COMBO_MARKUP if pm else S.COMBO_MARKUP).get(k)
+    measured = (S.PM_COMBO_MEASURED.get(k) if pm else True)
+    price = (f"product of the legs + {markup * 100:.2f}% "
+             f"{'measured' if measured else 'extrapolated'} markup" if markup else "product of the legs")
+    return (
+        ("Backs", f"{k} favourite-band legs as one contract, paid only if all {k} win"),
+        ("Legs", f"priced {band}, same {hours:g}h window and tours as the favourite band ({tours})"),
+        ("Price", price),
+        ("Venue", venue_name(d, row)),
+    )
+
+
+def params_html(d, row):
+    pairs = params(d, row)
+    if not pairs:
+        return ""
+    return ('<dl class="tn-params">'
+            + "".join(f"<dt>{B.esc(k)}</dt><dd>{B.esc(v)}</dd>" for k, v in pairs)
+            + "</dl>")
+
+
+def changes_html(row):
+    """The dated resets, newest first, folded under the current definition."""
+    changes = [c for c in (row["meta"].get("changes") or []) if str(c).strip()]
+    if not changes:
+        return ""
+    items = "".join(f'<li>{B.esc(str(c).strip())}</li>' for c in changes)
+    return (f'<details class="tn-changes"><summary>Changes · {len(changes)}</summary>'
+            f'<ol class="sm mut">{items}</ol></details>')
+
+
 def _rule_row(d, row, now):
     name = rule_name(row)
     badges = ""
@@ -337,13 +403,16 @@ def _rule_row(d, row, now):
         badges += ' <span class="sig n">Combo</span>'
     if row.get("prod"):
         badges += ' <span class="sig y">PRODUCTION</span>'
+    frozen = row["meta"].get("frozen")
+    if frozen:
+        badges += f' <span class="sig n">Frozen {B.esc(frozen)}</span>'
     note = (row["meta"].get("note") or "").strip()
     note_html = f'<p class="tn-def sm mut">{B.esc(note)}</p>' if note else ""
     open_n = len(open_quotes(d, row["name"], row["sport"], row))
     return (
         f'<tr data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}">'
         f'<td><details class="tn-rule"><summary><b>{B.esc(name)}</b>{badges}</summary>'
-        f'{note_html}{_recent_html(d, row, now)}</details></td>'
+        f'{params_html(d, row)}{note_html}{changes_html(row)}{_recent_html(d, row, now)}</details></td>'
         f'<td>{B.esc(venue_name(d, row))}</td>'
         f'<td class="num">{B.esc(record_text(row["a"]))}</td>'
         f'<td class="num">{roi_html(row)}</td>'
@@ -383,28 +452,28 @@ def rules_html(d, rows, now):
 
 
 # ------------------------------------------------------------------ tiles and the venue fold
+def singles_row(rows):
+    """The match-winner rule the tiles report: Production first, then the deepest record."""
+    singles = [r for r in rows if B._base_sport(r["sport"]) == "tennis"]
+    return sorted(singles, key=_sort_key)[0] if singles else None
+
+
 def tiles_html(d, rows):
-    """Open picks · active rules · record · ROI after fees, across the active rules."""
+    """Open picks · active rules, then the match-winner rule's own W–L and ROI.
+
+    The combo baskets are different contracts on different venues; each one's
+    record and ROI is on its own table row. Nothing here pools across rules.
+    """
     act, _ina = active_rows(rows, d)
     open_n = sum(len(open_quotes(d, r["name"], r["sport"], r)) for r in rows)
-    n = sum(r["a"].get("n") or 0 for r in act)
-    won = sum(r["a"].get("won") or 0 for r in act)
-    if n:
-        # Flat stakes, so the n-weighted mean of each rule's ROI is the pooled ROI.
-        roi = sum((r["a"].get("roi_fee") or 0) * (r["a"].get("n") or 0) for r in act) / n
-        klass = "mut" if n < B.MIN_N else fmt.tone(roi, ".1f", 100)
-        roi_cell = f'<b class="{klass}">{B.pct(roi, sign=True)}</b>'
-        rec = f"{won}–{n - won}"
-    else:
-        roi_cell = '<b class="mut">—</b>'
-        rec = "—"
+    single = singles_row(rows)
+    label = rule_name(single).split(" · ")[0] if single else "Match winner"
     return (
         '<div class="tiles tn-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
         f'<div class="tile"><b>{len(act)}</b><span>active rules</span></div>'
-        f'<div class="tile"><b>{rec}</b><span>record · active rules</span></div>'
-        f'<div class="tile">{roi_cell}<span>ROI after fees</span></div>'
-        '</div>')
+        + UI.rule_tiles(single["a"] if single else {}, label, B.MIN_N)
+        + '</div>')
 
 
 def _listing(d):

@@ -5849,7 +5849,7 @@ eq([q["market_id"] for q in S.fetch_tennis_fav_band("mma", {"mma": [dict(_bp[1],
    ["m2"], "the same 0.86 price is still a bet in MMA")
 ok("0.77-0.81" in S.SOURCES["tennis_fav_band"]["label"], "the label says which band it is now")
 for _k in ("tennis_fav_band", "tennis_combo2", "tennis_combo3", "tennis_combo4"):
-    ok("NARROWED" in S.SOURCES[_k]["note"] and "2026-09-24" in S.SOURCES[_k]["note"],
+    ok("NARROWED" in S.rule_text(_k) and "2026-09-24" in S.rule_text(_k),
        f"{_k} records the latest reset in its own words, so a 0.75-0.80 record is never read "
        f"as a 0.77-0.81 one")
 ok("tennis_fav_band|tennis" not in T.PAIR_OVERRIDES,
@@ -7220,46 +7220,50 @@ ok(S.lane_paused("nws", "climate") and S.lane_paused("nws_fade", "climate"),
 print("\ntennis_fav_band_3h: in band and inside 3 hours, beside the unchanged lane")
 
 eq(S.TENNIS_FAV_3H, timedelta(hours=3), "the window is 3 hours, fixed with the lane")
+# The registration is the current definition (ending in the FROZEN line) and,
+# apart from it, the dated change that widened the band.
 eq(S.SOURCES["tennis_fav_band_3h"]["note"],
-   "PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, "
-   "only when the entry is within 3 hours of the scheduled start. The tour "
-   "has to be ATP, WTA Doubles, or UTR. BAND WIDENED 2026-10-04 from "
-   "0.77-0.81 to 0.70-0.85: the lane is tour-specific, the narrow band was "
-   "cut on every tour's record, and on the kept tours it left about one "
-   "contest a day. The page record restarts at 2026-10-02T16:34:37Z, "
-   "the merge that put the narrowed selection on main. No kept-tour bet "
-   "was logged between that restart and the widening, so the record from "
-   "the restart is the wide band only and is not reset again. Two kept-tour "
-   "bets logged after the rule was written and before that merge stay on "
-   "file under the old rule and do not count in the record. The basket lanes cut "
-   "the same 0.70-0.85 legs. The window stays 3 hours. Why the window: closing-line value on the "
-   "band was about -1.2c on entries 3 or more hours before the start, and "
-   "about -0.3c on entries inside 3 hours (in-band n=90, +11.8% after fees). "
-   "TOURS, chosen 2026-10-02 by looking at the 648 distinct contests already "
-   "logged (27 that the parent lane and this lane both bet, counted once). "
-   "On the 18 days those contests cover, that was 36.0 contests a day, and "
-   "the kept tours were 4.3. Kept: ATP, WTA Doubles, UTR, 78 contests, "
-   "z +2.76 before fees. That z is a selected-group z. It is not a "
-   "significance test and must not be quoted as one. "
-   "2026-10-02T05:00:00Z is the looked-at cutoff for those 648 contests, "
-   "not the page record. Those 648 contests are the reason for looking, "
-   "not evidence, and they count toward nothing here. No mechanism is "
-   "claimed. ATP is the deepest field here and UTR the shallowest, with "
-   "four flatter tours between them, and the idea that a deeper field "
-   "prices better does not survive UTR. WTA Doubles rests on 9 contests, "
-   "ROI +12.0% after fees: a direction, not a result, and the first of the "
-   "three to be readable or to fail. A flat $100 stake on the opposite "
-   "side at its own price, after fees, returned -60.6% on those 9, -24.1% "
-   "on the whole band (z -2.88 on the fade prices before fees) and -68.7% "
-   "on the kept set (z -3.06 on the fade prices before fees). The units of "
-   "P/L beside each tour (ATP +6.35, UTR +2.45, WTA Doubles +0.96) and the "
-   "z on the side that was backed are before fees: one contract, pay the "
-   "price, receive 1. A Polymarket US match filed under the atp league is "
-   "ATP only when Kalshi's ATP series lists the same two players. A "
-   "Challenger listing, or no listing, is not ATP. A Kalshi start is "
-   "inside the 3-hour window only when Tennis Explorer has confirmed "
-   "it; an estimate is unknown and is not a bet.",
+   'PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, only '
+   'when the entry is within 3 hours of the scheduled start. The tour has to be '
+   'ATP, WTA Doubles, or UTR. The basket lanes cut the same 0.70-0.85 legs. The '
+   'window stays 3 hours. Why the window: closing-line value on the band was '
+   'about -1.2c on entries 3 or more hours before the start, and about -0.3c on '
+   'entries inside 3 hours (in-band n=90, +11.8% after fees). TOURS, chosen '
+   '2026-10-02 by looking at the 648 distinct contests already logged (27 that '
+   'the parent lane and this lane both bet, counted once). On the 18 days those '
+   'contests cover, that was 36.0 contests a day, and the kept tours were 4.3. '
+   'Kept: ATP, WTA Doubles, UTR, 78 contests, z +2.76 before fees. That z is a '
+   'selected-group z. It is not a significance test and must not be quoted as '
+   'one. 2026-10-02T05:00:00Z is the looked-at cutoff for those 648 contests, '
+   'not the page record. Those 648 contests are the reason for looking, not '
+   'evidence, and they count toward nothing here. No mechanism is claimed. ATP '
+   'is the deepest field here and UTR the shallowest, with four flatter tours '
+   'between them, and the idea that a deeper field prices better does not '
+   'survive UTR. WTA Doubles rests on 9 contests, ROI +12.0% after fees: a '
+   'direction, not a result, and the first of the three to be readable or to '
+   'fail. A flat $100 stake on the opposite side at its own price, after fees, '
+   'returned -60.6% on those 9, -24.1% on the whole band (z -2.88 on the fade '
+   'prices before fees) and -68.7% on the kept set (z -3.06 on the fade prices '
+   'before fees). The units of P/L beside each tour (ATP +6.35, UTR +2.45, WTA '
+   'Doubles +0.96) and the z on the side that was backed are before fees: one '
+   'contract, pay the price, receive 1. A Polymarket US match filed under the '
+   "atp league is ATP only when Kalshi's ATP series lists the same two players. "
+   'A Challenger listing, or no listing, is not ATP. A Kalshi start is inside '
+   'the 3-hour window only when Tennis Explorer has confirmed it; an estimate is '
+   'unknown and is not a bet.'
+   + " " + S.TENNIS_FROZEN_LINE,
    "the 3-hour note states the window, the band, and the tour cut")
+eq(S.SOURCES["tennis_fav_band_3h"]["changes"],
+   [
+    'BAND WIDENED 2026-10-04 from 0.77-0.81 to 0.70-0.85: the lane is '
+    "tour-specific, the narrow band was cut on every tour's record, and on the "
+    'kept tours it left about one contest a day. The page record restarts at '
+    '2026-10-02T16:34:37Z, the merge that put the narrowed selection on main. No '
+    'kept-tour bet was logged between that restart and the widening, so the '
+    'record from the restart is the wide band only and is not reset again. Two '
+    'kept-tour bets logged after the rule was written and before that merge stay '
+    'on file under the old rule and do not count in the record.'],
+   "the band widening is the one dated change on the 3-hour lane")
 _tnow = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
 
 

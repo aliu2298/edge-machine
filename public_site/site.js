@@ -58,8 +58,8 @@
       return bar.scrollLeft > 2;
     }
     function paint() {
-      bar.classList.toggle("nav-fade", narrow.matches && pastRight());
-      bar.classList.toggle("nav-fade-left", narrow.matches && pastLeft());
+      bar.classList.toggle("nav-fade", (narrow.matches || overflowing()) && pastRight());
+      bar.classList.toggle("nav-fade-left", (narrow.matches || overflowing()) && pastLeft());
     }
     // The outset ring (3px outline + 2px offset) hangs past a chip. Main-nav
     // pills inset theirs, so this is 0 there.
@@ -77,8 +77,13 @@
     }
     // Chrome does not scroll a partly visible link on keyboard focus. Pull it
     // clear of both fades and its own ring. Instant, so reduced motion is not animated.
+    // The row also scrolls above the phone width once ten pills outgrow the
+    // bar, so the current pill is pulled into view whenever the row overflows.
+    function overflowing() {
+      return bar.scrollWidth > bar.clientWidth + 1;
+    }
     function reveal(el) {
-      if (!narrow.matches || !el) return;
+      if (!el || !(narrow.matches || overflowing())) return;
       var fade = fadeWidth() + ringOutset(el);
       var navRect = bar.getBoundingClientRect();
       var aRect = el.getBoundingClientRect();
@@ -90,7 +95,7 @@
     var placedWidth = -1;
     function place() {
       placedWidth = window.innerWidth;
-      if (!narrow.matches) {
+      if (!narrow.matches && !overflowing()) {
         bar.classList.remove("nav-fade");
         bar.classList.remove("nav-fade-left");
         return;

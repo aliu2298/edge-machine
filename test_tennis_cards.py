@@ -211,19 +211,26 @@ print("\ntiles")
 tiles = re.findall(r'<div class="tile">(.*?)</div>', main, re.S)
 eq(len(tiles), 4, "four stat tiles")
 labels = [re.search(r"<span>(.*?)</span>", t).group(1) for t in tiles]
-eq(labels, ["open picks", "active rules", "record · active rules", "ROI after fees"],
-   "the tiles are open picks · active rules · record · ROI")
+eq(labels, ["open picks", "active rules", "Favourite band · W–L", "Favourite band · ROI after fees"],
+   "the tiles are open picks · active rules · the singles rule's W–L · its ROI")
 open_n = sum(1 for q in d["quotes"] if str(q["sport"]).startswith("tennis")
              and q["bet"] and q["status"] == "open")
 eq(_text(tiles[0]), f"{open_n} open picks", "open picks counts every open tennis bet")
 active = [r for r in rows if r["a"]["n"] or r["open"]]
 eq(_text(tiles[1]), f"{len(active)} active rules", "a rule is active once it has fired")
-won = sum(r["a"]["won"] for r in active)
-n = sum(r["a"]["n"] for r in active)
-eq(_text(tiles[2]), f"{won}–{n - won} record · active rules", "the record is W–L across active rules")
-roi = sum((r["a"]["roi_fee"] or 0) * r["a"]["n"] for r in active) / n
-ok(B.pct(roi, sign=True) in tiles[3], "ROI after fees is the pooled flat-stake ROI")
-ok('class="mut"' in tiles[3], f"the pooled ROI is grey under the read floor ({n} < {B.MIN_N})")
+single = next(r for r in rows if r["name"] == "tennis_fav_band_3h")
+sa = single["a"]
+eq(_text(tiles[2]), f"{sa['won']}–{sa['n'] - sa['won']} Favourite band · W–L",
+   "the record tile is the singles rule's own W–L, not a pool")
+ok(B.pct(sa["roi_fee"], sign=True) in tiles[3], "the ROI tile is the singles rule's own ROI after fees")
+ok('class="mut"' in tiles[3], f"the ROI is grey under the read floor ({sa['n']} < {B.MIN_N})")
+pooled = sum(r["a"]["n"] for r in active)
+ok(f"{sum(r['a']['won'] for r in active)}–{pooled - sum(r['a']['won'] for r in active)}" not in _text(tiles[2]),
+   "no tile pools the combo baskets into the singles record")
+import sport_ui
+eq(sport_ui.rule_tiles(sa, "Favourite band", B.MIN_N), tiles[2] and
+   '<div class="tile">' + tiles[2] + '</div><div class="tile">' + tiles[3] + '</div>',
+   "the two rule tiles are the shared sport_ui helper's output")
 
 print("\npicks")
 picks = _picks(html)
@@ -301,6 +308,28 @@ for source, sport, body in rule_rows:
     note = (row["meta"].get("note") or "").strip()
     ok(B.esc(note) in body, f"{source} row expands to its registered definition")
     eq(html.count(B.esc(note)), 1, f"{source} definition appears once on the page")
+    changes = row["meta"].get("changes") or []
+    cell = re.search(r"<td>(.*?)</td>", body, re.S).group(1)
+    if changes:
+        ok(f'<details class="tn-changes"><summary>Changes · {len(changes)}</summary>' in cell,
+           f"{source} dated changes are folded under the definition")
+        ok(all(B.esc(c) in cell for c in changes), f"{source} every change entry is on the page, verbatim")
+        ok(cell.index('<dl class="tn-params">') < cell.index('<p class="tn-def') < cell.index('<details class="tn-changes">'),
+           f"{source} reads parameters, then the current definition, then the folded changes")
+        ok(cell.find("WIDENED") == -1 or cell.find("WIDENED") > cell.find('<details class="tn-changes">'),
+           f"{source} no reset text comes before the current definition")
+    if source in S.TENNIS_FROZEN_RULES:
+        ok('<span class="sig n">Frozen 2026-10-08</span>' in cell, f"{source} summary carries the Frozen badge")
+        ok(S.TENNIS_FROZEN_LINE in note, f"{source} definition ends with the FROZEN line")
+        ok("<dt>Backs</dt>" in cell and "<dt>Venue</dt>" in cell, f"{source} prints its current parameters")
+        if sport == "tennis":
+            ok("70–85¢" in cell and "within 3h" in cell and "ATP, WTA Doubles, UTR" in cell,
+               f"{source} parameters are the band, window and tours from the registered constants")
+        else:
+            legs = int(source[-1])
+            ok(f"{legs} favourite-band legs as one contract" in cell, f"{source} parameters name its leg count")
+            ok(("extrapolated" in cell) == (sport == "tennis_pmcombo" and legs > 2),
+               f"{source} says whether its markup was measured")
     combo = sport in ("tennis_combo", "tennis_pmcombo")
     eq('<span class="sig n">Combo</span>' in body, combo, f"{source} Combo badge follows the market")
     ok('<details class="tn-rule"><summary>' in body, f"{source} row has a chevron that expands")
@@ -316,7 +345,8 @@ eq(_text(cells["tennis_combo4"][5]), "—", "a rule with no open bet shows a das
 fav = cells["tennis_fav_band_3h"][0]
 ok("Yesterday vs Gone" in fav and "Alpha vs Beta soonest" in fav,
    "the expanded rule lists its open and recent settled picks")
-ok(fav.count("<li>") <= 4 + tennis_cards.RECENT_LIMIT, "recent picks are capped")
+recent = re.search(r'<ul class="tn-recent">(.*?)</ul>', fav, re.S)
+ok(recent is not None and recent.group(1).count("<li>") <= 4 + tennis_cards.RECENT_LIMIT, "recent picks are capped")
 
 print("\nsystem")
 system = re.search(r'<section id="system" class="tn-system">(.*?)</section>', html, re.S).group(1)

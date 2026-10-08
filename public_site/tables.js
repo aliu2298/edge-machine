@@ -37,8 +37,8 @@
           return bar.scrollLeft > 2;
         }
         function paint() {
-          bar.classList.toggle("nav-fade", narrowNav.matches && pastRight());
-          bar.classList.toggle("nav-fade-left", narrowNav.matches && pastLeft());
+          bar.classList.toggle("nav-fade", (narrowNav.matches || overflowing()) && pastRight());
+          bar.classList.toggle("nav-fade-left", (narrowNav.matches || overflowing()) && pastLeft());
         }
         function ringOutset(el) {
           try {
@@ -53,8 +53,13 @@
           }
         }
         // Same reveal as site.js. Keyboard focus only. Instant scroll.
+        // The row also scrolls above the phone width once ten pills outgrow the
+        // bar, so the current pill is pulled into view whenever the row overflows.
+        function overflowing() {
+          return bar.scrollWidth > bar.clientWidth + 1;
+        }
         function reveal(el) {
-          if (!narrowNav.matches || !el) return;
+          if (!el || !(narrowNav.matches || overflowing())) return;
           var fade = fadeWidth() + ringOutset(el);
           var navRect = bar.getBoundingClientRect();
           var aRect = el.getBoundingClientRect();
@@ -66,7 +71,7 @@
         var placedWidth = -1;
         function place() {
           placedWidth = root.innerWidth;
-          if (!narrowNav.matches) {
+          if (!narrowNav.matches && !overflowing()) {
             bar.classList.remove("nav-fade");
             bar.classList.remove("nav-fade-left");
             return;

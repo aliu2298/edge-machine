@@ -87,10 +87,14 @@ ok("function passesFilters" in js and "function paintRow" in js
 ok("tr[hidden]" in css and "display: none !important" in css,
    "a hidden row stays hidden when the card layout sets display:block")
 
-print("\n3. nav wraps instead of clipping")
+print("\n3. the page pills stay on one line; the sub-nav wraps instead of clipping")
 nav_css = css.split("nav.main, nav.toc {", 1)[-1].split("}", 1)[0]
 ok("flex-wrap: wrap" in nav_css and "overflow-x: visible" in nav_css,
-   "the main nav and the sub-nav wrap")
+   "the sub-nav wraps")
+main_css = css.split("\nnav.main {", 1)[-1].split("}", 1)[0]
+ok("flex-wrap: nowrap" in main_css and "overflow-x: auto" in main_css
+   and "scrollbar-width: none" in main_css,
+   "the page pills never wrap: the row scrolls sideways under a hidden scrollbar")
 import site_chrome
 for rel in ("index.html", "nba.html", "archive/index.html"):
     page_html = _read(os.path.join("public_site", rel))
@@ -480,9 +484,9 @@ def browser_checks():
             page.wait_for_timeout(40)
             got = page.evaluate(STICKY_WRAP)
             hdr = float(str(got["hdr"]).removesuffix("px") or "0")
-            ok(got["wrapped"] and not got["scrollX"] and abs(got["gap"]) <= 1
+            ok(not got["wrapped"] and not got["scrollX"] and abs(got["gap"]) <= 1
                and abs(got["headerHeight"] - hdr) <= 1,
-               f"wrapped nav keeps the fixture header flush "
+               f"a squeezed nav scrolls, never wraps, and keeps the fixture header flush "
                f"(gap {got['gap']:.2f}px, header {got['headerHeight']:.1f}px, "
                f"--hdr-h {got['hdr']}, wrapped {got['wrapped']}, scroll-x {got['scrollX']})")
 

@@ -1144,7 +1144,8 @@ def definitions(rs):
         if not note:
             continue
         key = r["meta"]["label"].split(" (")[0]
-        seen.setdefault(key, [note, set(), r["meta"]["kind"], []])
+        seen.setdefault(key, [note, set(), r["meta"]["kind"], [],
+                              [str(c) for c in (r["meta"].get("changes") or [])]])
         sfx = _scope(r["sport"])
         seen[key][1].add(S.SCOPE_LABEL[sfx] if sfx else S.CLUB_SCOPE_LABEL)
         # Why a pair was retired belongs with its definition, not in the row: it is the last
@@ -1154,7 +1155,7 @@ def definitions(rs):
     if not seen:
         return ""
     items = []
-    for name, (note, scopes, kind, why) in sorted(seen.items()):
+    for name, (note, scopes, kind, why, changes) in sorted(seen.items()):
         order = (S.CLUB_SCOPE_LABEL, "Cups", "Internationals")
         where = ", ".join(sorted(scopes, key=lambda x: order.index(x) if x in order else 9))
         # A cup or international twin is a SEPARATE record on a different set of competitions,
@@ -1165,9 +1166,14 @@ def definitions(rs):
             for sfx, lab in S.SCOPE_LABEL.items() if lab in scopes)
         retired = "".join(f'<div class="sm"><b>Retired.</b> <span class="mut">{esc(w)}</span></div>'
                           for w in why)
+        # A rule's dated resets sit under its current definition, folded: the
+        # registration is read first, the history when it is wanted.
+        history = ("".join(f'<li>{esc(c)}</li>' for c in changes) if changes else "")
+        history = (f'<details class="sm"><summary>Changes · {len(changes)}</summary>'
+                   f'<ol class="mut">{history}</ol></details>' if history else "")
         items.append(f'<div class="def"><b>{esc(name)}</b>'
                      f'<span class="mut sm"> · {esc(kind)} · {esc(where)}</span>'
-                     f'{extra}{retired}<div class="sm mut">{esc(note)}</div></div>')
+                     f'{extra}{retired}<div class="sm mut">{esc(note)}</div>{history}</div>')
     return (f'<details class="sport"><summary><b>How each rule is defined</b>'
             f'<span class="mut"> · {len(items)} of them, as registered</span></summary>'
             f'<div class="note sm">What each one backs, where the claim came from, and what was '
