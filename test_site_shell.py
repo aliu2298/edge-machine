@@ -463,8 +463,8 @@ def _check_sport_tab(family, html, d, st):
             ok(tennis_cards.verdict_html(r) in html and tennis_cards.roi_html(r) in html,
                f"tennis card shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
     elif family == "Cricket":
-        ok('class="rule-card"' in html and 'class="rule-grid"' in html,
-           "cricket lanes are flippable cards")
+        ok('class="tn-rules"' in html and ("tn-picks" in html or "No open pick" in html),
+           "cricket lanes are one rules table beside the picks list")
         import cricket_cards
         for r in rows:
             ok(cricket_cards.verdict_html(r) in html and cricket_cards.roi_html(r) in html,
@@ -511,8 +511,8 @@ if tennis_build is not None and SB is not None:
        "tennis and cricket hide the Kalshi pre-flight column")
     ok('id="listing"' in _ten and "435" in _ten and "267" in _ten,
        "tennis shows the Polymarket US listing counts")
-    ok('id="listing"' in _cri and ">10<" in _cri,
-       "cricket shows the Polymarket US listing count")
+    ok("Polymarket US listing: 10 taken · 11 listed · 9 priced · no record" in _cri,
+       "cricket shows the Polymarket US listing counts on one line")
     ok("99" not in _ten and "99" not in _cri and "Table Tennis" not in _ten and "Table Tennis" not in _cri,
        "table tennis stays off the Tennis and Cricket tabs")
     ok("within 3 hours of the scheduled start" in _ten and "Challenger" in _ten

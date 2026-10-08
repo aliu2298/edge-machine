@@ -360,7 +360,7 @@ ok('class="soccer-rules"' in soc and "Soccer Only vs Stay" in soc,
    "soccer renders its own rules table and fixture list")
 ok("tennis_fav_band_3h" not in soc and "Alpha vs Beta soonest" not in soc,
    "soccer cards do not pick up tennis lanes")
-ok('class="rule-card"' in cri and "Oddspedia" in cri, "cricket renders its own cards")
+ok('class="tn-rules"' in cri and "Oddspedia" in cri, "cricket renders its own rules table")
 ok("tennis_fav_band_3h" not in cri and "Alpha vs Beta soonest" not in cri,
    "cricket does not pick up tennis lanes")
 

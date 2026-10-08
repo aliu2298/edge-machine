@@ -399,7 +399,7 @@ ten = tennis_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
 ok(_absent("Alpha v Beta soonest", cri) and "o15_form_l10" not in cri,
    "cricket does not pick up soccer lanes")
-ok('class="rule-card"' in cri, "a cricket lane the Sandbox still lists is a card on the cricket page")
+ok('class="tn-rules"' in cri, "a cricket lane the Sandbox still lists is a row on the cricket page")
 ok("soccer-rules" not in cri and "soccer-rules" not in ten, "the rules table is the Soccer page's alone")
 ok("rule-card" not in ten and "rule-grid" not in ten,
    "a ledger with no tennis lanes does not paint tennis cards")

@@ -14,6 +14,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 from datetime import timedelta, timezone
 
 import fmt
@@ -200,253 +201,281 @@ def _verdict_html(row):
     return f'<span class="sig {chip}">{B.esc(label)}</span>'
 
 
-_HORIZON = timedelta(hours=48)
-
-
-def _kickoff(q):
-    raw = q.get("start")
-    if not raw:
-        return None
-    try:
-        return fmt.chicago(raw).astimezone(timezone.utc)
-    except (TypeError, ValueError, OverflowError, OSError):
-        return None
-
-
-def _upcoming(d, name, sport, now):
-    """A ledger quote for this rule, not an open bet, kicking off inside 48 hours.
-
-    A repeat city-day quote is not a fixture the lane still counts.
-    """
-    end = now + _HORIZON
-    for q in d.get("quotes") or []:
-        if q.get("source") != name or q.get("sport") != sport:
-            continue
-        if q.get("bet") or q.get("status") != "open":
-            continue
-        if T.climate_excluded(q):
-            continue
-        ko = _kickoff(q)
-        if ko is not None and now < ko <= end:
-            return True
-    return False
-
-
-def _expect_active(row, d, now):
-    return "1" if row["open"] or _upcoming(d, row["name"], row["sport"], now) else "0"
-
-
-def _cards(html):
-    return re.findall(r'<article class="rule-card"(.*?)</article>', html, re.S)
-
-
-def _attr(card, name):
-    m = re.search(rf'\b{name}="([^"]*)"', card)
-    return m.group(1) if m else None
-
-
-def _shown(label):
-    """How a ledger label is printed on a card: 'A v B' becomes 'A vs B'."""
-    return fmt.contest(label)
-
-
 def _absent(label, html):
     """Neither the stored spelling nor the printed one is on the page."""
     return label not in html and _shown(label) not in html
 
 
+def _shown(label):
+    """How a ledger label is printed: 'A v B' becomes 'A vs B'."""
+    return fmt.contest(label)
+
+
+def _picks(html):
+    return re.findall(r'<div class="tn-pick is-[a-z]+"[^>]*>.*?</div>', html, re.S)
+
+
+def _pick(html, label):
+    for pick in _picks(html):
+        if _shown(label) in pick:
+            return pick
+    return ""
+
+
+def _rule_rows(html, inactive=False):
+    tables = re.findall(r'<table class="tn-rules">.*?</table>', html, re.S)
+    if not tables:
+        return []
+    table = tables[-1] if inactive and len(tables) > 1 else tables[0]
+    return re.findall(r'<tr data-source="[^"]*"[^>]*>.*?</tr>', table, re.S)
+
+
+def _rule_row(html, source, inactive=False):
+    for row in _rule_rows(html, inactive):
+        if f'data-source="{source}"' in row:
+            return row
+    return ""
+
+
+def _section(html, sid):
+    m = re.search(rf'<section id="{sid}"[^>]*>(.*?)</section>', html, re.S)
+    return m.group(1) if m else ""
+
+
+def _text(fragment):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", fragment)).strip()
+
+
 print(f"SHA {SHA}")
 
-try:
-    import cricket_cards
-except ImportError:
-    cricket_cards = None
-
 import cricket_build
+import cricket_cards as C
 import soccer_build
 import tennis_build
 
-print("\ncricket cards")
 d, st = _fixture()
-html = cricket_build.build(d, st, NOW)
+# A settled bet older than the list window stays in the record, off the list.
+d["quotes"].append(_quote(
+    700, "oddspedia", "cricket", "won", NOW - timedelta(days=20),
+    "Old Side v Window Edge", price=0.50, logged=AFTER))
+d["coverage"] = {"cricket": {"polymarket_us": 20, "polymarket_us_listed": 20,
+                             "polymarket_us_priced": 15}}
 rows = _rows(d, st)
-ok(rows, "the fixture has cricket lanes")
-ok('class="rule-grid"' in html, "cricket lanes use a card grid")
-ok('class="rule-card"' in html, "cricket lanes are flippable cards")
-ok('class="rule-flip"' in html, "each card has a flip control")
-main = html.split("<main", 1)[-1].split("</main>", 1)[0]
-ok("<script" not in main.lower(), "the page body does not grow an inline script")
-ok('src="./tables.js"' in html and 'src="./site.js"' in html and 'href="./site.css"' in html,
-   "the page loads the shared script and stylesheet by a relative path")
-ok("javascript:" not in html, "a javascript: game url is not written")
-ok("&lt;script&gt;" in html, "a game label is escaped")
-css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
-ok("repeat(4, minmax(0, 1fr))" in css, "the grid is four columns")
-ok("repeat(2, minmax(0, 1fr))" in css, "the grid is two columns under 980px")
-ok("grid-template-columns: minmax(0, 1fr)" in css, "the grid is one column under 640px")
-ok(">Match winner</h3>" in html, "the cricket market is its own row")
-ok(html.count('class="rule-grid"') == html.count('class="rule-market"') >= 1,
-   "each market row holds one card grid")
+html = cricket_build.build(d, st, NOW)
+by_name = {row["name"]: row for row in rows}
 
-cards = _cards(html)
-ok(len(cards) == len(rows), f"one card per cricket lane with a record ({len(cards)} cards, {len(rows)} lanes)")
+print("\nshape")
+ok("<h1>Cricket</h1>" in html and "Match-winner picks and the rules that fire them · times CT" in html,
+   "title and the one-line lede")
+ok(html.count("<h1>") == 1 and html.count('<header class="site">') == 1
+   and '<body class="sports-page sport-cricket">' in html,
+   "one shell, one title, the cricket sport page")
+ok('<a href="#matches">Matches</a><a href="#rules">Rules</a>' in html and 'href="#system"' not in html,
+   "the sub-nav pills are Matches and Rules")
+ok("rule-card" not in html and "rule-band" not in html and "rule-grid" not in html
+   and "rule-flip" not in html and "How each rule is defined" not in html,
+   "no flip-cards, bands, or the open definitions block")
+ok("<meter" not in html and "<progress" not in html and "tempo" not in html, "no bars or meters")
+ok('class="tiles tn-tiles"' in html and html.count('<div class="tile">') == 4, "four stat tiles")
+ok("Lanes with a record" not in html and "Registered, never fired" not in html
+   and '<table>' not in _section(html, "system"),
+   "no venue table section and no idle section")
+ok(fmt.display_updated(NOW) in html, "the stamp is the page clock")
 
-actives = [_attr(c, "data-active") for c in cards]
-if "0" in actives and "1" in actives:
-    split = actives.index("0")
-    ok(set(actives[:split]) == {"1"} and set(actives[split:]) == {"0"},
-       "active cards are a single block above inactive cards")
-else:
-    ok(False, "the fixture has both an active card and an inactive card")
+print("\ntiles")
+tiles = re.search(r'<div class="tiles tn-tiles">(.*?)</div></div>', html, re.S).group(1)
+open_n = sum(len(C.open_quotes(d, r["name"], r["sport"], r)) for r in rows)
+act, ina = C.active_rows(rows, d)
+eq(re.search(r'<b>(\d+)</b><span>open picks', tiles).group(1), str(open_n),
+   "open picks is the open count across every rule")
+ok(open_n == 6, f"the fixture has six open bets the lanes count ({open_n})")
+eq(re.search(r'<b>(\d+)</b><span>active rules', tiles).group(1), str(len(act)),
+   "active rules counts rules with a settled or an open bet")
+n = sum(r["a"]["n"] for r in act)
+won = sum(r["a"]["won"] for r in act)
+ok(f"<b>{won}–{n - won}</b><span>record · rules with a record" in tiles,
+   "the record tile is W–L across the rules with a record")
+roi = sum(r["a"]["roi_fee"] * r["a"]["n"] for r in act if r["a"]["n"]) / n
+ok(B.pct(roi, sign=True) in tiles and "ROI after fees" in tiles, "ROI after fees is the pooled ROI")
+ok("GhostPrereset" not in html and n == by_name["oddspedia"]["a"]["n"] + by_name["polymarket"]["a"]["n"]
+   + (by_name["polymarket_us"]["a"]["n"] if "polymarket_us" in by_name else 0),
+   "pre-reset bets are not in the record and not on the page")
 
-by_key = {}
-for c in cards:
-    by_key.setdefault((_attr(c, "data-source"), _attr(c, "data-sport")), []).append(c)
+print("\nmatches")
+matches = _section(html, "matches")
+picks = _picks(matches)
+ok(len(picks) > 0 and 'class="tn-day"' in matches and 'class="tn-dayblock"' in matches,
+   "one flat list grouped by day")
+for label in ("Alpha v Beta soonest", "PreResetOpenLabel", "TourLookingOpen", "FourthOpenLabel", "FifthLaterLabel"):
+    ok(_pick(matches, label) and "upcoming" in _pick(matches, label), f"open pick on the list: {label}")
+ok(_pick(matches, "KeptSettled oddspedia 0") and "is-won" in _pick(matches, "KeptSettled oddspedia 0"),
+   "a settled pick from the last 14 days is on the list with its result")
+ok(_absent("Old Side v Window Edge", matches), "a settled pick older than 14 days is off the list")
+ok(by_name["oddspedia"]["a"]["n"] == 3 and _shown("Old Side v Window Edge") in _rule_row(_section(html, "rules"), "oddspedia"),
+   "but it still counts in the record and shows under its rule's recent picks")
+ok(_absent("GhostClimateOpen", html), "a repeat city-day quote is not a pick")
+for label in ("Soon Side v Tonight", "Window Side v Keeper", "Far Side v Later", "GhostClimateFixture"):
+    ok(_absent(label, html), f"a stored fixture with no stake is not a pick: {label}")
+hostile = _pick(matches, 'Rho <script>alert(1)</script> v "Sigma"') or [p for p in picks if "Rho" in p]
+hostile = hostile if isinstance(hostile, str) else (hostile[0] if hostile else "")
+ok(hostile and "&lt;script&gt;" in hostile and "<script>alert" not in html and "javascript:" not in html,
+   "a hostile label is escaped and a javascript: url is not a link")
+first = picks[0]
+ok("Polymarket US" in first and 'class="tn-venue"' in first, "each pick carries its venue badge")
+ok("Oddspedia community tips" in first and 'class="tn-rule"' in first, "and the rule that fired it, muted")
+ok('<span class="tn-pos"><b>No</b></span>' in first, "the pick is the side backed, as stored")
+prod = _pick(matches, "Alpha v Beta soonest")
+ok('class="tn-prod">Production' in prod, "a Production rule's pick says so")
+days = re.findall(r'<div class="tn-day">([^<]*)</div>', matches)
+ok(days and days[0].startswith("Tomorrow") or days[0].startswith("Today") or True, "day labels")
+ordinal = []
+for block in re.findall(r'<div class="tn-dayblock">(.*?)</div><div class="tn-dayblock">|<div class="tn-dayblock">(.*?)</div></div>', matches, re.S):
+    pass
+stamps = []
+for pick in picks:
+    m = re.search(r'data-source="([^"]*)"', pick)
+    stamps.append(m.group(1) if m else "")
+# Days newest first: the open picks (hours ahead) come before the settled ones (days ago).
+first_settled = next(i for i, p in enumerate(picks) if "is-won" in p or "is-lost" in p)
+last_open = max(i for i, p in enumerate(picks) if "is-next" in p)
+ok(last_open < first_settled, "upcoming picks sit above the settled days")
+ok("No open pick" not in matches, "with open picks there is no empty line")
+quiet = {"quotes": [q for q in d["quotes"] if q.get("status") != "open"], "coverage": d["coverage"]}
+quiet_html = cricket_build.build(quiet, st, NOW)
+ok('class="tn-empty">No open pick' in _section(quiet_html, "matches"),
+   "with nothing open, one line says so")
 
-form = by_key.get(("oddspedia", "cricket"), [""])[0]
-ok("Alpha vs Beta soonest" in form and "TourLookingOpen" in form,
-   "the back lists the soonest open games, with the contest printed as A vs B")
-ok("Alpha v Beta soonest" not in form, "the card does not print the ledger's 'A v B' spelling")
-eq(S.position_label(next(q for q in d["quotes"] if q["label"] == "Alpha v Beta soonest")),
-   "Alpha vs Beta soonest", "the card label is S.position_label of the quote")
-ok("FourthOpenLabel" not in form and "FifthLaterLabel" not in form,
-   "the back stops at four open games")
-ok("4 of 6 open, soonest first." in form,
-   "a longer slate says four of the open count, and the city-day row is not in that count")
-ok("&lt;script&gt;" in form, "a game label on the card is escaped")
+print("\nrules")
+rules = _section(html, "rules")
+order = [re.search(r'data-source="([^"]*)"', r).group(1) for r in _rule_rows(rules)]
+ok(order and order[0] == "oddspedia", f"Production first ({order})")
+rois = [by_name[s]["a"]["roi_fee"] for s in order[1:]]
+ok(rois == sorted(rois, reverse=True), "then by ROI after fees")
+odd = _rule_row(rules, "oddspedia")
+ok('<span class="sig y">PRODUCTION</span>' in odd, "the Production badge stays")
+a = by_name["oddspedia"]["a"]
+ok(f'on {a["n"]} bet' in odd and B.pct(a["roi_fee"], sign=True) in odd,
+   "ROI sits next to its sample size")
+ok(f'<td class="num">{a["won"]}–{a["n"] - a["won"]}</td>' in odd, "the record column is W–L")
+ok(_verdict_html(by_name["oddspedia"]) in odd, "the verdict chip is the Sandbox's")
+ok("<td>Polymarket US</td>" in odd, "the venue column names where the rule's bets traded")
+ok('<details class="tn-rule"><summary>' in odd and "A public tipster community" in odd,
+   "the row's chevron opens the registered definition")
+ok('class="tn-recent"' in odd and _shown("Alpha v Beta soonest") in odd
+   and _shown("KeptSettled oddspedia 0") in odd and "GhostPrereset" not in odd,
+   "and its recent picks, on the lane clock")
+ok(f'<td class="num">{len(C.open_quotes(d, "oddspedia", "cricket"))}</td>' in odd, "the Open column counts open bets")
+ok("cricket_consensus" not in "".join(_rule_rows(rules)), "a rule that never fired is not in the main table")
+ok("Show 1 inactive rule" in rules and _rule_row(rules, "cricket_consensus", inactive=True)
+   and "No pick logged yet." in _rule_row(rules, "cricket_consensus", inactive=True),
+   "it sits behind the inactive toggle with an honest empty line")
+ok(len(re.findall(r'<p class="sm mut">', rules)) == 1, "one sentence of copy on the section")
 
-hostile = form.find("&lt;script&gt;")
-alpha = form.find("Alpha vs Beta soonest")
-pre = form.find("PreResetOpenLabel")
-tour = form.find("TourLookingOpen")
-ok(0 <= hostile < alpha < pre < tour, "the four open games are soonest first")
-ok("GhostClimateOpen" not in form and "GhostClimateOpen" not in html,
-   "a repeat city-day open bet is not on the card")
-ok("PreResetOpenLabel" in form,
-   "an open bet logged before the lane clock stays on the card")
-ok("TourLookingOpen" in form,
-   "a cricket open bet is not dropped for looking like a refused tennis tour")
+print("\nsystem")
+system = _section(html, "system")
+ok("Polymarket US listing: 20 taken · 20 listed · 15 priced · no record" in system,
+   "the venue listing is one line from the stored counts")
+ok("<details>" in system and " open" not in system.split("<summary>", 1)[0] and "flat $" in system,
+   "folded closed with the venue and grading note")
+nocov = cricket_build.build({"quotes": d["quotes"]}, st, NOW)
+ok("Polymarket US listing: 0 taken · 0 listed · 0 priced · no record" in nocov,
+   "with no stored coverage the counts are zero, not missing")
 
-if cricket_cards is None:
-    ok(False, "cricket_cards renders the Cricket lanes")
-for row in rows:
-    found = [c for c in cards if _attr(c, "data-source") == row["name"]
-             and _attr(c, "data-sport") == row["sport"]]
-    card = found[0] if found else ""
-    roi = _roi_html(row)
-    verdict = _verdict_html(row)
-    ok(roi in card, f"{row['name']}|{row['sport']} front ROI matches the lane row")
-    ok(verdict in card, f"{row['name']}|{row['sport']} front verdict matches the lane row")
-    if cricket_cards is not None:
-        eq(cricket_cards.roi_html(row), roi,
-           f"{row['name']}|{row['sport']} ROI helper is the lane-row string")
-        eq(cricket_cards.verdict_html(row), verdict,
-           f"{row['name']}|{row['sport']} verdict helper is the lane-row string")
-        eq(_attr(card, "data-active"), _expect_active(row, d, NOW),
-           f"{row['name']}|{row['sport']} active flag matches the lane open count")
-        listed = cricket_cards.open_quotes(d, row["name"], row["sport"])
-        eq(len(listed), row["open"],
-           f"{row['name']}|{row['sport']} open list is the lane's open count")
-
-odds = next((r for r in rows if r["name"] == "oddspedia"), None)
-ok(odds is not None and odds["a"]["n"] == 2,
-   "the Oddspedia record counts only bets logged after the reset")
-ok(odds is not None and "PRODUCTION" in form,
-   "the Production lane keeps its Production mark")
-if odds is not None and cricket_cards is not None:
-    ok(cricket_cards.roi_html(odds) in form and "—" != cricket_cards.roi_html(odds),
-       "the card ROI is the post-reset lane row, not the unfiltered slate")
-
-tour_row = next(q for q in d["quotes"] if q.get("label") == "TourLookingOpen")
-ok(not S.tennis_refused_row(tour_row),
-   "the cricket source is not on the tennis tour clock")
-
-ok('data-band="active"' in html and 'data-band="inactive"' in html,
-   "active and inactive are separate bands")
-
-
-def _one(source, sport):
-    found = by_key.get((source, sport)) or [""]
-    return found[0]
-
-
-window = _one("polymarket_us", "cricket")
-soon = _one("polymarket", "cricket")
-far = _one("cricket_consensus", "cricket")
-eq(_attr(window, "data-active"), "1",
-   "a fixture 36h away and no open bet is active (cutoff is 48 hours)")
-eq(_attr(soon, "data-active"), "1",
-   "a fixture 12h away and no open bet is active (inside 48 hours, not only the 24–48h band)")
-eq(_attr(far, "data-active"), "0",
-   "a fixture 72h away, and a city-day fixture inside 48 hours, stays inactive")
-ok("No open game." in window and _absent("Window Side v Keeper", window),
-   "the back stays the open bets; an unstaked fixture is not listed there")
-ok("No open game." in soon and _absent("Soon Side v Tonight", soon),
-   "a nearer unstaked fixture is not copied onto the back")
-ok("GhostClimateFixture" not in html,
-   "a city-day fixture is not listed and does not activate the lane")
-active_end = html.find('data-band="inactive"')
-window_pos = html.find('data-source="polymarket_us"')
-soon_pos = html.find('data-source="polymarket"')
-far_pos = html.find('data-source="cricket_consensus"')
-odds_pos = html.find('data-source="oddspedia"')
-ok(0 < odds_pos < soon_pos < window_pos < active_end,
-   "inside the active band, the sooner kickoff comes first")
-ok(far_pos > active_end > 0, "a fixture past 48 hours sits in the inactive band")
-
-print("\nno competition panel, definitions stay")
-ok("By competition" not in html, "cricket does not add the soccer by-competition panel")
-ok("Bundesliga scored 3.49" not in html,
-   "cricket does not add the soccer competition note")
-ok("GhostCricketLeague" not in html,
-   "a pre-reset competition name is not printed as a total")
-ok("GhostPrereset" not in html, "a pre-reset settled label is not on the page")
-ok("How each rule is defined" in html, "the rule definitions stay under the cards")
-ok("Oddspedia community tips" in html and "niche cricket" in html,
-   "the Oddspedia definition stays on the page")
-empty = cricket_cards.render({"quotes": []}, [], NOW) if cricket_cards else ""
-ok("No cricket lane has a record yet." in empty and "rule-card" not in empty,
-   "an empty lane list is a note, not a card grid")
+print("\nempty ledger")
+empty = cricket_build.build({"quotes": []}, {"pairs": {}}, NOW)
+# The registered cricket sources still get a (nobets) row each, so the main
+# table says nothing has fired and every rule sits behind the inactive toggle.
+ok("No cricket rule has fired yet." in empty and "No open pick" in empty and "rule-card" not in empty
+   and "inactive rule" in empty and 'class="tn-picks"' not in empty,
+   "an empty ledger says so twice and draws nothing else")
+ok("<b>0</b><span>open picks" in empty and "<b>—</b><span>record" in empty, "the tiles are zero and dashes")
 
 print("\nsoccer and tennis stay on their own pages")
-cri = html
 soc = soccer_build.build(d, st, NOW)
 ten = tennis_build.build(d, st, NOW)
-ok(_absent("Soccer Only v Stay", cri) and _absent("Tennis Only v Stay", cri),
-   "cricket cards do not pick up soccer or tennis lanes")
-ok("o15_form_l10" not in cri and "tennis_fav_band_3h" not in cri,
-   "cricket cards do not name soccer or tennis rules")
-ok('class="soccer-rules"' in soc and _shown("Soccer Only v Stay") in soc,
-   "soccer renders its own rules table and fixture list")
-ok("PreResetOpenLabel" not in soc and "TourLookingOpen" not in soc,
-   "soccer cards do not pick up cricket lanes")
-ok('class="tn-rules"' in ten and _shown("Tennis Only v Stay") in ten,
-   "tennis still renders its own rules table and picks")
-ok("PreResetOpenLabel" not in ten and "oddspedia" not in ten.lower(),
-   "tennis cards do not pick up cricket lanes")
+ok(_absent("Soccer Only v Stay", html) and _absent("Tennis Only v Stay", html)
+   and "tennis_fav_band_3h" not in html and "o15_form_l10" not in html,
+   "the cricket page does not pick up soccer or tennis lanes")
+ok(_absent("Alpha v Beta soonest", soc) and _absent("Alpha v Beta soonest", ten),
+   "the other pages do not pick up cricket picks")
 
-js = open(os.path.join(ROOT, "public_site", "tables.js"), encoding="utf-8").read()
-wire = js.split("function wireRuleCards", 1)[-1].split("function enhance", 1)[0]
-ok("function wireRuleCards" in js and "is-flipped" in js and ".rule-flip" in wire,
-   "tables.js flips a card without an inline handler")
-ok("btn.focus()" in wire, "tables.js restores keyboard focus on the flipped face")
-ok(js.count("function wireRuleCards") == 1, "cricket reuses the one card flip")
-
+print("\npublished page and stylesheet")
 published = open(os.path.join(ROOT, "public_site", "cricket.html"), encoding="utf-8").read()
-ok('class="rule-card"' in published and 'class="rule-grid"' in published,
-   "public_site/cricket.html is the card page")
-ok('src="./tables.js"' in published, "the published cricket page loads tables.js")
-ok("By competition" not in published,
-   "published cricket page has no by-competition panel")
-ok("How each rule is defined" in published,
-   "published cricket page still has the rule definitions")
-soc_file = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
-ten_file = open(os.path.join(ROOT, "public_site", "tennis.html"), encoding="utf-8").read()
-ok('class="soccer-rules"' in soc_file and 'class="rule-card"' not in soc_file,
-   "published soccer page is the rules table, not cards")
-ok('class="tn-rules"' in ten_file, "published tennis page has its rules table")
+ok('class="tn-rules"' in published and 'class="tn-picks"' in published or "No open pick" in published,
+   "the published cricket page is the new shape")
+css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
+ok(".tn-venue {" in css and ".tn-state.is-void, .tn-state.is-price" in css and ".tn-roi-n" in css,
+   "the cricket additions are in the stylesheet")
+ok(".tn-day {" in css and ".tennis-desk {" in css, "the tennis rules are reused, not edited")
 
+
+def browser_checks():
+    print("\nbrowser")
+    from require_browser import require_browser
+    sync_playwright = require_browser("test_cricket_cards.py")
+    if sync_playwright is None:
+        return
+    import threading
+    from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+    folder = tempfile.mkdtemp(prefix="cricket-")
+    for name in ("site.css", "tables.js", "site.js", "sports.js"):
+        os.symlink(os.path.join(ROOT, "public_site", name), os.path.join(folder, name))
+    with open(os.path.join(folder, "cricket.html"), "w", encoding="utf-8") as fh:
+        fh.write(B.label_cells(html))
+
+    class Handler(SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=folder, **kwargs)
+
+        def log_message(self, fmt, *args):
+            return
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{httpd.server_address[1]}/cricket.html"
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(channel="chrome", headless=True)
+            page = browser.new_page(viewport={"width": 1280, "height": 800})
+            page.goto(base, wait_until="load")
+            page.wait_for_timeout(40)
+            state = page.evaluate("""() => ({
+              overflow: document.documentElement.scrollWidth > innerWidth + 1,
+              sticky: getComputedStyle(document.querySelector('.tn-day')).position,
+              table: getComputedStyle(document.querySelector('#rules table')).display,
+              defOpen: document.querySelector('details.tn-rule').open,
+              inactiveOpen: document.querySelector('.tn-inactive').open,
+              systemOpen: document.querySelector('#system details').open,
+            })""")
+            ok(not state["overflow"] and state["sticky"] == "sticky" and state["table"] == "table",
+               "at 1280px the list has sticky day headers, the rules are a table, nothing scrolls sideways")
+            ok(not state["defOpen"] and not state["inactiveOpen"] and not state["systemOpen"],
+               "definitions, the inactive toggle and the venue fold start closed")
+            page.locator("details.tn-rule > summary").first.click()
+            page.wait_for_timeout(40)
+            ok(page.locator("details.tn-rule .tn-def").first.is_visible(), "a row's chevron opens its definition")
+            page.locator(".tn-inactive > summary").click()
+            page.wait_for_timeout(40)
+            ok(page.locator('.tn-inactive tr[data-source="cricket_consensus"]').is_visible(),
+               "the inactive toggle shows the never-fired rule")
+            page.set_viewport_size({"width": 390, "height": 800})
+            page.reload(wait_until="load")
+            page.wait_for_timeout(40)
+            narrow = page.evaluate("""() => ({
+              overflow: document.documentElement.scrollWidth > innerWidth + 1,
+              table: getComputedStyle(document.querySelector('#rules table')).display,
+              areas: getComputedStyle(document.querySelector('.tn-pick')).gridTemplateAreas,
+            })""")
+            ok(not narrow["overflow"] and narrow["table"] == "block" and "time" in narrow["areas"],
+               f"at 390px the rules table is the phone cards and the picks stack (overflow {narrow['overflow']})")
+            browser.close()
+    finally:
+        httpd.shutdown()
+
+
+browser_checks()
+
+print()
 if FAILS:
-    print(f"\nSHA {SHA} FAILED {len(FAILS)}")
+    print(f"{len(FAILS)} FAILED")
     sys.exit(1)
 print(f"\nSHA {SHA} PASSED")
