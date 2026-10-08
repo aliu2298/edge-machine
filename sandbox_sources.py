@@ -3710,7 +3710,9 @@ def quote_league(q):
     """The board league name for a Kalshi soccer quote, or None."""
     if q.get("venue") == "kalshi":
         return KALSHI_GAME_LEAGUES.get(str(q.get("market_id") or "").split("-")[0])
-    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS:
+    # A BTTS row is tied to its ESPN fixture the same way a goals row is (fetch_kalshi_btts),
+    # so it carries the same league name. Added 2026-10-08 with liga_btts_even|soccer_btts.
+    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS:
         return q.get("league") if q.get("league") in KALSHI_GAME_LEAGUES.values() else None
     return None
 

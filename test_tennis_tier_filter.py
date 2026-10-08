@@ -862,11 +862,10 @@ def main():
        "pm_combo4 is off the tour clock, so its record is not restarted by the tour cut")
     ok(prod.get("since") != S.TENNIS_FAV_KEEP_SINCE,
        "and it does not carry the tour-cut clock")
-    eq(sorted(T.PAIR_OVERRIDES),
-       ["o15_ranked|soccer_o15_intl", "oddspedia|cricket",
-        "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
-        "u35_low_scoring|soccer_u35_intl"],
-       "the Production list no longer carries pm_combo4")
+    ok("pm_combo4|tennis_pmcombo" not in T.PAIR_OVERRIDES
+       and "tennis_combo2|tennis_combo" in T.PAIR_OVERRIDES,
+       "the Production list no longer carries pm_combo4; the Kalshi 2-leg basket is the "
+       "one tennis pair there (moved 2026-10-08)")
     rows = SB.pair_list(d, st)
     by_name = {r["name"]: r for r in rows}
     rendered = {f"{r['name']}|{r['sport']}" for r in rows}

@@ -18,6 +18,7 @@ from datetime import timedelta, timezone
 
 import fmt
 import sport_ui as UI
+import production
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
@@ -283,7 +284,8 @@ def roi_cell(row):
 
 def _rule_row(d, row, now):
     name = rule_name(row)
-    badges = ' <span class="sig y">PRODUCTION</span>' if row.get("prod") else ""
+    badges = (' <span class="sig y">PRODUCTION</span>' + production.early_html(row.get("early"))
+              if row.get("prod") else "")
     note = (row["meta"].get("note") or "").strip()
     note_html = f'<p class="tn-def sm mut">{B.esc(note)}</p>' if note else ""
     open_n = len(open_quotes(d, row["name"], row["sport"], row))

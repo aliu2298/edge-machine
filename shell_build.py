@@ -633,6 +633,14 @@ def _lane_board(d, st, pair_key, cache):
             d, st, source, sport)
     except (KeyError, TypeError):
         return found
+    # The Early badge the Production page and the sport pages print for this pair,
+    # present only while there is one.
+    try:
+        early = production.early_badge(d, str(pair_key), _pair)
+    except (KeyError, TypeError, ValueError, OverflowError, OSError):
+        early = None
+    if early:
+        found["early"] = early
     if not isinstance(assessed, dict):
         return found
     try:
@@ -705,6 +713,10 @@ def _card(lane, board):
         "status": status,
         "spoken": _SPOKEN.get(status, status),
     }
+    # "Early · N bets" beside the PRODUCTION pill while the pair has under
+    # production.EARLY_N settled since its move. A Sandbox card never carries it.
+    if card["pill"] == "PRODUCTION" and board.get("early"):
+        card["early"] = board["early"]
     about = _about(lane.get("source") or "")
     if about:
         card["about"] = about

@@ -1275,6 +1275,9 @@ nav.sports button[aria-pressed="true"] {
   font-weight: 700;
 }
 .rule-mini .lane-pill.sandbox { color: var(--mut); }
+/* "Early · N bets": a Production pair with under 10 settled bets since its move. */
+.rule-mini .lane-pill.early { color: var(--warn); border-color: rgba(245, 194, 107, .4); }
+.sig.early { font-size: 12px; padding: 1px 7px; }
 .rule-mini-market { font-size: 13px; }
 .rule-mini-meta {
   display: flex;

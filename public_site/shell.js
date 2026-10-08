@@ -136,6 +136,12 @@
         pill.textContent = card.pill;
         title.appendChild(pill);
       }
+      if (card.early) {
+        var early = document.createElement("span");
+        early.className = "lane-pill early";
+        early.textContent = card.early;
+        title.appendChild(early);
+      }
       article.appendChild(title);
       addLine(article, "rule-mini-about", card.about || "");
       addLine(article, "rule-mini-market", card.market || "");
