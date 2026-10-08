@@ -36,9 +36,10 @@ SPORTS = (
     ("tennis", "Tennis"),
     ("cricket", "Cricket"),
     ("crypto", "Crypto"),
+    ("commodities", "Commodities"),
 )
 RUNNING = (("live", "Live", True), ("settled", "Settled", False), ("upcoming", "Upcoming", False))
-_GROUP_ORDER = ("NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Markets")
+_GROUP_ORDER = ("NBA", "Soccer", "Tennis", "Cricket", "Crypto", "Commodities", "Markets")
 PRICE_LABEL = "Settled on price"
 # Chicago dates on the Running Settled list, today included. Not
 # production.KEEP_SETTLED_DAYS: that cutoff still belongs to production.html.
@@ -82,6 +83,10 @@ _SPORT_PAGES = {
     "cricket": "./cricket.html",
     "nba": "./nba.html",
     "crypto": "./crypto.html",
+    # The favourite-band lane only. The commodity price baseline and the gasoline
+    # rule trade the `commodities` domain and file under Markets, so a prefix that
+    # caught them would send their rows to a page they are not on.
+    "commodities_fav": "./commodities.html",
 }
 
 

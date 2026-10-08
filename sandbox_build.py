@@ -41,7 +41,7 @@ SPORT_KEYS = [k for k in S.SPORTS if k.startswith("soccer")] + ["tennis", "table
 # stay near the top.
 SHOW_ROWS = 8
 MARKET_KEYS = ["climate", "crypto", "economics", "commodities", "finance", "politics",
-               "elections", "crypto_fav", "commodities_fav"]
+               "elections"]
 
 
 def esc(x):
