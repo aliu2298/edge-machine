@@ -149,14 +149,12 @@ def _fixture_rows(d, rows, now):
 
 
 def _rule_name(row):
-    return row["meta"]["label"].split(" (")[0]
+    """The rule's display name, with its scope where the name is shared across scopes."""
+    return B.rule_name(row)
 
 
 def _scoped_name(row):
-    """The rule's name with its scope: 'Team scores 1+ form rule · Internationals'."""
-    sfx = B._scope(row["sport"])
-    if sfx:
-        return f"{_rule_name(row)} · {S.SCOPE_LABEL[sfx]}"
+    """Kept for callers that asked for the scoped form; the name always carries it now."""
     return _rule_name(row)
 
 
@@ -331,7 +329,7 @@ def _rule_rows(d, row, i):
     a = row["a"]
     stage, chip = _status(row)
     sfx = B._scope(row["sport"])
-    scope = S.SCOPE_LABEL[sfx] if sfx else "League"
+    scope = S.SCOPE_LABEL[sfx] if sfx else S.CLUB_SCOPE_LABEL
     record = f'{a["won"]}–{a["n"] - a["won"]}' if a["n"] else "—"
     detail_id = f"rule-d-{i}"
     note = (row["meta"].get("note") or "").strip()

@@ -242,7 +242,7 @@ ok('class="soccer-pick-side is-watch">watching<' in fixtures,
 ok(_absent("Far Side v Later", html), "an unstaked fixture past 48 hours is not listed")
 rows_html = re.findall(r'<div class="soccer-row(?: is-past)?"', fixtures)
 eq(len(rows_html), len(C._fixture_rows(d, rows, NOW)), "one flat row per fixture")
-ok('class="soccer-pick-rule">Over 1.5 form rule</span>' in fixtures,
+ok('class="soccer-pick-rule">Over 1.5 form rule · Clubs</span>' in fixtures,
    "the rule name is printed, muted, after the price")
 ok('class="soccer-pick-price">55¢</span>' in fixtures, "the price is the stored ask in cents")
 ok(fixtures.count("<article") == 0 and "soccer-fixture-list" not in fixtures,

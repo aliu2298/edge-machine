@@ -622,7 +622,10 @@ def page(d, st, blob, style, now=None):
     raw = d
     d = _without_weather(d)
     pairs = {k: v for k, v in production_pairs(st).items() if not _weather_pair(k)}
-    name = lambda key: S.SOURCES.get(key.split("|")[0], {}).get("label", key).split(" (")[0]
+    # The display name, with its scope where two Production rules share one name
+    # ("Team scores 1+ form rule · Clubs" and "· Internationals"). The pair key and
+    # the lead ids keep the plain label.
+    name = lambda key: S.scoped_rule(*(key.split("|", 1) + [None])[:2]) if "|" in key else S.scoped_rule(key)
     sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
     label = lambda key: f"{name(key)} · {sport_of(key)}"
     pct = lambda x: fmt.pct(x, digits=1, sign=True)

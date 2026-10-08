@@ -4767,7 +4767,8 @@ eq(None if _o15_lead is None else _o15_lead.get("league"),
 _twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_form_l10"],
              a=dict(n=0, won=0, expected=0, z=0, roi_fee=None), open=2, last="", prod=False, moved="", v="waiting")
 eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")
-ok("CUPS" in SB._row(_twin), "its row is tagged as a separate cup record")
+ok("Over 1.5 form rule · Cups" in SB._row(_twin) and 'class="sig w">CUPS' not in SB._row(_twin),
+   "its row names the separate cup record in the rule name, with no scope chip beside it")
 ok("EFL Cup" in SB.definitions([_twin]) and "Over 1.5 form rule" in SB.definitions([_twin]),
    "and what a cup pair covers is written once, in the definitions, not in every row")
 ok("Pre-registered" not in SB._row(_twin),

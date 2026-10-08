@@ -563,17 +563,9 @@ def _price_text(items):
 
 def _lane_name(source, sport_key):
     """The rule or tipster label the Sandbox and Production pages already print."""
-    meta = S.SOURCES.get(source) or {}
-    label = meta.get("label") or source or ""
-    name = str(label).split(" (")[0] or "—"
-    try:
-        sfx = sandbox_build._scope(sport_key)
-    except (TypeError, AttributeError):
-        sfx = ""
-    scope = S.SCOPE_LABEL.get(sfx) if sfx else None
-    if scope:
-        return f"{name} · {scope}"
-    return name
+    if not S.SOURCES.get(source):
+        return str(source or "") or "—"
+    return S.scoped_rule(source, sport_key) or "—"
 
 
 def _venue_name(venue):

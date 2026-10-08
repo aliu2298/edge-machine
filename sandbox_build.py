@@ -130,7 +130,8 @@ def _side(q):
 
 
 def _source_label(q):
-    return S.SOURCES[q["source"]]["label"].split(" (")[0]
+    """The rule's display name on a ledger row, with its scope where the name is shared."""
+    return S.scoped_rule(q["source"], q.get("sport"))
 
 
 
@@ -913,13 +914,22 @@ def pair_list(d, st, include_retired=True):
     return out
 
 
+def rule_name(r):
+    """A pair row's display name: the registered label with its scope where the name is
+    shared across scopes. A row built without a source id (a test fixture, a frozen
+    block) keeps the label it carries."""
+    name = r.get("name")
+    if name in S.SOURCES:
+        return S.scoped_rule(name, r.get("sport"))
+    return str((r.get("meta") or {}).get("label") or name or "").split(" (")[0]
+
+
 def _who(r):
     """'Tennis favourite-band rule' or 'ESPN FPI / Matchup Predictor · MLB'."""
-    label = r["meta"]["label"].split(" (")[0]
+    label = rule_name(r)
     kind = r["meta"].get("kind")
-    sfx = _scope(r["sport"])
     if kind == "Rule":
-        return f"{label} · {S.SCOPE_LABEL[sfx]}" if sfx else label
+        return label
     return f"{label} · {S.SPORTS.get(r['sport'], r['sport'])}"
 
 
@@ -1094,8 +1104,9 @@ def _row(r, rank=None, provisional=False, in_market=False):
             f'<span class="{"mut" if fd["n"] < MIN_N else fmt.tone(fd["roi"], ".1f", 100)}">{pct(fd["roi"], sign=True)}</span>'
             f'<div class="sm mut">{fd["won"]} v {fd["expected"]:.1f} on {fd["n"]}'
             f'{" " + fd["unit"] + ("s" if fd["n"] != 1 else "") if fd.get("unit") else ""}</div>')
-    sfx = _scope(r["sport"])
-    tag = f' <span class="sig w">{esc(S.SCOPE_LABEL[sfx].upper())}</span>' if sfx else ""
+    # The scope is part of the name now ("· Clubs", "· Cups", "· Internationals"), on
+    # every rule that has a twin, so the row no longer needs a scope chip beside it.
+    tag = ""
     # What a pair IS lives in one place per sport now ("How each rule is defined"), not in
     # every row. A table is for comparing records; a paragraph inside a row is read once and
     # then scrolled past forever, and 26 of them made the soccer section unreadable.
@@ -1110,7 +1121,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     # word the folded market sections already use.
     subline = meta["kind"] if (in_market or r["sport"] in MARKET_KEYS) else sub
     return f"""<tr><td class="num">{rk}</td>
-<td><b>{esc(meta['label'].split(' (')[0])}</b>{tag}
+<td><b>{esc(rule_name(r))}</b>{tag}
 <div class="sm mut">{esc(subline)}</div>{gone}</td>
 <td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
@@ -1135,7 +1146,7 @@ def definitions(rs):
         key = r["meta"]["label"].split(" (")[0]
         seen.setdefault(key, [note, set(), r["meta"]["kind"], []])
         sfx = _scope(r["sport"])
-        seen[key][1].add(S.SCOPE_LABEL[sfx] if sfx else "League")
+        seen[key][1].add(S.SCOPE_LABEL[sfx] if sfx else S.CLUB_SCOPE_LABEL)
         # Why a pair was retired belongs with its definition, not in the row: it is the last
         # thing written about it and the least often read.
         if r.get("gone") and str(r["gone"]) not in seen[key][3]:
@@ -1144,8 +1155,8 @@ def definitions(rs):
         return ""
     items = []
     for name, (note, scopes, kind, why) in sorted(seen.items()):
-        where = ", ".join(sorted(scopes, key=lambda x: ("League", "Cups", "Internationals").index(x)
-                                 if x in ("League", "Cups", "Internationals") else 9))
+        order = (S.CLUB_SCOPE_LABEL, "Cups", "Internationals")
+        where = ", ".join(sorted(scopes, key=lambda x: order.index(x) if x in order else 9))
         # A cup or international twin is a SEPARATE record on a different set of competitions,
         # and which ones is part of the definition — it used to sit in the row and now lives
         # here, so the table stays a table and the scope is still written down somewhere.
@@ -1267,7 +1278,7 @@ def _league_row(r, sp):
             + f'<div class="sm mut">{sp["fade_won"]} v {sp["fade_expected"]:.1f} on {sp["fade_n"]}</div>')
     mkt = S.SPORTS.get(r["sport"], r["sport"]).split(" · ", 1)
     prod = '<span class="sig y">PRODUCTION</span>' if r["prod"] else ""
-    return (f'<tr><td><b>{esc(r["meta"]["label"].split(" (")[0])}</b> {prod}</td>'
+    return (f'<tr><td><b>{esc(rule_name(r))}</b> {prod}</td>'
             f'<td class="sm mut">{esc(mkt[1] if len(mkt) > 1 else mkt[0])}</td>'
             f'<td class="num">{rec}</td><td class="num">{vp}</td>'
             f'<td class="num">{_cell(sp["roi_fee"], sp["n"])}</td><td class="num">{fade}</td></tr>')
@@ -1333,7 +1344,7 @@ def league_panel(d, rs):
             f'<td class="num">{won} v {exp:.1f}<div class="sm mut">{won - exp:+.1f} wins '
             f'· {(won - exp) / n:+.3f}/bet</div></td>'
             f'<td class="num">{_cell(roi, n)}</td><td class="num">{_cell(fade, n)}</td>'
-            f'<td class="sm">{esc(best[0]["meta"]["label"].split(" (")[0])}'
+            f'<td class="sm">{esc(rule_name(best[0]))}'
             f'<div class="sm mut">{best[1]["won"]}–{best[1]["n"] - best[1]["won"]} '
             f'· {best[1]["edge"]:+.3f}/bet</div></td></tr>')
         if n >= LEAGUE_FOLD_N:
