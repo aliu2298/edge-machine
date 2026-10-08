@@ -1,5 +1,12 @@
 # Kalshi finance ladders — discovery note (2026-10-08)
 
+> **Status: shelved (2026-10-08).** No Kalshi daily or weekly FX or Treasury ladder had a
+> 70–80¢ rung within the 3¢ spread floor in five trading days; spreads on those rungs ran
+> 10–71¢. Nothing was registered, scanned or published, and no Finance tab exists.
+> **Worth revisiting if** in-window spreads sit at or under 3¢ on several series for a
+> week. This note is the record; the survey script it describes was removed with the
+> shelving (it is in the history of #100, `finance_discover.py`).
+
 Read-only survey for a Finance favourite-band lane, the same shape as the Crypto lane
 (`crypto_fav_band`). Nothing here registers a rule or logs a quote.
 
@@ -112,13 +119,13 @@ Treasury 5Y/7Y/30Y ladders with a wider floor stated up front (for example ≤10
 size ≥25, which the live book suggests they can meet) and judge against backing every
 in-band rung as Crypto does. Either is the owner's call, not this note's.
 
-## Still to read live: size inside the window
+## Not read: size inside the window (shelved before the in-window reads)
 
 Kalshi keeps no history of resting size, so the "ask ≥25" half of the floor is only
-readable from the live book inside the window itself. `python3 finance_discover.py
---no-history --only 'AD$'` at 12:00–1:30 PM ET reads the daily Treasury books, and at
-1:30–3:00 PM ET the daily FX books (if listed); `--only 'AW$|^KXUST(2|5|7|10|30)A$'` on a
-Friday afternoon reads the weekly ones. Spread already fails the floor on the days read
+readable from the live book inside the window itself. The survey script's `--no-history --only 'AD$'` mode at 12:00–1:30 PM ET would read the
+daily Treasury books, and at 1:30–3:00 PM ET the daily FX books (if listed); on a Friday
+afternoon `--only 'AW$|^KXUST(2|5|7|10|30)A$'` would read the weekly ones. Those reads were
+scheduled and then cancelled when the lane was shelved. Spread already fails the floor on the days read
 above, so size cannot rescue those days; it decides only whether alternative (b) is
 realistic.
 
