@@ -6243,6 +6243,17 @@ for _lane in TENNIS_FROZEN_RULES:
 del _lane
 
 
+def rule_text(name):
+    """A registration in full: the current definition, then its dated changes.
+
+    The page prints the two apart (the definition first, the history folded);
+    a check on the registration's wording reads them together here.
+    """
+    meta = SOURCES[name]
+    parts = [str(meta.get("note") or "")] + [str(c) for c in (meta.get("changes") or [])]
+    return " ".join(p.strip() for p in parts if p and p.strip())
+
+
 def _combo_leg(row, side):
     """One basket leg. `tour` travels with it when the resolver stamped one."""
     leg = dict(market_id=row["market_id"], pick=side,

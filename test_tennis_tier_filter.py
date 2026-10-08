@@ -786,7 +786,7 @@ def main():
        "six basket lanes cut from this band")
     for name in BASKETS:
         ok(S.SOURCES[name]["connected"], f"{name} stays connected")
-        ok("ATP, WTA Doubles, or UTR" in S.SOURCES[name]["note"],
+        ok("ATP, WTA Doubles, or UTR" in S.rule_text(name),
            f"{name} says which tours a leg may come from")
     kalshi_ids = ["KXATPMATCH-A", "KXATPCHALLENGERMATCH-B", "KXWTAMATCH-C", "KXITFMATCH-D"]
     kalshi = [mid for legs in S.combo_legs_by_day(_legs("kalshi", kalshi_ids)).values()
@@ -830,7 +830,7 @@ def main():
     _check_frozen_note(frozen)
     _check_note_quotes(note, frozen, overlaps)
     _check_phrase_guards(frozen, overlaps)
-    _check_record_clock_note(note)
+    _check_record_clock_note(S.rule_text("tennis_fav_band_3h"))
     _check_overlap_ids(raw, overlaps)
 
     print("\nthe page record restarts; the ledger rows stay")

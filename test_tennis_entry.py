@@ -652,7 +652,7 @@ def main():
 
     print("\nthe combo notes print the reset instant, and the 3-hour note matches the baskets")
     for name in sorted(S.TENNIS_COMBO_RESET):
-        note = S.SOURCES[name]["note"]
+        note = S.rule_text(name)
         ok(S.TENNIS_COMBO_BAND_SINCE in note,
            f"{name} prints {S.TENNIS_COMBO_BAND_SINCE}")
         ok("TENNIS_COMBO_BAND_SINCE" not in note,

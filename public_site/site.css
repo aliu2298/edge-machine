@@ -115,6 +115,20 @@ nav.main a {
   text-decoration: none;
 }
 nav.main a:focus-visible { outline-offset: -3px; }
+/* The same edge fades the phone row uses, so a scrolled desktop row shows
+   that more pills sit past its edge. The scripts set the classes. */
+nav.main.nav-fade {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+}
+nav.main.nav-fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+  mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+}
+nav.main.nav-fade.nav-fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+}
 nav.main a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
 nav.main a[aria-current="page"] { color: var(--fg); background: #2a2e37; }
 .stamp { margin-left: auto; font-size: 13px; color: var(--mut); white-space: nowrap; flex: 0 0 auto; }
