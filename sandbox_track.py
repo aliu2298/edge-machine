@@ -1142,6 +1142,24 @@ def _retire_replaced_kalshi(d, row, stamp, now):
 _COIN_CLOSE_RE = re.compile(r"^([A-Z0-9]+)-(\d{2}[A-Z]{3}\d{4})(?:-|$)")
 
 
+def _book_fields(r):
+    """bid, ask and ask size from a Kalshi universe row's own market, for a lane that
+    registers store_book. Missing numbers stay out rather than being written as None."""
+    m = r.get("market") or {}
+    out = {}
+    bid, ask = S._num(m.get("yes_bid_dollars")), S._num(m.get("yes_ask_dollars"))
+    size = S._num(m.get("yes_ask_size_fp"))
+    if size is None:
+        size = S._num(m.get("yes_ask_size"))
+    if bid is not None:
+        out["bid"] = round(bid, 4)
+    if ask is not None:
+        out["ask"] = round(ask, 4)
+    if size is not None:
+        out["ask_size"] = size
+    return out
+
+
 def _coin_close(market_id):
     """Series and close token from a Kalshi coin ticker, or None.
 
@@ -1447,6 +1465,9 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     # than being written down as ATP.
                     **({"tier": _tier} if _tier else {}),
                     **({"tour": r.get("tour")} if r.get("tour") in S.TENNIS_TIERS else {}),
+                    # The book a rung was taken at, for a lane that registers
+                    # store_book (commod_fav_band). Every other lane's row is as before.
+                    **(_book_fields(r) if (S.SOURCES.get(name) or {}).get("store_book") else {}),
                     # Pinnacle only: was this a contest nothing else had covered? That is
                     # the Pinnacle-versus-venue rule's own lane, reported separately.
                     uncovered=(mid not in (covered.get(sport) or set())

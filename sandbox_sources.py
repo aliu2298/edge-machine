@@ -62,6 +62,7 @@ SPORTS = {
     "climate":      "Climate",
     "crypto":       "Crypto",
     "crypto_fav":   "Crypto · Favourite band",
+    "commodities_fav": "Commodities · Favourite band",
     "economics":    "Economics",
     "commodities":  "Commodities",
     "finance":      "Finance",
@@ -1019,6 +1020,65 @@ SOURCES = {
              "outcomes, about six weeks. A rung also needs a two-sided quote, a spread of "
              "3c or less and 25 contracts on the ask: HYPE quoted one price on fourteen "
              "consecutive strikes, which is a stale book, not a signal."),
+    "commod_fav_band": dict(
+        label="Commodities favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
+        connected=True, site="edge-machine", sports=["commodities_fav"],
+        baseline="favourite_population",
+        # One bet per series per close token (KXWTI + 26OCT0814), across runs, the
+        # same gate crypto_fav_band uses. publish() reads this flag.
+        one_per_coin_close=True,
+        # Store the book the rung was taken at (bid, ask, ask size). The ledger has
+        # never kept ask size, so the 25-contract floor could not be checked against
+        # history; this lane's rows carry it so the first weeks answer that. Read by
+        # publish(); no other lane sets it, so no other lane's rows change shape.
+        store_book=True,
+        note="PRE-REGISTERED 2026-10-08, before it logged anything, and registered "
+             "expecting to find nothing: the crypto favourite-band question asked of "
+             "Kalshi's daily commodity ladders. Back the YES on a daily 'above $X' rung "
+             "priced 0.70-0.80 inclusive on WTI crude, Brent crude, gold, silver, copper "
+             "or natural gas, entered 2-3.5 hours before that series' close, so the bet "
+             "is held about three hours and settles the same afternoon. Every parameter "
+             "is the crypto lane's, copied, not retuned: the band, the window, the lowest "
+             "qualifying rung, one per commodity per close, a two-sided quote with a "
+             "spread of 3c or less and 25 contracts on the ask, read at 30 independent "
+             "outcomes. The ONE change a commodity fact forces is the close: WTI settles "
+             "at 14:30 Eastern and the other five at 17:00 Eastern, so the scanner reads "
+             "twice a day, once inside each window (10:00-11:30 Central for WTI, "
+             "12:30-14:00 Central for the rest), each matched in Eastern so the November "
+             "clock change moves it with the exchange. One per commodity because rungs "
+             "are NESTED: '$82 or above' and '$81.50 or above' settle on one print, and "
+             "counting both is one bet counted twice. A MARKET-DAY IS A TRADING DAY: these "
+             "ladders exist only on days the exchanges trade, so a weekend or a US "
+             "exchange holiday is no market-day at all, not a skipped entry, and a rung "
+             "that is somehow listed on one is refused. In three weeks of ledger the "
+             "17:00 group listed Monday to Thursday only while WTI listed Fridays too; if "
+             "that holds, the 30-day read takes about seven weeks rather than six. AN "
+             "OUTCOME IS A DAY, NOT A BET, and the pairs are stated: on the ledger's own "
+             "graded rungs gold and silver moved together at +0.89 (sign agreement 90%), "
+             "WTI and Brent at +0.84 (75%), and copper with the metals at +0.70 to +0.85, "
+             "over 8-10 settled days each, so a day where both members of a pair fire "
+             "is reported per commodity on the page and judged as one outcome in the "
+             "record, as the Crypto method explains. Natural gas is closer to "
+             "independent of the pairs and is clustered with the day all the same, "
+             "which errs toward too little evidence rather than too much. Judged against "
+             "backing every in-band rung in the window, so the lane only counts if "
+             "picking the lowest beats the band itself. WHAT IT MUST BEAT is the crypto "
+             "figure, unchanged: at the taker fee the effective price at mid-band is "
+             "0.7632, so the band has to beat its own price by about 1.3pp to break "
+             "even. The one prior is against it: the commodity price baseline found this "
+             "board efficient where it is normally traded, 87.7% won against 87.5% "
+             "priced over 61 days. SETTLEMENT, read live from Kalshi before the first "
+             "log: WTI settles on ICE's daily settlement price of the front-month "
+             "contract at 14:30 ET; Brent, gold, silver, copper and natural gas settle "
+             "on Pyth's one-minute candle close at 17:00 ET. THE FRIDAY GAP IS KALSHI'S "
+             "CALENDAR: since March 2026 the five 17:00 daily series have listed Monday "
+             "to Thursday only (about 110 settled events each, none on a Friday); "
+             "Friday's 17:00 close is a separate weekly series (KXGOLDW and kin, the "
+             "same ladder shape) that is NOT part of this registration. The ask size at "
+             "the in-band rungs inside the window was not measurable before the first "
+             "read; this lane stores the bid, ask and ask size of every rung it takes, "
+             "and commodities_ladders.md carries the pre-market snapshot and the open "
+             "question."),
     "spot": dict(
         label="Spot price (no-change baseline)", kind="Baseline", connected=False,
         retired="2026-10-05: ANSWERED, which is why it is retired rather than eliminated. "
@@ -3740,7 +3800,7 @@ ELIMINATED = {
 # z read +10.40 where the honest figure on one-day-one-result is +0.24. Any nested ladder
 # belongs here, and cluster_stats in sandbox_track now refuses to produce a z for a record
 # that is mostly such clusters rather than quietly returning one.
-DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "soccer_corners")
+DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "soccer_corners")
 
 
 def market_day(q):
@@ -3756,6 +3816,13 @@ def market_day(q):
         # per-series key would overstate z by 2.01x. A day of "or above" rungs wins or
         # loses together because the coins do, so the day is the unit.
         return f"CRYPTOFAV|{str(q.get('date') or '').replace('-', '')}"
+    if q.get("sport") == "commodities_fav":
+        # EVERY COMMODITY ON ONE TRADING DAY IS ONE OUTCOME, the Crypto rule applied to
+        # the commodity ladders and measured the same way (see COMMOD_FAV_CORRELATION).
+        # Gold and silver moved together at +0.89 and WTI and Brent at +0.84 over the
+        # ledger's graded rungs, with copper riding the metals; a per-series key would
+        # count those pairs twice in the direction that makes a dead lane look alive.
+        return f"COMMODFAV|{str(q.get('date') or '').replace('-', '')}"
     if q.get("sport") == "soccer_corners":
         # Every total- and team-corner rung of one match is one result (per MATCH, not per day).
         code = (str(q.get("market_id") or "").split("-") + ["", ""])[1]
@@ -3806,6 +3873,16 @@ KALSHI_BINARY = {
     # nearer than the one this lane wants, so taking fewer would hide it. The lane then
     # keeps only the 21:00Z expiry itself.
     "crypto_fav":  dict(series=list(COINS), lead_h=2, cap=1200, ladders_per_series=4),
+    # The commodity favourite-band lane's own domain (2026-10-08). Its own and not
+    # `commodities` above: that domain reads 6h out for the price baseline and keeps one
+    # ladder per series, so a 2-3.5h window would never see a row. Two ladders per
+    # series because today's and tomorrow's daily ladder can both be open; the lane
+    # keeps only the close inside its window. COMMOD_FAV_SERIES is defined further
+    # down with the rule's constants; the names are repeated here so the universe is
+    # built from the same six series the rule reads.
+    "commodities_fav": dict(series=["KXWTI", "KXBRENTD", "KXGOLDD", "KXSILVERD",
+                                    "KXCOPPERD", "KXNATGASD"],
+                            lead_h=2, cap=1200, ladders_per_series=2),
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
     # Seven commodity ladders a day (WTI, Brent, gold, silver, copper, natural gas, retail
     # gasoline), each 20-65 strikes: take the soonest ladder of each, not 80 of the first.
@@ -7496,6 +7573,172 @@ def fetch_crypto_fav_band(sport, universe=None, now=None):
             for r in sorted(best.values(), key=lambda x: x["market_id"])]
 
 
+# ---------------------------------------------------------------------------
+# Commodities favourite band — pre-registered 2026-10-08
+# ---------------------------------------------------------------------------
+#
+# The crypto favourite-band question (fetch_crypto_fav_band, above) asked of Kalshi's
+# daily commodity ladders: WTI crude, Brent crude, gold, silver, copper and natural gas,
+# each a nested "above $X" ladder that settles once per trading day. Every parameter is
+# the crypto lane's, copied as a separate constant on purpose: the two lanes are judged
+# apart, and a later retune of one must not silently retune the other. The one thing a
+# commodity fact forces is the close. WTI settles at 14:30 Eastern and the other five
+# at 17:00 Eastern, so the window is computed per series, and the scanner reads twice.
+#
+# A market-day is a TRADING day. The ladders exist only on days the exchanges trade,
+# so a weekend or a US exchange holiday is no market-day at all (not a skipped entry),
+# and a rung that is somehow listed on one is refused rather than taken. The calendar is
+# the same set market_track.NYSE_HOLIDAYS keeps; a test holds the two equal.
+#
+# Co-movement, measured on the ledger's graded rungs before the first read (the
+# settlement of a day's ladder lies between the highest rung that resolved Yes and the
+# lowest that resolved No; day-over-day log returns, 8-10 days per pair):
+#   gold/silver +0.89 (sign agreement 90%), WTI/Brent +0.84 (75%), gold/copper +0.70,
+#   silver/copper +0.85; WTI against the metals -0.3 to -0.6; natural gas against
+#   everything, n=5-7, unreadable. So a day is one outcome across all six (market_day),
+#   which errs toward too little evidence where the pairs are not actually one.
+COMMOD_FAV_SERIES = {"KXWTI": "WTI crude", "KXBRENTD": "Brent crude", "KXGOLDD": "Gold",
+                     "KXSILVERD": "Silver", "KXCOPPERD": "Copper", "KXNATGASD": "Natural gas"}
+COMMOD_FAV_SHORT = {"KXWTI": "WTI", "KXBRENTD": "Brent", "KXGOLDD": "Gold",
+                    "KXSILVERD": "Silver", "KXCOPPERD": "Copper", "KXNATGASD": "Nat gas"}
+COMMOD_FAV_CORRELATION = {("KXGOLDD", "KXSILVERD"): 0.89, ("KXWTI", "KXBRENTD"): 0.84,
+                          ("KXGOLDD", "KXCOPPERD"): 0.70, ("KXSILVERD", "KXCOPPERD"): 0.85}
+COMMOD_FAV_BAND = (0.70, 0.80)          # BOTH ends inclusive, as crypto
+COMMOD_FAV_TZ = ZoneInfo("America/New_York")
+# Close hour in Eastern per series. WTI is the exception; everything else is 17:00.
+# Matched in Eastern, not UTC, for the reason CRYPTO_FAV_CLOSE_ET gives.
+COMMOD_FAV_CLOSE_ET = {"KXWTI": (14, 30)}
+COMMOD_FAV_DEFAULT_CLOSE_ET = (17, 0)
+COMMOD_FAV_MIN_H = 2.0
+COMMOD_FAV_MAX_H = 3.5
+COMMOD_FAV_MAX_SPREAD = 0.03
+COMMOD_FAV_MIN_ASK_SIZE = 25
+COMMOD_FAV_READ_DAYS = 30
+# NYSE full-day closures, the same set market_track.NYSE_HOLIDAYS keeps. Extend before 2028.
+COMMOD_FAV_HOLIDAYS = frozenset({
+    "2025-01-01", "2025-01-20", "2025-02-17", "2025-04-18", "2025-05-26", "2025-06-19",
+    "2025-07-04", "2025-09-01", "2025-11-27", "2025-12-25",
+    "2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03", "2026-05-25", "2026-06-19",
+    "2026-07-03", "2026-09-07", "2026-11-26", "2026-12-25",
+    "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18",
+    "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24",
+})
+
+
+def commod_fav_close_et(series):
+    """(hour, minute) in Eastern at which this series' daily ladder settles."""
+    return COMMOD_FAV_CLOSE_ET.get(series, COMMOD_FAV_DEFAULT_CLOSE_ET)
+
+
+def commod_fav_trading_day(day):
+    """Is this Eastern calendar day one the commodity ladders settle on?"""
+    return day.weekday() < 5 and day.isoformat() not in COMMOD_FAV_HOLIDAYS
+
+
+def commod_fav_windows(now):
+    """The lane's entry windows around `now`, soonest first.
+
+    One per distinct close time: [(label, series, window_start, window_end, close)],
+    each in UTC. A window already closed today is rolled to the next trading day, so
+    the first entry is always the next (or current) window and a page or a scheduler
+    can read it without repeating the calendar.
+    """
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    et = now.astimezone(COMMOD_FAV_TZ)
+    groups = {}
+    for series in COMMOD_FAV_SERIES:
+        groups.setdefault(commod_fav_close_et(series), []).append(series)
+    out = []
+    for (hour, minute), series in sorted(groups.items()):
+        day = et.date()
+        for _ in range(10):
+            close = et.replace(year=day.year, month=day.month, day=day.day, hour=hour,
+                               minute=minute, second=0, microsecond=0)
+            end = close - timedelta(hours=COMMOD_FAV_MIN_H)
+            if commod_fav_trading_day(day) and et <= end:
+                break
+            day += timedelta(days=1)
+        start = close - timedelta(hours=COMMOD_FAV_MAX_H)
+        label = f"{hour:02d}:{minute:02d} ET close"
+        out.append((label, series, start.astimezone(timezone.utc),
+                    end.astimezone(timezone.utc), close.astimezone(timezone.utc)))
+    out.sort(key=lambda w: w[2])
+    return out
+
+
+def _commod_fav_liquid(row):
+    """Is this rung tight and deep enough to be a real price? (ok, why)."""
+    if not (row.get("tradeable") or {}).get("a"):
+        return False, "yes side not tradeable"
+    m = row.get("market") or {}
+    bid, ask = _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars"))
+    if bid is None or ask is None:
+        return False, "no two-sided quote"
+    # 1e-9 tolerance: 0.75 - 0.72 is not 0.03 in binary floating point, and the
+    # exactly-3c spread is the boundary the floor is meant to ALLOW.
+    if ask - bid > COMMOD_FAV_MAX_SPREAD + 1e-9:
+        return False, f"spread {ask - bid:.2f} over {COMMOD_FAV_MAX_SPREAD:.2f}"
+    size = _num(m.get("yes_ask_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_ask_size"))
+    if size is not None and size < COMMOD_FAV_MIN_ASK_SIZE:
+        return False, f"ask size {size:g} under {COMMOD_FAV_MIN_ASK_SIZE}"
+    return True, ""
+
+
+def fetch_commod_fav_band(sport, universe=None, now=None):
+    """The lowest in-band Yes per commodity, 2-3.5h before that series' close."""
+    if sport != "commodities_fav":
+        return []
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    lo, hi = COMMOD_FAV_BAND
+    best, skipped = {}, {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        series = r.get("series")
+        # Its own domain's rows only: the price baseline's `commodities` rows are the
+        # same ladders read 6h out, and a row under the wrong key is not this lane's.
+        if series not in COMMOD_FAV_SERIES or r.get("sport") != sport:
+            continue
+        try:
+            exp = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            continue
+        if exp.tzinfo is None:
+            exp = exp.replace(tzinfo=timezone.utc)
+        local = exp.astimezone(COMMOD_FAV_TZ)
+        # This series' daily close only, matched in Eastern. Any other expiry on the
+        # series is a different contract with a different hold.
+        if (local.hour, local.minute) != commod_fav_close_et(series):
+            continue
+        # A trading day only. A rung listed on a weekend or a holiday is refused.
+        if not commod_fav_trading_day(local.date()):
+            skipped.setdefault(series, f"{local.date()} is not a trading day")
+            continue
+        hours = (exp - now).total_seconds() / 3600.0
+        if not (COMMOD_FAV_MIN_H <= hours <= COMMOD_FAV_MAX_H):
+            continue
+        price = r.get("price_a")
+        if price is None or not (lo <= price <= hi) or r.get("price_draw") is not None:
+            continue
+        ok, why = _commod_fav_liquid(r)
+        if not ok:
+            skipped.setdefault(series, why)
+            continue
+        cur = best.get(series)
+        if cur is None or price < cur["price_a"]:
+            best[series] = r
+    for series, why in sorted(skipped.items()):
+        if series not in best:
+            print(f"  commod_fav_band: skip {series}: {why}")
+    return [dict(market_id=r["market_id"], pick="a",
+                 detail=f"lowest in band {r['price_a']:.2f}, "
+                        f"{(datetime.fromisoformat(str(r['start']).replace('Z', '+00:00')) - now).total_seconds() / 3600:.1f}h to close")
+            for r in sorted(best.values(), key=lambda x: x["market_id"])]
+
+
 def fetch_spot(domain):
     """Back the bucket today's spot price already sits in."""
     if domain != "crypto":
@@ -7643,7 +7886,9 @@ ODDS_RESERVE = 25              # never spend the last few credits
 # and overspends. It is deliberately the SCHEDULED count and not the observed one: GitHub
 # actually delivers about 4.2 cron runs a day here, so the real figure is lower and erring
 # high only underspends, which is the safe direction for a monthly credit budget.
-ODDS_RUNS_PER_DAY = 10         # 9 cron slots + 1 launchd dispatch
+# 11 since 2026-10-08: commod_fav_band's WTI window (10:00-11:30 Central) adds one more
+# window request a day; its 17:00 ET group shares the crypto window's run.
+ODDS_RUNS_PER_DAY = 11         # 9 cron slots + 2 window dispatches
 # Where Pinnacle has nothing to add, stop paying for it. Fixed before it was applied: once a
 # sport has PINNACLE_RETIRE_N Pinnacle quotes in the ledger and not one of them disagreed
 # with the venue by the betting edge, that sport's venue already prices like Pinnacle and a
@@ -9120,6 +9365,7 @@ CHALLENGERS = {
     "o15_ranked": fetch_o15_ranked,
     "team2_ranked": fetch_team2_ranked,
     "crypto_fav_band": fetch_crypto_fav_band,
+    "commod_fav_band": fetch_commod_fav_band,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "mls_away_band": fetch_mls_away_band,

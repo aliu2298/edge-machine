@@ -1084,7 +1084,8 @@ for _name, _script in _named_run_scripts(open(_tracker_path, encoding="utf-8").r
         _tracker_commit = _script
         break
 ok(bool(_tracker_commit), "the tracker commit step stages trading.html")
-for _page in ("public_site/soccer.html", "public_site/tennis.html", "public_site/cricket.html"):
+for _page in ("public_site/soccer.html", "public_site/tennis.html", "public_site/cricket.html",
+              "public_site/crypto.html", "public_site/commodities.html"):
     ok(f"if [ -f {_page} ]; then" in _tracker_commit and f"git add {_page}" in _tracker_commit,
        f"the tracker commit step stages {_page} when the file is present")
 

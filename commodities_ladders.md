@@ -3,9 +3,10 @@
 Read-only survey for a Commodities favourite-band lane, the same shape as the Crypto
 lane (`crypto_fav_band`). Nothing here registers a rule or logs a quote.
 
-**How this was read.** This session's network policy denies `api.elections.kalshi.com`
-(the egress gateway answers 403 to the CONNECT), so the public API could not be called
-from here. The facts below come from the repo's own ledger instead: the `commodities`
+**How this was read.** When first written, this session's network policy denied
+`api.elections.kalshi.com`, so the survey below came from the repo's own ledger; the host
+was opened the same morning and the open questions at the end were answered live. The
+ledger survey: the `commodities`
 domain already asks Kalshi for every *daily* series in the Commodities category
 (`KALSHI_BINARY["commodities"]`, `freq=("daily",)`) and has logged every rung of every
 ladder since 2026-09-18 — 4,881 rows across 7 series as of this morning. That list is
@@ -64,19 +65,83 @@ measurement; the only earlier study (61 days, 6h before close) found a two-sided
    commodity equivalent on file yet; it should be measured from the ledger's graded
    rungs before the first read, not assumed.
 
-## Unverified from this environment (needs one live read before registration)
+## Open questions, answered from the live API (2026-10-08, 06:00Z, read-only)
 
-- **Settlement source per series** (the `settlement_sources` field on `/series`): not
-  stored in the ledger and not readable from here. Likely CME/NYMEX settlements for WTI
-  and natural gas and a 5 PM reference print for the metals and Brent, but that is a
-  guess and is not written into the registration until read.
-- **Ask size** at the window: the tracker gates on a two-sided book but does not store
-  `yes_ask_size_fp`, so the 25-contract floor cannot be checked against history. The
-  crypto scanner reads it live and refuses below 25; the commodity scanner will do the
-  same, and the first week of logged quotes will show how often that floor bites.
-- **The Friday gap** above.
+The host was opened later the same morning. Read from `/series?category=Commodities`
+and `/events?series_ticker=…` (open, settled and closed), before the lane logged anything.
 
-To take the live read, allow `api.elections.kalshi.com` for this environment (the
-cloud environment's network settings, under Allowed domains), or run
-`python3 -c 'import sandbox_sources as S; print(S.kalshi_series("Commodities", ("daily",)))'`
-from a machine that can reach it.
+1. **Settlement source per series — answered.**
+
+   | Series | `settlement_sources` | Rule text (from the market) |
+   |---|---|---|
+   | `KXWTI` | ICE | "the daily settlement price for WTI crude oil (front-month contract) on <date> is above $X" — the 14:30 ET settlement |
+   | `KXBRENTD` | Pyth – Brent | "the close price of the 1-minute candlestick for brent crude oil on <date> at 5:00 PM EDT is above $X" |
+   | `KXGOLDD` | Pyth – Gold | same form, gold USD/t.oz |
+   | `KXSILVERD` | Pyth – Silver | same form, silver USD/t.oz |
+   | `KXCOPPERD` | Pyth – Copper | same form, copper USD/lb |
+   | `KXNATGASD` | Pyth – NATGAS | same form, natural gas USD/MMBtu |
+
+   Close times confirmed: WTI `expected_expiration_time` 18:30Z, the other five 21:00Z.
+   Every open event is a `greater` ladder (`yes_sub_title` "Above $X"), as built.
+
+2. **Ask size at the 70–80¢ rungs — pre-market snapshot only; the in-window figure
+   comes from the lane's own rows.** Read at 02:00 ET, eight to fifteen hours before the
+   closes, so this is NOT the window measurement the rule is judged at:
+
+   | Series | In-band rungs now | Spread | Ask size |
+   |---|---|---|---|
+   | KXWTI (Oct 8) | 2 | 1¢ | 13, 215 |
+   | KXWTI (Oct 9) | 2 | 3–4¢ | 550, 4,000 |
+   | KXBRENTD | 2 | 1¢ | 58, 58 |
+   | KXGOLDD | 2 | 1¢ | 12, 29 |
+   | KXSILVERD | 1 | 1¢ | 2 |
+   | KXCOPPERD | 1 | 1¢ | 15.5 |
+   | KXNATGASD | 6 | 3–4¢ | 71–575 |
+
+   Overnight the books are tight (1¢) and thin (metals 2–29 contracts), which is what a
+   25-contract floor would refuse; what they look like inside 10:00–11:30 AM CT and
+   12:30–2:00 PM CT is exactly what the lane now records (`bid`, `ask`, `ask_size` on
+   every row it takes, `store_book`). Read the first week's rows before drawing anything.
+
+3. **The Friday gap is Kalshi's calendar — answered.** Settled and closed events since
+   each series began: WTI 855 since 2022-09 (Mon–Thu ~190 each, Fri 94); Brent, gold,
+   silver, copper and natural gas 107–112 each since 2026-03, **Monday to Thursday only,
+   zero Fridays** (two or three Sunday events each, early experiments the trading-day rule
+   refuses anyway). Friday's 17:00 ET close is listed under the **weekly** series
+   (`KXGOLDW-26OCT0917`, "Gold price on October 09, 2026 at 5:00 PM EDT?", 40 `greater`
+   rungs, the same Pyth rule). Those weekly tickers are **not** in this registration: the
+   approved lane is the six daily series, so for the 17:00 group a Friday is no market-day,
+   and the 30-day read is about seven weeks as registered. Adding the Friday weekly ladders
+   as the same bet is a possible follow-up, not a change made here.
+
+## Decisions taken at registration (2026-10-08)
+
+- All six series, every crypto parameter copied unchanged (band, window, lowest rung,
+  one per commodity per close, 3¢ / 25 floor measured inside the window, 30-day read).
+- Two reads a day: WTI in 10:00–11:30 AM CT, the 17:00 ET group in 12:30–2:00 PM CT.
+  `scripts/vps_commodities_window.sh` asks for each from inside its window and defers
+  to the crypto request when that has already covered the 17:00 window.
+- A market-day is a trading day: weekends and NYSE holidays (`COMMOD_FAV_HOLIDAYS`, the
+  same set `market_track.NYSE_HOLIDAYS` keeps) are no market-day; a rung listed on one
+  is refused.
+- One outcome per trading day across all six (`market_day` → `COMMODFAV|date`).
+
+## Co-movement, measured from the ledger's graded rungs (2026-10-08)
+
+The settlement of a day's ladder lies between the highest rung that resolved Yes and
+the lowest that resolved No; day-over-day log returns from that midpoint, pairs with
+8–10 settled days each (natural gas has 5–7 and is not readable yet):
+
+| Pair | n | Correlation | Sign agreement |
+|---|---|---|---|
+| Gold / Silver | 10 | **+0.89** | 90% |
+| WTI / Brent | 8 | **+0.84** | 75% |
+| Silver / Copper | 10 | +0.85 | 90% |
+| Gold / Copper | 10 | +0.70 | 80% |
+| WTI / Gold | 10 | −0.27 | 30% |
+| WTI / Copper | 10 | −0.61 | 10% |
+| Brent / metals | 8 | −0.2 to −0.3 | 38% |
+
+So the pairs are real and the pairs are not one cluster with each other. A day is
+still judged as one outcome across all six, which errs toward too little evidence
+rather than too much, and is stated in the registration.
