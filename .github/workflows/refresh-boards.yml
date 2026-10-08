@@ -25,6 +25,9 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  # actions: read lists this run's own artifacts, so the deploy can wait for the
+  # Pages artifact to be listed before it asks for it.
+  actions: read
 
 # Queue, never cancel. GitHub's own Pages guidance is explicit that an in-progress
 # production deployment must be allowed to finish, so `cancel-in-progress: true` is the
@@ -153,6 +156,29 @@ jobs:
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
+      # The artifact just uploaded is not always listed by the API the instant the upload
+      # finalises. On 2026-10-08 Refresh boards #316 uploaded github-pages (artifact
+      # 11569374258, finalised 18:16:00.08Z), deploy-pages listed the run's artifacts at
+      # 18:16:00.54Z, was told 0, and failed with "No artifacts named github-pages were
+      # found" while the artifact sat in the run. A read-after-write lag in the Actions
+      # artifacts API, not a missing upload. So the deploy waits until the run's own
+      # artifact list names it, a minute at most, instead of racing the upload.
+      - name: Wait for the Pages artifact to be listed
+        if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' && steps.main_tip.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            n="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?name=github-pages" --jq '.total_count' || echo 0)"
+            if [ "${n:-0}" -ge 1 ]; then
+              echo "github-pages artifact listed (attempt ${attempt})"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::the github-pages artifact was uploaded but is still not listed after 60s"
+          exit 1
       - id: deployment
         if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' && steps.main_tip.outcome == 'success' }}
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

@@ -403,6 +403,23 @@ def qa_since(pair, sport, key=None):
     return pair["promoted_at"]
 
 
+def record_since(pair):
+    """Where a pair's Sandbox record starts: its Sandbox clock, or the clock it carried
+    into Production.
+
+    A reset or a demotion sets `since`. Moving the pair by hand moves that clock into
+    `entry_since` (evaluate_stages), where qa_since reads it for the tracker's own
+    judgement -- but the pages read `since`, so on 2026-10-08 the six promoted pairs
+    showed their whole record the moment they moved: o15_form_l10|soccer_o15 went from
+    4-0 on 4 (since its 2026-09-21 removal) to 24-6 on 30, and the tennis combo lost its
+    2026-10-04 reset. Every record a page prints reads this, so a promotion changes
+    where a pair's picks publish and nothing about the record beside them.
+    """
+    if not pair:
+        return None
+    return pair.get("since") or pair.get("entry_since")
+
+
 def sport_rules(sport):
     """The threshold set for `sport` (SPORT_RULES)."""
     return SPORT_RULES["high" if sport in HIGH_VOLUME_SPORTS else "standard"]
