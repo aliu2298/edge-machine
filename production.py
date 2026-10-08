@@ -716,9 +716,9 @@ def page(d, st, blob, style, now=None):
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{T.record_text(live)}<div class="sm mut">{esc(since_note)}</div></td>
+<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
-<td class="num">{light}<div class="sm mut">{esc(why)}</div></td>
+<td class="num">{light}<div class="sm mut wrap">{esc(why)}</div></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_html = (f"""<div class="tbl"><table>

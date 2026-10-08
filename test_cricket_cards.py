@@ -408,8 +408,8 @@ ok('<span class="sig y">PRODUCTION</span>' in odd, "the Production badge stays")
 a = by_name["oddspedia"]["a"]
 ok(f'on {a["n"] + a["n_price"]} bet' in odd and B.pct(a["roi_fee"], sign=True) in odd,
    "ROI sits next to its sample size, every stake in the ROI counted")
-ok(f'<td class="num">{a["won"]}–{a["n"] - a["won"]}, {a["n_price"]} no result</td>' in odd,
-   "the record column is W–L with the no-result count beside it")
+ok(f'<td class="num">{a["won"]}–{a["n"] - a["won"]}<div class="sm mut">{a["n_price"]} no result</div></td>' in odd,
+   "the record column is W–L with the no-result count under it")
 ok(_verdict_html(by_name["oddspedia"]) in odd, "the verdict chip is the Sandbox's")
 ok("<td>Polymarket US</td>" in odd, "the venue column names where the rule's bets traded")
 ok('<details class="tn-rule"><summary>' in odd and "A public tipster community" in odd,
@@ -418,8 +418,8 @@ ok('class="tn-recent"' in odd and _shown("Alpha v Beta soonest") in odd
    and _shown("KeptSettled oddspedia 0") in odd and "GhostPrereset" not in odd,
    "and its recent picks, on the lane clock")
 ok(f'<td class="num">{len(C.open_quotes(d, "oddspedia", "cricket"))}</td>' in odd, "the Open column counts open bets")
-ok(f'<td class="num">{T.record_text(odds_a)}</td>' in odd and ", 1 no result" in odd,
-   "the record cell counts the no-result bet beside the W–L")
+ok(f'<td class="num">{T.record_html(odds_a)}</td>' in odd and ">1 no result</div>" in odd,
+   "the record cell counts the no-result bet under the W–L")
 ok(f'on {odds_a["n"] + odds_a["n_price"]} bets' in odd, "the ROI sample counts every stake in the ROI")
 ok("cricket_consensus" not in "".join(_rule_rows(rules)), "a rule that never fired is not in the main table")
 ok(not _rule_row(rules, "polymarket"), "a rule that has not picked in 7 days is not in the main table")

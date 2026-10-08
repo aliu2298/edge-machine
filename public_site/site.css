@@ -311,6 +311,9 @@ tr[hidden] { display: none !important; }
 tr:last-child td { border-bottom: none; }
 tbody tr:hover td { background: var(--raised); }
 .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+/* A muted note under a number that may wrap: a nine-column table must not grow
+   past its card for one long health note. */
+.num .wrap { white-space: normal; }
 .rank { font-weight: 700; font-size: 15px; }
 .st, .sig {
   display: inline-block;

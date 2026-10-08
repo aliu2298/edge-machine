@@ -292,7 +292,7 @@ def _rule_row(d, row, now):
         f'<td><details class="tn-rule"><summary><b>{B.esc(name)}</b>{badges}</summary>'
         f'{note_html}{_recent_html(d, row, now)}</details></td>'
         f'<td>{B.esc(venue_name(d, row))}</td>'
-        f'<td class="num">{B.esc(record_text(row["a"]))}</td>'
+        f'<td class="num">{T.record_html(row["a"])}</td>'
         f'<td class="num">{roi_cell(row)}</td>'
         f'<td>{verdict_html(row)}</td>'
         f'<td class="num">{open_n or "—"}</td></tr>')

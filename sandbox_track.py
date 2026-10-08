@@ -70,6 +70,22 @@ def record_text(a):
     return rec
 
 
+def record_html(a):
+    """record_text for a table cell: the W–L on the line, the no-result count
+    under it in the cell's small muted line, so the count never widens a
+    column of a nine-column table past its card (the Production pairs table
+    sat 5px inside its card on the CI runner's fonts before this)."""
+    n_price = a.get("n_price") or 0
+    n = a.get("n") or 0
+    if not n and not n_price:
+        return "—"
+    won = a.get("won") or 0
+    line = f"{won}–{max(0, n - won)}"
+    if n_price:
+        line += f'<div class="sm mut">{n_price} no result</div>'
+    return line
+
+
 STAKE = 100.0        # flat, always. Any staking plan mixes bet-sizing skill into the
                      # source's score, and the question here is only "is it right?".
 EDGE_MIN = 0.03      # 3pp. Below this a "disagreement" is just the tick size.
