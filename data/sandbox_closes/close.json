@@ -1,5 +1,15 @@
 {
  "closes": {
+  "corners_under:KXLALIGATCORNERS-26OCT09MCFESP-ESP4": {
+   "at": "2026-10-09T18:49:05+00:00",
+   "lead_min": 10.9,
+   "price": 0.44
+  },
+  "crypto_fav_band:KXETHD-26OCT0917-T2469.99": {
+   "at": "2026-10-09T18:49:05+00:00",
+   "lead_min": 15.9,
+   "price": 0.82
+  },
   "espn_fpi:aec-mlb-bos-nyy-2026-09-29": {
    "at": "2026-09-29T23:11:19+00:00",
    "lead_min": 48.7,
@@ -33,6 +43,11 @@
   "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT01UZBSYR-2": {
    "at": "2026-10-01T13:52:20+00:00",
    "lead_min": 7.7,
+   "price": 0.72
+  },
+  "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT09BRASPO-2": {
+   "at": "2026-10-09T18:49:05+00:00",
+   "lead_min": 25.9,
    "price": 0.72
   },
   "o25_congestion:KXINTLFRIENDLYTOTAL-26OCT01UZBSYR-3": {
@@ -69,6 +84,11 @@
    "at": "2026-09-30T02:21:47+00:00",
    "lead_min": 8.2,
    "price": 0.87
+  },
+  "p05_unbeaten:KXLIGAPORTUGALGAME-26OCT09BRASPO-BRA": {
+   "at": "2026-10-09T18:49:05+00:00",
+   "lead_min": 25.9,
+   "price": 0.7
   },
   "p05_unbeaten:KXSAUDIPLGAME-26OCT09AKHQAD-AKH": {
    "at": "2026-10-09T13:10:10+00:00",
@@ -206,5 +226,5 @@
    "price": 0.81
   }
  },
- "updated": "2026-10-09T13:10:10+00:00"
+ "updated": "2026-10-09T18:49:05+00:00"
 }
