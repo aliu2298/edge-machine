@@ -1,8 +1,8 @@
 {
  "closes": {
   "bund_o35:KXBUNDESLIGATOTAL-26OCT09BVBSVW-4": {
-   "at": "2026-10-09T18:05:04+00:00",
-   "lead_min": 24.9,
+   "at": "2026-10-09T18:20:08+00:00",
+   "lead_min": 9.9,
    "price": 0.43
   },
   "commod_fav_band:KXNATGASD-26OCT0817-T3.200": {
@@ -16,8 +16,8 @@
    "price": 0.86
   },
   "corners_under:KXLALIGATCORNERS-26OCT09MCFESP-ESP4": {
-   "at": "2026-10-09T18:05:04+00:00",
-   "lead_min": 54.9,
+   "at": "2026-10-09T18:20:08+00:00",
+   "lead_min": 39.9,
    "price": 0.45
   },
   "crypto_fav_band:KXBTCD-26OCT0617-T85249.99": {
@@ -41,14 +41,19 @@
    "price": 0.99
   },
   "crypto_fav_band:KXETHD-26OCT0917-T2469.99": {
-   "at": "2026-10-09T18:05:04+00:00",
-   "lead_min": 59.9,
+   "at": "2026-10-09T18:20:08+00:00",
+   "lead_min": 44.9,
    "price": 0.82
   },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT06COLPER-2": {
    "at": "2026-10-06T23:33:48+00:00",
    "lead_min": 11.2,
    "price": 0.71
+  },
+  "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT09BRASPO-2": {
+   "at": "2026-10-09T18:20:08+00:00",
+   "lead_min": 54.9,
+   "price": 0.75
   },
   "o15_ranked:KXUEFANLTOTAL-26OCT06MDASVK-2": {
    "at": "2026-10-06T18:44:07+00:00",
@@ -110,9 +115,14 @@
    "lead_min": 10.2,
    "price": 0.9
   },
+  "p05_unbeaten:KXLIGAPORTUGALGAME-26OCT09BRASPO-BRA": {
+   "at": "2026-10-09T18:20:08+00:00",
+   "lead_min": 54.9,
+   "price": 0.69
+  },
   "p05_unbeaten:KXLIGUE1GAME-26OCT09RCLOL-RCL": {
-   "at": "2026-10-09T18:05:04+00:00",
-   "lead_min": 39.9,
+   "at": "2026-10-09T18:20:08+00:00",
+   "lead_min": 24.9,
    "price": 0.64
   },
   "p05_unbeaten:KXSAUDIPLGAME-26OCT09AKHQAD-AKH": {
@@ -336,5 +346,5 @@
    "price": 0.81
   }
  },
- "updated": "2026-10-09T18:05:04+00:00"
+ "updated": "2026-10-09T18:20:08+00:00"
 }
