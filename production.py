@@ -31,7 +31,7 @@ data/production_leads.json is the machine-readable feed. It has the Leads ledger
 An empty feed is normal until the first pair arrives. This file only ever changes when the
 tracker runs (every 3h).
 """
-import datetime, html, json, os, sys
+import datetime, html, json, os, re, sys
 
 import fmt
 import sandbox_sources as S
@@ -741,6 +741,56 @@ def _held_note(held, blob):
             f'has been confirmed.</div>')
 
 
+# The sport sections of the pairs table, in this order; a sport the ledger adds
+# later lands after these, alphabetically. A sport with no pair is not drawn.
+SPORT_ORDER = ("Soccer", "Cricket", "Tennis", "Crypto", "Commodities")
+# Coming up shows leads inside this many hours by default; later days fold.
+SOON_H = 24
+# Recently settled shows this many days by default; older rows fold.
+RECENT_DAYS = 7
+
+
+def sport_group(sport):
+    """The sport a pair belongs to, from its registered label: 'Soccer · Over 1.5' is
+    Soccer, 'Commodities · Favourite band' is Commodities. A lane not in the registry
+    is its own group under its key, so a new lane cannot fall out of the page."""
+    label = str(S.SPORTS.get(sport, sport) or sport)
+    return label.split(" · ")[0].strip() or str(sport)
+
+
+def sport_key(group):
+    """The data-sport token a chip and a row share: 'Polymarket US' -> 'polymarket-us'."""
+    return re.sub(r"[^a-z0-9]+", "-", str(group).lower()).strip("-")
+
+
+def ordered_groups(groups):
+    """SPORT_ORDER first, then anything else by name."""
+    rank = {name: i for i, name in enumerate(SPORT_ORDER)}
+    return sorted(set(groups), key=lambda g: (rank.get(g, len(rank)), g))
+
+
+def _group_record(lives):
+    """One record across a sport's pairs since Production: wins, losses, no-results
+    and the ROI after fees over every stake (flat stakes, so the n-weighted mean)."""
+    n = sum(int(l.get("n") or 0) for l in lives)
+    n_price = sum(int(l.get("n_price") or 0) for l in lives)
+    won = sum(int(l.get("won") or 0) for l in lives)
+    stakes = sum(int(l.get("n") or 0) + int(l.get("n_price") or 0) for l in lives)
+    roi = (sum((l.get("roi_fee") or 0) * (int(l.get("n") or 0) + int(l.get("n_price") or 0))
+               for l in lives) / stakes) if stakes else None
+    return dict(n=n, won=won, n_price=n_price, roi_fee=roi)
+
+
+def sport_chips(groups):
+    """All · the sports present, as the home page's filter pills. All starts pressed."""
+    parts = ['<button type="button" data-sport="all" aria-pressed="true">All</button>']
+    for g in ordered_groups(groups):
+        parts.append(f'<button type="button" data-sport="{esc(sport_key(g))}" '
+                     f'aria-pressed="false">{esc(g)}</button>')
+    return ('<nav class="sports sport-filter prod-filter" aria-label="Sport filter" '
+            'data-controls="coming-up recent">' + "".join(parts) + "</nav>")
+
+
 def page(d, st, blob, style, now=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -785,6 +835,8 @@ def page(d, st, blob, style, now=None):
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
     cards = []
     n_early = 0
+    # Each pair's row, its since-Production record and its leads to come, by sport.
+    groups = {}
     for key, pair in sorted(pairs.items(), key=lambda kv: (sport_of(kv[0]), name(kv[0]))):
         source, sport = key.split("|", 1)
         since = entered_at(pair)
@@ -850,6 +902,11 @@ def page(d, st, blob, style, now=None):
         early = early_state(pair, live["n"])
         if early:
             n_early += 1
+        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0))
+        group["lives"].append(live)
+        group["to_come"] += to_come
+        group["early"] += 1 if early else 0
+        group["rows"].append(len(cards))
         cards.append(f"""<tr>
 <td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
@@ -860,62 +917,112 @@ def page(d, st, blob, style, now=None):
 <td class="num">{light}<div class="sm mut wrap">{esc(why)}</div></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
-    pairs_html = (f"""<div class="tbl"><table>
-<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
+    pairs_head = """<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
 <th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
-<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>
-{''.join(cards)}</table></div>
-<p class="sm mut">Reaches the feed counts the pair's bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>""" if cards else
-        '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
-        'the Sandbox measured.</div>')
+<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>"""
+    # One section per sport, in SPORT_ORDER, with the same columns in each. The
+    # summary line is the sport's combined since-Production record, greyed under
+    # EARLY_N settled bets the way a pair's own is, and its leads still to come.
+    # A sport with leads to come starts open; the rest start folded.
+    sections = []
+    for g in ordered_groups(groups):
+        grp = groups[g]
+        rec = _group_record(grp["lives"])
+        n_pairs = len(grp["rows"])
+        bits = [f'{n_pairs} pair{"s" if n_pairs != 1 else ""}'
+                + (f' ({grp["early"]} early)' if grp["early"] else "")]
+        if rec["n"] or rec["n_price"]:
+            bits.append(f'since Production {T.record_text(rec)}')
+            bits.append(f'<span class="{tone(rec["roi_fee"], rec["n"] >= EARLY_N)}">{pct(rec["roi_fee"])}</span>'
+                        + (' <span class="sm">too early</span>' if rec["n"] < EARLY_N else ""))
+        else:
+            bits.append("nothing settled since Production")
+        bits.append(f'{grp["to_come"]} lead{"s" if grp["to_come"] != 1 else ""} to come')
+        rows = "".join(cards[i] for i in grp["rows"])
+        sections.append(
+            f'<details class="fold sport-fold" data-sport="{esc(sport_key(g))}"'
+            f'{" open" if grp["to_come"] else ""}>'
+            f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
+            f'<div class="tbl"><table>{pairs_head}{rows}</table></div></details>')
+    pairs_html = ("".join(sections) +
+                  '<p class="sm mut">Reaches the feed counts the pair\'s bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>'
+                  if cards else
+                  '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
+                  'the Sandbox measured.</div>')
 
     # ---- what is coming up, a table per day ----
-    by_day = {}
-    for l in upcoming:
-        # A bad kickoff still gets a row. Dropping it would hide the lead.
-        by_day.setdefault(_chicago_day(l.get("kickoff")), []).append(l)
-    days_html = ""
-    known = sorted((day, ls) for day, ls in by_day.items() if day is not None)
-    unknown = by_day.get(None)
-    ordered = known + ([(None, unknown)] if unknown else [])
-    for i, (day, ls) in enumerate(ordered):
-        rows = "".join(
-            f"""<tr><td class="mut">{esc(_ct_when(l.get('kickoff')))}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
+    lead_group = lambda l: sport_group(str(l.get("pair") or "").split("|")[-1])
+    lead_attr = lambda l: f' data-sport="{esc(sport_key(lead_group(l)))}"'
+    lead_head = ('<tr><th>Starts</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>'
+                 '<th class="num">Logged at</th></tr>')
+
+    def lead_row(l, when):
+        return (f"""<tr{lead_attr(l)}><td class="mut">{esc(when)}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
 <td>{esc(fmt.contest(l['match']))}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
-<td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
-            for l in ls)
-        # Each day folds; the soonest one starts open, since that is what a visitor came for.
-        label = PLACEHOLDER_DATE if day is None else _day_label(day, today)
-        days_html += (f"""<details class="fold"{' open' if i == 0 else ''}><summary>{esc(label)}
+<td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>""")
+
+    def day_fold(label, ls, opened):
+        rows = "".join(lead_row(l, _ct_when(l.get("kickoff"))) for l in ls)
+        return (f"""<details class="fold"{' open' if opened else ''}><summary>{esc(label)}
 <span class="mut sm">· {len(ls)} lead{'s' if len(ls) != 1 else ''}</span></summary>
-<div class="tbl"><table><tr><th>Starts</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr>{rows}</table></div></details>""")
+<div class="tbl"><table>{lead_head}{rows}</table></div></details>""")
+
+    # The next SOON_H hours by day, open; every later day folded under one line.
+    soon_cut = (now_dt + datetime.timedelta(hours=SOON_H)).strftime("%Y-%m-%dT%H:%MZ")
+    by_day, later_by_day = {}, {}
+    for l in upcoming:
+        bucket = by_day if str(l.get("kickoff")) <= soon_cut else later_by_day
+        # A bad kickoff still gets a row. Dropping it would hide the lead.
+        bucket.setdefault(_chicago_day(l.get("kickoff")), []).append(l)
+    known = sorted((day, ls) for day, ls in by_day.items() if day is not None)
+    days_html = "".join(day_fold(PLACEHOLDER_DATE if day is None else _day_label(day, today), ls, True)
+                        for day, ls in known + ([(None, by_day[None])] if by_day.get(None) else []))
+    later = sorted((day, ls) for day, ls in later_by_day.items() if day is not None)
+    if later_by_day.get(None):
+        later.append((None, later_by_day[None]))
+    if later:
+        n_later = sum(len(ls) for _d, ls in later)
+        inner = "".join(day_fold(PLACEHOLDER_DATE if day is None else _day_label(day, today), ls, False)
+                        for day, ls in later)
+        days_html += (f'<details class="fold later" id="coming-later"><summary>Later'
+                      f'<span class="mut sm">· {n_later} lead{"s" if n_later != 1 else ""} over '
+                      f'{len(later)} day{"s" if len(later) != 1 else ""}</span></summary>{inner}</details>')
     if unknown_up:
-        rows = "".join(
-            f"""<tr><td class="mut">{_KICKOFF_UNKNOWN}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
-<td>{esc(fmt.contest(l['match']))}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
-<td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>"""
-            for l in unknown_up)
+        rows = "".join(lead_row(l, _KICKOFF_UNKNOWN) for l in unknown_up)
         days_html += (f"""<details class="fold"><summary>{_KICKOFF_UNKNOWN}
 <span class="mut sm">· {len(unknown_up)} lead{'s' if len(unknown_up) != 1 else ''}</span></summary>
-<div class="tbl"><table><tr><th>Starts</th><th>Competition</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Logged at</th></tr>{rows}</table></div></details>""")
+<div class="tbl"><table>{lead_head}{rows}</table></div></details>""")
     upcoming_html = days_html or ('<div class="note">Nothing is scheduled. A lead appears here when a '
                                   'Production pair logs a bet on a contest with a verified start time.</div>')
+    n_soon = sum(len(ls) for ls in by_day.values())
 
     # ---- how the recent ones landed ----
     # The 25 newest readable kickoffs, then every settled lead whose kickoff
     # cannot be read, so a missing kickoff cannot fall off the end of the list.
-    recent = settled_known[:25] + settled_unknown
-    rec_rows = "".join(
-        f"""<tr><td class="mut">{esc(_ct_when(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(fmt.contest(l['match']))}</td>
+    def settled_row(l):
+        return (f"""<tr{lead_attr(l)}><td class="mut">{esc(_ct_when(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(fmt.contest(l['match']))}</td>
 <td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
-<td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else (T.NO_RESULT_LABEL if l['status'] == 'price' else 'missed')}</span></td></tr>"""
-        for l in recent)
+<td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else (T.NO_RESULT_LABEL if l['status'] == 'price' else 'missed')}</span></td></tr>""")
+
+    settled_head = ('<tr><th>Kickoff</th><th>Match</th><th>Lead</th><th>From</th>'
+                    '<th class="num">Result</th></tr>')
+    # The last RECENT_DAYS days, then every settled lead whose kickoff cannot be
+    # read, so a missing kickoff cannot fall off the end of the list. Older
+    # settled leads fold under one line.
+    recent_cut = (now_dt - datetime.timedelta(days=RECENT_DAYS)).strftime("%Y-%m-%dT%H:%MZ")
+    recent = [l for l in settled_known if str(l.get("kickoff")) >= recent_cut] + settled_unknown
+    older = [l for l in settled_known if str(l.get("kickoff")) < recent_cut]
+    rec_rows = "".join(settled_row(l) for l in recent)
     hits = sum(1 for l in landed if l["status"] == "hit")
-    recent_html = (f"""<div class="tbl"><table><tr><th>Kickoff</th><th>Match</th><th>Lead</th><th>From</th>
-<th class="num">Result</th></tr>{rec_rows}</table></div>""" if rec_rows else
-                   '<div class="note">Nothing has settled since these pairs were moved.</div>')
+    recent_html = (f"""<div class="tbl"><table>{settled_head}{rec_rows}</table></div>""" if rec_rows else
+                   ('<div class="note">Nothing has settled since these pairs were moved.</div>' if not older else
+                    f'<div class="note">Nothing settled in the last {RECENT_DAYS} days.</div>'))
+    if older:
+        recent_html += (f'<details class="fold later" id="recent-older"><summary>Older'
+                        f'<span class="mut sm">· {len(older)} lead{"s" if len(older) != 1 else ""} before the last '
+                        f'{RECENT_DAYS} days</span></summary>'
+                        f'<div class="tbl"><table>{settled_head}{"".join(settled_row(l) for l in older)}</table></div></details>')
+    chips = sport_chips([lead_group(l) for l in upcoming + unknown_up + settled_known + settled_unknown])
 
     nxt = _ct_when(upcoming[0].get("kickoff")) if upcoming else "None scheduled"
     held = blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
@@ -933,8 +1040,8 @@ def page(d, st, blob, style, now=None):
 </div>
 
 <section id="pairs">
-<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}{f' · {n_early} early' if n_early else ''}</span></summary>
-<p class="sm mut">Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
+<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}{f' · {n_early} early' if n_early else ''} · {len(groups)} sport{'s' if len(groups) != 1 else ''}</span></summary>
+<p class="sm mut">By sport, each sport's combined record since Production on its line. Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
 and its record since it entered Production. Under {EARLY_N} settled bets an ROI is grey: one win at 0.46 reads
 +117%, and means nothing yet. A pair moved on or after {EARLY_STATE_SINCE} carries an <b>Early</b> badge with its
 settled count until it reaches {EARLY_N}. CLV is the closing price minus the price at logging: positive means its
@@ -942,8 +1049,10 @@ leads got dearer after they were published.</p>
 {pairs_html}</details>
 </section>
 
+{chips}
+
 <section id="coming-up">
-<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {_coming_up_count(len(upcoming), len(by_day))}</span></summary>
+<details class="fold sec" open><summary><h2>Coming up</h2> <span class="mut sm">· {_coming_up_count(len(upcoming), len(by_day) + len(later_by_day))}{f' · {n_soon} in the next {SOON_H}h' if later_by_day else ''}</span></summary>
 {upcoming_html}</details>
 </section>
 

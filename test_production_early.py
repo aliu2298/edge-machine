@@ -308,7 +308,8 @@ d10 = {"quotes": [_settled(i, KEY) for i in range(10)]}
 html10 = PR.page(d10, {"pairs": {KEY: dict(_new)}}, {"leads": {}, "pairs": {}}, "", now=page_now)
 ok("Early" not in html10.split("<section", 1)[1].split("</section>", 1)[0].split("<p class", 1)[0]
    and 'sig w early' not in html10, "at ten settled the badge is gone from the table")
-ok("· 1</span>" in html10 and "early</span>" not in html10, "and the fold no longer counts an early pair")
+ok("· 1 · 1 sport</span>" in html10 and "early" not in html10.split('id="pairs"', 1)[1].split("</summary>", 1)[0],
+   "and the fold no longer counts an early pair")
 _empty = PR.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=page_now)
 ok('sig w early' not in _empty and "early</span>" not in _empty, "an empty Production has nothing to badge")
 
