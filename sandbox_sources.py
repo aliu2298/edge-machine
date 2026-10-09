@@ -7747,9 +7747,45 @@ def commod_fav_close_et(series):
     return COMMOD_FAV_CLOSE_ET.get(series, COMMOD_FAV_DEFAULT_CLOSE_ET)
 
 
-def commod_fav_trading_day(day):
-    """Is this Eastern calendar day one the commodity ladders settle on?"""
-    return day.weekday() < 5 and day.isoformat() not in COMMOD_FAV_HOLIDAYS
+# WHICH WEEKDAYS EACH DAILY SERIES SETTLES ON (2026-10-09, with the move to Production).
+# KXWTI lists Monday to Friday. The five 17:00 ET series list Monday to Thursday only:
+# Friday's 17:00 close is their WEEKLY series (KXGOLDW and kin), a different ticker and
+# not this lane's contract. The scanner and the Production feed read one calendar, so a
+# rung on a day its series does not trade is neither logged nor published.
+COMMOD_FAV_TRADING_WEEKDAYS = {"KXWTI": (0, 1, 2, 3, 4)}
+COMMOD_FAV_DEFAULT_WEEKDAYS = (0, 1, 2, 3)
+
+
+def commod_fav_weekdays(series):
+    """The weekdays (Monday 0) this series' daily ladder settles on."""
+    return COMMOD_FAV_TRADING_WEEKDAYS.get(series, COMMOD_FAV_DEFAULT_WEEKDAYS)
+
+
+def commod_fav_trading_day(day, series=None):
+    """Is this Eastern calendar day one the commodity ladders settle on?
+
+    With a series, that series' own weekdays; without one, any weekday the lane
+    trades at all (Monday to Friday). A US exchange holiday is no trading day for any.
+    """
+    weekdays = commod_fav_weekdays(series) if series else (0, 1, 2, 3, 4)
+    return day.weekday() in weekdays and day.isoformat() not in COMMOD_FAV_HOLIDAYS
+
+
+def ladder_close_trades(q):
+    """Does this ladder rung settle on a day its series trades? True for every rung
+    that is not a commodity. A commodity rung whose close falls on a weekend, a US
+    exchange holiday, or a Friday for a Monday-to-Thursday series is refused: the
+    daily series lists no such market, so the lead could only be a mistake."""
+    if q.get("sport") != "commodities_fav":
+        return True
+    try:
+        close = datetime.fromisoformat(str(q.get("start")).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return False
+    if close.tzinfo is None:
+        close = close.replace(tzinfo=timezone.utc)
+    series = str(q.get("market_id") or "").split("-")[0]
+    return commod_fav_trading_day(close.astimezone(COMMOD_FAV_TZ).date(), series)
 
 
 def commod_fav_windows(now):
@@ -7773,7 +7809,8 @@ def commod_fav_windows(now):
             close = et.replace(year=day.year, month=day.month, day=day.day, hour=hour,
                                minute=minute, second=0, microsecond=0)
             end = close - timedelta(hours=COMMOD_FAV_MIN_H)
-            if commod_fav_trading_day(day) and et <= end:
+            # The group shares one close and one calendar (its first series' weekdays).
+            if commod_fav_trading_day(day, series[0]) and et <= end:
                 break
             day += timedelta(days=1)
         start = close - timedelta(hours=COMMOD_FAV_MAX_H)
@@ -7830,9 +7867,10 @@ def fetch_commod_fav_band(sport, universe=None, now=None):
         # series is a different contract with a different hold.
         if (local.hour, local.minute) != commod_fav_close_et(series):
             continue
-        # A trading day only. A rung listed on a weekend or a holiday is refused.
-        if not commod_fav_trading_day(local.date()):
-            skipped.setdefault(series, f"{local.date()} is not a trading day")
+        # A trading day for THIS series only. A rung listed on a weekend, a holiday, or
+        # a Friday for a Monday-to-Thursday series is refused.
+        if not commod_fav_trading_day(local.date(), series):
+            skipped.setdefault(series, f"{local.date()} is not a trading day for {series}")
             continue
         hours = (exp - now).total_seconds() / 3600.0
         if not (COMMOD_FAV_MIN_H <= hours <= COMMOD_FAV_MAX_H):
