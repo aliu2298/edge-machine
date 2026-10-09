@@ -921,6 +921,42 @@
    "pair": "crypto_fav_band|crypto_fav",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-09T04:31:34+00:00",
+   "evidence": {
+    "base_roi": 0.2553,
+    "clv": 0.1033,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 0.2553,
+    "roi": 0.2553,
+    "roi_fee": 0.2376,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.5052
+   },
+   "pair": "commod_fav_band|commodities_fav",
+   "reason": "moved to Production by hand on 2026-10-09",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-09T04:31:34+00:00",
+   "evidence": {
+    "base_roi": 0.2553,
+    "clv": 0.1033,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 0.2553,
+    "roi": 0.2553,
+    "roi_fee": 0.2376,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.5052
+   },
+   "pair": "commod_fav_band|commodities_fav",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -942,6 +978,26 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
+  },
+  "commod_fav_band|commodities_fav": {
+   "by_hand": "2026-10-09",
+   "entry": {
+    "base_roi": 0.2553,
+    "clv": 0.1033,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 0.2553,
+    "roi": 0.2553,
+    "roi_fee": 0.2376,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.5052
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-09T04:31:34+00:00",
+   "ready_at": "2026-10-09T04:31:34+00:00",
+   "ready_since": "2026-10-09T04:31:34+00:00",
    "stage": "production"
   },
   "crypto_fav_band|crypto_fav": {
@@ -1203,5 +1259,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-09T03:50:59+00:00"
+ "updated": "2026-10-09T04:31:34+00:00"
 }
