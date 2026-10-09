@@ -12,6 +12,7 @@
       api.containWideTables(document);
       api.wireRuleCards(document);
       api.wireRuleRows(document);
+      api.wireSportFilter(document);
       api.revealHash(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
@@ -374,6 +375,61 @@
     });
   }
 
+  // A row of sport pills over one or more lists (Production's Coming up and
+  // Recently settled). One pill is pressed; a row whose data-sport is another
+  // sport is hidden, a day fold with nothing left to show folds away, and a
+  // list with nothing left says so. All shows everything again. With script
+  // off, every row is on the page and the pills do nothing.
+  function wireSportFilter(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll("nav.sport-filter[data-controls]"), function (nav) {
+      var ids = (nav.getAttribute("data-controls") || "").split(/\s+/).filter(Boolean);
+      var buttons = nav.querySelectorAll("button[data-sport]");
+      if (!ids.length || !buttons.length) return;
+      function sections() {
+        return ids.map(function (id) { return doc.getElementById(id); }).filter(Boolean);
+      }
+      function apply(key) {
+        Array.prototype.forEach.call(buttons, function (btn) {
+          btn.setAttribute("aria-pressed", btn.getAttribute("data-sport") === key ? "true" : "false");
+        });
+        nav.setAttribute("data-sport-filter", key);
+        sections().forEach(function (section) {
+          var shown = 0;
+          Array.prototype.forEach.call(section.querySelectorAll("tr[data-sport]"), function (row) {
+            var on = key === "all" || row.getAttribute("data-sport") === key;
+            paintRow(row, on);
+            if (on) shown += 1;
+          });
+          // A day fold (or the Later / Older fold) with no row left is hidden
+          // whole, so the list is not a run of empty headings.
+          Array.prototype.forEach.call(section.querySelectorAll("details.fold:not(.sec)"), function (fold) {
+            var any = Array.prototype.some.call(fold.querySelectorAll("tr[data-sport]"), function (row) {
+              return !row.hidden;
+            });
+            fold.hidden = !any;
+          });
+          var note = section.querySelector(".sport-filter-empty");
+          if (!note) {
+            note = doc.createElement("p");
+            note.className = "note sport-filter-empty";
+            note.hidden = true;
+            var fold = section.querySelector("details.sec");
+            (fold || section).appendChild(note);
+          }
+          var pressed = nav.querySelector('button[data-sport="' + key + '"]');
+          var label = key === "all" ? "" : ((pressed && pressed.textContent) || key);
+          note.textContent = "No " + label + " lead here.";
+          note.hidden = shown > 0 || key === "all";
+        });
+      }
+      Array.prototype.forEach.call(buttons, function (btn) {
+        btn.addEventListener("click", function () {
+          apply(btn.getAttribute("data-sport") || "all");
+        });
+      });
+    });
+  }
+
   function enhance(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll("table.sortable"), function (table) {
       var rows = bodyRows(table);
@@ -495,6 +551,7 @@
     paintRow: paintRow,
     containWideTables: containWideTables,
     wireRuleCards: wireRuleCards,
+    wireSportFilter: wireSportFilter,
     wireRuleRows: wireRuleRows,
     revealHash: revealHash,
   };

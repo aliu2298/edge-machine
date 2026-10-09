@@ -65,7 +65,7 @@ def _coming_label(html, match):
 
 
 def _rows(section):
-    return [row for row in re.findall(r"<tr>(.*?)</tr>", section, re.S) if "<td" in row]
+    return [row for row in re.findall(r"<tr\b[^>]*>(.*?)</tr>", section, re.S) if "<td" in row]
 
 
 def _settled_date(html, match):

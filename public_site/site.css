@@ -2612,3 +2612,19 @@ details.tn-changes ol { margin: 6px 0 0; padding-left: 18px; display: grid; gap:
 @media (prefers-reduced-motion: reduce) {
   details.tn-changes > summary::before { transition: none; }
 }
+
+/* Production by sport (2026-10-09): one fold per sport in the pairs table, a
+   sport pill row over Coming up and Recently settled, and the Later / Older
+   folds. New rules only. */
+nav.sport-filter.prod-filter { margin: 24px 0 4px; }
+details.fold.sport-fold { margin: 0 0 6px; }
+details.fold.sport-fold > summary { flex-wrap: wrap; gap: 6px 10px; }
+details.fold.sport-fold > summary h3 { display: inline; margin: 0; font-size: 16px; }
+details.fold.sport-fold > summary .sm { font-weight: 500; }
+details.fold.sport-fold .tbl { margin: 6px 0 12px; }
+details.fold.later > summary { margin-top: 12px; }
+.sport-filter-empty { margin: 8px 0 0; }
+@media (max-width: 640px) {
+  details.fold.sport-fold > summary h3 { font-size: 15px; }
+  details.fold.sport-fold > summary .sm { flex: 1 0 100%; padding-left: 18px; }
+}

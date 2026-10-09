@@ -60,7 +60,7 @@ def bet(i, logged, start, status="won", placed=True, **extra):
 
 def _cells(html):
     section = html.split('id="pairs"', 1)[1].split('id="coming-up"', 1)[0]
-    rows = [row for row in re.findall(r"<tr>(.*?)</tr>", section, re.S)
+    rows = [row for row in re.findall(r"<tr\b[^>]*>(.*?)</tr>", section, re.S)
             if "fixture_kick" in row]
     if len(rows) != 1:
         return None
