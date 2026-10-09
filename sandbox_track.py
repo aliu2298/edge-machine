@@ -392,6 +392,19 @@ PAIR_OVERRIDES = {
     # under-3.5 rule backs the No on, so the league under-3.5 domain now carries two
     # publishable claims and the pick tells them apart (FEED_YES_TWIN).
     "bund_o35|soccer_u35": dict(moved_on="2026-10-08", production_at=None),
+    # 2026-10-09, as asked: the commodities favourite band, the crypto question asked of
+    # Kalshi's daily commodity ladders (KXWTI, KXBRENTD, KXGOLDD, KXSILVERD, KXCOPPERD,
+    # KXNATGASD), registered 2026-10-08 and EARLY like the six above. Its whole record
+    # at listing: one market-day settled, 3 rungs won of 3 (silver, natural gas, Brent
+    # on 2026-10-08), +23.8% after fees, and one WTI rung still open. One day says
+    # nothing, and the lane's own note says a day holds about one draw, not six. Listed
+    # so its leads publish while the read runs. The feed expresses it as it does
+    # crypto (LADDER_SPORTS): the Yes on the exact contract, the close as the kickoff,
+    # read from the market -- 18:30Z for WTI, 21:00Z for the rest -- and never for a day
+    # the series does not trade (S.ladder_close_trades). One rung per commodity per
+    # close, the 3c spread, the 25-contract ask and the 2-3.5h window are the Sandbox
+    # rule's gates at logging; the feed publishes only what the rule logged.
+    "commod_fav_band|commodities_fav": dict(moved_on="2026-10-09", production_at=None),
 }
 
 
@@ -2827,7 +2840,9 @@ FEED_YES_TWIN = {"soccer_u35": {"kind": "total_gte", "n": 4}}
 # coin's "$X or above" contract, settled at the 17:00 ET close the ticker names. The feed
 # names the exact contract, the rung, and the close. No league, no fixture, no kickoff to
 # verify: the close is a term of the contract itself.
-LADDER_SPORTS = ("crypto_fav",)
+# commodities_fav joined 2026-10-09: the same rung on Kalshi's daily commodity ladders,
+# with a per-series close (WTI 14:30 ET, the rest 17:00 ET) and a per-series calendar.
+LADDER_SPORTS = ("crypto_fav", "commodities_fav")
 
 
 def feed_pick(sport):

@@ -3342,10 +3342,11 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["bund_o35|soccer_u35", "crypto_fav_band|crypto_fav", "liga_btts_even|soccer_btts",
-    "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
-    "oddspedia|cricket", "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
-    "tennis_combo2|tennis_combo", "u35_low_scoring|soccer_u35_intl"],
+   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "crypto_fav_band|crypto_fav",
+    "liga_btts_even|soccer_btts", "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15",
+    "o15_ranked|soccer_o15_intl", "oddspedia|cricket", "team1_form_l5|soccer_team1",
+    "team1_form_l5|soccer_team1_intl", "tennis_combo2|tennis_combo",
+    "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The

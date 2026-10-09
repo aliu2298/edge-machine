@@ -84,7 +84,7 @@ ok("o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
 eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    ((0.70, 0.85), 0.0084, "2026-10-04T06:46:57+00:00"),
    "promotion touches no tennis parameter")
-eq(len(T.PAIR_OVERRIDES), 11, "five pairs before, eleven after, nothing else moved")
+eq(len(T.PAIR_OVERRIDES), 12, "five pairs before, eleven after the six, twelve with commodities (2026-10-09)")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -235,7 +235,7 @@ rung = dict(id="crypto_fav_band:KXBTCD-26OCT0817-T82749.99", source="crypto_fav_
             price_draw=None, venue="kalshi_binary", bet=True, status="open",
             start="2026-10-08T21:05:00+00:00", venue_start=None, start_source=None,
             logged="2026-10-08T17:49:59+00:00", date="2026-10-08")
-eq(T.LADDER_SPORTS, ("crypto_fav",), "the ladder sports are the crypto favourite band")
+eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav"), "the ladder sports are the crypto and commodities favourite bands")
 ok(T.placeable(rung), "a Kalshi ladder rung's Yes reaches the feed")
 ok(PR.start_verified(rung), "its close is a term of the contract, so it needs no outside verification")
 ok(not PR.start_verified(dict(rung, start="not a time")), "but a rung with no readable close is held back")
@@ -422,6 +422,140 @@ ok('<td class="num">4<div class="sm mut">settled</div></td>' in row_o15,
 ok('<td class="num">30<div class="sm mut">settled</div></td>' not in row_o15, "never 30")
 row_list = next(r for r in SB.pair_list(d_o15, st_o15) if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
 eq(row_list["since"], CLOCK, "the row carries the clock for the league split and the pick lists")
+
+# ---------------------------------------------------------------------------
+print("\ncommodities (2026-10-09): the same rung on Kalshi's daily commodity ladders")
+# ---------------------------------------------------------------------------
+CKEY = "commod_fav_band|commodities_fav"
+CMOVE = "2026-10-09"
+eq((T.PAIR_OVERRIDES.get(CKEY) or {}).get("moved_on"), CMOVE, f"{CKEY} is listed with move date {CMOVE}")
+ok(T.PAIR_OVERRIDES[CKEY].get("production_at") is None, "ready from the run that moves it")
+eq(S.SOURCES["commod_fav_band"]["sports"], ["commodities_fav"], "one pair: the lane has one sport")
+ok(not S.lane_paused("commod_fav_band", "commodities_fav") and not S.lane_removed("commod_fav_band", "commodities_fav")
+   and "commod_fav_band" not in S.PAUSED_LANES, "the lane is not paused and not removed: it logs")
+eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav"), "it is a ladder sport beside crypto")
+# No `since` on a lane that never reset, so the record is the whole record, and the
+# Early badge counts from the move like the six before it.
+_cst = {"pairs": {}, "events": []}
+T.evaluate_stages({"quotes": []}, _cst, now=NOW, verbose=False)
+_cp = _cst["pairs"][CKEY]
+eq((_cp["stage"], _cp["by_hand"], _cp["ready_at"]), ("production", CMOVE, BUILT), "it moves on the run after the merge")
+eq(PR.early_badge({"quotes": []}, CKEY, _cp), "Early · 0 bets", "and wears the Early badge with nothing settled since")
+
+# The live crypto lead downstream already reads, copied from data/production_leads.json
+# on 2026-10-09. A commodities lead must carry exactly these fields.
+CRYPTO_LEAD = {
+    "away": None, "bet": {"kind": "ladder", "side": "yes"}, "date": "2026-10-08",
+    "edge_at_log": None, "first_seen": "2026-10-08", "headline": "$80,250 or above at the close",
+    "home": None,
+    "id": "2026-10-08|KXBTCD-26OCT0817-T80249.99|$80,250 or above at the close · Crypto favourite band",
+    "kickoff": "2026-10-08T21:05Z", "lane": "production", "league": "Crypto · Favourite band",
+    "match": "Bitcoin price on Oct 8, 2026", "pair": "crypto_fav_band|crypto_fav", "price_at_log": 0.76,
+    "route": {"market": "KXBTCD-26OCT0817-T80249.99", "outcome": "$80,250 or above",
+              "outcome_side": "yes", "venue": "kalshi"},
+    "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT0817-T80249.99", "source": "crypto_fav_band",
+    "sport": "crypto_fav", "status": "hit",
+}
+
+
+def _crung(series, strike, close, price=0.78, logged=None, **over):
+    """A commodities row as the ledger stores it (store_book: bid, ask, ask_size)."""
+    token = close.strftime("%y%b%d").upper() + ("14" if series == "KXWTI" else "17")
+    q = dict(id=f"commod_fav_band:{series}-{token}-T{strike}", source="commod_fav_band",
+             sport="commodities_fav", market_id=f"{series}-{token}-T{strike}",
+             label=f"Will the {series} close price be above {strike} on {close:%B %d, %Y}?",
+             side_a=f"Above ${strike}", side_b="No", pick="a", price=price, price_a=price,
+             price_b=round(1 - price, 2), price_draw=None, venue="kalshi_binary", bet=True,
+             status="open", start=close.isoformat(), venue_start=None, start_source=None,
+             logged=(logged or close - timedelta(hours=2, minutes=50)).isoformat(),
+             date=close.strftime("%Y-%m-%d"), bid=round(price - 0.01, 2), ask=price, ask_size=200)
+    q.update(over)
+    return q
+
+
+MON = datetime.datetime(2026, 10, 12, tzinfo=timezone.utc)
+wti = _crung("KXWTI", "92.49", MON.replace(hour=18, minute=30))
+gold = _crung("KXGOLDD", "4006", MON.replace(hour=21, minute=0))
+for q, close in ((wti, "2026-10-12T18:30Z"), (gold, "2026-10-12T21:00Z")):
+    ok(T.placeable(q) and PR.start_verified(q), f"{q['market_id']}: a commodity rung's Yes reaches the feed")
+    lead = PR.lead_from_quote(q, CKEY, BUILT)
+    eq(lead["kickoff"], close, f"{q['market_id']}: the kickoff is the market's own close, read from the row")
+    eq(lead["route"], {"venue": "kalshi", "market": q["market_id"], "outcome": q["side_a"], "outcome_side": "yes"},
+       f"{q['market_id']}: routed to the exact contract and rung, Yes side")
+    eq(lead["bet"], {"kind": "ladder", "side": "yes"}, f"{q['market_id']}: the claim is a ladder Yes")
+    eq(lead["price_at_log"], 0.78, f"{q['market_id']}: the price the rule paid")
+    eq(set(lead), set(CRYPTO_LEAD) - {"last_seen", "last_seen_at"} | {"last_seen", "last_seen_at"},
+       f"{q['market_id']}: the same fields as the crypto lead, plus the open lead's last-seen stamps")
+    eq(set(lead["route"]), set(CRYPTO_LEAD["route"]), f"{q['market_id']}: the same route fields")
+    eq((lead["home"], lead["away"], lead["league"], lead["lane"], lead["status"]),
+       (None, None, "Commodities · Favourite band", "production", "pending"),
+       f"{q['market_id']}: no sides, the lane's league, pending until the close")
+eq(PR.lead_from_quote(wti, CKEY, BUILT)["match"], "WTI crude close on Oct 12, 2026", "the contest names the commodity and its close")
+eq(PR.lead_from_quote(gold, CKEY, BUILT)["headline"], "Above $4006 at the close", "the headline is the rung as Kalshi names it")
+eq(PR.lead_from_quote(gold, CKEY, BUILT)["id"],
+   "2026-10-12|KXGOLDD-26OCT1217-T4006|Above $4006 at the close · Commodities favourite band",
+   "one lead per rung per close")
+
+# The calendar: a close on a day the series does not trade is never published.
+fri = datetime.datetime(2026, 10, 9, tzinfo=timezone.utc)
+fri_gold = _crung("KXGOLDD", "4006", fri.replace(hour=21))
+fri_wti = _crung("KXWTI", "92.49", fri.replace(hour=18, minute=30))
+ok(not S.ladder_close_trades(fri_gold) and not PR.start_verified(fri_gold),
+   "a Friday 17:00 close for a Monday-to-Thursday series is held back")
+ok(S.ladder_close_trades(fri_wti) and PR.start_verified(fri_wti), "WTI's Friday 14:30 close is published")
+sat = _crung("KXWTI", "92.49", datetime.datetime(2026, 10, 10, 18, 30, tzinfo=timezone.utc))
+ok(not PR.start_verified(sat), "a Saturday close is held back")
+thanks = _crung("KXSILVERD", "58.75", datetime.datetime(2026, 11, 26, 22, 0, tzinfo=timezone.utc))
+ok(not PR.start_verified(thanks), "a US exchange holiday is held back")
+ok(S.ladder_close_trades(rung) and PR.start_verified(rung), "a crypto rung has no such calendar: every day closes")
+ok(not S.ladder_close_trades(dict(fri_wti, start="not a time")), "an unreadable close is held back")
+eq(S.commod_fav_weekdays("KXWTI"), (0, 1, 2, 3, 4), "WTI trades Monday to Friday")
+for series in ("KXBRENTD", "KXGOLDD", "KXSILVERD", "KXCOPPERD", "KXNATGASD"):
+    eq(S.commod_fav_weekdays(series), (0, 1, 2, 3), f"{series} trades Monday to Thursday")
+
+# The feed, on the lane's own schedule: the WTI window run publishes WTI, the 17:00 run
+# publishes the rest, each pending until its close and settled after it.
+cst = {"pairs": {CKEY: {"stage": "production", "by_hand": CMOVE, "ready_at": "2026-10-09T14:00:00+00:00"}}}
+at_wti = MON.replace(hour=15, minute=40)
+feed_wti = PR.build_feed({"quotes": [wti]}, cst, now=at_wti)
+eq([l["kickoff"] for l in feed_wti["leads"].values()], ["2026-10-12T18:30Z"], "the WTI window run publishes the WTI rung")
+eq((feed_wti["unlisted_skipped"], feed_wti["unverified_kickoff_skipped"]), (0, 0), "nothing held back")
+at_five = MON.replace(hour=18, minute=10)
+silver = _crung("KXSILVERD", "58.75", MON.replace(hour=21), price=0.79)
+feed_five = PR.build_feed({"quotes": [wti, gold, silver]}, cst, now=at_five)
+eq(sorted(l["kickoff"] for l in feed_five["leads"].values()), ["2026-10-12T18:30Z", "2026-10-12T21:00Z", "2026-10-12T21:00Z"],
+   "the 17:00 run adds the rest; the WTI rung, past its close but open, stays until it settles")
+won = dict(gold, status="won", result="a", pnl=28.21, settled="2026-10-12T21:30:00+00:00")
+after = PR.build_feed({"quotes": [won]}, cst, now=MON.replace(hour=23))
+eq([l["status"] for l in after["leads"].values()], ["hit"], "and reads hit once the close settles it")
+feed_fri = PR.build_feed({"quotes": [fri_gold, fri_wti]}, cst, now=fri.replace(hour=15, minute=40))
+eq([l["route"]["market"] for l in feed_fri["leads"].values()], [fri_wti["market_id"]],
+   "on a Friday only the WTI rung is published; the 17:00 series do not trade")
+eq(feed_fri["unverified_kickoff_skipped"], 1, "and the Friday gold rung is counted as held back")
+eq(PR.pair_health(CKEY, [wti, gold], 2, feed_five["pairs"], now=at_five), ("ok", "publishing"), "the light is green")
+eq(feed_five["pairs"][CKEY]["sandbox_n"], 0, "the feed's pairs map carries the since-move record (nothing settled yet)")
+
+# One rung per commodity per close, whatever the ledger holds.
+twin = _crung("KXGOLDD", "4001", MON.replace(hour=21), price=0.74, logged=MON.replace(hour=18, minute=30))
+feed_twin = PR.build_feed({"quotes": [gold, twin]}, cst, now=at_five)
+eq([l["route"]["market"] for l in feed_twin["leads"].values()], [gold["market_id"]],
+   "two gold rungs on one close publish as one lead, the rung logged first")
+feed_pair = PR.build_feed({"quotes": [gold, silver]}, cst, now=at_five)
+eq(len(feed_pair["leads"]), 2, "two commodities on one close are two leads")
+ok(S.SOURCES["commod_fav_band"].get("one_per_coin_close") is True
+   and (S.COMMOD_FAV_MAX_SPREAD, S.COMMOD_FAV_MIN_ASK_SIZE, S.COMMOD_FAV_MIN_H, S.COMMOD_FAV_MAX_H) == (0.03, 25, 2.0, 3.5),
+   "the Sandbox rule's own gates are unchanged: one per commodity per close, 3c, 25 contracts, 2-3.5h")
+
+# The pages: the commodities rule row badges like the six.
+import commodities_build
+crow = _row(CKEY, "Early · 0 bets", a=dict(n=1, won=1, expected=0.8, roi_fee=0.24, n_bets=3, unit="market-day"))
+chtml = commodities_build.rule_html([crow], {"quotes": []})
+ok('<span class="sig y">PRODUCTION</span> <span class="sig w early">Early · 0 bets</span>' in chtml,
+   "the commodities rule row shows PRODUCTION and Early · 0 bets")
+cpage = PR.page({"quotes": [dict(gold, status="won", result="a", pnl=28.21, settled="2026-10-12T21:30:00+00:00")]},
+                {"pairs": {CKEY: dict(_cp)}}, {"leads": {}, "pairs": {}}, "", now=MON.replace(hour=23))
+ok("Commodities favourite band" in cpage and 'sig w early">Early · 1 bet</span>' in cpage,
+   "the Production pairs table names the pair with its Early count")
 
 print(f"\n{len(FAILS)} FAILED" if FAILS else "\nall passed")
 sys.exit(1 if FAILS else 0)

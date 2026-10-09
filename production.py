@@ -131,7 +131,9 @@ def start_verified(q):
         # contract is written on, published by Kalshi as a term of the contract (the
         # ticker names it, KXBTCD-26OCT0717 is the Oct 7 17:00 ET close). Verified
         # whenever it parses; a rung with no readable close is held back like any other.
-        return _kickoff(q) is not None
+        # A commodity rung must also close on a day its series trades (weekday, no US
+        # exchange holiday, and not a Friday for the Monday-to-Thursday 17:00 series).
+        return _kickoff(q) is not None and S.ladder_close_trades(q)
     if q.get("sport") in T.ROUTED_SPORTS:
         # Polymarket US publishes the contest's own start; a Kalshi row has one only once
         # something has confirmed it (the tennis schedule, an ESPN fixture, or, for
@@ -142,6 +144,24 @@ def start_verified(q):
                     and (source != "kalshi_milestone" or q.get("sport") == "cricket"))
         return q.get("venue") == "polymarket_us" or verified
     return q.get("start_source") == "espn"
+
+
+def ladder_contest(q):
+    """The contest a ladder rung is a bet on, as the lead's match field.
+
+    Crypto keeps the market's own title ("Bitcoin price on Oct 8, 2026"). A commodity
+    market's title is a whole sentence, so its contest is the commodity and the close
+    it settles on ("WTI crude close on Oct 8, 2026", "Gold close on Oct 8, 2026").
+    """
+    series = str(q.get("market_id") or "").split("-")[0]
+    name = S.COMMOD_FAV_SERIES.get(series) if q.get("sport") == "commodities_fav" else None
+    if name:
+        ko = _kickoff(q)
+        if ko is not None:
+            day = ko.astimezone(S.COMMOD_FAV_TZ)
+            return f"{name} close on {fmt._MONTHS[day.month - 1]} {day.day}, {day.year}"
+        return f"{name} close"
+    return S.display_label(q).rstrip("?").strip() or str(q["market_id"])
 
 
 def lead_from_quote(q, pair_key, built):
@@ -178,7 +198,7 @@ def lead_from_quote(q, pair_key, built):
         # coin's close ("Bitcoin price on Oct 7, 2026") and the claim is the rung the
         # venue names ("$82,750 or above"), so the lead reads as the ticket would.
         home = away = None
-        contest = S.display_label(q).rstrip("?").strip() or str(q["market_id"])
+        contest = ladder_contest(q)
         headline = f"{q['side_a']} at the close"
         bet = {"kind": "ladder", "side": "yes"}
     elif True:
@@ -336,7 +356,7 @@ def build_feed(d, st, now=None):
         if S.lane_removed(source, sport):
             continue
         pairs[key] = pair
-    leads, skipped, unverified = {}, 0, 0
+    leads, skipped, unverified, logged_at = {}, 0, 0, {}
     for key, pair in pairs.items():
         source, sport = key.split("|", 1)
         for q in T.all_bets(d):
@@ -371,6 +391,8 @@ def build_feed(d, st, now=None):
                 continue
             lead = lead_from_quote(q, key, built)
             leads[lead["id"]] = lead
+            logged_at[lead["id"]] = (str(q.get("logged") or ""), float(q.get("price") or 1.0))
+    _one_rung_per_close(leads, logged_at)
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
         # The Sandbox's own record for each pair since it entered Production, counted on
@@ -383,6 +405,33 @@ def build_feed(d, st, now=None):
                   for k, p in pairs.items()},
         "leads": leads, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
     }
+
+
+def _one_rung_per_close(leads, logged_at):
+    """Keep one ladder lead per pair, series and close: the rung the rule logged first.
+
+    The Sandbox rule already takes one rung per coin or commodity per close
+    (one_per_coin_close), so this is a guard, not a selection: should two rungs of one
+    ladder ever reach the ledger for one close, the feed still names one bet, because
+    the rungs are nested and two of them is one bet counted twice. The first logged
+    wins, the lowest price on a tie, which is the rule's own choice. `logged_at` is
+    {lead id: (logged stamp, price)} from the quotes the leads were built from.
+    """
+    seen = {}
+    for lead_id, lead in list(leads.items()):
+        if lead.get("sport") not in T.LADDER_SPORTS:
+            continue
+        series = str((lead.get("route") or {}).get("market") or lead_id).split("-")[0]
+        key = (lead.get("pair"), series, lead.get("kickoff"))
+        rank = logged_at.get(lead_id) or ("", float(lead.get("price_at_log") or 1.0))
+        kept = seen.get(key)
+        if kept is None:
+            seen[key] = (rank, lead_id)
+        elif rank < kept[0]:
+            del leads[kept[1]]
+            seen[key] = (rank, lead_id)
+        else:
+            del leads[lead_id]
 
 
 def save_feed(blob, path=None):

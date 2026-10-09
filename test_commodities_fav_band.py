@@ -191,9 +191,20 @@ eq(ids([rung("KXWTI", "81.99", 0.74, start=fri, token="26OCT0914")],
 windows = S.commod_fav_windows(datetime.datetime(2026, 10, 9, 22, 0, tzinfo=timezone.utc))
 eq([w[4].astimezone(ET).strftime("%a %H:%M") for w in windows], ["Mon 14:30", "Mon 17:00"],
    "after Friday's closes the next windows are Monday's, skipping the weekend")
+# Per-series calendar since 2026-10-09 (the move to Production): WTI lists Monday to
+# Friday, the 17:00 group Monday to Thursday, so after Thanksgiving WTI's next window is
+# Friday's and the 17:00 group's is Monday's.
 windows = S.commod_fav_windows(datetime.datetime(2026, 11, 25, 23, 0, tzinfo=timezone.utc))
-eq([w[4].astimezone(ET).date().isoformat() for w in windows], ["2026-11-27", "2026-11-27"],
-   "the evening before Thanksgiving, the next windows are Friday's")
+eq([w[4].astimezone(ET).date().isoformat() for w in windows], ["2026-11-27", "2026-11-30"],
+   "the evening before Thanksgiving, the next windows are Friday's for WTI and Monday's for the 17:00 group")
+ok(S.commod_fav_trading_day(datetime.date(2026, 10, 9), "KXWTI")
+   and not S.commod_fav_trading_day(datetime.date(2026, 10, 9), "KXGOLDD")
+   and S.commod_fav_trading_day(datetime.date(2026, 10, 8), "KXGOLDD"),
+   "a Friday is a trading day for WTI and not for a 17:00 series")
+fri_gold = datetime.datetime(2026, 10, 9, 17, 0, tzinfo=ET)
+eq(ids([rung("KXGOLDD", "4006", 0.75, start=fri_gold, token="26OCT0917")],
+       fri_gold.astimezone(timezone.utc) - datetime.timedelta(hours=2, minutes=30)), [],
+   "a 17:00 rung listed on a Friday is refused: that close is the weekly series, not this lane's")
 windows = S.commod_fav_windows(datetime.datetime(2026, 10, 8, 12, 0, tzinfo=timezone.utc))
 eq([(w[4].astimezone(ET).strftime("%H:%M"), sorted(w[1])) for w in windows],
    [("14:30", ["KXWTI"]), ("17:00", ["KXBRENTD", "KXCOPPERD", "KXGOLDD", "KXNATGASD", "KXSILVERD"])],
@@ -254,8 +265,10 @@ a2 = publish_lane(d, moved, FIVE_NOW + datetime.timedelta(minutes=25))
 eq(a2, 0, "a second run inside the window logs no second gold rung")
 eq(sorted(q["market_id"] for q in lane_rows(d)), ["KXGOLDD-26OCT0817-T4016", "KXSILVERD-26OCT0817-T47.5"],
    "one row per commodity per close")
-nxt = [rung("KXGOLDD", "4006", 0.73, start=FIVE_CLOSE + datetime.timedelta(days=1), token="26OCT0917")]
-a3 = publish_lane(d, nxt, FIVE_NOW + datetime.timedelta(days=1))
+# The next trading day for a 17:00 series after Thursday Oct 8 is Monday Oct 12; its
+# Friday close is the weekly series and is refused (per-series calendar, 2026-10-09).
+nxt = [rung("KXGOLDD", "4006", 0.73, start=FIVE_CLOSE + datetime.timedelta(days=4), token="26OCT1217")]
+a3 = publish_lane(d, nxt, FIVE_NOW + datetime.timedelta(days=4))
 eq(a3, 1, "the next trading day's close is a new bet")
 
 d = temp_ledger()
