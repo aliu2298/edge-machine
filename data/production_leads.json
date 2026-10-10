@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-10T12:10:38+00:00",
+ "board_built_at": "2026-10-10T15:53:09+00:00",
  "leads": {
   "2026-10-03|Canada|Peru|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Peru",
@@ -822,8 +822,6 @@
    "id": "2026-10-10|1. FC Union Berlin|SV Elversberg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
    "kickoff": "2026-10-10T13:30Z",
    "lane": "production",
-   "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
    "league": "Bundesliga",
    "match": "1. FC Union Berlin v SV Elversberg",
    "pair": "bund_o35|soccer_u35",
@@ -831,7 +829,7 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT10UNISVE-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-10|AS Monaco|Toulouse|AS Monaco to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Toulouse",
@@ -849,7 +847,7 @@
    "kickoff": "2026-10-10T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Ligue 1",
    "match": "AS Monaco v Toulouse",
    "pair": "team1_form_l5|soccer_team1",
@@ -857,30 +855,6 @@
    "sandbox_quote": "team1_form_l5:KXLIGUE1TEAMTOTAL-26OCT10ASMTFC-ASM1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
-   "status": "pending"
-  },
-  "2026-10-10|Alav\u00e9s|Atl\u00e9tico Madrid|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
-   "away": "Atl\u00e9tico Madrid",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-10",
-   "edge_at_log": null,
-   "first_seen": "2026-10-06",
-   "headline": "Both teams to score",
-   "home": "Alav\u00e9s",
-   "id": "2026-10-10|Alav\u00e9s|Atl\u00e9tico Madrid|Both teams to score \u00b7 La Liga BTTS in balanced matches",
-   "kickoff": "2026-10-10T14:15Z",
-   "lane": "production",
-   "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
-   "league": "La Liga",
-   "match": "Alav\u00e9s v Atl\u00e9tico Madrid",
-   "pair": "liga_btts_even|soccer_btts",
-   "price_at_log": 0.54,
-   "sandbox_quote": "liga_btts_even:KXLALIGABTTS-26OCT10ALAATM-BTTS",
-   "source": "liga_btts_even",
-   "sport": "soccer_btts",
    "status": "pending"
   },
   "2026-10-10|Brest|Angers|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
@@ -898,7 +872,7 @@
    "kickoff": "2026-10-10T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Ligue 1",
    "match": "Brest v Angers",
    "pair": "o15_ranked|soccer_o15",
@@ -922,8 +896,6 @@
    "id": "2026-10-10|FC Augsburg|Bayern Munich|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
    "kickoff": "2026-10-10T13:30Z",
    "lane": "production",
-   "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
    "league": "Bundesliga",
    "match": "FC Augsburg v Bayern Munich",
    "pair": "bund_o35|soccer_u35",
@@ -931,7 +903,7 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT10FCABMU-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-10|Mainz|Bayer Leverkusen|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Bayer Leverkusen",
@@ -947,8 +919,6 @@
    "id": "2026-10-10|Mainz|Bayer Leverkusen|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
    "kickoff": "2026-10-10T13:30Z",
    "lane": "production",
-   "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
    "league": "Bundesliga",
    "match": "Mainz v Bayer Leverkusen",
    "pair": "bund_o35|soccer_u35",
@@ -956,7 +926,7 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT10M05LEV-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-10|New England Revolution|Seattle Sounders FC|Seattle Sounders FC to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Seattle Sounders FC",
@@ -974,7 +944,7 @@
    "kickoff": "2026-10-10T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "MLS",
    "match": "New England Revolution v Seattle Sounders FC",
    "pair": "team1_form_l5|soccer_team1",
@@ -999,7 +969,7 @@
    "kickoff": "2026-10-10T16:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Bundesliga",
    "match": "RB Leipzig v Eintracht Frankfurt",
    "pair": "bund_o35|soccer_u35",
@@ -1025,7 +995,7 @@
    "kickoff": "2026-10-10T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "La Liga",
    "match": "Real Madrid v Villarreal",
    "pair": "team1_form_l5|soccer_team1",
@@ -1049,8 +1019,6 @@
    "id": "2026-10-10|SC Paderborn 07|VfB Stuttgart|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
    "kickoff": "2026-10-10T13:30Z",
    "lane": "production",
-   "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
    "league": "Bundesliga",
    "match": "SC Paderborn 07 v VfB Stuttgart",
    "pair": "bund_o35|soccer_u35",
@@ -1058,7 +1026,7 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT10PADVFB-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-10|TSG Hoffenheim|Hamburg SV|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Hamburg SV",
@@ -1074,8 +1042,6 @@
    "id": "2026-10-10|TSG Hoffenheim|Hamburg SV|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
    "kickoff": "2026-10-10T13:30Z",
    "lane": "production",
-   "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
    "league": "Bundesliga",
    "match": "TSG Hoffenheim v Hamburg SV",
    "pair": "bund_o35|soccer_u35",
@@ -1083,7 +1049,7 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT10TSGHSV-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-11|Como|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "AS Roma",
@@ -1101,7 +1067,7 @@
    "kickoff": "2026-10-11T10:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Serie A",
    "match": "Como v AS Roma",
    "pair": "team1_form_l5|soccer_team1",
@@ -1126,7 +1092,7 @@
    "kickoff": "2026-10-11T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Bundesliga",
    "match": "FC Cologne v Borussia M\u00f6nchengladbach",
    "pair": "bund_o35|soccer_u35",
@@ -1151,7 +1117,7 @@
    "kickoff": "2026-10-11T13:00Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Serie A",
    "match": "Lecce v Bologna",
    "pair": "o15_ranked|soccer_o15",
@@ -1176,7 +1142,7 @@
    "kickoff": "2026-10-11T16:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "La Liga",
    "match": "Real Betis v Osasuna",
    "pair": "o15_ranked|soccer_o15",
@@ -1201,7 +1167,7 @@
    "kickoff": "2026-10-11T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Bundesliga",
    "match": "SC Freiburg v Schalke 04",
    "pair": "bund_o35|soccer_u35",
@@ -1226,7 +1192,7 @@
    "kickoff": "2026-10-11T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Serie A",
    "match": "Sassuolo v AC Milan",
    "pair": "o15_ranked|soccer_o15",
@@ -1252,7 +1218,7 @@
    "kickoff": "2026-10-11T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Portland Timbers",
    "pair": "team1_form_l5|soccer_team1",
@@ -1278,7 +1244,7 @@
    "kickoff": "2026-10-11T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LA Galaxy",
    "pair": "team1_form_l5|soccer_team1",
@@ -1303,7 +1269,7 @@
    "kickoff": "2026-10-12T19:15Z",
    "lane": "production",
    "last_seen": "2026-10-10",
-   "last_seen_at": "2026-10-10T12:10:38+00:00",
+   "last_seen_at": "2026-10-10T15:53:09+00:00",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Alverca",
    "pair": "o15_ranked|soccer_o15",
@@ -1321,10 +1287,10 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
-   "sandbox_clv": -0.06,
-   "sandbox_n": 1,
-   "sandbox_roi": 1.0408,
-   "sandbox_roi_fee": 0.9705
+   "sandbox_clv": -0.0217,
+   "sandbox_n": 6,
+   "sandbox_roi": 0.2773,
+   "sandbox_roi_fee": 0.236
   },
   "commod_fav_band|commodities_fav": {
    "by_hand": "2026-10-09",
@@ -1431,10 +1397,10 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
-   "sandbox_clv": -0.0025,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.206,
-   "sandbox_roi_fee": 0.1703
+   "sandbox_clv": 0.0042,
+   "sandbox_n": 4,
+   "sandbox_roi": 0.3088,
+   "sandbox_roi_fee": 0.2704
   },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
@@ -1450,6 +1416,6 @@
  },
  "stage": "production",
  "unlisted_skipped": 0,
- "unverified_kickoff_skipped": 4,
- "updated_at": "2026-10-10T12:10:38+00:00"
+ "unverified_kickoff_skipped": 6,
+ "updated_at": "2026-10-10T15:53:09+00:00"
 }
