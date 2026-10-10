@@ -21,8 +21,8 @@
    "price": 0.52
   },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT10RBLSGE-4": {
-   "at": "2026-10-10T15:49:46+00:00",
-   "lead_min": 40.2,
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
    "price": 0.57
   },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT10TSGHSV-4": {
@@ -90,10 +90,40 @@
    "lead_min": 11.2,
    "price": 0.59
   },
+  "corners_under:KXLALIGACORNERS-26OCT10BARGET-10": {
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
+   "price": 0.37
+  },
+  "corners_under:KXLALIGACORNERS-26OCT10BARGET-11": {
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
+   "price": 0.49
+  },
+  "corners_under:KXLALIGACORNERS-26OCT10BARGET-12": {
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
+   "price": 0.61
+  },
+  "corners_under:KXLALIGACORNERS-26OCT10BARGET-8": {
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
+   "price": 0.24
+  },
+  "corners_under:KXLALIGACORNERS-26OCT10BARGET-9": {
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
+   "price": 0.29
+  },
   "corners_under:KXLALIGATCORNERS-26OCT09MCFESP-ESP4": {
    "at": "2026-10-09T18:50:27+00:00",
    "lead_min": 9.5,
    "price": 0.44
+  },
+  "corners_under:KXLALIGATCORNERS-26OCT10BARGET-BAR8": {
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
+   "price": 0.5
   },
   "corners_under:KXLALIGATCORNERS-26OCT10RVCATH-RVC6": {
    "at": "2026-10-10T11:45:38+00:00",
@@ -126,8 +156,8 @@
    "price": 0.86
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT10FEYAZA": {
-   "at": "2026-10-10T15:49:46+00:00",
-   "lead_min": 55.2,
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 39.9,
    "price": 0.23
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT10GAESPA": {
@@ -141,8 +171,8 @@
    "price": 0.52
   },
   "liga_u15_dog:KXLALIGATOTAL-26OCT10BARGET-2": {
-   "at": "2026-10-10T15:49:46+00:00",
-   "lead_min": 40.2,
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
    "price": 0.09
   },
   "o15_ranked:KXINTLFRIENDLYTOTAL-26OCT06COLPER-2": {
@@ -221,8 +251,8 @@
    "price": 0.48
   },
   "p05_unbeaten:KXEPLGAME-26OCT10MUNTOT-TOT": {
-   "at": "2026-10-10T15:49:46+00:00",
-   "lead_min": 40.2,
+   "at": "2026-10-10T16:05:03+00:00",
+   "lead_min": 24.9,
    "price": 0.79
   },
   "p05_unbeaten:KXEREDIVISIEGAME-26OCT09PSVHEE-HEE": {
@@ -571,5 +601,5 @@
    "price": 0.81
   }
  },
- "updated": "2026-10-10T15:49:46+00:00"
+ "updated": "2026-10-10T16:05:03+00:00"
 }
