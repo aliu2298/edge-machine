@@ -1,5 +1,10 @@
 {
  "closes": {
+  "bund_o35:KXBUNDESLIGATOTAL-26OCT10RBLSGE-4": {
+   "at": "2026-10-10T15:51:23+00:00",
+   "lead_min": 38.6,
+   "price": 0.57
+  },
   "corners_under:KXLALIGATCORNERS-26OCT09MCFESP-ESP4": {
    "at": "2026-10-09T18:49:05+00:00",
    "lead_min": 10.9,
@@ -10,10 +15,20 @@
    "lead_min": 15.9,
    "price": 0.82
   },
+  "ere_draw:KXEREDIVISIEGAME-26OCT10FEYAZA": {
+   "at": "2026-10-10T15:51:23+00:00",
+   "lead_min": 53.6,
+   "price": 0.23
+  },
   "espn_fpi:aec-mlb-cws-hou-2026-09-30": {
    "at": "2026-09-30T20:46:59+00:00",
    "lead_min": 13.0,
    "price": 0.415
+  },
+  "liga_u15_dog:KXLALIGATOTAL-26OCT10BARGET-2": {
+   "at": "2026-10-10T15:51:23+00:00",
+   "lead_min": 38.6,
+   "price": 0.09
   },
   "mma_fav_band:aec-ufc-deifig-paytal-2026-10-03": {
    "at": "2026-10-04T00:34:25+00:00",
@@ -70,6 +85,11 @@
    "lead_min": 19.0,
    "price": 0.63
   },
+  "p05_unbeaten:KXEPLGAME-26OCT10MUNTOT-TOT": {
+   "at": "2026-10-10T15:51:23+00:00",
+   "lead_min": 38.6,
+   "price": 0.79
+  },
   "p05_unbeaten:KXLIGAPORTUGALGAME-26OCT09BRASPO-BRA": {
    "at": "2026-10-09T18:49:05+00:00",
    "lead_min": 25.9,
@@ -79,6 +99,11 @@
    "at": "2026-10-09T13:10:10+00:00",
    "lead_min": 39.8,
    "price": 0.89
+  },
+  "p05_unbeaten:KXSERIEAGAME-26OCT10INTPAR-PAR": {
+   "at": "2026-10-10T15:51:23+00:00",
+   "lead_min": 8.6,
+   "price": 0.95
   },
   "p05_unbeaten:KXUEFANLGAME-26OCT03SUISLO-SLO": {
    "at": "2026-10-03T18:39:54+00:00",
@@ -201,5 +226,5 @@
    "price": 0.81
   }
  },
- "updated": "2026-10-10T09:44:53+00:00"
+ "updated": "2026-10-10T15:51:23+00:00"
 }
