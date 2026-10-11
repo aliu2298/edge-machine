@@ -374,7 +374,7 @@ def _frozen_overlaps():
 # pair is the same edit; the test does not require it.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
-SETTLED_PAIRS_SHA256 = "cfa55e451f4744ee6b6b971cf6e0ed616a82474d1d7f0097ca0f867c38a7c695"
+SETTLED_PAIRS_SHA256 = "3a5d7d3ea5a18c9ddd6b3d2a5938ed24cc5c60cbcc049e5fd08ec2fdf9997ff6"
 
 
 def _check_frozen_note(rows):
@@ -688,7 +688,7 @@ def _check_settled_pairs(rendered):
        "an edit of the settled-pair list changes its sha256")
 
 
-def _wired_pairs(d, st, include_retired=True):
+def _wired_pairs(d, st, include_retired=False):
     """The source|sport pairs the listing rule renders, from the wiring.
 
     Walks SOURCES with the same keep-or-skip rule pair_list uses: removed
@@ -705,12 +705,16 @@ def _wired_pairs(d, st, include_retired=True):
         if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             continue
         sports = list(meta["sports"]) if meta["connected"] else []
-        gone = {} if not include_retired else dict(
+        retired = dict(
             {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
             **({sp: meta["retired"] for sp in meta["sports"]}
                if not meta["connected"] and meta.get("retired") else {}))
+        gone = retired if include_retired else {}
         for sport in sports + [sp for sp in gone if sp not in sports]:
             if S.lane_removed(name, sport):
+                continue
+            # Retired pairs are off the pages since 2026-10-10.
+            if sport in retired and not include_retired:
                 continue
             group, _a, _qa, _open_n, _last, pair = SB.pair_status(d, st, name, sport)
             reset_row = bool(pair.get("since")) and bool(

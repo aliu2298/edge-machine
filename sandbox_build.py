@@ -738,7 +738,7 @@ def collapse(rows_html, head, total, noun):
 def unconnected_rows(d=None):
     out = []
     for name, m in S.SOURCES.items():
-        if m["connected"] or name in S.REMOVED_SOURCES:
+        if m["connected"] or name in S.REMOVED_SOURCES or m.get("retired"):
             continue
         rec = ""
         if m.get("retired") and d is not None:
@@ -749,20 +749,6 @@ def unconnected_rows(d=None):
         out.append(f"""<tr><td><b>{esc(m['label'])}</b>
 <div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div>{rec}</td>
 <td class="mut">{why}</td></tr>""")
-    # A source can lose one sport and keep the others: that pair is retired on its own.
-    for name, m in S.SOURCES.items():
-        for sport, reason in (m.get("retired_sports") or {}).items():
-            if S.lane_removed(name, sport):
-                continue
-            rec = ""
-            if d is not None:
-                n = sum(1 for q in T.bet_rows(d) if q["source"] == name and q["sport"] == sport
-                        and q["status"] in ("won", "lost")
-                        and not T.climate_excluded(q))
-                rec = f'<div class="sm">{n} settled bets kept on record</div>'
-            out.append(f"""<tr><td><b>{esc(m['label'].split(' (')[0])} · {esc(S.SPORTS.get(sport, sport))}</b>
-<div class="mut sm">{esc(m['kind'])} · {esc(m['site'])}</div>{rec}</td>
-<td class="mut"><b class="neg">Retired</b> {esc(reason)}</td></tr>""")
     return "\n".join(out)
 
 
@@ -858,11 +844,13 @@ def _fade_book(d, pair):
     return out
 
 
-def pair_list(d, st, include_retired=True):
+def pair_list(d, st, include_retired=False):
     """Every (source, sport) pair that has bet, with its record and verdict.
 
-    Retired pairs are listed too, marked, so a sport's section accounts for its own history
-    rather than sending the reader to the Reference table to find where the bets went.
+    Retired pairs are OFF the pages (2026-10-10, by Olu): each was judged under rules that
+    no longer run, and listing its record beside a live rule's mixed old results with new.
+    Their bets stay in the ledger. The audit passes include_retired=True so its raw recount
+    still covers them.
     """
     out = []
     for name, meta in S.SOURCES.items():
@@ -871,11 +859,14 @@ def pair_list(d, st, include_retired=True):
         if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             continue
         sports = list(meta["sports"]) if meta["connected"] else []
-        gone = {} if not include_retired else dict(
+        retired = dict(
             {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
             **({sp: meta["retired"] for sp in meta["sports"]} if not meta["connected"] and meta.get("retired") else {}))
+        gone = retired if include_retired else {}
         for sport in sports + [sp for sp in gone if sp not in sports]:
             if S.lane_removed(name, sport):
+                continue
+            if sport in retired and not include_retired:
                 continue
             group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
@@ -895,8 +886,9 @@ def pair_list(d, st, include_retired=True):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Waiting for results") and hides the record it was removed on.
+            # Only the audit sees it: on a page it is a record from before the clock restarted.
             removed = None
-            if pair.get("demoted_at") and pair.get("stage") != "production":
+            if include_retired and pair.get("demoted_at") and pair.get("stage") != "production":
                 removed = dict(at=str(pair["demoted_at"])[:10],
                                a=T.assess(d, name, sport, until=pair["demoted_at"],
                                           venues=T.TRADEABLE_VENUES))
@@ -987,22 +979,6 @@ def insights(rows, now=None):
             f'{r["removed"]["a"]["expected"]:.1f} priced over {r["removed"]["a"]["n"]} bets, '
             f'{pct(r["removed"]["a"]["roi_fee"], sign=True)} after fees' for r in gone)
             + ". Back in the Sandbox, counting again.")
-    recent = []
-    for name, m in S.SOURCES.items():
-        if name in S.REMOVED_SOURCES:
-            continue
-        items = ([(None, m["retired"])] if m.get("retired") else []) + list((m.get("retired_sports") or {}).items())
-        for sport, why in items:
-            if sport and S.lane_removed(name, sport):
-                continue
-            try:
-                when = datetime.strptime(str(why)[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
-            except ValueError:
-                continue
-            if (now - when).days <= 7:
-                recent.append(m["label"].split(" (")[0] + (f" · {S.SPORTS.get(sport, sport)}" if sport else ""))
-    if recent:
-        li.append(f"<b>Retired this week:</b> {esc(', '.join(recent))} — listed under Reference with their records.")
     return '<ul class="ins">' + "".join(f"<li>{x}</li>" for x in li) + "</ul>"
 
 
@@ -1227,20 +1203,25 @@ def reconcile(d, rows):
             and not T.climate_excluded(q) and not S.removed_row(q)]
     shown = {(r["name"], r["sport"]) for r in rows}
     in_sections = sum((r["a"].get("n_bets") or r["a"]["n"]) for r in rows)
-    venue = base = before = other = 0
+    venue = base = before = other = gone = 0
     for q in bets:
         key = (q["source"], q["sport"])
         if key in shown:
             if (q.get("venue") or "polymarket") not in T.TRADEABLE_VENUES:
                 venue += 1
             continue
-        if (S.SOURCES.get(q["source"]) or {}).get("kind") in T.NEVER_PROMOTED_KINDS:
+        meta = S.SOURCES.get(q["source"]) or {}
+        if meta.get("kind") in T.NEVER_PROMOTED_KINDS:
             base += 1
+        elif q["sport"] in (meta.get("retired_sports") or {}) or (
+                meta.get("retired") and not meta.get("connected")):
+            gone += 1
         else:
             other += 1
-    before = max(0, len(bets) - in_sections - venue - base - other)
+    before = max(0, len(bets) - in_sections - venue - base - other - gone)
     parts = [f"{venue:,} on the retired polymarket.com venue" if venue else "",
              f"{before:,} logged before a pair's clock was reset" if before else "",
+             f"{gone:,} from retired rules, which are off the pages" if gone else "",
              f"{base:,} from the never-betting baselines" if base else "",
              f"{other:,} elsewhere" if other else ""]
     return (f'<div class="note sm"><b>Where the {len(bets):,} settled bets are:</b> '
@@ -1975,7 +1956,7 @@ def _sandbox_html(d, st, now_dt, full=None):
     lane_note = outage_notes(d)
     archive_links = _archive_links(groups, "./archive/")
     n_unconnected = sum(1 for name, m in S.SOURCES.items()
-                        if not m["connected"] and name not in S.REMOVED_SOURCES)
+                        if not m["connected"] and name not in S.REMOVED_SOURCES and not m.get("retired"))
     in_prod = sum(1 for p in (st.get("pairs") or {}).values() if p.get("stage") == "production")
     # Counted over the pairs still running. Pooling every bet ever logged put this at 46%,
     # but 952 of the misses were one retired rule that quoted hundreds of ladder rungs a day
@@ -2045,7 +2026,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 
 <section id="reference">
 <details class="sec"><summary><h2>Reference</h2></summary>
-<details class="ref"><summary>Retired, or declared but not connected ({n_unconnected})</summary>
+<details class="ref"><summary>Declared but not connected ({n_unconnected})</summary>
 <div class="tbl"><table><tr><th>Source</th><th>Why it is not scored</th></tr>{unconnected_rows(d)}</table></div></details>
 <details class="ref"><summary>Stamp of approval — every criterion, every source</summary>
 <div class="note">The stamp needs <b>{T.APPROVAL['min_bets']}+ settled bets spanning {T.APPROVAL['min_days']}+ days</b>
