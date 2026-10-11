@@ -435,14 +435,14 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="nba-local-nav" aria-label="NBA sections">' in HTML
-   and all(f'href="#{sid}">{label}</a>' in HTML for sid, label in
-           (("matchups", "Upcoming"), ("graded", "Results"), ("teams", "Teams"))),
-   "the Upcoming / Results / Teams jump pills are in the sub-nav")
+ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
+   and "nba-local-nav" not in HTML,
+   "the Upcoming / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
-ok("<h1>NBA</h1>" in head and "Expected combined points · tip times CT" in head
+ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Research board</p>' in head
+   and '<p class="scope">Expected combined points · tip times Central</p>' in head
    and "Pace data as of Oct 1, 1:00 PM CT" in head and "Open a matchup" not in HTML,
-   "the header is the title, one line, and the freshness line")
+   "the header is the eyebrow, the title, one scope line, and the freshness line")
 ok(fmt.display_updated(NOW) in HTML and "CT" in fmt.display_updated(NOW),
    "the stamp is Updated … CT for the pinned clock")
 about = re.search(r'<details class="section-disclosure nba-about">.*?</details>', HTML, re.S)
@@ -450,7 +450,8 @@ ok(about and " open" not in about.group(0).split(">", 1)[0]
    and len(re.findall(r"[.!?](\s|$)", _text(about.group(0)))) <= 4,
    "About this desk is collapsed and a few sentences")
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
-ok("color-scheme: dark" in css and "prefers-color-scheme: light" not in css, "the stylesheet is dark only")
+ok("color-scheme: dark" in css and "prefers-color-scheme: light" in css,
+   "the stylesheet is dark by default with the light theme on the same tokens")
 ok("tempo" not in css and "pace-leader" not in css, "the bar and leader-tile styles are gone")
 ok("tr.nba-detail[hidden] { display: none !important; }" in css,
    "a hidden detail row stays hidden under the phone cards")

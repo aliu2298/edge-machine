@@ -106,12 +106,12 @@ if playwright is not None:
                     page.locator("a[href='#teams']").click()
                     page.locator("#teams > details[open]").wait_for(state="attached")
                 if sport == "soccer":
-                    assert page.locator("#health > details").get_attribute("open") is None
+                    assert page.locator("#method > details").get_attribute("open") is None
                 if sport == "tennis":
-                    assert page.locator("#system > details").get_attribute("open") is None
+                    assert page.locator("#method > details").get_attribute("open") is None
                 if sport == "crypto":
                     assert page.locator("#method details[open]").count() == 0
-                    assert page.locator(".tn-pick.cr-pick").count() == 5
+                    assert page.locator(".sp-tabs").count() == 1 and page.locator(".sp-pick").count() == 0
                     assert page.locator(".crypto-hero, .crypto-progress, .crypto-coin").count() == 0
                 page.close()
         page = browser.new_page()
@@ -119,7 +119,7 @@ if playwright is not None:
         page.route("http://fixture.local/*.js", lambda route: route.fulfill(body="", content_type="application/javascript"))
         page.route("http://fixture.local/*.css", lambda route: route.fulfill(body="", content_type="text/css"))
         page.goto("http://fixture.local/soccer.html")
-        assert page.locator("#health > details").get_attribute("open") is not None
-        assert page.locator("#health details.section-disclosure").get_attribute("open") is None
+        assert page.locator("#method > details").get_attribute("open") is not None
+        assert page.locator("#method details.section-disclosure").get_attribute("open") is None
         browser.close()
 print("PASS four sport pages: 320–1280px, readable text, one shell, disclosures, stored scan status")

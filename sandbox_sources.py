@@ -8447,13 +8447,23 @@ def plan_pinnacle_totals(universe, now=None):
     out = {}
     rows = [(sp, r) for sp in universe if sp.split("_cup")[0].split("_intl")[0] == "soccer_o25"
             for r in (universe.get(sp) or []) if not r.get("untraded") and r.get("espn_home")]
-    if not rows or not _odds_key():
+    if not rows:
+        return out
+    # This lane reports its own read. Before 2026-10-11 it reported none, so the
+    # Sandbox feed check judged it on picks alone and printed "could not be read"
+    # on a run that HAD read Pinnacle and found no 2.5 line on the one key it
+    # bought (MLS: 14 of 16 events at 3.0-3.75, two with no totals). No line at
+    # the point is an absence of opinion, not a dead feed.
+    if not _odds_key():
+        _mark("pin_totals", False, "no ODDS_API_KEY in the environment")
         return out
     events = pinnacle_events("soccer")               # free; also loads the credit balance
     if not events:
+        _mark("pin_totals", False, "no Odds API soccer events")
         return out
     if ODDS_USAGE.get("remaining") is not None and ODDS_USAGE["remaining"] < ODDS_RESERVE:
         _mark("pinnacle", False, f"credit reserve reached ({ODDS_USAGE['remaining']} left)")
+        _mark("pin_totals", False, f"credit reserve reached ({ODDS_USAGE['remaining']} left)")
         return out
     if "allowance" not in ODDS_USAGE:
         ODDS_USAGE["allowance"] = odds_allowance(ODDS_USAGE.get("remaining"), now)
@@ -8470,6 +8480,7 @@ def plan_pinnacle_totals(universe, now=None):
         share = ODDS_USAGE["allowance"] // 2
     left = min(PIN_TOTALS_MAX_CALLS, share)
     if left <= 0:
+        _mark("pin_totals", False, "no paced credit left for this run")
         return out
 
     # Which Odds API key covers most of the fixtures Kalshi has priced. One row is matched to
@@ -8492,7 +8503,9 @@ def plan_pinnacle_totals(universe, now=None):
                                            oddsFormat="decimal", dateFormat="iso"))
         except RuntimeError as e:
             _mark("pinnacle", False, str(e))
+            _mark("pin_totals", False, str(e))
             continue
+        _mark("pin_totals", True)
         ODDS_USAGE["calls"] = ODDS_USAGE.get("calls", 0) + 1
         entry = dict(key=key, listed=len(want),
                      empty=dict(no_event=0, no_totals=0, other_point=0, stale=0, points=[]),

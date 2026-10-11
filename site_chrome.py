@@ -78,6 +78,8 @@ CSP = (
     'base-uri \'none\'; form-action \'none\'">'
 )
 REFERRER = '<meta name="referrer" content="no-referrer">'
+# Both themes are drawn; the device's own preference picks one, the toggle the other.
+COLOR_SCHEME = '<meta name="color-scheme" content="dark light">'
 
 
 def title_for(page):
@@ -160,7 +162,13 @@ def header(active, sections, stamp_html, tools="", prefix="./", crumb=None):
         breadcrumb(crumb) if crumb else "",
         toc(sections),
     ) if part]
-    sub = ("\n" + "\n".join(below)) if below else "\n"
+    # The second row: the section nav or the breadcrumb, and the theme toggle
+    # at its right end. The toggle lives here, not in the top bar, so the ten
+    # page pills keep their room beside the brand and the stamp, and a phone's
+    # scrolling pill row keeps its full width.
+    sub = ("\n" + "\n".join(below)) if below else ""
+    toggle = ('<button type="button" class="theme-toggle" data-theme-toggle '
+              'aria-label="Switch theme" title="Switch between the light and dark theme">Theme</button>')
     brand_current = ' aria-current="page"' if active == "index" else ""
     return f"""<a class="skip" href="#content">Skip to content</a>
 <header class="site">
@@ -168,7 +176,10 @@ def header(active, sections, stamp_html, tools="", prefix="./", crumb=None):
 <a class="brand" href="{esc(_href("./index.html", prefix))}"{brand_current}>Edge Machine</a>
 {nav(active, prefix)}
 <p class="stamp">{stamp_html}</p>
-</div>{sub}
+</div>
+<div class="subbar">{sub}
+{toggle}
+</div>
 </header>"""
 
 
@@ -235,7 +246,8 @@ def document(title, description, active, sections, stamp_html, body,
 <link rel="stylesheet" href="{esc(_href("./site.css", prefix))}">
 {head_meta(title, description, active, prefix)}
 {CSP}
-{REFERRER}{extra}
+{REFERRER}
+{COLOR_SCHEME}{extra}
 </head>
 <body{body_attr}>
 {header(active, sections, stamp_html, tools=tools, prefix=prefix, crumb=crumb)}

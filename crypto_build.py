@@ -1,27 +1,24 @@
 #!/usr/bin/env python3
-"""The Crypto page: the favourite-band rule on Kalshi's daily coin closes.
+"""The Crypto page: the favourite-band rule on Kalshi's daily coin closes, on the
+shared sport template (sport_page).
 
-Four stat tiles, a one-row rules table, one flat list of picks grouped by day,
-and the method folded away. The record, verdict and ROI are the Sandbox row's
+One rule, its market-days as the events, the method folded away. The record, verdict and ROI are the Sandbox row's
 own figures, the same strings the Sandbox table prints, so this page cannot
 disagree with the Sandbox about the pair. The page states the unit the Sandbox
 cannot: the lane is judged per market-day, not per contract, because the coins
 move together.
 
-The list and table reuse the Tennis page's patterns (tn-*), so the sport pages
-read as one product. No live venue call is made here; the page is rebuilt by
+No live venue call is made here; the page is rebuilt by
 the tracker, and a Kalshi hiccup must not turn into a failed publish.
 """
 import datetime
 import os
 
 import fmt
-import production
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome as C
-import tennis_cards as TN
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "public_site", "crypto.html")
@@ -32,7 +29,7 @@ SPORTS = ("crypto_fav",)
 SOURCE = "crypto_fav_band"
 COIN_LABELS = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
                "ripple": "XRP", "hyperliquid": "HYPE"}
-TOC = (("rule", "Rule"), ("picks", "Picks"), ("method", "Method"))
+TOC = (("rules", "Rules"), ("events", "Events"), ("method", "Method"))
 LEDE = "Daily favourite-band picks on Kalshi coin closes · times CT"
 
 
@@ -122,24 +119,6 @@ def pick_text(q):
 
 
 # ------------------------------------------------------------------ the picks list
-def _pick_html(coin, series, q, when):
-    word, cls = state_of(q)
-    if q is not None:
-        link = B.safe_href(S.market_url(q), f"{coin} · {series}")
-        pick = B.esc(pick_text(q)) if q.get("bet") or q.get("side_a") else "—"
-        price = fmt.cents(q.get("price")) if q.get("price") is not None else "—"
-    else:
-        link = f"{B.esc(coin)} · {B.esc(series)}"
-        pick, price = "", ""
-    muted = " is-muted" if q is None else ""
-    return (f'<div class="tn-pick cr-pick{muted} {cls}" data-series="{B.esc(series)}">'
-            f'<span class="tn-time">{B.esc(when)}</span>'
-            f'<span class="tn-match">{link}</span>'
-            f'<span class="tn-pos">{f"<b>{pick}</b>" if pick else ""}</span>'
-            f'<span class="tn-price">{B.esc(price)}</span>'
-            f'<span class="tn-state {cls}">{B.esc(word)}</span></div>')
-
-
 def day_blocks(d, now):
     """[(day, [(coin, series, quote or None)])], today first, then earlier days, newest first.
 
@@ -167,22 +146,6 @@ def day_blocks(d, now):
         rows = sorted(by_day[day], key=lambda q: (not q.get("bet"), _series(q)))
         blocks.append((day, [(_coin(_series(q)), _series(q), q) for q in rows]))
     return blocks
-
-
-def picks_html(d, now):
-    now = _as_utc(now)
-    today = fmt.chicago(now).date()
-    close_today = fmt.clock(_today_close(now))
-    parts = []
-    for day, rows in day_blocks(d, now):
-        label = TN._day_label(day, today)
-        items = [f'<div class="tn-day">{B.esc(label)}</div>']
-        for coin, series, q in rows:
-            close = _close(q) if q is not None else None
-            when = fmt.clock(close) if close is not None else (close_today if day == today else "—")
-            items.append(_pick_html(coin, series, q, when))
-        parts.append(f'<div class="tn-dayblock">{"".join(items)}</div>')
-    return f'<div class="tn-picks">{"".join(parts)}</div>'
 
 
 def _window(now):
@@ -220,31 +183,7 @@ def _scan_status(d, now):
     return f'<p class="sm mut cr-scan">{esc(" · ".join(bits))}</p>'
 
 
-# ------------------------------------------------------------------ tiles and the rule
-def _unit(a, n=None):
-    n = a.get("n") if n is None else n
-    return f'market-day{"" if n == 1 else "s"}'
-
-
-def tiles_html(rows, d):
-    fav = _fav_row(rows)
-    a = (fav or {}).get("a") or {}
-    n = int(a.get("n") or 0)
-    open_n = sum(1 for q in _fav_quotes(d) if q.get("bet") and q.get("status") == "open")
-    if n and a.get("roi_fee") is not None:
-        klass = "mut" if n < B.MIN_N else fmt.tone(a["roi_fee"], ".1f", 100)
-        roi = f'<b class="{klass}">{B.pct(a["roi_fee"], sign=True)}</b>'
-    else:
-        roi = '<b class="mut">—</b>'
-    return (
-        '<div class="tiles tn-tiles">'
-        f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
-        f'<div class="tile"><b>{esc(TN.record_text(a))}</b><span>record · W–L</span></div>'
-        f'<div class="tile">{roi}<span>ROI after fees</span></div>'
-        f'<div class="tile"><b>{n} of {T.READ_FLOOR}</b><span>market-days logged · {T.READ_FLOOR} planned</span></div>'
-        '</div>')
-
-
+# ------------------------------------------------------------------ the rule
 def params():
     """The four entry parameters, as (name, value), from the registered constants."""
     lo, hi = S.CRYPTO_FAV_BAND
@@ -256,84 +195,84 @@ def params():
     )
 
 
-_HEAD = ('<tr><th>Rule</th><th>Venue</th><th class="num">Record</th>'
-         '<th class="num">ROI</th><th>Verdict</th><th class="num">Open</th></tr>')
+def registered_row():
+    """The lane as registered, before the Sandbox lists it.
+
+    pair_list gives a pair a row once it has bet. Until then the page still has a
+    rule to show: the registration itself, with no record, no ROI and the
+    Sandbox's own 'Waiting for results' verdict. Nothing here is a number the
+    ledger has not produced.
+    """
+    meta = S.SOURCES.get(SOURCE) or {}
+    return dict(name=SOURCE, sport="crypto_fav", meta=meta, prod=False, open=0, since=None,
+                v="waiting", a=dict(n=0, won=0, expected=0.0, roi_fee=None, n_bets=0, unit="market-day"))
 
 
-def rule_html(rows, d):
-    fav = _fav_row(rows)
-    if not fav:
-        return '<div class="note">No crypto favourite-band record yet.</div>'
-    a = fav["a"]
-    n = int(a.get("n") or 0)
-    open_n = sum(1 for q in _fav_quotes(d) if q.get("bet") and q.get("status") == "open")
-    note = (fav["meta"].get("note") or "").strip()
-    stage = (' <span class="sig y">PRODUCTION</span>' + production.early_html(fav.get("early"))
-             if fav.get("prod") else "")
+def page_rows(d, st):
+    """The Sandbox rows, or the registration while the lane has not bet."""
+    return crypto_rows(d, st) or [registered_row()]
+
+
+def rule_name(row):
+    return "Favourite band · 3h to the close"
+
+
+def market(d, row):
+    return "Kalshi"
+
+
+def definition(d, row):
+    """The entry parameters first, then the registered definition."""
     dl = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in params())
-    sample = f'<div class="sm mut">on {n} {_unit(a, n)}</div>' if n else ""
-    return (
-        f'<div class="tbl"><table class="tn-rules cr-rules">{_HEAD}'
-        f'<tr data-source="{esc(fav["name"])}" data-sport="{esc(fav["sport"])}">'
-        f'<td><details class="tn-rule"><summary><b>Favourite band · 3h to the close</b>{stage}</summary>'
-        f'<dl class="cr-params">{dl}</dl>'
-        f'<p class="tn-def sm mut">{esc(note)}</p></details></td>'
-        f'<td>Kalshi</td>'
-        f'<td class="num">{esc(TN.record_text(a))}</td>'
-        f'<td class="num">{TN.roi_html(fav)}{sample}</td>'
-        f'<td>{TN.verdict_html(fav)}</td>'
-        f'<td class="num">{open_n or "—"}</td></tr></table></div>')
+    import sport_page as SP
+    return f'<dl class="sp-params">{dl}</dl>' + SP.definition_html(row["meta"].get("note"))
+
+
+def recent_html(d, row, now):
+    """The scanner line: last scan, quotes seen, the next entry window."""
+    return _scan_status(d, now)
+
+
+def events(d, rows, now):
+    """One event per coin per market-day: its bet, or the watch-only quote."""
+    import sport_page as SP
+    now = _as_utc(now)
+    row = _fav_row(rows) or registered_row()
+    out = []
+    for q in _fav_quotes(d):
+        word, _cls = state_of(q)
+        state = {"W": "won", "L": "lost", "void": "void", "open": "open"}.get(word, "watch")
+        series = _series(q)
+        close = _close(q)
+        label = f"{_coin(series)} · {series}"
+        out.append(SP.event(close, label, [SP.pick(row, q, pick_text(q) if (q.get("bet") or q.get("side_a")) else "",
+                                                   state, price=q.get("price"))],
+                            href=S.market_url(q), sub="", key=(series, q.get("date"), str(q.get("id")))))
+    return out
 
 
 # ------------------------------------------------------------------ method
-def method_html():
-    return f'''<section id="method" class="tn-system">
-<details><summary><b>Method</b><small>why a day is one bet · scheduling</small></summary>
-<div>
+def method(d, rows, now):
+    inner = f'''{_scan_status(d, now)}
 <p class="sm">A day is one bet because the five coins move together: over 90 days of closes their returns correlate at +0.76 and all five move the same way on 54% of days, so a day's rungs win or lose as one and keying per coin would overstate the evidence about twofold. Each contract is logged at the Yes ask inside the window, settled on Kalshi's own result at a flat ${int(T.STAKE)} stake, and the day is graded as a single outcome against backing every in-band rung that day; the lane reads at {T.READ_FLOOR} market-days.</p>
-<p class="sm"><b>Scheduling.</b> A timer on the always-on Mac runs the tracker at 13:15 Central, a fixed 2.83h before the 17:00 Eastern close on either side of the clock change; GitHub's cron could not hold the 90-minute window (inside it on 10 of 18 days). The close is matched in Eastern, not UTC, and the hourly closes on the same series are a different contract.</p>
-</div>
-</details>
-</section>'''
+<p class="sm"><b>Scheduling.</b> A timer on the always-on Mac runs the tracker at 13:15 Central, a fixed 2.83h before the 17:00 Eastern close on either side of the clock change; GitHub's cron could not hold the 90-minute window (inside it on 10 of 18 days). The close is matched in Eastern, not UTC, and the hourly closes on the same series are a different contract.</p>'''
+    return "Method", "why a day is one bet · scheduling", inner, False
 
 
 def build(d=None, st=None, now=None):
+    import sport_page as SP
     now = _as_utc(now or datetime.datetime.now(datetime.timezone.utc))
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
-    rows = crypto_rows(d, st)
-    body = f"""<h1>Crypto</h1>
-<p class="lede">{esc(LEDE)}</p>
-<p class="sm mut cr-updated">{esc(fmt.display_updated(now))}</p>
-{tiles_html(rows, d)}
-<section id="rule" class="tn-section">
-<h2>Rule</h2>
-<p class="sm mut">Open the row for the entry parameters and the registered definition.</p>
-{rule_html(rows, d)}
-</section>
-<section id="picks" class="tn-section">
-<h2>Picks</h2>
-<p class="sm mut">Today's five coins once each, then every settled market-day.</p>
-{picks_html(d, now)}
-{_scan_status(d, now)}
-</section>
-{method_html()}
-<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-"""
-    page = C.document(
-        "Edge Machine · Crypto",
-        "Daily favourite-band picks on Kalshi coin closes, and the rule's record per market-day.",
-        "crypto",
-        TOC,
-        C.stamp(now),
-        body,
-        script_src="./site.js",
-        scripts=("./tables.js",),
-        sports=True,
-    )
-    # Cells named for the phone layout here, so the direct build and the
-    # tracker build (which labels every page) are the same document.
-    return B.label_cells(page)
+    rows = page_rows(d, st)
+    sp = SP.spec(
+        family="Crypto", key="crypto", title="Edge Machine · Crypto",
+        description="Daily favourite-band picks on Kalshi coin closes, and the rule's record per market-day.",
+        scope="Daily favourite-band picks on Kalshi coin closes", venue="Kalshi",
+        rows=rows, events=events, rule_name=rule_name, market=market,
+        definition=definition, recent=recent_html, method=method, scoped=False,
+        unit=lambda row: "market-day")
+    return SP.page(sp, d, st, now, rows=rows)
 
 
 def main():

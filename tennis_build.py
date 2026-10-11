@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""The Tennis page.
+"""The Tennis page, on the shared sport template (sport_page).
 
 Family Tennis: the 3-hour band and the combo lanes, on Kalshi and Polymarket US.
 Table tennis is a different family and is not on this page. The rows are the
-Sandbox's own (sport_tab.family_rows), so the records are unchanged; the body
-is tennis_cards: four tiles, one list of picks, one rules table, one fold.
+Sandbox's own (sport_tab.family_rows), so the records are unchanged; the events
+and the rule words are tennis_cards.
 """
 import datetime
 import os
 
 import sandbox_track as T
-import site_chrome as C
+import sport_page as SP
 import sport_tab
 import tennis_cards
 
@@ -23,7 +23,8 @@ TITLE = "Edge Machine · Tennis"
 DESCRIPTION = ("Every tennis rule under test — the 3-hour favourite band and the combo "
                "baskets, on Kalshi and Polymarket US.")
 LEDE = "Match-winner picks and combo baskets · times CT"
-TOC = (("rules", "Rules"), ("matches", "Matches"), ("system", "System"))
+SCOPE = "Match-winner picks and combo baskets"
+TOC = SP.TOC
 
 
 def build(d=None, st=None, now=None):
@@ -33,11 +34,13 @@ def build(d=None, st=None, now=None):
     rows = sport_tab.family_rows(d, st, FAMILY)
     idle = sport_tab.idle_lanes(KEY, d, skip=tuple(r["name"] for r in rows))
     idle_html = sport_tab._idle_html(idle, {}, status=False, prefix=KEY) if idle else ""
-    body = tennis_cards.render(d, rows, now, idle_html=idle_html)
-    body += f"<footer>{sport_tab._FOOT}</footer>\n"
-    return C.document(
-        TITLE, DESCRIPTION, KEY, TOC, C.stamp(now), body,
-        script_src="./site.js", scripts=("./tables.js",), sports=True)
+    sp = SP.spec(
+        family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
+        venue="Kalshi or Polymarket US", rows=rows, events=tennis_cards.events,
+        rule_name=tennis_cards.rule_name, market=tennis_cards.market,
+        definition=tennis_cards.definition, recent=tennis_cards.recent_html,
+        method=tennis_cards.method(idle_html))
+    return SP.page(sp, d, st, now, rows=rows, idle=idle)
 
 
 def main():

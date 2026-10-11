@@ -13,6 +13,8 @@
       api.wireRuleCards(document);
       api.wireRuleRows(document);
       api.wireSportFilter(document);
+      api.wireSportPage(document);
+      api.wireTheme(document);
       api.revealHash(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
@@ -430,6 +432,188 @@
     });
   }
 
+  // The sport pages (one template): the scope and stage chips drive the rule
+  // cards, the Sandbox rows and the event lines together; the events sit in
+  // three tabs. With script off every panel is on the page under its own
+  // heading and the chips and tabs do nothing.
+  function wireSportPage(doc) {
+    var filters = doc.querySelector(".sp-filters[data-controls]");
+    var events = doc.getElementById("events");
+    var rules = doc.getElementById("rules");
+    if (!filters && !events) return;
+    var state = { scope: "all", stage: "all" };
+    function matches(el) {
+      var scope = el.getAttribute("data-scope"), stage = el.getAttribute("data-stage");
+      var scopes = el.getAttribute("data-scopes"), stages = el.getAttribute("data-stages");
+      var okScope = state.scope === "all" || scope === state.scope
+        || (scopes && (" " + scopes + " ").indexOf(" " + state.scope + " ") >= 0);
+      var okStage = state.stage === "all" || stage === state.stage
+        || (stages && (" " + stages + " ").indexOf(" " + state.stage + " ") >= 0);
+      return !!(okScope && okStage);
+    }
+    function note(host, shown, had, what) {
+      var p = host.querySelector(":scope > .sp-filter-empty");
+      if (!p) {
+        p = doc.createElement("p");
+        p.className = "sp-empty sp-filter-empty";
+        p.hidden = true;
+        host.appendChild(p);
+      }
+      var words = [];
+      if (state.stage !== "all") words.push(state.stage === "production" ? "Production" : "Sandbox");
+      if (state.scope !== "all") {
+        var btn = filters && filters.querySelector('button[data-value="' + state.scope + '"]');
+        words.push(btn ? btn.textContent : state.scope);
+      }
+      p.textContent = "No " + (words.length ? words.join(" · ") + " " : "") + what + " under this filter.";
+      p.hidden = shown > 0 || !had;
+    }
+    function apply() {
+      if (rules) {
+        var cards = rules.querySelectorAll(".sp-rule[data-stage]");
+        var shownCards = 0;
+        Array.prototype.forEach.call(cards, function (card) {
+          var on = matches(card);
+          card.hidden = !on;
+          if (on) shownCards += 1;
+        });
+        var grid = rules.querySelector(".sp-cards");
+        if (grid) note(grid.parentElement === rules ? rules : grid.parentElement, shownCards, cards.length, "rule in Production");
+        var shownRows = 0, rows = rules.querySelectorAll("tr.rule-row[data-stage]");
+        Array.prototype.forEach.call(rows, function (row) {
+          var on = matches(row);
+          paintRow(row, on);
+          if (on) shownRows += 1;
+          var detail = doc.getElementById((row.querySelector("button.rule-chev[aria-controls]") || {}).getAttribute
+            ? row.querySelector("button.rule-chev[aria-controls]").getAttribute("aria-controls") : "");
+          if (detail && !on) {
+            paintRow(detail, false);
+            var btn = row.querySelector("button.rule-chev");
+            if (btn) { btn.setAttribute("aria-expanded", "false"); row.classList.remove("is-open"); }
+          }
+        });
+        var fold = rules.querySelector("details.sp-sandbox");
+        if (fold) {
+          note(fold, shownRows, rows.length, "rule in the Sandbox");
+          if (state.stage === "sandbox") fold.open = true;
+        }
+      }
+      if (events) {
+        Array.prototype.forEach.call(events.querySelectorAll(".sp-panel"), function (panel) {
+          var shown = 0, picks = panel.querySelectorAll(".sp-pick[data-stage]");
+          Array.prototype.forEach.call(picks, function (line) {
+            var on = matches(line);
+            line.hidden = !on;
+            if (on) shown += 1;
+          });
+          Array.prototype.forEach.call(panel.querySelectorAll(".sp-event"), function (row) {
+            var any = Array.prototype.some.call(row.querySelectorAll(".sp-pick"), function (l) { return !l.hidden; });
+            row.hidden = !any;
+          });
+          Array.prototype.forEach.call(panel.querySelectorAll(".sp-day"), function (day) {
+            var any = Array.prototype.some.call(day.querySelectorAll(".sp-event"), function (r) { return !r.hidden; });
+            day.hidden = !any;
+          });
+          Array.prototype.forEach.call(panel.querySelectorAll("details.fold.later"), function (later) {
+            var any = Array.prototype.some.call(later.querySelectorAll(".sp-event"), function (r) { return !r.hidden; });
+            later.hidden = !any;
+          });
+          var key = panel.getAttribute("data-tab");
+          var tab = events.querySelector('.sp-tabs button[data-tab="' + key + '"] .sp-count');
+          if (tab) tab.textContent = String(shown);
+          note(panel, shown, picks.length, "pick here");
+        });
+      }
+    }
+    if (filters) {
+      Array.prototype.forEach.call(filters.querySelectorAll("nav[data-filter]"), function (nav) {
+        var kind = nav.getAttribute("data-filter");
+        var buttons = nav.querySelectorAll("button[data-value]");
+        Array.prototype.forEach.call(buttons, function (btn) {
+          btn.addEventListener("click", function () {
+            state[kind] = btn.getAttribute("data-value") || "all";
+            Array.prototype.forEach.call(buttons, function (b) {
+              b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+            });
+            filters.setAttribute("data-" + kind, state[kind]);
+            apply();
+          });
+        });
+      });
+    }
+    if (events) {
+      var tabs = events.querySelectorAll('.sp-tabs button[data-tab]');
+      var panels = events.querySelectorAll(".sp-panel[data-tab]");
+      function show(key) {
+        Array.prototype.forEach.call(tabs, function (t) {
+          t.setAttribute("aria-selected", t.getAttribute("data-tab") === key ? "true" : "false");
+        });
+        Array.prototype.forEach.call(panels, function (p) {
+          p.hidden = p.getAttribute("data-tab") !== key;
+        });
+        events.setAttribute("data-tab", key);
+      }
+      Array.prototype.forEach.call(tabs, function (t) {
+        t.addEventListener("click", function () { show(t.getAttribute("data-tab")); });
+      });
+      if (tabs.length) show(events.getAttribute("data-default-tab") || tabs[0].getAttribute("data-tab"));
+    }
+    apply();
+  }
+
+  // The theme. The stylesheet follows the device (dark with no preference);
+  // html[data-theme] overrides it and is remembered per browser. Storage can
+  // be absent or refused (private windows, blocked site data), so every read
+  // and write is wrapped, and with no storage the toggle still works for the
+  // page. With script off the device preference stands.
+  var THEME_KEY = "edge-theme";
+  function storedTheme() {
+    try {
+      var v = window.localStorage.getItem(THEME_KEY);
+      return v === "light" || v === "dark" ? v : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  function rememberTheme(name) {
+    try {
+      if (name) window.localStorage.setItem(THEME_KEY, name);
+      else window.localStorage.removeItem(THEME_KEY);
+    } catch (e) { /* no storage: the choice lasts for this page */ }
+  }
+  function currentTheme(doc) {
+    var set = doc.documentElement.getAttribute("data-theme");
+    if (set === "light" || set === "dark") return set;
+    try {
+      return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    } catch (e) {
+      return "dark";
+    }
+  }
+  function wireTheme(doc) {
+    var root = doc.documentElement;
+    var saved = storedTheme();
+    if (saved) root.setAttribute("data-theme", saved);
+    var buttons = doc.querySelectorAll("[data-theme-toggle]");
+    function label() {
+      var now = currentTheme(doc);
+      Array.prototype.forEach.call(buttons, function (btn) {
+        btn.setAttribute("aria-label", now === "dark" ? "Switch to the light theme" : "Switch to the dark theme");
+        btn.setAttribute("data-theme-now", now);
+        btn.textContent = now === "dark" ? "Light" : "Dark";
+      });
+    }
+    label();
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener("click", function () {
+        var next = currentTheme(doc) === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        rememberTheme(next);
+        label();
+      });
+    });
+  }
+
   function enhance(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll("table.sortable"), function (table) {
       var rows = bodyRows(table);
@@ -552,6 +736,9 @@
     containWideTables: containWideTables,
     wireRuleCards: wireRuleCards,
     wireSportFilter: wireSportFilter,
+    wireSportPage: wireSportPage,
+    wireTheme: wireTheme,
+    currentTheme: currentTheme,
     wireRuleRows: wireRuleRows,
     revealHash: revealHash,
   };

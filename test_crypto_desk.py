@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""The Crypto page: four tiles, one picks list grouped by day, a one-row rules
-table, and the method folded away. Presentation only: the record, ROI and
-verdict are the Sandbox row's own strings, and nothing here grades a bet.
+"""The Crypto page on the shared sport template: one rule, its market-days as
+the events, the method folded. Presentation only: the record, ROI and verdict
+are the Sandbox row's own strings, and nothing here grades a bet.
 """
-import copy
 import datetime
 import os
 import re
@@ -17,6 +16,7 @@ import fmt
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
+import sport_page as SP
 
 FAILS = []
 NOW = datetime.datetime(2026, 10, 7, 12, tzinfo=datetime.timezone.utc)   # 7:00 AM CT, Oct 7
@@ -34,12 +34,8 @@ def eq(got, want, why):
 
 
 def _section(markup, name):
-    m = re.search(rf'<section id="{name}"[^>]*>(.*?)</section>', markup, re.S)
+    m = re.search(rf'<section id="{name}"[^>]*>(.*?)(?=<section id="|<footer)', markup, re.S)
     return m.group(1) if m else ""
-
-
-def _rows(block):
-    return re.findall(r'<div class="tn-pick cr-pick[^"]*"[^>]*>.*?</div>(?=<div class="tn-pick|</div>)', block, re.S)
 
 
 def quote(series, strike, price, day, status="open", bet=True, logged=None):
@@ -74,139 +70,137 @@ stages = {"pairs": {}}
 
 print("page shape")
 html = C.build(ledger, stages, NOW)
-ok('<h1>Crypto</h1>' in html, "the title is Crypto")
-ok("Daily favourite-band picks on Kalshi coin closes · times CT" in html, "the one-line lede")
-ok(fmt.display_updated(NOW) in html.split("<main", 1)[-1], "the freshness stamp is under the title")
-for anchor in ("picks", "rule", "method"):
+main = html.split("<main", 1)[-1].split("</main>", 1)[0]
+ok("<h1>Crypto</h1>" in html, "the title is Crypto")
+ok("Daily favourite-band picks on Kalshi coin closes · All times Central" in html, "the one scope line")
+for anchor in ("events", "rules", "method"):
     ok(f'id="{anchor}"' in html and f'href="#{anchor}"' in html, f"section and sub-nav pill for #{anchor}")
-ok(html.find('id="rule"') < html.find('id="picks"') < html.find('id="method"'),
-   "the rule first, then the picks, then the folded method")
+ok(html.find('id="rules"') < html.find('id="events"') < html.find('id="method"'),
+   "the rule first, then the events, then the folded method")
 for gone in ("crypto-hero", "crypto-progress", "progressbar", "crypto-coin", "crypto-tabs", "crypto-health",
-             "crypto-rule-strip", "Favourite-band record", "Five live coins", "crypto-metrics",
-             'id="today"', 'id="performance"', 'id="lanes"', "Full record table", "<h3"):
+             "crypto-rule-strip", "Favourite-band record", "Five live coins", "crypto-metrics", "tn-pick", "cr-pick",
+             "cr-rules", 'id="today"', 'id="performance"', 'id="lanes"', "Full record table"):
     ok(gone not in html, f"the page no longer prints {gone!r}")
-ok("<thead>" in html and 'data-l="Record"' in html, "the table is labelled for the phone cards")
 eq(B.label_cells(html), html, "the tracker's labelling pass leaves the page unchanged")
+ok('data-filter="scope"' not in html and 'data-filter="stage"' in html, "one scope, so only the stage chips")
 
 print("\ntiles")
-tiles = re.search(r'<div class="tiles tn-tiles">(.*?)</div>\s*<section', html, re.S).group(1)
-cells = re.findall(r'<div class="tile">(.*?)</div>', tiles)
+cells = re.findall(r'<div class="tile">(.*?)</div>', main)
 eq(len(cells), 4, "four stat tiles")
 rows = C.crypto_rows(ledger, stages)
 fav = C._fav_row(rows)
 a = fav["a"]
 ok(">1</b><span>open picks" in cells[0], "open picks counts the open bet")
-ok(f'>{a["won"]}–{a["n"] - a["won"]}</b><span>record · W–L' in cells[1], "record is W–L from the Sandbox row")
-ok(f'>{B.pct(a["roi_fee"], sign=True)}</b><span>ROI after fees' in cells[2], "ROI is the Sandbox row's figure")
-ok(f'>{a["n"]} of {T.READ_FLOOR}</b><span>market-days logged · {T.READ_FLOOR} planned' in cells[3],
-   "market-days logged reads 'n of 30' in the tile text")
-ok('class="mut"' in cells[2], "ROI under the read floor is grey")
+ok(">1</b><span>active rules" in cells[1], "the one rule is active")
+ok("<b>—</b><span>Production record · no rule in Production</span>" in cells[2], "not in Production, so the record tile says so")
+ok("ROI after fees · no rule in Production" in cells[3], "and the ROI tile too")
+prod = {"pairs": {"crypto_fav_band|crypto_fav": {"stage": "production", "by_hand": "2026-10-08",
+                                                 "promoted_at": "2026-10-04T00:00:00+00:00"}}}
+prod_html = C.build(ledger, prod, NOW)
+ok("since Production · Favourite band · 3h to the close" in prod_html
+   and f'<b>{a["won"]}–{a["n"] - a["won"]}</b><span>since Production · Favourite band · 3h to the close</span>' in prod_html,
+   "in Production the record tile is the since-Production market-day record, named")
 
-print("\npicks: one list grouped by day")
-picks = _section(html, "picks")
-days = re.findall(r'<div class="tn-day">(.*?)</div>', picks)
-eq(days, ["Today · Oct 7", "Oct 6", "Oct 5"], "today first, then settled days newest first")
-today_block = picks.split('<div class="tn-day">Oct 6</div>', 1)[0]
-today_rows = re.findall(r'<div class="tn-pick cr-pick([^"]*)" data-series="([^"]+)">', today_block)
-eq([s for _c, s in today_rows], list(S.COINS), "today lists the five live coins once each, in order")
-ok(' is-live' in today_rows[0][0] and 'is-next' in today_rows[1][0], "an open bet is live, a watch-only quote is watching")
-ok(all("is-muted is-none" in cls for cls, _s in today_rows[2:]), "a coin with no rung today is one muted no-entry line")
-btc = re.search(r'<div class="tn-pick cr-pick is-live" data-series="KXBTCD">(.*?)</div></div>', today_block, re.S).group(1)
-ok('<span class="tn-time">4:05 PM CT</span>' in btc, "time is the close, Chicago clock")
-ok("BTC · KXBTCD" in btc and f'href="{S.market_url(ledger["quotes"][0])}"' in btc, "coin · series links to the market")
-ok("<b>$84,500 or above</b>" in btc, "the pick is the rung as the venue names it")
-ok('<span class="tn-price">78¢</span>' in btc, "the price in cents")
-ok('<span class="tn-state is-live">open</span>' in btc, "state open")
-sol = re.search(r'<div class="tn-pick cr-pick is-muted is-none" data-series="KXSOLD">(.*?)</div></div>', today_block, re.S).group(1)
-ok('<span class="tn-state is-none">no entry</span>' in sol and '<span class="tn-pos"></span>' in sol
-   and '<span class="tn-price"></span>' in sol and "4:00 PM CT" in sol,
-   "a no-entry row carries only the coin, the close and the state")
-ok("W</span>" in picks and "L</span>" in picks, "settled market-days are rows with W and L states")
-y_block = picks.split('<div class="tn-day">Oct 6</div>', 1)[1].split('<div class="tn-day">Oct 5</div>', 1)[0]
-ok("$85,250 or above" in y_block and "$118 or above" in y_block and "is-won" in y_block and "is-lost" in y_block,
+print("\nevents: market-days in the tabs")
+events = _section(main, "events")
+tabs = [re.sub(r"<[^>]+>", "", t).strip() for t in re.findall(r'role="tab"[^>]*>(.*?)</button>', events)]
+eq(tabs, ["Next 24h 2", "In progress 0", "Completed · 14 days 3"], "the open bet and the watch-only quote are next; three market-days completed")
+nxt = events.split('id="events-live"', 1)[0]
+btc = re.search(r'<div class="sp-event"[^>]*>(?:(?!sp-event").)*?BTC · KXBTCD.*?</div></div>', nxt, re.S).group(0)
+ok('<div class="sp-when">4:05 PM CT</div>' in btc, "time is the close, Chicago clock")
+ok(f'href="{S.market_url(ledger["quotes"][0])}"' in btc and "BTC · KXBTCD" in btc, "coin · series links to the market")
+ok(">$84,500 or above<" in btc, "the pick is the rung as the venue names it")
+ok('<span class="sp-price">78¢</span>' in btc and 'class="sp-state is-next">upcoming<' in btc, "the price in cents and the state")
+eth = re.search(r'<div class="sp-event"[^>]*>(?:(?!sp-event").)*?ETH · KXETHD.*?</div></div>', nxt, re.S).group(0)
+ok('class="sp-pick is-watch"' in eth and ">watching<" in eth, "a watch-only quote is watching")
+done = events.split('id="events-done"', 1)[1]
+days = re.findall(r'<h4 class="sp-day-head">([^<]+)', done)
+eq(days, ["Tue Oct 6", "Mon Oct 5"], "completed market-days newest first")
+ok("$85,250 or above" in done and "$118 or above" in done and 'is-won">W<' in done and 'is-lost">L<' in done,
    "yesterday lists both coins with their results")
-ok(picks.count('<div class="tn-pick cr-pick') == 8, "five today, two yesterday, one earlier")
-ok("card" not in picks and "<article" not in picks, "no cards")
-scan = re.search(r'<p class="sm mut cr-scan">(.*?)</p>', picks).group(1)
-eq(scan, "Last scan Oct 7, 6:00 AM CT · 525 quotes · next window Oct 7, 12:30–2:00 PM CT",
-   "one muted scanner line: last scan · quotes · window")
-inside = C._scan_status(ledger, datetime.datetime(2026, 10, 7, 18, tzinfo=datetime.timezone.utc))
-ok("current window Oct 7, 12:30–2:00 PM CT" in inside, "inside the window the line says current")
-eq(picks.count("<p"), 2, "one sentence of copy and the scanner line, nothing else")
-later = C._scan_status(ledger, NOW.replace(hour=23))
-ok("next window Oct 8, 12:30–2:00 PM CT" in later, "after the window closes the line names the next one")
-with patch.object(S, "CRYPTO_FAV_CLOSE_ET", 16):
-    ok("11:30 AM–1:00 PM CT" in C._scan_status(ledger, NOW), "a window across noon keeps both periods")
+ok("no entry" not in html, "a coin with no rung is not a line; the empty state carries the reason instead")
 
-print("\nrule: one row")
-rule = _section(html, "rule")
-ok('<table class="tn-rules cr-rules">' in rule, "the rule is the tennis table pattern")
-eq(re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", rule), ["Rule", "Venue", "Record", "ROI", "Verdict", "Open"],
-   "Rule · Venue · Record · ROI · Verdict · Open")
-eq(rule.count("<tr"), 2, "one header row and one rule row")
-ok('<details class="tn-rule"><summary><b>Favourite band · 3h to the close</b></summary>' in rule,
-   "the chevron is the details summary in the Rule cell")
-ok(f'{B.pct(a["roi_fee"], sign=True)}</span><div class="sm mut">on {a["n"]} market-days</div>' in rule,
-   "ROI sits next to its sample")
-ok(f'data-l="Record">{a["won"]}–{a["n"] - a["won"]}</td>' in rule, "record W–L")
+print("\nrules: one card")
+rule = _section(main, "rules")
+ok("No crypto rule is in Production." in rule and 'class="sp-sandbox-table"' in rule, "the Sandbox rule is a table row")
+tr = re.search(r'<tr class="rule-row(?: is-early)?"(.*?)</tr>', rule, re.S).group(1)
+ok('data-source="crypto_fav_band" data-sport="crypto_fav"' in tr, "the row is the favourite-band lane")
+ok("<b>Favourite band · 3h to the close</b>" in tr, "named")
+ok(f'data-l="Record">{a["won"]}–{a["n"] - a["won"]}</td>' in tr, "record W–L")
+ok(SP.roi_html(fav) in tr, "ROI is the Sandbox row's figure")
+ok(f'data-l="Evidence">{a["n"]}/{T.READ_FLOOR}</td>' in tr, "evidence is market-days of 30")
 label, chip, _o = B.VERDICTS[fav["v"]]
-ok(f'<span class="sig {chip}">{label}</span>' in rule, "the verdict is the Sandbox chip")
-ok('data-l="Venue">Kalshi</td>' in rule and 'data-l="Open">1</td>' in rule, "venue and open count")
-dl = re.search(r'<dl class="cr-params">(.*?)</dl>', rule).group(1)
+ok(f'<span class="sig {chip}">{label}</span>' in tr, "the verdict is the Sandbox chip")
+ok('data-l="Market">Kalshi</td>' in tr, "the market column is the venue")
+detail = re.search(r'<tr class="rule-detail"[^>]*>(.*?)</tr>', rule, re.S).group(1)
+dl = re.search(r'<dl class="sp-params">(.*?)</dl>', detail).group(1)
 eq(re.findall(r"<dt>(.*?)</dt>", dl), ["Entry", "Selection", "Liquidity", "Close"], "four entry parameters")
 eq(re.findall(r"<dd>(.*?)</dd>", dl),
    ["Yes ask 70–80¢, 2–3.5h before the close", "lowest qualifying rung, one per coin",
     "≤3¢ spread, 25+ ask", "17:00 ET"], "the parameters are the registered constants")
 note = S.SOURCES["crypto_fav_band"]["note"].strip()
-ok(f'<p class="tn-def sm mut">{B.esc(note)}</p>' in rule, "the registered definition paragraph is in the row")
-ok(rule.find("<dl") < rule.find("tn-def"), "parameters first, then the definition")
+lead, rest = SP.short_definition(note)
+ok(f'<p class="sp-def">{B.esc(lead)}</p>' in detail and B.esc(rest) in detail, "the registered definition, its opening then the rest folded")
+ok(detail.find("<dl") < detail.find("sp-def"), "parameters first, then the definition")
+ok("Last scan Oct 7, 6:00 AM CT · 525 quotes · next window Oct 7, 12:30–2:00 PM CT" in detail,
+   "the scanner line sits under the definition")
 with patch.object(S, "CRYPTO_FAV_BAND", (0.6, 0.9)), patch.object(S, "CRYPTO_FAV_MAX_SPREAD", 0.04), \
         patch.object(S, "CRYPTO_FAV_CLOSE_ET", 16):
     const = C.build(ledger, stages, NOW)
     ok("Yes ask 60–90¢" in const and "≤4¢ spread" in const and "16:00 ET" in const and "70–80¢" not in const,
        "the parameters follow the registered constants")
+prod_rules = _section(prod_html.split("<main", 1)[-1], "rules")
+card = re.search(r'<article class="card sp-rule"(.*?)</article>', prod_rules, re.S)
+ok(card is not None and "<h3>Favourite band · 3h to the close</h3>" in card.group(1)
+   and '<dl class="sp-params">' in card.group(1) and "evidence · market-days settled" in card.group(1),
+   "in Production the rule is a card with its parameters and market-day evidence")
+
+print("\nscan status")
+scan = C._scan_status(ledger, NOW)
+eq(scan, '<p class="sm mut cr-scan">Last scan Oct 7, 6:00 AM CT · 525 quotes · next window Oct 7, 12:30–2:00 PM CT</p>',
+   "one muted scanner line: last scan · quotes · window")
+inside = C._scan_status(ledger, datetime.datetime(2026, 10, 7, 18, tzinfo=datetime.timezone.utc))
+ok("current window Oct 7, 12:30–2:00 PM CT" in inside, "inside the window the line says current")
+later = C._scan_status(ledger, NOW.replace(hour=23))
+ok("next window Oct 8, 12:30–2:00 PM CT" in later, "after the window closes the line names the next one")
+with patch.object(S, "CRYPTO_FAV_CLOSE_ET", 16):
+    ok("11:30 AM–1:00 PM CT" in C._scan_status(ledger, NOW), "a window across noon keeps both periods")
 
 print("\nmethod: folded")
-method = _section(html, "method")
-ok(method.startswith("\n<details>") or method.lstrip().startswith("<details>"), "method is one closed fold")
+method = _section(main, "method")
+ok(method.lstrip().startswith("<details><summary><b>Method</b>"), "method is one closed fold")
 ok("<details open" not in method, "it starts closed")
 ok("A day is one bet" in method and "graded as a single outcome" in method, "it says why a day is one bet and how a day is graded")
 ok("<b>Scheduling.</b>" in method and "13:15 Central" in method, "the scheduling note is a sub-line inside the fold")
 ok("launchd" not in html.split('id="method"')[0], "no operational notes on the open page")
-ok(method.count("<p") == 2, "a few sentences, two paragraphs")
 ok(method.find("Scheduling") > method.find("A day is one bet"), "the method sentences come before scheduling")
 
 print("\nedge cases")
 empty = C.build({"quotes": []}, {"pairs": {}}, NOW)
-ok("No crypto favourite-band record yet." in empty, "no row says so")
-ok(empty.count('<div class="tn-pick cr-pick') == len(S.COINS) and "no entry" in empty,
-   "an empty ledger still lists today's coins as no entry")
-ok(">0</b><span>open picks" in empty and ">—</b><span>record" in empty and f">0 of {T.READ_FLOOR}</b>" in empty,
-   "empty tiles")
-for anchor in ("picks", "rule", "method"):
+ok("No crypto favourite-band record yet." not in empty and "Waiting for results" in empty
+   and 'data-l="Record" data-empty="1">—</td>' in empty,
+   "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
+ok(">0</b><span>open picks" in empty and "<b>—</b><span>Production record" in empty, "empty tiles")
+for anchor in ("events", "rules", "method"):
     ok(f'id="{anchor}"' in empty, f"an empty page keeps #{anchor}")
 ok("Last scan not recorded · no scanner coverage stored" in empty, "no scan is said once")
+ok('data-empty="next"' in empty and "no read is stored for this sport yet" in empty, "the Next 24h empty state says no read is stored")
 unknown = {"quotes": [dict(quote("KXBTCD", 1, 0.75, TODAY, status="open"), start="unreadable")]}
 odd = C.build(unknown, stages, NOW)
-ok("$1 or above" in odd and "None" not in odd, "an unreadable close still lists the pick by its stored date")
-row = {"sport": "crypto_fav", "name": "crypto_fav_band", "prod": False, "open": 0, "v": "early",
+ok("$1 or above" in odd and "None" not in odd and "time TBC" in odd, "an unreadable close still lists the pick, time TBC")
+row = {"sport": "crypto_fav", "name": "crypto_fav_band", "prod": False, "open": 0, "v": "early", "since": None,
        "meta": S.SOURCES["crypto_fav_band"],
        "a": {"n": 2, "won": 1, "expected": 1.5, "roi_fee": None, "clv": None, "clv_n": 0, "n_bets": 5}}
 with patch.object(C, "crypto_rows", return_value=[row]):
     nul = C.build({"quotes": []}, {}, NOW)
-    ok("None" not in nul and ">—</b><span>ROI after fees" in nul, "a missing ROI is a dash, not None")
-prod_row = dict(row, prod=True, a=dict(row["a"], roi_fee=0.1))
-with patch.object(C, "crypto_rows", return_value=[prod_row]):
-    prod = C.build({"quotes": []}, {}, NOW)
-    ok('<span class="sig y">PRODUCTION</span>' in prod, "a Production lane is marked on the row")
-ok('<script' not in html.split("<main", 1)[-1].split("</main>", 1)[0].replace('<script src="./', ""),
-   "no inline script")
+    ok("None" not in nul, "a missing ROI is a dash, not None")
+ok('<script' not in main.replace('<script src="./', ""), "no inline script")
 
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
-ok(".tn-pick.cr-pick {" in css and ".cr-params {" in css, "the crypto rules are additive overrides on the tennis patterns")
-ok(".tn-day {" in css and ".tn-rules td:first-child" in css, "the tennis patterns are reused, not copied")
+ok(".sp-params {" in css and ".cr-params" not in css and ".tn-pick.cr-pick" not in css,
+   "the crypto rules are the template's; the page-specific ones are retired")
 published = open(os.path.join(ROOT, "public_site", "crypto.html"), encoding="utf-8").read()
-ok('class="tn-pick cr-pick' in published and "crypto-hero" not in published, "public_site/crypto.html is the list page")
+ok('class="sp-head"' in published and "crypto-hero" not in published, "public_site/crypto.html is the template page")
 
 print("\nbrowser")
 from require_browser import require_browser
@@ -228,24 +222,27 @@ if playwright is not None:
             page.goto("http://fixture.local/crypto.html", wait_until="load")
             ok(not errors, f"{width}px no JavaScript errors")
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px no sideways scroll")
-            eq(page.locator(".tn-pick.cr-pick").count(), 8, f"{width}px eight list rows")
-            eq(page.locator(".tn-day").first.evaluate("e => getComputedStyle(e).position"), "sticky",
-               f"{width}px the day header is sticky")
+            eq(page.locator(".sp-pick:visible").count(), 2, f"{width}px the Next 24h tab shows two lines")
+            page.locator('.sp-tabs button[data-tab="done"]').click()
+            eq(page.locator(".sp-pick:visible").count(), 3, f"{width}px the Completed tab shows three")
+            eq(page.locator(".sp-day-head:visible").first.evaluate("e => getComputedStyle(e).position"), "sticky",
+               f"{width}px the day head is sticky")
             eq(page.locator("#method > details[open]").count(), 0, f"{width}px method starts closed")
-            ok(not page.locator("details.tn-rule .cr-params").is_visible(), f"{width}px the parameters start hidden")
-            page.locator("details.tn-rule > summary").click()
-            ok(page.locator("details.tn-rule .cr-params").is_visible(), f"{width}px the chevron reveals the parameters")
+            page.locator("details.sp-sandbox > summary").click()
+            ok(not page.locator("tr.rule-detail .sp-params").is_visible(), f"{width}px the parameters start hidden")
+            page.locator("button.rule-chev").first.click()
+            ok(page.locator("tr.rule-detail .sp-params").is_visible(), f"{width}px the chevron reveals the parameters")
             page.locator("#method > details > summary").click()
             ok(page.locator("#method > details > div").is_visible(), f"{width}px the method fold opens")
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px still fits with both open")
-            cards = page.locator(".cr-rules thead").first.evaluate("e => getComputedStyle(e).display")
+            cards = page.locator(".sp-sandbox-table thead").first.evaluate("e => getComputedStyle(e).display")
             eq(cards, "none" if width < 760 else "table-header-group", f"{width}px cards fallback under 760px")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
-               ["#rule", "#picks", "#method"], f"{width}px sub-nav is Rule / Picks / Method")
+               ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method")
             page.close()
         browser.close()
 
 if FAILS:
     print(f"\nFAILED {len(FAILS)}")
     sys.exit(1)
-print("PASS crypto page: tiles, one picks list, one-row rule table, folded method")
+print("PASS crypto page: tiles, market-day events, one rule row, folded method")

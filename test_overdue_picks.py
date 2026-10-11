@@ -94,14 +94,19 @@ rows = [dict(name="tennis_fav_band_3h", sport="tennis", meta=S.SOURCES["tennis_f
              prod=False, v="waiting", a=dict(n=0, won=0), open=3, since=None),
         dict(name="tennis_combo2", sport="tennis_combo", meta=S.SOURCES["tennis_combo2"],
              prod=False, v="waiting", a=dict(n=0, won=0), open=1, since=None)]
-html = C.picks_html(d, rows, NOW)
+import sport_page as SP
+events = C.events(d, rows, NOW)
+_nxt, _later, live, _done = SP.bucket(events, NOW)
+states = sorted(SP.pick_state(p, NOW)[1] for e in live for p in e["picks"])
 eq(C.state_of(d["quotes"][2], NOW), ("unsettled · 30h", "is-late"), "an overdue pick reads unsettled · Nh")
 eq(C.state_of(d["quotes"][0], NOW), ("in play", "is-live"), "a pick 2h past its start is in play")
 eq(C.state_of(d["quotes"][1], NOW), ("in play", "is-live"), "a pick inside 24h is still in play")
-ok('class="tn-state is-late">unsettled · 60h<' in html, "the basket's line carries the badge")
-badges = re.findall(r'<span class="tn-state (is-[a-z]+)">', html)
-eq(sorted(badges), ["is-late", "is-late", "is-live", "is-live", "is-next"],
-   "two overdue, two in play, one with no start to read")
+html = tennis_build.build(d, {"pairs": {}}, NOW) if False else SP.body(
+    SP.spec(family="Tennis", key="tennis", rows=rows, events=C.events, rule_name=C.rule_name, market=C.market,
+            definition=C.definition, recent=C.recent_html), d, {"pairs": {}}, NOW, rows=rows)
+ok('class="sp-state is-late">unsettled · 60h<' in html, "the basket's line carries the badge")
+eq(states, ["is-late", "is-late", "is-live", "is-live"], "two overdue, two in play on the In progress tab")
+eq(sum(1 for e in _nxt for p in e["picks"] if SP.pick_state(p, NOW)[1] == "is-next"), 1, "one with no start to read is upcoming")
 
 if FAILS:
     print(f"\nFAILED {len(FAILS)}")
