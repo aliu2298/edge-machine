@@ -3349,11 +3349,12 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "crypto_fav_band|crypto_fav",
-    "liga_btts_even|soccer_btts", "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15",
-    "o15_ranked|soccer_o15_intl", "oddspedia|cricket", "team1_form_l5|soccer_team1",
-    "team1_form_l5|soccer_team1_intl", "tennis_combo2|tennis_combo",
-    "u35_low_scoring|soccer_u35_intl"],
+   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "corners_under|soccer_corners",
+    "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
+    "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
+    "oddspedia|cricket", "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+    "team2_ranked|soccer_team2", "tennis_combo2|tennis_combo", "turkey_btts_dog|soccer_btts",
+    "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
@@ -4849,7 +4850,10 @@ eq((_ca2["n"], _ca2["n_bets"], _ca2["unit"]), (1, 3, "match"), "three rungs of o
 ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corners", meta=S.SOURCES["corners_under"],
                                       a=_ca2, open=0, last="", prod=False, moved="", v="early")),
    "and the page says so")
-ok("soccer_corners" not in [k.split("|")[1] for k in T.PAIR_OVERRIDES], "the corners rule is not in Production")
+# Moved to Production by hand on 2026-10-11, as an Early pair; the feed names its No on the
+# corners rung (FEED_BETS soccer_corners, kind corners_lte). test_production_early holds it.
+eq((T.PAIR_OVERRIDES.get("corners_under|soccer_corners") or {}).get("moved_on"), "2026-10-11",
+   "the corners rule is in Production since 2026-10-11")
 
 
 print("\nSoccer by-competition counts match the card window and the card's units")

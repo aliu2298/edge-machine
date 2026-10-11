@@ -405,6 +405,34 @@ PAIR_OVERRIDES = {
     # close, the 3c spread, the 25-contract ask and the 2-3.5h window are the Sandbox
     # rule's gates at logging; the feed publishes only what the rule logged.
     "commod_fav_band|commodities_fav": dict(moved_on="2026-10-09", production_at=None),
+    # 2026-10-11, as asked: SIX more rules, EARLY like the rest, on their whole records at
+    # listing. Promotion changes where their picks publish and nothing about what they pick.
+    #
+    # under 3.5 low-scoring, CLUBS scope (the internationals twin has been in Production
+    # since 2026-10-04): 11-2 on 13, +16.5% after fees, -2.2c against the close, 4 open.
+    # The feed already names its No on the league over-3.5 contract (FEED_BETS soccer_u35).
+    "u35_low_scoring|soccer_u35": dict(moved_on="2026-10-11", production_at=None),
+    # corners under form rule: 8-6 on 14 matches (35 rungs), +4.4% after fees, +1.4c
+    # against the close, 3 open. The feed learned the corners rung for it: the NO on a
+    # Kalshi total-corner or team-corner "N+" contract (FEED_BETS soccer_corners, kind
+    # corners_lte), the exact contract and the No side named in the route as the under-3.5
+    # leads are, since Kalshi lists no under contract.
+    "corners_under|soccer_corners": dict(moved_on="2026-10-11", production_at=None),
+    # Eredivisie draw band: 2-3 on 5, +52.0% after fees (two draws at 0.25 and 0.24), flat
+    # against the close. A draw is Kalshi's Tie contract on the GAME event, which the feed
+    # has expressed since 2026-09-16.
+    "ere_draw|soccer": dict(moved_on="2026-10-11", production_at=None),
+    # Turkey BTTS in heavy mismatches: 1-0 on 1 (+86.1%), nothing to read. BTTS reached the
+    # feed on 2026-10-08; the Turkish Super Lig is a BTTS-board league and not a GAME-map
+    # one, so quote_league now accepts either map's leagues for a yes/no row.
+    "turkey_btts_dog|soccer_btts": dict(moved_on="2026-10-11", production_at=None),
+    # favourite to score 2+, ranked by margin, CLUBS scope (the internationals twin was
+    # retired and faded on 2026-10-11, and is not listed): 1-0 on 1 (+105%), nothing to
+    # read. The feed names its Yes on the team-total contract (FEED_BETS soccer_team2).
+    "team2_ranked|soccer_team2": dict(moved_on="2026-10-11", production_at=None),
+    # Turkey over 2.5 in heavy mismatches: 1-0 on 1 (+43.8%), nothing to read. The feed
+    # learned the over-2.5 Yes for it (FEED_BETS soccer_o25, total_gte 3).
+    "turkey_o25_dog|soccer_o25": dict(moved_on="2026-10-11", production_at=None),
 }
 
 
@@ -2821,6 +2849,12 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              # 2026-10-08, with liga_btts_even|soccer_btts: both teams to score, the Yes on
              # Kalshi's KX<league>BTTS contract. League scope only; no cup or intl twin.
              "soccer_btts": {"kind": "btts"},
+             # 2026-10-11, with turkey_o25_dog|soccer_o25: over 2.5, the Yes on KX<league>TOTAL-3.
+             "soccer_o25": {"kind": "total_gte", "n": 3},
+             # 2026-10-11, with corners_under|soccer_corners: the NO on a Kalshi corners rung,
+             # total ("8+ corners") or team ("Crystal Palace 5+ corners"). The rung is in the
+             # ticker (corners_strike) and the claim is that many corners or fewer, less one.
+             "soccer_corners": {"kind": "corners_lte"},
              # 2026-10-08, with bund_o35|soccer_u35: the LEAGUE under-3.5 domain. Its named
              # bet is the under (the No), as on the internationals; the over is the Yes
              # twin below.
@@ -2828,7 +2862,7 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_u35_intl": {"kind": "total_lte", "n": 3}}
 
 # Which side of the named market each kind buys, as the Sandbox records a pick.
-FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a"}
+FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "corners_lte": "b"}
 
 # ONE DOMAIN, TWO CLAIMS (2026-10-08). bund_o35 backs the YES on the same KX...TOTAL-4
 # contract u35_low_scoring backs the No on, so a soccer_u35 bet is the over or the under
@@ -2843,6 +2877,19 @@ FEED_YES_TWIN = {"soccer_u35": {"kind": "total_gte", "n": 4}}
 # commodities_fav joined 2026-10-09: the same rung on Kalshi's daily commodity ladders,
 # with a per-series close (WTI 14:30 ET, the rest 17:00 ET) and a per-series calendar.
 LADDER_SPORTS = ("crypto_fav", "commodities_fav")
+
+
+_CORNERS_STRIKE = re.compile(r"-(?:[A-Z]+)?(\d+)$")
+
+
+def corners_strike(market_id):
+    """The rung of a Kalshi corners contract from its ticker, or None.
+
+    KXEPLCORNERS-26OCT11CRYNFO-8 is 8+ corners in the match; KXEPLTCORNERS-26OCT11CRYNFO-CRY5
+    is Crystal Palace 5+ corners. The No side of either is "fewer than N".
+    """
+    m = _CORNERS_STRIKE.search(str(market_id or ""))
+    return int(m.group(1)) if m else None
 
 
 def feed_pick(sport):
@@ -2894,7 +2941,8 @@ def placeable(q):
         bet = feed_bet(q)
         return (bet is not None and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
-                and (bet["kind"] != "team_gte" or bool(q.get("team"))))
+                and (bet["kind"] != "team_gte" or bool(q.get("team")))
+                and (bet["kind"] != "corners_lte" or corners_strike(q.get("market_id")) is not None))
     if q.get("sport") in LADDER_SPORTS:
         # One rung of a Kalshi daily-close ladder: the Yes on the contract the quote names,
         # whose side_a is the rung ("$82,750 or above"). The close is in the contract.

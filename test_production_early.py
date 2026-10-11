@@ -12,6 +12,7 @@ page's Rules table and the home rule cards, dropping on its own at EARLY_N and n
 pair moved before that date. No network, nothing read from data/.
 """
 import datetime
+import html as html_mod
 import re
 import sys
 from datetime import timedelta, timezone
@@ -27,6 +28,8 @@ import soccer_cards
 import tennis_cards
 
 FAILS = []
+# The fields the feed contract (test_polybot_contract.LEAD_KEYS) requires on every lead.
+LEAD_KEYS_MIN = ("kickoff", "price_at_log", "pair", "status", "bet")
 
 
 def ok(cond, why):
@@ -84,7 +87,7 @@ ok("o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
 eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    ((0.70, 0.85), 0.0084, "2026-10-04T06:46:57+00:00"),
    "promotion touches no tennis parameter")
-eq(len(T.PAIR_OVERRIDES), 12, "five pairs before, eleven after the six, twelve with commodities (2026-10-09)")
+eq(len(T.PAIR_OVERRIDES), 18, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -557,6 +560,125 @@ cpage = PR.page({"quotes": [dict(gold, status="won", result="a", pnl=28.21, sett
                 {"pairs": {CKEY: dict(_cp)}}, {"leads": {}, "pairs": {}}, "", now=MON.replace(hour=23))
 ok("Commodities favourite band" in cpage and 'sig w early">Early · 1 bet</span>' in cpage,
    "the Production pairs table names the pair with its Early count")
+
+# ---------------------------------------------------------------------------
+print("\nthe six of 2026-10-11: under 3.5 clubs, corners, the Eredivisie draw, Turkey BTTS and over 2.5, team 2+ clubs")
+# ---------------------------------------------------------------------------
+SIX2 = {
+    "u35_low_scoring|soccer_u35": "Under 3.5 low-scoring rule",
+    "corners_under|soccer_corners": "Corners under form rule",
+    "ere_draw|soccer": "Eredivisie draw band",
+    "turkey_btts_dog|soccer_btts": "Turkey BTTS in heavy mismatches",
+    "team2_ranked|soccer_team2": "Favourite to score 2+, ranked by margin",
+    "turkey_o25_dog|soccer_o25": "Turkey over 2.5 in heavy mismatches",
+}
+MOVE2 = "2026-10-11"
+for key, name in SIX2.items():
+    ov = T.PAIR_OVERRIDES.get(key) or {}
+    eq(ov.get("moved_on"), MOVE2, f"{key} is listed with move date {MOVE2}")
+    ok(ov.get("production_at") is None, f"{key} is ready from the run that moves it")
+    source, sport = key.split("|", 1)
+    eq(str(S.SOURCES[source]["label"]).split(" (")[0], name, f"{source} is the rule named {name!r}")
+    ok(sport in S.SOURCES[source]["sports"], f"{sport} is a scope {source} is registered on")
+    ok(not S.lane_paused(source, sport) and not S.lane_removed(source, sport), f"{key} is not paused or removed")
+eq(S.scoped_rule("u35_low_scoring", "soccer_u35"), "Under 3.5 low-scoring rule · Clubs", "the under-3.5 pair is the Clubs scope")
+eq(S.scoped_rule("team2_ranked", "soccer_team2"), "Favourite to score 2+, ranked by margin · Clubs",
+   "the team 2+ pair is the Clubs scope (its internationals twin was retired and faded)")
+for twin in ("u35_low_scoring|soccer_u35_cup", "team2_ranked|soccer_team2_cup", "team2_ranked|soccer_team2_intl"):
+    ok(twin not in T.PAIR_OVERRIDES, f"{twin} is not listed")
+_st2 = {"pairs": {}, "events": []}
+T.evaluate_stages({"quotes": []}, _st2, now=NOW, verbose=False)
+for key in SIX2:
+    eq((_st2["pairs"][key]["stage"], _st2["pairs"][key]["by_hand"]), ("production", MOVE2), f"{key} moves on the next run")
+
+print("\nthe feed expresses each of them")
+# Under 3.5, clubs: the No on the league over-3.5 contract, as the internationals pair.
+u35c = _goals("u35_low_scoring", "soccer_u35", "KXMLSTOTAL-26OCT14RSLSJ-4", pick="b", league="MLS",
+              espn_home="Real Salt Lake", espn_away="San Jose Earthquakes", price=0.57)
+ok(T.placeable(u35c) and PR.start_verified(u35c), "the league under-3.5 No reaches the feed")
+_l = PR.lead_from_quote(u35c, "u35_low_scoring|soccer_u35", BUILT)
+eq((_l["headline"], _l["bet"], _l["route"]["outcome_side"], _l["route"]["market"]),
+   ("Under 3.5 goals", {"kind": "total_lte", "n": 3}, "no", "KXMLSTOTAL-26OCT14RSLSJ-4"),
+   "named contract, No side, like the internationals under")
+
+# Corners: the No on a total-corner or team-corner "N+" rung, the strike read off the ticker.
+eq(T.corners_strike("KXEPLCORNERS-26OCT11CRYNFO-8"), 8, "a total-corners ticker ends in its rung")
+eq(T.corners_strike("KXEPLTCORNERS-26OCT11CRYNFO-CRY5"), 5, "a team-corners ticker ends in the team code and its rung")
+eq(T.corners_strike("KXLALIGATCORNERS-26OCT11SANVCF-SAN6"), 6, "another team rung")
+eq(T.corners_strike("KXEPLCORNERS-26OCT11CRYNFO"), None, "no rung, no strike")
+eq(T.corners_strike(None), None, "no ticker, no strike")
+team_c = _goals("corners_under", "soccer_corners", "KXEPLTCORNERS-26OCT11CRYNFO-CRY5", pick="b", league="Premier League",
+                espn_home="Crystal Palace", espn_away="Nottingham Forest", team="Crystal Palace", price=0.57)
+total_c = _goals("corners_under", "soccer_corners", "KXEPLCORNERS-26OCT11CRYNFO-8", pick="b", league="Premier League",
+                 espn_home="Crystal Palace", espn_away="Nottingham Forest", price=0.62)
+ok(T.placeable(team_c) and PR.start_verified(team_c), "a team-corners No reaches the feed")
+ok(T.placeable(total_c) and PR.start_verified(total_c), "a total-corners No reaches the feed")
+ok(not T.placeable(dict(team_c, pick="a")), "the Yes (N+ corners) is not the rule's bet")
+ok(not T.placeable(dict(team_c, market_id="KXEPLTCORNERS-26OCT11CRYNFO")), "a rung the ticker does not name is not published")
+ok(not T.placeable(dict(team_c, league="Allsvenskan")), "nor an unmapped league")
+tl = PR.lead_from_quote(team_c, "corners_under|soccer_corners", BUILT)
+eq(tl["bet"], {"kind": "corners_lte", "n": 4, "team": "Crystal Palace"}, "5+ team corners, No: Crystal Palace 4 corners or fewer")
+eq(tl["headline"], "Under 5 corners · Crystal Palace", "the headline says under the rung, and whose")
+eq(tl["route"], {"venue": "kalshi", "market": "KXEPLTCORNERS-26OCT11CRYNFO-CRY5",
+                 "outcome": "Under 5 corners · Crystal Palace", "outcome_side": "no"},
+   "routed to the exact contract on the No side, as the under-3.5 leads are")
+ol = PR.lead_from_quote(total_c, "corners_under|soccer_corners", BUILT)
+eq((ol["bet"], ol["headline"], ol["route"]["outcome_side"]), ({"kind": "corners_lte", "n": 7}, "Under 8 corners", "no"),
+   "8+ match corners, No: 7 or fewer, no team")
+eq(ol["match"], "Crystal Palace v Nottingham Forest", "on its fixture")
+eq(T.feed_pick("soccer_corners"), "b", "corners is a No kind")
+
+# The Eredivisie draw: Kalshi's Tie contract on the GAME event, as the feed has said since 2026-09-16.
+draw = dict(id="ere_draw:KXEREDIVISIEGAME-26OCT11TELADO", source="ere_draw", sport="soccer",
+            market_id="KXEREDIVISIEGAME-26OCT11TELADO", label="Telstar vs Den Haag", side_a="Telstar",
+            side_b="Den Haag", pick="draw", price=0.25, price_a=0.5, price_b=0.25, price_draw=0.25,
+            venue="kalshi", bet=True, status="open", start=KO, logged=NOW.isoformat(), start_source="espn")
+ok(T.placeable(draw) and PR.start_verified(draw), "an Eredivisie draw on a Kalshi GAME market reaches the feed")
+dl = PR.lead_from_quote(draw, "ere_draw|soccer", BUILT)
+eq((dl["bet"], dl["headline"], dl["league"], dl["match"]), ({"kind": "match_result", "side": "draw"}, "Draw", "Eredivisie", "Telstar v Den Haag"),
+   "the lead is a draw claim on the fixture")
+ok(not T.placeable(dict(draw, venue="polymarket_us")), "only the Kalshi GAME market carries a Tie contract")
+
+# Turkey: the Super Lig is a BTTS-board league the GAME map does not name.
+ok("Turkish Super Lig" in S.feed_binary_leagues() and "Turkish Super Lig" not in S.KALSHI_GAME_LEAGUES.values(),
+   "the feed's yes/no leagues are the GAME map's plus the BTTS board's")
+tb = _goals("turkey_btts_dog", "soccer_btts", "KXSUPERLIGBTTS-26OCT09GALKAS-BTTS", league="Turkish Super Lig",
+            espn_home="Galatasaray", espn_away="Kasimpasa", price=0.52)
+eq(S.quote_league(tb), "Turkish Super Lig", "a Super Lig BTTS row maps to its league")
+ok(T.placeable(tb) and PR.start_verified(tb), "Turkey BTTS Yes reaches the feed")
+eq(PR.lead_from_quote(tb, "turkey_btts_dog|soccer_btts", BUILT)["headline"], "Both teams to score", "as a BTTS claim")
+to = _goals("turkey_o25_dog", "soccer_o25", "KXSUPERLIGTOTAL-26OCT09GALKAS-3", league="Turkish Super Lig",
+            espn_home="Galatasaray", espn_away="Kasimpasa", price=0.68)
+ok(T.placeable(to) and PR.start_verified(to), "Turkey over 2.5 Yes reaches the feed")
+_o = PR.lead_from_quote(to, "turkey_o25_dog|soccer_o25", BUILT)
+eq((_o["headline"], _o["bet"], _o.get("route")), ("Over 2.5 goals", {"kind": "total_gte", "n": 3}, None),
+   "over 2.5 is a plain Yes on the -3 contract, no route needed")
+ok(not T.placeable(dict(to, pick="b")), "its No is not published")
+ok(not T.placeable(dict(to, sport="soccer_o25_cup")), "no cup twin reaches the feed")
+ok(not T.placeable(dict(tb, league="Allsvenskan")), "a league on neither map is still refused")
+
+# Team 2+, clubs: the Yes on the team-total contract, as the team 1+ pairs.
+t2 = _goals("team2_ranked", "soccer_team2", "KXSERIEATEAMTOTAL-26OCT11LECBFC-BFC2", league="Serie A",
+            espn_home="Lecce", espn_away="Bologna", team="Bologna", price=0.47)
+ok(T.placeable(t2) and PR.start_verified(t2), "the team 2+ Yes reaches the feed")
+eq(PR.lead_from_quote(t2, "team2_ranked|soccer_team2", BUILT)["bet"], {"kind": "team_gte", "n": 2, "team": "Bologna"},
+   "as a team-goals claim")
+
+# One feed, six pairs, one lead each, nothing held back.
+st6 = {"pairs": {key: {"stage": "production", "by_hand": MOVE2, "ready_at": BUILT} for key in SIX2}}
+feed6b = PR.build_feed({"quotes": [u35c, team_c, draw, tb, t2, to]}, st6, now=NOW)
+eq(sorted(l["pair"] for l in feed6b["leads"].values()), sorted(SIX2), "each of the six publishes one lead")
+eq((feed6b["unlisted_skipped"], feed6b["unverified_kickoff_skipped"]), (0, 0), "with nothing held back")
+for l in feed6b["leads"].values():
+    ok(set(LEAD_KEYS_MIN) <= set(l), f"{l['pair']}: the lead carries the feed's required fields")
+
+# The Production pairs table names them with their scope and the Early badge.
+page6 = PR.page({"quotes": []}, st6, {"leads": {}, "pairs": {}}, "", now=NOW + timedelta(hours=1))
+for text in ("Under 3.5 low-scoring rule · Clubs", "Corners under form rule", "Eredivisie draw band",
+             "Turkey BTTS in heavy mismatches", "Favourite to score 2+, ranked by margin · Clubs",
+             "Turkey over 2.5 in heavy mismatches"):
+    ok(f"<b>{html_mod.escape(text)}</b> <span class=\"sig w early\">Early · 0 bets</span>" in page6,
+       f"the Production table shows {text!r} with Early · 0 bets")
 
 print(f"\n{len(FAILS)} FAILED" if FAILS else "\nall passed")
 sys.exit(1 if FAILS else 0)

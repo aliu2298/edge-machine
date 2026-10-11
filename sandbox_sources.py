@@ -3749,8 +3749,13 @@ def quote_league(q):
         return KALSHI_GAME_LEAGUES.get(str(q.get("market_id") or "").split("-")[0])
     # A BTTS row is tied to its ESPN fixture the same way a goals row is (fetch_kalshi_btts),
     # so it carries the same league name. Added 2026-10-08 with liga_btts_even|soccer_btts.
-    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS:
-        return q.get("league") if q.get("league") in KALSHI_GAME_LEAGUES.values() else None
+    # A corners row (fetch_kalshi_corners) is tied the same way; added 2026-10-11 with
+    # corners_under|soccer_corners. The league may be any the goals and BTTS boards map
+    # (BTTS_LEAGUES names the Turkish Super Lig, which the GAME map does not): every such
+    # row was matched to an ESPN fixture before it was logged, which is what the feed
+    # needs the league for.
+    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS + ("soccer_corners",):
+        return q.get("league") if q.get("league") in feed_binary_leagues() else None
     return None
 
 
@@ -4212,6 +4217,12 @@ SCOPE_NOTE = {
               "over-1.5 top-2 mismatches are in Production; every other internationals pair is not."),
 }
 BTTS_SPORTS = ("soccer_btts", "soccer_btts_cup", "soccer_btts_intl")
+
+
+def feed_binary_leagues():
+    """The leagues a Kalshi yes/no row (goals, BTTS, corners) may name for the feed: the
+    GAME map's and the BTTS board's. Read at call time: both maps are defined below."""
+    return set(KALSHI_GAME_LEAGUES.values()) | set(BTTS_LEAGUES.values())
 
 BTTS_FORM_WINDOW = 10
 BTTS_FORM_MIN = 7
