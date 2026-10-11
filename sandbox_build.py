@@ -155,31 +155,10 @@ def dark_feeds(d):
     """[(source, label, reason)] for every connected source whose feed could not be read on
     the last run. The reason is the adapter's own ("down: ..." in feed_status) or "" when
     the verdict came from empty counts across every sport the source covers. The rule
-    feed_health prints, as data, so the Control Center can list the same feeds."""
-    cov = d.get("coverage") or {}
-    status = d.get("feed_status") or {}
-    if not cov and not status:
-        return []
-    dark = []
-    for name, meta in S.SOURCES.items():
-        if not meta["connected"] or name == "polymarket_us":
-            continue
-        if name in S.REMOVED_SOURCES:
-            continue
-        # A rule reads data we already hold; zero picks means no match qualified, not a dead feed.
-        if meta.get("kind") == "Rule":
-            continue
-        st = status.get(name)
-        if st is not None:
-            if st.startswith("down"):
-                reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
-                dark.append((name, meta["label"], reason))
-            continue
-        counts = [_coverage_signal((cov.get(sp) or {}).get(name)) for sp in meta["sports"]]
-        seen = [c for c in counts if c is not None]
-        if seen and not any(seen):
-            dark.append((name, meta["label"], ""))
-    return dark
+    feed_health prints, as data, so the Control Center can list the same feeds.
+
+    One definition: sandbox_track.broken_feeds, which data/status.json also writes."""
+    return [(item["source"], item["label"], item["reason"]) for item in T.broken_feeds(d)]
 
 
 def feed_health(d):

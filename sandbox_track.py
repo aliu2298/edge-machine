@@ -2090,6 +2090,24 @@ def grade(d, verbose=True, now=None, mismatches=None):
 # The audit's stale check (48h) asks the venue when it went final; this is the
 # earlier, cheaper flag from the settler itself, with no extra venue call.
 OVERDUE_H = 24
+# A contest that runs for days is not overdue a day after it starts. Test cricket
+# is the one such contest on the board: five days, and Polymarket US settles it
+# after the last day. Its slug carries "testcr" (aec-testcr-sao-aus-2026-10-09:
+# South Africa v Australia, flagged "still open 45h past its start" on day two).
+TEST_MATCH_H = 5 * 24
+
+
+def contest_length_h(q):
+    """How long the contest itself runs, in hours. 0 for a game decided the same day."""
+    mid = str(q.get("market_id") or "")
+    if q.get("sport") == "cricket" and ("testcr" in mid.lower() or "test match" in str(q.get("label") or "").lower()):
+        return TEST_MATCH_H
+    return 0
+
+
+def overdue_after_h(q):
+    """Hours past the start after which an open bet is overdue: the flag plus the contest's own length."""
+    return OVERDUE_H + contest_length_h(q)
 
 
 def overdue_bets(d, now=None):
@@ -2115,9 +2133,160 @@ def overdue_bets(d, now=None):
         if start.tzinfo is None:
             start = start.replace(tzinfo=timezone.utc)
         age = (now - start).total_seconds() / 3600
-        if age > OVERDUE_H:
+        if age > overdue_after_h(q):
             out.append((q, age))
     out.sort(key=lambda item: (-item[1], str(item[0].get("id") or "")))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Feed health and the status file
+# ---------------------------------------------------------------------------
+
+STATUS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "status.json")
+
+
+def _coverage_signal(cell):
+    """The count feed health can test, or None when the cell is not a signal.
+
+    An int is the shape stored before offered-row counts. A dict uses the picks.
+    An empty offer returns None, so an empty board does not mark the feed dark.
+    """
+    if isinstance(cell, dict):
+        if int(cell.get("offered") or 0) == 0:
+            return None
+        return int(cell.get("picked") or 0)
+    return cell
+
+
+def broken_feeds(d):
+    """[{source, label, reason}] for every connected source the last run could not read.
+
+    A source that reports a status is dark when that status says down. One that
+    reports none is dark only when it picked nothing across EVERY sport it
+    covers that had rows on offer: a single quiet sport is just an empty fixture
+    list. Rules read data already held, so zero picks is no match, not a dead
+    feed. The Sandbox page's feed check prints exactly this list.
+    """
+    cov = d.get("coverage") or {}
+    status = d.get("feed_status") or {}
+    out = []
+    if not cov and not status:
+        return out
+    for name, meta in S.SOURCES.items():
+        if not meta["connected"] or name == "polymarket_us":
+            continue
+        if name in S.REMOVED_SOURCES:
+            continue
+        if meta.get("kind") == "Rule":
+            continue
+        st = status.get(name)
+        if st is not None:
+            if st.startswith("down"):
+                reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
+                out.append(dict(source=name, label=meta["label"], reason=reason))
+            continue
+        counts = [_coverage_signal((cov.get(sp) or {}).get(name)) for sp in meta["sports"]]
+        seen = [c for c in counts if c is not None]
+        if seen and not any(seen):
+            # "" is the counts verdict: rows on offer on every sport it covers, no pick on any.
+            out.append(dict(source=name, label=meta["label"], reason=""))
+    return out
+
+
+def build_status(d, now=None, previous=None):
+    """The machine-readable run status: one entry per lane, the overdue open bets,
+    and the feeds the last run could not read.
+
+    Shape (every time is ISO-8601 UTC, every list is sorted and may be empty):
+      written            when this file was built
+      ledger_updated     the ledger's own stamp for the run it describes
+      lanes              {"<source>|<sport>": {source, sport, label, kind, paused,
+                            read: "ok" | "down: <why>" | "quiet" | "paused" | None,
+                            last_read: the last run that read this source's feed
+                                       (its status said ok, or it had rows on offer),
+                                       carried forward from the previous file when
+                                       this run did not,
+                            offered, picked: this run's counts, or None,
+                            open: open bets on this lane,
+                            last_quote: the newest quote logged on this lane}}
+      overdue_open       [{id, source, sport, venue, market_id, label, start,
+                           hours_past_start, overdue_after_h}], oldest first
+      broken_feeds       [{source, label, reason}]; reason "" means the source
+                         reported no status and picked nothing on any sport it had rows for
+    A lane is a connected source on one of its registered sports. A source's
+    feed is read once per run for every sport it covers, so last_read is the
+    source's; it is repeated on each of its lanes so a reader need not join.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    stamp = now.isoformat()
+    prev_lanes = ((previous or {}).get("lanes") or {}) if isinstance(previous, dict) else {}
+    cov = d.get("coverage") or {}
+    status = d.get("feed_status") or {}
+    quotes = [q for q in (d.get("quotes") or []) if isinstance(q, dict)]
+    open_n, last_quote = {}, {}
+    for q in quotes:
+        key = f"{q.get('source')}|{q.get('sport')}"
+        if q.get("bet") and q.get("status") == "open":
+            open_n[key] = open_n.get(key, 0) + 1
+        logged = str(q.get("logged") or "")
+        if logged > last_quote.get(key, ""):
+            last_quote[key] = logged
+    lanes = {}
+    for name, meta in sorted(S.SOURCES.items()):
+        if not meta.get("connected") or name in S.REMOVED_SOURCES:
+            continue
+        st = status.get(name)
+        for sport in meta.get("sports") or []:
+            key = f"{name}|{sport}"
+            cell = (cov.get(sport) or {}).get(name)
+            offered = picked = None
+            if isinstance(cell, dict):
+                offered, picked = int(cell.get("offered") or 0), int(cell.get("picked") or 0)
+            elif isinstance(cell, int):
+                picked = cell
+            paused = bool(S.fetch_skipped(name, sport)) if hasattr(S, "fetch_skipped") else False
+            if paused:
+                read = "paused"
+            elif st is not None:
+                read = st
+            elif offered:
+                read = "ok"
+            elif cell is None:
+                read = None
+            else:
+                read = "quiet"
+            read_now = read == "ok"
+            last_read = stamp if read_now else (prev_lanes.get(key) or {}).get("last_read")
+            lanes[key] = dict(source=name, sport=sport, label=meta.get("label"), kind=meta.get("kind"),
+                              paused=paused, read=read, last_read=last_read,
+                              offered=offered, picked=picked,
+                              open=open_n.get(key, 0), last_quote=last_quote.get(key))
+    overdue = [dict(id=q.get("id"), source=q.get("source"), sport=q.get("sport"), venue=q.get("venue"),
+                    market_id=q.get("market_id"), label=q.get("label"), start=q.get("start"),
+                    hours_past_start=round(age, 1), overdue_after_h=overdue_after_h(q))
+               for q, age in overdue_bets(d, now)]
+    return dict(written=stamp, ledger_updated=(d.get("meta") or {}).get("updated"),
+                lanes=lanes, overdue_open=overdue, broken_feeds=broken_feeds(d))
+
+
+def write_status(d, now=None, path=None):
+    """Write build_status to data/status.json, carrying last_read forward. Returns the dict."""
+    path = path or STATUS
+    previous = None
+    try:
+        with open(path, encoding="utf-8") as f:
+            previous = json.load(f)
+    except (OSError, ValueError):
+        previous = None
+    out = build_status(d, now=now, previous=previous)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=1, sort_keys=True)
+        f.write("\n")
+    os.replace(tmp, path)
     return out
 
 
@@ -4110,6 +4279,15 @@ def main():
     if n_city:
         print(f"  climate city-days: re-marked {n_city} quote(s) under {CLIMATE_KEEP_RULE}")
     save(d)
+    # The machine-readable status beside the ledger: per lane the last run that
+    # read its feed, the open bets overdue past their start, the feeds this run
+    # could not read. A failure here must not cost the run its ledger.
+    try:
+        status = write_status(d)
+        print(f" status: {len(status['overdue_open'])} overdue open bet(s), "
+              f"{len(status['broken_feeds'])} broken feed(s) -> {STATUS}")
+    except Exception as e:
+        print(f"  ! status file failed: {type(e).__name__}: {str(e)[:80]}")
     st = load_stages()
     evaluate_stages(d, st)
     save_stages(st)
