@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-11T17:50:26+00:00",
+ "board_built_at": "2026-10-11T19:34:45+00:00",
  "leads": {
   "2026-10-05|Garden Route Badgers|Limpopo Impalas|Limpopo Impalas to win \u00b7 Oddspedia community tips": {
    "away": "Limpopo Impalas",
@@ -1006,6 +1006,29 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
+  "2026-10-11|Real Betis|Osasuna|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Osasuna",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-11",
+   "edge_at_log": null,
+   "first_seen": "2026-10-07",
+   "headline": "Over 1.5 goals",
+   "home": "Real Betis",
+   "id": "2026-10-11|Real Betis|Osasuna|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-11T16:30Z",
+   "lane": "production",
+   "league": "La Liga",
+   "match": "Real Betis v Osasuna",
+   "pair": "o15_ranked|soccer_o15",
+   "price_at_log": 0.78,
+   "sandbox_quote": "o15_ranked:KXLALIGATOTAL-26OCT11RBBOSA-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15",
+   "status": "hit"
+  },
   "2026-10-11|SC Freiburg|Schalke 04|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Schalke 04",
    "bet": {
@@ -1028,6 +1051,29 @@
    "source": "bund_o35",
    "sport": "soccer_u35",
    "status": "miss"
+  },
+  "2026-10-11|Sassuolo|AC Milan|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "AC Milan",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-11",
+   "edge_at_log": null,
+   "first_seen": "2026-10-07",
+   "headline": "Over 1.5 goals",
+   "home": "Sassuolo",
+   "id": "2026-10-11|Sassuolo|AC Milan|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-11T16:00Z",
+   "lane": "production",
+   "league": "Serie A",
+   "match": "Sassuolo v AC Milan",
+   "pair": "o15_ranked|soccer_o15",
+   "price_at_log": 0.8,
+   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT11SASACM-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15",
+   "status": "hit"
   },
   "2026-10-11|Sporting Kansas City|Portland Timbers|Sporting Kansas City to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Portland Timbers",
@@ -1069,7 +1115,7 @@
    "kickoff": "2026-10-11T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T17:50:26+00:00",
+   "last_seen_at": "2026-10-11T19:34:45+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LA Galaxy",
    "pair": "team1_form_l5|soccer_team1",
@@ -1094,7 +1140,7 @@
    "kickoff": "2026-10-12T19:15Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T17:50:26+00:00",
+   "last_seen_at": "2026-10-11T19:34:45+00:00",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Alverca",
    "pair": "o15_ranked|soccer_o15",
@@ -1102,6 +1148,37 @@
    "sandbox_quote": "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-2",
    "source": "o15_ranked",
    "sport": "soccer_o15",
+   "status": "pending"
+  },
+  "2026-10-12|FC Famalicao|Alverca|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Alverca",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-12",
+   "edge_at_log": null,
+   "first_seen": "2026-10-09",
+   "headline": "Under 3.5 goals",
+   "home": "FC Famalicao",
+   "id": "2026-10-12|FC Famalicao|Alverca|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-12T19:15Z",
+   "lane": "production",
+   "last_seen": "2026-10-11",
+   "last_seen_at": "2026-10-11T19:34:45+00:00",
+   "league": "Primeira Liga",
+   "match": "FC Famalicao v Alverca",
+   "pair": "u35_low_scoring|soccer_u35",
+   "price_at_log": 0.76,
+   "route": {
+    "market": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35",
    "status": "pending"
   },
   "2026-10-13|Lens|Sporting CP|Sporting CP to score 1+ \u00b7 Team scores 1+ form rule": {
@@ -1120,7 +1197,7 @@
    "kickoff": "2026-10-13T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T17:50:26+00:00",
+   "last_seen_at": "2026-10-11T19:34:45+00:00",
    "league": "Champions League",
    "match": "Lens v Sporting CP",
    "pair": "team1_form_l5|soccer_team1",
@@ -1128,6 +1205,68 @@
    "sandbox_quote": "team1_form_l5:KXUCLTEAMTOTAL-26OCT13RCLSPO-SPO1",
    "source": "team1_form_l5",
    "sport": "soccer_team1",
+   "status": "pending"
+  },
+  "2026-10-14|D.C. United|Red Bull New York|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Red Bull New York",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-14",
+   "edge_at_log": null,
+   "first_seen": "2026-10-11",
+   "headline": "Under 3.5 goals",
+   "home": "D.C. United",
+   "id": "2026-10-14|D.C. United|Red Bull New York|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-14T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-11",
+   "last_seen_at": "2026-10-11T19:34:45+00:00",
+   "league": "MLS",
+   "match": "D.C. United v Red Bull New York",
+   "pair": "u35_low_scoring|soccer_u35",
+   "price_at_log": 0.58,
+   "route": {
+    "market": "KXMLSTOTAL-26OCT14DCUNYRB-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXMLSTOTAL-26OCT14DCUNYRB-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35",
+   "status": "pending"
+  },
+  "2026-10-15|Real Salt Lake|San Jose Earthquakes|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "San Jose Earthquakes",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-10-15",
+   "edge_at_log": null,
+   "first_seen": "2026-10-11",
+   "headline": "Under 3.5 goals",
+   "home": "Real Salt Lake",
+   "id": "2026-10-15|Real Salt Lake|San Jose Earthquakes|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-10-15T01:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-11",
+   "last_seen_at": "2026-10-11T19:34:45+00:00",
+   "league": "MLS",
+   "match": "Real Salt Lake v San Jose Earthquakes",
+   "pair": "u35_low_scoring|soccer_u35",
+   "price_at_log": 0.57,
+   "route": {
+    "market": "KXMLSTOTAL-26OCT14RSLSJ-4",
+    "outcome": "Under 3.5 goals",
+    "outcome_side": "no",
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXMLSTOTAL-26OCT14RSLSJ-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35",
    "status": "pending"
   }
  },
@@ -1154,6 +1293,17 @@
    "sandbox_roi": 0.2821,
    "sandbox_roi_fee": 0.2626
   },
+  "corners_under|soccer_corners": {
+   "by_hand": "2026-10-11",
+   "entered_at": "2026-10-11T19:34:45+00:00",
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "route": "moved by hand on 2026-10-11",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
   "crypto_fav_band|crypto_fav": {
    "by_hand": "2026-10-08",
    "entered_at": "2026-10-08T17:50:08+00:00",
@@ -1164,6 +1314,17 @@
    "sandbox_n": 2,
    "sandbox_roi": 0.3221,
    "sandbox_roi_fee": 0.2999
+  },
+  "ere_draw|soccer": {
+   "by_hand": "2026-10-11",
+   "entered_at": "2026-10-11T19:34:45+00:00",
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "route": "moved by hand on 2026-10-11",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
   },
   "liga_btts_even|soccer_btts": {
    "by_hand": "2026-10-08",
@@ -1193,10 +1354,10 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
-   "sandbox_clv": -0.0233,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.311,
-   "sandbox_roi_fee": 0.2896
+   "sandbox_clv": -0.002,
+   "sandbox_n": 5,
+   "sandbox_roi": 0.293,
+   "sandbox_roi_fee": 0.2728
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -1242,6 +1403,17 @@
    "sandbox_roi": 0.1895,
    "sandbox_roi_fee": 0.1765
   },
+  "team2_ranked|soccer_team2": {
+   "by_hand": "2026-10-11",
+   "entered_at": "2026-10-11T19:34:45+00:00",
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "route": "moved by hand on 2026-10-11",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
   "tennis_combo2|tennis_combo": {
    "by_hand": "2026-10-08",
    "entered_at": "2026-10-08T17:50:08+00:00",
@@ -1252,6 +1424,39 @@
    "sandbox_n": 5,
    "sandbox_roi": 0.0906,
    "sandbox_roi_fee": 0.0586
+  },
+  "turkey_btts_dog|soccer_btts": {
+   "by_hand": "2026-10-11",
+   "entered_at": "2026-10-11T19:34:45+00:00",
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "route": "moved by hand on 2026-10-11",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
+  "turkey_o25_dog|soccer_o25": {
+   "by_hand": "2026-10-11",
+   "entered_at": "2026-10-11T19:34:45+00:00",
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "route": "moved by hand on 2026-10-11",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
+  },
+  "u35_low_scoring|soccer_u35": {
+   "by_hand": "2026-10-11",
+   "entered_at": "2026-10-11T19:34:45+00:00",
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "route": "moved by hand on 2026-10-11",
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null
   },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
@@ -1268,5 +1473,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 6,
- "updated_at": "2026-10-11T17:50:26+00:00"
+ "updated_at": "2026-10-11T19:34:45+00:00"
 }
