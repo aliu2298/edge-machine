@@ -793,6 +793,21 @@ if _root_bad:
 else:
     ok(True, "publish and Pages require steps.site_root.outcome == 'success'")
 
+print("\nPages artifact: one name per attempt, on both deploying workflows")
+# A re-run keeps the first attempt's artifact. With one fixed name the second attempt
+# uploads a second "github-pages" and deploy-pages refuses the run (#340, attempt 2).
+for _wf in ("sandbox-tracker.yml", "refresh-boards.yml"):
+    _text = open(os.path.join(WF_DIR, _wf), encoding="utf-8").read()
+    _uploads = re.findall(r"uses: actions/upload-pages-artifact@[0-9a-f]{40}[^\n]*\n(?:[ \t]+[^\n]*\n)*?[ \t]+name: ([^\n]+)", _text)
+    ok(_uploads == ["github-pages-${{ github.run_attempt }}"],
+       f"{_wf}: upload-pages-artifact names the artifact per attempt ({_uploads})")
+    _deploys = re.findall(r"uses: actions/deploy-pages@[0-9a-f]{40}[^\n]*\n[ \t]+with:\n[ \t]+artifact_name: ([^\n]+)", _text)
+    ok(_deploys == ["github-pages-${{ github.run_attempt }}"],
+       f"{_wf}: deploy-pages asks for that same name ({_deploys})")
+    ok("artifacts?name=github-pages-${GITHUB_RUN_ATTEMPT}" in _text
+       and 'artifacts?name=github-pages"' not in _text,
+       f"{_wf}: the wait step lists the per-attempt name")
+
 _GATE_DOC = """
 jobs:
   refresh:
