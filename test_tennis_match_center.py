@@ -74,9 +74,9 @@ nothing = C.picks_html({'quotes': []}, rows, NOW)
 assert nothing.startswith('<p class="tn-empty">No open pick · next check ') and 'tn-picks' not in nothing
 
 empty = tennis_build.build({'quotes': []}, {'pairs': {}}, NOW)
-for anchor in ('matches', 'rules', 'system'):
+for anchor in ('events', 'rules', 'method'):
     assert f'id="{anchor}"' in empty, anchor
-assert 'href="#matches"' in empty and 'href="#rules"' in empty and 'href="#system"' in empty
+assert 'href="#events"' in empty and 'href="#rules"' in empty and 'href="#method"' in empty
 
 from require_browser import require_browser
 playwright = require_browser('test_tennis_match_center.py')
@@ -98,14 +98,14 @@ if playwright is not None:
         page.goto('http://fixture.local/tennis.html', wait_until='load')
         for width in (1280, 390, 320):
             page.set_viewport_size({'width': width, 'height': 800})
-            assert page.locator('#matches .tn-pick').first.is_visible()
+            assert page.locator('#events .tn-pick').first.is_visible()
             assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), width
             # The match list stays a flat list at every width: one grid row per pick.
-            assert page.locator('#matches .tn-pick').count() == full.count('class="tn-pick ') > 0
+            assert page.locator('#events .tn-pick').count() == full.count('class="tn-pick ') > 0
             assert page.evaluate("getComputedStyle(document.querySelector('.tn-pick')).display") == 'grid'
             # The rules table is cards under 760px, a table above it.
             thead_shown = page.locator('#rules table thead').first.is_visible()
             assert thead_shown == (width > 760), (width, thead_shown)
-            assert page.locator('#system > details').get_attribute('open') is None
+            assert page.locator('#method > details').get_attribute('open') is None
         browser.close()
 print('PASS tennis identity, per-pick links, day windows, empty line, and phone layout')

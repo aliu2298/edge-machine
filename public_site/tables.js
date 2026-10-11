@@ -13,6 +13,7 @@
       api.wireRuleCards(document);
       api.wireRuleRows(document);
       api.wireSportFilter(document);
+      api.wireTheme(document);
       api.revealHash(document);
     };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
@@ -430,6 +431,59 @@
     });
   }
 
+  // The theme. The stylesheet follows the device (dark with no preference);
+  // html[data-theme] overrides it and is remembered per browser. Storage can
+  // be absent or refused (private windows, blocked site data), so every read
+  // and write is wrapped, and with no storage the toggle still works for the
+  // page. With script off the device preference stands.
+  var THEME_KEY = "edge-theme";
+  function storedTheme() {
+    try {
+      var v = window.localStorage.getItem(THEME_KEY);
+      return v === "light" || v === "dark" ? v : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  function rememberTheme(name) {
+    try {
+      if (name) window.localStorage.setItem(THEME_KEY, name);
+      else window.localStorage.removeItem(THEME_KEY);
+    } catch (e) { /* no storage: the choice lasts for this page */ }
+  }
+  function currentTheme(doc) {
+    var set = doc.documentElement.getAttribute("data-theme");
+    if (set === "light" || set === "dark") return set;
+    try {
+      return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    } catch (e) {
+      return "dark";
+    }
+  }
+  function wireTheme(doc) {
+    var root = doc.documentElement;
+    var saved = storedTheme();
+    if (saved) root.setAttribute("data-theme", saved);
+    var buttons = doc.querySelectorAll("[data-theme-toggle]");
+    function label() {
+      var now = currentTheme(doc);
+      Array.prototype.forEach.call(buttons, function (btn) {
+        btn.setAttribute("aria-label", now === "dark" ? "Switch to the light theme" : "Switch to the dark theme");
+        btn.setAttribute("data-theme-now", now);
+        btn.textContent = now === "dark" ? "Light" : "Dark";
+      });
+    }
+    label();
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener("click", function () {
+        var next = currentTheme(doc) === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        rememberTheme(next);
+        label();
+      });
+    });
+  }
+
   function enhance(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll("table.sortable"), function (table) {
       var rows = bodyRows(table);
@@ -552,6 +606,8 @@
     containWideTables: containWideTables,
     wireRuleCards: wireRuleCards,
     wireSportFilter: wireSportFilter,
+    wireTheme: wireTheme,
+    currentTheme: currentTheme,
     wireRuleRows: wireRuleRows,
     revealHash: revealHash,
   };

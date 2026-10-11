@@ -194,11 +194,11 @@ d, st = _fixture()
 html = soccer_build.build(d, st, NOW)
 rows = _rows(d, st)
 ok(rows, "the fixture has soccer lanes")
-ok('id="fixtures"' in html and 'id="rules"' in html and 'id="health"' in html,
+ok('id="events"' in html and 'id="rules"' in html and 'id="method"' in html,
    "the page has Fixtures, Rules and System sections")
-ok('href="#fixtures"' in html and 'href="#rules"' in html and 'href="#health"' in html,
+ok('href="#events"' in html and 'href="#rules"' in html and 'href="#method"' in html,
    "the sub-nav jumps to Fixtures, Rules and System")
-ok(html.find('id="rules"') < html.find('id="fixtures"') < html.find('id="health"'),
+ok(html.find('id="rules"') < html.find('id="events"') < html.find('id="method"'),
    "rules come first, then fixtures, then the folded system note")
 ok("Open picks and the rules that fire them · kickoff times CT" in html,
    "the one-line lede names open picks, rules and the CT clock")
@@ -218,7 +218,7 @@ ok("&lt;script&gt;" in html, "a game label is escaped")
 ok('class="rule-card"' not in html, "no flip cards")
 
 print("\nfixtures: one list grouped by day")
-fixtures = _section(html, "fixtures")
+fixtures = _section(html, "events")
 ok(fixtures, "the fixtures section renders")
 days = re.findall(r'<h3 class="soccer-day-head">(.*?)</h3>', fixtures)
 ok(len(days) >= 3, f"fixtures are grouped under day headers ({days})")
@@ -314,7 +314,7 @@ ok("Date TBC" not in days_b and len(days_b) == 4 and "Tue Oct 6" in days_b[2]
 ok(bucket_html.find("Past match") < bucket_html.find("Today match") < bucket_html.find("Later match"),
    "past, today and later run in order on the one list")
 empty_fix = C.fixtures({"quotes": []}, [], NOW)
-ok("No open pick" in empty_fix and 'id="fixtures"' in empty_fix, "an empty list says so once")
+ok("No open pick" in empty_fix and 'id="events"' in empty_fix, "an empty list says so once")
 
 print("\nrules table")
 rules = _section(html, "rules")
@@ -379,7 +379,7 @@ empty_strip = C.production_strip([])
 ok("None in Production." in empty_strip, "an empty strip says so")
 
 print("\nsystem fold")
-health = _section(html, "health")
+health = _section(html, "method")
 ok(health.startswith("\n<details>") or "<details>" in health.split("summary", 1)[0],
    "the system section is a closed fold by default")
 ok("Prices are the Kalshi ask" in health and "settlement" in health,
@@ -389,7 +389,7 @@ ok('class="section-disclosure"' in health and "Registered lanes" in health,
 
 with patch("sport_tab.family_rows", return_value=[]):
     empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW)
-ok(all(f'id="{anchor}"' in empty_html for anchor in ("fixtures", "rules", "health")),
+ok(all(f'id="{anchor}"' in empty_html for anchor in ("events", "rules", "method")),
    "empty soccer pages preserve every navigation target")
 ok("No soccer lane has a record yet." in empty_html and "None in Production." in empty_html,
    "empty pages still explain the missing record")
@@ -416,7 +416,7 @@ for bar in (".soccer-fixture-state", ".soccer-local-nav", ".soccer-rule-chip", "
     ok(bar not in css, f"site.css no longer styles {bar}")
 
 published = open(os.path.join(ROOT, "public_site", "soccer.html"), encoding="utf-8").read()
-ok('class="soccer-rules"' in published and 'id="fixtures"' in published,
+ok('class="soccer-rules"' in published and 'id="events"' in published,
    "public_site/soccer.html is the fixture-list page")
 ok('class="rule-card"' not in published, "public_site/soccer.html has no cards")
 pub_again = B.label_cells(published)
@@ -463,7 +463,7 @@ if sync_playwright is not None:
                        f"{width}px pick links have comfortable tap targets")
                     anchors = page.locator("nav.toc a").evaluate_all(
                         "links => links.map(a => a.getAttribute('href'))")
-                    eq(anchors, ["#rules", "#fixtures", "#health"], f"{width}px sub-nav is Rules / Fixtures / System")
+                    eq(anchors, ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method")
                     ok(all(page.locator(a).count() == 1 for a in anchors),
                        f"{width}px sub-nav reaches unique sections")
                     eq(page.locator(".soccer-day-head").first.evaluate("e => getComputedStyle(e).position"),
@@ -480,7 +480,7 @@ if sync_playwright is not None:
                     cards = page.locator(".soccer-rules thead").first.evaluate("e => getComputedStyle(e).display")
                     eq(cards, "none" if width < 760 else "table-header-group",
                        f"{width}px the rules table uses the phone cards under 760px")
-                    ok(page.locator("#health > details").get_attribute("open") is None,
+                    ok(page.locator("#method > details").get_attribute("open") is None,
                        f"{width}px System starts folded")
                     page.close()
                 browser.close()

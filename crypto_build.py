@@ -32,7 +32,7 @@ SPORTS = ("crypto_fav",)
 SOURCE = "crypto_fav_band"
 COIN_LABELS = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
                "ripple": "XRP", "hyperliquid": "HYPE"}
-TOC = (("rule", "Rule"), ("picks", "Picks"), ("method", "Method"))
+TOC = (("rules", "Rules"), ("events", "Events"), ("method", "Method"))
 LEDE = "Daily favourite-band picks on Kalshi coin closes · times CT"
 
 
@@ -239,7 +239,7 @@ def tiles_html(rows, d):
     return (
         '<div class="tiles tn-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
-        f'<div class="tile"><b>{esc(TN.record_text(a))}</b><span>record · W–L</span></div>'
+        f'{TN.record_tile(a, "record · W–L")}'
         f'<div class="tile">{roi}<span>ROI after fees</span></div>'
         f'<div class="tile"><b>{n} of {T.READ_FLOOR}</b><span>market-days logged · {T.READ_FLOOR} planned</span></div>'
         '</div>')
@@ -306,12 +306,12 @@ def build(d=None, st=None, now=None):
 <p class="lede">{esc(LEDE)}</p>
 <p class="sm mut cr-updated">{esc(fmt.display_updated(now))}</p>
 {tiles_html(rows, d)}
-<section id="rule" class="tn-section">
+<section id="rules" class="tn-section">
 <h2>Rule</h2>
 <p class="sm mut">Open the row for the entry parameters and the registered definition.</p>
 {rule_html(rows, d)}
 </section>
-<section id="picks" class="tn-section">
+<section id="events" class="tn-section">
 <h2>Picks</h2>
 <p class="sm mut">Today's five coins once each, then every settled market-day.</p>
 {picks_html(d, now)}

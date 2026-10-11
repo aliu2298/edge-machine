@@ -286,7 +286,7 @@ def fixtures(d, rows, now):
     count = (f'{picks} open pick{"" if picks == 1 else "s"} on {len(recs)} fixture{"" if len(recs) == 1 else "s"}'
              if recs else "no open pick")
     body = "".join(blocks) or '<p class="sm mut">No open pick and no tracked fixture.</p>'
-    return (f'<section id="fixtures" class="soccer-fixtures">'
+    return (f'<section id="events" class="soccer-fixtures">'
             f'<div class="soccer-section-head"><h2>Fixtures</h2><span>{B.esc(count)}</span></div>'
             f'{body}</section>')
 

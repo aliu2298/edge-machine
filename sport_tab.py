@@ -214,7 +214,7 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
         if family == "Soccer" and cards:
             attention = 'class="neg"' in pf_note or "could not be read" in pf_note
             health_open = " open" if attention else ""
-            health_label = "System · check needed" if attention else "System"
+            health_label = "Method · check needed" if attention else "Method"
             import soccer_cards
             body = f"""<div class="soccer-page-head">
 <h1>{esc(family)}</h1>
@@ -225,7 +225,7 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
 
 {sections}
 
-<section id="health" class="soccer-health">
+<section id="method" class="soccer-health">
 <details{health_open}>
 <summary><span><b>{health_label}</b><small>{len(idle)} waiting for a market</small></span></summary>
 <p class="note sm">Prices are the Kalshi ask the tracker logged when a rule fired. Results are read back from the venue's own settlement, and this page is rebuilt from that ledger by GitHub Actions.</p>
@@ -237,7 +237,7 @@ def build(family, key, title, lede, d=None, st=None, now=None, description=None,
 </section>
 <footer>{_FOOT}</footer>
 """
-            toc = (("rules", "Rules"), ("fixtures", "Fixtures"), ("health", "System"))
+            toc = (("rules", "Rules"), ("events", "Events"), ("method", "Method"))
         else:
             body = f"""<h1>{esc(family)}</h1>
 <p class="lede">{lede}</p>

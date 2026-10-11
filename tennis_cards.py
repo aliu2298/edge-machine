@@ -62,6 +62,22 @@ def record_text(a):
     return T.record_text(a)
 
 
+def record_tile(a, label):
+    """The record stat tile: the W–L as the big number, the no-result count in
+    the small label, so '13–8, 6 no result' never wraps into two huge lines.
+
+    `label` is what the record is of ('record · Favourite band'); the no-result
+    count is appended to it. Nothing settled is an em dash.
+    """
+    n = int(a.get("n") or 0)
+    n_price = int(a.get("n_price") or 0)
+    if not n and not n_price:
+        return f'<div class="tile"><b>—</b><span>{B.esc(label)}</span></div>'
+    big = f'{int(a.get("won") or 0)}–{max(0, n - int(a.get("won") or 0))}'
+    small = label + (f' · {n_price} no result' if n_price else "")
+    return f'<div class="tile"><b>{B.esc(big)}</b><span>{B.esc(small)}</span></div>'
+
+
 # ------------------------------------------------------------------ the rows a rule owns
 def _on_clock(q, row):
     """False for a bet logged before this lane's reset clock. Those stay on file only.
@@ -475,16 +491,17 @@ def tiles_html(d, rows, now=None):
     open_n = sum(len(open_quotes(d, r["name"], r["sport"], r)) for r in rows)
     head = cricket_cards.headline_row(singles_rows(rows), d, now)
     if head is not None and (head["a"].get("n") or head["a"].get("n_price")):
-        rec = record_text(head["a"])
+        rec_tile = record_tile(head["a"], "record · " + rule_name(head) + (" · Production" if head.get("prod") else ""))
         roi_cell_html = f'<b>{roi_html(head)}</b>'
         who = rule_name(head) + (" · Production" if head.get("prod") else "")
     else:
-        rec, roi_cell_html, who = "—", '<b class="mut">—</b>', "no match-winner rule with a record"
+        who = "no match-winner rule with a record"
+        rec_tile, roi_cell_html = record_tile({}, "record · " + who), '<b class="mut">—</b>'
     return (
         '<div class="tiles tn-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
         f'<div class="tile"><b>{len(act)}</b><span>active rules</span></div>'
-        f'<div class="tile"><b>{B.esc(rec)}</b><span>record · {B.esc(who)}</span></div>'
+        f'{rec_tile}'
         f'<div class="tile">{roi_cell_html}<span>ROI after fees · {B.esc(who)}</span></div>'
         '</div>')
 
@@ -516,7 +533,7 @@ def _listing(d):
 def system_html(d, idle_html=""):
     """The venue and grading note, closed by default."""
     listing = _listing(d) or '<div class="note">No venue coverage stored yet.</div>'
-    return f'''<section id="system" class="tn-system">
+    return f'''<section id="method" class="tn-system">
 <details><summary><b>Polymarket US &amp; how picks are graded</b><small>venue listing</small></summary>
 <div>
 <p class="sm">Polymarket US lists the match-winner markets; it logs prices and holds no record of its own, so it has no row in the rules table, and the counts are what the last run stored.</p>
@@ -538,7 +555,7 @@ def render(d, rows, now=None, idle_html=""):
 <p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>
 {rules_html(d, rows, now)}
 </section>
-<section id="matches" class="tn-section">
+<section id="events" class="tn-section">
 <h2>Matches</h2>
 <p class="sm mut">Every open pick, soonest first, plus today's settled ones.</p>
 {picks_html(d, rows, now)}

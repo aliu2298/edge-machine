@@ -73,9 +73,9 @@ html = C.build(ledger, stages, NOW)
 ok("<h1>Commodities</h1>" in html, "the title is Commodities")
 ok("Daily favourite-band picks on Kalshi commodity closes · times CT" in html, "the one-line lede")
 ok(fmt.display_updated(NOW) in html.split("<main", 1)[-1], "the freshness stamp is under the title")
-for anchor in ("rule", "picks", "method"):
+for anchor in ("rules", "events", "method"):
     ok(f'id="{anchor}"' in html and f'href="#{anchor}"' in html, f"section and sub-nav pill for #{anchor}")
-ok(html.find('id="rule"') < html.find('id="picks"') < html.find('id="method"'),
+ok(html.find('id="rules"') < html.find('id="events"') < html.find('id="method"'),
    "the rule first, then the picks, then the folded method")
 ok('href="./commodities.html" aria-current="page"' in html and 'href="./crypto.html"' in html,
    "the shared nav carries Commodities after Crypto and marks it current")
@@ -101,7 +101,7 @@ ok(f'>{a["n"]} of 30</b><span>market-days logged · 30 planned' in cells[3],
 eq(a.get("unit"), "market-day", "the Sandbox counts this lane in market-days")
 
 print("\nrule: one row, first")
-rule = _section(html, "rule")
+rule = _section(html, "rules")
 ok('<table class="tn-rules cr-rules">' in rule, "the rule is the tennis table pattern")
 eq(re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", rule), ["Rule", "Venue", "Record", "ROI", "Verdict", "Open"],
    "Rule · Venue · Record · ROI · Verdict · Open")
@@ -120,7 +120,7 @@ ok(f'<p class="tn-def sm mut">{B.esc(note)}</p>' in rule, "the registered defini
 ok('data-l="Venue">Kalshi</td>' in rule and 'data-l="Open">1</td>' in rule, "venue and open count")
 
 print("\npicks: one list grouped by trading day")
-picks = _section(html, "picks")
+picks = _section(html, "events")
 days = re.findall(r'<div class="tn-day">(.*?)</div>', picks)
 eq(days, ["Today · Oct 8", "Oct 7", "Oct 6"], "today first, then settled days newest first")
 today_block = picks.split('<div class="tn-day">Oct 7</div>', 1)[0]
@@ -152,9 +152,9 @@ eq(picks.count("<p"), 2, "one sentence of copy and the scanner line, nothing els
 
 print("\nweekends and holidays")
 sat = C.build(ledger, stages, datetime.datetime(2026, 10, 10, 15, tzinfo=datetime.timezone.utc))
-sat_days = re.findall(r'<div class="tn-day">(.*?)</div>', _section(sat, "picks"))
+sat_days = re.findall(r'<div class="tn-day">(.*?)</div>', _section(sat, "events"))
 ok(sat_days and not sat_days[0].startswith("Today"), "a Saturday is not a market-day, so there is no Today block")
-ok("no entry" not in _section(sat, "picks"), "and no six no-entry lines")
+ok("no entry" not in _section(sat, "events"), "and no six no-entry lines")
 thanks = C.build({"quotes": []}, stages, datetime.datetime(2026, 11, 26, 15, tzinfo=datetime.timezone.utc))
 ok("No market-day today" in thanks, "a holiday with nothing settled says so once")
 
@@ -170,7 +170,7 @@ eq(method.count("<p"), 2, "two paragraphs")
 
 print("\nedge cases")
 empty = C.build({"quotes": []}, {"pairs": {}}, NOW)
-empty_rule = _section(empty, "rule")
+empty_rule = _section(empty, "rules")
 ok('<table class="tn-rules cr-rules">' in empty_rule and "Waiting for results" in empty_rule
    and 'data-l="Record" data-empty="1">—</td>' in empty_rule and "Yes ask 70–80¢" in empty_rule,
    "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
@@ -218,7 +218,7 @@ if playwright is not None:
             page.locator("#method > details > summary").click()
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px still fits with both open")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
-               ["#rule", "#picks", "#method"], f"{width}px sub-nav is Rule / Picks / Method")
+               ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method")
             eq(page.locator("nav.main a[aria-current='page']").text_content(), "Commodities", f"{width}px the nav marks the page")
             page.close()
         browser.close()

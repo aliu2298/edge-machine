@@ -195,10 +195,10 @@ ok(rows, "the fixture has tennis lanes")
 main = html.split("<main", 1)[-1].split("</main>", 1)[0]
 ok("<h1>Tennis</h1>" in main and "Match-winner picks and combo baskets · times CT" in main,
    "the header is the title and one line")
-ok('id="matches"' in main and 'id="rules"' in main and 'id="system"' in main,
+ok('id="events"' in main and 'id="rules"' in main and 'id="method"' in main,
    "the page has Matches, Rules and System sections")
 toc = re.search(r'<nav class="toc"[^>]*>(.*?)</nav>', html, re.S)
-eq(re.findall(r">([^<]+)</a>", toc.group(1)) if toc else None, ["Rules", "Matches", "System"],
+eq(re.findall(r">([^<]+)</a>", toc.group(1)) if toc else None, ["Rules", "Events", "Method"],
    "the jump pills are Rules / Matches / System")
 for gone in ('id="today"', 'id="upcoming"', 'id="in-play"', 'id="combos"', "No tracked tennis match",
              "rule-card", "rule-grid", "tennis-combo-grid", "How each rule is defined", "Match center"):
@@ -351,7 +351,7 @@ recent = re.search(r'<ul class="tn-recent">(.*?)</ul>', fav, re.S)
 ok(recent is not None and recent.group(1).count("<li>") <= 4 + tennis_cards.RECENT_LIMIT, "recent picks are capped")
 
 print("\nsystem")
-system = re.search(r'<section id="system" class="tn-system">(.*?)</section>', html, re.S).group(1)
+system = re.search(r'<section id="method" class="tn-system">(.*?)</section>', html, re.S).group(1)
 ok(system.startswith("\n<details><summary>") and "<details open" not in system,
    "the venue note is a fold, closed by default")
 ok('id="listing"' in system, "the Polymarket US listing table is inside the fold")
@@ -359,7 +359,7 @@ ok(len(re.findall(r"<p class=\"sm\">", system)) == 2, "the note is two sentences
 
 print("\nempty ledger")
 empty = tennis_build.build({"quotes": []}, {"pairs": {}}, NOW)
-for anchor in ("matches", "rules", "system"):
+for anchor in ("events", "rules", "method"):
     ok(f'id="{anchor}"' in empty, f"an empty page keeps #{anchor}")
 ok('class="tn-pick' not in empty and "No tracked tennis match" not in empty,
    "an empty page has no pick lines and no empty boxes")

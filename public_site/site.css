@@ -1,9 +1,16 @@
-/* Edge Machine public site. Dark only: no light theme, no toggle. System fonts. */
+/* Edge Machine public site. One token set, two themes.
+
+   The tokens below are the whole palette: every rule reads a token, none a
+   colour of its own. The dark theme is the default (no device preference, or
+   a dark one). A device set to light gets the light theme. A viewer's own
+   choice, the toggle in the top bar, is stored as html[data-theme] and wins
+   over the device. One sans font, one page width, one radius. */
 :root {
   color-scheme: dark;
   /* Fallback until tables.js measures header.site. 104px is the no-JS stand-in. */
   --hdr-h: 104px;
   --sticky-top: var(--hdr-h);
+  --page-w: 1120px;
   --bg: #0b0c0f;
   --card: #16181d;
   --raised: #1f2229;
@@ -11,14 +18,107 @@
   --bd: #2a2e37;
   --fg: #f2f4f7;
   --mut: #a3a9b5;
+  --dim: #6d7380;
   --acc: #6cb4ff;
   --pos: #4ade80;
   --neg: #ff7b72;
   --warn: #f5c26b;
+  --att: #ff9f5a;
+  /* The tinted fills and borders behind a status word. */
+  --pos-bg: rgba(74, 222, 128, .12);
+  --pos-bd: rgba(74, 222, 128, .35);
+  --neg-bg: rgba(255, 123, 114, .12);
+  --neg-bd: rgba(255, 123, 114, .35);
+  --warn-bg: rgba(245, 194, 107, .12);
+  --warn-bd: rgba(245, 194, 107, .4);
+  --att-bg: rgba(255, 159, 90, .14);
+  --att-bd: rgba(255, 159, 90, .4);
+  --pos-ring: rgba(74, 222, 128, .08);
+  /* The translucent bar and sticky strips over the page. */
+  --bar-bg: rgba(11, 12, 15, .92);
+  --strip-bg: rgba(17, 19, 24, .94);
+  --bg-fade: rgba(11, 12, 15, 0);
+  /* A surface a shade lighter than its card, and its edge. */
+  --tint: rgba(255, 255, 255, .025);
+  --tint-bd: rgba(255, 255, 255, .055);
+  --tint-top: rgba(255, 255, 255, .035);
+  --tint-bottom: rgba(255, 255, 255, .012);
+  --shadow: 0 18px 42px rgba(0, 0, 0, .20);
+  --mask: #000;
   --font: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --r: 14px;
   /* Width of the phone nav's edge fade. site.js and tables.js read this. */
   --nav-fade: 22px;
+}
+/* Light: an off-white page with a faint green tint, near-black text, white
+   cards with a thin border and no shadow, pale tiles. The same tokens. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #f5f8f4;
+    --card: #ffffff;
+    --raised: #eef3ec;
+    --line: #dde4da;
+    --bd: #dde4da;
+    --fg: #15191b;
+    --mut: #5f6b66;
+    --dim: #8a948f;
+    --acc: #1a6fcf;
+    --pos: #1f8a4c;
+    --neg: #c8403a;
+    --warn: #a86d0a;
+    --att: #d1670f;
+    --pos-bg: rgba(31, 138, 76, .10);
+    --pos-bd: rgba(31, 138, 76, .35);
+    --neg-bg: rgba(200, 64, 58, .10);
+    --neg-bd: rgba(200, 64, 58, .35);
+    --warn-bg: rgba(168, 109, 10, .10);
+    --warn-bd: rgba(168, 109, 10, .35);
+    --att-bg: rgba(209, 103, 15, .12);
+    --att-bd: rgba(209, 103, 15, .4);
+    --pos-ring: rgba(31, 138, 76, .12);
+    --bar-bg: rgba(245, 248, 244, .92);
+    --strip-bg: rgba(245, 248, 244, .94);
+    --bg-fade: rgba(245, 248, 244, 0);
+    --tint: rgba(21, 25, 27, .025);
+    --tint-bd: rgba(21, 25, 27, .07);
+    --tint-top: rgba(21, 25, 27, .03);
+    --tint-bottom: rgba(21, 25, 27, .01);
+    --shadow: none;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f5f8f4;
+  --card: #ffffff;
+  --raised: #eef3ec;
+  --line: #dde4da;
+  --bd: #dde4da;
+  --fg: #15191b;
+  --mut: #5f6b66;
+  --dim: #8a948f;
+  --acc: #1a6fcf;
+  --pos: #1f8a4c;
+  --neg: #c8403a;
+  --warn: #a86d0a;
+  --att: #d1670f;
+  --pos-bg: rgba(31, 138, 76, .10);
+  --pos-bd: rgba(31, 138, 76, .35);
+  --neg-bg: rgba(200, 64, 58, .10);
+  --neg-bd: rgba(200, 64, 58, .35);
+  --warn-bg: rgba(168, 109, 10, .10);
+  --warn-bd: rgba(168, 109, 10, .35);
+  --att-bg: rgba(209, 103, 15, .12);
+  --att-bd: rgba(209, 103, 15, .4);
+  --pos-ring: rgba(31, 138, 76, .12);
+  --bar-bg: rgba(245, 248, 244, .92);
+  --strip-bg: rgba(245, 248, 244, .94);
+  --bg-fade: rgba(245, 248, 244, 0);
+  --tint: rgba(21, 25, 27, .025);
+  --tint-bd: rgba(21, 25, 27, .07);
+  --tint-top: rgba(21, 25, 27, .03);
+  --tint-bottom: rgba(21, 25, 27, .01);
+  --shadow: none;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 108px; }
@@ -61,16 +161,16 @@ header.site {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(11, 12, 15, .92);
+  background: var(--bar-bg);
   backdrop-filter: saturate(180%) blur(16px);
   border-bottom: 1px solid var(--line);
 }
 .topbar {
-  max-width: 1120px;
+  max-width: var(--page-w);
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   padding: 0 24px;
   min-height: 56px;
 }
@@ -90,25 +190,20 @@ nav.main, nav.toc {
   overflow-x: visible;
   min-width: 0;
 }
-/* The page pills stay on one line at every width. Ten of them no longer fit
-   the 1120px bar with the brand and the stamp, so the row is tighter and,
-   when it still does not fit, scrolls sideways under a hidden scrollbar, as
-   it does on a phone. Nothing wraps and no pill is dropped. */
+/* The page pills never clip. From 641px up the row wraps onto a second line
+   when ten pills no longer fit beside the brand and the stamp; under 641px
+   it scrolls sideways with an edge fade. No pill is dropped. */
 nav.main {
   flex: 1 1 auto;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 2px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  overscroll-behavior-x: contain;
+  overflow: visible;
 }
-nav.main::-webkit-scrollbar { display: none; height: 0; }
 nav.main a {
   color: var(--mut);
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 9px;
+  padding: 6px 8px;
   border-radius: 999px;
   white-space: nowrap;
   flex: 0 0 auto;
@@ -118,22 +213,22 @@ nav.main a:focus-visible { outline-offset: -3px; }
 /* The same edge fades the phone row uses, so a scrolled desktop row shows
    that more pills sit past its edge. The scripts set the classes. */
 nav.main.nav-fade {
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
-  mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+  -webkit-mask-image: linear-gradient(to right, var(--mask) calc(100% - var(--nav-fade)), transparent);
+  mask-image: linear-gradient(to right, var(--mask) calc(100% - var(--nav-fade)), transparent);
 }
 nav.main.nav-fade-left {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
-  mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+  -webkit-mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade));
+  mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade));
 }
 nav.main.nav-fade.nav-fade-left {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
-  mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade), var(--mask) calc(100% - var(--nav-fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade), var(--mask) calc(100% - var(--nav-fade)), transparent);
 }
 nav.main a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
-nav.main a[aria-current="page"] { color: var(--fg); background: #2a2e37; }
-.stamp { margin-left: auto; font-size: 13px; color: var(--mut); white-space: nowrap; flex: 0 0 auto; }
+nav.main a[aria-current="page"] { color: var(--fg); background: var(--line); }
+.stamp { margin-left: auto; font-size: 12px; color: var(--mut); white-space: nowrap; flex: 0 0 auto; }
 nav.toc {
-  max-width: 1120px;
+  max-width: var(--page-w);
   margin: 0 auto;
   gap: 18px;
   padding: 0 24px 10px;
@@ -185,7 +280,7 @@ nav.toc a:hover { color: var(--fg); }
 /* The control clips overflow. An outset ring is cut off; draw it inside the segment. */
 .view-toggle button:focus-visible { outline-offset: -3px; position: relative; z-index: 1; }
 nav.crumbs {
-  max-width: 1120px;
+  max-width: var(--page-w);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -199,7 +294,7 @@ nav.crumbs a { color: var(--mut); font-weight: 500; text-decoration: none; }
 nav.crumbs a:hover { color: var(--fg); text-decoration: none; }
 nav.crumbs .here { color: var(--fg); font-weight: 600; }
 nav.crumbs .sep { color: var(--mut); }
-.wrap { max-width: 1120px; margin: 0 auto; padding: 40px 24px 80px; }
+.wrap { max-width: var(--page-w); margin: 0 auto; padding: 40px 24px 80px; }
 h1 {
   font-size: 40px;
   line-height: 1.1;
@@ -231,7 +326,7 @@ h2 {
   margin: 0 0 16px;
 }
 .note b { color: var(--fg); font-weight: 600; }
-.note.warn { border-color: rgba(245, 194, 107, .45); background: rgba(245, 194, 107, .08); }
+.note.warn { border-color: var(--warn-bd); background: var(--warn-bg); }
 .tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -280,8 +375,8 @@ h2 {
 /* A card with columns past its right edge fades that edge. tables.js drops
    the fade once the card is scrolled to its end. */
 .tbl.scroll-x:not(.scroll-end) {
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), rgba(0, 0, 0, .15));
-  mask-image: linear-gradient(to right, #000 calc(100% - 28px), rgba(0, 0, 0, .15));
+  -webkit-mask-image: linear-gradient(to right, var(--mask) calc(100% - 28px), rgba(0, 0, 0, .15));
+  mask-image: linear-gradient(to right, var(--mask) calc(100% - 28px), rgba(0, 0, 0, .15));
 }
 .tbl.scroll-x { scrollbar-width: thin; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -342,7 +437,7 @@ tbody tr:hover td { background: var(--raised); }
 .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 /* A muted note under a number that may wrap: a nine-column table must not grow
    past its card for one long health note. */
-.num .wrap { white-space: normal; }
+.num .sub { white-space: normal; }
 .rank { font-weight: 700; font-size: 15px; }
 .st, .sig {
   display: inline-block;
@@ -354,10 +449,10 @@ tbody tr:hover td { background: var(--raised); }
   border: 1px solid;
   white-space: nowrap;
 }
-.st.won, .sig.y { color: var(--pos); border-color: rgba(74, 222, 128, .35); background: rgba(74, 222, 128, .12); }
-.st.lost, .st.miss, .sig.x { color: var(--neg); border-color: rgba(255, 123, 114, .35); background: rgba(255, 123, 114, .12); }
+.st.won, .sig.y { color: var(--pos); border-color: var(--pos-bd); background: var(--pos-bg); }
+.st.lost, .st.miss, .sig.x { color: var(--neg); border-color: var(--neg-bd); background: var(--neg-bg); }
 .st.void, .st.price, .sig.n { color: var(--mut); border-color: var(--line); background: var(--raised); }
-.sig.w { color: var(--warn); border-color: rgba(245, 194, 107, .4); background: rgba(245, 194, 107, .12); }
+.sig.w { color: var(--warn); border-color: var(--warn-bd); background: var(--warn-bg); }
 ul.ins { padding-left: 18px; display: grid; gap: 8px; color: var(--fg); font-size: 15px; line-height: 1.55; }
 details.sport {
   background: var(--card);
@@ -698,7 +793,7 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(11, 12, 15, .92);
+    background: var(--bar-bg);
     backdrop-filter: saturate(180%) blur(16px);
     -webkit-backdrop-filter: saturate(180%) blur(16px);
     border-bottom: 1px solid var(--line);
@@ -738,16 +833,16 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   nav.main::after { content: ""; flex: 0 0 12px; }
   nav.main::-webkit-scrollbar { display: none; height: 0; }
   nav.main.nav-fade, nav.toc.nav-fade {
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - var(--nav-fade)), transparent);
+    -webkit-mask-image: linear-gradient(to right, var(--mask) calc(100% - var(--nav-fade)), transparent);
+    mask-image: linear-gradient(to right, var(--mask) calc(100% - var(--nav-fade)), transparent);
   }
   nav.main.nav-fade-left, nav.toc.nav-fade-left {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
-    mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade));
+    -webkit-mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade));
+    mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade));
   }
   nav.main.nav-fade.nav-fade-left, nav.toc.nav-fade.nav-fade-left {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
-    mask-image: linear-gradient(to right, transparent, #000 var(--nav-fade), #000 calc(100% - var(--nav-fade)), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade), var(--mask) calc(100% - var(--nav-fade)), transparent);
+    mask-image: linear-gradient(to right, transparent, var(--mask) var(--nav-fade), var(--mask) calc(100% - var(--nav-fade)), transparent);
   }
   nav.main a {
     min-height: 44px;
@@ -941,7 +1036,7 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 .bet-roll {
   display: block;
   width: 100%;
-  max-width: 1120px;
+  max-width: var(--page-w);
   margin: 0 auto;
   padding: 10px 24px 4px;
   min-width: 0;
@@ -1039,7 +1134,7 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
 }
 .bet-chip-status { grid-area: status; font-weight: 700; }
 .bet-chip[data-status="Open"] {
-  border-color: rgba(245, 194, 107, .75);
+  border-color: var(--warn);
 }
 .bet-chip[data-status="Open"] .bet-chip-status { color: var(--warn); }
 .bet-chip[data-status="W"] .bet-chip-status { color: var(--pos); }
@@ -1080,8 +1175,8 @@ nav.sports button,
 }
 nav.sports button[aria-disabled="true"] {
   opacity: 0.45;
-  color: #6d7380;
-  border-color: #3a3e48;
+  color: var(--dim);
+  border-color: var(--line);
   background: transparent;
   cursor: default;
   pointer-events: none;
@@ -1089,8 +1184,8 @@ nav.sports button[aria-disabled="true"] {
 nav.sports button[aria-disabled="true"]:hover,
 nav.sports button[aria-disabled="true"]:focus {
   opacity: 0.45;
-  color: #6d7380;
-  border-color: #3a3e48;
+  color: var(--dim);
+  border-color: var(--line);
   background: transparent;
 }
 nav.sports button:hover {
@@ -1276,7 +1371,7 @@ nav.sports button[aria-pressed="true"] {
 }
 .rule-mini .lane-pill.sandbox { color: var(--mut); }
 /* "Early · N bets": a Production pair with under 10 settled bets since its move. */
-.rule-mini .lane-pill.early { color: var(--warn); border-color: rgba(245, 194, 107, .4); }
+.rule-mini .lane-pill.early { color: var(--warn); border-color: var(--warn-bd); }
 .sig.early { font-size: 12px; padding: 1px 7px; }
 .rule-mini-market { font-size: 13px; }
 .rule-mini-meta {
@@ -1318,7 +1413,7 @@ nav.sports button[aria-pressed="true"] {
    feed in the middle and the rules/status rail on the right. The sport
    pills live inside the Running pane and filter it in place. */
 body.analyst-desk .wrap {
-  max-width: 1280px;
+  max-width: var(--page-w);
   padding-top: 18px;
 }
 .top-production,
@@ -1328,10 +1423,10 @@ body.analyst-desk .wrap {
   justify-content: center;
   min-height: 26px;
   padding: 0 10px;
-  border: 1px solid rgba(57, 214, 138, .45);
+  border: 1px solid var(--pos-bd);
   border-radius: 999px;
   color: var(--pos);
-  background: rgba(57, 214, 138, .08);
+  background: var(--pos-bg);
   font-size: 11px;
   font-weight: 750;
   letter-spacing: .02em;
@@ -1376,7 +1471,7 @@ body.analyst-desk .running-filters {
   z-index: 4;
   margin: 10px -4px 8px;
   padding: 4px;
-  background: rgba(17, 19, 24, .94);
+  background: var(--strip-bg);
   backdrop-filter: blur(12px);
   border-radius: 10px;
 }
@@ -1617,12 +1712,12 @@ tr.is-open td { border-bottom: 0; }
 
 /* Crypto Analyst Desk — finance-app polish without changing the research logic. */
 .crypto-hero {
-  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  background: linear-gradient(180deg, var(--tint-top), var(--tint-bottom));
   border: 1px solid var(--line);
   border-radius: 24px;
   padding: 24px;
   margin: 0 0 14px;
-  box-shadow: 0 18px 42px rgba(0,0,0,.20);
+  box-shadow: var(--shadow);
 }
 .crypto-hero-top,
 .crypto-section-head {
@@ -1654,7 +1749,7 @@ tr.is-open td { border-bottom: 0; }
   height: 8px;
   border-radius: 50%;
   background: var(--pos);
-  box-shadow: 0 0 0 4px rgba(74,222,128,.08);
+  box-shadow: 0 0 0 4px var(--pos-ring);
 }
 .crypto-return {
   display: flex;
@@ -1682,8 +1777,8 @@ tr.is-open td { border-bottom: 0; }
 .crypto-stats > div,
 .crypto-metrics > div {
   min-width: 0;
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.055);
+  background: var(--tint);
+  border: 1px solid var(--tint-bd);
   border-radius: 16px;
   padding: 13px 14px;
 }
@@ -1720,7 +1815,7 @@ tr.is-open td { border-bottom: 0; }
   display: flex;
   gap: 6px;
   padding: 8px 0 14px;
-  background: linear-gradient(var(--bg) 72%, rgba(11,12,15,0));
+  background: linear-gradient(var(--bg) 72%, var(--bg-fade));
 }
 .crypto-tabs a {
   flex: 1 1 0;
@@ -1797,13 +1892,13 @@ tr.is-open td { border-bottom: 0; }
 .crypto-state-open,
 .crypto-state-won {
   color: var(--pos);
-  background: rgba(74,222,128,.10);
-  border: 1px solid rgba(74,222,128,.20);
+  background: var(--pos-bg);
+  border: 1px solid var(--pos-bd);
 }
 .crypto-state-lost {
   color: var(--neg);
-  background: rgba(255,123,114,.10);
-  border: 1px solid rgba(255,123,114,.20);
+  background: var(--neg-bg);
+  border: 1px solid var(--neg-bd);
 }
 .crypto-state-watch {
   color: var(--mut);
@@ -1968,8 +2063,8 @@ tr.is-open td { border-bottom: 0; }
   display: inline-block;
   padding: 1px 7px;
   border-radius: 999px;
-  border: 1px solid rgba(74, 222, 128, .35);
-  background: rgba(74, 222, 128, .12);
+  border: 1px solid var(--pos-bd);
+  background: var(--pos-bg);
   color: var(--pos);
   font-size: 11px;
   font-weight: 700;
@@ -2196,7 +2291,7 @@ html[data-view="cards"] .soccer-rules td.rule-detail-cell { display: block; text
   padding: 4px 7px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,.025);
+  background: var(--tint);
   color: var(--mut);
   font-size: 11px;
   font-weight: 700;
@@ -2220,8 +2315,8 @@ html[data-view="cards"] .soccer-rules td.rule-detail-cell { display: block; text
 }
 .tennis-match-state.is-live {
   color: var(--pos);
-  background: rgba(74,222,128,.10);
-  border: 1px solid rgba(74,222,128,.20);
+  background: var(--pos-bg);
+  border: 1px solid var(--pos-bd);
 }
 .tennis-match-state.is-watch {
   color: var(--mut);
@@ -2464,8 +2559,8 @@ html[data-view="cards"] .soccer-rules td.rule-detail-cell { display: block; text
   font-weight: 700;
   white-space: nowrap;
 }
-.tn-state.is-live, .tn-state.is-won { color: var(--pos); border-color: rgba(74, 222, 128, .35); background: rgba(74, 222, 128, .12); }
-.tn-state.is-lost { color: var(--neg); border-color: rgba(255, 123, 114, .35); background: rgba(255, 123, 114, .12); }
+.tn-state.is-live, .tn-state.is-won { color: var(--pos); border-color: var(--pos-bd); background: var(--pos-bg); }
+.tn-state.is-lost { color: var(--neg); border-color: var(--neg-bd); background: var(--neg-bg); }
 .tn-empty {
   margin: 0 0 12px;
   padding: 14px;
@@ -2604,7 +2699,7 @@ details.tn-changes > summary::-webkit-details-marker { display: none; }
 details.tn-changes > summary::before { content: "›"; margin-right: 6px; display: inline-block; transition: transform .15s ease; }
 details.tn-changes[open] > summary::before { transform: rotate(90deg); }
 details.tn-changes ol { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 6px; max-width: 72ch; line-height: 1.5; }
-.tn-state.is-late { color: var(--warn); border-color: rgba(245, 194, 107, .4); background: rgba(245, 194, 107, .12); }
+.tn-state.is-late { color: var(--warn); border-color: var(--warn-bd); background: var(--warn-bg); }
 @media (max-width: 760px) {
   .tn-params { grid-template-columns: 1fr; gap: 2px; }
   .tn-params dd { margin-bottom: 6px; }
@@ -2627,4 +2722,99 @@ details.fold.later > summary { margin-top: 12px; }
 @media (max-width: 640px) {
   details.fold.sport-fold > summary h3 { font-size: 15px; }
   details.fold.sport-fold > summary > .sm { flex: 1 0 100%; padding-left: 18px; }
+}
+
+/* ---- Shared components (2026-10-11). Every page draws these from the tokens
+   above, so a theme is the tokens and nothing else. ---- */
+/* The theme toggle in the top bar. tables.js sets its text to the theme it
+   switches to. */
+.theme-toggle {
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mut);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 28px;
+  padding: 0 9px;
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--fg); background: var(--raised); }
+/* Small spaced uppercase line above a page title or a section. */
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+/* The one scope line under a title: "All times Central". */
+.scope { margin: 4px 0 20px; color: var(--mut); font-size: 15px; }
+/* A card: the page surface, a thin edge, no shadow. */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 16px 18px;
+}
+/* Badges. A stage badge is small caps (Production, Sandbox, Early). A status
+   badge is colour-coded: grey waiting, amber stale, orange attention, green
+   healthy. Both sit on one line beside a name. */
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--raised);
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.badge.stage { font-variant-caps: all-small-caps; font-size: 13px; letter-spacing: .06em; }
+.badge.status.waiting { color: var(--mut); border-color: var(--line); background: var(--raised); }
+.badge.status.stale { color: var(--warn); border-color: var(--warn-bd); background: var(--warn-bg); }
+.badge.status.attention { color: var(--att); border-color: var(--att-bd); background: var(--att-bg); }
+.badge.status.healthy { color: var(--pos); border-color: var(--pos-bd); background: var(--pos-bg); }
+/* A figure with its small grey line under it: "88.9%" over "8W / 1L". */
+.fig { font-variant-numeric: tabular-nums; text-align: right; }
+.fig .sub, .num .sub { display: block; font-size: 13px; color: var(--mut); white-space: normal; }
+/* The Production light: the dot and its word on one line. */
+td.light { white-space: normal; text-align: left; width: 170px; min-width: 150px; }
+/* The pair's name may break anywhere (above), so the auto layout would give
+   its column whatever the eight number columns leave. On a runner whose
+   fallback font is wider than Inter that left the name a few words per line
+   and the row six lines tall. The name column asks for its usual share and
+   keeps a floor, the light column takes its 170px and no more, and when a
+   wide font still needs room the number cells' grey sub-lines give way a
+   word at a time; the table never grows past its card. */
+#pairs td[data-l="Pair"] { width: 22%; min-width: 220px; }
+#pairs td.num .sm { white-space: normal; }
+td.light b { margin-right: 6px; }
+/* The second header row: section nav or breadcrumb on the left, the theme
+   toggle on the right. The nav keeps its own phone scrolling. */
+.subbar {
+  max-width: var(--page-w);
+  margin: 0 auto;
+  padding: 0 24px 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.subbar > nav.toc, .subbar > nav.crumbs { max-width: none; margin: 0; padding: 0; flex: 1 1 auto; min-width: 0; }
+.subbar > .theme-toggle { margin-left: auto; }
+@media (max-width: 640px) {
+  /* The section nav keeps its own 16px inset, so a chip's focus ring stays
+     inside its row; the toggle sits just past it. */
+  .subbar { padding: 0; gap: 0; }
+  .subbar > nav.toc, .subbar > nav.crumbs { padding: 8px 16px; }
+  .subbar > .theme-toggle { min-height: 32px; margin: 0 16px 0 0; }
+  .subbar > .theme-toggle:first-child { margin: 8px 16px 8px auto; }
 }

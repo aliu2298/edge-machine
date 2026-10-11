@@ -923,7 +923,7 @@ def page(d, st, blob, style, now=None):
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
 <td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div></td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
-<td class="num">{light}<div class="sm mut wrap">{esc(why)}</div></td>
+<td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>""")
     pairs_head = """<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>

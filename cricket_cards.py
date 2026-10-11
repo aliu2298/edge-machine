@@ -338,16 +338,17 @@ def tiles_html(d, rows, now=None):
     open_n = sum(len(open_quotes(d, r["name"], r["sport"], r)) for r in rows)
     head = headline_row(rows, d, now)
     if head is not None and (head["a"].get("n") or head["a"].get("n_price")):
-        rec = record_text(head["a"])
-        roi_cell_html = f'<b>{roi_html(head)}</b>'
         who = rule_name(head) + (" · Production" if head.get("prod") else "")
+        rec_tile = TN.record_tile(head["a"], "record · " + who)
+        roi_cell_html = f'<b>{roi_html(head)}</b>'
     else:
-        rec, roi_cell_html, who = "—", '<b class="mut">—</b>', "no rule with a record"
+        who = "no rule with a record"
+        rec_tile, roi_cell_html = TN.record_tile({}, "record · " + who), '<b class="mut">—</b>'
     return (
         '<div class="tiles tn-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
         f'<div class="tile"><b>{len(act)}</b><span>active rules</span></div>'
-        f'<div class="tile"><b>{B.esc(rec)}</b><span>record · {B.esc(who)}</span></div>'
+        f'{rec_tile}'
         f'<div class="tile">{roi_cell_html}<span>ROI after fees · {B.esc(who)}</span></div>'
         '</div>')
 
@@ -389,7 +390,7 @@ def listing_line(d):
 
 def system_html(d, idle_html=""):
     """The venue line and the grading note, closed by default."""
-    return f'''<section id="system" class="tn-system">
+    return f'''<section id="method" class="tn-system">
 <details><summary><b class="mut">{B.esc(listing_line(d))}</b><small>venue note</small></summary>
 <div>
 <p class="sm">Polymarket US lists the match-winner markets; it logs prices and holds no record of its own, so it has no row in the rules table, and the counts are what the last run stored.</p>
@@ -411,7 +412,7 @@ def render(d, rows, now=None, idle_html=""):
 <p class="sm mut">Production first, then by ROI after fees; open a row for the registered definition and its recent picks.</p>
 {rules_html(d, rows, now)}
 </section>
-<section id="matches" class="tn-section">
+<section id="events" class="tn-section">
 <h2>Matches</h2>
 <p class="sm mut">Every open pick, plus the last {SETTLED_DAYS} days of settled ones, newest day first.</p>
 {picks_html(d, rows, now)}
