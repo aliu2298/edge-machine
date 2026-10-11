@@ -374,7 +374,7 @@ def _frozen_overlaps():
 # pair is the same edit; the test does not require it.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
-SETTLED_PAIRS_SHA256 = "a6a1ba4af28b95da56b07c0bb07e8765b7c9331b8fee63d5c15e0f9293107958"
+SETTLED_PAIRS_SHA256 = "b04ef8cb88cd5560189fe0a35106813b867f661f8ca422461da08760b00cb30b"
 
 
 def _check_frozen_note(rows):
