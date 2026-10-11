@@ -113,8 +113,9 @@ eq(T.record_html(a), '1–2<div class="sm mut">2 no result</div>',
    "in a table cell the count sits under the W–L, so it cannot widen the column")
 eq(T.record_html(dict(n=3, won=1)), "1–2", "no no-result bets: the plain W–L")
 eq(T.record_html(dict(n=0, won=0)), "—", "nothing settled is an em dash")
-ok('class="sm mut wrap"' in src and ".num .wrap { white-space: normal; }" in open(os.path.join(ROOT, "public_site", "site.css")).read(),
-   "the health note under the pairs table light may wrap")
+ok('<td class="num light">{light} <span class="sm mut">' in src
+   and "td.light { white-space: normal;" in open(os.path.join(ROOT, "public_site", "site.css")).read(),
+   "the health note under the pairs table light sits beside the dot and may wrap")
 ok("A tip is unreachable when no Kalshi or Polymarket US market was listed for it" in src,
    "the reachable column is explained in one line")
 

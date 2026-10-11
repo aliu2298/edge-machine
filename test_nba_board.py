@@ -450,7 +450,8 @@ ok(about and " open" not in about.group(0).split(">", 1)[0]
    and len(re.findall(r"[.!?](\s|$)", _text(about.group(0)))) <= 4,
    "About this desk is collapsed and a few sentences")
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
-ok("color-scheme: dark" in css and "prefers-color-scheme: light" not in css, "the stylesheet is dark only")
+ok("color-scheme: dark" in css and "prefers-color-scheme: light" in css,
+   "the stylesheet is dark by default with the light theme on the same tokens")
 ok("tempo" not in css and "pace-leader" not in css, "the bar and leader-tile styles are gone")
 ok("tr.nba-detail[hidden] { display: none !important; }" in css,
    "a hidden detail row stays hidden under the phone cards")

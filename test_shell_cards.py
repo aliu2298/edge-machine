@@ -731,7 +731,7 @@ def _browser():
                   };
                 }""")
                 ok(warn and warn["flag"] == "true" and not warn["hidden"]
-                   and "245, 194, 107" in warn["shadow"],
+                   and ("245, 194, 107" in warn["shadow"] or "168, 109, 10" in warn["shadow"]),
                    f"a mixed awaiting row keeps the warn bar ({warn})")
                 view.locator('.bet-chip').filter(has_text="Late vs Grade").focus()
                 view.keyboard.press("Enter")
@@ -749,7 +749,7 @@ def _browser():
                 }""")
                 ok(card_style and card_style["token"] == "awaiting"
                    and card_style["italic"] == "italic"
-                   and "245, 194, 107" in card_style["color"]
+                   and ("245, 194, 107" in card_style["color"] or "168, 109, 10" in card_style["color"])
                    and "Awaiting result" in card_style["text"],
                    f"an Awaiting result card uses the warn italic style ({card_style})")
                 view.keyboard.press("Escape")
