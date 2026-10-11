@@ -192,6 +192,12 @@ publish_ledger() {
     echo "refusing: data/market_ledger.json is missing after market_track"
     exit 1
   fi
+  # Place tomorrow's open orders, AFTER the record is written so market_exec sees everything
+  # market_track just logged and cannot re-send it. Never fatal: the ledger is the thing this
+  # job exists to publish, and a broker outage must not cost a day of the record.
+  if ! python3 market_exec.py --place; then
+    echo "market_exec failed — orders not placed, continuing to publish the ledger"
+  fi
   git add -- data/market_ledger.json
   if [ -f data/sp500.json ]; then
     git add -- data/sp500.json
