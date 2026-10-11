@@ -69,10 +69,13 @@ def _on_clock(q, row):
     The clock is the stage row's, read the way the Sandbox's If-faded cell reads
     it, so the picks listed here are the bets the row's record counts.
     """
-    clock = S.tour_clock_since(since=row.get("since"))
-    if clock is None:
-        return True
-    return str(q.get("logged") or "") >= clock
+    logged = str(q.get("logged") or "")
+    # The row's own reset counts as well: pm_combo4 was demoted 2026-10-03, before the
+    # 2026-10-04 widening, and without this its Sep 24-25 narrow-leg baskets were listed.
+    clocks = [c for c in (S.tour_clock_since(since=row.get("since")), row.get("since"),
+                          S.TENNIS_COMBO_BAND_SINCE if row.get("sport", "").endswith(("combo", "pmcombo")) else None)
+              if c]
+    return all(logged >= c for c in clocks)
 
 
 def _kept(q, row):

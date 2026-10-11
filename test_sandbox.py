@@ -3736,7 +3736,7 @@ for _name, _html in _pages.items():
 ok("mlb" not in S.SOURCES["scores24"]["sports"] and "mlb" in S.SOURCES["scores24"]["retired_sports"],
    "scores24 MLB is retired, its other sports kept")
 _ur = SB.unconnected_rows(None) if "SB" in dir() else __import__("sandbox_build").unconnected_rows(None)
-ok("Polymarket · Tennis" in _ur, "a retired pair is listed with its reason")
+ok("Polymarket · Tennis" not in _ur, "a retired pair is off the pages (2026-10-10): its record was under other rules")
 ok("Scores24" not in _ur, "a removed source is not listed as retired history")
 
 # RE-OPENED 2026-09-21: retired pairs whose FADE looked better than the rule go back to
@@ -4626,11 +4626,16 @@ _rq.append(dict(_rq[0], id="sp-open", status="open", logged="2026-09-19T10:00:00
                 start="2026-09-19T18:00:00+00:00"))
 _rst = {"pairs": {"team2_form_l10|soccer_team2": {"stage": "sandbox", "since": "2026-09-18T21:30:00+00:00",
                                                   "demoted_at": "2026-09-18T21:30:00+00:00"}}}
+# Since 2026-10-10 the page shows only the record from the reset: the 40 bets it was removed
+# on are the old record, so they stay out of the row and the summary. The audit still sees them.
 _rr = [r for r in SB.pair_list({"quotes": _rq}, _rst) if r["name"] == "team2_form_l10"][0]
-eq((_rr["v"], _rr["removed"]["a"]["n"], _rr["removed"]["at"]), ("removed", 40, "2026-09-18"),
-   "a removed pair shows as removed, with the 40 bets it was removed on, not as waiting")
-ok("Removed 2026-09-18 on 16 won" in SB._row(_rr), "and its row says what it was removed on")
-ok("Removed from Production:" in SB.insights([_rr]), "and the summary names it")
+eq((_rr["removed"], _rr["v"] != "removed"), (None, True),
+   "a removed pair's pre-reset record is not on the page")
+ok("Removed 2026-09-18" not in SB._row(_rr), "its row does not print the old record")
+ok("Removed from Production:" not in SB.insights([_rr]), "and the summary does not name it")
+_ra = [r for r in SB.pair_list({"quotes": _rq}, _rst, include_retired=True) if r["name"] == "team2_form_l10"][0]
+eq((_ra["v"], _ra["removed"]["a"]["n"], _ra["removed"]["at"]), ("removed", 40, "2026-09-18"),
+   "the audit's view keeps the 40 bets it was removed on")
 
 # ---- Cups and Internationals: the same form rules as SEPARATE Sandbox pairs (2026-09-19) ----
 _cupfx = [dict(f, comp="cup") if f.get("played") is False else dict(f, comp="league") for f in _gall]
@@ -4945,13 +4950,18 @@ _recq = {"quotes": [
             start="2026-07-01T18:00:00+00:00", logged="2026-07-01T10:00:00+00:00")]}
 _recr = SB.pair_list(_recq, {"pairs": {}})
 ok_ = lambda c, w: ok(c, w)
-ok(any(r["name"] == "polymarket" and r["sport"] == "tennis" for r in _recr),
-   "a retired pair is listed inside its own sport, not only under Reference")
-eq(next(r["v"] for r in _recr if r["name"] == "polymarket" and r["sport"] == "tennis"), "retired",
-   "and is marked Retired")
+ok(not any(r["name"] == "polymarket" and r["sport"] == "tennis" for r in _recr),
+   "a retired pair is off the pages (2026-10-10), not listed inside its sport")
+_reca = SB.pair_list(_recq, {"pairs": {}}, include_retired=True)
+eq(next(r["v"] for r in _reca if r["name"] == "polymarket" and r["sport"] == "tennis"), "retired",
+   "the audit's view still has it, marked Retired")
 _rec = SB.reconcile(_recq, _recr)
+ok("5 settled bets" in _rec and "5 from retired rules" in _rec,
+   "the line under the sections still accounts for every settled bet, the retired ones by name")
+ok("0 sit in the sections above" in _rec, "and none of them is counted toward a verdict")
+_rec = SB.reconcile(_recq, _reca)
 ok("5 settled bets" in _rec and "1 on the retired polymarket.com venue" in _rec,
-   "the line under the sections reconciles every settled bet, judged or not")
+   "with the retired row present, the venue split still reconciles")
 ok("4 sit in the sections above" in _rec, "and says how many are counted toward a verdict")
 
 print("\ntennis combos: baskets of the favourite-band legs")

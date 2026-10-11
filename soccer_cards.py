@@ -307,10 +307,15 @@ def _rule_order(row):
     return (stage == "retired", stage != "production", roi is None, -(roi or 0), -row["a"]["n"], row["name"])
 
 
-def recent_picks(d, name, sport):
-    """Up to PICK_LIMIT picks for one rule: open ones soonest first, then the newest settled."""
+def recent_picks(d, name, sport, since=None):
+    """Up to PICK_LIMIT picks for one rule: open ones soonest first, then the newest settled.
+
+    `since` is the row's reset clock. A pick logged before it was made under the old rule
+    and counts toward nothing, so it is not listed beside the new record.
+    """
     mine = [q for q in T.bet_rows(d)
-            if q.get("source") == name and q.get("sport") == sport and q.get("bet") and _keep(q)]
+            if q.get("source") == name and q.get("sport") == sport and q.get("bet") and _keep(q)
+            and (not since or str(q.get("logged") or "") >= since)]
     live = sorted((q for q in mine if q.get("status") == "open"), key=_by_start)
     done = sorted((q for q in mine if q.get("status") != "open"), key=_by_start, reverse=True)
     return (live + done)[:PICK_LIMIT]
@@ -334,7 +339,7 @@ def _rule_rows(d, row, i):
     record = T.record_html(a)
     detail_id = f"rule-d-{i}"
     note = (row["meta"].get("note") or "").strip()
-    picks = recent_picks(d, row["name"], row["sport"])
+    picks = recent_picks(d, row["name"], row["sport"], row.get("since"))
     picks_html = (f'<ul class="rule-picks">{"".join(_pick_item(q) for q in picks)}</ul>'
                   if picks else '<p class="sm mut">No pick yet.</p>')
     main = (f'<tr class="rule-row" data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}" '

@@ -44,7 +44,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 STATE = os.path.join(ROOT, "data", "market_orders.json")
 
 # Paper by default, and loudly. The live host is reachable only by setting ALPACA_LIVE=1, so
-# pointing real money at this takes a deliberate act, not a default nobody re-read.
+# pointing the live account at this takes a deliberate act, not a default nobody re-read.
 PAPER_HOST = "https://paper-api.alpaca.markets"
 LIVE_HOST = "https://api.alpaca.markets"
 
@@ -67,7 +67,7 @@ MAX_POSITIONS = int(_num("ALPACA_MAX_POSITIONS", 60))   # 60 x $1000 never needs
 MAX_NEW_PER_DAY = int(_num("ALPACA_MAX_NEW_PER_DAY", 20))   # a bad data day is not 400 orders
 
 # Loss caps. Checked on every run, in paper as well as live, so the thing that is supposed to
-# stop real money has been exercised for months before it ever sees any.
+# protect the live account has been exercised for months before it ever sees any.
 MAX_DAILY_LOSS_PCT = _num("ALPACA_MAX_DAILY_LOSS_PCT", 3.0)   # v the previous close's equity
 MAX_DRAWDOWN_PCT = _num("ALPACA_MAX_DRAWDOWN_PCT", 15.0)      # v a high-water mark kept here
 
@@ -93,7 +93,7 @@ def live():
 # Live keys are a SEPARATE pair under their own names in the same 0600 file. Not a switch over
 # one pair: a paper key sent to the live host fails with a 401 that reads like an outage, and a
 # live key sent to the paper host would quietly trade the wrong account. Keeping them apart
-# means the only way to reach real money is to have deliberately stored a live key AND set
+# means the only way to reach the live account is to have deliberately stored a live key AND set
 # ALPACA_LIVE=1 — two acts, neither of them a default.
 LIVE_KEY_NAMES = ("APCA_LIVE_API_KEY_ID", "APCA_LIVE_API_SECRET_KEY")
 
@@ -680,8 +680,8 @@ def main(argv=None):
                     os.environ.pop("ALPACA_LIVE", None)
                 else:
                     os.environ["ALPACA_LIVE"] = prev
-        armed = os.environ.get("ALPACA_LIVE") == "1"
-        print(f"  {'ARMED' if armed else 'no   '} ALPACA_LIVE is {'SET — this host trades LIVE' if armed else 'not set, so every run is paper'}")
+        live_on = os.environ.get("ALPACA_LIVE") == "1"
+        print(f"  {'LIVE ' if live_on else 'no   '} ALPACA_LIVE is {'SET — this host trades LIVE' if live_on else 'not set, so every run is paper'}")
         print(f"        caps: ${NOTIONAL_USD:,.0f}/trade, {MAX_POSITIONS} positions, "
               f"{MAX_NEW_PER_DAY} new/day, loss {MAX_DAILY_LOSS_PCT:.1f}%/day "
               f"{MAX_DRAWDOWN_PCT:.1f}% drawdown")

@@ -245,7 +245,7 @@ def check_duplicates(d, rep):
 
 def check_records(d, st, rep):
     """Recount every pair from its raw bets, without assess(), and compare."""
-    rows = B.pair_list(d, st)
+    rows = B.pair_list(d, st, include_retired=True)
     n = 0
     for r in rows:
         name, sport = r["name"], r["sport"]
