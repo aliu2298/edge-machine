@@ -55,8 +55,24 @@ def production_pairs(st):
 
 
 def entered_at(pair):
-    """When the pair's Production record starts."""
-    return pair.get("ready_at") or pair.get("promoted_at")
+    """When the pair's Production record starts: its entry, or a reset made after it.
+
+    A promotion strips `since`, so a Production pair carries one only when its
+    record was reset while it sat in Production (sandbox_track.PAIR_RESETS). The
+    reset restarts the Production record too: the feed, the since-Production
+    column, the home roll and the Early badge all count from it.
+    """
+    entered = pair.get("ready_at") or pair.get("promoted_at")
+    return reset_after_entry(pair) or entered
+
+
+def reset_after_entry(pair):
+    """The pair's reset clock when it is later than its Production entry, else None."""
+    entered = pair.get("ready_at") or pair.get("promoted_at")
+    since = pair.get("since")
+    if entered and since and str(since) > str(entered):
+        return str(since)
+    return None
 
 
 def route_label(pair):
@@ -507,10 +523,21 @@ def early_state(pair, n_since):
     """
     if not pair or pair.get("stage") != "production":
         return None
-    moved = str(pair.get("by_hand") or "")[:10]
+    moved = _early_from(pair)
     if not moved or moved < EARLY_STATE_SINCE:
         return None
     return early_label(n_since)
+
+
+def _early_from(pair):
+    """The date the Early count starts from: the by-hand move, or a reset after entry.
+
+    A pair whose Production record was reset is early again from the reset: its
+    since-Production count restarted, and the badge is a fact about that sample.
+    """
+    moved = str(pair.get("by_hand") or "")[:10]
+    reset = str(reset_after_entry(pair) or "")[:10]
+    return reset if reset > moved else moved
 
 
 def early_badge(d, key, pair):
@@ -522,7 +549,7 @@ def early_badge(d, key, pair):
     """
     if not pair or pair.get("stage") != "production":
         return None
-    moved = str(pair.get("by_hand") or "")[:10]
+    moved = _early_from(pair)
     if not moved or moved < EARLY_STATE_SINCE:
         return None            # before the record is read: an old pair costs nothing
     if entered_at(pair) is None:

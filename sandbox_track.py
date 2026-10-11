@@ -3613,11 +3613,58 @@ def ready_gate(a):
 
 
 def load_stages(path=None):
+    """The stage registry, with every registered reset applied (apply_resets)."""
     path = path or STAGES
     if os.path.exists(path):
         with open(path) as f:
-            return json.load(f)
-    return {"pairs": {}, "events": []}
+            st = json.load(f)
+    else:
+        st = {"pairs": {}, "events": []}
+    apply_resets(st)
+    return st
+
+
+# A reset registered in code, applied to the stage file on every read (load_stages),
+# so the pair's record restarts the moment the change reaches main: the stage file
+# is rewritten by every tracker run, so it cannot carry the change itself. The row
+# is the site's reset convention, `since` plus a `reset` note, the one the tennis
+# lanes wrote by hand. A Production pair keeps its stage, its promotion and its
+# by_hand date; `since` restarts the record the pages print and `entry_since` the
+# record the tracker judges it on (qa_since), the same two clocks a by-hand move
+# sets. A clock already later than the reset (a demotion after it) is kept.
+PAIR_RESETS = {
+    f"{src}|{sport}": dict(since=since, reset=S.CRICKET_RESET_LINE)
+    for (src, sport), since in S.LANE_RESETS.items()
+}
+
+
+def apply_resets(st):
+    """Write every PAIR_RESETS row into `st` in place. Returns the keys it changed.
+
+    Idempotent: a row already on the reset clock is left alone. A pair with no row
+    gets a Sandbox row on the clock, so the page lists it as Waiting rather than
+    dropping it. An applied reset is appended to st["events"] once.
+    """
+    changed = []
+    pairs = st.setdefault("pairs", {})
+    events = st.setdefault("events", [])
+    for key, reset in PAIR_RESETS.items():
+        pair = pairs.get(key) or dict(stage="sandbox", since=None)
+        since = str(pair.get("since") or "")
+        if since >= reset["since"] and pair.get("reset") == reset["reset"]:
+            continue
+        if since >= reset["since"]:
+            pair = dict(pair, reset=reset["reset"])
+        else:
+            pair = dict(pair, since=reset["since"], reset=reset["reset"])
+            if pair.get("stage") == "production":
+                pair["entry_since"] = reset["since"]
+        pairs[key] = pair
+        changed.append(key)
+        if not any(e.get("pair") == key and e.get("reset") == reset["since"] for e in events):
+            events.append(dict(pair=key, to=pair.get("stage"), at=reset["since"],
+                               reset=reset["since"], reason=reset["reset"]))
+    return changed
 
 
 def save_stages(st, path=None):
