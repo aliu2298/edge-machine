@@ -156,6 +156,12 @@ jobs:
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public_site
+          # Named per attempt. A re-run of a job keeps the first attempt's artifact,
+          # so a second "github-pages" in the same run made deploy-pages refuse with
+          # "Multiple artifacts named github-pages were unexpectedly found" (Sandbox
+          # Tracker #340, attempt 2, 2026-10-11). Each attempt uploads and deploys its
+          # own name, and the wait step below looks for that same name.
+          name: github-pages-${{ github.run_attempt }}
       # The artifact just uploaded is not always listed by the API the instant the upload
       # finalises. On 2026-10-08 Refresh boards #316 uploaded github-pages (artifact
       # 11569374258, finalised 18:16:00.08Z), deploy-pages listed the run's artifacts at
@@ -170,15 +176,17 @@ jobs:
         run: |
           set -euo pipefail
           for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
-            n="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?name=github-pages" --jq '.total_count' || echo 0)"
+            n="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?name=github-pages-${GITHUB_RUN_ATTEMPT}" --jq '.total_count' || echo 0)"
             if [ "${n:-0}" -ge 1 ]; then
-              echo "github-pages artifact listed (attempt ${attempt})"
+              echo "github-pages-${GITHUB_RUN_ATTEMPT} artifact listed (attempt ${attempt})"
               exit 0
             fi
             sleep 5
           done
-          echo "::error::the github-pages artifact was uploaded but is still not listed after 60s"
+          echo "::error::the github-pages-${GITHUB_RUN_ATTEMPT} artifact was uploaded but is still not listed after 60s"
           exit 1
       - id: deployment
         if: ${{ !cancelled() && steps.close_snapshot.outcome != 'skipped' && steps.site_root.outcome == 'success' && steps.publish.outcome == 'success' && steps.main_tip.outcome == 'success' }}
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
