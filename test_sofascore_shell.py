@@ -4,8 +4,8 @@
 Fails before the shell exists: the site root still refreshes to the Sandbox,
 the page nav is the old sport list, and there is no empty Running pane.
 Passes once the root is the dark shell, Production is the current page pill,
-the summary strip is the Production board's own headline tiles, and the
-Running and Rules-applied panes are empty. No network.
+the summary strip is the Control Center's own tiles, and the Running and
+Rules-applied panes are empty. No network.
 """
 import html as html_lib
 import os
@@ -36,8 +36,6 @@ PAGE_HREFS = (
 )
 PAGE_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Crypto",
                "Commodities", "Method"]
-LANDED = re.compile(
-    r'<div class="tile"><b>[^<]*</b><span>(?:recent leads landed|paper bets landed[^<]*)</span></div>')
 SKETCH_FAKES = (
     "Milan",
     "Atalanta",
@@ -109,9 +107,7 @@ def _present_sports(html):
     return [label for key, label in shell_build.SPORTS if key != "all" and label in present]
 
 
-def _without_landed(tiles):
-    """The strip minus the landed tile, which the shell counts its own way."""
-    return LANDED.sub("", tiles)
+TILE_LABELS = ["pairs in Production", "open bets", "landed · last 14 days", "areas healthy", "needs attention"]
 
 
 def _fixture():
@@ -217,15 +213,10 @@ def _check_chrome(html, why, placeholders=True):
        f"{why} counts each Running filter")
     eq(html.count('</span><span class="sr-only"> paper bets</span></button>'), 3,
        f"{why} each filter count is read as paper bets")
-    if 'class="running-row"' in html:
-        ok('class="bet-chip"' in html, f"{why} wires the Open and recent roll")
-        ok("No open or recent paper bets yet." not in html,
-           f"{why} hides the roll empty state when a chip is showing")
-    else:
-        ok("No open or recent paper bets yet." in html,
-           f"{why} bet roll stays empty when there is nothing to show")
-        ok('class="bet-chip"' not in html, f"{why} an empty roll has no chips")
-    ok('class="event-chip"' not in html, f"{why} bet roll has no sketch chips")
+    ok('class="bet-chip"' not in html and "No open or recent paper bets yet." not in html
+       and 'id="bets-roll-title"' not in html,
+       f"{why} has no Bets roll: the Control Center dropped it")
+    ok('class="event-chip"' not in html, f"{why} has no sketch chips")
     stamp = re.search(r'<div class="topbar">.*?<p class="stamp">(.*?)</p>', html, re.S)
     ok(stamp and fmt.iso_z(NOW) in stamp.group(1) and "CT" in stamp.group(1),
        f"{why} top bar stamp is the build clock, labeled CT")
@@ -240,11 +231,15 @@ def _check_chrome(html, why, placeholders=True):
     ok('role="tab"' not in html, f"{why} has no tab stub")
     ok('href="./production.html"' in html and "Full page" in html,
        f"{why} links Full page to the existing Production board")
-    ok('data-board="production"' in html, f"{why} summary strip is the Production board")
-    ok("paper bets landed · last 14 days" in _tiles(html) and "recent leads landed" not in _tiles(html),
-       f"{why} counts landed paper bets over the shell window, not recent leads")
-    ok('<title>Edge Machine · Home</title>' in html and '<body class="analyst-desk">' in html,
-       f"{why} is titled Home on the analyst-desk body")
+    ok('data-board="production"' not in html and 'class="shell-summary"' not in html,
+       f"{why} no longer copies the Production board's strip")
+    eq(list(_tile_map(_tiles(html))), TILE_LABELS,
+       f"{why} summary strip is the Control Center's five tiles, in order")
+    ok("recent leads landed" not in _tiles(html) and "paper bets landed" not in _tiles(html),
+       f"{why} counts landed bets over the shell window, not recent leads")
+    ok('<title>Edge Machine · Home</title>' in html and '<body class="analyst-desk control-center">' in html,
+       f"{why} is titled Home on the analyst-desk body with the Control Center class")
+    ok('<link rel="stylesheet" href="./control.css">' in html, f"{why} links control.css")
     ok('<link rel="icon" href="./favicon.svg" type="image/svg+xml">' in html,
        f"{why} links the favicon")
     css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
@@ -267,77 +262,74 @@ if shell_build is not None:
     html = shell_build.page(NOW, d=d, st=st, blob=blob)
     _check_chrome(html, "fixture shell")
     prod = production.page(d, st, blob, "", now=NOW)
-    shell_tiles = _tiles(html)
-    prod_tiles = _tiles(prod)
-    eq(_without_landed(shell_tiles), _without_landed(prod_tiles),
-       "summary strip is the Production page's own tiles, bar the landed tile")
-    eq(shell_tiles, shell_build._with_landed(prod_tiles, 1, 2),
-       "the landed tile is rewritten in place from the roll's chips")
-    ok("recent leads landed" in prod_tiles and "recent leads landed" not in shell_tiles,
-       "production.html keeps its own landed tile; the shell does not copy it")
-    want_next = fmt.when("2026-10-06T15:00:00Z")
-    eq(_tile_map(shell_tiles), {
+    shell_tiles = _tile_map(_tiles(html))
+    prod_tiles = _tile_map(_tiles(prod))
+    eq(shell_tiles["pairs in Production"], prod_tiles["pairs in Production"],
+       "the pairs tile is the Production page's own count")
+    ok("leads still to come" in prod_tiles and "leads still to come" not in shell_tiles
+       and "recent leads landed" in prod_tiles,
+       "production.html keeps its lead tiles; the Control Center does not copy them")
+    eq(shell_tiles, {
         "pairs in Production": "1",
-        "leads still to come": "2",
-        "paper bets landed · last 14 days": "1/2",
-        "next lead (CT)": want_next,
-    }, "fixture totals are the Production headlines, with landed paper bets")
+        "open bets": "0",
+        "landed · last 14 days": "1/2",
+        "areas healthy": "0 of 7",
+        "needs attention": "0",
+    }, "fixture totals: one pair, nothing open, one of two landed, no lane read with a stamp, nothing to fix")
     empty = shell_build.page(
         NOW, d={"quotes": []}, st={"pairs": {}}, blob={"leads": {}, "pairs": {}})
     eq(_tile_map(_tiles(empty)), {
         "pairs in Production": "0",
-        "leads still to come": "0",
-        "paper bets landed · last 14 days": "0/0",
-        "next lead · none logged yet": "None scheduled",
-    }, "an empty board prints the Production zeros and no next lead, not the sketch")
-    ok("No open or recent paper bets yet." in empty and 'class="bet-chip"' not in empty,
-       "an empty board keeps the roll empty state")
+        "open bets": "0",
+        "landed · last 14 days": "0/0",
+        "areas healthy": "0 of 7",
+        "needs attention": "0",
+    }, "an empty board prints zeros, not the sketch")
+    ok('class="running-row"' not in empty and 'class="bet-chip"' not in empty,
+       "an empty board lists nothing and has no roll")
     eq(re.findall(r">([^<]+)</button>", _sports(empty)), ["All"],
        "an empty board has only the All pill")
     live = shell_build.page(NOW)
     live_prod = production.page(T.load(), T.load_stages(), production.load_feed(), "", now=NOW)
-    eq(_without_landed(_tiles(live)), _without_landed(_tiles(live_prod)),
-       "the live shell strip matches the live Production headlines, bar the landed tile")
-    live_chips = re.findall(r'<button\b[^>]*class="bet-chip"[^>]*>', live)
-    live_won = sum(1 for chip in live_chips if 'data-status="W"' in chip)
-    # A no-result chip (data-status price) is on the settled list and out of
-    # the landed count: it is neither a win nor a loss.
-    live_settled = sum(1 for chip in live_chips
-                       if re.search(r'data-status="(?:W|L|Void)"', chip))
-    eq(_tiles(live), shell_build._with_landed(_tiles(live_prod), live_won, live_settled),
-       "the live landed tile counts the live roll's settled chips, no-result chips apart")
+    eq(_tile_map(_tiles(live))["pairs in Production"], _tile_map(_tiles(live_prod))["pairs in Production"],
+       "the live pairs tile matches the live Production headline")
+    import control_center
+    live_open = sum(1 for q in control_center._bet_rows(T.load()) if q.get("status") == "open")
+    eq(_tile_map(_tiles(live))["open bets"], str(live_open),
+       "the live open tile counts every open bet in the ledger")
     _check_chrome(live, "live shell", placeholders=False)
 
     print("\none build writes production.html and index.html")
     import sandbox_build
     later = datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc)
-    built_prod, built_index = sandbox_build.production_and_index(NOW, d, st, blob)
-    eq(_without_landed(_tiles(built_prod)), _without_landed(_tiles(built_index)),
-       "one build writes both pages with the same tiles, bar the landed tile")
+    built_prod, built_index = sandbox_build.production_and_index(NOW, d, st, blob, extra={})
+    eq(_tile_map(_tiles(built_prod))["pairs in Production"], _tile_map(_tiles(built_index))["pairs in Production"],
+       "one build writes both pages with the same pairs tile")
     eq(_tile_map(_tiles(built_index)), {
         "pairs in Production": "1",
-        "leads still to come": "2",
-        "paper bets landed · last 14 days": "1/2",
-        "next lead (CT)": want_next,
-    }, "that shared strip is the Production headlines at this clock")
-    later_prod, later_index = sandbox_build.production_and_index(later, d, st, blob)
-    eq(_without_landed(_tiles(later_prod)), _without_landed(_tiles(later_index)),
-       "a later clock still writes the same tiles on both pages")
+        "open bets": "0",
+        "landed · last 14 days": "1/2",
+        "areas healthy": "0 of 7",
+        "needs attention": "0",
+    }, "that strip is the Control Center's at this clock")
+    later_prod, later_index = sandbox_build.production_and_index(later, d, st, blob, extra={})
+    eq(_tile_map(_tiles(later_index)), _tile_map(_tiles(built_index)),
+       "a later clock within the window writes the same tiles")
     ok(_tiles(later_prod) != _tiles(built_prod),
-       "the shared strip follows that clock")
-    # Passing tiles must not count again. A boom in production.page proves it.
+       "the Production strip follows that clock")
+    # The Control Center counts its own tiles: production.page is never called for the root,
+    # and a strip passed in is ignored. A boom in production.page proves it.
     sentinel = '<div class="tiles"><div class="tile"><b>7</b><span>pairs in Production</span></div></div>'
     real_page = production.page
     def _boom(*_a, **_k):
         raise AssertionError("shell recounted tiles")
     production.page = _boom
     try:
-        copied = shell_build.page(NOW, tiles=sentinel)
+        copied = shell_build.page(NOW, d=d, st=st, blob=blob, tiles=sentinel)
     finally:
         production.page = real_page
-    ok('<div class="tile"><b>7</b><span>pairs in Production</span></div>' in copied
-       and "paper bets landed" in _tiles(copied) and "recent leads landed" not in copied,
-       "the shell uses the tiles it was given, adding only its landed tile")
+    ok('<b>7</b>' not in _tiles(copied) and _tile_map(_tiles(copied)) == shell_tiles,
+       "the shell ignores a strip it is given and counts its own tiles without the Production page")
 
     print("\npublished root")
     root_html = open(os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read()
@@ -354,11 +346,12 @@ if shell_build is not None:
         ok(os.path.isfile(os.path.join(ROOT, "public_site", rel)),
            f"{rel} still exists for the page pill")
     prod_html = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
-    eq(_tile_map(_without_landed(_tiles(root_html))), _tile_map(_without_landed(_tiles(prod_html))),
-       "committed index.html tiles equal committed production.html tiles, bar the landed tile")
-    ok("paper bets landed · last 14 days" in _tile_map(_tiles(root_html))
-       and "recent leads landed" in _tile_map(_tiles(prod_html)),
-       "the committed shell counts landed paper bets; production.html keeps recent leads")
+    eq(_tile_map(_tiles(root_html))["pairs in Production"], _tile_map(_tiles(prod_html))["pairs in Production"],
+       "committed index.html and production.html agree on the pairs in Production")
+    eq(list(_tile_map(_tiles(root_html))), TILE_LABELS,
+       "the committed root carries the Control Center's five tiles")
+    ok("recent leads landed" in _tile_map(_tiles(prod_html)),
+       "production.html keeps recent leads")
     tracker = open(os.path.join(ROOT, ".github", "workflows", "sandbox-tracker.yml"),
                    encoding="utf-8").read()
     ok("public_site/index.html" in tracker.split('SITE="', 1)[-1].split('"', 1)[0],
@@ -477,7 +470,8 @@ def _browser():
             }""")
             page.locator("a.brand").focus()
             focused = None
-            for _ in range(30):
+            # The area cards, their Open links and the attention list sit before Running now.
+            for _ in range(120):
                 page.keyboard.press("Tab")
                 focused = page.evaluate("""() => {
                   const el = document.activeElement;
@@ -519,7 +513,7 @@ def _browser():
               const panes = [...cols.querySelectorAll(".shell-pane")]
                 .map((pane) => ({ id: pane.id, box: pane.getBoundingClientRect() }))
                 .sort((a, b) => a.box.top - b.box.top);
-              let stacked = panes.length >= 4;
+              let stacked = panes.length >= 2;
               for (let i = 1; i < panes.length; i += 1) {
                 if (panes[i].box.top < panes[i - 1].box.bottom - 2) stacked = false;
               }
@@ -530,8 +524,8 @@ def _browser():
               };
             }""")
             ok(narrow["stacked"] and not narrow["overflow"]
-               and narrow["order"] == ["running", "rules", "status", "bets-roll"],
-               f"phone stacks the panes, Running, Rule cards, Status, then the roll, "
+               and narrow["order"] == ["running", "rules"],
+               f"phone stacks the Live now panes, Running then Rule cards, "
                f"without sideways scroll ({narrow})")
             browser.close()
     finally:

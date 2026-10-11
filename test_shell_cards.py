@@ -648,6 +648,31 @@ for needle in ("innerHTML", "insertAdjacentHTML", "outerHTML", "document.write",
 ok("textContent" in js, "shell.js writes card text with textContent")
 
 
+def _open_row(view, name):
+    """Select a Running row by name with the keyboard, revealing it first if a filter hides it.
+
+    The roll chips that used to reveal a hidden contest are gone from the root; the All
+    pill and the row's own bucket do that here.
+    """
+    view.evaluate("""(name) => {
+      const row = [...document.querySelectorAll(".running-row")]
+        .find((item) => item.getAttribute("data-name") === name);
+      if (!row) throw new Error("no Running row named " + name);
+      if (row.hidden) {
+        const nav = document.querySelector("nav.sport-filter");
+        if (nav) nav.setAttribute("data-sport-filter", "all");
+        const all = nav ? nav.querySelector('button[data-sport="all"]') : null;
+        if (all) all.click();
+        const bucket = document.querySelector(
+          '.running-filters button[data-filter="' + row.getAttribute("data-filter") + '"]');
+        if (bucket) bucket.click();
+      }
+      row.focus();
+    }""", name)
+    view.keyboard.press("Enter")
+    view.wait_for_timeout(30)
+
+
 def _browser():
     from require_browser import require_browser
     sync_playwright = require_browser("test_shell_cards.py")
@@ -708,9 +733,7 @@ def _browser():
                 }""")
                 ok(loaded["n"] == 1 and loaded["first"] and loaded["cards"] >= 1,
                    f"on load the first visible row is pressed and its cards show ({loaded})")
-                view.locator('.bet-chip').filter(has_text="On vs Time").focus()
-                view.keyboard.press("Enter")
-                view.wait_for_timeout(30)
+                _open_row(view, "On vs Time")
                 about_line = view.evaluate("""() => {
                   const about = [...document.querySelectorAll(".rule-mini .rule-mini-about")];
                   return about.map((p) => p.textContent);
@@ -733,9 +756,7 @@ def _browser():
                 ok(warn and warn["flag"] == "true" and not warn["hidden"]
                    and ("245, 194, 107" in warn["shadow"] or "168, 109, 10" in warn["shadow"]),
                    f"a mixed awaiting row keeps the warn bar ({warn})")
-                view.locator('.bet-chip').filter(has_text="Late vs Grade").focus()
-                view.keyboard.press("Enter")
-                view.wait_for_timeout(30)
+                _open_row(view, "Late vs Grade")
                 card_style = view.evaluate("""() => {
                   const status = document.querySelector(".rule-mini .running-status");
                   if (!status) return null;
@@ -837,7 +858,6 @@ def _browser():
                   const link = document.querySelector("a.full-page");
                   return {
                     pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
-                    chips: document.querySelectorAll('.bet-chip[aria-pressed="true"]').length,
                     cards: document.querySelectorAll(".rule-mini").length,
                     emptyHidden: empty ? empty.hidden : null,
                     live: live ? live.textContent : "",
@@ -845,7 +865,6 @@ def _browser():
                   };
                 }""")
                 eq(escaped["pressed"], 0, "Escape clears aria-pressed")
-                eq(escaped["chips"], 0, "Escape clears the chip's aria-pressed")
                 eq(escaped["cards"], 0, "Escape clears the cards")
                 ok(not escaped["emptyHidden"], "Escape restores the empty state")
                 eq(escaped["live"], "Select a contest in Running.",
@@ -877,20 +896,16 @@ def _browser():
                   return row ? row.hidden : null;
                 }""")
                 ok(sport is True, "a cricket sport filter hides the soccer row")
-                view.locator(".bet-chip").filter(has_text="Mix vs Match").first.click()
-                view.wait_for_timeout(30)
+                _open_row(view, "Mix vs Match")
                 opened = view.evaluate("""() => {
                   const nav = document.querySelector("nav.sport-filter");
                   const row = [...document.querySelectorAll(".running-row")]
                     .find((item) => item.getAttribute("data-name") === "Mix vs Match");
-                  const chip = [...document.querySelectorAll(".bet-chip")]
-                    .find((item) => item.textContent.indexOf("Mix vs Match") >= 0);
                   const link = document.querySelector("a.full-page");
                   return {
                     filter: nav ? nav.getAttribute("data-sport-filter") : "",
                     hidden: row ? row.hidden : null,
                     pressed: row ? row.getAttribute("aria-pressed") : "",
-                    chip: chip ? chip.getAttribute("aria-pressed") : "",
                     cards: document.querySelectorAll(".rule-mini").length,
                     href: link ? link.getAttribute("href") : "",
                     bucket: document.querySelector(".running-filters button[aria-pressed='true']")
@@ -899,27 +914,28 @@ def _browser():
                   };
                 }""")
                 ok(opened["filter"] in ("all", "soccer") and opened["hidden"] is False
-                   and opened["pressed"] == "true" and opened["chip"] == "true"
+                   and opened["pressed"] == "true"
                    and opened["cards"] == 2 and opened["href"] == "./soccer.html"
                    and opened["bucket"] == "settled",
-                   f"a chip reveals the contest, selects it, and opens its cards ({opened})")
-                view.locator(".bet-chip").filter(has_text="Mix vs Match").first.focus()
+                   f"the All pill and the row's bucket reveal the contest; Enter selects it and opens its cards ({opened})")
+                view.evaluate("""() => {
+                  [...document.querySelectorAll(".running-row")]
+                    .find((item) => item.getAttribute("data-name") === "Mix vs Match").focus();
+                }""")
                 view.keyboard.press(" ")
                 view.wait_for_timeout(30)
                 closed = view.evaluate("""() => {
                   const link = document.querySelector("a.full-page");
                   return {
                     pressed: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
-                    chips: document.querySelectorAll('.bet-chip[aria-pressed="true"]').length,
                     cards: document.querySelectorAll(".rule-mini").length,
                     href: link ? link.getAttribute("href") : "",
                   };
                 }""")
-                eq(closed["pressed"], 0, "Space on the selected chip clears the row")
-                eq(closed["chips"], 0, "Space on the selected chip clears aria-pressed")
-                eq(closed["cards"], 0, "Space on the selected chip closes the cards")
+                eq(closed["pressed"], 0, "Space on the selected row clears it")
+                eq(closed["cards"], 0, "Space on the selected row closes the cards")
                 eq(closed["href"], "./production.html",
-                   "closing the chip resets Full page")
+                   "closing the row resets Full page")
                 view.evaluate("""() => {
                   const row = document.querySelector(".running-row:not([hidden])");
                   row.setAttribute("data-page", "./football.html");

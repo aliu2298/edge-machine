@@ -62,10 +62,6 @@ def _rows(page):
     return re.findall(r'<button\b[^>]*class="running-row"[^>]*>.*?</button>', page, re.S)
 
 
-def _chips(page):
-    return re.findall(r'<button\b[^>]*class="bet-chip"[^>]*>.*?</button>', page, re.S)
-
-
 def _chip_text(tag):
     return re.sub(r"\s+", " ", html_lib.unescape(re.sub(r"<[^>]+>", " ", tag))).strip()
 
@@ -121,13 +117,18 @@ def _quote(qid, status, start, settled=None, price=0.54, source="oddspedia",
         "start_source": "espn",
         "price": price,
         "label": f"{home} v {away}",
+        "stake": 100.0,
+        "pnl": 0.0,
+        "result": None,
     }
     if settled:
         row["settled"] = settled
     if status == "won":
         row["result"] = "a"
+        row["pnl"] = round(100.0 * (1 - price) / price, 2)
     if status == "lost":
         row["result"] = "b"
+        row["pnl"] = -100.0
     if status == "settled":
         row["result"] = "price"
     return row
@@ -291,63 +292,17 @@ ok('data-filter="settled" aria-pressed="false" aria-describedby="settled-caption
    "the Settled filter's described-by is the caption")
 
 
-print("\nopen and recent roll")
-CHIPS = _chips(PAGE)
-ok(CHIPS, "the fixture roll has chips")
-ok("No open or recent paper bets yet." not in PAGE,
-   "a roll with chips does not keep the empty state")
+print("\nno bets roll")
+ok('class="bet-chip"' not in PAGE and 'id="bets-roll-title"' not in PAGE and 'class="bet-roll' not in PAGE,
+   "the Control Center dropped the Bets roll: no chips, no roll pane")
+ok("No open or recent paper bets yet." not in PAGE, "and no roll empty state")
 empty_roll = shell_build.page(
     NOW, d={"quotes": []}, st={"pairs": {}}, blob={"leads": {}, "pairs": {}})
-ok("No open or recent paper bets yet." in empty_roll and 'class="bet-chip"' not in empty_roll,
-   "the empty state stays when there is nothing to show")
-ok("Old v Gone" not in _chip_text(" ".join(CHIPS)) and "Old vs Gone" not in _chip_text(" ".join(CHIPS)),
-   "a contest outside the 14-day window is not a chip")
-chip_names = []
-for chip in CHIPS:
-    contest = _attr(chip, "data-contest")
-    matched = [item for item in ROWS if _attr(item, "data-contest") == contest]
-    eq(len(matched), 1, f"chip {contest} selects exactly one Running row")
-    if len(matched) != 1:
-        continue
-    chip_names.append((_attr(chip, "data-status"), _attr(matched[0], "data-name")))
-# Open bets by kickoff, then settled bets newest first.
-eq([item[1] for item in chip_names], [_vs(name) for name in (
-    "Live v Now",
-    "Alpha v Beta",
-    "Alpha v Beta",
-    "Gamma v Delta",
-    "<b>Beta v javascript:alert(1)",
-    "Echo v Foxtrot",
-    "Void v Match",
-    "Price v Result",
-    "Inside v Edge",
-)], "open chips follow kickoff, then settled chips are newest first")
-eq([item[0] for item in chip_names], [
-    "Open", "Open", "Open", "Open", "Open", "W", "Void", shell_build.PRICE_TOKEN, "L",
-], "chip status is Open, then W, Void, price, and L")
-eq(shell_build.PRICE_TOKEN, "price", "the price token is the short word price")
-alpha_chips = [chip for chip in CHIPS if _vs("Alpha v Beta") in _chip_text(chip)]
-eq(len(alpha_chips), 2, "each open bet on one contest is its own chip")
-ok(all("Alpha v Beta" not in _chip_text(chip) for chip in CHIPS),
-   "no chip spells the contest with a bare v")
-ok(alpha_chips and '<span class="bet-chip-letter" aria-hidden="true" title="Cricket">C</span>' in alpha_chips[0]
-   and '<span class="bet-chip-contest" title="Alpha vs Beta">Alpha vs Beta</span>' in alpha_chips[0]
-   and '<span class="bet-chip-line" title="Alpha to win">' in alpha_chips[0],
-   "a chip's letter and contest carry the full text in a title")
-eq(_attr(alpha_chips[0], "data-contest"), _attr(_got("Alpha v Beta"), "data-contest"),
-   "a chip points at that contest's Running row")
-ok("C" in _chip_text(alpha_chips[0]) and "Alpha to win · 54¢" in _chip_text(alpha_chips[0]),
-   "a chip shows the sport letter, the market, and the price in cents")
-ok("Alpha to win · 40¢" in _chip_text(alpha_chips[1]),
-   "the second chip keeps the other bet's price")
-gamma_chips = [chip for chip in CHIPS if _vs("Gamma v Delta") in _chip_text(chip)]
-eq(len(gamma_chips), 1, "Gamma v Delta is one chip")
-ok(gamma_chips and "S" in _chip_text(gamma_chips[0]),
-   "a soccer chip uses the sport letter S")
-ok('aria-pressed="false"' in CHIPS[0] and "tabindex=\"-1\"" not in CHIPS[0],
-   "a chip is a focusable button that starts unpressed")
-ok("&lt;b&gt;" in CHIPS[4] and 'href="javascript:' not in CHIPS[4],
-   "the hostile chip escapes the contest name and does not make it a link")
+ok('class="bet-chip"' not in empty_roll and "No open or recent paper bets yet." not in empty_roll,
+   "an empty page has no roll either")
+ok(not hasattr(shell_build, "_roll_html") and not hasattr(shell_build, "_chip_html"),
+   "the roll renderers are gone from shell_build")
+eq(shell_build.PRICE_TOKEN, "price", "the price token is still the short word price")
 top = re.search(r'<div class="topbar">.*?<p class="stamp">(.*?)</p>', PAGE, re.S)
 ok(top and "2026-10-05T18:00:00Z" in top.group(1) and "CT" in top.group(1),
    "the top bar stamp is this build's clock, labeled CT")
@@ -794,7 +749,7 @@ ok('<span class="running-time">Live</span>' not in early_rows[0],
 eq(_attr(late_rows[0], "data-filter"), "live",
    "the same contest is live when the build clock is after kickoff")
 
-print("\none pass, one clock, copied tiles")
+print("\none pass, one clock, the Control Center's own tiles")
 import production
 import sandbox_build
 fixture_d = {"quotes": []}
@@ -814,12 +769,15 @@ prod_html, index_html = sandbox_build.production_and_index(
     NOW, fixture_d, fixture_st, fixture_blob)
 prod_tiles = shell_build.tiles_html(prod_html)
 index_tiles = shell_build.tiles_html(index_html)
-ok(index_tiles != prod_tiles and "paper bets landed" in index_tiles
-   and "recent leads landed" not in index_tiles and "recent leads landed" in prod_tiles,
-   "the shared pass copies Production tiles onto the shell, then rewrites the landed tile")
-_landed = re.compile(r'<div class="tile"><b>[^<]*</b><span>(?:recent leads landed|paper bets landed[^<]*)</span></div>')
-eq(_landed.sub("", index_tiles), _landed.sub("", prod_tiles),
-   "the other three tiles are production.html's own")
+_TILE = re.compile(r'<div class="tile"><b(?: class="when")?>(.*?)</b><span>(.*?)</span></div>')
+_index_tile_map = {label: value for value, label in _TILE.findall(index_tiles)}
+_prod_tile_map = {label: value for value, label in _TILE.findall(prod_tiles)}
+eq(list(_index_tile_map), ["pairs in Production", "open bets", "landed · last 14 days", "areas healthy", "needs attention"],
+   "the shared pass writes the Control Center's five tiles on the root")
+eq(_index_tile_map["pairs in Production"], _prod_tile_map["pairs in Production"],
+   "the pairs tile agrees with production.html's")
+ok("leads still to come" in _prod_tile_map and "leads still to come" not in _index_tile_map,
+   "production.html keeps its lead tiles; the root does not copy them")
 prod_stamp = re.search(r'<time datetime="([^"]+)"', prod_html)
 index_stamp = re.search(r'<p class="stamp">.*?<time datetime="([^"]+)"', index_html, re.S)
 ok(prod_stamp and index_stamp and prod_stamp.group(1) == index_stamp.group(1),
@@ -952,8 +910,10 @@ taken = open(take_index, encoding="utf-8").read()
 eq(boom["n"], 0, "takeover does not call production.page")
 ok("2026-10-01T12:00:00Z" in _stamp(taken), "takeover stamps the shell with production.html's clock")
 ok("2026-10-05" not in _stamp(taken), "takeover does not stamp the shell with its own clock")
-ok('<div class="tile"><b>4</b><span>pairs in Production</span></div>' in taken,
-   "takeover copies the production tiles")
+ok('<div class="tile"><b>4</b><span>pairs in Production</span></div>' not in taken
+   and '<div class="tile"><b>0</b><span>pairs in Production</span></div>' in taken
+   and 'class="cc-areas"' in taken,
+   "takeover rebuilds the Control Center with its own tiles; it does not copy production.html's")
 shutil.rmtree(take_dir, ignore_errors=True)
 
 
@@ -1057,9 +1017,9 @@ try:
     copied_shell = open(copy_index, encoding="utf-8").read()
 finally:
     site_root.OUT = saved_copy_out
-ok('<b>10</b>' in copied_shell and "leads still to come" in copied_shell,
-   "a different stamp copies production.html's tiles")
-ok('<b>4</b>' not in copied_shell, "the stale tiles do not stay")
+ok('<b>10</b>' not in copied_shell and "leads still to come" not in copied_shell,
+   "a different stamp does not copy production.html's tiles")
+ok('<b>4</b><span>pairs in Production</span>' in copied_shell, "the shell keeps its own tiles")
 ok("2026-10-05T12:00:00Z" in copied_shell and "a\\b" in copied_shell,
    "a different stamp copies production.html's clock, backslash included")
 ok(running_block in copied_shell, "the Running block is not rebuilt")
@@ -1159,19 +1119,17 @@ ok('class="rule-mini"' not in _committed,
 if _committed_rows:
     ok('data-cards="' in _committed, "committed index.html embeds a card payload per contest")
 _prod_committed = open(os.path.join(ROOT, "public_site", "production.html"), encoding="utf-8").read()
-eq(_landed.sub("", shell_build.tiles_html(_committed)),
-   _landed.sub("", shell_build.tiles_html(_prod_committed)),
-   "committed index.html tiles equal committed production.html tiles, bar the landed tile")
-_committed_chips = _chips(_committed)
-_landed_m = re.search(r'<div class="tile"><b>(\d+)/(\d+)</b><span>paper bets landed · last 14 days</span></div>',
+_committed_tiles = {label: value for value, label in _TILE.findall(shell_build.tiles_html(_committed))}
+_prod_tiles_map = {label: value for value, label in _TILE.findall(shell_build.tiles_html(_prod_committed))}
+eq(_committed_tiles.get("pairs in Production"), _prod_tiles_map.get("pairs in Production"),
+   "committed index.html and production.html agree on the pairs in Production")
+_landed_m = re.search(r'<div class="tile"><b>(\d+)/(\d+)</b><span>landed · last 14 days</span></div>',
                       _committed)
-ok(_landed_m is not None, "committed index.html has the paper-bets-landed tile")
+ok(_landed_m is not None, "committed index.html has the landed tile")
 if _landed_m is not None:
-    eq((int(_landed_m.group(1)), int(_landed_m.group(2))),
-       (sum(1 for c in _committed_chips if _attr(c, "data-status") == "W"),
-        sum(1 for c in _committed_chips
-            if _attr(c, "data-status") in ("W", "L", "Void"))),
-       "the landed tile counts the roll's settled chips, a no-result chip apart")
+    ok(int(_landed_m.group(1)) <= int(_landed_m.group(2)),
+       "the landed tile is won over settled")
+ok('class="bet-chip"' not in _committed, "the committed root has no roll chips")
 _RESULT = {"landed": "W", "missed": "L", shell_build.PRICE_LABEL: shell_build.PRICE_LABEL}
 _recent = _prod_committed.split('id="recent"', 1)[1].split('id="held-back"', 1)[0]
 _prod_rows = [
@@ -1305,10 +1263,10 @@ ok(len(_shell_settled) >= _matched_settled,
 ok(f"Last {shell_build.SHELL_SETTLED_DAYS} days" in _committed,
    "committed Settled caption renders from SHELL_SETTLED_DAYS")
 _to_come = re.search(
-    r'<div class="tile"><b>(\d+)</b><span>leads still to come</span>', _committed)
+    r'<div class="tile"><b>(\d+)</b><span>leads still to come</span>', _prod_committed)
 _upcoming_bets = _bucket_bets(_committed_rows, "upcoming")
 eq(len(_upcoming_bets), int(_to_come.group(1)) if _to_come else None,
-   "Upcoming bets equal the strip's leads still to come")
+   "Upcoming bets equal production.html's leads still to come")
 _graded_visual = {"W", "L", "Void", shell_build.PRICE_LABEL}
 ok(all(bet not in _graded_visual for bet in _upcoming_bets),
    "an upcoming bet is still open or an unresolved status")
@@ -1343,88 +1301,23 @@ def _browser():
                 browser = p.chromium.launch(channel="chrome", headless=True)
                 page = browser.new_page(viewport={"width": 1280, "height": 800})
                 page.goto(base, wait_until="load")
-                roll = page.evaluate("""() => {
-                  const track = document.querySelector(".bet-roll-track");
-                  if (!track) return null;
-                  const style = getComputedStyle(track);
-                  const chips = [...track.querySelectorAll(".bet-chip")];
-                  const tops = new Set(chips.map((chip) => Math.round(chip.getBoundingClientRect().top)));
-                  return {
-                    display: style.display,
-                    scrolls: track.scrollWidth > track.clientWidth + 1,
-                    chips: chips.length,
-                    rows: tops.size,
-                    empty: track.querySelector(".bet-roll-empty") ? true : false,
-                  };
-                }""")
-                ok(roll and roll["chips"] > 0 and not roll["empty"]
-                   and roll["display"] == "grid" and not roll["scrolls"],
-                   f"the roll is a wrapping chip grid, not a scroller ({roll})")
-                page.set_viewport_size({"width": 640, "height": 800})
-                page.wait_for_timeout(30)
-                narrow_roll = page.evaluate("""() => {
-                  const track = document.querySelector(".bet-roll-track");
-                  const chips = [...track.querySelectorAll(".bet-chip")];
-                  const tops = new Set(chips.map((chip) => Math.round(chip.getBoundingClientRect().top)));
-                  return {
-                    scrolls: track.scrollWidth > track.clientWidth + 1,
-                    rows: tops.size,
-                    page: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-                  };
-                }""")
-                ok(not narrow_roll["scrolls"] and narrow_roll["rows"] > 1 and not narrow_roll["page"],
-                   f"at 640px the roll wraps onto more rows and nothing scrolls sideways ({narrow_roll})")
                 loaded = page.evaluate("""() => {
                   const pressed = [...document.querySelectorAll('.running-row[aria-pressed="true"]')];
                   const first = document.querySelector(".running-row:not([hidden])");
-                  const chips = [...document.querySelectorAll('.bet-chip[aria-pressed="true"]')];
                   const empty = document.getElementById("rules-empty");
                   return {
                     n: pressed.length,
                     first: !!first && pressed[0] === first,
                     name: pressed[0] ? pressed[0].getAttribute("data-name") : "",
-                    chips: chips.map((chip) => chip.getAttribute("data-contest")),
                     contest: pressed[0] ? pressed[0].getAttribute("data-contest") : "",
                     cards: document.querySelectorAll(".rule-mini").length,
                     emptyHidden: empty ? empty.hidden : null,
                   };
                 }""")
                 ok(loaded["n"] == 1 and loaded["first"] and loaded["name"] == "Live vs Now"
-                   and loaded["chips"] == [loaded["contest"]] and loaded["cards"] >= 1
+                   and loaded["cards"] >= 1
                    and loaded["emptyHidden"],
-                   f"on load the first visible row is pressed and its chip and cards follow ({loaded})")
-                mobile_chip = page.locator('.bet-chip[aria-pressed="false"]').nth(0)
-                mobile_chip.focus()
-                page.keyboard.press("Enter")
-                page.wait_for_timeout(30)
-                mobile_open = page.evaluate("""() => {
-                  const chip = document.activeElement;
-                  const rect = chip ? chip.getBoundingClientRect() : null;
-                  return {
-                    chip: !!chip && chip.classList.contains("bet-chip"),
-                    pressed: chip ? chip.getAttribute("aria-pressed") : null,
-                    visible: !!rect && rect.bottom > 0 && rect.top < window.innerHeight,
-                    cards: document.querySelectorAll(".rule-mini").length,
-                    row: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
-                  };
-                }""")
-                ok(mobile_open["chip"] and mobile_open["pressed"] == "true"
-                   and mobile_open["visible"] and mobile_open["cards"] >= 1
-                   and mobile_open["row"] == 1,
-                   f"opening a roll chip on a phone keeps the focused chip in view ({mobile_open})")
-                page.keyboard.press("Escape")
-                mobile_closed = page.evaluate("""() => {
-                  const chip = document.activeElement;
-                  return {
-                    chip: !!chip && chip.classList.contains("bet-chip"),
-                    pressed: chip ? chip.getAttribute("aria-pressed") : null,
-                    cards: document.querySelectorAll(".rule-mini").length,
-                    row: document.querySelectorAll('.running-row[aria-pressed="true"]').length,
-                  };
-                }""")
-                ok(mobile_closed["chip"] and mobile_closed["pressed"] == "false"
-                   and mobile_closed["cards"] == 0 and mobile_closed["row"] == 0,
-                   f"Escape closes a selected roll chip without losing focus ({mobile_closed})")
+                   f"on load the first visible row is pressed and its cards follow ({loaded})")
                 page.set_viewport_size({"width": 1280, "height": 800})
                 page.wait_for_timeout(30)
                 styles = page.evaluate("""() => {

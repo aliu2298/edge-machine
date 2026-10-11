@@ -176,8 +176,8 @@ ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in wee
 ok('class="toc"' not in trade_html, "Trading does not render a one-link Rules nav")
 _root_toc = _toc(root_html)
 _root_labels = re.findall(r">([^<]+)</a>", _root_toc.group(0) if _root_toc else "")
-ok(_root_labels == ["Running", "Bets roll", "Rule cards", "Status"],
-   f"the site root renders its own four-link section nav, not a one-link Sandbox nav ({_root_labels})")
+ok(_root_labels == ["Overview", "Areas", "Attention", "Live now"],
+   f"the site root renders the Control Center's four-link section nav, not a one-link Sandbox nav ({_root_labels})")
 
 # The site root's visible time is Central Time, the same form site_root.py writes.
 # A raw ISO instant or a +00:00 offset in that stamp is the broken regeneration.
@@ -208,9 +208,9 @@ _index_main = re.search(r'<nav class="main"[^>]*>.*?</nav>', _index, re.S)
 ok(_index.count('<nav class="main"') == 1 and _index_main is not None
    and 'aria-current="page"' not in _index_main.group(0),
    "index.html has one page nav, in the header, with no pill current")
-ok("<title>Edge Machine · Home</title>" in _index and '<body class="analyst-desk">' in _index
+ok("<title>Edge Machine · Home</title>" in _index and '<body class="analyst-desk control-center">' in _index
    and "desk-nav" not in _index and "top-production" not in _index,
-   "index.html is the Analyst Desk in the shared shell, with no sidebar rail")
+   "index.html is the Control Center in the shared shell, with no sidebar rail")
 ok(_lede_text == "" or _STAMP_TEXT.fullmatch(_lede_text) is not None,
    f"index.html has no stale lede (got {_lede_text!r})")
 _raw_hits = _RAW_ISO.findall(_index)

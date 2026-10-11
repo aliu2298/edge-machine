@@ -7,11 +7,10 @@ that form lives on sandbox.html and production.html, and a freshness check
 pointed at this page fails closed on purpose. backup-refresh.yml reads those two pages.
 
 The tracker build (sandbox_build.production_and_index) is the only producer of
-the summary strip and the Running block. This command does not count tiles and
-does not rebuild Running from the ledger. When index.html already carries
-production.html's stamp, it is left untouched. Otherwise the tiles, the clock,
-and the Running block are copied from those tracker-written pages.
-refresh-boards does not run this command.
+the Control Center's tiles, cards and Running block. This command does not count
+and does not rebuild anything from the ledger. When index.html already carries
+production.html's stamp, it is left untouched. Otherwise only the clock is copied
+from the tracker-written production.html. refresh-boards does not run this command.
 
 Usage:  python3 site_root.py
 """
@@ -105,31 +104,28 @@ def _swap_time(html, prod_html):
 
 
 def _copy_from_tracker(index_html, prod_html):
-    """Tiles and clock from production.html. Running stays the tracker block.
+    """The clock from production.html. Everything else on the root stays as the tracker
+    wrote it.
 
-    Returns None when index.html has no tracker Running block to copy. The
-    caller then writes an empty list rather than reading the ledger.
+    The root is the Control Center since the redesign: its tiles are its own counts
+    (areas, attention, open bets), not production.html's strip, so there is nothing
+    to copy but the clock. Returns None when index.html carries no tracker Running
+    block; the caller then writes a root from an empty ledger rather than reading one.
     """
     if 'class="running-filters"' not in (index_html or ""):
         return None
-    try:
-        old_tiles = shell_build.tiles_html(index_html)
-    except RuntimeError:
-        return None
-    if old_tiles not in index_html:
-        return None
-    tiles = shell_build.tiles_html(prod_html)
-    return _swap_time(index_html.replace(old_tiles, tiles, 1), prod_html)
+    return _swap_time(index_html, prod_html)
 
 
 def _empty_shell(prod_html, when):
-    """Chrome and the production strip, with no Running rows and no ledger read."""
+    """The root from an empty ledger: chrome, zero tiles, no Running rows, no ledger read."""
+    del prod_html
     return shell_build.page(
         when,
-        tiles=shell_build.tiles_html(prod_html),
         d={"quotes": []},
         st={"pairs": {}},
         blob={"leads": {}, "pairs": {}},
+        nba={}, market={}, closes={},
     )
 
 

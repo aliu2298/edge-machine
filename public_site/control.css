@@ -1,0 +1,56 @@
+/* Control Center (redesign, phase 2). Reuses the shell's tokens (--card, --line, --mut,
+   --fg) and components (.tiles, .tile, .sig, .note, .pane-head, the Running pane). The
+   rules here lay out what the shell has no component for: the area card grid and the
+   attention list. Phase 1's shared tokens and components replace this file. */
+.control-center .cc-overview .tiles { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.control-center section#areas, .control-center section#attention, .control-center section#live { margin-top: 28px; }
+.control-center .pane-head { align-items: baseline; gap: 10px; }
+.cc-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+.cc-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.cc-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cc-card-head h3 { margin: 0; font-size: 17px; }
+.cc-card.cc-stale { border-color: rgba(245, 194, 107, .45); }
+.cc-card.cc-attention { border-color: rgba(255, 123, 114, .45); }
+.cc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+}
+.cc-stats div { display: flex; flex-direction: column; min-width: 0; }
+.cc-stats dt { font-size: 12px; color: var(--mut); }
+.cc-stats dd { margin: 0; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cc-coverage, .cc-read, .cc-why { margin: 0; }
+.cc-why { color: var(--warn); }
+.cc-card-items { margin: 0; padding-left: 16px; color: var(--mut); }
+.cc-open { margin-top: auto; align-self: flex-start; font-weight: 600; }
+.cc-attention { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 8px; }
+.cc-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.cc-item-text { flex: 1 1 240px; min-width: 0; }
+.cc-live .pane-head h3 { font-size: 16px; margin: 0; }
+.cc-live .desk-layout { margin-top: 8px; }
+@media (max-width: 800px) {
+  .cc-areas { grid-template-columns: minmax(0, 1fr); }
+}
