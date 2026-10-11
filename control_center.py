@@ -39,6 +39,7 @@ import sandbox_sources as S
 import sandbox_track as T
 import shell_build
 import site_chrome
+import sport_page as SP
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NBA_PATH = os.path.join(ROOT, "data", "nba_pace.json")
@@ -91,7 +92,11 @@ STATUS_CHIP = {"healthy": "y", "stale": "w", "attention": "x", "waiting": "n"}
 KIND_LABEL = {"overdue": "Open past start", "feed": "Feed", "paused": "Production pair",
               "quiet": "Production pair", "run": "Workflow", "venue": "Closing prices"}
 SECTIONS = (("overview", "Overview"), ("areas", "Areas"), ("attention", "Attention"),
-            ("live", "Live now"))
+            ("live", "Live now"), ("scorecard", "Rules"))
+# The Rule scorecard's chips: (value, label). "records" is any settled result,
+# "read" is the read floor (sport_page.EVIDENCE_FLOOR, 30) or over.
+SCORECARD_FILTERS = (("all", "All"), ("production", "Production"), ("records", "With records"),
+                     ("read", f"{SP.EVIDENCE_FLOOR}+"))
 
 esc = site_chrome.esc
 
@@ -403,14 +408,55 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None):
         areas.append(area)
     live = shell_build._running_body(d, st, blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
+    scorecard = scorecard_rows(pair_rows)
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
         tiles=dict(pairs=len(pairs), open=sum(1 for q in rows if q.get("status") == "open"),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
-        areas=areas, attention=attention, live=live,
+        areas=areas, attention=attention, live=live, scorecard=scorecard,
         runs_read=runs is not None,
     )
+
+
+# ------------------------------------------------------------------ the rule scorecard
+def _rule_href(sport):
+    return AREA_HREF.get(FAMILY_AREA.get(B.family(sport)), "./sandbox.html")
+
+
+def scorecard_rows(pair_rows):
+    """Every rule on the pages, one entry each, in scorecard order: Production first, then
+    the most evidence, then the best ROI after fees, then the name. Each entry keeps the
+    Sandbox row it came from (`row`), so the badge, record and ROI are that row's own."""
+    out = []
+    for r in pair_rows:
+        a = r.get("a") or {}
+        n = int(a.get("n") or 0)
+        n_price = int(a.get("n_price") or 0)
+        unit = SP.settled_unit(r)
+        out.append(dict(
+            row=r, name=B.rule_name(r), sport=r["sport"],
+            sport_label=S.SPORTS.get(r["sport"], r["sport"]), href=_rule_href(r["sport"]),
+            stage="production" if r.get("prod") else "sandbox",
+            open=int(r.get("open") or 0), n=n, n_price=n_price, unit=unit,
+            n_bets=int(a.get("n_bets") or n), won=int(a.get("won") or 0),
+            expected=float(a.get("expected") or 0), z=a.get("z") if n else None,
+            roi=a.get("roi_fee") if n else None,
+            win_rate=(int(a.get("won") or 0) / n) if n else None,
+            records=bool(n or n_price), read=n >= SP.EVIDENCE_FLOOR,
+            verdict=r.get("v")))
+    def order(e):
+        roi = e["roi"] if e["roi"] is not None else float("-inf")
+        return (e["stage"] != "production", -e["n"], -roi, e["name"].lower(), e["sport"])
+    return sorted(out, key=order)
+
+
+def scorecard_counts(entries):
+    """{filter value: rows it shows}, for the chips."""
+    return {"all": len(entries),
+            "production": sum(1 for e in entries if e["stage"] == "production"),
+            "records": sum(1 for e in entries if e["records"]),
+            "read": sum(1 for e in entries if e["read"])}
 
 
 # ------------------------------------------------------------------ the page
@@ -447,6 +493,55 @@ def _area_card(area, now):
 {why}
 <a class="cc-open" href="{esc(area['href'])}">Open →</a>
 </article>"""
+
+
+def _scorecard_row(e):
+    r, a = e["row"], e["row"].get("a") or {}
+    settled = SP.unit_count(e["n"], e["unit"])
+    if e["unit"] in ("market-day", "match") and e["n"]:
+        settled += f'<div class="sm mut">{e["n_bets"]} bet{"" if e["n_bets"] == 1 else "s"}</div>'
+    record = T.record_html(a)
+    if e["win_rate"] is not None:
+        record += f'<div class="sm mut cc-winrate">{e["win_rate"] * 100:.0f}% won</div>'
+    wvp = esc(SP.won_v_priced(a))
+    if e["z"] is not None:
+        wvp += f'<div class="sm">z {float(e["z"]):+.2f}</div>'
+    attrs = (f' data-stage="{e["stage"]}" data-records="{1 if e["records"] else 0}"'
+             f' data-read="{1 if e["read"] else 0}" data-sport="{esc(e["sport"])}"')
+    return (f'<tr class="cc-rule"{attrs}>'
+            f'<td><a href="{esc(e["href"])}"><b>{esc(e["name"])}</b></a>'
+            f'<div class="sm mut">{esc(e["sport_label"])}</div></td>'
+            f'<td class="cc-stage">{SP.stage_badges(r)}</td>'
+            f'<td class="num" data-v="{e["open"]}">{e["open"]}</td>'
+            f'<td class="num" data-v="{e["n"]}">{settled}</td>'
+            f'<td class="num">{record}</td>'
+            f'<td class="num">{wvp}</td>'
+            f'<td class="num">{SP.roi_html(r)}</td>'
+            f'<td class="num" data-v="{e["n"]}">{esc(SP.evidence(a))}</td>'
+            f'<td class="cc-verdict">{SP.verdict_badge(r)}</td></tr>')
+
+
+def _scorecard_html(entries):
+    if not entries:
+        return '<p class="shell-empty">No rule has a record yet.</p>'
+    counts = scorecard_counts(entries)
+    chips = "".join(
+        f'<button type="button" data-value="{key}" aria-pressed="{"true" if key == "all" else "false"}">'
+        f'{esc(label)} <span class="count">{counts[key]}</span></button>'
+        for key, label in SCORECARD_FILTERS)
+    rows = "".join(_scorecard_row(e) for e in entries)
+    return f"""<nav class="sp-filter cc-filter" aria-label="Rules" data-controls="scorecard-table">{chips}</nav>
+<div class="tbl"><table class="cc-scorecard" id="scorecard-table">
+<thead><tr><th>Rule</th><th>Stage</th><th class="num">Open</th><th class="num">Settled</th>
+<th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th>
+<th class="num">Evidence</th><th>Verdict</th></tr></thead>
+<tbody>{rows}</tbody></table></div>
+<p class="sp-empty cc-scorecard-empty" hidden></p>
+<p class="sm mut cc-scorecard-note">Settled counts a market-day for Crypto and Commodities, a match
+for the corners ladder, a basket for a combo, and a bet otherwise. Evidence is settled over the
+read floor of {SP.EVIDENCE_FLOOR}. The verdict reads <i>Too early</i> under {SP.TOO_EARLY_N},
+<i>Collecting n/{SP.EVIDENCE_FLOOR}</i> with its lean (<i>Promising</i> or <i>Behind</i>) up to
+{SP.EVIDENCE_FLOOR}, then <i>Working</i>, <i>No edge</i> or <i>Proven</i>.</p>"""
 
 
 def _attention_html(items):
@@ -546,6 +641,11 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
 </div>
 </div>
 </div>
+</section>
+
+<section id="scorecard" aria-labelledby="scorecard-title" class="cc-scorecard-section">
+<div class="pane-head"><h2 id="scorecard-title">Rule scorecard</h2> <span class="mut sm">· {len(m['scorecard'])} rules</span></div>
+{_scorecard_html(m['scorecard'])}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """

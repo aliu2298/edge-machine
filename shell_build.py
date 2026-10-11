@@ -644,8 +644,9 @@ def _lane_board(d, st, pair_key, cache):
     if not isinstance(assessed, dict):
         return found
     try:
+        import sport_page
         key = sandbox_build.verdict(assessed) if group is not None else "nobets"
-        found["verdict"] = sandbox_build.VERDICTS[key][0]
+        found["verdict"] = sport_page.verdict_text(dict(v=key, a=assessed))
     except (KeyError, TypeError):
         found["verdict"] = None
     n = assessed.get("n")

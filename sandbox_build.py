@@ -772,16 +772,18 @@ def pair_status(d, st, name, sport):
 # ------------------------------------------------------------------ the page's verdicts
 # One plain word per pair instead of a z score. The numbers stay on the row; the word says
 # what they add up to, on the same floor the ladder uses (MIN_N settled bets to read).
+# The words are sport_page.VERDICT_WORDS (one vocabulary on every page; the
+# badge is sport_page.verdict_badge). This table keeps the sort order and chip.
 VERDICTS = {                     # key -> (label, chip class, sort order)
-    "proven":    ("Proven edge", "y", 0),
+    "proven":    ("Proven", "y", 0),
     "working":   ("Working", "y", 1),
     "promising": ("Promising", "w", 2),
-    "behind":    ("Behind so far", "n", 3),
+    "behind":    ("Behind", "n", 3),
     "early":     ("Too early", "n", 4),
     "noedge":    ("No edge", "x", 5),
-    "waiting":   ("Waiting for results", "n", 6),
+    "waiting":   ("Too early", "n", 6),
     "removed":   ("Removed from Production", "x", 5),
-    "nobets":    ("No qualifying match yet", "n", 7),
+    "nobets":    ("Too early", "n", 7),
     "retired":   ("Retired", "x", 8),
     "build_fail": ("Fails BUILD", "x", 5),
 }
@@ -873,7 +875,7 @@ def pair_list(d, st, include_retired=False):
                     and name not in T.CONSENSUS and not reset_row):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
-            # brand-new source ("Waiting for results") and hides the record it was removed on.
+            # brand-new source ("Too early", nothing settled) and hides the record it was removed on.
             # Only the audit sees it: on a page it is a record from before the clock restarted.
             removed = None
             if include_retired and pair.get("demoted_at") and pair.get("stage") != "production":
@@ -1041,8 +1043,9 @@ def rank_rows(rs):
 
 
 def _row(r, rank=None, provisional=False, in_market=False):
+    import sport_page
     a, meta = r["a"], r["meta"]
-    label, chip, _o = VERDICTS[r["v"]]
+    badge = sport_page.verdict_badge(r)
     rm = r.get("removed")
     if rm and rm["a"]["n"]:
         ra = rm["a"]
@@ -1053,7 +1056,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     else:
         more_rm = ""
     more = (f'<div class="sm mut">{MIN_N - a["n"]} more {"market-days" if a.get("unit") == "market-day" else "matches" if a.get("unit") == "match" else "settled"} to read</div>'
-            if r["v"] in ("promising", "behind", "early") else "")
+            if r["v"] == "early" else "")
     sub = S.SPORTS.get(r["sport"], r["sport"])
     thin = a["n"] < MIN_N
     unit = (f'{a["n"]} {a["unit"]}{"" if a["n"] == 1 else ("es" if a["unit"] == "match" else "s")} · {a["n_bets"]} bets'
@@ -1094,7 +1097,7 @@ def _row(r, rank=None, provisional=False, in_market=False):
     return f"""<tr><td class="num">{rk}</td>
 <td><b>{esc(rule_name(r))}</b>{tag}
 <div class="sm mut">{esc(subline)}</div>{gone}</td>
-<td><span class="sig {chip}">{esc(label)}</span>{more}{more_rm}</td>
+<td>{badge}{more}{more_rm}</td>
 <td class="num">{rec}</td><td class="num">{vp}</td><td class="num">{roi}</td>
 <td class="num">{close_cell(a)}</td>
 <td class="num">{fade}</td>
@@ -1539,10 +1542,10 @@ def legend():
 ${int(T.STAKE)} a bet at the price available before the start. <b>Won v priced</b> is wins against
 the wins the prices implied \u2014 beating that is the whole test, and the ranking sorts on it per
 bet rather than on ROI, which mostly reflects the prices a pair happened to be offered.
-<b>Verdict</b> is read only at {MIN_N}+ settled bets: <i>Proven edge</i> is ahead of the prices by
-z \u2265 2, <i>Working</i> is ahead, <i>No edge</i> is not; under {MIN_N} a pair is only
-<i>Promising</i> or <i>Behind so far</i>, and under {EARLY_N} it is <i>Too early</i> and is not
-ranked at all. <b>If faded</b> is what backing the OTHER side of the same bets would have
+<b>Verdict</b> is one ladder on every page. Under {EARLY_N} settled a pair is <i>Too early</i> and is
+not ranked at all. From {EARLY_N} to {MIN_N} it is <i>Collecting n/{MIN_N}</i>, with its lean so far:
+<i>Promising</i> or <i>Behind</i>. At {MIN_N}+ it is read: <i>Proven</i> is ahead of the prices by
+z \u2265 2, <i>Working</i> is ahead, <i>No edge</i> is not. <b>If faded</b> is what backing the OTHER side of the same bets would have
 returned \u2014 not this row's ROI with the sign flipped, since both sides of a book are sold
 above fair, so fading an average rule loses that overround plus its fee; a large positive there
 means the rule is picking the wrong side, which is a different complaint from having no edge.
@@ -1655,12 +1658,13 @@ def _trade_day(value):
 def trading_rows(md):
     """The trading lane: one row per rule, counted per ENTRY DAY (see market_track)."""
     import market_track as MT
+    import sport_page
     rows = []
     for r in sorted(MT.report(md), key=lambda r: (MT.VERDICTS[r["verdict"]][2], -r["days"])):
         meta = MT.RULES[r["rule"]]
-        label, chip, _o = MT.VERDICTS[r["verdict"]]
+        badge = sport_page.verdict_badge(dict(v=r["verdict"], a={"n": r["days"]}), floor=MT.READ_FLOOR)
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
-                if r["verdict"] in ("promising", "behind", "early") else
+                if r["verdict"] == "early" else
                 f'<div class="sm mut">{esc(meta["retired"])}</div>' if r["verdict"] == "retired" else "")
         pc = lambda x: "—" if x is None else f'<span class="{fmt.tone(x, ".2f", 100)}">{fmt.pct(x, digits=2, sign=True)}</span>'
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
@@ -1668,7 +1672,7 @@ def trading_rows(md):
         vs = "v cash" if meta.get("bench") == "cash" else "v SPY"
         rows.append(f"""<tr><td><b>{esc(meta['label'])}</b>
 <div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div></td>
-<td><span class="sig {chip}">{esc(label)}</span>{more}</td>
+<td>{badge}{more}</td>
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
 <td class="num">{pc(r['mean'])}<div class="sm mut">{fmt.tstat(r['t']) if r['days'] > 1 else ''}</div></td>
@@ -2105,8 +2109,9 @@ def trading_page(now=None):
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
 never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
 <b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
-<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days;
-under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
+<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days
+(<i>Working</i>, <i>No edge</i> or <i>Proven</i>); from {MT.EARLY_N} it is <i>Collecting n/{MT.READ_FLOOR}</i>
+with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """

@@ -224,7 +224,7 @@ ok('data-status="Open">2 open</span>' in _got("Alpha v Beta")
    and 'aria-hidden="true">2 open</span>' not in _got("Alpha v Beta"),
    "two open bets on one contest read 2 open, once, with no hidden/spoken pair")
 ok(">Production</span>" in _got("Alpha v Beta"), "the lane pill says Production")
-ok(">Sandbox</span>" not in PAGE, "Sandbox contests are not on the Production list")
+ok(all(">Sandbox</span>" not in row for row in ROWS), "Sandbox contests are not on the Production list")
 ok('<span class="running-time">Tomorrow, 10:00 AM CT</span>' in _got("Alpha v Beta"),
    "tomorrow's kickoff is a relative day with its CT clock")
 ok('<span class="running-time">Yesterday, 10:00 AM CT</span>' in _got("Echo v Foxtrot"),

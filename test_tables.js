@@ -229,4 +229,18 @@ assert.strictEqual(document.activeElement, doc,
   "a click that was not on a .rule-flip leaves focus where it was");
 
 console.log("ok: flip from a .rule-flip keeps focus on the face now showing");
+// The Control Center's Rule scorecard chips: All, Production, With records, 30+.
+var prodRead = { stage: "production", records: "1", read: "1" };
+var sandEarly = { stage: "sandbox", records: "1", read: "0" };
+var sandNone = { stage: "sandbox", records: "0", read: "0" };
+assert.ok(tables.scorecardShows(sandNone, "all"), "All shows a rule with nothing settled");
+assert.ok(tables.scorecardShows(prodRead, "production") && !tables.scorecardShows(sandEarly, "production"),
+  "Production shows only Production rules");
+assert.ok(tables.scorecardShows(sandEarly, "records") && !tables.scorecardShows(sandNone, "records"),
+  "With records drops a rule with nothing settled");
+assert.ok(tables.scorecardShows(prodRead, "read") && !tables.scorecardShows(sandEarly, "read"),
+  "30+ keeps only rules at the read floor");
+assert.strictEqual(typeof tables.wireScorecard, "function", "the chips are wired on load");
+console.log("ok: the scorecard chips filter on stage, records and the read floor");
+
 console.log("SHA " + sha + " PASSED");

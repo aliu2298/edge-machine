@@ -757,14 +757,14 @@ def grade(bars_by_symbol, d, rules=None):
 
 
 # --------------------------------------------------------------------------- the verdict
-VERDICTS = {                       # key -> (label, chip class, order)
-    "proven":    ("Proven edge", "y", 0),
+VERDICTS = {                       # key -> (label, chip class, order); words as sport_page.VERDICT_WORDS
+    "proven":    ("Proven", "y", 0),
     "working":   ("Working", "y", 1),
     "promising": ("Promising", "w", 2),
-    "behind":    ("Behind so far", "n", 3),
+    "behind":    ("Behind", "n", 3),
     "early":     ("Too early", "n", 4),
     "noedge":    ("No edge", "x", 5),
-    "waiting":   ("Waiting for trades", "n", 6),
+    "waiting":   ("Too early", "n", 6),
     "retired":   ("Retired", "x", 7),
 }
 

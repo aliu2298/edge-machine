@@ -129,8 +129,7 @@ ok("<b>Favourite band · 3h to the close</b>" in tr, "named")
 ok(f'data-l="Record">{a["won"]}–{a["n"] - a["won"]}</td>' in tr, "record W–L")
 ok(SP.roi_html(fav) in tr, "ROI is the Sandbox row's figure")
 ok(f'data-l="Evidence">{a["n"]}/{T.READ_FLOOR}</td>' in tr, "evidence is market-days of 30")
-label, chip, _o = B.VERDICTS[fav["v"]]
-ok(f'<span class="sig {chip}">{label}</span>' in tr, "the verdict is the Sandbox chip")
+ok(SP.verdict_badge(fav) in tr, "the verdict is the Sandbox chip, read through sport_page.verdict_badge")
 ok('data-l="Market">Kalshi</td>' in tr, "the market column is the venue")
 detail = re.search(r'<tr class="rule-detail"[^>]*>(.*?)</tr>', rule, re.S).group(1)
 dl = re.search(r'<dl class="sp-params">(.*?)</dl>', detail).group(1)
@@ -177,7 +176,7 @@ ok(method.find("Scheduling") > method.find("A day is one bet"), "the method sent
 
 print("\nedge cases")
 empty = C.build({"quotes": []}, {"pairs": {}}, NOW)
-ok("No crypto favourite-band record yet." not in empty and "Waiting for results" in empty
+ok("No crypto favourite-band record yet." not in empty and 'data-verdict="waiting">Too early<' in empty
    and 'data-l="Record" data-empty="1">—</td>' in empty,
    "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
 ok(">0</b><span>open picks" in empty and "<b>—</b><span>Production record" in empty, "empty tiles")

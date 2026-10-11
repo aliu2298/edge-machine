@@ -14,6 +14,7 @@
       api.wireRuleRows(document);
       api.wireSportFilter(document);
       api.wireSportPage(document);
+      api.wireScorecard(document);
       api.wireTheme(document);
       api.revealHash(document);
     };
@@ -614,6 +615,53 @@
     });
   }
 
+  // The Control Center's Rule scorecard. One chip is pressed: All, Production,
+  // With records (any settled result) or 30+ (at the read floor). The row
+  // carries data-stage, data-records and data-read; the predicate is pure so
+  // test_tables.js can check it. With script off every row is on the page.
+  function scorecardShows(attrs, key) {
+    if (!key || key === "all") return true;
+    if (key === "production") return attrs.stage === "production";
+    if (key === "records") return attrs.records === "1";
+    if (key === "read") return attrs.read === "1";
+    return true;
+  }
+
+  function wireScorecard(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll("nav.cc-filter[data-controls]"), function (nav) {
+      var table = doc.getElementById(nav.getAttribute("data-controls"));
+      var buttons = nav.querySelectorAll("button[data-value]");
+      if (!table || !buttons.length) return;
+      var section = nav.parentElement;
+      var empty = section ? section.querySelector(".cc-scorecard-empty") : null;
+      function apply(key) {
+        var shown = 0;
+        Array.prototype.forEach.call(buttons, function (btn) {
+          btn.setAttribute("aria-pressed", btn.getAttribute("data-value") === key ? "true" : "false");
+        });
+        nav.setAttribute("data-scorecard", key);
+        Array.prototype.forEach.call(table.querySelectorAll("tbody tr[data-stage]"), function (row) {
+          var on = scorecardShows({
+            stage: row.getAttribute("data-stage"),
+            records: row.getAttribute("data-records"),
+            read: row.getAttribute("data-read"),
+          }, key);
+          paintRow(row, on);
+          if (on) shown += 1;
+        });
+        if (empty) {
+          var pressed = nav.querySelector('button[data-value="' + key + '"]');
+          var label = pressed ? (pressed.firstChild ? pressed.firstChild.textContent : pressed.textContent).trim() : key;
+          empty.textContent = "No rule under " + label + " yet.";
+          empty.hidden = shown > 0;
+        }
+      }
+      Array.prototype.forEach.call(buttons, function (btn) {
+        btn.addEventListener("click", function () { apply(btn.getAttribute("data-value") || "all"); });
+      });
+    });
+  }
+
   function enhance(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll("table.sortable"), function (table) {
       var rows = bodyRows(table);
@@ -737,6 +785,8 @@
     wireRuleCards: wireRuleCards,
     wireSportFilter: wireSportFilter,
     wireSportPage: wireSportPage,
+    wireScorecard: wireScorecard,
+    scorecardShows: scorecardShows,
     wireTheme: wireTheme,
     currentTheme: currentTheme,
     wireRuleRows: wireRuleRows,
