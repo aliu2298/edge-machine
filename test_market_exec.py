@@ -362,6 +362,11 @@ finally:
 
 
 print("\nlive keys are separate from paper keys")
+# Stub both key reads: the CI runner has no ~/.alpaca-credentials, and a machine that
+# later stores live keys must not change what these checks see.
+_creds0, _live0 = X.M._creds, X._live_creds
+X.M._creds = lambda: ("PKTEST", "paper-secret")
+X._live_creds = lambda: (None, None)
 check("live is not configured until live keys are stored", X.live_configured(), False)
 os.environ["ALPACA_LIVE"] = "1"
 try:
@@ -372,7 +377,8 @@ except RuntimeError as e:
           "live keys" in str(e) and "paper keys are deliberately not reused" in str(e), True)
 finally:
     os.environ.pop("ALPACA_LIVE", None)
-check("and paper still works", bool(X._headers().get("APCA-API-KEY-ID")), True)
+check("and paper still works", X._headers().get("APCA-API-KEY-ID"), "PKTEST")
+X.M._creds, X._live_creds = _creds0, _live0
 
 
 print("\nrisk limits can be overridden, but never silently")
