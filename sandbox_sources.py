@@ -6278,6 +6278,64 @@ for _lane in TENNIS_COMBO_RESET:
         for c in SOURCES[_lane].get("changes") or []]
 del _lane
 
+# ---------------------------------------------------------------------------
+# CRICKET RESET (decided 2026-10-08, by Olu). Every cricket record restarts.
+# ---------------------------------------------------------------------------
+# The 47-row audit found two Polymarket US entries, Amsterdam Flames at 7c on
+# Sep 16 and Belfast Wolves at 11c on Sep 19, whose prices were 48-64c by the
+# start and which made up $2,138 of Oddspedia's $2,354 gross, on top of the
+# earlier side-swap voids. The record could not be trusted, so it restarts, the
+# way the tennis lanes did (TENNIS_COMBO_BAND_SINCE): every row stays on file,
+# no settled row changes, the two longshots are not voided, and nothing logged
+# before CRICKET_RESET_SINCE counts toward any cricket record, ROI, verdict,
+# tile, Production record, home roll or landed tile. Oddspedia stays in
+# Production on a record that starts here. The clock is fixed in code because the
+# stage file is rewritten by every run: it is the first midnight UTC after this
+# change was written (2026-10-11 23:4xZ), not the merge itself, which is not known
+# when the code is. A cricket bet logged between the clock and the merge was logged
+# under these same rules, unchanged here, so it counts on the new record.
+CRICKET_RESET_DECIDED = "2026-10-08"
+CRICKET_RESET_SINCE = "2026-10-12T00:00:00+00:00"
+# (source, sport) -> the clock its record restarts from.
+LANE_RESETS = {
+    ("oddspedia", "cricket"): CRICKET_RESET_SINCE,
+    ("polymarket", "cricket"): CRICKET_RESET_SINCE,
+    ("cricket_consensus", "cricket"): CRICKET_RESET_SINCE,
+}
+CRICKET_RESET_WHY = (
+    "the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, "
+    "Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made "
+    "up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record "
+    "could not be trusted, so it restarts. Every row stays on file, no settled row changes "
+    "and nothing is voided.")
+CRICKET_RESET_LINE = (
+    f"RESET {CRICKET_RESET_DECIDED}: this rule's cricket record counts from "
+    f"{CRICKET_RESET_SINCE}, and nothing logged before that instant counts toward its "
+    f"record, ROI, verdict or Production record. Why: {CRICKET_RESET_WHY}")
+for _src, _sport in LANE_RESETS:
+    SOURCES[_src]["note"] = SOURCES[_src]["note"].rstrip() + " " + CRICKET_RESET_LINE
+    SOURCES[_src]["changes"] = list(SOURCES[_src].get("changes") or []) + [CRICKET_RESET_LINE]
+del _src, _sport
+
+
+def lane_reset_since(source, sport):
+    """The clock a lane's record restarts from (LANE_RESETS), or None."""
+    return LANE_RESETS.get((source, sport))
+
+
+def source_reset_since(source):
+    """The one clock every sport of a source restarts from, or None.
+
+    A source reset on every sport it covers is judged from that clock wherever
+    it is judged as a source (its stamp row). A source reset on one sport of
+    several keeps its other sports' bets, so it has no single clock here.
+    """
+    sports = (SOURCES.get(source) or {}).get("sports") or ()
+    clocks = {LANE_RESETS.get((source, sp)) for sp in sports}
+    if sports and len(clocks) == 1 and None not in clocks:
+        return clocks.pop()
+    return None
+
 # FREEZE (2026-10-08). The seven live tennis rules are frozen: band, window, tours
 # and construction stay as registered until the planned read. A change after this
 # date retires the rule and starts a new one; test_tennis_freeze.py pins the

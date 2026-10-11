@@ -36,6 +36,7 @@ def build(d=None, st=None, now=None):
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
         venue="Polymarket US", rows=rows, events=cricket_cards.events,
         rule_name=cricket_cards.rule_name, market=cricket_cards.market,
+        definition=cricket_cards.definition,
         recent=cricket_cards.recent_html, method=cricket_cards.method(idle_html))
     return SP.page(sp, d, st, now, rows=rows, idle=idle)
 

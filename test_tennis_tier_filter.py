@@ -999,10 +999,16 @@ def main():
     ok(f"{judge['n']} bets over {span4:.0f} {day4}" in kept4
        and f"{judge['won']} won v {judge['expected']:.1f} priced" in kept4,
        "pm_combo4's stamp quotes the record assess reads")
-    other = T.assess(SB.stamp_ledger(d, "oddspedia"), "oddspedia")
+    # ESPN FPI is on no clock at all. Oddspedia was the example until the cricket
+    # reset (S.CRICKET_RESET_SINCE) put it on a clock of its own.
+    other = T.assess(SB.stamp_ledger(d, "espn_fpi"), "espn_fpi")
     sample = next((c[3] for c in other["criteria"] if c[0] == "sample"), None)
-    ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["oddspedia"]["label"]),
+    ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["espn_fpi"]["label"]),
        "a lane off the tour clock still shows its whole record on the stamp")
+    reset = T.assess(SB.stamp_ledger(d, "oddspedia"), "oddspedia", since=S.CRICKET_RESET_SINCE)
+    sample = next((c[3] for c in reset["criteria"] if c[0] == "sample"), None)
+    ok(sample is not None and sample in _stamp_row(stamp, S.SOURCES["oddspedia"]["label"]),
+       "a lane reset on its own clock shows its record from that clock on the stamp")
     fx_page = SB.hide_refused_tours(fx)
     fx_stamp = SB.approval_table(fx_page, T.score(fx_page), full=fx)
     fx_row = _stamp_row(fx_stamp, S.SOURCES["tennis_fav_band_3h"]["label"])
