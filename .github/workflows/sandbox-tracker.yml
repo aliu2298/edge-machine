@@ -196,6 +196,11 @@ jobs:
           # written or still describing the previous feed.
           DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
           SITE="public_site/sandbox.html public_site/production.html public_site/index.html"
+          # data/status.json is written by the tracker after the ledger; a run
+          # whose status write failed has none, and the ledger must still land.
+          if [ -f data/status.json ]; then
+            git add data/status.json
+          fi
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE
             # trading.html is rebuilt with the other pages. site.css and the

@@ -778,9 +778,11 @@ def _stale_answer(q, network):
 def check_stale(d, rep, network, now=None):
     now = now or datetime.now(timezone.utc)
     graded = _dt((d.get("meta") or {}).get("updated"))
+    # A contest that runs for days (Test cricket) is asked about STALE_H after
+    # it could have ended, not after it began.
     stale = [q for q in d["quotes"] if q.get("bet") and q["status"] == "open"
              and not S.removed_row(q)
-             and (_dt(q.get("start")) or now) < now - timedelta(hours=STALE_H)]
+             and (_dt(q.get("start")) or now) < now - timedelta(hours=STALE_H + T.contest_length_h(q))]
     if not stale:
         rep.ok("stale", f"no bet open {STALE_H}h past its start")
         return
