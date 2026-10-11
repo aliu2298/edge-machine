@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""The Tennis page: four tiles, one picks list, one rules table, one fold.
+"""The Tennis page on the shared sport template: what tennis_cards hands it.
 
-Presentation only. The verdict word and the ROI text are the Sandbox row's own
-figures, compared as strings. Nothing here grades a bet or writes a ledger.
-Soccer and Cricket keep their own cards; this file does not change those.
+Presentation only. The record, verdict and ROI are the Sandbox row's own
+figures, compared as strings. Every basket's record is on its own row; the
+tiles are the since-Production window, never a pool across Sandbox rules.
+A refused tour or a pre-reset bet never reaches the page.
 """
 import datetime
 import os
@@ -17,17 +18,17 @@ import fmt
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
+import sport_page as SP
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
-NOW = datetime.datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)
+NOW = datetime.datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # 11:00 AM CT
 
 
 def _head_sha():
     try:
-        out = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"],
-            cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
+        out = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True,
+                                      stderr=subprocess.DEVNULL).strip()
     except (OSError, subprocess.CalledProcessError):
         return "unknown"
     return out or "unknown"
@@ -44,6 +45,10 @@ def ok(cond, msg):
 
 def eq(got, want, msg):
     ok(got == want, msg if got == want else f"{msg} — got {got!r}, want {want!r}")
+
+
+def _text(html):
+    return " ".join(re.sub(r"<[^>]+>", " ", html).split())
 
 
 def _quote(i, source, sport, status, start, label, price=0.55,
@@ -94,8 +99,6 @@ def _fixture():
     quotes += _settled("tennis_fav_band_3h", "tennis", n=6, won=4)
     quotes += _settled("tennis_combo2", "tennis_combo", n=4, won=3, price=0.62)
     quotes += _settled("pm_combo2", "tennis_pmcombo", n=5, won=2, price=0.48)
-    # Open single-match picks. Labels are stored with " v "; the page prints " vs ".
-    # The sides name the players, so the pick is a player's name.
     opens = [
         (1, "Alpha v Beta soonest", "Alpha", "Beta"),
         (2, "Gamma v Delta second", "Gamma", "Delta"),
@@ -105,15 +108,15 @@ def _fixture():
         quotes.append(_quote(100 + i, "tennis_fav_band_3h", "tennis", "open", hours, label,
                              side_a=a, side_b=b, venue="polymarket_us",
                              url="https://polymarket.us/event/x"))
-    # One already started and still open: in play.
+    # One already started and still open: in progress.
     quotes.append(_quote(110, "tennis_fav_band_3h", "tennis", "open", -1,
                          "Started v Running", side_a="Started", side_b="Running"))
-    # Settled today (page clock 16:00Z is 11 AM CT on Oct 5): on the list with W / L.
+    # Settled today: completed, with W / L.
     quotes.append(_quote(120, "tennis_fav_band_3h", "tennis", "won", -6,
                          "Morning v Winner", side_a="Morning", side_b="Winner"))
     quotes.append(_quote(121, "tennis_fav_band_3h", "tennis", "lost", -5,
                          "Morning v Loser", side_a="Morning", side_b="Loser"))
-    # Settled yesterday: in the rule's recent picks, not on the day list.
+    # Settled yesterday: completed too, under its own day.
     quotes.append(_quote(122, "tennis_fav_band_3h", "tennis", "won", -30,
                          "Yesterday v Gone", side_a="Yesterday", side_b="Gone"))
     # A two-leg basket names both legs in the pick; a three-leg one lists them under it.
@@ -125,27 +128,24 @@ def _fixture():
                          "3-leg tennis combo: Ann + Bob + Cid", pick="a",
                          side_a="All 3 win", side_b="Any one loses", venue="combo",
                          url="https://kalshi.com/combos", legs=_legs("Ann", "Bob", "Cid")))
-    # Open on Polymarket US, far out, with a hostile label and url.
+    # Open on Polymarket US, far out, with a hostile url.
     quotes.append(_quote(400, "pm_combo2", "tennis_pmcombo", "open", 80,
-                         '2-leg tennis combo: Rho <script>alert(1)</script> + "Sigma"', pick="a",
-                         side_a="All 2 win", side_b="Any one loses", venue="combo",
-                         url="javascript:alert(1)",
-                         legs=_legs('Rho <script>alert(1)</script>', '"Sigma"')))
-    # A stored fixture with no stake is not a pick and does not make a rule active.
-    quotes.append(_quote(500, "tennis_combo4", "tennis_combo", "open", 12,
-                         "Watch v Only", bet=False))
-    # Baskets struck before the 4-leg rule's reset clock: they keep the row on the
-    # page with an empty record, and never reach it as picks.
-    for i in range(3):
-        quotes.append(_quote(600 + i, "tennis_combo4", "tennis_combo", "won",
-                             datetime.datetime(2026, 9, 20, 12 + i, tzinfo=timezone.utc),
-                             f"PreresetBasket {i}", price=0.5))
-    # Other families must not land on the Tennis page.
-    quotes += _settled("o15_form_l10", "soccer_o15", n=4, won=3)
-    quotes.append(_quote(900, "o15_form_l10", "soccer_o15", "open", 5, "Soccer Only v Stay"))
-    quotes += _settled("oddspedia", "cricket", n=6, won=4, price=0.40)
-    stages = {"pairs": {"tennis_combo4|tennis_combo": {"stage": "sandbox", "since": S.TENNIS_COMBO_BAND_SINCE}}}
-    return {"quotes": quotes}, stages
+                         "2-leg tennis combo: Rho + Sigma", pick="a",
+                         side_a="All 2 win", side_b="Any one loses", venue="polymarket_us",
+                         url="javascript:alert(1)", legs=_legs("Rho", "Sigma")))
+    # A singles pick with a hostile label.
+    quotes.append(_quote(130, "tennis_fav_band_3h", "tennis", "open", 7,
+                         'Rho <script>alert(1)</script> v "Sigma"', side_a="Rho", side_b="Sigma"))
+    # A stored fixture with no stake is not a pick on this page.
+    quotes.append(_quote(500, "tennis_fav_band_3h", "tennis", "open", 12,
+                         "Watch v Only", side_a="Watch", side_b="Only", bet=False))
+    # Other families stay on their own pages.
+    quotes += _settled("o15_form_l10", "soccer_o15", n=3, won=2)
+    quotes.append(_quote(600, "o15_form_l10", "soccer_o15", "open", 3, "Soccer Only v Stay"))
+    quotes += _settled("oddspedia", "cricket", n=3, won=2)
+    quotes.append(_quote(700, "oddspedia", "cricket", "open", 3, "Cricket Only v Stay",
+                         side_a="Cricket Only", side_b="Stay", venue="polymarket_us"))
+    return {"quotes": quotes}, {"pairs": {}}
 
 
 def _rows(d, st):
@@ -153,31 +153,17 @@ def _rows(d, st):
     return sport_tab.family_rows(d, st, "Tennis")
 
 
-def _roi_html(row):
-    a = row["a"]
-    if not a["n"]:
-        return "—"
-    thin = a["n"] < B.MIN_N
-    klass = "mut" if thin else fmt.tone(a["roi_fee"], ".1f", 100)
-    return f'<span class="{klass}">{B.pct(a["roi_fee"], sign=True)}</span>'
+def _section(markup, name):
+    m = re.search(rf'<section id="{name}"[^>]*>(.*?)(?=<section id="|<footer)', markup, re.S)
+    return m.group(1) if m else ""
 
 
-def _verdict_html(row):
-    label, chip, _order = B.VERDICTS[row["v"]]
-    return f'<span class="sig {chip}">{B.esc(label)}</span>'
+def _picks(markup):
+    return re.findall(r'<div class="sp-pick ([^"]*)" data-source="([^"]*)"[^>]*>(.*?)</div>', markup, re.S)
 
 
-def _picks(html):
-    return re.findall(r'<div class="tn-pick ([^"]*)" data-source="([^"]*)"[^>]*>(.*?)</div>\s*(?=<div class="tn-(?:pick|day)|</div>)',
-                      html, re.S)
-
-
-def _rule_rows(html):
-    return re.findall(r'<tr data-source="([^"]+)" data-sport="([^"]+)">(.*?)</tr>', html, re.S)
-
-
-def _text(fragment):
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", fragment)).strip()
+def _rule_rows(markup):
+    return re.findall(r'<tr class="rule-row(?: is-early)?" data-source="([^"]*)" data-sport="([^"]*)"[^>]*>(.*?)</tr>', markup, re.S)
 
 
 print(f"SHA {SHA}")
@@ -193,135 +179,135 @@ html = tennis_build.build(d, st, NOW)
 rows = _rows(d, st)
 ok(rows, "the fixture has tennis lanes")
 main = html.split("<main", 1)[-1].split("</main>", 1)[0]
-ok("<h1>Tennis</h1>" in main and "Match-winner picks and combo baskets · times CT" in main,
-   "the header is the title and one line")
+ok("<h1>Tennis</h1>" in main and "Match-winner picks and combo baskets · All times Central" in main,
+   "the head is the title and one scope line")
 ok('id="events"' in main and 'id="rules"' in main and 'id="method"' in main,
-   "the page has Matches, Rules and System sections")
+   "the page has Rules, Events and Method sections")
 toc = re.search(r'<nav class="toc"[^>]*>(.*?)</nav>', html, re.S)
 eq(re.findall(r">([^<]+)</a>", toc.group(1)) if toc else None, ["Rules", "Events", "Method"],
-   "the jump pills are Rules / Matches / System")
+   "the jump pills are Rules / Events / Method")
 for gone in ('id="today"', 'id="upcoming"', 'id="in-play"', 'id="combos"', "No tracked tennis match",
-             "rule-card", "rule-grid", "tennis-combo-grid", "How each rule is defined", "Match center"):
+             "rule-card", "rule-grid", "tennis-combo-grid", "How each rule is defined", "Match center",
+             "tn-pick", "tn-rules", "tn-system"):
     ok(gone not in main, f"{gone} is gone")
-ok(main.count("<h2>") == 2, "two headings: Matches and Rules; System is a fold")
+ok(main.count("<h2>") == 2, "two headings: Rules and Events; Method is a fold")
 ok("<script" not in main.lower(), "the page body does not grow an inline script")
 ok("javascript:" not in html, "a javascript: url is not written")
 ok("&lt;script&gt;" in html, "a hostile label is escaped")
+ok('data-filter="scope"' not in html and 'data-filter="stage"' in html, "one scope, so only the stage chips")
 
 print("\ntiles")
 tiles = re.findall(r'<div class="tile">(.*?)</div>', main, re.S)
 eq(len(tiles), 4, "four stat tiles")
 labels = [re.search(r"<span>(.*?)</span>", t).group(1) for t in tiles]
-single = next(r for r in rows if r["name"] == "tennis_fav_band_3h")
-who = tennis_cards.rule_name(single)
-eq(labels, ["open picks", "active rules", f"record · {who}", f"ROI after fees · {who}"],
-   "the tiles are open picks · active rules · one match-winner rule's W–L · its ROI, named")
+eq(labels, ["open picks", "active rules", "Production record · no rule in Production", "ROI after fees · no rule in Production"],
+   "with nothing in Production the record and ROI tiles say so")
 open_n = sum(1 for q in d["quotes"] if str(q["sport"]).startswith("tennis")
              and q["bet"] and q["status"] == "open")
 eq(_text(tiles[0]), f"{open_n} open picks", "open picks counts every open tennis bet")
 active = [r for r in rows if r["a"]["n"] or r["open"]]
 eq(_text(tiles[1]), f"{len(active)} active rules", "a rule is active once it has fired")
-sa = single["a"]
-import cricket_cards
-eq(cricket_cards.headline_row(tennis_cards.singles_rows(rows), d, NOW)["name"], "tennis_fav_band_3h",
-   "the headline rule is chosen by the Cricket page's own helper, over the match-winner rules")
-eq(_text(tiles[2]), f"{T.record_text(sa)} record · {who}",
-   "the record tile is the singles rule's own W–L in the ledger's words, not a pool")
-ok(B.pct(sa["roi_fee"], sign=True) in tiles[3], "the ROI tile is the singles rule's own ROI after fees")
-ok('class="mut"' in tiles[3], f"the ROI is grey under the read floor ({sa['n']} < {B.MIN_N})")
+single = next(r for r in rows if r["name"] == "tennis_fav_band_3h")
+prod_st = {"pairs": {"tennis_fav_band_3h|tennis": {"stage": "production", "by_hand": "2026-09-20",
+                                                   "promoted_at": "2026-09-20T00:00:00+00:00"}}}
+prod_html = tennis_build.build(d, prod_st, NOW)
+who = tennis_cards.rule_name(single)
+import production
+live = production._assess_since_kickoff(d, "tennis_fav_band_3h|tennis", prod_st["pairs"]["tennis_fav_band_3h|tennis"])
+ok(f'<b>{live["won"]}–{live["n"] - live["won"]}</b><span>since Production · {who}</span>' in prod_html,
+   "with the band in Production the record tile is its since-Production W–L, named")
+ok(f"ROI after fees · since Production · {who}" in prod_html, "and the ROI tile is that window's ROI")
 pooled = sum(r["a"]["n"] for r in active)
-ok(f"{sum(r['a']['won'] for r in active)}–{pooled - sum(r['a']['won'] for r in active)}" not in _text(tiles[2]),
+ok(f"{sum(r['a']['won'] for r in active)}–{pooled - sum(r['a']['won'] for r in active)}" not in _text("".join(re.findall(r'<div class="tile">(.*?)</div>', prod_html))),
    "no tile pools the combo baskets into the singles record")
-ok(not hasattr(__import__("sport_ui"), "rule_tiles"), "there is no second per-rule tile helper")
 
-print("\npicks")
-picks = _picks(html)
+print("\nevents")
+events = _section(main, "events")
+picks = _picks(events)
+by_lane = {(r["name"], r["sport"]): r for r in rows}
 want = sorted(
     (q for q in d["quotes"] if str(q["sport"]).startswith("tennis") and q["bet"]
-     and (q["status"] == "open" or fmt.chicago(q["start"]).date() == fmt.chicago(NOW).date())),
+     and (q["status"] == "open" or q["status"] in ("won", "lost"))
+     and (q["source"], q["sport"]) in by_lane and tennis_cards._kept(q, by_lane[(q["source"], q["sport"])])),
     key=lambda q: q["start"])
-eq(len(picks), len(want), f"one line per open pick and per pick settled today ({len(want)})")
-eq([p[1] for p in picks], [q["source"] for q in want], "picks are chronological, soonest first")
-days = re.findall(r'<div class="tn-day">([^<]+)</div>', html)
-eq(days, ["Today · Oct 5", "Tomorrow · Oct 6", "Oct 8"], "day headers once per day, in order")
-ok("Alpha vs Beta soonest" in html and "Alpha v Beta soonest" not in html,
-   "a contest is spelt \"vs\"")
+eq(len(picks), len(want), f"one line per open pick and per pick settled in the window, on the lane clocks ({len(want)})")
+nxt = events.split('id="events-live"', 1)[0]
+done = events.split('id="events-done"', 1)[1]
+days = re.findall(r'<h4 class="sp-day-head">([^<]+)', nxt)
+eq(days, ["Mon Oct 5", "Tue Oct 6", "Thu Oct 8"], "day heads once per day, soonest first; Later holds the far ones")
+ok('<h4 class="sp-day-head">Mon Oct 5<small>Today</small></h4>' in nxt, "today is marked")
+ok("Alpha vs Beta soonest" in html and "Alpha v Beta soonest" not in html, "a contest is spelt \"vs\"")
 ok("Watch vs Only" not in html, "a stored fixture with no stake is not a pick")
-ok("Yesterday vs Gone" not in main.split('id="rules"')[0], "yesterday's settled pick is not on the list")
+ok("Yesterday vs Gone" in done and "Sun Oct 4" in done, "yesterday's settled pick is on the Completed tab under its day")
 by_label = {}
 for cls, source, body in picks:
-    by_label[_text(re.search(r'<span class="tn-match">(.*?)</span>', body, re.S).group(1))] = (cls, body)
-alpha = by_label.get("Alpha vs Beta soonest", ("", ""))
-ok('<span class="tn-pos"><b>Beta</b></span>' in alpha[1], "the pick is the player's name")
-ok(">55¢<" in alpha[1], "the price is in cents")
-ok("Favourite band · within 3h of the start" in alpha[1], "the rule name is on the line")
-ok('tn-state is-next">upcoming<' in alpha[1], "a future pick is upcoming")
-ok('href="https://polymarket.us/event/x"' in alpha[1], "the contest links to its market")
-started = by_label.get("Started vs Running", ("", ""))
-ok('tn-state is-live">in play<' in started[1], "a started open pick is in play")
-ok('is-won">W<' in by_label.get("Morning vs Winner", ("", ""))[1], "a pick won today is W")
-ok('is-lost">L<' in by_label.get("Morning vs Loser", ("", ""))[1], "a pick lost today is L")
-combo2 = [b for c, s, b in picks if s == "tennis_combo2"]
-ok(combo2 and "<b>2-leg combo: Nuno Borges + Federico Cina</b>" in combo2[0],
+    by_label[source + "|" + _text(body)[:40]] = (cls, body)
+alpha = next(b for c, s_, b in picks if "Beta" in b and s_ == "tennis_fav_band_3h")
+ok('<span class="sp-pos"><a href="https://polymarket.us/event/x" rel="noopener noreferrer" target="_blank">Beta</a></span>' in alpha
+   or ('<span class="sp-pos">' in alpha and ">Beta<" in alpha and 'href="https://polymarket.us/event/x"' in alpha),
+   "the pick is the player's name, linked to its market")
+ok(">55¢<" in alpha, "the price is in cents")
+ok("Favourite band · within 3h of the start" in alpha, "the rule name is on the line")
+ok('sp-state is-next">upcoming<' in alpha, "a future pick is upcoming")
+started = next(b for c, s_, b in picks if 'is-live' in c)
+ok('sp-state is-live">in play<' in started, "a started open pick is in play")
+ok("Started vs Running" in events.split('id="events-live"', 1)[1].split('id="events-done"', 1)[0], "and sits on the In progress tab")
+ok('is-won">W<' in done and "Morning vs Winner" in done, "a pick won today is W")
+ok('is-lost">L<' in done and "Morning vs Loser" in done, "a pick lost today is L")
+combo2 = [b for c, s_, b in picks if s_ == "tennis_combo2"]
+ok(combo2 and ">2-leg combo: Nuno Borges + Federico Cina<" in combo2[0],
    "a two-leg basket's pick names both legs")
-ok(combo2 and 'class="tn-match"><a href="https://kalshi.com/combos"' in combo2[0]
-   and "Combo · Kalshi" in combo2[0], "a basket's contest cell is its venue, linked")
-ok(combo2 and 'class="tn-legs"' not in combo2[0], "two legs need no second line")
-combo3 = [b for c, s, b in picks if s == "tennis_combo3"]
-ok(combo3 and "<b>3-leg combo</b>" in combo3[0] and '<span class="tn-legs">Ann · Bob · Cid</span>' in combo3[0],
+ok("Combo · Kalshi" in nxt, "a basket's contest cell is its venue")
+ok(combo2 and 'class="sp-legs"' not in combo2[0], "two legs need no second line")
+combo3 = [b for c, s_, b in picks if s_ == "tennis_combo3"]
+ok(combo3 and ">3-leg combo<" in combo3[0] and '<span class="sp-legs">Ann · Bob · Cid</span>' in combo3[0],
    "a three-leg basket lists its legs on one muted line under the pick")
-ok("No open pick" not in main, "the empty line is not printed when picks are open")
+ok('data-empty="next"' not in events, "the empty line is not printed when picks are open")
+later = re.search(r'<details class="fold later"><summary>Later<span class="sm mut"> · (\d+) picks past 24 hours</span>', nxt)
+ok(later is not None and later.group(1) == "2" and nxt.find("Iota vs Kappa later") > nxt.find("<details"),
+   "the picks past 24 hours (Iota, the Polymarket basket) sit in the Later fold")
 
 print("\nrules")
-rule_rows = _rule_rows(html)
+rules = _section(main, "rules")
+ok("No tennis rule is in Production." in rules, "with nothing in Production the cards say so")
+rule_rows = _rule_rows(rules)
 eq(len(rule_rows), len(rows), f"one table row per tennis lane ({len(rows)})")
-active_names = [(r["name"], r["sport"]) for r in active]
-inactive_rows = [r for r in rows if (r["name"], r["sport"]) not in active_names]
-toggle = re.search(r'<details class="section-disclosure historical tn-inactive"><summary><b>([^<]+)</b>', html)
-ok(inactive_rows and all(not r["a"]["n"] and not r["open"] for r in inactive_rows),
-   f"the fixture has a never-fired rule ({[r['name'] for r in inactive_rows]})")
-eq(toggle.group(1) if toggle else None,
-   f"Show {len(inactive_rows)} inactive rule{'s' if len(inactive_rows) != 1 else ''}",
-   "the never-fired rules sit behind a Show N inactive rules toggle")
-ok("PreresetBasket" not in html, "a basket struck before the reset clock never reaches the page")
-before = html.split("tn-inactive", 1)[0]
-after = html.split("tn-inactive", 1)[-1]
-eq(sorted(s for s, _sp, _b in _rule_rows(before)), sorted(r["name"] for r in active),
-   "the open table holds the active rules")
-eq(sorted(s for s, _sp, _b in _rule_rows(after)), sorted(r["name"] for r in inactive_rows),
-   "the toggle holds the inactive rules")
-order = [s for s, _sp, _b in _rule_rows(before)]
 by_name = {r["name"]: r for r in rows}
-want_order = sorted(order, key=lambda s: (
-    not by_name[s]["prod"],
-    -(by_name[s]["a"]["roi_fee"] if by_name[s]["a"]["n"] else float("-inf")),
-    -by_name[s]["a"]["n"], s))
-eq(order, want_order, "active rules are Production first, then by ROI")
-head = re.search(r"<tr><th>Rule</th>.*?</tr>", html, re.S)
-eq(_text(head.group(0)) if head else None, "Rule Venue Record ROI Verdict Open",
-   "the columns are Rule · Venue · Record · ROI · Verdict · Open")
-ok("<h3>" not in main, "no per-market H3 groups")
+order = [s_ for s_, _sp, _b in rule_rows]
+eq(order, [r["name"] for r in sorted(rows, key=SP.sandbox_order)], "rows run by evidence, the too-early ones sunk")
+ok(f'· {len(rows)} rules · {sum(1 for r in rows if SP.is_early(r))} too early to read · by evidence' in rules,
+   "the fold's summary counts the rows and the too-early ones")
+head = re.search(r"<thead>(.*?)</thead>", rules, re.S).group(1)
+eq(re.findall(r"<th[^>]*>(.*?)</th>", head), ["Rule", "Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
+   "the columns are Rule · Market · Record · ROI after fees · Won v priced · Evidence · Verdict")
+ok("<h3>" not in rules.split("<details", 1)[0], "no per-market H3 groups")
+ok("PreresetBasket" not in html, "a basket struck before the reset clock never reaches the page")
 for source, sport, body in rule_rows:
     row = by_name[source]
-    ok(_roi_html(row) in body, f"{source} ROI is the Sandbox row's string")
-    ok(_verdict_html(row) in body, f"{source} verdict is the Sandbox row's string")
-    eq(tennis_cards.roi_html(row), _roi_html(row), f"{source} ROI helper is the lane-row string")
-    eq(tennis_cards.verdict_html(row), _verdict_html(row), f"{source} verdict helper is the lane-row string")
+    ok(SP.roi_html(row) in body, f"{source} ROI is the Sandbox row's string")
+    ok(SP.verdict_badge(row) in body, f"{source} verdict is the Sandbox row's string")
+    eq(tennis_cards.roi_html(row).replace('<span class="mut">', "").replace("</span>", "") if not row["a"]["n"] else tennis_cards.roi_html(row),
+       SP.roi_html(row).replace('<span class="mut">', "").replace("</span>", "") if not row["a"]["n"] else SP.roi_html(row),
+       f"{source} ROI helper is the lane-row string")
+    chev = re.search(r'aria-controls="([^"]+)"', body)
+    detail = re.search(rf'<tr class="rule-detail" id="{chev.group(1)}" hidden>(.*?)</tr>', rules, re.S) if chev else None
+    ok(detail is not None, f"{source} row has a chevron that expands")
+    cell = detail.group(1) if detail else ""
     note = (row["meta"].get("note") or "").strip()
-    ok(B.esc(note) in body, f"{source} row expands to its registered definition")
-    eq(html.count(B.esc(note)), 1, f"{source} definition appears once on the page")
+    lead, rest = SP.short_definition(note)
+    ok(B.esc(lead) in cell, f"{source} row expands to its registered definition")
+    ok(not rest or B.esc(rest) in cell, f"{source} the rest of the registration is folded, verbatim")
     changes = row["meta"].get("changes") or []
-    cell = re.search(r"<td>(.*?)</td>", body, re.S).group(1)
     if changes:
-        ok(f'<details class="tn-changes"><summary>Changes · {len(changes)}</summary>' in cell,
+        ok(f'<details class="sp-changes"><summary>Changes · {len(changes)}</summary>' in cell,
            f"{source} dated changes are folded under the definition")
         ok(all(B.esc(c) in cell for c in changes), f"{source} every change entry is on the page, verbatim")
-        ok(cell.index('<dl class="tn-params">') < cell.index('<p class="tn-def') < cell.index('<details class="tn-changes">'),
+        ok(cell.index('<dl class="sp-params">') < cell.index('<p class="sp-def') < cell.index('<details class="sp-changes">'),
            f"{source} reads parameters, then the current definition, then the folded changes")
-        ok(cell.find("WIDENED") == -1 or cell.find("WIDENED") > cell.find('<details class="tn-changes">'),
+        ok(cell.find("WIDENED") == -1 or cell.find("WIDENED") > cell.find('<details class="sp-changes">'),
            f"{source} no reset text comes before the current definition")
     if source in S.TENNIS_FROZEN_RULES:
-        ok('<span class="sig n">Frozen 2026-10-08</span>' in cell, f"{source} summary carries the Frozen badge")
+        ok('<span class="badge stage">Frozen 2026-10-08</span>' in body, f"{source} row carries the Frozen badge")
         ok(S.TENNIS_FROZEN_LINE in note, f"{source} definition ends with the FROZEN line")
         ok("<dt>Backs</dt>" in cell and "<dt>Venue</dt>" in cell, f"{source} prints its current parameters")
         if sport == "tennis":
@@ -333,41 +319,39 @@ for source, sport, body in rule_rows:
             ok(("extrapolated" in cell) == (sport == "tennis_pmcombo" and legs > 2),
                f"{source} says whether its markup was measured")
     combo = sport in ("tennis_combo", "tennis_pmcombo")
-    eq('<span class="sig n">Combo</span>' in body, combo, f"{source} Combo badge follows the market")
-    ok('<details class="tn-rule"><summary>' in body, f"{source} row has a chevron that expands")
-cells = {s: re.findall(r"<td[^>]*>(.*?)</td>", b, re.S) for s, _sp, b in rule_rows}
+    eq('<span class="badge stage">Combo</span>' in body, combo, f"{source} Combo badge follows the market")
+cells = {s_: re.findall(r"<td[^>]*>(.*?)</td>", b, re.S) for s_, _sp, b in rule_rows}
 eq(_text(cells["tennis_combo2"][1]), "Kalshi", "a Kalshi basket's venue is Kalshi")
 eq(_text(cells["pm_combo2"][1]), "Polymarket US", "a Polymarket US basket's venue is Polymarket US")
 eq(_text(cells["tennis_fav_band_3h"][1]), "Kalshi · Polymarket US",
    "the single-match rule names the venues of its own bets")
 fav_a = by_name["tennis_fav_band_3h"]["a"]
 eq(_text(cells["tennis_fav_band_3h"][2]), f'{fav_a["won"]}–{fav_a["n"] - fav_a["won"]}', "the record cell is W–L")
-eq(_text(cells["tennis_fav_band_3h"][5]), "4", "the open cell counts open bets")
-eq(_text(cells["tennis_combo4"][5]), "—", "a rule with no open bet shows a dash")
-fav = cells["tennis_fav_band_3h"][0]
-ok("Yesterday vs Gone" in fav and "Alpha vs Beta soonest" in fav,
+ok("· 5 open" in cells["tennis_fav_band_3h"][0], "the rule cell counts open bets")
+ok("open" not in cells["pm_combo2"][0].split("</b>", 1)[1].split("<td", 1)[0] or "· 1 open" in cells["pm_combo2"][0], "the basket row counts its one open bet")
+fav_detail = re.search(r'<tr class="rule-detail" id="' + re.search(r'aria-controls="([^"]+)"', cells["tennis_fav_band_3h"][0]).group(1) + r'" hidden>(.*?)</tr>', rules, re.S).group(1)
+ok("Yesterday vs Gone" in fav_detail and "Alpha vs Beta soonest" in fav_detail,
    "the expanded rule lists its open and recent settled picks")
-recent = re.search(r'<ul class="tn-recent">(.*?)</ul>', fav, re.S)
-ok(recent is not None and recent.group(1).count("<li>") <= 4 + tennis_cards.RECENT_LIMIT, "recent picks are capped")
+recent = re.search(r'<ul class="rule-picks">(.*?)</ul>', fav_detail, re.S)
+ok(recent is not None and recent.group(1).count("<li") <= 5 + tennis_cards.RECENT_LIMIT, "recent picks are capped at the open ones plus the limit")
 
-print("\nsystem")
-system = re.search(r'<section id="method" class="tn-system">(.*?)</section>', html, re.S).group(1)
-ok(system.startswith("\n<details><summary>") and "<details open" not in system,
+print("\nmethod")
+method = _section(main, "method")
+ok(method.lstrip().startswith("<details><summary>") and "<details open" not in method.split("</summary>", 1)[0],
    "the venue note is a fold, closed by default")
-ok('id="listing"' in system, "the Polymarket US listing table is inside the fold")
-ok(len(re.findall(r"<p class=\"sm\">", system)) == 2, "the note is two sentences")
+ok('id="listing"' in method, "the Polymarket US listing table is inside the fold")
+ok(len(re.findall(r"<p class=\"sm\">", method)) == 2, "the note is two sentences")
 
 print("\nempty ledger")
 empty = tennis_build.build({"quotes": []}, {"pairs": {}}, NOW)
 for anchor in ("events", "rules", "method"):
     ok(f'id="{anchor}"' in empty, f"an empty page keeps #{anchor}")
-ok('class="tn-pick' not in empty and "No tracked tennis match" not in empty,
+ok('class="sp-pick' not in empty and "No tracked tennis match" not in empty,
    "an empty page has no pick lines and no empty boxes")
-nxt = tennis_cards.next_check(NOW)
-ok(nxt is not None and nxt > NOW, "the tracker workflow gives a next firing")
-ok(f'<p class="tn-empty">No open pick · next check {fmt.when(nxt)}</p>' in empty,
-   "the empty state is one line with the next check")
-ok("No tennis rule has a record yet." in empty, "no rows is a note, not a table")
+nxt_check = tennis_cards.next_check(NOW)
+ok(nxt_check is not None and nxt_check > NOW, "the tracker workflow gives a next firing")
+ok(f"next check {fmt.when(nxt_check)}" in empty, "the Next 24h empty state names the next check")
+ok("history still warming" in empty, "and says the registered rules are waiting for a qualifying contest")
 
 print("\nnext check")
 with tempfile.TemporaryDirectory() as tmp:
@@ -388,20 +372,20 @@ soc = soccer_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
 ok("Soccer Only vs Stay" not in html and "oddspedia" not in html.lower(),
    "the tennis page does not pick up soccer or cricket lanes")
-ok('class="soccer-rules"' in soc and "Soccer Only vs Stay" in soc,
-   "soccer renders its own rules table and fixture list")
+ok('class="sp-sandbox-table"' in soc and "Soccer Only vs Stay" in soc,
+   "soccer renders its own rules table and events")
 ok("tennis_fav_band_3h" not in soc and "Alpha vs Beta soonest" not in soc,
-   "soccer cards do not pick up tennis lanes")
-ok('class="tn-rules"' in cri and "Oddspedia" in cri, "cricket renders its own rules table")
+   "soccer does not pick up tennis lanes")
+ok('class="sp-sandbox-table"' in cri and "Oddspedia" in cri, "cricket renders its own rules table")
 ok("tennis_fav_band_3h" not in cri and "Alpha vs Beta soonest" not in cri,
    "cricket does not pick up tennis lanes")
 
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
-ok(".tn-day {" in css and "position: sticky;" in css.split(".tn-day {", 1)[1].split("}", 1)[0],
-   "the day header is sticky")
-ok(".tn-pick {" in css and "@media (max-width: 760px)" in css.split(".tn-pick {", 1)[1],
+ok(".sp-day-head {" in css and "position: sticky;" in css.split(".sp-day-head {", 1)[1].split("}", 1)[0],
+   "the day head is sticky")
+ok(".sp-pick {" in css and "@media (max-width: 760px)" in css.split(".sp-pick {", 1)[1],
    "the picks list has a phone layout")
-ok(".tennis-desk {" in css, "the earlier tennis rules are left in place, not edited")
+ok(".tn-" not in css and ".tennis-desk" not in css, "the earlier tennis rules are retired with the pages that used them")
 
 
 def _filtered_quote(i, source, sport, status, logged, label, league, tier, market_id,
@@ -487,14 +471,13 @@ ok(fav_row is not None and combo_row is not None,
 if fav_row and combo_row:
     eq(fav_row["a"]["n"], KEPT_N, "the favourite-band record counts only kept tours logged after the reset")
     eq(combo_row["a"]["n"], KEPT_N, "the combo record counts only kept tours logged after its reset")
-    frows = {s: b for s, _sp, b in _rule_rows(filter_html)}
-    ok(tennis_cards.roi_html(fav_row) in frows.get("tennis_fav_band_3h", ""),
+    frows = {s_: b for s_, _sp, b in _rule_rows(filter_html)}
+    ok(SP.roi_html(fav_row) in frows.get("tennis_fav_band_3h", ""),
        "the favourite-band row ROI is the filtered lane row")
-    ok(tennis_cards.roi_html(combo_row) in frows.get("tennis_combo2", ""),
+    ok(SP.roi_html(combo_row) in frows.get("tennis_combo2", ""),
        "the combo row ROI is the filtered lane row")
     ok("KeptOpenAtpLabel" in filter_html, "a kept open bet is on the page")
-    ok("Kept Atp Settled 1" in frows.get("tennis_fav_band_3h", ""),
-       "a kept settled bet is in the rule's recent picks")
+    ok("Kept Atp Settled 1" in filter_html, "a kept settled bet is on the page")
 for ghost in ("GhostRefusedLeague", "GhostPreresetLeague",
               "GhostComboRefused", "GhostComboPrereset",
               "GhostRefusedRow", "GhostPreresetRow",

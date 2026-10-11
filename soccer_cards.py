@@ -1,51 +1,31 @@
 #!/usr/bin/env python3
-"""The Soccer page's two lists. Presentation only; only the Soccer page asks for them.
+"""What the Soccer page hands the shared sport template (sport_page).
 
-Fixtures: every open pick and every fixture a rule has already been shown,
-grouped by Chicago day, one flat row per fixture, one line per pick. The pick
-is written as the position a reader would take ("Under 3.5", "Lyon +0.5",
-"BTTS yes"), derived from the market title and the side backed; the stored
-label and side are untouched. A kickoff the ledger could not read is marked
-"time TBC" inside its day. A kickoff already behind the page clock is "in play".
+The events: every open pick and every fixture a rule has already been shown,
+one event per fixture, one pick line per rule on it, plus the picks settled in
+the template's window. The pick is written as the position a reader would take
+("Under 3.5", "Lyon +0.5", "BTTS yes"), derived from the market title and the
+side backed; the stored label and side are untouched.
 
-Rules: one table row per Sandbox lane, Production first and then by ROI after
-fees. The record and the ROI are the Sandbox row's own figures. A chevron opens
-the registered description and the rule's recent picks.
-
-Nothing here grades, settles, or chooses a bet.
+The rules: the registered definition, the market a rule trades, and its recent
+picks for the expanders. Nothing here grades, settles, or chooses a bet.
 """
 import datetime
 import re
 from datetime import timedelta, timezone
 
 import fmt
-import production
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
+import sport_page as SP
 
 # A fixture a rule has been shown, with no stake on it yet, is listed while its
 # kickoff is after the page clock and at most this far ahead.
 HORIZON = timedelta(hours=48)
-# A rule's open panel lists this many picks, open ones first.
+# A rule's expander lists this many picks, open ones first.
 PICK_LIMIT = 5
 _FAR = datetime.datetime.max.replace(tzinfo=timezone.utc)
-
-
-def roi_html(row):
-    """The ROI text a Sandbox row prints for this pair. Grey under the read floor."""
-    a = row["a"]
-    if not a["n"]:
-        return "—"
-    thin = a["n"] < B.MIN_N
-    klass = "mut" if thin else fmt.tone(a["roi_fee"], ".1f", 100)
-    return f'<span class="{klass}">{B.pct(a["roi_fee"], sign=True)}</span>'
-
-
-def verdict_html(row):
-    """The verdict chip a Sandbox row prints for this pair."""
-    label, chip, _order = B.VERDICTS[row["v"]]
-    return f'<span class="sig {chip}">{B.esc(label)}</span>'
 
 
 def _keep(q):
@@ -63,6 +43,16 @@ def open_quotes(d, name, sport):
             and q.get("status") == "open" and q.get("bet") and _keep(q)]
     live.sort(key=_by_start)
     return live
+
+
+def settled_quotes(d, name, sport, since=None):
+    """Settled bets for one rule, newest first, on the row's reset clock."""
+    done = [q for q in T.bet_rows(d)
+            if q.get("source") == name and q.get("sport") == sport and q.get("bet")
+            and q.get("status") in ("won", "lost", "void", "settled") and _keep(q)
+            and (not since or str(q.get("logged") or "") >= since)]
+    done.sort(key=_by_start, reverse=True)
+    return done
 
 
 def _kickoff(q):
@@ -117,6 +107,11 @@ def _market_name(base, fam="Soccer"):
     return "Match winner" if full == fam else full.split(" · ")[-1]
 
 
+def market(d, row):
+    """The market column: 'Over 1.5', 'BTTS', 'Corners'."""
+    return _market_name(B._base_sport(row["sport"]))
+
+
 def _fixture_label(q):
     # Soccer market labels append the outcome after the match's team names.
     return S.position_label(q).split(":", 1)[0].strip()
@@ -130,23 +125,6 @@ def _fixture_key(q):
     # Without a match name and verified instant, keep distinct markets separate.
     return ("market", str(q.get("market_id") or q.get("id") or ""),
             str(q.get("start") or ""))
-
-
-def _fixture_rows(d, rows, now):
-    """Open and upcoming fixtures, grouped across rules so one match is one row."""
-    by_key = {}
-    for row in rows:
-        open_live = open_quotes(d, row["name"], row["sport"])
-        upcoming = upcoming_quotes(d, row["name"], row["sport"], now)
-        for q in open_live + upcoming:
-            key = _fixture_key(q)
-            rec = by_key.setdefault(key, {"q": q, "rules": []})
-            rec["rules"].append((row, q))
-    out = list(by_key.values())
-    out.sort(key=lambda rec: (
-        _kickoff(rec["q"]) or _FAR,
-        str(rec["q"].get("label") or rec["q"].get("market_id") or "")))
-    return out
 
 
 def _rule_name(row):
@@ -177,33 +155,33 @@ def pick_text(q):
     """
     side = str(B._side(q) or "").strip()
     label = str(q.get("label") or "")
-    market = label.split(": ", 1)[1].strip() if ": " in label else ""
+    market_text = label.split(": ", 1)[1].strip() if ": " in label else ""
     sides = {str(q.get("side_a") or "").strip().lower(),
              str(q.get("side_b") or "").strip().lower()}
     if sides == {"yes", "no"}:
         yes = side.lower() == "yes"
-        m = _GOALS.match(market)
+        m = _GOALS.match(market_text)
         if m:
             word = m.group(1).lower()
             if not yes:
                 word = "under" if word == "over" else "over"
             return f"{word.capitalize()} {m.group(2)}"
-        if market.lower() == "both teams to score":
+        if market_text.lower() == "both teams to score":
             return "BTTS yes" if yes else "BTTS no"
-        m = _WIN.match(market)
+        m = _WIN.match(market_text)
         if m:
             return f"{m.group(1)} to win" if yes else f"{m.group(2)} +0.5"
-        m = _SCORE.match(market)
+        m = _SCORE.match(market_text)
         if m:
             team, n = m.group(1), m.group(2)
             return f"{team} {n}+ goals" if yes else f"{team} under {n} goal{'' if n == '1' else 's'}"
-        m = _CORNERS.match(market)
+        m = _CORNERS.match(market_text)
         if m:
             head, n = m.group(1).strip(), m.group(2)
             if yes:
                 return f"{head} {n}+ corners" if head else f"{n}+ corners"
             return f"{head} under {n} corners" if head else f"Under {n} corners"
-        return f"{'Yes' if yes else 'No'}: {market}" if market else side
+        return f"{'Yes' if yes else 'No'}: {market_text}" if market_text else side
     if not side:
         return "—"
     if side.lower() == "draw":
@@ -211,102 +189,52 @@ def pick_text(q):
     return f"{side} to win"
 
 
-# ------------------------------------------------------------------ fixtures
-def _day_key(q, kickoff):
-    """The Chicago calendar day a fixture is listed under. None when the ledger has no day."""
-    if kickoff is not None:
-        return fmt.chicago(kickoff).date()
-    raw = q.get("date")
-    if isinstance(raw, str):
-        try:
-            return datetime.date.fromisoformat(raw.strip()[:10])
-        except ValueError:
-            return None
-    return None
+# ------------------------------------------------------------------ the events
+def _state(q):
+    if not q.get("bet"):
+        return "watch"
+    status = str(q.get("status") or "open")
+    if status == "settled":
+        return "price"
+    return status if status in ("won", "lost", "void") else "open"
 
 
-def _day_title(day, today):
-    text = f"{day.strftime('%a')} {fmt._MONTHS[day.month - 1]} {day.day}"
-    if day == today:
-        return f"{B.esc(text)}<small>Today</small>"
-    return B.esc(text)
+def _settled_at(q):
+    try:
+        return SP.instant(q.get("settled"))
+    except (TypeError, ValueError):
+        return None
 
 
-def _pick_line(row, q, now):
-    if q.get("bet"):
-        side = B.safe_href(S.market_url(q), pick_text(q))
-        cls = "soccer-pick-side"
-        price = fmt.cents(q.get("price"))
-    else:
-        side, cls, price = "watching", "soccer-pick-side is-watch", "—"
-    return (f'<div class="soccer-pick" data-source="{B.esc(row["name"])}">'
-            f'<span class="{cls}">{side}</span>'
-            f'<span class="soccer-pick-price">{B.esc(price)}</span>'
-            f'<span class="soccer-pick-rule">{B.esc(_scoped_name(row))}</span></div>')
+def events(d, rows, now):
+    """One event per fixture: the open picks, the fixtures being watched, and the
+    picks settled inside the template's window, grouped so one match is one row."""
+    now = SP.as_utc(now)
+    floor = now - timedelta(days=SP.DONE_DAYS)
+    by_key = {}
+    for row in rows:
+        live = open_quotes(d, row["name"], row["sport"])
+        watching = upcoming_quotes(d, row["name"], row["sport"], now)
+        done = [q for q in settled_quotes(d, row["name"], row["sport"], row.get("since"))
+                if (_kickoff(q) or _settled_at(q) or now) >= floor]
+        for q in live + watching + done:
+            key = _fixture_key(q)
+            rec = by_key.setdefault(key, dict(q=q, picks=[]))
+            rec["picks"].append(SP.pick(
+                row, q, pick_text(q) if q.get("bet") else "watching", _state(q),
+                price=q.get("price") if q.get("bet") else None,
+                settled=_settled_at(q)))
+    out = []
+    for rec in by_key.values():
+        q = rec["q"]
+        league = S.display_league(q) or ""
+        out.append(SP.event(_kickoff(q), fmt.contest(_fixture_label(q)), rec["picks"],
+                            href=None, sub=str(league)))
+    out.sort(key=lambda e: (e["when"] or _FAR, e["label"]))
+    return out
 
 
-def _fixture_row(rec, now):
-    q = rec["q"]
-    ko = _kickoff(q)
-    live = ko is not None and ko <= now and any(quote.get("bet") for _r, quote in rec["rules"])
-    if ko is None:
-        when = '<span class="soccer-tbc">time TBC</span>'
-    else:
-        when = B.esc(fmt.clock(ko))
-    badge = '<span class="soccer-live">in play</span>' if live else ""
-    picks = "".join(_pick_line(row, quote, now) for row, quote in rec["rules"])
-    return (f'<div class="soccer-row{" is-past" if live else ""}">'
-            f'<div class="soccer-row-time">{when}{badge}</div>'
-            f'<div class="soccer-row-match">{B.esc(_fixture_label(q))}</div>'
-            f'<div class="soccer-row-picks">{picks}</div></div>')
-
-
-def fixtures(d, rows, now):
-    """The Fixtures section: one list, grouped by Chicago day, chronological."""
-    now = fmt.chicago(now).astimezone(timezone.utc)
-    today = fmt.chicago(now).date()
-    recs = _fixture_rows(d, rows, now)
-    days = {}
-    dated = []
-    for rec in recs:
-        day = _day_key(rec["q"], _kickoff(rec["q"]))
-        if day is None:
-            dated.append(rec)
-        else:
-            days.setdefault(day, []).append(rec)
-    blocks = []
-    for day in sorted(days):
-        rows_html = "".join(_fixture_row(rec, now) for rec in days[day])
-        blocks.append(f'<section class="soccer-day"><h3 class="soccer-day-head">{_day_title(day, today)}</h3>'
-                      f'{rows_html}</section>')
-    if dated:
-        rows_html = "".join(_fixture_row(rec, now) for rec in dated)
-        blocks.append(f'<section class="soccer-day"><h3 class="soccer-day-head">Date TBC</h3>{rows_html}</section>')
-    picks = sum(1 for rec in recs for _r, q in rec["rules"] if q.get("bet"))
-    count = (f'{picks} open pick{"" if picks == 1 else "s"} on {len(recs)} fixture{"" if len(recs) == 1 else "s"}'
-             if recs else "no open pick")
-    body = "".join(blocks) or '<p class="sm mut">No open pick and no tracked fixture.</p>'
-    return (f'<section id="events" class="soccer-fixtures">'
-            f'<div class="soccer-section-head"><h2>Fixtures</h2><span>{B.esc(count)}</span></div>'
-            f'{body}</section>')
-
-
-# ------------------------------------------------------------------ rules
-def _status(row):
-    if row.get("gone") or row["v"] == "retired":
-        return "retired", '<span class="sig x">Retired</span>'
-    if row.get("prod"):
-        return "production", '<span class="sig y">Production</span>' + production.early_html(row.get("early"))
-    return "sandbox", '<span class="mut">Sandbox</span>'
-
-
-def _rule_order(row):
-    """Production first, then ROI after fees, highest first; no record last; retired after all."""
-    stage, _chip = _status(row)
-    roi = row["a"]["roi_fee"] if row["a"]["n"] else None
-    return (stage == "retired", stage != "production", roi is None, -(roi or 0), -row["a"]["n"], row["name"])
-
-
+# ------------------------------------------------------------------ the rules
 def recent_picks(d, name, sport, since=None):
     """Up to PICK_LIMIT picks for one rule: open ones soonest first, then the newest settled.
 
@@ -326,66 +254,14 @@ def _pick_item(q):
     word = {"won": "won", "lost": "lost", "void": "void", "open": "open"}.get(status, status or "—")
     cls = {"won": "pos", "lost": "neg"}.get(status, "mut")
     return (f'<li class="rule-pick"><span class="mut">{B.esc(_kick_label(q))}</span>'
-            f'<span>{B.safe_href(S.market_url(q), _fixture_label(q))}</span>'
+            f'<span>{B.safe_href(S.market_url(q), fmt.contest(_fixture_label(q)))}</span>'
             f'<b>{B.esc(pick_text(q))}</b><span class="num">{B.esc(fmt.cents(q.get("price")))}</span>'
             f'<span class="{cls}">{B.esc(word)}</span></li>')
 
 
-def _rule_rows(d, row, i):
-    a = row["a"]
-    stage, chip = _status(row)
-    sfx = B._scope(row["sport"])
-    scope = S.SCOPE_LABEL[sfx] if sfx else S.CLUB_SCOPE_LABEL
-    record = T.record_html(a)
-    detail_id = f"rule-d-{i}"
-    note = (row["meta"].get("note") or "").strip()
+def recent_html(d, row, now=None):
+    """The rule's recent picks, for a card's fold or a table row's expander."""
     picks = recent_picks(d, row["name"], row["sport"], row.get("since"))
-    picks_html = (f'<ul class="rule-picks">{"".join(_pick_item(q) for q in picks)}</ul>'
-                  if picks else '<p class="sm mut">No pick yet.</p>')
-    main = (f'<tr class="rule-row" data-source="{B.esc(row["name"])}" data-sport="{B.esc(row["sport"])}" '
-            f'data-stage="{stage}">'
-            f'<td><span class="rule-name-cell"><button type="button" class="rule-chev" aria-expanded="false" '
-            f'aria-controls="{detail_id}" aria-label="Details for {B.esc(_rule_name(row))}">›</button>'
-            f'<b>{B.esc(_rule_name(row))}</b></span></td>'
-            f'<td>{B.esc(_market_name(B._base_sport(row["sport"])))}</td>'
-            f'<td>{B.esc(scope)}</td>'
-            f'<td class="num">{record}</td>'
-            f'<td class="num">{roi_html(row)}</td>'
-            f'<td>{chip}</td></tr>')
-    detail = (f'<tr class="rule-detail" id="{detail_id}" hidden><td colspan="6" class="rule-detail-cell">'
-              f'<p class="rule-about">{verdict_html(row)} <span>{B.esc(note) or "No registered description."}</span></p>'
-              f'{picks_html}</td></tr>')
-    return main + detail
-
-
-RULES_HEAD = ('<tr><th>Rule</th><th>Market</th><th>Scope</th><th class="num">Record</th>'
-              '<th class="num">ROI</th><th>Status</th></tr>')
-
-
-def rules_table(d, rows):
-    """The Rules section: one row per lane, Production first, then by ROI."""
-    ordered = sorted(rows, key=_rule_order)
-    body = "".join(_rule_rows(d, row, i) for i, row in enumerate(ordered))
-    prod = sum(1 for r in rows if _status(r)[0] == "production")
-    count = f'{len(rows)} rules · {prod} in Production' if rows else "no rule has a record yet"
-    table = (f'<div class="tbl"><table class="soccer-rules">{RULES_HEAD}{body}</table></div>'
-             if rows else '<div class="note">No soccer lane has a record yet.</div>')
-    return (f'<section id="rules" class="soccer-rule-desk">'
-            f'<div class="soccer-section-head"><h2>Rules</h2><span>{B.esc(count)}</span></div>'
-            f'{table}</section>')
-
-
-def production_strip(rows):
-    """Production rules as small chips: name · market."""
-    prod = [r for r in rows if r.get("prod")]
-    chips = "".join(
-        f'<span class="soccer-prod-rule"><b>{B.esc(_scoped_name(r))}</b>'
-        f'<small>{B.esc(_market_name(B._base_sport(r["sport"])))}</small></span>'
-        for r in prod)
-    return f'<div class="soccer-prod-strip">{chips or "<span class=\"mut\">None in Production.</span>"}</div>'
-
-
-def render(d, rows, now=None):
-    """Rules, then Fixtures. `now` is the page clock."""
-    now = now or datetime.datetime.now(timezone.utc)
-    return rules_table(d, rows) + fixtures(d, rows, now)
+    if not picks:
+        return '<p class="sm mut">No pick yet.</p>'
+    return f'<ul class="rule-picks">{"".join(_pick_item(q) for q in picks)}</ul>'

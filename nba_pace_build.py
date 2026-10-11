@@ -18,7 +18,6 @@ import os
 import re
 
 import fmt
-import shell_build
 import site_chrome as C
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -598,17 +597,11 @@ def build(blob=None, now=None):
             fresh += f" · board cut at {fmt.when(clock)}"
     fresh_html = f'<p class="nba-fresh">{esc(fresh)}</p>' if fresh else ""
     n_up = len(upcoming)
-    body = f"""<div class="nba-head">
-<div>
+    body = f"""<div class="sp-head nba-head">
+<p class="eyebrow">Research board</p>
 <h1>NBA</h1>
-<p class="lede">Expected combined points · tip times CT</p>
+<p class="scope">Expected combined points · tip times Central</p>
 {fresh_html}</div>
-<nav class="nba-local-nav" aria-label="NBA sections">
-<a href="#matchups">Upcoming</a>
-<a href="#graded">Results</a>
-<a href="#teams">Teams</a>
-</nav>
-</div>
 <section id="matchups">
 <div class="nba-section-head">
 <div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological · the mark is the board's highest expectation in that column</p></div>
@@ -633,12 +626,17 @@ def build(blob=None, now=None):
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
 """
-    page = shell_build.sport_board(
-        "nba",
+    # The shared shell, with the section nav every sport page carries in its
+    # second header row (Upcoming · Results · Teams) in place of a local pill bar.
+    page = C.document(
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
+        "nba",
+        (("matchups", "Upcoming"), ("graded", "Results"), ("teams", "Teams")),
         C.stamp(clock),
         body,
+        scripts=("./tables.js",),
+        sports=True,
     )
     # Every cell named for its column and the header rows in <thead>, so the
     # phone cards work on this page however it is written out.

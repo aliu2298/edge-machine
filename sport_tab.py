@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
-"""One sport's page, built the way the Soccer tab is built.
-
-Records, verdicts and the by-market panels are the Sandbox's own functions, so a
-sport tab cannot disagree with the Sandbox about the same pair. The idle table
-names connected lanes that have never logged a quote. The Kalshi pre-flight file
-is a soccer check, so only the Soccer page shows that column.
+"""What the sport pages share below the template: the Sandbox rows of one family,
+the connected lanes that have never fired, the Kalshi pre-flight report (a soccer
+check, so only the Soccer page shows that column), the venue listing, and the
+file writer. The pages themselves are sport_page, one template for every sport.
 """
 import datetime
 import json
 import os
 
-import fmt
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome as C
-import sport_ui as UI
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PREFLIGHT = os.path.join(ROOT, "data", "lane_preflight.json")
@@ -67,25 +63,6 @@ def family_rows(d, st, family):
     """
     return [r for r in B.pair_list(d, st)
             if B.family(r["sport"]) == family and not B.eliminated(r)]
-
-
-def _open_bets(d, prefix):
-    return sum(1 for q in d.get("quotes", [])
-               if q.get("bet") and q.get("status") == "open"
-               and str(q.get("sport") or "").startswith(prefix)
-               and not S.removed_row(q) and not S.tennis_refused_row(q))
-
-
-def _tiles(rows, idle, open_bets):
-    settled = sum(r["a"]["n"] for r in rows)
-    prod = sum(1 for r in rows if r.get("prod"))
-    return "".join(f'<div class="tile"><b>{v:,}</b><span>{k}</span></div>' for k, v in (
-        ("lanes with a record", len(rows)),
-        ("settled bets", settled),
-        ("bets running", open_bets),
-        ("in Production", prod),
-        ("registered, never fired", len(idle)),
-    ))
 
 
 def preflight_report(path=PREFLIGHT, now=None):
@@ -175,152 +152,21 @@ def venue_listing(d, family):
 
 
 def build(family, key, title, lede, d=None, st=None, now=None, description=None,
-         preflight=False, cards=False):
-    """One sport tab. `preflight` is the Soccer Kalshi column; other sports leave it off.
-
-    `cards` is the rule-card grid. Soccer, Tennis, and Cricket each ask for
-    it, and each has its own renderer, so a change on one page does not move
-    the others.
-    """
+          preflight=False, cards=False):
+    """One sport tab. Kept for older callers: each family's page is its own builder
+    on the shared template (sport_page) now, so this hands the call to it."""
+    del key, title, lede, description, preflight, cards
     now = now or datetime.datetime.now(datetime.timezone.utc)
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
-    rows = family_rows(d, st, family)
-    idle = idle_lanes(key, d, skip=tuple(r["name"] for r in rows))
-    tiles = _tiles(rows, idle, _open_bets(d, key))
-    if cards:
-        if family == "Tennis":
-            import tennis_cards
-            sections = tennis_cards.render(d, rows, now)
-        elif family == "Cricket":
-            import cricket_cards
-            sections = cricket_cards.render(d, rows, now)
-        else:
-            import soccer_cards
-            sections = soccer_cards.render(d, rows, now)
-    else:
-        sections = B.sport_sections(d, rows)
-    if description is None:
-        description = lede
-
-    record = UI.disclosure("Full record", f'<div class="tiles">{tiles}</div>',
-                           "Tracked lanes & outcomes", css="page-record")
-    if preflight:
-        by_lane, pf_note = preflight_report(now=now)
-        # idle_table re-reads lanes when status is set. Pass the tile list by
-        # calling the table builder with the lanes already chosen, so the skip
-        # set is the one the tiles counted.
-        idle_html = _idle_html(idle, by_lane, status=True, prefix=key)
-        if family == "Soccer" and cards:
-            attention = 'class="neg"' in pf_note or "could not be read" in pf_note
-            health_open = " open" if attention else ""
-            health_label = "Method · check needed" if attention else "Method"
-            import soccer_cards
-            body = f"""<div class="soccer-page-head">
-<h1>{esc(family)}</h1>
-<p class="lede">{esc(lede)}</p>
-<p class="soccer-updated">{esc(fmt.display_updated(now))}</p>
-{soccer_cards.production_strip(rows)}
-</div>
-
-{sections}
-
-<section id="method" class="soccer-health">
-<details{health_open}>
-<summary><span><b>{health_label}</b><small>{len(idle)} waiting for a market</small></span></summary>
-<p class="note sm">Prices are the Kalshi ask the tracker logged when a rule fired. Results are read back from the venue's own settlement, and this page is rebuilt from that ledger by GitHub Actions.</p>
-{pf_note}
-<details class="section-disclosure"><summary><b>Registered lanes</b><span>{len(idle)}</span></summary>
-{idle_html}
-</details>
-</details>
-</section>
-<footer>{_FOOT}</footer>
-"""
-            toc = (("rules", "Rules"), ("events", "Events"), ("method", "Method"))
-        else:
-            body = f"""<h1>{esc(family)}</h1>
-<p class="lede">{lede}</p>
-<div class="tiles">{tiles}</div>
-
-<section id="idle">
-<h2>Registered, never fired</h2>
-<div class="note">These lanes are connected and waiting, and have <b>no row in the
-Sandbox</b> — it builds from the ledger, and they have never logged a quote. That is not
-the rule failing. It is Kalshi not listing the market, and the status below is the
-pre-flight's own verdict on each one.</div>
-{pf_note}
-{idle_html}
-</section>
-
-<section id="lanes">
-<h2>Lanes with a record</h2>
-{sections}
-</section>
-<footer>{_FOOT}</footer>
-"""
-            toc = (("idle", "Registered, never fired"), ("lanes", "Lanes with a record"))
-    else:
-        parts = [f"""<h1>{esc(family)}</h1>
-<p class="lede">{lede}</p>
-{'' if family == 'Tennis' and cards else f'<div class="tiles">{tiles}</div>'}
-"""]
-        toc = []
-        if idle and not (family == "Tennis" and cards):
-            parts.append(f"""
-<section id="idle">
-<h2>Registered, never fired</h2>
-<div class="note">These lanes are connected and have <b>no row in the record below</b>. They have never logged a quote. The Kalshi pre-flight is a soccer check, so this table does not show a status column.</div>
-{_idle_html(idle, {}, status=False, prefix=key)}
-</section>
-""")
-            toc.append(("idle", "Registered, never fired"))
-        listing = venue_listing(d, family)
-        if family == "Tennis" and cards:
-            parts.append(f"""
-<section id="lanes">
-{sections}
-</section>
-""")
-            toc.extend((("today", "Today"), ("upcoming", "Upcoming"), ("in-play", "Past kickoff"),
-                        ("combos", "Combos"), ("rules", "Rules")))
-            parts.append(f"""
-{record}
-
-<section id="system" class="tennis-system">
-<details><summary><span><b>System & venue coverage</b><small>Polymarket US listing</small></span></summary>
-{listing or '<div class="note">No venue coverage stored yet.</div>'}
-{_idle_html(idle, {}, status=False, prefix=key) if idle else ''}
-</details>
-</section>
-""")
-            toc.append(("system", "System"))
-            parts.append(f"<footer>{_FOOT}</footer>\n")
-        else:
-            if listing:
-                parts.append("\n" + listing + "\n")
-                toc.append(("listing", "Polymarket US"))
-            parts.append(f"""
-<section id="lanes">
-<h2>Lanes with a record</h2>
-{sections}
-</section>
-<footer>{_FOOT}</footer>
-""")
-            toc.append(("lanes", "Lanes with a record"))
-        body = "".join(parts)
-
-    return C.document(
-        title,
-        description,
-        key,
-        tuple(toc),
-        C.stamp(now),
-        body,
-        script_src="./site.js",
-        scripts=("./tables.js",),
-        sports=family in ("Soccer", "Tennis"),
-    )
+    if family == "Tennis":
+        import tennis_build
+        return tennis_build.build(d, st, now)
+    if family == "Cricket":
+        import cricket_build
+        return cricket_build.build(d, st, now)
+    import soccer_build
+    return soccer_build.build(d, st, now)
 
 
 def _idle_html(lanes, by_lane, status, prefix):
