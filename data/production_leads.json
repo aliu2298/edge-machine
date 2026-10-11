@@ -1,87 +1,6 @@
 {
- "board_built_at": "2026-10-11T12:28:47+00:00",
+ "board_built_at": "2026-10-11T16:11:53+00:00",
  "leads": {
-  "2026-10-04|CSA Emerging|Western Province|CSA Emerging to win \u00b7 Oddspedia community tips": {
-   "away": "Western Province",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-04",
-   "edge_at_log": null,
-   "first_seen": "2026-10-04",
-   "headline": "CSA Emerging to win",
-   "home": "CSA Emerging",
-   "id": "2026-10-04|CSA Emerging|Western Province|CSA Emerging to win \u00b7 Oddspedia community tips",
-   "kickoff": "2026-10-04T16:00Z",
-   "lane": "production",
-   "league": "Cricket",
-   "match": "CSA Emerging v Western Province",
-   "pair": "oddspedia|cricket",
-   "price_at_log": 0.39,
-   "route": {
-    "market": "KXT20MATCH-26OCT041200CSAEMEWPR",
-    "outcome": "CSA Emerging",
-    "outcome_side": "yes",
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT041200CSAEMEWPR",
-   "source": "oddspedia",
-   "sport": "cricket",
-   "status": "miss"
-  },
-  "2026-10-04|Lions|Warriors (SA)|Warriors (SA) to win \u00b7 Oddspedia community tips": {
-   "away": "Warriors (SA)",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-04",
-   "edge_at_log": null,
-   "first_seen": "2026-10-04",
-   "headline": "Warriors (SA) to win",
-   "home": "Lions",
-   "id": "2026-10-04|Lions|Warriors (SA)|Warriors (SA) to win \u00b7 Oddspedia community tips",
-   "kickoff": "2026-10-04T16:00Z",
-   "lane": "production",
-   "league": "Cricket",
-   "match": "Lions v Warriors (SA)",
-   "pair": "oddspedia|cricket",
-   "price_at_log": 0.43,
-   "route": {
-    "market": "KXT20MATCH-26OCT041200LIOWAR",
-    "outcome": "Warriors (SA)",
-    "outcome_side": "yes",
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT041200LIOWAR",
-   "source": "oddspedia",
-   "sport": "cricket",
-   "status": "price"
-  },
-  "2026-10-04|Malta|Andorra|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Andorra",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-04",
-   "edge_at_log": null,
-   "first_seen": "2026-10-04",
-   "headline": "Over 1.5 goals",
-   "home": "Malta",
-   "id": "2026-10-04|Malta|Andorra|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-04T16:00Z",
-   "lane": "production",
-   "league": "UEFA Nations League",
-   "match": "Malta v Andorra",
-   "pair": "o15_ranked|soccer_o15_intl",
-   "price_at_log": 0.61,
-   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT04MLTAND-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15_intl",
-   "status": "miss"
-  },
   "2026-10-05|Garden Route Badgers|Limpopo Impalas|Limpopo Impalas to win \u00b7 Oddspedia community tips": {
    "away": "Limpopo Impalas",
    "bet": {
@@ -1017,6 +936,30 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
+  "2026-10-11|Como|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "AS Roma",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "AS Roma"
+   },
+   "date": "2026-10-11",
+   "edge_at_log": null,
+   "first_seen": "2026-10-09",
+   "headline": "AS Roma to score 1+",
+   "home": "Como",
+   "id": "2026-10-11|Como|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-11T10:30Z",
+   "lane": "production",
+   "league": "Serie A",
+   "match": "Como v AS Roma",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.82,
+   "sandbox_quote": "team1_form_l5:KXSERIEATEAMTOTAL-26OCT11COMROM-ROM1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "miss"
+  },
   "2026-10-11|FC Cologne|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Borussia M\u00f6nchengladbach",
    "bet": {
@@ -1031,8 +974,6 @@
    "id": "2026-10-11|FC Cologne|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
    "kickoff": "2026-10-11T13:30Z",
    "lane": "production",
-   "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
    "league": "Bundesliga",
    "match": "FC Cologne v Borussia M\u00f6nchengladbach",
    "pair": "bund_o35|soccer_u35",
@@ -1040,7 +981,7 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT11KOEBMG-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-11|Lecce|Bologna|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Bologna",
@@ -1056,8 +997,6 @@
    "id": "2026-10-11|Lecce|Bologna|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-11T13:00Z",
    "lane": "production",
-   "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
    "league": "Serie A",
    "match": "Lecce v Bologna",
    "pair": "o15_ranked|soccer_o15",
@@ -1065,7 +1004,7 @@
    "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT11LECBFC-2",
    "source": "o15_ranked",
    "sport": "soccer_o15",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-11|Real Betis|Osasuna|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Osasuna",
@@ -1082,62 +1021,12 @@
    "kickoff": "2026-10-11T16:30Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
+   "last_seen_at": "2026-10-11T16:11:53+00:00",
    "league": "La Liga",
    "match": "Real Betis v Osasuna",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.78,
    "sandbox_quote": "o15_ranked:KXLALIGATOTAL-26OCT11RBBOSA-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
-  "2026-10-11|SC Freiburg|Schalke 04|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Schalke 04",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-11",
-   "edge_at_log": null,
-   "first_seen": "2026-10-07",
-   "headline": "Over 3.5 goals",
-   "home": "SC Freiburg",
-   "id": "2026-10-11|SC Freiburg|Schalke 04|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-11T15:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
-   "league": "Bundesliga",
-   "match": "SC Freiburg v Schalke 04",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.39,
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT11SCFSCH-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-11|Sassuolo|AC Milan|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "AC Milan",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-11",
-   "edge_at_log": null,
-   "first_seen": "2026-10-07",
-   "headline": "Over 1.5 goals",
-   "home": "Sassuolo",
-   "id": "2026-10-11|Sassuolo|AC Milan|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-11T16:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
-   "league": "Serie A",
-   "match": "Sassuolo v AC Milan",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.8,
-   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT11SASACM-2",
    "source": "o15_ranked",
    "sport": "soccer_o15",
    "status": "pending"
@@ -1182,7 +1071,7 @@
    "kickoff": "2026-10-11T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
+   "last_seen_at": "2026-10-11T16:11:53+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LA Galaxy",
    "pair": "team1_form_l5|soccer_team1",
@@ -1207,7 +1096,7 @@
    "kickoff": "2026-10-12T19:15Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T12:28:47+00:00",
+   "last_seen_at": "2026-10-11T16:11:53+00:00",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Alverca",
    "pair": "o15_ranked|soccer_o15",
@@ -1225,10 +1114,10 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
-   "sandbox_clv": -0.0157,
-   "sandbox_n": 7,
-   "sandbox_roi": 0.35,
-   "sandbox_roi_fee": 0.3069
+   "sandbox_clv": -0.015,
+   "sandbox_n": 8,
+   "sandbox_roi": 0.1812,
+   "sandbox_roi_fee": 0.1436
   },
   "commod_fav_band|commodities_fav": {
    "by_hand": "2026-10-09",
@@ -1280,10 +1169,10 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
-   "sandbox_clv": -0.015,
-   "sandbox_n": 2,
-   "sandbox_roi": 0.2908,
-   "sandbox_roi_fee": 0.2707
+   "sandbox_clv": -0.0233,
+   "sandbox_n": 3,
+   "sandbox_roi": 0.311,
+   "sandbox_roi_fee": 0.2896
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -1313,10 +1202,10 @@
    "promoted_at": "2026-09-18T00:43:21+00:00",
    "ready_at": "2026-09-18T00:51:24+00:00",
    "route": "moved by hand on 2026-09-18",
-   "sandbox_clv": -0.0061,
-   "sandbox_n": 18,
-   "sandbox_roi": -0.0209,
-   "sandbox_roi_fee": -0.031
+   "sandbox_clv": -0.0068,
+   "sandbox_n": 19,
+   "sandbox_roi": -0.0724,
+   "sandbox_roi_fee": -0.082
   },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
@@ -1355,5 +1244,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 6,
- "updated_at": "2026-10-11T12:28:47+00:00"
+ "updated_at": "2026-10-11T16:11:53+00:00"
 }
