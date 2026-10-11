@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-11T01:18:08+00:00",
+ "board_built_at": "2026-10-11T01:53:38+00:00",
  "leads": {
   "2026-10-04|CSA Emerging|Western Province|CSA Emerging to win \u00b7 Oddspedia community tips": {
    "away": "Western Province",
@@ -900,6 +900,30 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
+  "2026-10-10|New England Revolution|Seattle Sounders FC|Seattle Sounders FC to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Seattle Sounders FC",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Seattle Sounders FC"
+   },
+   "date": "2026-10-10",
+   "edge_at_log": null,
+   "first_seen": "2026-10-09",
+   "headline": "Seattle Sounders FC to score 1+",
+   "home": "New England Revolution",
+   "id": "2026-10-10|New England Revolution|Seattle Sounders FC|Seattle Sounders FC to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-10T23:30Z",
+   "lane": "production",
+   "league": "MLS",
+   "match": "New England Revolution v Seattle Sounders FC",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.77,
+   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26OCT10NESEA-SEA1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "hit"
+  },
   "2026-10-10|RB Leipzig|Eintracht Frankfurt|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Eintracht Frankfurt",
    "bet": {
@@ -1009,7 +1033,7 @@
    "kickoff": "2026-10-11T10:30Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "Serie A",
    "match": "Como v AS Roma",
    "pair": "team1_form_l5|soccer_team1",
@@ -1034,7 +1058,7 @@
    "kickoff": "2026-10-11T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "Bundesliga",
    "match": "FC Cologne v Borussia M\u00f6nchengladbach",
    "pair": "bund_o35|soccer_u35",
@@ -1059,7 +1083,7 @@
    "kickoff": "2026-10-11T13:00Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "Serie A",
    "match": "Lecce v Bologna",
    "pair": "o15_ranked|soccer_o15",
@@ -1084,7 +1108,7 @@
    "kickoff": "2026-10-11T16:30Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "La Liga",
    "match": "Real Betis v Osasuna",
    "pair": "o15_ranked|soccer_o15",
@@ -1109,7 +1133,7 @@
    "kickoff": "2026-10-11T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "Bundesliga",
    "match": "SC Freiburg v Schalke 04",
    "pair": "bund_o35|soccer_u35",
@@ -1134,7 +1158,7 @@
    "kickoff": "2026-10-11T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "Serie A",
    "match": "Sassuolo v AC Milan",
    "pair": "o15_ranked|soccer_o15",
@@ -1160,7 +1184,7 @@
    "kickoff": "2026-10-11T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LA Galaxy",
    "pair": "team1_form_l5|soccer_team1",
@@ -1185,7 +1209,7 @@
    "kickoff": "2026-10-12T19:15Z",
    "lane": "production",
    "last_seen": "2026-10-11",
-   "last_seen_at": "2026-10-11T01:18:08+00:00",
+   "last_seen_at": "2026-10-11T01:53:38+00:00",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Alverca",
    "pair": "o15_ranked|soccer_o15",
@@ -1291,10 +1315,10 @@
    "promoted_at": "2026-09-18T00:43:21+00:00",
    "ready_at": "2026-09-18T00:51:24+00:00",
    "route": "moved by hand on 2026-09-18",
-   "sandbox_clv": -0.0056,
-   "sandbox_n": 16,
-   "sandbox_roi": -0.0515,
-   "sandbox_roi_fee": -0.0609
+   "sandbox_clv": -0.0047,
+   "sandbox_n": 17,
+   "sandbox_roi": -0.0309,
+   "sandbox_roi_fee": -0.041
   },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
@@ -1333,5 +1357,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 6,
- "updated_at": "2026-10-11T01:18:08+00:00"
+ "updated_at": "2026-10-11T01:53:38+00:00"
 }
