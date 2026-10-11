@@ -375,6 +375,20 @@ finally:
 check("and paper still works", bool(X._headers().get("APCA-API-KEY-ID")), True)
 
 
+print("\nrisk limits can be overridden, but never silently")
+check("a sane override is taken", X._num("T_OVR_A", 5.0), 5.0)
+os.environ["T_OVR_A"] = "250"
+check("  from the environment", X._num("T_OVR_A", 5.0), 250.0)
+os.environ["T_OVR_A"] = "0"
+check("zero falls back to the default (0 would size every order to nothing)",
+      X._num("T_OVR_A", 5.0), 5.0)
+os.environ["T_OVR_A"] = "-10"
+check("a negative falls back too", X._num("T_OVR_A", 5.0), 5.0)
+os.environ["T_OVR_A"] = "not a number"
+check("so does nonsense, rather than crashing the run", X._num("T_OVR_A", 5.0), 5.0)
+os.environ.pop("T_OVR_A", None)
+
+
 print("\nreconciliation: what the broker filled v what the record says")
 # Every net return and every verdict in the lane rests on COST_BPS_PER_SIDE being roughly
 # right, and nothing measured it until now. The sign convention is the part that is easy to

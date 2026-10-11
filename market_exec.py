@@ -50,14 +50,26 @@ LIVE_HOST = "https://api.alpaca.markets"
 
 # Sizing. Equal notional per position, because the ledger grades every trade as one equally
 # weighted result; sizing by conviction here would measure something the record does not.
-NOTIONAL_USD = 1000.0
-MAX_POSITIONS = 60           # 60 x $1000 against ~$95k leaves room and never needs margin
-MAX_NEW_PER_DAY = 20         # a bad data day cannot turn into 400 orders
+def _num(env, default):
+    """An override from the environment, or the default. Always PRINTED when it differs, because
+    a risk limit that changed silently is worse than one that was never there."""
+    try:
+        v = float(os.environ[env])
+        return v if v > 0 else default
+    except (KeyError, ValueError):
+        return default
+
+
+# Sizing. Overridable from the environment so going live can start small without a code change
+# — the point of readying this now is that switching is one act, not another build.
+NOTIONAL_USD = _num("ALPACA_NOTIONAL_USD", 1000.0)
+MAX_POSITIONS = int(_num("ALPACA_MAX_POSITIONS", 60))   # 60 x $1000 never needs margin at ~$95k
+MAX_NEW_PER_DAY = int(_num("ALPACA_MAX_NEW_PER_DAY", 20))   # a bad data day is not 400 orders
 
 # Loss caps. Checked on every run, in paper as well as live, so the thing that is supposed to
 # stop real money has been exercised for months before it ever sees any.
-MAX_DAILY_LOSS_PCT = 3.0     # against the previous close's equity (Alpaca's last_equity)
-MAX_DRAWDOWN_PCT = 15.0      # against the high-water mark this module records as it goes
+MAX_DAILY_LOSS_PCT = _num("ALPACA_MAX_DAILY_LOSS_PCT", 3.0)   # v the previous close's equity
+MAX_DRAWDOWN_PCT = _num("ALPACA_MAX_DRAWDOWN_PCT", 15.0)      # v a high-water mark kept here
 
 # A BREACH STOPS BUYING AND NEVER STOPS SELLING. A cap that blocked exits would lock the
 # account into the losing positions it exists to limit, and each rule's exit is the only thing
@@ -633,6 +645,49 @@ def main(argv=None):
         print("no Alpaca credentials (~/.alpaca-credentials) — nothing to do")
         return 0
 
+    if "--live-check" in argv:
+        # Read-only. Says whether the live path WOULD work, and places nothing whatever happens.
+        print("live readiness")
+        ok = True
+        if not live_configured():
+            print(f"  NO    live keys: add {LIVE_KEY_NAMES[0]} and {LIVE_KEY_NAMES[1]} to "
+                  f"~/.alpaca-credentials (0600)")
+            ok = False
+        else:
+            print("  yes   live keys are stored")
+            prev = os.environ.get("ALPACA_LIVE")
+            os.environ["ALPACA_LIVE"] = "1"
+            try:
+                a = account()
+                eq, cash = float(a.get("equity") or 0), float(a.get("cash") or 0)
+                print(f"  yes   live account reachable: {a.get('status')} "
+                      f"equity=${eq:,.2f} cash=${cash:,.2f}")
+                if a.get("trading_blocked") or a.get("account_blocked"):
+                    print("  NO    the broker has trading BLOCKED on this account")
+                    ok = False
+                if cash < NOTIONAL_USD:
+                    print(f"  NO    cash ${cash:,.2f} is under one position (${NOTIONAL_USD:,.2f}) "
+                          f"— fund it, or lower ALPACA_NOTIONAL_USD")
+                    ok = False
+                n = int(cash // NOTIONAL_USD) if NOTIONAL_USD else 0
+                print(f"        at ${NOTIONAL_USD:,.0f} a position that funds {n} of the "
+                      f"{MAX_POSITIONS}-position cap")
+            except Exception as e:
+                print(f"  NO    live account unreachable: {type(e).__name__}: {str(e)[:160]}")
+                ok = False
+            finally:
+                if prev is None:
+                    os.environ.pop("ALPACA_LIVE", None)
+                else:
+                    os.environ["ALPACA_LIVE"] = prev
+        armed = os.environ.get("ALPACA_LIVE") == "1"
+        print(f"  {'ARMED' if armed else 'no   '} ALPACA_LIVE is {'SET — this host trades LIVE' if armed else 'not set, so every run is paper'}")
+        print(f"        caps: ${NOTIONAL_USD:,.0f}/trade, {MAX_POSITIONS} positions, "
+              f"{MAX_NEW_PER_DAY} new/day, loss {MAX_DAILY_LOSS_PCT:.1f}%/day "
+              f"{MAX_DRAWDOWN_PCT:.1f}% drawdown")
+        print(f"\n{'READY — arm with Environment=ALPACA_LIVE=1 in edge-market.service' if ok else 'NOT READY'}")
+        return 0 if ok else 1
+
     if "--reconcile" in argv:
         rep = reconcile()
         print_reconcile(rep)
@@ -660,6 +715,11 @@ def main(argv=None):
     dry = "--place" not in argv
     rules_ok, skipped = executable_rules()
     print(f"host      : {host()}{'  *** LIVE ***' if live() else '  (paper)'}")
+    od = [f"{k}={os.environ[k]}" for k in
+          ("ALPACA_NOTIONAL_USD", "ALPACA_MAX_POSITIONS", "ALPACA_MAX_NEW_PER_DAY",
+           "ALPACA_MAX_DAILY_LOSS_PCT", "ALPACA_MAX_DRAWDOWN_PCT") if k in os.environ]
+    if od:
+        print(f"overrides : {', '.join(od)}")
     print(f"rules     : {len(rules_ok)} executable — {', '.join(sorted(rules_ok))}")
     for name, why in sorted(skipped.items()):
         print(f"    skip  {name:22} {why}")
