@@ -98,10 +98,12 @@ eq(TN.record_tile(dict(n=5, won=3), "record · W–L"),
    '<div class="tile"><b>3–2</b><span>record · W–L</span></div>', "with no no-result bet the label is plain")
 eq(TN.record_tile({}, "record · W–L"), '<div class="tile"><b>—</b><span>record · W–L</span></div>',
    "nothing settled is an em dash")
-for src in ("cricket_cards.py", "tennis_cards.py", "crypto_build.py", "commodities_build.py"):
+template = open(os.path.join(ROOT, "sport_page.py"), encoding="utf-8").read()
+ok("record_tile(" in template, "the one sport template builds its record tile through the helper")
+for src in ("cricket_build.py", "tennis_build.py", "crypto_build.py", "commodities_build.py", "soccer_build.py"):
     text = open(os.path.join(ROOT, src), encoding="utf-8").read()
-    ok("record_tile(" in text and "<b>{B.esc(rec)}</b>" not in text and "<b>{esc(TN.record_text(a))}</b>" not in text,
-       f"{src} builds its record tile through the helper")
+    ok("SP.page(" in text and "<b>{B.esc(rec)}</b>" not in text and "<b>{esc(TN.record_text(a))}</b>" not in text,
+       f"{src} draws its page through the template")
 
 print("\nthe sub-nav vocabulary")
 import soccer_build, tennis_build, cricket_build, crypto_build, commodities_build

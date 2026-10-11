@@ -77,8 +77,9 @@ def _has_toggle(path):
 
 # One link, or a breadcrumb in that slot. The section nav must not be rendered.
 # Every page, the sport pages included, carries the one shell: brand, page
-# pills, stamp. The NBA board and Trading have one section, so no section nav.
-_NO_TOC = {"trading.html", "nba.html", "archive/index.html"}
+# pills, stamp. Trading has one section, so no section nav; the NBA board's
+# Upcoming / Results / Teams nav is the shared one since the phase-3 template.
+_NO_TOC = {"trading.html", "archive/index.html"}
 
 
 def _expects_toc(path):

@@ -111,7 +111,7 @@ if playwright is not None:
                     assert page.locator("#method > details").get_attribute("open") is None
                 if sport == "crypto":
                     assert page.locator("#method details[open]").count() == 0
-                    assert page.locator(".tn-pick.cr-pick").count() == 5
+                    assert page.locator(".sp-tabs").count() == 1 and page.locator(".sp-pick").count() == 0
                     assert page.locator(".crypto-hero, .crypto-progress, .crypto-coin").count() == 0
                 page.close()
         page = browser.new_page()

@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""Match identity, each pick's link, the day windows, the empty line, and phone layout."""
+"""Match identity, each pick's link, the tabs' windows, the empty state, and phone layout."""
 import datetime
-import os
 import re
 from pathlib import Path
 from urllib.parse import urlparse
 
 import sandbox_sources as S
+import sport_page as SP
 import tennis_cards as C
 import tennis_build
-import site_chrome
 
 NOW = datetime.datetime(2026, 10, 7, 12, tzinfo=datetime.timezone.utc)   # 7 AM CT
 
@@ -44,46 +43,57 @@ quotes = [quote('market-a', rows[0]['name'], 'Alpha v Beta', 24),
           quote('lost-yesterday', rows[0]['name'], 'Lost v Yesterday', -20, status='lost', result='b', pnl=-100.0)]
 d = {'quotes': quotes}
 
-picks = C.pick_rows(d, rows, NOW)
-# Every open pick, plus the one settled today. Yesterday's loss is not a line.
-assert [q['id'] for _r, q in picks] == [
-    'past-day', 'won-today', 'past-today', 'today', 'market-a', 'market-b', 'later', 'unknown'], \
-    [q['id'] for _r, q in picks]
+events = C.events(d, rows, NOW)
+nxt, later, live, done = SP.bucket(events, NOW)
+# The same contest picked by two rules is one event with two picks, each linked to its
+# own market and each naming its own side. Labels are stored with ' v '; the page prints ' vs '.
+alpha = [e for e in nxt if e['label'] == 'Alpha vs Beta']
+assert len(alpha) == 1 and len(alpha[0]['picks']) == 2, [(e['label'], len(e['picks'])) for e in nxt]
+assert sorted((p['href'], p['text']) for p in alpha[0]['picks']) == [
+    ('https://polymarket.us/event/market-a', 'Alpha'), ('https://polymarket.us/event/market-b', 'Beta')]
+assert ' v ' not in ' '.join(e['label'] for e in events)
+assert [e['label'] for e in nxt] == ['Today vs Future', 'Alpha vs Beta', 'Unknown vs Time'], [e['label'] for e in nxt]
+assert [e['label'] for e in later] == ['Later vs Match']
+assert [e['label'] for e in live] == ['Old vs Match', 'Earlier vs Today']
+assert [e['label'] for e in done] == ['Won vs Today', 'Lost vs Yesterday']
+assert SP.pick_state(live[0]['picks'][0], NOW) == ('unsettled · 30h', 'is-late')
+assert SP.pick_state(live[1]['picks'][0], NOW) == ('in play', 'is-live')
+assert SP.pick_state(nxt[2]['picks'][0], NOW) == ('upcoming', 'is-next')
 
-html = C.picks_html(d, rows, NOW)
-# The same contest picked by two rules is two lines, each linked to its own market and
-# each naming its own side. Labels are stored with ' v '; the page prints ' vs '.
-assert html.count('Alpha vs Beta') == 2 and ' v ' not in re.sub(r'<[^>]+>', ' ', html)
-for market, side in (('market-a', 'Alpha'), ('market-b', 'Beta')):
-    line = re.search(r'<div class="tn-pick [^"]*"[^>]*>(?:(?!tn-pick).)*?href="https://polymarket.us/event/'
-                     + market + r'".*?</span></div>', html, re.S).group()
-    assert f'<span class="tn-pos"><b>{side}</b></span>' in line, line
-days = re.findall(r'<div class="tn-day">([^<]+)</div>', html)
-assert days == ['Oct 6', 'Today · Oct 7', 'Tomorrow · Oct 8', 'Oct 10', 'Time unconfirmed'], days
-states = re.findall(r'<span class="tn-state ([^"]+)">([^<]+)</span>', html)
-assert states == [('is-late', 'unsettled · 30h'), ('is-won', 'W'), ('is-live', 'in play'),
-                  ('is-next', 'upcoming'), ('is-next', 'upcoming'), ('is-next', 'upcoming'),
-                  ('is-next', 'upcoming'), ('is-next', 'upcoming')], states
-assert '<span class="tn-time">time TBC</span>' in html
-assert 'No open pick' not in html
+# The page on the fixture's own rows (the registry no longer lists the older band as a
+# live lane, so the built page would carry one rule): the template takes rows directly.
+spec = SP.spec(family='Tennis', key='tennis', title='Edge Machine · Tennis', description='t', scope='s',
+               rows=rows, events=C.events, rule_name=C.rule_name, market=C.market,
+               definition=C.definition, recent=C.recent_html, method=C.method(''))
+html = SP.page(spec, d, {'pairs': {}}, NOW, rows=rows)
+ev = re.search(r'<section id="events"[^>]*>(.*?)(?=<section id="|<footer)', html, re.S).group(1)
+days = re.findall(r'<h4 class="sp-day-head">([^<]+)', ev.split('id="events-live"', 1)[0])
+assert days == ['Wed Oct 7', 'Thu Oct 8', 'Sat Oct 10'], days
+# A pick with a date but no readable time sits under its day, as time TBC.
+assert ev.find('Wed Oct 7') < ev.find('Unknown vs Time') < ev.find('Thu Oct 8')
+states = re.findall(r'<span class="sp-state ([^"]+)">([^<]+)</span>', ev)
+assert sorted(states) == sorted([('is-late', 'unsettled · 30h'), ('is-won', 'W'), ('is-live', 'in play'),
+                                 ('is-lost', 'L'), ('is-next', 'upcoming'), ('is-next', 'upcoming'),
+                                 ('is-next', 'upcoming'), ('is-next', 'upcoming'), ('is-next', 'upcoming')]), states
+assert '<span class="sp-tbc">time TBC</span>' in ev
+assert 'data-empty="next"' not in ev
 
-# Settled today and nothing open: the lines stay, and the one-line empty state follows.
-quiet = C.picks_html({'quotes': [quotes[7]]}, rows, NOW)
-assert 'Won vs Today' in quiet and quiet.count('No open pick · next check ') == 1, quiet
-nothing = C.picks_html({'quotes': []}, rows, NOW)
-assert nothing.startswith('<p class="tn-empty">No open pick · next check ') and 'tn-picks' not in nothing
+# Settled only: the Next 24h and In progress tabs say why they are empty, Completed starts selected.
+quiet = tennis_build.build({'quotes': [quotes[7]]}, {'pairs': {}}, NOW)
+assert 'Won vs Today' in quiet and quiet.count('No pick starts in the next 24 hours') == 1, quiet.count('No pick starts')
+assert 'next check ' in quiet and 'data-default-tab="done"' in quiet
+nothing = tennis_build.build({'quotes': []}, {'pairs': {}}, NOW)
+assert 'data-empty="next"' in nothing and 'data-empty="done"' in nothing and 'class="sp-pick' not in nothing
 
-empty = tennis_build.build({'quotes': []}, {'pairs': {}}, NOW)
 for anchor in ('events', 'rules', 'method'):
-    assert f'id="{anchor}"' in empty, anchor
-assert 'href="#events"' in empty and 'href="#rules"' in empty and 'href="#method"' in empty
+    assert f'id="{anchor}"' in nothing, anchor
+assert 'href="#events"' in nothing and 'href="#rules"' in nothing and 'href="#method"' in nothing
 
 from require_browser import require_browser
 playwright = require_browser('test_tennis_match_center.py')
 if playwright is not None:
-    import sandbox_build as B
-    # The publish path labels every cell for the phone cards; judge that page.
-    full = B.label_cells(tennis_build.build(d, {'pairs': {}}, NOW))
+    # The published shape: the registry's own rows, so the Sandbox table is on the page.
+    full = tennis_build.build(d, {'pairs': {}}, NOW)
     with playwright() as p:
         browser = p.chromium.launch(channel='chrome', headless=True)
         page = browser.new_page()
@@ -98,14 +108,15 @@ if playwright is not None:
         page.goto('http://fixture.local/tennis.html', wait_until='load')
         for width in (1280, 390, 320):
             page.set_viewport_size({'width': width, 'height': 800})
-            assert page.locator('#events .tn-pick').first.is_visible()
+            assert page.locator('#events-next .sp-pick').first.is_visible()
             assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), width
-            # The match list stays a flat list at every width: one grid row per pick.
-            assert page.locator('#events .tn-pick').count() == full.count('class="tn-pick ') > 0
-            assert page.evaluate("getComputedStyle(document.querySelector('.tn-pick')).display") == 'grid'
-            # The rules table is cards under 760px, a table above it.
+            # The events stay a flat list at every width: one grid row per pick.
+            assert page.locator('#events-next .sp-pick:visible').count() == 3, page.locator('#events-next .sp-pick:visible').count()
+            assert page.evaluate("getComputedStyle(document.querySelector('.sp-pick')).display") == 'grid'
+            # The Sandbox table is cards under 760px, a table above it.
+            page.locator('details.sp-sandbox').evaluate('e => e.open = true')
             thead_shown = page.locator('#rules table thead').first.is_visible()
             assert thead_shown == (width > 760), (width, thead_shown)
             assert page.locator('#method > details').get_attribute('open') is None
         browser.close()
-print('PASS tennis identity, per-pick links, day windows, empty line, and phone layout')
+print('PASS tennis identity, per-pick links, the tabs, the empty state, and phone layout')
