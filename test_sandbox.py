@@ -2962,27 +2962,34 @@ _bq = {(q["source"], q["market_id"]): q for q in _db["quotes"]}
 ok(("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS") not in _bq,
    "btts_form_l10 is paused: publish enters nothing, and the selector above still finds the match")
 ok(not any(q["bet"] for q in _db["quotes"] if q["source"] == "btts_market"), "the market's own price never bets")
+# 2026-10-11: the Clubs scope is retired and FADED. btts_form_l10_fade logs the same match
+# the selector finds, on the No side at the No ask.
 S.CHALLENGERS = {"btts_market": lambda sp: S.fetch_btts_market(sp, universe={"soccer_btts": _brows}),
-                 "btts_form_l10": lambda sp: S.fetch_btts_form_l10(sp, universe={"soccer_btts": _brows}, fixtures=_fx_all)}
+                 "btts_form_l10_fade": lambda sp: S.fetch_btts_form_l10_fade(sp, universe={"soccer_btts": _brows}, fixtures=_fx_all)}
 try:
-    with _without_pause("btts_form_l10"):
-        _db_on = {"quotes": [], "meta": {}, "coverage": {}}
-        _real_started = T._started
-        T._started = lambda r, _now, _f=_real_started: _f(r, _b0)
-        try:
-            T.publish(_db_on, {"soccer_btts": _brows}, {}, verbose=False)
-        finally:
-            T._started = _real_started
+    _db_on = {"quotes": [], "meta": {}, "coverage": {}}
+    _real_started = T._started
+    T._started = lambda r, _now, _f=_real_started: _f(r, _b0)
+    try:
+        T.publish(_db_on, {"soccer_btts": _brows}, {}, verbose=False)
+    finally:
+        T._started = _real_started
 finally:
     S.CHALLENGERS = _saved_ch4
 _bq_on = {(q["source"], q["market_id"]): q for q in _db_on["quotes"]}
-_rq = _bq_on[("btts_form_l10", "KXEPLBTTS-26SEP15HOTWAR-BTTS")]
-eq((_rq["bet"], _rq["pick"], _rq["price"]), (True, "a", 0.62),
-   "with btts_form_l10 re-enabled, the rule's bet is booked at the Yes ask")
+_rq = _bq_on[("btts_form_l10_fade", "KXEPLBTTS-26SEP15HOTWAR-BTTS")]
+_hot = next(r for r in _brows if r["market_id"] == "KXEPLBTTS-26SEP15HOTWAR-BTTS")
+eq((_rq["bet"], _rq["pick"], _rq["price"]), (True, "b", _hot["price_b"]),
+   "the faded rule books the same match on No, at the No ask")
 ok(not any(q["bet"] for q in _db_on["quotes"] if q["source"] == "btts_market"),
-   "the market's own price never bets, paused or not")
-ok(S.lane_paused("btts_form_l10", "soccer_btts"),
-   "the re-enable check put btts_form_l10 back on the pause list")
+   "the market's own price never bets")
+ok("soccer_btts" not in S.SOURCES["btts_form_l10"]["sports"]
+   and "soccer_btts" in S.SOURCES["btts_form_l10"]["retired_sports"],
+   "the follow side's Clubs scope is retired, its reason recorded")
+eq(S.SOURCES["btts_form_l10_fade"]["sports"], ["soccer_btts"], "the fade runs on Clubs only")
+eq(S._other_side([dict(market_id="x", pick="a"), dict(market_id="y", pick="b"), dict(market_id="z")]),
+   [dict(market_id="x", pick="b"), dict(market_id="y", pick="a")],
+   "the other side flips a and b and drops a pick with no side")
 
 # population baseline: rule 2/2 at 0.62 against backing Yes on all 4 matches (2 won at 0.62, 2 lost at 0.55)
 def _pb(mid, src, won, price, bet):
@@ -4654,9 +4661,12 @@ eq([p["market_id"] for p in S.fetch_o15_form_l10("soccer_o15_cup", universe=_cro
    ["KXEFLCUPTOTAL-26SEP15GOALEA-2"], "the Over 1.5 rule reads the cup domain with the same thresholds")
 eq((S._form_league({"comp": "cup", "league": "EFL Cup"}), S._form_league({"league": "Serie A"})),
    (None, "Serie A"), "cup and international pairs count form across all competitions; league pairs as before")
-for _src in ("o15_form_l10", "team1_form_l5", "team2_form_l10", "u35_low_scoring", "p05_unbeaten", "btts_form_l10"):
+for _src in ("o15_form_l10", "team1_form_l5", "team2_form_l10", "u35_low_scoring", "p05_unbeaten"):
     _base = S.SOURCES[_src]["sports"][0]
     eq(S.SOURCES[_src]["sports"], [_base, _base + "_cup", _base + "_intl"], f"{_src} runs as league, Cups and Internationals pairs")
+# btts_form_l10's Clubs scope was retired and faded on 2026-10-11; its twins keep running.
+eq(S.SOURCES["btts_form_l10"]["sports"], ["soccer_btts_cup", "soccer_btts_intl"],
+   "btts_form_l10 runs its Cups and Internationals pairs; Clubs is now btts_form_l10_fade")
 eq(S.SPORTS["soccer_o15_intl"], "Soccer · Over 1.5 · Internationals", "twins are labelled for review under Soccer")
 ok(not any("_cup" in k for k in T.PAIR_OVERRIDES), "no cup pair is in Production")
 ok("team1_form_l5|soccer_team1_intl" in T.PAIR_OVERRIDES

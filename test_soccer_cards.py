@@ -88,7 +88,7 @@ def _fixture():
     quotes += _settled("o15_form_l10", "soccer_o15", n=6, won=4)
     quotes += _settled("o15_ranked", "soccer_o15", n=4, won=1, price=0.70)
     quotes += _settled("o15_form_l10", "soccer_o15_cup", n=3, won=2)
-    quotes += _settled("btts_form_l10", "soccer_btts", n=5, won=2, price=0.48)
+    quotes += _settled("btts_form_l10_fade", "soccer_btts", n=5, won=2, price=0.48)
     quotes += _settled("corners_under", "soccer_corners", n=4, won=3, price=0.52)
     soon = [
         (1, "Alpha v Beta soonest"),
@@ -102,7 +102,7 @@ def _fixture():
     quotes.append(_quote(
         200, "o15_ranked", "soccer_o15", "open", 20, "Lambda v Mu ranked"))
     quotes.append(_quote(
-        300, "btts_form_l10", "soccer_btts", "open", 40, "Nu v Xi btts"))
+        300, "btts_form_l10_fade", "soccer_btts", "open", 40, "Nu v Xi btts"))
     # Open, past 48 hours: listed on its own day like any other open pick.
     quotes.append(_quote(
         400, "corners_under", "soccer_corners", "open", 80, "Omicron v Pi later"))
@@ -256,7 +256,7 @@ eq(C.pick_text(over), "Over 1.5", "a Yes on an over market is 'Over 1.5'")
 eq(C.pick_text(dict(over, pick="b")), "Under 1.5", "a No on an over market is 'Under 1.5'")
 under35 = _quote(901, "u35_low_scoring", "soccer_u35", "open", 30, "Genoa v Fiorentina: over 3.5 goals")
 eq(C.pick_text(under35), "Under 3.5", "the under-3.5 rule's No reads 'Under 3.5'")
-btts = _quote(902, "btts_form_l10", "soccer_btts", "open", 30, "City v United: both teams to score")
+btts = _quote(902, "btts_form_l10_fade", "soccer_btts", "open", 30, "City v United: both teams to score")
 btts.update(pick="a", url="https://kalshi.com/markets/btts")
 eq(C.pick_text(btts), "BTTS yes", "a Yes on both teams to score is 'BTTS yes'")
 eq(C.pick_text(dict(btts, pick="b")), "BTTS no", "a No on both teams to score is 'BTTS no'")

@@ -218,6 +218,28 @@ SOURCES = {
              "outcomes, fixed now. One city-day is one outcome, because the buckets of a "
              "single ladder cannot all happen. Do not retune the side, the stake, or this "
              "number before that many independent outcomes have settled."),
+    "btts_form_l10_fade": dict(
+        label="BTTS form rule, faded · Clubs (back No)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_btts"], baseline="population",
+        note="REGISTERED 2026-10-11 by Olu, before it logged anything. The other side of "
+             "btts_form_l10 on Clubs: the same matches (both teams saw both teams score in 7+ "
+             "of their last 10 competitive games, ESPN results strictly before kickoff), "
+             "backing NO at the Kalshi No ask instead of Yes. Why: the follow side went 11-10 "
+             "on 21 settled at -20.7% after fees, and backing No on those same bets made +19.7% "
+             "after fees per contract (+20.4% at $100 a bet), z +0.91. That record is the "
+             "reason for looking and counts toward nothing here; this record starts empty. "
+             "Nothing about the selection is retuned: only the side changes."),
+    "team2_ranked_fade": dict(
+        label="Favourite to score 2+, ranked, faded · Internationals (back under 2)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_team2_intl"], baseline="population",
+        note="REGISTERED 2026-10-11 by Olu, before it logged anything. The other side of "
+             "team2_ranked on Internationals: the same day's top 2 favourites by margin (5pp+, "
+             "low blocks skipped), backing NO on 'favourite scores 2+' at the Kalshi No ask. "
+             "Why: the follow side went 8-17 on 25 settled at -42.6% after fees, and backing "
+             "No on those same bets made +19.0% after fees per contract (+20.3% at $100 a bet), "
+             "z +1.30. That record is the reason for looking and counts toward nothing here; "
+             "this record starts empty. Nothing about the selection is retuned: only the side "
+             "changes."),
     "btts_market": dict(
         label="Kalshi BTTS price (every match)", kind="Baseline", connected=True,
         site="kalshi.com", sports=["soccer_btts", "soccer_btts_cup", "soccer_btts_intl"],
@@ -226,7 +248,12 @@ SOURCES = {
              "backing Yes on every match would have made over the same period."),
     "btts_form_l10": dict(
         label="BTTS form rule (both teams 7+ of last 10)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_btts", "soccer_btts_cup", "soccer_btts_intl"], baseline="population",
+        site="edge-machine", sports=["soccer_btts_cup", "soccer_btts_intl"], baseline="population",
+        retired_sports={
+            "soccer_btts": "Retired 2026-10-11 by Olu and FADED: 11 won, 10 lost on 21 settled, "
+                           "-20.7% after fees, while the other side of the same bets made +19.7% "
+                           "after fees per contract (+20.4% at $100 a bet). The Clubs scope now "
+                           "runs as btts_form_l10_fade, backing No, on a fresh record."},
         note="Pre-registered 2026-09-13, with no fitted number. Back Yes at the Kalshi ask on "
              "every match where BOTH teams saw both teams score in at least 7 of their last 10 "
              "competitive games (ESPN results strictly before kickoff). Found in research: "
@@ -516,7 +543,13 @@ SOURCES = {
              "The same rule selects the Leads board's over-1.5 cards since 2026-09-14."),
     "team2_ranked": dict(
         label="Favourite to score 2+, ranked by margin (top 2, 5pp+)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_team2", "soccer_team2_cup", "soccer_team2_intl"],
+        site="edge-machine", sports=["soccer_team2", "soccer_team2_cup"],
+        retired_sports={
+            "soccer_team2_intl": "Retired 2026-10-11 by Olu and FADED: 8 won, 17 lost on 25 "
+                                 "settled, -42.6% after fees, while the other side of the same "
+                                 "bets made +19.0% after fees per contract (+20.3% at $100 a "
+                                 "bet). The Internationals scope now runs as team2_ranked_fade, "
+                                 "backing No, on a fresh record."},
         baseline="population",
         note="PRE-REGISTERED 2026-09-24, before it logged anything. This market has the widest "
              "rankable spread measured here: on 11,152 priced matches the favourite scores "
@@ -7185,6 +7218,22 @@ def fetch_team2_ranked(sport, universe=None, fixtures=None):
     return out
 
 
+def _other_side(picks):
+    """The same picks with the side flipped. Anything without a plain a/b side is dropped."""
+    flip = {"a": "b", "b": "a"}
+    return [dict(p, pick=flip[p["pick"]]) for p in picks if p.get("pick") in flip]
+
+
+def fetch_team2_ranked_fade(sport, universe=None, fixtures=None):
+    """team2_ranked's picks on the other side: No on 'favourite scores 2+'. Registered 2026-10-11."""
+    return _other_side(fetch_team2_ranked(sport, universe, fixtures))
+
+
+def fetch_btts_form_l10_fade(sport, universe=None, fixtures=None):
+    """btts_form_l10's picks on the other side: BTTS No. Registered 2026-10-11."""
+    return _other_side(fetch_btts_form_l10(sport, universe, fixtures))
+
+
 def fetch_o15_ranked(sport, universe=None, fixtures=None):
     """Back over 1.5 on the day's top-ranked mismatches, under the ceiling, skipping low blocks.
 
@@ -9523,6 +9572,8 @@ CHALLENGERS = {
     "o15_cup_mismatch": fetch_o15_cup_mismatch,
     "o15_ranked": fetch_o15_ranked,
     "team2_ranked": fetch_team2_ranked,
+    "team2_ranked_fade": fetch_team2_ranked_fade,
+    "btts_form_l10_fade": fetch_btts_form_l10_fade,
     "crypto_fav_band": fetch_crypto_fav_band,
     "commod_fav_band": fetch_commod_fav_band,
     "team1_form_l5": fetch_team1_form_l5,
