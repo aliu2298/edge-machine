@@ -316,5 +316,89 @@ check("ALPACA_LIVE=1 switches hosts", X.live(), True)
 os.environ.pop("ALPACA_LIVE", None)
 check("and back", X.host(), X.PAPER_HOST)
 
+print("\nreconciliation: what the broker filled v what the record says")
+# Every net return and every verdict in the lane rests on COST_BPS_PER_SIDE being roughly
+# right, and nothing measured it until now. The sign convention is the part that is easy to
+# get backwards: ADVERSE must be positive on both sides, or a bad entry and a bad exit cancel
+# out and the report says the costs are fine.
+LED = {"trades": [
+    dict(id="r1|AAA|2026-10-09", rule="r1", symbol="AAA", entry=100.0, exit=110.0,
+         entry_day="2026-10-10", exit_day="2026-10-14", status="closed"),
+    dict(id="r2|BBB|2026-10-09", rule="r2", symbol="BBB", entry=50.0, exit=None,
+         entry_day="2026-10-10", exit_day=None, status="open"),
+], "meta": {}}
+
+
+def _ord(status="filled", px=None, qty=10, sym="AAA", side="buy"):
+    return {"status": status, "filled_avg_price": (str(px) if px is not None else None),
+            "filled_qty": str(qty), "symbol": sym, "side": side, "filled_at": "2026-10-10T13:30:00Z"}
+
+
+EX = {
+    # bought at 100.10 against a recorded open of 100.00 -> paid 10bp MORE: adverse
+    X.client_order_id("r1|AAA|2026-10-09", "buy"): _ord(px=100.10),
+    # sold at 109.89 against a recorded open of 110.00 -> got 10bp LESS: also adverse
+    X.client_order_id("r1|AAA|2026-10-09", "sell"): _ord(px=109.89, side="sell"),
+    # still working
+    X.client_order_id("r2|BBB|2026-10-09", "buy"): _ord(status="accepted", px=None, sym="BBB"),
+    # a fill no ledger trade claims
+    "em-" + str(__import__("uuid").uuid5(X.NS, "ghost|ZZZ|2026-10-09|buy")): _ord(px=7.0, sym="ZZZ"),
+}
+_rex3 = X.exchange_orders
+X.exchange_orders = lambda days=120: EX
+try:
+    rep = X.reconcile(LED)
+    by = {(r["id"], r["side"]): r for r in rep["rows"]}
+    buy = by[("r1|AAA|2026-10-09", "buy")]
+    sell = by[("r1|AAA|2026-10-09", "sell")]
+    check("paying ABOVE the recorded open is adverse (positive)", buy["slip_bps"], 10.0)
+    check("selling BELOW the recorded open is adverse (positive too)", sell["slip_bps"], 10.0)
+    check("  so a bad entry and a bad exit ADD, they do not cancel",
+          round(buy["slip_bps"] + sell["slip_bps"], 2), 20.0)
+    check("an unfilled order is counted, not measured",
+          (by[("r2|BBB|2026-10-09", "buy")]["status"],
+           by[("r2|BBB|2026-10-09", "buy")]["slip_bps"]), ("accepted", None))
+    check("summary counts fills and unfilled separately",
+          (rep["summary"]["fills"], rep["summary"]["unfilled"]), (2, 1))
+    check("the mean is over FILLED sides only", rep["summary"]["mean_bps"], 10.0)
+    check("per-rule breakdown", rep["summary"]["by_rule"]["r1"], {"n": 2, "mean_bps": 10.0})
+    check("a fill with no trade behind it is an ORPHAN",
+          [(o["symbol"], o["qty"]) for o in rep["orphans"]], [("ZZZ", 10)])
+    check("  and orphans are not folded into the cost figure", rep["summary"]["orphans"], 1)
+
+    # IN FLIGHT v ORPHAN. Between sending an order in the evening and market_track logging it
+    # after the next close, an order legitimately has no trade behind it. Calling that an orphan
+    # would cry wolf every night; calling a FILLED unmatched order "in flight" would hide the
+    # one case that means the account and the record have actually drifted.
+    GHOST = "em-" + str(__import__("uuid").uuid5(X.NS, "ghost|QQQ|2026-10-09|buy"))
+    X.exchange_orders = lambda days=120: {GHOST: _ord(status="accepted", px=None, sym="QQQ")}
+    rp = X.reconcile(LED)
+    check("a placed, unfilled, unmatched order is IN FLIGHT",
+          (rp["summary"]["in_flight"], rp["summary"]["orphans"]), (1, 0))
+    X.exchange_orders = lambda days=120: {GHOST: _ord(status="filled", px=500.0, sym="QQQ")}
+    rp = X.reconcile(LED)
+    check("the same order once FILLED is an orphan",
+          (rp["summary"]["in_flight"], rp["summary"]["orphans"]), (0, 1))
+    X.exchange_orders = lambda days=120: {GHOST: _ord(status="canceled", px=None, sym="QQQ")}
+    rp = X.reconcile(LED)
+    check("a cancelled order is neither",
+          (rp["summary"]["in_flight"], rp["summary"]["orphans"]), (0, 0))
+
+    # A favourable fill is negative, so the average is not a one-way ratchet.
+    EX2 = {X.client_order_id("r1|AAA|2026-10-09", "buy"): _ord(px=99.90)}
+    X.exchange_orders = lambda days=120: EX2
+    rep2 = X.reconcile(LED)
+    check("buying BELOW the recorded open is favourable (negative)",
+          rep2["summary"]["mean_bps"], -10.0)
+
+    # Nothing filled at all must not divide by zero.
+    X.exchange_orders = lambda days=120: {}
+    rep3 = X.reconcile(LED)
+    check("no fills yet is a clean empty report",
+          (rep3["summary"]["fills"], rep3["summary"]["mean_bps"], rep3["orphans"]), (0, None, []))
+finally:
+    X.exchange_orders = _rex3
+
+
 print(f"\n{'ALL PASS' if not FAILS else str(FAILS) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -412,6 +412,144 @@ def place(orders, dry_run=True):
     return sent, failed
 
 
+# ------------------------------------------------------------------ reconciliation
+FILLS = os.path.join(ROOT, "data", "market_fills.json")
+
+
+def _bps(a, b):
+    """(a - b) / b in basis points. None if b is not a usable price."""
+    try:
+        return round((float(a) - float(b)) / float(b) * 10_000, 2)
+    except (TypeError, ValueError, ZeroDivisionError):
+        return None
+
+
+def reconcile(d=None, days=120):
+    """Compare what the broker FILLED against what the ledger RECORDED. -> a report dict.
+
+    The whole record is costed at market_sources.COST_BPS_PER_SIDE — 5bp a side, assumed. Every
+    net return and every verdict rests on that number being roughly right, and until now nothing
+    measured it. This does: the ledger's entry is a bar's open, the fill is what the account
+    actually paid, and the gap between them is the real cost of crossing.
+
+    Expect the gap to be larger than pure slippage, and say so rather than calling it slippage.
+    Bars come from the free IEX feed, so the "open" in the ledger is IEX's first print, while a
+    market-on-open order executes in the primary exchange's opening auction. Part of what this
+    measures is that difference — which is just as important, because it is the error in the
+    prices the record is built from.
+
+    It also answers an integrity question the cost model does not: is there a fill with no trade
+    behind it? market_exec and market_track are supposed to partition the signals exactly. An
+    orphan fill means they have drifted, and that is the failure that would otherwise be silent.
+    """
+    d = d if d is not None else T.load()
+    ex = exchange_orders(days)
+    by_trade = {t["id"]: t for t in d["trades"]}
+    seen, rows, orphans = set(), [], []
+
+    for tid, t in by_trade.items():
+        for side, ledger_px, day_key in (("buy", t.get("entry"), "entry_day"),
+                                         ("sell", t.get("exit"), "exit_day")):
+            cid = client_order_id(tid, side)
+            o = ex.get(cid)
+            if not o:
+                continue
+            seen.add(cid)
+            if o.get("status") != "filled":
+                rows.append(dict(id=tid, rule=t.get("rule"), symbol=t.get("symbol"), side=side,
+                                 status=o.get("status"), ledger=ledger_px, fill=None, slip_bps=None))
+                continue
+            fill = float(o.get("filled_avg_price") or 0) or None
+            # Adverse is POSITIVE on both sides: paying above the recorded open, or selling
+            # below it, both cost money. One signed number that means the same thing either way.
+            slip = None
+            if fill and ledger_px:
+                raw = _bps(fill, ledger_px)
+                slip = raw if side == "buy" else (None if raw is None else -raw)
+            rows.append(dict(id=tid, rule=t.get("rule"), symbol=t.get("symbol"), side=side,
+                             status="filled", ledger=ledger_px, fill=fill, slip_bps=slip,
+                             qty=int(float(o.get("filled_qty") or 0)),
+                             filled_at=(o.get("filled_at") or "")[:19],
+                             day=t.get(day_key)))
+
+    # Orders this module placed that no ledger trade claims yet. Two very different cases, and
+    # collapsing them would hide the one that matters:
+    #   IN FLIGHT  placed, not filled, not yet in the record. The normal state between sending
+    #              an order in the evening and market_track logging it after the next close.
+    #   ORPHAN     FILLED, and still nothing in the record. The ids are a pure function of the
+    #              trade, so this is not a naming mismatch — it is a position the record does
+    #              not know about, which is exactly the drift this whole split is meant to
+    #              prevent.
+    in_flight = []
+    for cid, o in ex.items():
+        if cid in seen:
+            continue
+        row = dict(client_order_id=cid, symbol=o.get("symbol"), side=o.get("side"),
+                   qty=int(float(o.get("filled_qty") or o.get("qty") or 0)),
+                   price=float(o.get("filled_avg_price") or 0) or None,
+                   status=o.get("status"), filled_at=(o.get("filled_at") or "")[:19])
+        if o.get("status") == "filled":
+            orphans.append(row)
+        elif o.get("status") not in ("canceled", "expired", "rejected"):
+            in_flight.append(row)
+
+    done = [r for r in rows if r.get("slip_bps") is not None]
+    per_rule = {}
+    for r in done:
+        per_rule.setdefault(r["rule"], []).append(r["slip_bps"])
+    summary = dict(
+        fills=len(done), unfilled=len([r for r in rows if r["status"] != "filled"]),
+        orphans=len(orphans), in_flight=len(in_flight),
+        assumed_bps_per_side=M.COST_BPS_PER_SIDE,
+        mean_bps=round(sum(x["slip_bps"] for x in done) / len(done), 2) if done else None,
+        median_bps=(sorted(x["slip_bps"] for x in done)[len(done) // 2] if done else None),
+        worst_bps=max((x["slip_bps"] for x in done), default=None),
+        best_bps=min((x["slip_bps"] for x in done), default=None),
+        by_rule={k: dict(n=len(v), mean_bps=round(sum(v) / len(v), 2)) for k, v in sorted(per_rule.items())},
+    )
+    return dict(summary=summary, rows=sorted(rows, key=lambda r: (r.get("day") or "", r["id"])),
+                orphans=orphans, in_flight=in_flight)
+
+
+def save_fills(rep):
+    rep = dict(rep, updated=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"))
+    os.makedirs(os.path.dirname(FILLS), exist_ok=True)
+    tmp = FILLS + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(rep, f, indent=1, sort_keys=True)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, FILLS)
+
+
+def print_reconcile(rep):
+    s = rep["summary"]
+    print(f"fills     : {s['fills']} matched, {s['unfilled']} not filled, "
+          f"{s.get('in_flight', 0)} in flight, {s['orphans']} orphan")
+    if not s["fills"]:
+        print("            nothing filled yet — nothing to measure"
+              + (f" ({s.get('in_flight', 0)} order(s) placed and waiting for an open)"
+                 if s.get("in_flight") else ""))
+    else:
+        print(f"cost      : assumed {s['assumed_bps_per_side']:.1f}bp/side  |  "
+              f"measured mean {s['mean_bps']:+.2f}bp  median {s['median_bps']:+.2f}bp  "
+              f"(worst {s['worst_bps']:+.2f}, best {s['best_bps']:+.2f})")
+        print("            positive = adverse (paid above, or sold below, the recorded open)")
+        over = s["mean_bps"] is not None and s["mean_bps"] > s["assumed_bps_per_side"]
+        if over:
+            print(f"            *** measured cost EXCEEDS the {s['assumed_bps_per_side']:.1f}bp "
+                  f"the record is costed at — net returns are optimistic ***")
+        for rule, v in s["by_rule"].items():
+            print(f"    {rule:24} n {v['n']:4}  mean {v['mean_bps']:+7.2f}bp")
+    if rep["orphans"]:
+        # Not a cost problem. market_exec and market_track are meant to partition the signals
+        # exactly, so a fill with no trade behind it means they have drifted apart.
+        print(f"ORPHANS   : {len(rep['orphans'])} fill(s) with no trade in the ledger — "
+              f"the account and the record have drifted")
+        for o in rep["orphans"][:10]:
+            print(f"    {o['side']:4} {o['symbol']:6} {o['qty']:>5} @ {o['price']}  {o['filled_at']}")
+
+
 # ------------------------------------------------------------------ cli
 def _fetch_bars():
     syms = M.universe()
@@ -423,6 +561,13 @@ def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     if not M.configured():
         print("no Alpaca credentials (~/.alpaca-credentials) — nothing to do")
+        return 0
+
+    if "--reconcile" in argv:
+        rep = reconcile()
+        print_reconcile(rep)
+        save_fills(rep)
+        print(f"written   : {os.path.relpath(FILLS, ROOT)}")
         return 0
 
     if "--status" in argv:

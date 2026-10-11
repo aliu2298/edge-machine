@@ -198,6 +198,12 @@ publish_ledger() {
   if ! python3 market_exec.py --place; then
     echo "market_exec failed — orders not placed, continuing to publish the ledger"
   fi
+  # Measure what the broker actually filled against what the record says it paid. The lane's
+  # net returns are all costed at an ASSUMED 5bp a side; this is the only thing that checks it.
+  # Non-fatal for the same reason as the orders: the ledger is what this job exists to publish.
+  if ! python3 market_exec.py --reconcile; then
+    echo "market_exec --reconcile failed — continuing to publish the ledger"
+  fi
   git add -- data/market_ledger.json
   if [ -f data/sp500.json ]; then
     git add -- data/sp500.json

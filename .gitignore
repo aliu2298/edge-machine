@@ -52,6 +52,8 @@ data/market_daily.log
 # Execution state: which orders this host has sent. Operational, not the research
 # record, and the ledger publish path refuses any commit holding anything but the ledger.
 data/market_orders.json
+# Derived: the fill-v-ledger comparison. Regenerable on any host from the broker + the ledger.
+data/market_fills.json
 
 # temp files from atomic_write_json. A hard kill can leave one behind, and
 # `git add data/sandbox_archive` would otherwise stage it.
