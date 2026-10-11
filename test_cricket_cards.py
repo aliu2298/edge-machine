@@ -285,7 +285,7 @@ ok("<h1>Cricket</h1>" in html and "Match-winner picks and the rules that fire th
 ok(html.count("<h1>") == 1 and html.count('<header class="site">') == 1
    and '<body class="sports-page sport-cricket">' in html,
    "one shell, one title, the cricket sport page")
-ok('<a href="#rules">Rules</a><a href="#matches">Matches</a>' in html and 'href="#system"' not in html,
+ok('<a href="#rules">Rules</a><a href="#events">Events</a><a href="#method">Method</a>' in html and 'href="#system"' not in html,
    "the sub-nav pills are Rules and Matches")
 ok("rule-card" not in html and "rule-band" not in html and "rule-grid" not in html
    and "rule-flip" not in html and "How each rule is defined" not in html,
@@ -293,7 +293,7 @@ ok("rule-card" not in html and "rule-band" not in html and "rule-grid" not in ht
 ok("<meter" not in html and "<progress" not in html and "tempo" not in html, "no bars or meters")
 ok('class="tiles tn-tiles"' in html and html.count('<div class="tile">') == 4, "four stat tiles")
 ok("Lanes with a record" not in html and "Registered, never fired" not in html
-   and '<table>' not in _section(html, "system"),
+   and '<table>' not in _section(html, "method"),
    "no venue table section and no idle section")
 ok(fmt.display_updated(NOW) in html, "the stamp is the page clock")
 
@@ -309,8 +309,8 @@ eq(re.search(r'<b>(\d+)</b><span>active rules', tiles).group(1), str(len(act)),
 odds_a = by_name["oddspedia"]["a"]
 eq(T.record_text(odds_a), f'{odds_a["won"]}–{odds_a["n"] - odds_a["won"]}, 1 no result',
    "the Production rule's record names its one no-result bet beside the W–L")
-ok(f"<b>{T.record_text(odds_a)}</b><span>record · Oddspedia community tips · Production" in tiles,
-   "the record tile is the Production rule's own, named")
+ok(f'<b>{odds_a["won"]}–{odds_a["n"] - odds_a["won"]}</b><span>record · Oddspedia community tips · Production · 1 no result</span>' in tiles,
+   "the record tile is the Production rule's own, named, the W–L big and the no-result count in its label")
 ok(B.pct(odds_a["roi_fee"], sign=True) in tiles
    and "ROI after fees · Oddspedia community tips · Production" in tiles,
    "the ROI tile is the Production rule's own ROI, named")
@@ -350,7 +350,7 @@ ok("record · Oddspedia community tips · Production" in _tiles3,
    "an inactive Production rule still headlines the tiles")
 
 print("\nmatches")
-matches = _section(html, "matches")
+matches = _section(html, "events")
 picks = _picks(matches)
 ok(len(picks) > 0 and 'class="tn-day"' in matches and 'class="tn-dayblock"' in matches,
    "one flat list grouped by day")
@@ -394,7 +394,7 @@ ok(last_open < first_settled, "upcoming picks sit above the settled days")
 ok("No open pick" not in matches, "with open picks there is no empty line")
 quiet = {"quotes": [q for q in d["quotes"] if q.get("status") != "open"], "coverage": d["coverage"]}
 quiet_html = cricket_build.build(quiet, st, NOW)
-ok('class="tn-empty">No open pick' in _section(quiet_html, "matches"),
+ok('class="tn-empty">No open pick' in _section(quiet_html, "events"),
    "with nothing open, one line says so")
 
 print("\nrules")
@@ -431,7 +431,7 @@ ok(_pm and "3–1" in _pm and "on 4 bets" in _pm, "the idle Polymarket rule keep
 ok(len(re.findall(r'<p class="sm mut">', rules)) == 1, "one sentence of copy on the section")
 
 print("\nsystem")
-system = _section(html, "system")
+system = _section(html, "method")
 ok("Polymarket US listing: 20 taken · 20 listed · 15 priced · no record" in system,
    "the venue listing is one line from the stored counts")
 ok("<details>" in system and " open" not in system.split("<summary>", 1)[0] and "flat $" in system,
@@ -503,7 +503,7 @@ def browser_checks():
               table: getComputedStyle(document.querySelector('#rules table')).display,
               defOpen: document.querySelector('details.tn-rule').open,
               inactiveOpen: document.querySelector('.tn-inactive').open,
-              systemOpen: document.querySelector('#system details').open,
+              systemOpen: document.querySelector('#method details').open,
             })""")
             ok(not state["overflow"] and state["sticky"] == "sticky" and state["table"] == "table",
                "at 1280px the list has sticky day headers, the rules are a table, nothing scrolls sideways")

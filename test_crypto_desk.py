@@ -77,9 +77,9 @@ html = C.build(ledger, stages, NOW)
 ok('<h1>Crypto</h1>' in html, "the title is Crypto")
 ok("Daily favourite-band picks on Kalshi coin closes · times CT" in html, "the one-line lede")
 ok(fmt.display_updated(NOW) in html.split("<main", 1)[-1], "the freshness stamp is under the title")
-for anchor in ("picks", "rule", "method"):
+for anchor in ("events", "rules", "method"):
     ok(f'id="{anchor}"' in html and f'href="#{anchor}"' in html, f"section and sub-nav pill for #{anchor}")
-ok(html.find('id="rule"') < html.find('id="picks"') < html.find('id="method"'),
+ok(html.find('id="rules"') < html.find('id="events"') < html.find('id="method"'),
    "the rule first, then the picks, then the folded method")
 for gone in ("crypto-hero", "crypto-progress", "progressbar", "crypto-coin", "crypto-tabs", "crypto-health",
              "crypto-rule-strip", "Favourite-band record", "Five live coins", "crypto-metrics",
@@ -103,7 +103,7 @@ ok(f'>{a["n"]} of {T.READ_FLOOR}</b><span>market-days logged · {T.READ_FLOOR} p
 ok('class="mut"' in cells[2], "ROI under the read floor is grey")
 
 print("\npicks: one list grouped by day")
-picks = _section(html, "picks")
+picks = _section(html, "events")
 days = re.findall(r'<div class="tn-day">(.*?)</div>', picks)
 eq(days, ["Today · Oct 7", "Oct 6", "Oct 5"], "today first, then settled days newest first")
 today_block = picks.split('<div class="tn-day">Oct 6</div>', 1)[0]
@@ -139,7 +139,7 @@ with patch.object(S, "CRYPTO_FAV_CLOSE_ET", 16):
     ok("11:30 AM–1:00 PM CT" in C._scan_status(ledger, NOW), "a window across noon keeps both periods")
 
 print("\nrule: one row")
-rule = _section(html, "rule")
+rule = _section(html, "rules")
 ok('<table class="tn-rules cr-rules">' in rule, "the rule is the tennis table pattern")
 eq(re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", rule), ["Rule", "Venue", "Record", "ROI", "Verdict", "Open"],
    "Rule · Venue · Record · ROI · Verdict · Open")
@@ -183,7 +183,7 @@ ok(empty.count('<div class="tn-pick cr-pick') == len(S.COINS) and "no entry" in 
    "an empty ledger still lists today's coins as no entry")
 ok(">0</b><span>open picks" in empty and ">—</b><span>record" in empty and f">0 of {T.READ_FLOOR}</b>" in empty,
    "empty tiles")
-for anchor in ("picks", "rule", "method"):
+for anchor in ("events", "rules", "method"):
     ok(f'id="{anchor}"' in empty, f"an empty page keeps #{anchor}")
 ok("Last scan not recorded · no scanner coverage stored" in empty, "no scan is said once")
 unknown = {"quotes": [dict(quote("KXBTCD", 1, 0.75, TODAY, status="open"), start="unreadable")]}
@@ -241,7 +241,7 @@ if playwright is not None:
             cards = page.locator(".cr-rules thead").first.evaluate("e => getComputedStyle(e).display")
             eq(cards, "none" if width < 760 else "table-header-group", f"{width}px cards fallback under 760px")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
-               ["#rule", "#picks", "#method"], f"{width}px sub-nav is Rule / Picks / Method")
+               ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method")
             page.close()
         browser.close()
 

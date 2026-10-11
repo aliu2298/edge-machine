@@ -159,8 +159,8 @@ def _check_chrome(html, why, placeholders=True):
     ok('http-equiv="refresh"' not in html, f"{why} does not refresh away")
     ok('src="./root.js"' not in html, f"{why} does not load the Sandbox redirect")
     ok("Continue to the Sandbox" not in html, f"{why} is not the old Sandbox stub")
-    ok("theme-toggle" not in html and "data-theme" not in html,
-       f"{why} has no theme toggle")
+    ok(html.count('class="theme-toggle"') == 1 and "data-theme-toggle" in html,
+       f"{why} has the one theme toggle")
     ok("download" not in html.lower() and ".csv" not in html.lower(),
        f"{why} has no download or CSV affordance")
     banned = SKETCH_FAKES if placeholders else (
@@ -249,7 +249,8 @@ def _check_chrome(html, why, placeholders=True):
        f"{why} links the favicon")
     css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
     ok("color-scheme: dark" in css, "site.css is dark")
-    ok("prefers-color-scheme: light" not in css, "site.css has no light theme")
+    ok("prefers-color-scheme: light" in css and ':root[data-theme="light"]' in css,
+       "site.css has the light theme on the same tokens")
     ok(".shell-columns" in css and "grid-template-columns: minmax(0, 1fr)" in css,
        "narrow viewports stack the two panes")
 
@@ -436,8 +437,10 @@ def _browser():
             else:
                 ok(wide["pressed"] == 0 and wide["empty"] == "Select a contest in Running.",
                    f"with no Running rows, the detail pane starts empty ({wide})")
-            ok(wide["bg"] in ("rgb(11, 12, 15)", "rgb(11, 13, 16)"),
-               f"desktop background stays dark ({wide['bg']})")
+            # The page follows the device: the headless browser emulates a light
+            # preference by default, so the light page is the one drawn here.
+            ok(wide["bg"] in ("rgb(11, 12, 15)", "rgb(11, 13, 16)", "rgb(245, 248, 244)"),
+               f"desktop background is one of the two themes' pages ({wide['bg']})")
             page.mouse.move(0, 0)
             sports = page.evaluate("""() => {
               const nav = document.querySelector("nav.sport-filter");
