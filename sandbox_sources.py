@@ -662,7 +662,11 @@ SOURCES = {
              "question is closed. Every listed game is backed, so nothing here is selected."),
     "o25_congestion": dict(
         label="Congestion under 2.5 rule (one side's 2nd game in 4 days)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
+        connected=True, site="edge-machine", sports=["soccer_o25", "soccer_o25_cup"],
+        retired_sports={
+            "soccer_o25_intl": "Retired 2026-10-11 by Olu: 7 won, 10 lost on 17 settled, -29.1% after "
+                               "fees, and backing the other side of the same bets lost too (-1.9% "
+                               "after fees per contract, -9.7% at $100 a bet). It loses both ways."},
         baseline="population",
         note="Pre-registered 2026-09-22, before it logged anything, with both thresholds taken "
              "from the study rather than chosen here. Back under 2.5 (No on Kalshi's Over 2.5) "
