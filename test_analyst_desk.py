@@ -27,28 +27,33 @@ html = shell_build.page(
 
 print("Analyst Desk structure")
 ok('data-layout="analyst-desk"' in html, "root declares the Analyst Desk layout")
-ok('<body class="analyst-desk">' in html, "the body carries the analyst-desk class")
+ok('<body class="analyst-desk control-center">' in html,
+   "the body carries the analyst-desk class and the Control Center's")
 ok("<title>Edge Machine · Home</title>" in html, "the root is titled Edge Machine · Home")
 ok(html.count('<header class="site">') == 1, "one site header, the shared shell")
 ok('<aside class="desk-nav"' not in html and "desk-nav-block" not in html,
    "the old desktop quick-access rail is gone")
 ok('<div class="desk-center">' in html, "center Running column exists")
-ok('<div class="desk-side">' in html, "right Rules/status column exists")
+ok('<div class="desk-side">' in html, "right Rules column exists")
 ok('id="running-title">Running markets<' in html, "center column is the Running markets feed")
 ok('id="rules-title">Rule cards<' in html, "right column carries Rule cards")
-ok('id="status-title">System status<' in html, "right column carries System status")
-ok('class="shell-summary"' in html and 'data-board="production"' in html,
-   "Production totals remain the system-status source")
-ok('class="bet-roll shell-pane"' in html and 'id="bets-roll-title">Bets roll<' in html,
-   "Bets roll is in the center workspace")
-ok(html.index('class="shell-pane running-pane"') < html.index('class="bet-roll shell-pane"'),
-   "Running appears before Bets roll")
-ok(html.index('class="shell-pane rules-pane"') < html.index('class="shell-pane desk-status"'),
-   "Rule cards appear before System status")
+ok('id="status-title"' not in html and "System status" not in html,
+   "System status is gone: the area cards and Needs attention carry the system's state")
+ok('class="shell-summary"' not in html and 'data-board="production"' not in html,
+   "the Production totals strip is gone from the root")
+ok('class="bet-roll' not in html and "Bets roll" not in html,
+   "the Bets roll is gone from the home page")
+ok('<div class="cc-areas">' in html and html.count('<article class="cc-card') == 7,
+   "one card per area, seven areas")
+ok('id="live-title">Live now<' in html
+   and html.index('id="areas-title"') < html.index('id="attention-title"') < html.index('id="live-title"'),
+   "Areas, then Needs attention, then Live now")
+ok(html.index('id="live-title"') < html.index('class="shell-pane running-pane"') < html.index('class="shell-pane rules-pane"'),
+   "Running markets and Rule cards sit inside Live now, Running first")
 ok('class="production-badge">Production</span>' in html
-   and html.index('id="running-title"') < html.index('class="production-badge"')
-   < html.index('class="running-filters"'),
-   "the Running pane head exposes Production state immediately")
+   and html.index('id="live-title"') < html.index('class="production-badge"')
+   < html.index('id="running-title"') < html.index('class="running-filters"'),
+   "the Live now head exposes Production state immediately, before the Running pane")
 ok("top-production" not in html, "the header no longer carries the Production badge")
 ok(re.search(r'>\s*History\s*<', html, re.I) is None,
    "deferred History remains absent")
@@ -75,7 +80,7 @@ if sports:
     labels = re.findall(r'>([^<]+)</button>', sports.group(1))
     ok(labels == ["All"], f"an empty list keeps only the All pill ({labels})")
     ok('data-sport="all" aria-pressed="true"' in sports.group(0), "All starts pressed")
-    running = html[html.index('class="shell-pane running-pane"'):html.index('class="bet-roll shell-pane"')]
+    running = html[html.index('class="shell-pane running-pane"'):html.index('class="shell-pane rules-pane"')]
     ok(sports.group(0) in running, "the sport filter lives inside the Running pane")
     ok(running.index('class="running-filters"') < running.index('class="sports sport-filter"')
        < running.index('id="settled-caption"'),

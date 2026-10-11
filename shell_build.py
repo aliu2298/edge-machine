@@ -828,67 +828,8 @@ _OPEN_CHIP = ("Open", "Awaiting result")
 _SETTLED_CHIP = ("W", "L", "Void", PRICE_LABEL)
 
 
-def _chip_rank(kind, kick, order):
-    """Open bets by kickoff, then settled bets newest first. Missing times go last."""
-    if kind == "open":
-        when = kick.timestamp() if kick is not None else float("inf")
-        return (0, when, order)
-    when = -kick.timestamp() if kick is not None else float("inf")
-    return (1, when, order)
-
-
-def _chip_html(contest, index, card):
-    """One bet. Text is escaped here; the browser does not parse a payload."""
-    status = card.get("status") or "Unknown"
-    sport = contest.get("sport") or "Other"
-    name = fmt.contest(contest.get("match") or "—")
-    market = card.get("market") or "—"
-    price = card.get("price") or "—"
-    spoken = card.get("spoken") or status
-    token = _status_token(status)
-    esc = site_chrome.esc
-    return (
-        f'<button type="button" class="bet-chip"'
-        f' data-contest="c{index}" data-status="{esc(token)}" aria-pressed="false">'
-        f'<span class="bet-chip-letter" aria-hidden="true" title="{esc(sport)}">{esc(_sport_letter(sport))}</span>'
-        f'<span class="sr-only">{esc(sport)}: </span>'
-        f'<span class="bet-chip-contest" title="{esc(name)}">{esc(name)}</span>'
-        f'<span class="bet-chip-line" title="{esc(market)}">{esc(market)} · {esc(price)}</span>'
-        f'{_status_html("bet-chip-status", status, spoken, token)}'
-        f'</button>'
-    )
-
-
-def _roll_html(ordered):
-    """Open chips, then recently settled chips. Same contests as the Running list.
-
-    An open bet past the await window is still an open chip, with the Awaiting
-    result status the row already uses. Settled chips are the graded bets on
-    contests the 14-day window kept. Nothing else, including a contest outside
-    that window, is a chip.
-    """
-    pending = []
-    order = 0
-    for index, contest in enumerate(ordered):
-        kick = contest.get("kickoff")
-        for card in contest.get("cards") or []:
-            status = card.get("status") or ""
-            if status in _OPEN_CHIP:
-                kind = "open"
-            elif contest.get("bucket") == "settled" or status in _SETTLED_CHIP:
-                kind = "settled"
-            else:
-                continue
-            pending.append((kind, kick, order, _chip_html(contest, index, card)))
-            order += 1
-    if not pending:
-        return '<p class="bet-roll-empty">No open or recent paper bets yet.</p>'
-    pending.sort(key=lambda item: _chip_rank(item[0], item[1], item[2]))
-    return "".join(item[3] for item in pending)
-
-
 def _roll_counts(ordered):
-    """(open chips, settled chips, won chips): the same bets _roll_html draws.
+    """(open bets, settled bets, won bets) over the contests on the Running list.
 
     A no-result chip is on the settled list and out of this settled count: it is
     neither a win nor a loss, so it must not read as a miss in the landed tile.
@@ -990,136 +931,23 @@ def _running_body(d, st, blob, now):
         "sports": _sport_pills(present),
         "groups": "".join(groups),
         "empty": empty,
-        "roll": _roll_html(ordered),
         "roll_counts": _roll_counts(ordered),
         "roll_no_result": _roll_no_result(ordered),
         "counts": counts,
     }
 
 
-_LANDED_TILE = re.compile(
-    r'<div class="tile"><b>[^<]*</b><span>recent leads landed</span></div>')
+def page(now, d=None, st=None, blob=None, tiles=None, **extra):
+    """The site root: the Research Control Center (control_center.page).
 
-
-def _landed_tile(n_won, n_settled):
-    return (f'<div class="tile"><b>{int(n_won)}/{int(n_settled)}</b>'
-            f'<span>paper bets landed · last {int(SHELL_SETTLED_DAYS)} days</span></div>')
-
-
-def _with_landed(tiles, n_won, n_settled):
-    """The Production strip with its landed tile counted the way this page counts.
-
-    production.html counts leads over its own {KEEP_SETTLED_DAYS}-day feed. The
-    shell lists bets over SHELL_SETTLED_DAYS, so its tile has to count those
-    same bets or the two numbers on one screen disagree. The other three tiles
-    are still production.html's own.
+    Kept as the entry point every caller already uses. `tiles` was the Production
+    strip the old shell copied; the Control Center counts its own tiles, so the
+    argument is accepted and ignored. Keyword inputs (nba, market, closes, runs,
+    extra) pass through to control_center.page.
     """
-    tile = _landed_tile(n_won, n_settled)
-    if _LANDED_TILE.search(tiles):
-        return _LANDED_TILE.sub(lambda _m: tile, tiles, count=1)
-    end = tiles.rfind("</div>")
-    return tiles[:end] + tile + tiles[end:] if end >= 0 else tiles + tile
-
-
-def page(now, d=None, st=None, blob=None, tiles=None):
-    """The shell document.
-
-    Pass `tiles` to reuse a strip already computed for production.html. Omitting
-    it builds that strip from `d`, `st`, and `blob` (the live board by default)
-    for callers that are not the tracker build. Running rows use `now` either way
-    and do not count the tiles again, except the landed tile, which is this
-    page's own bets over its own window.
-    """
-    when = _now(now)
-    if tiles is None:
-        d, st, blob = _load(d, st, blob)
-        summary = production_summary(d, st, blob, when)
-    else:
-        summary = tiles
-        if d is None or st is None or blob is None:
-            d, st, blob = _load(d, st, blob)
-    parts = _running_body(d, st, blob, when)
-    n_open, n_settled, n_won = parts["roll_counts"]
-    summary = _with_landed(summary, n_won, n_settled)
-    caption = (
-        f'<p class="settled-caption" id="settled-caption" hidden>'
-        f'Last {int(SHELL_SETTLED_DAYS)} days · counts are paper bets, one contest can carry several</p>'
-    )
-    n_price = parts.get("roll_no_result") or 0
-    roll_note = (f'{n_open} open, then {n_settled} settled in the last {int(SHELL_SETTLED_DAYS)} days'
-                 + (f', {n_price} no result' if n_price else '')
-                 if (n_open or n_settled or n_price) else "")
-    body = f"""<h1 class="sr-only">Edge Machine · Home</h1>
-<div class="desk-layout" data-layout="analyst-desk">
-<div class="shell-columns">
-<div class="desk-center">
-<section class="shell-pane running-pane" id="running" aria-labelledby="running-title">
-<div class="pane-head">
-<div>
-<h2 id="running-title">Running markets</h2>
-<p class="shell-kicker">Production lanes · choose a market to inspect its rules</p>
-</div>
-<span class="production-badge">Production</span>
-</div>
-<div class="running-filters" role="group" aria-label="Running filters">
-{parts["filters"]}
-</div>
-<nav class="sports sport-filter" aria-label="Sport filter">{parts["sports"]}</nav>
-{caption}
-<div class="running-list" id="running-list">
-{parts["groups"]}
-</div>
-{parts["empty"]}
-</section>
-<section class="bet-roll shell-pane" id="bets-roll" aria-labelledby="bets-roll-title">
-<div class="bet-roll-head">
-<p class="bet-roll-label" id="bets-roll-title">Bets roll</p>
-<p class="bet-roll-note">{site_chrome.esc(roll_note)}</p>
-</div>
-<div class="bet-roll-track">
-{parts["roll"]}
-</div>
-</section>
-</div>
-<div class="desk-side">
-<section class="shell-pane rules-pane" id="rules" aria-labelledby="rules-title">
-<div class="pane-head">
-<h2 id="rules-title">Rule cards</h2>
-<a class="full-page" href="./production.html">Full page →</a>
-</div>
-<div class="rules-head" id="rules-head" hidden>
-<p class="rules-line" id="rules-line"></p>
-</div>
-<p class="sr-only" id="rules-live" aria-live="polite"></p>
-<h3 class="rules-section" id="rules-section" hidden></h3>
-<div class="rules-cards" id="rules-cards" hidden></div>
-<p class="shell-empty" id="rules-empty">Select a contest in Running.</p>
-</section>
-<section class="shell-pane desk-status" id="status" aria-labelledby="status-title">
-<div class="pane-head">
-<h2 id="status-title">System status</h2>
-<span class="production-badge">Production</span>
-</div>
-<section class="shell-summary" aria-label="Production totals" data-board="production">
-{summary}
-</section>
-</section>
-</div>
-</div>
-</div>
-<footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
-"""
-    return site_chrome.document(
-        "Home",
-        "Production headlines, and the paper bets on those lanes.",
-        "index",
-        (("running", "Running"), ("bets-roll", "Bets roll"), ("rules", "Rule cards"), ("status", "Status")),
-        _stamp(now),
-        body,
-        script_src="./tables.js",
-        scripts=("./shell.js",),
-        body_class="analyst-desk",
-    )
+    import control_center
+    del tiles
+    return control_center.page(now, d=d, st=st, blob=blob, **extra)
 
 
 def sport_board(active, title, description, stamp_html, body):

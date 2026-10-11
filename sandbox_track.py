@@ -1628,12 +1628,46 @@ def publish(d, universe, coverage, verbose=True, now=None):
 
     d["coverage"] = coverage
     d["feed_status"] = dict(S.FEED_STATUS)
+    # Per-sport stamps of the last run that READ the lane (a venue listing or a rule that
+    # saw rows), kept across runs. coverage is this run's alone; the Control Center
+    # needs to know when a lane was last read, not only whether this run read it.
+    d["meta"]["lane_reads"] = lane_reads_after(d["meta"].get("lane_reads"), coverage, now_iso())
     if S.ODDS_USAGE:
         d["meta"]["odds_api"] = dict(S.ODDS_USAGE, at=now_iso())
     if verbose:
         print(f"  logged {added} new quotes, closing price refreshed on {snapped} open bets")
     S.clear_nws_run()
     return added
+
+
+def lane_read_signal(cell):
+    """Did this coverage cell come from a lane that was read this run?
+
+    A venue listing (kalshi_venue, polymarket_us, polymarket_us_listed, polymarket_us_priced
+    above zero) or any rule that reported rows offered, even when nothing qualified. A
+    lane with an empty fixture list is not a failed read; a lane with no cell at all was
+    not read.
+    """
+    if not isinstance(cell, dict):
+        return False
+    for key, value in cell.items():
+        if isinstance(value, dict):
+            if (value.get("offered") or 0) > 0:
+                return True
+        elif key in ("kalshi_venue", "polymarket_us", "polymarket_us_listed", "polymarket_us_priced"):
+            if (value or 0) > 0:
+                return True
+    return False
+
+
+def lane_reads_after(previous, coverage, stamp):
+    """{sport: stamp of the last run that read it}: `previous` carried forward, every sport
+    this run read set to `stamp`. A sport this run did not read keeps its older stamp."""
+    out = dict(previous or {})
+    for sport, cell in (coverage or {}).items():
+        if lane_read_signal(cell):
+            out[sport] = stamp
+    return out
 
 
 def close_deadline(q):

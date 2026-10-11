@@ -414,71 +414,8 @@ def _browser():
                        for row in crypto_up["rows"]),
                    "Markets is still not a Crypto row on Upcoming")
 
-                page.click('.running-filters button[data-filter="live"]')
-                page.click('nav.sport-filter button[data-sport="soccer"]')
-                chips = page.evaluate("""() => [...document.querySelectorAll(".bet-chip")].map((chip) => {
-                  const note = chip.querySelector(".chip-filter-note");
-                  const style = getComputedStyle(chip);
-                  return {
-                    name: (chip.querySelector(".bet-chip-contest") || {}).textContent || "",
-                    dimmed: chip.getAttribute("data-dimmed"),
-                    opacity: Number(style.opacity),
-                    note: note ? note.textContent : "",
-                    events: style.pointerEvents,
-                  };
-                })""")
-                by_chip = {chip["name"]: chip for chip in chips}
-                own = by_chip["Alpha vs Beta"]
-                other = by_chip["Crease vs Wicket"]
-                unknown = by_chip["Curl vs Stone"]
-                market = by_chip["Market vs Quote"]
-                coin = by_chip["Coin vs Token"]
-                ok(own["dimmed"] is None and own["opacity"] == 1 and own["note"] == "",
-                   f"a chip for the selected sport stays bright ({own})")
-                ok(other["dimmed"] == "true" and 0.5 < other["opacity"] < 0.9
-                   and other["note"] == "other sport" and other["events"] != "none"
-                   and "Crease vs Wicket" in other["name"],
-                   f"another sport's chip is dimmed, readable, and labeled ({other})")
-                ok(unknown["dimmed"] == "true" and unknown["note"] == "other sport",
-                   f"an unknown sport's chip is dimmed too ({unknown})")
-                ok(market["dimmed"] == "true" and coin["dimmed"] == "true",
-                   "Markets and Crypto chips dim while Soccer is pressed")
-                page.locator(".bet-chip").filter(has_text="Crease vs Wicket").click()
-                from_chip = page.evaluate(SNAP)
-                _check_filter(from_chip, "a dimmed cricket chip")
-                eq(from_chip["pressed"], ["cricket"],
-                   "a dimmed chip presses that contest's sport pill")
-                eq(from_chip["tab"], "live", "a live chip stays on Live")
-                eq(from_chip["selected"], ["Crease vs Wicket"],
-                   "the dimmed chip selects its contest")
-                ok(all(not row["hidden"] for row in from_chip["rows"]
-                       if row["name"] == "Crease vs Wicket"),
-                   "the chip's row is visible")
-
-                page.click('nav.sport-filter button[data-sport="soccer"]')
-                page.locator(".bet-chip").filter(has_text="Curl vs Stone").focus()
-                page.keyboard.press("Enter")
-                from_unknown = page.evaluate(SNAP)
-                _check_filter(from_unknown, "a dimmed unknown chip")
-                eq(from_unknown["pressed"], ["all"],
-                   "a chip whose sport has no pill presses All")
-                eq(from_unknown["selected"], ["Curl vs Stone"],
-                   "that chip selects the unknown-sport contest")
-                ok(any(not row["hidden"] and row["name"] == "Curl vs Stone"
-                       for row in from_unknown["rows"]),
-                   "the unknown-sport row is visible under All")
-
-                page.click('nav.sport-filter button[data-sport="soccer"]')
-                page.locator(".bet-chip").filter(has_text="Coin vs Token").click()
-                from_coin = page.evaluate(SNAP)
-                _check_filter(from_coin, "a dimmed crypto chip")
-                eq(from_coin["pressed"], ["crypto"],
-                   "a dimmed crypto chip presses Crypto, not Trading")
-                eq(from_coin["tab"], "upcoming",
-                   "the chip switches to the bucket that holds its contest")
-                eq(from_coin["selected"], ["Coin vs Token"],
-                   "the crypto chip selects its contest")
-                eq(page.url, base, "the crypto chip stays on the shell")
+                ok(page.evaluate("() => document.querySelectorAll('.bet-chip').length") == 0,
+                   "the shell has no roll chips to dim: the Control Center dropped the roll")
 
                 page.goto(base, wait_until="load")
                 page.evaluate("""() => {

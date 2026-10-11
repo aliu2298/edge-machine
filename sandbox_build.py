@@ -151,6 +151,37 @@ def _coverage_signal(cell):
     return cell
 
 
+def dark_feeds(d):
+    """[(source, label, reason)] for every connected source whose feed could not be read on
+    the last run. The reason is the adapter's own ("down: ..." in feed_status) or "" when
+    the verdict came from empty counts across every sport the source covers. The rule
+    feed_health prints, as data, so the Control Center can list the same feeds."""
+    cov = d.get("coverage") or {}
+    status = d.get("feed_status") or {}
+    if not cov and not status:
+        return []
+    dark = []
+    for name, meta in S.SOURCES.items():
+        if not meta["connected"] or name == "polymarket_us":
+            continue
+        if name in S.REMOVED_SOURCES:
+            continue
+        # A rule reads data we already hold; zero picks means no match qualified, not a dead feed.
+        if meta.get("kind") == "Rule":
+            continue
+        st = status.get(name)
+        if st is not None:
+            if st.startswith("down"):
+                reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
+                dark.append((name, meta["label"], reason))
+            continue
+        counts = [_coverage_signal((cov.get(sp) or {}).get(name)) for sp in meta["sports"]]
+        seen = [c for c in counts if c is not None]
+        if seen and not any(seen):
+            dark.append((name, meta["label"], ""))
+    return dark
+
+
 def feed_health(d):
     """Name any connected source whose feed could not be READ on the last run.
 
@@ -168,29 +199,7 @@ def feed_health(d):
     EVERY sport they cover: a single quiet sport is just an empty fixture list, and
     warning about that would train the reader to ignore this line.
     """
-    cov = d.get("coverage") or {}
-    status = d.get("feed_status") or {}
-    if not cov and not status:
-        return ""
-    dark = []
-    for name, meta in S.SOURCES.items():
-        if not meta["connected"] or name == "polymarket_us":
-            continue
-        if name in S.REMOVED_SOURCES:
-            continue
-        # A rule reads data we already hold; zero picks means no match qualified, not a dead feed.
-        if meta.get("kind") == "Rule":
-            continue
-        st = status.get(name)
-        if st is not None:
-            if st.startswith("down"):
-                reason = st.split(":", 1)[1].strip() if ":" in st else "unreachable"
-                dark.append(f"{meta['label']} ({reason})")
-            continue
-        counts = [_coverage_signal((cov.get(sp) or {}).get(name)) for sp in meta["sports"]]
-        seen = [c for c in counts if c is not None]
-        if seen and not any(seen):
-            dark.append(meta["label"])
+    dark = [f"{label} ({reason})" if reason else label for _name, label, reason in dark_feeds(d)]
     if not dark:
         return ""
     return (f'<div class="note warn"><b>Feed check:</b> '
@@ -2164,16 +2173,20 @@ def _write(path, text):
         f.write(text)
 
 
-def production_and_index(now, d, st, blob):
-    """Production page and the site root, one clock, one tile strip.
+def production_and_index(now, d, st, blob, extra=None):
+    """Production page and the site root, on one clock.
 
-    The shell does not count. Its summary is the tiles this call just computed,
-    so index.html cannot disagree with production.html.
+    The root is the Control Center (control_center.page): its own tiles, one card per
+    area, the attention list and the Running list, all read from the same ledger,
+    stage file and feed this call renders production.html from. `extra` is
+    control_center.inputs(): the NBA board, the trading ledger, the closing-price
+    writers and, from the tracker build, the last workflow runs.
     """
+    import control_center
     import production
-    import shell_build
     prod = label_cells(production.page(d, st, blob, "", now=now))
-    index = shell_build.page(now, d=d, st=st, blob=blob, tiles=shell_build.tiles_html(prod))
+    index = control_center.page(now, d=d, st=st, blob=blob,
+                                extra=extra if extra is not None else control_center.inputs())
     return prod, index
 
 
@@ -2185,8 +2198,12 @@ def main():
     import production
     prod_out = os.path.join(os.path.dirname(OUT), "production.html")
     index_out = os.path.join(os.path.dirname(OUT), "index.html")
+    # The tracker build is the one that reads the last workflow runs for the Control
+    # Center's attention list; a fixture build passes its own inputs and reads nothing.
+    import control_center
     prod_html, index_html = production_and_index(
-        now, T.load(), T.load_stages(), production.load_feed())
+        now, T.load(), T.load_stages(), production.load_feed(),
+        extra=control_center.inputs(runs=os.environ.get("EDGE_SKIP_RUNS") != "1"))
     _write(prod_out, prod_html)
     print(f"wrote {prod_out}")
     _write(index_out, index_html)
