@@ -114,8 +114,10 @@ eq(SP.evidence(dict(n=4)), f"4/{T.READ_FLOOR}", "evidence is n of the read floor
 row_early = dict(v="early", a=dict(n=3), gone=None)
 row_read = dict(v="promising", a=dict(n=12), gone=None)
 ok(SP.is_early(row_early) and not SP.is_early(row_read), "too early is the Sandbox's own early verdict or under EARLY_N settled")
-label, chip, _o = B.VERDICTS["promising"]
-eq(SP.verdict_badge(dict(v="promising")), f'<span class="sig {chip}">{label}</span>', "the verdict badge is the Sandbox chip")
+_label, chip, _o = B.VERDICTS["promising"]
+eq(SP.verdict_badge(dict(v="promising", a=dict(n=12))),
+   f'<span class="sig {chip}" data-verdict="promising">Collecting 12/30 · Promising</span>',
+   "the verdict badge is the Sandbox chip in the one vocabulary")
 
 print("\nthe buckets")
 r1 = dict(name="a", sport="soccer_o15", meta={}, prod=True, a={}, v="early")

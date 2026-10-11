@@ -375,8 +375,8 @@ ok('id="bets-roll"' not in html and 'class="bet-chip"' not in html and "Bets rol
 ok('id="status"' not in html and "System status" not in html, "the old System status pane is gone: the areas carry it")
 ok("<style" not in html.lower() and not re.search(r"\sstyle\s*=", html), "no inline style")
 nav = re.search(r'<nav class="toc"[^>]*>(.*?)</nav>', html, re.S)
-eq(re.findall(r">([^<]+)</a>", nav.group(1)) if nav else None, ["Overview", "Areas", "Attention", "Live now"],
-   "the section nav is the four Control Center sections")
+eq(re.findall(r">([^<]+)</a>", nav.group(1)) if nav else None, ["Overview", "Areas", "Attention", "Live now", "Rules"],
+   "the section nav is the five Control Center sections, the scorecard last")
 empty = CC.page(NOW, d=_ledger([]), st=STAGES_EMPTY, blob=blob, nba={}, market={}, closes={}, runs=None)
 ok("Nothing needs attention" in empty and "0 of 7" in empty and "Workflow run results were not read" in empty,
    "an empty ledger renders every area Waiting, no attention, and says the runs were not read")

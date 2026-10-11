@@ -200,7 +200,7 @@ def registered_row():
 
     pair_list gives a pair a row once it has bet. Until then the page still has a
     rule to show: the registration itself, with no record, no ROI and the
-    Sandbox's own 'Waiting for results' verdict. Nothing here is a number the
+    Sandbox's own 'Too early' verdict. Nothing here is a number the
     ledger has not produced.
     """
     meta = S.SOURCES.get(SOURCE) or {}

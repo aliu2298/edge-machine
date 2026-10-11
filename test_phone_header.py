@@ -177,8 +177,8 @@ ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in wee
 ok('class="toc"' not in trade_html, "Trading does not render a one-link Rules nav")
 _root_toc = _toc(root_html)
 _root_labels = re.findall(r">([^<]+)</a>", _root_toc.group(0) if _root_toc else "")
-ok(_root_labels == ["Overview", "Areas", "Attention", "Live now"],
-   f"the site root renders the Control Center's four-link section nav, not a one-link Sandbox nav ({_root_labels})")
+ok(_root_labels == ["Overview", "Areas", "Attention", "Live now", "Rules"],
+   f"the site root renders the Control Center's five-link section nav, not a one-link Sandbox nav ({_root_labels})")
 
 # The site root's visible time is Central Time, the same form site_root.py writes.
 # A raw ISO instant or a +00:00 offset in that stamp is the broken regeneration.

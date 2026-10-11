@@ -21,6 +21,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 import fmt
 import sandbox_build
+import sport_page
 import shell_build
 
 FAILS = []
@@ -399,8 +400,8 @@ live = _contests([
 live_group, live_a, *_rest = sandbox_build.pair_status(live_d, live_st, "oddspedia", "cricket")
 live_key = sandbox_build.verdict(live_a) if live_group is not None else "nobets"
 live_card = live[0]["cards"][0]
-eq(live_card.get("verdict"), sandbox_build.VERDICTS[live_key][0],
-   "the live card verdict is pair_status plus verdict()")
+eq(live_card.get("verdict"), sport_page.verdict_text(dict(v=live_key, a=live_a)),
+   "the live card verdict is pair_status plus verdict(), in the one vocabulary")
 if live_a.get("n"):
     eq(live_card.get("roi"), sandbox_build.pct(live_a.get("roi_fee"), sign=True),
        "ROI after fees is sandbox_build.pct of the assessed roi_fee")
@@ -459,7 +460,7 @@ for card, bet in zip(pair_contest["cards"], pair_contest["bets"]):
     source, sport = bet["pair"].split("|", 1)
     group, assessed, *_rest = sandbox_build.pair_status(pair_d, pair_st, source, sport)
     key = sandbox_build.verdict(assessed) if group is not None else "nobets"
-    want = sandbox_build.VERDICTS[key][0]
+    want = sport_page.verdict_text(dict(v=key, a=assessed))
     eq(card.get("verdict"), want, f"{card['market']} takes verdict() for {bet['pair']}")
     ok(card.get("verdict") != group,
        f"{card['market']} does not use the group label {group!r}")
@@ -507,7 +508,7 @@ for card, bet in zip(intl_contest["cards"], intl_contest["bets"]):
     src, sport = bet["pair"].split("|", 1)
     group, assessed, *_rest = sandbox_build.pair_status(intl_d, intl_st, src, sport)
     key = sandbox_build.verdict(assessed) if group is not None else "nobets"
-    eq(card.get("verdict"), sandbox_build.VERDICTS[key][0],
+    eq(card.get("verdict"), sport_page.verdict_text(dict(v=key, a=assessed)),
        f"{card.get('market')} uses verdict() for {bet['pair']}")
     ok(card.get("verdict") != group,
        f"{card.get('market')} does not use the group label {group!r}")

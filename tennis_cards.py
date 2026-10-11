@@ -48,9 +48,9 @@ def roi_html(row):
 
 
 def verdict_html(row):
-    """The verdict chip a Sandbox row prints for this pair."""
-    label, chip, _order = B.VERDICTS[row["v"]]
-    return f'<span class="sig {chip}">{B.esc(label)}</span>'
+    """The verdict chip a Sandbox row prints for this pair: sport_page.verdict_badge."""
+    import sport_page
+    return sport_page.verdict_badge(row)
 
 
 def record_text(a):

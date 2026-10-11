@@ -164,7 +164,7 @@ ok("<b>Scheduling.</b>" in method and "10:00–11:30 Central" in method and "12:
 print("\nedge cases")
 empty = C.build({"quotes": []}, {"pairs": {}}, NOW)
 empty_rule = _section(empty.split("<main", 1)[-1], "rules")
-ok('class="sp-sandbox-table"' in empty_rule and "Waiting for results" in empty_rule
+ok('class="sp-sandbox-table"' in empty_rule and 'data-verdict="waiting">Too early<' in empty_rule
    and 'data-l="Record" data-empty="1">—</td>' in empty_rule and "Yes ask 70–80¢" in empty_rule,
    "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
 ok("No commodities favourite-band record yet." not in empty, "the page never says it has no rule")

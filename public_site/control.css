@@ -54,3 +54,18 @@
 @media (max-width: 800px) {
   .cc-areas { grid-template-columns: minmax(0, 1fr); }
 }
+/* Rule scorecard (phase 4): every rule in one table under the chips. The chips are the
+   sport pages' .sp-filter; the table is the shared .tbl. */
+.control-center section#scorecard { margin-top: 28px; }
+.cc-filter { margin: 8px 0 10px; }
+.cc-filter .count { color: var(--mut); font-variant-numeric: tabular-nums; margin-left: 2px; }
+.cc-scorecard td { vertical-align: top; }
+.cc-scorecard th, .cc-scorecard td { padding-left: 8px; padding-right: 8px; }
+.cc-scorecard th { white-space: normal; }
+.cc-scorecard td:first-child { min-width: 200px; }
+/* Stage badges stack, and a long verdict wraps inside its chip, so all nine columns
+   fit the page at desktop width; a phone scrolls the table inside its box. */
+.cc-scorecard td.cc-stage > span { display: block; width: max-content; margin: 0 0 4px; }
+.cc-scorecard td.cc-verdict { min-width: 150px; max-width: 180px; }
+.cc-scorecard td.cc-verdict .sig { white-space: normal; display: inline-block; line-height: 1.3; }
+.cc-scorecard-note { margin-top: 8px; max-width: 72ch; }

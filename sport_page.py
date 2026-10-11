@@ -118,10 +118,75 @@ def is_early(row):
     return row.get("v") in EARLY_VERDICTS or int(a.get("n") or 0) < TOO_EARLY_N
 
 
-def verdict_badge(row):
-    """The verdict as the Sandbox prints it. One place, so phase 4's vocabulary lands here."""
-    label, chip, _order = B.VERDICTS[row["v"]]
-    return f'<span class="sig {chip}">{esc(label)}</span>'
+# ------------------------------------------------------------------ the verdict
+# One vocabulary on every page, read off the evidence ladder:
+#   Too early            under TOO_EARLY_N settled (no result yet included)
+#   Collecting n/30 · Promising | Behind
+#                        TOO_EARLY_N up to the read floor, with the lean so far
+#   Working | No edge | Proven
+#                        at the read floor and over
+# The grading is sandbox_build.verdict(), unchanged; only the words are here.
+# Removed, Retired and Fails BUILD are not points on the ladder: they say what
+# happened to the rule, so they keep their own words.
+VERDICT_WORDS = {               # key -> (word, chip class)
+    "proven": ("Proven", "y"),
+    "working": ("Working", "y"),
+    "noedge": ("No edge", "x"),
+    "promising": ("Promising", "w"),
+    "behind": ("Behind", "n"),
+    "early": ("Too early", "n"),
+    "waiting": ("Too early", "n"),
+    "nobets": ("Too early", "n"),
+    "removed": ("Removed from Production", "x"),
+    "retired": ("Retired", "x"),
+    "build_fail": ("Fails BUILD", "x"),
+}
+COLLECTING = ("promising", "behind")
+
+
+def verdict_label(key, n=0, floor=EVIDENCE_FLOOR):
+    """(text, chip) for a verdict key at n settled units: 'Collecting 14/30 · Promising'."""
+    word, chip = VERDICT_WORDS.get(key, (str(key), "n"))
+    if key in COLLECTING and n:
+        return f"Collecting {int(n)}/{int(floor)} · {word}", chip
+    return word, chip
+
+
+def verdict_text(row, floor=EVIDENCE_FLOOR):
+    """The verdict words alone, for a place that prints text, not a chip."""
+    return verdict_label(row["v"], (row.get("a") or {}).get("n") or 0, floor)[0]
+
+
+def verdict_badge(row, floor=EVIDENCE_FLOOR):
+    """The verdict chip every page prints: the Sandbox and sport tables, the rule
+    cards, the trading table and the Control Center's scorecard. `row` needs "v"
+    and, for the Collecting count, "a" with "n"; `floor` is the read floor of the
+    row's own unit (30 settled, or 30 entry days on the trading lane)."""
+    text, chip = verdict_label(row["v"], (row.get("a") or {}).get("n") or 0, floor)
+    return f'<span class="sig {chip}" data-verdict="{esc(row["v"])}">{esc(text)}</span>'
+
+
+COMBO_SPORTS = ("tennis_combo", "tennis_pmcombo")
+
+
+def settled_unit(row):
+    """What one settled count is for this rule: a market-day where a day's ladder
+    is one result (crypto, commodities), a match for the corners ladder, a basket
+    for a combo, a bet otherwise. The count itself is assess()'s n."""
+    unit = (row.get("a") or {}).get("unit")
+    if unit in ("market-day", "match"):
+        return unit
+    if B._base_sport(row.get("sport") or "") in COMBO_SPORTS:
+        return "basket"
+    return "bet"
+
+
+def unit_count(n, unit):
+    """'1 bet', '12 market-days', '3 matches', '4 baskets'."""
+    n = int(n or 0)
+    if n == 1:
+        return f"1 {unit}"
+    return f"{n} {unit}{'es' if unit == 'match' else 's'}"
 
 
 def roi_html(row, grey_under=B.MIN_N):

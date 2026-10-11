@@ -951,8 +951,8 @@ def main():
     table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
     ok(bool(table_rows), "pm_combo3 is on the sandbox page")
     if ((by_name.get("pm_combo3") or {}).get("a") or {}).get("n") == 0:
-        ok(any("Waiting for results" in part for part in table_rows),
-           "an empty pm_combo3 record renders as Waiting for results")
+        ok(any('data-verdict="waiting">Too early<' in part for part in table_rows),
+           "an empty pm_combo3 record renders as Too early")
 
     print("\na post-reset kept bet counts, and a dropped tour does not")
     fx = _reset_fixture()
