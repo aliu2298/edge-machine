@@ -133,6 +133,9 @@ for i in range(6):
                        logged=(start - timedelta(hours=2)).isoformat(), date=start.date().isoformat(),
                        settled=(start + timedelta(hours=3)).isoformat(), price_a=0.6, price_b=0.4,
                        side_a="Home", side_b="Away", label=f"Home v Away {i}", market_id=f"m{i}", url="https://kalshi.com/x"))
+# The pair's light is red with the longest reason the column carries ("6 of 6 recent
+# bets cannot be published — the feed drops them silently"), so the row the browser
+# measures below is the tallest a pair row gets.
 prod = P.page({"quotes": quotes}, {"pairs": pairs}, {"leads": {}, "pairs": {}}, "", now=NOW)
 row = re.search(r'<tr>\s*<td><b>Over 1\.5 form rule.*?</tr>', prod, re.S).group(0)
 light = re.search(r'<td class="num light">(.*?)</td>', row, re.S)
@@ -245,14 +248,33 @@ if playwright is not None:
             const t = document.querySelector('#pairs table'); const tr = t.tBodies[0].rows[0];
             const cell = tr.querySelector('td.light'); const dot = cell.querySelector('b'); const word = cell.querySelector('span');
             const first = word.getClientRects()[0];   // the word's first line box, if it wraps
+            const tables = [...document.querySelectorAll('#pairs table')];
             return { rowH: Math.round(tr.getBoundingClientRect().height),
                      sameLine: Math.abs(dot.getBoundingClientRect().top - first.top) < 6
                                && first.left >= dot.getBoundingClientRect().right - 1,
-                     gap: Math.round(t.tBodies[0].rows[0].getBoundingClientRect().top - t.tHead.getBoundingClientRect().bottom) };
+                     gap: Math.round(t.tBodies[0].rows[0].getBoundingClientRect().top - t.tHead.getBoundingClientRect().bottom),
+                     cols: [...tr.cells].map(c => Math.round(c.getBoundingClientRect().width)),
+                     lines: [...tr.cells].map(c => { const r = document.createRange(); r.selectNodeContents(c);
+                                                     return new Set([...r.getClientRects()].map(b => Math.round(b.top))).size; }),
+                     pair: tr.cells[0].textContent.trim().replace(/\s+/g, ' '),
+                     // every sport's pairs table fits its card: no in-card scrolling, where the header cannot stick
+                     fits: tables.every(x => x.getBoundingClientRect().width <= x.parentElement.getBoundingClientRect().width + 1
+                                             && !x.parentElement.classList.contains('scroll-x')) };
         }""")
-        ok(got["rowH"] <= 140, f"a Production pair row is under 140px tall ({got['rowH']}px, was 205px)")
+        # The runner's fonts differ from a desktop's; the font the row was drawn with goes in the report.
+        try:
+            cdp = page.context.new_cdp_session(page)
+            cdp.send("DOM.enable"); cdp.send("CSS.enable")
+            root = cdp.send("DOM.getDocument", {"depth": -1})["root"]["nodeId"]
+            node = cdp.send("DOM.querySelector", {"nodeId": root, "selector": "body"})["nodeId"]
+            got["font"] = [f["familyName"] for f in cdp.send("CSS.getPlatformFontsForNode", {"nodeId": node})["fonts"]]
+        except Exception as e:  # the report is richer with the font, the checks do not need it
+            got["font"] = f"unknown ({type(e).__name__})"
+        ok(got["rowH"] <= 140, f"a Production pair row with the longest light reason is under 140px tall ({got['rowH']}px, was 205px; font {got['font']}, columns {got['cols']}, lines {got['lines']}, pair {got['pair']!r})")
         ok(got["sameLine"], f"the light's word sits beside its dot ({got})")
         ok(abs(got["gap"]) <= 1, f"no empty band between the header rows and the first pair ({got['gap']}px)")
+        ok(got["fits"], f"every pairs table fits its card, whatever the font (columns {got['cols']})")
+        ok(got["cols"][0] >= 220, f"the pair's name keeps its column ({got['cols'][0]}px, floor 220)")
         page.close()
         page = browser.new_page(viewport={"width": 1280, "height": 900})
         page.route("http://fixture.local/**", serve(pages["cricket.html"]))

@@ -2786,7 +2786,16 @@ details.fold.later > summary { margin-top: 12px; }
 .fig { font-variant-numeric: tabular-nums; text-align: right; }
 .fig .sub, .num .sub { display: block; font-size: 13px; color: var(--mut); white-space: normal; }
 /* The Production light: the dot and its word on one line. */
-td.light { white-space: normal; text-align: left; min-width: 150px; }
+td.light { white-space: normal; text-align: left; width: 170px; min-width: 150px; }
+/* The pair's name may break anywhere (above), so the auto layout would give
+   its column whatever the eight number columns leave. On a runner whose
+   fallback font is wider than Inter that left the name a few words per line
+   and the row six lines tall. The name column asks for its usual share and
+   keeps a floor, the light column takes its 170px and no more, and when a
+   wide font still needs room the number cells' grey sub-lines give way a
+   word at a time; the table never grows past its card. */
+#pairs td[data-l="Pair"] { width: 22%; min-width: 220px; }
+#pairs td.num .sm { white-space: normal; }
 td.light b { margin-right: 6px; }
 /* The second header row: section nav or breadcrumb on the left, the theme
    toggle on the right. The nav keeps its own phone scrolling. */
