@@ -54,6 +54,15 @@ NOTIONAL_USD = 1000.0
 MAX_POSITIONS = 60           # 60 x $1000 against ~$95k leaves room and never needs margin
 MAX_NEW_PER_DAY = 20         # a bad data day cannot turn into 400 orders
 
+# Loss caps. Checked on every run, in paper as well as live, so the thing that is supposed to
+# stop real money has been exercised for months before it ever sees any.
+MAX_DAILY_LOSS_PCT = 3.0     # against the previous close's equity (Alpaca's last_equity)
+MAX_DRAWDOWN_PCT = 15.0      # against the high-water mark this module records as it goes
+
+# A BREACH STOPS BUYING AND NEVER STOPS SELLING. A cap that blocked exits would lock the
+# account into the losing positions it exists to limit, and each rule's exit is the only thing
+# that ends a trade — there is no stop-loss underneath it.
+
 # Namespace for client_order_id. Alpaca rejects a repeat, which is the point: it is the
 # exchange-side half of at-most-once, and survives this process dying mid-run.
 NS = uuid.UUID("3b2e1f4a-9c7d-5e6b-8a1f-2d4c6e8b0a39")
@@ -69,8 +78,44 @@ def live():
     return host() == LIVE_HOST
 
 
+# Live keys are a SEPARATE pair under their own names in the same 0600 file. Not a switch over
+# one pair: a paper key sent to the live host fails with a 401 that reads like an outage, and a
+# live key sent to the paper host would quietly trade the wrong account. Keeping them apart
+# means the only way to reach real money is to have deliberately stored a live key AND set
+# ALPACA_LIVE=1 — two acts, neither of them a default.
+LIVE_KEY_NAMES = ("APCA_LIVE_API_KEY_ID", "APCA_LIVE_API_SECRET_KEY")
+
+
+def _live_creds():
+    path = os.path.expanduser("~/.alpaca-credentials")
+    kv = {}
+    try:
+        with open(path) as f:
+            for line in f:
+                line = line.strip()
+                if "=" in line and not line.startswith("#"):
+                    a, b = line.split("=", 1)
+                    kv[a.strip()] = b.strip().strip('"').strip("'")
+    except OSError:
+        return None, None
+    return kv.get(LIVE_KEY_NAMES[0]) or None, kv.get(LIVE_KEY_NAMES[1]) or None
+
+
+def live_configured():
+    k, s_ = _live_creds()
+    return bool(k and s_)
+
+
 def _headers():
-    key, sec = M._creds()
+    if live():
+        key, sec = _live_creds()
+        if not key:
+            raise RuntimeError(
+                "ALPACA_LIVE=1 but no live keys stored. Add "
+                f"{LIVE_KEY_NAMES[0]} and {LIVE_KEY_NAMES[1]} to ~/.alpaca-credentials. "
+                "The paper keys are deliberately not reused for the live host.")
+    else:
+        key, sec = M._creds()
     if not key:
         raise RuntimeError("no Alpaca credentials")
     return {"APCA-API-KEY-ID": key, "APCA-API-SECRET-KEY": sec,
@@ -198,12 +243,34 @@ def size(intent, cash_left):
     return qty
 
 
+def risk(acct, s):
+    """-> (may_buy, [reasons]). Selling is never gated; see MAX_DAILY_LOSS_PCT above."""
+    equity = float(acct.get("equity") or 0)
+    prev = float(acct.get("last_equity") or 0)
+    hwm = max(float(s["meta"].get("high_water") or 0), equity)
+    s["meta"]["high_water"] = round(hwm, 2)
+    reasons = []
+    if prev > 0:
+        day = (prev - equity) / prev * 100.0
+        if day >= MAX_DAILY_LOSS_PCT:
+            reasons.append(f"down {day:.2f}% today, cap {MAX_DAILY_LOSS_PCT:.1f}%")
+    if hwm > 0:
+        dd = (hwm - equity) / hwm * 100.0
+        if dd >= MAX_DRAWDOWN_PCT:
+            reasons.append(f"down {dd:.2f}% from the high-water mark, cap {MAX_DRAWDOWN_PCT:.1f}%")
+    if acct.get("trading_blocked") or acct.get("account_blocked"):
+        reasons.append("the broker has blocked trading on this account")
+    return (not reasons), reasons
+
+
 def plan(bars_by_symbol, d, rules=None, state=None):
     """-> (orders to send, refusals with a named reason). Sells first: they free cash."""
     s = state if state is not None else refresh(load_state())
     mine = held_by_trade(s)
     acct_pos = positions()
-    cash = float(account().get("cash") or 0)
+    acct = account()
+    cash = float(acct.get("cash") or 0)
+    may_buy, risk_reasons = risk(acct, s)
     orders, refused = [], []
 
     # Local state first (cheap, and covers orders still "sending"), then the exchange, which
@@ -243,6 +310,9 @@ def plan(bars_by_symbol, d, rules=None, state=None):
     n_open = len(bought - committed(s, "sell"))
     new = 0
     for en in pending_entries(bars_by_symbol, d, rules):
+        if not may_buy:
+            refused.append(dict(en, reason="LOSS CAP: " + "; ".join(risk_reasons)))
+            continue
         if en["id"] in bought or live_at_exchange(en["id"], "buy"):
             refused.append(dict(en, reason="already bought or queued"))
             continue
@@ -598,7 +668,12 @@ def main(argv=None):
     bars = _fetch_bars()
     print(f"bars      : {len(bars)} symbols, through {max((T._day(b[-1]) for b in bars.values() if b), default='?')}")
 
-    orders, refused = plan(bars, d)
+    st = refresh(load_state())
+    ok_buy, why = risk(account(), st)
+    save_state(st)
+    if not ok_buy:
+        print(f"LOSS CAP  : buying halted — {'; '.join(why)}  (exits are never gated)")
+    orders, refused = plan(bars, d, state=st)
     buys = [o for o in orders if o["action"] == "buy"]
     sells = [o for o in orders if o["action"] == "sell"]
     print(f"planned   : {len(sells)} sell, {len(buys)} buy"

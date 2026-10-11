@@ -316,6 +316,65 @@ check("ALPACA_LIVE=1 switches hosts", X.live(), True)
 os.environ.pop("ALPACA_LIVE", None)
 check("and back", X.host(), X.PAPER_HOST)
 
+print("\nloss caps halt BUYING and never halt selling")
+# A cap that blocked exits would lock the account into the very positions it exists to limit.
+# Each rule's exit is the only thing that ends a trade — there is no stop-loss underneath it —
+# so a halted sell is a position held indefinitely while the ledger records a clean exit.
+st0 = {"orders": [], "meta": {}}
+ok, why = X.risk({"equity": "100000", "last_equity": "100000"}, dict(st0, meta={}))
+check("a flat day is fine", (ok, why), (True, []))
+ok, why = X.risk({"equity": "96000", "last_equity": "100000"}, {"orders": [], "meta": {}})
+check("a 4% daily loss trips the 3% cap", (ok, len(why)), (False, 1))
+ok, why = X.risk({"equity": "97500", "last_equity": "100000"}, {"orders": [], "meta": {}})
+check("a 2.5% daily loss does not", (ok, why), (True, []))
+# Drawdown runs off a high-water mark this module keeps as it goes.
+m = {"orders": [], "meta": {"high_water": 120000}}
+ok, why = X.risk({"equity": "100000", "last_equity": "100000"}, m)
+check("16% off the high-water mark trips the 15% cap", ok, False)
+check("  and the high-water mark is kept", m["meta"]["high_water"], 120000)
+m2 = {"orders": [], "meta": {"high_water": 100}}
+X.risk({"equity": "100000", "last_equity": "100000"}, m2)
+check("  and raised by a new high", m2["meta"]["high_water"], 100000.0)
+ok, why = X.risk({"equity": "100000", "last_equity": "100000", "trading_blocked": True},
+                 {"orders": [], "meta": {}})
+check("a broker block stops buying too", ok, False)
+
+# The whole point: with the cap tripped, entries are refused and exits still go out.
+_p4, _a4, _e4, _pe4, _x4 = X.positions, X.account, X.pending_exits, X.pending_entries, X.exchange_orders
+TID4 = "r|CCC|2026-10-09"
+X.account = lambda: {"equity": "90000", "last_equity": "100000", "cash": "50000"}
+X.positions = lambda: {"CCC": {"qty": "5"}}
+X.exchange_orders = lambda days=120: {X.client_order_id(TID4, "buy"): {"status": "filled",
+                                                                      "filled_qty": "5"}}
+X.pending_entries = lambda b, d, r=None: [dict(id="r|DDD|2026-10-09", rule="r", symbol="DDD",
+                                               action="buy", ref_price=50.0)]
+X.pending_exits = lambda b, d, r=None: [dict(id=TID4, rule="r", symbol="CCC",
+                                             action="sell", ref_price=50.0)]
+try:
+    o, r = X.plan({}, {"trades": [], "meta": {}}, state={"orders": [], "meta": {}})
+    check("with the cap tripped, the BUY is refused",
+          [x["reason"] for x in r if x["action"] == "buy"][:1], ["LOSS CAP: down 10.00% today, cap 3.0%"])
+    check("...and the SELL still goes out",
+          [(x["symbol"], x["qty"]) for x in o], [("CCC", 5)])
+finally:
+    X.positions, X.account, X.pending_exits = _p4, _a4, _e4
+    X.pending_entries, X.exchange_orders = _pe4, _x4
+
+
+print("\nlive keys are separate from paper keys")
+check("live is not configured until live keys are stored", X.live_configured(), False)
+os.environ["ALPACA_LIVE"] = "1"
+try:
+    X._headers()
+    check("ALPACA_LIVE=1 without live keys is refused", "no error", "RuntimeError")
+except RuntimeError as e:
+    check("ALPACA_LIVE=1 without live keys is refused, by name",
+          "live keys" in str(e) and "paper keys are deliberately not reused" in str(e), True)
+finally:
+    os.environ.pop("ALPACA_LIVE", None)
+check("and paper still works", bool(X._headers().get("APCA-API-KEY-ID")), True)
+
+
 print("\nreconciliation: what the broker filled v what the record says")
 # Every net return and every verdict in the lane rests on COST_BPS_PER_SIDE being roughly
 # right, and nothing measured it until now. The sign convention is the part that is easy to
