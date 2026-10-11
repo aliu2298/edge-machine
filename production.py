@@ -191,6 +191,15 @@ def lead_from_quote(q, pair_key, built):
             headline = f"Under {bet['n'] + 0.5:g} goals"
         elif bet["kind"] == "btts":
             headline = "Both teams to score"
+        elif bet["kind"] == "corners_lte":
+            # The No on an "N+" corners rung is N - 1 corners or fewer: under N.
+            strike = T.corners_strike(q["market_id"])
+            bet["n"] = strike - 1
+            if q.get("team"):
+                bet["team"] = q["team"]
+                headline = f"Under {strike} corners · {q['team']}"
+            else:
+                headline = f"Under {strike} corners"
         else:
             headline = f"Over {bet['n'] - 0.5:g} goals"
     elif q["sport"] in T.LADDER_SPORTS:
@@ -222,7 +231,7 @@ def lead_from_quote(q, pair_key, built):
                  "legs": [{"market": l["market_id"], "name": l.get("name"),
                            "side": "yes" if l["pick"] == "a" else "no",
                            "starts": str(l.get("start"))[:16]} for l in (q.get("legs") or [])]}
-    elif q["sport"] in T.FEED_BETS and bet["kind"] == "total_lte":
+    elif q["sport"] in T.FEED_BETS and bet["kind"] in ("total_lte", "corners_lte"):
         # An under is the No side of the over market, and Kalshi lists one contract per
         # STRIKE inside the totals event -- the -4 ticker is over 3.5, the -3 over 2.5.
         # So the lead names the exact contract it was priced on and says which side to
