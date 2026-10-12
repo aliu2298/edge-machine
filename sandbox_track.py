@@ -2256,8 +2256,8 @@ def build_status(d, now=None, previous=None):
       ledger_updated     the ledger's own stamp for the run it describes
       lanes              {"<source>|<sport>": {source, sport, label, kind, paused,
                             read: "ok" | "down: <why>" | "quiet" | "paused" | None,
-                            last_read: the last run that read this source's feed
-                                       (its status said ok, or it had rows on offer),
+                            last_read: the last run on which this source's feed
+                                       answered and this sport had rows on offer,
                                        carried forward from the previous file when
                                        this run did not,
                             offered, picked: this run's counts, or None,
@@ -2267,9 +2267,9 @@ def build_status(d, now=None, previous=None):
                            hours_past_start, overdue_after_h}], oldest first
       broken_feeds       [{source, label, reason}]; reason "" means the source
                          reported no status and picked nothing on any sport it had rows for
-    A lane is a connected source on one of its registered sports. A source's
-    feed is read once per run for every sport it covers, so last_read is the
-    source's; it is repeated on each of its lanes so a reader need not join.
+    A lane is a connected source on one of its registered sports. `read` is the
+    source's state this run (a feed is read once for every sport it covers);
+    last_read is the lane's own, set only when that sport had rows on offer.
     """
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
@@ -2311,7 +2311,11 @@ def build_status(d, now=None, previous=None):
                 read = None
             else:
                 read = "quiet"
-            read_now = read == "ok"
+            # A lane is read when its source answered AND this sport had rows on offer,
+            # the same test lane_read_signal applies to a coverage cell. A source whose
+            # feed answered on another sport, with nothing offered on this one, does not
+            # make this lane fresh.
+            read_now = read == "ok" and bool(offered)
             last_read = stamp if read_now else (prev_lanes.get(key) or {}).get("last_read")
             lanes[key] = dict(source=name, sport=sport, label=meta.get("label"), kind=meta.get("kind"),
                               paused=paused, read=read, last_read=last_read,

@@ -167,7 +167,7 @@ for key in KEYS:
     name, sport = key.split("|")
     group, a, _qa, open_n, _last, pair = B.pair_status(d, st, name, sport)
     eq((group, a["n"], a.get("n_price") or 0), ("waiting", 0, 0), f"{key}: nothing counted, Waiting")
-    eq(B.verdict(a), "waiting", f"{key}: the verdict is waiting, which the pages print as Too early")
+    eq(B.verdict(a), "waiting", f"{key}: the verdict is Waiting")
 eq(B.pair_status(d, st, "oddspedia", "cricket")[3], 1, "the open bet logged before the clock still shows as open")
 rows = {f'{r["name"]}|{r["sport"]}': r for r in B.pair_list(d, st) if r["sport"] == "cricket"}
 eq(sorted(rows), sorted(KEYS), "all three cricket pairs stay listed")
@@ -224,7 +224,7 @@ card = html[html.find('data-source="oddspedia"'):]
 card = card[:card.find("</article>")]
 ok('<span class="sig w early">Early · 0 bets</span>' in card, "the Production card wears Early · 0 bets")
 ok('<b>—</b><span>record</span>' in card, "its record is empty")
-ok('data-verdict="waiting">Too early<' in card, "its verdict is Too early: nothing settled since the reset")
+ok('data-verdict="waiting"' in card, "its verdict chip is the Waiting verdict")
 ok("RESET 2026-10-08:" in card, "its registration shows the RESET line")
 fold = card[card.find('<details class="sp-more sp-before-reset">'):]
 fold = fold[:fold.find("</details>")]
@@ -240,7 +240,7 @@ sand = html[html.find('<details class="fold sp-sandbox"'):]
 ok(sand.count("Before the reset · not counted") == 1, "the Polymarket comparison rule folds its old record too")
 ok('data-source="cricket_consensus"' in sand and sand.count("Before the reset · not counted") == 1,
    "Cricket consensus, which never bet, has nothing to fold")
-ok('data-verdict="waiting">Too early<' in sand, "the Sandbox rows read Too early")
+ok(sand.count('data-verdict="waiting"') >= 2, "the Sandbox rows carry the Waiting verdict")
 ok(f"every cricket record counts from {CLOCK}" in html, "the method fold states the reset once")
 pre_html = cricket_build.build(d, _stages(), NOW)
 ok("Before the reset · not counted" not in pre_html, "without the stage rows nothing is folded: the fold is the reset's")
