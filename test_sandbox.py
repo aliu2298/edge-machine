@@ -2859,8 +2859,8 @@ _l3 = next(l for l in _fl if l["sandbox_quote"].endswith("3"))
 eq((_l3["bet"], _l3["headline"]), ({"kind": "match_result", "side": "draw"}, "Draw"), "a draw tip is published as a draw")
 eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
 eq(sorted(_feed["pairs"]["mls_away_band|soccer"]),
-   ["by_hand", "entered_at", "promoted_at", "ready_at", "route", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
-   "each pair carries the Sandbox's own record since ready, to compare real fills with")
+   ["by_hand", "entered_at", "promoted_at", "ready_at", "route", "routing", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
+   "each pair carries the Sandbox's own record since ready, to compare real fills with, and its routing count")
 _l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
 eq((_l1["bet"], _l1["home"], _l1["away"], _l1["league"], _l1["status"]),
    ({"kind": "match_result", "side": "home"}, "Leeds United", "Newcastle", "Premier League", "pending"),
@@ -3509,7 +3509,8 @@ ok(not PR.start_verified(dict(_tnq, sport="soccer", start_source=None)),
 _tnl = PR.lead_from_quote(_tnq, _STAGE_PAIR, "2026-09-18T06:00:00+00:00")
 eq(_tnl["bet"], {"kind": "match_result", "side": "away"}, "backing side B is the away side")
 eq(_tnl["route"], {"venue": "polymarket_us", "market": "aec-utr-a-b-2026-09-18",
-                   "outcome": "Player B", "outcome_side": "no"},
+                   "outcome": "Player B", "outcome_side": "no",
+                   "price_at_log": _tnl["price_at_log"], "claim": "Player B to win"},
    "the lead names the market and which outcome to buy — no name matching downstream")
 eq(PR.lead_from_quote(dict(_tnq, pick="a"), _STAGE_PAIR, "x")["route"]["outcome_side"],
    "yes", "the first player is the Yes side of that same market")
@@ -3521,10 +3522,12 @@ ok("model_prob" not in PR.lead_from_quote(dict(_tnq, prob_a=0.5, edge=0.05, pric
                                           "espn_fpi|mlb", "x"),
    "…but not on a three-way market, where 1 - P(home) also holds the draw")
 
-ok("route" not in PR.lead_from_quote(dict(_tnq, sport="soccer", venue="kalshi",
-                                          market_id="KXEPLGAME-26SEP18ARSCFC", pick="a",
-                                          start_source="espn"), "x|soccer", "y"),
-   "a soccer lead carries no route: it is matched by league and club name")
+_soc = PR.lead_from_quote(dict(_tnq, sport="soccer", venue="kalshi",
+                               market_id="KXEPLGAME-26SEP18ARSCFC", pick="a",
+                               start_source="espn"), "x|soccer", "y")
+eq((_soc["route"]["venue"], _soc["route"]["market"], _soc["route"]["event"], _soc["route"]["outcome_side"]),
+   ("kalshi", "KXEPLGAME-26SEP18ARSCFC", "KXEPLGAME-26SEP18ARSCFC", "yes"),
+   "a soccer result lead names its Kalshi event too (2026-10-12): no team names to match downstream")
 
 # ---------------------------------------------------------------------------
 print("\nverified start times for Kalshi tennis")
@@ -3566,8 +3569,9 @@ _kl = PR.lead_from_quote(dict(source="tennis_fav_band", id="q", sport="tennis", 
                               pick="b", price=0.8, status="open", start_source="tennisexplorer",
                               start="2026-09-18T12:00:00+00:00", logged="2026-09-18T06:00:00+00:00"),
                          _STAGE_PAIR, "2026-09-18T06:00:00+00:00")
-eq(_kl["route"], {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome": "B Player",
-                  "outcome_side": "yes"},
+eq({k: _kl["route"].get(k) for k in ("venue", "market", "outcome", "outcome_side")},
+   {"venue": "kalshi", "market": "KXATPMATCH-26SEP18AB", "outcome": "B Player",
+    "outcome_side": "yes"},
    "Kalshi lists a market per player, so either side is a plain Yes")
 
 # ---------------------------------------------------------------------------
@@ -3605,13 +3609,14 @@ ok(T.placeable(dict(_mq, venue="kalshi", market_id="KXMLBGAME-26SEP20SEACOL", st
 _ml = PR.lead_from_quote(_mq, "espn_fpi|mlb", "2026-09-18T06:00:00+00:00")
 eq((_ml["league"], _ml["bet"]), ("MLB", {"kind": "match_result", "side": "away"}),
    "it is published as a match result, labelled with its sport")
-eq(_ml["route"], {"venue": "polymarket_us", "market": "aec-mlb-sea-col-2026-09-20",
-                  "outcome": "Colorado Rockies", "outcome_side": "no"},
+eq({k: _ml["route"].get(k) for k in ("venue", "market", "outcome", "outcome_side")},
+   {"venue": "polymarket_us", "market": "aec-mlb-sea-col-2026-09-20",
+    "outcome": "Colorado Rockies", "outcome_side": "no"},
    "carrying the market it was priced on, and which outcome to buy")
-ok("route" not in PR.lead_from_quote(dict(_mq, sport="soccer", venue="kalshi",
-                                          market_id="KXEPLGAME-26SEP20ARSCFC", pick="a",
-                                          start_source="espn"), "x|soccer", "y"),
-   "soccer still carries no route: those are found by league and club name")
+eq(PR.lead_from_quote(dict(_mq, sport="soccer", venue="kalshi",
+                          market_id="KXEPLGAME-26SEP20ARSCFC", pick="a",
+                          start_source="espn"), "x|soccer", "y")["route"]["venue"], "kalshi",
+   "soccer now carries its Kalshi route too")
 
 # ---------------------------------------------------------------------------
 print("\ndaily commodities: the far-tail rule")
@@ -5566,7 +5571,8 @@ def _cleg(mid, start, price, name):
     return dict(market_id=mid, sport="tennis", side_a=name, side_b="Other", price_a=price,
                 price_b=round(1 - price + 0.02, 2), tradeable={"a": True, "b": True},
                 start=start, date=start[:10], venue="kalshi", start_source="tennisexplorer",
-                price_draw=None, untraded=False)
+                price_draw=None, untraded=False,
+                tickers={"a": mid + "-" + name[:3].upper(), "b": mid + "-OTH"})
 
 
 _cu = {"tennis": [_cleg("KXATPMATCH-A", "2026-09-24T10:00:00+00:00", 0.78, "Alcaraz"),
@@ -5581,18 +5587,25 @@ eq([l["name"] for l in _crow["legs"]], ["Alcaraz", "Sinner", "Zverev"],
    "and each leg carries its own name — a market ticker is not something a reader can check")
 ok(T.placeable(_cq), "a basket IS publishable: the feed can say exactly what to ask for")
 ok(PROD.start_verified(_cq), "and its start is verified through its legs")
-_clead = PROD.lead_from_quote(_cq, "tennis_combo3|tennis_combo", "2026-09-23T13:30:00+00:00")
+_ccoll = {"collections": [dict(ticker="KXMVESPORTSMULTIGAMEEXTENDED-R", series="KXMVESPORTSMULTIGAMEEXTENDED",
+                                exchange_index=1, events={"KXATPMATCH-A", "KXATPMATCH-B", "KXATPMATCH-C"})]}
+_clead = PROD.lead_from_quote(_cq, "tennis_combo3|tennis_combo", "2026-09-23T13:30:00+00:00", kalshi=_ccoll)
 _cr = _clead["route"]
 eq((_cr["instrument"], _cr["how"]), ("combo", "request_quote"),
    "the route says ASK for a quote — a basket is not a market anyone can hit, and the resting "
    "book was 7.4% and 9.8% worse on the only baskets that had an ask at all")
-eq(_cr["collection"], S.COMBO_COLLECTION, "named in the collection the markup was measured through")
+eq(_cr["mve_collection_ticker"], "KXMVESPORTSMULTIGAMEEXTENDED-R",
+   "named in the collection Kalshi lists the legs in, read from Kalshi rather than a constant")
 close(_cr["max_price"], _crow["price_a"],
       "max_price is the ceiling: the legs' product plus the measured markup, and a quote above "
       "it is a different bet")
-eq([(l["market"], l["side"]) for l in _cr["legs"]],
-   [("KXATPMATCH-A", "yes"), ("KXATPMATCH-B", "yes"), ("KXATPMATCH-C", "yes")],
-   "every leg and which side of it")
+eq([(l["market"], l["event"], l["outcome_side"], l["ask_at_log"]) for l in _cr["legs"]],
+   [("KXATPMATCH-A-ALC", "KXATPMATCH-A", "yes", 0.78), ("KXATPMATCH-B-SIN", "KXATPMATCH-B", "yes", 0.79),
+    ("KXATPMATCH-C-ZVE", "KXATPMATCH-C", "yes", 0.77)],
+   "every leg's own market, its event, the Yes side and the ask it was cut at")
+_cbare = PROD.lead_from_quote(_cq, "tennis_combo3|tennis_combo", "2026-09-23T13:30:00+00:00")
+ok("route" not in _cbare and _cbare["unroutable"] == "no open Kalshi collection lists every leg",
+   "with no collection read, the basket goes out unrouted and says why")
 eq(_clead["bet"], {"kind": "combo", "n": 3, "all_must_win": True}, "and that all of them must win")
 ok(not T.placeable(dict(_cq, legs=[dict(l, venue="polymarket_us") for l in _cq["legs"]])),
    "a leg somewhere other than Kalshi is not publishable: the collection lives on Kalshi")
@@ -6111,7 +6124,7 @@ def _patch_main(feed_boom=False, save_boom=False):
             raise RuntimeError("production feed down")
         _PROD.build_feed = _feed_boom
     else:
-        _PROD.build_feed = lambda d, st: {"pairs": {}, "leads": {},
+        _PROD.build_feed = lambda d, st, **k: {"pairs": {}, "leads": {},
                                           "unlisted_skipped": 0, "unverified_kickoff_skipped": 0}
     return saved
 
