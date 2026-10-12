@@ -195,6 +195,62 @@ def listing_line(d):
 
 
 
+# ------------------------------------------------------------------ before the reset
+def before_reset(d, row):
+    """The lane's record from before its reset clock, or None without a reset.
+
+    Read off the same ledger the row's record is, on the US exchanges, up to
+    the instant the stage row's `since` names. It is shown, labelled as not
+    counted, and counts toward nothing: the row's own figures start at the clock.
+    """
+    since = row.get("since")
+    if not since or not row.get("reset"):
+        return None
+    a = T.assess(d, row["name"], row["sport"], until=since, venues=T.TRADEABLE_VENUES)
+    mine = [q for q in T.bet_rows(d)
+            if q.get("source") == row["name"] and q.get("sport") == row["sport"]
+            and q.get("bet") and str(q.get("logged") or "") < str(since)]
+    if not mine:
+        return None
+    stamps = sorted(str(q.get("logged") or "")[:10] for q in mine if q.get("logged"))
+    # The money on the same venues as the record: the US exchanges, settled rows only.
+    gross = sum(float(q.get("pnl") or 0) for q in mine
+                if q.get("status") in ("won", "lost", "settled")
+                and (q.get("venue") or "polymarket") in T.TRADEABLE_VENUES)
+    return dict(a=a, bets=len(mine), first=stamps[0] if stamps else "", last=stamps[-1] if stamps else "",
+                gross=gross, since=since)
+
+
+def before_reset_html(d, row):
+    """A folded 'Before the reset' note under a rule's definition, or an empty string."""
+    found = before_reset(d, row)
+    if not found:
+        return ""
+    a = found["a"]
+    n = int(a.get("n") or 0)
+    roi = (f'{B.pct(a["roi_fee"], sign=True)} after fees' if n and a.get("roi_fee") is not None
+           else "no ROI to read")
+    priced = (f'{int(a.get("won") or 0)} won v {float(a.get("expected") or 0):.1f} the prices implied'
+              if n else "nothing settled on the US exchanges")
+    span = (f'{found["first"]} to {found["last"]}' if found["first"] and found["first"] != found["last"]
+            else found["first"])
+    sign = "+" if found["gross"] >= 0 else "−"
+    return (
+        f'<details class="sp-more sp-before-reset"><summary>Before the reset · not counted</summary>'
+        f'<p class="sp-def"><b>Not counted.</b> {B.esc(found["bets"])} bet{"s" if found["bets"] != 1 else ""} '
+        f'logged {B.esc(span)}, before the clock at {B.esc(found["since"])}. On the US exchanges: '
+        f'{B.esc(T.record_text(a))}, {B.esc(roi)}, {B.esc(priced)}, '
+        f'{sign}${abs(found["gross"]):,.0f} gross at a flat ${int(T.STAKE)} stake. '
+        f'These rows stay on file and count toward nothing above.</p>'
+        f'<p class="sp-def sm mut">{B.esc(row["reset"])}</p></details>')
+
+
+def definition(d, row):
+    """The registered definition, with the pre-reset record folded under it."""
+    import sport_page as SP
+    return SP.default_definition(d, row) + before_reset_html(d, row)
+
+
 # ------------------------------------------------------------------ what the template asks for
 def market(d, row):
     """The venue column: where the rule's own bets traded."""
@@ -247,6 +303,9 @@ def method(idle_html=""):
             f'<p class="sm">Every pick is logged before the start at the price available then, settled '
             f'on the real result at a flat ${int(T.STAKE)} stake, and judged after fees against the '
             f'price it paid.</p>'
+            f'<p class="sm">Reset {B.esc(S.CRICKET_RESET_DECIDED)}: every cricket record counts from '
+            f'{B.esc(S.CRICKET_RESET_SINCE)}. What each rule did before that is under its own '
+            f'"Before the reset" fold, on file and counted toward nothing.</p>'
             f'{idle_html}')
         return listing_line(d), "venue note", inner, False
     return _method

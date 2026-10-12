@@ -334,7 +334,8 @@ def approval_table(d, scores, full=None):
     none, so its numbers are main's. A source that also had a removed sport
     is judged without those bets. A reset lane is judged only on bets logged
     since the tour clock, so a kept-tour bet from before that clock is not
-    its stamp. pm_combo4 is not a reset lane, and neither is any other source.
+    its stamp. A source reset on every sport it covers (S.source_reset_since) is
+    judged from that clock the same way. pm_combo4 is not a reset lane.
     """
     full = d if full is None else full
     head = "".join(f'<th>{esc(label)}</th>' for _k, label, _p, _d in
@@ -346,7 +347,9 @@ def approval_table(d, scores, full=None):
         if not (s["connected"] and name not in S.REMOVED_SOURCES
                 and (s["bets"] or name in S.TENNIS_FAV_RESET)):
             continue
-        since = S.tour_clock_since(source=name)
+        # A source reset on every sport it covers is stamped from that clock too
+        # (S.source_reset_since): Oddspedia's cricket record restarts, so its stamp does.
+        since = S.tour_clock_since(source=name) or S.source_reset_since(name)
         judged.append((name, T.assess(stamp_ledger(full, name), name, since=since)))
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
@@ -758,9 +761,11 @@ def pair_status(d, st, name, sport):
     open_n = sum(1 for q in mine if q["status"] == "open" and not T.climate_excluded(q))
     last = max((str(q.get("logged") or "") for q in mine), default="")
     if not a["n"]:
-        # A tour-clock reset with nothing counted yet stays Waiting. Dropping
-        # the row would hide the lane for having no entries.
-        reset_empty = S.tour_clock_since(since=T.record_since(pair)) is not None
+        # A reset with nothing counted yet stays Waiting. Dropping the row would
+        # hide the lane for having no entries. A tour-clock reset is one; so is a
+        # stage row carrying a reset note (sandbox_track.PAIR_RESETS).
+        reset_empty = (S.tour_clock_since(since=T.record_since(pair)) is not None
+                       or bool(pair.get("reset")))
         group = "waiting" if open_n or reset_empty else None
     elif a["n"] >= MIN_N:
         group = "working" if (a["roi"] or 0) > 0 and a["z"] > 0 else "failing"
@@ -899,7 +904,10 @@ def pair_list(d, st, include_retired=False):
                             # its move; None for every other row. The sport pages and the
                             # home cards print it beside the Production chip.
                             early=production.early_badge(d, f"{name}|{sport}", pair),
-                            removed=removed, v=v, since=T.record_since(pair)))
+                            removed=removed, v=v, since=T.record_since(pair),
+                            # The stage row's reset note, when it carries one, so a
+                            # sport page can fold the record from before the clock.
+                            reset=pair.get("reset")))
     return out
 
 
