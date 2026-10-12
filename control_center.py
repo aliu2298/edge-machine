@@ -25,6 +25,16 @@ A "successful read" is the tracker run on which the lane's venue listing or any 
 its rules reported rows (sandbox_track.lane_read_signal), stamped per sport into the
 ledger's meta.lane_reads by the tracker. Before that stamp exists for a lane, the last
 run's coverage decides, and failing that the newest row the lane ever logged.
+
+THE STATUS FILE. data/status.json is the tracker's own statement of its run
+(sandbox_track.build_status): per lane the last successful read, the open bets past
+their allowed window, and the feeds it could not read. When the file describes the
+ledger this page renders (its ledger_updated is the ledger's meta.updated), the page
+reads those three from it: an area's last read includes its lanes' last_read, the
+broken feeds are the file's, and the overdue bets are the file's, each aged to the
+build's clock, plus any bet that crossed its window after the file was written. A
+missing file, or one from another run, falls back to the ledger, and an out-of-date
+file is itself an attention item.
 """
 import datetime
 import json
@@ -43,6 +53,7 @@ import sport_page as SP
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NBA_PATH = os.path.join(ROOT, "data", "nba_pace.json")
+STATUS_PATH = T.STATUS
 MARKET_PATH = os.path.join(ROOT, "data", "market_ledger.json")
 CLOSES_DIR = T.CLOSES_DIR
 REPO = "aliu2298/edge-machine"
@@ -202,7 +213,25 @@ def fetch_runs(opener=None, timeout=RUNS_TIMEOUT):
 def inputs(runs=False, opener=None):
     """Everything the model reads beside the ledger, the stages and the feed."""
     return dict(nba=_read_json(NBA_PATH), market=_read_json(MARKET_PATH),
-                closes=closes_updated(), runs=fetch_runs(opener) if runs else None)
+                closes=closes_updated(), runs=fetch_runs(opener) if runs else None,
+                status=_read_json(STATUS_PATH))
+
+
+def current_status(status, d):
+    """(status, note): the status file when it describes this ledger, else (None, why).
+
+    `why` is None when there is no file at all (a fixture build reads none), and a
+    sentence when a file exists but cannot be used: it is then an attention item.
+    """
+    if status is None:
+        return None, None
+    if not isinstance(status, dict) or not isinstance(status.get("lanes"), dict):
+        return None, "data/status.json could not be read; the Control Center read the ledger instead"
+    ledger_at = ((d or {}).get("meta") or {}).get("updated")
+    if not ledger_at or status.get("ledger_updated") != ledger_at:
+        return None, (f"data/status.json describes the run of {status.get('ledger_updated') or 'an unknown time'}, "
+                      f"not the ledger's {ledger_at or 'unstamped'} run; the Control Center read the ledger instead")
+    return status, None
 
 
 # ------------------------------------------------------------------ the model
@@ -244,7 +273,17 @@ def _lane_last_read(sports, d, rows, now):
     return max(found) if found else None
 
 
-def _lane_area(key, label, rows, pair_rows, d, now):
+def _status_last_read(sports, status):
+    """The newest lane last_read in the status file across `sports`, or None."""
+    if not status:
+        return None
+    found = [_utc(lane.get("last_read")) for lane in (status.get("lanes") or {}).values()
+             if isinstance(lane, dict) and lane.get("sport") in sports and lane.get("last_read")]
+    found = [f for f in found if f is not None]
+    return max(found) if found else None
+
+
+def _lane_area(key, label, rows, pair_rows, d, now, status=None):
     sports = [sp for sp in S.SPORTS if B.family(sp) == label]
     mine = [q for q in rows if q.get("sport") in sports]
     starts = {id(q): production._kickoff(q) for q in mine}
@@ -261,8 +300,10 @@ def _lane_area(key, label, rows, pair_rows, d, now):
         lanes = [r for r in pair_rows if B.family(r["sport"]) == label]
         n_prod = sum(1 for r in lanes if r.get("prod"))
         coverage = f"{len(lanes)} rule{'s' if len(lanes) != 1 else ''} · {n_prod} in Production"
+    reads = [r for r in (_lane_last_read(sports, d, mine, now), _status_last_read(sports, status))
+             if r is not None]
     return dict(key=key, label=label, href=AREA_HREF[key], open=open_n, settled=settled,
-                next24=next24, coverage=coverage, last_read=_lane_last_read(sports, d, mine, now))
+                next24=next24, coverage=coverage, last_read=max(reads) if reads else None)
 
 
 def _nba_area(nba, now):
@@ -316,16 +357,53 @@ def _area_of_sport(sport):
     return FAMILY_AREA.get(B.family(sport))
 
 
-def _attention(d, st, pairs, now, closes, runs):
+def _overdue(d, now, status):
+    """[(quote, hours past start)] for the attention list, oldest first.
+
+    With a current status file: its overdue_open, each looked up in the ledger and
+    aged to `now`, then any bet the ledger shows past its window that the file does
+    not list (it crossed after the file was written). Without one: the ledger's.
+    """
+    live = T.overdue_bets(d, now)
+    if not status:
+        return live
+    by_id = {q.get("id"): q for q in T.bet_rows(d) if q.get("id")}
+    out, seen = [], set()
+    for item in status.get("overdue_open") or []:
+        if not isinstance(item, dict) or item.get("id") in seen:
+            continue
+        q = by_id.get(item.get("id"))
+        if q is None or q.get("status") != "open":
+            continue                      # settled since, or not in this ledger at all
+        start = _utc(item.get("start") or q.get("start"))
+        age = _hours(start, now) if start is not None else float(item.get("hours_past_start") or 0)
+        seen.add(item.get("id"))
+        out.append((q, age))
+    out += [(q, age) for q, age in live if q.get("id") not in seen]
+    out.sort(key=lambda qa: -qa[1])
+    return out
+
+
+def _broken_feeds(d, status):
+    """[(source, label, reason)]: the status file's when it is current, else the ledger's."""
+    if not status:
+        return B.dark_feeds(d)
+    return [(f.get("source"), f.get("label"), f.get("reason") or "")
+            for f in status.get("broken_feeds") or [] if isinstance(f, dict) and f.get("source")]
+
+
+def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None):
     items = []
-    for q, age in T.overdue_bets(d, now):
+    if status_note:
+        items.append(dict(kind="status", area=None, text=status_note, href="./sandbox.html"))
+    for q, age in _overdue(d, now, status):
         if S.tennis_refused_row(q):
             continue
         area = _area_of_sport(q.get("sport"))
         items.append(dict(kind="overdue", area=area,
                           text=f"{_contest(q)} is still open {int(age)}h past its start",
                           href=AREA_HREF.get(area, "./production.html")))
-    for name, label, reason in B.dark_feeds(d):
+    for name, label, reason in _broken_feeds(d, status):
         sports = (S.SOURCES.get(name) or {}).get("sports") or []
         area = _area_of_sport(sports[0]) if sports else None
         items.append(dict(kind="feed", area=area,
@@ -387,13 +465,17 @@ def _age_text(hours):
     return f"{int(hours)}h"
 
 
-def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None):
-    """The Control Center as data. Pure: everything it reads is an argument."""
+def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None):
+    """The Control Center as data. Pure: everything it reads is an argument.
+
+    `status` is data/status.json as read (inputs()); it is used only when it
+    describes this ledger (current_status)."""
     now = _utc(now) or datetime.datetime.now(timezone.utc)
+    status, status_note = current_status(status, d)
     rows = _bet_rows(d)
     pairs = {k: v for k, v in production.production_pairs(st).items() if not production._weather_pair(k)}
     pair_rows = [r for r in B.pair_list(d, st) if not B.eliminated(r)]
-    attention = _attention(d, st, pairs, now, closes, runs)
+    attention = _attention(d, st, pairs, now, closes, runs, status=status, status_note=status_note)
     flagged = {item["area"] for item in attention if item.get("area")}
     areas = []
     for key, label, _href in AREAS:
@@ -402,7 +484,7 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None):
         elif key == "trading":
             area = _trading_area(market, now)
         else:
-            area = _lane_area(key, label, rows, pair_rows, d, now)
+            area = _lane_area(key, label, rows, pair_rows, d, now, status=status)
         area["status"] = _status(area, now, key in flagged)
         area["items"] = [item for item in attention if item.get("area") == key]
         areas.append(area)
@@ -415,7 +497,7 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None):
         tiles=dict(pairs=len(pairs), open=sum(1 for q in rows if q.get("status") == "open"),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
-        runs_read=runs is not None,
+        runs_read=runs is not None, status_read=status is not None,
     )
 
 
@@ -559,7 +641,8 @@ def _attention_html(items):
     return f'<ol class="cc-attention">{"".join(rows)}</ol>'
 
 
-def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None):
+def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
+         status=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -568,7 +651,8 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         market = extra.get("market") if market is None else market
         closes = extra.get("closes") if closes is None else closes
         runs = extra.get("runs") if runs is None else runs
-    m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs)
+        status = extra.get("status") if status is None else status
+    m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]

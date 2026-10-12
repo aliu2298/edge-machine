@@ -6080,7 +6080,7 @@ def _patch_main(feed_boom=False, save_boom=False):
         "retire_venue_duplicates": T.retire_venue_duplicates, "collect": T.collect,
         "publish": T.publish, "grade": T.grade, "prune": T.prune, "save": T.save,
         "load_stages": T.load_stages, "evaluate_stages": T.evaluate_stages,
-        "save_stages": T.save_stages, "score": T.score,
+        "save_stages": T.save_stages, "score": T.score, "write_status": T.write_status,
         "build_feed": _PROD.build_feed, "prune_feed": _PROD.prune_feed,
         "save_feed": _PROD.save_feed,
     }
@@ -6098,6 +6098,8 @@ def _patch_main(feed_boom=False, save_boom=False):
     T.evaluate_stages = lambda d, st: None
     T.save_stages = lambda st, path=None: None
     T.score = lambda d: {}
+    # The status file sits beside the ledger; a stubbed run must not rewrite the real one.
+    T.write_status = lambda *a, **k: {"overdue_open": [], "broken_feeds": []}
     _PROD.prune_feed = lambda *a, **k: 0
     _PROD.save_feed = lambda *a, **k: None
     if save_boom:
