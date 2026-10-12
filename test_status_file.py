@@ -155,6 +155,10 @@ eq([(x["id"], x["overdue_after_h"]) for x in s["overdue_open"]], [("oddspedia:ae
 eq([x["source"] for x in s["broken_feeds"]], ["espn_fpi"], "broken_feeds is broken_feeds(d)")
 olbg = next(v for k, v in s["lanes"].items() if k.startswith("espn_fpi|"))
 eq((olbg["read"], olbg["last_read"]), ("down: page unreachable", None), "a source down this run has no last_read to carry")
+empty = dict(d2, coverage={"cricket": {"oddspedia": {"offered": 0, "picked": 0}}})
+quiet = T.build_status(empty, now=NOW)["lanes"]["oddspedia|cricket"]
+eq((quiet["read"], quiet["last_read"]), ("ok", None),
+   "a feed that answered with nothing on offer for this sport is not a read of this lane")
 previous = {"lanes": {next(k for k in s["lanes"] if k.startswith("espn_fpi|")): {"last_read": "2026-10-10T08:00:00+00:00"}}}
 s2 = T.build_status(d2, now=NOW, previous=previous)
 olbg2 = next(v for k, v in s2["lanes"].items() if k.startswith("espn_fpi|"))
