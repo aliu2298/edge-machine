@@ -21,9 +21,9 @@ jobs:
         run: python3 test_daily_research.py
       - name: Public market observations and paper settlement
         id: collect
-        continue-on-error: true
         run: python3 daily_track.py
       - name: Save records even when a source failed
+        if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
         run: |
           set -euo pipefail
           python3 -c 'import json; json.load(open("data/daily_ledger.json"))'
@@ -40,6 +40,3 @@ jobs:
             git rebase origin/main
           done
           exit 1
-      - name: Surface source failure after records are saved
-        if: steps.collect.outcome == 'failure'
-        run: exit 1
