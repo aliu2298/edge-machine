@@ -2253,6 +2253,11 @@ def main():
         print(f"wrote {commod_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::commodities page not rebuilt ({type(exc).__name__}: {exc})")
+    import daily_build
+    for daily_key in daily_build.D.LANES:
+        daily_out = os.path.join(os.path.dirname(OUT), daily_key + ".html")
+        _write(daily_out, daily_build.build(daily_key, now=now))
+        print(f"wrote {daily_out}")
     # The NBA board reads a file its own job writes four times a day. Rebuilt
     # here too, on the same clock as every other page, so its Upcoming list is
     # filtered by the real time rather than the file's own build stamp.

@@ -195,7 +195,7 @@ jobs:
           # commits the data files only — not public_site, which may be half
           # written or still describing the previous feed.
           DATA="data/sandbox_ledger.json data/stages.json data/sandbox_archive data/production_leads.json data/espn_history"
-          SITE="public_site/sandbox.html public_site/production.html public_site/index.html"
+          SITE="public_site/sandbox.html public_site/production.html public_site/index.html public_site/econ_daily.html public_site/finance_daily.html"
           # data/status.json is written by the tracker after the ledger; a run
           # whose status write failed has none, and the ledger must still land.
           if [ -f data/status.json ]; then
