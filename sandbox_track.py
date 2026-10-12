@@ -962,8 +962,9 @@ def collect(verbose=True, combo_used=None):
             # run already priced, so a leg and the basket holding it always carry the same
             # number. SPORTS lists this domain after tennis, so those rows exist by now.
             try:
-                rows = S.tennis_combo_rows(universe, used=combo_used)
-                legs = S.combo_legs_by_day(universe)
+                entry_now = datetime.now(timezone.utc)
+                rows = S.tennis_combo_rows(universe, now=entry_now, used=combo_used)
+                legs = S.combo_legs_by_day(universe, now=entry_now)
             except Exception as e:
                 print(f"  ! tennis_combo build failed: {type(e).__name__}: {str(e)[:70]}")
                 rows, legs = [], {}
