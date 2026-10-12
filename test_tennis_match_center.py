@@ -113,10 +113,10 @@ if playwright is not None:
             # The events stay a flat list at every width: one grid row per pick.
             assert page.locator('#events-next .sp-pick:visible').count() == 3, page.locator('#events-next .sp-pick:visible').count()
             assert page.evaluate("getComputedStyle(document.querySelector('.sp-pick')).display") == 'grid'
-            # The Sandbox table is cards under 760px, a table above it.
+            # The rule rows carry a column header above 980px; below it each figure has its own label.
             page.locator('details.sp-sandbox').evaluate('e => e.open = true')
-            thead_shown = page.locator('#rules table thead').first.is_visible()
-            assert thead_shown == (width > 760), (width, thead_shown)
+            head_shown = page.locator('#rules .sp-head-line').first.is_visible()
+            assert head_shown == (width > 980), (width, head_shown)
             assert page.locator('#method > details').get_attribute('open') is None
         browser.close()
 print('PASS tennis identity, per-pick links, the tabs, the empty state, and phone layout')

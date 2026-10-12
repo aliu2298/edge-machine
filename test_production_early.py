@@ -354,44 +354,50 @@ def _row(key, early, **over):
     return r
 
 
-# Every sport page draws a Production rule through the one template (sport_page): the
-# card carries the Production badge and, beside it, the Early count.
+# Every sport page draws a Production rule through the one template (sport_page): a row
+# in the Production list, its Early count a small badge beside the name. The row does
+# not repeat "Production": the list it sits in says so, and data-stage carries it.
 import sport_page as SP
 import soccer_cards
 import tennis_cards
 import cricket_cards
 import crypto_build
 import commodities_build
-BADGED = '<span class="badge stage production">Production</span> <span class="sig w early">Early · 3 bets</span>'
+
+
+def _badges(html):
+    m = re.search(r'<span class="sp-badges">(.*?)</span><span class="sr-only">', html, re.S)
+    return m.group(1) if m else ""
+
+
 soc_spec = SP.spec(family="Soccer", key="soccer", rows=[], rule_name=soccer_cards._rule_name,
                    market=soccer_cards.market, recent=soccer_cards.recent_html)
-soc = SP.rule_card(soc_spec, d3, _row(KEY, "Early · 3 bets"), NOW)
-ok(BADGED in soc, "the soccer rule card badges beside the Production badge")
-ok("Early" not in SP.rule_card(soc_spec, d3, _row(KEY, None), NOW), "and not once the text is gone")
-sand = SP.sandbox_row(soc_spec, d3, _row(KEY, "Early · 3 bets", prod=False), NOW, 0, True)
-ok("Early" not in sand and '<span class="badge stage production">' not in sand,
-   "a Sandbox row never shows one, whatever it carries")
-ok(BADGED in SP.rules_html(soc_spec, d3, [_row(KEY, "Early · 3 bets")], NOW, []), "through the whole Rules section")
+soc = SP.rule_row(soc_spec, d3, _row(KEY, "Early · 3 bets"), NOW, False)
+ok('<span class="sig w early">Early · 3 bets</span>' in _badges(soc) and 'data-stage="production"' in soc,
+   "the soccer Production row badges its Early count beside the name")
+ok("Early" not in SP.rule_row(soc_spec, d3, _row(KEY, None), NOW, False), "and not once the text is gone")
+sand = SP.rule_row(soc_spec, d3, _row(KEY, "Early · 3 bets", prod=False), NOW, False)
+ok("Early" not in sand and 'data-stage="sandbox"' in sand, "a Sandbox row never shows one, whatever it carries")
+whole = SP.rules_html(soc_spec, d3, [_row(KEY, "Early · 3 bets")], NOW, [])
+ok('<span class="sig w early">Early · 3 bets</span>' in whole and 'class="sp-rules-list sp-prod"' in whole,
+   "through the whole Rules section, in the Production list")
 ten_spec = SP.spec(family="Tennis", key="tennis", rows=[], rule_name=tennis_cards.rule_name, market=tennis_cards.market,
                    definition=tennis_cards.definition, recent=tennis_cards.recent_html)
-ten = SP.rule_card(ten_spec, {"quotes": []}, _row("tennis_combo2|tennis_combo", "Early · 0 bets"), NOW)
-ok('<span class="badge stage production">Production</span> <span class="sig w early">Early · 0 bets</span>' in ten,
-   "the tennis rule card badges beside Production")
-ok("Early" not in SP.rule_card(ten_spec, {"quotes": []}, _row("tennis_combo2|tennis_combo", None), NOW),
+ten = SP.rule_row(ten_spec, {"quotes": []}, _row("tennis_combo2|tennis_combo", "Early · 0 bets"), NOW, False)
+ok('<span class="sig w early">Early · 0 bets</span>' in _badges(ten), "the tennis Production row badges its Early count")
+ok("Early" not in SP.rule_row(ten_spec, {"quotes": []}, _row("tennis_combo2|tennis_combo", None), NOW, False),
    "and drops it with the text")
 cri_spec = SP.spec(family="Cricket", key="cricket", rows=[], rule_name=cricket_cards.rule_name,
                    market=cricket_cards.market, recent=cricket_cards.recent_html)
-cri = SP.rule_card(cri_spec, {"quotes": []}, _row("oddspedia|cricket", "Early · 2 bets"), NOW)
-ok('<span class="badge stage production">Production</span> <span class="sig w early">Early · 2 bets</span>' in cri,
-   "the cricket rule card would badge an early pair the same way")
+cri = SP.rule_row(cri_spec, {"quotes": []}, _row("oddspedia|cricket", "Early · 2 bets"), NOW, False)
+ok('<span class="sig w early">Early · 2 bets</span>' in _badges(cri), "the cricket row would badge an early pair the same way")
 cry_spec = SP.spec(family="Crypto", key="crypto", rows=[], rule_name=crypto_build.rule_name, market=crypto_build.market,
                    definition=crypto_build.definition, recent=crypto_build.recent_html, unit=lambda r: "market-day")
-cry = SP.rule_card(cry_spec, {"quotes": []}, _row("crypto_fav_band|crypto_fav", "Early · 0 bets",
-                                                    a=dict(n=0, won=0, expected=0, roi_fee=None, n_bets=0, unit="market-day")), NOW)
-ok('<span class="badge stage production">Production</span> <span class="sig w early">Early · 0 bets</span>' in cry,
-   "the crypto rule card badges beside Production")
-ok("Early" not in SP.rule_card(cry_spec, {"quotes": []}, _row("crypto_fav_band|crypto_fav", None,
-                                                              a=dict(n=0, won=0, expected=0, roi_fee=None, n_bets=0, unit="market-day")), NOW),
+cry = SP.rule_row(cry_spec, {"quotes": []}, _row("crypto_fav_band|crypto_fav", "Early · 0 bets",
+                                                   a=dict(n=0, won=0, expected=0, roi_fee=None, n_bets=0, unit="market-day")), NOW, False)
+ok('<span class="sig w early">Early · 0 bets</span>' in _badges(cry), "the crypto Production row badges its Early count")
+ok("Early" not in SP.rule_row(cry_spec, {"quotes": []}, _row("crypto_fav_band|crypto_fav", None,
+                                                             a=dict(n=0, won=0, expected=0, roi_fee=None, n_bets=0, unit="market-day")), NOW, False),
    "and not without the text")
 
 # The home rule cards: the card carries the text and shell.js prints it as a pill.
@@ -582,14 +588,14 @@ ok(S.SOURCES["commod_fav_band"].get("one_per_coin_close") is True
    and (S.COMMOD_FAV_MAX_SPREAD, S.COMMOD_FAV_MIN_ASK_SIZE, S.COMMOD_FAV_MIN_H, S.COMMOD_FAV_MAX_H) == (0.03, 25, 2.0, 3.5),
    "the Sandbox rule's own gates are unchanged: one per commodity per close, 3c, 25 contracts, 2-3.5h")
 
-# The pages: the commodities rule card badges like the six.
+# The pages: the commodities Production row badges like the six.
 crow = _row(CKEY, "Early · 0 bets", a=dict(n=1, won=1, expected=0.8, roi_fee=0.24, n_bets=3, unit="market-day"))
 com_spec = SP.spec(family="Commodities", key="commodities", rows=[], rule_name=commodities_build.rule_name,
                    market=commodities_build.market, definition=commodities_build.definition,
                    recent=commodities_build.recent_html, unit=lambda r: "market-day")
-chtml = SP.rule_card(com_spec, {"quotes": []}, crow, NOW)
-ok('<span class="badge stage production">Production</span> <span class="sig w early">Early · 0 bets</span>' in chtml,
-   "the commodities rule card shows Production and Early · 0 bets")
+chtml = SP.rule_row(com_spec, {"quotes": []}, crow, NOW, False)
+ok('<span class="sig w early">Early · 0 bets</span>' in _badges(chtml) and 'data-stage="production"' in chtml,
+   "the commodities Production row shows Early · 0 bets")
 cpage = PR.page({"quotes": [dict(gold, status="won", result="a", pnl=28.21, settled="2026-10-12T21:30:00+00:00")]},
                 {"pairs": {CKEY: dict(_cp)}}, {"leads": {}, "pairs": {}}, "", now=MON.replace(hour=23))
 ok("Commodities favourite band" in cpage and 'sig w early">Early · 1 bet</span>' in cpage,

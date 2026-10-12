@@ -95,19 +95,10 @@ def fixture():
 
 
 print("the words")
-lead, rest = SP.short_definition("One. Two is longer than the first. " * 30)
-ok(len(lead) >= SP.DEF_MIN and len(lead) <= SP.DEF_MAX + 40 and lead.endswith(".") and rest.startswith("One."),
-   f"a long note's lead is its opening sentences and the rest follows ({len(lead)} chars)")
-eq(SP.short_definition("Short note."), ("Short note.", ""), "a short note is all lead")
-first = "A" * 500 + ". Then more."
-ok(SP.short_definition(first)[0] == "A" * 500 + ".", "a first sentence longer than the cap is kept whole")
-html = SP.definition_html("Short note.")
-eq(html, '<p class="sp-def">Short note.</p>', "a short definition is one paragraph, no fold")
 html = SP.definition_html("First sentence here. " * 40)
-ok(html.count('<p class="sp-def">') == 2 and '<details class="sp-more sp-registration"><summary>Full registration</summary>' in html,
-   "a long definition folds the rest under Full registration")
-ok(_text(html).replace(" ", "") == ("First sentence here. " * 40).replace(" ", "") + "Fullregistration".replace(" ", "") or True,
-   "nothing is dropped")
+eq(html, f'<p class="sp-def">{("First sentence here. " * 40).strip()}</p>',
+   "a definition is the whole registration in one paragraph, for inside the Rule details fold")
+eq(SP.definition_html(""), '<p class="sp-def mut">No registered description.</p>', "no note says so")
 eq(SP.won_v_priced(dict(n=4, won=3, expected=2.45)), "3 v 2.5", "won v priced reads wins against the priced wins")
 eq(SP.won_v_priced(dict(n=0)), "—", "nothing settled is a dash")
 eq(SP.evidence(dict(n=4)), f"4/{T.READ_FLOOR}", "evidence is n of the read floor")
@@ -175,7 +166,7 @@ labels = [re.search(r"<span>(.*?)</span>", t).group(1) for t in tiles]
 prod_row = next(r for r in rows if r.get("prod"))
 who = soccer_cards._rule_name(prod_row)
 eq(labels[:2], ["open picks", "active rules"], "open picks and active rules first")
-ok(labels[2] == f"since Production · {who}" and labels[3] == f"ROI after fees · since Production · {who}",
+ok(labels[2] == f"since Production · {who}" and labels[3] == "ROI after fees · since Production",
    f"the record and ROI tiles are the since-Production window, named ({labels[2:]})")
 open_n = sum(1 for q in d["quotes"] if q["bet"] and q["status"] == "open")
 eq(_text(tiles[0]), f"{open_n} open picks", "open picks counts every open bet on the page")
@@ -213,70 +204,72 @@ one_scope = tennis_build.build(d, st, NOW)
 ok('data-filter="scope"' not in one_scope and 'data-filter="stage"' in one_scope,
    "a sport with one scope (Tennis) has no scope chips and keeps the stage chips")
 
-print("\nthe Production cards")
+print("\nthe Production rows")
+from sport_rows_testlib import rule_rows, text as row_text
 rules = _section(main, "rules")
-cards = re.findall(r'<article class="card sp-rule"(.*?)</article>', rules, re.S)
-eq(len(cards), 1, "one card per Production rule")
-card = cards[0]
-ok(f'data-source="o15_form_l10" data-sport="soccer_o15" data-scope="clubs" data-stage="production"' in card,
-   "the card carries its scope and stage for the chips")
-ok(f"<h3>{B.esc(who)}</h3>" in card and '<span class="badge stage production">Production</span>' in card,
-   "the name and the Production stage badge")
-note = (prod_row["meta"].get("note") or "").strip()
-lead, rest = SP.short_definition(note)
-ok(f'<p class="sp-def">{B.esc(lead)}</p>' in card, "the plain-language definition is the registration's opening sentences")
-ok((rest == "") or ('<summary>Full registration</summary>' in card and B.esc(rest) in card),
-   "the rest of the registration is folded under it, verbatim")
+prod_list = rules.split('class="sp-rules-list sp-prod"', 1)[1].split('id="sandbox"', 1)[0] if 'sp-prod"' in rules else ""
+prows = rule_rows(prod_list)
+eq(len(prows), 1, "one row per Production rule")
+pr = prows[0]
+ok((pr["source"], pr["sport"], pr["scope"], pr["stage"]) == ("o15_form_l10", "soccer_o15", "clubs", "production"),
+   "the row carries its scope and stage for the chips")
+ok(pr["name"] == B.esc(who.rsplit(" · ", 1)[0]) and pr["full_name"] == B.esc(who),
+   "the row names the rule; with a Scope column it drops the scope suffix, the full name in its tooltip")
+ok("Production" not in pr["badges"], "the row does not repeat its stage: it sits in the Production list")
 a = prod_row["a"]
-stats = re.findall(r'<div class="sp-stat[^"]*"><b>(.*?)</b><span>(.*?)</span></div>', card, re.S)
-eq([s for _b, s in stats], ["record", "ROI after fees", "won v priced", "evidence · bets settled", "verdict"],
-   "record · ROI after fees · won v priced · evidence · verdict")
-eq(stats[0][0], T.record_text(a), "the record is the ledger's own words")
-ok(B.pct(a["roi_fee"], sign=True) in stats[1][0], "the ROI is the row's ROI after fees")
-eq(stats[2][0], f'{a["won"]} v {a["expected"]:.1f}', "won v priced is wins against the priced wins")
-eq(stats[3][0], f'{a["n"]}/{T.READ_FLOOR}', "evidence is n/30")
-eq(stats[4][0], SP.verdict_badge(prod_row), "the verdict is the Sandbox chip")
-ok('<p class="sp-market sm mut">Over 1.5</p>' in card, "the market the rule trades is named")
-ok('<details class="sp-more"><summary>Recent picks · 3 open</summary>' in card and 'class="rule-picks"' in card,
-   "recent picks are folded with the open count")
+cells = pr["cells"]
+eq(list(cells), ["Market", "Scope", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
+   "market · scope · record · ROI after fees · won v priced · evidence · verdict")
+eq(cells["Market"], "Over 1.5", "the market the rule trades")
+eq(cells["Scope"], "Clubs", "its scope")
+eq(row_text(cells["Record"]), f'{a["won"]}–{a["n"] - a["won"]}', "the record is the W–L")
+eq(cells["ROI after fees"], SP.roi_html(prod_row), "the ROI is the row's ROI after fees")
+eq(cells["Won v priced"], f'{a["won"]} v {a["expected"]:.1f}', "won v priced is wins against the priced wins")
+eq(cells["Evidence"], f'{a["n"]}/{T.READ_FLOOR}', "evidence is n/30")
+eq(cells["Verdict"], SP.verdict_badge(prod_row), "the verdict is the one vocabulary's chip")
+ok("<summary" in rules and not pr["open"], "the row is the summary of a closed fold")
+ok('<span class="sr-only"> · Rule details</span>' in pr["summary"], "named Rule details for a screen reader")
+body = pr["body"]
+note = " ".join((prod_row["meta"].get("note") or "").split())
+ok(f'<p class="sp-def">{B.esc(note)}</p>' in body, "the fold holds the whole registration, verbatim")
+ok(f'<p class="sp-details-name"><b>{B.esc(who)}</b> · Over 1.5</p>' in body, "and the full name with its market")
+ok('<h4 class="sp-details-sub">Recent picks · 3 open</h4>' in body and 'class="rule-picks"' in body,
+   "and the recent picks with the open count")
 ok("No soccer rule is in Production." in _section(no_prod.split("<main", 1)[-1], "rules"), "no Production rule says so")
+for gone in ('class="card sp-rule"', '<div class="sp-stat', "sp-cards", "Full registration", "sp-sandbox-table", "rule-chev"):
+    ok(gone not in html, f"the page no longer prints {gone!r}")
 
-print("\nthe Sandbox table")
-fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"><summary>(.*?)</summary>(.*?</table>)', rules, re.S)
+print("\nthe Sandbox rows")
+fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"><summary>(.*?)</summary>(.*)', rules, re.S)
 ok(fold is not None and "<h3>Sandbox rules</h3>" in fold.group(1), "the Sandbox rules are one fold")
 sand = [r for r in rows if not r.get("prod")]
 n_early = sum(1 for r in sand if SP.is_early(r))
 ok(f"· {len(sand)} rules · {n_early} too early to read · by evidence" in fold.group(1), "the summary counts the rows and the too-early ones")
-table = fold.group(2)
-heads = re.findall(r"<th[^>]*>(.*?)</th>", re.search(r"<thead>(.*?)</thead>", table, re.S).group(1))
-eq(heads, ["Rule", "Market", "Scope", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
+head_line = re.search(r'<div class="sp-line sp-head-line is-scoped" aria-hidden="true">(.*?)</div>', fold.group(2), re.S)
+eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_line.group(1)) if head_line else None,
+   ["Rule", "Market", "Scope", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
    "the columns, with Scope because the rows span the scopes")
-trs = re.findall(r'<tr class="rule-row(?: is-early)?"(.*?)</tr>', table, re.S)
-eq(len(trs), len(sand), "one row per Sandbox rule")
-order = [(re.search(r'data-source="([^"]*)"', t).group(1), re.search(r'data-sport="([^"]*)"', t).group(1)) for t in trs]
-want = [(r["name"], r["sport"]) for r in sorted(sand, key=SP.sandbox_order)]
-eq(order, want, "rows run by evidence, the too-early ones sunk")
-early_flags = ['data-early="1"' in t for t in trs]
+srows = rule_rows(fold.group(2))
+eq(len(srows), len(sand), "one row per Sandbox rule")
+eq([(r["source"], r["sport"]) for r in srows], [(r["name"], r["sport"]) for r in sorted(sand, key=SP.sandbox_order)],
+   "rows run by evidence, the too-early ones sunk")
+early_flags = [r["early"] for r in srows]
 ok(early_flags == sorted(early_flags), "every too-early row sits under every read row")
-ok(all(('is-early' in re.search(r'<tr class="rule-row( is-early)?"', table[table.find(t) - 40:table.find(t) + 1]).group(0)) == e
-       for t, e in zip(trs, early_flags)) or True, "too-early rows carry the is-early class")
-eq(table.count('class="rule-row is-early"'), n_early, "the too-early rows carry the is-early class")
-for t in trs:
-    src, sp_ = re.search(r'data-source="([^"]*)"', t).group(1), re.search(r'data-sport="([^"]*)"', t).group(1)
-    row = next(r for r in sand if r["name"] == src and r["sport"] == sp_)
-    cells = re.findall(r"<td[^>]*>(.*?)</td>", t, re.S)
-    ok(T.record_html(row["a"]) in cells[3] and SP.roi_html(row) in cells[4]
-       and cells[5] == SP.won_v_priced(row["a"]) and cells[6] == SP.evidence(row["a"]) and SP.verdict_badge(row) in cells[7],
-       f"{src}|{sp_} record, ROI, won v priced, evidence and verdict are the row's own")
-    chev = re.search(r'<button type="button" class="rule-chev" aria-expanded="false" aria-controls="([^"]+)"', t)
-    ok(chev is not None and f'<tr class="rule-detail" id="{chev.group(1)}" hidden>' in table, f"{src}|{sp_} has a chevron and a detail row")
-    ok(f'data-scope="{SP.scope_key(row)}" data-stage="sandbox"' in t, f"{src}|{sp_} carries its scope and stage")
-scopes = [re.search(r'data-scope="([^"]*)"', t).group(1) for t in trs]
-ok({"cups", "intl"} <= set(scopes), "the cup and international twins are on the page with their scopes")
-ok(all(re.search(rf'<td data-l="Scope">{w}</td>', table) for w in ("Cups", "Internationals", "Clubs")), "the scope column reads the scope word")
+eq(sum(early_flags), n_early, "the too-early rows carry the is-early class")
+for r in srows:
+    row = next(x for x in sand if x["name"] == r["source"] and x["sport"] == r["sport"])
+    c = r["cells"]
+    ok(row_text(c["Record"]) == (row_text(SP.record_compact(row["a"]))) and c["ROI after fees"] == SP.roi_html(row)
+       and c["Won v priced"] == SP.won_v_priced(row["a"]) and c["Evidence"] == SP.evidence(row["a"])
+       and c["Verdict"] == SP.verdict_badge(row),
+       f"{r['source']}|{r['sport']} record, ROI, won v priced, evidence and verdict are the row's own")
+    ok(r["stage"] == "sandbox" and r["scope"] == SP.scope_key(row), f"{r['source']}|{r['sport']} carries its scope and stage")
+    ok(not r["open"] and 'class="sp-details-body"' in r["body"], f"{r['source']}|{r['sport']} has a closed Rule details fold")
+ok({"cups", "intl"} <= {r["scope"] for r in srows}, "the cup and international twins are on the page with their scopes")
+ok({"Cups", "Internationals", "Clubs"} <= {r["cells"]["Scope"] for r in srows}, "the scope column reads the scope word")
 for ghost in ("soccer-prod-strip", "soccer-rules", "tn-rules", "tn-pick", "<h3>Goals</h3>", "How each rule is defined"):
     ok(ghost not in html, f"the page no longer prints {ghost!r}")
-ok("by ROI" not in rules, "the Sandbox table is no longer a ROI sort")
+ok("by ROI" not in rules, "the Sandbox list is no longer a ROI sort")
 
 print("\nthe events")
 events_html = _section(main, "events")
@@ -355,10 +348,12 @@ ok('<details open><summary><b>Method · check needed</b>' in warn, "a pre-flight
 print("\nthe stylesheet and the script")
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
 js = open(os.path.join(ROOT, "public_site", "tables.js"), encoding="utf-8").read()
-for sel in (".sp-head", ".sp-filters", ".sp-cards", ".sp-rule", ".sp-stats", "tr.rule-row.is-early td", ".sp-tabs button[aria-selected=\"true\"]",
+for sel in (".sp-head", ".sp-filters", ".sp-rules-list", ".sp-line", "details.sp-rule.is-early > summary .sp-cell", ".sp-details-body",
+            "details.fold.sp-more-rules", ".sp-tabs button[aria-selected=\"true\"]",
             ".sp-day-head", ".sp-event", ".sp-pick", ".sp-state.is-late", ".sp-empty", ".sp-method", "details.sp-changes"):
     ok(sel in css, f"site.css styles {sel}")
-for gone in (".soccer-", ".tn-", ".cr-", ".tennis-desk", ".crypto-hero", ".nba-local-nav", ".rule-band", ".rule-flip"):
+for gone in (".soccer-", ".tn-", ".cr-", ".tennis-desk", ".crypto-hero", ".nba-local-nav", ".rule-band", ".rule-flip",
+             ".sp-cards", ".sp-stats", ".sp-sandbox-table"):
     ok(gone not in css, f"site.css no longer carries {gone}")
 ok("position: sticky" in css.split(".sp-day-head {", 1)[1].split("}", 1)[0], "the day head is sticky")
 ok("function wireSportPage" in js and "wireSportPage: wireSportPage" in js and "api.wireSportPage(document)" in js,
@@ -398,17 +393,19 @@ if playwright is not None:
             page.locator('.sp-tabs button[data-tab="next"]').click()
             # The chips drive the cards, the rows and the pick lines together.
             page.locator('nav[data-filter="stage"] button[data-value="sandbox"]').click()
-            eq(page.locator(".sp-rule:visible").count(), 0, f"{width}px Sandbox hides the Production cards")
+            eq(page.locator(".sp-prod details.sp-rule:visible").count(), 0, f"{width}px Sandbox hides the Production rows")
             ok(page.locator("details.sp-sandbox").evaluate("e => e.open"), f"{width}px and opens the Sandbox fold")
-            ok(page.locator(".sp-cards + .sp-filter-empty, #rules > .sp-filter-empty").first.is_visible(),
-               f"{width}px with no card left the cards say so")
+            ok(page.locator(".sp-prod + .sp-filter-empty").is_visible()
+               and "No Sandbox rule in Production" in page.locator(".sp-prod + .sp-filter-empty").text_content(),
+               f"{width}px with no Production row left the list says so")
             ok(page.locator('.sp-pick[data-stage="production"]:visible').count() == 0
                and page.locator('.sp-pick[data-stage="sandbox"]:visible').count() > 0,
                f"{width}px the pick lines follow the stage chip")
             page.locator('nav[data-filter="scope"] button[data-value="cups"]').click()
             eq(page.locator(".sp-pick:visible").count(), 1, f"{width}px Sandbox · Cups keeps the one cup pick in the next 24 hours")
             ok(not page.locator("#events-next .sp-filter-empty").is_visible(), f"{width}px so the panel has no filter note")
-            eq(page.locator('tr.rule-row:visible').count(), page.locator('tr.rule-row[data-scope="cups"]').count(),
+            eq(page.locator('[data-list="sandbox"] details.sp-rule:visible').count(),
+               page.locator('[data-list="sandbox"] details.sp-rule[data-scope="cups"]').count(),
                f"{width}px the Sandbox rows on Cups stay, the rest hide")
             page.locator('nav[data-filter="stage"] button[data-value="production"]').click()
             page.locator('nav[data-filter="scope"] button[data-value="intl"]').click()
@@ -416,23 +413,23 @@ if playwright is not None:
             ok(page.locator("#events-next .sp-filter-empty").is_visible()
                and "Production · Internationals" in page.locator("#events-next .sp-filter-empty").text_content(),
                f"{width}px and the panel says so under the filter")
-            eq(page.locator(".sp-rule:visible").count(), 0, f"{width}px and no card is on Internationals")
+            eq(page.locator("details.sp-rule:visible").count(), 0, f"{width}px and no rule row is on Production · Internationals")
             page.locator('nav[data-filter="scope"] button[data-value="all"]').click()
             page.locator('nav[data-filter="stage"] button[data-value="all"]').click()
-            eq(page.locator(".sp-rule:visible").count(), 1, f"{width}px All brings the card back")
+            eq(page.locator(".sp-prod details.sp-rule:visible").count(), 1, f"{width}px All brings the Production row back")
             ok(not page.locator("#events-next .sp-filter-empty").is_visible(), f"{width}px and the filter note goes")
             # The too-early rows are greyed; a chevron opens a detail row.
             page.locator("details.sp-sandbox > summary").click() if not page.locator("details.sp-sandbox").evaluate("e => e.open") else None
             dim = page.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--dim').trim()")
-            early_color = page.locator("tr.rule-row.is-early td b").first.evaluate("e => getComputedStyle(e).color")
-            read_color = page.locator("tr.rule-row:not(.is-early) td b").first.evaluate("e => getComputedStyle(e).color")
+            early_color = page.locator('[data-list="sandbox"] details.sp-rule.is-early .sp-name').first.evaluate("e => getComputedStyle(e).color")
+            read_color = page.locator('[data-list="sandbox"] details.sp-rule:not(.is-early) .sp-name').first.evaluate("e => getComputedStyle(e).color")
             ok(early_color != read_color, f"{width}px a too-early row is greyed against a read one ({early_color} v {read_color})")
-            eq(page.locator("tr.rule-detail:visible").count(), 0, f"{width}px rule details start closed")
-            page.locator("tr.rule-row button.rule-chev").first.click()
-            eq(page.locator("tr.rule-detail:visible").count(), 1, f"{width}px a chevron opens one detail row")
+            eq(page.locator(".sp-details-body:visible").count(), 0, f"{width}px every Rule details fold starts closed")
+            page.locator('[data-list="sandbox"] details.sp-rule > summary').first.click()
+            eq(page.locator(".sp-details-body:visible").count(), 1, f"{width}px a row opens its one Rule details fold")
             ok(page.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"{width}px still no sideways scroll")
-            eq(page.locator(".sp-sandbox-table thead").first.evaluate("e => getComputedStyle(e).display"),
-               "none" if width < 760 else "table-header-group", f"{width}px the Sandbox table uses the phone cards under 760px")
+            eq(page.locator(".sp-head-line").first.evaluate("e => getComputedStyle(e).display"),
+               "none" if width <= 980 else "grid", f"{width}px the column labels sit on each figure under 981px")
             eq(page.locator(".sp-day-head").first.evaluate("e => getComputedStyle(e).position"), "sticky", f"{width}px the day head is sticky")
             ok(page.locator("#method > details").get_attribute("open") is None, f"{width}px the method starts folded")
             page.close()
