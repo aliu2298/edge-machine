@@ -1,5 +1,5 @@
 {
- "built": "2026-10-11T20:01:38+00:00",
+ "built": "2026-10-12T01:05:29+00:00",
  "games": [
   {
    "act_ft": 234,
@@ -1802,15 +1802,15 @@
    "start": "2026-10-11T10:00Z"
   },
   {
-   "act_ft": null,
-   "act_h1": null,
-   "act_q1": null,
+   "act_ft": 224,
+   "act_h1": 111,
+   "act_q1": 60,
    "away": "ORL",
-   "completed": false,
+   "completed": true,
    "day": "2026-10-11",
-   "err_ft": null,
-   "err_h1": null,
-   "err_q1": null,
+   "err_ft": -14.9,
+   "err_h1": -10.6,
+   "err_q1": 1.5,
    "home": "CLE",
    "id": "401898401",
    "roll_away_D": 112.2,
@@ -2154,9 +2154,6 @@
    "err_ft": null,
    "err_h1": null,
    "err_q1": null,
-   "flipped": [
-    "SA O+D-->O-D-"
-   ],
    "home": "UTAH",
    "id": "401898721",
    "roll_away_D": 114.8,
@@ -2176,13 +2173,13 @@
    "roll_home_O_h1": 62.0,
    "roll_home_O_q1": 31.2,
    "roll_home_n": 5,
-   "roll_lab_away_ft": "O-D-",
+   "roll_lab_away_ft": "O+D-",
    "roll_lab_away_h1": "O+D+",
    "roll_lab_away_q1": "O+D-",
    "roll_lab_home_ft": "O+D+",
    "roll_lab_home_h1": "O+D-",
    "roll_lab_home_q1": "O+D-",
-   "roll_pluses": 2,
+   "roll_pluses": 3,
    "seed_away_D": 117.4,
    "seed_away_O": 123.6,
    "seed_away_n": 5,
@@ -2213,25 +2210,25 @@
    "err_q1": null,
    "home": "ORL",
    "id": "401898403",
-   "roll_away_D": 121.4,
-   "roll_away_D_h1": 63.6,
-   "roll_away_D_q1": 29.0,
-   "roll_away_O": 121.8,
-   "roll_away_O_h1": 60.6,
-   "roll_away_O_q1": 30.2,
+   "roll_away_D": 117.2,
+   "roll_away_D_h1": 60.8,
+   "roll_away_D_q1": 27.4,
+   "roll_away_O": 117.2,
+   "roll_away_O_h1": 59.2,
+   "roll_away_O_q1": 31.8,
    "roll_away_n": 5,
-   "roll_exp_ft": 238.9,
-   "roll_exp_h1": 121.6,
-   "roll_exp_q1": 58.5,
-   "roll_home_D": 112.2,
-   "roll_home_D_h1": 54.8,
-   "roll_home_D_q1": 26.4,
-   "roll_home_O": 122.4,
-   "roll_home_O_h1": 64.2,
-   "roll_home_O_q1": 31.4,
+   "roll_exp_ft": 233.9,
+   "roll_exp_h1": 118.2,
+   "roll_exp_q1": 58.7,
+   "roll_home_D": 114.6,
+   "roll_home_D_h1": 56.0,
+   "roll_home_D_q1": 27.2,
+   "roll_home_O": 118.8,
+   "roll_home_O_h1": 60.4,
+   "roll_home_O_q1": 31.0,
    "roll_home_n": 5,
    "roll_lab_away_ft": "O+D+",
-   "roll_lab_away_h1": "O+D+",
+   "roll_lab_away_h1": "O-D+",
    "roll_lab_away_q1": "O+D-",
    "roll_lab_home_ft": "O+D-",
    "roll_lab_home_h1": "O+D-",
@@ -2614,10 +2611,10 @@
    "roll_lab_away_ft": "O-D-",
    "roll_lab_away_h1": "O+D-",
    "roll_lab_away_q1": "O+D-",
-   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_ft": "O+D-",
    "roll_lab_home_h1": "O+D+",
    "roll_lab_home_q1": "O+D-",
-   "roll_pluses": 0,
+   "roll_pluses": 1,
    "seed_away_D": 108.0,
    "seed_away_O": 109.0,
    "seed_away_n": 5,
@@ -2982,15 +2979,15 @@
    "roll_away_O_h1": 69.4,
    "roll_away_O_q1": 32.8,
    "roll_away_n": 5,
-   "roll_exp_ft": 241.9,
-   "roll_exp_h1": 123.4,
-   "roll_exp_q1": 58.3,
-   "roll_home_D": 112.2,
-   "roll_home_D_h1": 54.8,
-   "roll_home_D_q1": 26.4,
-   "roll_home_O": 122.4,
-   "roll_home_O_h1": 64.2,
-   "roll_home_O_q1": 31.4,
+   "roll_exp_ft": 241.3,
+   "roll_exp_h1": 122.1,
+   "roll_exp_q1": 58.5,
+   "roll_home_D": 114.6,
+   "roll_home_D_h1": 56.0,
+   "roll_home_D_q1": 27.2,
+   "roll_home_O": 118.8,
+   "roll_home_O_h1": 60.4,
+   "roll_home_O_q1": 31.0,
    "roll_home_n": 5,
    "roll_lab_away_ft": "O+D+",
    "roll_lab_away_h1": "O+D-",
@@ -3265,10 +3262,10 @@
    "roll_lab_away_ft": "O-D+",
    "roll_lab_away_h1": "O-D+",
    "roll_lab_away_q1": "O-D-",
-   "roll_lab_home_ft": "O-D-",
+   "roll_lab_home_ft": "O+D-",
    "roll_lab_home_h1": "O+D+",
    "roll_lab_home_q1": "O+D-",
-   "roll_pluses": 1,
+   "roll_pluses": 2,
    "seed_away_D": 120.2,
    "seed_away_O": 113.0,
    "seed_away_n": 5,
@@ -3320,7 +3317,7 @@
    "roll_lab_away_h1": "O-D-",
    "roll_lab_away_q1": "O+D-",
    "roll_lab_home_ft": "O-D+",
-   "roll_lab_home_h1": "O-D+",
+   "roll_lab_home_h1": "O+D+",
    "roll_lab_home_q1": "O-D+",
    "roll_pluses": 1,
    "seed_away_D": 108.6,
@@ -3619,7 +3616,7 @@
   "HOU": 1,
   "MEM": 2,
   "OKC": 2,
-  "SA": 2,
+  "SA": 1,
   "TOR": 2
  },
  "periods": [
@@ -5841,32 +5838,32 @@
   },
   "CLE": {
    "last_game": {
-    "date": "2026-10-08",
+    "date": "2026-10-11",
     "home_away": "home",
-    "id": "401898392",
-    "opp": "BOS",
+    "id": "401898401",
+    "opp": "ORL",
     "top_pra": {
      "ast": 2,
-     "name": "Jaylon Tyson",
-     "pra": 19,
-     "pts": 14,
-     "reb": 3
+     "name": "James Harden",
+     "pra": 30,
+     "pts": 24,
+     "reb": 4
     }
    },
    "roll": {
     "ft": {
-     "D": 121.4,
-     "O": 121.8,
+     "D": 117.2,
+     "O": 117.2,
      "n": 5
     },
     "h1": {
-     "D": 63.6,
-     "O": 60.6,
+     "D": 60.8,
+     "O": 59.2,
      "n": 5
     },
     "q1": {
-     "D": 29.0,
-     "O": 30.2,
+     "D": 27.4,
+     "O": 31.8,
      "n": 5
     }
    }
@@ -6353,32 +6350,32 @@
   },
   "ORL": {
    "last_game": {
-    "date": "2026-10-07",
+    "date": "2026-10-11",
     "home_away": "away",
-    "id": "401898391",
-    "opp": "MEM",
+    "id": "401898401",
+    "opp": "CLE",
     "top_pra": {
      "ast": 2,
      "name": "Tristan da Silva",
-     "pra": 26,
-     "pts": 19,
-     "reb": 5
+     "pra": 22,
+     "pts": 17,
+     "reb": 3
     }
    },
    "roll": {
     "ft": {
-     "D": 112.2,
-     "O": 122.4,
+     "D": 114.6,
+     "O": 118.8,
      "n": 5
     },
     "h1": {
-     "D": 54.8,
-     "O": 64.2,
+     "D": 56.0,
+     "O": 60.4,
      "n": 5
     },
     "q1": {
-     "D": 26.4,
-     "O": 31.4,
+     "D": 27.2,
+     "O": 31.0,
      "n": 5
     }
    }
