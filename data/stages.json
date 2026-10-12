@@ -1173,6 +1173,27 @@
    "pair": "corners_under|soccer_corners",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-12T00:00:00+00:00",
+   "pair": "oddspedia|cricket",
+   "reason": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "reset": "2026-10-12T00:00:00+00:00",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-12T00:00:00+00:00",
+   "pair": "polymarket|cricket",
+   "reason": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "reset": "2026-10-12T00:00:00+00:00",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-12T00:00:00+00:00",
+   "pair": "cricket_consensus|cricket",
+   "reason": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "reset": "2026-10-12T00:00:00+00:00",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1235,6 +1256,11 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "ready_since": "2026-10-11T19:34:45+00:00",
    "stage": "production"
+  },
+  "cricket_consensus|cricket": {
+   "reset": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "since": "2026-10-12T00:00:00+00:00",
+   "stage": "sandbox"
   },
   "crypto_fav_band|crypto_fav": {
    "by_hand": "2026-10-08",
@@ -1384,10 +1410,12 @@
     "weeks": 1,
     "z": 2.2155
    },
-   "entry_since": null,
+   "entry_since": "2026-10-12T00:00:00+00:00",
    "promoted_at": "2026-09-28T02:59:44+00:00",
    "ready_at": "2026-09-28T02:59:44+00:00",
    "ready_since": "2026-09-28T02:59:44+00:00",
+   "reset": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "since": "2026-10-12T00:00:00+00:00",
    "stage": "production"
   },
   "olbg|boxing": {
@@ -1408,6 +1436,11 @@
   "pm_combo4|tennis_pmcombo": {
    "demoted_at": "2026-10-03T18:56:04+00:00",
    "since": "2026-10-03T18:56:04+00:00",
+   "stage": "sandbox"
+  },
+  "polymarket|cricket": {
+   "reset": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "since": "2026-10-12T00:00:00+00:00",
    "stage": "sandbox"
   },
   "soccerpredictions|soccer": {
@@ -1595,5 +1628,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-11T21:58:19+00:00"
+ "updated": "2026-10-12T00:06:17+00:00"
 }

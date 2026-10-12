@@ -27,7 +27,7 @@
 <div class="topbar">
 <a class="brand" href="./index.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html" aria-current="page">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html">Crypto</a><a href="./commodities.html">Commodities</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-11T21:58:20Z">Updated Oct 11, 4:58 PM CT</time><span class="sr-only">updated 2026-10-11 21:58 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-12T00:06:17Z">Updated Oct 11, 7:06 PM CT</time><span class="sr-only">updated 2026-10-12 00:06 UTC</span></p>
 </div>
 <div class="subbar">
 <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch theme" title="Switch between the light and dark theme">Theme</button>
@@ -48,7 +48,7 @@
 <h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table><thead><tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th><th class="num">Trades</th><th class="num">Mean per day</th><th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr></thead><tbody><tr><td data-l="Rule"><b>RSI(2) pullback in an uptrend</b>
 <div class="sm mut">Swing · sw_rsi2_pullback</div></td>
-<td data-l="Verdict"><span class="sig w">Promising</span><div class="sm mut">17 more entry days to read</div></td>
+<td data-l="Verdict"><span class="sig w" data-verdict="promising">Collecting 13/30 · Promising</span></td>
 <td class="num" data-l="Entry days">13</td>
 <td class="num" data-l="Trades">251<div class="sm mut">72 open</div></td>
 <td class="num" data-l="Mean per day"><span class="pos">+0.77%</span><div class="sm mut">t +3.15</div></td>
@@ -63,7 +63,7 @@ Sep 18, not part of the record above):
 −0.10% a day v SPY, t −0.46.</div></details></td></tr>
 <tr><td data-l="Rule"><b>Overnight hold (buy the close, sell the open)</b>
 <div class="sm mut">Swing · etf_overnight</div></td>
-<td data-l="Verdict"><span class="sig n">Behind so far</span><div class="sm mut">18 more entry days to read</div></td>
+<td data-l="Verdict"><span class="sig n" data-verdict="behind">Collecting 12/30 · Behind</span></td>
 <td class="num" data-l="Entry days">12</td>
 <td class="num" data-l="Trades">24<div class="sm mut">0 open</div></td>
 <td class="num" data-l="Mean per day"><span class="neg">−0.01%</span><div class="sm mut">t −0.06</div></td>
@@ -78,7 +78,7 @@ Sep 21, not part of the record above):
 −0.02% a day v cash, t −0.53.</div></details></td></tr>
 <tr><td data-l="Rule"><b>Double 7s (Connors)</b>
 <div class="sm mut">Swing · etf_double7</div></td>
-<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">25 more entry days to read</div></td>
+<td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">25 more entry days to read</div></td>
 <td class="num" data-l="Entry days">5</td>
 <td class="num" data-l="Trades">10<div class="sm mut">2 open</div></td>
 <td class="num" data-l="Mean per day"><span class="pos">+0.89%</span><div class="sm mut">t +3.09</div></td>
@@ -93,7 +93,7 @@ Sep 17, not part of the record above):
 +0.94% a day v cash, t +4.16.</div></details></td></tr>
 <tr><td data-l="Rule"><b>IBS mean reversion below the 10-day band</b>
 <div class="sm mut">Swing · etf_ibs_band</div></td>
-<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">26 more entry days to read</div></td>
+<td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">26 more entry days to read</div></td>
 <td class="num" data-l="Entry days">4</td>
 <td class="num" data-l="Trades">6<div class="sm mut">0 open</div></td>
 <td class="num" data-l="Mean per day"><span class="neg">−0.05%</span><div class="sm mut">t −0.15</div></td>
@@ -108,7 +108,7 @@ Sep 18, not part of the record above):
 +0.64% a day v cash, t +3.65.</div></details></td></tr>
 <tr><td data-l="Rule"><b>Gap-down reversal above the 200-day</b>
 <div class="sm mut">Swing · sw_gap_down_reversal</div></td>
-<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">27 more entry days to read</div></td>
+<td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">27 more entry days to read</div></td>
 <td class="num" data-l="Entry days">3</td>
 <td class="num" data-l="Trades">8<div class="sm mut">8 open</div></td>
 <td class="num" data-l="Mean per day"><span class="pos">+1.95%</span><div class="sm mut">t +0.91</div></td>
@@ -123,7 +123,7 @@ Sep 18, not part of the record above):
 −0.26% a day v SPY, t −0.31.</div></details></td></tr>
 <tr><td data-l="Rule"><b>Turn of the month</b>
 <div class="sm mut">Swing · etf_tom</div></td>
-<td data-l="Verdict"><span class="sig n">Too early</span><div class="sm mut">29 more entry days to read</div></td>
+<td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">29 more entry days to read</div></td>
 <td class="num" data-l="Entry days">1</td>
 <td class="num" data-l="Trades">1<div class="sm mut">0 open</div></td>
 <td class="num" data-l="Mean per day"><span class="pos">+1.43%</span><div class="sm mut"></div></td>
@@ -140,8 +140,9 @@ Aug 31, not part of the record above):
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
 never the signal bar's close. Costs of 5bp a side are charged on entry and exit.
 <b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
-<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at 30+ entry days;
-under 10 a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
+<b>SPY over the identical days</b>: beating a rising market is not an edge. Read at 30+ entry days
+(<i>Working</i>, <i>No edge</i> or <i>Proven</i>); from 10 it is <i>Collecting n/30</i>
+with its lean, <i>Promising</i> or <i>Behind</i>; under 10 a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
