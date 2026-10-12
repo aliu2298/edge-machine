@@ -32,6 +32,12 @@ FAILS = []
 LEAD_KEYS_MIN = ("kickoff", "price_at_log", "pair", "status", "bet")
 
 
+def _rt(lead):
+    """(route.market, route.outcome_side), or None without a route."""
+    r = lead.get("route")
+    return (r.get("market"), r.get("outcome_side")) if isinstance(r, dict) else None
+
+
 def ok(cond, why):
     print(f"  {'ok  ' if cond else 'FAIL'} {why}")
     if not cond:
@@ -169,8 +175,9 @@ for source in ("o15_form_l10", "o15_ranked"):
                espn_home="Lecce", espn_away="Bologna")
     ok(T.placeable(q) and PR.start_verified(q), f"{source}: a league over-1.5 Yes with an ESPN start reaches the feed")
     lead = PR.lead_from_quote(q, f"{source}|soccer_o15", BUILT)
-    eq((lead["headline"], lead["bet"], lead.get("route")), ("Over 1.5 goals", {"kind": "total_gte", "n": 2}, None),
-       f"{source}: the lead claims over 1.5 as a plain Yes")
+    eq((lead["headline"], lead["bet"], _rt(lead)),
+       ("Over 1.5 goals", {"kind": "total_gte", "n": 2}, ("KXSERIEATOTAL-26OCT11LECBFC-2", "yes")),
+       f"{source}: the lead claims over 1.5 as a plain Yes, routed to the exact market (2026-10-12)")
     eq(lead["match"], "Lecce v Bologna", f"{source}: on its fixture")
     ok(not T.placeable(dict(q, sport="soccer_o15_cup", league="EFL Cup")), f"{source}: the cup twin still does not")
 
@@ -183,8 +190,9 @@ ok(not T.placeable(dict(btts, pick="b")), "its No is a different claim and is no
 ok(not T.placeable(dict(btts, league="Allsvenskan")), "nor an unmapped league")
 ok(not T.placeable(dict(btts, espn_home=None)), "and it still needs its fixture")
 lead = PR.lead_from_quote(btts, "liga_btts_even|soccer_btts", BUILT)
-eq((lead["headline"], lead["bet"], lead.get("route"), lead["league"]),
-   ("Both teams to score", {"kind": "btts"}, None, "La Liga"), "the lead says both teams to score, a plain Yes")
+eq((lead["headline"], lead["bet"], _rt(lead), lead["league"]),
+   ("Both teams to score", {"kind": "btts"}, ("KXLALIGABTTS-26OCT10ALAATM-BTTS", "yes"), "La Liga"),
+   "the lead says both teams to score, a plain Yes on the exact market")
 eq(lead["id"], "2026-10-09|Alavés|Atlético Madrid|Both teams to score · La Liga BTTS in balanced matches",
    "the lead id names the fixture, the claim and the rule's plain label")
 eq(T.feed_pick("soccer_btts"), "a", "BTTS is a Yes kind")
@@ -193,8 +201,9 @@ eq(T.feed_pick("soccer_btts"), "a", "BTTS is a Yes kind")
 over = _goals("bund_o35", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT11SCFSCH-4", price=0.39)
 ok(T.placeable(over) and PR.start_verified(over), "the Bundesliga over-3.5 Yes reaches the feed")
 lead = PR.lead_from_quote(over, KEY, BUILT)
-eq((lead["headline"], lead["bet"], lead.get("route")), ("Over 3.5 goals", {"kind": "total_gte", "n": 4}, None),
-   "the lead claims over 3.5 as a plain Yes, no route needed")
+eq((lead["headline"], lead["bet"], _rt(lead)),
+   ("Over 3.5 goals", {"kind": "total_gte", "n": 4}, ("KXBUNDESLIGATOTAL-26OCT11SCFSCH-4", "yes")),
+   "the lead claims over 3.5 as a plain Yes, routed to the exact market so no club name is matched")
 under = dict(over, source="u35_low_scoring", pick="b")
 ok(T.placeable(under), "the No on the same contract is the under, still expressible")
 ulead = PR.lead_from_quote(under, "u35_low_scoring|soccer_u35", BUILT)
@@ -222,8 +231,17 @@ def _basket(start_source="tennisexplorer"):
 
 basket = _basket()
 ok(T.placeable(basket) and PR.start_verified(basket), "a 2-leg basket of Kalshi legs with verified starts reaches the feed")
-lead = PR.lead_from_quote(basket, "tennis_combo2|tennis_combo", BUILT)
+_KX = {"collections": [dict(ticker="KXMVESPORTSMULTIGAMEEXTENDED-R", series="KXMVESPORTSMULTIGAMEEXTENDED",
+                            exchange_index=1, events={"KXATPMATCH-26OCT09SAKRUB", "KXATPMATCH-26OCT09ZHOMUS"})],
+       # The legs predate stored tickers, so their markets are read off the live event.
+       "markets": {"KXATPMATCH-26OCT09SAKRUB": [dict(ticker="KXATPMATCH-26OCT09SAKRUB-SAK", yes_sub_title="Sakamoto"),
+                                                dict(ticker="KXATPMATCH-26OCT09SAKRUB-RUB", yes_sub_title="Andrey Rublev")],
+                   "KXATPMATCH-26OCT09ZHOMUS": [dict(ticker="KXATPMATCH-26OCT09ZHOMUS-ZHO", yes_sub_title="Zhou"),
+                                                dict(ticker="KXATPMATCH-26OCT09ZHOMUS-MUS", yes_sub_title="Lorenzo Musetti")]}}
+lead = PR.lead_from_quote(basket, "tennis_combo2|tennis_combo", BUILT, kalshi=_KX)
 eq(lead["bet"], {"kind": "combo", "n": 2, "all_must_win": True}, "the lead is a combo claim")
+eq([l["market"] for l in lead["route"]["legs"]], ["KXATPMATCH-26OCT09SAKRUB-RUB", "KXATPMATCH-26OCT09ZHOMUS-MUS"],
+   "side b of each event is the second player's own market, mapped by kalshi_sides")
 eq((lead["route"]["instrument"], lead["route"]["how"], lead["route"]["max_price"], len(lead["route"]["legs"])),
    ("combo", "request_quote", 0.5954, 2), "routed as a quote request with the legs and the price ceiling")
 ok(not PR.start_verified(_basket(start_source=None)), "a basket whose legs carry no verified start is held back")
@@ -248,9 +266,10 @@ lead = PR.lead_from_quote(rung, "crypto_fav_band|crypto_fav", BUILT)
 eq(lead["headline"], "$82,750 or above at the close", "the lead names the rung as the venue does")
 eq(lead["match"], "Bitcoin price on Oct 8, 2026", "and the coin's close as the contest")
 eq(lead["bet"], {"kind": "ladder", "side": "yes"}, "the claim is the Yes on a ladder rung")
-eq(lead["route"], {"venue": "kalshi", "market": "KXBTCD-26OCT0817-T82749.99",
-                   "outcome": "$82,750 or above", "outcome_side": "yes"},
-   "routed to the exact contract and rung")
+eq({k: lead["route"].get(k) for k in ("venue", "market", "event", "outcome", "outcome_side", "price_at_log")},
+   {"venue": "kalshi", "market": "KXBTCD-26OCT0817-T82749.99", "event": "KXBTCD-26OCT0817",
+    "outcome": "$82,750 or above", "outcome_side": "yes", "price_at_log": lead["price_at_log"]},
+   "routed to the exact contract and rung, its event and the Yes price at log")
 eq((lead["kickoff"], lead["league"], lead["home"], lead["away"]),
    ("2026-10-08T21:05Z", "Crypto · Favourite band", None, None), "the kickoff is the close")
 eq(lead["id"], "2026-10-08|KXBTCD-26OCT0817-T82749.99|$82,750 or above at the close · Crypto favourite band",
@@ -467,7 +486,8 @@ CRYPTO_LEAD = {
     "kickoff": "2026-10-08T21:05Z", "lane": "production", "league": "Crypto · Favourite band",
     "match": "Bitcoin price on Oct 8, 2026", "pair": "crypto_fav_band|crypto_fav", "price_at_log": 0.76,
     "route": {"market": "KXBTCD-26OCT0817-T80249.99", "outcome": "$80,250 or above",
-              "outcome_side": "yes", "venue": "kalshi"},
+              "outcome_side": "yes", "venue": "kalshi", "event": "KXBTCD-26OCT0817",
+              "price_at_log": 0.78, "claim": "$80,250 or above at the close"},
     "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT0817-T80249.99", "source": "crypto_fav_band",
     "sport": "crypto_fav", "status": "hit",
 }
@@ -495,7 +515,8 @@ for q, close in ((wti, "2026-10-12T18:30Z"), (gold, "2026-10-12T21:00Z")):
     ok(T.placeable(q) and PR.start_verified(q), f"{q['market_id']}: a commodity rung's Yes reaches the feed")
     lead = PR.lead_from_quote(q, CKEY, BUILT)
     eq(lead["kickoff"], close, f"{q['market_id']}: the kickoff is the market's own close, read from the row")
-    eq(lead["route"], {"venue": "kalshi", "market": q["market_id"], "outcome": q["side_a"], "outcome_side": "yes"},
+    eq({k: lead["route"].get(k) for k in ("venue", "market", "outcome", "outcome_side")},
+       {"venue": "kalshi", "market": q["market_id"], "outcome": q["side_a"], "outcome_side": "yes"},
        f"{q['market_id']}: routed to the exact contract and rung, Yes side")
     eq(lead["bet"], {"kind": "ladder", "side": "yes"}, f"{q['market_id']}: the claim is a ladder Yes")
     eq(lead["price_at_log"], 0.78, f"{q['market_id']}: the price the rule paid")
@@ -633,8 +654,13 @@ tl = PR.lead_from_quote(team_c, "corners_under|soccer_corners", BUILT)
 eq(tl["bet"], {"kind": "corners_lte", "n": 4, "team": "Crystal Palace"}, "5+ team corners, No: Crystal Palace 4 corners or fewer")
 eq(tl["headline"], "Under 5 corners · Crystal Palace", "the headline says under the rung, and whose")
 eq(tl["route"], {"venue": "kalshi", "market": "KXEPLTCORNERS-26OCT11CRYNFO-CRY5",
-                 "outcome": "Under 5 corners · Crystal Palace", "outcome_side": "no"},
-   "routed to the exact contract on the No side, as the under-3.5 leads are")
+                 "event": "KXEPLTCORNERS-26OCT11CRYNFO", "outcome_side": "no",
+                 "price_at_log": tl["price_at_log"], "claim": "Under 5 corners · Crystal Palace"},
+   "routed to the exact contract on the No side at the No's own price, as the under-3.5 leads are; "
+   "no outcome wording, since this fixture never read Kalshi's")
+tl2 = PR.lead_from_quote(dict(team_c, kalshi_title="Crystal Palace: 5+"), "corners_under|soccer_corners", BUILT)
+eq((tl2["route"]["outcome"], tl2["route"]["outcome_side"]), ("Crystal Palace: 5+", "no"),
+   "with Kalshi's own wording read, the route names it: the follower takes the No of 'Crystal Palace: 5+'")
 ol = PR.lead_from_quote(total_c, "corners_under|soccer_corners", BUILT)
 eq((ol["bet"], ol["headline"], ol["route"]["outcome_side"]), ({"kind": "corners_lte", "n": 7}, "Under 8 corners", "no"),
    "8+ match corners, No: 7 or fewer, no team")
@@ -664,8 +690,9 @@ to = _goals("turkey_o25_dog", "soccer_o25", "KXSUPERLIGTOTAL-26OCT09GALKAS-3", l
             espn_home="Galatasaray", espn_away="Kasimpasa", price=0.68)
 ok(T.placeable(to) and PR.start_verified(to), "Turkey over 2.5 Yes reaches the feed")
 _o = PR.lead_from_quote(to, "turkey_o25_dog|soccer_o25", BUILT)
-eq((_o["headline"], _o["bet"], _o.get("route")), ("Over 2.5 goals", {"kind": "total_gte", "n": 3}, None),
-   "over 2.5 is a plain Yes on the -3 contract, no route needed")
+eq((_o["headline"], _o["bet"], _rt(_o)),
+   ("Over 2.5 goals", {"kind": "total_gte", "n": 3}, ("KXSUPERLIGTOTAL-26OCT09GALKAS-3", "yes")),
+   "over 2.5 is a plain Yes, routed to the -3 contract itself")
 ok(not T.placeable(dict(to, pick="b")), "its No is not published")
 ok(not T.placeable(dict(to, sport="soccer_o25_cup")), "no cup twin reaches the feed")
 ok(not T.placeable(dict(tb, league="Allsvenskan")), "a league on neither map is still refused")

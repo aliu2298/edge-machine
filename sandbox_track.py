@@ -831,6 +831,53 @@ def decide(prob_a, price_a, price_b):
 COMBO_SPORTS = ("tennis_combo", "tennis_pmcombo")
 
 
+def verify_open_baskets(d, universe):
+    """Stamp a verified start onto open Kalshi baskets whose legs Tennis Explorer has now
+    confirmed. -> how many baskets became verified this run.
+
+    A basket is logged once, the first time its legs are seen -- usually the day before
+    they play, when Tennis Explorer's page (today's schedule only) does not list them yet
+    and every leg's start is still Kalshi's estimate. Logged that way it never became
+    publishable: production.start_verified wants a verified start, and nothing re-checked
+    it, so tennis_combo2 sat in Production from 2026-10-08 with six Kalshi baskets and not
+    one lead. Each run now looks each open basket's legs up in this run's tennis rows and
+    takes the start Tennis Explorer confirmed, keeping Kalshi's estimate beside it.
+    The basket's start is its EARLIEST leg's, verified only when every leg is: it cannot
+    be bought once any leg has begun. Price, legs, pick and id are not touched. A leg's
+    own Kalshi market ticker is filled in from the row when the leg predates it.
+    """
+    rows = {str(r.get("market_id")): r for r in (universe or {}).get("tennis") or []
+            if r.get("venue") == "kalshi"}
+    done = 0
+    for q in d.get("quotes") or []:
+        if (q.get("venue") != "combo" or q.get("status") != "open" or not q.get("bet")
+                or q.get("start_source") in VERIFIED_STARTS):
+            continue
+        legs = q.get("legs") or []
+        if not legs or any(l.get("venue") != "kalshi" for l in legs):
+            continue
+        for leg in legs:
+            r = rows.get(str(leg.get("market_id")))
+            if r is None:
+                continue
+            if not leg.get("market") and (r.get("tickers") or {}).get(leg.get("pick")):
+                leg["market"] = str(r["tickers"][leg["pick"]])
+            if r.get("start_source") == "tennisexplorer" and leg.get("start_source") != "tennisexplorer":
+                leg["estimated_start"] = leg.get("start")
+                leg["start"] = str(r["start"])
+                leg["start_source"] = "tennisexplorer"
+        if all(l.get("start_source") == "tennisexplorer" for l in legs):
+            # Kept as estimated_start, NOT venue_start: production._kickoff takes the earlier
+            # of start and venue_start, and Kalshi's tennis "start" is a guess three hours
+            # before its expected end, not the venue's time for the match. The lead's
+            # kickoff is the earliest CONFIRMED leg start.
+            q["estimated_start"] = q.get("start")
+            q["start"] = min(str(l["start"]) for l in legs)
+            q["start_source"] = "tennisexplorer"
+            done += 1
+    return done
+
+
 def combo_used_legs(d):
     """{n: leg market ids already in a logged n-leg basket} — see S.tennis_combo_rows.
 
@@ -1596,8 +1643,14 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     start_source=r.get("start_source"), venue_start=r.get("venue_start"),
                     # Soccer yes/no rows: the ESPN fixture and side the market is about, so a
                     # Production lead can name them without re-matching.
-                    **{k: r[k] for k in ("league", "espn_home", "espn_away", "team", "opponent")
+                    **{k: r[k] for k in ("league", "espn_home", "espn_away", "team", "opponent",
+                                         "kalshi_title", "event")
                        if r.get(k) and r.get("venue") == "kalshi_binary"},
+                    # Kalshi result and match rows: each side's own market ticker and
+                    # Kalshi's own name for it, so a Production lead can name the exact
+                    # contract (production.kalshi_route) instead of a follower matching names.
+                    **({"tickers": dict(r["tickers"]), "titles": dict(r.get("titles") or {})}
+                       if r.get("venue") == "kalshi" and r.get("tickers") else {}),
                     # A combo basket carries its legs, because that is the only thing that
                     # can settle it later. Stored on the quote rather than looked up again,
                     # so the basket is judged on exactly the legs it was bought with.
@@ -4314,6 +4367,9 @@ def main():
     print(" collecting…")
     universe, coverage = collect(combo_used=combo_used_legs(d))
     print(f"  ({time.time() - t0:.0f}s)")
+    n_baskets = verify_open_baskets(d, universe)
+    if n_baskets:
+        print(f"  baskets: {n_baskets} open basket start(s) verified by the tennis schedule")
     t1 = time.time()
     print(" publishing…")
     publish(d, universe, coverage)
@@ -4349,7 +4405,10 @@ def main():
     feed_failed = False
     try:
         import production
-        feed = production.build_feed(d, st)
+        # Live Kalshi lookups for the routes: the collection a basket is quoted through,
+        # and an event's markets for a quote logged before the readers kept tickers.
+        feed = production.build_feed(d, st, kalshi={"markets": S.kalshi_event_markets,
+                                                    "collections": S.kalshi_combo_collections})
         production.save_feed(feed)
         print(f" production: {len(feed['pairs'])} pair(s), "
               f"{sum(1 for l in feed['leads'].values() if l['status'] == 'pending')} open lead(s), "

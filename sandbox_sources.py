@@ -3142,6 +3142,12 @@ def fetch_kalshi_venue(sport, horizon_days=4, cap=800, stats=None, now=None):
             tradeable=tradeable, untraded=not any(tradeable.values()),
             start=start.isoformat(), date=date, volume=0.0,
             url=f"https://kalshi.com/markets/{series.lower()}",
+            # Kalshi lists a market per side inside the event. The side's own ticker and
+            # Kalshi's own name for it travel with the row, so a lead can name the exact
+            # contract ("KXBUNDESLIGAGAME-26OCT11KOEBMG-KOE", "FC Köln") rather than leave
+            # a follower to match "FC Cologne" against it.
+            tickers={side: str(m["ticker"]) for side, m in by_side.items() if m.get("ticker")},
+            titles={side: str(m.get("yes_sub_title") or "") for side, m in by_side.items()},
         )
         # Cricket rules restate the scheduled start. Kept only so the milestone check
         # can require that sentence to agree; apply_kalshi_cricket_starts strips it
@@ -4299,7 +4305,7 @@ def fetch_kalshi_btts(horizon_days=4, fixtures=None, now=None, stats=None, event
                 tradeable=tradeable, untraded=not any(tradeable.values()),
                 start=ko.isoformat(), date=ko.strftime("%Y-%m-%d"), volume=0.0,
                 start_source="espn", league=league, espn_home=f["home"], espn_away=f["away"],
-                url=f"https://kalshi.com/markets/{series.lower()}"))
+                url=f"https://kalshi.com/markets/{series.lower()}", **_kalshi_ids(m)))
     rows.sort(key=lambda r: r["start"])
     if stats is not None:
         stats["listed"] = listed
@@ -4411,6 +4417,21 @@ def _espn_fixture_for(ev, upcoming):
     return best[1:] if best else None
 
 
+def _kalshi_ids(m):
+    """A yes/no market's own names, kept so a lead can name the contract exactly.
+
+    `kalshi_title` is Kalshi's yes_sub_title ("Over 3.5 goals scored", "Bologna over 1.5
+    goals", "Santander: 6+") and `event` its event ticker. The row's label is in ESPN's
+    names, which are what the rules read; these are what the exchange reads.
+    """
+    out = {}
+    if m.get("yes_sub_title"):
+        out["kalshi_title"] = str(m["yes_sub_title"])
+    if m.get("event_ticker"):
+        out["event"] = str(m["event_ticker"])
+    return out
+
+
 def _yes_no_row(m, sport, label, ko, f, league, series, **extra):
     """One Kalshi yes/no market as a universe row (side a = Yes, side b = No), or None."""
     ya, yb, na, nb = (_num(m.get("yes_ask_dollars")), _num(m.get("yes_bid_dollars")),
@@ -4427,7 +4448,7 @@ def _yes_no_row(m, sport, label, ko, f, league, series, **extra):
         tradeable=tradeable, untraded=not any(tradeable.values()),
         start=ko.isoformat(), date=ko.strftime("%Y-%m-%d"), volume=0.0,
         start_source="espn", league=league, espn_home=f["home"], espn_away=f["away"],
-        url=f"https://kalshi.com/markets/{series.lower()}", **extra)
+        url=f"https://kalshi.com/markets/{series.lower()}", **_kalshi_ids(m), **extra)
 
 
 def fetch_kalshi_goals(horizon_days=4, fixtures=None, now=None, stats=None, events_by_series=None):
@@ -5817,6 +5838,87 @@ COMBO_MARKUP = {2: 0.0084, 3: 0.0106, 4: 0.0066}
 # 7.4% and 9.8% worse on the one occasion any of them had an ask at all, so a follower who
 # takes the book instead of asking is not making this bet.
 COMBO_COLLECTION = "KXMVECROSSCATEGORY-R"
+# Which collection a lead names is READ from Kalshi each run, not this constant. Kalshi
+# reshuffled its collections on 2026-10-11 (KXMVESPORTSMULTIGAMEEXTENDED-R opened that day,
+# beside the cross-category pair), and a basket is quoted only through a collection that
+# lists every one of its legs' events. The sports multi-game collection is the one a
+# sports basket belongs in, so it is preferred; any other open collection that lists all
+# the legs is the fallback; none at all and the lead carries no route.
+COMBO_COLLECTION_PREFER = "KXMVESPORTSMULTIGAME"
+KALSHI_COLLECTIONS_API = "https://api.elections.kalshi.com/trade-api/v2/multivariate_event_collections"
+_combo_collections = None
+
+
+def kalshi_combo_collections(refresh=False, getter=None):
+    """[{ticker, series, exchange_index, events}] for Kalshi's open multivariate
+    collections, read once per run. Fail-soft: an outage is [] and the basket leads
+    simply carry no collection, which the feed reports as unroutable."""
+    global _combo_collections
+    if _combo_collections is not None and not refresh and getter is None:
+        return _combo_collections
+    get = getter or _get
+    out, cursor = [], ""
+    try:
+        for _page in range(10):
+            url = f"{KALSHI_COLLECTIONS_API}?status=open&limit=200" + (f"&cursor={cursor}" if cursor else "")
+            body = get(url) or {}
+            for c in body.get("multivariate_contracts") or body.get("collections") or []:
+                events = {str(e) for e in (c.get("associated_event_tickers") or [])}
+                events |= {str(e.get("ticker")) for e in (c.get("associated_events") or [])
+                           if isinstance(e, dict) and e.get("ticker")}
+                if c.get("collection_ticker"):
+                    out.append(dict(ticker=str(c["collection_ticker"]),
+                                    series=str(c.get("series_ticker") or ""),
+                                    exchange_index=c.get("exchange_index"),
+                                    events=events))
+            cursor = body.get("cursor") or ""
+            if not cursor:
+                break
+    except Exception as e:                       # fail soft, say so
+        print(f"  ! kalshi collections: {type(e).__name__}: {str(e)[:70]}")
+        out = []
+    if getter is None:
+        _combo_collections = out
+    return out
+
+
+def combo_collection(event_tickers, collections):
+    """The collection a basket of these leg events is quoted through, or None.
+
+    Only a collection that lists EVERY leg's event can quote the basket. Among those the
+    sports multi-game collection wins; otherwise the first that lists them all."""
+    need = {str(e) for e in event_tickers if e}
+    if not need:
+        return None
+    fits = [c for c in (collections or []) if need <= set(c.get("events") or ())]
+    fits.sort(key=lambda c: (not str(c.get("series") or c.get("ticker") or "").startswith(COMBO_COLLECTION_PREFER),
+                             str(c.get("ticker"))))
+    return fits[0] if fits else None
+
+
+_event_markets = {}
+
+
+def kalshi_event_markets(event_ticker, getter=None):
+    """[{ticker, yes_sub_title}] for one Kalshi event, cached per run. Used only to name
+    the exact contract on a lead whose quote was logged before the readers kept tickers.
+    Fail-soft: an outage is [] and the lead keeps the event-level route."""
+    key = str(event_ticker or "")
+    if not key:
+        return []
+    if key in _event_markets and getter is None:
+        return _event_markets[key]
+    get = getter or _get
+    try:
+        body = get(f"{KALSHI_API}?event_ticker={key}&limit=50") or {}
+        out = [dict(ticker=str(m.get("ticker")), yes_sub_title=str(m.get("yes_sub_title") or ""))
+               for m in body.get("markets") or [] if m.get("ticker")]
+    except Exception as e:
+        print(f"  ! kalshi event {key}: {type(e).__name__}: {str(e)[:60]}")
+        out = []
+    if getter is None:
+        _event_markets[key] = out
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -6009,7 +6111,7 @@ def _basket_rows(by_day, used, markup, sport, prefix, url):
                     # The leg's own NAME travels with it. A basket is bought by naming its
                     # legs to the venue, and "KXATPMATCH-26SEP24MARBOL yes" is not something
                     # a reader can check against the match they think they are backing.
-                    legs=[_combo_leg(r, sd) for r, sd, _ in pick],
+                    legs=[_combo_leg(r, sd, p) for r, sd, p in pick],
                 ))
     return out
 
@@ -6362,12 +6464,25 @@ def rule_text(name):
     return " ".join(p.strip() for p in parts if p and p.strip())
 
 
-def _combo_leg(row, side):
-    """One basket leg. `tour` travels with it when the resolver stamped one."""
+def _combo_leg(row, side, price=None):
+    """One basket leg. `tour` travels with it when the resolver stamped one.
+
+    A basket is bought by naming each leg's MARKET to the collection, so the leg keeps
+    the player's own Kalshi ticker (`market`, "KXATPMATCH-26OCT10CARAUG-AUG") beside
+    the event (`market_id`, which settlement reads), the ask it was cut at (`ask`) and
+    whether its start is verified (`start_source`).
+    """
     leg = dict(market_id=row["market_id"], pick=side,
                venue=row.get("venue", "polymarket"),
                name=str(row["side_a"] if side == "a" else row["side_b"]),
                start=str(row["start"]))
+    market = (row.get("tickers") or {}).get(side)
+    if market:
+        leg["market"] = str(market)
+    if price is not None:
+        leg["ask"] = round(float(price), 4)
+    if row.get("start_source"):
+        leg["start_source"] = str(row["start_source"])
     if row.get("tour") in TENNIS_TIERS or row.get("tour") == "unknown":
         leg["tour"] = row["tour"]
     return leg

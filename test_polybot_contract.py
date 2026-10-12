@@ -321,6 +321,9 @@ def test_breaks_fail(written, quotes):
 # build_feed on the fixture above, at FIXED_NOW, as main 0dfa4d35 writes it,
 # with the four sandbox-record fields removed. Those four may change. Leads
 # (every lead, every field), updated_at, and every other key may not.
+# Changed on purpose 2026-10-12 ("nothing in Production is observation only"): every
+# route gains price_at_log (the side's ask when logged) and claim (the headline), and
+# every pair gains routing (production.routing_problem's counts). Nothing else moved.
 _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
 {
   "board_built_at": "2026-10-01T12:00:00+00:00",
@@ -343,9 +346,11 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "pair": "oddspedia|cricket",
       "price_at_log": 0.8,
       "route": {
+        "claim": "Away Side to win",
         "market": "aec-fixture-pick",
         "outcome": "Away Side",
         "outcome_side": "no",
+        "price_at_log": 0.8,
         "venue": "polymarket_us"
       },
       "sandbox_quote": "oddspedia:aec-fixture-pick",
@@ -372,9 +377,11 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "pair": "espn_fpi|nfl",
       "price_at_log": 0.55,
       "route": {
+        "claim": "Home Side to win",
         "market": "aec-fixture-model",
         "outcome": "Home Side",
         "outcome_side": "yes",
+        "price_at_log": 0.55,
         "venue": "polymarket_us"
       },
       "sandbox_quote": "espn_fpi:aec-fixture-model",
@@ -389,14 +396,18 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "entered_at": "2026-09-01T00:00:00+00:00",
       "promoted_at": null,
       "ready_at": "2026-09-01T00:00:00+00:00",
-      "route": "moved by hand on 2026-09-01"
+      "route": "moved by hand on 2026-09-01",
+      "routing": {"leads": 1, "problem": null, "routed": 1, "unlisted": 0,
+                  "unrouted": 0, "unverified": 0, "why": []}
     },
     "oddspedia|cricket": {
       "by_hand": "2026-09-01",
       "entered_at": "2026-09-01T00:00:00+00:00",
       "promoted_at": null,
       "ready_at": "2026-09-01T00:00:00+00:00",
-      "route": "moved by hand on 2026-09-01"
+      "route": "moved by hand on 2026-09-01",
+      "routing": {"leads": 1, "problem": null, "routed": 1, "unlisted": 0,
+                  "unrouted": 0, "unverified": 0, "why": []}
     }
   },
   "stage": "production",

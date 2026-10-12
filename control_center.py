@@ -101,7 +101,8 @@ WORKFLOWS = ("Sandbox Tracker", "Refresh boards")
 STATUS_LABEL = {"healthy": "Healthy", "stale": "Stale", "attention": "Attention", "waiting": "Waiting"}
 STATUS_CHIP = {"healthy": "y", "stale": "w", "attention": "x", "waiting": "n"}
 KIND_LABEL = {"overdue": "Open past start", "feed": "Feed", "paused": "Production pair",
-              "quiet": "Production pair", "run": "Workflow", "venue": "Closing prices"}
+              "quiet": "Production pair", "route": "Not tradeable", "run": "Workflow",
+              "venue": "Closing prices"}
 SECTIONS = (("overview", "Overview"), ("areas", "Areas"), ("attention", "Attention"),
             ("live", "Live now"), ("scorecard", "Rules"))
 # The Rule scorecard's chips: (value, label). "records" is any settled result,
@@ -392,7 +393,7 @@ def _broken_feeds(d, status):
             for f in status.get("broken_feeds") or [] if isinstance(f, dict) and f.get("source")]
 
 
-def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None):
+def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None, blob=None):
     items = []
     if status_note:
         items.append(dict(kind="status", area=None, text=status_note, href="./sandbox.html"))
@@ -432,6 +433,18 @@ def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None):
                               text=f"{rule}: no new bet since {fmt.day(last_at)}; the stale-pair net "
                                    f"demotes it on {when} ({days_left} days)",
                               href="./production.html"))
+    # Nothing in Production is observation only: a pair whose leads carry no market a
+    # follower can buy, or whose bets in the window were all held back, is listed with the
+    # feed's own reason (production.routing_problem).
+    feed_pairs = (blob or {}).get("pairs") or {}
+    for key in sorted(pairs):
+        problem = ((feed_pairs.get(key) or {}).get("routing") or {}).get("problem")
+        if not problem:
+            continue
+        name, sport = key.split("|", 1)
+        items.append(dict(kind="route", area=_area_of_sport(sport),
+                          text=f"{S.scoped_rule(name, sport)} cannot be followed: {problem}",
+                          href="./production.html"))
     if runs:
         seen = set()
         for run in runs:
@@ -475,7 +488,8 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     rows = _bet_rows(d)
     pairs = {k: v for k, v in production.production_pairs(st).items() if not production._weather_pair(k)}
     pair_rows = [r for r in B.pair_list(d, st) if not B.eliminated(r)]
-    attention = _attention(d, st, pairs, now, closes, runs, status=status, status_note=status_note)
+    attention = _attention(d, st, pairs, now, closes, runs, status=status, status_note=status_note,
+                           blob=blob)
     flagged = {item["area"] for item in attention if item.get("area")}
     areas = []
     for key, label, _href in AREAS:

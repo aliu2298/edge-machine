@@ -180,7 +180,123 @@ def ladder_contest(q):
     return S.display_label(q).rstrip("?").strip() or str(q["market_id"])
 
 
-def lead_from_quote(q, pair_key, built):
+# ------------------------------------------------------------------ routes
+# Every Production lead names the exact contract it was priced on, so a follower buys
+# that contract rather than finding one by matching team or player names across two
+# sites (a follower missed Cologne v Gladbach on 2026-10-11 because the lead said
+# "FC Cologne" and Kalshi says "FC Köln"). A Kalshi route is:
+#   market        the market ticker itself ("KXBUNDESLIGAGAME-26OCT11KOEBMG-KOE"); the
+#                 event ticker only when the market could not be named
+#   event         the event ticker the market hangs off
+#   outcome       KALSHI's own wording of that market's Yes (yes_sub_title: "FC Köln",
+#                 "Tie", "Over 3.5 goals scored"), compared exactly by the follower;
+#                 left out when the board never read it, never our own wording
+#   outcome_side  "yes", or "no" for a claim that is the No of the named market
+#   price_at_log  that side's ask when the bet was written down
+#   claim         the lead's headline, in our words ("Under 3.5 goals")
+# `kalshi` is the tracker's live lookups: {"markets": event -> [{ticker, yes_sub_title}],
+# "collections": S.kalshi_combo_collections (called only when a basket needs it)}. Without it the routes use only what the
+# quote stored, which is everything for a quote logged after 2026-10-12.
+
+
+def _kalshi_markets(kalshi, event):
+    fn = (kalshi or {}).get("markets")
+    try:
+        got = fn(event) if callable(fn) else (fn or {}).get(event)
+    except Exception:
+        got = None
+    return [m for m in (got or []) if isinstance(m, dict) and m.get("ticker")]
+
+
+def _side_market(event, side, kalshi):
+    """(market ticker, yes_sub_title) for one side of a Kalshi event, read from the live
+    event, or (None, None). The side is mapped with S.kalshi_sides, the same function the
+    readers and settlement use, so 'a' is the same team here as it was when logged."""
+    ms = _kalshi_markets(kalshi, event)
+    if not ms:
+        return None, None
+    sides = S.kalshi_sides(event, ms)
+    code = next((c for c, sd in sides.items() if sd == side), None)
+    hit = next((m for m in ms if str(m["ticker"]).rsplit("-", 1)[-1] == code), None) if code else None
+    return (str(hit["ticker"]), str(hit.get("yes_sub_title") or "")) if hit else (None, None)
+
+
+def kalshi_route(q, headline, kalshi=None):
+    """The route for one Kalshi contract. -> (route, None); never unroutable, since an
+    event ticker with Kalshi's own outcome name is the fallback."""
+    side = q.get("pick")
+    price = q.get("price")
+    if q.get("venue") == "kalshi_binary":
+        market = str(q["market_id"])
+        event = str(q.get("event") or market.rsplit("-", 1)[0])
+        title = q.get("kalshi_title") or (q.get("side_a") if q.get("sport") in T.LADDER_SPORTS else None)
+        if not title:
+            title = next((m.get("yes_sub_title") for m in _kalshi_markets(kalshi, event)
+                          if str(m["ticker"]) == market), None)
+        outcome_side = "no" if side == "b" else "yes"
+    else:
+        event = str(q["market_id"])
+        market = (q.get("tickers") or {}).get(side)
+        title = (q.get("titles") or {}).get(side)
+        if not market:
+            market, title = _side_market(event, side, kalshi)
+        if not title:
+            # Kalshi's own side name as the reader kept it; the Tie contract is "Tie".
+            title = "Tie" if side == "draw" else (q.get("side_a") if side == "a" else q.get("side_b"))
+        market = market or event
+        outcome_side = "yes"
+    route = {"venue": "kalshi", "market": market, "event": event, "outcome_side": outcome_side,
+             "price_at_log": round(float(price), 4) if price is not None else None,
+             "claim": headline}
+    if title:
+        route["outcome"] = str(title)
+    return route, None
+
+
+def combo_route(q, kalshi=None):
+    """The route for a Kalshi basket. -> (route, None) or (None, why it cannot be bought).
+
+    A basket is no market to hit: the follower names each leg's market to the collection
+    and ASKS for a quote (Kalshi's RFQ). So the route carries the collection read from
+    Kalshi this run, every leg's own market and event ticker, the player, the Yes side (a
+    leg backs its player to win), the ask the leg was cut at, and the modelled price --
+    the product of the legs' asks times the measured markup -- as the most worth paying.
+    """
+    legs = []
+    for leg in q.get("legs") or []:
+        event = str(leg.get("market_id") or "")
+        market = leg.get("market")
+        if not market and event:
+            market, _title = _side_market(event, leg.get("pick"), kalshi)
+        legs.append({"market": market, "event": event, "player": leg.get("name"),
+                     "outcome_side": "yes",
+                     "ask_at_log": leg.get("ask"),
+                     "starts": str(leg.get("start") or "")[:16]})
+    if not legs:
+        return None, "the basket has no legs"
+    missing = [l["player"] for l in legs if not l["market"]]
+    if missing:
+        return None, "no Kalshi market named for " + ", ".join(str(m) for m in missing)
+    colls = (kalshi or {}).get("collections")
+    if callable(colls):
+        # Read lazily: a run with no basket in its window asks Kalshi for nothing.
+        try:
+            colls = colls()
+        except Exception:
+            colls = []
+    coll = S.combo_collection([l["event"] for l in legs], colls)
+    if coll is None:
+        return None, "no open Kalshi collection lists every leg"
+    price = round(float(q["price"]), 4)
+    return {"venue": "kalshi", "instrument": "combo", "how": "request_quote",
+            "mve_collection_ticker": coll["ticker"], "collection": coll["ticker"],
+            "exchange_index": coll.get("exchange_index"),
+            "basket_id": q["market_id"], "modelled_price": price, "max_price": price,
+            "markup": S.COMBO_MARKUP.get(len(legs)),
+            "legs": legs}, None
+
+
+def lead_from_quote(q, pair_key, built, kalshi=None):
     """One Sandbox bet as a feed lead."""
     ko = _kickoff(q)
     if ko is None:
@@ -234,41 +350,24 @@ def lead_from_quote(q, pair_key, built):
     # A sport with no league table to look the fixture up in carries the venue's own market
     # instead, so a follower buys the contract this bet was priced on rather than one found
     # by matching two player names across two sites.
-    route = None
+    route, unroutable = None, None
     if q.get("venue") == "combo":
-        # A basket has no market to hit. The route therefore says what to ASK for, not what
-        # to buy: the collection, each leg and its side, and max_price -- the most this bet
-        # is worth paying, which is the product of the legs plus the markup Kalshi's RFQ was
-        # measured at. A quote above that is a different bet, and the resting book (7.4% and
-        # 9.8% worse on the only baskets that had an ask) is never it.
-        route = {"venue": "kalshi", "instrument": "combo", "how": "request_quote",
-                 "collection": S.COMBO_COLLECTION,
-                 "max_price": round(float(q["price"]), 4),
-                 "legs": [{"market": l["market_id"], "name": l.get("name"),
-                           "side": "yes" if l["pick"] == "a" else "no",
-                           "starts": str(l.get("start"))[:16]} for l in (q.get("legs") or [])]}
-    elif q["sport"] in T.FEED_BETS and bet["kind"] in ("total_lte", "corners_lte"):
-        # An under is the No side of the over market, and Kalshi lists one contract per
-        # STRIKE inside the totals event -- the -4 ticker is over 3.5, the -3 over 2.5.
-        # So the lead names the exact contract it was priced on and says which side to
-        # take, rather than leaving a follower to pick a strike and then invert it. Every
-        # other FEED_BETS lane is a plain Yes on a market its headline fully identifies,
-        # and keeps no route.
-        route = {"venue": "kalshi", "market": q["market_id"],
-                 "outcome": headline, "outcome_side": "no"}
-    elif q["sport"] in T.LADDER_SPORTS:
-        # A ladder lists one contract per rung inside the coin's daily event, so the lead
-        # names the exact contract it was priced on and the rung's own wording. The Yes
-        # side, always: the rule backs "or above", never fades it.
-        route = {"venue": "kalshi", "market": q["market_id"],
-                 "outcome": q["side_a"], "outcome_side": "yes"}
+        route, unroutable = combo_route(q, kalshi)
+    elif q.get("venue") in ("kalshi", "kalshi_binary"):
+        # Every Kalshi lead -- results, draws, goals, corners, BTTS, team totals, ladders,
+        # tennis and cricket -- names its market. An under or a corners fade is the No of
+        # the over contract Kalshi lists, at the No's own price.
+        route, unroutable = kalshi_route(q, headline, kalshi)
     elif q["sport"] in T.ROUTED_SPORTS:
-        # Kalshi lists a market per player inside one event, so backing either player is a
-        # plain Yes on that player's market. Polymarket lists ONE market with two outcomes,
-        # so the second player is the No side of it.
+        # Polymarket lists ONE market with two outcomes, so the second player is the No
+        # side of it.
         route = {"venue": q["venue"], "market": q["market_id"],
                  "outcome": home if q["pick"] == "a" else away,
-                 "outcome_side": "yes" if (q["pick"] == "a" or q["venue"] == "kalshi") else "no"}
+                 "outcome_side": "yes" if q["pick"] == "a" else "no",
+                 "price_at_log": round(float(q["price"]), 4) if q.get("price") is not None else None,
+                 "claim": headline}
+    else:
+        unroutable = f"no route for a {q.get('venue')} bet"
     lead = {
         "id": (f"{date}|{q['market_id']}|{headline} · {label}" if home is None
                else f"{date}|{home}|{away}|{headline} · {label}"),
@@ -291,6 +390,10 @@ def lead_from_quote(q, pair_key, built):
         lead["model_prob"] = round(pa if q["pick"] == "a" else 1.0 - pa, 4)
     if route:
         lead["route"] = route
+    if unroutable:
+        lead["unroutable"] = unroutable
+    if q.get("venue") == "combo":
+        lead["basket_id"] = q["market_id"]
     if lead["status"] == "pending":
         lead["last_seen"] = built[:10]
         lead["last_seen_at"] = built
@@ -369,8 +472,9 @@ def prune_feed(path=None, st=None):
     return len(gone)
 
 
-def build_feed(d, st, now=None):
-    """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage registry."""
+def build_feed(d, st, now=None, kalshi=None):
+    """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage
+    registry, `kalshi` the tracker's live Kalshi lookups (see kalshi_route), or None."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     built = now.replace(microsecond=0).isoformat()
     # A removed lane never reaches the feed, even if a stage file still names it.
@@ -382,6 +486,8 @@ def build_feed(d, st, now=None):
             continue
         pairs[key] = pair
     leads, skipped, unverified, logged_at = {}, 0, 0, {}
+    routing = {key: dict(leads=0, routed=0, unrouted=0, unlisted=0, unverified=0, why=[])
+               for key in pairs}
     for key, pair in pairs.items():
         source, sport = key.split("|", 1)
         for q in T.all_bets(d):
@@ -410,14 +516,30 @@ def build_feed(d, st, now=None):
                 continue
             if not T.placeable(q):
                 skipped += 1
+                routing[key]["unlisted"] += 1
                 continue
             if not start_verified(q):
                 unverified += 1
+                routing[key]["unverified"] += 1
                 continue
-            lead = lead_from_quote(q, key, built)
+            lead = lead_from_quote(q, key, built, kalshi=kalshi)
             leads[lead["id"]] = lead
             logged_at[lead["id"]] = (str(q.get("logged") or ""), float(q.get("price") or 1.0))
     _one_rung_per_close(leads, logged_at)
+    for lead in leads.values():
+        r = routing.get(lead["pair"])
+        if r is None:
+            continue
+        r["leads"] += 1
+        if route_ok(lead.get("route")):
+            r["routed"] += 1
+        else:
+            r["unrouted"] += 1
+            why = lead.get("unroutable") or "no route"
+            if why not in r["why"]:
+                r["why"].append(why)
+    for r in routing.values():
+        r["problem"] = routing_problem(r)
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
         # The Sandbox's own record for each pair since it entered Production, counted on
@@ -426,10 +548,43 @@ def build_feed(d, st, now=None):
         "pairs": {k: dict({"ready_at": p.get("ready_at"), "promoted_at": p.get("promoted_at"),
                            "entered_at": entered_at(p), "route": route_label(p),
                            "by_hand": p.get("by_hand")},
-                          **_sandbox_record(d, k, entered_at(p)))
+                          **_sandbox_record(d, k, entered_at(p)),
+                          routing=routing[k])
                   for k, p in pairs.items()},
         "leads": leads, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
     }
+
+
+def route_ok(route):
+    """Does this route name something a follower can act on? A single contract needs its
+    venue and market; a basket needs its collection and every leg's market."""
+    if not isinstance(route, dict) or not route.get("venue"):
+        return False
+    if route.get("instrument") == "combo":
+        legs = route.get("legs") or []
+        return bool(route.get("mve_collection_ticker") and legs
+                    and all(isinstance(l, dict) and l.get("market") for l in legs))
+    return bool(route.get("market"))
+
+
+def routing_problem(r):
+    """One sentence when a Production pair cannot be followed, else None.
+
+    Two ways: leads were published without a route, or the pair bet since it entered
+    Production and none of those bets could be published at all."""
+    if r.get("unrouted"):
+        return (f"{r['unrouted']} of {r['leads']} lead{'s' if r['leads'] != 1 else ''} "
+                f"carry no tradeable route ({'; '.join(r.get('why') or ['no route'])})")
+    held = int(r.get("unlisted") or 0) + int(r.get("unverified") or 0)
+    if not r.get("leads") and held:
+        parts = []
+        if r.get("unverified"):
+            parts.append(f"{r['unverified']} held for an unverified start")
+        if r.get("unlisted"):
+            parts.append(f"{r['unlisted']} not a market the feed can name")
+        return (f"{held} bet{'s' if held != 1 else ''} in the window, none published: "
+                + ", ".join(parts))
+    return None
 
 
 def _one_rung_per_close(leads, logged_at):
@@ -637,13 +792,17 @@ def _clip_shown(value, limit=80):
 #            with nothing to show for it.
 #   unwired  the pair is listed in Production but missing from the feed's own pairs map, so
 #            the two halves disagree about what is live.
+#   no route the feed's own routing count says the pair cannot be followed: a lead went out
+#            with no market a follower can buy, or every bet in the window was held back
+#            (routing_problem). Nothing in Production is observation only.
 # A pair that is merely WAITING -- publishing leads, declining on price, between fixtures --
 # is green. A light that cries wolf is a light that gets ignored, so quiet alone is not a
 # fault; the Since-Production cell already says how quiet.
 HEALTH_WINDOW_DAYS = 7
 
 
-def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_WINDOW_DAYS):
+def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_WINDOW_DAYS,
+                routing=None):
     """(state, reason) for one Production pair: "ok" or "bad", and why.
 
     `bets` is every bet the pair has logged, `lead_count` how many leads it has in the feed,
@@ -659,6 +818,9 @@ def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_
     if dropped:
         return "bad", (f"{len(dropped)} of {len(recent)} recent bets cannot be published "
                        f"— the feed drops them silently")
+    problem = (routing or {}).get("problem") if isinstance(routing, dict) else None
+    if problem:
+        return "bad", f"not tradeable: {problem}"
     if not lead_count and not recent:
         return "bad", f"no leads and nothing logged in {window_days}d"
     return "ok", ("publishing" if lead_count else "nothing to publish yet")
@@ -922,7 +1084,8 @@ def page(d, st, blob, style, now=None):
         reach_n = sum(1 for q in all_bets if T.placeable(q))
         reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
         reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
-        state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None))
+        state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None),
+                                 routing=((blob.get("pairs") or {}).get(key) or {}).get("routing"))
         light = ("<b class=\"pos\">\u25cf</b>" if state == "ok" else "<b class=\"neg\">\u25cf</b>")
         idle_days = _days_since(since)
         if live["n"]:
