@@ -5998,7 +5998,7 @@ def pm_combo_legs_by_day(universe=None):
     return by_day
 
 
-def combo_legs_by_day(universe=None):
+def combo_legs_by_day(universe=None, now=None):
     """{date: [(row, side, price)]} — the legs a basket may be cut from, KALSHI ONLY.
 
     Every leg must be a Kalshi market. A basket is not a market anyone can hit: you name its
@@ -6030,6 +6030,12 @@ def combo_legs_by_day(universe=None):
             continue
         if not tennis_fav_kept(r.get("market_id")):
             continue
+        # Live construction uses the same verified three-hour entry window as
+        # the single-leg rule. Do this BEFORE pairing: an estimated start must
+        # not strand a verified leg in a basket Production cannot publish.
+        # Omitted now retains the pure historical reconstruction interface.
+        if now is not None and tennis_start_window(r, now) != "in":
+            continue
         for side in ("a", "b"):
             p = r.get(f"price_{side}")
             # Default True, as every other reader of this field does: a row that does not
@@ -6058,7 +6064,7 @@ def tennis_combo_rows(universe=None, now=None, used=None):
     whichever run builds it. (Until 2026-09-21 this built ONE basket a day per size, from
     the first n legs, and left ~55 of a typical day's ~60 eligible legs unused.)
     """
-    return _basket_rows(combo_legs_by_day(universe), used, COMBO_MARKUP,
+    return _basket_rows(combo_legs_by_day(universe, now=now), used, COMBO_MARKUP,
                         sport="tennis_combo", prefix="combo", url="https://kalshi.com/combos")
 
 
