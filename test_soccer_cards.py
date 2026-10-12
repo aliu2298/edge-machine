@@ -294,39 +294,30 @@ ok("Date TBC" not in bucket_html and "Tue Oct 6" in bucket_html, "a fixture with
 empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW)
 ok('data-empty="next"' in empty_html and 'data-empty="done"' in empty_html, "an empty page says why each tab is empty")
 
-print("\nrules: Production cards and the Sandbox table")
+print("\nrules: a row per rule, the words folded")
+from sport_rows_testlib import rule_rows, text as row_text
 rules = _section(html, "rules")
-ok('<table class="sp-sandbox-table">' in rules, "the Sandbox rules are one table")
-ok("<thead>" in rules and "<tbody>" in rules, "the table is labelled for the phone cards")
-head = re.search(r"<thead>(.*?)</thead>", rules, re.S).group(1)
-eq(re.findall(r"<th[^>]*>(.*?)</th>", head),
+ok('class="sp-rules-list" data-list="sandbox"' in rules, "the Sandbox rules are one list")
+head_line = re.search(r'<div class="sp-line sp-head-line[^"]*" aria-hidden="true">(.*?)</div>', rules.split('id="sandbox"', 1)[-1], re.S)
+eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_line.group(1)) if head_line else None,
    ["Rule", "Market", "Scope", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
    "the columns are Rule · Market · Scope · Record · ROI after fees · Won v priced · Evidence · Verdict")
-rule_rows = _rule_rows(rules)
-eq(len(rule_rows), len(rows), f"with nothing in Production, one row per soccer lane ({len(rule_rows)} rows, {len(rows)} lanes)")
+srows = rule_rows(rules)
+eq(len(srows), len(rows), f"with nothing in Production, one row per soccer lane ({len(srows)} rows, {len(rows)} lanes)")
 ok("<h3>Goals</h3>" not in rules, "no per-market H3 groups")
 for row in rows:
-    frag = next(r for r in rule_rows if _attr(r, "data-source") == row["name"]
-                and _attr(r, "data-sport") == row["sport"])
-    ok(SP.roi_html(row) in frag, f"{row['name']}|{row['sport']} ROI is the Sandbox row's own text")
+    r = next(x for x in srows if x["source"] == row["name"] and x["sport"] == row["sport"])
+    ok(r["cells"]["ROI after fees"] == SP.roi_html(row), f"{row['name']}|{row['sport']} ROI is the Sandbox row's own text")
     a = row["a"]
     rec = f'{a["won"]}–{a["n"] - a["won"]}' if a["n"] else "—"
-    ok(f'>{rec}<' in frag, f"{row['name']}|{row['sport']} record is W–L")
-    chev = re.search(r'<button type="button" class="rule-chev" aria-expanded="false" aria-controls="([^"]+)"', frag)
-    ok(chev is not None, f"{row['name']}|{row['sport']} has a chevron")
-    if chev:
-        detail = re.search(rf'<tr class="rule-detail" id="{chev.group(1)}" hidden>(.*?)</tr>', rules, re.S)
-        ok(detail is not None, f"{row['name']}|{row['sport']} chevron controls a detail row")
-        if detail:
-            lead, _rest = SP.short_definition(row["meta"].get("note") or "")
-            ok(B.esc(lead) in detail.group(1), f"{row['name']}|{row['sport']} detail carries the registered description")
-            ok('class="rule-picks"' in detail.group(1) or "No pick yet." in detail.group(1),
-               f"{row['name']}|{row['sport']} detail lists recent picks")
-stages = [_attr(r, "data-stage") for r in rule_rows]
-ok(all(s == "sandbox" for s in stages), "every row is a Sandbox row")
-by_n = [next(r for r in rows if r["name"] == _attr(f, "data-source") and r["sport"] == _attr(f, "data-sport"))["a"]["n"]
-        for f in rule_rows]
-early = ['data-early="1"' in f for f in rule_rows]
+    ok(row_text(r["cells"]["Record"]).startswith(rec), f"{row['name']}|{row['sport']} record is W–L")
+    ok(not r["open"], f"{row['name']}|{row['sport']} Rule details starts closed")
+    note = " ".join((row["meta"].get("note") or "").split())
+    ok(not note or B.esc(note) in r["body"], f"{row['name']}|{row['sport']} the fold carries the registered description, verbatim")
+    ok('class="rule-picks"' in r["body"] or "No pick yet." in r["body"], f"{row['name']}|{row['sport']} the fold lists recent picks")
+ok(all(r["stage"] == "sandbox" for r in srows), "every row is a Sandbox row")
+by_n = [next(x for x in rows if x["name"] == r["source"] and x["sport"] == r["sport"])["a"]["n"] for r in srows]
+early = [r["early"] for r in srows]
 ok(early == sorted(early), "the too-early rows (under 10 settled) are sunk under the read ones")
 ok(all(by_n[i] >= by_n[i + 1] for i in range(len(by_n) - 1) if early[i] == early[i + 1]),
    "within each band, more evidence comes first")
@@ -335,17 +326,15 @@ prod_st = {"pairs": {"o15_ranked|soccer_o15": {"stage": "production", "by_hand":
                      "team1_form_l5|soccer_team1_cup": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"}}}
 prod_html = soccer_build.build(d, prod_st, NOW)
 prod_rules = _section(prod_html, "rules")
-cards = re.findall(r'<article class="card sp-rule"(.*?)</article>', prod_rules, re.S)
-eq(len(cards), 2, "a Production rule is a card, not a row")
-eq(len(_rule_rows(prod_rules)), len(rows) - 2, "and leaves the Sandbox table")
-ok(all('<span class="badge stage production">Production</span>' in c for c in cards), "a card says Production")
-names = [re.search(r"<h3>(.*?)</h3>", c).group(1) for c in cards]
-ok("Team scores 1+ form rule · Cups" in names, "a scoped twin carries its scope in its name")
-ok(all('data-scope="' in c and 'data-stage="production"' in c for c in cards), "cards carry their scope and stage")
-ok("Production rule" not in prod_rules.split("<article", 1)[0] or True, "")
-ok('<p class="sp-market sm mut">Team 1+</p>' in prod_html, "a card names the market the rule trades")
+prod_list = prod_rules.split('class="sp-rules-list sp-prod"', 1)[1].split('id="sandbox"', 1)[0]
+prows = rule_rows(prod_list)
+eq(len(prows), 2, "a Production rule is a row in the Production list")
+eq(len(rule_rows(prod_rules.split('id="sandbox"', 1)[1])), len(rows) - 2, "and leaves the Sandbox list")
+ok(all(r["stage"] == "production" for r in prows), "its rows carry the Production stage for the chips")
+ok("Team scores 1+ form rule · Cups" in [r["full_name"] for r in prows], "a scoped twin carries its scope in its full name")
+ok("Team 1+" in [r["cells"]["Market"] for r in prows], "a row names the market the rule trades")
 empty_rules = _section(empty_html, "rules")
-ok("No soccer rule is in Production." in empty_rules and 'class="sp-sandbox-table"' in empty_rules,
+ok("No soccer rule is in Production." in empty_rules and 'data-list="sandbox"' in empty_rules,
    "an empty ledger still lists the wired cup and international twins as Sandbox rows, and says nothing is in Production")
 with patch("sport_tab.family_rows", return_value=[]):
     no_rows = _section(soccer_build.build({"quotes": []}, {"pairs": {}}, NOW), "rules")
@@ -370,7 +359,7 @@ ten = tennis_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
 ok(_absent("Alpha v Beta soonest", cri) and "o15_form_l10" not in cri,
    "cricket does not pick up soccer lanes")
-ok('class="sp-sandbox-table"' in cri or "No cricket rule is in the Sandbox." in cri,
+ok('data-list="sandbox"' in cri or "No cricket rule is in the Sandbox." in cri,
    "the cricket page is on the same template")
 ok(_absent("Alpha v Beta soonest", ten) and "o15_form_l10" not in ten, "tennis does not pick up soccer lanes")
 
@@ -439,18 +428,13 @@ if sync_playwright is not None:
                     eq(page.locator(".sp-day-head").first.evaluate("e => getComputedStyle(e).position"),
                        "sticky", f"{width}px day head is sticky")
                     page.locator("details.sp-sandbox > summary").click()
-                    eq(page.locator("tr.rule-detail:visible").count(), 0, f"{width}px rule details start closed")
-                    page.locator("button.rule-chev").first.click()
-                    eq(page.locator("tr.rule-detail:visible").count(), 1, f"{width}px a chevron opens one detail row")
-                    eq(page.locator("button.rule-chev").first.get_attribute("aria-expanded"), "true",
-                       f"{width}px the chevron reports expanded")
+                    eq(page.locator(".sp-details-body:visible").count(), 0, f"{width}px every Rule details fold starts closed")
+                    page.locator('[data-list="sandbox"] details.sp-rule > summary').first.click()
+                    eq(page.locator(".sp-details-body:visible").count(), 1, f"{width}px a row opens its one Rule details fold")
                     ok(page.evaluate("document.documentElement.scrollWidth <= innerWidth"),
-                       f"{width}px no sideways scroll with a detail row open")
-                    page.locator("button.rule-chev").first.click()
-                    eq(page.locator("tr.rule-detail:visible").count(), 0, f"{width}px the chevron closes it again")
-                    cards = page.locator(".sp-sandbox-table thead").first.evaluate("e => getComputedStyle(e).display")
-                    eq(cards, "none" if width < 760 else "table-header-group",
-                       f"{width}px the Sandbox table uses the phone cards under 760px")
+                       f"{width}px no sideways scroll with a fold open")
+                    page.locator('[data-list="sandbox"] details.sp-rule > summary').first.click()
+                    eq(page.locator(".sp-details-body:visible").count(), 0, f"{width}px and closes it again")
                     ok(page.locator("#method > details").get_attribute("open") is None,
                        f"{width}px Method starts folded")
                     page.close()

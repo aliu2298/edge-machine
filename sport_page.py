@@ -2,10 +2,16 @@
 """One template for every sport page (redesign, phase 3).
 
 Head, one scope line, four tiles; a filter row whose scope and stage chips drive
-the rules and the events together; one card per Production rule; the Sandbox
-rules folded into one table sorted by evidence, the too-early rows greyed and
-sunk; the events in three tabs, Next 24h, In progress and Completed (14 days),
-each empty state saying why; the method folded.
+the rules and the events together; the Production rules as one compact list, a
+row per rule (name, badges, market, record, ROI after fees, won v priced,
+evidence n/30, verdict), the first few shown and the rest folded; the Sandbox
+rules in the same rows inside a closed fold, sorted by evidence, the too-early
+rows greyed and sunk; the events in three tabs, Next 24h, In progress and
+Completed (14 days), each empty state saying why; the method folded.
+
+No prose on load. A rule's definition, registration, parameters, dated changes
+and recent picks sit in its row's closed "Rule details" fold; nothing in the
+Rules section is a sentence until a reader opens one.
 
 Presentation only. Every number is the ledger's own, read through sandbox_build
 (pair_list rows, VERDICTS, MIN_N, EARLY_N), sandbox_track (assess, record_text)
@@ -208,41 +214,14 @@ def evidence(a):
     return f'{int(a.get("n") or 0)}/{EVIDENCE_FLOOR}'
 
 
-# A card's definition is the registration's opening sentences; the whole text
-# is folded under it, verbatim. Same words, only the fold is new. Sentences are
-# added until the lead says enough (DEF_MIN) and never past DEF_MAX unless the
-# first sentence alone is longer.
-DEF_MIN = 160
-DEF_MAX = 420
-_SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\"'])")
-
-
-def short_definition(note):
-    """(lead, rest): the opening sentences of a registered note, and what follows
-    them. A note that fits DEF_MAX is all lead."""
-    text = " ".join(str(note or "").split())
-    if len(text) <= DEF_MAX:
-        return text, ""
-    lead = ""
-    for part in _SENTENCE_END.split(text):
-        cand = f"{lead} {part}".strip()
-        if lead and (len(lead) >= DEF_MIN or len(cand) > DEF_MAX):
-            break
-        lead = cand
-    rest = text[len(lead):].strip()
-    return lead, rest
-
-
+# A rule's definition is its registration, verbatim. It is only ever drawn inside
+# the rule's closed "Rule details" fold: the page shows numbers on load, never prose.
 def definition_html(note, extra_class=""):
-    """The plain-language definition with the rest of the registration folded."""
-    lead, rest = short_definition(note)
-    if not lead:
+    """The registered definition as one paragraph, for inside a closed fold."""
+    text = " ".join(str(note or "").split())
+    if not text:
         return '<p class="sp-def mut">No registered description.</p>'
-    html = f'<p class="sp-def{(" " + extra_class) if extra_class else ""}">{esc(lead)}</p>'
-    if rest:
-        html += (f'<details class="sp-more sp-registration"><summary>Full registration</summary>'
-                 f'<p class="sp-def">{esc(rest)}</p></details>')
-    return html
+    return f'<p class="sp-def{(" " + extra_class) if extra_class else ""}">{esc(text)}</p>'
 
 
 def default_definition(d, row):
@@ -301,7 +280,7 @@ def tiles_html(sp, d, st, rows, open_n):
             roi = f'<b class="{klass}">{B.pct(rec["roi_fee"], sign=True)}</b>'
         else:
             roi = '<b class="mut">—</b>'
-        roi_tile = f'<div class="tile">{roi}<span>ROI after fees · {esc(label)}</span></div>'
+        roi_tile = f'<div class="tile">{roi}<span>ROI after fees · since Production</span></div>'
     else:
         rec_tile = '<div class="tile"><b>—</b><span>Production record · no rule in Production</span></div>'
         roi_tile = '<div class="tile"><b class="mut">—</b><span>ROI after fees · no rule in Production</span></div>'
@@ -338,43 +317,98 @@ def _open_count(ev_list, row):
                if p["state"] == "open" and p["row"] is row)
 
 
-def _stat(big, small, cls=""):
-    return f'<div class="sp-stat{(" " + cls) if cls else ""}"><b>{big}</b><span>{esc(small)}</span></div>'
+# The Production rows shown before the "Show N more" fold. Header, tiles, filters,
+# these rows and the folded Sandbox fit one 1366x768 screen with Events below them.
+PROD_VISIBLE = 5
 
 
-def rule_card(sp, d, row, now, ev_list=()):
-    """One Production rule: name, plain-language definition, record, ROI after fees,
-    Won v priced, Evidence n/30, the verdict; recent picks folded."""
-    a = row["a"]
-    open_n = _open_count(ev_list, row)
-    # The W–L is the big figure; a no-result count goes in the small label, the
-    # way the record tile prints it, so "13–8, 6 no result" never clips.
+def row_badges(row):
+    """The small badges on a rule's row: Early with its count, Frozen, Combo, Retired.
+    The stage is the list a row sits in (the Production list, or the Sandbox fold),
+    so the row does not repeat it; data-stage carries it for the chips."""
+    bits = []
+    if row.get("prod") and row.get("early"):
+        bits.append(production.early_html(row.get("early")).strip())
+    frozen = row["meta"].get("frozen")
+    if frozen:
+        # A small badge, the date in its tooltip and in the rule's details.
+        bits.append(f'<span class="badge stage" title="Frozen {esc(frozen)}">Frozen</span>')
+    if B._base_sport(row.get("sport") or "") in COMBO_SPORTS:
+        bits.append('<span class="badge stage">Combo</span>')
+    if row.get("gone") or row.get("v") == "retired":
+        bits.append('<span class="badge stage">Retired</span>')
+    return " ".join(bits)
+
+
+def record_compact(a):
+    """'13–8' on the row, with a no-result count as a small tail: '13–8 +6 n/r'."""
     n, n_price, won = int(a.get("n") or 0), int(a.get("n_price") or 0), int(a.get("won") or 0)
-    rec = f"{won}–{max(0, n - won)}" if (n or n_price) else "—"
-    rec_label = "record" + (f" · {n_price} no result" if n_price else "")
-    unit = sp["unit"](row)
-    recent = sp["recent"](d, row, now) if sp["recent"] else ""
-    more = (f'<details class="sp-more"><summary>Recent picks{f" · {open_n} open" if open_n else ""}</summary>'
-            f'{recent}</details>') if recent else ""
+    if not n and not n_price:
+        return '<span class="mut">—</span>'
+    tail = (f' <small class="mut" title="{n_price} no result">+{n_price} n/r</small>' if n_price else "")
+    return f"{won}–{max(0, n - won)}{tail}"
+
+
+def rule_details(sp, d, row, now, ev_list=()):
+    """What a rule says in words: its full name and market, the registered definition
+    (parameters, registration, dated changes, anything a sport adds), and its recent
+    picks. Drawn only inside the row's closed "Rule details" fold."""
+    open_n = _open_count(ev_list, row)
     market = sp["market"](d, row) if sp["market"] else ""
-    market_html = f'<p class="sp-market sm mut">{esc(market)}</p>' if market else ""
+    frozen = row["meta"].get("frozen")
+    facts = [esc(market)] if market else []
+    if frozen:
+        facts.append(f"frozen {esc(frozen)}")
+    head = (f'<p class="sp-details-name"><b>{esc(sp["rule_name"](row))}</b>'
+            f'{" · " + " · ".join(facts) if facts else ""}</p>')
+    recent = sp["recent"](d, row, now) if sp["recent"] else ""
+    recent_html = (f'<h4 class="sp-details-sub">Recent picks{f" · {open_n} open" if open_n else ""}</h4>{recent}'
+                   if recent else "")
+    return f'<div class="sp-details-body">{head}{sp["definition"](d, row)}{recent_html}</div>'
+
+
+def rule_row(sp, d, row, now, scoped, ev_list=()):
+    """One rule on one line: name and badges, market, (scope,) record, ROI after fees,
+    won v priced, evidence n/30, verdict. The row is the summary of a closed
+    <details> named "Rule details"; opening it shows the words."""
+    a = row["a"]
+    early = (not row.get("prod")) and is_early(row)
+    name = sp["rule_name"](row)
+    # With a Scope column the name drops its scope suffix ("· Clubs"): the column says it.
+    shown_name = name
+    if scoped:
+        suffix = f" · {SCOPE_WORDS[scope_key(row)]}"
+        if shown_name.endswith(suffix):
+            shown_name = shown_name[:-len(suffix)]
+    market = sp["market"](d, row) if sp["market"] else ""
+    scope_cell = (f'<span class="sp-cell sp-c-scope" data-l="Scope">{esc(SCOPE_WORDS[scope_key(row)])}</span>'
+                  if scoped else "")
+    badges = row_badges(row)
     return (
-        f'<article class="card sp-rule" data-source="{esc(row["name"])}" data-sport="{esc(row["sport"])}" '
-        f'data-scope="{scope_key(row)}" data-stage="{stage_key(row)}">'
-        f'<div class="sp-rule-head"><h3>{esc(sp["rule_name"](row))}</h3>{stage_badges(row)}</div>'
-        f'{market_html}{sp["definition"](d, row)}'
-        f'<div class="sp-stats">'
-        f'{_stat(esc(rec), rec_label)}'
-        f'{_stat(roi_html(row), "ROI after fees")}'
-        f'{_stat(esc(won_v_priced(a)), "won v priced")}'
-        f'{_stat(esc(evidence(a)), f"evidence · {unit}s settled")}'
-        f'{_stat(verdict_badge(row), "verdict", "sp-verdict")}'
-        f'</div>{more}</article>')
+        f'<details class="sp-rule{" is-early" if early else ""}" data-source="{esc(row["name"])}" '
+        f'data-sport="{esc(row["sport"])}" data-scope="{scope_key(row)}" data-stage="{stage_key(row)}"'
+        f'{" data-early=\"1\"" if early else ""}>'
+        f'<summary class="sp-line{" is-scoped" if scoped else ""}">'
+        f'<span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
+        f'<b class="sp-name" title="{esc(name)}">{esc(shown_name)}</b>'
+        f'{f"<span class=\"sp-badges\">{badges}</span>" if badges else ""}'
+        f'<span class="sr-only"> · Rule details</span></span>'
+        f'<span class="sp-cell sp-c-market" data-l="Market">{esc(market) or "—"}</span>{scope_cell}'
+        f'<span class="sp-cell num" data-l="Record">{record_compact(a)}</span>'
+        f'<span class="sp-cell num" data-l="ROI after fees">{roi_html(row)}</span>'
+        f'<span class="sp-cell num" data-l="Won v priced">{esc(won_v_priced(a))}</span>'
+        f'<span class="sp-cell num" data-l="Evidence">{esc(evidence(a))}</span>'
+        f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict_badge(row)}</span>'
+        f'</summary>{rule_details(sp, d, row, now, ev_list)}</details>')
 
 
-SANDBOX_HEAD = ('<tr><th>Rule</th><th>Market</th>{scope}<th class="num">Record</th>'
-                '<th class="num">ROI after fees</th><th class="num">Won v priced</th>'
-                '<th class="num">Evidence</th><th>Verdict</th></tr>')
+def list_head(scoped, first="Rule"):
+    scope = '<span class="sp-cell sp-c-scope">Scope</span>' if scoped else ""
+    return (f'<div class="sp-line sp-head-line{" is-scoped" if scoped else ""}" aria-hidden="true">'
+            f'<span class="sp-cell sp-c-name">{esc(first)}</span><span class="sp-cell sp-c-market">Market</span>{scope}'
+            f'<span class="sp-cell num">Record</span><span class="sp-cell num">ROI after fees</span>'
+            f'<span class="sp-cell num">Won v priced</span><span class="sp-cell num">Evidence</span>'
+            f'<span class="sp-cell sp-c-verdict">Verdict</span></div>')
 
 
 def sandbox_order(row):
@@ -385,59 +419,41 @@ def sandbox_order(row):
     return (retired, is_early(row), -int(a.get("n") or 0), -roi, sp_name(row))
 
 
+production_order = sandbox_order
+
+
 def sp_name(row):
     return B.rule_name(row)
 
 
-def sandbox_row(sp, d, row, now, i, scoped, ev_list=()):
-    a = row["a"]
-    early = is_early(row)
-    detail_id = f"rule-d-{i}"
-    name = sp["rule_name"](row)
-    market = sp["market"](d, row) if sp["market"] else ""
-    scope_cell = f'<td>{esc(SCOPE_WORDS[scope_key(row)])}</td>' if scoped else ""
-    recent = sp["recent"](d, row, now) if sp["recent"] else ""
-    open_n = _open_count(ev_list, row)
-    main = (f'<tr class="rule-row{" is-early" if early else ""}" data-source="{esc(row["name"])}" '
-            f'data-sport="{esc(row["sport"])}" data-scope="{scope_key(row)}" data-stage="{stage_key(row)}"'
-            f'{" data-early=\"1\"" if early else ""}>'
-            f'<td><span class="rule-name-cell"><button type="button" class="rule-chev" aria-expanded="false" '
-            f'aria-controls="{detail_id}" aria-label="Details for {esc(name)}">›</button>'
-            f'<b>{esc(name)}</b></span>{" " + stage_badges(row) if row.get("prod") or row["meta"].get("frozen") or row.get("gone") else ""}'
-            f'{f"<span class=\"sm mut sp-open\"> · {open_n} open</span>" if open_n else ""}</td>'
-            f'<td>{esc(market)}</td>{scope_cell}'
-            f'<td class="num">{T.record_html(a)}</td>'
-            f'<td class="num">{roi_html(row)}</td>'
-            f'<td class="num">{esc(won_v_priced(a))}</td>'
-            f'<td class="num">{esc(evidence(a))}</td>'
-            f'<td>{verdict_badge(row)}</td></tr>')
-    cols = 8 if scoped else 7
-    detail = (f'<tr class="rule-detail" id="{detail_id}" hidden><td colspan="{cols}" class="rule-detail-cell">'
-              f'{sp["definition"](d, row)}{recent}</td></tr>')
-    return main + detail
-
-
 def rules_html(sp, d, rows, now, ev_list):
-    prod = [r for r in rows if r.get("prod")]
+    prod = sorted((r for r in rows if r.get("prod")), key=production_order)
     sand = sorted((r for r in rows if not r.get("prod")), key=sandbox_order)
     scoped = sp["scoped"] and len(scopes_present(rows)) > 1
+    family = esc(sp["family"].lower())
     if prod:
-        cards = "".join(rule_card(sp, d, r, now, ev_list) for r in prod)
-        prod_html = f'<div class="sp-cards">{cards}</div>'
+        shown = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in prod[:PROD_VISIBLE])
+        rest = prod[PROD_VISIBLE:]
+        more = ""
+        if rest:
+            more = (f'<details class="fold sp-more-rules"><summary>Show {len(rest)} more Production '
+                    f'rule{"s" if len(rest) != 1 else ""}</summary>'
+                    f'{"".join(rule_row(sp, d, r, now, scoped, ev_list) for r in rest)}</details>')
+        prod_html = (f'<div class="sp-rules-list sp-prod" data-list="production">'
+                     f'{list_head(scoped, "Production rule")}{shown}{more}</div>')
     else:
-        prod_html = f'<p class="sp-empty" data-empty="production">No {esc(sp["family"].lower())} rule is in Production.</p>'
+        prod_html = f'<p class="sp-empty" data-empty="production">No {family} rule is in Production.</p>'
     n_early = sum(1 for r in sand if is_early(r))
     if sand:
-        body = "".join(sandbox_row(sp, d, r, now, i, scoped, ev_list) for i, r in enumerate(sand))
-        head = SANDBOX_HEAD.format(scope="<th>Scope</th>" if scoped else "")
-        table = f'<div class="tbl"><table class="sp-sandbox-table">{head}{body}</table></div>'
+        body = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in sand)
         count = f'{len(sand)} rule{"s" if len(sand) != 1 else ""}'
         if n_early:
             count += f' · {n_early} too early to read'
         sand_html = (f'<details class="fold sp-sandbox" id="sandbox"><summary><h3>Sandbox rules</h3>'
-                     f'<span class="sm mut">· {esc(count)} · by evidence</span></summary>{table}</details>')
+                     f'<span class="sm mut">· {esc(count)} · by evidence</span></summary>'
+                     f'<div class="sp-rules-list" data-list="sandbox">{list_head(scoped)}{body}</div></details>')
     else:
-        sand_html = f'<p class="sp-empty" data-empty="sandbox">No {esc(sp["family"].lower())} rule is in the Sandbox.</p>'
+        sand_html = f'<p class="sp-empty" data-empty="sandbox">No {family} rule is in the Sandbox.</p>'
     count = (f'{len(prod)} in Production · {len(sand)} in the Sandbox' if rows
              else "no rule has a record yet")
     return (f'<section id="rules" class="sp-section">'

@@ -453,12 +453,15 @@
       return !!(okScope && okStage);
     }
     function note(host, shown, had, what) {
-      var p = host.querySelector(":scope > .sp-filter-empty");
-      if (!p) {
+      // A rule list's note goes right after the list; a panel's at its end.
+      var after = host.classList.contains("sp-rules-list");
+      var p = after ? host.nextElementSibling : host.querySelector(":scope > .sp-filter-empty");
+      if (!p || !p.classList.contains("sp-filter-empty")) {
         p = doc.createElement("p");
         p.className = "sp-empty sp-filter-empty";
         p.hidden = true;
-        host.appendChild(p);
+        if (after) host.insertAdjacentElement("afterend", p);
+        else host.appendChild(p);
       }
       var words = [];
       if (state.stage !== "all") words.push(state.stage === "production" ? "Production" : "Sandbox");
@@ -471,33 +474,26 @@
     }
     function apply() {
       if (rules) {
-        var cards = rules.querySelectorAll(".sp-rule[data-stage]");
-        var shownCards = 0;
-        Array.prototype.forEach.call(cards, function (card) {
-          var on = matches(card);
-          card.hidden = !on;
-          if (on) shownCards += 1;
-        });
-        var grid = rules.querySelector(".sp-cards");
-        if (grid) note(grid.parentElement === rules ? rules : grid.parentElement, shownCards, cards.length, "rule in Production");
-        var shownRows = 0, rows = rules.querySelectorAll("tr.rule-row[data-stage]");
-        Array.prototype.forEach.call(rows, function (row) {
-          var on = matches(row);
-          paintRow(row, on);
-          if (on) shownRows += 1;
-          var detail = doc.getElementById((row.querySelector("button.rule-chev[aria-controls]") || {}).getAttribute
-            ? row.querySelector("button.rule-chev[aria-controls]").getAttribute("aria-controls") : "");
-          if (detail && !on) {
-            paintRow(detail, false);
-            var btn = row.querySelector("button.rule-chev");
-            if (btn) { btn.setAttribute("aria-expanded", "false"); row.classList.remove("is-open"); }
+        // Every rule is a row (details.sp-rule) in a list: the Production list and,
+        // inside its fold, the Sandbox list. A list left empty says so.
+        Array.prototype.forEach.call(rules.querySelectorAll(".sp-rules-list"), function (list) {
+          var shown = 0, items = list.querySelectorAll("details.sp-rule[data-stage]");
+          Array.prototype.forEach.call(items, function (row) {
+            var on = matches(row);
+            row.hidden = !on;
+            if (!on) row.open = false;
+            if (on) shown += 1;
+          });
+          var more = list.querySelector("details.sp-more-rules");
+          if (more) {
+            var anyMore = Array.prototype.some.call(more.querySelectorAll("details.sp-rule"), function (r) { return !r.hidden; });
+            more.hidden = !anyMore;
           }
+          var what = list.getAttribute("data-list") === "sandbox" ? "rule in the Sandbox" : "rule in Production";
+          note(list, shown, items.length, what);
         });
         var fold = rules.querySelector("details.sp-sandbox");
-        if (fold) {
-          note(fold, shownRows, rows.length, "rule in the Sandbox");
-          if (state.stage === "sandbox") fold.open = true;
-        }
+        if (fold && state.stage === "sandbox") fold.open = true;
       }
       if (events) {
         Array.prototype.forEach.call(events.querySelectorAll(".sp-panel"), function (panel) {

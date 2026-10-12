@@ -122,24 +122,25 @@ ok("no entry" not in html, "a coin with no rung is not a line; the empty state c
 
 print("\nrules: one card")
 rule = _section(main, "rules")
-ok("No crypto rule is in Production." in rule and 'class="sp-sandbox-table"' in rule, "the Sandbox rule is a table row")
-tr = re.search(r'<tr class="rule-row(?: is-early)?"(.*?)</tr>', rule, re.S).group(1)
-ok('data-source="crypto_fav_band" data-sport="crypto_fav"' in tr, "the row is the favourite-band lane")
-ok("<b>Favourite band · 3h to the close</b>" in tr, "named")
-ok(f'data-l="Record">{a["won"]}–{a["n"] - a["won"]}</td>' in tr, "record W–L")
-ok(SP.roi_html(fav) in tr, "ROI is the Sandbox row's figure")
-ok(f'data-l="Evidence">{a["n"]}/{T.READ_FLOOR}</td>' in tr, "evidence is market-days of 30")
-ok(SP.verdict_badge(fav) in tr, "the verdict is the Sandbox chip, read through sport_page.verdict_badge")
-ok('data-l="Market">Kalshi</td>' in tr, "the market column is the venue")
-detail = re.search(r'<tr class="rule-detail"[^>]*>(.*?)</tr>', rule, re.S).group(1)
+from sport_rows_testlib import rule_rows, text as row_text
+ok("No crypto rule is in Production." in rule and 'data-list="sandbox"' in rule, "the Sandbox rule is a row in the Sandbox fold")
+r = rule_rows(rule)[0]
+ok((r["source"], r["sport"]) == ("crypto_fav_band", "crypto_fav"), "the row is the favourite-band lane")
+eq(r["name"], "Favourite band · 3h to the close", "named")
+eq(row_text(r["cells"]["Record"]), f'{a["won"]}–{a["n"] - a["won"]}', "record W–L")
+eq(r["cells"]["ROI after fees"], SP.roi_html(fav), "ROI is the Sandbox row's figure")
+eq(r["cells"]["Evidence"], f'{a["n"]}/{T.READ_FLOOR}', "evidence is market-days of 30")
+eq(r["cells"]["Verdict"], SP.verdict_badge(fav), "the verdict is the Sandbox chip, read through sport_page.verdict_badge")
+eq(r["cells"]["Market"], "Kalshi", "the market column is the venue")
+detail = r["body"]
+ok(not r["open"], "its Rule details fold starts closed")
 dl = re.search(r'<dl class="sp-params">(.*?)</dl>', detail).group(1)
 eq(re.findall(r"<dt>(.*?)</dt>", dl), ["Entry", "Selection", "Liquidity", "Close"], "four entry parameters")
 eq(re.findall(r"<dd>(.*?)</dd>", dl),
    ["Yes ask 70–80¢, 2–3.5h before the close", "lowest qualifying rung, one per coin",
     "≤3¢ spread, 25+ ask", "17:00 ET"], "the parameters are the registered constants")
-note = S.SOURCES["crypto_fav_band"]["note"].strip()
-lead, rest = SP.short_definition(note)
-ok(f'<p class="sp-def">{B.esc(lead)}</p>' in detail and B.esc(rest) in detail, "the registered definition, its opening then the rest folded")
+note = " ".join(S.SOURCES["crypto_fav_band"]["note"].split())
+ok(f'<p class="sp-def">{B.esc(note)}</p>' in detail, "the registered definition, verbatim, in the fold")
 ok(detail.find("<dl") < detail.find("sp-def"), "parameters first, then the definition")
 ok("Last scan Oct 7, 6:00 AM CT · 525 quotes · next window Oct 7, 12:30–2:00 PM CT" in detail,
    "the scanner line sits under the definition")
@@ -149,10 +150,10 @@ with patch.object(S, "CRYPTO_FAV_BAND", (0.6, 0.9)), patch.object(S, "CRYPTO_FAV
     ok("Yes ask 60–90¢" in const and "≤4¢ spread" in const and "16:00 ET" in const and "70–80¢" not in const,
        "the parameters follow the registered constants")
 prod_rules = _section(prod_html.split("<main", 1)[-1], "rules")
-card = re.search(r'<article class="card sp-rule"(.*?)</article>', prod_rules, re.S)
-ok(card is not None and "<h3>Favourite band · 3h to the close</h3>" in card.group(1)
-   and '<dl class="sp-params">' in card.group(1) and "evidence · market-days settled" in card.group(1),
-   "in Production the rule is a card with its parameters and market-day evidence")
+prow = rule_rows(prod_rules.split('id="sandbox"', 1)[0])
+ok(prow and prow[0]["stage"] == "production" and prow[0]["name"] == "Favourite band · 3h to the close"
+   and '<dl class="sp-params">' in prow[0]["body"],
+   "in Production the rule is a row in the Production list, its parameters in the fold")
 
 print("\nscan status")
 scan = C._scan_status(ledger, NOW)
@@ -177,7 +178,7 @@ ok(method.find("Scheduling") > method.find("A day is one bet"), "the method sent
 print("\nedge cases")
 empty = C.build({"quotes": []}, {"pairs": {}}, NOW)
 ok("No crypto favourite-band record yet." not in empty and 'data-verdict="waiting">Too early<' in empty
-   and 'data-l="Record" data-empty="1">—</td>' in empty,
+   and '<span class="sp-cell num" data-l="Record"><span class="mut">—</span></span>' in empty,
    "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
 ok(">0</b><span>open picks" in empty and "<b>—</b><span>Production record" in empty, "empty tiles")
 for anchor in ("events", "rules", "method"):
@@ -228,14 +229,14 @@ if playwright is not None:
                f"{width}px the day head is sticky")
             eq(page.locator("#method > details[open]").count(), 0, f"{width}px method starts closed")
             page.locator("details.sp-sandbox > summary").click()
-            ok(not page.locator("tr.rule-detail .sp-params").is_visible(), f"{width}px the parameters start hidden")
-            page.locator("button.rule-chev").first.click()
-            ok(page.locator("tr.rule-detail .sp-params").is_visible(), f"{width}px the chevron reveals the parameters")
+            ok(not page.locator("details.sp-rule .sp-params").is_visible(), f"{width}px the parameters start hidden")
+            page.locator("details.sp-rule > summary").first.click()
+            ok(page.locator("details.sp-rule .sp-params").is_visible(), f"{width}px opening the row reveals the parameters")
             page.locator("#method > details > summary").click()
             ok(page.locator("#method > details > div").is_visible(), f"{width}px the method fold opens")
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px still fits with both open")
-            cards = page.locator(".sp-sandbox-table thead").first.evaluate("e => getComputedStyle(e).display")
-            eq(cards, "none" if width < 760 else "table-header-group", f"{width}px cards fallback under 760px")
+            eq(page.locator(".sp-head-line").first.evaluate("e => getComputedStyle(e).display"),
+               "none" if width <= 980 else "grid", f"{width}px the figures carry their own labels under 981px")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
                ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method")
             page.close()

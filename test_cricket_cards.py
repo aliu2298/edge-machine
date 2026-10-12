@@ -160,7 +160,7 @@ import production
 live = production._assess_since_kickoff(d, "oddspedia|cricket", st["pairs"]["oddspedia|cricket"])
 ok(f'<b>{live["won"]}–{live["n"] - live["won"]}</b><span>since Production · Oddspedia community tips · {live["n_price"]} no result</span>' in tiles[2],
    "the record tile is the Production rule's since-Production W–L, named, the no-result count in its label")
-ok(B.pct(live["roi_fee"], sign=True) in tiles[3] and "ROI after fees · since Production · Oddspedia community tips" in tiles[3],
+ok(B.pct(live["roi_fee"], sign=True) in tiles[3] and "ROI after fees · since Production" in tiles[3],
    "the ROI tile is that window's ROI after fees, named")
 odds_a = by_name["oddspedia"]["a"]
 eq(T.record_text(odds_a), f'{odds_a["won"]}–{odds_a["n"] - odds_a["won"]}, 1 no result',
@@ -202,35 +202,36 @@ ok('data-empty="next"' in quiet_html and "No pick starts in the next 24 hours" i
 ok("no read is stored for this sport yet" in quiet_html, "a venue listing alone is not a rule read, so the reason is honest")
 
 print("\nrules")
-cards = re.findall(r'<article class="card sp-rule"(.*?)</article>', rules, re.S)
-eq(len(cards), 1, "the Production tipster is one card")
-odd = cards[0]
-ok("<h3>Oddspedia community tips</h3>" in odd and '<span class="badge stage production">Production</span>' in odd,
-   "named, with the Production badge")
+from sport_rows_testlib import rule_rows, text as row_text
+prod_list = rules.split('class="sp-rules-list sp-prod"', 1)[1].split('id="sandbox"', 1)[0]
+prows = rule_rows(prod_list)
+eq(len(prows), 1, "the Production tipster is one row")
+odd = prows[0]
+ok(odd["name"] == "Oddspedia community tips" and odd["stage"] == "production", "named, in the Production list")
 a = odds_a
-stats = re.findall(r'<div class="sp-stat[^"]*"><b>(.*?)</b><span>(.*?)</span></div>', odd, re.S)
-eq(stats[0], (f'{a["won"]}–{a["n"] - a["won"]}', "record · 1 no result"),
-   "the record is the W–L with the no-result count in its label")
-ok(B.pct(a["roi_fee"], sign=True) in stats[1][0] and stats[1][1] == "ROI after fees", "ROI after fees")
-eq(stats[2][0], f'{a["won"]} v {a["expected"]:.1f}', "won v priced")
-eq(stats[3], (f'{a["n"]}/{T.READ_FLOOR}', "evidence · bets settled"), "evidence n/30")
-eq(stats[4][0], SP.verdict_badge(by_name["oddspedia"]), "the verdict chip is the Sandbox's")
-ok('<p class="sp-market sm mut">Polymarket US</p>' in odd, "the market line names where the rule's bets traded")
-ok("A public tipster community" in odd, "the plain-language definition is the registration's opening")
-ok('<summary>Recent picks · 2 open</summary>' in odd and _shown("Alpha v Beta soonest") in odd
-   and _shown("KeptSettled oddspedia 0") in odd and "GhostPrereset" not in odd,
-   "recent picks are folded, on the lane clock")
-fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"><summary>(.*?)</summary>(.*?</table>)', rules, re.S)
+c = odd["cells"]
+eq(row_text(c["Record"]), f'{a["won"]}–{a["n"] - a["won"]} +1 n/r', "the record is the W–L with the no-result count as a small tail")
+ok(c["ROI after fees"] == SP.roi_html(by_name["oddspedia"]), "ROI after fees")
+eq(c["Won v priced"], f'{a["won"]} v {a["expected"]:.1f}', "won v priced")
+eq(c["Evidence"], f'{a["n"]}/{T.READ_FLOOR}', "evidence n/30")
+eq(c["Verdict"], SP.verdict_badge(by_name["oddspedia"]), "the verdict chip is the one vocabulary's")
+eq(c["Market"], "Polymarket US", "the market column names where the rule's bets traded")
+ok(not odd["open"] and "A public tipster community" in odd["body"], "the registration is in the closed Rule details fold")
+ok('<h4 class="sp-details-sub">Recent picks · 2 open</h4>' in odd["body"] and _shown("Alpha v Beta soonest") in odd["body"]
+   and _shown("KeptSettled oddspedia 0") in odd["body"] and "GhostPrereset" not in odd["body"],
+   "recent picks are in the fold, on the lane clock")
+fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"><summary>(.*?)</summary>(.*)', rules, re.S)
 ok(fold is not None, "the Sandbox rules are one fold")
-trs = re.findall(r'<tr class="rule-row(?: is-early)?" data-source="([^"]*)"[^>]*>(.*?)</tr>', fold.group(2), re.S) if fold else []
-order = [s_ for s_, _b in trs]
+srows = rule_rows(fold.group(2)) if fold else []
+order = [r["source"] for r in srows]
 eq(order, [r["name"] for r in sorted(rows, key=SP.sandbox_order) if not r.get("prod")], "Sandbox rows by evidence, too-early sunk")
-con = dict(trs).get("cricket_consensus", "")
-ok("cricket_consensus" in order and 'is-early' in fold.group(2) and 'data-l="Record" data-empty="1">—</td>' in con
-   and 'data-l="Evidence">0/30</td>' in con, "a rule that never fired is a too-early row with no record")
-ok('data-l="Market" data-empty="1">—</td>' in con, "and no venue, having no bet to read one from")
-heads = re.findall(r"<th[^>]*>(.*?)</th>", re.search(r"<thead>(.*?)</thead>", fold.group(2), re.S).group(1))
-eq(heads, ["Rule", "Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"], "one scope, so no Scope column")
+con = next((r for r in srows if r["source"] == "cricket_consensus"), None)
+ok(con is not None and con["early"] and row_text(con["cells"]["Record"]) == "—" and con["cells"]["Evidence"] == "0/30",
+   "a rule that never fired is a too-early row with no record")
+ok(con is not None and con["cells"]["Market"] == "—", "and no venue, having no bet to read one from")
+head_line = re.search(r'<div class="sp-line sp-head-line" aria-hidden="true">(.*?)</div>', fold.group(2), re.S)
+eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_line.group(1)) if head_line else None,
+   ["Rule", "Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"], "one scope, so no Scope column")
 
 print("\nmethod")
 method = _section(main, "method")
@@ -298,21 +299,21 @@ def browser_checks():
             state = page.evaluate("""() => ({
               overflow: document.documentElement.scrollWidth > innerWidth + 1,
               sticky: getComputedStyle(document.querySelector('.sp-day-head')).position,
-              card: getComputedStyle(document.querySelector('.sp-rule')).display,
-              moreOpen: document.querySelector('details.sp-more').open,
+              card: getComputedStyle(document.querySelector('details.sp-rule > summary')).display,
+              moreOpen: document.querySelector('details.sp-rule').open,
               sandboxOpen: document.querySelector('details.sp-sandbox').open,
               methodOpen: document.querySelector('#method details').open,
             })""")
-            ok(not state["overflow"] and state["sticky"] == "sticky" and state["card"] == "flex",
-               "at 1280px the list has sticky day heads, the Production rule is a card, nothing scrolls sideways")
+            ok(not state["overflow"] and state["sticky"] == "sticky" and state["card"] == "grid",
+               "at 1280px the list has sticky day heads, the Production rule is one row, nothing scrolls sideways")
             ok(not state["moreOpen"] and not state["sandboxOpen"] and not state["methodOpen"],
-               "recent picks, the Sandbox fold and the method start closed")
+               "the Rule details fold, the Sandbox fold and the method start closed")
             page.locator("details.sp-sandbox > summary").click()
             page.wait_for_timeout(40)
-            ok(page.locator('tr[data-source="cricket_consensus"]').is_visible(), "the Sandbox fold shows the never-fired rule")
-            page.locator("tr.rule-row button.rule-chev").first.click()
+            ok(page.locator('details.sp-rule[data-source="cricket_consensus"]').is_visible(), "the Sandbox fold shows the never-fired rule")
+            page.locator('[data-list="sandbox"] details.sp-rule > summary').first.click()
             page.wait_for_timeout(40)
-            ok(page.locator("tr.rule-detail:visible").count() == 1, "a row's chevron opens its definition")
+            ok(page.locator(".sp-details-body:visible").count() == 1, "a row opens its Rule details")
             page.set_viewport_size({"width": 390, "height": 800})
             page.reload(wait_until="load")
             page.wait_for_timeout(40)
