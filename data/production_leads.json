@@ -1,102 +1,6 @@
 {
- "board_built_at": "2026-10-12T17:49:53+00:00",
+ "board_built_at": "2026-10-12T21:28:29+00:00",
  "leads": {
-  "2026-10-05|Liechtenstein|Gibraltar|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Gibraltar",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-05",
-   "edge_at_log": null,
-   "first_seen": "2026-10-04",
-   "headline": "Under 3.5 goals",
-   "home": "Liechtenstein",
-   "id": "2026-10-05|Liechtenstein|Gibraltar|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-05T18:45Z",
-   "lane": "production",
-   "league": "International Friendly",
-   "match": "Liechtenstein v Gibraltar",
-   "pair": "u35_low_scoring|soccer_u35_intl",
-   "price_at_log": 0.88,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXINTLFRIENDLYTOTAL-26OCT05LIEGIB",
-    "market": "KXINTLFRIENDLYTOTAL-26OCT05LIEGIB-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.88,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXINTLFRIENDLYTOTAL-26OCT05LIEGIB-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35_intl",
-   "status": "hit"
-  },
-  "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Armenia",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-05",
-   "edge_at_log": null,
-   "first_seen": "2026-10-03",
-   "headline": "Over 1.5 goals",
-   "home": "Montenegro",
-   "id": "2026-10-05|Montenegro|Armenia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-05T18:45Z",
-   "lane": "production",
-   "league": "UEFA Nations League",
-   "match": "Montenegro v Armenia",
-   "pair": "o15_ranked|soccer_o15_intl",
-   "price_at_log": 0.8,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUEFANLTOTAL-26OCT05MNEARM",
-    "market": "KXUEFANLTOTAL-26OCT05MNEARM-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXUEFANLTOTAL-26OCT05MNEARM-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15_intl",
-   "status": "miss"
-  },
-  "2026-10-05|Northern Ireland|Georgia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Georgia",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-05",
-   "edge_at_log": null,
-   "first_seen": "2026-10-02",
-   "headline": "Under 3.5 goals",
-   "home": "Northern Ireland",
-   "id": "2026-10-05|Northern Ireland|Georgia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-05T18:45Z",
-   "lane": "production",
-   "league": "UEFA Nations League",
-   "match": "Northern Ireland v Georgia",
-   "pair": "u35_low_scoring|soccer_u35_intl",
-   "price_at_log": 0.81,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXUEFANLTOTAL-26OCT05NIRGEO",
-    "market": "KXUEFANLTOTAL-26OCT05NIRGEO-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.81,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26OCT05NIRGEO-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35_intl",
-   "status": "hit"
-  },
   "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "San Marino",
    "bet": {
@@ -1271,8 +1175,6 @@
    "id": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Premier League",
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
@@ -1289,7 +1191,7 @@
    "sandbox_quote": "corners_under:KXEPLCORNERS-26OCT12COVNEW-10",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|Coventry City|Newcastle United|Under 11 corners \u00b7 Corners under form rule": {
    "away": "Newcastle United",
@@ -1305,8 +1207,6 @@
    "id": "2026-10-12|Coventry City|Newcastle United|Under 11 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Premier League",
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
@@ -1323,7 +1223,7 @@
    "sandbox_quote": "corners_under:KXEPLCORNERS-26OCT12COVNEW-11",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|Coventry City|Newcastle United|Under 5 corners \u00b7 Coventry City \u00b7 Corners under form rule": {
    "away": "Newcastle United",
@@ -1340,8 +1240,6 @@
    "id": "2026-10-12|Coventry City|Newcastle United|Under 5 corners \u00b7 Coventry City \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Premier League",
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
@@ -1358,7 +1256,7 @@
    "sandbox_quote": "corners_under:KXEPLTCORNERS-26OCT12COVNEW-COV5",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|Coventry City|Newcastle United|Under 7 corners \u00b7 Corners under form rule": {
    "away": "Newcastle United",
@@ -1374,8 +1272,6 @@
    "id": "2026-10-12|Coventry City|Newcastle United|Under 7 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Premier League",
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
@@ -1392,7 +1288,7 @@
    "sandbox_quote": "corners_under:KXEPLCORNERS-26OCT12COVNEW-7",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-12|Coventry City|Newcastle United|Under 8 corners \u00b7 Corners under form rule": {
    "away": "Newcastle United",
@@ -1408,8 +1304,6 @@
    "id": "2026-10-12|Coventry City|Newcastle United|Under 8 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Premier League",
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
@@ -1426,7 +1320,7 @@
    "sandbox_quote": "corners_under:KXEPLCORNERS-26OCT12COVNEW-8",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-12|Coventry City|Newcastle United|Under 9 corners \u00b7 Corners under form rule": {
    "away": "Newcastle United",
@@ -1442,8 +1336,6 @@
    "id": "2026-10-12|Coventry City|Newcastle United|Under 9 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Premier League",
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
@@ -1460,7 +1352,7 @@
    "sandbox_quote": "corners_under:KXEPLCORNERS-26OCT12COVNEW-9",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|FC Famalicao|Alverca|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Alverca",
@@ -1476,8 +1368,6 @@
    "id": "2026-10-12|FC Famalicao|Alverca|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "kickoff": "2026-10-12T19:15Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Alverca",
    "pair": "o15_ranked|soccer_o15",
@@ -1494,7 +1384,7 @@
    "sandbox_quote": "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-2",
    "source": "o15_ranked",
    "sport": "soccer_o15",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|FC Famalicao|Alverca|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Alverca",
@@ -1510,8 +1400,6 @@
    "id": "2026-10-12|FC Famalicao|Alverca|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
    "kickoff": "2026-10-12T19:15Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "Primeira Liga",
    "match": "FC Famalicao v Alverca",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1528,7 +1416,7 @@
    "sandbox_quote": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-12|Levante|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Sevilla",
@@ -1545,8 +1433,6 @@
    "id": "2026-10-12|Levante|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "La Liga",
    "match": "Levante v Sevilla",
    "pair": "team2_ranked|soccer_team2",
@@ -1563,7 +1449,7 @@
    "sandbox_quote": "team2_ranked:KXLALIGATEAMTOTAL-26OCT12LEVSEV-SEV2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule": {
    "away": "Sevilla",
@@ -1579,8 +1465,6 @@
    "id": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "La Liga",
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
@@ -1597,7 +1481,7 @@
    "sandbox_quote": "corners_under:KXLALIGACORNERS-26OCT12LEVSEV-10",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|Levante|Sevilla|Under 11 corners \u00b7 Corners under form rule": {
    "away": "Sevilla",
@@ -1613,8 +1497,6 @@
    "id": "2026-10-12|Levante|Sevilla|Under 11 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "La Liga",
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
@@ -1631,7 +1513,7 @@
    "sandbox_quote": "corners_under:KXLALIGACORNERS-26OCT12LEVSEV-11",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-12|Levante|Sevilla|Under 5 corners \u00b7 Levante \u00b7 Corners under form rule": {
    "away": "Sevilla",
@@ -1648,8 +1530,6 @@
    "id": "2026-10-12|Levante|Sevilla|Under 5 corners \u00b7 Levante \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "La Liga",
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
@@ -1666,7 +1546,7 @@
    "sandbox_quote": "corners_under:KXLALIGATCORNERS-26OCT12LEVSEV-LEV5",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-12|Levante|Sevilla|Under 9 corners \u00b7 Corners under form rule": {
    "away": "Sevilla",
@@ -1682,8 +1562,6 @@
    "id": "2026-10-12|Levante|Sevilla|Under 9 corners \u00b7 Corners under form rule",
    "kickoff": "2026-10-12T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
    "league": "La Liga",
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
@@ -1700,7 +1578,7 @@
    "sandbox_quote": "corners_under:KXLALIGACORNERS-26OCT12LEVSEV-9",
    "source": "corners_under",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-13|Lens|Sporting CP|Sporting CP to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Sporting CP",
@@ -1718,7 +1596,7 @@
    "kickoff": "2026-10-13T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
    "league": "Champions League",
    "match": "Lens v Sporting CP",
    "pair": "team1_form_l5|soccer_team1",
@@ -1752,7 +1630,7 @@
    "kickoff": "2026-10-14T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
    "league": "MLS",
    "match": "D.C. United v Red Bull New York",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1771,6 +1649,41 @@
    "sport": "soccer_u35",
    "status": "pending"
   },
+  "2026-10-14|Real Betis|FC Porto|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "FC Porto",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Real Betis"
+   },
+   "date": "2026-10-14",
+   "edge_at_log": null,
+   "first_seen": "2026-10-12",
+   "headline": "Real Betis to score 1+",
+   "home": "Real Betis",
+   "id": "2026-10-14|Real Betis|FC Porto|Real Betis to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-10-14T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-12",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
+   "league": "Champions League",
+   "match": "Real Betis v FC Porto",
+   "pair": "team1_form_l5|soccer_team1",
+   "price_at_log": 0.84,
+   "route": {
+    "claim": "Real Betis to score 1+",
+    "event": "KXUCLTEAMTOTAL-26OCT14RBBFCP",
+    "market": "KXUCLTEAMTOTAL-26OCT14RBBFCP-RBB1",
+    "outcome": "Real Betis over 0.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.84,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team1_form_l5:KXUCLTEAMTOTAL-26OCT14RBBFCP-RBB1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1",
+   "status": "pending"
+  },
   "2026-10-15|Al Khaleej|Al Fayha|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Al Fayha",
    "bet": {
@@ -1786,7 +1699,7 @@
    "kickoff": "2026-10-15T14:50Z",
    "lane": "production",
    "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
    "league": "Saudi Pro League",
    "match": "Al Khaleej v Al Fayha",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1820,7 +1733,7 @@
    "kickoff": "2026-10-15T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
    "league": "Europa League",
    "match": "NEC Nijmegen v Levski Sofia",
    "pair": "o15_ranked|soccer_o15",
@@ -1854,7 +1767,7 @@
    "kickoff": "2026-10-15T01:30Z",
    "lane": "production",
    "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v San Jose Earthquakes",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1873,6 +1786,74 @@
    "sport": "soccer_u35",
    "status": "pending"
   },
+  "2026-10-16|Deportivo|Levante|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Levante",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-16",
+   "edge_at_log": null,
+   "first_seen": "2026-10-12",
+   "headline": "Over 1.5 goals",
+   "home": "Deportivo",
+   "id": "2026-10-16|Deportivo|Levante|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-16T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-12",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
+   "league": "La Liga",
+   "match": "Deportivo v Levante",
+   "pair": "o15_ranked|soccer_o15",
+   "price_at_log": 0.75,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXLALIGATOTAL-26OCT16DEPLEV",
+    "market": "KXLALIGATOTAL-26OCT16DEPLEV-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.75,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "o15_ranked:KXLALIGATOTAL-26OCT16DEPLEV-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15",
+   "status": "pending"
+  },
+  "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
+   "away": "FC Cologne",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-10-16",
+   "edge_at_log": null,
+   "first_seen": "2026-10-12",
+   "headline": "Over 3.5 goals",
+   "home": "Eintracht Frankfurt",
+   "id": "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
+   "kickoff": "2026-10-16T18:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-12",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
+   "league": "Bundesliga",
+   "match": "Eintracht Frankfurt v FC Cologne",
+   "pair": "bund_o35|soccer_u35",
+   "price_at_log": 0.51,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXBUNDESLIGATOTAL-26OCT16SGEKOE",
+    "market": "KXBUNDESLIGATOTAL-26OCT16SGEKOE-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.51,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT16SGEKOE-4",
+   "source": "bund_o35",
+   "sport": "soccer_u35",
+   "status": "pending"
+  },
   "2026-10-16|Heerenveen|Excelsior|Draw \u00b7 Eredivisie draw band": {
    "away": "Excelsior",
    "bet": {
@@ -1888,7 +1869,7 @@
    "kickoff": "2026-10-16T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-12",
-   "last_seen_at": "2026-10-12T17:49:53+00:00",
+   "last_seen_at": "2026-10-12T21:28:29+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Excelsior",
    "pair": "ere_draw|soccer",
@@ -1916,9 +1897,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 9,
+    "leads": 10,
     "problem": null,
-    "routed": 9,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1964,10 +1945,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": 0.0592,
+   "sandbox_n": 2,
+   "sandbox_roi": 0.4144,
+   "sandbox_roi_fee": 0.3667
   },
   "crypto_fav_band|crypto_fav": {
    "by_hand": "2026-10-08",
@@ -2056,18 +2037,18 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 7,
+    "leads": 8,
     "problem": null,
-    "routed": 7,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.002,
-   "sandbox_n": 5,
-   "sandbox_roi": 0.293,
-   "sandbox_roi_fee": 0.2728
+   "sandbox_clv": -0.0033,
+   "sandbox_n": 6,
+   "sandbox_roi": 0.2997,
+   "sandbox_roi_fee": 0.2791
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -2076,9 +2057,9 @@
    "ready_at": "2026-10-01T16:20:16+00:00",
    "route": "moved by hand on 2026-10-01",
    "routing": {
-    "leads": 3,
+    "leads": 2,
     "problem": null,
-    "routed": 3,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2116,9 +2097,9 @@
    "ready_at": "2026-09-18T00:51:24+00:00",
    "route": "moved by hand on 2026-09-18",
    "routing": {
-    "leads": 7,
+    "leads": 8,
     "problem": null,
-    "routed": 7,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2164,10 +2145,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": 0.05,
+   "sandbox_n": 1,
+   "sandbox_roi": 2.0303,
+   "sandbox_roi_fee": 1.8945
   },
   "tennis_combo2|tennis_combo": {
    "by_hand": "2026-10-08",
@@ -2244,10 +2225,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_clv": -0.01,
+   "sandbox_n": 1,
+   "sandbox_roi": -1.0,
+   "sandbox_roi_fee": -1.0
   },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
@@ -2256,9 +2237,9 @@
    "ready_at": "2026-10-04T07:03:02+00:00",
    "route": "moved by hand on 2026-10-04",
    "routing": {
-    "leads": 8,
+    "leads": 6,
     "problem": null,
-    "routed": 8,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2273,5 +2254,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 7,
- "updated_at": "2026-10-12T17:49:53+00:00"
+ "updated_at": "2026-10-12T21:28:29+00:00"
 }
