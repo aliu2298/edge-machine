@@ -27,6 +27,16 @@ PY="${EDGE_WINDOWS_PY:-/usr/bin/python3}"
 stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 cd "$DIR" || { echo "$(stamp) no clone at $DIR"; exit 1; }
 
+# ONE GIT USER AT A TIME. local_closes.sh and vps_window_requests.sh share this clone on
+# edge-vps and both pull, commit and push every 15 minutes; on 2026-10-13 they met twice
+# ("cannot lock ref", "Cannot rebase onto multiple branches"). Both take this lock, waiting
+# up to two minutes, and a run that cannot get it exits and leaves the retry to the next one.
+# flock is util-linux: on a Mac without it the script runs as before.
+if command -v flock >/dev/null 2>&1; then
+  exec 9>"$(git rev-parse --git-dir)/edge-shared.lock"
+  flock -w 120 9 || { echo "$(stamp) the clone is busy (lock held for 2 min); next run retries"; exit 0; }
+fi
+
 git pull -q --rebase origin main || { echo "$(stamp) pull failed"; exit 0; }
 
 DUE="$("$PY" lane_windows.py --due)" || { echo "$(stamp) lane_windows.py failed"; exit 0; }
