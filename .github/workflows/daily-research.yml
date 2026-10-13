@@ -3,6 +3,13 @@ on:
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
+  # The VPS asks for a read from inside each supported close's 2-3.5h window by pushing one
+  # line here (scripts/vps_window_requests.sh, lane_windows.py). GitHub's cron cannot hold
+  # a 90-minute window; the hourly schedule above stays as a backstop.
+  push:
+    branches: [main]
+    paths:
+      - "data/daily_window/**"
 permissions:
   contents: write
 concurrency:
