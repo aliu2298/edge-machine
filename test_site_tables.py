@@ -127,8 +127,21 @@ def _asset_urls(page):
     return found
 
 
+def _current_rule(q, pairs):
+    """Recounted here, not taken from sandbox_build: a retired rule's bet, or one logged before
+    its rule's reset, is not on Recently settled (2026-10-13); it is on an archive page."""
+    meta = S.SOURCES.get(q.get("source")) or {}
+    if q.get("sport") in (meta.get("retired_sports") or {}):
+        return False
+    if meta.get("retired") and not meta.get("connected"):
+        return False
+    since = T.record_since(pairs.get(f"{q.get('source')}|{q.get('sport')}"))
+    return not since or str(q.get("logged") or "") >= since
+
+
 def _ledger_settled(now):
     d = T.load()
+    pairs = (T.load_stages().get("pairs") or {})
     today = fmt.chicago(now).date()
     recent, older = [], []
     for q in d["quotes"]:
@@ -139,7 +152,7 @@ def _ledger_settled(now):
             day = fmt.chicago(q.get("settled")).date()
         except (TypeError, ValueError, OverflowError, OSError):
             day = None
-        if day is not None and 0 <= (today - day).days < 7:
+        if day is not None and 0 <= (today - day).days < 7 and _current_rule(q, pairs):
             recent.append(q["id"])
         else:
             older.append(q["id"])
