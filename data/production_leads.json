@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-13T11:39:22+00:00",
+ "board_built_at": "2026-10-13T12:41:56+00:00",
  "leads": {
   "2026-10-06|Albania|San Marino|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "San Marino",
@@ -1595,7 +1595,7 @@
    "kickoff": "2026-10-13T16:00Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Cricket",
    "match": "Dolphins v North West Dragons",
    "pair": "oddspedia|cricket",
@@ -1610,6 +1610,40 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "oddspedia:KXT20MATCH-26OCT131200DOLNWD",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "pending"
+  },
+  "2026-10-13|Eastern Cape Iinyathi|Lions|Lions to win \u00b7 Oddspedia community tips": {
+   "away": "Lions",
+   "bet": {
+    "kind": "match_result",
+    "side": "away"
+   },
+   "date": "2026-10-13",
+   "edge_at_log": null,
+   "first_seen": "2026-10-13",
+   "headline": "Lions to win",
+   "home": "Eastern Cape Iinyathi",
+   "id": "2026-10-13|Eastern Cape Iinyathi|Lions|Lions to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-13T16:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-13",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
+   "league": "Cricket",
+   "match": "Eastern Cape Iinyathi v Lions",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.78,
+   "route": {
+    "claim": "Lions to win",
+    "event": "KXT20MATCH-26OCT131200ECILIO",
+    "market": "KXT20MATCH-26OCT131200ECILIO-LIO",
+    "outcome": "Lions",
+    "outcome_side": "yes",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT131200ECILIO",
    "source": "oddspedia",
    "sport": "cricket",
    "status": "pending"
@@ -1630,7 +1664,7 @@
    "kickoff": "2026-10-13T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Champions League",
    "match": "Lens v Sporting CP",
    "pair": "team1_form_l5|soccer_team1",
@@ -1664,7 +1698,7 @@
    "kickoff": "2026-10-14T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "MLS",
    "match": "D.C. United v Red Bull New York",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1683,6 +1717,39 @@
    "sport": "soccer_u35",
    "status": "pending"
   },
+  "2026-10-14|India|West Indies|India to win \u00b7 Oddspedia community tips": {
+   "away": "West Indies",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-14",
+   "edge_at_log": null,
+   "first_seen": "2026-10-13",
+   "headline": "India to win",
+   "home": "India",
+   "id": "2026-10-14|India|West Indies|India to win \u00b7 Oddspedia community tips",
+   "kickoff": "2026-10-14T13:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-13",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
+   "league": "Cricket",
+   "match": "India v West Indies",
+   "pair": "oddspedia|cricket",
+   "price_at_log": 0.73,
+   "route": {
+    "claim": "India to win",
+    "market": "aec-t20icr-india-wie-2026-10-14",
+    "outcome": "India",
+    "outcome_side": "yes",
+    "price_at_log": 0.73,
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "oddspedia:aec-t20icr-india-wie-2026-10-14",
+   "source": "oddspedia",
+   "sport": "cricket",
+   "status": "pending"
+  },
   "2026-10-14|Real Betis|FC Porto|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "FC Porto",
    "bet": {
@@ -1699,7 +1766,7 @@
    "kickoff": "2026-10-14T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Champions League",
    "match": "Real Betis v FC Porto",
    "pair": "team1_form_l5|soccer_team1",
@@ -1734,7 +1801,7 @@
    "kickoff": "2026-10-14T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "MLS",
    "match": "Toronto FC v Orlando City SC",
    "pair": "team1_form_l5|soccer_team1",
@@ -1768,7 +1835,7 @@
    "kickoff": "2026-10-15T14:50Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Saudi Pro League",
    "match": "Al Khaleej v Al Fayha",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1802,7 +1869,7 @@
    "kickoff": "2026-10-15T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Europa League",
    "match": "NEC Nijmegen v Levski Sofia",
    "pair": "o15_ranked|soccer_o15",
@@ -1836,7 +1903,7 @@
    "kickoff": "2026-10-15T01:30Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v San Jose Earthquakes",
    "pair": "u35_low_scoring|soccer_u35",
@@ -1870,7 +1937,7 @@
    "kickoff": "2026-10-16T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "La Liga",
    "match": "Deportivo v Levante",
    "pair": "o15_ranked|soccer_o15",
@@ -1904,7 +1971,7 @@
    "kickoff": "2026-10-16T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v FC Cologne",
    "pair": "bund_o35|soccer_u35",
@@ -1938,7 +2005,7 @@
    "kickoff": "2026-10-16T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Excelsior",
    "pair": "ere_draw|soccer",
@@ -1957,6 +2024,40 @@
    "sport": "soccer",
    "status": "pending"
   },
+  "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Atl\u00e9tico Madrid",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-17",
+   "edge_at_log": null,
+   "first_seen": "2026-10-13",
+   "headline": "Over 1.5 goals",
+   "home": "Espanyol",
+   "id": "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-17T12:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-13",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
+   "league": "La Liga",
+   "match": "Espanyol v Atl\u00e9tico Madrid",
+   "pair": "o15_ranked|soccer_o15",
+   "price_at_log": 0.77,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXLALIGATOTAL-26OCT17ESPATM",
+    "market": "KXLALIGATOTAL-26OCT17ESPATM-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.77,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "o15_ranked:KXLALIGATOTAL-26OCT17ESPATM-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15",
+   "status": "pending"
+  },
   "2026-10-17|Sparta|Willem II|Draw \u00b7 Eredivisie draw band": {
    "away": "Willem II",
    "bet": {
@@ -1972,7 +2073,7 @@
    "kickoff": "2026-10-17T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-13",
-   "last_seen_at": "2026-10-13T11:39:22+00:00",
+   "last_seen_at": "2026-10-13T12:41:56+00:00",
    "league": "Eredivisie",
    "match": "Sparta v Willem II",
    "pair": "ere_draw|soccer",
@@ -2140,9 +2241,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2180,9 +2281,9 @@
    "ready_at": "2026-09-28T02:59:44+00:00",
    "route": "moved by hand on 2026-09-27",
    "routing": {
-    "leads": 1,
+    "leads": 3,
     "problem": null,
-    "routed": 1,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2357,5 +2458,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 7,
- "updated_at": "2026-10-13T11:39:22+00:00"
+ "updated_at": "2026-10-13T12:41:56+00:00"
 }
