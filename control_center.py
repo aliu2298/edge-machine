@@ -215,7 +215,7 @@ def inputs(runs=False, opener=None):
     """Everything the model reads beside the ledger, the stages and the feed."""
     return dict(nba=_read_json(NBA_PATH), market=_read_json(MARKET_PATH),
                 closes=closes_updated(), runs=fetch_runs(opener) if runs else None,
-                status=_read_json(STATUS_PATH))
+                status=_read_json(STATUS_PATH), daily=_read_json(os.path.join(ROOT, 'data', 'daily_ledger.json')))
 
 
 def current_status(status, d):
@@ -478,7 +478,7 @@ def _age_text(hours):
     return f"{int(hours)}h"
 
 
-def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None):
+def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None):
     """The Control Center as data. Pure: everything it reads is an argument.
 
     `status` is data/status.json as read (inputs()); it is used only when it
@@ -502,13 +502,34 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
         area["status"] = _status(area, now, key in flagged)
         area["items"] = [item for item in attention if item.get("area") == key]
         areas.append(area)
+    if daily is not None:
+        for key, label in (("econ_daily", "Econ Daily"), ("finance_daily", "Finance Daily")):
+            lane = (daily.get('lanes') or {}).get(key) or {}
+            picks = lane.get('picks') or []
+            last = _utc(lane.get('last_success'))
+            status_word = ('attention' if lane.get('error') else 'waiting' if last is None
+                           else 'stale' if last < now - timedelta(hours=3) else 'healthy')
+            daily_items = []
+            if lane.get('error') or status_word == 'stale':
+                item = dict(kind='feed', area=key, href='./'+key+'.html',
+                            text=label+': '+(lane.get('error') or 'no successful paper scan in the last 3 hours'))
+                attention.append(item)
+                daily_items.append(item)
+            areas.append(dict(key=key, label=label, href='./'+key+'.html',
+                open=sum(x.get('status')=='open' for x in picks),
+                settled=sum(x.get('status')!='open' and _in_window(_utc(x.get('settled')),now) for x in picks),
+                next24=sum(x.get('status')=='open' and _utc(x.get('close')) is not None
+                           and now < _utc(x['close']) <= now+timedelta(hours=NEXT_HOURS) for x in picks),
+                coverage=f"{len(lane.get('catalog') or [])} series · paper only", last_read=last,
+                status=status_word, items=daily_items))
     live = shell_build._running_body(d, st, blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
     scorecard = scorecard_rows(pair_rows)
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
-        tiles=dict(pairs=len(pairs), open=sum(1 for q in rows if q.get("status") == "open"),
+        tiles=dict(pairs=len(pairs), open=sum(1 for q in rows if q.get("status") == "open")
+                   + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
         runs_read=runs is not None, status_read=status is not None,
@@ -656,7 +677,7 @@ def _attention_html(items):
 
 
 def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
-         status=None):
+         status=None, daily=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -666,7 +687,8 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         closes = extra.get("closes") if closes is None else closes
         runs = extra.get("runs") if runs is None else runs
         status = extra.get("status") if status is None else status
-    m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status)
+        daily = extra.get("daily") if daily is None else daily
+    m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]
