@@ -440,6 +440,11 @@
    "lead_min": 7.7,
    "price": 0.31
   },
+  "o25_congestion:KXAFCCLTOTAL-26OCT13SADHIL-3": {
+   "at": "2026-10-13T15:11:13+00:00",
+   "lead_min": 48.8,
+   "price": 0.29
+  },
   "o25_congestion:KXINTLFRIENDLYTOTAL-26OCT06ARGBEN-3": {
    "at": "2026-10-06T22:48:08+00:00",
    "lead_min": 11.9,
@@ -489,6 +494,16 @@
    "at": "2026-10-09T15:18:06+00:00",
    "lead_min": 11.9,
    "price": 0.74
+  },
+  "oddspedia:KXT20MATCH-26OCT131200DOLNWD": {
+   "at": "2026-10-13T15:11:13+00:00",
+   "lead_min": 48.8,
+   "price": 0.55
+  },
+  "oddspedia:KXT20MATCH-26OCT131200ECILIO": {
+   "at": "2026-10-13T15:11:13+00:00",
+   "lead_min": 48.8,
+   "price": 0.78
   },
   "oddspedia:aec-testcr-sao-aus-2026-10-09": {
    "at": "2026-10-09T07:24:08+00:00",
@@ -1176,5 +1191,5 @@
    "price": 0.81
   }
  },
- "updated": "2026-10-13T09:53:38+00:00"
+ "updated": "2026-10-13T15:11:13+00:00"
 }
