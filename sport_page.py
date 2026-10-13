@@ -319,7 +319,9 @@ def _open_count(ev_list, row):
 
 # The Production rows shown before the "Show N more" fold. Header, tiles, filters,
 # these rows and the folded Sandbox fit one 1366x768 screen with Events below them.
-PROD_VISIBLE = 5
+# Leave room for the event tabs when the shared page navigation wraps. A
+# crowded rule list keeps every remaining rule in the existing Show more fold.
+PROD_VISIBLE = 4
 
 
 def row_badges(row):
