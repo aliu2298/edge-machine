@@ -48,4 +48,20 @@ assert 'daily' in extra
 model=CC.model({'meta':{},'quotes':[]},{},{'pairs':{},'leads':[]},now,daily=state)
 assert {a['key'] for a in model['areas']} >= set(D.LANES)
 assert next(a for a in model['areas'] if a['key']=='finance_daily')['status']=='attention'
+# A 429 is retried with backoff and then succeeds; a 404 is final (2026-10-13).
+import io, urllib.error
+_calls, _slept = [], []
+def _opener(seq):
+    def op(req, timeout=25):
+        code = seq.pop(0); _calls.append(code)
+        if code != 200: raise urllib.error.HTTPError(req.full_url, code, 'x', {}, None)
+        return io.BytesIO(b'{"ok": true}')
+    return op
+assert D.get('series', sleep=_slept.append, clock=lambda: 1e9, opener=_opener([429, 429, 200])) == {'ok': True}
+assert _calls == [429, 429, 200] and [x for x in _slept if x >= 1] == [1, 2], (_calls, _slept)
+_calls.clear()
+try:
+    D.get('series', sleep=lambda s: None, clock=lambda: 1e9, opener=_opener([404])); raise AssertionError('404 retried')
+except urllib.error.HTTPError as e:
+    assert e.code == 404 and _calls == [404]
 print('PASS: windows, exclusions, book depth, settlement, ranking, frozen entry, partial failure retention and pages')
