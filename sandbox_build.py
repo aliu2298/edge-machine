@@ -498,6 +498,20 @@ def coverage_table(cov):
 {''.join(rows)}</table></div>"""
 
 
+def off_record(q, st):
+    """True for a bet the pages do not count: a retired rule's, or one logged before its rule's
+    reset. Recently settled sends these to the archive (2026-10-13, by Olu) so the feed never
+    mixes an old rule's results with the record beside it; the archive keeps every bet.
+    """
+    meta = S.SOURCES.get(q.get("source")) or {}
+    if q.get("sport") in (meta.get("retired_sports") or {}):
+        return True
+    if meta.get("retired") and not meta.get("connected"):
+        return True
+    since = T.record_since(((st or {}).get("pairs") or {}).get(f"{q.get('source')}|{q.get('sport')}"))
+    return bool(since) and str(q.get("logged") or "") < since
+
+
 def open_rows(d, limit=None):
     """Running bets, soonest first. One flat table: Contest, then Price."""
     live = [q for q in d["quotes"] if q["status"] == "open" and q["bet"]
@@ -630,8 +644,12 @@ def _is_recent(q, today):
     return 0 <= (today - day).days < RECENT_DAYS
 
 
-def partition_settled(d, now):
+def partition_settled(d, now, st=None):
     """(recent, older) settled bets. Recent is the last 7 Chicago dates through `now`.
+
+    With `st`, a recent bet the pages do not count (off_record: a retired rule's, or one from
+    before its rule's reset) goes to `older`, so Recently settled is only the current rules
+    and every settled bet is still on exactly one page.
 
     Every settled bet that still counts is in exactly one of the two lists. The
     list is the live quotes plus archived bets (one row per id; compact price
@@ -647,7 +665,8 @@ def partition_settled(d, now):
     done.sort(key=lambda q: (q.get("settled") or "", str(q.get("id") or "")), reverse=True)
     recent, older = [], []
     for q in done:
-        (recent if _is_recent(q, today) else older).append(q)
+        current = st is None or not off_record(q, st)
+        (recent if current and _is_recent(q, today) else older).append(q)
     return recent, older
 
 
@@ -1891,7 +1910,7 @@ def render_pages(now=None, d=None, st=None):
     st = T.load_stages() if st is None else st
     now_dt = _as_now(now)
     sandbox = _sandbox_html(shown, st, now_dt, full=raw)
-    recent, older = partition_settled(shown, now_dt)
+    recent, older = partition_settled(shown, now_dt, st)
     groups = archive_groups(older)
     weeks = {slug: archive_week_html(slug, groups[slug], now_dt, shown) for slug in _week_order(groups)}
     return sandbox, archive_index_html(groups, now_dt), weeks
@@ -1937,7 +1956,7 @@ def _sandbox_html(d, st, now_dt, full=None):
                  f"{ou['remaining']} credits left until they reset on the 1st."
                  if ou.get("remaining") is not None else "")
     live_rows, n_live = open_rows(d)
-    recent, older = partition_settled(d, now_dt)
+    recent, older = partition_settled(d, now_dt, st)
     groups = archive_groups(older)
     recent_rows, _n_recent = settled_rows({"quotes": recent})
     n_hist = len(recent) + len(older)

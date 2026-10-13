@@ -535,7 +535,21 @@ def main():
     sandbox, weeks = _pages(both, st)
     eq(_headline(sandbox), before["headline"],
        "headline is unchanged after evaluate_stages")
-    eq(weeks, before["weeks"], "weekly pages are unchanged after evaluate_stages")
+    # The stage pass demotes espn_fpi|nfl and restarts its clock at NOW. Since 2026-10-13 a
+    # recent bet from before a rule's reset goes to the archive rather than sitting in Recently
+    # settled beside the fresh record, so the weekly pages may GAIN those bets -- and nothing
+    # else may change: every settled bet is still on exactly one page.
+    r0, o0 = SB.partition_settled(both, NOW, ST)
+    r1, o1 = SB.partition_settled(both, NOW, st)
+    eq(sorted(q["id"] for q in r1 + o1), sorted(q["id"] for q in r0 + o0),
+       "every settled bet is still on exactly one page after evaluate_stages")
+    since = T.record_since(st["pairs"]["espn_fpi|nfl"])
+    eq([q["id"] for q in r1 if q["source"] == "espn_fpi" and q["sport"] == "nfl"
+         and q["logged"] < since], [],
+       "the demoted pair's pre-reset bets leave Recently settled")
+    eq(sorted(q["id"] for q in o1 if q not in o0),
+       sorted(q["id"] for q in r0 if q not in r1),
+       "and they are exactly the bets the weekly pages gained")
 
     _dedup()
     _same_start()
