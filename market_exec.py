@@ -12,7 +12,7 @@ This module is the other half. It evaluates exactly the two cases the ledger ski
     ENTRY   a rule's signal fires on the LAST bar          -> buy at the next open
     EXIT    an open trade's exit triggers on the LAST bar  -> sell at the next open
 
-— and places market-on-open orders for them. Tomorrow market_track will log the same signals
+— and places market orders queued for the next open (see TIME_IN_FORCE). Tomorrow market_track will log the same signals
 from the bars that by then exist, with the ids this module already used, so the record and the
 account describe the same trades and can be compared fill by fill.
 
@@ -39,6 +39,9 @@ import os, sys, json, uuid, datetime, urllib.request, urllib.error
 
 import market_sources as M
 import market_track as T
+from zoneinfo import ZoneInfo
+
+_NY = ZoneInfo("America/New_York")
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 STATE = os.path.join(ROOT, "data", "market_orders.json")
@@ -346,10 +349,32 @@ def plan(bars_by_symbol, d, rules=None, state=None):
     return orders, refused
 
 
+# TIME IN FORCE: "day", not "opg" (2026-10-12). Two things went wrong with market-on-open:
+#   * Alpaca accepts an opg order only between 19:00 and 09:28 ET. The daily job runs at 16:10
+#     ET, so every order it sent on 2026-10-12 came back HTTP 403, 11 of 11.
+#   * The opg orders that WERE accepted (14, sent 04:01 ET that Monday) mostly expired at the
+#     open: paper filled 3 of 14 in its opening auction and let 11 lapse unfilled.
+# A market "day" order sent after the close is queued and goes in at the next session's open,
+# so the 16:10 job can stay where it is, and it fills at the first trade rather than gambling on
+# the paper auction. The record still enters at the bar's open; --reconcile measures the gap
+# between that and the fill, so the difference is reported, not hidden.
+# ALPACA_TIF=opg brings market-on-open back; it is then refused outside its window by name.
+TIME_IN_FORCE = os.environ.get("ALPACA_TIF", "day").strip().lower()
+if TIME_IN_FORCE not in ("day", "opg"):
+    TIME_IN_FORCE = "day"
+
+
+def opg_window_open(now=None):
+    """True between 19:00 and 09:28 New York time, the only hours Alpaca takes an opg order."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    t = now.astimezone(_NY).time()
+    return t >= datetime.time(19, 0) or t < datetime.time(9, 28)
+
+
 def submit(order):
-    """One market-on-open order. `opg` queues for the next open when sent after the close."""
+    """One market order for the next open: a queued day order, or opg when ALPACA_TIF=opg."""
     body = {"symbol": order["symbol"], "qty": str(order["qty"]), "side": order["action"],
-            "type": "market", "time_in_force": "opg",
+            "type": "market", "time_in_force": TIME_IN_FORCE,
             "client_order_id": client_order_id(order["id"], order["action"])}
     return _call("POST", "/v2/orders", body)
 
@@ -468,13 +493,19 @@ def save_state(s):
 def place(orders, dry_run=True):
     """Send the orders. A claim is written BEFORE each send, so a crash cannot re-send."""
     s = load_state()
-    done = {(o["id"], o["action"]) for o in s["orders"]}
+    # A FAILED send never reached the broker, so it is not a claim: on 2026-10-12 all 11 orders
+    # failed on the opg window and this set would have refused every one of them forever.
+    done = {(o["id"], o["action"]) for o in s["orders"] if o.get("status") != "failed"}
     sent, failed = [], []
     for o in orders:
         if (o["id"], o["action"]) in done:
             continue
         if dry_run:
             sent.append(dict(o, status="dry_run"))
+            continue
+        if TIME_IN_FORCE == "opg" and not opg_window_open():
+            failed.append(dict(o, status="failed",
+                               error="not sent: opg orders are taken only 19:00-09:28 ET"))
             continue
         rec = dict(o, client_order_id=client_order_id(o["id"], o["action"]),
                    sent_at=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"))
