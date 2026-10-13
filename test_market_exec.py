@@ -479,5 +479,53 @@ finally:
     X.exchange_orders = _rex3
 
 
+print("\norders are day market orders, and a failed send is retried (2026-10-12)")
+import tempfile
+_state0, _call0, _tif0 = X.STATE, X._call, X.TIME_IN_FORCE
+_sent_bodies = []
+X.STATE = os.path.join(tempfile.mkdtemp(), "market_orders.json")
+try:
+    X._call = lambda method, path, body=None: (_sent_bodies.append(body) or {"id": "x1", "status": "accepted"})
+    _o = dict(id="r|AAA|2026-10-12", rule="r", symbol="AAA", action="buy", qty=3, ref_price=10.0)
+    check("the default time in force is day", X.TIME_IN_FORCE, "day")
+    X.submit(_o)
+    check("submit sends a market day order", (_sent_bodies[-1]["type"], _sent_bodies[-1]["time_in_force"]),
+          ("market", "day"))
+
+    # A send that failed never reached the broker: the next run must try it again.
+    _fail = {"n": 0}
+    def _refuse(method, path, body=None):
+        _fail["n"] += 1
+        raise X.AlpacaError(403, "opg orders must be submitted after 7:00pm and before 9:28am")
+    X._call = _refuse
+    _s, _f = X.place([_o], dry_run=False)
+    check("a refused send is recorded as failed", (len(_s), len(_f)), (0, 1))
+    X._call = lambda method, path, body=None: {"id": "x2", "status": "accepted"}
+    _s, _f = X.place([_o], dry_run=False)
+    check("...and the next run sends it again", ([x["status"] for x in _s], len(_f)), (["accepted"], 0))
+    _s, _f = X.place([_o], dry_run=False)
+    check("...but an accepted order is never sent twice", (len(_s), len(_f)), (0, 0))
+
+    # opg is still available, and is refused by name outside its window without a broker call.
+    X.TIME_IN_FORCE = "opg"
+    _o2 = dict(_o, id="r|BBB|2026-10-12", symbol="BBB")
+    _calls = []
+    X._call = lambda method, path, body=None: (_calls.append(body) or {"id": "x3"})
+    _real_win = X.opg_window_open
+    X.opg_window_open = lambda now=None: False
+    try:
+        _s, _f = X.place([_o2], dry_run=False)
+    finally:
+        X.opg_window_open = _real_win
+    check("ALPACA_TIF=opg outside 19:00-09:28 ET is refused before the broker is called",
+          (len(_s), len(_f), len(_calls), "19:00-09:28" in (_f[0].get("error") or "")), (0, 1, 0, True))
+    _ny = lambda h, m: datetime.datetime(2026, 10, 12, h, m, tzinfo=X._NY)
+    check("the opg window: 16:10 closed, 19:05 open, 09:20 open, 09:29 closed",
+          [X.opg_window_open(_ny(16, 10)), X.opg_window_open(_ny(19, 5)),
+           X.opg_window_open(_ny(9, 20)), X.opg_window_open(_ny(9, 29))], [False, True, True, False])
+finally:
+    X.STATE, X._call, X.TIME_IN_FORCE = _state0, _call0, _tif0
+
+
 print(f"\n{'ALL PASS' if not FAILS else str(FAILS) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
