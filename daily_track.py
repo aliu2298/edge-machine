@@ -7,6 +7,8 @@ import json
 import math
 import os
 import re
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter
@@ -36,9 +38,26 @@ def number(v):
     try: return float(v) if math.isfinite(float(v)) else None
     except (ValueError, TypeError): return None
 
-def get(path):
+# Kalshi rate-limits a burst. The first run on GitHub's runner (2026-10-13) sent ~95 series
+# reads back to back and got HTTP 429 on most of them, so every one became an incomplete
+# scan. Requests are spaced, and a 429 or 5xx is retried with backoff; anything else is final.
+MIN_GAP_S = 0.12
+RETRY_WAITS_S = (1, 2, 4, 8, 16)
+_last = [0.0]
+
+def get(path, sleep=time.sleep, clock=time.monotonic, opener=urllib.request.urlopen):
     req = urllib.request.Request(API + path, headers={'User-Agent':'edge-machine-paper-dailies'})
-    with urllib.request.urlopen(req, timeout=25) as r: return json.load(r)
+    for attempt in range(len(RETRY_WAITS_S) + 1):
+        wait = MIN_GAP_S - (clock() - _last[0])
+        if wait > 0: sleep(wait)
+        _last[0] = clock()
+        try:
+            with opener(req, timeout=25) as r: return json.load(r)
+        except urllib.error.HTTPError as e:
+            if (e.code == 429 or e.code >= 500) and attempt < len(RETRY_WAITS_S):
+                retry_after = number(e.headers.get('Retry-After')) if e.headers else None
+                sleep(max(RETRY_WAITS_S[attempt], retry_after or 0)); continue
+            raise
 
 def pages(path, key, fetch=get):
     out, seen = [], set()
