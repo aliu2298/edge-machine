@@ -3066,6 +3066,10 @@ ok(S.outcome_cluster(dict(venue="kalshi_binary", sport="soccer_team1", market_id
    "both sides of one team total can land: two outcomes, not one ladder")
 
 _saved_ch5 = S.CHALLENGERS
+# The Clubs scope of team1_form_l5 was retired on 2026-10-14. This block tests how a team-goals
+# bet is BOOKED, not the lane, so it lends the rule its Clubs scope and gives it back after.
+_saved_t1 = list(S.SOURCES["team1_form_l5"]["sports"])
+S.SOURCES["team1_form_l5"]["sports"] = ["soccer_team1"] + _saved_t1
 S.CHALLENGERS = {"goals_market": lambda sp: S.fetch_goals_market(sp, universe=_grows),
                  "team1_form_l5": lambda sp: S.fetch_team1_form_l5(sp, universe=_grows, fixtures=_gall)}
 try:
@@ -3080,6 +3084,7 @@ try:
         T._started = _real_started
 finally:
     S.CHALLENGERS = _saved_ch5
+    S.SOURCES["team1_form_l5"]["sports"] = _saved_t1
 _gq = {(q["source"], q["market_id"]): q for q in _gdb["quotes"]}
 _tq = _gq[("team1_form_l5", "KXEPLTEAMTOTAL-26SEP15GOALEA-GOA1")]
 eq((_tq["bet"], _tq["price"], _tq["team"], _tq["espn_home"], _tq["league"]), (True, 0.86, "Goal FC", "Goal FC", "Premier League"),
@@ -3119,12 +3124,16 @@ def _ftq(i, won, price=0.8, logged="2026-09-14T06:00:00+00:00"):
                 label="x", side_a="Yes", side_b="No", league="Premier League", espn_home="Goal FC", espn_away="Leak FC",
                 team="Goal FC", start_source="espn")
 _st_ft = {"pairs": {}, "events": []}
-_d_ft = {"quotes": [_ftq(i, True) for i in range(5)]}
-# team1 is in Production by hand since 2026-09-18 (PAIR_OVERRIDES), not by any fast track.
-T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 9, 20, tzinfo=timezone.utc), verbose=False)
-T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 9, 20, 0, 5, tzinfo=timezone.utc), verbose=False)
-eq(_st_ft["pairs"]["team1_form_l5|soccer_team1"]["stage"], "production", "the listed pair is in Production")
-ok("team1_form_l5|soccer_team1" in PR.production_pairs(_st_ft), "and trading")
+# team1 Clubs was in Production by hand from 2026-09-18 and taken out on 2026-10-14; the
+# Internationals twin stays listed. A listed pair moves by hand, never by a fast track.
+_d_ft = {"quotes": [_ftq(i, True) for i in range(5)]
+                   + [dict(_ftq(i, True), id=f"team1_form_l5:I{i}", sport="soccer_team1_intl") for i in range(5)]}
+T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 10, 20, tzinfo=timezone.utc), verbose=False)
+T.evaluate_stages(_d_ft, _st_ft, now=datetime(2026, 10, 20, 0, 5, tzinfo=timezone.utc), verbose=False)
+eq(_st_ft["pairs"]["team1_form_l5|soccer_team1_intl"]["stage"], "production", "the listed pair is in Production")
+ok("team1_form_l5|soccer_team1_intl" in PR.production_pairs(_st_ft), "and trading")
+ok("team1_form_l5|soccer_team1" not in PR.production_pairs(_st_ft),
+   "the Clubs pair, taken off the list on 2026-10-14, is not promoted by its record")
 
 _open = dict(_ftq(99, True), status="open", pnl=0.0, result=None,
              start=datetime(2026, 9, 16, 18, tzinfo=timezone.utc).isoformat(), logged="2026-09-15T00:00:00+00:00")
@@ -3352,10 +3361,11 @@ eq(sorted(T.PAIR_OVERRIDES),
    ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "corners_under|soccer_corners",
     "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
     "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
-    "oddspedia|cricket", "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+    "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
     "team2_ranked|soccer_team2", "tennis_combo2|tennis_combo", "turkey_btts_dog|soccer_btts",
     "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
-   "the Production list is exactly the pairs moved there by hand, and nothing else")
+   "the Production list is exactly the pairs moved there by hand, and nothing else "
+   "(team scores 1+ · Clubs out 2026-10-14)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
 # refusal below is why, and it must keep holding or the pair could be relisted as a label.
@@ -4667,9 +4677,14 @@ eq([p["market_id"] for p in S.fetch_o15_form_l10("soccer_o15_cup", universe=_cro
    ["KXEFLCUPTOTAL-26SEP15GOALEA-2"], "the Over 1.5 rule reads the cup domain with the same thresholds")
 eq((S._form_league({"comp": "cup", "league": "EFL Cup"}), S._form_league({"league": "Serie A"})),
    (None, "Serie A"), "cup and international pairs count form across all competitions; league pairs as before")
-for _src in ("o15_form_l10", "team1_form_l5", "team2_form_l10", "u35_low_scoring", "p05_unbeaten"):
+for _src in ("o15_form_l10", "team2_form_l10", "u35_low_scoring"):
     _base = S.SOURCES[_src]["sports"][0]
     eq(S.SOURCES[_src]["sports"], [_base, _base + "_cup", _base + "_intl"], f"{_src} runs as league, Cups and Internationals pairs")
+# Retired scopes (2026-10-11 and 2026-10-14): the twins that remain keep running.
+eq(S.SOURCES["team1_form_l5"]["sports"], ["soccer_team1_cup", "soccer_team1_intl"],
+   "team1_form_l5 runs Cups and Internationals; Clubs retired 2026-10-14")
+eq(S.SOURCES["p05_unbeaten"]["sports"], ["soccer_p05_cup"],
+   "p05_unbeaten runs Cups only; Clubs and Internationals retired 2026-10-14")
 # btts_form_l10's Clubs scope was retired and faded on 2026-10-11; its twins keep running.
 eq(S.SOURCES["btts_form_l10"]["sports"], ["soccer_btts_cup", "soccer_btts_intl"],
    "btts_form_l10 runs its Cups and Internationals pairs; Clubs is now btts_form_l10_fade")
@@ -5255,9 +5270,10 @@ for _hidden_name, _hidden_sport in (("nws", "climate"), ("nws_fade", "climate"),
     eq(RANKB.eliminated_section([dict(_er[1], name=_hidden_name, sport=_hidden_sport)]), "",
        f"a removed source is not drawn, even though {_hidden_name} is eliminated")
 # the other both-ways failures that were kept in their sports stay there
-for _s, _sp in (("p05_unbeaten", "soccer_p05"), ("team2_form_l10", "soccer_team2")):
-    ok((_s, _sp) not in S.ELIMINATED and _sp in S.SOURCES[_s]["sports"],
-       f"{_s} also failed both ways but stays in its sport, as asked")
+ok(("team2_form_l10", "soccer_team2") not in S.ELIMINATED and "soccer_team2" in S.SOURCES["team2_form_l10"]["sports"],
+   "team2_form_l10 also failed both ways but stays in its sport, as asked")
+ok("soccer_p05" in S.SOURCES["p05_unbeaten"]["retired_sports"],
+   "p05_unbeaten Clubs, kept in its sport until 2026-10-14, is now retired as asked")
 ok(("nhl_dog_pl", "nhl_pl") in S.ELIMINATED and not S.SOURCES["nhl_dog_pl"]["connected"],
    "nhl_dog_pl is eliminated: both directions lose")
 

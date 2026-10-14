@@ -115,9 +115,9 @@ def _fixture():
         venue="polymarket_us",
     ))
     # A record, no open bet, and a fixture the tracker already logged without a stake.
-    quotes += _settled("team1_form_l5", "soccer_team1", n=4, won=3, price=0.62)
+    quotes += _settled("team1_form_l5", "soccer_team1_intl", n=4, won=3, price=0.62)
     quotes.append(_quote(
-        500, "team1_form_l5", "soccer_team1", "open", 36,
+        500, "team1_form_l5", "soccer_team1_intl", "open", 36,
         "Window Side v Keeper", bet=False))
     quotes += _settled("team2_ranked", "soccer_team2", n=4, won=2, price=0.58)
     quotes.append(_quote(

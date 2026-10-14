@@ -610,7 +610,12 @@ SOURCES = {
              "something its over price does not already hold."),
     "team1_form_l5": dict(
         label="Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_team1", "soccer_team1_cup", "soccer_team1_intl"], baseline="population",
+        connected=True, site="edge-machine", sports=["soccer_team1_cup", "soccer_team1_intl"], baseline="population",
+        retired_sports={
+            "soccer_team1": "Retired 2026-10-14 by Olu, and out of Production: 21 won, 4 lost on 25 "
+                            "settled, -1.5% after fees (-6.0% on 21 since it entered Production), "
+                            "and the other side of the same bets lost too (-27.4% after fees per "
+                            "contract). It points neither way."},
         note="Pre-registered 2026-09-14. Back a side to score at the Kalshi ask where it "
              "scored in each of its last 5 competitive games and its opponent conceded in each "
              "of theirs (10+ games each). Research: 91.9% on 99 team-games against 77.9% own "
@@ -618,7 +623,14 @@ SOURCES = {
              "In Production since 2026-09-18, moved by hand."),
     "p05_unbeaten": dict(
         label="Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_p05", "soccer_p05_cup", "soccer_p05_intl"], baseline="population",
+        connected=True, site="edge-machine", sports=["soccer_p05_cup"], baseline="population",
+        retired_sports={
+            "soccer_p05": "Retired 2026-10-14 by Olu: 34 won, 11 lost, 1 no result on 46 settled, "
+                          "-5.3% after fees, and the other side of the same bets lost too (-4.7% "
+                          "after fees per contract, -20.5% at $100 a bet). It loses both ways.",
+            "soccer_p05_intl": "Retired 2026-10-14 by Olu: 22 won, 4 lost on 26 settled, 0.0% after "
+                               "fees, and the other side lost -29.0% after fees per contract. No "
+                               "edge in either direction."},
         note="Pre-registered 2026-09-14. Back a team not to lose (+0.5: No on Kalshi's market for "
              "its opponent to win) where the team is unbeaten in 8+ of its last 10 games in this "
              "competition and the opponent won 3 or fewer of its last 10 there (HOF's windows, "

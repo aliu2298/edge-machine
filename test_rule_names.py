@@ -62,8 +62,9 @@ eq(SB.rule_name(plain), "A frozen block", "a row without a registered source kee
 print("\nnothing a join reads has moved")
 eq(S.SOURCES["team1_form_l5"]["label"], "Team scores 1+ form rule (5/5 scored, opponent 5/5 conceded)",
    "the registered label is unchanged")
-eq(S.SOURCES["team1_form_l5"]["sports"], ["soccer_team1", "soccer_team1_cup", "soccer_team1_intl"],
-   "the sports list is unchanged")
+eq(S.SOURCES["team1_form_l5"]["sports"], ["soccer_team1_cup", "soccer_team1_intl"],
+   "the sports list is the two live scopes; Clubs retired 2026-10-14")
+ok("soccer_team1" in S.SOURCES["team1_form_l5"]["retired_sports"], "and the Clubs scope's retirement is recorded")
 eq(S.SCOPE_LABEL, {"_cup": "Cups", "_intl": "Internationals"}, "the twin scope words are unchanged")
 NOW = datetime.datetime(2026, 10, 8, 12, tzinfo=timezone.utc)
 ko = NOW + datetime.timedelta(hours=6)
