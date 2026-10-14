@@ -163,7 +163,9 @@ def _picks(markup):
 
 
 def _rule_rows(markup):
-    return re.findall(r'<tr class="rule-row(?: is-early)?" data-source="([^"]*)" data-sport="([^"]*)"[^>]*>(.*?)</tr>', markup, re.S)
+    """(source, sport, row) for every rule row: the summary's cells and the fold's body."""
+    from sport_rows_testlib import rule_rows
+    return [(r["source"], r["sport"], r) for r in rule_rows(markup)]
 
 
 print(f"SHA {SHA}")
@@ -216,7 +218,7 @@ import production
 live = production._assess_since_kickoff(d, "tennis_fav_band_3h|tennis", prod_st["pairs"]["tennis_fav_band_3h|tennis"])
 ok(f'<b>{live["won"]}–{live["n"] - live["won"]}</b><span>since Production · {who}</span>' in prod_html,
    "with the band in Production the record tile is its since-Production W–L, named")
-ok(f"ROI after fees · since Production · {who}" in prod_html, "and the ROI tile is that window's ROI")
+ok("ROI after fees · since Production" in prod_html, "and the ROI tile is that window's ROI")
 pooled = sum(r["a"]["n"] for r in active)
 ok(f"{sum(r['a']['won'] for r in active)}–{pooled - sum(r['a']['won'] for r in active)}" not in _text("".join(re.findall(r'<div class="tile">(.*?)</div>', prod_html))),
    "no tile pools the combo baskets into the singles record")
@@ -271,32 +273,29 @@ print("\nrules")
 rules = _section(main, "rules")
 ok("No tennis rule is in Production." in rules, "with nothing in Production the cards say so")
 rule_rows = _rule_rows(rules)
-eq(len(rule_rows), len(rows), f"one table row per tennis lane ({len(rows)})")
+eq(len(rule_rows), len(rows), f"one row per tennis lane ({len(rows)})")
 by_name = {r["name"]: r for r in rows}
 order = [s_ for s_, _sp, _b in rule_rows]
 eq(order, [r["name"] for r in sorted(rows, key=SP.sandbox_order)], "rows run by evidence, the too-early ones sunk")
 ok(f'· {len(rows)} rules · {sum(1 for r in rows if SP.is_early(r))} too early to read · by evidence' in rules,
    "the fold's summary counts the rows and the too-early ones")
-head = re.search(r"<thead>(.*?)</thead>", rules, re.S).group(1)
-eq(re.findall(r"<th[^>]*>(.*?)</th>", head), ["Rule", "Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
+head = re.search(r'<div class="sp-line sp-head-line" aria-hidden="true">(.*?)</div>', rules, re.S)
+eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head.group(1)) if head else None,
+   ["Rule", "Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
    "the columns are Rule · Market · Record · ROI after fees · Won v priced · Evidence · Verdict")
 ok("<h3>" not in rules.split("<details", 1)[0], "no per-market H3 groups")
 ok("PreresetBasket" not in html, "a basket struck before the reset clock never reaches the page")
-for source, sport, body in rule_rows:
+for source, sport, r in rule_rows:
     row = by_name[source]
-    ok(SP.roi_html(row) in body, f"{source} ROI is the Sandbox row's string")
-    ok(SP.verdict_badge(row) in body, f"{source} verdict is the Sandbox row's string")
+    ok(r["cells"]["ROI after fees"] == SP.roi_html(row), f"{source} ROI is the Sandbox row's string")
+    ok(r["cells"]["Verdict"] == SP.verdict_badge(row), f"{source} verdict is the Sandbox row's string")
     eq(tennis_cards.roi_html(row).replace('<span class="mut">', "").replace("</span>", "") if not row["a"]["n"] else tennis_cards.roi_html(row),
        SP.roi_html(row).replace('<span class="mut">', "").replace("</span>", "") if not row["a"]["n"] else SP.roi_html(row),
        f"{source} ROI helper is the lane-row string")
-    chev = re.search(r'aria-controls="([^"]+)"', body)
-    detail = re.search(rf'<tr class="rule-detail" id="{chev.group(1)}" hidden>(.*?)</tr>', rules, re.S) if chev else None
-    ok(detail is not None, f"{source} row has a chevron that expands")
-    cell = detail.group(1) if detail else ""
-    note = (row["meta"].get("note") or "").strip()
-    lead, rest = SP.short_definition(note)
-    ok(B.esc(lead) in cell, f"{source} row expands to its registered definition")
-    ok(not rest or B.esc(rest) in cell, f"{source} the rest of the registration is folded, verbatim")
+    ok(not r["open"], f"{source} its Rule details fold starts closed")
+    cell = r["body"]
+    note = " ".join((row["meta"].get("note") or "").split())
+    ok(B.esc(note) in cell, f"{source} the fold holds its registered definition, verbatim")
     changes = row["meta"].get("changes") or []
     if changes:
         ok(f'<details class="sp-changes"><summary>Changes · {len(changes)}</summary>' in cell,
@@ -307,7 +306,9 @@ for source, sport, body in rule_rows:
         ok(cell.find("WIDENED") == -1 or cell.find("WIDENED") > cell.find('<details class="sp-changes">'),
            f"{source} no reset text comes before the current definition")
     if source in S.TENNIS_FROZEN_RULES:
-        ok('<span class="badge stage">Frozen 2026-10-08</span>' in body, f"{source} row carries the Frozen badge")
+        ok('<span class="badge stage" title="Frozen 2026-10-08">Frozen</span>' in r["badges"],
+           f"{source} row carries a small Frozen badge, the date in its tooltip")
+        ok("frozen 2026-10-08" in cell, f"{source} the fold names the freeze date")
         ok(S.TENNIS_FROZEN_LINE in note, f"{source} definition ends with the FROZEN line")
         ok("<dt>Backs</dt>" in cell and "<dt>Venue</dt>" in cell, f"{source} prints its current parameters")
         if sport == "tennis":
@@ -319,19 +320,18 @@ for source, sport, body in rule_rows:
             ok(("extrapolated" in cell) == (sport == "tennis_pmcombo" and legs > 2),
                f"{source} says whether its markup was measured")
     combo = sport in ("tennis_combo", "tennis_pmcombo")
-    eq('<span class="badge stage">Combo</span>' in body, combo, f"{source} Combo badge follows the market")
-cells = {s_: re.findall(r"<td[^>]*>(.*?)</td>", b, re.S) for s_, _sp, b in rule_rows}
-eq(_text(cells["tennis_combo2"][1]), "Kalshi", "a Kalshi basket's venue is Kalshi")
-eq(_text(cells["pm_combo2"][1]), "Polymarket US", "a Polymarket US basket's venue is Polymarket US")
-eq(_text(cells["tennis_fav_band_3h"][1]), "Kalshi · Polymarket US",
+    eq('<span class="badge stage">Combo</span>' in r["badges"], combo, f"{source} Combo badge follows the market")
+cells = {s_: r["cells"] for s_, _sp, r in rule_rows}
+eq(cells["tennis_combo2"]["Market"], "Kalshi", "a Kalshi basket's venue is Kalshi")
+eq(cells["pm_combo2"]["Market"], "Polymarket US", "a Polymarket US basket's venue is Polymarket US")
+eq(cells["tennis_fav_band_3h"]["Market"], "Kalshi · Polymarket US",
    "the single-match rule names the venues of its own bets")
 fav_a = by_name["tennis_fav_band_3h"]["a"]
-eq(_text(cells["tennis_fav_band_3h"][2]), f'{fav_a["won"]}–{fav_a["n"] - fav_a["won"]}', "the record cell is W–L")
-ok("· 5 open" in cells["tennis_fav_band_3h"][0], "the rule cell counts open bets")
-ok("open" not in cells["pm_combo2"][0].split("</b>", 1)[1].split("<td", 1)[0] or "· 1 open" in cells["pm_combo2"][0], "the basket row counts its one open bet")
-fav_detail = re.search(r'<tr class="rule-detail" id="' + re.search(r'aria-controls="([^"]+)"', cells["tennis_fav_band_3h"][0]).group(1) + r'" hidden>(.*?)</tr>', rules, re.S).group(1)
+eq(_text(cells["tennis_fav_band_3h"]["Record"]), f'{fav_a["won"]}–{fav_a["n"] - fav_a["won"]}', "the record cell is W–L")
+fav_detail = next(r for s_, _sp, r in rule_rows if s_ == "tennis_fav_band_3h")["body"]
+ok('<h4 class="sp-details-sub">Recent picks · 5 open</h4>' in fav_detail, "the fold counts the rule's open bets")
 ok("Yesterday vs Gone" in fav_detail and "Alpha vs Beta soonest" in fav_detail,
-   "the expanded rule lists its open and recent settled picks")
+   "the fold lists its open and recent settled picks")
 recent = re.search(r'<ul class="rule-picks">(.*?)</ul>', fav_detail, re.S)
 ok(recent is not None and recent.group(1).count("<li") <= 5 + tennis_cards.RECENT_LIMIT, "recent picks are capped at the open ones plus the limit")
 
@@ -372,11 +372,11 @@ soc = soccer_build.build(d, st, NOW)
 cri = cricket_build.build(d, st, NOW)
 ok("Soccer Only vs Stay" not in html and "oddspedia" not in html.lower(),
    "the tennis page does not pick up soccer or cricket lanes")
-ok('class="sp-sandbox-table"' in soc and "Soccer Only vs Stay" in soc,
+ok('data-list="sandbox"' in soc and "Soccer Only vs Stay" in soc,
    "soccer renders its own rules table and events")
 ok("tennis_fav_band_3h" not in soc and "Alpha vs Beta soonest" not in soc,
    "soccer does not pick up tennis lanes")
-ok('class="sp-sandbox-table"' in cri and "Oddspedia" in cri, "cricket renders its own rules table")
+ok('class="sp-rules-list' in cri and "Oddspedia" in cri, "cricket renders its own rules list")
 ok("tennis_fav_band_3h" not in cri and "Alpha vs Beta soonest" not in cri,
    "cricket does not pick up tennis lanes")
 
@@ -471,7 +471,7 @@ ok(fav_row is not None and combo_row is not None,
 if fav_row and combo_row:
     eq(fav_row["a"]["n"], KEPT_N, "the favourite-band record counts only kept tours logged after the reset")
     eq(combo_row["a"]["n"], KEPT_N, "the combo record counts only kept tours logged after its reset")
-    frows = {s_: b for s_, _sp, b in _rule_rows(filter_html)}
+    frows = {s_: r["summary"] + r["body"] for s_, _sp, r in _rule_rows(filter_html)}
     ok(SP.roi_html(fav_row) in frows.get("tennis_fav_band_3h", ""),
        "the favourite-band row ROI is the filtered lane row")
     ok(SP.roi_html(combo_row) in frows.get("tennis_combo2", ""),

@@ -1,4 +1,7 @@
 #!/bin/bash
+# SUPERSEDED 2026-10-13 by scripts/vps_window_requests.sh + lane_windows.py, which ask for up to
+# three reads per window for every ladder lane (crypto, commodities, Econ/Finance Daily) from
+# one crontab line. Kept for reference; not in the edge-vps crontab.
 # vps_commodities_window.sh — ask for a tracker run from inside commod_fav_band's windows.
 #
 # The commodity favourite-band lane reads the Kalshi commodity ladders 2-3.5h before

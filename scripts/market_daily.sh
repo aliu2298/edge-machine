@@ -5,7 +5,9 @@
 # we control and must not go to a CI runner. The run scans for new signals, grades the trades
 # whose exit has happened, and publishes the updated ledger.
 #
-# It never places an order. The lane is a paper record of what the rules would have done.
+# The ledger is a paper record of what the rules would have done. After it is written,
+# market_exec.py sends the next open's orders to the Alpaca PAPER account (never fatal),
+# as day market orders that Alpaca queues for the open, and reconciles yesterday's fills.
 #
 # It publishes the LEDGER ONLY. public_site/*.html is built by the sandbox-tracker workflow in
 # CI and by nothing else: two machines regenerating the same page collided on every push
@@ -192,7 +194,7 @@ publish_ledger() {
     echo "refusing: data/market_ledger.json is missing after market_track"
     exit 1
   fi
-  # Place tomorrow's open orders, AFTER the record is written so market_exec sees everything
+  # Queue tomorrow's open orders, AFTER the record is written so market_exec sees everything
   # market_track just logged and cannot re-send it. Never fatal: the ledger is the thing this
   # job exists to publish, and a broker outage must not cost a day of the record.
   if ! python3 market_exec.py --place; then

@@ -1078,6 +1078,15 @@ SOURCES = {
     "crypto_fav_band": dict(
         label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["crypto_fav"],
+        changes=[
+            (
+                'READS 2026-10-13: up to three reads per window, 30 minutes apart, asked for by the '
+                'VPS from lane_windows.py; a later read is skipped once every series of that close '
+                'has an entry, and the one-entry-per-series-per-close rule is unchanged. The 2-3.5h '
+                'window is now measured to the contract CLOSE (close_time), as the Econ/Finance Daily '
+                'lanes do, not to the 5-minute-later expiry; equal prices go to the lower ticker. The '
+                'record is not reset: band, window, liquidity floor and selection are the same rule.'),
+        ],
         baseline="favourite_population",
         # One bet per series per close token (KXBTCD + 26OCT0617), across runs.
         # one_per_day is the wrong switch: it keys on the date alone and would
@@ -1111,6 +1120,15 @@ SOURCES = {
     "commod_fav_band": dict(
         label="Commodities favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["commodities_fav"],
+        changes=[
+            (
+                'READS 2026-10-13: up to three reads per window, 30 minutes apart, asked for by the '
+                'VPS from lane_windows.py; a later read is skipped once every series of that close '
+                'has an entry, and the one-entry-per-series-per-close rule is unchanged. The 2-3.5h '
+                'window is now measured to the contract CLOSE (close_time), as the Econ/Finance Daily '
+                'lanes do, not to the 5-minute-later expiry; equal prices go to the lower ticker. The '
+                'record is not reset: band, window, liquidity floor and selection are the same rule.'),
+        ],
         baseline="favourite_population",
         # One bet per series per close token (KXWTI + 26OCT0814), across runs, the
         # same gate crypto_fav_band uses. publish() reads this flag.
@@ -5998,7 +6016,7 @@ def pm_combo_legs_by_day(universe=None):
     return by_day
 
 
-def combo_legs_by_day(universe=None):
+def combo_legs_by_day(universe=None, now=None):
     """{date: [(row, side, price)]} — the legs a basket may be cut from, KALSHI ONLY.
 
     Every leg must be a Kalshi market. A basket is not a market anyone can hit: you name its
@@ -6030,6 +6048,12 @@ def combo_legs_by_day(universe=None):
             continue
         if not tennis_fav_kept(r.get("market_id")):
             continue
+        # Live construction uses the same verified three-hour entry window as
+        # the single-leg rule. Do this BEFORE pairing: an estimated start must
+        # not strand a verified leg in a basket Production cannot publish.
+        # Omitted now retains the pure historical reconstruction interface.
+        if now is not None and tennis_start_window(r, now) != "in":
+            continue
         for side in ("a", "b"):
             p = r.get(f"price_{side}")
             # Default True, as every other reader of this field does: a row that does not
@@ -6058,7 +6082,7 @@ def tennis_combo_rows(universe=None, now=None, used=None):
     whichever run builds it. (Until 2026-09-21 this built ONE basket a day per size, from
     the first n legs, and left ~55 of a typical day's ~60 eligible legs unused.)
     """
-    return _basket_rows(combo_legs_by_day(universe), used, COMBO_MARKUP,
+    return _basket_rows(combo_legs_by_day(universe, now=now), used, COMBO_MARKUP,
                         sport="tennis_combo", prefix="combo", url="https://kalshi.com/combos")
 
 
@@ -7884,6 +7908,24 @@ def _crypto_fav_liquid(row):
     return True, ""
 
 
+def _ladder_close(r):
+    """A ladder rung's trading CLOSE, from the market's own close_time.
+
+    The row's `start` is Kalshi's expected_expiration_time, which for the coin ladders is
+    21:05Z against a 21:00Z close. Measuring the 2-3.5h window to that put the crypto lane
+    five minutes late of the rule it states ("before the 17:00 ET close") and of the
+    commodity and Econ/Finance Daily lanes, which all read the close. Aligned 2026-10-13.
+    Falls back to `start` only for a row that carries no market payload (a test fixture).
+    """
+    for v in ((r.get("market") or {}).get("close_time"), r.get("start")):
+        try:
+            x = datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            continue
+        return x if x.tzinfo else x.replace(tzinfo=timezone.utc)
+    return None
+
+
 def fetch_crypto_fav_band(sport, universe=None, now=None):
     """The lowest in-band Yes per coin, 2-3.5h before the 21:00Z close."""
     if sport != "crypto_fav":
@@ -7894,12 +7936,9 @@ def fetch_crypto_fav_band(sport, universe=None, now=None):
     lo, hi = CRYPTO_FAV_BAND
     best, skipped = {}, {}
     for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
-        try:
-            exp = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
-        except (TypeError, ValueError):
+        exp = _ladder_close(r)
+        if exp is None:
             continue
-        if exp.tzinfo is None:
-            exp = exp.replace(tzinfo=timezone.utc)
         # The 17:00 ET close only. These series are hourly now, and an hourly rung is a
         # different contract with a different hold -- it is not this lane's bet. Compared
         # in Eastern, so the DST change moves the test with the exchange.
@@ -7916,14 +7955,16 @@ def fetch_crypto_fav_band(sport, universe=None, now=None):
             skipped.setdefault(r.get("series"), why)
             continue
         cur = best.get(r.get("series"))
-        if cur is None or price < cur["price_a"]:
+        # Ties go to the lower ticker, as in the Econ/Finance Daily lanes, so the pick
+        # never depends on the order the venue happened to list the rungs in.
+        if cur is None or (price, r["market_id"]) < (cur["price_a"], cur["market_id"]):
             best[r.get("series")] = r
     for series, why in sorted(skipped.items()):
         if series not in best:
             print(f"  crypto_fav_band: skip {series}: {why}")
     return [dict(market_id=r["market_id"], pick="a",
                  detail=f"lowest in band {r['price_a']:.2f}, "
-                        f"{(datetime.fromisoformat(str(r['start']).replace('Z', '+00:00')) - now).total_seconds() / 3600:.1f}h to close")
+                        f"{(_ladder_close(r) - now).total_seconds() / 3600:.1f}h to close")
             for r in sorted(best.values(), key=lambda x: x["market_id"])]
 
 
@@ -8093,12 +8134,9 @@ def fetch_commod_fav_band(sport, universe=None, now=None):
         # same ladders read 6h out, and a row under the wrong key is not this lane's.
         if series not in COMMOD_FAV_SERIES or r.get("sport") != sport:
             continue
-        try:
-            exp = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
-        except (TypeError, ValueError):
+        exp = _ladder_close(r)
+        if exp is None:
             continue
-        if exp.tzinfo is None:
-            exp = exp.replace(tzinfo=timezone.utc)
         local = exp.astimezone(COMMOD_FAV_TZ)
         # This series' daily close only, matched in Eastern. Any other expiry on the
         # series is a different contract with a different hold.
@@ -8120,14 +8158,14 @@ def fetch_commod_fav_band(sport, universe=None, now=None):
             skipped.setdefault(series, why)
             continue
         cur = best.get(series)
-        if cur is None or price < cur["price_a"]:
+        if cur is None or (price, r["market_id"]) < (cur["price_a"], cur["market_id"]):
             best[series] = r
     for series, why in sorted(skipped.items()):
         if series not in best:
             print(f"  commod_fav_band: skip {series}: {why}")
     return [dict(market_id=r["market_id"], pick="a",
                  detail=f"lowest in band {r['price_a']:.2f}, "
-                        f"{(datetime.fromisoformat(str(r['start']).replace('Z', '+00:00')) - now).total_seconds() / 3600:.1f}h to close")
+                        f"{(_ladder_close(r) - now).total_seconds() / 3600:.1f}h to close")
             for r in sorted(best.values(), key=lambda x: x["market_id"])]
 
 

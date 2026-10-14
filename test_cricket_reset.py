@@ -221,9 +221,10 @@ ok(any("<b>—</b><span>since Production · Oddspedia community tips</span>" in 
    "the record tile is empty since Production")
 ok(any('<b class="mut">—</b><span>ROI after fees · since Production' in t for t in tiles), "so is the ROI tile")
 card = html[html.find('data-source="oddspedia"'):]
-card = card[:card.find("</article>")]
-ok('<span class="sig w early">Early · 0 bets</span>' in card, "the Production card wears Early · 0 bets")
-ok('<b>—</b><span>record</span>' in card, "its record is empty")
+card = card[:min(i for i in (card.find('<details class="sp-rule', 10), card.find('id="sandbox"'), len(card)) if i > 0)]
+summary = card[:card.find("</summary>")]
+ok('<span class="sig w early">Early · 0 bets</span>' in summary, "the Production row wears Early · 0 bets")
+ok('<span class="sp-cell num" data-l="Record"><span class="mut">—</span></span>' in summary, "its record is empty")
 ok('data-verdict="waiting"' in card, "its verdict chip is the Waiting verdict")
 ok("RESET 2026-10-08:" in card, "its registration shows the RESET line")
 fold = card[card.find('<details class="sp-more sp-before-reset">'):]

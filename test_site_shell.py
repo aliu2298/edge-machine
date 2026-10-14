@@ -40,7 +40,7 @@ _NAV_HREFS = (
     'href="./sandbox.html#method"',
 )
 _NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket",
-               "Crypto", "Commodities", "Method"]
+               "Crypto", "Commodities", "Econ Daily", "Finance Daily", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
@@ -454,13 +454,13 @@ def _check_sport_tab(family, html, d, st):
     # Tennis and Soccer name their one rules table #rules; the other tabs keep #lanes.
     lanes = re.search(r'<section id="(?:lanes|rules)"[^>]*>(.*?)</section>', html, re.S)
     ok(lanes is not None, f"{family} tab has a lanes section")
-    # Soccer, Tennis and Cricket are the one sport template (sport_page): a card per
-    # Production rule, the Sandbox rules in one table. The verdict and the ROI are
-    # still the Sandbox row's strings.
+    # Soccer, Tennis and Cricket are the one sport template (sport_page): a row per
+    # rule, the Production list and the Sandbox list in its fold. The verdict and
+    # the ROI are still the Sandbox row's strings.
     if family in ("Soccer", "Tennis", "Cricket"):
         import sport_page as SP
-        ok(('class="sp-sandbox-table"' in html or 'class="card sp-rule"' in html) and 'class="rule-card"' not in html,
-           f"{family.lower()} lanes are Production cards and one Sandbox table")
+        ok('class="sp-rules-list' in html and 'class="rule-card"' not in html,
+           f"{family.lower()} lanes are rule rows in the Production and Sandbox lists")
         for r in rows:
             ok(SP.verdict_badge(r) in html and SP.roi_html(r) in html,
                f"{family.lower()} page shows the Sandbox verdict and ROI for {r['name']}|{r['sport']}")
@@ -480,7 +480,7 @@ def _check_sport_tab(family, html, d, st):
                            if B.family(r["sport"]) == family and not B.eliminated(r)])
     eq(got, again, f"{family} metrics are pair_list's own record")
     if any(prod for _n, _s, _v, prod, _o, _n2, _w, _e, _r, _p in got):
-        ok("PRODUCTION" in html or '<span class="badge stage production">Production</span>' in html,
+        ok("PRODUCTION" in html or 'data-stage="production"' in html,
            f"{family} shows a Production lane the way the Sandbox does")
     return got
 
@@ -515,7 +515,8 @@ if tennis_build is not None and SB is not None:
        and "Tennis Explorer" in _ten and S.TENNIS_COMBO_BAND_SINCE in _ten
        and "TENNIS_COMBO_BAND_SINCE" not in _ten,
        "tennis keeps the 3-hour note, the tour check, and the combo clock")
-    ok('<span class="badge stage production">Production</span>' in _cri and "Oddspedia community tips" in _cri
+    ok('class="sp-rules-list sp-prod"' in _cri and 'data-source="oddspedia" data-sport="cricket" data-scope="clubs" data-stage="production"' in _cri
+       and "Oddspedia community tips" in _cri
        and "Cricket consensus" in _cri,
        "cricket shows the Production lane and the consensus lane")
     for _label in ("Tennis favourite-band rule", "OLBG community tips",

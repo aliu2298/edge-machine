@@ -100,20 +100,21 @@ eq(a.get("unit"), "market-day", "the Sandbox counts this lane in market-days")
 
 print("\nrules: one row")
 rule = _section(main, "rules")
-ok("No commodities rule is in Production." in rule and 'class="sp-sandbox-table"' in rule, "the Sandbox rule is a table row")
-tr = re.search(r'<tr class="rule-row(?: is-early)?"(.*?)</tr>', rule, re.S).group(1)
-ok("<b>Favourite band · 3h to the close</b>" in tr, "named")
-ok(SP.roi_html(fav) in tr and f'data-l="Evidence">{a["n"]}/{T.READ_FLOOR}</td>' in tr, "ROI and evidence are the row's own")
-detail = re.search(r'<tr class="rule-detail"[^>]*>(.*?)</tr>', rule, re.S).group(1)
+from sport_rows_testlib import rule_rows, text as row_text
+ok("No commodities rule is in Production." in rule and 'data-list="sandbox"' in rule, "the Sandbox rule is a row in the Sandbox fold")
+r = rule_rows(rule)[0]
+eq(r["name"], "Favourite band · 3h to the close", "named")
+ok(r["cells"]["ROI after fees"] == SP.roi_html(fav) and r["cells"]["Evidence"] == f'{a["n"]}/{T.READ_FLOOR}', "ROI and evidence are the row's own")
+detail = r["body"]
+ok(not r["open"], "its Rule details fold starts closed")
 dl = re.search(r'<dl class="sp-params">(.*?)</dl>', detail).group(1)
 eq(re.findall(r"<dt>(.*?)</dt>", dl), ["Entry", "Selection", "Liquidity", "Close"], "four entry parameters")
 eq(re.findall(r"<dd>(.*?)</dd>", dl),
    ["Yes ask 70–80¢, 2–3.5h before the close", "lowest qualifying rung, one per commodity, trading days only",
     "≤3¢ spread, 25+ ask", "WTI 14:30 ET · the rest 17:00 ET"], "the parameters are the registered constants")
-note = S.SOURCES["commod_fav_band"]["note"].strip()
-lead, rest = SP.short_definition(note)
-ok(f'<p class="sp-def">{B.esc(lead)}</p>' in detail, "the registered definition paragraph is in the row")
-ok('data-l="Market">Kalshi</td>' in tr, "the market column is the venue")
+note = " ".join(S.SOURCES["commod_fav_band"]["note"].split())
+ok(f'<p class="sp-def">{B.esc(note)}</p>' in detail, "the registered definition paragraph is in the fold")
+eq(r["cells"]["Market"], "Kalshi", "the market column is the venue")
 
 print("\nevents: market-days in the tabs")
 events = _section(main, "events")
@@ -164,8 +165,8 @@ ok("<b>Scheduling.</b>" in method and "10:00–11:30 Central" in method and "12:
 print("\nedge cases")
 empty = C.build({"quotes": []}, {"pairs": {}}, NOW)
 empty_rule = _section(empty.split("<main", 1)[-1], "rules")
-ok('class="sp-sandbox-table"' in empty_rule and 'data-verdict="waiting">Too early<' in empty_rule
-   and 'data-l="Record" data-empty="1">—</td>' in empty_rule and "Yes ask 70–80¢" in empty_rule,
+ok('data-list="sandbox"' in empty_rule and 'data-verdict="waiting">Too early<' in empty_rule
+   and '<span class="sp-cell num" data-l="Record"><span class="mut">—</span></span>' in empty_rule and "Yes ask 70–80¢" in empty_rule,
    "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
 ok("No commodities favourite-band record yet." not in empty, "the page never says it has no rule")
 ok(">0</b><span>open picks" in empty and "<b>—</b><span>Production record" in empty, "empty tiles")
@@ -204,8 +205,8 @@ if playwright is not None:
             eq(page.locator(".sp-pick:visible").count(), 2, f"{width}px the Next 24h tab shows two lines")
             eq(page.locator("#method > details[open]").count(), 0, f"{width}px method starts closed")
             page.locator("details.sp-sandbox > summary").click()
-            page.locator("button.rule-chev").first.click()
-            ok(page.locator("tr.rule-detail .sp-params").is_visible(), f"{width}px the chevron reveals the parameters")
+            page.locator("details.sp-rule > summary").first.click()
+            ok(page.locator("details.sp-rule .sp-params").is_visible(), f"{width}px opening the row reveals the parameters")
             page.locator("#method > details > summary").click()
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px still fits with both open")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
