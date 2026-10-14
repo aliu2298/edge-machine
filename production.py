@@ -595,6 +595,7 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
             leads[lead["id"]] = lead
             logged_at[lead["id"]] = (str(q.get("logged") or ""), float(q.get("price") or 1.0))
     _one_rung_per_close(leads, logged_at)
+    corners_selections = _one_corners_per_match(leads, logged_at, previous)
     for lead in leads.values():
         r = routing.get(lead["pair"])
         if r is None:
@@ -621,7 +622,7 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
                           **_sandbox_record(d, k, entered_at(p)),
                           routing=routing[k], timing=pair_timing(leads, k))
                   for k, p in pairs.items()},
-        "leads": leads, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
+        "leads": leads, "corners_selections": corners_selections, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
     }
 
 
@@ -655,6 +656,34 @@ def routing_problem(r):
         return (f"{held} bet{'s' if held != 1 else ''} in the window, none published: "
                 + ", ".join(parts))
     return None
+
+
+def _one_corners_per_match(leads, logged_at, previous=None):
+    """Lock one upcoming total/team corners selection; retain settled history.
+
+    Carry locks separately from the rolling leads: a temporarily missing lead
+    must not let a later refresh substitute another threshold. Legacy duplicates
+    choose the first published/logged id; historical settled rows stay untouched.
+    """
+    locks = dict((previous or {}).get("corners_selections") or {})
+    groups = {}
+    for lid, lead in {**((previous or {}).get("leads") or {}), **leads}.items():
+        if (lead.get("bet") or {}).get("kind") != "corners_lte":
+            continue
+        key = S.corners_fixture_key(lead)
+        if key:
+            old = ((previous or {}).get("leads") or {}).get(lid)
+            at = (old or {}).get("published_at") or lead.get("published_at") or (logged_at.get(lid) or ("",))[0]
+            groups.setdefault(key, []).append((old is None, str(at), lid))
+    for key, entries in groups.items():
+        locks.setdefault(key, min(entries)[2])
+    for lid, lead in list(leads.items()):
+        if (lead.get("bet") or {}).get("kind") != "corners_lte" or lead.get("status") != "pending":
+            continue
+        key = S.corners_fixture_key(lead)
+        if key is None or locks.get(key) != lid:
+            del leads[lid]
+    return locks
 
 
 def _one_rung_per_close(leads, logged_at):

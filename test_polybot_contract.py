@@ -326,8 +326,11 @@ def test_breaks_fail(written, quotes):
 # every pair gains routing (production.routing_problem's counts). Nothing else moved.
 # Changed on purpose 2026-10-14 (late leads): every lead gains published_at,
 # published_min_before_kickoff and published_late, and every pair gains timing.
+# Changed on purpose 2026-10-14: durable corners selection locks. This fixture
+# has no corners, so its reservation map is empty.
 _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
 {
+  "corners_selections": {},
   "board_built_at": "2026-10-01T12:00:00+00:00",
   "leads": {
     "2026-10-03|Home Side|Away Side|Away Side to win · Oddspedia community tips": {

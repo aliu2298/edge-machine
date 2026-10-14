@@ -1129,6 +1129,7 @@ SOURCES = {
     "corners_under": dict(
         label="Corners under form rule (model beats the No ask by 5c)", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_corners"], baseline="population",
+        one_per_corners_fixture=True,
         note="Pre-registered 2026-09-19. Buy No on a Kalshi total-corner or team-corner rung (\"N+ "
              "corners\") when the form model's chance of UNDER beats the No ask by 5c or more after "
              "fees, within 4 hours of kickoff. Model: each side's corners = the average of its corners "
@@ -1138,7 +1139,8 @@ SOURCES = {
              "19 2026 at the last price before kickoff: backing Over lost at every line (-12.3% per "
              "match); this rule +9.7% on 60 matches (t 0.78), +29.6% at a 10c edge (29 matches, "
              "t 1.62). A lead, not proof. Judged PER MATCH: every rung it buys in one match is one "
-             "result."),
+             "result. Since 2026-10-14, at most one selection per match across total and team corners: "
+             "highest model edge after fees, lower No ask then ticker on ties; first logged selection stays locked."),
     "crypto_fav_band": dict(
         label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["crypto_fav"],
@@ -7275,24 +7277,59 @@ def corners_model(fixtures, r, ko):
     return nb_at_least(int(r["corner_n"]), lam, CORNERS_DISP[r.get("corner_kind", "total")])
 
 
+def corners_fixture_key(row):
+    """One match across total/team corners series and every threshold.
+
+    Kalshi's second ticker token identifies the dated fixture; the first token
+    differs between CORNERS and TCORNERS, and the last is the threshold/team.
+    ESPN names and UTC date are a fallback for rows without a Kalshi ticker.
+    """
+    route = row.get("route") or {}
+    ticker = str(row.get("market_id") or route.get("market") or row.get("event") or "").upper()
+    m = re.match(r"^KX[A-Z0-9]*CORNERS-([^-]+)(?:-|$)", ticker)
+    if m:
+        return "kalshi:" + m.group(1)
+    home, away = row.get("espn_home") or row.get("home"), row.get("espn_away") or row.get("away")
+    try:
+        day = datetime.fromisoformat(str(row.get("start") or row.get("kickoff")).replace("Z", "+00:00")).astimezone(timezone.utc).date().isoformat()
+    except (ValueError, TypeError, OverflowError):
+        return None
+    if home and away:
+        return "fixture:" + day + "|" + "|".join(sorted(" ".join(str(t).casefold().split()) for t in (home, away)))
+    return None
+
+
 def fetch_corners_under(sport, universe=None, fixtures=None, now=None):
-    """Buy No where the model's P(under) beats the No ask by CORNERS_EDGE after the Kalshi fee."""
+    """One selection per match: highest model edge after the No ask and fee.
+
+    All total and team thresholds compete together. Ties use lower ask then
+    ticker, independent of venue row order. The publisher locks the first entry.
+    """
     fixtures = _espn_fixtures() if fixtures is None else fixtures
     now = now or datetime.now(timezone.utc)
-    out = []
+    candidates = {}
     for r, ko in _rule_rows(sport, universe):
         if not (now < ko <= now + timedelta(hours=CORNERS_LEAD_H)):
             continue
-        if not (r.get("tradeable") or {}).get("b"):
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("b"):
+            continue
+        key = corners_fixture_key(r)
+        if key is None:
             continue
         p = corners_model(fixtures, r, ko)
         if p is None:
             continue
         no_ask = float(r["price_b"])
+        # Match the publisher's betting price band before selecting a winner.
+        if not 0.05 <= no_ask <= 0.95:
+            continue
         fee = 0.07 * no_ask * (1 - no_ask)
-        if (1 - p) - no_ask - fee >= CORNERS_EDGE:
-            out.append(dict(market_id=r["market_id"], pick="b"))
-    return out
+        edge = (1 - p) - no_ask - fee
+        if edge >= CORNERS_EDGE:
+            rank = (-edge, no_ask, str(r["market_id"]))
+            if key not in candidates or rank < candidates[key][0]:
+                candidates[key] = (rank, dict(market_id=r["market_id"], pick="b"))
+    return [entry[1] for _, entry in sorted(candidates.items())]
 
 
 def fetch_corners_market(sport, universe=None):

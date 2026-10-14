@@ -1149,8 +1149,17 @@ try:
     # lands in every CI log as "! polymarket/nfl failed" — a false alarm on each run,
     # which is exactly how a real failure line gets ignored.
     import contextlib, io
-    with contextlib.redirect_stdout(io.StringIO()):
-        uni_, cov_ = T.collect(verbose=False)
+    # Dedicated readers must also be stubbed to keep this regression offline.
+    from unittest.mock import patch
+    with contextlib.ExitStack() as stack:
+        for name in ("fetch_kalshi_corners", "fetch_kalshi_ftts", "fetch_kalshi_btts", "fetch_kalshi_binary"):
+            stack.enter_context(patch.object(S, name, return_value=[]))
+        for name in ("fetch_kalshi_goals", "fetch_nhl"):
+            stack.enter_context(patch.object(S, name, return_value={}))
+        stack.enter_context(patch.object(S, "apply_espn_starts", side_effect=lambda rows: (rows, {})))
+        stack.enter_context(patch.object(S, "apply_pinnacle_starts", side_effect=lambda sport, rows: (rows, {})))
+        with contextlib.redirect_stdout(io.StringIO()):
+            uni_, cov_ = T.collect(verbose=False)
     ok(set(uni_) == set(S.SPORTS) and uni_["nfl"] == [],
        "one venue failing for one sport leaves every other sport's collection intact")
 finally:
@@ -4852,9 +4861,10 @@ eq(sorted((r["corner_kind"], r["corner_n"], r.get("team")) for r in _crow),
 _p9 = S.corners_model(_chist, [r for r in _crow if r["corner_n"] == 9][0], datetime(2026, 9, 20, 14, tzinfo=timezone.utc))
 ok(0.02 < _p9 < 0.25, f"a match expected to have ~4.5 corners rarely reaches 9 (model {_p9:.2f})")
 _cpicks = S.fetch_corners_under("soccer_corners", universe={"soccer_corners": _crow}, fixtures=_chist, now=_c0)
-eq(sorted(p["market_id"] for p in _cpicks),
-   ["KXEPLCORNERS-26SEP20QUICAL-6", "KXEPLCORNERS-26SEP20QUICAL-9", "KXEPLTCORNERS-26SEP20QUICAL-QUI5"],
-   "No is bought where the model's under beats the No ask by 5c after fees")
+_eligible = [(r, S.corners_model(_chist, r, datetime(2026, 9, 20, 14, tzinfo=timezone.utc))) for r in _crow]
+_best_corner = min(_eligible, key=lambda rp: (-(1-rp[1]-rp[0]["price_b"]-0.07*rp[0]["price_b"]*(1-rp[0]["price_b"])), rp[0]["price_b"], rp[0]["market_id"]))[0]
+eq([p["market_id"] for p in _cpicks], [_best_corner["market_id"]],
+   "one total/team corners selection: highest model edge after fees")
 ok("KXEPLCORNERS-26SEP20QUICAL-3" not in [p["market_id"] for p in _cpicks],
    "and not on the 3+ rung, where the model's under (~0.2) beats the 0.16 No ask by less than 5c")
 eq(S.fetch_corners_under("soccer_corners", universe={"soccer_corners": _crow}, fixtures=_chist,
@@ -5766,26 +5776,26 @@ _spec = [("A", 0.92, 0.79), ("B", 0.85, 0.78), ("C", 0.78, 0.95), ("D", 0.60, 0.
 _ru = {"soccer_o15": [_o15r(f"KXO15-{c}C", a) for c, _f, a in _spec],
        "soccer_p05": [_p05r(f"KXP05-{c}C", f) for c, f, _a in _spec]}
 _code = lambda p: p["market_id"].split("-")[1][0]
-eq([_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru)], ["A", "B"],
+eq([_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru, fixtures=[])], ["A", "B"],
    "the two biggest mismatches on the board — goals come from mismatches, not good fixtures: "
    "over 1.5 runs 73.7% at a 0.30-0.40 favourite and 87.5% at 0.80+, and an all-positive "
    "match goes over 4.67pp LESS often than one with a clear favourite (z -5.79)")
 eq([c for c, _f, _a in _spec if _a > S.O15_RANK_MAX_ASK], ["C"],
    "C is the third-biggest mismatch but is priced above the ceiling")
-ok("C" not in [_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru)],
+ok("C" not in [_code(x) for x in S.fetch_o15_ranked("soccer_o15", _ru, fixtures=[])],
    "so it is dropped BEFORE the ranking, not after — ranking first and then dropping what is "
    "too dear would let a day's best two price out and leave the rule idle beside affordable "
    "candidates it never considered")
 _dear = {"soccer_o15": [_o15r(f"KXO15-{c}C", 0.95) for c, _f, _a in _spec],
          "soccer_p05": _ru["soccer_p05"]}
-eq(S.fetch_o15_ranked("soccer_o15", _dear), [],
+eq(S.fetch_o15_ranked("soccer_o15", _dear, fixtures=[]), [],
    "a board with nothing under the ceiling fires nothing, rather than buying the cheapest "
    "dear thing on it")
 eq(S.fetch_o15_ranked("soccer_o15", {"soccer_o15": _ru["soccer_o15"][:3],
-                                     "soccer_p05": _ru["soccer_p05"][:3]}), [],
+                                     "soccer_p05": _ru["soccer_p05"][:3]}, fixtures=[]), [],
    "and a board too small to rank is not a pool: no choice, no rule")
 _nowin = {"soccer_o15": _ru["soccer_o15"], "soccer_p05": []}
-eq(S.fetch_o15_ranked("soccer_o15", _nowin), [],
+eq(S.fetch_o15_ranked("soccer_o15", _nowin, fixtures=[]), [],
    "a fixture whose winner book cannot be read is not ranked at all — an unpriced tie is "
    "unknown, not competitive, and ranking it zero would call it the safest bet on the board")
 # The low-block exclusion, added 2026-09-24. A mismatch only makes goals if the underdog

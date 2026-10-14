@@ -1422,6 +1422,12 @@ def publish(d, universe, coverage, verbose=True, now=None):
         key = _coin_close(q.get("market_id"))
         if key:
             coin_close.setdefault(src, set()).add(key)
+    # A corners selection never changes on a refresh, even if the old row has
+    # settled, voided, or moved to the archive. Total and team rungs share a key.
+    corners_fixtures = {S.corners_fixture_key(q)
+                        for q in d["quotes"] + (d.get("_archive") or [])
+                        if q.get("bet") and q.get("sport") == "soccer_corners"}
+    corners_fixtures.discard(None)
     added = 0
     # Adapters that pay per page (SportsGambler) read this to skip fixtures no venue
     # prices — a page that can never be scored is not worth a polite second of waiting.
@@ -1632,6 +1638,10 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     key = _coin_close(mid)
                     if key and key in coin_close.get(name, ()):
                         continue
+                if (S.SOURCES.get(name) or {}).get("one_per_corners_fixture"):
+                    fixture = S.corners_fixture_key(r)
+                    if fixture is None or fixture in corners_fixtures:
+                        continue
                 # Strictly before the start, for every source and every venue, checked at
                 # the moment of logging. The venue feeds keep a contest for five minutes
                 # past its start to absorb clock skew, and that window let a tip on Al
@@ -1737,6 +1747,8 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     key = _coin_close(mid)
                     if key:
                         coin_close.setdefault(name, set()).add(key)
+                if bet and (S.SOURCES.get(name) or {}).get("one_per_corners_fixture"):
+                    corners_fixtures.add(S.corners_fixture_key(r))
                 added += 1
 
     snapped = snap_closing(d, universe)
