@@ -340,7 +340,9 @@ method = _section(main, "method")
 ok(method.lstrip().startswith("<details><summary>") and "<details open" not in method.split("</summary>", 1)[0],
    "the venue note is a fold, closed by default")
 ok('id="listing"' in method, "the Polymarket US listing table is inside the fold")
-ok(len(re.findall(r"<p class=\"sm\">", method)) == 2, "the note is two sentences")
+ok(len(re.findall(r"<p class=\"sm\">", method)) == 3, "the folded method includes the shortlist comparison note")
+ok("All eligible first observations" in method and "Selected shortlist" in method,
+   "the folded method compares the shortlist with its eligible population")
 
 print("\nempty ledger")
 empty = tennis_build.build({"quotes": []}, {"pairs": {}}, NOW)
