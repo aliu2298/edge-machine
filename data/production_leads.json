@@ -246,42 +246,6 @@
    "sport": "soccer_u35",
    "status": "miss"
   },
-  "2026-10-10|AS Monaco|Toulouse|AS Monaco to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Toulouse",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "AS Monaco"
-   },
-   "date": "2026-10-10",
-   "edge_at_log": null,
-   "first_seen": "2026-10-08",
-   "headline": "AS Monaco to score 1+",
-   "home": "AS Monaco",
-   "id": "2026-10-10|AS Monaco|Toulouse|AS Monaco to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-10T18:45Z",
-   "lane": "production",
-   "league": "Ligue 1",
-   "match": "AS Monaco v Toulouse",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.9,
-   "published_at": "2026-10-08T22:48:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2636,
-   "route": {
-    "claim": "AS Monaco to score 1+",
-    "event": "KXLIGUE1TEAMTOTAL-26OCT10ASMTFC",
-    "market": "KXLIGUE1TEAMTOTAL-26OCT10ASMTFC-ASM1",
-    "outcome": "Monaco over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.9,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXLIGUE1TEAMTOTAL-26OCT10ASMTFC-ASM1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-10-10|Alav\u00e9s|Atl\u00e9tico Madrid|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
    "away": "Atl\u00e9tico Madrid",
    "bet": {
@@ -421,42 +385,6 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
-  "2026-10-10|New England Revolution|Seattle Sounders FC|Seattle Sounders FC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Seattle Sounders FC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Seattle Sounders FC"
-   },
-   "date": "2026-10-10",
-   "edge_at_log": null,
-   "first_seen": "2026-10-09",
-   "headline": "Seattle Sounders FC to score 1+",
-   "home": "New England Revolution",
-   "id": "2026-10-10|New England Revolution|Seattle Sounders FC|Seattle Sounders FC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-10T23:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "New England Revolution v Seattle Sounders FC",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-09T03:50:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2619,
-   "route": {
-    "claim": "Seattle Sounders FC to score 1+",
-    "event": "KXMLSTEAMTOTAL-26OCT10NESEA",
-    "market": "KXMLSTEAMTOTAL-26OCT10NESEA-SEA1",
-    "outcome": "Seattle over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26OCT10NESEA-SEA1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-10-10|RB Leipzig|Eintracht Frankfurt|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Eintracht Frankfurt",
    "bet": {
@@ -491,42 +419,6 @@
    "source": "bund_o35",
    "sport": "soccer_u35",
    "status": "hit"
-  },
-  "2026-10-10|Real Madrid|Villarreal|Villarreal to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Villarreal",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Villarreal"
-   },
-   "date": "2026-10-10",
-   "edge_at_log": null,
-   "first_seen": "2026-10-08",
-   "headline": "Villarreal to score 1+",
-   "home": "Real Madrid",
-   "id": "2026-10-10|Real Madrid|Villarreal|Villarreal to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-10T19:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Real Madrid v Villarreal",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.69,
-   "published_at": "2026-10-08T22:48:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2651,
-   "route": {
-    "claim": "Villarreal to score 1+",
-    "event": "KXLALIGATEAMTOTAL-26OCT10RMAVIL",
-    "market": "KXLALIGATEAMTOTAL-26OCT10RMAVIL-VIL1",
-    "outcome": "Villarreal over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.69,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXLALIGATEAMTOTAL-26OCT10RMAVIL-VIL1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "miss"
   },
   "2026-10-10|SC Paderborn 07|VfB Stuttgart|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "VfB Stuttgart",
@@ -597,42 +489,6 @@
    "source": "bund_o35",
    "sport": "soccer_u35",
    "status": "hit"
-  },
-  "2026-10-11|Como|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "AS Roma",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "AS Roma"
-   },
-   "date": "2026-10-11",
-   "edge_at_log": null,
-   "first_seen": "2026-10-09",
-   "headline": "AS Roma to score 1+",
-   "home": "Como",
-   "id": "2026-10-11|Como|AS Roma|AS Roma to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-11T10:30Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Como v AS Roma",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.82,
-   "published_at": "2026-10-09T12:37:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2752,
-   "route": {
-    "claim": "AS Roma to score 1+",
-    "event": "KXSERIEATEAMTOTAL-26OCT11COMROM",
-    "market": "KXSERIEATEAMTOTAL-26OCT11COMROM-ROM1",
-    "outcome": "Roma over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.82,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXSERIEATEAMTOTAL-26OCT11COMROM-ROM1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "miss"
   },
   "2026-10-11|FC Cologne|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "Borussia M\u00f6nchengladbach",
@@ -807,78 +663,6 @@
    "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT11SASACM-2",
    "source": "o15_ranked",
    "sport": "soccer_o15",
-   "status": "hit"
-  },
-  "2026-10-11|Sporting Kansas City|Portland Timbers|Sporting Kansas City to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Portland Timbers",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Sporting Kansas City"
-   },
-   "date": "2026-10-11",
-   "edge_at_log": null,
-   "first_seen": "2026-10-09",
-   "headline": "Sporting Kansas City to score 1+",
-   "home": "Sporting Kansas City",
-   "id": "2026-10-11|Sporting Kansas City|Portland Timbers|Sporting Kansas City to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-11T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Sporting Kansas City v Portland Timbers",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.87,
-   "published_at": "2026-10-09T08:06:15+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2423,
-   "route": {
-    "claim": "Sporting Kansas City to score 1+",
-    "event": "KXMLSTEAMTOTAL-26OCT10SKCPOR",
-    "market": "KXMLSTEAMTOTAL-26OCT10SKCPOR-SKC1",
-    "outcome": "Kansas City over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.87,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26OCT10SKCPOR-SKC1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
-  "2026-10-11|St. Louis CITY SC|LA Galaxy|St. Louis CITY SC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "LA Galaxy",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "St. Louis CITY SC"
-   },
-   "date": "2026-10-11",
-   "edge_at_log": null,
-   "first_seen": "2026-10-10",
-   "headline": "St. Louis CITY SC to score 1+",
-   "home": "St. Louis CITY SC",
-   "id": "2026-10-11|St. Louis CITY SC|LA Galaxy|St. Louis CITY SC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-11T23:00Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "St. Louis CITY SC v LA Galaxy",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.93,
-   "published_at": "2026-10-10T03:44:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2595,
-   "route": {
-    "claim": "St. Louis CITY SC to score 1+",
-    "event": "KXMLSTEAMTOTAL-26OCT11STLLAG",
-    "market": "KXMLSTEAMTOTAL-26OCT11STLLAG-STL1",
-    "outcome": "Saint Louis over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.93,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26OCT11STLLAG-STL1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
    "status": "hit"
   },
   "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule": {
@@ -2009,42 +1793,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-13|Lens|Sporting CP|Sporting CP to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Sporting CP",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Sporting CP"
-   },
-   "date": "2026-10-13",
-   "edge_at_log": null,
-   "first_seen": "2026-10-11",
-   "headline": "Sporting CP to score 1+",
-   "home": "Lens",
-   "id": "2026-10-13|Lens|Sporting CP|Sporting CP to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-13T16:45Z",
-   "lane": "production",
-   "league": "Champions League",
-   "match": "Lens v Sporting CP",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-11T17:49:30+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2815,
-   "route": {
-    "claim": "Sporting CP to score 1+",
-    "event": "KXUCLTEAMTOTAL-26OCT13RCLSPO",
-    "market": "KXUCLTEAMTOTAL-26OCT13RCLSPO-SPO1",
-    "outcome": "Sporting CP over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXUCLTEAMTOTAL-26OCT13RCLSPO-SPO1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "hit"
-  },
   "2026-10-13|RB Leipzig|PSV Eindhoven|Under 6 corners \u00b7 RB Leipzig \u00b7 Corners under form rule": {
    "away": "PSV Eindhoven",
    "bet": {
@@ -2190,44 +1938,6 @@
    "sport": "cricket",
    "status": "pending"
   },
-  "2026-10-14|Real Betis|FC Porto|Real Betis to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "FC Porto",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Real Betis"
-   },
-   "date": "2026-10-14",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Real Betis to score 1+",
-   "home": "Real Betis",
-   "id": "2026-10-14|Real Betis|FC Porto|Real Betis to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-14T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T03:58:01+00:00",
-   "league": "Champions League",
-   "match": "Real Betis v FC Porto",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.84,
-   "published_at": "2026-10-12T21:27:56+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2732,
-   "route": {
-    "claim": "Real Betis to score 1+",
-    "event": "KXUCLTEAMTOTAL-26OCT14RBBFCP",
-    "market": "KXUCLTEAMTOTAL-26OCT14RBBFCP-RBB1",
-    "outcome": "Real Betis over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.84,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXUCLTEAMTOTAL-26OCT14RBBFCP-RBB1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "pending"
-  },
   "2026-10-14|South Africa Champions|Bangladesh Champions|South Africa Champions to win \u00b7 Oddspedia community tips": {
    "away": "Bangladesh Champions",
    "bet": {
@@ -2263,44 +1973,6 @@
    "sandbox_quote": "oddspedia:KXT20MATCH-26OCT141130SACHPBANCHP",
    "source": "oddspedia",
    "sport": "cricket",
-   "status": "pending"
-  },
-  "2026-10-14|Toronto FC|Orlando City SC|Orlando City SC to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Orlando City SC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Orlando City SC"
-   },
-   "date": "2026-10-14",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Orlando City SC to score 1+",
-   "home": "Toronto FC",
-   "id": "2026-10-14|Toronto FC|Orlando City SC|Orlando City SC to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-14T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T03:58:01+00:00",
-   "league": "MLS",
-   "match": "Toronto FC v Orlando City SC",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.82,
-   "published_at": "2026-10-13T03:34:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2635,
-   "route": {
-    "claim": "Orlando City SC to score 1+",
-    "event": "KXMLSTEAMTOTAL-26OCT14TORORL",
-    "market": "KXMLSTEAMTOTAL-26OCT14TORORL-ORL1",
-    "outcome": "Orlando over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.82,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXMLSTEAMTOTAL-26OCT14TORORL-ORL1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
    "status": "pending"
   },
   "2026-10-15|Al Khaleej|Al Fayha|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
@@ -2412,82 +2084,6 @@
    "sandbox_quote": "u35_low_scoring:KXMLSTOTAL-26OCT14RSLSJ-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-15|TSG Hoffenheim|Besiktas|Besiktas to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Besiktas",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Besiktas"
-   },
-   "date": "2026-10-15",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Besiktas to score 1+",
-   "home": "TSG Hoffenheim",
-   "id": "2026-10-15|TSG Hoffenheim|Besiktas|Besiktas to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-15T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T03:58:01+00:00",
-   "league": "Europa League",
-   "match": "TSG Hoffenheim v Besiktas",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-13T20:16:50+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2803,
-   "route": {
-    "claim": "Besiktas to score 1+",
-    "event": "KXUELTEAMTOTAL-26OCT15TSGBES",
-    "market": "KXUELTEAMTOTAL-26OCT15TSGBES-BES1",
-    "outcome": "Besiktas over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXUELTEAMTOTAL-26OCT15TSGBES-BES1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
-   "status": "pending"
-  },
-  "2026-10-15|Union St.-Gilloise|Real Sociedad|Union St.-Gilloise to score 1+ \u00b7 Team scores 1+ form rule": {
-   "away": "Real Sociedad",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Union St.-Gilloise"
-   },
-   "date": "2026-10-15",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Union St.-Gilloise to score 1+",
-   "home": "Union St.-Gilloise",
-   "id": "2026-10-15|Union St.-Gilloise|Real Sociedad|Union St.-Gilloise to score 1+ \u00b7 Team scores 1+ form rule",
-   "kickoff": "2026-10-15T16:45Z",
-   "lane": "production",
-   "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T03:58:01+00:00",
-   "league": "Europa League",
-   "match": "Union St.-Gilloise v Real Sociedad",
-   "pair": "team1_form_l5|soccer_team1",
-   "price_at_log": 0.82,
-   "published_at": "2026-10-13T17:33:55+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2831,
-   "route": {
-    "claim": "Union St.-Gilloise to score 1+",
-    "event": "KXUELTEAMTOTAL-26OCT15USGRSO",
-    "market": "KXUELTEAMTOTAL-26OCT15USGRSO-USG1",
-    "outcome": "Union Gilloise over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.82,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team1_form_l5:KXUELTEAMTOTAL-26OCT15USGRSO-USG1",
-   "source": "team1_form_l5",
-   "sport": "soccer_team1",
    "status": "pending"
   },
   "2026-10-16|Deportivo|Levante|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
@@ -3297,31 +2893,6 @@
     "under_target": 0
    }
   },
-  "team1_form_l5|soccer_team1": {
-   "by_hand": "2026-09-18",
-   "entered_at": "2026-09-18T00:51:24+00:00",
-   "promoted_at": "2026-09-18T00:43:21+00:00",
-   "ready_at": "2026-09-18T00:51:24+00:00",
-   "route": "moved by hand on 2026-09-18",
-   "routing": {
-    "leads": 11,
-    "problem": null,
-    "routed": 11,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0071,
-   "sandbox_n": 21,
-   "sandbox_roi": -0.05,
-   "sandbox_roi_fee": -0.0598,
-   "timing": {
-    "late": [],
-    "timed": 11,
-    "under_target": 0
-   }
-  },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
    "entered_at": "2026-10-01T16:20:16+00:00",
@@ -3506,6 +3077,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-14T04:05:38+00:00",
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 7,

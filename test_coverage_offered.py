@@ -91,10 +91,10 @@ def main():
        ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "corners_under|soccer_corners",
         "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
         "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
-        "oddspedia|cricket", "team1_form_l5|soccer_team1", "team1_form_l5|soccer_team1_intl",
+        "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
         "team2_ranked|soccer_team2", "tennis_combo2|tennis_combo", "turkey_btts_dog|soccer_btts",
         "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
-       "PAIR_OVERRIDES is the eighteen pairs moved by hand: the six of 2026-10-08, "
+       "PAIR_OVERRIDES is the seventeen pairs moved by hand (team scores 1+ · Clubs out 2026-10-14): the six of 2026-10-08, "
        "commodities on 2026-10-09 and the six of 2026-10-11 included")
 
     print("\n0 of 0 — nothing offered")

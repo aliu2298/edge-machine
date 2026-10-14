@@ -244,7 +244,9 @@ PAIR_OVERRIDES = {
     # bets (-57.6%) — a record that cannot say anything either way. Taken off 2026-09-21 as
     # asked. No pair belongs in Production on a sample that small because its sibling once looked good.
     #   team scores 1+ — was on fast-track probation, which no longer exists as a route.
-    "team1_form_l5|soccer_team1": dict(moved_on="2026-09-18", production_at=None),
+    #   team scores 1+ · Clubs — listed 2026-09-18, OUT 2026-10-14 as asked, and retired with it:
+    #   21-4 on 25 settled at -1.5% after fees, -6.0% on 21 since it entered Production,
+    #   and the other side lost too (-27.4% per contract), so it points neither way.
     # 2026-10-01, as asked. The internationals twin, named as its own pair. The
     # league pair above does not cover it, and neither does any other suffix:
     # the cup twin is not listed. Same checks as the league pair.
