@@ -640,7 +640,7 @@ def order_counts(ex):
     """Every order this module has at the broker, counted once each, for the Trading page.
 
     sent      every em- order in the window
-    filled    filled (matched to a trade or not: an orphan was still filled)
+    filled    finished with executed shares, including terminal partial fills
     unfilled  finished with nothing filled: cancelled, expired, rejected, done for the day
     working   not finished yet: queued for the open, or part filled
     since     the day the first of them was submitted
@@ -651,7 +651,7 @@ def order_counts(ex):
     for o in ex.values():
         status = o.get("status")
         qty = float(o.get("filled_qty") or 0)
-        if status == "filled":
+        if status == "filled" or (status in TERMINAL and qty > 0):
             filled += 1
         elif status in TERMINAL and not qty:
             unfilled += 1
@@ -675,7 +675,7 @@ def held_positions(rows):
     """
     bought, sold, meta = {}, {}, {}
     for r in rows:
-        if r.get("status") != "filled":
+        if int(r.get("qty") or 0) <= 0:
             continue
         meta[r["id"]] = (r.get("rule"), r.get("symbol"))
         book = bought if r.get("side") == "buy" else sold
