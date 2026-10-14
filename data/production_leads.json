@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-14T01:53:29+00:00",
+ "board_built_at": "2026-10-14T03:58:01+00:00",
  "leads": {
   "2026-10-08|KXBTCD-26OCT0817-T80249.99|$80,250 or above at the close \u00b7 Crypto favourite band": {
    "away": null,
@@ -19,6 +19,9 @@
    "match": "Bitcoin price on Oct 8, 2026",
    "pair": "crypto_fav_band|crypto_fav",
    "price_at_log": 0.76,
+   "published_at": "2026-10-08T17:49:39+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 195,
    "route": {
     "claim": "$80,250 or above at the close",
     "event": "KXBTCD-26OCT0817",
@@ -51,6 +54,9 @@
    "match": "Ethereum price at Oct 8, 2026 at 5pm EDT",
    "pair": "crypto_fav_band|crypto_fav",
    "price_at_log": 0.71,
+   "published_at": "2026-10-08T17:55:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 189,
    "route": {
     "claim": "$2,400 or above at the close",
     "event": "KXETHD-26OCT0817",
@@ -83,6 +89,9 @@
    "match": "Borussia Dortmund v Werder Bremen",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.49,
+   "published_at": "2026-10-05T19:40:24+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5689,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT09BVBSVW",
@@ -115,6 +124,9 @@
    "match": "Braga v Sporting CP",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.76,
+   "published_at": "2026-10-06T21:28:53+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4186,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXLIGAPORTUGALTOTAL-26OCT09BRASPO",
@@ -147,6 +159,9 @@
    "match": "Ethereum price at Oct 9, 2026 at 5pm EDT",
    "pair": "crypto_fav_band|crypto_fav",
    "price_at_log": 0.78,
+   "published_at": "2026-10-09T17:49:14+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 195,
    "route": {
     "claim": "$2,470 or above at the close",
     "event": "KXETHD-26OCT0917",
@@ -179,6 +194,9 @@
    "match": "WTI crude close on Oct 9, 2026",
    "pair": "commod_fav_band|commodities_fav",
    "price_at_log": 0.78,
+   "published_at": "2026-10-09T16:19:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 130,
    "route": {
     "claim": "Above $90.99 at the close",
     "event": "KXWTI-26OCT0914",
@@ -211,6 +229,9 @@
    "match": "1. FC Union Berlin v SV Elversberg",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.41,
+   "published_at": "2026-10-06T16:24:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5585,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT10UNISVE",
@@ -244,6 +265,9 @@
    "match": "AS Monaco v Toulouse",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.9,
+   "published_at": "2026-10-08T22:48:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2636,
    "route": {
     "claim": "AS Monaco to score 1+",
     "event": "KXLIGUE1TEAMTOTAL-26OCT10ASMTFC",
@@ -275,6 +299,9 @@
    "match": "Alav\u00e9s v Atl\u00e9tico Madrid",
    "pair": "liga_btts_even|soccer_btts",
    "price_at_log": 0.54,
+   "published_at": "2026-10-06T16:24:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5630,
    "route": {
     "claim": "Both teams to score",
     "event": "KXLALIGABTTS-26OCT10ALAATM",
@@ -307,6 +334,9 @@
    "match": "Brest v Angers",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.79,
+   "published_at": "2026-10-06T21:28:53+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5596,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXLIGUE1TOTAL-26OCT10STBANG",
@@ -339,6 +369,9 @@
    "match": "FC Augsburg v Bayern Munich",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.71,
+   "published_at": "2026-10-06T16:24:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5585,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT10FCABMU",
@@ -371,6 +404,9 @@
    "match": "Mainz v Bayer Leverkusen",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.46,
+   "published_at": "2026-10-06T16:24:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5585,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT10M05LEV",
@@ -404,6 +440,9 @@
    "match": "New England Revolution v Seattle Sounders FC",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.77,
+   "published_at": "2026-10-09T03:50:33+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2619,
    "route": {
     "claim": "Seattle Sounders FC to score 1+",
     "event": "KXMLSTEAMTOTAL-26OCT10NESEA",
@@ -436,6 +475,9 @@
    "match": "RB Leipzig v Eintracht Frankfurt",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.56,
+   "published_at": "2026-10-06T17:13:37+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5716,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT10RBLSGE",
@@ -469,6 +511,9 @@
    "match": "Real Madrid v Villarreal",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.69,
+   "published_at": "2026-10-08T22:48:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2651,
    "route": {
     "claim": "Villarreal to score 1+",
     "event": "KXLALIGATEAMTOTAL-26OCT10RMAVIL",
@@ -501,6 +546,9 @@
    "match": "SC Paderborn 07 v VfB Stuttgart",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.5,
+   "published_at": "2026-10-06T16:24:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5585,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT10PADVFB",
@@ -533,6 +581,9 @@
    "match": "TSG Hoffenheim v Hamburg SV",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.49,
+   "published_at": "2026-10-06T16:24:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5585,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT10TSGHSV",
@@ -566,6 +617,9 @@
    "match": "Como v AS Roma",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.82,
+   "published_at": "2026-10-09T12:37:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2752,
    "route": {
     "claim": "AS Roma to score 1+",
     "event": "KXSERIEATEAMTOTAL-26OCT11COMROM",
@@ -598,6 +652,9 @@
    "match": "FC Cologne v Borussia M\u00f6nchengladbach",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.44,
+   "published_at": "2026-10-07T16:46:32+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5563,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT11KOEBMG",
@@ -630,6 +687,9 @@
    "match": "Lecce v Bologna",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.74,
+   "published_at": "2026-10-08T07:37:06+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4642,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXSERIEATOTAL-26OCT11LECBFC",
@@ -662,6 +722,9 @@
    "match": "Real Betis v Osasuna",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.78,
+   "published_at": "2026-10-07T16:46:32+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5743,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXLALIGATOTAL-26OCT11RBBOSA",
@@ -694,6 +757,9 @@
    "match": "SC Freiburg v Schalke 04",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.39,
+   "published_at": "2026-10-07T16:46:32+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5683,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT11SCFSCH",
@@ -726,6 +792,9 @@
    "match": "Sassuolo v AC Milan",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.8,
+   "published_at": "2026-10-07T16:46:32+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5713,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXSERIEATOTAL-26OCT11SASACM",
@@ -759,6 +828,9 @@
    "match": "Sporting Kansas City v Portland Timbers",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.87,
+   "published_at": "2026-10-09T08:06:15+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2423,
    "route": {
     "claim": "Sporting Kansas City to score 1+",
     "event": "KXMLSTEAMTOTAL-26OCT10SKCPOR",
@@ -792,6 +864,9 @@
    "match": "St. Louis CITY SC v LA Galaxy",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.93,
+   "published_at": "2026-10-10T03:44:02+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2595,
    "route": {
     "claim": "St. Louis CITY SC to score 1+",
     "event": "KXMLSTEAMTOTAL-26OCT11STLLAG",
@@ -824,6 +899,9 @@
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.51,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 10 corners",
     "event": "KXEPLCORNERS-26OCT12COVNEW",
@@ -856,6 +934,9 @@
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.61,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 11 corners",
     "event": "KXEPLCORNERS-26OCT12COVNEW",
@@ -889,6 +970,9 @@
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.51,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 5 corners \u00b7 Coventry City",
     "event": "KXEPLTCORNERS-26OCT12COVNEW",
@@ -921,6 +1005,9 @@
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.18,
+   "published_at": "2026-10-12T17:49:35+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 70,
    "route": {
     "claim": "Under 7 corners",
     "event": "KXEPLCORNERS-26OCT12COVNEW",
@@ -953,6 +1040,9 @@
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.28,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 8 corners",
     "event": "KXEPLCORNERS-26OCT12COVNEW",
@@ -985,6 +1075,9 @@
    "match": "Coventry City v Newcastle United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.38,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 9 corners",
     "event": "KXEPLCORNERS-26OCT12COVNEW",
@@ -1017,6 +1110,9 @@
    "match": "FC Famalicao v Alverca",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.75,
+   "published_at": "2026-10-09T21:21:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4193,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV",
@@ -1049,6 +1145,9 @@
    "match": "FC Famalicao v Alverca",
    "pair": "u35_low_scoring|soccer_u35",
    "price_at_log": 0.76,
+   "published_at": "2026-10-09T21:21:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4193,
    "route": {
     "claim": "Under 3.5 goals",
     "event": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV",
@@ -1082,6 +1181,9 @@
    "match": "Levante v Sevilla",
    "pair": "team2_ranked|soccer_team2",
    "price_at_log": 0.33,
+   "published_at": "2026-10-12T17:49:35+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 70,
    "route": {
     "claim": "Sevilla to score 2+",
     "event": "KXLALIGATEAMTOTAL-26OCT12LEVSEV",
@@ -1114,6 +1216,9 @@
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.54,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 10 corners",
     "event": "KXLALIGACORNERS-26OCT12LEVSEV",
@@ -1146,6 +1251,9 @@
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.64,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 11 corners",
     "event": "KXLALIGACORNERS-26OCT12LEVSEV",
@@ -1179,6 +1287,9 @@
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.49,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 5 corners \u00b7 Levante",
     "event": "KXLALIGATCORNERS-26OCT12LEVSEV",
@@ -1211,6 +1322,9 @@
    "match": "Levante v Sevilla",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.41,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
    "route": {
     "claim": "Under 9 corners",
     "event": "KXLALIGACORNERS-26OCT12LEVSEV",
@@ -1244,6 +1358,9 @@
    "match": "Arsenal v Lille",
    "pair": "team2_ranked|soccer_team2",
    "price_at_log": 0.74,
+   "published_at": "2026-10-13T18:33:55+00:00",
+   "published_late": true,
+   "published_min_before_kickoff": 26,
    "route": {
     "claim": "Arsenal to score 2+",
     "event": "KXUCLTEAMTOTAL-26OCT13ARSLIL",
@@ -1276,6 +1393,9 @@
    "match": "Arsenal v Lille",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.55,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 10 corners",
     "event": "KXUCLCORNERS-26OCT13ARSLIL",
@@ -1308,6 +1428,9 @@
    "match": "Arsenal v Lille",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.66,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 11 corners",
     "event": "KXUCLCORNERS-26OCT13ARSLIL",
@@ -1341,6 +1464,9 @@
    "match": "Arsenal v Lille",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.54,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 7 corners \u00b7 Arsenal",
     "event": "KXUCLTCORNERS-26OCT13ARSLIL",
@@ -1373,6 +1499,9 @@
    "match": "Arsenal v Lille",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.24,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 7 corners",
     "event": "KXUCLCORNERS-26OCT13ARSLIL",
@@ -1405,6 +1534,9 @@
    "match": "Arsenal v Lille",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.32,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 8 corners",
     "event": "KXUCLCORNERS-26OCT13ARSLIL",
@@ -1437,6 +1569,9 @@
    "match": "Arsenal v Lille",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.43,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 9 corners",
     "event": "KXUCLCORNERS-26OCT13ARSLIL",
@@ -1470,6 +1605,9 @@
    "match": "Atl\u00e9tico Madrid v Manchester United",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.52,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 6 corners \u00b7 Atl\u00e9tico Madrid",
     "event": "KXUCLTCORNERS-26OCT13ATMMUN",
@@ -1502,6 +1640,9 @@
    "match": "Dolphins v North West Dragons",
    "pair": "oddspedia|cricket",
    "price_at_log": 0.55,
+   "published_at": "2026-10-13T11:38:54+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 261,
    "route": {
     "claim": "Dolphins to win",
     "event": "KXT20MATCH-26OCT131200DOLNWD",
@@ -1534,6 +1675,9 @@
    "match": "Eastern Cape Iinyathi v Lions",
    "pair": "oddspedia|cricket",
    "price_at_log": 0.78,
+   "published_at": "2026-10-13T12:41:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 198,
    "route": {
     "claim": "Lions to win",
     "event": "KXT20MATCH-26OCT131200ECILIO",
@@ -1566,6 +1710,9 @@
    "match": "Galatasaray v Barcelona",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.45,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 10 corners",
     "event": "KXUCLCORNERS-26OCT13GALBAR",
@@ -1598,6 +1745,9 @@
    "match": "Galatasaray v Barcelona",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.56,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 11 corners",
     "event": "KXUCLCORNERS-26OCT13GALBAR",
@@ -1631,6 +1781,9 @@
    "match": "Galatasaray v Barcelona",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.53,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 7 corners \u00b7 Barcelona",
     "event": "KXUCLTCORNERS-26OCT13GALBAR",
@@ -1663,6 +1816,9 @@
    "match": "Galatasaray v Barcelona",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.23,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 8 corners",
     "event": "KXUCLCORNERS-26OCT13GALBAR",
@@ -1696,6 +1852,9 @@
    "match": "Internazionale v Club Brugge",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.51,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 7 corners \u00b7 Internazionale",
     "event": "KXUCLTCORNERS-26OCT13INTBRU",
@@ -1728,6 +1887,9 @@
    "match": "Brent crude close on Oct 13, 2026",
    "pair": "commod_fav_band|commodities_fav",
    "price_at_log": 0.72,
+   "published_at": "2026-10-13T18:33:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 146,
    "route": {
     "claim": "Above $103 at the close",
     "event": "KXBRENTD-26OCT1317",
@@ -1760,6 +1922,9 @@
    "match": "Gold close on Oct 13, 2026",
    "pair": "commod_fav_band|commodities_fav",
    "price_at_log": 0.73,
+   "published_at": "2026-10-13T18:33:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 146,
    "route": {
     "claim": "Above $4154 at the close",
     "event": "KXGOLDD-26OCT1317",
@@ -1792,6 +1957,9 @@
    "match": "Natural gas close on Oct 13, 2026",
    "pair": "commod_fav_band|commodities_fav",
    "price_at_log": 0.76,
+   "published_at": "2026-10-13T17:33:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 206,
    "route": {
     "claim": "Above $3.510 at the close",
     "event": "KXNATGASD-26OCT1317",
@@ -1824,6 +1992,9 @@
    "match": "WTI crude close on Oct 13, 2026",
    "pair": "commod_fav_band|commodities_fav",
    "price_at_log": 0.75,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 205,
    "route": {
     "claim": "Above $93.49 at the close",
     "event": "KXWTI-26OCT1314",
@@ -1857,6 +2028,9 @@
    "match": "Lens v Sporting CP",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.8,
+   "published_at": "2026-10-11T17:49:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2815,
    "route": {
     "claim": "Sporting CP to score 1+",
     "event": "KXUCLTEAMTOTAL-26OCT13RCLSPO",
@@ -1890,6 +2064,9 @@
    "match": "RB Leipzig v PSV Eindhoven",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.53,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 6 corners \u00b7 RB Leipzig",
     "event": "KXUCLTCORNERS-26OCT13RBLPSV",
@@ -1923,6 +2100,9 @@
    "match": "Viking FK v Bayern Munich",
    "pair": "corners_under|soccer_corners",
    "price_at_log": 0.55,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
    "route": {
     "claim": "Under 8 corners \u00b7 Bayern Munich",
     "event": "KXUCLTCORNERS-26OCT13VIKBMU",
@@ -1952,11 +2132,14 @@
    "kickoff": "2026-10-14T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "MLS",
    "match": "D.C. United v Red Bull New York",
    "pair": "u35_low_scoring|soccer_u35",
    "price_at_log": 0.58,
+   "published_at": "2026-10-11T01:52:43+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5617,
    "route": {
     "claim": "Under 3.5 goals",
     "event": "KXMLSTOTAL-26OCT14DCUNYRB",
@@ -1986,11 +2169,14 @@
    "kickoff": "2026-10-14T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Cricket",
    "match": "India v West Indies",
    "pair": "oddspedia|cricket",
    "price_at_log": 0.73,
+   "published_at": "2026-10-13T12:41:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 1488,
    "route": {
     "claim": "India to win",
     "market": "aec-t20icr-india-wie-2026-10-14",
@@ -2020,11 +2206,14 @@
    "kickoff": "2026-10-14T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Champions League",
    "match": "Real Betis v FC Porto",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.84,
+   "published_at": "2026-10-12T21:27:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2732,
    "route": {
     "claim": "Real Betis to score 1+",
     "event": "KXUCLTEAMTOTAL-26OCT14RBBFCP",
@@ -2054,11 +2243,14 @@
    "kickoff": "2026-10-14T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Cricket",
    "match": "South Africa Champions v Bangladesh Champions",
    "pair": "oddspedia|cricket",
    "price_at_log": 0.81,
+   "published_at": "2026-10-13T17:33:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 1316,
    "route": {
     "claim": "South Africa Champions to win",
     "event": "KXT20MATCH-26OCT141130SACHPBANCHP",
@@ -2089,11 +2281,14 @@
    "kickoff": "2026-10-14T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "MLS",
    "match": "Toronto FC v Orlando City SC",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.82,
+   "published_at": "2026-10-13T03:34:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2635,
    "route": {
     "claim": "Orlando City SC to score 1+",
     "event": "KXMLSTEAMTOTAL-26OCT14TORORL",
@@ -2123,11 +2318,14 @@
    "kickoff": "2026-10-15T14:50Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Saudi Pro League",
    "match": "Al Khaleej v Al Fayha",
    "pair": "u35_low_scoring|soccer_u35",
    "price_at_log": 0.76,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4242,
    "route": {
     "claim": "Under 3.5 goals",
     "event": "KXSAUDIPLTOTAL-26OCT15KHAFAY",
@@ -2157,11 +2355,14 @@
    "kickoff": "2026-10-15T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Europa League",
    "match": "NEC Nijmegen v Levski Sofia",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.79,
+   "published_at": "2026-10-12T16:07:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4492,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXUELTOTAL-26OCT15NIJLEV",
@@ -2191,11 +2392,14 @@
    "kickoff": "2026-10-15T01:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "MLS",
    "match": "Real Salt Lake v San Jose Earthquakes",
    "pair": "u35_low_scoring|soccer_u35",
    "price_at_log": 0.57,
+   "published_at": "2026-10-11T04:42:47+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5567,
    "route": {
     "claim": "Under 3.5 goals",
     "event": "KXMLSTOTAL-26OCT14RSLSJ",
@@ -2226,11 +2430,14 @@
    "kickoff": "2026-10-15T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Europa League",
    "match": "TSG Hoffenheim v Besiktas",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.77,
+   "published_at": "2026-10-13T20:16:50+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2803,
    "route": {
     "claim": "Besiktas to score 1+",
     "event": "KXUELTEAMTOTAL-26OCT15TSGBES",
@@ -2261,11 +2468,14 @@
    "kickoff": "2026-10-15T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Europa League",
    "match": "Union St.-Gilloise v Real Sociedad",
    "pair": "team1_form_l5|soccer_team1",
    "price_at_log": 0.82,
+   "published_at": "2026-10-13T17:33:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2831,
    "route": {
     "claim": "Union St.-Gilloise to score 1+",
     "event": "KXUELTEAMTOTAL-26OCT15USGRSO",
@@ -2295,11 +2505,14 @@
    "kickoff": "2026-10-16T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "La Liga",
    "match": "Deportivo v Levante",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.75,
+   "published_at": "2026-10-12T21:27:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5612,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXLALIGATOTAL-26OCT16DEPLEV",
@@ -2329,11 +2542,14 @@
    "kickoff": "2026-10-16T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "Eintracht Frankfurt v FC Cologne",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.51,
+   "published_at": "2026-10-12T21:27:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5582,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT16SGEKOE",
@@ -2363,11 +2579,14 @@
    "kickoff": "2026-10-16T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Excelsior",
    "pair": "ere_draw|soccer",
    "price_at_log": 0.25,
+   "published_at": "2026-10-12T07:41:36+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 6378,
    "route": {
     "claim": "Draw",
     "event": "KXEREDIVISIEGAME-26OCT16HEEEXC",
@@ -2397,11 +2616,14 @@
    "kickoff": "2026-10-17T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "1. FC Union Berlin v Borussia Dortmund",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.43,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5665,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT17UNIBVB",
@@ -2431,11 +2653,14 @@
    "kickoff": "2026-10-17T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Serie A",
    "match": "AS Roma v Genoa",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.8,
+   "published_at": "2026-10-13T20:16:50+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5668,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXSERIEATOTAL-26OCT17ROMGEN",
@@ -2465,11 +2690,14 @@
    "kickoff": "2026-10-17T16:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "Bayern Munich v RB Leipzig",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.69,
+   "published_at": "2026-10-13T17:33:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5696,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT17BMURBL",
@@ -2499,11 +2727,14 @@
    "kickoff": "2026-10-17T12:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "La Liga",
    "match": "Espanyol v Atl\u00e9tico Madrid",
    "pair": "o15_ranked|soccer_o15",
    "price_at_log": 0.77,
+   "published_at": "2026-10-13T12:41:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5718,
    "route": {
     "claim": "Over 1.5 goals",
     "event": "KXLALIGATOTAL-26OCT17ESPATM",
@@ -2533,11 +2764,14 @@
    "kickoff": "2026-10-17T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "Hamburg SV v VfB Stuttgart",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.49,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5665,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT17HSVVFB",
@@ -2567,11 +2801,14 @@
    "kickoff": "2026-10-17T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "MLS",
    "match": "New York City FC v LAFC",
    "pair": "u35_low_scoring|soccer_u35",
    "price_at_log": 0.72,
+   "published_at": "2026-10-14T01:52:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5617,
    "route": {
     "claim": "Under 3.5 goals",
     "event": "KXMLSTOTAL-26OCT17NYCLAFC",
@@ -2601,11 +2838,14 @@
    "kickoff": "2026-10-17T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "SV Elversberg v FC Augsburg",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.47,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5665,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT17SVEFCA",
@@ -2635,11 +2875,14 @@
    "kickoff": "2026-10-17T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "Schalke 04 v Mainz",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.39,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5665,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT17SCHM05",
@@ -2669,11 +2912,14 @@
    "kickoff": "2026-10-17T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Eredivisie",
    "match": "Sparta v Willem II",
    "pair": "ere_draw|soccer",
    "price_at_log": 0.22,
+   "published_at": "2026-10-13T00:39:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 6860,
    "route": {
     "claim": "Draw",
     "event": "KXEREDIVISIEGAME-26OCT17SPAWIL",
@@ -2703,11 +2949,14 @@
    "kickoff": "2026-10-17T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v SC Paderborn 07",
    "pair": "bund_o35|soccer_u35",
    "price_at_log": 0.42,
+   "published_at": "2026-10-13T15:04:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5665,
    "route": {
     "claim": "Over 3.5 goals",
     "event": "KXBUNDESLIGATOTAL-26OCT17SVWPAD",
@@ -2737,11 +2986,14 @@
    "kickoff": "2026-10-18T14:45Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Ajax",
    "pair": "ere_draw|soccer",
    "price_at_log": 0.22,
+   "published_at": "2026-10-14T01:52:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 6532,
    "route": {
     "claim": "Draw",
     "event": "KXEREDIVISIEGAME-26OCT18GROAJA",
@@ -2771,11 +3023,14 @@
    "kickoff": "2026-10-18T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-14",
-   "last_seen_at": "2026-10-14T01:53:29+00:00",
+   "last_seen_at": "2026-10-14T03:58:01+00:00",
    "league": "Eredivisie",
    "match": "Nijmegen v Sittard",
    "pair": "ere_draw|soccer",
    "price_at_log": 0.21,
+   "published_at": "2026-10-14T01:52:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 6727,
    "route": {
     "claim": "Draw",
     "event": "KXEREDIVISIEGAME-26OCT18NIJFOR",
@@ -2810,7 +3065,12 @@
    "sandbox_clv": -0.0122,
    "sandbox_n": 9,
    "sandbox_roi": 0.05,
-   "sandbox_roi_fee": 0.0165
+   "sandbox_roi_fee": 0.0165,
+   "timing": {
+    "late": [],
+    "timed": 16,
+    "under_target": 0
+   }
   },
   "commod_fav_band|commodities_fav": {
    "by_hand": "2026-10-09",
@@ -2830,7 +3090,12 @@
    "sandbox_clv": 0.035,
    "sandbox_n": 2,
    "sandbox_roi": 0.317,
-   "sandbox_roi_fee": 0.2952
+   "sandbox_roi_fee": 0.2952,
+   "timing": {
+    "late": [],
+    "timed": 5,
+    "under_target": 0
+   }
   },
   "corners_under|soccer_corners": {
    "by_hand": "2026-10-11",
@@ -2850,7 +3115,12 @@
    "sandbox_clv": 0.0236,
    "sandbox_n": 8,
    "sandbox_roi": 0.3422,
-   "sandbox_roi_fee": 0.2945
+   "sandbox_roi_fee": 0.2945,
+   "timing": {
+    "late": [],
+    "timed": 24,
+    "under_target": 0
+   }
   },
   "crypto_fav_band|crypto_fav": {
    "by_hand": "2026-10-08",
@@ -2870,7 +3140,12 @@
    "sandbox_clv": 0.1625,
    "sandbox_n": 2,
    "sandbox_roi": 0.3221,
-   "sandbox_roi_fee": 0.2999
+   "sandbox_roi_fee": 0.2999,
+   "timing": {
+    "late": [],
+    "timed": 3,
+    "under_target": 0
+   }
   },
   "ere_draw|soccer": {
    "by_hand": "2026-10-11",
@@ -2890,7 +3165,12 @@
    "sandbox_clv": null,
    "sandbox_n": 0,
    "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 4,
+    "under_target": 0
+   }
   },
   "liga_btts_even|soccer_btts": {
    "by_hand": "2026-10-08",
@@ -2910,7 +3190,12 @@
    "sandbox_clv": -0.02,
    "sandbox_n": 1,
    "sandbox_roi": 0.8519,
-   "sandbox_roi_fee": 0.7941
+   "sandbox_roi_fee": 0.7941,
+   "timing": {
+    "late": [],
+    "timed": 1,
+    "under_target": 0
+   }
   },
   "o15_form_l10|soccer_o15": {
    "by_hand": "2026-10-08",
@@ -2930,7 +3215,12 @@
    "sandbox_clv": null,
    "sandbox_n": 0,
    "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   },
   "o15_ranked|soccer_o15": {
    "by_hand": "2026-10-08",
@@ -2950,7 +3240,12 @@
    "sandbox_clv": -0.0033,
    "sandbox_n": 6,
    "sandbox_roi": 0.2997,
-   "sandbox_roi_fee": 0.2791
+   "sandbox_roi_fee": 0.2791,
+   "timing": {
+    "late": [],
+    "timed": 10,
+    "under_target": 0
+   }
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
@@ -2970,7 +3265,12 @@
    "sandbox_clv": -0.0063,
    "sandbox_n": 8,
    "sandbox_roi": -0.0142,
-   "sandbox_roi_fee": -0.0304
+   "sandbox_roi_fee": -0.0304,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -2990,7 +3290,12 @@
    "sandbox_clv": 0.025,
    "sandbox_n": 2,
    "sandbox_roi": 0.5502,
-   "sandbox_roi_fee": 0.5127
+   "sandbox_roi_fee": 0.5127,
+   "timing": {
+    "late": [],
+    "timed": 4,
+    "under_target": 0
+   }
   },
   "team1_form_l5|soccer_team1": {
    "by_hand": "2026-09-18",
@@ -3010,7 +3315,12 @@
    "sandbox_clv": -0.0071,
    "sandbox_n": 21,
    "sandbox_roi": -0.05,
-   "sandbox_roi_fee": -0.0598
+   "sandbox_roi_fee": -0.0598,
+   "timing": {
+    "late": [],
+    "timed": 11,
+    "under_target": 0
+   }
   },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
@@ -3030,7 +3340,12 @@
    "sandbox_clv": -0.022,
    "sandbox_n": 5,
    "sandbox_roi": 0.1895,
-   "sandbox_roi_fee": 0.1765
+   "sandbox_roi_fee": 0.1765,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   },
   "team2_ranked|soccer_team2": {
    "by_hand": "2026-10-11",
@@ -3050,7 +3365,20 @@
    "sandbox_clv": 0.025,
    "sandbox_n": 2,
    "sandbox_roi": 1.1909,
-   "sandbox_roi_fee": 1.1108
+   "sandbox_roi_fee": 1.1108,
+   "timing": {
+    "late": [
+     {
+      "headline": "Arsenal to score 2+",
+      "id": "2026-10-13|Arsenal|Lille|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
+      "kickoff": "2026-10-13T19:00Z",
+      "match": "Arsenal v Lille",
+      "minutes": 26
+     }
+    ],
+    "timed": 2,
+    "under_target": 1
+   }
   },
   "tennis_combo2|tennis_combo": {
    "by_hand": "2026-10-08",
@@ -3070,7 +3398,12 @@
    "sandbox_clv": -0.0005,
    "sandbox_n": 6,
    "sandbox_roi": -0.0652,
-   "sandbox_roi_fee": -0.0926
+   "sandbox_roi_fee": -0.0926,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   },
   "turkey_btts_dog|soccer_btts": {
    "by_hand": "2026-10-11",
@@ -3090,7 +3423,12 @@
    "sandbox_clv": null,
    "sandbox_n": 0,
    "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   },
   "turkey_o25_dog|soccer_o25": {
    "by_hand": "2026-10-11",
@@ -3110,7 +3448,12 @@
    "sandbox_clv": null,
    "sandbox_n": 0,
    "sandbox_roi": null,
-   "sandbox_roi_fee": null
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   },
   "u35_low_scoring|soccer_u35": {
    "by_hand": "2026-10-11",
@@ -3130,7 +3473,12 @@
    "sandbox_clv": -0.01,
    "sandbox_n": 1,
    "sandbox_roi": -1.0,
-   "sandbox_roi_fee": -1.0
+   "sandbox_roi_fee": -1.0,
+   "timing": {
+    "late": [],
+    "timed": 5,
+    "under_target": 0
+   }
   },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
@@ -3150,11 +3498,16 @@
    "sandbox_clv": 0.0187,
    "sandbox_n": 8,
    "sandbox_roi": 0.2596,
-   "sandbox_roi_fee": 0.2334
+   "sandbox_roi_fee": 0.2334,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   }
  },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 7,
- "updated_at": "2026-10-14T01:53:29+00:00"
+ "updated_at": "2026-10-14T03:58:01+00:00"
 }
