@@ -27,7 +27,7 @@
 <div class="topbar">
 <a class="brand" href="./index.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Sandbox</a><a href="./production.html">Production</a><a href="./trading.html" aria-current="page">Trading</a><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html">Crypto</a><a href="./commodities.html">Commodities</a><a href="./econ_daily.html">Econ Daily</a><a href="./finance_daily.html">Finance Daily</a><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-14T18:43:38Z">Updated Oct 14, 1:43 PM CT</time><span class="sr-only">updated 2026-10-14 18:43 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-14T22:36:14Z">Updated Oct 14, 5:36 PM CT</time><span class="sr-only">updated 2026-10-14 22:36 UTC</span></p>
 </div>
 <div class="subbar">
 <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch theme" title="Switch between the light and dark theme">Theme</button>
@@ -40,21 +40,21 @@
 <div class="tile"><b>0</b><span>working (30+ days)</span></div>
 <div class="tile"><b>1</b><span>promising</span></div>
 <div class="tile"><b class="">0</b><span>no edge</span></div>
-<div class="tile"><b>336</b><span>trades logged</span></div>
-<div class="tile"><b>80</b><span>open now</span></div>
+<div class="tile"><b>356</b><span>trades logged</span></div>
+<div class="tile"><b>104</b><span>open now</span></div>
 </div>
-<p class="sm trade-source">Run by market_track.py and market_exec.py in edge-machine, on edge-vps (edge-market.timer, weekdays 16:10 ET). The table is each rule's <b>paper record</b> since its registration, every signal at the bar's open; it is not the Alpaca account.</p><p class="sm trade-exec">Alpaca paper execution: no fill check has been published yet.</p>
+<p class="sm trade-source">Run by market_track.py and market_exec.py in edge-machine, on edge-vps (edge-market.timer, weekdays 16:10 ET). The table is each rule's <b>paper record</b> since its registration, every signal at the bar's open; it is not the Alpaca account.</p><p class="sm trade-exec">Alpaca paper execution since Oct 12: 55 sent · 25 filled · 10 unfilled · 20 waiting for the open · held by two rules: <span class="trade-shared">DAL 24: <span class="badge">sw_gap_down_reversal 12</span> <span class="badge">sw_rsi2_pullback 12</span></span> · <span class="trade-shared">DELL 2: <span class="badge">sw_gap_down_reversal 1</span> <span class="badge">sw_rsi2_pullback 1</span></span> · <span class="trade-shared">HPE 28: <span class="badge">sw_gap_down_reversal 14</span> <span class="badge">sw_rsi2_pullback 14</span></span></p><details class="fold trade-exec-detail"><summary>Execution detail</summary><p class="sm">Each order is one rule's trade: its id is made from the trade, so the account and the record match fill by fill, and two rules on one stock are two orders sized separately. 25 fills matched to the record, measured cost +35.2bp a side on average against the 5bp the record assumes. </p><p class="sm">Held now, by rule:</p><ul class="sm"><li>CRWD 3: sw_rsi2_pullback 3</li><li>CSCO 8: sw_rsi2_pullback 8</li><li>DAL 24: sw_gap_down_reversal 12, sw_rsi2_pullback 12</li><li>DASH 5: sw_rsi2_pullback 5</li><li>DELL 2: sw_gap_down_reversal 1, sw_rsi2_pullback 1</li><li>FCX 13: sw_rsi2_pullback 13</li><li>FLEX 9: sw_rsi2_pullback 9</li><li>HPE 28: sw_gap_down_reversal 14, sw_rsi2_pullback 14</li><li>ILMN 3: sw_rsi2_pullback 3</li><li>KEYS 2: sw_rsi2_pullback 2</li><li>KLAC 5: sw_rsi2_pullback 5</li><li>LITE 1: sw_rsi2_pullback 1</li><li>MRVL 3: sw_gap_down_reversal 3</li><li>MU 1: sw_gap_down_reversal 1</li><li>P 6: sw_gap_down_reversal 6</li><li>QQQ 1: etf_double7 1</li><li>SMCI 25: sw_gap_down_reversal 25</li><li>STX 1: sw_gap_down_reversal 1</li><li>SWKS 11: sw_rsi2_pullback 11</li><li>TER 2: sw_gap_down_reversal 2</li></ul><p class="sm mut">The overnight rule is record only — not sent to Alpaca (needs a market-on-close order). Fill check published 3:12 PM CT Oct 14.</p></details>
 <section id="rules">
 <h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table><thead><tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th><th class="num">Trades</th><th class="num">Mean per day</th><th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr></thead><tbody><tr><td data-l="Rule"><b>RSI(2) pullback in an uptrend</b>
 <div class="sm mut">Swing · sw_rsi2_pullback</div></td>
-<td data-l="Verdict"><span class="sig w" data-verdict="promising">Collecting 15/30 · Promising</span></td>
-<td class="num" data-l="Entry days">15</td>
-<td class="num" data-l="Trades">280<div class="sm mut">70 open</div></td>
-<td class="num" data-l="Mean per day"><span class="pos">+0.98%</span><div class="sm mut">t +3.78</div></td>
-<td class="num" data-l="Edge"><span class="pos">+0.64%</span><div class="sm mut">v SPY · t +2.56</div></td>
-<td class="num pos" data-l="P/L">+$2,214</td>
-<td class="num mut sm" data-l="Last">Oct 13</td></tr>
+<td data-l="Verdict"><span class="sig w" data-verdict="promising">Collecting 16/30 · Promising</span></td>
+<td class="num" data-l="Entry days">16</td>
+<td class="num" data-l="Trades">297<div class="sm mut">85 open</div></td>
+<td class="num" data-l="Mean per day"><span class="pos">+0.88%</span><div class="sm mut">t +3.79</div></td>
+<td class="num" data-l="Edge"><span class="pos">+0.61%</span><div class="sm mut">v SPY · t +2.53</div></td>
+<td class="num pos" data-l="P/L">+$2,132</td>
+<td class="num mut sm" data-l="Last">Oct 14</td></tr>
 <tr class="rule-about"><td colspan="8" data-l="Rule"><details class="rule-more"><summary>What this rule does</summary>
 <div class="sm mut">Pre-registered 2026-09-19 (Connors&#x27; published RSI-2 rule, thresholds unchanged). Buy the next open when a stock closes above its 200-day average, below its 5-day average, with a 2-period RSI under 5. Leave at the open after the first close back above the 5-day average, or after 10 sessions, whichever comes first. The oldest published mean-reversion rule there is, which is the point: if a rule this well known still pays after costs, the Sandbox will show it; if it does not, that is the answer for every variant of it.</div>
 <div class="sm mut">Backtest before the lane went live (Feb 25 to
@@ -63,13 +63,13 @@ Sep 18, not part of the record above):
 −0.10% a day v SPY, t −0.46.</div></details></td></tr>
 <tr><td data-l="Rule"><b>Overnight hold (buy the close, sell the open)</b>
 <div class="sm mut">Swing · etf_overnight</div><div class="sm mut trade-record-only">record only — not sent to Alpaca (needs a market-on-close order)</div></td>
-<td data-l="Verdict"><span class="sig n" data-verdict="behind">Collecting 14/30 · Behind</span></td>
-<td class="num" data-l="Entry days">14</td>
-<td class="num" data-l="Trades">28<div class="sm mut">0 open</div></td>
-<td class="num" data-l="Mean per day"><span class="neg">−0.06%</span><div class="sm mut">t −0.48</div></td>
-<td class="num" data-l="Edge"><span class="neg">−0.06%</span><div class="sm mut">v cash · t −0.48</div></td>
-<td class="num neg" data-l="P/L">−$18</td>
-<td class="num mut sm" data-l="Last">Oct 12</td></tr>
+<td data-l="Verdict"><span class="sig n" data-verdict="behind">Collecting 15/30 · Behind</span></td>
+<td class="num" data-l="Entry days">15</td>
+<td class="num" data-l="Trades">30<div class="sm mut">0 open</div></td>
+<td class="num" data-l="Mean per day"><span class="neg">−0.10%</span><div class="sm mut">t −0.81</div></td>
+<td class="num" data-l="Edge"><span class="neg">−0.10%</span><div class="sm mut">v cash · t −0.81</div></td>
+<td class="num neg" data-l="P/L">−$31</td>
+<td class="num mut sm" data-l="Last">Oct 13</td></tr>
 <tr class="rule-about"><td colspan="8" data-l="Rule"><details class="rule-more"><summary>What this rule does</summary>
 <div class="sm mut">Pre-registered 2026-09-22. Buy SPY and QQQ at every close and sell at the next open. Most of the US market&#x27;s long-run return has come overnight, not during the session, and 2025 research finds the tilt persists even on nights with no news. It enters at the close because the decision does not depend on that bar: the rule is the window itself. The question is only whether the overnight premium beats 10bp of round-trip cost a night — a hard bar at this frequency.</div>
 <div class="sm mut">Backtest before the lane went live (Jul 23 to
@@ -78,13 +78,13 @@ Sep 21, not part of the record above):
 −0.02% a day v cash, t −0.53.</div></details></td></tr>
 <tr><td data-l="Rule"><b>Gap-down reversal above the 200-day</b>
 <div class="sm mut">Swing · sw_gap_down_reversal</div></td>
-<td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">25 more entry days to read</div></td>
-<td class="num" data-l="Entry days">5</td>
-<td class="num" data-l="Trades">11<div class="sm mut">7 open</div></td>
-<td class="num" data-l="Mean per day"><span class="pos">+0.49%</span><div class="sm mut">t +0.09</div></td>
-<td class="num" data-l="Edge"><span class="neg">−0.24%</span><div class="sm mut">v SPY · t −0.04</div></td>
-<td class="num pos" data-l="P/L">+$26</td>
-<td class="num mut sm" data-l="Last">Oct 12</td></tr>
+<td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">24 more entry days to read</div></td>
+<td class="num" data-l="Entry days">6</td>
+<td class="num" data-l="Trades">12<div class="sm mut">15 open</div></td>
+<td class="num" data-l="Mean per day"><span class="neg">−2.09%</span><div class="sm mut">t −0.39</div></td>
+<td class="num" data-l="Edge"><span class="neg">−2.63%</span><div class="sm mut">v SPY · t −0.51</div></td>
+<td class="num neg" data-l="P/L">−$124</td>
+<td class="num mut sm" data-l="Last">Oct 14</td></tr>
 <tr class="rule-about"><td colspan="8" data-l="Rule"><details class="rule-more"><summary>What this rule does</summary>
 <div class="sm mut">Pre-registered 2026-09-19. Buy the next open when a stock in an uptrend (prior close above its 200-day average) gaps down 3% or more and still closes above its own open that day. Hold 5 sessions, then leave at the open. Tests whether the crowd overreacts to a single bad headline in a name the market otherwise likes.</div>
 <div class="sm mut">Backtest before the lane went live (Feb 25 to
@@ -95,11 +95,11 @@ Sep 18, not part of the record above):
 <div class="sm mut">Swing · etf_double7</div></td>
 <td data-l="Verdict"><span class="sig n" data-verdict="early">Too early</span><div class="sm mut">25 more entry days to read</div></td>
 <td class="num" data-l="Entry days">5</td>
-<td class="num" data-l="Trades">10<div class="sm mut">3 open</div></td>
+<td class="num" data-l="Trades">10<div class="sm mut">4 open</div></td>
 <td class="num" data-l="Mean per day"><span class="pos">+0.89%</span><div class="sm mut">t +3.09</div></td>
 <td class="num" data-l="Edge"><span class="pos">+0.89%</span><div class="sm mut">v cash · t +3.09</div></td>
 <td class="num pos" data-l="P/L">+$90</td>
-<td class="num mut sm" data-l="Last">Oct 13</td></tr>
+<td class="num mut sm" data-l="Last">Oct 14</td></tr>
 <tr class="rule-about"><td colspan="8" data-l="Rule"><details class="rule-more"><summary>What this rule does</summary>
 <div class="sm mut">Pre-registered 2026-09-22, Larry Connors&#x27; published rule unchanged: on SPY, QQQ, IWM and DIA, when the index is above its 200-day average and closes at its lowest close of the last 7 sessions, buy the next open; leave at the open after it closes at its highest close of the last 7 (or after 20 sessions). Tests still show it working on the main indices; it lags buy-and-hold only because it sits out most days, which is why it is judged against cash, not against SPY over its own days.</div>
 <div class="sm mut">Backtest before the lane went live (Jul 31 to

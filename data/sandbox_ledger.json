@@ -1,38 +1,38 @@
 {
  "coverage": {
   "boxing": {
-   "kalshi_venue": 11,
-   "polymarket_us": 7,
-   "polymarket_us_listed": 7,
-   "polymarket_us_priced": 2
+   "kalshi_venue": 18,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "commodities": {
    "cmd_market": {
-    "offered": 240,
-    "picked": 240
+    "offered": 260,
+    "picked": 260
    },
-   "kalshi_venue": 240
+   "kalshi_venue": 260
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 240,
+    "offered": 260,
     "picked": 0
    },
-   "kalshi_venue": 240
+   "kalshi_venue": 260
   },
   "cricket": {
    "cricket_consensus": {
-    "offered": 11,
+    "offered": 8,
     "picked": 0
    },
    "kalshi_venue": 8,
    "oddspedia": {
-    "offered": 11,
+    "offered": 8,
     "picked": 0
    },
-   "polymarket_us": 3,
-   "polymarket_us_listed": 3,
-   "polymarket_us_priced": 2
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "crypto": {
    "kalshi_venue": 80
@@ -45,39 +45,39 @@
    "kalshi_venue": 535
   },
   "economics": {
-   "kalshi_venue": 44
+   "kalshi_venue": 34
   },
   "finance": {
    "kalshi_venue": 30
   },
   "mma": {
-   "kalshi_venue": 14,
-   "polymarket_us": 13,
-   "polymarket_us_listed": 13,
-   "polymarket_us_priced": 13
+   "kalshi_venue": 27,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "nfl": {
    "espn_fpi": {
     "offered": 13,
     "picked": 1
    },
-   "kalshi_venue": 1,
-   "polymarket_us": 12,
-   "polymarket_us_listed": 12,
-   "polymarket_us_priced": 12
+   "kalshi_venue": 13,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "nhl_pl": {
-   "kalshi_venue": 14
+   "kalshi_venue": 15
   },
   "nhl_rest": {
-   "kalshi_venue": 28
+   "kalshi_venue": 29
   },
   "soccer": {
    "ere_draw": {
     "offered": 9,
     "picked": 4
    },
-   "kalshi_venue": 309,
+   "kalshi_venue": 278,
    "mls_away_band": {
     "offered": 0,
     "picked": 0
@@ -107,10 +107,10 @@
   },
   "soccer_btts_cup": {
    "btts_market": {
-    "offered": 13,
-    "picked": 13
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 13
+   "kalshi_venue": 12
   },
   "soccer_btts_intl": {
    "btts_market": {
@@ -170,16 +170,16 @@
   },
   "soccer_o15_cup": {
    "goals_market": {
-    "offered": 13,
-    "picked": 13
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 13,
+   "kalshi_venue": 12,
    "o15_cup_mismatch": {
-    "offered": 13,
+    "offered": 12,
     "picked": 6
    },
    "o15_ranked": {
-    "offered": 13,
+    "offered": 12,
     "picked": 0
    }
   },
@@ -215,16 +215,16 @@
   },
   "soccer_o25_cup": {
    "goals_market": {
-    "offered": 13,
-    "picked": 13
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 13,
+   "kalshi_venue": 12,
    "o25_congestion": {
-    "offered": 13,
-    "picked": 2
+    "offered": 12,
+    "picked": 1
    },
    "pin_totals": {
-    "offered": 13,
+    "offered": 12,
     "picked": 0
    }
   },
@@ -252,12 +252,12 @@
   },
   "soccer_p05_cup": {
    "goals_market": {
-    "offered": 71,
-    "picked": 71
+    "offered": 70,
+    "picked": 70
    },
-   "kalshi_venue": 71,
+   "kalshi_venue": 70,
    "p05_unbeaten": {
-    "offered": 71,
+    "offered": 70,
     "picked": 0
    }
   },
@@ -363,12 +363,12 @@
   },
   "soccer_u35_cup": {
    "goals_market": {
-    "offered": 13,
-    "picked": 13
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 13,
+   "kalshi_venue": 12,
    "u35_low_scoring": {
-    "offered": 13,
+    "offered": 12,
     "picked": 0
    }
   },
@@ -384,10 +384,10 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 19,
-   "polymarket_us": 40,
-   "polymarket_us_listed": 335,
-   "polymarket_us_priced": 167,
+   "kalshi_venue": 21,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0,
    "tennis_utr_shortlist_v1": {
     "offered": 0,
     "picked": 0
@@ -398,55 +398,54 @@
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 2,
-   "legs": 3
+   "combo": 0,
+   "legs": 0
   }
  },
  "feed_status": {
   "oddspedia": "ok",
-  "pin_totals": "ok",
-  "pinnacle": "down: HTTP 429 on /sports/soccer_uefa_nations_league/events"
+  "pin_totals": "ok"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-10-14T21:41:43+00:00",
-   "commodities": "2026-10-14T21:41:43+00:00",
-   "commodities_fav": "2026-10-14T21:41:43+00:00",
-   "cricket": "2026-10-14T21:41:43+00:00",
-   "crypto": "2026-10-14T21:41:43+00:00",
-   "crypto_fav": "2026-10-14T21:41:43+00:00",
-   "economics": "2026-10-14T21:41:43+00:00",
-   "finance": "2026-10-14T21:41:43+00:00",
-   "mma": "2026-10-14T21:41:43+00:00",
-   "nfl": "2026-10-14T21:41:43+00:00",
-   "nhl_pl": "2026-10-14T21:41:43+00:00",
-   "nhl_rest": "2026-10-14T21:41:43+00:00",
-   "soccer": "2026-10-14T21:41:43+00:00",
-   "soccer_btts": "2026-10-14T21:41:43+00:00",
-   "soccer_btts_cup": "2026-10-14T21:41:43+00:00",
-   "soccer_corners": "2026-10-14T21:41:43+00:00",
-   "soccer_ftts": "2026-10-14T21:41:43+00:00",
-   "soccer_o15": "2026-10-14T21:41:43+00:00",
-   "soccer_o15_cup": "2026-10-14T21:41:43+00:00",
-   "soccer_o25": "2026-10-14T21:41:43+00:00",
-   "soccer_o25_cup": "2026-10-14T21:41:43+00:00",
-   "soccer_p05": "2026-10-14T21:41:43+00:00",
-   "soccer_p05_cup": "2026-10-14T21:41:43+00:00",
-   "soccer_team1": "2026-10-14T21:41:43+00:00",
-   "soccer_team1_cup": "2026-10-14T21:41:43+00:00",
-   "soccer_team2": "2026-10-14T21:41:43+00:00",
-   "soccer_team2_cup": "2026-10-14T21:41:43+00:00",
-   "soccer_u35": "2026-10-14T21:41:43+00:00",
-   "soccer_u35_cup": "2026-10-14T21:41:43+00:00",
-   "tennis": "2026-10-14T21:41:43+00:00",
+   "boxing": "2026-10-14T22:34:02+00:00",
+   "commodities": "2026-10-14T22:34:02+00:00",
+   "commodities_fav": "2026-10-14T22:34:02+00:00",
+   "cricket": "2026-10-14T22:34:02+00:00",
+   "crypto": "2026-10-14T22:34:02+00:00",
+   "crypto_fav": "2026-10-14T22:34:02+00:00",
+   "economics": "2026-10-14T22:34:02+00:00",
+   "finance": "2026-10-14T22:34:02+00:00",
+   "mma": "2026-10-14T22:34:02+00:00",
+   "nfl": "2026-10-14T22:34:02+00:00",
+   "nhl_pl": "2026-10-14T22:34:02+00:00",
+   "nhl_rest": "2026-10-14T22:34:02+00:00",
+   "soccer": "2026-10-14T22:34:02+00:00",
+   "soccer_btts": "2026-10-14T22:34:02+00:00",
+   "soccer_btts_cup": "2026-10-14T22:34:02+00:00",
+   "soccer_corners": "2026-10-14T22:34:02+00:00",
+   "soccer_ftts": "2026-10-14T22:34:02+00:00",
+   "soccer_o15": "2026-10-14T22:34:02+00:00",
+   "soccer_o15_cup": "2026-10-14T22:34:02+00:00",
+   "soccer_o25": "2026-10-14T22:34:02+00:00",
+   "soccer_o25_cup": "2026-10-14T22:34:02+00:00",
+   "soccer_p05": "2026-10-14T22:34:02+00:00",
+   "soccer_p05_cup": "2026-10-14T22:34:02+00:00",
+   "soccer_team1": "2026-10-14T22:34:02+00:00",
+   "soccer_team1_cup": "2026-10-14T22:34:02+00:00",
+   "soccer_team2": "2026-10-14T22:34:02+00:00",
+   "soccer_team2_cup": "2026-10-14T22:34:02+00:00",
+   "soccer_u35": "2026-10-14T22:34:02+00:00",
+   "soccer_u35_cup": "2026-10-14T22:34:02+00:00",
+   "tennis": "2026-10-14T22:34:02+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
    "allowance": 1,
-   "at": "2026-10-14T21:41:43+00:00",
+   "at": "2026-10-14T22:34:02+00:00",
    "calls": 1,
-   "remaining": 362,
+   "remaining": 361,
    "totals_on": [
     {
      "empty": {
@@ -489,7 +488,7 @@
        "empty": "other_point",
        "market_id": "KXMLSTOTAL-26OCT14MIANYC-3",
        "points": [
-        3.25
+        3.5
        ]
       },
       {
@@ -510,7 +509,7 @@
        "empty": "other_point",
        "market_id": "KXMLSTOTAL-26OCT14CHIPHI-3",
        "points": [
-        3.25
+        3.5
        ]
       },
       {
@@ -628,7 +627,7 @@
      ]
     }
    ],
-   "used": 138
+   "used": 139
   },
   "outages": [
    {
@@ -647,14 +646,14 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 377,
+  "runs": 378,
   "tennis_shortlist": {
    "audit": [],
-   "checked_at": "2026-10-14T21:41:43.141046+00:00",
+   "checked_at": "2026-10-14T22:34:02.503863+00:00",
    "daily_limit": 3,
    "day": "2026-10-14"
   },
-  "updated": "2026-10-14T21:42:51+00:00"
+  "updated": "2026-10-14T22:36:11+00:00"
  },
  "quotes": [
   {
@@ -287704,7 +287703,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.6,
    "date": "2026-10-14",
    "edge": null,
@@ -287744,7 +287743,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.59,
    "date": "2026-10-14",
    "edge": null,
@@ -287784,8 +287783,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.52,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.51,
    "date": "2026-10-14",
    "edge": null,
    "espn_away": "Charlotte FC",
@@ -287824,7 +287823,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.72,
    "date": "2026-10-15",
    "edge": null,
@@ -287864,7 +287863,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.93,
    "date": "2026-10-15",
    "edge": null,
@@ -289169,8 +289168,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.56,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.58,
    "date": "2026-10-14",
    "edge": null,
    "espn_away": "Red Bull New York",
@@ -289753,7 +289752,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.36,
    "date": "2026-10-15",
    "edge": null,
@@ -289899,7 +289898,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.57,
    "date": "2026-10-15",
    "edge": null,
@@ -290165,7 +290164,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.33,
    "date": "2026-10-15",
    "edge": null,
@@ -291667,7 +291666,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.29,
    "date": "2026-10-14",
    "edge": null,
@@ -291705,8 +291704,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.38,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.37,
    "date": "2026-10-14",
    "edge": null,
    "espn_away": "New York City FC",
@@ -291743,7 +291742,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.36,
    "date": "2026-10-14",
    "edge": null,
@@ -291781,7 +291780,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.28,
    "date": "2026-10-14",
    "edge": null,
@@ -291819,7 +291818,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.3,
    "date": "2026-10-15",
    "edge": null,
@@ -291857,8 +291856,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.37,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.36,
    "date": "2026-10-15",
    "edge": null,
    "espn_away": "Seattle Sounders FC",
@@ -293425,7 +293424,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.47,
    "date": "2026-10-15",
    "edge": null,
@@ -297507,7 +297506,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.84,
    "date": "2026-10-15",
    "edge": null,
@@ -301212,7 +301211,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.95,
    "date": "2026-10-15",
    "edge": null,
@@ -301250,7 +301249,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.86,
    "date": "2026-10-15",
    "edge": null,
@@ -301288,7 +301287,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.88,
    "date": "2026-10-15",
    "edge": null,
@@ -301326,7 +301325,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.9,
    "date": "2026-10-15",
    "edge": null,
@@ -301724,7 +301723,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.38,
    "date": "2026-10-15",
    "edge": null,
@@ -307194,7 +307193,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T21:56:48+00:00",
    "close_price": 0.53,
    "date": "2026-10-14",
    "edge": null,
@@ -307410,8 +307409,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.31,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.3,
    "date": "2026-10-15",
    "edge": null,
    "espn_away": "Portland Timbers",
@@ -307520,7 +307519,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T21:56:48+00:00",
    "close_price": 0.73,
    "date": "2026-10-14",
    "edge": null,
@@ -308142,7 +308141,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.53,
    "date": "2026-10-15",
    "edge": null,
@@ -308722,8 +308721,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.24,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.23,
    "date": "2026-10-16",
    "edge": null,
    "id": "ere_draw:KXEREDIVISIEGAME-26OCT16HEEEXC",
@@ -308767,7 +308766,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.79,
    "date": "2026-10-15",
    "edge": null,
@@ -310975,8 +310974,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.57,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.56,
    "date": "2026-10-15",
    "edge": null,
    "espn_away": "Vancouver Whitecaps",
@@ -314753,7 +314752,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.79,
    "date": "2026-10-15",
    "edge": null,
@@ -314793,7 +314792,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.84,
    "date": "2026-10-15",
    "edge": null,
@@ -314987,8 +314986,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.73,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.72,
    "date": "2026-10-15",
    "edge": null,
    "espn_away": "Al Fayha",
@@ -319565,7 +319564,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T21:56:48+00:00",
    "close_price": 0.73,
    "date": "2026-10-14",
    "edge": null,
@@ -321503,7 +321502,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.3,
    "date": "2026-10-16",
    "edge": null,
@@ -321543,7 +321542,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.41,
    "date": "2026-10-16",
    "edge": null,
@@ -321773,7 +321772,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.75,
    "date": "2026-10-16",
    "edge": null,
@@ -322003,7 +322002,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.38,
    "date": "2026-10-15",
    "edge": null,
@@ -323315,7 +323314,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.51,
    "date": "2026-10-16",
    "edge": null,
@@ -328369,7 +328368,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.22,
    "date": "2026-10-17",
    "edge": null,
@@ -330748,7 +330747,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.85,
    "date": "2026-10-14",
    "edge": null,
@@ -331550,8 +331549,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.81,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.8,
    "date": "2026-10-15",
    "edge": null,
    "espn_away": "Sporting Kansas City",
@@ -336655,7 +336654,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.77,
    "date": "2026-10-17",
    "edge": null,
@@ -336891,7 +336890,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.81,
    "date": "2026-10-17",
    "edge": null,
@@ -339135,7 +339134,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.33,
    "date": "2026-10-17",
    "edge": null,
@@ -339175,7 +339174,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.42,
    "date": "2026-10-17",
    "edge": null,
@@ -340051,8 +340050,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.29,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.28,
    "date": "2026-10-16",
    "edge": null,
    "espn_away": "Abha",
@@ -340589,8 +340588,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.5,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.49,
    "date": "2026-10-17",
    "edge": null,
    "espn_away": "VfB Stuttgart",
@@ -340629,7 +340628,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.39,
    "date": "2026-10-17",
    "edge": null,
@@ -340669,7 +340668,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.45,
    "date": "2026-10-17",
    "edge": null,
@@ -340709,7 +340708,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.42,
    "date": "2026-10-17",
    "edge": null,
@@ -340749,7 +340748,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.43,
    "date": "2026-10-17",
    "edge": null,
@@ -340789,7 +340788,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.39,
    "date": "2026-10-17",
    "edge": null,
@@ -342189,7 +342188,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.82,
    "date": "2026-10-17",
    "edge": null,
@@ -342231,7 +342230,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.67,
    "date": "2026-10-17",
    "edge": null,
@@ -347320,7 +347319,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.37,
    "date": "2026-10-17",
    "edge": null,
@@ -348336,7 +348335,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.8,
    "date": "2026-10-15",
    "edge": null,
@@ -349606,7 +349605,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.7,
    "date": "2026-10-17",
    "edge": null,
@@ -350126,7 +350125,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.85,
    "date": "2026-10-17",
    "edge": null,
@@ -351973,7 +351972,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.89,
    "date": "2026-10-17",
    "edge": null,
@@ -352462,7 +352461,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.36,
    "date": "2026-10-17",
    "edge": null,
@@ -353883,7 +353882,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.8,
    "date": "2026-10-17",
    "edge": null,
@@ -354755,7 +354754,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.79,
    "date": "2026-10-15",
    "edge": null,
@@ -355877,7 +355876,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.44,
    "date": "2026-10-15",
    "edge": null,
@@ -356039,7 +356038,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.6,
    "date": "2026-10-15",
    "edge": null,
@@ -356713,7 +356712,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.88,
    "date": "2026-10-17",
    "edge": null,
@@ -356755,7 +356754,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.78,
    "date": "2026-10-17",
    "edge": null,
@@ -358269,7 +358268,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.37,
    "date": "2026-10-17",
    "edge": null,
@@ -358385,7 +358384,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.48,
    "date": "2026-10-17",
    "edge": null,
@@ -358425,7 +358424,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.35,
    "date": "2026-10-17",
    "edge": null,
@@ -358465,7 +358464,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.43,
    "date": "2026-10-17",
    "edge": null,
@@ -358505,7 +358504,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.24,
    "date": "2026-10-17",
    "edge": null,
@@ -358545,8 +358544,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.46,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.45,
    "date": "2026-10-17",
    "edge": null,
    "espn_away": "Brest",
@@ -358903,7 +358902,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.62,
    "date": "2026-10-17",
    "edge": null,
@@ -362027,7 +362026,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.22,
    "date": "2026-10-18",
    "edge": null,
@@ -362072,7 +362071,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.21,
    "date": "2026-10-18",
    "edge": null,
@@ -362421,7 +362420,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.33,
    "date": "2026-10-17",
    "edge": null,
@@ -362461,7 +362460,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.33,
    "date": "2026-10-17",
    "edge": null,
@@ -363419,7 +363418,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.72,
    "date": "2026-10-17",
    "edge": null,
@@ -364099,7 +364098,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.56,
    "date": "2026-10-18",
    "edge": null,
@@ -365488,7 +365487,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.42,
    "date": "2026-10-18",
    "edge": null,
@@ -366384,7 +366383,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.56,
    "date": "2026-10-18",
    "edge": null,
@@ -366426,7 +366425,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.57,
    "date": "2026-10-18",
    "edge": null,
@@ -366468,7 +366467,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.86,
    "date": "2026-10-18",
    "edge": null,
@@ -366510,7 +366509,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.74,
    "date": "2026-10-18",
    "edge": null,
@@ -367660,7 +367659,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.63,
    "date": "2026-10-17",
    "edge": null,
@@ -371332,7 +371331,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.62,
    "date": "2026-10-17",
    "edge": null,
@@ -373321,7 +373320,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.43,
    "date": "2026-10-18",
    "edge": null,
@@ -373361,7 +373360,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.71,
    "date": "2026-10-18",
    "edge": null,
@@ -374041,7 +374040,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.6,
    "date": "2026-10-14",
    "edge": null,
@@ -377280,7 +377279,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.8,
    "date": "2026-10-17",
    "edge": null,
@@ -378760,8 +378759,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.7,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.69,
    "date": "2026-10-17",
    "edge": null,
    "espn_away": "St Mirren",
@@ -378800,7 +378799,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.7,
    "date": "2026-10-17",
    "edge": null,
@@ -378840,8 +378839,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.8,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.81,
    "date": "2026-10-18",
    "edge": null,
    "espn_away": "Alav\u00e9s",
@@ -384444,7 +384443,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.39,
    "date": "2026-10-17",
    "edge": null,
@@ -384712,7 +384711,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.75,
    "date": "2026-10-18",
    "edge": null,
@@ -384980,7 +384979,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.23,
    "date": "2026-10-17",
    "edge": null,
@@ -385288,7 +385287,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.49,
    "date": "2026-10-18",
    "edge": null,
@@ -387681,7 +387680,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.47,
    "date": "2026-10-15",
    "edge": null,
@@ -390392,7 +390391,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.4,
    "date": "2026-10-17",
    "edge": null,
@@ -390880,7 +390879,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.39,
    "date": "2026-10-17",
    "edge": null,
@@ -391148,8 +391147,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.15,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.16,
    "date": "2026-10-18",
    "edge": null,
    "espn_away": "Sevilla",
@@ -391416,7 +391415,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.32,
    "date": "2026-10-17",
    "edge": null,
@@ -391456,7 +391455,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.37,
    "date": "2026-10-17",
    "edge": null,
@@ -391496,7 +391495,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.3,
    "date": "2026-10-17",
    "edge": null,
@@ -391536,8 +391535,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
-   "close_price": 0.28,
+   "close_at": "2026-10-14T22:34:02+00:00",
+   "close_price": 0.29,
    "date": "2026-10-17",
    "edge": null,
    "espn_away": "Paris Saint-Germain",
@@ -391576,7 +391575,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.29,
    "date": "2026-10-17",
    "edge": null,
@@ -391616,7 +391615,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.45,
    "date": "2026-10-17",
    "edge": null,
@@ -391656,7 +391655,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-14T21:41:43+00:00",
+   "close_at": "2026-10-14T22:34:02+00:00",
    "close_price": 0.44,
    "date": "2026-10-18",
    "edge": null,
@@ -394641,6 +394640,666 @@
    "result": null,
    "settled": null,
    "side_a": "Above $3.960",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.700",
+   "label": "Will the natural gas close price be above 3.700 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.700",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.17,
+   "price_b": 0.86,
+   "price_draw": null,
+   "prob_a": 0.17,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.700",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.705",
+   "label": "Will the natural gas close price be above 3.705 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.705",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.16,
+   "price_b": 0.88,
+   "price_draw": null,
+   "prob_a": 0.16,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.705",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.710",
+   "label": "Will the natural gas close price be above 3.710 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.710",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.16,
+   "price_b": 0.88,
+   "price_draw": null,
+   "prob_a": 0.16,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.710",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.715",
+   "label": "Will the natural gas close price be above 3.715 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.715",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.15,
+   "price_b": 0.89,
+   "price_draw": null,
+   "prob_a": 0.15,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.715",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.720",
+   "label": "Will the natural gas close price be above 3.720 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.720",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.14,
+   "price_b": 0.89,
+   "price_draw": null,
+   "prob_a": 0.14,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.720",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.725",
+   "label": "Will the natural gas close price be above 3.725 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.725",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.13,
+   "price_b": 0.91,
+   "price_draw": null,
+   "prob_a": 0.13,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.725",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.730",
+   "label": "Will the natural gas close price be above 3.730 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.730",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.13,
+   "price_b": 0.91,
+   "price_draw": null,
+   "prob_a": 0.13,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.730",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.735",
+   "label": "Will the natural gas close price be above 3.735 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.735",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.12,
+   "price_b": 0.92,
+   "price_draw": null,
+   "prob_a": 0.12,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.735",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.740",
+   "label": "Will the natural gas close price be above 3.740 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.740",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.12,
+   "price_b": 0.92,
+   "price_draw": null,
+   "prob_a": 0.12,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.740",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.745",
+   "label": "Will the natural gas close price be above 3.745 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.745",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.12,
+   "price_b": 0.92,
+   "price_draw": null,
+   "prob_a": 0.12,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.745",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.750",
+   "label": "Will the natural gas close price be above 3.750 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.750",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.11,
+   "price_b": 0.93,
+   "price_draw": null,
+   "prob_a": 0.11,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.750",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.755",
+   "label": "Will the natural gas close price be above 3.755 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.755",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.11,
+   "price_b": 0.93,
+   "price_draw": null,
+   "prob_a": 0.11,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.755",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.760",
+   "label": "Will the natural gas close price be above 3.760 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.760",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.1,
+   "price_b": 0.94,
+   "price_draw": null,
+   "prob_a": 0.1,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.760",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.765",
+   "label": "Will the natural gas close price be above 3.765 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.765",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.1,
+   "price_b": 0.94,
+   "price_draw": null,
+   "prob_a": 0.1,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.765",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.770",
+   "label": "Will the natural gas close price be above 3.770 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.770",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.09,
+   "price_b": 0.94,
+   "price_draw": null,
+   "prob_a": 0.09,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.770",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.775",
+   "label": "Will the natural gas close price be above 3.775 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.775",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.09,
+   "price_b": 0.95,
+   "price_draw": null,
+   "prob_a": 0.09,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.775",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.780",
+   "label": "Will the natural gas close price be above 3.780 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.780",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.09,
+   "price_b": 0.95,
+   "price_draw": null,
+   "prob_a": 0.09,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.780",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.785",
+   "label": "Will the natural gas close price be above 3.785 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.785",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.08,
+   "price_b": 0.96,
+   "price_draw": null,
+   "prob_a": 0.08,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.785",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.790",
+   "label": "Will the natural gas close price be above 3.790 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.790",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.08,
+   "price_b": 0.96,
+   "price_draw": null,
+   "prob_a": 0.08,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.790",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-15T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXNATGASD-26OCT1517-T3.795",
+   "label": "Will the natural gas close price be above 3.795 USD/MMBtu on October 15, 2026 at 5:00 PM E",
+   "liquidity": null,
+   "logged": "2026-10-14T22:34:02+00:00",
+   "market_id": "KXNATGASD-26OCT1517-T3.795",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.08,
+   "price_b": 0.96,
+   "price_draw": null,
+   "prob_a": 0.08,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.795",
    "side_b": "No",
    "source": "cmd_market",
    "sport": "commodities",
