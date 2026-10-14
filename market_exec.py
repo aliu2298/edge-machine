@@ -568,9 +568,11 @@ def reconcile(d=None, days=120):
             if not o:
                 continue
             seen.add(cid)
-            if o.get("status") != "filled":
+            qty = int(float(o.get("filled_qty") or 0))
+            if qty <= 0:
                 rows.append(dict(id=tid, rule=t.get("rule"), symbol=t.get("symbol"), side=side,
-                                 status=o.get("status"), ledger=ledger_px, fill=None, slip_bps=None))
+                                 status=o.get("status"), ledger=ledger_px, fill=None, slip_bps=None,
+                                 qty=0))
                 continue
             fill = float(o.get("filled_avg_price") or 0) or None
             # Adverse is POSITIVE on both sides: paying above the recorded open, or selling
@@ -580,8 +582,8 @@ def reconcile(d=None, days=120):
                 raw = _bps(fill, ledger_px)
                 slip = raw if side == "buy" else (None if raw is None else -raw)
             rows.append(dict(id=tid, rule=t.get("rule"), symbol=t.get("symbol"), side=side,
-                             status="filled", ledger=ledger_px, fill=fill, slip_bps=slip,
-                             qty=int(float(o.get("filled_qty") or 0)),
+                             status=o.get("status"), ledger=ledger_px, fill=fill, slip_bps=slip,
+                             qty=qty,
                              filled_at=(o.get("filled_at") or "")[:19],
                              day=t.get(day_key)))
 
@@ -601,7 +603,9 @@ def reconcile(d=None, days=120):
                    qty=int(float(o.get("filled_qty") or o.get("qty") or 0)),
                    price=float(o.get("filled_avg_price") or 0) or None,
                    status=o.get("status"), filled_at=(o.get("filled_at") or "")[:19])
-        if o.get("status") == "filled":
+        # An expired/canceled order can still own shares (e.g. SWKS filled 11/13).
+        # The broker's executed quantity, not the terminal status, determines a fill.
+        if float(o.get("filled_qty") or 0) > 0:
             orphans.append(row)
         elif o.get("status") not in ("canceled", "expired", "rejected"):
             in_flight.append(row)
@@ -611,7 +615,7 @@ def reconcile(d=None, days=120):
     for r in done:
         per_rule.setdefault(r["rule"], []).append(r["slip_bps"])
     summary = dict(
-        fills=len(done), unfilled=len([r for r in rows if r["status"] != "filled"]),
+        fills=len(done), unfilled=len([r for r in rows if not r.get("qty")]),
         orphans=len(orphans), in_flight=len(in_flight),
         assumed_bps_per_side=M.COST_BPS_PER_SIDE,
         mean_bps=round(sum(x["slip_bps"] for x in done) / len(done), 2) if done else None,

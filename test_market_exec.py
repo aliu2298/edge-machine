@@ -408,7 +408,8 @@ LED = {"trades": [
 ], "meta": {}}
 
 
-def _ord(status="filled", px=None, qty=10, sym="AAA", side="buy"):
+def _ord(status="filled", px=None, qty=None, sym="AAA", side="buy"):
+    qty = (10 if status == "filled" else 0) if qty is None else qty
     return {"status": status, "filled_avg_price": (str(px) if px is not None else None),
             "filled_qty": str(qty), "symbol": sym, "side": side, "filled_at": "2026-10-10T13:30:00Z"}
 
@@ -475,6 +476,21 @@ try:
     rep3 = X.reconcile(LED)
     check("no fills yet is a clean empty report",
           (rep3["summary"]["fills"], rep3["summary"]["mean_bps"], rep3["orphans"]), (0, None, []))
+
+    # Expiry/cancellation does not undo an executed portion of an order.
+    for terminal in ("expired", "canceled", "partially_filled"):
+        partial = _ord(status=terminal, px=50.05, qty=11, sym="BBB")
+        X.exchange_orders = lambda days=120: {
+            X.client_order_id("r2|BBB|2026-10-09", "buy"): partial}
+        rp = X.reconcile(LED)
+        check(f"{terminal} partial fill keeps quantity, price and broker status",
+              (rp["rows"][0]["qty"], rp["rows"][0]["fill"], rp["rows"][0]["status"],
+               rp["summary"]["fills"], rp["summary"]["unfilled"], rp["summary"]["mean_bps"]),
+              (11, 50.05, terminal, 1, 0, 10.0))
+        X.exchange_orders = lambda days=120: {GHOST: partial}
+        rp = X.reconcile(LED)
+        check(f"{terminal} unmatched partial fill is not silently discarded",
+              (rp["summary"]["orphans"], rp["orphans"][0]["qty"]), (1, 11))
 finally:
     X.exchange_orders = _rex3
 
