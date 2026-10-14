@@ -7024,9 +7024,9 @@ ok(S.lane_paused("espn_fpi", "nfl") and S.lane_paused("espn_fpi", "mlb"),
    "ESPN FPI NFL stays paused and ESPN FPI MLB is removed")
 ok(S.lane_paused("tennis_combo3", "tennis_combo") and S.lane_paused("tennis_combo4", "tennis_combo")
    and S.lane_paused("pm_combo3", "tennis_pmcombo") and S.lane_paused("pm_combo4", "tennis_pmcombo")
-   and not S.lane_paused("tennis_combo2", "tennis_combo")
-   and not S.lane_paused("pm_combo2", "tennis_pmcombo"),
-   "3- and 4-leg combos are paused; both 2-leg combos stay")
+   and S.lane_paused("tennis_combo2", "tennis_combo")
+   and S.lane_paused("pm_combo2", "tennis_pmcombo"),
+   "all previous tennis combos are paused")
 ok(S.lane_paused("polymarket_us", "nfl") and not S.lane_paused("polymarket_us", "tennis"),
    "NFL is paused on a source that is not otherwise paused")
 ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
@@ -7172,9 +7172,9 @@ ok(("espn_fpi", "mlb") not in _kb, "ESPN FPI MLB does not enter")
 ok(("espn_fpi", "nfl") not in _kb, "ESPN FPI NFL does not")
 ok(("soccerpredictions", "soccer") not in _kb and ("soccerpredictions", "nfl") not in _kb,
    "soccerpredictions enters on neither sport")
-eq(_kb[("tennis_combo2", "tennis_combo")]["bet"], True, "the 2-leg Kalshi combo still enters")
+ok(("tennis_combo2", "tennis_combo") not in _kb, "the paused 2-leg Kalshi combo does not enter")
 ok(("tennis_combo3", "tennis_combo") not in _kb, "the 3-leg Kalshi combo does not")
-eq(_kb[("pm_combo2", "tennis_pmcombo")]["bet"], True, "the 2-leg Polymarket combo still enters")
+ok(("pm_combo2", "tennis_pmcombo") not in _kb, "the paused 2-leg Polymarket combo does not enter")
 ok(("pm_combo4", "tennis_pmcombo") not in _kb, "the 4-leg Polymarket combo does not")
 
 _open = []
@@ -7383,8 +7383,8 @@ _ts = {(q["source"], q["market_id"]): q for q in _td["quotes"] if q["source"].st
 ok(("tennis_fav_band", "aec-atp-near-x-2026-09-25") not in _ts
    and ("tennis_fav_band", "aec-atp-far-x-2026-09-25") not in _ts,
    "the removed favourite-band lane logs nothing")
-eq(_ts[("tennis_fav_band_3h", "aec-atp-near-x-2026-09-25")]["bet"], True,
-   "the 3-hour lane still logs the match inside the window")
+ok(("tennis_fav_band_3h", "aec-atp-near-x-2026-09-25") not in _ts,
+   "the paused 3-hour lane logs nothing new even inside its former window")
 ok(("tennis_fav_band_3h", "aec-atp-far-x-2026-09-25") not in _ts,
    "the 3-hour lane does not log the one six hours out")
 eq(T.retire_venue_duplicates(_td, verbose=False), 0,
