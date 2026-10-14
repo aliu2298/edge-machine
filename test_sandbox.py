@@ -176,7 +176,7 @@ def _live_ledger_checks():
     # which the promotion made false while the clock it was guarding stayed right.
     _e = (_st.get("pairs") or {}).get("tennis_combo2|tennis_combo") or {}
     ok(_e.get("stage") == "sandbox" and S.lane_paused("tennis_combo2", "tennis_combo") and _e.get("entry_since") == S.TENNIS_COMBO_BAND_SINCE
-       and T.qa_since(_e, "tennis_combo", "tennis_combo2|tennis_combo") == S.TENNIS_COMBO_BAND_SINCE,
+       and T.record_since(_e) == S.TENNIS_COMBO_BAND_SINCE,
        "paused tennis_combo2 preserves its 2026-10-04 historical clock")
 
     print("\nledger history is unchanged by the pause")
@@ -7036,10 +7036,9 @@ ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
    and not S.source_fully_paused("polymarket_us"),
    "a removed source logs no sport; Polymarket US still logs the sports it keeps")
 for _name, _sport in (
-        ("tennis_fav_band_3h", "tennis"), ("crypto_fav_band", "crypto_fav"),
+        ("tennis_utr_shortlist_v1", "tennis"), ("crypto_fav_band", "crypto_fav"),
         ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
-        ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),
         ("o15_ranked", "soccer_o15"),
         ("pin_totals", "soccer_o25"), ("btts_market", "soccer_btts"),
         ("oddspedia", "cricket"), ("cmd_market", "commodities")):
