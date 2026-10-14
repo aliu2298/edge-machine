@@ -12,7 +12,8 @@
 # later read once every series of that close holds an entry. This script only writes what
 # it prints into the stamp files and pushes them in ONE commit, so a crypto and a commodity
 # read due in the same 17:00 ET window start one tracker run, not two:
-#   data/crypto_window/**, data/commodities_window/**  -> sandbox-tracker.yml
+#   data/crypto_window/**, data/commodities_window/**,
+#   data/ftts_window/**                                -> sandbox-tracker.yml
 #   data/daily_window/**                               -> daily-research.yml
 #
 # The stamp names the close and the read number, so git is the once-per-read guard: the
@@ -48,7 +49,7 @@ fi
 while IFS=$'\t' read -r path text; do
   [ -z "$path" ] && continue
   case "$path" in
-    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt) ;;
+    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt) ;;
     *) echo "$(stamp) refusing unexpected stamp path $path"; exit 1 ;;
   esac
   mkdir -p "$(dirname "$path")"

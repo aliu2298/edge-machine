@@ -13,6 +13,11 @@ is different:
     finance_daily     Treasury yields       15:30 ET, weekdays
                       S&P 500 / Nasdaq-100  16:00 ET, weekdays
 
+and the first-to-score lanes (2026-10-14), timed to the CENTRAL day and to each kickoff:
+
+    ftts_no_*         the day's pick        09:00-10:30 CT, reads at 09:00, 09:30, 10:00
+    ftts_lineup_lag   each kickoff K        K-60 to K-15 min, reads at K-60 and K-40
+
 GitHub's cron cannot hold a 90-minute window, so the VPS asks for each read by pushing one
 line to a stamp file (scripts/vps_window_requests.sh). This module is the one place that
 says when those reads are, computed from each lane's own constants so a schedule can
@@ -51,7 +56,13 @@ STAMP = {
     "commod_fav_band": "data/commodities_window/request.txt",
     "econ_daily": "data/daily_window/request.txt",
     "finance_daily": "data/daily_window/request.txt",
+    "ftts_no": "data/ftts_window/request.txt",
+    "ftts_lineup_lag": "data/ftts_window/request.txt",
 }
+CT = ZoneInfo("America/Chicago")
+FTTS_DAY = ((9, 0), (10, 30))
+LINEUP_FROM, LINEUP_TO = 60, 15          # minutes before kickoff
+LINEUP_EVERY = dt.timedelta(minutes=20)  # two reads fit before the last-ask cut-off
 EVERY_DAY = tuple(range(7))
 WEEKDAYS = (0, 1, 2, 3, 4)
 # The Daily lanes' supported closes, the clocks daily_track.window_reason verifies.
@@ -70,7 +81,59 @@ def _window(lane, label, close, series=()):
                 start=close - dt.timedelta(hours=MAX_H), end=close - dt.timedelta(hours=MIN_H))
 
 
-def windows(now):
+def _load_ledger(ledger):
+    if ledger is not None:
+        return ledger
+    try:
+        with open(os.path.join(ROOT, "data", "sandbox_ledger.json")) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def ftts_kickoffs(now, ledger=None):
+    """Distinct first-to-score kickoffs within the next day, from the baseline's logged legs."""
+    out = set()
+    for q in (_load_ledger(ledger).get("quotes") or []):
+        if q.get("sport") != "soccer_ftts" or not q.get("start"):
+            continue
+        try:
+            ko = dt.datetime.fromisoformat(str(q["start"]).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if now - dt.timedelta(hours=2) <= ko <= now + dt.timedelta(days=1):
+            out.add(ko.astimezone(dt.timezone.utc))
+    return sorted(out)
+
+
+def ftts_windows(now, ledger=None):
+    """The No lanes' daily pick window and one lineup window per kickoff, in UTC."""
+    out = []
+    local = now.astimezone(CT)
+    for day in (local.date(), local.date() + dt.timedelta(days=1)):
+        (h0, m0), (h1, m1) = FTTS_DAY
+        start = dt.datetime(day.year, day.month, day.day, h0, m0, tzinfo=CT).astimezone(dt.timezone.utc)
+        end = dt.datetime(day.year, day.month, day.day, h1, m1, tzinfo=CT).astimezone(dt.timezone.utc)
+        out.append(dict(lane="ftts_no", label=f"First to score NO picks {day}", series=(),
+                        close=end, start=start, end=end, every=READ_EVERY, last_ask=dt.timedelta(0),
+                        day=day.isoformat()))
+    for ko in ftts_kickoffs(now, ledger):
+        out.append(dict(lane="ftts_lineup_lag", label=f"Lineup lag {ko:%H:%M}Z kickoff", series=(),
+                        close=ko, start=ko - dt.timedelta(minutes=LINEUP_FROM),
+                        end=ko - dt.timedelta(minutes=LINEUP_TO), every=LINEUP_EVERY))
+    return out
+
+
+def ftts_day_full(day, ledger=None):
+    """True once BOTH No lanes hold FTTS_NO_PICKS bets for that Central day."""
+    n = {"ftts_no_70_80": 0, "ftts_no_60_70": 0}
+    for q in (_load_ledger(ledger).get("quotes") or []):
+        if q.get("source") in n and q.get("bet") and q.get("date") == day:
+            n[q["source"]] += 1
+    return all(v >= S.FTTS_NO_PICKS for v in n.values())
+
+
+def windows(now, ledger=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -95,6 +158,7 @@ def windows(now):
     out = [dict(w, close=w["close"].astimezone(dt.timezone.utc),
                 start=w["start"].astimezone(dt.timezone.utc),
                 end=w["end"].astimezone(dt.timezone.utc)) for w in out]
+    out += ftts_windows(now, ledger)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
 
@@ -128,14 +192,16 @@ def entered_series(lane, close, ledger=None):
 def due(now, ledger=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now):
-        if not (w["start"] <= now <= w["end"] - LAST_ASK):
+    for w in windows(now, ledger):
+        if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
-        k = int((now - w["start"]) / READ_EVERY)
+        k = int((now - w["start"]) / w.get("every", READ_EVERY))
         if k >= READS:
             continue
         if w["series"] and set(w["series"]) <= entered_series(w["lane"], w["close"], ledger):
             continue                       # every series already entered: nothing left to read for
+        if w["lane"] == "ftts_no" and ftts_day_full(w["day"], ledger):
+            continue                       # both No lanes already hold their five for the day
         out.append((w, k + 1))
     return out
 

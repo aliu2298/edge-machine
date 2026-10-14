@@ -987,6 +987,21 @@ def collect(verbose=True, combo_used=None):
                 print(f"  {S.SPORTS[sport]:<13} built {len(rows)} baskets from the day's "
                       f"favourite-band legs{why} ({time.time() - t0:.0f}s)")
             continue
+        if sport == "soccer_ftts":
+            # Built from Kalshi's FTTS series and joined to the `soccer` rows this run already
+            # fetched (kickoff and the match-winner fit). SPORTS lists this domain after soccer.
+            fstats = {}
+            try:
+                rows = S.fetch_kalshi_ftts(universe, stats=fstats)
+            except Exception as e:
+                print(f"  ! kalshi/soccer_ftts failed: {type(e).__name__}: {str(e)[:70]}")
+                rows = []
+            universe[sport] = rows
+            coverage.setdefault(sport, {})["kalshi_venue"] = len(rows)
+            if verbose:
+                print(f"  {S.SPORTS[sport]:<13} kalshi first-to-score: {fstats.get('listed', 0)} team legs "
+                      f"listed, {len(rows)} priced ({time.time() - t0:.0f}s)")
+            continue
         if sport == "soccer_corners":
             cstats = {}
             try:
@@ -1569,6 +1584,17 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 if (S.SOURCES.get(name) or {}).get("one_per_day") and any(
                         p.get("date") == r["date"] for p in prior.get((name, sport), ())):
                     continue
+                # One leg per match (one_per_event): the FTTS legs of one fixture are one
+                # outcome, so a second leg of the same event is never logged by the same rule.
+                if (S.SOURCES.get(name) or {}).get("one_per_event") and r.get("event") and any(
+                        p.get("event") == r["event"] for p in prior.get((name, sport), ())):
+                    continue
+                # A daily cap (day_cap): at most N bets on one `date`, the rule's own ranking
+                # deciding which N -- the fetcher returns its picks best first.
+                _cap = (S.SOURCES.get(name) or {}).get("day_cap")
+                if _cap and sum(1 for p in prior.get((name, sport), ())
+                                if p.get("bet") and p.get("date") == r["date"]) >= _cap:
+                    continue
                 # Per coin per close, for a lane that registers the flag. A
                 # different coin, or the same coin on a later close, still logs.
                 if (S.SOURCES.get(name) or {}).get("one_per_coin_close"):
@@ -1647,7 +1673,7 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     # Soccer yes/no rows: the ESPN fixture and side the market is about, so a
                     # Production lead can name them without re-matching.
                     **{k: r[k] for k in ("league", "espn_home", "espn_away", "team", "opponent",
-                                         "kalshi_title", "event")
+                                         "kalshi_title", "event", "fair_yes")
                        if r.get(k) and r.get("venue") == "kalshi_binary"},
                     # Kalshi result and match rows: each side's own market ticker and
                     # Kalshi's own name for it, so a Production lead can name the exact
