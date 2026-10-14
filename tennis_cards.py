@@ -299,7 +299,7 @@ def params(d, row):
     if row["name"] == "tennis_utr_shortlist_v1":
         return (("Backs", "UTR singles · 70–74¢ · Polymarket US"),
                 ("Limit", "Up to 3 per Central day, across all checks; no forced quota"),
-                ("Book", "≤5 minutes old · ≤3¢ spread · depth covers $100 modeled entry"),
+                ("Book", "≤5 minutes old · ≤3¢ spread · depth sufficient for $100 modeled entry"),
                 ("Ranking", "Lowest modeled cost, then spread, depth and start"),
                 ("Status", "Unproven · owner-listed Production research · fresh record"))
     if row["name"] not in S.TENNIS_FROZEN_RULES:

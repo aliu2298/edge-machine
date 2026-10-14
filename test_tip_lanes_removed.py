@@ -284,8 +284,8 @@ def main():
     eq(removed_calls, [], "no removed source or sport-scoped lane is fetched")
     ok(("espn_fpi", "nfl") in calls and ("espn_fpi", "mlb") not in calls,
        "ESPN FPI NFL is fetched and MLB is not")
-    ok(("tennis_fav_band_3h", "tennis") in calls and ("pin_totals", "soccer_o25") in calls,
-       "the 3-hour band and pin totals are still fetched")
+    ok(("tennis_fav_band_3h", "tennis") not in calls and ("pin_totals", "soccer_o25") in calls,
+       "the paused tennis band is not fetched; pin totals remains active")
     ok(not any(q.get("source") in FULL or (q.get("source"), q.get("sport")) in S.REMOVED_LANES
                for q in logged["quotes"]),
        "the run logs no removed-lane quote")
