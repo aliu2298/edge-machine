@@ -92,8 +92,31 @@ eq(orders["since"], "2026-10-10", "since is the day the first order was submitte
 eq(X.order_counts({}), dict(sent=0, filled=0, unfilled=0, working=0, since=None), "no orders, zero counts")
 part = {"a": {"status": "partially_filled", "filled_qty": "3", "submitted_at": "2026-10-11T20:10:00Z"},
         "b": {"status": "canceled", "filled_qty": "2", "submitted_at": "2026-10-11T20:10:00Z"}}
-eq((X.order_counts(part)["working"], X.order_counts(part)["unfilled"]), (2, 0),
-   "a part-filled order is working, and a cancelled one that filled some shares is not 'unfilled'")
+eq((X.order_counts(part)["filled"], X.order_counts(part)["working"], X.order_counts(part)["unfilled"]),
+   (1, 1, 0), "an active partial is working, but a cancelled partial is finished with a fill")
+
+# The real SWKS pattern: 11/13 executed, then the opening-auction order expired.
+swks = "sw_rsi2_pullback|SWKS|2026-10-09"
+partial_buy = _ord(status="expired", px=77.05, qty=13, sym="SWKS")
+partial_buy["filled_qty"] = "11"
+fixture = {X.client_order_id(swks, "buy"): partial_buy}
+saved = X.exchange_orders
+X.exchange_orders = lambda days=120: fixture
+try:
+    partial_rep = X.reconcile({"trades": [dict(id=swks, rule="sw_rsi2_pullback", symbol="SWKS",
+                                              entry=77.05, entry_day="2026-10-12", status="open")]})
+finally:
+    X.exchange_orders = saved
+eq(partial_rep["held"][0]["qty"], 11, "expired SWKS buy still contributes all 11 executed shares")
+eq((partial_rep["summary"]["orders"]["filled"], partial_rep["summary"]["orders"]["working"]),
+   (1, 0), "expired partial fill is finished, not waiting for the open")
+ok("waiting for the open" not in SB.trade_exec_html(partial_rep),
+   "the page does not label an expired partial as queued")
+partial_sell = dict(id=swks, rule="sw_rsi2_pullback", symbol="SWKS", side="sell", status="canceled", qty=3)
+eq(X.held_positions(partial_rep["rows"] + [partial_sell])[0]["qty"], 8,
+   "a canceled sell's executed shares reduce the holding")
+active_buy = dict(partial_rep["rows"][0], status="partially_filled")
+eq(X.held_positions([active_buy])[0]["qty"], 11, "active partial fills also count as held shares")
 
 print("\nthe overnight rule is record only")
 eq(MT.RULES["etf_overnight"].get("entry"), "close", "the overnight rule enters at the close")
