@@ -1682,6 +1682,82 @@ def _trade_day(value):
     return f"{fmt._MONTHS[day.month - 1]} {day.day}"
 
 
+RECORD_ONLY = "record only — not sent to Alpaca (needs a market-on-close order)"
+# Where the lane runs. Named here once, so the page and its test cannot drift apart.
+TRADE_RUNNER = ("market_track.py and market_exec.py in edge-machine, on edge-vps "
+                "(edge-market.timer, weekdays 16:10 ET)")
+
+
+def load_fills(path=None):
+    """data/market_fills.json as the VPS published it (market_exec.reconcile), or None."""
+    import market_exec as MX
+    try:
+        with open(path or MX.FILLS, encoding="utf-8") as fh:
+            rep = json.load(fh)
+    except (OSError, ValueError):
+        return None
+    return rep if isinstance(rep, dict) and isinstance(rep.get("summary"), dict) else None
+
+
+def _shared_tags(held):
+    """'DAL 24: [sw_gap_down_reversal 12] [sw_rsi2_pullback 12]' for each stock two or more
+    rules hold: one position at the broker, one trade per rule in the record. One small
+    badge per rule, so the line wraps on a phone instead of clipping one long badge."""
+    tags = []
+    for h in held or []:
+        parts = h.get("rules") or []
+        if len({p.get("rule") for p in parts}) < 2:
+            continue
+        badges = " ".join(f'<span class="badge">{esc(p.get("rule"))} {int(p.get("qty") or 0)}</span>'
+                          for p in parts)
+        tags.append(f'<span class="trade-shared">{esc(h.get("symbol"))} {int(h.get("qty") or 0)}: {badges}</span>')
+    return " · ".join(tags)
+
+
+def trade_exec_html(fills):
+    """The one-line Alpaca execution count, and its closed detail fold.
+
+    The counts are the fill check's (market_exec.order_counts): every order sent, how many
+    filled, how many finished with nothing filled, and how many are still working. Where two
+    rules hold the same stock the line tags each rule's share.
+    """
+    orders = ((fills or {}).get("summary") or {}).get("orders")
+    if not orders:
+        return ('<p class="sm trade-exec">Alpaca paper execution: no fill check has been '
+                'published yet.</p>')
+    since = orders.get("since")
+    head = (f'Alpaca paper execution{" since " + esc(_trade_day(since)) if since else ""}: '
+            f'{int(orders.get("sent") or 0)} sent · {int(orders.get("filled") or 0)} filled · '
+            f'{int(orders.get("unfilled") or 0)} unfilled')
+    if orders.get("working"):
+        head += f' · {int(orders["working"])} waiting for the open'
+    tags = _shared_tags(fills.get("held"))
+    s = fills["summary"]
+    held = fills.get("held") or []
+    held_li = "".join(
+        f'<li>{esc(h.get("symbol"))} {int(h.get("qty") or 0)}: '
+        + esc(", ".join(f'{p.get("rule")} {int(p.get("qty") or 0)}' for p in h.get("rules") or []))
+        + '</li>' for h in held)
+    cost = ("nothing filled against a recorded price yet" if not s.get("fills") else
+            f'{int(s["fills"])} fills matched to the record, measured cost '
+            f'{s["mean_bps"]:+.1f}bp a side on average against the '
+            f'{float(s.get("assumed_bps_per_side") or 0):.0f}bp the record assumes')
+    drift = (f'<b class="neg">{int(s["orphans"])} fill(s) have no trade in the record.</b> '
+             if s.get("orphans") else "")
+    updated = fills.get("updated")
+    detail = (
+        '<details class="fold trade-exec-detail"><summary>Execution detail</summary>'
+        f'<p class="sm">Each order is one rule\'s trade: its id is made from the trade, so the '
+        f'account and the record match fill by fill, and two rules on one stock are two orders '
+        f'sized separately. {esc(cost)}. {drift}</p>'
+        + (f'<p class="sm">Held now, by rule:</p><ul class="sm">{held_li}</ul>' if held_li else
+           '<p class="sm">Nothing is held now.</p>')
+        + f'<p class="sm mut">The overnight rule is {esc(RECORD_ONLY)}.'
+        + (f' Fill check published {esc(_ct_phrase(updated))}.' if updated else "")
+        + '</p></details>')
+    return (f'<p class="sm trade-exec">{head}{(" · held by two rules: " + tags) if tags else ""}</p>{detail}')
+
+
 def trading_rows(md):
     """The trading lane: one row per rule, counted per ENTRY DAY (see market_track)."""
     import market_track as MT
@@ -1697,8 +1773,12 @@ def trading_rows(md):
         # A stock pick is judged against SPY over its own days; a timing rule on an index or a
         # coin against cash, since set against its own asset it would show zero edge by design.
         vs = "v cash" if meta.get("bench") == "cash" else "v SPY"
+        # A rule market_exec does not send (it would need a market-on-close order) says so on
+        # its own row: its record is graded like every other, but no Alpaca order backs it.
+        record_only = (f'<div class="sm mut trade-record-only">{esc(RECORD_ONLY)}</div>'
+                       if meta.get("entry") == "close" else "")
         rows.append(f"""<tr><td><b>{esc(meta['label'])}</b>
-<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div></td>
+<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div>{record_only}</td>
 <td>{badge}{more}</td>
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
@@ -2115,10 +2195,10 @@ def trading_page(now=None):
     md = MT.load()
     trade_rules = MT.report(md)
     trade_open = sum(r["open"] for r in trade_rules)
-    trade_note = ("" if MS.configured() else
-                  '<div class="note">These rules are scanned and graded on the machine that holds '
-                  'the market data keys, and the record below is what it published. This page is '
-                  'built elsewhere and only renders it, so it does not reach the market itself.</div>')
+    trade_note = (f'<p class="sm trade-source">Run by {esc(TRADE_RUNNER)}. The table is each '
+                  f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
+                  f'open; it is not the Alpaca account.</p>'
+                  f'{trade_exec_html(load_fills())}')
     body = f"""<h1>Trading</h1>
 <p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
@@ -2132,6 +2212,7 @@ def trading_page(now=None):
 <section id="rules">
 <h2>Stock and ETF rules under test</h2>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
+<details class="fold trade-method"><summary>How the record is kept</summary>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
 never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
@@ -2139,6 +2220,7 @@ never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are 
 <b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days
 (<i>Working</i>, <i>No edge</i> or <i>Proven</i>); from {MT.EARLY_N} it is <i>Collecting n/{MT.READ_FLOOR}</i>
 with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
+</details>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """

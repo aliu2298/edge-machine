@@ -606,6 +606,9 @@ def reconcile(d=None, days=120):
         elif o.get("status") not in ("canceled", "expired", "rejected"):
             in_flight.append(row)
 
+    orders = order_counts(ex)
+    held = held_positions(rows)
+
     done = [r for r in rows if r.get("slip_bps") is not None]
     per_rule = {}
     for r in done:
@@ -619,9 +622,70 @@ def reconcile(d=None, days=120):
         worst_bps=max((x["slip_bps"] for x in done), default=None),
         best_bps=min((x["slip_bps"] for x in done), default=None),
         by_rule={k: dict(n=len(v), mean_bps=round(sum(v) / len(v), 2)) for k, v in sorted(per_rule.items())},
+        orders=orders,
     )
     return dict(summary=summary, rows=sorted(rows, key=lambda r: (r.get("day") or "", r["id"])),
-                orphans=orphans, in_flight=in_flight)
+                orphans=orphans, in_flight=in_flight, held=held)
+
+
+# The broker's terminal states. An order in one of them with nothing filled never traded.
+TERMINAL = ("filled", "canceled", "expired", "rejected", "done_for_day")
+
+
+def order_counts(ex):
+    """Every order this module has at the broker, counted once each, for the Trading page.
+
+    sent      every em- order in the window
+    filled    filled (matched to a trade or not: an orphan was still filled)
+    unfilled  finished with nothing filled: cancelled, expired, rejected, done for the day
+    working   not finished yet: queued for the open, or part filled
+    since     the day the first of them was submitted
+    sent == filled + unfilled + working, so the three always add up to what was sent.
+    """
+    filled = unfilled = working = 0
+    days = []
+    for o in ex.values():
+        status = o.get("status")
+        qty = float(o.get("filled_qty") or 0)
+        if status == "filled":
+            filled += 1
+        elif status in TERMINAL and not qty:
+            unfilled += 1
+        else:
+            working += 1
+        at = str(o.get("submitted_at") or o.get("created_at") or "")[:10]
+        if at:
+            days.append(at)
+    return dict(sent=len(ex), filled=filled, unfilled=unfilled, working=working,
+                since=min(days) if days else None)
+
+
+def held_positions(rows):
+    """[{symbol, qty, rules: [{rule, id, qty}]}]: what the account holds, per TRADE.
+
+    Built from the reconciled rows, so each share is attributed to the trade (and so the
+    rule) whose order bought it: the client_order_id is a function of the trade id. Two rules
+    long the same stock are two trades, two orders and two sizes; the account shows one
+    position, this shows both halves. A trade is held while its buy filled and its sell has
+    not.
+    """
+    bought, sold, meta = {}, {}, {}
+    for r in rows:
+        if r.get("status") != "filled":
+            continue
+        meta[r["id"]] = (r.get("rule"), r.get("symbol"))
+        book = bought if r.get("side") == "buy" else sold
+        book[r["id"]] = book.get(r["id"], 0) + int(r.get("qty") or 0)
+    by_symbol = {}
+    for tid, qty in bought.items():
+        left = qty - sold.get(tid, 0)
+        if left <= 0:
+            continue
+        rule, symbol = meta[tid]
+        by_symbol.setdefault(symbol, []).append(dict(rule=rule, id=tid, qty=left))
+    return [dict(symbol=sym, qty=sum(x["qty"] for x in parts),
+                 rules=sorted(parts, key=lambda x: (x["rule"] or "", x["id"])))
+            for sym, parts in sorted(by_symbol.items())]
 
 
 def save_fills(rep):
