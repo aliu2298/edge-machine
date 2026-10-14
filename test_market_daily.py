@@ -731,6 +731,37 @@ def case_save_stamps_sha():
         tmp.cleanup()
 
 
+EXEC_STUB = r'''#!/usr/bin/env python3
+import json, os, sys
+from pathlib import Path
+data = Path(__file__).resolve().parent / "data"
+if "--reconcile" in sys.argv:
+    (data / "market_fills.json").write_text(json.dumps(
+        {"summary": {"orders": {"sent": 3, "filled": 2, "unfilled": 1, "working": 0,
+                                "since": "2026-10-10"}}, "held": []}), encoding="utf-8")
+'''
+
+
+def case_fills_published():
+    print("the fill check's report is published with the ledger")
+    repo = Repo()
+    try:
+        # Untracked, as the real market_exec.py's output is: the script ignores untracked files.
+        write(os.path.join(repo.clone, "market_exec.py"), EXEC_STUB)
+        proc = repo.run()
+        if proc.returncode != 0:
+            print_failure(proc)
+        eq(proc.returncode, 0, "a run whose fill check wrote a report exits 0")
+        names = repo.origin_names()
+        ok("data/market_fills.json" in names, f"the pushed commit carries data/market_fills.json ({names})")
+        ok(set(names) <= {"data/market_ledger.json", "data/sp500.json", "data/market_fills.json"},
+           "and nothing but ledger data")
+        shown = json.loads(git(repo.origin, "show", "main:data/market_fills.json").stdout)
+        eq(shown["summary"]["orders"]["sent"], 3, "the published report is the one the fill check wrote")
+    finally:
+        repo.close()
+
+
 def main():
     digest = hashlib.sha256(open(SCRIPT, "rb").read()).hexdigest()
     print(f"script {SCRIPT}")
@@ -754,6 +785,7 @@ def main():
     case_conflicting_leftover()
     case_remote_url_quiet()
     case_save_stamps_sha()
+    case_fills_published()
     print()
     if FAILS:
         print(f"FAILED: {len(FAILS)}")

@@ -9,10 +9,11 @@
 # market_exec.py sends the next open's orders to the Alpaca PAPER account (never fatal),
 # as day market orders that Alpaca queues for the open, and reconciles yesterday's fills.
 #
-# It publishes the LEDGER ONLY. public_site/*.html is built by the sandbox-tracker workflow in
-# CI and by nothing else: two machines regenerating the same page collided on every push
-# (2026-09-20), and the conflict was always in generated output neither side had edited by
-# hand. CI rebuilds the page from this ledger on its next run, within three hours.
+# It publishes the LEDGER and the fill check's report (data/market_fills.json) ONLY.
+# public_site/*.html is built by the sandbox-tracker workflow in CI and by nothing else: two
+# machines regenerating the same page collided on every push (2026-09-20), and the conflict
+# was always in generated output neither side had edited by hand. CI rebuilds the page from
+# this ledger on its next run, within three hours.
 #
 # Installed on the VPS as edge-market.timer -> edge-market.service:
 #   OnCalendar=Mon-Fri 16:10 America/New_York
@@ -210,6 +211,11 @@ publish_ledger() {
   if [ -f data/sp500.json ]; then
     git add -- data/sp500.json
   fi
+  # The fill check's report, published so the Trading page (built in CI, which never sees the
+  # Alpaca keys) can say what the paper account actually did beside the record.
+  if [ -f data/market_fills.json ]; then
+    git add -- data/market_fills.json
+  fi
   if git diff --cached --quiet; then
     echo "no change — nothing to publish"
     exit 0
@@ -298,7 +304,7 @@ staged_only_ledger() {
     [ -z "$f" ] && continue
     any=1
     case "$f" in
-      data/market_ledger.json|data/sp500.json) ;;
+      data/market_ledger.json|data/sp500.json|data/market_fills.json) ;;
       *)
         echo "refusing: staged path ${f} is not ledger data"
         return 1
@@ -338,7 +344,7 @@ ledger_files_are_pushable() {
       # :oldmode newmode oldsha newsha status
       read -r oldmode newmode _ _ status <<< "${meta#:}"
       case "$path" in
-        data/market_ledger.json|data/sp500.json) ;;
+        data/market_ledger.json|data/sp500.json|data/market_fills.json) ;;
         *)
           echo "refusing: commit ${c} touches ${path}, not only ledger data"
           return 1
@@ -409,7 +415,7 @@ ahead_is_ledger_only() {
     while IFS= read -r f; do
       [ -z "$f" ] && continue
       case "$f" in
-        data/market_ledger.json|data/sp500.json) ;;
+        data/market_ledger.json|data/sp500.json|data/market_fills.json) ;;
         *)
           echo "refusing: commit ${c} touches ${f}, not only ledger data"
           return 1
