@@ -7003,6 +7003,7 @@ _midwrite("stages", T.save_stages,
 print("\npaused lanes: no new entries, open ones still settle")
 
 _PAUSED_NAMES = {
+    "tennis_fav_band", "tennis_fav_band_3h", "tennis_combo2", "pm_combo2",
     "covers", "kalshi", "scores24", "polymarket", "draftkings", "mlb_fade_streak", "nws",
     "tt_band_55_60", "olbg", "pinnacle", "cmd_tail", "btts_form_l10", "o15_form_l10",
     "sportsgambler", "tennis_combo3", "tennis_combo4", "pm_combo3", "pm_combo4",
