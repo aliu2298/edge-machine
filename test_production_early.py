@@ -54,7 +54,6 @@ BUILT = NOW.isoformat()
 KO = (NOW + timedelta(hours=20)).isoformat()
 SIX = {
     "crypto_fav_band|crypto_fav": "Crypto favourite band",
-    "tennis_combo2|tennis_combo": "Tennis 2-leg combo",
     "o15_form_l10|soccer_o15": "Over 1.5 form rule",
     "o15_ranked|soccer_o15": "Over 1.5, ranked: the day's top 2 mismatches under 0.80",
     "liga_btts_even|soccer_btts": "La Liga BTTS in balanced matches",

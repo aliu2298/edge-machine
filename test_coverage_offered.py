@@ -92,7 +92,7 @@ def main():
         "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
         "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
         "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
-        "team2_ranked|soccer_team2", "tennis_combo2|tennis_combo", "turkey_btts_dog|soccer_btts",
+        "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis", "turkey_btts_dog|soccer_btts",
         "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
        "PAIR_OVERRIDES is the seventeen pairs moved by hand (team scores 1+ · Clubs out 2026-10-14): the six of 2026-10-08, "
        "commodities on 2026-10-09 and the six of 2026-10-11 included")

@@ -233,9 +233,9 @@ def main():
     for name in ("olbg", "mma_fav_band", "mlb_fade_streak", "nhl_rest_edge"):
         ok(name in S.REMOVED_SOURCES and S.lane_removed(name, S.SOURCES[name]["sports"][0]),
            f"{name} is off the board")
-    ok(not S.lane_paused("tennis_fav_band_3h", "tennis")
+    ok(S.lane_paused("tennis_fav_band_3h", "tennis")
        and not S.lane_paused("pin_totals", "soccer_o25"),
-       "the 3-hour band and pin totals may still log")
+       "the old tennis band is paused; pin totals may still log")
     ok(S.lane_paused("mma_fav_band", "mma") and S.lane_paused("olbg", "boxing")
        and S.lane_paused("mlb_fade_streak", "mlb") and S.lane_paused("nhl_rest_edge", "nhl_rest"),
        "the five removed lanes log nothing new")
