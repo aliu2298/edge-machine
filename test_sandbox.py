@@ -175,9 +175,9 @@ def _live_ledger_checks():
     # TENNIS_COMBO_BAND_SINCE. Until 2026-10-08 this check asked for stage "sandbox",
     # which the promotion made false while the clock it was guarding stayed right.
     _e = (_st.get("pairs") or {}).get("tennis_combo2|tennis_combo") or {}
-    ok(_e.get("stage") == "production" and _e.get("entry_since") == S.TENNIS_COMBO_BAND_SINCE
-       and T.qa_since(_e, "tennis_combo", "tennis_combo2|tennis_combo") == S.TENNIS_COMBO_BAND_SINCE,
-       "tennis_combo2|tennis_combo counts from its 2026-10-04 reset, in Production")
+    ok(_e.get("stage") == "sandbox" and S.lane_paused("tennis_combo2", "tennis_combo") and _e.get("entry_since") == S.TENNIS_COMBO_BAND_SINCE
+       and T.record_since(_e) == S.TENNIS_COMBO_BAND_SINCE,
+       "paused tennis_combo2 preserves its 2026-10-04 historical clock")
 
     print("\nledger history is unchanged by the pause")
 
@@ -3362,7 +3362,7 @@ eq(sorted(T.PAIR_OVERRIDES),
     "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
     "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
     "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
-    "team2_ranked|soccer_team2", "tennis_combo2|tennis_combo", "turkey_btts_dog|soccer_btts",
+    "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis", "turkey_btts_dog|soccer_btts",
     "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else "
    "(team scores 1+ · Clubs out 2026-10-14)")
@@ -7003,6 +7003,7 @@ _midwrite("stages", T.save_stages,
 print("\npaused lanes: no new entries, open ones still settle")
 
 _PAUSED_NAMES = {
+    "tennis_fav_band", "tennis_fav_band_3h", "tennis_combo2", "pm_combo2",
     "covers", "kalshi", "scores24", "polymarket", "draftkings", "mlb_fade_streak", "nws",
     "tt_band_55_60", "olbg", "pinnacle", "cmd_tail", "btts_form_l10", "o15_form_l10",
     "sportsgambler", "tennis_combo3", "tennis_combo4", "pm_combo3", "pm_combo4",
@@ -7024,9 +7025,9 @@ ok(S.lane_paused("espn_fpi", "nfl") and S.lane_paused("espn_fpi", "mlb"),
    "ESPN FPI NFL stays paused and ESPN FPI MLB is removed")
 ok(S.lane_paused("tennis_combo3", "tennis_combo") and S.lane_paused("tennis_combo4", "tennis_combo")
    and S.lane_paused("pm_combo3", "tennis_pmcombo") and S.lane_paused("pm_combo4", "tennis_pmcombo")
-   and not S.lane_paused("tennis_combo2", "tennis_combo")
-   and not S.lane_paused("pm_combo2", "tennis_pmcombo"),
-   "3- and 4-leg combos are paused; both 2-leg combos stay")
+   and S.lane_paused("tennis_combo2", "tennis_combo")
+   and S.lane_paused("pm_combo2", "tennis_pmcombo"),
+   "all previous tennis combos are paused")
 ok(S.lane_paused("polymarket_us", "nfl") and not S.lane_paused("polymarket_us", "tennis"),
    "NFL is paused on a source that is not otherwise paused")
 ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
@@ -7035,10 +7036,9 @@ ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
    and not S.source_fully_paused("polymarket_us"),
    "a removed source logs no sport; Polymarket US still logs the sports it keeps")
 for _name, _sport in (
-        ("tennis_fav_band_3h", "tennis"), ("crypto_fav_band", "crypto_fav"),
+        ("tennis_utr_shortlist_v1", "tennis"), ("crypto_fav_band", "crypto_fav"),
         ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
-        ("tennis_combo2", "tennis_combo"), ("pm_combo2", "tennis_pmcombo"),
         ("o15_ranked", "soccer_o15"),
         ("pin_totals", "soccer_o25"), ("btts_market", "soccer_btts"),
         ("oddspedia", "cricket"), ("cmd_market", "commodities")):
@@ -7172,9 +7172,9 @@ ok(("espn_fpi", "mlb") not in _kb, "ESPN FPI MLB does not enter")
 ok(("espn_fpi", "nfl") not in _kb, "ESPN FPI NFL does not")
 ok(("soccerpredictions", "soccer") not in _kb and ("soccerpredictions", "nfl") not in _kb,
    "soccerpredictions enters on neither sport")
-eq(_kb[("tennis_combo2", "tennis_combo")]["bet"], True, "the 2-leg Kalshi combo still enters")
+ok(("tennis_combo2", "tennis_combo") not in _kb, "the paused 2-leg Kalshi combo does not enter")
 ok(("tennis_combo3", "tennis_combo") not in _kb, "the 3-leg Kalshi combo does not")
-eq(_kb[("pm_combo2", "tennis_pmcombo")]["bet"], True, "the 2-leg Polymarket combo still enters")
+ok(("pm_combo2", "tennis_pmcombo") not in _kb, "the paused 2-leg Polymarket combo does not enter")
 ok(("pm_combo4", "tennis_pmcombo") not in _kb, "the 4-leg Polymarket combo does not")
 
 _open = []
@@ -7383,8 +7383,8 @@ _ts = {(q["source"], q["market_id"]): q for q in _td["quotes"] if q["source"].st
 ok(("tennis_fav_band", "aec-atp-near-x-2026-09-25") not in _ts
    and ("tennis_fav_band", "aec-atp-far-x-2026-09-25") not in _ts,
    "the removed favourite-band lane logs nothing")
-eq(_ts[("tennis_fav_band_3h", "aec-atp-near-x-2026-09-25")]["bet"], True,
-   "the 3-hour lane still logs the match inside the window")
+ok(("tennis_fav_band_3h", "aec-atp-near-x-2026-09-25") not in _ts,
+   "the paused 3-hour lane logs nothing new even inside its former window")
 ok(("tennis_fav_band_3h", "aec-atp-far-x-2026-09-25") not in _ts,
    "the 3-hour lane does not log the one six hours out")
 eq(T.retire_venue_duplicates(_td, verbose=False), 0,

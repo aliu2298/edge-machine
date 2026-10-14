@@ -895,7 +895,7 @@ def pair_list(d, st, include_retired=False):
             # "removed" branch below exists for exactly this and never got the chance to run.
             reset_row = bool(T.record_since(pair)) and bool(
                 T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
-            if (group is None and not _scope(sport)
+            if (group is None and name != "tennis_utr_shortlist_v1" and not _scope(sport)
                     and name not in T.CONSENSUS and not reset_row):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a

@@ -1331,7 +1331,27 @@ SOURCES = {
 # Value None pauses every sport. {"keep": {...}} pauses every sport not named.
 # {"sports": {...}} pauses only those sports.
 
+SOURCES["tennis_utr_shortlist_v1"] = dict(
+    label="UTR daily shortlist · up to 3 singles", kind="Rule", connected=True,
+    site="edge-machine", sports=["tennis"], baseline="favourite_population",
+    note="UNPROVEN PAPER RULE v1, registered 2026-10-14. UTR singles on Polymarket US only, "
+         "70 cents to below 75 cents, within 3 hours of the venue-confirmed start. A fresh "
+         "open public order book (at most 5 minutes old), spread at most 3 cents, and enough "
+         "top-level depth for the modeled $100 entry are mandatory; unknown depth is skipped. "
+         "Rank simultaneously eligible candidates by lowest fee-adjusted cost (existing 6% "
+         "paper fee model), then narrower spread, greater depth, earlier start and market ID. "
+         "At most 3 picks per America/Chicago calendar day across all refreshes, no forced quota, "
+         "one pick per match. Singles only. Eligible unselected candidates are retained as "
+         "unstaked comparisons. Freeze these parameters for the next 50 settled selections; "
+         "historical fitted results are not this rule's record. Listed in Production by owner "
+         "request, which is not evidence of a proven edge or an order-placement instruction.")
+
 PAUSED_LANES = {
+    # Owner stopped the previous tennis rules on 2026-10-14. Keep history and grading.
+    "tennis_fav_band": None,
+    "tennis_fav_band_3h": None,
+    "tennis_combo2": None,
+    "pm_combo2": None,
     # −6.7% after fees.
     "covers": None,
     # Kalshi, all of it MLB, −19.7% after fees.
@@ -9836,6 +9856,7 @@ CHALLENGERS = {
     "corners_market": fetch_corners_market,
     "corners_under": fetch_corners_under,
     "tennis_fav_band": fetch_tennis_fav_band,
+    "tennis_utr_shortlist_v1": lambda sport: [],  # publish() ranks fresh books against the persistent daily quota
     "tennis_fav_band_3h": fetch_tennis_fav_band_3h,
     "tennis_combo2": fetch_tennis_combo2,
     "tennis_combo3": fetch_tennis_combo3,

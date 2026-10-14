@@ -22,7 +22,7 @@ KEY = "tennis"
 TITLE = "Edge Machine · Tennis"
 DESCRIPTION = ("Every tennis rule under test — the 3-hour favourite band and the combo "
                "baskets, on Kalshi and Polymarket US.")
-LEDE = "Match-winner picks and combo baskets · times CT"
+LEDE = "UTR daily shortlist · up to 3 singles · previous rules paused · times CT"
 SCOPE = "Match-winner picks and combo baskets"
 TOC = SP.TOC
 
