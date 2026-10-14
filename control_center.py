@@ -91,6 +91,7 @@ VENUE_WRITERS = {"vps": 2, "watchdog": 3, "close": 2, "boards": 7}
 DEFAULT_WRITER_HOURS = 48
 # A Production pair this close to the stale-pair demotion is named.
 NEAR_DEMOTION_DAYS = 7
+LATE_LEAD_HOURS = 48          # a lead published too late to act on is listed this long after its kickoff
 NEXT_HOURS = 24
 
 
@@ -101,7 +102,8 @@ WORKFLOWS = ("Sandbox Tracker", "Refresh boards")
 STATUS_LABEL = {"healthy": "Healthy", "stale": "Stale", "attention": "Attention", "waiting": "Waiting"}
 STATUS_CHIP = {"healthy": "y", "stale": "w", "attention": "x", "waiting": "n"}
 KIND_LABEL = {"overdue": "Open past start", "feed": "Feed", "paused": "Production pair",
-              "quiet": "Production pair", "route": "Not tradeable", "run": "Workflow",
+              "quiet": "Production pair", "route": "Not tradeable", "late": "Published late",
+              "run": "Workflow",
               "venue": "Closing prices"}
 SECTIONS = (("overview", "Overview"), ("areas", "Areas"), ("attention", "Attention"),
             ("live", "Live now"), ("scorecard", "Rules"))
@@ -436,6 +438,18 @@ def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None, b
     # Nothing in Production is observation only: a pair whose leads carry no market a
     # follower can buy, or whose bets in the window were all held back, is listed with the
     # feed's own reason (production.routing_problem).
+    # A lead first published inside production.LATE_MIN of its kickoff could not be acted
+    # on: the follower skips anything that close. Listed while its kickoff is recent.
+    for lead in sorted(((blob or {}).get("leads") or {}).values(), key=lambda l: str(l.get("kickoff"))):
+        ko = _utc(lead.get("kickoff"))
+        if not lead.get("published_late") or ko is None or ko < now - timedelta(hours=LATE_LEAD_HOURS):
+            continue
+        name, sport = str(lead.get("pair") or "|").split("|", 1)
+        items.append(dict(kind="late", area=_area_of_sport(sport),
+                          text=(f"{lead.get('match')} · {lead.get('headline')} ({S.scoped_rule(name, sport)}) "
+                                f"was published {lead.get('published_min_before_kickoff')} min before kickoff "
+                                f"— too close to kickoff to act on"),
+                          href="./production.html"))
     feed_pairs = (blob or {}).get("pairs") or {}
     for key in sorted(pairs):
         problem = ((feed_pairs.get(key) or {}).get("routing") or {}).get("problem")

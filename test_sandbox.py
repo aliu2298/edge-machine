@@ -2859,8 +2859,8 @@ _l3 = next(l for l in _fl if l["sandbox_quote"].endswith("3"))
 eq((_l3["bet"], _l3["headline"]), ({"kind": "match_result", "side": "draw"}, "Draw"), "a draw tip is published as a draw")
 eq(_feed["unverified_kickoff_skipped"], 1, "a lead whose kickoff is only Kalshi's estimate is held back too")
 eq(sorted(_feed["pairs"]["mls_away_band|soccer"]),
-   ["by_hand", "entered_at", "promoted_at", "ready_at", "route", "routing", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee"],
-   "each pair carries the Sandbox's own record since ready, to compare real fills with, and its routing count")
+   ["by_hand", "entered_at", "promoted_at", "ready_at", "route", "routing", "sandbox_clv", "sandbox_n", "sandbox_roi", "sandbox_roi_fee", "timing"],
+   "each pair carries the Sandbox's own record since ready, to compare real fills with, its routing count and its lead timing")
 _l1 = next(l for l in _fl if l["sandbox_quote"].endswith("1"))
 eq((_l1["bet"], _l1["home"], _l1["away"], _l1["league"], _l1["status"]),
    ({"kind": "match_result", "side": "home"}, "Leeds United", "Newcastle", "Premier League", "pending"),

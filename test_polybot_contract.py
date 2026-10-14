@@ -324,6 +324,8 @@ def test_breaks_fail(written, quotes):
 # Changed on purpose 2026-10-12 ("nothing in Production is observation only"): every
 # route gains price_at_log (the side's ask when logged) and claim (the headline), and
 # every pair gains routing (production.routing_problem's counts). Nothing else moved.
+# Changed on purpose 2026-10-14 (late leads): every lead gains published_at,
+# published_min_before_kickoff and published_late, and every pair gains timing.
 _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
 {
   "board_built_at": "2026-10-01T12:00:00+00:00",
@@ -345,6 +347,9 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "match": "Home Side v Away Side",
       "pair": "oddspedia|cricket",
       "price_at_log": 0.8,
+      "published_at": "2026-10-01T00:00:00+00:00",
+      "published_late": false,
+      "published_min_before_kickoff": 4200,
       "route": {
         "claim": "Away Side to win",
         "market": "aec-fixture-pick",
@@ -376,6 +381,9 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "model_prob": 0.62,
       "pair": "espn_fpi|nfl",
       "price_at_log": 0.55,
+      "published_at": "2026-10-01T00:00:00+00:00",
+      "published_late": false,
+      "published_min_before_kickoff": 4260,
       "route": {
         "claim": "Home Side to win",
         "market": "aec-fixture-model",
@@ -398,7 +406,8 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "ready_at": "2026-09-01T00:00:00+00:00",
       "route": "moved by hand on 2026-09-01",
       "routing": {"leads": 1, "problem": null, "routed": 1, "unlisted": 0,
-                  "unrouted": 0, "unverified": 0, "why": []}
+                  "unrouted": 0, "unverified": 0, "why": []},
+      "timing": {"late": [], "timed": 1, "under_target": 0}
     },
     "oddspedia|cricket": {
       "by_hand": "2026-09-01",
@@ -407,7 +416,8 @@ _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
       "ready_at": "2026-09-01T00:00:00+00:00",
       "route": "moved by hand on 2026-09-01",
       "routing": {"leads": 1, "problem": null, "routed": 1, "unlisted": 0,
-                  "unrouted": 0, "unverified": 0, "why": []}
+                  "unrouted": 0, "unverified": 0, "why": []},
+      "timing": {"late": [], "timed": 1, "under_target": 0}
     }
   },
   "stage": "production",
