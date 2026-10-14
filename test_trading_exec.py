@@ -121,8 +121,9 @@ line = SB.trade_exec_html(fills)
 head = re.search(r'<p class="sm trade-exec">(.*?)</p>', line).group(1)
 ok(head.startswith("Alpaca paper execution since Oct 10: 6 sent · 4 filled · 1 unfilled · 1 waiting for the open"),
    "one line: since the first order, sent · filled · unfilled, and what is still waiting")
-ok('<span class="badge">DAL 24 = sw_gap_down_reversal 12 + sw_rsi2_pullback 12</span>' in head,
-   "a stock two rules hold is tagged with each rule's share")
+ok('<span class="trade-shared">DAL 24: <span class="badge">sw_gap_down_reversal 12</span> '
+   '<span class="badge">sw_rsi2_pullback 12</span></span>' in head,
+   "a stock two rules hold is tagged with each rule's share, one badge per rule")
 ok("SPY" not in head, "a stock one rule held is not tagged")
 fold = line[line.find('<details class="fold trade-exec-detail">'):]
 ok(fold.startswith('<details class="fold trade-exec-detail"><summary>Execution detail</summary>'),

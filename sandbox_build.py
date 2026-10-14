@@ -1700,16 +1700,18 @@ def load_fills(path=None):
 
 
 def _shared_tags(held):
-    """'DAL 24 = sw_gap_down_reversal 12 + sw_rsi2_pullback 12' for each stock two or more
-    rules hold, as badges. One position at the broker, one trade per rule in the record."""
+    """'DAL 24: [sw_gap_down_reversal 12] [sw_rsi2_pullback 12]' for each stock two or more
+    rules hold: one position at the broker, one trade per rule in the record. One small
+    badge per rule, so the line wraps on a phone instead of clipping one long badge."""
     tags = []
     for h in held or []:
         parts = h.get("rules") or []
         if len({p.get("rule") for p in parts}) < 2:
             continue
-        split = " + ".join(f'{p.get("rule")} {int(p.get("qty") or 0)}' for p in parts)
-        tags.append(f'<span class="badge">{esc(h.get("symbol"))} {int(h.get("qty") or 0)} = {esc(split)}</span>')
-    return " ".join(tags)
+        badges = " ".join(f'<span class="badge">{esc(p.get("rule"))} {int(p.get("qty") or 0)}</span>'
+                          for p in parts)
+        tags.append(f'<span class="trade-shared">{esc(h.get("symbol"))} {int(h.get("qty") or 0)}: {badges}</span>')
+    return " · ".join(tags)
 
 
 def trade_exec_html(fills):
@@ -1753,7 +1755,7 @@ def trade_exec_html(fills):
         + f'<p class="sm mut">The overnight rule is {esc(RECORD_ONLY)}.'
         + (f' Fill check published {esc(_ct_phrase(updated))}.' if updated else "")
         + '</p></details>')
-    return (f'<p class="sm trade-exec">{head}{(" " + tags) if tags else ""}</p>{detail}')
+    return (f'<p class="sm trade-exec">{head}{(" · held by two rules: " + tags) if tags else ""}</p>{detail}')
 
 
 def trading_rows(md):
