@@ -41,6 +41,9 @@ on:
       # once for the WTI window (14:30 ET close) and once for the 17:00 ET group when
       # the crypto request has not already covered that window.
       - "data/commodities_window/**"
+      # The first-to-score lanes (2026-10-14): the No lanes' 09:00-10:30 CT pick reads and a
+      # lineup-lag read 60 and 40 minutes before each kickoff (lane_windows.py).
+      - "data/ftts_window/**"
 
 permissions:
   contents: write

@@ -54,8 +54,8 @@ check("crypto: 18:30-20:00Z after the change", (w["start"], w["end"]),
 print("\nweekday and calendar rules")
 sat = at(2026, 10, 17, 12, 0)
 lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat) if w["close"].date() == dt.date(2026, 10, 17)}
-check("Saturday: crypto and gas/diesel windows, no Treasury, index or commodity",
-      sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily"])
+check("Saturday: crypto, gas/diesel and the first-to-score NO pick, no Treasury, index or commodity",
+      sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "ftts_no"])
 
 print("\nup to three reads, 30 minutes apart, none in the last 10 minutes")
 for minute, want in ((29, [1]), (35, [2]), (65, [3]), (82, []), (95, [])):

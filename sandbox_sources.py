@@ -95,6 +95,9 @@ SPORTS["tennis_combo"] = "Tennis · Combos"
 # so the two venues' baskets can never pool into one record: they are different contracts at
 # different costs, and the whole point is to read them side by side.
 SPORTS["tennis_pmcombo"] = "Tennis · PM Combos"
+# First team to score (2026-10-14): Kalshi's three-leg FTTS events (home, away, No Goal). Its
+# own domain, so these legs never pool with a goals market. Only the two TEAM legs are rows.
+SPORTS["soccer_ftts"] = "Soccer · First to score"
 
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
 # six returns open, tradeable markets. table-tennis is the surprise — Polymarket carries
@@ -1025,6 +1028,55 @@ SOURCES = {
              "runs -3.5pp and dog-to-score -3.1pp, so fewer matches have both teams scoring, "
              "which is not a spread story. The selection is unchanged; the explanation for it "
              "is withdrawn until something replaces it."),
+    "ftts_market": dict(
+        label="Kalshi first-to-score price (every team leg)", kind="Baseline", connected=True,
+        site="kalshi.com", sports=["soccer_ftts"],
+        note="The market's own midpoint on every Kalshi first-team-to-score team leg the Sandbox "
+             "lists. Never bets. The population the three first-to-score rules are judged against "
+             "(backing the same side on every listed leg over the same period), and the kickoff "
+             "list lane_windows.py reads to time the lineup-lag reads."),
+    "ftts_lineup_lag": dict(
+        label="First to score, lineup lag (model beats the ask by 3c, 15-60 min out)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_ftts"], baseline="population",
+        one_per_event=True,
+        note="REGISTERED 2026-10-14 by Olu, before it logged anything. Back the YES on a team's "
+             "Kalshi first-team-to-score leg when the entry is 15-60 minutes before kickoff (after "
+             "the teams are named) and a fair price built from the same fixture's Kalshi "
+             "match-winner asks beats that leg's ask plus the taker fee by 3c or more. Fair price: "
+             "the three match-winner asks de-vigged, fitted to two independent Poisson goal rates, "
+             "P(team first) = its rate over the sum, times one minus P(no goal). One leg per match, "
+             "the larger edge. No Goal legs are never bought: the same fit overrates 0-0 (7.2% "
+             "predicted v 6.3% on 17,182 ESPN matches). WHY: the FTTS book is made off the "
+             "match-winner prices, so when team news moves the match-winner market first, the "
+             "first-to-score legs can lag for minutes. Measured before registering, at kickoff "
+             "-20 min on 314 settled Kalshi matches: the same fit matches the FTTS book's own "
+             "accuracy (Brier 0.1721 v 0.1728) and a 3c edge ran +15.2% on 49 legs at z +0.37 -- "
+             "noise, which is why this is a paper test. Read at 30 settled."),
+    "ftts_no_70_80": dict(
+        label="First to score, NO at 0.70-0.80, best 5 a day by model edge", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_ftts"], baseline="population",
+        one_per_event=True, day_cap=5,
+        note="REGISTERED 2026-10-14 by Olu, before it logged anything. Buy the NO on a team's "
+             "Kalshi first-team-to-score leg -- the team does NOT score first: the other side "
+             "scores first or nobody scores -- when the NO ask is 0.70-0.80 inclusive. Ranked, "
+             "not thresholded: each day, at the first read at or after 09:00 Central, every leg in "
+             "band on a fixture kicking off that Central day at least an hour later is ranked by "
+             "the fair NO price (one minus the match-winner fit's P(team first), as in "
+             "ftts_lineup_lag) minus the NO ask and fee, and the best FIVE are taken, one leg per "
+             "match. A later read adds only while fewer than five are logged that day. Measured "
+             "before registering: buying the No on favourites at their price was flat on 314 "
+             "settled Kalshi matches (-1.1%). Read at 30 settled."),
+    "ftts_no_60_70": dict(
+        label="First to score, NO at 0.60-0.70, best 5 a day by model edge", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_ftts"], baseline="population",
+        one_per_event=True, day_cap=5,
+        note="REGISTERED 2026-10-14 by Olu, before it logged anything. The same rule as "
+             "ftts_no_70_80 with the NO ask at 0.60 up to but NOT including 0.70 (a 0.70 NO is the "
+             "0.70-0.80 lane's), so the two bands never share a price: the team does not score "
+             "first, best five a day by the match-winner fit's edge over the NO ask and fee, one "
+             "leg per match, picked at the first read at or after 09:00 Central for that Central "
+             "day's fixtures kicking off at least an hour later. Its own record: the two bands "
+             "are judged apart. Read at 30 settled."),
     "ere_draw": dict(
         label="Eredivisie draw band (de-vigged 0.20-0.25)", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer"], baseline="draw_population",
@@ -9848,6 +9900,199 @@ def apply_kalshi_mma_starts(rows, milestones=None, now=None):
 
 # Pinnacle is not in here: it is planned across every sport after these have run, so its
 # credits go to the contests none of them cover (plan_pinnacle, called from publish).
+# ---------------------------------------------------------------------------
+# First team to score (FTTS) — three lanes registered 2026-10-14
+# ---------------------------------------------------------------------------
+# Kalshi lists KX{LEAGUE}FTTS events with three legs (home, away, NONE = no goal) for the
+# leagues the board already reads. Polymarket US lists no such market. The book is made off
+# the match-winner prices, so the lanes compare each team leg with a fair price fitted to the
+# SAME fixture's Kalshi match-winner asks (the `soccer` domain row), joined on the fixture code
+# the two series share (KXEPLFTTS-26OCT11LFCMCI <-> KXEPLGAME-26OCT11LFCMCI). A fixture with
+# no match-winner row has no kickoff and no model, and is not listed.
+FTTS_FRAGS = tuple(dict.fromkeys(list(BTTS_LEAGUES) + ["UEFANL"]))
+FTTS_TZ = ZoneInfo("America/Chicago")
+FTTS_FEE = 0.07
+FTTS_LAG_MIN, FTTS_LAG_MAX = 15, 60          # minutes before kickoff, lineup lag window
+FTTS_LAG_EDGE = 0.03
+FTTS_NO_FROM_CT = 9                          # the No lanes pick at the first read from 09:00 CT
+FTTS_NO_MIN_LEAD_MIN = 60                    # ...over fixtures at least an hour away
+FTTS_NO_PICKS = 5
+
+
+def _pois_pc(lam, n=12):
+    """[(P(k), P(<=k))] for k = 0..n-1."""
+    p, c, out = math.exp(-lam), 0.0, []
+    for k in range(n):
+        if k:
+            p *= lam / k
+        c += p
+        out.append((p, c))
+    return out
+
+
+def ftts_x12(lh, la):
+    """(P home win, P draw, P away win) for independent Poisson goal rates."""
+    h, a = _pois_pc(lh), _pois_pc(la)
+    ph = sum(h[i][0] * a[i - 1][1] for i in range(1, len(h)))
+    pa = sum(a[j][0] * h[j - 1][1] for j in range(1, len(a)))
+    return ph, max(0.0, 1 - ph - pa), pa
+
+
+def ftts_fit(ph, pd, pa):
+    """Two Poisson rates whose 1X2 is closest to (ph, pd, pa): a coarse grid, then a fine one."""
+    def err(lh, la):
+        h, d_, a = ftts_x12(lh, la)
+        return (h - ph) ** 2 + (d_ - pd) ** 2 + (a - pa) ** 2
+    _, bh, ba = min((err(x / 5, y / 5), x / 5, y / 5) for x in range(1, 21) for y in range(1, 21))
+    _, fh, fa = min((err(bh + i / 50, ba + j / 50), bh + i / 50, ba + j / 50)
+                    for i in range(-10, 11) for j in range(-10, 11)
+                    if bh + i / 50 > 0.02 and ba + j / 50 > 0.02)
+    return fh, fa
+
+
+def ftts_fair(game):
+    """{'a': P(home first), 'b': P(away first), 'none': P(no goal)} from a match-winner row."""
+    asks = [game.get("price_a"), game.get("price_draw"), game.get("price_b")]
+    if any(x is None or not 0 < x < 1 for x in asks):
+        return None
+    tot = sum(asks)
+    lh, la = ftts_fit(asks[0] / tot, asks[1] / tot, asks[2] / tot)
+    p0 = math.exp(-(lh + la))
+    return {"a": lh / (lh + la) * (1 - p0), "b": la / (lh + la) * (1 - p0), "none": p0}
+
+
+def _ftts_fee(p):
+    return FTTS_FEE * p * (1 - p)
+
+
+def fetch_kalshi_ftts(universe, stats=None):
+    """Team legs of every open Kalshi FTTS event whose fixture the `soccer` domain priced."""
+    games = {}
+    for g in (universe or {}).get("soccer") or []:
+        mid = str(g.get("market_id") or "")
+        if g.get("venue") == "kalshi" and "GAME-" in mid:
+            games[mid.split("GAME-", 1)[1]] = g
+    rows, listed = [], 0
+    for frag in FTTS_FRAGS:
+        series = f"KX{frag}FTTS"
+        by_event = {}
+        for m in _kalshi_open(series) or []:
+            by_event.setdefault(m.get("event_ticker"), []).append(m)
+        for event, ms in by_event.items():
+            game = games.get(str(event).split("-", 1)[-1])
+            if not game or len(ms) != 3:
+                continue
+            fair = ftts_fair(game)
+            if not fair:
+                continue
+            tick = game.get("tickers") or {}
+            side_of = {str(tick.get(k, "")).rsplit("-", 1)[-1]: k for k in ("a", "b")}
+            try:
+                ko = datetime.fromisoformat(str(game["start"]).replace("Z", "+00:00"))
+            except (KeyError, ValueError):
+                continue
+            for m in ms:
+                side = side_of.get(str(m.get("ticker", "")).rsplit("-", 1)[-1])
+                if side is None:
+                    continue                      # NONE, or a leg code no side carries
+                listed += 1
+                ya, yb = _num(m.get("yes_ask_dollars")), _num(m.get("yes_bid_dollars"))
+                na, nb = _num(m.get("no_ask_dollars")), _num(m.get("no_bid_dollars"))
+                if ya is None or na is None:
+                    continue
+                tight = lambda bid, ask: bool(bid is not None and ask is not None and bid > 0
+                                              and ask < 1 and ask - bid <= KALSHI_MAX_SPREAD)
+                tradeable = {"a": tight(yb, ya), "b": tight(nb, na)}
+                team = game.get("side_a") if side == "a" else game.get("side_b")
+                opp = game.get("side_b") if side == "a" else game.get("side_a")
+                rows.append(dict(
+                    sport="soccer_ftts", venue="kalshi_binary", market_id=m["ticker"],
+                    label=f"{game.get('label')}: {team} to score first",
+                    side_a="Yes", side_b="No", price_a=ya, price_b=na, price_draw=None,
+                    tradeable=tradeable, untraded=not any(tradeable.values()),
+                    start=ko.isoformat(), date=ko.astimezone(FTTS_TZ).date().isoformat(),
+                    volume=0.0, series=series, event=event, team=team, opponent=opp,
+                    league=game.get("league"), market=m, fair_yes=round(fair[side], 4),
+                    mid_a=round((ya + yb) / 2, 4) if yb is not None and yb > 0 else ya,
+                    url=f"https://kalshi.com/markets/{series.lower()}"))
+    if stats is not None:
+        stats["listed"] = listed
+    return rows
+
+
+def _ftts_rows(sport, universe):
+    if sport != "soccer_ftts":
+        return []
+    return [r for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
+            if r.get("fair_yes") is not None]
+
+
+def _ftts_best_per_event(cands):
+    """{event: (edge, row)} keeping the larger edge, ties to the lower ticker."""
+    best = {}
+    for edge, r in sorted(cands, key=lambda x: (-x[0], x[1]["market_id"])):
+        best.setdefault(r["event"], (edge, r))          # first seen = largest edge, lowest ticker
+    return sorted(best.values(), key=lambda x: (-x[0], x[1]["market_id"]))
+
+
+def fetch_ftts_lineup_lag(sport, universe=None, now=None):
+    """YES on a team leg 15-60 min out where the match-winner fit beats ask + fee by 3c."""
+    now = now or datetime.now(timezone.utc)
+    cands = []
+    for r in _ftts_rows(sport, universe):
+        mins = (datetime.fromisoformat(r["start"]) - now).total_seconds() / 60
+        if not (FTTS_LAG_MIN <= mins <= FTTS_LAG_MAX) or not (r.get("tradeable") or {}).get("a"):
+            continue
+        edge = r["fair_yes"] - (r["price_a"] + _ftts_fee(r["price_a"]))
+        if edge >= FTTS_LAG_EDGE:
+            cands.append((edge, r))
+    return [dict(market_id=r["market_id"], pick="a",
+                 detail=f"fit {r['fair_yes']:.3f} v ask {r['price_a']:.2f} ({e:+.3f})")
+            for e, r in _ftts_best_per_event(cands)]
+
+
+def ftts_no_band_picks(sport, band, universe=None, now=None, hi_open=False):
+    """NO on a team leg with its NO ask in `band`, ranked by fit edge, the best FTTS_NO_PICKS.
+
+    `hi_open` excludes the top of the band, so 0.60-0.70 and 0.70-0.80 never share a price:
+    a NO at exactly 0.70 belongs to the 0.70-0.80 lane only.
+    """
+    now = now or datetime.now(timezone.utc)
+    local = now.astimezone(FTTS_TZ)
+    if local.hour < FTTS_NO_FROM_CT:
+        return []
+    lo, hi = band
+    cands = []
+    for r in _ftts_rows(sport, universe):
+        if r.get("date") != local.date().isoformat():
+            continue
+        mins = (datetime.fromisoformat(r["start"]) - now).total_seconds() / 60
+        no = r["price_b"]
+        if mins < FTTS_NO_MIN_LEAD_MIN or not (lo - 1e-9 <= no and (no < hi - 1e-9 if hi_open else no <= hi + 1e-9)):
+            continue
+        if not (r.get("tradeable") or {}).get("b"):
+            continue
+        cands.append(((1 - r["fair_yes"]) - (no + _ftts_fee(no)), r))
+    ranked = _ftts_best_per_event(cands)[:FTTS_NO_PICKS]
+    return [dict(market_id=r["market_id"], pick="b",
+                 detail=f"rank {i + 1}: fit edge {e:+.3f}, NO ask {r['price_b']:.2f}")
+            for i, (e, r) in enumerate(ranked)]
+
+
+def fetch_ftts_market(sport, universe=None):
+    """The Kalshi midpoint on every listed FTTS team leg — never a bet (edge 0 by construction)."""
+    return [dict(market_id=r["market_id"], prob_a=r.get("mid_a", r["price_a"]))
+            for r in _ftts_rows(sport, universe)]
+
+
+def fetch_ftts_no_70_80(sport, universe=None, now=None):
+    return ftts_no_band_picks(sport, (0.70, 0.80), universe, now)
+
+
+def fetch_ftts_no_60_70(sport, universe=None, now=None):
+    return ftts_no_band_picks(sport, (0.60, 0.70), universe, now, hi_open=True)
+
+
 CHALLENGERS = {
     "polymarket": polymarket_com_probs,
     "btts_market": fetch_btts_market,
@@ -9871,6 +10116,10 @@ CHALLENGERS = {
     "o15_cup_mismatch": fetch_o15_cup_mismatch,
     "o15_ranked": fetch_o15_ranked,
     "team2_ranked": fetch_team2_ranked,
+    "ftts_market": fetch_ftts_market,
+    "ftts_lineup_lag": fetch_ftts_lineup_lag,
+    "ftts_no_70_80": fetch_ftts_no_70_80,
+    "ftts_no_60_70": fetch_ftts_no_60_70,
     "team2_ranked_fade": fetch_team2_ranked_fade,
     "btts_form_l10_fade": fetch_btts_form_l10_fade,
     "crypto_fav_band": fetch_crypto_fav_band,
