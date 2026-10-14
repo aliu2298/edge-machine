@@ -2951,25 +2951,25 @@
     "under_target": 1
    }
   },
-  "tennis_combo2|tennis_combo": {
-   "by_hand": "2026-10-08",
-   "entered_at": "2026-10-08T17:50:08+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "route": "moved by hand on 2026-10-08",
+  "tennis_utr_shortlist_v1|tennis": {
+   "by_hand": "2026-10-14",
+   "entered_at": "2026-10-14T04:38:55+00:00",
+   "promoted_at": "2026-10-14T04:38:55+00:00",
+   "ready_at": "2026-10-14T04:38:55+00:00",
+   "route": "moved by hand on 2026-10-14",
    "routing": {
     "leads": 0,
-    "problem": "7 bets in the window, none published: 7 held for an unverified start",
+    "problem": null,
     "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
-    "unverified": 7,
+    "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.0005,
-   "sandbox_n": 6,
-   "sandbox_roi": -0.0652,
-   "sandbox_roi_fee": -0.0926,
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
    "timing": {
     "late": [],
     "timed": 0,
