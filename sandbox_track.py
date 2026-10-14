@@ -4408,8 +4408,11 @@ def main():
         import production
         # Live Kalshi lookups for the routes: the collection a basket is quoted through,
         # and an event's markets for a quote logged before the readers kept tickers.
+        # The feed this one replaces carries each lead's first publication time, so a
+        # lead published too close to kickoff to act on can be named (production.LATE_MIN).
         feed = production.build_feed(d, st, kalshi={"markets": S.kalshi_event_markets,
-                                                    "collections": S.kalshi_combo_collections})
+                                                    "collections": S.kalshi_combo_collections},
+                                     previous=production.load_feed())
         production.save_feed(feed)
         print(f" production: {len(feed['pairs'])} pair(s), "
               f"{sum(1 for l in feed['leads'].values() if l['status'] == 'pending')} open lead(s), "

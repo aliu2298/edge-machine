@@ -6283,18 +6283,17 @@ TENNIS_START_MAX_H = 4          # a start this far from Kalshi's estimate is a d
 _tennis_starts = None
 
 
-def tennis_starts(refresh=False):
-    """[(player a, player b, start UTC)] from Tennis Explorer's schedule. Cached per run."""
-    global _tennis_starts
-    if _tennis_starts is not None and not refresh:
-        return _tennis_starts
+def tennis_schedule_url(day=None):
+    """Tennis Explorer's schedule page: today's at the bare URL, another Prague date by
+    its year, month and day."""
+    if day is None:
+        return TENNIS_EXPLORER
+    return f"{TENNIS_EXPLORER}?type=all&year={day.year}&month={day.month:02d}&day={day.day:02d}"
+
+
+def parse_tennis_schedule(h, day):
+    """[(player a, player b, start UTC)] from one schedule page for Prague date `day`."""
     from zoneinfo import ZoneInfo
-    try:
-        h = _get_html(TENNIS_EXPLORER)
-    except RuntimeError as e:
-        print(f"  ! tennisexplorer schedule: {str(e)[:70]}")
-        return []
-    day = datetime.now(ZoneInfo(TENNIS_TZ)).date()
     out, pending = [], None
     for r in re.findall(r"(?is)<tr[^>]*>(.*?)</tr>", h):
         if "t-name" not in r:
@@ -6311,7 +6310,39 @@ def tennis_starts(refresh=False):
             hh, mm = (int(x) for x in t.split(":"))
             local = datetime(day.year, day.month, day.day, hh, mm, tzinfo=ZoneInfo(TENNIS_TZ))
             out.append((a, nm.group(1).strip(), local.astimezone(timezone.utc)))
-    _tennis_starts = out
+    return out
+
+
+def tennis_starts(refresh=False, getter=None, today=None):
+    """[(player a, player b, start UTC)] from Tennis Explorer's schedule for today AND
+    tomorrow (Prague dates). Cached per run.
+
+    Tomorrow's page was added 2026-10-14. With today's alone, a Kalshi match could only be
+    confirmed on its own Prague date, so a tennis basket logged the day before its legs
+    sat unverified until the first run after Prague midnight -- and a late-evening match
+    (Prague's next day starts at 22:00Z) could be confirmed only minutes before it began,
+    too close to kickoff for a follower to act on. Tomorrow's page fails soft: without it
+    the schedule is today's, exactly as before.
+    """
+    global _tennis_starts
+    if _tennis_starts is not None and not refresh and getter is None:
+        return _tennis_starts
+    from zoneinfo import ZoneInfo
+    get = getter or _get_html
+    day = today or datetime.now(ZoneInfo(TENNIS_TZ)).date()
+    try:
+        h = get(tennis_schedule_url())
+    except RuntimeError as e:
+        print(f"  ! tennisexplorer schedule: {str(e)[:70]}")
+        return []
+    out = parse_tennis_schedule(h, day)
+    nxt = day + timedelta(days=1)
+    try:
+        out += parse_tennis_schedule(get(tennis_schedule_url(nxt)), nxt)
+    except RuntimeError as e:
+        print(f"  ! tennisexplorer schedule for {nxt}: {str(e)[:60]}")
+    if getter is None:
+        _tennis_starts = out
     return out
 
 

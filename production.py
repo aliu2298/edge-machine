@@ -472,9 +472,78 @@ def prune_feed(path=None, st=None):
     return len(gone)
 
 
-def build_feed(d, st, now=None, kalshi=None):
+# A lead is only worth publishing if a follower has time to act on it. The follower
+# skips anything inside LATE_MIN of kickoff, so a lead FIRST published that close is
+# a lead nobody can follow: it is flagged (published_late) on the lead, red on the
+# Production page and an item on the Control Center. TARGET_MIN is what the feed aims
+# for; a lead under it but over LATE_MIN is counted, not flagged.
+LATE_MIN = 30
+TARGET_MIN = 60
+
+
+def _published_at(lead_id, previous, logged, built):
+    """When this lead first reached the feed.
+
+    The previous feed's stamp when it has one. A lead that was in the previous feed
+    without a stamp (written before the stamp existed) takes its bet's logged time,
+    which is when the run that published it began. A lead absent from a previous feed
+    is new: this build. With no previous feed at all (a test, a first run) the logged
+    time is the best evidence there is."""
+    if previous is not None:
+        prev = (previous.get("leads") or {}).get(lead_id)
+        if prev is None:
+            return built
+        if prev.get("published_at"):
+            return str(prev["published_at"])
+    return logged or built
+
+
+def stamp_timing(leads, previous, logged_at, built):
+    """Stamp published_at, published_min_before_kickoff and published_late on each lead.
+
+    Only a lead first published while still pending is timed: one that reached the feed
+    after its kickoff (a pair moved into Production with settled bets behind it) was
+    never on offer, so it is neither early nor late."""
+    for lid, lead in leads.items():
+        at = _published_at(lid, previous, (logged_at.get(lid) or ("",))[0] or None, built)
+        lead["published_at"] = at
+        pub, ko = _one_instant(at), _one_instant(lead.get("kickoff"))
+        if pub is None or ko is None or ko <= pub:
+            lead["published_min_before_kickoff"] = None
+            lead["published_late"] = False
+            continue
+        minutes = int((ko - pub).total_seconds() // 60)
+        lead["published_min_before_kickoff"] = minutes
+        lead["published_late"] = minutes < LATE_MIN
+
+
+def pair_timing(leads, key):
+    """{timed, under_target, late: [...]} for one pair's leads in the feed."""
+    mine = [l for l in leads.values() if l.get("pair") == key
+            and l.get("published_min_before_kickoff") is not None]
+    late = sorted((l for l in mine if l.get("published_late")), key=lambda l: str(l.get("kickoff")))
+    return {"timed": len(mine),
+            "under_target": sum(1 for l in mine if l["published_min_before_kickoff"] < TARGET_MIN),
+            "late": [{"id": l["id"], "match": l.get("match"), "headline": l.get("headline"),
+                      "kickoff": l.get("kickoff"),
+                      "minutes": l["published_min_before_kickoff"]} for l in late]}
+
+
+def timing_problem(timing):
+    """One sentence when a pair published a lead too close to kickoff to act on, else None."""
+    late = (timing or {}).get("late") or []
+    if not late:
+        return None
+    first = late[-1]
+    more = f" (+{len(late) - 1} more)" if len(late) > 1 else ""
+    return (f"published late — too close to kickoff to act on: {first['match']} · "
+            f"{first['headline']}, {first['minutes']} min before kickoff{more}")
+
+
+def build_feed(d, st, now=None, kalshi=None, previous=None):
     """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage
-    registry, `kalshi` the tracker's live Kalshi lookups (see kalshi_route), or None."""
+    registry, `kalshi` the tracker's live Kalshi lookups (see kalshi_route), or None,
+    `previous` the feed this one replaces (for each lead's first publication time)."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     built = now.replace(microsecond=0).isoformat()
     # A removed lane never reaches the feed, even if a stage file still names it.
@@ -540,6 +609,7 @@ def build_feed(d, st, now=None, kalshi=None):
                 r["why"].append(why)
     for r in routing.values():
         r["problem"] = routing_problem(r)
+    stamp_timing(leads, previous, logged_at, built)
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
         # The Sandbox's own record for each pair since it entered Production, counted on
@@ -549,7 +619,7 @@ def build_feed(d, st, now=None, kalshi=None):
                            "entered_at": entered_at(p), "route": route_label(p),
                            "by_hand": p.get("by_hand")},
                           **_sandbox_record(d, k, entered_at(p)),
-                          routing=routing[k])
+                          routing=routing[k], timing=pair_timing(leads, k))
                   for k, p in pairs.items()},
         "leads": leads, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
     }
@@ -795,6 +865,8 @@ def _clip_shown(value, limit=80):
 #   no route the feed's own routing count says the pair cannot be followed: a lead went out
 #            with no market a follower can buy, or every bet in the window was held back
 #            (routing_problem). Nothing in Production is observation only.
+#   late     a lead was first published inside LATE_MIN of its kickoff (timing_problem):
+#            the follower skips anything that close, so nobody could act on it.
 # A pair that is merely WAITING -- publishing leads, declining on price, between fixtures --
 # is green. A light that cries wolf is a light that gets ignored, so quiet alone is not a
 # fault; the Since-Production cell already says how quiet.
@@ -802,7 +874,7 @@ HEALTH_WINDOW_DAYS = 7
 
 
 def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_WINDOW_DAYS,
-                routing=None):
+                routing=None, timing=None):
     """(state, reason) for one Production pair: "ok" or "bad", and why.
 
     `bets` is every bet the pair has logged, `lead_count` how many leads it has in the feed,
@@ -821,6 +893,9 @@ def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_
     problem = (routing or {}).get("problem") if isinstance(routing, dict) else None
     if problem:
         return "bad", f"not tradeable: {problem}"
+    late = timing_problem(timing) if isinstance(timing, dict) else None
+    if late:
+        return "bad", late
     if not lead_count and not recent:
         return "bad", f"no leads and nothing logged in {window_days}d"
     return "ok", ("publishing" if lead_count else "nothing to publish yet")
@@ -1085,7 +1160,8 @@ def page(d, st, blob, style, now=None):
         reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
         reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
         state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None),
-                                 routing=((blob.get("pairs") or {}).get(key) or {}).get("routing"))
+                                 routing=((blob.get("pairs") or {}).get(key) or {}).get("routing"),
+                                 timing=((blob.get("pairs") or {}).get(key) or {}).get("timing"))
         light = ("<b class=\"pos\">\u25cf</b>" if state == "ok" else "<b class=\"neg\">\u25cf</b>")
         idle_days = _days_since(since)
         if live["n"]:
