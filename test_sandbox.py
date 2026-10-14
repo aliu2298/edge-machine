@@ -175,9 +175,9 @@ def _live_ledger_checks():
     # TENNIS_COMBO_BAND_SINCE. Until 2026-10-08 this check asked for stage "sandbox",
     # which the promotion made false while the clock it was guarding stayed right.
     _e = (_st.get("pairs") or {}).get("tennis_combo2|tennis_combo") or {}
-    ok(_e.get("stage") == "production" and _e.get("entry_since") == S.TENNIS_COMBO_BAND_SINCE
+    ok(_e.get("stage") == "sandbox" and S.lane_paused("tennis_combo2", "tennis_combo") and _e.get("entry_since") == S.TENNIS_COMBO_BAND_SINCE
        and T.qa_since(_e, "tennis_combo", "tennis_combo2|tennis_combo") == S.TENNIS_COMBO_BAND_SINCE,
-       "tennis_combo2|tennis_combo counts from its 2026-10-04 reset, in Production")
+       "paused tennis_combo2 preserves its 2026-10-04 historical clock")
 
     print("\nledger history is unchanged by the pause")
 
@@ -3362,7 +3362,7 @@ eq(sorted(T.PAIR_OVERRIDES),
     "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
     "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
     "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
-    "team2_ranked|soccer_team2", "tennis_combo2|tennis_combo", "turkey_btts_dog|soccer_btts",
+    "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis", "turkey_btts_dog|soccer_btts",
     "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else "
    "(team scores 1+ · Clubs out 2026-10-14)")

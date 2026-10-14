@@ -720,7 +720,7 @@ def _wired_pairs(d, st, include_retired=False):
             reset_row = bool(pair.get("since")) and bool(
                 T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
             scope = next((x for x in S.SCOPE_LABEL if str(sport).endswith(x)), "")
-            if (group is None and not scope
+            if (group is None and name != "tennis_utr_shortlist_v1" and not scope
                     and name not in T.CONSENSUS and not reset_row):
                 continue
             out.add(f"{name}|{sport}")
@@ -861,7 +861,7 @@ def main():
             # Moved to Production by hand on 2026-10-08 (#105). The move carries the
             # reset into entry_since, and T.record_since reads it back, so the record
             # still starts at the clock; only the stage changed.
-            eq((pair.get("stage"), T.record_since(pair)), ("production", want),
+            eq((pair.get("stage"), T.record_since(pair)), ("sandbox", want),
                f"{key} counts from its latest reset, in Production")
             continue
         eq((pair.get("stage"), pair.get("since")), ("sandbox", want),
@@ -874,7 +874,8 @@ def main():
     ok(prod.get("since") != S.TENNIS_FAV_KEEP_SINCE,
        "and it does not carry the tour-cut clock")
     ok("pm_combo4|tennis_pmcombo" not in T.PAIR_OVERRIDES
-       and "tennis_combo2|tennis_combo" in T.PAIR_OVERRIDES,
+       and "tennis_combo2|tennis_combo" not in T.PAIR_OVERRIDES
+       and "tennis_utr_shortlist_v1|tennis" in T.PAIR_OVERRIDES,
        "the Production list no longer carries pm_combo4; the Kalshi 2-leg basket is the "
        "one tennis pair there (moved 2026-10-08)")
     rows = SB.pair_list(d, st)

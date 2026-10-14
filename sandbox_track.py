@@ -378,7 +378,7 @@ PAIR_OVERRIDES = {
     # +2.7% after fees, -2.1c a basket against the close. The tennis rules are FROZEN
     # from 2026-10-08; promotion is not a parameter change and leaves the freeze intact.
     # A basket reaches the feed only once every leg carries a verified start.
-    "tennis_combo2|tennis_combo": dict(moved_on="2026-10-08", production_at=None),
+    "tennis_utr_shortlist_v1|tennis": dict(moved_on="2026-10-14", production_at=None),
     # over 1.5 form rule, LEAGUE scope only -- not the cup or internationals twins. Back in
     # Production after its 2026-09-21 removal: 4-0 on 4, +15.0% after fees since the
     # clock restarted. The removal above still stands as the record it was taken off on.
@@ -1534,6 +1534,27 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 "picked": len(source_probs[name]), "offered": len(by_id)}
 
     for sport, (by_id, source_probs) in per_sport.items():
+        if (sport == "tennis" and "tennis_utr_shortlist_v1" in S.CHALLENGERS
+                and not S.lane_paused("tennis_utr_shortlist_v1", sport)):
+            import tennis_shortlist as TS
+            at = log_now()
+            selected, eligible, audit = TS.select(list(by_id.values()), bet_rows(d), at)
+            d["meta"]["tennis_shortlist"] = dict(checked_at=at.isoformat(), daily_limit=TS.MAX_DAILY,
+                                                day=at.astimezone(TS.CT).date().isoformat(), audit=audit)
+            source_probs[TS.NAME] = {r["market_id"]: ("pick", r["pick"]) for r in selected}
+            coverage.setdefault(sport, {})[TS.NAME] = dict(offered=len(eligible), picked=len(selected))
+            # All qualifying first observations are unstaked, independently settled controls.
+            pool_seen = {q.get("id") for q in d["quotes"] + (d.get("_archive") or [])}
+            for r in eligible:
+                qid = f"{TS.POOL}:{r['market_id']}"
+                if qid not in pool_seen:
+                    d["quotes"].append(dict(r, id=qid, source=TS.POOL, sport="tennis", bet=False,
+                        logged=at.replace(microsecond=0).isoformat(), stake=0., status="open",
+                        pnl=0., result=None, settled=None, prob_a=None, edge=None,
+                        shortlist_selected=r in selected, tier="utr"))
+                    pool_seen.add(qid)
+            for r in selected:
+                by_id[r["market_id"]] = r
         for name, probs in source_probs.items():
             for mid, opinion in probs.items():
                 # A pause stops a new entry and nothing else. Logging the row with
@@ -1561,6 +1582,16 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 # have logged. That overlap is the comparison. Neither quote is a
                 # duplicate of the other, and neither can void the other.
                 at = log_now()
+                if name == "tennis_utr_shortlist_v1":
+                    import tennis_shortlist as TS
+                    # Enforce again at the actual logging instant (midnight/fetch delays).
+                    if S.tennis_start_window(r, at) != "in" or not TS.instant(r.get("book_at")):
+                        continue
+                    if not 0 <= (at-TS.instant(r["book_at"])).total_seconds() <= TS.MAX_AGE_SECONDS:
+                        continue
+                    used = [q for q in bet_rows(d) if q.get("source") == TS.NAME and q.get("bet")]
+                    if sum(TS.day(q.get("logged")) == at.astimezone(TS.CT).date().isoformat() for q in used) >= TS.MAX_DAILY:
+                        continue
                 if any(_same_contest_quote(p, probe) and _prior_blocks(name, p, r, at)
                        for p in prior.get((name, sport), ())):
                     continue
@@ -1641,6 +1672,8 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
                     venue=r.get("venue", "polymarket"),
                     spread=r.get("spread"), liquidity=r.get("liquidity"),
+                    **({k: r[k] for k in ("ask_size", "cost", "book_at")}
+                       if name == "tennis_utr_shortlist_v1" else {}),
                     # Fight rows: where the start came from, and the venue's own, so a
                     # re-timed bout can be audited against the real walk-out later.
                     start_source=r.get("start_source"), venue_start=r.get("venue_start"),
@@ -4303,7 +4336,7 @@ def prune(d, retain_days=RETAIN_DAYS, verbose=True, price_days=PRICE_RETAIN_DAYS
                   f" ({q.get('source') or '?'}/{q.get('market_id') or '?'})",
                   file=sys.stderr)
             continue
-        if q.get("bet"):
+        if q.get("bet") or q.get("source") == "tennis_utr_shortlist_pool_v1":
             if q["id"] not in archived:
                 to_archive(q)
         elif (not q.get("bet") and q.get("result") in ("a", "b", "draw") and q.get("price_a") is not None

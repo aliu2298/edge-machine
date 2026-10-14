@@ -296,6 +296,12 @@ def params(d, row):
     reader sees the band, window, tours and venue before any reset is mentioned.
     Only the frozen tennis rules print one; another family's row prints nothing.
     """
+    if row["name"] == "tennis_utr_shortlist_v1":
+        return (("Backs", "UTR singles · 70–74¢ · Polymarket US"),
+                ("Limit", "Up to 3 per Central day, across all checks; no forced quota"),
+                ("Book", "≤5 minutes old · ≤3¢ spread · depth covers $100 modeled entry"),
+                ("Ranking", "Lowest modeled cost, then spread, depth and start"),
+                ("Status", "Unproven · owner-listed Production research · fresh record"))
     if row["name"] not in S.TENNIS_FROZEN_RULES:
         return ()
     lo, hi = S.TENNIS_3H_BAND
@@ -423,6 +429,18 @@ def listing_html(d):
 def method(idle_html=""):
     """The venue and grading note for the template's Method fold."""
     def _method(d, rows, now):
+        import tennis_shortlist as TS
+        comparison = TS.comparison(d)
+        lines = []
+        for key, title in ((TS.NAME, "Selected shortlist"), (TS.POOL, "All eligible first observations")):
+            value = comparison[key]
+            roi = f"{100*value['roi']:+.2f}%" if value['roi'] is not None else "—"
+            lines.append(f"<li>{title}: {value['n']} settled · {roi} modeled ROI after fees</li>")
+        controls = ('<p class="sm">Daily shortlist is unproven Production research. Previous tennis rules '
+                    'are paused for new entries; existing records still settle. The comparison pool is '
+                    'unstaked and includes selected and skipped eligible first observations. Prices are '
+                    'snapshots, not fills; a later selection can have a different entry price.</p>'
+                    '<ul class="sm">' + ''.join(lines) + '</ul>')
         listing = listing_html(d) or '<div class="note">No venue coverage stored yet.</div>'
         inner = (
             '<p class="sm">Polymarket US lists the match-winner markets; it logs prices and holds no '
@@ -431,6 +449,6 @@ def method(idle_html=""):
             f'<p class="sm">Every pick is logged before the start at the price available then, settled '
             f'on the real result at a flat ${int(T.STAKE)} stake, and judged after fees against the '
             f'price it paid.</p>'
-            f'{listing}{idle_html}')
+            f'{controls}{listing}{idle_html}')
         return "Polymarket US & how picks are graded", "venue listing", inner, False
     return _method

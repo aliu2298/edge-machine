@@ -1194,6 +1194,12 @@
    "reason": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
    "reset": "2026-10-12T00:00:00+00:00",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-14T04:38:55+00:00",
+   "pair": "tennis_utr_shortlist_v1|tennis",
+   "reason": "Owner-requested unproven daily shortlist; previous tennis entries paused",
+   "to": "production"
   }
  ],
  "pairs": {
@@ -1508,9 +1514,8 @@
    },
    "entry_since": "2026-10-04T06:46:57+00:00",
    "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "ready_since": "2026-10-08T17:50:08+00:00",
-   "stage": "production"
+   "stage": "sandbox",
+   "stopped_at": "2026-10-14T04:38:55+00:00"
   },
   "tennis_combo3|tennis_combo": {
    "reset": "2026-10-04: legs widened to 0.70-0.85, the band tennis_fav_band_3h backs, still on ATP, WTA Doubles and UTR only. A basket of wide legs is a different contract, so the record restarts here.",
@@ -1531,6 +1536,27 @@
    "reset": "2026-09-24: band narrowed again to 0.77-0.81; the 0.75-0.80 record is on file but counts toward nothing here \u2014 a 0.77-0.81 contract is not a 0.75-0.80 one",
    "since": "2026-09-24T13:16:04+00:00",
    "stage": "sandbox"
+  },
+  "tennis_utr_shortlist_v1|tennis": {
+   "by_hand": "2026-10-14",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": "2026-10-14T04:38:55+00:00",
+   "promoted_at": "2026-10-14T04:38:55+00:00",
+   "ready_at": "2026-10-14T04:38:55+00:00",
+   "ready_since": "2026-10-14T04:38:55+00:00",
+   "research_only": true,
+   "stage": "production"
   },
   "turkey_btts_dog|soccer_btts": {
    "by_hand": "2026-10-11",
