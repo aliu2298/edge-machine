@@ -1,0 +1,892 @@
+{
+ "held": [
+  {
+   "qty": 3,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|CRWD|2026-10-13",
+     "qty": 3,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "CRWD"
+  },
+  {
+   "qty": 8,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|CSCO|2026-10-13",
+     "qty": 8,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "CSCO"
+  },
+  {
+   "qty": 24,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|DAL|2026-10-09",
+     "qty": 12,
+     "rule": "sw_gap_down_reversal"
+    },
+    {
+     "id": "sw_rsi2_pullback|DAL|2026-10-09",
+     "qty": 12,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "DAL"
+  },
+  {
+   "qty": 5,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|DASH|2026-10-13",
+     "qty": 5,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "DASH"
+  },
+  {
+   "qty": 2,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|DELL|2026-10-13",
+     "qty": 1,
+     "rule": "sw_gap_down_reversal"
+    },
+    {
+     "id": "sw_rsi2_pullback|DELL|2026-10-13",
+     "qty": 1,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "DELL"
+  },
+  {
+   "qty": 13,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|FCX|2026-10-13",
+     "qty": 13,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "FCX"
+  },
+  {
+   "qty": 9,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|FLEX|2026-10-13",
+     "qty": 9,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "FLEX"
+  },
+  {
+   "qty": 28,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|HPE|2026-10-13",
+     "qty": 14,
+     "rule": "sw_gap_down_reversal"
+    },
+    {
+     "id": "sw_rsi2_pullback|HPE|2026-10-13",
+     "qty": 14,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "HPE"
+  },
+  {
+   "qty": 3,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|ILMN|2026-10-13",
+     "qty": 3,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "ILMN"
+  },
+  {
+   "qty": 2,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|KEYS|2026-10-13",
+     "qty": 2,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "KEYS"
+  },
+  {
+   "qty": 5,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|KLAC|2026-10-13",
+     "qty": 5,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "KLAC"
+  },
+  {
+   "qty": 1,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|LITE|2026-10-13",
+     "qty": 1,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "LITE"
+  },
+  {
+   "qty": 3,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|MRVL|2026-10-13",
+     "qty": 3,
+     "rule": "sw_gap_down_reversal"
+    }
+   ],
+   "symbol": "MRVL"
+  },
+  {
+   "qty": 1,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|MU|2026-10-13",
+     "qty": 1,
+     "rule": "sw_gap_down_reversal"
+    }
+   ],
+   "symbol": "MU"
+  },
+  {
+   "qty": 6,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|P|2026-10-13",
+     "qty": 6,
+     "rule": "sw_gap_down_reversal"
+    }
+   ],
+   "symbol": "P"
+  },
+  {
+   "qty": 1,
+   "rules": [
+    {
+     "id": "etf_double7|QQQ|2026-10-13",
+     "qty": 1,
+     "rule": "etf_double7"
+    }
+   ],
+   "symbol": "QQQ"
+  },
+  {
+   "qty": 25,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|SMCI|2026-10-13",
+     "qty": 25,
+     "rule": "sw_gap_down_reversal"
+    }
+   ],
+   "symbol": "SMCI"
+  },
+  {
+   "qty": 1,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|STX|2026-10-13",
+     "qty": 1,
+     "rule": "sw_gap_down_reversal"
+    }
+   ],
+   "symbol": "STX"
+  },
+  {
+   "qty": 11,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|SWKS|2026-10-09",
+     "qty": 11,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "SWKS"
+  },
+  {
+   "qty": 2,
+   "rules": [
+    {
+     "id": "sw_gap_down_reversal|TER|2026-10-13",
+     "qty": 2,
+     "rule": "sw_gap_down_reversal"
+    }
+   ],
+   "symbol": "TER"
+  }
+ ],
+ "in_flight": [
+  {
+   "client_order_id": "em-ea40d1db-dea9-5f81-81a1-f79616dd9024",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "MU"
+  },
+  {
+   "client_order_id": "em-383ec029-f38e-5720-8217-f8a12d5db077",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "LRCX"
+  },
+  {
+   "client_order_id": "em-325ad6d8-3f1e-5756-8a1a-62bbb41bf7ac",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "LITE"
+  },
+  {
+   "client_order_id": "em-31930e4f-8bd4-5ba1-ac48-7598503ae92d",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "KEYS"
+  },
+  {
+   "client_order_id": "em-4706e29c-b233-519a-b2bd-98848516d3f5",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "ICE"
+  },
+  {
+   "client_order_id": "em-bb9998a6-e02a-5a2f-bb0a-8d1f335715fa",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "IBKR"
+  },
+  {
+   "client_order_id": "em-e8d37b47-02d0-5261-ae6f-ecb0f930a1c5",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "HPE"
+  },
+  {
+   "client_order_id": "em-7c6b5b33-ca8c-51ee-87eb-c6c5d887bb40",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "FCX"
+  },
+  {
+   "client_order_id": "em-307b8269-12af-5206-82e6-396b01f33aac",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "DELL"
+  },
+  {
+   "client_order_id": "em-34ad3721-0d26-5823-85d8-0560006ab2cf",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "DDOG"
+  },
+  {
+   "client_order_id": "em-e581e422-cfbe-52da-863c-01e4d6d74d39",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "DAL"
+  },
+  {
+   "client_order_id": "em-2d1f14cc-b991-5158-bb3f-fbe1fed980e4",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "CSCO"
+  },
+  {
+   "client_order_id": "em-5564cf36-6fc9-5c90-b5f1-3e8ae4285424",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "CRWD"
+  },
+  {
+   "client_order_id": "em-0befd6d4-a994-5f0b-b087-0166bef9756d",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "STT"
+  },
+  {
+   "client_order_id": "em-38c67300-0583-578b-8cc0-5429d3d24f4d",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "PGR"
+  },
+  {
+   "client_order_id": "em-76360c03-f730-5575-90b9-b422558aeb7c",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "FAST"
+  },
+  {
+   "client_order_id": "em-96b99544-d13a-52ad-b99d-b650529def75",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "QQQ"
+  },
+  {
+   "client_order_id": "em-37d4a567-c58c-539e-8057-47c4884ec919",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "IWM"
+  },
+  {
+   "client_order_id": "em-40cb6e34-6a00-5def-bcb5-28d6cbfb75f2",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "SPY"
+  },
+  {
+   "client_order_id": "em-c81399d4-3b3d-556a-bdd5-6a7031f6810f",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "QQQ"
+  }
+ ],
+ "orphans": [],
+ "rows": [
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|DE|2026-10-09",
+   "ledger": 621.24,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "DE"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|INTC|2026-10-09",
+   "ledger": 102.56,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "INTC"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|KLAC|2026-10-09",
+   "ledger": 193.355,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "KLAC"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|LRCX|2026-10-09",
+   "ledger": 314.25,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "LRCX"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|META|2026-10-09",
+   "ledger": 727.97,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "META"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|NVDA|2026-10-09",
+   "ledger": 228.69,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "NVDA"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|QCOM|2026-10-09",
+   "ledger": 175.06,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "QCOM"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|ROK|2026-10-09",
+   "ledger": 432.51,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "ROK"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|SMCI|2026-10-09",
+   "ledger": 41.37,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "SMCI"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|TXN|2026-10-09",
+   "ledger": 280.36,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": null,
+   "status": "expired",
+   "symbol": "TXN"
+  },
+  {
+   "day": "2026-10-12",
+   "fill": 80.9,
+   "filled_at": "2026-10-12T13:30:26",
+   "id": "sw_gap_down_reversal|DAL|2026-10-09",
+   "ledger": 80.905,
+   "qty": 12,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": -0.62,
+   "status": "filled",
+   "symbol": "DAL"
+  },
+  {
+   "day": "2026-10-12",
+   "fill": 80.9,
+   "filled_at": "2026-10-12T13:30:14",
+   "id": "sw_rsi2_pullback|DAL|2026-10-09",
+   "ledger": 80.905,
+   "qty": 12,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -0.62,
+   "status": "filled",
+   "symbol": "DAL"
+  },
+  {
+   "day": "2026-10-12",
+   "fill": 222.4,
+   "filled_at": "2026-10-12T13:30:10",
+   "id": "sw_rsi2_pullback|ROST|2026-10-09",
+   "ledger": 222.09,
+   "qty": 4,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 13.96,
+   "status": "filled",
+   "symbol": "ROST"
+  },
+  {
+   "day": "2026-10-12",
+   "fill": 77.05,
+   "filled_at": "2026-10-12T13:30:27",
+   "id": "sw_rsi2_pullback|SWKS|2026-10-09",
+   "ledger": 75.93,
+   "qty": 11,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 147.5,
+   "status": "expired",
+   "symbol": "SWKS"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 737.83,
+   "filled_at": "2026-10-14T13:30:29",
+   "id": "etf_double7|QQQ|2026-10-13",
+   "ledger": 737.96,
+   "qty": 1,
+   "rule": "etf_double7",
+   "side": "buy",
+   "slip_bps": -1.76,
+   "status": "filled",
+   "symbol": "QQQ"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 535.56,
+   "filled_at": "2026-10-14T13:31:33",
+   "id": "sw_gap_down_reversal|DELL|2026-10-13",
+   "ledger": 543.09,
+   "qty": 1,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": -138.65,
+   "status": "filled",
+   "symbol": "DELL"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 65.247143,
+   "filled_at": "2026-10-14T13:32:35",
+   "id": "sw_gap_down_reversal|HPE|2026-10-13",
+   "ledger": 64.83,
+   "qty": 14,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": 64.34,
+   "status": "filled",
+   "symbol": "HPE"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 263.143333,
+   "filled_at": "2026-10-14T13:32:34",
+   "id": "sw_gap_down_reversal|MRVL|2026-10-13",
+   "ledger": 263.12,
+   "qty": 3,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": 0.89,
+   "status": "filled",
+   "symbol": "MRVL"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 935.75,
+   "filled_at": "2026-10-14T13:30:10",
+   "id": "sw_gap_down_reversal|MU|2026-10-13",
+   "ledger": 934.3,
+   "qty": 1,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": 15.52,
+   "status": "filled",
+   "symbol": "MU"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 153.95,
+   "filled_at": "2026-10-14T13:30:19",
+   "id": "sw_gap_down_reversal|P|2026-10-13",
+   "ledger": 153.04,
+   "qty": 6,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": 59.46,
+   "status": "filled",
+   "symbol": "P"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 37.81,
+   "filled_at": "2026-10-14T13:31:07",
+   "id": "sw_gap_down_reversal|SMCI|2026-10-13",
+   "ledger": 37.965,
+   "qty": 25,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": -40.83,
+   "status": "filled",
+   "symbol": "SMCI"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 741.9,
+   "filled_at": "2026-10-14T13:30:04",
+   "id": "sw_gap_down_reversal|STX|2026-10-13",
+   "ledger": 733.04,
+   "qty": 1,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": 120.87,
+   "status": "filled",
+   "symbol": "STX"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 368.82,
+   "filled_at": "2026-10-14T13:30:34",
+   "id": "sw_gap_down_reversal|TER|2026-10-13",
+   "ledger": 368.27,
+   "qty": 2,
+   "rule": "sw_gap_down_reversal",
+   "side": "buy",
+   "slip_bps": 14.93,
+   "status": "filled",
+   "symbol": "TER"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 251.903333,
+   "filled_at": "2026-10-14T13:32:49",
+   "id": "sw_rsi2_pullback|CRWD|2026-10-13",
+   "ledger": 253.805,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -74.93,
+   "status": "filled",
+   "symbol": "CRWD"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 115.98,
+   "filled_at": "2026-10-14T13:31:22",
+   "id": "sw_rsi2_pullback|CSCO|2026-10-13",
+   "ledger": 115.15,
+   "qty": 8,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 72.08,
+   "status": "filled",
+   "symbol": "CSCO"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 190.752,
+   "filled_at": "2026-10-14T13:32:02",
+   "id": "sw_rsi2_pullback|DASH|2026-10-13",
+   "ledger": 190.55,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 10.6,
+   "status": "filled",
+   "symbol": "DASH"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 545.35,
+   "filled_at": "2026-10-14T13:30:51",
+   "id": "sw_rsi2_pullback|DELL|2026-10-13",
+   "ledger": 543.09,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 41.61,
+   "status": "filled",
+   "symbol": "DELL"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 71.334615,
+   "filled_at": "2026-10-14T13:32:14",
+   "id": "sw_rsi2_pullback|FCX|2026-10-13",
+   "ledger": 70.97,
+   "qty": 13,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 51.38,
+   "status": "filled",
+   "symbol": "FCX"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 108.644444,
+   "filled_at": "2026-10-14T13:32:58",
+   "id": "sw_rsi2_pullback|FLEX|2026-10-13",
+   "ledger": 108.2,
+   "qty": 9,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 41.08,
+   "status": "filled",
+   "symbol": "FLEX"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 65.356428,
+   "filled_at": "2026-10-14T13:32:56",
+   "id": "sw_rsi2_pullback|HPE|2026-10-13",
+   "ledger": 64.83,
+   "qty": 14,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 81.2,
+   "status": "filled",
+   "symbol": "HPE"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 274.0,
+   "filled_at": "2026-10-14T13:31:29",
+   "id": "sw_rsi2_pullback|ILMN|2026-10-13",
+   "ledger": 269.83,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 154.54,
+   "status": "filled",
+   "symbol": "ILMN"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 368.8,
+   "filled_at": "2026-10-14T13:31:58",
+   "id": "sw_rsi2_pullback|KEYS|2026-10-13",
+   "ledger": 368.13,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 18.2,
+   "status": "filled",
+   "symbol": "KEYS"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 182.148,
+   "filled_at": "2026-10-14T13:31:54",
+   "id": "sw_rsi2_pullback|KLAC|2026-10-13",
+   "ledger": 180.545,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 88.79,
+   "status": "filled",
+   "symbol": "KLAC"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 970.16,
+   "filled_at": "2026-10-14T13:31:30",
+   "id": "sw_rsi2_pullback|LITE|2026-10-13",
+   "ledger": 960.505,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 100.52,
+   "status": "filled",
+   "symbol": "LITE"
+  },
+  {
+   "day": "2026-10-14",
+   "fill": 226.11,
+   "filled_at": "2026-10-14T13:32:25",
+   "id": "sw_rsi2_pullback|ROST|2026-10-09",
+   "ledger": 227.0,
+   "qty": 4,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 39.21,
+   "status": "filled",
+   "symbol": "ROST"
+  }
+ ],
+ "summary": {
+  "assumed_bps_per_side": 5.0,
+  "best_bps": -138.65,
+  "by_rule": {
+   "etf_double7": {
+    "mean_bps": -1.76,
+    "n": 1
+   },
+   "sw_gap_down_reversal": {
+    "mean_bps": 10.66,
+    "n": 9
+   },
+   "sw_rsi2_pullback": {
+    "mean_bps": 52.34,
+    "n": 15
+   }
+  },
+  "fills": 25,
+  "in_flight": 20,
+  "mean_bps": 35.17,
+  "median_bps": 39.21,
+  "orders": {
+   "filled": 25,
+   "sent": 55,
+   "since": "2026-10-12",
+   "unfilled": 10,
+   "working": 20
+  },
+  "orphans": 0,
+  "unfilled": 10,
+  "worst_bps": 154.54
+ },
+ "updated": "2026-10-14T20:12:53+00:00"
+}
