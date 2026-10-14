@@ -1,5 +1,15 @@
 {
  "closes": {
+  "btts_form_l10_fade:KXMLSBTTS-26OCT14CHIPHI-BTTS": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.3
+  },
+  "btts_form_l10_fade:KXMLSBTTS-26OCT14DALSEA-BTTS": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.36
+  },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT10RBLSGE-4": {
    "at": "2026-10-10T15:51:23+00:00",
    "lead_min": 38.6,
@@ -20,15 +30,35 @@
    "lead_min": 53.6,
    "price": 0.23
   },
+  "ftts_no_60_70:KXMLSFTTS-26OCT14DALSEA-SEA": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.61
+  },
+  "ftts_no_70_80:KXMLSFTTS-26OCT14NSHSKC-SKC": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.8
+  },
   "liga_u15_dog:KXLALIGATOTAL-26OCT10BARGET-2": {
    "at": "2026-10-10T15:51:23+00:00",
    "lead_min": 38.6,
    "price": 0.09
   },
+  "mls_away_band:KXMLSGAME-26OCT14DALSEA": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.29
+  },
   "mls_fade_home:KXMLSGAME-26OCT10SKCPOR-SKC": {
    "at": "2026-10-10T23:30:43+00:00",
    "lead_min": 59.3,
    "price": 0.67
+  },
+  "mls_fade_home:KXMLSGAME-26OCT14STLVAN-STL": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.58
   },
   "o15_cup_mismatch:KXAFCCLTOTAL-26OCT13KYORAT-2": {
    "at": "2026-10-13T09:21:07+00:00",
@@ -60,6 +90,11 @@
    "lead_min": 38.9,
    "price": 0.41
   },
+  "o25_congestion:KXMLSTOTAL-26OCT14STLVAN-3": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.36
+  },
   "p05_unbeaten:KXEPLGAME-26OCT10MUNTOT-TOT": {
    "at": "2026-10-10T15:51:23+00:00",
    "lead_min": 38.6,
@@ -79,6 +114,16 @@
    "at": "2026-10-10T23:30:43+00:00",
    "lead_min": 59.3,
    "price": 0.76
+  },
+  "p05_unbeaten:KXMLSGAME-26OCT14DALSEA-SEA": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.72
+  },
+  "p05_unbeaten:KXMLSGAME-26OCT14NSHSKC-SKC": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.94
   },
   "p05_unbeaten:KXSAUDIPLGAME-26OCT09AKHQAD-AKH": {
    "at": "2026-10-09T13:10:10+00:00",
@@ -135,6 +180,11 @@
    "lead_min": 59.3,
    "price": 0.84
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT14NSHSKC-NSH2": {
+   "at": "2026-10-14T23:53:49+00:00",
+   "lead_min": 36.2,
+   "price": 0.83
+  },
   "tennis_fav_band_3h:aec-utr-duoamy-torcam-2026-10-14": {
    "at": "2026-10-14T01:11:27+00:00",
    "lead_min": 18.5,
@@ -186,5 +236,5 @@
    "price": 0.71
   }
  },
- "updated": "2026-10-14T17:35:33+00:00"
+ "updated": "2026-10-14T23:53:49+00:00"
 }
