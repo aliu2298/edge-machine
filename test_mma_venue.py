@@ -40,6 +40,10 @@ def _publish(d, universe, now=None):
     `now` pins the clock when a case must not read the wall clock.
     """
     saved_ch, saved_uni = S.CHALLENGERS, S.UNIVERSE
+    saved_pause = S.PAUSED_LANES
+    # This pins historical venue ordering when the old rule is enabled.
+    # Its current pause is independently verified by test_tennis_shortlist.py.
+    S.PAUSED_LANES = {k: v for k, v in saved_pause.items() if k != "tennis_fav_band_3h"}
     S.CHALLENGERS = {
         "mma_fav_band": S.fetch_tennis_fav_band,
         "tennis_fav_band_3h": S.fetch_tennis_fav_band_3h,
@@ -49,6 +53,7 @@ def _publish(d, universe, now=None):
     finally:
         S.CHALLENGERS = saved_ch
         S.UNIVERSE = saved_uni
+        S.PAUSED_LANES = saved_pause
 
 
 def _row(mid, venue, side_a, side_b, price_a, price_b, start, sport="mma"):
