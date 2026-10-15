@@ -11,6 +11,12 @@ import sandbox_track as T
 class ProductionActive(unittest.TestCase):
     def test_registry_has_no_paused_production_pair(self):
         pairs = P.production_pairs(T.load_stages())
+        # The daily collector owns its own Production registry and publication clock.
+        try:
+            import daily_production
+            pairs.update(daily_production.pairs())
+        except ImportError:
+            pass
         self.assertTrue(pairs)
         paused = [key for key in pairs if S.lane_paused(*key.split('|', 1))]
         self.assertEqual(paused, [], 'Production must contain active rules only')

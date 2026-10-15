@@ -255,7 +255,7 @@ rung = dict(id="crypto_fav_band:KXBTCD-26OCT0817-T82749.99", source="crypto_fav_
             price_draw=None, venue="kalshi_binary", bet=True, status="open",
             start="2026-10-08T21:05:00+00:00", venue_start=None, start_source=None,
             logged="2026-10-08T17:49:59+00:00", date="2026-10-08")
-eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav"), "the ladder sports are the crypto and commodities favourite bands")
+eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav", "econ_daily"), "the ladder sports include the promoted economic daily band")
 ok(T.placeable(rung), "a Kalshi ladder rung's Yes reaches the feed")
 ok(PR.start_verified(rung), "its close is a term of the contract, so it needs no outside verification")
 ok(not PR.start_verified(dict(rung, start="not a time")), "but a rung with no readable close is held back")
@@ -472,7 +472,7 @@ ok(T.PAIR_OVERRIDES[CKEY].get("production_at") is None, "ready from the run that
 eq(S.SOURCES["commod_fav_band"]["sports"], ["commodities_fav"], "one pair: the lane has one sport")
 ok(not S.lane_paused("commod_fav_band", "commodities_fav") and not S.lane_removed("commod_fav_band", "commodities_fav")
    and "commod_fav_band" not in S.PAUSED_LANES, "the lane is not paused and not removed: it logs")
-eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav"), "it is a ladder sport beside crypto")
+eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav", "econ_daily"), "it is a ladder sport beside crypto")
 # No `since` on a lane that never reset, so the record is the whole record, and the
 # Early badge counts from the move like the six before it.
 _cst = {"pairs": {}, "events": []}

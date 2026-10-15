@@ -926,6 +926,9 @@ def collect(verbose=True, combo_used=None):
     universe, coverage = {}, {}
     goals = nhl = None
     for sport in S.SPORTS:
+        if sport in S.EXTERNAL_COLLECTORS:
+            universe[sport] = []
+            continue
         t0 = time.time()
         # Weather markets are not fetched. Climate is the Kalshi temperature
         # ladder; leaving it out of the universe means that read never runs.
@@ -3210,7 +3213,7 @@ FEED_YES_TWIN = {"soccer_u35": {"kind": "total_gte", "n": 4}}
 # verify: the close is a term of the contract itself.
 # commodities_fav joined 2026-10-09: the same rung on Kalshi's daily commodity ladders,
 # with a per-series close (WTI 14:30 ET, the rest 17:00 ET) and a per-series calendar.
-LADDER_SPORTS = ("crypto_fav", "commodities_fav")
+LADDER_SPORTS = ("crypto_fav", "commodities_fav", "econ_daily")
 
 
 _CORNERS_STRIKE = re.compile(r"-(?:[A-Z]+)?(\d+)$")

@@ -2277,9 +2277,10 @@ def production_and_index(now, d, st, blob, extra=None):
     """
     import control_center
     import production
-    prod = label_cells(production.page(d, st, blob, "", now=now))
-    index = control_center.page(now, d=d, st=st, blob=blob,
-                                extra=extra if extra is not None else control_center.inputs())
+    extra = extra if extra is not None else control_center.inputs()
+    prod = label_cells(production.page(d, st, blob, "", now=now,
+                                       daily=extra.get("daily")))
+    index = control_center.page(now, d=d, st=st, blob=blob, extra=extra)
     return prod, index
 
 
