@@ -481,6 +481,8 @@ def prune_feed(path=None, st=None):
 # for; a lead under it but over LATE_MIN is counted, not flagged.
 LATE_MIN = 30
 TARGET_MIN = 60
+# Leave time for feed publication and the follower's ten-minute polling cycle.
+FIRST_PUBLISH_MIN = LATE_MIN + 15
 
 
 def _published_at(lead_id, previous, logged, built):
@@ -542,10 +544,37 @@ def timing_problem(timing):
             f"{first['headline']}, {first['minutes']} min before kickoff{more}")
 
 
+def withhold_new_late_leads(leads, previous, now):
+    """Keep new, unworkable picks out of Production; retain their audit trail.
+
+    Use this build's clock, never the paper log's clock: an old paper pick may
+    only just have become routeable or entered Production. Existing published
+    leads keep their identity and timing. A withheld pick cannot reappear as a
+    settled Production lead on the next run.
+    """
+    previous = previous or {}
+    cut = now - datetime.timedelta(days=KEEP_SETTLED_DAYS)
+    held = {lid: item for lid, item in (previous.get("publication_withheld") or {}).items()
+            if (_one_instant(item.get("kickoff")) or cut) >= cut}
+    published = previous.get("leads") or {}
+    for lid, lead in list(leads.items()):
+        ko = _one_instant(lead.get("kickoff"))
+        if lid not in published and lead.get("status") == "pending" and (
+                ko is None or (ko - now).total_seconds() < FIRST_PUBLISH_MIN * 60):
+            held.setdefault(lid, {k: lead.get(k) for k in
+                                  ("id", "pair", "match", "headline", "kickoff")})
+            held[lid].setdefault("withheld_at", now.replace(microsecond=0).isoformat())
+            held[lid]["reason"] = f"less than {FIRST_PUBLISH_MIN} minutes left at first publication"
+        if lid in held and lid not in published:
+            del leads[lid]
+    return held
+
+
 def build_feed(d, st, now=None, kalshi=None, previous=None):
     """The Production feed as a dict. Pure: `d` is the Sandbox ledger, `st` the stage
     registry, `kalshi` the tracker's live Kalshi lookups (see kalshi_route), or None,
     `previous` the feed this one replaces (for each lead's first publication time)."""
+    live_clock = now is None
     now = now or datetime.datetime.now(datetime.timezone.utc)
     built = now.replace(microsecond=0).isoformat()
     # A removed lane never reaches the feed, even if a stage file still names it.
@@ -598,6 +627,14 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
             logged_at[lead["id"]] = (str(q.get("logged") or ""), float(q.get("price") or 1.0))
     _one_rung_per_close(leads, logged_at)
     corners_selections = _one_corners_per_match(leads, logged_at, previous)
+    # Routing can fetch remote data. Check the clock after those lookups too.
+    if live_clock:
+        now = datetime.datetime.now(datetime.timezone.utc)
+        built = now.replace(microsecond=0).isoformat()
+        for lead in leads.values():
+            if lead.get("status") == "pending":
+                lead["last_seen_at"] = built
+    publication_withheld = withhold_new_late_leads(leads, previous, now)
     for lead in leads.values():
         r = routing.get(lead["pair"])
         if r is None:
@@ -624,7 +661,9 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
                           **_sandbox_record(d, k, entered_at(p)),
                           routing=routing[k], timing=pair_timing(leads, k))
                   for k, p in pairs.items()},
-        "leads": leads, "corners_selections": corners_selections, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
+        "leads": leads, "corners_selections": corners_selections,
+        "publication_withheld": publication_withheld, "late_publication_skipped": len(publication_withheld),
+        "first_publish_min": FIRST_PUBLISH_MIN, "unlisted_skipped": skipped, "unverified_kickoff_skipped": unverified,
     }
 
 
@@ -1036,15 +1075,18 @@ def _held_count(held):
 def _held_note(held, blob):
     unlisted = blob.get("unlisted_skipped", 0)
     unverified = blob.get("unverified_kickoff_skipped", 0)
+    late = blob.get("late_publication_skipped", 0)
     if not held:
         return ('<div class="note">Every bet these pairs logged was published. A bet is held '
                 'back only when it cannot be expressed as a standard market, or when its '
-                'start time is not yet verified.</div>')
+                f'start time is not yet verified, or it first qualifies with fewer than {FIRST_PUBLISH_MIN} '
+                'minutes remaining.</div>')
     return (f'<div class="note">{held} bet{"s" if held != 1 else ""} from these pairs '
             f'{"were" if held != 1 else "was"} not published: {unlisted} cannot be expressed '
             f'as a standard market, and {unverified} {"are" if unverified != 1 else "is"} '
-            f'waiting for a verified start time. A lead is only published once its start '
-            f'has been confirmed.</div>')
+            f'waiting for a verified start time; {late} first qualified too close to the start. '
+            f'New leads need at least {FIRST_PUBLISH_MIN} minutes remaining. Previously published '
+            f'leads keep their original timing.</div>')
 
 
 # The sport sections of the pairs table, in this order; a sport the ledger adds
@@ -1338,7 +1380,8 @@ def page(d, st, blob, style, now=None, daily=None):
     chips = sport_chips([lead_group(l) for l in upcoming + unknown_up + settled_known + settled_unknown])
 
     nxt = _ct_when(upcoming[0].get("kickoff")) if upcoming else "None scheduled"
-    held = blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
+    held = (blob.get("unlisted_skipped", 0) + blob.get("unverified_kickoff_skipped", 0)
+            + blob.get("late_publication_skipped", 0))
     # `style` used to be the Sandbox page's inline stylesheet. The shared site.css
     # replaced it. The argument stays so existing callers do not break.
     del style
