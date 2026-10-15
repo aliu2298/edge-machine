@@ -4504,7 +4504,7 @@ def main():
               f"{sum(1 for l in feed['leads'].values() if l['status'] == 'pending')} open lead(s), "
               f"{feed['unlisted_skipped']} unpublishable and {feed['unverified_kickoff_skipped']} "
               f"unverified-kickoff bet(s) held back; "
-              f"{feed['late_publication_skipped']} withheld by the first-publication cutoff")
+              f"{feed.get('late_publication_skipped', 0)} withheld by the first-publication cutoff")
     except Exception as e:
         feed_failed = True
         # A failed rebuild leaves the OLD feed on disk, which is the dangerous failure.
