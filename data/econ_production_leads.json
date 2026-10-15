@@ -1,0 +1,38 @@
+{
+ "board_built_at": "2026-10-15T04:08:46+00:00",
+ "collector_error": null,
+ "collector_healthy": true,
+ "corners_selections": {},
+ "leads": {},
+ "pairs": {
+  "econ_daily_fav_band|econ_daily": {
+   "by_hand": "2026-10-14",
+   "entered_at": "2026-10-15T03:48:37+00:00",
+   "promoted_at": "2026-10-15T03:48:37+00:00",
+   "ready_at": "2026-10-15T03:48:37+00:00",
+   "route": "moved by hand on 2026-10-14",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  }
+ },
+ "stage": "production",
+ "unlisted_skipped": 0,
+ "unverified_kickoff_skipped": 0,
+ "updated_at": "2026-10-15T04:08:46+00:00"
+}
