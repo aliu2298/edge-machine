@@ -476,13 +476,15 @@ def prune_feed(path=None, st=None):
 
 # A lead is only worth publishing if a follower has time to act on it. The follower
 # skips anything inside LATE_MIN of kickoff, so a lead FIRST published that close is
-# a lead nobody can follow: it is flagged (published_late) on the lead, red on the
-# Production page and an item on the Control Center. TARGET_MIN is what the feed aims
+# a lead nobody can follow: its timing remains on the lead. Unaddressed incidents
+# are red on Production and an item on the Control Center. TARGET_MIN is what the feed aims
 # for; a lead under it but over LATE_MIN is counted, not flagged.
 LATE_MIN = 30
 TARGET_MIN = 60
 # Leave time for feed publication and the follower's ten-minute polling cycle.
 FIRST_PUBLISH_MIN = LATE_MIN + 15
+# First successful feed published with the preventative cutoff (PR #143).
+LATE_PUBLICATION_RESOLVED_BEFORE = "2026-10-15T05:16:01+00:00"
 
 
 def _published_at(lead_id, previous, logged, built):
@@ -521,6 +523,18 @@ def stamp_timing(leads, previous, logged_at, built):
         lead["published_late"] = minutes < LATE_MIN
 
 
+def late_issue_active(lead):
+    """Pre-cutoff incidents were addressed by the publication guard; keep the audit.
+
+    Unknown publication times and any recurrence after deployment still need attention.
+    """
+    if not lead.get("published_late"):
+        return False
+    at = _one_instant(lead.get("published_at"))
+    resolved = _one_instant(LATE_PUBLICATION_RESOLVED_BEFORE)
+    return at is None or at >= resolved
+
+
 def pair_timing(leads, key):
     """{timed, under_target, late: [...]} for one pair's leads in the feed."""
     mine = [l for l in leads.values() if l.get("pair") == key
@@ -530,12 +544,13 @@ def pair_timing(leads, key):
             "under_target": sum(1 for l in mine if l["published_min_before_kickoff"] < TARGET_MIN),
             "late": [{"id": l["id"], "match": l.get("match"), "headline": l.get("headline"),
                       "kickoff": l.get("kickoff"),
-                      "minutes": l["published_min_before_kickoff"]} for l in late]}
+                      "minutes": l["published_min_before_kickoff"],
+                      "addressed": not late_issue_active(l)} for l in late]}
 
 
 def timing_problem(timing):
     """One sentence when a pair published a lead too close to kickoff to act on, else None."""
-    late = (timing or {}).get("late") or []
+    late = [item for item in ((timing or {}).get("late") or []) if not item.get("addressed")]
     if not late:
         return None
     first = late[-1]

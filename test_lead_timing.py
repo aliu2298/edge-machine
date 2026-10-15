@@ -5,14 +5,14 @@ On Oct 13 "Arsenal v Lille — Arsenal to score 2+" (team2_ranked) first reached
 18:34:55Z for a 19:00Z kickoff, 25 minutes ahead; the follower skips anything under 30, so
 nobody could act on it. The rule decided late by its own definition (the favourite's win
 price crossed the 0.80 bucket edge minutes before kickoff), so new Production leads now need a 45-minute first-publication window. Historical
-late leads retain their original audit warning:
+late leads retain their original audit timing:
 
   * every lead carries published_at (its first appearance in the feed, carried run to
     run), published_min_before_kickoff and published_late (under production.LATE_MIN);
   * each pair carries timing: how many leads were timed, how many came in under the
     60-minute target, and the late ones;
-  * a pair with a late lead is red on the Production page and the lead is an item on the
-    Control Center's attention list;
+  * incidents before the preventative guard are addressed and removed from active warnings;
+    a recurrence after deployment still raises Production and Control Center warnings;
   * Tennis Explorer is read for today AND tomorrow, so a Kalshi tennis basket's legs are
     confirmed the day before rather than minutes before a late-evening match.
 No network.
@@ -76,8 +76,7 @@ eq((leads["backfill"]["published_min_before_kickoff"], leads["backfill"]["publis
 t = PR.pair_timing(leads, "team2_ranked|soccer_team2")
 eq((t["timed"], t["under_target"], [x["id"] for x in t["late"]]), (3, 2, ["late"]),
    "the pair counts three timed leads, two under the hour, one late")
-eq(PR.timing_problem(t), "published late — too close to kickoff to act on: Arsenal v Lille · Arsenal to score 2+, "
-   "25 min before kickoff", "and says which, how close")
+eq(PR.timing_problem(t), None, "pre-fix incidents are addressed, with their timing retained")
 eq(PR.timing_problem({"late": []}), None, "a pair with no late lead has nothing to say")
 
 print("\nthe Arsenal lead, through build_feed")
@@ -102,7 +101,7 @@ eq(feed["late_publication_skipped"], 1, "the withheld pick is counted")
 eq(by["Alpha v Beta"]["published_at"], prev["updated_at"], "the earlier lead keeps the time it first appeared")
 page = PR.page({"quotes": [early, q]}, st, feed, "", now=now)
 ok("1 first qualified too close to the start" in page, "Production explains the withheld pick")
-# A deployed feed may already contain a historical late lead. Keep that fact intact.
+# A deployed feed may contain a historical late lead. Preserve the fact and clear its active warning.
 legacy = PR.lead_from_quote(q, "team2_ranked|soccer_team2", built)
 legacy["published_at"] = built
 feed = PR.build_feed({"quotes": [early, q]}, st, now=now,
@@ -111,23 +110,33 @@ feed = PR.build_feed({"quotes": [early, q]}, st, now=now,
 timing = feed["pairs"]["team2_ranked|soccer_team2"]["timing"]
 eq([x["minutes"] for x in timing["late"]], [25], "the pair's timing names the late lead")
 state, why = PR.pair_health("team2_ranked|soccer_team2", [q], 2, feed["pairs"], now=now, timing=timing)
-eq(state, "bad", "the Production page's light goes red")
-ok(why.startswith("published late — too close to kickoff to act on: Arsenal v Lille"), f"with the lead named ({why})")
+eq(state, "ok", "the addressed Arsenal incident no longer makes Production red")
 page = PR.page({"quotes": [early, q]}, st, feed, "", now=now)
-ok("published late — too close to kickoff to act on" in page, "and the Production page prints it")
+ok("published late — too close to kickoff to act on" not in page, "the addressed warning is removed from Production")
+ok(timing["late"][0]["addressed"], "the original late incident remains marked addressed in feed history")
+eq(next(l for l in feed["leads"].values() if l["match"] == "Arsenal v Lille")["published_at"], built,
+   "original publication time is preserved")
 
-print("\nthe Control Center lists it")
+print("\nthe Control Center clears addressed warnings but flags recurrences")
 items = [i for i in CC._attention({"quotes": []}, st, {}, now, None, None, blob=feed) if i["kind"] == "late"]
-eq(len(items), 1, "one item for the one late lead")
-ok("Arsenal v Lille · Arsenal to score 2+" in items[0]["text"] and "25 min before kickoff" in items[0]["text"]
-   and items[0]["area"] == "soccer" and items[0]["href"] == "./production.html",
-   "naming the match, the claim and the minutes, filed under Soccer, linking the Production page")
-later = now + timedelta(hours=CC.LATE_LEAD_HOURS + 2)
-eq([i for i in CC._attention({"quotes": []}, st, {}, later, None, None, blob=feed) if i["kind"] == "late"], [],
-   f"listed for {CC.LATE_LEAD_HOURS}h after its kickoff, then dropped")
+eq(items, [], "the addressed Arsenal warning is removed from active attention")
+future_ko = KO + timedelta(days=3)
+future_pub = future_ko - timedelta(minutes=26)
+recurrence = dict(legacy, kickoff=_iso(future_ko), published_at=_iso(future_pub), published_late=True,
+                  published_min_before_kickoff=26)
+future_feed = {"leads": {recurrence["id"]: recurrence}}
+future_timing = PR.pair_timing(future_feed["leads"], "team2_ranked|soccer_team2")
+ok(PR.timing_problem(future_timing) is not None, "a new incident after the fix still raises a Production warning")
+items = [i for i in CC._attention({"quotes": []}, st, {}, future_pub, None, None, blob=future_feed) if i["kind"] == "late"]
+eq(len(items), 1, "a post-fix recurrence still needs Control Center attention")
+ok("Arsenal v Lille" in items[0]["text"], "the recurrence names the affected fixture")
+ok(PR.late_issue_active(dict(recurrence, published_at=None)), "unknown publication time cannot hide a warning")
 eq(CC.KIND_LABEL["late"], "Published late", "labelled as such")
 from sandbox_audit import COPY_RE
-ok(not COPY_RE.search(items[0]["text"]) and not COPY_RE.search(why), "worded in the pages' own vocabulary")
+ok(not COPY_RE.search(items[0]["text"]), "warning uses the pages' own vocabulary")
+later = future_ko + timedelta(hours=CC.LATE_LEAD_HOURS + 2)
+eq([i for i in CC._attention({"quotes": []}, st, {}, later, None, None, blob=future_feed) if i["kind"] == "late"], [],
+   "a recurrence still expires from attention after the existing window")
 
 print("\nfirst-publication boundary and persistence")
 from copy import deepcopy
