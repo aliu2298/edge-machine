@@ -1,11 +1,82 @@
 {
- "board_built_at": "2026-10-15T05:56:19+00:00",
+ "board_built_at": "2026-10-15T11:37:57+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
- "leads": {},
+ "leads": {
+  "2026-10-15|KXAAAGASD-26OCT15-4.3300|Above 4.3300 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-15",
+   "edge_at_log": null,
+   "first_seen": "2026-10-15",
+   "headline": "Above 4.3300 at the close",
+   "home": null,
+   "id": "2026-10-15|KXAAAGASD-26OCT15-4.3300|Above 4.3300 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-15T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "US gas price up",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.73,
+   "published_at": "2026-10-15T11:37:57+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above 4.3300 at the close",
+    "event": "KXAAAGASD-26OCT15",
+    "market": "KXAAAGASD-26OCT15-4.3300",
+    "outcome": "Above 4.3300",
+    "outcome_side": "yes",
+    "price_at_log": 0.73,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASD-26OCT15-4.3300",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "hit"
+  },
+  "2026-10-15|KXAAAGASDKS-26OCT15-4.0000|Above 4.0000 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-15",
+   "edge_at_log": null,
+   "first_seen": "2026-10-15",
+   "headline": "Above 4.0000 at the close",
+   "home": null,
+   "id": "2026-10-15|KXAAAGASDKS-26OCT15-4.0000|Above 4.0000 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-15T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "Kansas gas price",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.74,
+   "published_at": "2026-10-15T11:37:57+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above 4.0000 at the close",
+    "event": "KXAAAGASDKS-26OCT15",
+    "market": "KXAAAGASDKS-26OCT15-4.0000",
+    "outcome": "Above 4.0000",
+    "outcome_side": "yes",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDKS-26OCT15-4.0000",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "hit"
+  }
+ },
  "pairs": {
   "econ_daily_fav_band|econ_daily": {
    "by_hand": "2026-10-14",
@@ -14,18 +85,18 @@
    "ready_at": "2026-10-15T03:48:37+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 0,
+    "leads": 2,
     "problem": null,
-    "routed": 0,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_n": 2,
+   "sandbox_roi": 0.3606,
+   "sandbox_roi_fee": 0.3358,
    "timing": {
     "late": [],
     "timed": 0,
@@ -37,5 +108,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-15T05:56:19+00:00"
+ "updated_at": "2026-10-15T11:37:57+00:00"
 }
