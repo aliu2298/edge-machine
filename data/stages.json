@@ -1200,6 +1200,114 @@
    "pair": "tennis_utr_shortlist_v1|tennis",
    "reason": "Owner-requested unproven daily shortlist; previous tennis entries paused",
    "to": "production"
+  },
+  {
+   "at": "2026-10-15T07:20:21+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "corners_total_under|soccer_corners",
+   "reason": "moved to Production by hand on 2026-10-15",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-15T07:20:21+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "corners_total_under|soccer_corners",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-15T07:20:21+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "corners_ucl_fade|soccer_corners",
+   "reason": "moved to Production by hand on 2026-10-15",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-15T07:20:21+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "corners_ucl_fade|soccer_corners",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-15T07:20:21+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "corners_team_fade|soccer_corners",
+   "reason": "moved to Production by hand on 2026-10-15",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-15T07:20:21+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "corners_team_fade|soccer_corners",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -1241,6 +1349,66 @@
    "promoted_at": "2026-10-09T04:31:34+00:00",
    "ready_at": "2026-10-09T04:31:34+00:00",
    "ready_since": "2026-10-09T04:31:34+00:00",
+   "stage": "production"
+  },
+  "corners_team_fade|soccer_corners": {
+   "by_hand": "2026-10-15",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-15T07:20:21+00:00",
+   "ready_at": "2026-10-15T07:20:21+00:00",
+   "ready_since": "2026-10-15T07:20:21+00:00",
+   "stage": "production"
+  },
+  "corners_total_under|soccer_corners": {
+   "by_hand": "2026-10-15",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-15T07:20:21+00:00",
+   "ready_at": "2026-10-15T07:20:21+00:00",
+   "ready_since": "2026-10-15T07:20:21+00:00",
+   "stage": "production"
+  },
+  "corners_ucl_fade|soccer_corners": {
+   "by_hand": "2026-10-15",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-15T07:20:21+00:00",
+   "ready_at": "2026-10-15T07:20:21+00:00",
+   "ready_since": "2026-10-15T07:20:21+00:00",
    "stage": "production"
   },
   "corners_under|soccer_corners": {
@@ -1624,5 +1792,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-15T05:42:29+00:00"
+ "updated": "2026-10-15T07:20:21+00:00"
 }
