@@ -1,7 +1,7 @@
 """Publish Econ Daily's owner-promoted rule on its own collector clock.
 
 The measured record remains paper. Real-money activation is a separate manual
-Polybot setting; this module never places orders or edits bot configuration.
+Polybot setting; this module only publishes saved source records.
 """
 import datetime as dt
 import json
