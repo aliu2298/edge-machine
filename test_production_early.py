@@ -563,7 +563,7 @@ eq([l["kickoff"] for l in feed_wti["leads"].values()], ["2026-10-12T18:30Z"], "t
 eq((feed_wti["unlisted_skipped"], feed_wti["unverified_kickoff_skipped"]), (0, 0), "nothing held back")
 at_five = MON.replace(hour=18, minute=10)
 silver = _crung("KXSILVERD", "58.75", MON.replace(hour=21), price=0.79)
-feed_five = PR.build_feed({"quotes": [wti, gold, silver]}, cst, now=at_five)
+feed_five = PR.build_feed({"quotes": [wti, gold, silver]}, cst, now=at_five, previous=feed_wti)
 eq(sorted(l["kickoff"] for l in feed_five["leads"].values()), ["2026-10-12T18:30Z", "2026-10-12T21:00Z", "2026-10-12T21:00Z"],
    "the 17:00 run adds the rest; the WTI rung, past its close but open, stays until it settles")
 won = dict(gold, status="won", result="a", pnl=28.21, settled="2026-10-12T21:30:00+00:00")

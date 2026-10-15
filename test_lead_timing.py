@@ -4,7 +4,8 @@
 On Oct 13 "Arsenal v Lille — Arsenal to score 2+" (team2_ranked) first reached the feed at
 18:34:55Z for a 19:00Z kickoff, 25 minutes ahead; the follower skips anything under 30, so
 nobody could act on it. The rule decided late by its own definition (the favourite's win
-price crossed the 0.80 bucket edge minutes before kickoff), so the fix is to SAY so:
+price crossed the 0.80 bucket edge minutes before kickoff), so new Production leads now need a 45-minute first-publication window. Historical
+late leads retain their original audit warning:
 
   * every lead carries published_at (its first appearance in the feed, carried run to
     run), published_min_before_kickoff and published_late (under production.LATE_MIN);
@@ -96,10 +97,17 @@ now = datetime.datetime(2026, 10, 13, 18, 34, 55, tzinfo=timezone.utc)
 prev = PR.build_feed({"quotes": [early]}, st, now=now - timedelta(minutes=30), previous={"leads": {}})
 feed = PR.build_feed({"quotes": [early, q]}, st, now=now, previous=prev)
 by = {l["match"]: l for l in feed["leads"].values()}
-eq((by["Arsenal v Lille"]["published_at"], by["Arsenal v Lille"]["published_min_before_kickoff"],
-    by["Arsenal v Lille"]["published_late"]), ("2026-10-13T18:34:55+00:00", 25, True),
-   "Arsenal reaches the feed at 18:34:55 for 19:00: 25 minutes, late")
+ok("Arsenal v Lille" not in by, "the newly qualifying Arsenal lead is withheld before publication")
+eq(feed["late_publication_skipped"], 1, "the withheld pick is counted")
 eq(by["Alpha v Beta"]["published_at"], prev["updated_at"], "the earlier lead keeps the time it first appeared")
+page = PR.page({"quotes": [early, q]}, st, feed, "", now=now)
+ok("1 first qualified too close to the start" in page, "Production explains the withheld pick")
+# A deployed feed may already contain a historical late lead. Keep that fact intact.
+legacy = PR.lead_from_quote(q, "team2_ranked|soccer_team2", built)
+legacy["published_at"] = built
+feed = PR.build_feed({"quotes": [early, q]}, st, now=now,
+                     previous={"leads": {legacy["id"]: legacy}})
+
 timing = feed["pairs"]["team2_ranked|soccer_team2"]["timing"]
 eq([x["minutes"] for x in timing["late"]], [25], "the pair's timing names the late lead")
 state, why = PR.pair_health("team2_ranked|soccer_team2", [q], 2, feed["pairs"], now=now, timing=timing)
@@ -120,6 +128,48 @@ eq([i for i in CC._attention({"quotes": []}, st, {}, later, None, None, blob=fee
 eq(CC.KIND_LABEL["late"], "Published late", "labelled as such")
 from sandbox_audit import COPY_RE
 ok(not COPY_RE.search(items[0]["text"]) and not COPY_RE.search(why), "worded in the pages' own vocabulary")
+
+print("\nfirst-publication boundary and persistence")
+from copy import deepcopy
+paper = {"quotes": [q]}
+original = deepcopy(paper)
+for seconds, count in ((45*60, 1), (45*60-1, 0), (30*60, 0), (26*60, 0)):
+    at = KO - timedelta(seconds=seconds)
+    fresh = PR.build_feed(paper, st, now=at, previous={"leads": {}})
+    eq(len(fresh["leads"]), count, f"first publish with {seconds} seconds remaining")
+    if not count:
+        withheld = fresh
+# Missing previous feed must not use an old paper log to bypass the guard.
+stale_log = dict(q, logged="2026-10-13T09:00:00+00:00")
+eq(len(PR.build_feed({"quotes": [stale_log]}, st, now=now)["leads"]), 0,
+   "old logged time cannot bypass the guard when previous feed is missing")
+# Once withheld it remains absent when settled; paper ledger remains untouched.
+settled = dict(q, status="hit")
+next_feed = PR.build_feed({"quotes": [settled]}, st, now=KO+timedelta(hours=2), previous=withheld)
+eq(len(next_feed["leads"]), 0, "withheld pick cannot return as a settled Production lead")
+eq(next_feed["late_publication_skipped"], 1, "withheld audit survives refresh and settlement")
+eq(paper, original, "the cutoff never changes the paper ledger")
+# An early publication is retained when refreshed inside the cutoff.
+at = KO - timedelta(hours=2)
+first = PR.build_feed(paper, st, now=at, previous={"leads": {}})
+refresh = PR.build_feed(paper, st, now=now, previous=first)
+eq(set(refresh["leads"]), set(first["leads"]), "early lead survives refresh with 25 minutes left")
+eq(refresh["late_publication_skipped"], 0, "refresh is not counted as a late first publication")
+eq(next(iter(refresh["leads"].values()))["published_at"], first["updated_at"], "refresh preserves first-publication time")
+# A slow routing lookup cannot rely on the clock captured at build start.
+from unittest.mock import patch
+RealDateTime = datetime.datetime
+class BuildClock(RealDateTime):
+    reads = iter((KO - timedelta(minutes=50), KO - timedelta(minutes=26)))
+    @classmethod
+    def now(cls, tz=None):
+        return next(cls.reads)
+with patch.object(PR.datetime, "datetime", BuildClock):
+    slow = PR.build_feed(paper, st, previous={"leads": {}})
+eq(len(slow["leads"]), 0, "clock is rechecked after routing, before publication")
+eq(slow["updated_at"], _iso(KO - timedelta(minutes=26)), "feed stamp reflects the completed build")
+expired = PR.build_feed({"quotes": []}, st, now=KO+timedelta(days=PR.KEEP_SETTLED_DAYS+1), previous=next_feed)
+eq(expired["publication_withheld"], {}, "old withheld audit expires with the settled-history window")
 
 print("\nTennis Explorer, today and tomorrow")
 today = datetime.date(2026, 10, 14)

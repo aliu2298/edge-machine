@@ -331,6 +331,9 @@ def test_breaks_fail(written, quotes):
 _MAIN_FEED_ASIDE_FROM_SANDBOX = json.loads(r"""
 {
   "corners_selections": {},
+  "publication_withheld": {},
+  "late_publication_skipped": 0,
+  "first_publish_min": 45,
   "board_built_at": "2026-10-01T12:00:00+00:00",
   "leads": {
     "2026-10-03|Home Side|Away Side|Away Side to win · Oddspedia community tips": {
