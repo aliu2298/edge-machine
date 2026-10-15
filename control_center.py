@@ -443,7 +443,7 @@ def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None, b
     # on: the follower skips anything that close. Listed while its kickoff is recent.
     for lead in sorted(((blob or {}).get("leads") or {}).values(), key=lambda l: str(l.get("kickoff"))):
         ko = _utc(lead.get("kickoff"))
-        if not lead.get("published_late") or ko is None or ko < now - timedelta(hours=LATE_LEAD_HOURS):
+        if not production.late_issue_active(lead) or ko is None or ko < now - timedelta(hours=LATE_LEAD_HOURS):
             continue
         name, sport = str(lead.get("pair") or "|").split("|", 1)
         items.append(dict(kind="late", area=_area_of_sport(sport),
