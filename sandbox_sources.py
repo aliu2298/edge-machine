@@ -1127,9 +1127,15 @@ SOURCES = {
              "lists. Never bets. The population the corners rule is judged against: backing No on "
              "every listed rung over the same period."),
     "corners_under": dict(
-        label="Corners under form rule (model beats the No ask by 5c)", kind="Rule", connected=True,
+        label="Corners under form rule (model beats the No ask by 5c)", kind="Rule", connected=False,
         site="edge-machine", sports=["soccer_corners"], baseline="population",
         one_per_corners_fixture=True,
+        retired="2026-10-15 by Olu, and out of Production: split into three lanes on fresh records "
+                "(corners_total_under, corners_ucl_fade, corners_team_fade). Its last record, per "
+                "match: total-corner unders 7-6 on 13 matches (+8.8% after fees, nested rungs "
+                "averaged), team-corner unders 10-20 on 30 (-37.0%, z -1.98), while the YES on those "
+                "same team rungs at its own ask made +24.4% (z +1.58). Kept here as the legacy "
+                "corners record; none of it counts toward the new lanes.",
         note="Pre-registered 2026-09-19. Buy No on a Kalshi total-corner or team-corner rung (\"N+ "
              "corners\") when the form model's chance of UNDER beats the No ask by 5c or more after "
              "fees, within 4 hours of kickoff. Model: each side's corners = the average of its corners "
@@ -1141,6 +1147,48 @@ SOURCES = {
              "t 1.62). A lead, not proof. Judged PER MATCH: every rung it buys in one match is one "
              "result. Since 2026-10-14, at most one selection per match across total and team corners: "
              "highest model edge after fees, lower No ask then ticker on ties; first logged selection stays locked."),
+    "corners_total_under": dict(
+        label="Corners total under (No, one rung a match, 5 a day, no Champions League)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        one_per_corners_fixture=True, day_cap=5,
+        note="REGISTERED 2026-10-15 by Olu, before it logged anything; a fresh record split from "
+             "corners_under. MATCH-TOTAL corner rungs only ('N+ corners'), every league the corners "
+             "feed reads EXCEPT the Champions League, which has its own fade lane. Buy the NO when "
+             "corners_under's form model (unchanged: each side's corners won over its last 10 v its "
+             "opponent's conceded, negative binomial, dispersion 1.28) beats the No ask by 5c or more "
+             "after fees, within 4 hours of kickoff. ONE rung per match: the largest edge, then the "
+             "lower ask, then the ticker -- corners_under used to buy three to five nested rungs on "
+             "one match, so one high-corner game lost them all. At most FIVE a day (the kickoff's "
+             "date), the strongest edges first within a read. A match any corners lane has already "
+             "bet is never entered again. Read at 30 settled."),
+    "corners_ucl_fade": dict(
+        label="Corners total fade, Champions League (Yes where the under model fires)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        one_per_corners_fixture=True, day_cap=5,
+        note="REGISTERED 2026-10-15 by Olu, before it logged anything. The REVERSE of "
+             "corners_total_under, on Champions League matches only: on the same rung that lane's "
+             "rule would select (match-total corners, model under-edge 5c+ after fees, within 4 hours, "
+             "the strongest edge of the match), buy the YES at its own Yes ask. Why: on 2026-10-14 the "
+             "under rule lost all four Champions League matches it bet, every one finishing with 7+ "
+             "or 11+ corners. That is four matches, the reason for looking and not evidence; the "
+             "model's own estimate is negative on every fade by construction, so this lane is judged "
+             "on its record alone. One rung a match, five a day, and a match any corners lane has "
+             "already bet is never entered again. Read at 30 settled."),
+    "corners_team_fade": dict(
+        label="Corners team fade (Yes on the team rung the under model picks)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        one_per_corners_fixture=True, day_cap=5,
+        note="REGISTERED 2026-10-15 by Olu, before it logged anything. TEAM corner rungs only "
+             "('Team: N+'). Start from the selection corners_under's team-under signal would make -- "
+             "model under-edge 5c+ after fees (dispersion 1.74), within 4 hours, the strongest edge "
+             "of the match -- and buy that rung's YES at its own Yes ask instead. Why: corners_under's "
+             "team unders went 10-20 on 30 matches (-37.0%, z -1.98), while the Yes on the same rungs "
+             "at the real Yes ask and fee made +24.4% (z +1.58). That record is the reason for "
+             "looking and counts toward nothing here. The model's estimate is negative on every fade "
+             "by construction, so it is judged on its record alone. One rung a match, five a day; "
+             "the match-total lanes are registered first, so when they pick a match in the same run "
+             "they keep it, and a match any corners lane has already bet is never entered again. "
+             "Read at 30 settled."),
     "crypto_fav_band": dict(
         label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["crypto_fav"],
@@ -7346,6 +7394,67 @@ def fetch_corners_under(sport, universe=None, fixtures=None, now=None):
     return [entry[1] for _, entry in sorted(candidates.items())]
 
 
+def corners_selections(sport, universe=None, fixtures=None, now=None, kind=None, ucl=None):
+    """[(under_edge, row)] — the under model's choice for each match, strongest first.
+
+    The same model, window and 5c bar as corners_under, restricted to one corner `kind`
+    ("total" / "team") and, with `ucl`, to (True) or away from (False) the Champions League.
+    One rung per match: the largest under edge, then the lower No ask, then the ticker.
+    """
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
+    now = now or datetime.now(timezone.utc)
+    best = {}
+    for r, ko in _rule_rows(sport, universe):
+        if kind and r.get("corner_kind", "total") != kind:
+            continue
+        if ucl is not None and (r.get("league") == "Champions League") != ucl:
+            continue
+        if not (now < ko <= now + timedelta(hours=CORNERS_LEAD_H)):
+            continue
+        key = corners_fixture_key(r)
+        if key is None:
+            continue
+        p = corners_model(fixtures, r, ko)
+        if p is None:
+            continue
+        no_ask = float(r["price_b"])
+        edge = (1 - p) - no_ask - 0.07 * no_ask * (1 - no_ask)
+        if edge < CORNERS_EDGE:
+            continue
+        rank = (-edge, no_ask, str(r["market_id"]))
+        if key not in best or rank < best[key][0]:
+            best[key] = (rank, edge, r)
+    return [(e, r) for _rk, e, r in sorted(best.values(), key=lambda x: x[0])]
+
+
+def _corner_pick(r, side):
+    """A row the publisher can bet on `side`: a tradeable book and a price inside the band."""
+    price = r.get("price_a") if side == "a" else r.get("price_b")
+    return (not r.get("untraded") and (r.get("tradeable") or {}).get(side)
+            and price is not None and 0.05 <= float(price) <= 0.95)
+
+
+def fetch_corners_total_under(sport, universe=None, fixtures=None, now=None):
+    """NO on the match-total rung the under model picks, outside the Champions League."""
+    return [dict(market_id=r["market_id"], pick="b", detail=f"under edge {e:+.3f}")
+            for e, r in corners_selections(sport, universe, fixtures, now, kind="total", ucl=False)
+            if _corner_pick(r, "b")]
+
+
+def fetch_corners_ucl_fade(sport, universe=None, fixtures=None, now=None):
+    """YES on the Champions League match-total rung the under model picks."""
+    return [dict(market_id=r["market_id"], pick="a", detail=f"fading an under edge of {e:+.3f}")
+            for e, r in corners_selections(sport, universe, fixtures, now, kind="total", ucl=True)
+            if _corner_pick(r, "a")]
+
+
+def fetch_corners_team_fade(sport, universe=None, fixtures=None, now=None):
+    """YES on the team rung the under model picks, any league."""
+    return [dict(market_id=r["market_id"], pick="a", detail=f"fading an under edge of {e:+.3f}")
+            for e, r in corners_selections(sport, universe, fixtures, now, kind="team")
+            if _corner_pick(r, "a")]
+
+
 def fetch_corners_market(sport, universe=None):
     """The Kalshi midpoint on every listed corners rung — never a bet."""
     rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
@@ -10151,6 +10260,11 @@ CHALLENGERS = {
     "goals_market": fetch_goals_market,
     "corners_market": fetch_corners_market,
     "corners_under": fetch_corners_under,
+    # Order matters: in one run, a match taken by an earlier corners lane is locked for the
+    # later ones (one_per_corners_fixture). The match-total lanes come before the team fade.
+    "corners_total_under": fetch_corners_total_under,
+    "corners_ucl_fade": fetch_corners_ucl_fade,
+    "corners_team_fade": fetch_corners_team_fade,
     "tennis_fav_band": fetch_tennis_fav_band,
     "tennis_utr_shortlist_v1": lambda sport: [],  # publish() ranks fresh books against the persistent daily quota
     "tennis_fav_band_3h": fetch_tennis_fav_band_3h,

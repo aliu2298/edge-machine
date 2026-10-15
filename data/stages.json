@@ -1244,24 +1244,9 @@
    "stage": "production"
   },
   "corners_under|soccer_corners": {
-   "by_hand": "2026-10-11",
-   "entry": {
-    "base_roi": -0.0006,
-    "clv": 0.0122,
-    "clv_n": 15,
-    "n": 15,
-    "own_roi": 0.0101,
-    "roi": 0.0101,
-    "roi_fee": -0.0258,
-    "span_days": 22.0,
-    "weeks": 3,
-    "z": 0.0383
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "ready_since": "2026-10-11T19:34:45+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-15T06:13:04+00:00",
+   "since": "2026-10-15T06:13:04+00:00",
+   "stage": "sandbox"
   },
   "cricket_consensus|cricket": {
    "reset": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",

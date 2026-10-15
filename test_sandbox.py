@@ -3227,11 +3227,11 @@ def _pq2(src, sport, i, won, price=0.5):
                 start=f"2026-08-{1 + i % 28:02d}T18:00:00+00:00", logged=f"2026-08-{1 + i % 28:02d}T10:00:00+00:00")
 _pd = {"quotes": [_pq2("mls_away_band", "soccer", i, i % 3 != 0) for i in range(36)]  # 24/36 at 0.5: working
                 + [_pq2("espn_fpi", "nfl", i, i % 3 == 0) for i in range(33)]    # 11/33: not working
-                + [_pq2("corners_under", "soccer_corners", i, i % 2 == 0) for i in range(5)]}  # too early
+                + [_pq2("corners_total_under", "soccer_corners", i, i % 2 == 0) for i in range(5)]}  # too early
 _pl = {(r["name"], r["sport"]): r["v"] for r in SB.pair_list(_pd, {"pairs": {}})}
 eq((_pl[("mls_away_band", "soccer")], _pl[("espn_fpi", "nfl")]), ("proven", "noedge"),
    "24/36 at 0.50 is a proven edge (z > 2); 11/33 has no edge")
-eq(_pl[("corners_under", "soccer_corners")], "early", "five bets is too early for any verdict, whichever way it leans")
+eq(_pl[("corners_total_under", "soccer_corners")], "early", "five bets is too early for any verdict, whichever way it leans")
 _secs = SB.sport_sections(_pd, SB.pair_list(_pd, {"pairs": {}}))
 ok("<b>Soccer</b>" in _secs and "<b>NFL</b>" in _secs and "MLS away side" in _secs,
    "one section per sport, naming each source")
@@ -3367,7 +3367,8 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "corners_under|soccer_corners",
+   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "corners_team_fade|soccer_corners",
+    "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners",
     "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
     "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
     "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
@@ -4882,8 +4883,12 @@ ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corne
    "and the page says so")
 # Moved to Production by hand on 2026-10-11, as an Early pair; the feed names its No on the
 # corners rung (FEED_BETS soccer_corners, kind corners_lte). test_production_early holds it.
-eq((T.PAIR_OVERRIDES.get("corners_under|soccer_corners") or {}).get("moved_on"), "2026-10-11",
-   "the corners rule is in Production since 2026-10-11")
+# Out on 2026-10-15, as asked: split into three lanes on fresh records, each moved by hand.
+ok("corners_under|soccer_corners" not in T.PAIR_OVERRIDES and not S.SOURCES["corners_under"]["connected"],
+   "the corners rule left Production and stopped on 2026-10-15")
+eq(sorted(k for k, v in T.PAIR_OVERRIDES.items() if k.startswith("corners_") and v["moved_on"] == "2026-10-15"),
+   ["corners_team_fade|soccer_corners", "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners"],
+   "and its three lanes are in Production from that day")
 
 
 print("\nSoccer by-competition counts match the card window and the card's units")
@@ -4928,7 +4933,7 @@ _rung_i = 0
 for _code, _pnls in _corner_specs:
     for _pnl in _pnls:
         _panel_q.append(_panel_bet(
-            _rung_i, "corners_under", "soccer_corners", _POST, "Premier League",
+            _rung_i, "corners_total_under", "soccer_corners", _POST, "Premier League",
             status="won" if _pnl > 0 else "lost", pnl=_pnl,
             market_id=f"KXEPLCORNERS-{_code}-{_rung_i}"))
         _rung_i += 1
@@ -4936,7 +4941,7 @@ _panel_d = {"quotes": _panel_q}
 _panel_st = {"pairs": {"o15_form_l10|soccer_o15": {"since": _O15_SINCE}}, "events": []}
 _panel_rows = SB.pair_list(_panel_d, _panel_st)
 _panel_o15 = next(r for r in _panel_rows if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
-_panel_cu = next(r for r in _panel_rows if r["name"] == "corners_under" and r["sport"] == "soccer_corners")
+_panel_cu = next(r for r in _panel_rows if r["name"] == "corners_total_under" and r["sport"] == "soccer_corners")
 eq(_panel_o15.get("since"), _O15_SINCE, "the lane row carries the stage clock the card already uses")
 eq(_panel_o15["a"]["n"], 4, "the over-1.5 card counts only the four bets logged after the reset")
 _o15_parts = T.league_split(_panel_d, "o15_form_l10", "soccer_o15", venues=T.TRADEABLE_VENUES,
@@ -4947,7 +4952,7 @@ eq(sorted(sp["league"] for sp in _o15_parts), ["MLS"],
    "pre-reset leagues, and a pre-reset price payout, are not in the split")
 eq((_panel_cu["a"]["n"], _panel_cu["a"]["n_bets"], _panel_cu["a"]["unit"]), (8, 11, "match"),
    "the corners card counts eight matches and eleven rungs")
-_cu_parts = T.league_split(_panel_d, "corners_under", "soccer_corners", venues=T.TRADEABLE_VENUES,
+_cu_parts = T.league_split(_panel_d, "corners_total_under", "soccer_corners", venues=T.TRADEABLE_VENUES,
                            since=_panel_cu.get("since"))
 eq((sum(sp["n"] for sp in _cu_parts), sum(sp["won"] for sp in _cu_parts),
     sum(sp["n_bets"] for sp in _cu_parts)),
