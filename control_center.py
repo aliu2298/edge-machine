@@ -535,7 +535,7 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                 settled=sum(x.get('status')!='open' and _in_window(_utc(x.get('settled')),now) for x in picks),
                 next24=sum(x.get('status')=='open' and _utc(x.get('close')) is not None
                            and now < _utc(x['close']) <= now+timedelta(hours=NEXT_HOURS) for x in picks),
-                coverage=f"{len(lane.get('catalog') or [])} series · paper only", last_read=last,
+                coverage=f"{len(lane.get('catalog') or [])} series · "+("Production" if key=="econ_daily" else "paper only"), last_read=last,
                 status=status_word, items=daily_items))
     live = shell_build._running_body(d, st, blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
@@ -543,7 +543,7 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
-        tiles=dict(pairs=len(pairs), open=sum(1 for q in rows if q.get("status") == "open")
+        tiles=dict(pairs=len(pairs)+(1 if daily is not None else 0), open=sum(1 for q in rows if q.get("status") == "open")
                    + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,

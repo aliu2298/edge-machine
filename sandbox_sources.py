@@ -1400,6 +1400,17 @@ SOURCES["tennis_utr_shortlist_v1"] = dict(
          "historical fitted results are not this rule's record. Listed in Production by owner "
          "request, which is not evidence of a proven edge or an order-placement instruction.")
 
+# Collected independently by daily_track; the main venue sweep must not fetch it.
+SPORTS["econ_daily"] = "Econ Daily"
+EXTERNAL_COLLECTORS = {"econ_daily": "daily_track"}
+SOURCES["econ_daily_fav_band"] = dict(
+    label="Econ Daily favourite band", kind="Rule", connected=True,
+    site="kalshi.com", sports=["econ_daily"], baseline="population",
+    note="Owner-promoted 2026-10-14. The daily-v1 rule on supported daily economic "
+         "above-threshold contracts: YES 70–80 cents, spread at most 3 cents, 25+ "
+         "contracts at the ask, 2–3.5 hours before the verified contract close. "
+         "One frozen entry per event. Paper performance is not an account fill record.")
+
 PAUSED_LANES = {
     # Owner stopped the previous tennis rules on 2026-10-14. Keep history and grading.
     "tennis_fav_band": None,

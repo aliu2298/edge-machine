@@ -11,7 +11,7 @@ state={'lanes':{k:{'picks':[],'baseline':[],'catalog':[],'observations':[],'erro
 reference=[C.build(d={'quotes':[]},st={'pairs':{}},now=now),
            M.build(d={'quotes':[]},st={'pairs':{}},now=now)]
 tokens=['class="sp-head"','class="tiles sp-tiles"','class="sp-filters"',
-        'class="sp-rules-list"','class="sp-tabs"','id="events-next"',
+        'class="sp-rules-list','class="sp-tabs"','id="events-next"',
         'id="events-live"','id="events-done"','class="sp-method"',
         'src="./tables.js"','src="./sports.js"']
 for key in T.LANES:
@@ -22,13 +22,14 @@ for key in T.LANES:
     assert 'Econ Daily' in html and 'Finance Daily' in html
     assert 'Scan reasons &amp; coverage' in html
     assert '<style' not in html and 'onclick=' not in html
-    assert 'No '+T.LANES[key].lower()+' rule is in Production.' in html
+    if key=='econ_daily': assert 'Production · paper record' in html
+    else: assert 'No '+T.LANES[key].lower()+' rule is in Production.' in html
     sample=copy.deepcopy(state)
     sample['lanes'][key]['picks']=[dict(id='KXINX-26OCT12-T6000',event='KXINX-26OCT12',
         series='KXINX',name='S&P close',title='Above 6000',close='2026-10-12T20:00Z',
         price=.75,bid=.73,size=25,logged='2026-10-12T17:00Z',status='won',profit=31.04,settled='2026-10-12T21:00Z')]
     rendered=D.build(key,sample,now)
     assert 'Above 6000' in rendered and '1/30 market-days' in rendered
-    assert 'Paper record · not graded' in rendered
+    assert ('Production · paper record' if key=='econ_daily' else 'Paper record · not graded') in rendered
     assert sample['lanes'][key]['picks'][0]['profit']==31.04
 print('PASS: current shared template, four tiles, rule folds, filters, event tabs, scripts, and unchanged paper records')

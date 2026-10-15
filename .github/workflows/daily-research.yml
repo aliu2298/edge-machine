@@ -29,6 +29,9 @@ jobs:
       - name: Public market observations and paper settlement
         id: collect
         run: python3 daily_track.py
+      - name: Publish Econ Daily Production feed
+        if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
+        run: python3 daily_production.py
       - name: Save records even when a source failed
         if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
         run: |
@@ -36,7 +39,7 @@ jobs:
           python3 -c 'import json; json.load(open("data/daily_ledger.json"))'
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/daily_ledger.json
+          git add data/daily_ledger.json data/econ_production_leads.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Daily paper research observations"
           for attempt in 1 2 3; do

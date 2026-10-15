@@ -11,12 +11,13 @@ def build(key, state=None, now=None):
     state = state if state is not None else D.load()
     lane = state['lanes'][key]
     now = SP.as_utc(now)
+    promoted = key == "econ_daily"
     picks = lane['picks']
     settled = [r for r in picks if r['status'] != 'open']
     binary = [r for r in settled if r['status'] in ('won', 'lost')]
     days = len({D.instant(r['close']).astimezone(D.ET).date() for r in settled})
     row = dict(name=key+'_fav_band', sport=key, meta={'label':'Daily favourite band', 'note':D.RULE},
-               prod=False, open=sum(r['status']=='open' for r in picks), since=None, v='waiting',
+               prod=promoted, open=sum(r['status']=='open' for r in picks), since=None, v='waiting',
                a=dict(n=len(binary), n_price=len(settled)-len(binary), won=sum(r['status']=='won' for r in binary),
                       expected=sum(r['price'] for r in binary), n_bets=len(settled), unit='contract',
                       roi_fee=sum(r.get('profit',0) for r in settled)/(100*len(settled)) if settled else None))
@@ -59,15 +60,20 @@ def build(key, state=None, now=None):
     coverage = {key: {'daily': {'offered':sum(x['listed'] for x in lane['observations']),
                                'picked':sum(x['eligible'] for x in lane['observations'])}}} if lane.get('last_success') else {}
     spec = SP.spec(family=D.LANES[key],key=key,title='Edge Machine · '+D.LANES[key],description=D.RULE,
-                   scope='Daily favourite-band thresholds · paper only',venue='Kalshi',rows=[row],
+                   scope='Daily favourite-band thresholds · '+('Production' if promoted else 'paper only'),venue='Kalshi',rows=[row],
                    events=events,rule_name=lambda r:'Favourite band · 3h to the close',
                    market=lambda d,r:'Kalshi',definition=definition,recent=lambda d,r,n:scan(),
                    method=method,scoped=False,unit=lambda r:'contract')
-    html = SP.page(spec, {'quotes':[], 'coverage':coverage}, {'pairs':{}}, now, rows=[row])
+    data, stages = {'quotes':[], 'coverage':coverage}, {'pairs':{}}
+    if promoted:
+        import daily_production as DP
+        data['quotes'] = DP.quotes(state)
+        stages['pairs'] = DP.pairs()
+    html = SP.page(spec, data, stages, now, rows=[row])
     # Keep the template's design while preserving this lane's existing record semantics:
     # contract wins are descriptive; market-days are the evidence clock, not an edge test.
     html = html.replace(f'data-l="Evidence">{len(binary)}/30</span>',f'data-l="Evidence">{days}/30 market-days</span>')
-    html = html.replace(SP.verdict_badge(row), '<span class="sig w">Paper record · not graded</span>')
+    html = html.replace(SP.verdict_badge(row), '<span class="sig w">'+('Production · paper record' if promoted else 'Paper record · not graded')+'</span>')
     return html
 
 

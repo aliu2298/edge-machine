@@ -169,6 +169,8 @@ def ladder_contest(q):
     market's title is a whole sentence, so its contest is the commodity and the close
     it settles on ("WTI crude close on Oct 8, 2026", "Gold close on Oct 8, 2026").
     """
+    if q.get("sport") == "econ_daily":
+        return str(q.get("label") or "Economic daily close")
     series = str(q.get("market_id") or "").split("-")[0]
     name = S.COMMOD_FAV_SERIES.get(series) if q.get("sport") == "commodities_fav" else None
     if name:
@@ -1055,6 +1057,8 @@ RECENT_DAYS = 7
 
 
 def sport_group(sport):
+    if sport == "econ_daily":
+        return "Econ Daily"
     """The sport a pair belongs to, from its registered label: 'Soccer · Over 1.5' is
     Soccer, 'Commodities · Favourite band' is Commodities. A lane not in the registry
     is its own group under its key, so a new lane cannot fall out of the page."""
@@ -1095,7 +1099,7 @@ def sport_chips(groups):
             'data-controls="coming-up recent">' + "".join(parts) + "</nav>")
 
 
-def page(d, st, blob, style, now=None):
+def page(d, st, blob, style, now=None, daily=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1105,6 +1109,9 @@ def page(d, st, blob, style, now=None):
     """
     now_dt = now or datetime.datetime.now(datetime.timezone.utc)
     today = _chicago_day(now_dt)
+    if daily is not None:
+        import daily_production
+        d, st, blob = daily_production.page_inputs(d, st, blob, daily, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.
@@ -1115,7 +1122,7 @@ def page(d, st, blob, style, now=None):
     # ("Team scores 1+ form rule · Clubs" and "· Internationals"). The pair key and
     # the lead ids keep the plain label.
     name = lambda key: S.scoped_rule(*(key.split("|", 1) + [None])[:2]) if "|" in key else S.scoped_rule(key)
-    sport_of = lambda key: S.SPORTS.get(key.split("|")[1], key.split("|")[1])
+    sport_of = lambda key: S.SPORTS.get(key.split("|")[1], "Econ Daily" if key.endswith("|econ_daily") else key.split("|")[1])
     label = lambda key: f"{name(key)} · {sport_of(key)}"
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: _tone(x, n, digits=1)
