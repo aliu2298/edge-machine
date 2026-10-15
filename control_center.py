@@ -537,7 +537,11 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                            and now < _utc(x['close']) <= now+timedelta(hours=NEXT_HOURS) for x in picks),
                 coverage=f"{len(lane.get('catalog') or [])} series · "+("Production" if key=="econ_daily" else "paper only"), last_read=last,
                 status=status_word, items=daily_items))
-    live = shell_build._running_body(d, st, blob, now)
+    live_d, live_st, live_blob = d, st, blob
+    if daily is not None:
+        import daily_production
+        live_d, live_st, live_blob = daily_production.page_inputs(d, st, blob, daily, now=now)
+    live = shell_build._running_body(live_d, live_st, live_blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
     scorecard = scorecard_rows(pair_rows)
     healthy = sum(1 for a in areas if a["status"] == "healthy")

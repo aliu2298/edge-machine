@@ -51,6 +51,17 @@ class EconProduction(unittest.TestCase):
         self.assertEqual(s,before)
         self.assertEqual(r['profit'],31.04)
 
+    def test_future_econ_pick_reaches_running_list(self):
+        import control_center as C
+        import sandbox_build as B
+        s=state()
+        d={'quotes':[]};st={'pairs':{}};blob={'updated_at':NOW.isoformat(),'pairs':{},'leads':{}}
+        prod,index=B.production_and_index(NOW,d,st,blob,extra={'daily':s})
+        self.assertIn('US gas price up',prod)
+        self.assertIn('US gas price up',index)
+        model=C.model(d,st,blob,NOW,daily=s)
+        self.assertEqual(model['tiles']['pairs'],1)
+
     def test_page_merge_does_not_mutate_sports_inputs_or_reset_sports_clock(self):
         d={'quotes':[]};st={'pairs':{}};blob={'updated_at':'2026-10-15T12:00Z','pairs':{},'leads':{}}
         before=copy.deepcopy((d,st,blob))
