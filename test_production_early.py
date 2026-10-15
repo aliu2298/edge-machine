@@ -92,7 +92,7 @@ ok("o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
 eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    ((0.70, 0.85), 0.0084, "2026-10-04T06:46:57+00:00"),
    "promotion touches no tennis parameter")
-eq(len(T.PAIR_OVERRIDES), 17, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14")
+eq(len(T.PAIR_OVERRIDES), 19, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -213,7 +213,10 @@ eq(T.feed_bet(over), {"kind": "total_gte", "n": 4}, "feed_bet reads the over off
 eq(T.feed_bet(under), {"kind": "total_lte", "n": 3}, "and the under off the No")
 eq(T.feed_bet(dict(over, pick="draw")), None, "a pick on no named side is nothing")
 eq(T.feed_pick("soccer_u35"), "b", "the domain's NAMED bet is still the under")
-eq(T.FEED_YES_TWIN, {"soccer_u35": {"kind": "total_gte", "n": 4}}, "the Yes twin exists on the league under domain only")
+eq(T.FEED_YES_TWIN, {"soccer_u35": {"kind": "total_gte", "n": 4}, "soccer_corners": {"kind": "corners_gte"}},
+   "the Yes twins: the league under domain's over, and (2026-10-15) the corners rung's N-or-more")
+eq(T.feed_bet(dict(sport="soccer_corners", pick="a")), {"kind": "corners_gte"}, "a corners Yes is corners_gte")
+eq(T.feed_bet(dict(sport="soccer_corners", pick="b")), {"kind": "corners_lte"}, "and its No is still corners_lte")
 eq(T.feed_bet(dict(over, sport="soccer_u35_intl")), None,
    "the internationals under domain has no over twin: no rule there backs the Yes")
 ok(not T.placeable(dict(over, sport="soccer_u35_cup", league="DFB Pokal")), "the cup twin still does not")
@@ -605,13 +608,14 @@ print("\nthe six of 2026-10-11: under 3.5 clubs, corners, the Eredivisie draw, T
 # ---------------------------------------------------------------------------
 SIX2 = {
     "u35_low_scoring|soccer_u35": "Under 3.5 low-scoring rule",
-    "corners_under|soccer_corners": "Corners under form rule",
     "ere_draw|soccer": "Eredivisie draw band",
     "turkey_btts_dog|soccer_btts": "Turkey BTTS in heavy mismatches",
     "team2_ranked|soccer_team2": "Favourite to score 2+, ranked by margin",
     "turkey_o25_dog|soccer_o25": "Turkey over 2.5 in heavy mismatches",
 }
 MOVE2 = "2026-10-11"
+# corners_under was the sixth: it left Production on 2026-10-15 (three corners lanes replaced it).
+ok("corners_under|soccer_corners" not in T.PAIR_OVERRIDES, "corners_under, listed that day, is out since 2026-10-15")
 for key, name in SIX2.items():
     ov = T.PAIR_OVERRIDES.get(key) or {}
     eq(ov.get("moved_on"), MOVE2, f"{key} is listed with move date {MOVE2}")
@@ -652,7 +656,7 @@ total_c = _goals("corners_under", "soccer_corners", "KXEPLCORNERS-26OCT11CRYNFO-
                  espn_home="Crystal Palace", espn_away="Nottingham Forest", price=0.62)
 ok(T.placeable(team_c) and PR.start_verified(team_c), "a team-corners No reaches the feed")
 ok(T.placeable(total_c) and PR.start_verified(total_c), "a total-corners No reaches the feed")
-ok(not T.placeable(dict(team_c, pick="a")), "the Yes (N+ corners) is not the rule's bet")
+ok(T.placeable(dict(team_c, pick="a")), "since 2026-10-15 the Yes (N+ corners) is publishable too: the corners fades")
 ok(not T.placeable(dict(team_c, market_id="KXEPLTCORNERS-26OCT11CRYNFO")), "a rung the ticker does not name is not published")
 ok(not T.placeable(dict(team_c, league="Allsvenskan")), "nor an unmapped league")
 tl = PR.lead_from_quote(team_c, "corners_under|soccer_corners", BUILT)
@@ -719,7 +723,7 @@ for l in feed6b["leads"].values():
 
 # The Production pairs table names them with their scope and the Early badge.
 page6 = PR.page({"quotes": []}, st6, {"leads": {}, "pairs": {}}, "", now=NOW + timedelta(hours=1))
-for text in ("Under 3.5 low-scoring rule · Clubs", "Corners under form rule", "Eredivisie draw band",
+for text in ("Under 3.5 low-scoring rule · Clubs", "Eredivisie draw band",
              "Turkey BTTS in heavy mismatches", "Favourite to score 2+, ranked by margin · Clubs",
              "Turkey over 2.5 in heavy mismatches"):
     ok(f"<b>{html_mod.escape(text)}</b> <span class=\"sig w early\">Early · 0 bets</span>" in page6,

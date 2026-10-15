@@ -90,7 +90,7 @@ def _fixture():
     quotes += _settled("o15_ranked", "soccer_o15", n=4, won=1, price=0.70)
     quotes += _settled("o15_form_l10", "soccer_o15_cup", n=3, won=2)
     quotes += _settled("btts_form_l10_fade", "soccer_btts", n=5, won=2, price=0.48)
-    quotes += _settled("corners_under", "soccer_corners", n=4, won=3, price=0.52)
+    quotes += _settled("corners_total_under", "soccer_corners", n=4, won=3, price=0.52)
     soon = [
         (1, "Alpha v Beta soonest"),
         (2, "Gamma v Delta second"),
@@ -106,10 +106,10 @@ def _fixture():
         300, "btts_form_l10_fade", "soccer_btts", "open", 40, "Nu v Xi btts"))
     # Open, past 48 hours: in the Later fold like any other open pick.
     quotes.append(_quote(
-        400, "corners_under", "soccer_corners", "open", 80, "Omicron v Pi later"))
+        400, "corners_total_under", "soccer_corners", "open", 80, "Omicron v Pi later"))
     # A label and a url the page must not turn into markup or a script link.
     quotes.append(_quote(
-        401, "corners_under", "soccer_corners", "open", 90,
+        401, "corners_total_under", "soccer_corners", "open", 90,
         'Rho <script>alert(1)</script> v "Sigma"',
         url="javascript:alert(1)",
         venue="polymarket_us",
@@ -251,7 +251,7 @@ eq(C.pick_text(dict(p05, pick="a")), "Lens to win", "the Yes side of the same ma
 team1 = _quote(904, "team1_form_l5", "soccer_team1", "open", 30, "Ajax v PSV: Ajax to score 1+")
 team1.update(pick="a")
 eq(C.pick_text(team1), "Ajax 1+ goals", "a side to score 1+ reads 'Ajax 1+ goals'")
-corners = _quote(905, "corners_under", "soccer_corners", "open", 30, "Ajax v PSV: 10+ corners")
+corners = _quote(905, "corners_total_under", "soccer_corners", "open", 30, "Ajax v PSV: 10+ corners")
 eq(C.pick_text(corners), "Under 10 corners", "a No on '10+ corners' is 'Under 10 corners'")
 winner = _quote(906, "mls_away_band", "soccer", "open", 30, "Saint Louis vs Los Angeles G")
 winner.update(side_a="Saint Louis", side_b="Los Angeles G", pick="b")

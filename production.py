@@ -334,6 +334,15 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
                 headline = f"Under {strike} corners · {q['team']}"
             else:
                 headline = f"Under {strike} corners"
+        elif bet["kind"] == "corners_gte":
+            # The YES on an "N+" corners rung: N corners or more (the corners fades).
+            strike = T.corners_strike(q["market_id"])
+            bet["n"] = strike
+            if q.get("team"):
+                bet["team"] = q["team"]
+                headline = f"{strike}+ corners · {q['team']}"
+            else:
+                headline = f"{strike}+ corners"
         else:
             headline = f"Over {bet['n'] - 0.5:g} goals"
     elif q["sport"] in T.LADDER_SPORTS:
@@ -724,7 +733,7 @@ def _one_corners_per_match(leads, logged_at, previous=None):
     locks = dict((previous or {}).get("corners_selections") or {})
     groups = {}
     for lid, lead in {**((previous or {}).get("leads") or {}), **leads}.items():
-        if (lead.get("bet") or {}).get("kind") != "corners_lte":
+        if not str((lead.get("bet") or {}).get("kind") or "").startswith("corners_"):
             continue
         key = S.corners_fixture_key(lead)
         if key:
@@ -734,7 +743,8 @@ def _one_corners_per_match(leads, logged_at, previous=None):
     for key, entries in groups.items():
         locks.setdefault(key, min(entries)[2])
     for lid, lead in list(leads.items()):
-        if (lead.get("bet") or {}).get("kind") != "corners_lte" or lead.get("status") != "pending":
+        if (not str((lead.get("bet") or {}).get("kind") or "").startswith("corners_")
+                or lead.get("status") != "pending"):
             continue
         key = S.corners_fixture_key(lead)
         if key is None or locks.get(key) != lid:

@@ -414,12 +414,20 @@ PAIR_OVERRIDES = {
     # since 2026-10-04): 11-2 on 13, +16.5% after fees, -2.2c against the close, 4 open.
     # The feed already names its No on the league over-3.5 contract (FEED_BETS soccer_u35).
     "u35_low_scoring|soccer_u35": dict(moved_on="2026-10-11", production_at=None),
+    # 2026-10-15, as asked: the three corners lanes that replace corners_under go straight
+    # into Production, on empty records (the Early badge says so). The two fades are the YES
+    # of a corners rung (FEED_YES_TWIN corners_gte); the total under is the NO, as before.
+    "corners_total_under|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
+    "corners_ucl_fade|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
+    "corners_team_fade|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
     # corners under form rule: 8-6 on 14 matches (35 rungs), +4.4% after fees, +1.4c
     # against the close, 3 open. The feed learned the corners rung for it: the NO on a
     # Kalshi total-corner or team-corner "N+" contract (FEED_BETS soccer_corners, kind
     # corners_lte), the exact contract and the No side named in the route as the under-3.5
     # leads are, since Kalshi lists no under contract.
-    "corners_under|soccer_corners": dict(moved_on="2026-10-11", production_at=None),
+    #   corners under — listed 2026-10-11, OUT 2026-10-15 as asked: split into three Sandbox
+    #   lanes on fresh records (corners_total_under, corners_ucl_fade, corners_team_fade). Its
+    #   team-corner unders were 10-20 on 30 (-37.0%); none of the new lanes is in Production.
     # Eredivisie draw band: 2-3 on 5, +52.0% after fees (two draws at 0.25 and 0.24), flat
     # against the close. A draw is Kalshi's Tie contract on the GAME event, which the feed
     # has expressed since 2026-09-16.
@@ -3199,13 +3207,17 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_u35_intl": {"kind": "total_lte", "n": 3}}
 
 # Which side of the named market each kind buys, as the Sandbox records a pick.
-FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "corners_lte": "b"}
+FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "corners_lte": "b",
+             "corners_gte": "a"}
 
 # ONE DOMAIN, TWO CLAIMS (2026-10-08). bund_o35 backs the YES on the same KX...TOTAL-4
 # contract u35_low_scoring backs the No on, so a soccer_u35 bet is the over or the under
 # by its PICK, and the feed names each. The twin is the Yes on an under domain only; a
 # domain whose named bet is already the Yes has none.
-FEED_YES_TWIN = {"soccer_u35": {"kind": "total_gte", "n": 4}}
+FEED_YES_TWIN = {"soccer_u35": {"kind": "total_gte", "n": 4},
+                 # 2026-10-15, with the corners fades: the YES on a Kalshi corners rung is "N or
+                 # more corners" (corners_gte n = N, the rung in the ticker), total or team.
+                 "soccer_corners": {"kind": "corners_gte"}}
 
 # A Kalshi daily-close LADDER rung (2026-10-08, with crypto_fav_band|crypto_fav): Yes on one
 # coin's "$X or above" contract, settled at the 17:00 ET close the ticker names. The feed
