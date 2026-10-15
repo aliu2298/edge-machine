@@ -23,7 +23,7 @@ def at(y, mo, d, h, mi):
 
 def win(now, lane, label_part):
     """The next window of that lane whose close is still ahead of `now`."""
-    return next(w for w in W.windows(now) if w["lane"] == lane and label_part in w["label"]
+    return next(w for w in W.windows(now, ledger={"quotes": []}) if w["lane"] == lane and label_part in w["label"]
                 and w["close"] > now)
 
 
@@ -53,7 +53,10 @@ check("crypto: 18:30-20:00Z after the change", (w["start"], w["end"]),
 
 print("\nweekday and calendar rules")
 sat = at(2026, 10, 17, 12, 0)
-lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat) if w["close"].date() == dt.date(2026, 10, 17)}
+# An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
+# not depend on (it read real Oct 17 fixtures once they were logged).
+lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []})
+             if w["close"].date() == dt.date(2026, 10, 17)}
 check("Saturday: crypto, gas/diesel and the first-to-score NO pick, no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "ftts_no"])
 

@@ -83,6 +83,11 @@ EXPECTED = {
     "commodities": (30, "trading_days"),
     "nba": (36, "always"),
     "trading": (36, "weekdays"),
+    # Econ and Finance Daily scan on their own workflow (daily-research.yml). Listed here since
+    # 2026-10-15: a stale Daily card looked its hours up in this table, found nothing, and the
+    # KeyError took the whole page build down (Sandbox Tracker runs 11:09Z and 15:00Z).
+    "econ_daily": (3, "always"),
+    "finance_daily": (3, "always"),
 }
 # Closing-price writers and how often each is expected to write (hours). The VPS
 # snapshots every 15 minutes, the watchdog hourly, the close job every 30 minutes,
@@ -523,11 +528,11 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
             picks = lane.get('picks') or []
             last = _utc(lane.get('last_success'))
             status_word = ('attention' if lane.get('error') else 'waiting' if last is None
-                           else 'stale' if last < now - timedelta(hours=3) else 'healthy')
+                           else 'stale' if last < now - timedelta(hours=EXPECTED[key][0]) else 'healthy')
             daily_items = []
             if lane.get('error') or status_word == 'stale':
                 item = dict(kind='feed', area=key, href='./'+key+'.html',
-                            text=label+': '+(lane.get('error') or 'no successful paper scan in the last 3 hours'))
+                            text=label+': '+(lane.get('error') or f'no successful paper scan in the last {EXPECTED[key][0]} hours'))
                 attention.append(item)
                 daily_items.append(item)
             areas.append(dict(key=key, label=label, href='./'+key+'.html',
@@ -611,8 +616,10 @@ def _area_card(area, now):
     next24 = "—" if area["next24"] is None else str(area["next24"])
     why = ""
     if status == "stale":
-        hours, calendar = EXPECTED[area["key"]]
-        why = (f'<p class="cc-why sm">No successful read inside {hours}h'
+        # A card for an area this table does not list still renders, without the hours.
+        hours, calendar = EXPECTED.get(area["key"], (None, "always"))
+        why = ('<p class="cc-why sm">No successful read inside the expected interval.</p>' if hours is None else
+               f'<p class="cc-why sm">No successful read inside {hours}h'
                f'{" of trading days" if calendar == "trading_days" else " of weekdays" if calendar == "weekdays" else ""}.</p>')
     elif area["items"]:
         why = '<ul class="cc-card-items sm">' + "".join(
