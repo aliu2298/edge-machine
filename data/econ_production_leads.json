@@ -1,8 +1,10 @@
 {
- "board_built_at": "2026-10-15T04:08:46+00:00",
+ "board_built_at": "2026-10-15T05:56:19+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
+ "first_publish_min": 45,
+ "late_publication_skipped": 0,
  "leads": {},
  "pairs": {
   "econ_daily_fav_band|econ_daily": {
@@ -31,8 +33,9 @@
    }
   }
  },
+ "publication_withheld": {},
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-15T04:08:46+00:00"
+ "updated_at": "2026-10-15T05:56:19+00:00"
 }
