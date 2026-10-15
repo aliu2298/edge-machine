@@ -153,8 +153,8 @@ APPROVAL = dict(min_bets=50, min_days=28, z_min=2.0)
 # show", and demotion still uses them:
 #   * DEMOTION after demote_bets settled bets when EITHER the pair is behind the prices it
 #     paid (z < 0) or it does not beat every blind rule on the same contests. And whatever the
-#     count, when it has logged no new bet for STALE_DAYS — its source went dark or its season
-#     ended — so nothing sits in Production untested.
+#     count, non-soccer pairs with no new bet for STALE_DAYS. Soccer gaps across club breaks
+#     and international windows are normal; feed-health checks detect outages separately.
 #   * The closing price no longer demotes: every pair in Production was put there by hand,
 #     with its CLV visible on the page. It is reported, not enforced.
 #   * Baselines are benchmarks, not forecasters, and are never promoted.
@@ -3817,11 +3817,21 @@ def _last_logged(d, name, sport, since):
     return max(ts) if ts else None
 
 
+def inactivity_demotes(sport):
+    """Soccer signal gaps are normal across club breaks and international windows.
+
+    Zero qualifying bets does not establish a broken rule. Feed freshness and
+    adapter errors report collection failures separately; performance-based
+    demotion still uses settled evidence, including for soccer.
+    """
+    return not (sport == "soccer" or str(sport).startswith("soccer_"))
+
+
 def demote_reason(d, name, sport, pair, a, now):
     """Why a QA pair goes back to the Sandbox this run, or None."""
     since = pair["promoted_at"]
     last = _last_logged(d, name, sport, since) or since
-    if now - datetime.fromisoformat(last) >= timedelta(days=STALE_DAYS):
+    if inactivity_demotes(sport) and now - datetime.fromisoformat(last) >= timedelta(days=STALE_DAYS):
         return f"no new bet in {STALE_DAYS} days"
     if a["n"] < sport_rules(sport)["demote_bets"]:
         return None

@@ -64,10 +64,13 @@ ok("1 of 1" in why, "and counts how many")
 eq(PR.pair_health(KEY, [bet(), bad], 3, FEED, now=NOW)[0], "bad",
    "one bad bet among good ones is still a fault — it is not averaged away")
 
-print("\nred: dark")
+print("\nwaiting for soccer fixtures")
 eq(PR.pair_health(KEY, [], 0, FEED, now=NOW),
+   ("ok", "waiting for qualifying fixtures"),
+   "international windows and club breaks are not collection failures")
+eq(PR.pair_health("oddspedia|cricket", [], 0, {"oddspedia|cricket": {}}, now=NOW),
    ("bad", "no leads and nothing logged in 7d"),
-   "no leads AND nothing logged is dark, not merely quiet")
+   "the inactivity policy outside soccer is unchanged")
 
 print("\nred: unwired")
 eq(PR.pair_health(KEY, [bet()], 3, {}, now=NOW),

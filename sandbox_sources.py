@@ -1428,7 +1428,10 @@ PAUSED_LANES = {
     # Flat, with tail risk. Already retired; kept here so it cannot resume alone.
     "cmd_tail": None,
     "btts_form_l10": None,
-    "o15_form_l10": None,
+    # Production is active: the club pair was returned by hand on 2026-10-08.
+    # Its older source-wide pause must not suppress that Production rule.
+    # Cup and international variants remain outside Production and paused.
+    "o15_form_l10": {"keep": frozenset({"soccer_o15"})},
     # Already retired. Kept here so reconnecting it does not resume it.
     "sportsgambler": None,
     # 3- and 4-leg tennis baskets. The 2-leg lanes (tennis_combo2, pm_combo2) stay.
