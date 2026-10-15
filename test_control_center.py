@@ -396,5 +396,22 @@ ok('<b>4</b><span>pairs in Production</span>' in copied and '<b>10</b>' not in c
    "the Control Center's own tiles stay; production's strip is not copied over them")
 eq(site_root._copy_from_tracker("no running block", prod), None, "a root without the Running block is rebuilt, not patched")
 
+print("\na stale Econ or Finance Daily card renders (2026-10-15)")
+# Two Sandbox Tracker runs failed on KeyError 'econ_daily': a stale Daily card looked its hours
+# up in EXPECTED, which did not list the Daily lanes, and the whole page build crashed.
+_stale_daily = {"lanes": {k: {"picks": [], "catalog": [{}], "error": None,
+                              "last_success": (NOW - datetime.timedelta(hours=5)).isoformat()}
+                          for k in ("econ_daily", "finance_daily")}}
+_dhtml = CC.page(NOW, d=_ledger([]), st=STAGES_EMPTY, blob=blob, nba={}, market={}, closes={}, runs=None,
+                 daily=_stale_daily)
+ok('data-area="econ_daily" data-status="stale"' in _dhtml and 'data-area="finance_daily" data-status="stale"' in _dhtml,
+   "both Daily cards render as Stale instead of crashing the page")
+ok("No successful read inside 3h" in _dhtml, "and name the 3-hour bar, read from EXPECTED")
+eq((CC.EXPECTED["econ_daily"], CC.EXPECTED["finance_daily"]), ((3, "always"), (3, "always")),
+   "the Daily lanes are listed in EXPECTED")
+ok("expected interval" in CC._area_card(dict(key="not_listed", label="X", status="stale", last_read=None,
+                                              next24=None, items=[], open=0, settled=0, coverage="", href="#"), NOW),
+   "an area EXPECTED does not list still renders")
+
 print(f"\n{len(FAILS)} FAILED" if FAILS else "\nall passed")
 sys.exit(1 if FAILS else 0)
