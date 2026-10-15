@@ -926,6 +926,8 @@ def pair_health(key, bets, lead_count, feed_pairs, now=None, window_days=HEALTH_
     if late:
         return "bad", late
     if not lead_count and not recent:
+        if not T.inactivity_demotes(key.split("|", 1)[-1]):
+            return "ok", "waiting for qualifying fixtures"
         return "bad", f"no leads and nothing logged in {window_days}d"
     return "ok", ("publishing" if lead_count else "nothing to publish yet")
 

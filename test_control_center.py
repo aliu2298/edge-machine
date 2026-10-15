@@ -245,28 +245,28 @@ ok(any(i["kind"] == "feed" and "403" in i["text"] and i["area"] == "cricket" for
 ok("Feed check" in SB.feed_health(_ledger([], coverage=cov_dark)), "feed_health still prints the same feeds")
 
 # A Production pair paused in PAUSED_LANES, and one near the stale-pair demotion.
-paused_key = next(k for k in T.PAIR_OVERRIDES if S.lane_paused(*k.split("|", 1)))
+# Synthetic invalid Production entry: the real registry must have no paused pair.
+paused_key = "o15_form_l10|soccer_o15_cup"
 pname, psport = paused_key.split("|", 1)
 st_p = {"pairs": {paused_key: {"stage": "production", "by_hand": "2026-10-08", "ready_at": "2026-10-08T17:50:08+00:00",
                                "promoted_at": "2026-10-08T17:50:08+00:00"}}}
 m = _model(_ledger([], lane_reads=read_now), st_p)
 eq([i["kind"] for i in m["attention"]], ["paused"], f"one item: {paused_key} is paused")
-demote = datetime.datetime(2026, 10, 8, 17, 50, 8, tzinfo=timezone.utc) + timedelta(days=T.STALE_DAYS)
-ok(f"demotes it on {demote.strftime('%b')} {demote.day}" in m["attention"][0]["text"]
-   and "paused in PAUSED_LANES" in m["attention"][0]["text"]
-   and f"({max(0, int((demote - NOW).total_seconds() // 86400))} days)" in m["attention"][0]["text"],
-   f"it says the pair is paused and when the stale-pair net demotes it ({m['attention'][0]['text']})")
+ok("paused in PAUSED_LANES" in m["attention"][0]["text"]
+   and "Production rules must be active" in m["attention"][0]["text"]
+   and "demotes it" not in m["attention"][0]["text"],
+   "a paused soccer rule is a configuration fault, not a fixture-gap countdown")
 eq(m["attention"][0]["href"], "./production.html", "and links Production")
-quiet_key = "team1_form_l5|soccer_team1"
+quiet_key = "oddspedia|cricket"
 quiet_last = NOW - timedelta(days=T.STALE_DAYS - 3)
 st_q = {"pairs": {quiet_key: {"stage": "production", "by_hand": "2026-09-18", "ready_at": "2026-09-18T00:51:24+00:00",
                               "promoted_at": "2026-09-18T00:43:21+00:00"}}}
-quiet_bet = _q(9, "team1_form_l5", "soccer_team1", "won", hours=-24 * (T.STALE_DAYS - 3), logged=quiet_last.isoformat())
+quiet_bet = _q(9, "oddspedia", "cricket", "won", hours=-24 * (T.STALE_DAYS - 3), logged=quiet_last.isoformat())
 m = _model(_ledger([quiet_bet], lane_reads=read_now), st_q)
 eq([i["kind"] for i in m["attention"]], ["quiet"], "one item: a pair three days from demotion")
 ok("(3 days)" in m["attention"][0]["text"] and "no new bet since" in m["attention"][0]["text"],
    f"it says how long is left ({m['attention'][0]['text']})")
-safe_bet = _q(9, "team1_form_l5", "soccer_team1", "won", hours=-24, logged=(NOW - timedelta(days=1)).isoformat())
+safe_bet = _q(9, "oddspedia", "cricket", "won", hours=-24, logged=(NOW - timedelta(days=1)).isoformat())
 eq(_model(_ledger([safe_bet], lane_reads=read_now), st_q)["attention"], [], "a pair that logged yesterday is not listed")
 
 # A failed workflow run, read from the runs list.

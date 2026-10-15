@@ -427,10 +427,11 @@ def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None, b
         when = fmt.day(demote_at)
         if S.lane_paused(name, sport):
             items.append(dict(kind="paused", area=area,
-                              text=f"{rule} is paused in PAUSED_LANES: it logs nothing and the stale-pair "
-                                   f"net demotes it on {when} ({days_left} days)",
+                              text=(f"{rule} is paused in PAUSED_LANES: it logs nothing"
+                                    + (f" and the stale-pair net demotes it on {when} ({days_left} days)"
+                                       if T.inactivity_demotes(sport) else "; Production rules must be active")),
                               href="./production.html"))
-        elif days_left <= NEAR_DEMOTION_DAYS:
+        elif T.inactivity_demotes(sport) and days_left <= NEAR_DEMOTION_DAYS:
             items.append(dict(kind="quiet", area=area,
                               text=f"{rule}: no new bet since {fmt.day(last_at)}; the stale-pair net "
                                    f"demotes it on {when} ({days_left} days)",
