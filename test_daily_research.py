@@ -64,4 +64,15 @@ try:
     D.get('series', sleep=lambda s: None, clock=lambda: 1e9, opener=_opener([404])); raise AssertionError('404 retried')
 except urllib.error.HTTPError as e:
     assert e.code == 404 and _calls == [404]
+# 2026-10-16: the S&P / Nasdaq "above X" ladders. Kalshi files them hourly, their rungs are
+# greater_or_equal, and only the 16:00 ET event is the daily close.
+ladder={'series':'KXINXU','name':'S&P above/below','lane':'finance_daily','sources':[]}
+lm=dict(market('KXINXU-26OCT12H1600-T6000'),event_ticker='KXINXU-26OCT12H1600',strike_type='greater_or_equal')
+assert D.window_reason(lm,ladder,now) is None, D.window_reason(lm,ladder,now)
+assert D.window_reason(dict(lm,close_time='2026-10-12T19:30Z',event_ticker='KXINXU-26OCT12H1500'),ladder,
+                       dt.datetime(2026,10,12,16,30,tzinfo=dt.timezone.utc))=='Unverified index closing clock'
+cat=D.catalog([dict(ticker='KXINXU',title='S&P 500 above/below',category='Financials',frequency='hourly'),
+               dict(ticker='KXNASDAQ100U',title='Nasdaq above/below',category='Financials',frequency='hourly'),
+               dict(ticker='KXSOMEHOURLY',title='x',category='Financials',frequency='hourly')])
+assert [c['series'] for c in cat]==['KXINXU','KXNASDAQ100U'] and all(c['lane']=='finance_daily' for c in cat)
 print('PASS: windows, exclusions, book depth, settlement, ranking, frozen entry, partial failure retention and pages')

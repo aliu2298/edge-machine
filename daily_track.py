@@ -23,7 +23,14 @@ RULE = ('YES 70–80¢; spread ≤3¢; 25+ contracts at the ask; entry 2–3.5 h
         'before a verified supported close. Cheapest qualifying above-threshold '
         'contract per event, ties by ticker. One frozen paper entry per event. '
         'Ranges, weekly contracts, publication-lag rates and already-observed outcomes excluded.')
-INDICES = {'KXINXDUD', 'KXNASDAQDUD', 'KXINXAB', 'KXINX', 'KXNASDAQ100', 'KXNASDAQ100Z', 'KXINXZ'}
+INDICES = {'KXINXDUD', 'KXNASDAQDUD', 'KXINXAB', 'KXINX', 'KXNASDAQ100', 'KXNASDAQ100Z', 'KXINXZ',
+           'KXINXU', 'KXNASDAQ100U'}
+# The S&P 500 and Nasdaq-100 "above X" ladders (2026-10-16). Kalshi files them as HOURLY series
+# (they also list intraday closes), so the daily-frequency catalog never read them, and their
+# rungs are greater_or_equal, which the contract check refused. Until then Finance Daily read
+# only the range series (KXINX: 28 buckets and two tails near 1c) and logged nothing at all.
+# Only their 16:00 ET event is the daily close; the index closing-clock check keeps it to that.
+HOURLY_DAILY_CLOSE = {'KXINXU', 'KXNASDAQ100U'}
 MONTHS = {m:i+1 for i,m in enumerate(['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'])}
 
 def instant(v):
@@ -77,7 +84,8 @@ def catalog(rows):
                  lane='econ_daily' if s['category']=='Economics' else 'finance_daily',
                  sources=s.get('settlement_sources', [])) for s in rows
             if str(s.get('ticker','')).startswith('KX') and s.get('category') in ('Economics','Financials')
-            and (s.get('frequency')=='daily' or (s.get('category')=='Economics' and 'Econ Daily' in (s.get('tags') or [])))
+            and (s.get('frequency')=='daily' or s.get('ticker') in HOURLY_DAILY_CLOSE
+                 or (s.get('category')=='Economics' and 'Econ Daily' in (s.get('tags') or [])))
             and s['ticker']!='KXGOLD']
 
 def supported(series):
@@ -88,7 +96,7 @@ def window_reason(m, meta, now):
     series = meta['series']
     if not supported(series): return 'Unsupported or already-observed outcome'
     if (not str(m.get('ticker','')).startswith(series+'-') or m.get('status')!='active'
-            or m.get('market_type')!='binary' or m.get('strike_type')!='greater'):
+            or m.get('market_type')!='binary' or m.get('strike_type') not in ('greater', 'greater_or_equal')):
         return 'Not an active above-threshold binary contract'
     close, opened = instant(m.get('close_time')), instant(m.get('open_time'))
     if not close or not opened or opened>now: return 'Missing or invalid contract clock'
