@@ -1308,9 +1308,209 @@
    "pair": "corners_team_fade|soccer_corners",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": 0.7633,
+    "clv": -0.0037,
+    "clv_n": 8,
+    "n": 8,
+    "own_roi": 0.3332,
+    "roi": 0.3332,
+    "roi_fee": 0.2851,
+    "span_days": 1.3021,
+    "weeks": 0,
+    "z": 0.1758
+   },
+   "pair": "espn_fpi|nfl",
+   "reason": "moved to Production by hand on 2026-10-16",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": 0.7633,
+    "clv": -0.0037,
+    "clv_n": 8,
+    "n": 8,
+    "own_roi": 0.3332,
+    "roi": 0.3332,
+    "roi_fee": 0.2851,
+    "span_days": 1.3021,
+    "weeks": 0,
+    "z": 0.1758
+   },
+   "pair": "espn_fpi|nfl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": -0.0484,
+    "clv": -0.0227,
+    "clv_n": 11,
+    "n": 11,
+    "own_roi": 0.2321,
+    "roi": 0.2321,
+    "roi_fee": 0.18,
+    "span_days": 3.5104,
+    "weeks": 0,
+    "z": 0.5833
+   },
+   "pair": "btts_form_l10_fade|soccer_btts",
+   "reason": "moved to Production by hand on 2026-10-16",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": -0.0484,
+    "clv": -0.0227,
+    "clv_n": 11,
+    "n": 11,
+    "own_roi": 0.2321,
+    "roi": 0.2321,
+    "roi_fee": 0.18,
+    "span_days": 3.5104,
+    "weeks": 0,
+    "z": 0.5833
+   },
+   "pair": "btts_form_l10_fade|soccer_btts",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": -0.0272,
+    "clv": 0.001,
+    "clv_n": 10,
+    "n": 10,
+    "own_roi": 0.3685,
+    "roi": 0.3685,
+    "roi_fee": 0.3299,
+    "span_days": 4.125,
+    "weeks": 0,
+    "z": 1.3924
+   },
+   "pair": "mls_fade_home|soccer_p05",
+   "reason": "moved to Production by hand on 2026-10-16",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": -0.0272,
+    "clv": 0.001,
+    "clv_n": 10,
+    "n": 10,
+    "own_roi": 0.3685,
+    "roi": 0.3685,
+    "roi_fee": 0.3299,
+    "span_days": 4.125,
+    "weeks": 0,
+    "z": 1.3924
+   },
+   "pair": "mls_fade_home|soccer_p05",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": -0.039,
+    "clv": 0.0017,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.1218,
+    "roi": 0.1218,
+    "roi_fee": 0.1019,
+    "span_days": 1.0938,
+    "weeks": 0,
+    "z": 0.4642
+   },
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "reason": "moved to Production by hand on 2026-10-16",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": -0.039,
+    "clv": 0.0017,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.1218,
+    "roi": 0.1218,
+    "roi_fee": 0.1019,
+    "span_days": 1.0938,
+    "weeks": 0,
+    "z": 0.4642
+   },
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": 0.0647,
+    "clv": -0.0111,
+    "clv_n": 9,
+    "n": 9,
+    "own_roi": 0.1456,
+    "roi": 0.1456,
+    "roi_fee": 0.1205,
+    "span_days": 27.0208,
+    "weeks": 3,
+    "z": 0.8151
+   },
+   "pair": "team2_form_l10|soccer_team2",
+   "reason": "moved to Production by hand on 2026-10-16",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-16T17:17:38+00:00",
+   "evidence": {
+    "base_roi": 0.0647,
+    "clv": -0.0111,
+    "clv_n": 9,
+    "n": 9,
+    "own_roi": 0.1456,
+    "roi": 0.1456,
+    "roi_fee": 0.1205,
+    "span_days": 27.0208,
+    "weeks": 3,
+    "z": 0.8151
+   },
+   "pair": "team2_form_l10|soccer_team2",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
+  "btts_form_l10_fade|soccer_btts": {
+   "by_hand": "2026-10-16",
+   "entry": {
+    "base_roi": -0.0484,
+    "clv": -0.0227,
+    "clv_n": 11,
+    "n": 11,
+    "own_roi": 0.2321,
+    "roi": 0.2321,
+    "roi_fee": 0.18,
+    "span_days": 3.5104,
+    "weeks": 0,
+    "z": 0.5833
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-16T17:17:38+00:00",
+   "ready_at": "2026-10-16T17:17:38+00:00",
+   "ready_since": "2026-10-16T17:17:38+00:00",
+   "stage": "production"
+  },
   "bund_o35|soccer_u35": {
    "by_hand": "2026-10-08",
    "entry": {
@@ -1467,8 +1667,44 @@
    "stage": "sandbox"
   },
   "espn_fpi|nfl": {
-   "since": "2026-09-21T02:05:59+00:00",
-   "stage": "sandbox"
+   "by_hand": "2026-10-16",
+   "entry": {
+    "base_roi": 0.7633,
+    "clv": -0.0037,
+    "clv_n": 8,
+    "n": 8,
+    "own_roi": 0.3332,
+    "roi": 0.3332,
+    "roi_fee": 0.2851,
+    "span_days": 1.3021,
+    "weeks": 0,
+    "z": 0.1758
+   },
+   "entry_since": "2026-09-21T02:05:59+00:00",
+   "promoted_at": "2026-10-16T17:17:38+00:00",
+   "ready_at": "2026-10-16T17:17:38+00:00",
+   "ready_since": "2026-10-16T17:17:38+00:00",
+   "stage": "production"
+  },
+  "ftts_no_70_80|soccer_ftts": {
+   "by_hand": "2026-10-16",
+   "entry": {
+    "base_roi": -0.039,
+    "clv": 0.0017,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.1218,
+    "roi": 0.1218,
+    "roi_fee": 0.1019,
+    "span_days": 1.0938,
+    "weeks": 0,
+    "z": 0.4642
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-16T17:17:38+00:00",
+   "ready_at": "2026-10-16T17:17:38+00:00",
+   "ready_since": "2026-10-16T17:17:38+00:00",
+   "stage": "production"
   },
   "liga_btts_even|soccer_btts": {
    "by_hand": "2026-10-08",
@@ -1488,6 +1724,26 @@
    "promoted_at": "2026-10-08T17:50:08+00:00",
    "ready_at": "2026-10-08T17:50:08+00:00",
    "ready_since": "2026-10-08T17:50:08+00:00",
+   "stage": "production"
+  },
+  "mls_fade_home|soccer_p05": {
+   "by_hand": "2026-10-16",
+   "entry": {
+    "base_roi": -0.0272,
+    "clv": 0.001,
+    "clv_n": 10,
+    "n": 10,
+    "own_roi": 0.3685,
+    "roi": 0.3685,
+    "roi_fee": 0.3299,
+    "span_days": 4.125,
+    "weeks": 0,
+    "z": 1.3924
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-16T17:17:38+00:00",
+   "ready_at": "2026-10-16T17:17:38+00:00",
+   "ready_since": "2026-10-16T17:17:38+00:00",
    "stage": "production"
   },
   "mma_fav_band|mma": {
@@ -1629,6 +1885,26 @@
    "promoted_at": "2026-10-01T16:20:16+00:00",
    "ready_at": "2026-10-01T16:20:16+00:00",
    "ready_since": "2026-10-01T16:20:16+00:00",
+   "stage": "production"
+  },
+  "team2_form_l10|soccer_team2": {
+   "by_hand": "2026-10-16",
+   "entry": {
+    "base_roi": 0.0647,
+    "clv": -0.0111,
+    "clv_n": 9,
+    "n": 9,
+    "own_roi": 0.1456,
+    "roi": 0.1456,
+    "roi_fee": 0.1205,
+    "span_days": 27.0208,
+    "weeks": 3,
+    "z": 0.8151
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-16T17:17:38+00:00",
+   "ready_at": "2026-10-16T17:17:38+00:00",
+   "ready_since": "2026-10-16T17:17:38+00:00",
    "stage": "production"
   },
   "team2_ranked|soccer_team2": {
@@ -1792,5 +2068,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-16T15:34:14+00:00"
+ "updated": "2026-10-16T17:17:38+00:00"
 }
