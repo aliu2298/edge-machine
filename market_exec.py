@@ -44,7 +44,15 @@ from zoneinfo import ZoneInfo
 _NY = ZoneInfo("America/New_York")
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-STATE = os.path.join(ROOT, "data", "market_orders.json")
+# Each account keeps its own order state. The LIVE pass (scripts/market_daily.sh, switched on by
+# ~/.alpaca-live.env) points ALPACA_STATE / ALPACA_FILLS at its own files, so a paper position
+# can never be sold from the live account or the other way round.
+def _path_env(name, default):
+    v = os.environ.get(name)
+    return os.path.join(ROOT, v) if v and not os.path.isabs(v) else (v or default)
+
+
+STATE = _path_env("ALPACA_STATE", os.path.join(ROOT, "data", "market_orders.json"))
 
 # Paper by default, and loudly. The live host is reachable only by setting ALPACA_LIVE=1, so
 # pointing the live account at this takes a deliberate act, not a default nobody re-read.
@@ -68,6 +76,14 @@ def _num(env, default):
 NOTIONAL_USD = _num("ALPACA_NOTIONAL_USD", 1000.0)
 MAX_POSITIONS = int(_num("ALPACA_MAX_POSITIONS", 60))   # 60 x $1000 never needs margin at ~$95k
 MAX_NEW_PER_DAY = int(_num("ALPACA_MAX_NEW_PER_DAY", 20))   # a bad data day is not 400 orders
+# FRACTIONAL (ALPACA_FRACTIONAL=1): size each position by dollars, not whole shares. The live
+# pilot trades $100 a position, and at whole shares every stock above $100 (NVDA, KLAC, DELL...)
+# would be skipped, quietly turning the sample into "RSI(2) on cheap stocks". Alpaca takes
+# fractional quantities on DAY market orders only, so it is refused with opg.
+FRACTIONAL = os.environ.get("ALPACA_FRACTIONAL") == "1"
+# RULES (ALPACA_RULES=a,b): trade only these rules. The live pass trades sw_rsi2_pullback alone
+# while paper keeps every executable rule.
+ONLY_RULES = {x.strip() for x in os.environ.get("ALPACA_RULES", "").split(",") if x.strip()}
 
 # Loss caps. Checked on every run, in paper as well as live, so the thing that is supposed to
 # protect the live account has been exercised for months before it ever sees any.
@@ -185,6 +201,8 @@ def executable_rules(rules=None):
     for name, rule in (rules or T.RULES).items():
         if T.rule_removed(name):
             skipped[name] = "removed from the board"
+        elif ONLY_RULES and name not in ONLY_RULES:
+            skipped[name] = "not in ALPACA_RULES for this account"
         elif rule.get("lane") != LANE:
             skipped[name] = f"{rule.get('lane')} lane — the next open does not apply"
         elif rule.get("signal") is None:
@@ -194,6 +212,11 @@ def executable_rules(rules=None):
         else:
             out[name] = rule
     return out, skipped
+
+
+# How each rule ranks its own signals when more fire than the caps allow: LOWER is stronger.
+# RSI(2) pullback: the lowest 2-period RSI first, the deepest pullback in an uptrend.
+RANK = {"sw_rsi2_pullback": lambda h: T.rsi([b["c"] for b in h], 2)}
 
 
 def pending_entries(bars_by_symbol, d, rules=None):
@@ -217,9 +240,13 @@ def pending_entries(bars_by_symbol, d, rules=None):
             tid = T.trade_id(name, sym, T._day(h[-1]))
             if tid in seen or not rule["signal"](h):
                 continue
-            out.append(dict(id=tid, rule=name, symbol=sym, action="buy",
+            rank = RANK[name](h) if name in RANK else 0.0
+            out.append(dict(id=tid, rule=name, symbol=sym, action="buy", rank=rank,
                             signal_day=T._day(h[-1]), ref_price=float(h[-1]["c"])))
-    return sorted(out, key=lambda x: (x["rule"], x["symbol"]))
+    # Best first within each rule, so a daily cap takes the strongest signals rather than the
+    # first letters of the alphabet (on paper, 2026-10-13/14: 49 RSI(2) signals never sent, all
+    # past S). Ties fall back to the symbol, so the order is fixed and repeatable.
+    return sorted(out, key=lambda x: (x["rule"], x["rank"], x["symbol"]))
 
 
 def pending_exits(bars_by_symbol, d, rules=None):
@@ -247,11 +274,26 @@ def pending_exits(bars_by_symbol, d, rules=None):
     return sorted(out, key=lambda x: (x["rule"], x["symbol"]))
 
 
+def _q(x):
+    """A share count read from the broker or the state file: fractions kept when FRACTIONAL."""
+    try:
+        v = float(x or 0)
+    except (TypeError, ValueError):
+        return 0
+    return round(v, 9) if FRACTIONAL else int(v)
+
+
 def size(intent, cash_left):
-    """Whole shares worth about NOTIONAL_USD. Market-on-open does not accept fractions."""
+    """Shares worth about NOTIONAL_USD: whole shares, or with FRACTIONAL that many dollars of
+    stock rounded DOWN to 6 decimals. Market-on-open does not accept fractions."""
     px = intent.get("ref_price") or 0
     if px <= 0:
         return 0
+    if FRACTIONAL:
+        qty = int(NOTIONAL_USD / px * 1e6) / 1e6
+        if qty <= 0 or qty * px > cash_left or qty * px < 1.0:
+            return 0
+        return qty
     qty = int(NOTIONAL_USD // px)
     if qty < 1 or qty * px > cash_left:
         return 0
@@ -308,7 +350,7 @@ def plan(bars_by_symbol, d, rules=None, state=None):
         if not q:
             # Not in this host's file — ask the broker whether the buy filled anywhere.
             bo = at_exchange(ex_["id"], "buy")
-            q = int(float((bo or {}).get("filled_qty") or 0)) or None
+            q = _q((bo or {}).get("filled_qty")) or None
         if not q:
             # The ledger is in this trade and this module never filled it. Normal while the
             # account catches up with a record that started months earlier; never silent.
@@ -316,8 +358,8 @@ def plan(bars_by_symbol, d, rules=None, state=None):
             continue
         # Never sell more of a symbol than the account actually holds, however the per-trade
         # arithmetic came out.
-        in_acct = abs(int(float((acct_pos.get(ex_["symbol"]) or {}).get("qty") or 0)))
-        if in_acct < q:
+        in_acct = abs(_q((acct_pos.get(ex_["symbol"]) or {}).get("qty")))
+        if in_acct < q - 1e-9:
             refused.append(dict(ex_, reason=f"account holds {in_acct}, trade wants {q}"))
             continue
         orders.append(dict(ex_, qty=q))
@@ -371,9 +413,17 @@ def opg_window_open(now=None):
     return t >= datetime.time(19, 0) or t < datetime.time(9, 28)
 
 
+def _fractional_ok():
+    if FRACTIONAL and TIME_IN_FORCE != "day":
+        raise AlpacaError(0, "ALPACA_FRACTIONAL needs time_in_force day: Alpaca refuses fractional opg orders")
+
+
 def submit(order):
     """One market order for the next open: a queued day order, or opg when ALPACA_TIF=opg."""
-    body = {"symbol": order["symbol"], "qty": str(order["qty"]), "side": order["action"],
+    _fractional_ok()
+    q = order["qty"]
+    q = str(q) if isinstance(q, int) else (f"{q:.9f}".rstrip("0").rstrip(".") or "0")
+    body = {"symbol": order["symbol"], "qty": q, "side": order["action"],
             "type": "market", "time_in_force": TIME_IN_FORCE,
             "client_order_id": client_order_id(order["id"], order["action"])}
     return _call("POST", "/v2/orders", body)
@@ -424,7 +474,7 @@ def refresh(s):
         except AlpacaError:
             continue
         o["order_status"] = r.get("status")
-        o["filled_qty"] = int(float(r.get("filled_qty") or 0))
+        o["filled_qty"] = _q(r.get("filled_qty"))
         o["filled_avg_price"] = float(r.get("filled_avg_price") or 0) or None
         if r.get("status") in ("filled", "canceled", "expired", "rejected", "done_for_day"):
             o["status"] = "filled" if o["filled_qty"] else "unfilled"
@@ -462,9 +512,9 @@ def held_by_trade(s):
     for o in s["orders"]:
         if o.get("status") != "filled":
             continue
-        n = int(o.get("filled_qty") or 0)
+        n = _q(o.get("filled_qty"))
         qty[o["id"]] = qty.get(o["id"], 0) + (n if o["action"] == "buy" else -n)
-    return {k: v for k, v in qty.items() if v > 0}
+    return {k: (round(v, 9) if FRACTIONAL else v) for k, v in qty.items() if v > 1e-9}
 
 
 def load_state():
@@ -526,7 +576,7 @@ def place(orders, dry_run=True):
 
 
 # ------------------------------------------------------------------ reconciliation
-FILLS = os.path.join(ROOT, "data", "market_fills.json")
+FILLS = _path_env("ALPACA_FILLS", os.path.join(ROOT, "data", "market_fills.json"))
 
 
 def _bps(a, b):
@@ -568,7 +618,7 @@ def reconcile(d=None, days=120):
             if not o:
                 continue
             seen.add(cid)
-            qty = int(float(o.get("filled_qty") or 0))
+            qty = _q(o.get("filled_qty"))
             if qty <= 0:
                 rows.append(dict(id=tid, rule=t.get("rule"), symbol=t.get("symbol"), side=side,
                                  status=o.get("status"), ledger=ledger_px, fill=None, slip_bps=None,
@@ -600,7 +650,7 @@ def reconcile(d=None, days=120):
         if cid in seen:
             continue
         row = dict(client_order_id=cid, symbol=o.get("symbol"), side=o.get("side"),
-                   qty=int(float(o.get("filled_qty") or o.get("qty") or 0)),
+                   qty=_q(o.get("filled_qty") or o.get("qty")),
                    price=float(o.get("filled_avg_price") or 0) or None,
                    status=o.get("status"), filled_at=(o.get("filled_at") or "")[:19])
         # An expired/canceled order can still own shares (e.g. SWKS filled 11/13).
@@ -675,15 +725,15 @@ def held_positions(rows):
     """
     bought, sold, meta = {}, {}, {}
     for r in rows:
-        if int(r.get("qty") or 0) <= 0:
+        if _q(r.get("qty")) <= 0:
             continue
         meta[r["id"]] = (r.get("rule"), r.get("symbol"))
         book = bought if r.get("side") == "buy" else sold
-        book[r["id"]] = book.get(r["id"], 0) + int(r.get("qty") or 0)
+        book[r["id"]] = book.get(r["id"], 0) + _q(r.get("qty"))
     by_symbol = {}
     for tid, qty in bought.items():
         left = qty - sold.get(tid, 0)
-        if left <= 0:
+        if left <= 1e-9:
             continue
         rule, symbol = meta[tid]
         by_symbol.setdefault(symbol, []).append(dict(rule=rule, id=tid, qty=left))
@@ -781,10 +831,12 @@ def main(argv=None):
                     os.environ["ALPACA_LIVE"] = prev
         live_on = os.environ.get("ALPACA_LIVE") == "1"
         print(f"  {'LIVE ' if live_on else 'no   '} ALPACA_LIVE is {'SET — this host trades LIVE' if live_on else 'not set, so every run is paper'}")
+        print(f"        rules: {', '.join(sorted(ONLY_RULES)) or 'every executable rule'}"
+              f"{'; fractional shares' if FRACTIONAL else ''}; state {os.path.relpath(STATE, ROOT)}")
         print(f"        caps: ${NOTIONAL_USD:,.0f}/trade, {MAX_POSITIONS} positions, "
               f"{MAX_NEW_PER_DAY} new/day, loss {MAX_DAILY_LOSS_PCT:.1f}%/day "
               f"{MAX_DRAWDOWN_PCT:.1f}% drawdown")
-        print(f"\n{'READY — arm with Environment=ALPACA_LIVE=1 in edge-market.service' if ok else 'NOT READY'}")
+        print(f"\n{'READY — switch on by creating ~/.alpaca-live.env (scripts/market_daily.sh runs the live pass while it exists)' if ok else 'NOT READY'}")
         return 0 if ok else 1
 
     if "--reconcile" in argv:
@@ -816,7 +868,8 @@ def main(argv=None):
     print(f"host      : {host()}{'  *** LIVE ***' if live() else '  (paper)'}")
     od = [f"{k}={os.environ[k]}" for k in
           ("ALPACA_NOTIONAL_USD", "ALPACA_MAX_POSITIONS", "ALPACA_MAX_NEW_PER_DAY",
-           "ALPACA_MAX_DAILY_LOSS_PCT", "ALPACA_MAX_DRAWDOWN_PCT") if k in os.environ]
+           "ALPACA_MAX_DAILY_LOSS_PCT", "ALPACA_MAX_DRAWDOWN_PCT", "ALPACA_RULES",
+           "ALPACA_FRACTIONAL", "ALPACA_STATE", "ALPACA_FILLS") if k in os.environ]
     if od:
         print(f"overrides : {', '.join(od)}")
     print(f"rules     : {len(rules_ok)} executable — {', '.join(sorted(rules_ok))}")

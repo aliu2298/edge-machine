@@ -543,5 +543,65 @@ finally:
     X.STATE, X._call, X.TIME_IN_FORCE = _state0, _call0, _tif0
 
 
+print("\nthe live pilot (2026-10-15): one rule, ranked, fractional, its own state")
+import importlib
+_env = {k: os.environ.get(k) for k in ("ALPACA_RULES", "ALPACA_FRACTIONAL", "ALPACA_STATE",
+                                        "ALPACA_FILLS", "ALPACA_NOTIONAL_USD")}
+os.environ.update(ALPACA_RULES="sw_rsi2_pullback", ALPACA_FRACTIONAL="1", ALPACA_NOTIONAL_USD="100",
+                  ALPACA_STATE="data/market_orders_live.json", ALPACA_FILLS="data/market_fills_live.json")
+L = importlib.reload(X)
+try:
+    ok_rules, skipped = L.executable_rules()
+    check("only sw_rsi2_pullback is executable", sorted(ok_rules), ["sw_rsi2_pullback"])
+    check("the others say why", all(v for v in skipped.values()), True)
+    check("its own state file", os.path.relpath(L.STATE, L.ROOT), "data/market_orders_live.json")
+    check("its own fills file", os.path.relpath(L.FILLS, L.ROOT), "data/market_fills_live.json")
+    check("a $226 stock is bought in fractions, rounded down", L.size({"ref_price": 226.0}, 500), 0.442477)
+    check("never past the cash", L.size({"ref_price": 226.0}, 50), 0)
+    check("$0 cash is refused", L.size({"ref_price": 20.0}, 0), 0)
+    check("broker fractions are kept", L._q("0.442477"), 0.442477)
+    sent = {}
+    L._call = lambda method, path, body=None: sent.setdefault("b", body) and {"id": "x", "status": "accepted"}
+    try:
+        L.submit(dict(symbol="NVDA", qty=0.442477, action="buy", id="t1", rule="sw_rsi2_pullback"))
+    except Exception:
+        pass
+    check("a fractional qty is sent as a plain decimal", (sent.get("b") or {}).get("qty"), "0.442477")
+    L.TIME_IN_FORCE = "opg"
+    try:
+        L._fractional_ok(); refused = False
+    except L.AlpacaError:
+        refused = True
+    check("fractional with opg is refused before sending", refused, True)
+    L.TIME_IN_FORCE = "day"
+    # ranking: three symbols fire; the lowest RSI(2) must come first, not the first letter
+    def dip(n_down):
+        h = bars(215, 100.0)
+        for i in range(n_down):
+            h[-1 - i] = dict(h[-1 - i], c=100.0 - (n_down - i) * 0.1 - 0.0)
+        return h
+    fake = {"AAA": 3.0, "MMM": 0.5, "ZZZ": 1.5}
+    _rank = L.RANK["sw_rsi2_pullback"]
+    L.RANK["sw_rsi2_pullback"] = lambda h: fake[h[0]["sym"]]
+    _rules = T.RULES
+    T.RULES = {"sw_rsi2_pullback": dict(lane="swing", universe=list(fake), signal=lambda h: True,
+                                        exit=_exit_never, entry="open", label="t", note="t")}
+    try:
+        bb = {s_: [dict(b, sym=s_) for b in bars(215, 100.0)] for s_ in fake}
+        got = [e["symbol"] for e in L.pending_entries(bb, {"trades": [], "signals": []})]
+    finally:
+        T.RULES, L.RANK["sw_rsi2_pullback"] = _rules, _rank
+    check("signals are ranked lowest RSI(2) first, not alphabetically", got, ["MMM", "ZZZ", "AAA"])
+    check("the real ranking is RSI(2)", round(_rank([{"c": c} for c in (10, 11, 12, 11, 10)]), 4),
+          round(T.rsi([10, 11, 12, 11, 10], 2), 4))
+finally:
+    for k, v in _env.items():
+        if v is None:
+            os.environ.pop(k, None)
+        else:
+            os.environ[k] = v
+    X = importlib.reload(X)
+check("paper is back to whole shares and every rule", (X.FRACTIONAL, X.ONLY_RULES), (False, set()))
+
 print(f"\n{'ALL PASS' if not FAILS else str(FAILS) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
